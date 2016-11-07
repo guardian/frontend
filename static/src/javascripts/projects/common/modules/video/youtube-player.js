@@ -34,8 +34,7 @@ define([
         });
     });
 
-    function initTracking(el) {
-        var atomId = el.getAttribute('data-media-atom-id');
+    function initTracking(atomId) {
         tracking.init(atomId);
     }
 
@@ -57,13 +56,13 @@ define([
         return wrapper;
     }
 
-    function checkState(id, state, status) {
+    function checkState(id, atomId, state, status) {
         if (state === window.YT.PlayerState[status] && STATES[status]) {
-            STATES[status](id);
+            STATES[status](id, atomId);
         }
     }
 
-    function _onPlayerStateChange(event, handlers, wrapper, videoId) {
+    function _onPlayerStateChange(event, handlers, wrapper, videoId, atomId) {
         //change class according to the current state
         //TODO: Fix this so we can add poster image.
         fastdom.write(function () {
@@ -73,7 +72,7 @@ define([
             wrapper.classList.add('youtube__video-started');
         });
 
-        Object.keys(STATES).forEach(checkState.bind(null, videoId, event.data));
+        Object.keys(STATES).forEach(checkState.bind(null, videoId, atomId, event.data));
 
         if (handlers && typeof handlers.onPlayerStateChange === 'function') {
             handlers.onPlayerStateChange(event);
@@ -93,24 +92,24 @@ define([
         }
     }
 
-    function _onPlayerPlaying(id) {
-        setProgressTracker(id);
-        tracking.track('play');
+    function _onPlayerPlaying(id, atomId) {
+        setProgressTracker(id, atomId);
+        tracking.track('play', atomId);
     }
 
-    function _onPlayerPaused(id) {
+    function _onPlayerPaused(id, atomId) {
         killProgressTracker(false, id);
     }
 
-    function _onPlayerEnded(id) {
+    function _onPlayerEnded(id, atomId) {
         killProgressTracker(false, id);
-        tracking.track('end');
+        tracking.track('end', atomId);
     }
 
-    function setProgressTracker(id) {
+    function setProgressTracker(id, atomId)  {
         killProgressTracker(true);
         progressTracker.id = id;
-        progressTracker.tracker = setInterval(recordPlayerProgress.bind(null, id), 1000);
+        progressTracker.tracker = setInterval(recordPlayerProgress.bind(null, id, atomId), 1000);
     }
 
     function killProgressTracker(force, id) {
@@ -125,14 +124,15 @@ define([
         //wrap <iframe/> in a div with dynamically updating class attributes
         loadYoutubeJs();
         var wrapper = prepareWrapper(el);
+        var atomId = el.getAttribute('data-media-atom-id');
 
         if (tracking && typeof tracking === 'function') {
-            tracking(el);
+            tracking(atomId);
         }
 
         return promise.then(function () {
             function onPlayerStateChange(event) {
-                _onPlayerStateChange(event, handlers, wrapper, videoId);
+                _onPlayerStateChange(event, handlers, wrapper, videoId, atomId);
             }
 
             function onPlayerReady(event) {
@@ -156,14 +156,14 @@ define([
         });
     }
 
-    function recordPlayerProgress(id) {
+    function recordPlayerProgress(id, atomId) {
 
         var currentTime = players[id].player.getCurrentTime(),
             percentPlayed = Math.round(((currentTime / players[id].duration) * 100));
 
         if (percentPlayed > 0 &&
             percentPlayed % 25 === 0) {
-            tracking.track(percentPlayed);
+            tracking.track(percentPlayed, atomId);
         }
     }
 

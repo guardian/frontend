@@ -37,22 +37,22 @@ define([
             }
         };
 
-        var eventList = ['play', '25', '50', '75', 'end'];
+        var events = ['play', '25', '50', '75', 'end'];
 
-        forEach(eventList, function(event) {
-            mediator.once(event, function() {
-                ophanRecord(event);
+        forEach(events, function(event) {
+            mediator.once(event, function(id) {
+                ophanRecord(event, id);
                 ga(gaTracker + '.send', 'event',
                     gaHelper.buildGoogleAnalyticsEvent(event, events, window.location.pathname,
-                        'gu-video-youtube', eventAction, videoId));
+                        'gu-video-youtube', eventAction, id));
             });
         });
 
-        function ophanRecord(event) {
+        function ophanRecord(event, id) {
             require(['ophan/ng'], function (ophan) {
                 var eventObject = {
                     video: {
-                        id: 'gu-video-youtube-' + videoId,
+                        id: 'gu-video-youtube-' + id,
                         eventType: 'video:content:' + event
                     }
                 };
@@ -65,8 +65,8 @@ define([
         initYoutubeEvents(videoId);
     }
 
-    function track(property) {
-        mediator.emit(property);
+    function track(event, id) {
+        mediator.emit(event, id);
     }
 
     return {
