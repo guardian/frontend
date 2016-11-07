@@ -1,8 +1,6 @@
 package model
 
 import campaigns.ShortCampaignCodes
-import cats.data.NonEmptyList
-import cats.implicits._
 import common.`package`._
 import conf.Configuration.facebook.{appId => facebookAppId}
 
@@ -17,15 +15,12 @@ case class ShareLink (
 
 final case class ShareLinkMeta(
   visible: Seq[ShareLink],
-  hidden: Option[NonEmptyList[ShareLink]]
+  hidden: Seq[ShareLink]
 )
 
 object ShareLinkMeta {
   def noneHidden(shares: ShareLinkMeta): ShareLinkMeta =
-    ShareLinkMeta(shares.visible ++ shares.hidden.fold(Nil: Seq[ShareLink])(_.toList), None)
-
-  def create: ((Seq[ShareLink], Option[NonEmptyList[ShareLink]])) => ShareLinkMeta =
-    (ShareLinkMeta.apply _).tupled
+    ShareLinkMeta(shares.visible ++ shares.hidden, Nil)
 }
 
 sealed trait SharePlatform {
@@ -181,6 +176,10 @@ final case class ShareLinks(
     ShareLinks.create(sharePlatform, href = href, title = metadata.webTitle, mediaPath = mediaPath)
   })
 
-  val pageShares: ShareLinkMeta =
-    ShareLinkMeta.create((pageShareOrder.bimap(sharesToLinks, shares => NonEmptyList.fromList(sharesToLinks(shares)))))
+  val pageShares: ShareLinkMeta = {
+    pageShareOrder match {
+      case (visible, hidden) =>
+        ShareLinkMeta(sharesToLinks(visible), sharesToLinks(hidden))
+    }
+  }
 }
