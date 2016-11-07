@@ -17,10 +17,7 @@ list: # PRIVATE
 
 # Install all 3rd party dependencies.
 install: check-node check-yarn
-	@echo 'Installing 3rd party dependencies…'
 	@yarn install
-	@echo '…done.'
-	@node tools/messages.js install
 
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
