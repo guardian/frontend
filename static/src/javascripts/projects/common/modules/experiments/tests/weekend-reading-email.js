@@ -1,13 +1,11 @@
 define([
     'bean',
-    'reqwest',
     'fastdom',
     'qwery',
     'common/utils/$',
     'common/utils/config'
 ], function (
     bean,
-    reqwest,
     fastdom,
     qwery,
     $,
@@ -27,7 +25,7 @@ define([
         this.idealOutcome = 'Users open and click-through on the Weekend Reading email';
 
         this.canRun = function () {
-            return config.page.contentType === 'signup';
+            return (config.page.contentType.toLowerCase() === 'signup');
         };
 
         function passRefererParam(emailForm) {
