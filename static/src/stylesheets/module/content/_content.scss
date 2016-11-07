@@ -541,18 +541,17 @@
 }
 
 .meta__numbers {
-    border-top: 1px dotted $neutral-5;
-    height: $gs-baseline * 3;
-    padding: $gs-baseline / 2 0;
 
-    @include mq(tablet, leftCol) {
-        position: absolute;
-        right: 0;
-        top: 0;
-        border: 0;
-    }
+    padding: $gs-baseline / 2 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+
     @include mq(leftCol) {
+        border-top: 1px dotted $neutral-5;
         border-bottom: 1px dotted $neutral-5;
+        position: static;
+        height: $gs-baseline * 3;
     }
 }
 
