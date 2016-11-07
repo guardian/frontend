@@ -18,6 +18,9 @@
 
 @body(interactive: model.Interactive, isImmersive: Boolean, isPaidContent: Boolean) = {
     @if(isImmersive) {
+
+        @if(isPaidContent){ @fragments.guBand() }
+
         @* Must not be wrapped in any elements to support full screen immersives *@
         @bodyRaw(interactive)
     } else {
