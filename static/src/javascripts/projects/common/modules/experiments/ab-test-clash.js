@@ -18,8 +18,13 @@ define([
             variants: ['control', 'contributions2', 'contributions3', 'membership1', 'membership2', 'membership3', 'equal1', 'equal2', 'equal3']
         };
 
+        var contributionsMembershipEpicCtaRestOfWorld = {
+            name: 'ContributionsMembershipEpicCtaRestOfWorld',
+            variants: ['control', 'contributions2', 'contributions3', 'membership1', 'membership2', 'membership3', 'equal1', 'equal2', 'equal3']
+        };
 
-        var clashingTests = [contributionsMembershipEpic, contributionsMembershipEpicCtaUnitedStates];
+
+        var clashingTests = [contributionsMembershipEpic, contributionsMembershipEpicCtaUnitedStates, contributionsMembershipEpicCtaRestOfWorld];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 
