@@ -42,5 +42,5 @@
 }
 
 @Social(shares: ShareLinkMeta) = {
-    @fragments.social(ShareLinkMeta(shares.visible ++ shares.hidden.fold(Nil: List[model.ShareLink])(_.toList), None))
+    @fragments.social(ShareLinkMeta.noneHidden(shares))
 }

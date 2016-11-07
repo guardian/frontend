@@ -1,4 +1,4 @@
-@(item: model.ContentType, page: model.Page, showBadge: Boolean = true, showExtras: Boolean = true)(implicit request: RequestHeader)
+@(item: model.ContentType, page: model.Page, showBadge: Boolean = true, showExtras: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
 @import conf.switches.Switches.SaveForLaterSwitch
 @import model._
 @import views.support.Commercial.isPaidContent
@@ -9,6 +9,14 @@
         case v: Video   => { @fragments.meta.byline(v.bylineWithSource, v.tags) }
         case c          => { @fragments.meta.byline(c.trail.byline, c.tags) }
     }
+}
+
+@socialLinks() = @{
+    if (amp) ShareLinkMeta.noneHidden(item.sharelinks.pageShares) else item.sharelinks.pageShares
+}
+
+@iconModifier() = @{
+    if (item.content.isImmersiveGallery) List("social-icon-media") else Nil
 }
 
 @metaBody() = {
@@ -34,7 +42,7 @@
     @if(showExtras) {
         <div class="meta__extras">
             <div class="meta__social" data-component="share">
-                @fragments.social(item.sharelinks.pageShares, "top", iconModifier = if (item.content.isImmersiveGallery) List("social-icon-media") else Nil)
+                @fragments.social(socialLinks, "top", iconModifier = iconModifier)
                 @if(item.content.tags.tags.exists(_.id == "tone/news")) {
                     @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
                 }

@@ -20,6 +20,14 @@ final case class ShareLinkMeta(
   hidden: Option[NonEmptyList[ShareLink]]
 )
 
+object ShareLinkMeta {
+  def noneHidden(shares: ShareLinkMeta): ShareLinkMeta =
+    ShareLinkMeta(shares.visible ++ shares.hidden.fold(Nil: Seq[ShareLink])(_.toList), None)
+
+  def create: ((Seq[ShareLink], Option[NonEmptyList[ShareLink]])) => ShareLinkMeta =
+    (ShareLinkMeta.apply _).tupled
+}
+
 sealed trait SharePlatform {
   def campaign: Option[String]
   def text: String
@@ -174,5 +182,5 @@ final case class ShareLinks(
   })
 
   val pageShares: ShareLinkMeta =
-    ShareLinkMeta.tupled((pageShareOrder.bimap(sharesToLinks, shares => NonEmptyList.fromList(sharesToLinks(shares)))))
+    ShareLinkMeta.create((pageShareOrder.bimap(sharesToLinks, shares => NonEmptyList.fromList(sharesToLinks(shares)))))
 }
