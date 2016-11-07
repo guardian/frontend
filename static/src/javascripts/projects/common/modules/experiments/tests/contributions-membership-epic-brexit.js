@@ -37,7 +37,7 @@ define([
 
         this.id = 'ContributionsMembershipEpicBrexit';
         this.start = '2016-11-04';
-        this.expiry = '2016-11-07';
+        this.expiry = '2016-11-11';
         this.author = 'Jonathan Rankin';
         this.description = 'Find the optimal way of offering Contributions along side Membership in the Epic component on stories about Brexit';
         this.showForSensitive = true;
