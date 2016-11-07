@@ -67,17 +67,13 @@ category: Common
     }
 }
 
-.social-icon--more {
-    background: $neutral-6;
+.social-icon.social-icon--more {
+    @include social-icon($neutral-6);
     border-radius: 50%;
-    color: $neutral-3;
+    color: $neutral-2;
     display: inline-block;
     line-height: 32px;
     text-align: center;
-
-    &:hover {
-      color: $neutral-2;
-    }
 }
 
 .social--hidden {
