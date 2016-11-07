@@ -8,7 +8,7 @@ define([
     $
 ) {
 
-    function toggleDisplay (_) {
+    function toggleDisplay () {
 
         $('.social__secondary').each(function (icon){
             fastdom.write(function () {
@@ -35,5 +35,5 @@ define([
         });
 
         $('.social__item--more').toggleClass('social--hidden');
-    }
+    };
 });
