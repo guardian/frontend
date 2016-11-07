@@ -29,51 +29,56 @@ define([
         var $button = $('.js-manage-account-change-card', $parent);
         var $updating = $('.js-updating', $parent);
 
-        /*  show/hide */
+        /*  show/hide
+        *   once we've sent the token, we don't want to change the state of the dots until we redisplay
+        * */
         var loading = function () {
             var HIDDEN = 'is-hidden';
             var $elems = [$button, $number, $type, $last4];
-            var stack = 1; //We're waiting for the card to be displayed.
-            return function (isLoading) {
-                fastdom.write(function () {
-                    if (isLoading) {
-                        stack++;
-                    } else {
-                        stack--;
-                    }
-                    if (stack > 0) {
-                        $elems.forEach(function ($e) {
-                            $e.addClass(HIDDEN);
-                        });
-                        $updating.removeClass(HIDDEN);
-
-                    } else {
-                        $elems.forEach(function ($e) {
-                            $e.removeClass(HIDDEN);
-                        });
-                        $updating.addClass(HIDDEN);
-                    }
-                });
+            var sent = false;
+            var showDots = function(isLoading){
+                if(sent){
+                    return;
+                }
+                if(isLoading){
+                    $elems.forEach(function ($e) {
+                        $e.addClass(HIDDEN);
+                    });
+                    $updating.removeClass(HIDDEN);
+                } else {
+                    $elems.forEach(function ($e) {
+                        $e.removeClass(HIDDEN);
+                    });
+                    $updating.addClass(HIDDEN);
+                }
+            };
+            var send = function(){
+                sent = true;
+            };
+            return {
+                send:send,
+                showDots:showDots
             };
         }();
 
+        //Decode and display card
         var oldCardType = $type.data('type');
         var newCardType = 'i-' + card.type.toLowerCase().replace(' ', '-');
 
-        if (oldCardType) {
-            $type.removeClass(oldCardType);
-        }
+        bean.off($button[0], 'click');
+
+        bean.on($button[0], 'click', handler());
 
         fastdom.write(function () {
+            if (oldCardType) {
+                $type.removeClass(oldCardType);
+            }
             $last4.text(card.last4);
-            loading(false);
             $type.addClass(newCardType);
             $type.data('type', newCardType);
             $parent.removeClass('is-hidden');
+            loading.showDots(false);
         });
-
-        bean.off($button[0], 'click');
-        bean.on($button[0], 'click', handler());
 
 
         /*
@@ -86,7 +91,9 @@ define([
             var email = $button.data('email');
             return function (e) {
                 e.preventDefault();
-                loading(true);
+                fastdom.write(function () {
+                   loading.showDots(true);
+                });
 
                 checkoutHandler.open({
                     email: email,
@@ -94,7 +101,9 @@ define([
                     panelLabel: 'Update',
                     token: update(endpoint),
                     closed: function () {
-                        loading(false);
+                        fastdom.write(function(){
+                            loading.showDots(false);
+                        })
                     }
 
                 });
@@ -120,6 +129,7 @@ define([
          */
         function update(endpoint) {
             return function (token) {
+                loading.send();
                 ajax({
                     url: endpoint,
                     crossOrigin: true,
