@@ -44,7 +44,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
   def mostPopular(country: String): Seq[RelatedContentItem] =
     ophanPopularAgent().getOrElse(country, ophanPopularAgent().getOrElse(defaultCountry, Nil))
 
-  def refresh() {
+  def refresh(): Unit = {
     log.info("Refreshing most popular for countries.")
     countries foreach update
   }
