@@ -20,6 +20,12 @@
     </iframe>
 }
 
+@newsletterPlaceholderImage() = {
+    <div class="newsletter-image">
+        @fragments.inlineSvg("email_placeholder", "illustration")
+    </div>
+}
+
 @newsletterImage(emailListing: EmailSubscription) = {
     @defining(emailListing.imageFilename.getOrElse("2211.png")) { imageFilename =>
         <img class="newsletter-image"
@@ -41,7 +47,7 @@
                 data-component="newsletter-card @emailListing.name">
 
                 <div class="newsletter-card__imagewrapper">
-                    @newsletterImage(emailListing)
+                    @newsletterPlaceholderImage()
                 </div>
 
                 <div class="newsletter-card__content js-newsletter-content">

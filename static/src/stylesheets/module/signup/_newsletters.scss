@@ -62,12 +62,23 @@
 }
 
 .newsletter-card__imagewrapper {
+    background-color: $guardian-brand;
     height: 0;
     padding-bottom: 60%;
+
+    svg {
+        display: block;
+        margin: auto;
+        display: block;
+        margin: auto;
+        padding-top: 10%;
+        height: 80%;
+        width: 40%;
+    }
 }
 
 .newsletter-image {
-    width: 100%;
+    position: relative;
 }
 
 .newsletter-card__name {
@@ -260,6 +271,17 @@
 
 // TONE SPECIFIC MODS - FEATURE
 .newsletter-card--tone-feature {
+    border-top-color: $features-support-3;
+
+    .newsletter-card__imagewrapper {
+        background-color: $features-support-1;
+    }
+
+    .newsletter-image {
+        circle {
+            fill: $features-support-3;
+        }
+    }
 
     .newsletter-card__signup {
         .newsletter-card__lozenge {
@@ -292,6 +314,17 @@
 
 // TONE SPECIFIC MODS - COMMENT
 .newsletter-card--tone-comment {
+    border-top-color: $comment-support-4;
+
+    .newsletter-card__imagewrapper {
+        background-color: $comment-support-3;
+    }
+
+    .newsletter-image {
+        circle {
+            fill: $comment-support-4;
+        }
+    }
 
     .newsletter-card__signup {
         .newsletter-card__lozenge {
@@ -324,32 +357,47 @@
 
 // TONE SPECIFIC MODS - MEDIA
 .newsletter-card--tone-media {
+    border-top-color: $multimedia-main-2;
+
+    .newsletter-card__imagewrapper {
+        background-color: $multimedia-main-1;
+    }
+
+    .newsletter-image {
+        circle {
+            fill: $multimedia-main-2;
+        }
+
+        path {
+            fill: $multimedia-main-1;
+        }
+    }
 
     .newsletter-card__signup {
         .newsletter-card__lozenge {
-            border-color: $neutral-1;
-            background-color: $neutral-1;
+            border-color: $multimedia-main-1;
+            background-color: $multimedia-main-1;
 
             &:hover,
             &:focus {
-                border-color: darken($neutral-1, 10%);
-                background-color: darken($neutral-1, 10%);
+                border-color: darken($multimedia-main-1, 10%);
+                background-color: darken($multimedia-main-1, 10%);
             }
         }
     }
 
     .newsletter-card__lozenge--preview {
-        border-color: $neutral-1;
-        color: $neutral-1;
+        border-color: $multimedia-main-1;
+        color: $multimedia-main-1;
 
         &:hover,
         &:focus,
         &:active {
-            border-color: $neutral-1;
+            border-color: $multimedia-main-1;
         }
 
         .inline-arrow-right {
-            fill: $neutral-1;
+            fill: $multimedia-main-1;
         }
     }
 }
