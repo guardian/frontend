@@ -312,18 +312,20 @@ define([
 
     function initEndSlate(player, endSlatePath) {
         var endSlate = new Component(),
-            endState = 'vjs-has-ended';
+            endStateClass = 'vjs-has-ended';
 
         endSlate.endpoint = endSlatePath;
-        endSlate.fetch(player.el(), 'html');
 
         player.one(events.constructEventName('content:play', player), function () {
+            endSlate.fetch(player.el(), 'html');
+
             player.on('ended', function () {
-                bonzo(player.el()).addClass(endState);
+                bonzo(player.el()).addClass(endStateClass);
             });
         });
+
         player.on('playing', function () {
-            bonzo(player.el()).removeClass(endState);
+            bonzo(player.el()).removeClass(endStateClass);
         });
     }
 
