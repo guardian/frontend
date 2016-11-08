@@ -3,12 +3,11 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
-    'membership/payment-form',
-    'membership/formatters'
-], function (bean, $, ajax, config, PaymentForm, formatters) {
+    'membership/formatters',
+    'membership/stripe'
+], function (bean, $, ajax, config,  formatters, stripe) {
 
     var CARD_DETAILS = '.js-mem-card-details',
-        CARD_CHANGE_SUCCESS_MSG = '.js-mem-card-change-success-msg',
         CHANGE_TIER_CARD_LAST4 = '.js-mem-card-last4',
         PACKAGE_COST = '.js-mem-package-cost',
         PACKAGE_CURRENT_RENEWAL_DATE = '.js-mem-current-renewal-date',
@@ -32,8 +31,7 @@ define([
         UP_SELL = '.js-mem-up-sell',
         MEMBER_INFO = '.js-mem-info',
         LOADER = '.js-mem-loader',
-        IS_HIDDEN_CLASSNAME = 'is-hidden',
-        stripeForm = new PaymentForm(CARD_DETAILS, CARD_CHANGE_SUCCESS_MSG, '/me/membership-update-card');
+        IS_HIDDEN_CLASSNAME = 'is-hidden';
 
     function fetchUserDetails() {
         ajax({
@@ -92,11 +90,6 @@ define([
             $(DETAILS_MEMBER_NUM_TEXT).text(userDetails.regNumber);
         }
 
-        // update card details
-        if (userDetails.subscription.card) {
-            stripeForm.updateCard(userDetails.subscription.card);
-        }
-
         if (userDetails.subscription.start) {
             $(PACKAGE_CURRENT_PERIOD_START).text(formatters.formatDate(userDetails.subscription.start));
             $(PACKAGE_CURRENT_PERIOD_START_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
@@ -111,7 +104,7 @@ define([
             $(DETAILS_MEMBERSHIP_TIER_ICON_CURRENT).addClass('i-g-' + userDetails.tier.toLowerCase());
         } else if (userDetails.subscription.card) {
             // only show card details if user hasn't changed their subscription and has a payment method
-            stripeForm.showCardDetailsElementWithChangeCardOption();
+            stripe.display(CARD_DETAILS, userDetails.subscription.card);
         }
 
         $(MEMBER_INFO).removeClass(IS_HIDDEN_CLASSNAME);

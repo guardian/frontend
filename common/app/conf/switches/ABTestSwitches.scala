@@ -1,20 +1,9 @@
 package conf.switches
 
-import common.Edition
 import conf.switches.SwitchGroup.ABTests
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
-
-  val ABDiscussionExternalFrontend = Switch(
-    SwitchGroup.ABTests,
-    "ab-discussion-external-frontend",
-    "Standalone frontend discussion",
-    owners = Seq(Owner.withGithub("piuccio")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 11, 7),
-    exposeClientSide = true
-  )
 
   Switch(
     ABTests,
@@ -51,8 +40,8 @@ trait ABTestSwitches {
     "ab-membership-engagement-message-copy-experiment",
     "Test alternate short messages on membership engagement banner",
     owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 8),
+    safeState = On, // so we don't inadvertently turn off during deployment
+    sellByDate = new LocalDate(2016, 11, 10), // Thursday night
     exposeClientSide = true
   )
 
@@ -68,31 +57,22 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-countries-uk",
-    "Test whether different messages perform better/worse in different countries",
-    owners = Seq(Owner.withGithub("philwills")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 4),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-countries-america",
-    "Test whether different messages perform better/worse in different countries",
-    owners = Seq(Owner.withGithub("philwills")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 4),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-membership-epic",
-    "Find the optimal way of offering Contributions along side Membership in the Epic component",
+    "ab-contributions-membership-epic-cta-united-states-two",
+    "Find optimal way to present contributions and membership asks in Epic component for US",
     owners = Seq(Owner.withGithub("jranks123")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 7),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 11),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-contributions-membership-epic-cta-rest-of-world-two",
+    "Find optimal way to present contributions and membership asks in Epic component for not US",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 11),
+    exposeClientSide = true
+  )
+
 }

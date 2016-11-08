@@ -1,20 +1,17 @@
 @import common.InlineJs
-@import conf.switches.Switches.{AsyncCss, FontSwitch}
+@import conf.switches.Switches.{AsyncCss, FontSwitch, ElectionAppDelay}
+@import model.Page.getContent
 @import templates.inlineJS.blocking.js.{applyRenderConditions, cloudwatchBeacons, config, curlConfig, enableStylesheets, loadFonts, shouldEnhance}
 @import templates.inlineJS.blocking.polyfills.js.{classlist, details, matches, raf, setTimeout}
 
 @(page: model.Page)(implicit request: RequestHeader)
 
-<!--[if lt IE 8]>
-    <script src="@Static("javascripts/components/JSON-js/json2.js")"></script>
-<![endif]-->
 <!--[if lt IE 9]>
     <script src="@Static("javascripts/es5-html5.js")"></script>
 <![endif]-->
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
-
 
     // ************* POLYFILLS *************
     // Mostly handled by es5 shim above. Those which aren't are polyfilled ASAP.
@@ -66,18 +63,32 @@
 
     // ************* LOAD THE MAIN APP ASYNC *************
 
+    @loadApp = {
+        @if(conf.Configuration.assets.useHashedBundles) {
+            // Polyfill for async script
+            (function (document) {
+                var script = document.createElement('script');
+                script.src = '@Static("javascripts/app.js")';
+                var ref = document.getElementsByTagName('script')[0];
+                ref.parentNode.insertBefore(script, ref);
+            })(document);
+        } else {
+            @Html(common.Assets.js.curl);
+            require(['boot']);
+        }
+    }
 
-    @if(conf.Configuration.assets.useHashedBundles) {
-        // Polyfill for async script
-        (function (document) {
-            var script = document.createElement('script');
-            script.src = '@Static("javascripts/app.js")';
-            var ref = document.getElementsByTagName('script')[0];
-            ref.parentNode.insertBefore(script, ref);
-        })(document);
-    } else {
-        @Html(common.Assets.js.curl);
-        require(['boot']);
+    @defining(
+        getContent(page).flatMap(_.content.atoms).flatMap(_.interactives.find(_.id == "2016/general-election")).isDefined
+    ) { hasElectionAtom =>
+
+        @if(ElectionAppDelay.isSwitchedOn && hasElectionAtom) {
+            window.guardian.triggerLoadApp = function () {
+                @loadApp
+            };
+        } else {
+            @loadApp
+        }
     }
 
 

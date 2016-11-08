@@ -12,10 +12,10 @@ define([
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
     'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment',
-    'common/modules/experiments/tests/contributions-countries-uk',
-    'common/modules/experiments/tests/contributions-countries-america',
-    'common/modules/experiments/tests/contributions-membership-epic'
-    
+    'common/modules/experiments/tests/contributions-membership-epic-cta-united-states',
+    'common/modules/experiments/tests/contributions-membership-epic-cta-rest-of-world'
+
+
 ], function (
     reportError,
     config,
@@ -30,9 +30,9 @@ define([
     WeekendReadingEmail,
     MembershipEngagementMessageCopyExperiment,
     MembershipEngagementUSMessageCopyExperiment,
-    ContributionsCountriesUk,
-    ContributionsCountriesAmerica,
-    ContributionsMembershipEpic
+    ContributionsMembershipEpicCtaUnitedStates,
+    ContributionsMembershipEpicCtaRestOfWorld
+
 ) {
 
     var TESTS = [
@@ -41,9 +41,8 @@ define([
         new WeekendReadingEmail(),
         new MembershipEngagementMessageCopyExperiment(),
         new MembershipEngagementUSMessageCopyExperiment(),
-        new ContributionsCountriesUk(),
-        new ContributionsCountriesAmerica(),
-        new ContributionsMembershipEpic()
+        new ContributionsMembershipEpicCtaUnitedStates(),
+        new ContributionsMembershipEpicCtaRestOfWorld()
     ];
 
     var participationsKey = 'gu.ab.participations';
@@ -118,7 +117,7 @@ define([
             isSensitive = config.page.shouldHideAdverts;
 
         return ((isSensitive ? test.showForSensitive : true)
-        && test.canRun() && !expired && isTestSwitchedOn(test));
+            && isTestSwitchedOn(test)) && !expired && test.canRun() ;
     }
 
     function getId(test) {

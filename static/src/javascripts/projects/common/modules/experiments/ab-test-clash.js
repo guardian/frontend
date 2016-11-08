@@ -8,23 +8,18 @@ define([
 
     function userIsInAClashingAbTest() {
 
-        var contributionsCountriesUk = {
-            name: 'ContributionsCountriesUk',
-            variants: ['control', 'global', 'democracy']
+        var contributionsMembershipEpicCtaUnitedStatesTwo = {
+            name: 'ContributionsMembershipEpicCtaUnitedStatesTwo',
+            variants: ['control', 'membership', 'equal']
         };
 
-        var contributionsCountriesAmerica = {
-            name: 'ContributionsCountriesAmerica',
-            variants: ['control', 'global', 'democracy']
-        };
-
-        var contributionsMembershipEpic = {
-            name: 'ContributionsMembershipEpic',
-            variants: ['control', 'contribute-member', 'member-contribute']
+        var contributionsMembershipEpicCtaRestOfWorldTwo = {
+            name: 'ContributionsMembershipEpicCtaRestOfWorldTwo',
+            variants: ['control', 'membership', 'equal']
         };
 
 
-        var clashingTests = [contributionsCountriesUk, contributionsCountriesAmerica, contributionsMembershipEpic];
+        var clashingTests = [contributionsMembershipEpicCtaUnitedStatesTwo, contributionsMembershipEpicCtaRestOfWorldTwo];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 

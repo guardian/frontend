@@ -150,7 +150,6 @@ define([
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs'),
             mediaId = $el.attr('data-media-id'),
-            showEndSlate = $el.attr('data-show-end-slate') === 'true',
             endSlateUri = $el.attr('data-end-slate'),
             embedPath = $el.attr('data-embed-path'),
             // we need to look up the embedPath for main media videos
@@ -162,6 +161,11 @@ define([
             playerSetupComplete,
             withPreroll,
             blockVideoAds;
+
+        //end-slate url follows the patten /video/end-slate/section/<section>.json?shortUrl=
+        //only show end-slate if page has a section i.e. not on the `/global` path
+        //e.g https://www.theguardian.com/global/video/2016/nov/01/what-happened-at-the-battle-of-orgreave-video-explainer
+        var showEndSlate = $el.attr('data-show-end-slate') === 'true' && !!config.page.section;
 
         player = createVideoPlayer(el, videojsOptions({
             plugins: {
@@ -175,7 +179,7 @@ define([
         events.addPrerollEvents(player, mediaId, mediaType);
         events.bindGoogleAnalyticsEvents(player, gaEventLabel);
 
-        videoMetadata.getVideoInfo(el).then(function(videoInfo) {
+        videoMetadata.getVideoInfo($el).then(function(videoInfo) {
             if (videoInfo.expired) {
                 player.ready(function() {
                     player.error({
@@ -312,18 +316,20 @@ define([
 
     function initEndSlate(player, endSlatePath) {
         var endSlate = new Component(),
-            endState = 'vjs-has-ended';
+            endStateClass = 'vjs-has-ended';
 
         endSlate.endpoint = endSlatePath;
-        endSlate.fetch(player.el(), 'html');
 
         player.one(events.constructEventName('content:play', player), function () {
+            endSlate.fetch(player.el(), 'html');
+
             player.on('ended', function () {
-                bonzo(player.el()).addClass(endState);
+                bonzo(player.el()).addClass(endStateClass);
             });
         });
+
         player.on('playing', function () {
-            bonzo(player.el()).removeClass(endState);
+            bonzo(player.el()).removeClass(endStateClass);
         });
     }
 
@@ -332,7 +338,7 @@ define([
     }
 
     function initMoreInSection() {
-        if (!config.isMedia || !config.page.showRelatedContent) {
+        if (!config.isMedia || !config.page.showRelatedContent || !config.page.section) {
             return;
         }
 
@@ -399,7 +405,9 @@ define([
         mediator.on('page:media:moreinloaded', initPlayButtons);
 
         initFacia();
+
         initMoreInSection();
+
         initOnwardContainer();
     }
 

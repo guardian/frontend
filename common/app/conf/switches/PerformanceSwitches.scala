@@ -46,6 +46,16 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  val LongCacheCommentsSwitch = Switch(
+    SwitchGroup.Performance,
+    "long-cache-comments-switch",
+    "If this switch is on then closed comment threads will get a longer cache time",
+    owners = Seq(Owner.withGithub("gklopper")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 11, 21),
+    exposeClientSide = false
+  )
+
   val interactivePressing = Switch(
     SwitchGroup.Performance,
     "interactive-pressing",
