@@ -21,6 +21,7 @@ Follow [this link](https://www.google.co.uk) and enter the relevant search strin
 1. Fork [Janus](https://github.com/guardian/janus) and follow the readme (**Note:** you will need permission to access the Janus repo to do this, and 2FA set up on your Google account)
 2. Make your change and push to a new branch (you can review the closed PRs for help)
 3. Submit a PR
+4. You may need to `pip install awscli` and add `/Library/Frameworks/Python.framework/Versions/Current/bin` to your `$PATH` to run the commands Janus gives you.
 
 # Local Test Server setup
 
