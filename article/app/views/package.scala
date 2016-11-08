@@ -28,7 +28,8 @@ object MainCleaner {
       withJsoup(BulletCleaner(html))(
         if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
         PictureCleaner(article, amp),
-        MainFigCaptionCleaner
+        MainFigCaptionCleaner,
+        AtomsCleaner(article.content.atoms, shouldFence = true, amp)
       )
   }
 }
