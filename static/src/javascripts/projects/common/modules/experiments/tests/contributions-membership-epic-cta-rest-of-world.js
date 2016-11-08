@@ -37,18 +37,18 @@ define([
 
     return function () {
 
-        this.id = 'ContributionsMembershipEpicCtaRestOfWorld';
-        this.start = '2016-11-07';
+        this.id = 'ContributionsMembershipEpicCtaRestOfWorldTwo';
+        this.start = '2016-11-08';
         this.expiry = '2016-11-11';
         this.author = 'Jonathan Rankin';
-        this.description = '1) Find optimal way to present contributions and membership asks in Epic component. 2) Test 3 different messages for the Epic';
+        this.description = 'Find optimal way to present contributions and membership asks in Epic component';
         this.showForSensitive = true;
         this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Impressions to number of contributions/supporter signups';
         this.audienceCriteria = 'All readers who are not the US, who are reading about US politics OR the US election, as well as not reading a Brexit articles ';
         this.dataLinkNames = '';
-        this.idealOutcome = 'We learn the best way to present contributions and membership asks in Epic component, and we lean what the most effective of the 3 messages is';
+        this.idealOutcome = 'We learn the best way to present contributions and membership asks in Epic component';
         this.canRun = function () {
             var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
             if('keywordIds' in config.page && 'nonKeywordTagIds' in config.page) {
@@ -69,25 +69,11 @@ define([
         var contributeUrl = 'https://contribute.theguardian.com/?';
 
 
-        var messages = {
-            m1  : '...we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues are falling fast. ' +
+        var message = '...we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. ' +
             'So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do ' +
-            'it because we believe our perspective matters – because it might well be your perspective, too.',
-
-            m2: '... we’ve got a favour to ask. The US election has revealed the deep divides that run through American society, and the dangers of a politics based on untruths' +
-            ' and innuendo. When politicians lie and basic facts are disputed, independent journalism is more important than ever. The Guardian will hold the new President to account,' +
-            ' just as we have held the candidates to account with fearless, honest, in-depth reporting and a diverse range of commentary. When rumours swirl, we deal in facts; when other ' +
-            'outlets deliver soundbites, we give voters a voice. But these are tough times for independent news organisations and producing quality, global journalism is difficult and expensive.',
-
-
-            m3: '... we’ve got a favour to ask. The Guardian believes that good journalism gives people a voice, so we’ve travelled far and wide to bring you our coverage of the US election.' +
-            ' We’ve asked not just who people are voting for, but why – and which issues they care about most. And we’ve shown how the effects of this election are being felt in other countries, ' +
-            'too. Political reporting with a global perspective helps all of us understand the bigger picture. But producing this kind of quality journalism is expensive and these are tough times for ' +
-            'independent news organisations.'
-
-
-        };
-
+            'it because we believe our perspective matters – because it might well be your perspective, too.';
+        
+        
         var cta = {
             contributionsMain : {
                 p2: 'If everyone who reads our reporting, who likes it, helps to pay for it our future would be more secure. You can give money to the Guardian in less than a minute.',
@@ -147,9 +133,9 @@ define([
                 id: 'control',
                 test: function () {
                     var component = $.create(template(contributionsEpic, {
-                        linkUrl1: makeUrl(contributeUrl, contributeUrlPrefix + 'm1_contributions_main_row'),
-                        linkUrl2: makeUrl(membershipUrl, membershipUrlPrefix + 'm1_contributions_main_row'),
-                        p1: messages.m1,
+                        linkUrl1: makeUrl(contributeUrl, contributeUrlPrefix + 'm1_contributions_main_row_2'),
+                        linkUrl2: makeUrl(membershipUrl, membershipUrlPrefix + 'm1_contributions_main_row_2'),
+                        p1: message,
                         p2: cta.contributionsMain.p2,
                         p3: cta.contributionsMain.p3,
                         cta1: cta.contributionsMain.cta1,
@@ -163,53 +149,14 @@ define([
                 },
                 success: completer
             },
+
             {
-                id: 'contributions2',
+                id: 'membership',
                 test: function () {
                     var component = $.create(template(contributionsEpic, {
-                        linkUrl1: makeUrl(contributeUrl, contributeUrlPrefix + 'm2_contributions_main_row'),
-                        linkUrl2: makeUrl(membershipUrl, membershipUrlPrefix +'m2_contributions_main_row'),
-                        p1: messages.m2,
-                        p2: cta.contributionsMain.p2,
-                        p3: cta.contributionsMain.p3,
-                        cta1: cta.contributionsMain.cta1,
-                        cta2: cta.contributionsMain.cta2,
-                        hidden: ''
-                    }));
-                    componentWriter(component);
-                },
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
-                success: completer
-            },
-            {
-                id: 'contributions3',
-                test: function () {
-                    var component = $.create(template(contributionsEpic, {
-                        linkUrl1: makeUrl(contributeUrl, contributeUrlPrefix + 'm3_contributions_main_row'),
-                        linkUrl2: makeUrl(membershipUrl, membershipUrlPrefix + 'm3_contributions_main_row'),
-                        p1: messages.m3,
-                        p2: cta.contributionsMain.p2,
-                        p3: cta.contributionsMain.p3,
-                        cta1: cta.contributionsMain.cta1,
-                        cta2: cta.contributionsMain.cta2,
-                        hidden: ''
-                    }));
-                    componentWriter(component);
-                },
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
-                success: completer
-            },
-            {
-                id: 'membership1',
-                test: function () {
-                    var component = $.create(template(contributionsEpic, {
-                        linkUrl1: makeUrl(membershipUrl, membershipUrlPrefix  + 'm1_membership_main_row'),
-                        linkUrl2: makeUrl(contributeUrl, contributeUrlPrefix + 'm1_membership_main_row'),
-                        p1: messages.m1,
+                        linkUrl1: makeUrl(membershipUrl, membershipUrlPrefix  + 'm1_membership_main_row_2'),
+                        linkUrl2: makeUrl(contributeUrl, contributeUrlPrefix + 'm1_membership_main_row_2'),
+                        p1: message,
                         p2: cta.membershipMain.p2,
                         p3: cta.membershipMain.p3,
                         cta1: cta.membershipMain.cta1,
@@ -223,91 +170,14 @@ define([
                 },
                 success: completer
             },
+
             {
-                id: 'membership2',
-                test: function () {
-                    var component = $.create(template(contributionsEpic, {
-                        linkUrl1: makeUrl(membershipUrl, membershipUrlPrefix + 'm2_membership_main_row'),
-                        linkUrl2: makeUrl(contributeUrl, contributeUrlPrefix + 'm2_membership_main_row'),
-                        p1: messages.m2,
-                        p2: cta.membershipMain.p2,
-                        p3: cta.membershipMain.p3,
-                        cta1: cta.membershipMain.cta1,
-                        cta2: cta.membershipMain.cta2,
-                        hidden: ''
-                    }));
-                    componentWriter(component);
-                },
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
-                success: completer
-            },
-            {
-                id: 'membership3',
-                test: function () {
-                    var component = $.create(template(contributionsEpic, {
-                        linkUrl1: makeUrl(membershipUrl, membershipUrlPrefix + 'm3_membership_main_row'),
-                        linkUrl2: makeUrl(contributeUrl, contributeUrlPrefix + 'm3_membership_main_row'),
-                        p1: messages.m3,
-                        p2: cta.membershipMain.p2,
-                        p3: cta.membershipMain.p3,
-                        cta1: cta.membershipMain.cta1,
-                        cta2: cta.membershipMain.cta2,
-                        hidden: ''
-                    }));
-                    componentWriter(component);
-                },
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
-                success: completer
-            },
-            {
-                id: 'equal1',
+                id: 'equal',
                 test: function () {
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: makeUrl(membershipUrl, membershipUrlPrefix + 'm1_equal_row'),
-                        linkUrl2: makeUrl(contributeUrl, contributeUrlPrefix + 'm1_equal_row'),
-                        p1: messages.m1,
-                        p2: cta.equal.p2,
-                        cta1: cta.equal.cta1,
-                        cta2: cta.equal.cta2,
-                        hidden: ''
-                    }));
-                    componentWriter(component);
-                },
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
-                success: completer
-            },
-            {
-                id: 'equal2',
-                test: function () {
-                    var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: makeUrl(membershipUrl, membershipUrlPrefix + 'm2_equal_row'),
-                        linkUrl2: makeUrl(contributeUrl, contributeUrlPrefix + 'm2_equal_row'),
-                        p1: messages.m2,
-                        p2: cta.equal.p2,
-                        cta1: cta.equal.cta1,
-                        cta2: cta.equal.cta2,
-                        hidden: ''
-                    }));
-                    componentWriter(component);
-                },
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
-                success: completer
-            },
-            {
-                id: 'equal13',
-                test: function () {
-                    var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: makeUrl(membershipUrl, membershipUrlPrefix + 'm3_equal_row'),
-                        linkUrl2: makeUrl(contributeUrl, contributeUrlPrefix + 'm3_equal_row'),
-                        p1: messages.m3,
+                        linkUrl1: makeUrl(membershipUrl, membershipUrlPrefix + 'm1_equal_row_2'),
+                        linkUrl2: makeUrl(contributeUrl, contributeUrlPrefix + 'm1_equal_row_2'),
+                        p1: message,
                         p2: cta.equal.p2,
                         cta1: cta.equal.cta1,
                         cta2: cta.equal.cta2,
@@ -320,7 +190,6 @@ define([
                 },
                 success: completer
             }
-
 
         ];
     };

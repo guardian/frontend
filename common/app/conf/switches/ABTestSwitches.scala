@@ -57,8 +57,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-membership-epic-cta-united-states",
-    "1) Find optimal way to present contributions and membershuip asks in Epic component. 2) Test 3 different messages for the Epic in the United States ",
+    "ab-contributions-membership-epic-cta-united-states-two",
+    "Find optimal way to present contributions and membershuip asks in Epic component for US",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate =  new LocalDate(2016, 11, 11),
@@ -67,8 +67,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-membership-epic-cta-rest-of-world",
-    "1) Find optimal way to present contributions and membershuip asks in Epic component. 2) Test 3 different messages for the Epic not in the United States ",
+    "ab-contributions-membership-epic-cta-rest-of-world-two",
+    "Find optimal way to present contributions and membership asks in Epic component for not US",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate =  new LocalDate(2016, 11, 11),

@@ -486,4 +486,24 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2016, 11, 14),
     exposeClientSide = false
   )
+
+  val EpicMembershipOnly = Switch(
+    SwitchGroup.Feature,
+    "epic-membership-only",
+    "If this switch is turned on, we will only place membership links on our epic component ads",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 11),
+    exposeClientSide = true
+  )
+
+  val EpicContributionsOnly = Switch(
+    SwitchGroup.Feature,
+    "epic-contributions-only",
+    "If this switch is turned on, we will only place contributions links on our epic component ads",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 11),
+    exposeClientSide = true
+  )
 }
