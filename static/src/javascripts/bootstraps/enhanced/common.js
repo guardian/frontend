@@ -388,7 +388,7 @@ define([
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-pinterest', modules.initPinterest],
-                ['ci-hidden-share-toggle', hiddenShareToggle],
+                ['c-hidden-share-toggle', hiddenShareToggle],
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-engagement-banner', modules.membershipEngagementBanner],
                 ['c-email', modules.initEmail],
