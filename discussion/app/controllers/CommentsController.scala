@@ -167,6 +167,6 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
   // if the thread is switched on again the url changes and it cache busts itself.
   private def cacheTime(request: RequestHeader) = {
     val commentsClosed = request.getParameter("closed").contains("true")
-    if (commentsClosed && LongCacheCommentsSwitch.isSwitchedOn) CacheTime.DiskCached else CacheTime.Default
+    if (commentsClosed && LongCacheCommentsSwitch.isSwitchedOn) CacheTime(3800) else CacheTime(60)
   }
 }

@@ -25,10 +25,6 @@ object CacheTime {
   object ArchiveRedirect extends CacheTime(300)
   object NotFound extends CacheTime(10) // This will be overwritten by fastly
 
-  // Our CDN caches things with a TTL > 3700 on disk and not just in memory (i.e. more robust)
-  // https://community.fastly.com/t/why-isnt-serve-stale-working-as-expected/369
-  object DiskCached extends CacheTime(3800)
-
   def LastDayUpdated = CacheTime(extended(60))
   def NotRecentlyUpdated = CacheTime(extended(300))
   def NotRecentlyUpdatedPurgable = CacheTime(extended(1800))
