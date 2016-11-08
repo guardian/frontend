@@ -17,7 +17,7 @@ requirejs.config({
         commercial:   'projects/commercial',
         bean:         'components/bean/bean',
         bonzo:        'components/bonzo/bonzo',
-        react:        'components/react/react',
+        react:        'vendor/react/react',
         EventEmitter: 'components/eventEmitter/EventEmitter',
         fastclick:    'components/fastclick/fastclick',
         fastdom:      'components/fastdom/index',
