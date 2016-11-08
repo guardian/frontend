@@ -67,7 +67,7 @@ category: Common
     }
 }
 
-.social-icon.social-icon--more {
+.social-icon.social-icon--more { // Need extra specificity here
     @include social-icon($neutral-6);
     border-radius: 50%;
     color: $neutral-2;
@@ -84,7 +84,7 @@ category: Common
     display: inline-block;
 }
 
-.social__saveforlater-lozenge {
+.social__save-for-later-lozenge {
      @include fs-textSans(2);
      font-weight: bold;
      color: $neutral-1;

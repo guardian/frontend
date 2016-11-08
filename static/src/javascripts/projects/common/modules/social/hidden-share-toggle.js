@@ -8,15 +8,17 @@ define([
     $
 ) {
 
-    function toggleDisplay () {
+    function toggleDisplay (e) {
 
-        $('.social__secondary').each(function (icon){
+        e.preventDefault();
+
+        $('.js-social__secondary').each(function (icon){
             fastdom.write(function () {
                 $(icon).toggleClass('social--hidden');
             });
         });
 
-        $('.social--top').each(function (topSocial) {
+        $('.js-social--top').each(function (topSocial) {
             fastdom.write(function () {
                 $(topSocial).toggleClass('social--expanded-top');
             });
@@ -30,12 +32,12 @@ define([
     }
 
     return function hiddenShareToggle () {
-        $('.social-icon--more, .social__tray-close').each(function (toggle) {
+        $('.js-social__item--more, .js-social__tray-close').each(function (toggle) {
             bean.on(toggle, 'click', toggleDisplay);
         });
 
         fastdom.write(function () {
-            $('.social__item--more').toggleClass('social--hidden');
+            $('.js-social__item--more').toggleClass('social--hidden');
         });
     };
 });

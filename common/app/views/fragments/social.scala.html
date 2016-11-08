@@ -4,7 +4,7 @@
     @sharelinks.visible.map { link => @ShareLink(Nil, link) }
     @if(sharelinks.hidden.isEmpty) { Html("") } else {
         @SocialMore
-        @sharelinks.hidden.map { link => @ShareLink(List("social--hidden", "social__secondary"), link) }
+        @sharelinks.hidden.map { link => @ShareLink(List("social--hidden", "js-social__secondary"), link) }
     }
     @SaveForLater
     @CloseTray
@@ -24,13 +24,13 @@
 }
 
 @SocialMore = {
-    <li class="social__secondary social__item social--hidden social__item--more"><span class="social-icon social-icon--more">&bull;&bull;&bull;</span></li>
+    <li class="js-social__secondary social__item social--hidden social__item--more js-social__item--more"><a href="#"><span class="social-icon social-icon--more">&bull;&bull;&bull;</span></a></li>
 }
 
 @SaveForLater = {
-    <li class="social--hidden social__item social__secondary"><a class="social__saveforlater-lozenge js-save-for-later saveforlater--unstyled">Save for later</a></li>
+    <li class="social--hidden social__item js-social__secondary"><a class="social__save-for-later-lozenge js-save-for-later save-for-later--unstyled">Save for later</a></li>
 }
 
 @CloseTray = {
-    <li class="social__item social__secondary social--hidden"><span class="social__tray-close">Close</span></li>
+    <li class="social__item js-social__secondary social--hidden js-social__tray-close"><a href="#"><span class="social__tray-close">Close</span></a></li>
 }
