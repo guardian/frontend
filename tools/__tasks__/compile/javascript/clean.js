@@ -1,4 +1,7 @@
+const path = require('path');
+const {target, hash} = require('../../config').paths;
+
 module.exports = {
     description: 'Clear JS build artefacts',
-    task: 'grunt clean:js'
+    task: `rm -rf ${path.resolve(target, 'javascripts')} ${path.resolve(hash, 'javascripts')}`
 };

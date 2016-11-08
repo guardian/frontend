@@ -7,4 +7,4 @@ set -o errexit
 echo "Install dependencies"
 make install
 
-./grunt-tc clean
+rm -rf .git/hooks
