@@ -58,7 +58,7 @@ trait ABTestSwitches {
   Switch(
     ABTests,
     "ab-contributions-membership-epic-cta-united-states-two",
-    "Find optimal way to present contributions and membershuip asks in Epic component for US",
+    "Find optimal way to present contributions and membership asks in Epic component for US",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate =  new LocalDate(2016, 11, 11),
