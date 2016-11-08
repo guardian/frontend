@@ -173,8 +173,8 @@ final case class ShareLinks(
     ShareLinks.create(sharePlatform, href = href, title = metadata.webTitle, mediaPath = mediaPath)
   })
 
-  val pageShares: ShareLinkMeta = ShareLinkMeta
-    ( sharesToLinks(List(Facebook, Twitter, Email)),
+  val pageShares: ShareLinkMeta = ShareLinkMeta(
+      sharesToLinks(List(Facebook, Twitter, Email)),
       sharesToLinks(List(LinkedIn, PinterestPage, GooglePlus, WhatsApp, Messenger))
     )
 }
