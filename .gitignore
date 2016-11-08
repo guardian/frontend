@@ -43,6 +43,7 @@ RUNNING_PID
 local.sbt
 
 node_modules
+!dev/node_modules
 screenshots
 
 common/conf/assets

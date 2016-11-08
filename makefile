@@ -37,7 +37,7 @@ check-node: # PRIVATE
 
 # Make sure yarn is installed.
 check-yarn: # PRIVATE
-	@if [ -z "$$(which yarn)" ]; then npm i -g yarn; fi
+	@./dev/check-yarn.js
 
 # *********************** DEVELOPMENT ***********************
 
