@@ -34,6 +34,8 @@ define([
             bean.on(toggle, 'click', toggleDisplay);
         });
 
-        $('.social__item--more').toggleClass('social--hidden');
+        fastdom.write(function () {
+            $('.social__item--more').toggleClass('social--hidden');
+        });
     };
 });

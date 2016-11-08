@@ -243,6 +243,8 @@
 
         .social--expanded-top {
             padding: 6px 0 6px 8px;
+
+            // Widths are (width of icon + padding) * number of icons
             width: 304px; // (33 + 5) * 8
 
             @include mq(tablet) {

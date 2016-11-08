@@ -117,6 +117,8 @@ category: Common
     background: white;
     box-shadow: 0px 0px 20px $neutral-3;
     z-index: $zindex-popover;
+
+    // Widths are (width of icon + padding) * number of icons
     width: 320px; // (36 + 4) * 8
 
     @include mq(tablet) {
