@@ -1,7 +1,6 @@
 @()(implicit request: RequestHeader)
 @import conf.Static
 @import conf.Configuration
-@import mvt.CommercialSonobiRubiconAdapter
 
 window.curlConfig = {
     baseUrl: '@{Configuration.assets.path}javascripts',
