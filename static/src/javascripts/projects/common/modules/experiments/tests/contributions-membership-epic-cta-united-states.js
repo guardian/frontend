@@ -41,7 +41,7 @@ define([
         this.start = '2016-11-08';
         this.expiry = '2016-11-11';
         this.author = 'Jonathan Rankin';
-        this.description = 'Test 3 different messages for the Epic';
+        this.description = 'Test 3 different CTA configurations for the Epic in the US';
         this.showForSensitive = false;
         this.audience = 1;
         this.audienceOffset = 0;
@@ -50,19 +50,29 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'We learn the best way to present contributions and membership asks in Epic component';
         this.canRun = function () {
-            var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
-            if('keywordIds' in config.page && 'nonKeywordTagIds' in config.page) {
-                var worksWellWithPageTemplate = (config.page.contentType === 'Article'); // may render badly on other types
-                var keywords = config.page.keywordIds.split(',');
-                var nonKeywordTagIds = config.page.nonKeywordTagIds.split(',');
-                var isAboutBrexit = (keywords.indexOf('politics/eu-referendum') !== -1) && (nonKeywordTagIds.indexOf('tone/news') !== -1);
-                var isMinuteArticle = ('isMinuteArticle' in config.page && config.page.isMinuteArticle);
-                return !isMinuteArticle && !isAboutBrexit && userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate;
-            } else {
-                return false;
-            }
+            var whitelistedKeywordIds = ['us-news/us-elections-2016', 'us-news/us-politics',
+                'us-news/us-news', 'world/world', 'politics/politics', 'environment/environment',
+                'politics/eu-referendum'];
 
+            var hasKeywordIdsMatch = function(){
+                if('keywordIds' in config.page) {
+                    var pageKeywords = config.page.keywordIds.split(',');
+                    for (var i = 0; i < whitelistedKeywordIds.length; i++) {
+                        if (pageKeywords.indexOf(whitelistedKeywordIds[i]) !== -1) {
+                            return true;
+                        }
+                    }
+                    return false;
+                } else return false;
+            };
+
+            var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
+            var isMinuteArticle = ('isMinuteArticle' in config.page && config.page.isMinuteArticle);
+            var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !isMinuteArticle; // may render badly on other types
+            return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && hasKeywordIdsMatch();
         };
+
+
 
         var membershipUrl = 'https://membership.theguardian.com/supporter?';
         var contributeUrl = 'https://contribute.theguardian.com/?';
@@ -123,7 +133,7 @@ define([
             mediator.on('contributions-embed:insert', complete);
         };
 
-        var contributeUrlPrefix = 'co_ukus_epic_footer_';
+        var contributeUrlPrefix = 'co_us_epic_footer_';
         var membershipUrlPrefix = 'gdnwb_copts_mem_epic_';
 
         this.variants = [

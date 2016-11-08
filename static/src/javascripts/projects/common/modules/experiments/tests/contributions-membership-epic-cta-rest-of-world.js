@@ -41,7 +41,7 @@ define([
         this.start = '2016-11-08';
         this.expiry = '2016-11-11';
         this.author = 'Jonathan Rankin';
-        this.description = 'Find optimal way to present contributions and membership asks in Epic component';
+        this.description = 'Test 3 different CTA configurations for the Epic, not in the US';
         this.showForSensitive = true;
         this.audience = 1;
         this.audienceOffset = 0;
@@ -50,20 +50,28 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'We learn the best way to present contributions and membership asks in Epic component';
         this.canRun = function () {
+            var whitelistedKeywordIds = ['us-news/us-elections-2016', 'us-news/us-politics'];
+
+            var hasKeywordIdsMatch = function(){
+                if('keywordIds' in config.page) {
+                    var pageKeywords = config.page.keywordIds.split(',');
+                    for (var i = 0; i < whitelistedKeywordIds.length; i++) {
+                        if (pageKeywords.indexOf(whitelistedKeywordIds[i]) !== -1) {
+                            return true;
+                        }
+                    }
+                    return false;
+                } else return false;
+            };
+
             var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
-            if('keywordIds' in config.page && 'nonKeywordTagIds' in config.page) {
-                var worksWellWithPageTemplate = (config.page.contentType === 'Article'); // may render badly on other types
-                var keywords = config.page.keywordIds.split(',');
-                var nonKeywordTagIds = config.page.nonKeywordTagIds.split(',');
-                var isAboutBrexit = (keywords.indexOf('politics/eu-referendum') !== -1) && (nonKeywordTagIds.indexOf('tone/news') !== -1);
-                var isMinuteArticle = ('isMinuteArticle' in config.page && config.page.isMinuteArticle);
-                var isAboutUsElectionOrUsPolitics = (keywords.indexOf('us-news/us-elections-2016') !== -1) || (nonKeywordTagIds.indexOf('us-news/us-politics') !== -1);
-                return !isMinuteArticle && !isAboutBrexit && isAboutUsElectionOrUsPolitics && userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate;
-            } else {
-                return false;
-            }
+            var isMinuteArticle = ('isMinuteArticle' in config.page && config.page.isMinuteArticle);
+            var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !isMinuteArticle; // may render badly on other types
+            return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && hasKeywordIdsMatch();
 
         };
+
+
 
         var membershipUrl = 'https://membership.theguardian.com/supporter?';
         var contributeUrl = 'https://contribute.theguardian.com/?';
@@ -72,8 +80,8 @@ define([
         var message = '...we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. ' +
             'So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do ' +
             'it because we believe our perspective matters – because it might well be your perspective, too.';
-        
-        
+
+
         var cta = {
             contributionsMain : {
                 p2: 'If everyone who reads our reporting, who likes it, helps to pay for it our future would be more secure. You can give money to the Guardian in less than a minute.',
