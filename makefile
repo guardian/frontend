@@ -33,11 +33,11 @@ reinstall: uninstall install
 
 # Make sure we running a recent-enough version of Node.
 check-node: # PRIVATE
-	@./dev/check-node-version.js
+	@./tools/check-node-version.js
 
 # Make sure yarn is installed.
 check-yarn: # PRIVATE
-	@./dev/check-yarn.js
+	@./tools/check-yarn.js
 
 # *********************** DEVELOPMENT ***********************
 
