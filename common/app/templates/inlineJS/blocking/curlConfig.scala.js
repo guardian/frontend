@@ -36,7 +36,7 @@ window.curlConfig = {
                     Configuration.javascript.config("sonobiHeaderBiddingJsUrl")
                 }
             }',
-            react:                               '@Static("javascripts/components/react/react.js")',
+            react:                               '@Static("javascripts/vendor/react/react.js")',
             'ophan/ng':                          '@{Configuration.javascript.config("ophanJsUrl")}',
             'prebid.js':                         '@Static("javascripts/vendor/prebid/0.8.1/prebid.js")',
             'discussion-frontend-react':         '@DiscussionAsset("discussion-frontend.react.amd")',
@@ -53,7 +53,7 @@ window.curlConfig = {
             commercial:                     'projects/commercial',
             bean:                           'components/bean/bean',
             bonzo:                          'components/bonzo/bonzo',
-            react:                          'components/react/react',
+            react:                          'vendor/react/react',
             classnames:                     'components/classnames/index',
             domReady:                       'components/domready/ready',
             EventEmitter:                   'components/eventEmitter/EventEmitter',

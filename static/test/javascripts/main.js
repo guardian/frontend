@@ -17,7 +17,7 @@ requirejs.config({
         commercial:   'projects/commercial',
         bean:         'components/bean/bean',
         bonzo:        'components/bonzo/bonzo',
-        react:        '/base/static/public/javascripts/components/react/react',
+        react:        'vendor/react/react',
         EventEmitter: 'components/eventEmitter/EventEmitter',
         fastclick:    'components/fastclick/fastclick',
         fastdom:      'components/fastdom/index',
@@ -30,7 +30,7 @@ requirejs.config({
         reqwest:      'components/reqwest/reqwest',
         analytics:    'projects/common/modules/analytics/analytics',
         // Test specific paths
-        omniture:     'vendor/omniture',
+        omniture:     'vendor/omniture/omniture',
         squire:       '/base/static/test/javascripts/components/squire/src/Squire',
         fixtures:     '/base/static/test/javascripts/fixtures',
         helpers:      '/base/static/test/javascripts/helpers',
