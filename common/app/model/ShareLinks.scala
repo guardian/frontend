@@ -145,9 +145,6 @@ final case class ShareLinks(
   metadata: MetaData
 ) {
 
-  private val pageShareOrder: (List[SharePlatform], List[SharePlatform]) =
-    (List(Facebook, Twitter, Email), List(LinkedIn, PinterestPage, GooglePlus, WhatsApp, Messenger))
-
   private val elementShareOrder: List[SharePlatform] = if (tags.isLiveBlog) {
     List(Facebook, Twitter, GooglePlus)
   } else {
@@ -176,10 +173,8 @@ final case class ShareLinks(
     ShareLinks.create(sharePlatform, href = href, title = metadata.webTitle, mediaPath = mediaPath)
   })
 
-  val pageShares: ShareLinkMeta = {
-    pageShareOrder match {
-      case (visible, hidden) =>
-        ShareLinkMeta(sharesToLinks(visible), sharesToLinks(hidden))
-    }
-  }
+  val pageShares: ShareLinkMeta = ShareLinkMeta
+    ( sharesToLinks(List(Facebook, Twitter, Email)),
+      sharesToLinks(List(LinkedIn, PinterestPage, GooglePlus, WhatsApp, Messenger))
+    )
 }
