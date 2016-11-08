@@ -1,6 +1,5 @@
 package conf.switches
 
-import common.Edition
 import conf.switches.SwitchGroup.ABTests
 import org.joda.time.LocalDate
 
@@ -53,16 +52,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 11, 15),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-membership-epic-brexit",
-    "Find the optimal way of offering Contributions along side Membership in the Epic component on articles about Brexit",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 7),
     exposeClientSide = true
   )
 
