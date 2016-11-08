@@ -102,7 +102,7 @@ define([
                     panelLabel: 'Update',
                     token: update(endpoint),
                     closed: function () {
-                        fastdom.write(loading.hideDots);
+                        fastdom.write(loading.hideDots)
                     }
                 });
                 /*
