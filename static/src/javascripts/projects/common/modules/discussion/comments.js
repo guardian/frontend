@@ -163,7 +163,7 @@ Comments.prototype.fetchComments = function(options) {
         orderBy: orderBy,
         pageSize: options.pagesize || this.options.pagesize,
         displayThreaded: this.options.threading !== 'unthreaded',
-        closed: !config.page.commentable
+        commentable: config.page.commentable
     };
 
     if (options.page) {
