@@ -37,14 +37,16 @@ object Profile {
   }
 }
 
-case class PrivateProfileFields(canPostComment: Boolean, isPremoderated: Boolean, isSocial: Boolean)
+case class PrivateProfileFields(
+    canPostComment: Boolean, isPremoderated: Boolean, isSocial: Boolean, hasCommented: Boolean)
 
 object PrivateProfileFields{
   def apply(json: JsObject): PrivateProfileFields = {
     PrivateProfileFields(
       canPostComment = (json \\ "canPostComment") exists { _.as[Boolean] },
       isPremoderated = (json \\ "isPremoderated") exists { _.as[Boolean] },
-      isSocial = (json \\ "isSocial") exists { _.as[Boolean] }
+      isSocial = (json \\ "isSocial") exists { _.as[Boolean] },
+      hasCommented = (json \\ "hasCommented") exists { _.as[Boolean] }
     )
   }
 }

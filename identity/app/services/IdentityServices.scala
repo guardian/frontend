@@ -3,6 +3,7 @@ package services
 import com.softwaremill.macwire._
 import conf.IdentityConfigurationComponents
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
+import discussion.DiscussionApi
 import idapiclient.IdApiComponents
 import model.SaveForLaterDataBuilder
 import play.api.libs.ws.WSClient
@@ -12,6 +13,7 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
   def wsClient: WSClient
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
+  lazy val discussionApi = wire[DiscussionApi]
 
   lazy val returnUrlVerifier = wire[ReturnUrlVerifier]
   lazy val idRequestParser = wire[IdRequestParser]

@@ -1,21 +1,25 @@
 package idapiclient
 
-import com.gu.identity.model.{EmailList, Subscriber, LiftJsonConfig, User, SavedArticles}
-import client.{Anonymous, Auth, Response, Parameters}
+import com.gu.identity.model.{EmailList, LiftJsonConfig, SavedArticles, Subscriber, User}
+import client.{Anonymous, Auth, Parameters, Response}
 import client.connection.{Http, HttpResponse}
+
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future, ExecutionContext}
+import scala.concurrent.{Await, ExecutionContext, Future}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
-import idapiclient.responses.{CookiesResponse, AccessTokenResponse}
+import idapiclient.responses.{AccessTokenResponse, CookiesResponse, MemSub}
 import client.connection.util.{ApiHelpers, ExecutionContexts}
-import net.liftweb.json.JsonAST.{JValue, JNothing}
+import conf.IdentityConfiguration
+import net.liftweb.json.JsonAST.{JNothing, JValue}
 import net.liftweb.json.Serialization.write
+import net.liftweb.json._
 import utils.SafeLogging
 import idapiclient.requests.{PasswordUpdate, TokenPassword}
 
-
-abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser, val clientAuth: Auth)
+abstract class IdApi(conf: IdentityConfiguration, http: Http, jsonBodyParser: JsonBodyParser, val clientAuth: Auth)
   extends IdApiUtils with SafeLogging with ApiHelpers {
+
+  val apiRootUrl = conf.id.apiRoot
 
   import jsonBodyParser.{extractUnit, extract}
 
@@ -180,6 +184,25 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     post(urlJoin("user", "me", "group", groupCode), Some(auth)) map extractUnit
   }
 
+  // Membership & Subscription
+  def userIsMember(auth: Auth): Future[Boolean] = {
+    http.GET(
+      s"${conf.id.membersDataApiUrl}/user-attributes/me/mma-membership",
+      None,
+      buildHeaders(Some(auth))).map { response =>
+      response.fold(err => false, okResult => parse(okResult.body).extractOpt[MemSub].fold(false)(_ => true))
+    }
+  }
+
+  def userIsSubscriber(auth: Auth): Future[Boolean] = {
+    http.GET(
+      s"${conf.id.membersDataApiUrl}/user-attributes/me/mma-digitalpack",
+      None,
+      buildHeaders(Some(auth))).map { response =>
+      response.fold(err => false, okResult => parse(okResult.body).extractOpt[MemSub].fold(false)(_ => true))
+    }
+  }
+
   def post(apiPath: String,
            auth: Option[Auth] = None,
            trackingParameters: Option[TrackingData] = None,
@@ -193,8 +216,8 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     http.DELETE(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth))
 }
 
-class SynchronousIdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser, clientAuth: Auth)
-  extends IdApi(apiRootUrl, http, jsonBodyParser, clientAuth) {
+class SynchronousIdApi(conf: IdentityConfiguration, http: Http, jsonBodyParser: JsonBodyParser, clientAuth: Auth)
+  extends IdApi(conf, http, jsonBodyParser, clientAuth) {
   implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
 }
 
