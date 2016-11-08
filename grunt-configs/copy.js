@@ -4,17 +4,13 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    cwd: 'static/public/javascripts',
-                    src: ['**/*.js'],
-                    dest: options.staticTargetDir + 'javascripts'
-                },
-                {
-                    expand: true,
                     cwd: 'static/src/javascripts/vendor',
                     src: [
                         'formstack-interactive/**/*',
+                        'omniture/**/*',
                         'prebid/**/*',
-                        'stripe/**/*'
+                        'stripe/**/*',
+                        'react/**/*'
                     ],
                     dest: options.staticTargetDir + 'javascripts/vendor'
                 },
