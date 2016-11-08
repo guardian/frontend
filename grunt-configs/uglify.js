@@ -16,10 +16,7 @@ module.exports = function (grunt, options) {
                     expand: true,
                     cwd: options.staticTargetDir + 'javascripts',
                     src: [
-                        'es5-html5.js',
-                        '{components,vendor}/**/*.js',
-                        '!components/curl/**/*.js',
-                        '!vendor/stripe/*.js'
+                        'es5-html5.js'
                     ],
                     dest: options.staticTargetDir + 'javascripts'
                 }
@@ -28,9 +25,9 @@ module.exports = function (grunt, options) {
         conf: {
             files: [{
                 expand: true,
-                cwd: 'static/public/javascripts',
+                cwd: 'static/src/javascripts',
                 src: [
-                    'vendor/omniture.js'
+                    'vendor/omniture/omniture.js'
                 ],
                 dest: 'common/conf/assets'
             },

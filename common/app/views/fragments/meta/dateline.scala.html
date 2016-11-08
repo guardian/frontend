@@ -13,7 +13,9 @@
             @Format(webPublicationDate, "EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(webPublicationDate)</span>
         }
     </time>
-    <meta itemprop="coverageStartTime" content="@Format(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")">
+    @if(isLiveBlog) {
+        <meta itemprop="coverageStartTime" content="@Format(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")">
+    }
     @if(hasBeenModified && !isMinute) {
         <time itemprop="dateModified" datetime='@Format(lastModified, "yyyy-MM-dd'T'HH:mm:ssZ")'
         data-timestamp="@lastModified.getMillis" class="content__dateline-lm js-lm u-h">
