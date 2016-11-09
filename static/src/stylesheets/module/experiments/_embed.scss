@@ -152,8 +152,6 @@
     margin-right: $gs-gutter/2;
 }
 
-
-
 .contributions__option-button--epic {
     &:hover {
         background-color: $comment-support-1;
@@ -174,11 +172,6 @@
     margin-bottom: $gs-baseline;
 }
 
-.contributions__side-by-side-buttons {
-    display: flex;
-    flex-direction: column;
-}
-
 @include mq($from: phablet) {
     .contributions__option-button--bottom {
         width: 70px;
@@ -196,12 +189,8 @@
         margin-top: 0;
     }
 
-    .contributions__side-by-side-buttons {
-        flex-direction: row;
-    }
-
     .contributions__contribute--epic-member-top {
-        margin-bottom: 0;
+        margin-bottom: $gs-baseline;
     }
 
 }
