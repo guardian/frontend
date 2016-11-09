@@ -146,7 +146,7 @@ trait Index extends ConciergeRepository with Collections {
     val editorsPicksIds = editorsPicks.map(_.id)
     val latestContent = response.results.getOrElse(Nil).filterNot(c => editorsPicksIds contains c.id)
     val trails = (editorsPicks ++ latestContent).map(IndexPageItem(_))
-    val commercial = Commercial.make(section)
+    val commercial = Commercial.make
 
     IndexPage(page = section, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None, commercial)
   }
