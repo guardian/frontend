@@ -57,21 +57,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-membership-epic-cta-united-states-two",
-    "Find optimal way to present contributions and membership asks in Epic component for US",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-contributions-epic-post-election-copy-test",
+    "Test a version of the epic centered around the election result against one that is not related to the election",
+    owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 11),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-membership-epic-cta-rest-of-world-two",
-    "Find optimal way to present contributions and membership asks in Epic component for not US",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 11),
+    sellByDate =  new LocalDate(2016, 11, 14),
     exposeClientSide = true
   )
 
