@@ -10,6 +10,7 @@ define([
     'common/modules/commercial/user-features',
     'common/utils/mediator',
     'Promise',
+    'common/utils/fastdom-promise',
     'common/modules/experiments/ab',
     'common/utils/$',
     'common/views/svgs'
@@ -25,6 +26,7 @@ define([
     userFeatures,
     mediator,
     Promise,
+    fastdom,
     ab,
     $,
     svgs
@@ -77,22 +79,6 @@ define([
         var opts = options || {};
 
         if (opts.testName) {
-            if (opts.testName === 'prominent-level-1') {
-                var buttonCaption = $('#membership__engagement-message-button-caption'),
-                    buttonEl = $('#membership__engagement-message-button');
-
-                buttonEl.removeClass('is-hidden');
-                if (opts.addButtonClass) {
-                    buttonEl.addClass(opts.addButtonClass);
-                }
-                if (opts.setButtonText) {
-                    buttonCaption.text(opts.setButtonText);
-                }
-                if (opts.parentColour) {
-                    buttonEl.addClass(opts.parentColour);
-                }
-            }
-
             if (opts.testName === 'messaging-test-1') {
                 var engagementText = $('.site-message__message.site-message__message--membership');
                 if (engagementText && opts.setEngagementText) {
@@ -107,6 +93,10 @@ define([
                 }
             }
         }
+
+        if (opts.execute) {
+            opts.execute();
+        }
     };
 
     function show(edition, message) {
@@ -116,32 +106,9 @@ define([
             campaignCode = message.campaign,
             customJs = null,
             customOpts = {},
-            prominentTestVariant = ab.testCanBeRun('MembershipEngagementWarpFactorOne') ? ab.getTestVariantId('MembershipEngagementWarpFactorOne') : undefined,
             messagingTestVariant = ab.testCanBeRun('MembershipEngagementMessageCopyExperiment') ? ab.getTestVariantId('MembershipEngagementMessageCopyExperiment') : undefined,
             usMessagingTestVariant = ab.testCanBeRun('MembershipEngagementUsMessageCopyExperiment') ? ab.getTestVariantId('MembershipEngagementUsMessageCopyExperiment') : undefined,
             linkHref = formatEndpointUrl(edition, message);
-
-        if (prominentTestVariant) {
-            var prominentTestName = 'prominent-level-1';
-
-            if (prominentTestVariant !== 'notintest') {
-                campaignCode = 'gdnwb_copts_mem_banner_prominent1uk' + '__' + prominentTestVariant;
-                linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
-            }
-
-            if (prominentTestVariant === 'become') {
-                colours = ['yellow','purple','bright-blue','dark-blue'];
-                thisColour = thisInstanceColour(colours);
-                cssModifierClass = 'membership-message' + ' ' + prominentTestName + ' ' + thisColour;
-                customOpts = {
-                    testName: prominentTestName,
-                    addButtonClass: prominentTestName + '_' + prominentTestVariant,
-                    setButtonText: 'Become a Supporter',
-                    parentColour: thisColour
-                };
-                customJs = getCustomJs;
-            }
-        }
 
         if (messagingTestVariant) {
             var messagingTestName = 'messaging-test-1';
@@ -176,6 +143,25 @@ define([
                 };
                 customJs = getCustomJs;
             }
+        }
+
+        if (config.page.edition.toLowerCase() === 'uk' && config.switches['prominentMembershipEngagementBannerUk'] && (!messagingTestVariant || messagingTestVariant === 'notintest')) {
+            var prominentMarker = 'prominent';
+            linkHref = endpoints[edition] + '?INTCMP=' + message.campaign + '_' + prominentMarker;
+            colours = ['yellow','purple','bright-blue','dark-blue'];
+            thisColour = thisInstanceColour(colours);
+            cssModifierClass = 'membership-' + prominentMarker + ' ' + thisColour;
+            customOpts.execute = function () {
+                var buttonCaption = $('#membership__engagement-message-button-caption'),
+                    buttonEl = $('#membership__engagement-message-button');
+                fastdom.write(function () {
+                    buttonEl.removeClass('is-hidden');
+                    buttonEl.addClass(prominentMarker);
+                    buttonEl.addClass(thisColour);
+                    buttonCaption.text('Become a Supporter');
+                });
+            };
+            customJs = getCustomJs;
         }
 
         var renderedBanner = template(messageTemplate, { messageText: message.messageText, linkHref: linkHref, arrowWhiteRight: svgs('arrowWhiteRight') });

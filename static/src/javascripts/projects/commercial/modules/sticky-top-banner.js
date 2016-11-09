@@ -28,9 +28,9 @@ define([
 
     function init(_window) {
         win = _window || window;
-        if (detect.isBreakpoint({ min: 'desktop' })) {
+        topSlot = document.getElementById(topSlotId);
+        if (topSlot && detect.isBreakpoint({ min: 'desktop' })) {
             header = document.getElementById('header');
-            topSlot = document.getElementById(topSlotId);
             stickyBanner = topSlot.parentNode;
 
             // First, let's assign some default values so that everything

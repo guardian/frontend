@@ -332,7 +332,6 @@ object Content {
   }
 
   def make(apiContent: contentapi.Content): Content = {
-
     val fields = Fields.make(apiContent)
     val metadata = MetaData.make(fields, apiContent)
     val elements = Elements.make(apiContent)
@@ -521,20 +520,6 @@ final case class Article (
     leftColElements.isDefined
   }
 
-  lazy val chapterHeadings: Map[String, String] = {
-    val jsoupChapterCleaner = ChaptersLinksCleaner.clean(soupedBody)
-    val chapterElements = jsoupChapterCleaner.getElementsByClass("auto-chapter")
-    chapterElements.flatMap { el =>
-      val headingElOpt = el.getElementsByTag("h2").headOption
-      headingElOpt.flatMap { headingEl =>
-        val attributes = headingEl.attributes()
-        if(attributes.hasKey("id")) {
-          Some((attributes.get("id"), headingEl.text()))
-        } else None
-      }
-    }.toMap
-  }
-
   private lazy val soupedBody = Jsoup.parseBodyFragment(fields.body)
   lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").nonEmpty
 
@@ -620,13 +605,14 @@ object Video {
       metadata = metadata
     )
 
-    Video(contentOverrides, source)
+    Video(contentOverrides, source, content.media.headOption)
   }
 }
 
 final case class Video (
   override val content: Content,
-  source: Option[String] ) extends ContentType {
+  source: Option[String],
+  mediaAtom: Option[MediaAtom] ) extends ContentType {
 
   lazy val bylineWithSource: Option[String] = Some(Seq(
     trail.byline,
