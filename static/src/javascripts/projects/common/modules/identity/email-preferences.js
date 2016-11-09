@@ -6,14 +6,12 @@ define([
     'bean',
     'reqwest',
     'fastdom',
-    'common/utils/$',
-    'common/utils/config'
+    'common/utils/$'
 ], function (
     bean,
     reqwest,
     fastdom,
-    $,
-    config
+    $
 ) {
     function reqwestEmailSubscriptionUpdate(buttonEl) {
         bean.on(buttonEl, 'click', function () {
