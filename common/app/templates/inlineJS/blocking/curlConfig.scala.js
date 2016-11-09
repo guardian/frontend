@@ -1,6 +1,7 @@
 @()(implicit request: RequestHeader)
 @import conf.Static
 @import conf.Configuration
+@import conf.switches.Switches.WebpackSwitch
 
 window.curlConfig = {
     baseUrl: '@{Configuration.assets.path}javascripts',
@@ -30,8 +31,14 @@ window.curlConfig = {
             'foresee.js':                        'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                      '@{Configuration.javascript.config("googletagJsUrl")}',
             'sonobi.js':                        '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
+            'ophan/ng': '@{
+                if (WebpackSwitch.isSwitchedOn) {
+                    Static("javascripts/vendor/ophan/ophan.ng.js")
+                } else {
+                    Configuration.javascript.config("ophanJsUrl")
+                }
+            }',
             react:                               '@Static("javascripts/vendor/react/react.js")',
-            'ophan/ng':                          '@{Configuration.javascript.config("ophanJsUrl")}',
             'prebid.js':                         '@Static("javascripts/vendor/prebid/0.8.1/prebid.js")',
             'discussion-frontend-react':         '@DiscussionAsset("discussion-frontend.react.amd")',
             'discussion-frontend-preact':        '@DiscussionAsset("discussion-frontend.preact.amd")',
@@ -63,7 +70,13 @@ window.curlConfig = {
             'foresee.js':                   'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
             'sonobi.js':                    '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
-            'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',
+            'ophan/ng': '@{
+                if (WebpackSwitch.isSwitchedOn) {
+                    Static("javascripts/vendor/ophan/ophan.ng.js")
+                } else {
+                    Configuration.javascript.config("ophanJsUrl")
+                }
+            }',
             'prebid.js':                    'vendor/prebid/0.8.1/prebid.js',
             'discussion-frontend-react':    '@DiscussionAsset("discussion-frontend.react.amd")',
             'discussion-frontend-preact':   '@DiscussionAsset("discussion-frontend.preact.amd")',
