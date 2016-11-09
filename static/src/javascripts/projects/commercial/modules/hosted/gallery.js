@@ -45,10 +45,11 @@ define([
 
         // ELEMENT BINDINGS
         this.$galleryEl = $('.js-hosted-gallery-container');
+        this.$galleryFrame = $('.js-hosted-gallery-frame');
         this.$header = $('.js-hosted-headerwrap');
         this.$imagesContainer = $('.js-hosted-gallery-images', this.$galleryEl);
         this.$captionContainer = $('.js-gallery-caption-bar');
-        this.$captions = $('.js-hosted-gallery-caption', this.$captionContainer);
+        this.$captions = $('.js-hosted-gallery-caption');
         this.$scrollEl = $('.js-hosted-gallery-scroll-container', this.$galleryEl);
         this.$images = $('.js-hosted-gallery-image', this.$imagesContainer);
         this.$progress = $('.js-hosted-gallery-progress', this.$galleryEl);
@@ -188,14 +189,13 @@ define([
 
     HostedGallery.prototype.resizeImage = function (imgIndex) {
         var $imageDiv = this.$images[imgIndex],
-            $imagesContainer = this.$imagesContainer[0],
-            $gallery = this.$galleryEl[0],
+            $galleryFrame = this.$galleryFrame[0],
             $ctaFloat = this.$ctaFloat,
             $ojFloat = this.$ojFloat,
             $meta = this.$meta,
             $images = this.$images,
-            width = $gallery.clientWidth,
-            height = $imagesContainer.clientHeight,
+            width = $galleryFrame.clientWidth,
+            height = $galleryFrame.clientHeight,
             $sizer = $('.js-hosted-gallery-image-sizer', $imageDiv),
             imgRatio = this.imageRatios[imgIndex],
             ctaSize = getFrame(0),
@@ -311,7 +311,7 @@ define([
                 // load prev/current/next
                 this.loadSurroundingImages(this.index, this.$images.length);
                 this.$captions.each(function (caption, index) {
-                    bonzo(caption).toggleClass('current-caption', that.index === index + 1);
+                    bonzo(caption).toggleClass('current-caption', that.index - 1 === index  % that.$images.length);
                 });
                 bonzo(this.$counter).html(this.index + '/' + this.$images.length);
 
@@ -390,12 +390,11 @@ define([
             height = $imagesContainer.clientHeight,
             $header = this.$header,
             $footer = this.$captionContainer,
-            $progress = this.$progress,
-            $ctaFloat = this.$ctaFloat,
-            $ojFloat = this.$ojFloat,
+            $galleryFrame = this.$galleryFrame,
             imgRatio = 5 / 3,
             imageWidth = width,
-            leftRight = 0;
+            leftRight = 0,
+            that = this;
         if (imgRatio < width / height) {
             imageWidth = height * imgRatio;
             leftRight = (width - imageWidth) / 2 + 'px';
@@ -404,11 +403,9 @@ define([
             $header.css('width', imageWidth);
             $footer.css('margin', '0 ' + leftRight);
             $footer.css('width', 'auto');
-            $progress.css('right', leftRight);
-            bonzo($ctaFloat).css('left', leftRight);
-            bonzo($ojFloat).css('left', leftRight);
-            bonzo($ctaFloat).css('right', leftRight);
-            bonzo($ojFloat).css('right', leftRight);
+            $galleryFrame.css('left', leftRight);
+            $galleryFrame.css('right', leftRight);
+            that.loadSurroundingImages(0, that.$images.length);
         });
     };
 
@@ -431,6 +428,10 @@ define([
             return false;
         } else if (e.keyCode === 73) { // 'i'
             this.trigger('toggle-info');
+        } else if (e.keyCode === 67 && e.altKey && e.shiftKey) {
+            var $page = $('.hosted-page');
+            $page.toggleClass('small-captions');
+            $page.toggleClass('large-captions');
         }
     };
 
