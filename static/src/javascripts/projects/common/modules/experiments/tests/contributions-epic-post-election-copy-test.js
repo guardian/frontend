@@ -64,15 +64,11 @@ define([
                 'us/business',
                 'world/world'
             ];
-
-            var hasKeywordsMatch = function() {
-                var pageKeywords = config.page.keywordIds;
-                return pageKeywords && intersection(whitelistedKeywordIds, pageKeywords.split(',')).length > 0;
-            };
-
+            var pageKeywords = config.page.keywordIds;
+            var hasKeywordsMatch = pageKeywords && intersection(whitelistedKeywordIds, pageKeywords.split(',')).length > 0;
             var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
             var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle; // may render badly on other types
-            return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && hasKeywordsMatch();
+            return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && hasKeywordsMatch;
         };
 
 

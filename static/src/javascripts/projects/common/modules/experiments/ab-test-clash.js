@@ -7,7 +7,19 @@ define([
 ) {
 
     function userIsInAClashingAbTest() {
-        var clashingTests = [];
+
+        var contributionsEpicPostElectionCopyTest = {
+            name: 'ContributionsEpicPostElectionCopyTest',
+            variants: ['control']
+        };
+
+        var contributionsEpicPostElectionConBackup= {
+            name: 'ContributionsMembershipEpicBackup',
+            variants: ['control']
+        };
+        
+        
+        var clashingTests = [contributionsEpicPostElectionConBackup, contributionsEpicPostElectionCopyTest];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 

@@ -62,16 +62,16 @@ define([
         var contributeUrl = 'https://contribute.theguardian.com/?';
 
 
-        var message = '...we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your' +
-            ' help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your ' +
-            'perspective, too.';
+        var message  = {
+            control:  '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
+        };
 
         var cta = {
-            contributionsMain : {
-                p2: 'If everyone who reads our reporting, who likes it, helps to pay for it our future would be more secure. You can give money to the Guardian in less than a minute.',
-                p3: 'Alternatively, you can join the Guardian and get even closer to our journalism by ',
-                cta1: 'Make a contribution',
-                cta2: 'becoming a Supporter.'
+            equal: {
+                p2: 'Fund our journalism and together we can keep the world informed.',
+                p3: '',
+                cta1: 'Become a Supporter',
+                cta2: 'Make a contribution'
             }
         };
 
@@ -104,10 +104,10 @@ define([
                     var component = $.create(template(contributionsEpic, {
                         linkUrl1: makeUrl(contributeUrl, contributeUrlPrefix + 'm1_contributions_main_backup'),
                         linkUrl2: '',
-                        p1: message,
-                        p2: cta.contributionsMain.p2,
+                        p1: message.control,
+                        p2: cta.equal.p2,
                         p3: '',
-                        cta1: cta.contributionsMain.cta1,
+                        cta1: cta.equal.cta1,
                         cta2: '',
                         hidden: 'hidden'
                     }));
