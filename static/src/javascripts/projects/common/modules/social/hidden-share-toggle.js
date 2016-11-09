@@ -10,7 +10,7 @@ define([
 
     function toggleDisplay (e) {
 
-        e.preventDefault();
+        e && e.preventDefault();
 
         $('.js-social__secondary').each(function (icon){
             fastdom.write(function () {
@@ -23,17 +23,16 @@ define([
                 $(topSocial).toggleClass('social--expanded-top');
             });
         });
-
-        $('.social-icon').each(function (icon) {
-            fastdom.write(function () {
-                $(icon).toggleClass('social-icon--expanded-top');
-            });
-        });
     }
 
     return function hiddenShareToggle () {
         $('.js-social__item--more, .js-social__tray-close').each(function (toggle) {
             bean.on(toggle, 'click', toggleDisplay);
+        });
+
+        bean.on(document.body, 'click', function (e) {
+            if ($.ancestor(e.target, 'js-social--top') || !$('.js-social--top').hasClass('social--expanded-top')) return;
+            toggleDisplay();
         });
 
         fastdom.write(function () {
