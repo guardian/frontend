@@ -1,7 +1,7 @@
 @mixin social-icon($platform) {
     background-color: $platform;
     &:hover {
-        background-color: darken($platform, 10%)
+        background-color: darken($platform, 10%);
     }
 }
 
