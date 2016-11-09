@@ -35,9 +35,9 @@ reinstall: uninstall install
 check-node: # PRIVATE
 	@./tools/check-node-version.js
 
-# Make sure yarn is installed.
+# Make sure yarn is installed, and it's at least v0.16.
 check-yarn: # PRIVATE
-	@./tools/check-yarn.js
+	@if [ -z "$$(which yarn)" ] || [ $$(echo $$(yarn --version | cut -d . -f 1,2) '< 0.16' | bc) = 1 ]; then npm i -g yarn@\$<=0.16; fi
 
 # *********************** DEVELOPMENT ***********************
 
