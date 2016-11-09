@@ -1,15 +1,18 @@
 define([
     'common/utils/config',
-    'common/modules/ui/sticky',
+    'common/utils/closest',
     'common/utils/fastdom-promise',
+    'common/modules/ui/sticky',
     'commercial/modules/messenger'
 ], function (
     config,
-    Sticky,
+    closest,
     fastdom,
+    Sticky,
     messenger
 ) {
     var stickyElement = null;
+    var rightSlotId = 'dfp-ad--right';
 
     function stickyMpu($adSlot) {
         if ($adSlot.data('name') !== 'right' || stickyElement) {
@@ -38,11 +41,14 @@ define([
     }
 
     function onAppNexusResize(specs, _, iframe) {
-        messenger.unregister('set-ad-height', onAppNexusResize);
-        fastdom.write(function () {
-            iframe.style.height = specs.height + 'px';
-            stickyElement.updatePosition();
-        });
+        var adSlot = closest(iframe, '.js-ad-slot');
+        if (adSlot.id === rightSlotId) {
+            messenger.unregister('set-ad-height', onAppNexusResize);
+            fastdom.write(function () {
+                iframe.style.height = specs.height + 'px';
+                stickyElement.updatePosition();
+            });
+        }
     }
 
     return stickyMpu;
