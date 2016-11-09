@@ -15,16 +15,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val WebpackSwitch = Switch(
-    SwitchGroup.Feature,
-    "webpack",
-    "If this switch is on, website will serve standard JavaScript that has been bundled by Webpack",
-    owners = Seq(Owner.withGithub("siadcock")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 1, 1),
-    exposeClientSide = true
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     SwitchGroup.Feature,
     "fixtures-and-results-container",

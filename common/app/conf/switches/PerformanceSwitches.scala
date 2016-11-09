@@ -217,4 +217,14 @@ trait PerformanceSwitches {
     sellByDate = new LocalDate(2016, 12, 1),
     exposeClientSide = false
   )
+
+  val WebpackSwitch = Switch(
+    SwitchGroup.Performance,
+    "webpack",
+    "If this switch is on, website will serve standard JavaScript that has been bundled by Webpack",
+    owners = Seq(Owner.withGithub("siadcock")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 1, 9),
+    exposeClientSide = true
+  )
 }
