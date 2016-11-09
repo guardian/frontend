@@ -48,6 +48,14 @@
                 ophan.trackComponentAttention(href, el);
             }
         });
+        [].slice.apply(document.querySelectorAll('iframe.interactive-atom-fence')).forEach(function (el) {
+            var srcdoc;
+            if (!el.srcdoc) {
+                srcdoc = el.getAttribute('srcdoc');
+                el.contentWindow.contents = srcdoc;
+                el.src = 'javascript:window["contents"]';
+            }
+        });
     });
 }
 </script>
