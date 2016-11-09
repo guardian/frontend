@@ -10,7 +10,7 @@ object ChesterZooHostedPages {
     name = "What we fight for",
     owner = "Chester Zoo",
     logoUrl = "https://static.theguardian.com/commercial/hosted/act-for-wildlife/AFW+with+CZ+portrait+with+padding.png",
-    fontColour = FontColour("#E31B22")
+    fontColour = Colour("#E31B22")
   )
 
   private val images: List[HostedGalleryImage] = List(
