@@ -82,17 +82,6 @@ object CommercialHeaderBiddingControl extends TestDefinition(
   }
 }
 
-object CommercialSonobiRubiconAdapter extends TestDefinition(
-  name = "commercial-sonobi-rubicon",
-  description = "A test url for the new sonobi integration",
-  owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2016, 11, 30) // Wednesday
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.path.endsWith("politics/2016/oct/24/nicola-sturgeon-says-brexit-meeting-was-deeply-frustrating")
-  }
-}
-
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -111,8 +100,7 @@ object ActiveTests extends ServerSideABTests {
     ABNewNavControl,
     CommercialClientLoggingVariant,
     CommercialHeaderBiddingSonobiVariant,
-    CommercialHeaderBiddingControl,
-    CommercialSonobiRubiconAdapter
+    CommercialHeaderBiddingControl
   )
 }
 

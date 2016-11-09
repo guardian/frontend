@@ -4,17 +4,13 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    cwd: 'static/public/javascripts',
-                    src: ['**/*.js'],
-                    dest: options.staticTargetDir + 'javascripts'
-                },
-                {
-                    expand: true,
                     cwd: 'static/src/javascripts/vendor',
                     src: [
                         'formstack-interactive/**/*',
+                        'omniture/**/*',
                         'prebid/**/*',
-                        'stripe/**/*'
+                        'stripe/**/*',
+                        'react/**/*'
                     ],
                     dest: options.staticTargetDir + 'javascripts/vendor'
                 },
@@ -71,18 +67,6 @@ module.exports = function (grunt, options) {
                 cwd: 'static/src/inline-svgs',
                 src: ['**/*.svg'],
                 dest: 'common/conf/assets/inline-svgs'
-            }]
-        },
-        /**
-         * NOTE: not using this as doesn't preserve file permissions (using shell:copyHooks instead)
-         * Waiting for Grunt 0.4.3 - https://github.com/gruntjs/grunt/issues/615
-         */
-        hooks: {
-            files: [{
-                expand: true,
-                cwd: 'git-hooks',
-                src: ['*'],
-                dest: '.git/hooks/'
             }]
         }
     };

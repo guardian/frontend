@@ -25,16 +25,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val ChapterHeadingsSwitch = Switch(
-    SwitchGroup.Feature,
-    "chapter-headings",
-    "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 7),
-    exposeClientSide = false
-  )
-
   val FacebookShareImageLogoOverlay = Switch(
     SwitchGroup.Feature,
     "facebook-share-image-logo-overlay",
@@ -71,7 +61,7 @@ trait FeatureSwitches {
     "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition (for web only).",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 10),
+    sellByDate = new LocalDate(2016, 12, 13),
     exposeClientSide = true
   )
 
@@ -487,4 +477,13 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val ElectionAppDelay = Switch(
+    SwitchGroup.Feature,
+    "election-app-delay",
+    "Delay loading app.js until interactive is ready - SHORT TERM HACK FOR US ELECTIONS",
+    owners = Seq(Owner.withGithub("wpf500")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 14),
+    exposeClientSide = false
+  )
 }
