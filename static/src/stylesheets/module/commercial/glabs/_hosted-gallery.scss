@@ -1,3 +1,9 @@
+
+$headerHeight: 58px;
+$footerHeight: 46px;
+$approxGalleryWidth: calc(167vh - #{5/3 * ($headerHeight + $footerHeight)});
+
+
 .hosted-gallery__scroll-container {
     overflow-x: hidden;
     overflow-y: scroll;
@@ -193,6 +199,11 @@
         transform: scale(.6);
         margin-bottom: -3px;
     }
+    .minimise-oj & {
+        @include mq($until: tablet) {
+            padding-bottom: #{$footerHeight + 8px};
+        }
+    }
 }
 
 .hosted-gallery__next-gallery-title {
@@ -370,10 +381,6 @@
 .has-no-flex .hosted-gallery-page .hosted__side {
     height: calc(100% - 58px);
 }
-
-$headerHeight: 58px;
-$footerHeight: 46px;
-$approxGalleryWidth: calc(167vh - #{5/3 * ($headerHeight + $footerHeight)});
 
 .hosted-gallery-page {
     .hosted__headerwrap {
