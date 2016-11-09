@@ -153,9 +153,6 @@ define([
                  config: config
              };
             fastdom.write(function(){
-                if($saver.hasClass('save-for-later--unstyled')) {
-                    return this.makeActive($saver[0], options);
-                }
                 $saver.css('display', 'block');
                 if (options.url) {
                     $saver.html(template(saveLink,
