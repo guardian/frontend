@@ -12,8 +12,8 @@ define([
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
     'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment',
-    'common/modules/experiments/tests/contributions-membership-epic-cta-united-states',
-    'common/modules/experiments/tests/contributions-membership-epic-cta-rest-of-world'
+    'common/modules/experiments/tests/contributions-epic-post-election-copy-test-united-states',
+    'common/modules/experiments/tests/contributions-epic-post-election-copy-test-rest-of-world'
 
 
 ], function (
@@ -30,8 +30,8 @@ define([
     WeekendReadingEmail,
     MembershipEngagementMessageCopyExperiment,
     MembershipEngagementUSMessageCopyExperiment,
-    ContributionsMembershipEpicCtaUnitedStates,
-    ContributionsMembershipEpicCtaRestOfWorld
+    ContributionsEpicPostElectionCopyTestUnitedStates,
+    ContributionsEpicPostElectionCopyTestRestOfWorld
 
 ) {
 
@@ -41,8 +41,8 @@ define([
         new WeekendReadingEmail(),
         new MembershipEngagementMessageCopyExperiment(),
         new MembershipEngagementUSMessageCopyExperiment(),
-        new ContributionsMembershipEpicCtaUnitedStates(),
-        new ContributionsMembershipEpicCtaRestOfWorld()
+        new ContributionsEpicPostElectionCopyTestUnitedStates(),
+        new ContributionsEpicPostElectionCopyTestRestOfWorld()
     ];
 
     var participationsKey = 'gu.ab.participations';
