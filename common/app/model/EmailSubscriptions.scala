@@ -91,6 +91,7 @@ object EmailSubscriptions {
       frequency = "Tuesday mornings",
       listId = "3698",
       subscribedTo = subscribedListIds.exists{ x => x == "3698" },
+      tone = Some("brexit"),
       signupPage = Some("/politics/2016/may/31/eu-referendum-morning-briefing-sign-up"),
       exampleUrl = Some("/politics/series/eu-referendum-morning-briefing/latest/email")
     ),

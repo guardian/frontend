@@ -401,3 +401,50 @@
         }
     }
 }
+
+//  TONE SPECIFIC MODS - BREXIT
+.newsletter-card--tone-brexit {
+    border-top-color: #FF0;
+
+    .newsletter-card__imagewrapper {
+        background-color: #00C0F2;
+    }
+
+    .newsletter-image {
+        circle {
+            fill: #FF0;
+        }
+
+        path {
+            fill: $multimedia-main-1;
+        }
+    }
+
+    .newsletter-card__signup {
+        .newsletter-card__lozenge {
+            border-color: #00C0F2;
+            background-color: #00C0F2;
+
+            &:hover,
+            &:focus {
+                border-color: darken(#00C0F2, 10%);
+                background-color: darken(#00C0F2, 10%);
+            }
+        }
+    }
+
+    .newsletter-card__lozenge--preview {
+        border-color: #00C0F2;
+        color: #00C0F2;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: #00C0F2;
+        }
+
+        .inline-arrow-right {
+            fill: #00C0F2;
+        }
+    }
+}
