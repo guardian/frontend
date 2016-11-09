@@ -81,8 +81,7 @@ define([
         var contributeUrl = 'https://contribute.theguardian.com/?';
 
         var messages  = {
-            control:  '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-            election: '…we have a favour to ask. Never has the world needed fearless, independent journalism more. And never has there been a greater need for people to support it. Help us hold the new US president to account, sort fact from fiction, amplify under-represented voices, and ensure we all understand the forces behind this divisive election. While more people are reading the Guardian than ever, far fewer are paying for it and our journalism takes time, money and hard work to produce. But we do it because we believe our perspective matters – because it may well be your perspective too.'
+            control:  '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
         };
 
         var cta = {
@@ -123,33 +122,9 @@ define([
 
                 test: function () {
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: makeUrl(membershipUrl, membershipUrlPrefix + 'equal_postelection_1b'),
-                        linkUrl2: makeUrl(contributeUrl, contributeUrlPrefix + 'equal_postelection_1b'),
+                        linkUrl1: makeUrl(membershipUrl, membershipUrlPrefix + 'equal_postelection_1c'),
+                        linkUrl2: makeUrl(contributeUrl, contributeUrlPrefix + 'equal_postelection_1c'),
                         p1: messages.control,
-                        p2: cta.equal.p2,
-                        p3: cta.equal.p3,
-                        cta1: cta.equal.cta1,
-                        cta2: cta.equal.cta2,
-                        hidden: ''
-                    }));
-                    componentWriter(component);
-                },
-
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
-
-                success: completer
-            },
-
-            {
-                id: 'election',
-
-                test: function () {
-                    var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: makeUrl(membershipUrl, membershipUrlPrefix + 'equal_postelection_4'),
-                        linkUrl2: makeUrl(contributeUrl, contributeUrlPrefix + 'equal_postelection_4'),
-                        p1: messages.election,
                         p2: cta.equal.p2,
                         p3: cta.equal.p3,
                         cta1: cta.equal.cta1,
