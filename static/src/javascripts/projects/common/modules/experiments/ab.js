@@ -9,7 +9,6 @@ define([
     'lodash/utilities/noop',
     'common/modules/experiments/tests/discussion-promote-bottom-banner',
     'common/modules/experiments/tests/hosted-onward-journey',
-    'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
     'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment',
     'common/modules/experiments/tests/contributions-membership-epic-cta-united-states',
@@ -27,7 +26,6 @@ define([
     noop,
     DiscussionPromoteBottomBanner,
     HostedOnwardJourney,
-    WeekendReadingEmail,
     MembershipEngagementMessageCopyExperiment,
     MembershipEngagementUSMessageCopyExperiment,
     ContributionsMembershipEpicCtaUnitedStates,
@@ -38,7 +36,6 @@ define([
     var TESTS = [
         new DiscussionPromoteBottomBanner(),
         new HostedOnwardJourney(),
-        new WeekendReadingEmail(),
         new MembershipEngagementMessageCopyExperiment(),
         new MembershipEngagementUSMessageCopyExperiment(),
         new ContributionsMembershipEpicCtaUnitedStates(),
