@@ -5,6 +5,7 @@ module.exports = {
         require('../inline-svgs'),
         require('./copy'),
         require('./bundle'),
+        require('./webpack'),
         require('./bundle-app'),
         require('./bundle-shims')
     ]
