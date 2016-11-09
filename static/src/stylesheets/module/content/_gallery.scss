@@ -231,24 +231,6 @@
 
     .meta__social {
         border: 0;
-
-        .social--top {
-            padding: 8px 0 0;
-
-            .social__item {
-                padding-right: $gs-gutter/4;
-                min-width: auto;
-            }
-        }
-
-        .social--expanded-top {
-            padding: 6px 0 6px 8px;
-            width: 304px; // (33 + 5) * 8
-
-            @include mq(tablet) {
-                width: 228px; // (33 + 5) * 6
-            }
-        }
     }
 
     .meta__numbers {

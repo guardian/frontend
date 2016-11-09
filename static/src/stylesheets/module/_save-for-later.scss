@@ -13,7 +13,6 @@ $sfl-button-height: 30px;
     .save-for-later__button--saved:hover {
         .inline-icon {
             fill: $foreground;
-            background-color: $background;
         }
     }
 
@@ -85,6 +84,17 @@ $sfl-button-height: 30px;
         }
     }
 }
+
+.content--media.tonal--tone-media {
+    .save-for-later__button {
+        &:hover {
+            .inline-icon {
+                fill: $neutral-1;
+            }
+        }
+    }
+}
+
 
 // button labels per state
 .save-for-later__label {

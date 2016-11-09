@@ -28,9 +28,12 @@
 }
 
 @SaveForLater = {
-    <li class="social--hidden social__item social__secondary"><a class="social__saveforlater-lozenge js-save-for-later saveforlater--unstyled">Save for later</a></li>
+    <li class="social--hidden social__item social__secondary social__saveforlater"><div class="meta__save-for-later js-save-for-later" data-position="top"></div></li>
 }
 
 @CloseTray = {
-    <li class="social__item social__secondary social--hidden"><span class="social__tray-close">Close</span></li>
+    <li class="social__item social__secondary social--hidden social__tray-close">
+        <span class="u-h">Close</span>
+        @fragments.inlineSvg("close", "icon", List("inline-close--small"))
+    </li>
 }

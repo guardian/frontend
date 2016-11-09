@@ -46,13 +46,9 @@ category: Common
 
 .social__item {
     float: left;
-    min-width: 36px;
+    min-width: 32px;
     padding: 0 3px $gs-baseline/2 0;
     cursor: pointer;
-
-    @include mq(leftCol) {
-        min-width: 32px;
-    }
 }
 
 .social__item--whatsapp {
@@ -74,6 +70,10 @@ category: Common
     display: inline-block;
     line-height: 32px;
     text-align: center;
+
+    &:hover {
+        color: $neutral-2;
+    }
 }
 
 .social--hidden {
@@ -84,53 +84,72 @@ category: Common
     display: inline-block;
 }
 
-.social__saveforlater-lozenge {
-     @include fs-textSans(2);
-     font-weight: bold;
-     color: $neutral-1;
-     position: absolute;
-     bottom: 8px;
-     left: 10px;
-     padding: 5px 10px;
-     border: 1px solid $neutral-1;
-     border-radius: 15%/50%;
+.social__saveforlater {
+    clear: left;
+    padding-bottom: 0;
 
-    &:hover {
-        text-decoration: none;
+    .meta__save-for-later {
+        position: relative;
+        top: auto;
+        left: auto;
+        border: 0;
+        padding: 0;
     }
- }
+}
 
 .social__tray-close {
-    @include fs-textSans(2);
-    font-weight: bold;
-    position: absolute;
-    right: 10px;
-    bottom: 15px;
-    color: $neutral-2;
+    float: right;
+    padding-bottom: 0;
+    height: 32px;
+
+    .inline-close {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        position: relative;
+        background-color: $neutral-4;
+        box-sizing: border-box;
+
+        svg {
+            fill: $neutral-2;
+            width: 16px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            margin: auto;
+        }
+
+        &:hover {
+            background-color: $neutral-3;
+        }
+    }
 }
 
 .social--expanded-top {
     position: absolute;
-    padding-left: 8px;
-    left: -8px;
-    height: 70px;
-    background: white;
-    box-shadow: 0px 0px 20px $neutral-3;
+    padding-left: $gs-gutter/4;
+    padding-right: calc(#{$gs-gutter/4} - 3px);
+    left: -$gs-gutter/4;
+    height: auto;
+    background: $neutral-6;
     z-index: $zindex-popover;
-    width: 320px; // (36 + 4) * 8
+    width: auto;
+    display: inline-block;
+    clear: both;
+    box-sizing: border-box;
 
     @include mq(tablet) {
-        width: 240px; // (36 + 4) * 6
+        padding-left: $gs-gutter/2;
+        padding-right: calc(#{$gs-gutter/2} - 3px);
+        left: -$gs-gutter/2;
     }
 
-    @include mq(leftCol) {
-        width: 220px; // (32 + 4) * 6
+    @include mq($from: leftCol) {
+        min-width: 227px;
     }
-}
-
-.meta__social {
-    height: 45px;
-    position: relative;
 }
 
 /**
