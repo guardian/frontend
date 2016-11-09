@@ -39,7 +39,7 @@ module.exports = {
             inlineSvg:            'projects/common/utils/inlineSvg',
 
             //'react':              'empty:',
-            'ophan/ng':             'components/ophan/ophan.ng'
+            'ophan/ng':             'vendor/ophan/ophan.ng'
         }
     },
     output: {
