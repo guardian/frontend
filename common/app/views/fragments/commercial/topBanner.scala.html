@@ -3,10 +3,10 @@
 
 @(metaData: model.MetaData, edition: common.Edition, maybeTags: Option[Tags])
 
-<div class="@topAboveNavSlot.cssClasses">
+<div class="@topAboveNavSlot.cssClasses(metaData, edition, maybeTags)">
     @fragments.commercial.standardAd(
         "top-above-nav",
         topAboveNavSlot.slotCssClasses,
-        topAboveNavSlot.adSizes
+        topAboveNavSlot.adSizes(metaData, edition, maybeTags)
     )
 </div>

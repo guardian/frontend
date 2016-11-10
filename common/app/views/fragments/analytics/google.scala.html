@@ -1,5 +1,4 @@
-@(page: model.Page)(implicit request: RequestHeader)
-@import views.support.Commercial.listSponsorLogosOnPage
+@(page: model.Page)
 @import views.support.GoogleAnalyticsAccount
 
 <script id='google_analytics'>
@@ -78,9 +77,6 @@
         ga('@{trackerName}.set', 'dimension26', (!!guardian.config.page.isHosted).toString());
         ga('@{trackerName}.set', 'dimension27', navigator.userAgent);
         ga('@{trackerName}.set', 'dimension29', window.location.href);
-        @for(sponsorLogos <- listSponsorLogosOnPage(page)) {
-          ga('@{trackerName}.set', 'dimension31', '@Html(sponsorLogos.mkString("|"))');
-        }
     }
 
     @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>
