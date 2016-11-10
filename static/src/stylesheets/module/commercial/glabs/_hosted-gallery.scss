@@ -201,7 +201,7 @@ $approxGalleryWidth: calc(167vh - #{5/3 * ($headerHeight + $footerHeight)});
     }
     .minimise-oj & {
         @include mq($until: tablet) {
-            padding-bottom: #{$footerHeight + 8px};
+            padding-bottom: $footerHeight;
         }
     }
 }
