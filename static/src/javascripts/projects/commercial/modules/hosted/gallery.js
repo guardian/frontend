@@ -61,6 +61,7 @@ define([
         this.$ctaFloat = $('.js-hosted-gallery-cta', this.$galleryEl)[0];
         this.$ojFloat = $('.js-hosted-gallery-oj', this.$galleryEl)[0];
         this.$meta = $('.js-hosted-gallery-meta', this.$galleryEl)[0];
+        this.ojClose = qwery('.js-hosted-gallery-oj-close', this.$ojFloat)[0];
 
         if (this.$galleryEl.length) {
             this.resize = this.trigger.bind(this, 'resize');
@@ -75,6 +76,7 @@ define([
             });
 
             bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
+            bean.on(this.ojClose, 'click', this.toggleOj.bind(this));
             bean.on(document.body, 'keydown', this.handleKeyEvents.bind(this));
             this.loadSurroundingImages(1, this.$images.length);
             this.setPageWidth();
@@ -88,6 +90,10 @@ define([
             }
         }
     }
+
+    HostedGallery.prototype.toggleOj = function () {
+        bonzo(this.$ojFloat).toggleClass('minimise-oj');
+    };
 
     HostedGallery.prototype.initScroll = function () {
         bean.on(this.nextBtn, 'click', function(){
@@ -393,7 +399,8 @@ define([
             $galleryFrame = this.$galleryFrame,
             imgRatio = 5 / 3,
             imageWidth = width,
-            leftRight = 0;
+            leftRight = 0,
+            that = this;
         if (imgRatio < width / height) {
             imageWidth = height * imgRatio;
             leftRight = (width - imageWidth) / 2 + 'px';
@@ -404,6 +411,7 @@ define([
             $footer.css('width', 'auto');
             $galleryFrame.css('left', leftRight);
             $galleryFrame.css('right', leftRight);
+            that.resizeImage(0);
         });
     };
 

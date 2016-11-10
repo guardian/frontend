@@ -90,7 +90,7 @@
                                     </span>
                                 </div>
                                 <div class="hosted-gallery__caption-text">
-                                    @page.images(i).caption
+                                    @Html(page.images(i).caption)
                                     @if(page.images(i).caption.nonEmpty && page.images(i).credit.nonEmpty) {<br/>}
                                     @page.images(i).credit
                                 </div>
