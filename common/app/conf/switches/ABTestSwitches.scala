@@ -65,4 +65,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-contributions-membership-epic-backup",
+    "A backup contributions-only test for the event of membership going down",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 14),
+    exposeClientSide = true
+  )
+
 }
