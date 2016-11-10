@@ -48,7 +48,7 @@ object Commercial {
 
     val pageSponsor: Option[String] = page.branding(edition) map (_.sponsorName)
 
-    page match {
+    val allSponsors = page match {
       case front: PressedPage =>
         val containerSponsors = front.collections.flatMap(_.branding(edition)) map (_.sponsorName)
         pageSponsor map {
@@ -59,6 +59,10 @@ object Commercial {
       case _ =>
         pageSponsor map (Seq(_))
     }
+
+    def jsEscape(s: String) = s.replaceAll("'", "\\\\'")
+
+    allSponsors map (_ map jsEscape)
   }
 
   object topAboveNavSlot {
