@@ -173,7 +173,7 @@
     margin-bottom: $gs-baseline;
 }
 
-@include mq($from: phablet) {
+@include mq($from: mobileLandscape) {
     .contributions__option-button--bottom {
         width: 70px;
     }
@@ -191,7 +191,7 @@
     }
 
     .contributions__contribute--epic-member-top {
-        margin-bottom: $gs-baseline;
+        margin-bottom: 0;
     }
 
 }

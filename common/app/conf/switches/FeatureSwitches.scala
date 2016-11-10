@@ -486,4 +486,24 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2016, 11, 14),
     exposeClientSide = false
   )
+
+  val turnOffSupporterEpic = Switch(
+    SwitchGroup.Membership,
+    "turn-off-supporter-epic",
+    "Turning this on will hide the Become a Supporter button on the epic, leaving just the Contribute button",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 14),
+    exposeClientSide = true
+  )
+
+  val turnOffContributionsEpic = Switch(
+    SwitchGroup.Membership,
+    "turn-off-contributions-epic",
+    "Turning this on will hide the Make a Contribution button on the epic, leaving just the Become a Supporter button",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 14),
+    exposeClientSide = true
+  )
 }
