@@ -23,10 +23,10 @@ define([
         this.expiry = '2016-11-17';
         this.author = 'Justin Pinner';
         this.description = 'Test alternate short messages on engagement banner';
-        this.audience = 0.6;    // 60% (of UK audience)
-        this.audienceOffset = 0.3;  // allow offset to engage different readers from MembershipEngagementWarpFactorOne test
+        this.audience = 1;    // 100% (of UK audience)
+        this.audienceOffset = 0;
         this.successMeasure = 'More membership sign-ups';
-        this.audienceCriteria = '60 percent of (non-member) UK edition readers';
+        this.audienceCriteria = '100 percent of (non-member) UK edition readers';
         this.dataLinkNames = '';
         this.idealOutcome = 'More readers engage with the banner and then complete membership sign-up';
         this.hypothesis = 'More persuasive copy will improve membership conversions from impressions';
