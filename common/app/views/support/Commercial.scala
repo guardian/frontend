@@ -5,6 +5,7 @@ import common.Edition.defaultEdition
 import common.commercial.{Sponsored, _}
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.{Page, PressedPage}
+import org.apache.commons.lang.StringEscapeUtils._
 import play.api.mvc.RequestHeader
 
 object Commercial {
@@ -60,9 +61,7 @@ object Commercial {
         pageSponsor map (Seq(_))
     }
 
-    def jsEscape(s: String) = s.replaceAll("'", "\\\\'")
-
-    allSponsors map (_ map jsEscape)
+    allSponsors map (_ map escapeJavaScript)
   }
 
   object topAboveNavSlot {
