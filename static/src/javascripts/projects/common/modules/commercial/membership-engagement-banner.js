@@ -14,23 +14,21 @@ define([
     'common/modules/experiments/ab',
     'common/utils/$',
     'common/views/svgs'
-], function (
-    bean,
-    qwery,
-    config,
-    storage,
-    template,
-    Message,
-    messageTemplate,
-    commercialFeatures,
-    userFeatures,
-    mediator,
-    Promise,
-    fastdom,
-    ab,
-    $,
-    svgs
-) {
+], function (bean,
+             qwery,
+             config,
+             storage,
+             template,
+             Message,
+             messageTemplate,
+             commercialFeatures,
+             userFeatures,
+             mediator,
+             Promise,
+             fastdom,
+             ab,
+             $,
+             svgs) {
 
     var endpoints = {
         UK: 'https://membership.theguardian.com/uk/supporter',
@@ -71,7 +69,7 @@ define([
         return colours[storage.local.get('gu.alreadyVisited') % colours.length];
     }
 
-    var getCustomJs = function(options) {
+    var getCustomJs = function (options) {
         if (options === undefined) {
             return;
         }
@@ -91,7 +89,7 @@ define([
     };
 
     function show(edition, message) {
-        var colours = ['default','vibrant-blue','yellow','light-blue','deep-purple','teal'],
+        var colours = ['default', 'vibrant-blue', 'yellow', 'light-blue', 'deep-purple', 'teal'],
             thisColour = thisInstanceColour(colours),
             cssModifierClass = 'membership-message-' + thisColour,
             campaignCode = message.campaign,
@@ -101,44 +99,39 @@ define([
             usMessagingTestVariant = ab.testCanBeRun('MembershipEngagementUsMessageCopyExperiment') ? ab.getTestVariantId('MembershipEngagementUsMessageCopyExperiment') : undefined,
             linkHref = formatEndpointUrl(edition, message);
 
-        if (messagingTestVariant) {
-            var messagingTestName = 'messaging-test-1';
-            if (messagingTestVariant !== 'notintest') {
-                var variantMessages = {
-                    Get_round_to: 'Not got round to supporting us yet? Now is the time. Give £5 a month today',
-                    Give_upfront: 'Give £5 a month to help support our journalism and make the Guardian\'s future more secure',
-                    Together_informed: 'Together we can keep the world informed. Give £5 a month to support our journalism',
-                    Coffee_5: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for £5 a month'
-                };
-                campaignCode = 'gdnwb_copts_mem_banner_ukbanner__' + messagingTestVariant;
-                linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
-                customOpts = {
-                    testName: messagingTestName,
-                    setEngagementText: messagingTestVariant === 'control' ? undefined : variantMessages[messagingTestVariant]
-                };
-                customJs = getCustomJs;
-            }
+        if (messagingTestVariant && messagingTestVariant !== 'notintest') {
+            var variantMessages = {
+                Get_round_to: 'Not got round to supporting us yet? Now is the time. Give £5 a month today',
+                Give_upfront: 'Give £5 a month to help support our journalism and make the Guardian\'s future more secure',
+                Together_informed: 'Together we can keep the world informed. Give £5 a month to support our journalism',
+                Coffee_5: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for £5 a month'
+            };
+            campaignCode = 'gdnwb_copts_mem_banner_ukbanner__' + messagingTestVariant;
+            linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
+            customOpts = {
+                testName: 'messaging-test-1',
+                setEngagementText: messagingTestVariant === 'control' ? undefined : variantMessages[messagingTestVariant]
+            };
+            customJs = getCustomJs;
         }
 
-        if (usMessagingTestVariant) {
-            if (usMessagingTestVariant !== 'notintest') {
-                var usVariantMessages = {
-                    coffee: 'For less than the price of a coffee a week you could help secure the Guardian\'s future. Become a Guardian US member for just $49 a year.',
-                    defies: 'When politicians defy belief you need journalism that defies politicians. Become a Guardian US member for just $49 a year.',
-                    value: 'If you value our independent, international journalism, you can support it. Become a Guardian US member for just $49 a year.'
-                };
-                campaignCode = 'gdnwb_copts_mem_banner_messaging1us' + '__' + usMessagingTestVariant;
-                linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
-                customOpts = {
-                    testName: 'messaging-test-us-1',
-                    setEngagementText: usMessagingTestVariant === 'control' ? undefined : usVariantMessages[usMessagingTestVariant]
-                };
-                customJs = getCustomJs;
-            }
+        if (usMessagingTestVariant && usMessagingTestVariant !== 'notintest') {
+            var usVariantMessages = {
+                coffee: 'For less than the price of a coffee a week you could help secure the Guardian\'s future. Become a Guardian US member for just $49 a year.',
+                defies: 'When politicians defy belief you need journalism that defies politicians. Become a Guardian US member for just $49 a year.',
+                value: 'If you value our independent, international journalism, you can support it. Become a Guardian US member for just $49 a year.'
+            };
+            campaignCode = 'gdnwb_copts_mem_banner_messaging1us' + '__' + usMessagingTestVariant;
+            linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
+            customOpts = {
+                testName: 'messaging-test-us-1',
+                setEngagementText: usMessagingTestVariant === 'control' ? undefined : usVariantMessages[usMessagingTestVariant]
+            };
+            customJs = getCustomJs;
         }
 
         if (config.page.edition.toLowerCase() === 'uk' && config.switches['prominentMembershipEngagementBannerUk']) {
-            colours = ['yellow','purple','bright-blue','dark-blue'];
+            colours = ['yellow', 'purple', 'bright-blue', 'dark-blue'];
             thisColour = thisInstanceColour(colours);
             cssModifierClass = 'membership-prominent ' + thisColour;
             customOpts.execute = function () {
@@ -154,7 +147,11 @@ define([
             customJs = getCustomJs;
         }
 
-        var renderedBanner = template(messageTemplate, { messageText: message.messageText, linkHref: linkHref, arrowWhiteRight: svgs('arrowWhiteRight') });
+        var renderedBanner = template(messageTemplate, {
+            messageText: message.messageText,
+            linkHref: linkHref,
+            arrowWhiteRight: svgs('arrowWhiteRight')
+        });
         var messageShown = new Message(
             messageCode,
             {
@@ -179,7 +176,7 @@ define([
         var message = messages[edition];
         if (message) {
             var userHasMadeEnoughVisits = (storage.local.get('gu.alreadyVisited') || 0) >= 10;
-            if(userHasMadeEnoughVisits) {
+            if (userHasMadeEnoughVisits) {
                 return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
                     if (canShow) {
                         show(edition, message);
