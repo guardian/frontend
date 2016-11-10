@@ -1,20 +1,9 @@
 package conf.switches
 
-import common.Edition
 import conf.switches.SwitchGroup.ABTests
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
-
-  val ABDiscussionExternalFrontend = Switch(
-    SwitchGroup.ABTests,
-    "ab-discussion-external-frontend",
-    "Standalone frontend discussion",
-    owners = Seq(Owner.withGithub("piuccio")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 11, 3),
-    exposeClientSide = true
-  )
 
   Switch(
     ABTests,
@@ -22,7 +11,7 @@ trait ABTestSwitches {
     "Promote the comments with a sticky bottom banner",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 11, 9),
+    sellByDate = new LocalDate(2016, 11, 11),
     exposeClientSide = true
   )
 
@@ -51,8 +40,8 @@ trait ABTestSwitches {
     "ab-membership-engagement-message-copy-experiment",
     "Test alternate short messages on membership engagement banner",
     owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 8),
+    safeState = On, // so we don't inadvertently turn off during deployment
+    sellByDate = new LocalDate(2016, 11, 10), // Thursday night
     exposeClientSide = true
   )
 
@@ -68,31 +57,12 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-countries-uk",
-    "Test whether different messages perform better/worse in different countries",
-    owners = Seq(Owner.withGithub("philwills")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 4),
+    "ab-contributions-epic-post-election-copy-test",
+    "Test a version of the epic centered around the election result against one that is not related to the election",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 14),
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-contributions-countries-america",
-    "Test whether different messages perform better/worse in different countries",
-    owners = Seq(Owner.withGithub("philwills")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 4),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-membership-epic",
-    "Find the optimal way of offering Contributions along side Membership in the Epic component",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 7),
-    exposeClientSide = true
-  )
 }

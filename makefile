@@ -17,10 +17,7 @@ list: # PRIVATE
 
 # Install all 3rd party dependencies.
 install: check-node check-yarn
-	@echo 'Installing 3rd party dependencies…'
 	@yarn install
-	@echo '…done.'
-	@node tools/messages.js install
 
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
@@ -33,11 +30,11 @@ reinstall: uninstall install
 
 # Make sure we running a recent-enough version of Node.
 check-node: # PRIVATE
-	@./dev/check-node-version.js
+	@./tools/check-node-version.js
 
-# Make sure yarn is installed.
+# Make sure yarn is installed, and it's at least v0.16.
 check-yarn: # PRIVATE
-	@if [ -z "$$(which yarn)" ]; then npm i -g yarn; fi
+	@if [ -z "$$(which yarn)" ] || [ $$(echo $$(yarn --version | cut -d . -f 1,2) '< 0.16' | bc) = 1 ]; then npm i -g yarn@\$<=0.16; fi
 
 # *********************** DEVELOPMENT ***********************
 

@@ -13,7 +13,7 @@ object VisitBritainHostedPages {
     name = "#OMGB. Home of Amazing Moments. Great Britain & Northern Ireland",
     owner = "OMGB",
     logoUrl = "https://static.theguardian.com/commercial/hosted/visit-britain/OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg",
-    fontColour = FontColour("#E41F13")
+    fontColour = Colour("#E41F13")
   )
 
   private val activityImages: List[HostedGalleryImage] = List(

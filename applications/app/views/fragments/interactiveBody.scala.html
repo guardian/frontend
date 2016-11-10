@@ -18,6 +18,9 @@
 
 @body(interactive: model.Interactive, isImmersive: Boolean, isPaidContent: Boolean) = {
     @if(isImmersive) {
+
+        @if(isPaidContent){ @fragments.guBand() }
+
         @* Must not be wrapped in any elements to support full screen immersives *@
         @bodyRaw(interactive)
     } else {
@@ -64,18 +67,16 @@
         </div>
     }
 
-    @if(conf.switches.Switches.InlineInteractiveRequire.isSwitchedOn) {
-        <script>
-            @HtmlFormat.raw(common.Assets.js.curl)
+    <script>
+        @HtmlFormat.raw(common.Assets.js.curl)
 
-            [].slice.apply(document.querySelectorAll('figure.interactive[data-interactive]')).forEach(function (el) {
-                require([el.getAttribute('data-interactive')], function (interactive) {
-                    interactive.boot(el, document, window.guardian.config);
-                }, function (err) {
-                    console.log('Interactive failed', mainJS);
-                    console.log('Error:', err);
-                });
+        [].slice.apply(document.querySelectorAll('figure.interactive[data-interactive]')).forEach(function (el) {
+            require([el.getAttribute('data-interactive')], function (interactive) {
+                interactive.boot(el, document, window.guardian.config);
+            }, function (err) {
+                console.log('Interactive failed', mainJS);
+                console.log('Error:', err);
             });
-        </script>
-    }
+        });
+    </script>
 }

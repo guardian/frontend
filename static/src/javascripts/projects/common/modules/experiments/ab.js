@@ -12,10 +12,7 @@ define([
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
     'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment',
-    'common/modules/experiments/tests/contributions-countries-uk',
-    'common/modules/experiments/tests/contributions-countries-america',
-    'common/modules/experiments/tests/contributions-membership-epic'
-    
+    'common/modules/experiments/tests/contributions-epic-post-election-copy-test'
 ], function (
     reportError,
     config,
@@ -30,9 +27,7 @@ define([
     WeekendReadingEmail,
     MembershipEngagementMessageCopyExperiment,
     MembershipEngagementUSMessageCopyExperiment,
-    ContributionsCountriesUk,
-    ContributionsCountriesAmerica,
-    ContributionsMembershipEpic
+    ContributionsEpicPostElectionCopyTest
 ) {
 
     var TESTS = [
@@ -41,9 +36,7 @@ define([
         new WeekendReadingEmail(),
         new MembershipEngagementMessageCopyExperiment(),
         new MembershipEngagementUSMessageCopyExperiment(),
-        new ContributionsCountriesUk(),
-        new ContributionsCountriesAmerica(),
-        new ContributionsMembershipEpic()
+        new ContributionsEpicPostElectionCopyTest()
     ];
 
     var participationsKey = 'gu.ab.participations';
@@ -118,7 +111,7 @@ define([
             isSensitive = config.page.shouldHideAdverts;
 
         return ((isSensitive ? test.showForSensitive : true)
-        && test.canRun() && !expired && isTestSwitchedOn(test));
+            && isTestSwitchedOn(test)) && !expired && test.canRun() ;
     }
 
     function getId(test) {
