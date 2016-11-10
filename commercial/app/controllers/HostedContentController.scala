@@ -26,8 +26,12 @@ class HostedContentController(contentApiClient: ContentApiClient)
       case Some(page: HostedVideoPage) => cached(guardianHostedVideo(page))
       case Some(page: HostedGalleryPage) => cached(guardianHostedGallery(page))
       case Some(page: HostedArticlePage) =>
-        if(request.isAmp) guardianAmpHostedArticle(page)
-        else cached(guardianHostedArticle(page))
+        if(request.isAmp) {
+          cached(guardianAmpHostedArticle(page))
+        }
+        else {
+          cached(guardianHostedArticle(page))
+        }
       case _ => NoCache(NotFound)
     }
   }
