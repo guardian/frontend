@@ -41,11 +41,11 @@ define([
 
     // change messageCode to force redisplay of the message to users who already closed it.
     // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
-    var messageCode = 'engagement-banner-2016-10-12';
+    var messageCode = 'engagement-banner-2016-11-10';
 
     var messages = {
         UK: {
-            campaign: 'mem_uk_banner',
+            campaign: 'Coffee_49',
             messageText: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for just £49 per year.'
         },
         US: {
@@ -114,11 +114,12 @@ define([
             var messagingTestName = 'messaging-test-1';
             if (messagingTestVariant !== 'notintest') {
                 var variantMessages = {
-                    fairer: 'We all want to make the world a fairer place. We believe journalism can help – but producing it is expensive. That\'s why we need Supporters. Join for £49 per year.',
-                    appreciate: 'Become a Supporter and appreciate every article, knowing you\'ve helped bring it to the page. Be part of the Guardian. Join for £49 per year.',
-                    secure: 'Secure the future of independent journalism. Help us create a fairer world. Support the Guardian for £49 per year.'
+                    Get_round_to: 'Not got round to supporting us yet? Now is the time. Give £5 a month today',
+                    Give_upfront: 'Give £5 a month to help support our journalism and make the Guardian\'s future more secure',
+                    Together_informed: 'Together we can keep the world informed. Give £5 a month to support our journalism',
+                    Coffee_5: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for £5 a month'
                 };
-                campaignCode = 'gdnwb_copts_mem_banner_messaging1uk' + '__' + messagingTestVariant;
+                campaignCode = 'gdnwb_copts_mem_banner_ukbanner__' + messagingTestVariant;
                 linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
                 customOpts = {
                     testName: messagingTestName,

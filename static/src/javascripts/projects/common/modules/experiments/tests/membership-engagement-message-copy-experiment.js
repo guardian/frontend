@@ -19,8 +19,8 @@ define([
 ) {
     return function () {
         this.id = 'MembershipEngagementMessageCopyExperiment';
-        this.start = '2016-10-26';
-        this.expiry = '2016-11-8';
+        this.start = '2016-11-10';
+        this.expiry = '2016-11-17';
         this.author = 'Justin Pinner';
         this.description = 'Test alternate short messages on engagement banner';
         this.audience = 0.6;    // 60% (of UK audience)
@@ -52,17 +52,22 @@ define([
                 success: success.bind(this)
             },
             {
-                id: 'fairer',
+                id: 'Get_round_to',
                 test: function () {},
                 success: success.bind(this)
             },
             {
-                id: 'appreciate',
+                id: 'Give_upfront',
                 test: function () {},
                 success: success.bind(this)
             },
             {
-                id: 'secure',
+                id: 'Together_informed',
+                test: function () {},
+                success: success.bind(this)
+            },
+            {
+                id: 'Coffee_5',
                 test: function () {},
                 success: success.bind(this)
             }
