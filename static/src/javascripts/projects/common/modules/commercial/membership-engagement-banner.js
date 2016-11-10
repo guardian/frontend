@@ -63,7 +63,7 @@ define([
     };
 
     function formatEndpointUrl(edition, message) {
-        return endpoints[edition] + '?INTCMP=' + message.campaign;
+        return endpoints[edition] + '?INTCMP=' + message.campaign + "_prominent";
     }
 
     function thisInstanceColour(colours) {
@@ -78,19 +78,10 @@ define([
 
         var opts = options || {};
 
-        if (opts.testName) {
-            if (opts.testName === 'messaging-test-1') {
-                var engagementText = $('.site-message__message.site-message__message--membership');
-                if (engagementText && opts.setEngagementText) {
-                    engagementText[0].textContent = opts.setEngagementText;
-                }
-            }
-
-            if (opts.testName === 'messaging-test-us-1') {
-                var usEngagementText = $('.site-message__message.site-message__message--membership');
-                if (usEngagementText && opts.setEngagementText) {
-                    usEngagementText[0].textContent = opts.setEngagementText;
-                }
+        if (opts.setEngagementText) {
+            var engagementText = $('#membership__engagement-message-text');
+            if (engagementText && opts.setEngagementText) {
+                engagementText[0].textContent = opts.setEngagementText;
             }
         }
 
@@ -146,18 +137,16 @@ define([
             }
         }
 
-        if (config.page.edition.toLowerCase() === 'uk' && config.switches['prominentMembershipEngagementBannerUk'] && (!messagingTestVariant || messagingTestVariant === 'notintest')) {
-            var prominentMarker = 'prominent';
-            linkHref = endpoints[edition] + '?INTCMP=' + message.campaign + '_' + prominentMarker;
+        if (config.page.edition.toLowerCase() === 'uk' && config.switches['prominentMembershipEngagementBannerUk']) {
             colours = ['yellow','purple','bright-blue','dark-blue'];
             thisColour = thisInstanceColour(colours);
-            cssModifierClass = 'membership-' + prominentMarker + ' ' + thisColour;
+            cssModifierClass = 'membership-prominent ' + thisColour;
             customOpts.execute = function () {
                 var buttonCaption = $('#membership__engagement-message-button-caption'),
                     buttonEl = $('#membership__engagement-message-button');
                 fastdom.write(function () {
                     buttonEl.removeClass('is-hidden');
-                    buttonEl.addClass(prominentMarker);
+                    buttonEl.addClass("prominent");
                     buttonEl.addClass(thisColour);
                     buttonCaption.text('Become a Supporter');
                 });
