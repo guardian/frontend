@@ -20,21 +20,6 @@
     </iframe>
 }
 
-@newsletterPlaceholderImage() = {
-    <div class="newsletter-image">
-        @fragments.inlineSvg("email_placeholder", "illustration")
-    </div>
-}
-
-@newsletterImage(emailListing: EmailSubscription) = {
-    @defining(emailListing.imageFilename.getOrElse("2211.png")) { imageFilename =>
-        <img class="newsletter-image"
-            src="@{ Static("images/email" + imageFilename) }"
-            alt="cover image for @emailListing.name"
-        />
-    }
-}
-
 @emailListCategoryList(theme: String, emailListings: List[EmailSubscription]) = {
     <div class="newsletters-category__heading">
         @theme
@@ -47,7 +32,18 @@
                 data-component="newsletter-card @emailListing.name">
 
                 <div class="newsletter-card__imagewrapper">
-                    @newsletterPlaceholderImage()
+                    @if(emailListing.imageFilename.isDefined) {
+                        @defining(emailListing.imageFilename.get) { imageFilename =>
+                            <img class="newsletter-image"
+                                src="@{ Static("images/email" + imageFilename) }"
+                                alt="cover image for @emailListing.name"
+                            />
+                        }
+                    } else {
+                        <div class="newsletter-image">
+                            @fragments.inlineSvg("email_placeholder", "illustration")
+                        </div>
+                    }
                 </div>
 
                 <div class="newsletter-card__content js-newsletter-content">
