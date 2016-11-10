@@ -13,7 +13,7 @@ define([
             return;
         }
 
-        var referenceElement = document.querySelector(config.page.hasShowcaseMainElement ? '.media-primary' : '.content__article-body,.dropdown--live-feed');
+        var referenceElement = document.querySelector(config.page.hasShowcaseMainElement ? '.media-primary' : '.content__article-body,.js-liveblog-body-content');
         if (!referenceElement) {
             return;
         }
