@@ -111,7 +111,6 @@ define([
     HostedGallery.prototype.initSwipe = function () {
         var threshold, ox, dx, touchMove,
             updateTime = 20; // time in ms
-        this.swipeContainerWidth = this.$galleryEl.dim().width;
         this.$imagesContainer.css('width', this.$images.length + '00%');
 
         bean.on(this.$galleryEl[0], 'touchstart', function (e) {
@@ -312,7 +311,6 @@ define([
         'image': {
             enter: function () {
                 var that = this;
-                this.swipeContainerWidth = this.$galleryEl.dim().width;
 
                 // load prev/current/next
                 this.loadSurroundingImages(this.index, this.$images.length);
@@ -381,7 +379,7 @@ define([
         this.resizer = this.resizer || function () {
                 this.loadSurroundingImages(this.index, this.$images.length);
                 if (this.useSwipe) {
-                    this.swipeContainerWidth = this.$galleryEl.dim().width;
+                    this.swipeContainerWidth = this.$galleryFrame.dim().width;
                     this.translateContent(this.index, 0, 0);
                 }
                 this.setPageWidth();
@@ -405,13 +403,14 @@ define([
             imageWidth = height * imgRatio;
             leftRight = (width - imageWidth) / 2 + 'px';
         }
+        this.swipeContainerWidth = imageWidth;
         fastdom.write(function () {
             $header.css('width', imageWidth);
             $footer.css('margin', '0 ' + leftRight);
             $footer.css('width', 'auto');
             $galleryFrame.css('left', leftRight);
             $galleryFrame.css('right', leftRight);
-            that.resizeImage(0);
+            that.loadSurroundingImages(that.index, that.$images.length);
         });
     };
 
