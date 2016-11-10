@@ -424,7 +424,6 @@
 }
 
 .content__dateline-wpd--modified {
-    color: $news-default;
     cursor: pointer;
 
     &:hover,
@@ -605,6 +604,10 @@
         box-sizing: border-box;
         padding-bottom: $gs-baseline;
         min-height: $gs-baseline*4;
+    }
+
+    @include mq($until: leftCol) {
+        display: inline;
     }
 
     .content__meta-container--twitter &,
@@ -1089,14 +1092,14 @@
         }
 
         @include mq($until: leftCol) {
-            padding: 0;
+            padding: 0 3px;
             border: 0;
-            border-radius: 0;
-            margin-right: 0;
             background-color: transparent !important;
 
             svg {
-                margin-top: $gs-baseline/4;
+                position: relative;
+                vertical-align: middle;
+                bottom: -1px;
             }
         }
 
@@ -1107,6 +1110,10 @@
 
     .button--small .i-left {
         margin: 2px 4px 0 0;
+
+        @include mq($until: leftCol) {
+            margin: 0;
+        }
     }
 
     .button--small svg {
@@ -1128,6 +1135,10 @@
         margin-top: $gs-baseline/1.2;
         margin-bottom: $gs-baseline * 3/2;
         display: block;
+    }
+
+    @include mq($until: leftCol) {
+        margin: 0;
     }
 }
 
@@ -1186,6 +1197,11 @@
 
     .content__meta-container--bio & {
         margin-top: $gs-baseline;
+    }
+
+    @include mq($until: leftCol) {
+        border: 0;
+        display: inline;
     }
 }
 
