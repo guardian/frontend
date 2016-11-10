@@ -5,7 +5,7 @@
 @import views.InteractiveBodyCleaner
 @import views.support.Commercial._
 
-@body(page.interactive, page.item.content.isImmersive, isPaidContent(page))
+@body(page.interactive, page.item.content.isImmersive, isPaidContent(page.interactive, page))
 
 @bodyRaw(interactive: model.Interactive) = {
     @interactive.maybeBody.map { body =>
@@ -28,8 +28,8 @@
             <article id="article" class="@RenderClasses(
                     Map(
                         "content--advertisement-feature" -> isPaidContent,
-                        "content--sponsored" -> isSponsoredContent(page),
-                        "content--foundation-supported" -> isFoundationFundedContent(page),
+                        "content--sponsored" -> isSponsoredContent(interactive, page),
+                        "content--foundation-supported" -> isFoundationFundedContent(interactive, page),
                         "paid-content--advertisement-feature" -> isPaidContent
                     ),
                     "content", "content--interactive", "tonal", s"tonal--${toneClass(interactive)}"
@@ -45,7 +45,7 @@
                 <div class="content__main tonal__main tonal__main--@toneClass(interactive)">
                     <div class="gs-container u-cf">
                         <div class="content__main-column">
-                            @fragments.contentMeta(interactive, page)
+                            @fragments.contentMeta(interactive, page, showBadge = false)
                         </div>
                     </div>
 
@@ -57,7 +57,7 @@
 
                     <div class="gs-container u-cf">
                         <div class="content__main-column content__meta-footer">
-                            @fragments.contentMeta(interactive, page)
+                            @fragments.contentMeta(interactive, page, showBadge = false)
                         </div>
                     </div>
                 </div>
