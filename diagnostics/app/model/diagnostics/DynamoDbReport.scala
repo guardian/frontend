@@ -14,8 +14,7 @@ import scala.collection.JavaConverters._
 import scala.util.Try
 
 trait DynamoDbReport[A] extends Logging with ExecutionContexts {
-  val client = new AmazonDynamoDBAsyncClient(Configuration.aws.mandatoryCredentials)
-  client.setRegion(Region.getRegion(Regions.EU_WEST_1))
+  val client = services.DynamoDB.asyncClient
 
   def report(report: A): Unit
 }
