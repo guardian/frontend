@@ -490,7 +490,7 @@ $approxGalleryWidth: calc(167vh - #{5/3 * ($headerHeight + $footerHeight)});
             width: 100%;
             background-color: #ffffff;
             opacity: .5;
-            bottom: 0;
+            bottom: 1px;
             left:0;
             position: absolute;
         }
