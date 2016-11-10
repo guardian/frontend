@@ -3,11 +3,9 @@ package views.support
 import common.Edition
 import common.Edition.defaultEdition
 import common.commercial.{Sponsored, _}
-import common.dfp._
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
-import model.{ContentType, MetaData, Page, Tags}
+import model.{Page, PressedPage}
 import play.api.mvc.RequestHeader
-
 
 object Commercial {
 
@@ -32,34 +30,40 @@ object Commercial {
   private def isBrandedContent(page: Page, edition: Edition, sponsorshipType: SponsorshipType): Boolean =
     page.branding(edition).exists(_.sponsorshipType == sponsorshipType)
 
-  def isPaidContent(item: ContentType, page: Page): Boolean =
-    isBrandedContent(page, defaultEdition, PaidContent)
+  def isPaidContent(page: Page): Boolean = isBrandedContent(page, defaultEdition, PaidContent)
 
-  def isSponsoredContent(item: ContentType, page: Page)(implicit request: RequestHeader): Boolean = {
-    val edition = Edition(request)
-    isBrandedContent(page, edition, Sponsored)
-  }
+  def isSponsoredContent(page: Page)(implicit request: RequestHeader): Boolean =
+    isBrandedContent(page, Edition(request), Sponsored)
 
-  def isFoundationFundedContent(item: ContentType, page: Page)(implicit request: RequestHeader): Boolean = {
+  def isFoundationFundedContent(page: Page)(implicit request: RequestHeader): Boolean =
     isBrandedContent(page, defaultEdition, Foundation)
+
+  def isBrandedContent(page: Page)(implicit request: RequestHeader): Boolean = {
+    isPaidContent(page) || isSponsoredContent(page) || isFoundationFundedContent(page)
   }
 
-  def isBrandedContent(item: ContentType, page: Page)(implicit request: RequestHeader): Boolean = {
-    isPaidContent(item, page) || isSponsoredContent(item, page) || isFoundationFundedContent(item, page)
-  }
+  def listSponsorLogosOnPage(page: Page)(implicit request: RequestHeader): Option[Seq[String]] = {
 
-  private def hasAdOfSize(slot: AdSlot,
-                          size: AdSize,
-                          metaData: MetaData,
-                          edition: Edition,
-                          sizesOverride: Seq[AdSize] = Nil): Boolean = {
-    val sizes = if (sizesOverride.nonEmpty) sizesOverride else metaData.sizeOfTakeoverAdsInSlot(slot, edition)
-    sizes contains size
+    val edition = Edition(request)
+
+    val pageSponsor: Option[String] = page.branding(edition) map (_.sponsorName)
+
+    page match {
+      case front: PressedPage =>
+        val containerSponsors = front.collections.flatMap(_.branding(edition)) map (_.sponsorName)
+        pageSponsor map {
+          _ +: containerSponsors
+        } orElse {
+          if (containerSponsors.isEmpty) None else Some(containerSponsors)
+        }
+      case _ =>
+        pageSponsor map (Seq(_))
+    }
   }
 
   object topAboveNavSlot {
 
-    def adSizes(metaData: MetaData, edition: Edition, maybeTags: Option[Tags]): Map[String, Seq[String]] = {
+    val adSizes: Map[String, Seq[String]] = {
       val fabricAdvertsTop = Seq("88,71")
       val fluidAdvertsTop = Seq("fluid")
       Map(
@@ -69,7 +73,7 @@ object Commercial {
     }
 
     // The sizesOverride parameter is for testing only.
-    def cssClasses(metaData: MetaData, edition: Edition, maybeTags: Option[Tags], sizesOverride: Seq[AdSize] = Nil): String = {
+    val cssClasses: String = {
       val classes = Seq(
         "top-banner-ad-container",
         "js-top-banner"
