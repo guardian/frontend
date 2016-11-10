@@ -14,6 +14,10 @@ define([
         return 'video content';
     }
 
+    function buildEventId(event, videoId) {
+        return event + ':' + videoId;
+    }
+
     function initYoutubeEvents(videoId) {
 
         var ga = window.ga,
@@ -40,7 +44,7 @@ define([
         var eventsList = ['play', '25', '50', '75', 'end'];
 
         forEach(eventsList, function(event) {
-            mediator.once(event, function(id) {
+            mediator.once(buildEventId(event, videoId), function(id) {
                 ophanRecord(event, id);
                 ga(gaTracker + '.send', 'event',
                     gaHelper.buildGoogleAnalyticsEvent(event, events, window.location.pathname,
@@ -66,7 +70,7 @@ define([
     }
 
     function track(event, id) {
-        mediator.emit(event, id);
+        mediator.emit(buildEventId(event, id), id);
     }
 
     return {
