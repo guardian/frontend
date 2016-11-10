@@ -5,8 +5,11 @@ module.exports = {
         require('../inline-svgs'),
         require('./copy'),
         require('./bundle'),
+        require('./bundle-webpack'),
         require('./webpack'),
         require('./bundle-app'),
-        require('./bundle-shims')
+        require('./bundle-app-webpack'),
+        require('./bundle-shims'),
+        require('./minify')
     ]
 };
