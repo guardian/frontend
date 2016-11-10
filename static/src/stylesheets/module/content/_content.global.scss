@@ -20,6 +20,14 @@
         display: block;
     }
 
+    .commentcount2__heading {
+        padding-right: 20px;
+    }
+
+    .sharecount__heading {
+        padding-right: 16px;
+    }
+
     .commentcount2__heading,
     .sharecount__heading {
         @include fs-textSans(1);
@@ -27,15 +35,19 @@
         height: 15px;
         margin: 0;
         position: relative;
-        padding-left: 18px;
 
         .inline-icon {
             position: absolute;
-            left: 0;
+            right: 0;
         }
 
         @include mq(leftCol) {
             padding-left: $gs-gutter * .75;
+            padding-right: 0;
+
+            .inline-icon {
+                left: 0;
+            }
         }
     }
 
@@ -45,14 +57,18 @@
 
     .commentcount2__value,
     .sharecount__value {
-        // design is off font scale
-        font-family: $f-serif-headline;
-        font-size: 18px;
-        font-weight: 500;
+        @include fs-textSans(4);
+        display: block;
+        float: right;
+
+        @include mq(leftCol) {
+            float: none;
+            line-height: normal;
+        }
     }
 
     .sharecount__value {
-        color: $neutral-1;
+        color: $neutral-2;
     }
 
     .sharecount__value--short {
