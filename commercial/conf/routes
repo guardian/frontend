@@ -48,7 +48,7 @@ GET         /commercial/paid.json                                           comm
 GET         /commercial/paid                                                commercial.controllers.PaidContentCardController.cardHtml
 
 # Piggyback pixel from AppNexus, used for resizing mpus
-GET         /commercial/anx/anxresize.js                                    commercial.controllers.PiggybackPixelController.resize()
+GET         /commercial/anx/anxresize.js                                    commercial.controllers.PiggybackPixelController.resize
 
 # Hosted content
 GET         /commercial/advertiser-content/:campaignName/:pageName          commercial.controllers.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
