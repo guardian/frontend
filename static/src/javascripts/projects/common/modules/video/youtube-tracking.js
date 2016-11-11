@@ -20,8 +20,8 @@ define([
 
     function initYoutubeEvents(videoId) {
 
-        var ga = window.ga,
-            gaTracker = config.googleAnalytics.trackers.editorial;
+        var ga = window.ga;
+        var gaTracker = config.googleAnalytics.trackers.editorial;
 
         var events = {
             metricMap: {
@@ -35,7 +35,7 @@ define([
             baseEventObject: {
                 eventCategory: 'Media',
                 eventAction: 'video content',
-                eventLabel: window.location.pathname,
+                eventLabel: videoId,
                 dimension19: videoId,
                 dimension20: 'guardian-youtube'
             }
@@ -47,7 +47,7 @@ define([
             mediator.once(buildEventId(event, videoId), function(id) {
                 ophanRecord(event, id);
                 ga(gaTracker + '.send', 'event',
-                    gaHelper.buildGoogleAnalyticsEvent(event, events, window.location.pathname,
+                    gaHelper.buildGoogleAnalyticsEvent(event, events, videoId,
                         'gu-video-youtube', eventAction, id));
             });
         });
