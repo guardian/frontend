@@ -67,6 +67,8 @@ if the task is array of other tasks, you can specify that its tasks should run c
 }
 */
 
+process.env.FORCE_COLOR = true;
+
 const path = require('path');
 
 const yargs = require('yargs');
