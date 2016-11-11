@@ -23,6 +23,60 @@
     </head>
     <body>
         <div class="main-body">
+                <!--[if (gt IE 9)|(IEMobile)]><!-->
+            <style>
+                .hosted-tone {
+                    color: @{page.campaign.fontColour.brandColour};
+                }
+
+                .hosted-tone-bg {
+                    background-color: @{page.campaign.fontColour.brandColour};
+                }
+
+                .hosted-tone-btn {
+                    color: @{page.campaign.fontColour.brandColour};
+                    border: 1px solid @{page.campaign.fontColour.brandColour};
+                }
+
+                .hosted__banner .hosted-tone-btn,
+                .hosted-tone-btn:focus,
+                .hosted-tone-btn:hover {
+                    background-color: @{page.campaign.fontColour.brandColour};
+                }
+
+                .hosted-page .hosted__link {
+                    color: @{page.campaign.fontColour.brandColour};
+                }
+
+                .hosted-page ~ .survey-overlay-simple .survey-text__header {
+                    background-color: @{page.campaign.fontColour.brandColour};
+                }
+
+                .hosted-article-page p.intro + p::first-letter {
+                    background-color: @{page.campaign.fontColour.brandColour};
+                }
+
+                .from-content-api ul > li:before {
+                    background-color: @{page.campaign.fontColour.brandColour};
+                }
+
+                .hosted__next-page__carousel-arrows .inline-icon {
+                    fill: @{page.campaign.fontColour.brandColour};
+                    border-color: @{page.campaign.fontColour.brandColour};
+                }
+
+                /* To prevent video element from jumping */
+                video {
+                    width: 370px;
+                }
+
+                @@media (min-width: 740px) { /* Tablet bp and above */
+                    video {
+                        width : 600px;
+                    }
+                }
+            </style>
+                <!--<![endif]-->
 
             @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-article-page hosted-page--bright" else "hosted-article-page", page)
             <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
