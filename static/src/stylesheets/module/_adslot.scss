@@ -348,7 +348,6 @@
 }
 
 .ad-slot--books-inline {
-    width: $gs-gutter * 6.5;
     @include mq(mobileLandscape) {
         width: gs-span(2);
     }
