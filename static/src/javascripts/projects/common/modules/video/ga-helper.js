@@ -1,7 +1,5 @@
-define([
-], function (
+define(function (
 ) {
-
     function buildGoogleAnalyticsEvent(mediaEvent, metrics, canonicalUrl, player, eventAction, videoId) {
 
         var category = 'Media';
