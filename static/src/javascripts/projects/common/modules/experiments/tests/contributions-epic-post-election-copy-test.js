@@ -48,7 +48,7 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'We learn to what extend using messages that chime with current events have an impact on contributor/supporter conversion';
         this.canRun = function () {
-            var whitelistedKeywordIds = [
+            var includedKeywordIds = [
                 'australia-news/australia-news',
                 'politics/politics',
                 'politics/eu-referendum',
@@ -65,9 +65,17 @@ define([
                 'world/world'
             ];
 
+            var excludedKeywordIds = ['music/leonard-cohen'];
+
             var hasKeywordsMatch = function() {
                 var pageKeywords = config.page.keywordIds;
-                return pageKeywords && intersection(whitelistedKeywordIds, pageKeywords.split(',')).length > 0;
+                if (typeof(pageKeywords) != 'undefined') {
+                    var keywordList = pageKeywords.split(',');
+                    return intersection(excludedKeywordIds, keywordList).length == 0 &&
+                        intersection(includedKeywordIds, keywordList).length > 0;
+                } else {
+                    return false;
+                }
             };
 
             var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
