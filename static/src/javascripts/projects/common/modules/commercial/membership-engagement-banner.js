@@ -78,7 +78,7 @@ define([
 
         if (opts.setEngagementText) {
             var engagementText = $('#membership__engagement-message-text');
-            if (engagementText && opts.setEngagementText) {
+            if (engagementText) {
                 engagementText[0].textContent = opts.setEngagementText;
             }
         }
