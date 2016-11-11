@@ -67,11 +67,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-thankyou",
+    "ab-contributions-epic-thank-you",
     "Test a version of the epic centered around the election result against one that is not related to the election",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 14),
+    sellByDate =  new LocalDate(2016, 11, 17),
     exposeClientSide = true
   )
 

@@ -11,10 +11,8 @@ define([
     'inlineSvg!svgs/icon/arrow-right',
     'common/utils/config',
     'common/utils/cookies',
-    'common/modules/experiments/embed',
-    'common/utils/ajax',
-    'common/modules/commercial/commercial-features',
-    'lodash/arrays/intersection'
+    'common/modules/commercial/user-features',
+    'common/utils/element-inview'
 
 ], function (bean,
              qwery,
@@ -23,74 +21,37 @@ define([
              svg,
              fastdom,
              mediator,
-             contributionsEpicThankyou,
+             contributionsEpicThankYou,
              robust,
              arrowRight,
              config,
-             cookies,
-             embed,
-             ajax,
-             commercialFeatures,
-             intersection) {
+            cookies,
+            userFeatures, 
+             ElementInview) {
 
     return function () {
+        var isContributor = cookies.get('gu.contributions.contrib-timestamp');
+        var isPayingMember = userFeatures.isPayingMember;
 
-        this.id = 'ContributionsEpicThankyou';
+        this.id = 'ContributionsEpicThankYou';
         this.start = '2016-11-09';
-        this.expiry = '2016-11-14';
+        this.expiry = '2016-11-17';
         this.author = 'Jonathan Rankin';
-        this.description = 'Test a version of the epic centered around the election result against one that is not related to the election';
+        this.description = 'Send out a thank you to our existing members/contributors, with a social share';
         this.showForSensitive = false;
         this.audience = 1;
         this.audienceOffset = 0;
-        this.successMeasure = 'Impressions to number of contributions/supporter signups';
-        this.audienceCriteria = 'All readers who are in the US, who are reading about US politics or the US election';
+        this.successMeasure = 'Number of social shares';
+        this.audienceCriteria = 'All contributors/members';
         this.dataLinkNames = '';
-        this.idealOutcome = 'We learn to what extend using messages that chime with current events have an impact on contributor/supporter conversion';
+        this.idealOutcome = 'We learn to what extend our paying readers are willing to share the fact on social media';
         this.canRun = function () {
-            var whitelistedKeywordIds = [
-                'australia-news/australia-news',
-                'politics/politics',
-                'politics/eu-referendum',
-                'society/society',
-                'uk/commentisfree',
-                'uk/media',
-                'uk/uk',
-                'us/commentisfree',
-                'us/environment',
-                'us-news/us-news',
-                'us-news/us-politics',
-                'us-news/us-elections-2016',
-                'us/business',
-                'world/world'
-            ];
-
-            var hasKeywordsMatch = function() {
-                var pageKeywords = config.page.keywordIds;
-                return pageKeywords && intersection(whitelistedKeywordIds, pageKeywords.split(',')).length > 0;
-            };
-
-            var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
             var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle; // may render badly on other types
-            return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && hasKeywordsMatch();
+            return worksWellWithPageTemplate && (isContributor || isPayingMember);
         };
 
-
-
-        var membershipUrl = 'https://membership.theguardian.com/supporter?';
-        var contributeUrl = 'https://contribute.theguardian.com/?';
-
-        var messages  = {
-            control:  '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
-        };
-
-        var cta = {
-            equal: {
-                p2: 'Fund our journalism and together we can keep the world informed.',
-                p3: '',
-                cta1: 'Become a Supporter',
-                cta2: 'Make a contribution'
-            }
+        var completer = function (complete) {
+            mediator.on('contributions-embed:insert', complete);
         };
 
         var componentWriter = function (component) {
@@ -99,30 +60,102 @@ define([
 
                 if (submetaElement.length > 0) {
                     component.insertBefore(submetaElement);
-                    embed.init();
                     mediator.emit('contributions-embed:insert', component);
                 }
             });
         };
 
+
+        function getValue(name){
+            return parseInt(cookies.get(name));
+        }
+
+        function setValue(name, value){
+            cookies.add(name, value, 14);
+        }
+
+
+        function addInviewLIstener(thankYouCounter) {
+            mediator.on('contributions-embed:insert', function () {
+                $('.contributions__epic').each(function (el) {
+                        //top offset of 18 ensures view only counts when half of element is on screen
+                        var elementInview = ElementInview(el, window, {top: 18});
+                        elementInview.on('firstview', function () {
+                            setValue('gu.thankyouCount', thankYouCounter + 1);
+                        });
+
+                });
+
+            });
+        }
+
         var makeUrl = function(urlPrefix, intcmp) {
             return urlPrefix + 'INTCMP=' + intcmp;
         };
 
-        var completer = function (complete) {
-            mediator.on('contributions-embed:insert', complete);
+        var membershipUrl = 'https://membership.theguardian.com/supporter?';
+        var contributeUrl = 'https://contribute.theguardian.com/?';
+        var thankyouCount = getValue('gu.thankyouCount') || 0;
+        var campaignCode = 'epic_thankyou_' + thankyouCount;
+
+
+        var link = isPayingMember? makeUrl(contributeUrl, campaignCode) : makeUrl(membershipUrl, campaignCode);
+
+        var cta = {
+            v1: {
+                title: 'We\'d like to say thanks &#8230;',
+                p1: 'Your crucial financial support makes our journalism possible. We do it because we believe, like you, that the world has never needed fearless, independent media more.',
+                p2: 'If you know someone who might want to support us, why not tell them how they can by <a target=\"_blank\" href=\"' + link + '\">sharing this link?</a>'
+            },
+
+            v2: {
+                title: 'Thank you for your support',
+                p1: 'Your crucial financial support makes our journalism possible. We do it because we believe, like you, that the world has never needed fearless, independent media more.',
+                p2: 'If you know someone who might share that perspective and want to support us, why not tell them how they can by <a target=\"_blank\" href=\"' + link + '\">sharing this link?</a>'
+
+            }
+
         };
 
-        var contributeUrlPrefix = 'co_global_epic_';
-        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_post_';
 
         this.variants = [
             {
                 id: 'control',
 
                 test: function () {
-                    var component = $.create(template(contributionsEpicThankyou, {}));
-                    componentWriter(component);
+                    addInviewLIstener(thankyouCount);
+                    if(thankyouCount < 4) {
+                        var messages = cta.v1;
+                        var component = $.create(template(contributionsEpicThankYou, {
+                            title: messages.title,
+                            p1: messages.p1,
+                            p2: messages.p2
+                        }));
+                        componentWriter(component);
+                    }
+                },
+
+                impression: function(track) {
+                    mediator.on('contributions-embed:insert', track);
+                },
+
+                success: completer
+            },
+
+            {
+                id: 'other',
+
+                test: function () {
+                    addInviewLIstener(thankyouCount);
+                    if(thankyouCount < 4) {
+                        var messages = cta.v2;
+                        var component = $.create(template(contributionsEpicThankYou, {
+                            title: messages.title,
+                            p1: messages.p1,
+                            p2: messages.p2
+                        }));
+                        componentWriter(component);
+                    }
                 },
 
                 impression: function(track) {
