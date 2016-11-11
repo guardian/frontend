@@ -34,7 +34,7 @@ define([
             },
             baseEventObject: {
                 eventCategory: 'Media',
-                eventAction: 'video content',
+                eventAction: eventAction(),
                 eventLabel: videoId,
                 dimension19: videoId,
                 dimension20: 'guardian-youtube'
