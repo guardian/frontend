@@ -50,7 +50,8 @@ object Frontend extends Build with Prototypes {
       w3cSac,
       logback,
       kinesisLogbackAppender,
-      targetingClient
+      targetingClient,
+      scanamo
     )
   ).settings(
       mappings in TestAssets ~= filterAssets

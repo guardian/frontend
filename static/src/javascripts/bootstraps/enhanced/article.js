@@ -10,7 +10,6 @@ define([
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
     'common/modules/article/open-module',
-    'common/modules/article/chapters',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/atoms/quiz',
@@ -27,7 +26,6 @@ define([
     richLinks,
     membershipEvents,
     openModule,
-    chapters,
     ab,
     geoMostPopular,
     quiz,
@@ -70,7 +68,6 @@ define([
         richLinks.upgradeRichLinks();
         richLinks.insertTagRichLink();
         membershipEvents.upgradeEvents();
-        chapters.init();
         openModule.init();
         mediator.emit('page:article:ready');
         quiz.handleCompletion();

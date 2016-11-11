@@ -179,7 +179,7 @@ define([
         events.addPrerollEvents(player, mediaId, mediaType);
         events.bindGoogleAnalyticsEvents(player, gaEventLabel);
 
-        videoMetadata.getVideoInfo(el).then(function(videoInfo) {
+        videoMetadata.getVideoInfo($el).then(function(videoInfo) {
             if (videoInfo.expired) {
                 player.ready(function() {
                     player.error({
@@ -407,7 +407,7 @@ define([
         initFacia();
 
         initMoreInSection();
-        
+
         initOnwardContainer();
     }
 

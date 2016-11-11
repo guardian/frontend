@@ -20,13 +20,13 @@ define([
     return function () {
         this.id = 'MembershipEngagementUsMessageCopyExperiment';
         this.start = '2016-10-27';
-        this.expiry = '2016-11-15';
+        this.expiry = '2016-11-17';
         this.author = 'Justin Pinner';
         this.description = 'Test alternate short messages on engagement banner';
-        this.audience = 0.5;
+        this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'More US membership sign-ups';
-        this.audienceCriteria = '50 percent of (non-member) US edition readers';
+        this.audienceCriteria = '100 percent of (non-member) US edition readers';
         this.dataLinkNames = '';
         this.idealOutcome = 'More US readers engage with the banner and then complete membership sign-up';
         this.hypothesis = 'More persuasive copy will improve US membership conversions from impressions';
@@ -52,17 +52,7 @@ define([
                 success: success.bind(this)
             },
             {
-                id: 'coffee',
-                test: function () {},
-                success: success.bind(this)
-            },
-            {
-                id: 'defies',
-                test: function () {},
-                success: success.bind(this)
-            },
-            {
-                id: 'value',
+                id: 'informed',
                 test: function () {},
                 success: success.bind(this)
             }

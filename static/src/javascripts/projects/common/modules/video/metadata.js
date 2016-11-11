@@ -30,12 +30,12 @@ define([
         }
     }
 
-    function getVideoInfo(el) {
-        var shouldHideAdverts = el.dataset.blockVideoAds !== 'false';
-        var embedPath = el.dataset.embedPath;
+    function getVideoInfo($el) {
+        var shouldHideAdverts = $el.attr('data-block-video-ads') !== 'false';
+        var embedPath = $el.attr('data-embed-path');
 
         // we need to look up the embedPath for main media videos
-        var canonicalUrl = el.dataset.canonicalUrl || (embedPath ? embedPath : null);
+        var canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? embedPath : null);
 
         return new Promise(function(resolve) {
             // We only have the canonical URL in videos embedded in articles / main media.

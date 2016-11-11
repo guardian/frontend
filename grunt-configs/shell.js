@@ -1,15 +1,5 @@
 module.exports = function () {
     return {
-        /**
-         * Using this task to copy hooks, as Grunt's own copy task doesn't preserve permissions
-         */
-        copyHooks: {
-            command: 'ln -s ../git-hooks .git/hooks',
-            options: {
-                failOnError: false
-            }
-        },
-
         abTestInfo: {
             command: 'node tools/ab-test-info/ab-test-info.js ' +
                      'static/src/javascripts/projects/common/modules/experiments/tests ' +
