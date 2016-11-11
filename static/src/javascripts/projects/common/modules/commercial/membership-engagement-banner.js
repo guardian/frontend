@@ -61,7 +61,7 @@ define([
     };
 
     function formatEndpointUrl(edition, message) {
-        return endpoints[edition] + '?INTCMP=' + message.campaign + "_prominent";
+        return endpoints[edition] + '?INTCMP=' + message.campaign + '_prominent';
     }
 
     function thisInstanceColour(colours) {
@@ -139,7 +139,7 @@ define([
                     buttonEl = $('#membership__engagement-message-button');
                 fastdom.write(function () {
                     buttonEl.removeClass('is-hidden');
-                    buttonEl.addClass("prominent");
+                    buttonEl.addClass('prominent');
                     buttonEl.addClass(thisColour);
                     buttonCaption.text('Become a Supporter');
                 });
