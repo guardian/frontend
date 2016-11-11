@@ -541,8 +541,7 @@
 }
 
 .meta__numbers {
-
-    padding: $gs-baseline / 3 0;
+    padding: $gs-baseline / 2 0;
     position: absolute;
     right: 0;
     top: 0;
@@ -551,7 +550,7 @@
         border-top: 1px dotted $neutral-5;
         border-bottom: 1px dotted $neutral-5;
         position: static;
-        height: 30px;
+        height: 36px;
         padding: $gs-baseline / 4 0;
     }
 }
