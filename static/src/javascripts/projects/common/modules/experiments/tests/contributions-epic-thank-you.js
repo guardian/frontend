@@ -6,7 +6,7 @@ define([
     'common/views/svg',
     'common/utils/fastdom-promise',
     'common/utils/mediator',
-    'text!common/views/contributions-epic-equal-buttons.html',
+    'text!common/views/contributions-epic-thank-you.html',
     'common/utils/robust',
     'inlineSvg!svgs/icon/arrow-right',
     'common/utils/config',
@@ -23,7 +23,7 @@ define([
              svg,
              fastdom,
              mediator,
-             contributionsEpicEqualButtons,
+             contributionsEpicThankyou,
              robust,
              arrowRight,
              config,
@@ -35,10 +35,10 @@ define([
 
     return function () {
 
-        this.id = 'ContributionsEpicPostElectionCopyTest';
+        this.id = 'ContributionsEpicThankyou';
         this.start = '2016-11-09';
         this.expiry = '2016-11-14';
-        this.author = 'Sam Desborough';
+        this.author = 'Jonathan Rankin';
         this.description = 'Test a version of the epic centered around the election result against one that is not related to the election';
         this.showForSensitive = false;
         this.audience = 1;
@@ -121,16 +121,7 @@ define([
                 id: 'control',
 
                 test: function () {
-                    var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: makeUrl(membershipUrl, membershipUrlPrefix + 'equal_postelection_1c'),
-                        linkUrl2: makeUrl(contributeUrl, contributeUrlPrefix + 'equal_postelection_1c'),
-                        p1: messages.control,
-                        p2: cta.equal.p2,
-                        p3: cta.equal.p3,
-                        cta1: cta.equal.cta1,
-                        cta2: cta.equal.cta2,
-                        hidden: ''
-                    }));
+                    var component = $.create(template(contributionsEpicThankyou, {}));
                     componentWriter(component);
                 },
 
