@@ -23,9 +23,7 @@ define([
     var STATES = {
         'ENDED': _onPlayerEnded,
         'PLAYING': _onPlayerPlaying,
-        'PAUSED': _onPlayerPaused,
-        'BUFFERING': null,
-        'CUED': null
+        'PAUSED': _onPlayerPaused
     };
 
     fastdom.read(function() {
