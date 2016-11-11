@@ -41,7 +41,7 @@ trait ABTestSwitches {
     "Test alternate short messages on membership engagement banner",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = On, // so we don't inadvertently turn off during deployment
-    sellByDate = new LocalDate(2016, 11, 10), // Thursday night
+    sellByDate = new LocalDate(2016, 11, 17), // Thursday night
     exposeClientSide = true
   )
 
