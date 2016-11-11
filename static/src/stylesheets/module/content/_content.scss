@@ -763,6 +763,10 @@
     .tone-media--item {
         color: $neutral-1;
 
+        .rich-link__container:before{
+            background-color: $news-support-3
+        }
+
         .rich-link__standfirst {
             color: $neutral-1;
         }
