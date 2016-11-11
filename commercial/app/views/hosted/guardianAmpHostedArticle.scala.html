@@ -88,6 +88,16 @@
                 @guardianHostedCta(page, page.cta)
                 @guardianHostedOnwardOverlay(page)
 
+                <amp-font
+                    layout="nodisplay"
+                    font-family="Guardian Egyptian Web"
+                    timeout="3000"
+                    on-error-remove-class="guardian-egyptian-loading"
+                    on-error-add-class="guardian-egyptian-missing"
+                    on-load-remove-class="guardian-egyptian-loading"
+                    on-load-add-class="guardian-egyptian-loaded">
+                </amp-font>
+
         </div>
     </body>
 </html>
