@@ -47,8 +47,8 @@ define([
             messageText: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for just £49 per year.'
         },
         US: {
-            campaign: 'mem_us_banner',
-            messageText: 'We need your help to support our fearless, independent journalism. Become a Guardian US Member for just $69 a year.'
+            campaign: 'control',
+            messageText: 'If you use it, if you like it, then why not pay for it? It’s only fair.'
         },
         AU: {
             campaign: 'mem_au_banner',
@@ -97,6 +97,7 @@ define([
             customOpts = {},
             messagingTestVariant = ab.testCanBeRun('MembershipEngagementMessageCopyExperiment') ? ab.getTestVariantId('MembershipEngagementMessageCopyExperiment') : undefined,
             usMessagingTestVariant = ab.testCanBeRun('MembershipEngagementUsMessageCopyExperiment') ? ab.getTestVariantId('MembershipEngagementUsMessageCopyExperiment') : undefined,
+            buttonMessage='Become a Supporter',
             linkHref = formatEndpointUrl(edition, message);
 
         if (messagingTestVariant && messagingTestVariant !== 'notintest') {
@@ -117,12 +118,11 @@ define([
 
         if (usMessagingTestVariant && usMessagingTestVariant !== 'notintest') {
             var usVariantMessages = {
-                coffee: 'For less than the price of a coffee a week you could help secure the Guardian\'s future. Become a Guardian US member for just $49 a year.',
-                defies: 'When politicians defy belief you need journalism that defies politicians. Become a Guardian US member for just $49 a year.',
-                value: 'If you value our independent, international journalism, you can support it. Become a Guardian US member for just $49 a year.'
+                informed: 'Fund our journalism and together we can keep the world informed.'
             };
-            campaignCode = 'gdnwb_copts_mem_banner_messaging1us' + '__' + usMessagingTestVariant;
-            linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
+            buttonMessage = 'Make a Contribution';
+            campaignCode = 'co_us_engageb_' + usMessagingTestVariant;
+            linkHref = 'https://contribute.theguardian.com?INTCMP=' + campaignCode;
             customOpts = {
                 testName: 'messaging-test-us-1',
                 setEngagementText: usMessagingTestVariant === 'control' ? undefined : usVariantMessages[usMessagingTestVariant]
@@ -130,7 +130,7 @@ define([
             customJs = getCustomJs;
         }
 
-        if (config.page.edition.toLowerCase() === 'uk' && config.switches['prominentMembershipEngagementBannerUk']) {
+        if (config.switches['prominentMembershipEngagementBannerUk']) {
             colours = ['yellow', 'purple', 'bright-blue', 'dark-blue'];
             thisColour = thisInstanceColour(colours);
             cssModifierClass = 'membership-prominent ' + thisColour;
@@ -141,7 +141,7 @@ define([
                     buttonEl.removeClass('is-hidden');
                     buttonEl.addClass('prominent');
                     buttonEl.addClass(thisColour);
-                    buttonCaption.text('Become a Supporter');
+                    buttonCaption.text(buttonMessage);
                 });
             };
             customJs = getCustomJs;
