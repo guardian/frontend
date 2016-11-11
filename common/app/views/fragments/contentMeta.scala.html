@@ -18,6 +18,10 @@
     if (item.content.isImmersiveGallery) List("social-icon-media") else Nil
 }
 
+@ageNotice() = @{
+    ContentOldAgeDescriber(item.content)
+}
+
 @metaBody() = {
     @if(!item.content.isImmersiveGallery && !item.content.isExplore) {
         @if(!item.content.hasTonalHeaderByline) {
@@ -39,11 +43,11 @@
     }
 
     @if(showExtras) {
-        <div class="meta__extras">
+        <div class="meta__extras @if(!ageNotice.isEmpty){ meta__extras--notice }">
             <div class="meta__social" data-component="share">
                 @fragments.social(socialLinks, "top", iconModifier = iconModifier)
                 @if(item.content.tags.tags.exists(_.id == "tone/news")) {
-                    @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
+                    @fragments.contentAgeNotice(ageNotice)
                 }
             </div>
             @if(!item.content.isExplore) {
