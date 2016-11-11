@@ -145,10 +145,6 @@ Twitter: @aycenne
 From: Cork, Ireland
 Location: London, UK
 
-Developer: Rafe Kennedy
-Twitter: @rjmk_
-From: Reading, UK
-
 User Experience Architect: Alastair Jardine
 Twitter: @aj_ux
 From: London, UK
