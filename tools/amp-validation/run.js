@@ -1,60 +1,86 @@
 'use strict';
 
 const amphtmlValidator = require('amphtml-validator');
+const partition = require('lodash/partition');
+
 const validatorJs = require('./validator-js');
 const fetchPage = require('./fetch-page');
 
 const isDev = process.env.NODE_ENV === 'dev' || false;
 
-module.exports = (endpoints) => {
+module.exports = opts => endpoints => {
+    const options = Object.assign({
+        checkIfAmp: false,
+        logErrors: true
+    }, opts);
+
     // TODO: re-add pre-release when/if google provide us with one
     validatorJs.fetchRelease()
-        .then(checkEndpoints(false, endpoints))
+        .then(checkEndpoints(endpoints, options))
         .catch(onError);
 };
 
-function checkEndpoints(devChannel, endpoints) {
+function checkEndpoints(endpoints, options) {
     return validatorFilePath => amphtmlValidator.getInstance(validatorFilePath)
         .then(validator => {
-            const tests = endpoints.map(runValidator(validator, devChannel));
+            const tests = endpoints.map(maybeRunValidator(validator, options));
 
             Promise.all(tests)
                 .then(values => {
-                    const exitValue = values.every(Boolean) ? 0 : 1; // every promise returns true <=> exit value is zero
+                    const results = partition(values, Boolean);
+                    const exitValue = results[1].length ? 1 : 0; // every promise returns true <=> exit value is zero
+
+                    console.log(`Validator finished, there were ${results[0].length} passes and ${results[1].length} failures.`);
                     validatorJs.cleanUp();
                     process.exit(exitValue);
                 });
         });
 }
 
-function runValidator(validator, devChannel) {
+function maybeRunValidator(validator, options) {
+    return endpoint => {
+        const validate = runValidator(validator, options);
+        if (!options.checkIfAmp) return validate(endpoint);
 
-    return endpoint => fetchPage
-        .get(endpoint)
+        return fetchPage.get({
+                endpoint: endpoint,
+                host: fetchPage.hosts.prod
+            })
+            .then(body => {
+                if (body.includes('<link rel="amphtml" href="')) {
+                    return validate(endpoint)
+                } else {
+                    return Promise.resolve(true)
+                }
+            })
+            .catch(onError);
+    }
+}
+
+function runValidator(validator, options) {
+    return endpoint => fetchPage.get({
+            endpoint: endpoint,
+            host: isDev ? fetchPage.hosts.dev : fetchPage.hosts.amp
+        })
         .then(res => {
-            console.log(`Checking the AMP validity (${devChannel ? 'pre-release' : 'release'}) of the page at ${isDev ? 'localhost:9000' : ''}${endpoint}, result is:`);
             const result = validator.validateString(res);
-
             const pass = result.status === 'PASS';
-            (pass ? console.log : console.error)(`Result for ${endpoint} was: ${result.status}`);
-            result.errors.forEach(error => {
-                ((error.severity === 'ERROR') ? console.error : console.warn)(buildErrorMessage(error));
-            });
+            const message = `${result.status} for: ${endpoint}`;
+
+            (pass ? console.log : console.error)(message);
+            if(options.logErrors) {
+                result.errors.forEach(error => {
+                    ((error.severity === 'ERROR') ? console.error : console.warn)(buildErrorMessage(error));
+                });
+            }
 
             return pass;
         }).catch(onError);
 }
 
+
 function onError(error) {
-
-    try {
-        require('megalog').error(`Are you running the article or dev-build app? \n \n ${error.message}`, {
-            heading: 'A 200 was not returned'
-        });
-    } catch(e) {
-        console.log(error.message)
-    }
-
+    console.error(error.message);
     validatorJs.cleanUp();
     process.exit(1);
 }
