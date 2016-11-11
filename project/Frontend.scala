@@ -156,7 +156,8 @@ object Frontend extends Build with Prototypes {
       exactTargetClient,
       nScalaTime,
       dispatch,
-      libPhoneNumber
+      libPhoneNumber,
+      exactTargetFuel
     )
   )
 

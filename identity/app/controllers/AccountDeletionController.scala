@@ -1,6 +1,7 @@
 package controllers
 
 import actions.AuthenticatedActions
+import com.exacttarget.fuelsdk.ETSubscriber
 import com.gu.identity.model.GroupMembership
 import common.{ExecutionContexts, GuardianConfiguration}
 import conf.IdentityConfiguration
@@ -22,9 +23,6 @@ import scalaz.std.scalaFuture._
 import net.liftweb.json._
 import net.liftweb.json.{parse => liftParse}
 
-
-case class Membership(tier: String)
-
 class AccountDeletionController(
     api: IdApiClient,
     idRequestParser: IdRequestParser,
@@ -35,7 +33,9 @@ class AccountDeletionController(
     identityApiClient: IdApiClient,
     signinService : PlaySigninService,
     conf: IdentityConfiguration,
-    discussionApi: DiscussionApi)
+    discussionApi: DiscussionApi,
+    exactTargetService: ExactTargetService)
+
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
   import authenticatedActions._
@@ -58,10 +58,8 @@ class AccountDeletionController(
     *   - do not have a jobs account
     *   - do not have active subscriptions, and
     *   - do not have active membership, and
-    *   - do not have mail subscriptions
     */
   def usersSatisfyDeletionCriteria[A](implicit request: AuthenticatedActions.AuthRequest[A]): Future[Boolean] = {
-    logger.info("usersSatisfyDeletionCriteria")
     val noComments: Future[Boolean] = discussionApi.myProfile(request.headers).map { profile =>
         logger.info(s" hello ${profile}")
         profile.privateFields.fold(false)(_.hasCommented)
@@ -86,7 +84,6 @@ class AccountDeletionController(
         Ok(views.html.accountDeletion(page, idRequest, idUrlBuilder, form, Nil))
       else
         Forbidden("Cannot Delete")
-
     }
   }
 
@@ -112,6 +109,7 @@ class AccountDeletionController(
     case object FailedToEnterCorrectPassword extends AccountDeletionFailures
     case object FailedToUnauthenticateUser extends AccountDeletionFailures
     case object FailedToDeleteAccount extends AccountDeletionFailures
+    case object FailedToRemoveFromAllEmailLists extends AccountDeletionFailures
 
     def checkUserEnteredCorrectPassword(): EitherT[Future, AccountDeletionFailures, Unit] =
       (for {
@@ -124,6 +122,9 @@ class AccountDeletionController(
 
     def deleteAccountProper(): EitherT[Future, AccountDeletionFailures, Unit] =
       EitherT.fromEither(identityApiClient.deleteAccount(request.user.auth)).leftMap(_ => FailedToDeleteAccount)
+
+    def removeFromAllMalingLists(): EitherT[Future, AccountDeletionFailures, ETSubscriber] =
+      EitherT(exactTargetService.unsubscribeFromAllLists("y5c@gu.com")).leftMap(_ => FailedToRemoveFromAllEmailLists)
 
     def clearCookiesAndDisplaySuccessForm() =
       NoCache(SeeOther(routes.AccountDeletionController.renderAccountDeletionConfirmForm().url))
@@ -138,6 +139,10 @@ class AccountDeletionController(
           logger.error(s"Failed to un-authenticate user ${request.user.user.id} during account deletion.")
           renderFormWithUnableToDeleteAccountError(boundForm)
 
+        case FailedToRemoveFromAllEmailLists =>
+          logger.error(s"Failed to remove user ${request.user.user.id} from all mailing lists during account deletion.")
+          renderFormWithUnableToDeleteAccountError(boundForm)
+
         case FailedToDeleteAccount =>
           logger.error(s"Failed to delete account for user ${request.user.user.id}")
           renderFormWithUnableToDeleteAccountError(boundForm)
@@ -146,6 +151,7 @@ class AccountDeletionController(
     (for {
       _ <- checkUserEnteredCorrectPassword()
       _ <- unauthenticateUser()
+      _ <- removeFromAllMalingLists()
       _ <- deleteAccountProper()
     } yield ()).fold(processFailures, _ => clearCookiesAndDisplaySuccessForm)
   }

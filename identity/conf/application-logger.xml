@@ -15,6 +15,20 @@
         </encoder>
     </appender>
 
+    <appender name="EXACTTARGETSERVICE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/exacttargetservice.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%date [%thread] %-5level %logger{36} - %msg%n%xException</pattern>
+        </encoder>
+    </appender>
+
+    <!-- additivity=false ensures analytics data only goes to the analytics log -->
+    <!--<logger name="conf.switches.SwitchboardLifecycle" level="INFO" additivity="false">-->
+    <logger name="services.ExactTargetService" level="INFO" additivity="false">
+        <appender-ref ref="EXACTTARGETSERVICE"/>
+    </logger>
+
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
     </root>
