@@ -97,7 +97,7 @@ define([
             customOpts = {},
             messagingTestVariant = ab.testCanBeRun('MembershipEngagementMessageCopyExperiment') ? ab.getTestVariantId('MembershipEngagementMessageCopyExperiment') : undefined,
             usMessagingTestVariant = ab.testCanBeRun('MembershipEngagementUsMessageCopyExperiment') ? ab.getTestVariantId('MembershipEngagementUsMessageCopyExperiment') : undefined,
-            buttonMessage='Become a Supporter';
+            buttonMessage='Become a Supporter',
             linkHref = formatEndpointUrl(edition, message);
 
         if (messagingTestVariant && messagingTestVariant !== 'notintest') {
