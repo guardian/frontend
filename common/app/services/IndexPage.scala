@@ -40,7 +40,7 @@ object IndexPage {
     date: DateTime,
     tzOverride: Option[DateTimeZone]
   ): IndexPage = {
-    IndexPage(page, contents, tags, date, tzOverride, commercial = Commercial.make)
+    IndexPage(page, contents, tags, date, tzOverride, commercial = Commercial.empty)
   }
 
   def fastContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {

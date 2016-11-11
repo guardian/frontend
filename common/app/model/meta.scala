@@ -18,7 +18,6 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
-import play.twirl.api.Html
 
 object Commercial {
 
@@ -31,7 +30,7 @@ object Commercial {
     )
   }
 
-  def make: model.Commercial = {
+  val empty: model.Commercial = {
     model.Commercial(
       isInappropriateForSponsorship = false,
       hasInlineMerchandise = false
@@ -221,9 +220,6 @@ final case class MetaData (
       sectionId == "identity" ||
       contentType.toLowerCase == "survey" ||
       contentType.toLowerCase == "signup"
-
-  // Special means "Next Gen platform only".
-  private val special = id.contains("-sp-")
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
