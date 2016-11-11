@@ -16,7 +16,7 @@ object LeffeHostedPages {
     name = "Leffe - Rediscover Time",
     owner = "Leffe",
     logoUrl = Static("images/commercial/leffe.jpg"),
-    fontColour = FontColour("#dec190")
+    fontColour = Colour("#dec190")
   )
 
   private val cta = HostedCallToAction(

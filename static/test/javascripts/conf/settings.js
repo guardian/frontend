@@ -1,4 +1,4 @@
-var isTeamcityReporterEnabled = process.env.KARMA_TEAMCITY_REPORTER === 'true',
+var isTeamcityReporterEnabled = process.env.TEAMCITY === 'true',
     karmaReporters = [ isTeamcityReporterEnabled ? 'teamcity' : 'spec' ];
 
 module.exports = function (config) {

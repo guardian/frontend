@@ -23,9 +23,7 @@
         <meta itemprop="url" content="@LinkTo(article.metadata.url)">
         <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
             <meta itemprop="name" content="The Guardian">
-            <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-                <meta itemprop="url" content="https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2015/10/1/1443713974413/Guardiantitlepiecedigitalon.png">
-            </div>
+            @fragments.logo(amp)
         </div>
 
         <header class="content__head tonal__head tonal__head--@toneClass(article)
@@ -115,16 +113,18 @@
                         <div class="after-article js-after-article"></div>
                         <div class="js-bottom-marker"></div>
                     } else {
-                        @fragments.dropdown("Live feed", Some("live-feed"), true) {
-                            @views.html.liveblog.liveBlogBodyContent(model)
-                            @fragments.submeta(article)
-                            <div class="after-article js-after-article"></div>
-                            <div class="js-bottom-marker"></div>
-                        }
+                        <div class="js-liveblog-body-content">
+                            @fragments.dropdown("Live feed", Some("live-feed"), true) {
+                                @views.html.liveblog.liveBlogBodyContent(model)
+                                @fragments.submeta(article)
+                                <div class="after-article js-after-article"></div>
+                                <div class="js-bottom-marker"></div>
+                            }
+                        </div>
                     }
                 </div>
 
-                <div class="content__secondary-column" aria-hidden="true">
+                <div class="content__secondary-column js-secondary-column" aria-hidden="true">
                     <div class="ad-slot-container js-ad-slot-container"></div>
                     @if(model.related.hasStoryPackage && !amp) {
                         <aside role="complementary" class="blog__related">
@@ -152,7 +152,7 @@
     </article>
 
     @if(!amp) {
-        @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent(article, model))
+        @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent(model))
     }
 
 </div>

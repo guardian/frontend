@@ -4,11 +4,10 @@ define([
     'common/utils/ajax',
     'common/utils/config',
     'membership/formatters',
-    'membership/payment-form'
-], function (bean, $, ajax, config, formatters, PaymentForm) {
+    'membership/stripe'
+], function (bean, $, ajax, config, formatters, stripe) {
 
     var PACKAGE_COST = '.js-dig-package-cost',
-        CARD_CHANGE_SUCCESS_MSG = '.js-dig-card-change-success-msg',
         PAYMENT_FORM = '.js-dig-card-details',
         SUBSCRIBER_ID = '.js-dig-subscriber-id',
         REMAINING_TRIAL_LENGTH = '.js-dig-remaining-trial-length',
@@ -27,8 +26,7 @@ define([
         UP_SELL = '.js-dig-up-sell',
         DIG_INFO = '.js-dig-info',
         LOADER = '.js-dig-loader',
-        IS_HIDDEN_CLASSNAME = 'is-hidden',
-        stripeForm = new PaymentForm(PAYMENT_FORM, CARD_CHANGE_SUCCESS_MSG, '/me/digitalpack-update-card');
+        IS_HIDDEN_CLASSNAME = 'is-hidden';
 
     function fetchUserDetails() {
         ajax({
@@ -86,8 +84,7 @@ define([
             $(NOTIFICATION_CANCEL).removeClass(IS_HIDDEN_CLASSNAME);
             $(DIGITALPACK_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
         } else if (userDetails.subscription.card) {
-            stripeForm.updateCard(userDetails.subscription.card);
-            stripeForm.showCardDetailsElementWithChangeCardOption();
+            stripe.display(PAYMENT_FORM,userDetails.subscription.card);
         }
         $(DIG_INFO).removeClass(IS_HIDDEN_CLASSNAME);
     }

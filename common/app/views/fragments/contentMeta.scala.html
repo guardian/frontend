@@ -1,5 +1,4 @@
-@(item: model.ContentType, page: model.Page, showBadge: Boolean = true, showExtras: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
-@import conf.switches.Switches.SaveForLaterSwitch
+@(item: model.ContentType, page: model.Page, showExtras: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
 @import model._
 @import views.support.Commercial.isPaidContent
 @import views.support.ContentOldAgeDescriber
@@ -73,7 +72,7 @@
 
 
     @if(
-        item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !isPaidContent(item, page))
+        item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !isPaidContent(page))
     ) {
         @fragments.commercial.badge(item, page)
     }

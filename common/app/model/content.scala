@@ -520,20 +520,6 @@ final case class Article (
     leftColElements.isDefined
   }
 
-  lazy val chapterHeadings: Map[String, String] = {
-    val jsoupChapterCleaner = ChaptersLinksCleaner.clean(soupedBody)
-    val chapterElements = jsoupChapterCleaner.getElementsByClass("auto-chapter")
-    chapterElements.flatMap { el =>
-      val headingElOpt = el.getElementsByTag("h2").headOption
-      headingElOpt.flatMap { headingEl =>
-        val attributes = headingEl.attributes()
-        if(attributes.hasKey("id")) {
-          Some((attributes.get("id"), headingEl.text()))
-        } else None
-      }
-    }.toMap
-  }
-
   private lazy val soupedBody = Jsoup.parseBodyFragment(fields.body)
   lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").nonEmpty
 
