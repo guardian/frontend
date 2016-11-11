@@ -22,7 +22,7 @@ import play.api.routing.Router
 import play.api._
 import play.api.i18n.{I18nComponents, Lang, Messages}
 import play.api.libs.ws.WSClient
-import services.{ConfigAgentLifecycle, EmailService, FastlyStatisticService, OphanApi}
+import services._
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -40,6 +40,7 @@ trait AdminServices extends I18nComponents  {
   lazy val emailService = wire[EmailService]
   lazy val fastlyStatisticService = wire[FastlyStatisticService]
   lazy val fastlyCloudwatchLoadJob = wire[FastlyCloudwatchLoadJob]
+  lazy val redirects = wire[RedirectService]
   lazy val r2PagePressJob = wire[R2PagePressJob]
   lazy val videoEncodingsJob = wire[VideoEncodingsJob]
   lazy val matchDayRecorder = wire[MatchDayRecorder]

@@ -1,6 +1,5 @@
 package views.support
 
-import common.Edition.defaultEdition
 import model.{MetaData, SectionSummary}
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers, OptionValues}
 import views.support.Commercial.topAboveNavSlot
@@ -15,7 +14,7 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
 
   def pageShouldRequestAdSizes(pageId: String)(sizes: Seq[String]): Unit = {
     val metaData = metaDataFromId(pageId)
-    topAboveNavSlot.adSizes(metaData, defaultEdition, None).get("desktop").value shouldBe sizes
+    topAboveNavSlot.adSizes.get("desktop").value shouldBe sizes
   }
 
   "topAboveNavSlot ad sizes" should "be variable for all pages" in {
@@ -44,11 +43,6 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
   // }
 
   they should "be default for any other page" in {
-    topAboveNavSlot.cssClasses(metaDataFromId("uk/culture"), defaultEdition, None, Nil) should
-      endWith("js-top-banner")
-    topAboveNavSlot.cssClasses(metaDataFromId(
-      "business/2015/jul/07/eurozone-calls-on-athens-to-get-serious-over-greece-debt-crisis"),
-      defaultEdition, None, Nil)
-      .should(endWith("js-top-banner"))
+    topAboveNavSlot.cssClasses should endWith("js-top-banner")
   }
 }

@@ -6,20 +6,13 @@ define([
     ab
 ) {
 
+    var contributionsEpicPostElectionCopyTest = {
+        name: 'ContributionsEpicPostElectionCopyTest',
+        variants: ['control']
+    };
+
     function userIsInAClashingAbTest() {
-
-        var contributionsMembershipEpicCtaUnitedStatesTwo = {
-            name: 'ContributionsMembershipEpicCtaUnitedStatesTwo',
-            variants: ['control', 'membership', 'equal']
-        };
-
-        var contributionsMembershipEpicCtaRestOfWorldTwo = {
-            name: 'ContributionsMembershipEpicCtaRestOfWorldTwo',
-            variants: ['control', 'membership', 'equal']
-        };
-
-
-        var clashingTests = [contributionsMembershipEpicCtaUnitedStatesTwo, contributionsMembershipEpicCtaRestOfWorldTwo];
+        var clashingTests = [contributionsEpicPostElectionCopyTest];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 
