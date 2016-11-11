@@ -156,7 +156,7 @@ define([
      * @param {Object=} params
      */
     function CommercialComponent(adSlot, params) {
-        if(params.type == 'book') adSlot.addClass('ad-slot--books-inline');
+        if(params.type == 'book') fastdom.write(adSlot.addClass('ad-slot--books-inline'));
         this.params = params || {};
         this.type = this.params.type;
         // remove type from params
