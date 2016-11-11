@@ -12,6 +12,7 @@ define([
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
     'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment',
+    'common/modules/experiments/tests/membership-engagement-international-experiment',
     'common/modules/experiments/tests/contributions-epic-post-election-copy-test'
 ], function (
     reportError,
@@ -27,6 +28,7 @@ define([
     WeekendReadingEmail,
     MembershipEngagementMessageCopyExperiment,
     MembershipEngagementUSMessageCopyExperiment,
+    MembershipEngagementInternationalExperiment,
     ContributionsEpicPostElectionCopyTest
 ) {
 
@@ -36,6 +38,7 @@ define([
         new WeekendReadingEmail(),
         new MembershipEngagementMessageCopyExperiment(),
         new MembershipEngagementUSMessageCopyExperiment(),
+        new MembershipEngagementInternationalExperiment(),
         new ContributionsEpicPostElectionCopyTest()
     ];
 

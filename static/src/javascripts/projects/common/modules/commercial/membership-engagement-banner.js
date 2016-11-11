@@ -97,7 +97,8 @@ define([
             customOpts = {},
             messagingTestVariant = ab.testCanBeRun('MembershipEngagementMessageCopyExperiment') ? ab.getTestVariantId('MembershipEngagementMessageCopyExperiment') : undefined,
             usMessagingTestVariant = ab.testCanBeRun('MembershipEngagementUsMessageCopyExperiment') ? ab.getTestVariantId('MembershipEngagementUsMessageCopyExperiment') : undefined,
-            buttonMessage='Become a Supporter',
+            internationalTestVariant = ab.testCanBeRun('MembershipEngagementInternationalExperiment') ? ab.getTestVariantId('MembershipEngagementInternationalExperiment') : undefined,
+            buttonMessage = 'Become a Supporter',
             linkHref = formatEndpointUrl(edition, message);
 
         if (messagingTestVariant && messagingTestVariant !== 'notintest') {
@@ -128,6 +129,11 @@ define([
                 setEngagementText: usMessagingTestVariant === 'control' ? undefined : usVariantMessages[usMessagingTestVariant]
             };
             customJs = getCustomJs;
+        }
+
+        if (internationalTestVariant && internationalTestVariant !== 'notintest') {
+            campaignCode = 'gdnwb_copts_mem_banner_ROWbanner__' + internationalTestVariant;
+            linkHref = endpoints[edition] + '?INTCMP=' + campaignCode;
         }
 
         if (config.switches['prominentMembershipEngagementBannerUk']) {
@@ -175,8 +181,7 @@ define([
         var edition = config.page.edition;
         var message = messages[edition];
         if (message) {
-            var userHasMadeEnoughVisits = (storage.local.get('gu.alreadyVisited') || 0) >= 10;
-            if (userHasMadeEnoughVisits) {
+            if (userHasMadeEnoughVisits(edition)) {
                 return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
                     if (canShow) {
                         show(edition, message);
@@ -185,6 +190,16 @@ define([
             }
         }
         return Promise.resolve();
+    }
+
+    function userHasMadeEnoughVisits(edition) {
+        if (edition == 'INT') {
+            var internationalTestVariant = ab.testCanBeRun('MembershipEngagementInternationalExperiment') ? ab.getTestVariantId('MembershipEngagementInternationalExperiment') : undefined;
+            if (internationalTestVariant == 'first')
+                return true;
+        }
+
+        return (storage.local.get('gu.alreadyVisited') || 0) >= 10;
     }
 
     return {
