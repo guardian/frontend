@@ -1,3 +1,11 @@
+.content--article {
+    background: #f6f6f6;
+}
+
+.content-article-body {
+    margin: 0;
+}
+
 .hosted__side:before,
 .hosted__side:after {
     display: none;
@@ -302,11 +310,13 @@
 
 .hosted__next-page--more-from {
     font-weight: bolder;
+    margin: 0;
 }
 
 .hosted__next-page--client-name {
     font-size: 20px;
     line-height: 20px;
+    margin: 0;
 }
 
 .hosted__next-page .hosted__next-page--tile {
@@ -314,7 +324,7 @@
     color: #333333;
     text-decoration: none;
     position: relative;
-    min-height: 90px;
+    min-height: 56px;
 }
 
 .hosted__next-page .hosted__next-page--tile:active {
@@ -431,16 +441,37 @@
     background: linear-gradient(to top, rgba(51, 51, 51, .4) 0%, rgba(51, 51, 51, .4) 2%, transparent 100%);
 }
 
+.content__article-body {
+    margin: 0;
+}
+
+.content__article-body .media-primary {
+    margin-left: -10px;
+}
+
+.u-responsive-ratio img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.content .gs-container {
+    padding: 0 10px;
+}
+
 .hosted-article-page .gs-container {
     height: 100%;
 }
 
 .hosted-article-page .title {
     position: absolute;
+    margin: auto;
     z-index: 3;
-    bottom: $gs-gutter;
+    bottom: 20px;
     color: #ffffff;
-    font-size: 36px;
+    font-size: 32px;
     line-height: 36px;
     font-weight: bold;
 }
@@ -450,10 +481,15 @@
     left: 10px;
     top: 390px;
     right: unset;
+    padding: 0;
 }
 
 .hosted-article-page .content__meta-container {
-    margin-top: 48px;
+    margin: 48px 0 12px 0;
+}
+
+.hosted-article-page .meta__extras {
+    border-top: none;
 }
 
 .hosted-article-page .content[class*='-advertisement-feature'] .social__item--pinterest {
@@ -479,7 +515,7 @@
     text-align: center;
 }
 
-.hosted-article-page .intro {
+.hosted-article-page .content__article-body .intro {
     font-size: 20px;
     line-height: 24px;
     font-weight: 100;
@@ -511,6 +547,11 @@
     margin-top: 0;
     padding-top: 10px;
     border-top: 2px solid #eeeeee;
+}
+
+.hosted__ab-test-variant-carousel,
+.hosted__ab-test-variant-popup {
+    display: none;
 }
 
 .hosted-article-page .hosted__next-page {
