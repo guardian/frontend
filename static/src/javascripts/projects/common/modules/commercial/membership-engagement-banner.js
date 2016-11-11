@@ -138,6 +138,8 @@ define([
                 var buttonCaption = $('#membership__engagement-message-button-caption'),
                     buttonEl = $('#membership__engagement-message-button');
                 fastdom.write(function () {
+                    buttonEl.removeClass('is-hidden');
+                    buttonEl.addClass('prominent');
                     buttonEl.addClass(thisColour);
                     buttonCaption.text(buttonMessage);
                 });
