@@ -20,7 +20,7 @@ define([
     return function () {
         this.id = 'MembershipEngagementUsMessageCopyExperiment';
         this.start = '2016-10-27';
-        this.expiry = '2016-11-15';
+        this.expiry = '2016-11-17';
         this.author = 'Justin Pinner';
         this.description = 'Test alternate short messages on engagement banner';
         this.audience = 1;
