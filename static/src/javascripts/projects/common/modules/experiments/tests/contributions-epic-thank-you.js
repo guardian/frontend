@@ -26,12 +26,12 @@ define([
              arrowRight,
              config,
             cookies,
-            userFeatures, 
+            userFeatures,
              ElementInview) {
 
     return function () {
         var isContributor = cookies.get('gu.contributions.contrib-timestamp');
-        var isPayingMember = userFeatures.isPayingMember;
+        var isPayingMember = userFeatures.isPayingMember();
 
         this.id = 'ContributionsEpicThankYou';
         this.start = '2016-11-09';
@@ -71,11 +71,11 @@ define([
         }
 
         function setValue(name, value){
-            cookies.add(name, value, 14);
+            cookies.add(name, value, 18);
         }
 
 
-        function addInviewLIstener(thankYouCounter) {
+        function addInviewListener(thankYouCounter) {
             mediator.on('contributions-embed:insert', function () {
                 $('.contributions__epic').each(function (el) {
                         //top offset of 18 ensures view only counts when half of element is on screen
@@ -89,66 +89,30 @@ define([
             });
         }
 
-        var makeUrl = function(urlPrefix, intcmp) {
-            return urlPrefix + 'INTCMP=' + intcmp;
-        };
-
-        var membershipUrl = 'https://membership.theguardian.com/supporter?';
-        var contributeUrl = 'https://contribute.theguardian.com/?';
         var thankyouCount = getValue('gu.thankyouCount') || 0;
-        var campaignCode = 'epic_thankyou_' + thankyouCount;
 
-
-        var link = isPayingMember? makeUrl(contributeUrl, campaignCode) : makeUrl(membershipUrl, campaignCode);
-
-        var cta = {
-            v1: {
-                title: 'We\'d like to say thanks &#8230;',
-                p1: 'Your crucial financial support makes our journalism possible. We do it because we believe, like you, that the world has never needed fearless, independent media more.',
-                p2: 'If you know someone who might want to support us, why not tell them how they can by <a target=\"_blank\" href=\"' + link + '\">sharing this link?</a>'
-            },
-
-            v2: {
-                title: 'Thank you for your support',
-                p1: 'Your crucial financial support makes our journalism possible. We do it because we believe, like you, that the world has never needed fearless, independent media more.',
-                p2: 'If you know someone who might share that perspective and want to support us, why not tell them how they can by <a target=\"_blank\" href=\"' + link + '\">sharing this link?</a>'
-
-            }
-
+        var makeUrl = function() {
+            var membershipUrl = 'https://membership.theguardian.com/supporter?';
+            var contributeUrl = 'https://contribute.theguardian.com/?';
+            var urlPrefix =  isPayingMember ? membershipUrl : contributeUrl;
+            return urlPrefix + 'INTCMP=epic_thankyou_' + thankyouCount;
         };
 
+
+
+        var messages  =  {
+            title: 'Thank you',
+            p1: 'Your crucial financial support makes our journalism possible. We do it because we believe, like you, that the world has never needed fearless, independent media more.',
+            p2: 'If you know someone who might share that perspective and want to support us, why not tell them how they can by <a target=\"_blank\" href=\"' + makeUrl() + '\">sharing this link?</a>'
+        };
 
         this.variants = [
             {
                 id: 'control',
 
                 test: function () {
-                    addInviewLIstener(thankyouCount);
+                    addInviewListener(thankyouCount);
                     if(thankyouCount < 4) {
-                        var messages = cta.v1;
-                        var component = $.create(template(contributionsEpicThankYou, {
-                            title: messages.title,
-                            p1: messages.p1,
-                            p2: messages.p2
-                        }));
-                        componentWriter(component);
-                    }
-                },
-
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
-
-                success: completer
-            },
-
-            {
-                id: 'other',
-
-                test: function () {
-                    addInviewLIstener(thankyouCount);
-                    if(thankyouCount < 4) {
-                        var messages = cta.v2;
                         var component = $.create(template(contributionsEpicThankYou, {
                             title: messages.title,
                             p1: messages.p1,
