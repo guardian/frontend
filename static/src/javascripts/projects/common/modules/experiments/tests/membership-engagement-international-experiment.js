@@ -23,10 +23,10 @@ define([
         this.expiry = '2016-11-17';
         this.author = 'Rupert Bates';
         this.description = 'Test varying the number of visits before showing the membership engagement banner';
-        this.audience = 1;    // 100% (of UK audience)
+        this.audience = 1;    // 100% (of International audience)
         this.audienceOffset = 0;
         this.successMeasure = 'More membership sign-ups';
-        this.audienceCriteria = '100 percent of (non-member) UK edition readers';
+        this.audienceCriteria = '100 percent of (non-member) International edition readers';
         this.dataLinkNames = '';
         this.idealOutcome = 'More readers engage with the banner and then complete membership sign-up';
         this.hypothesis = 'Showing the banner to users who have visited us less frequently gives us a larger pool of potential supporters';
