@@ -763,6 +763,28 @@
         }
     }
 
+    .tone-media--item {
+        color: $neutral-1;
+
+        .rich-link__container:before{
+            background-color: $news-support-3
+        }
+
+        .rich-link__standfirst {
+            color: $neutral-1;
+        }
+
+        .rich-link__kicker, .rich-link__read-more-text {
+            color: $paid-article-richlink;
+        }
+
+        .rich-link__arrow-icon {
+            fill: $paid-article-richlink;
+        }
+    }
+
+
+
     .tone-news--item.rich-link {
         background: $paid-article-subheader;
     }

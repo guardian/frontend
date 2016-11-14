@@ -8,7 +8,7 @@ function fetch() {
         const errorMessage = 'Failed to fetch top traffic endpoints from ophan.';
         const opts = {
             hostname: 'api.ophan.co.uk',
-            path: '/api/mostread?count=25'
+            path: '/api/mostread?count=50'
         };
 
         const req = http.get(opts, res => {
