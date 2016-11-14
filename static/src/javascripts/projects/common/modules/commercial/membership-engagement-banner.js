@@ -40,6 +40,7 @@ define([
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
         var messageCode = 'engagement-banner-2016-11-10';
+        var notInTest = 'notintest';
 
         var messages = {
             UK: {
@@ -62,7 +63,7 @@ define([
 
         function doUkCopyTest(content) {
             var variant = getVariant('MembershipEngagementMessageCopyExperiment');
-            if (variant && variant !== 'notintest') {
+            if (variant && variant !== notInTest) {
                 var variantMessages = {
                     Get_round_to: 'Not got round to supporting us yet? Now is the time. Give £5 a month today',
                     Give_upfront: 'Give £5 a month to help support our journalism and make the Guardian’s future more secure',
@@ -73,15 +74,12 @@ define([
                 content.campaignCode = campaignCode;
                 content.linkHref = endpoints['UK'] + '?INTCMP=' + campaignCode;
                 content.messageText = variant === 'control' ? undefined : variantMessages[variant];
-                content.customOpts = {
-                    testName: 'messaging-test-1'
-                }
             }
         }
 
         function doUsCopyTest(content) {
             var variant = getVariant('MembershipEngagementUsMessageCopyExperiment');
-            if (variant && variant !== 'notintest') {
+            if (variant && variant !== notInTest) {
                 var usVariantMessages = {
                     informed: 'Fund our journalism and together we can keep the world informed.'
                 };
@@ -90,21 +88,15 @@ define([
                 content.linkHref = 'https://contribute.theguardian.com?INTCMP=' + campaignCode;
                 content.buttonCaption = 'Make a Contribution';
                 content.messageText = variant === 'control' ? undefined : usVariantMessages[variant];
-                content.customOpts = {
-                    testName: 'messaging-test-us-1'
-                }
             }
         }
 
         function doInternationalTest(content) {
             var variant = getVariant('MembershipEngagementInternationalExperiment');
-            if (variant && variant !== 'notintest') {
+            if (variant && variant !== notInTest) {
                 var campaignCode = 'gdnwb_copts_mem_banner_ROWbanner__' + variant;
                 content.campaignCode = campaignCode;
                 content.linkHref = endpoints['INT'] + '?INTCMP=' + campaignCode;
-                content.customOpts = {
-                    testName: 'messaging-test-int-1'
-                }
             }
         }
 
@@ -114,7 +106,6 @@ define([
                 linkHref: formatEndpointUrl(edition, message),
                 messageText: message.messageText,
                 campaignCode: message.campaign,
-                customOpts: {},
                 colourClass: thisInstanceColour(),
                 arrowWhiteRight: svgs('arrowWhiteRight')
             };
@@ -132,8 +123,7 @@ define([
                     siteMessageCloseBtn: 'hide',
                     siteMessageComponentName: content.campaignCode,
                     trackDisplay: true,
-                    cssModifierClass: 'membership-prominent ' + content.colourClass,
-                    customOpts: content.customOpts
+                    cssModifierClass: 'membership-prominent ' + content.colourClass
                 }).show(renderedBanner);
             if (messageShown) {
                 mediator.emit('membership-message:display');
