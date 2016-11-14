@@ -8,7 +8,7 @@ define([
 
     var contributionsEpicPostElectionCopyTest = {
         name: 'ContributionsEpicPostElectionCopyTestTwo',
-        variants: ['control', 'v1', 'v2']
+        variants: ['control', 'despair', 'belief']
     };
 
     var contributionsEpicThankyou = {
