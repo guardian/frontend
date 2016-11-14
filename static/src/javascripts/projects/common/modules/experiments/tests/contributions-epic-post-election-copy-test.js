@@ -35,16 +35,16 @@ define([
 
     return function () {
 
-        this.id = 'ContributionsEpicPostElectionCopyTest';
-        this.start = '2016-11-09';
+        this.id = 'ContributionsEpicPostElectionCopyTestTwo';
+        this.start = '2016-11-14';
         this.expiry = '2016-11-18';
-        this.author = 'Sam Desborough';
-        this.description = 'Test a version of the epic centered around the election result against one that is not related to the election';
+        this.author = 'Jonathan Rankin';
+        this.description = 'Try out 2 new epic variants to try an beat our control';
         this.showForSensitive = false;
         this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Impressions to number of contributions/supporter signups';
-        this.audienceCriteria = 'All readers who are in the US, who are reading about US politics or the US election';
+        this.audienceCriteria = 'Global ';
         this.dataLinkNames = '';
         this.idealOutcome = 'We learn to what extend using messages that chime with current events have an impact on contributor/supporter conversion';
         this.canRun = function () {
@@ -53,10 +53,8 @@ define([
                 'politics/politics',
                 'politics/eu-referendum',
                 'society/society',
-                'uk/commentisfree',
                 'uk/media',
                 'uk/uk',
-                'us/commentisfree',
                 'us/environment',
                 'us-news/us-news',
                 'us-news/us-politics',
@@ -83,8 +81,8 @@ define([
             return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && hasKeywordsMatch();
         };
 
-        var contributeUrlPrefix = 'co_global_epic_';
-        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_post_';
+        var contributeUrlPrefix = 'co_global_epic_two_';
+        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_post_two_';
 
 
         var makeUrl = function(urlPrefix, intcmp) {
@@ -95,7 +93,9 @@ define([
         var contributeUrl = 'https://contribute.theguardian.com/?';
 
         var messages  = {
-            control:  '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
+            control:  '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+            v1:  'NEW COPY',
+            v2:  'NEW COPY 2'
         };
 
         var cta = {
@@ -150,29 +150,85 @@ define([
             mediator.on('contributions-embed:insert', complete);
         };
 
+        var getCta = function() {
+            if (config.switches.turnOffSupporterEpic) {
+                return cta.justContribute;
+            }
+            if (config.switches.turnOffContributionsEpic) {
+                return cta.justSupporter;
+            }
+            return cta.equal;
+        };
+
 
         this.variants = [
             {
                 id: 'control',
 
                 test: function () {
-                    var epicType = cta.equal;
-                    if(config.switches.turnOffSupporterEpic){
-                        epicType = cta.justContribute;
-                    }
-                    if(config.switches.turnOffContributionsEpic){
-                        epicType = cta.justSupporter;
-                    }
 
+                    var ctaType = getCta();
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: epicType.intcmp1,
-                        linkUrl2: epicType.intcmp2,
+                        linkUrl1: ctaType.intcmp1,
+                        linkUrl2: ctaType.intcmp2,
                         p1: messages.control,
-                        p2:epicType.p2,
-                        p3: epicType.p3,
-                        cta1: epicType.cta1,
-                        cta2: epicType.cta2,
-                        hidden: epicType.hidden
+                        p2:ctaType.p2,
+                        p3: ctaType.p3,
+                        cta1: ctaType.cta1,
+                        cta2: ctaType.cta2,
+                        hidden: ctaType.hidden
+                    }));
+                    componentWriter(component);
+                },
+
+                impression: function(track) {
+                    mediator.on('contributions-embed:insert', track);
+                },
+
+                success: completer
+            },
+
+            {
+                id: 'v1',
+
+                test: function () {
+
+                    var ctaType = getCta();
+                    var component = $.create(template(contributionsEpicEqualButtons, {
+                        linkUrl1: ctaType.intcmp1,
+                        linkUrl2: ctaType.intcmp2,
+                        p1: messages.v1,
+                        p2:ctaType.p2,
+                        p3: ctaType.p3,
+                        cta1: ctaType.cta1,
+                        cta2: ctaType.cta2,
+                        hidden: ctaType.hidden
+                    }));
+                    componentWriter(component);
+                },
+
+                impression: function(track) {
+                    mediator.on('contributions-embed:insert', track);
+                },
+
+                success: completer
+            },
+
+            {
+                id: 'v2',
+
+                test: function () {
+
+                    var ctaType = getCta();
+                    var component = $.create(template(contributionsEpicEqualButtons, {
+                        linkUrl1: ctaType.intcmp1,
+                        linkUrl2: ctaType.intcmp2,
+                        p1: messages.v2,
+                        p2:ctaType.p2,
+                        p3: ctaType.p3,
+                        cta1: ctaType.cta1,
+                        cta2: ctaType.cta2,
+                        hidden: ctaType.hidden
                     }));
                     componentWriter(component);
                 },
