@@ -32,7 +32,7 @@
 
         @if(item.content.tags.contributors.length == 1) {
             @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) {
-                <p class="meta__contact-header hide-until-leftcol">Contact author</p>
+                <p class="meta__contact-header">Contact author</p>
             }
             @fragments.meta.contactAuthor(item.tags)
         }

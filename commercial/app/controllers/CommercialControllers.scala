@@ -29,4 +29,5 @@ trait CommercialControllers {
   lazy val soulmatesController = wire[SoulmatesController]
   lazy val travelOffersController = wire[TravelOffersController]
   lazy val trafficDriverController = wire[TrafficDriverController]
+  lazy val piggybackPixelController = wire[PiggybackPixelController]
 }

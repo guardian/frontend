@@ -11,8 +11,13 @@ define([
         variants: ['control']
     };
 
+    var contributionsEpicThankyou = {
+        name: 'ContributionsEpicThankYou',
+        variants: ['control']
+    };
+
     function userIsInAClashingAbTest() {
-        var clashingTests = [contributionsEpicPostElectionCopyTest];
+        var clashingTests = [contributionsEpicPostElectionCopyTest, contributionsEpicThankyou];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 
