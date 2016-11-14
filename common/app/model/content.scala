@@ -336,7 +336,7 @@ object Content {
     val metadata = MetaData.make(fields, apiContent)
     val elements = Elements.make(apiContent)
     val tags = Tags.make(apiContent)
-    val commercial = Commercial.make(metadata, tags, apiContent)
+    val commercial = Commercial.make(tags, apiContent)
     val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
     val sharelinks = ShareLinks(tags, fields, metadata)
     val atoms = Atoms.make(apiContent)
@@ -518,20 +518,6 @@ final case class Article (
     val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
     val leftColElements = soupedBody.body().select("body > *").find(_.classNames.intersect(supportingClasses).nonEmpty)
     leftColElements.isDefined
-  }
-
-  lazy val chapterHeadings: Map[String, String] = {
-    val jsoupChapterCleaner = ChaptersLinksCleaner.clean(soupedBody)
-    val chapterElements = jsoupChapterCleaner.getElementsByClass("auto-chapter")
-    chapterElements.flatMap { el =>
-      val headingElOpt = el.getElementsByTag("h2").headOption
-      headingElOpt.flatMap { headingEl =>
-        val attributes = headingEl.attributes()
-        if(attributes.hasKey("id")) {
-          Some((attributes.get("id"), headingEl.text()))
-        } else None
-      }
-    }.toMap
   }
 
   private lazy val soupedBody = Jsoup.parseBodyFragment(fields.body)

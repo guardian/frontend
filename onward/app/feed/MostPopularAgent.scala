@@ -36,11 +36,15 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
   // These are the only country codes (row must be lower-case) passed to us from the fastly service.
   // This allows us to choose carefully the codes that give us the most impact. The trade-off is caching.
-  private val countries = Seq("GB", "US", "AU", "CA", "IN", "NG", "row")
+  private val countries = Seq("GB", "US", "AU", "CA", "IN", "NG", "NZ", "row")
 
-  def mostPopular(country: String): Seq[RelatedContentItem] = ophanPopularAgent().get(country).getOrElse(Nil)
+  // Default country if the country does is not currently populated
+  private val defaultCountry: String = "row"
 
-  def refresh() {
+  def mostPopular(country: String): Seq[RelatedContentItem] =
+    ophanPopularAgent().getOrElse(country, ophanPopularAgent().getOrElse(defaultCountry, Nil))
+
+  def refresh(): Unit = {
     log.info("Refreshing most popular for countries.")
     countries foreach update
   }

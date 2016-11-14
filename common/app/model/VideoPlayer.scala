@@ -16,6 +16,7 @@ case class VideoPlayer(
   title: String,
   autoPlay: Boolean,
   showControlsAtStart: Boolean,
+  // TODO make Option[String] as relies on section being set
   endSlatePath: String,
   // TODO make `String` once `path` is available on main media on fronts
   path: Option[String],

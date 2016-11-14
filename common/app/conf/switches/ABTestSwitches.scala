@@ -1,20 +1,9 @@
 package conf.switches
 
-import common.Edition
 import conf.switches.SwitchGroup.ABTests
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
-
-  val ABDiscussionExternalFrontend = Switch(
-    SwitchGroup.ABTests,
-    "ab-discussion-external-frontend",
-    "Standalone frontend discussion",
-    owners = Seq(Owner.withGithub("piuccio")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 11, 7),
-    exposeClientSide = true
-  )
 
   Switch(
     ABTests,
@@ -22,7 +11,7 @@ trait ABTestSwitches {
     "Promote the comments with a sticky bottom banner",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 11, 9),
+    sellByDate = new LocalDate(2016, 11, 14),
     exposeClientSide = true
   )
 
@@ -52,7 +41,7 @@ trait ABTestSwitches {
     "Test alternate short messages on membership engagement banner",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = On, // so we don't inadvertently turn off during deployment
-    sellByDate = new LocalDate(2016, 11, 10), // Thursday night
+    sellByDate = new LocalDate(2016, 11, 17), // Thursday night
     exposeClientSide = true
   )
 
@@ -68,21 +57,33 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-membership-epic-brexit",
-    "Find the optimal way of offering Contributions along side Membership in the Epic component on articles about Brexit",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 7),
+    "ab-membership-engagement-international-experiment",
+    "Test varying the number of visits before showing the membership engagement banner",
+    owners = Seq(Owner.withGithub("rupert.bates")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 17),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-contributions-membership-epic-side-by-side",
-    "Find out if offering membership and contributions side by side with equal weighting is as effective as just offering membership by itself",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 7),
+    "ab-contributions-epic-post-election-copy-test",
+    "Test a version of the epic centered around the election result against one that is not related to the election",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 17),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-thank-you",
+    "Test a version of the epic centered around the election result against one that is not related to the election",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 17),
+    exposeClientSide = true
+  )
+
+
 }

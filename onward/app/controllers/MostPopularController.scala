@@ -93,7 +93,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
       JsonComponent(
         "items" -> JsArray(Seq(
           Json.obj(
-            "displayName" -> "popular",
+            "displayName" -> "most viewed",
             "showContent" -> mostPopular.nonEmpty,
             "content" ->  JsArray(mostPopular.map(content => isCuratedContent(content.faciaContent)))
           )

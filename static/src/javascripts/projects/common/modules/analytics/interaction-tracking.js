@@ -27,6 +27,10 @@ define([
             return;
         }
 
+        if (isSponsorLogoLinkClick(spec.target)) {
+            return google.trackSponsorLogoLinkClick(spec.target);
+        }
+
         if (spec.sameHost) {
             if (spec.samePage) {
                 trackSamePageLinkClick(spec);
@@ -36,6 +40,10 @@ define([
         } else {
             trackExternalLinkClick(spec);
         }
+    }
+
+    function isSponsorLogoLinkClick(target) {
+        return target.hasAttribute('data-sponsor');
     }
 
     // used where we don't have an element to pass as a tag, eg. keyboard interaction

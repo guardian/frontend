@@ -9,7 +9,7 @@ import jobs.VideoEncodingsJob
 import play.api.Environment
 import play.api.libs.ws.WSClient
 import play.api.i18n.Messages
-import services.OphanApi
+import services.{OphanApi, RedirectService}
 
 trait AdminControllers {
   def akkaAsync: AkkaAsync
@@ -17,6 +17,7 @@ trait AdminControllers {
   def videoEncodingsJob: VideoEncodingsJob
   def ophanApi: OphanApi
   def environment: Environment
+  def redirects: RedirectService
   implicit val messages: Messages
   lazy val oAuthLoginController = wire[OAuthLoginAdminController]
   lazy val uncachedWebAssets = wire[UncachedWebAssets]

@@ -1,7 +1,8 @@
 package weather
 
 import java.net.{URI, URLEncoder}
-import common.{ExecutionContexts, ResourcesHelper}
+
+import common.{ExecutionContexts, Logging, ResourcesHelper}
 import conf.Configuration
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WSClient
@@ -14,7 +15,7 @@ import scala.concurrent.duration.Duration
 import play.api.Environment
 import play.api.Mode
 
-class WeatherApi(wsClient: WSClient, environment: Environment) extends ExecutionContexts with ResourcesHelper {
+class WeatherApi(wsClient: WSClient, environment: Environment) extends ExecutionContexts with ResourcesHelper with Logging {
   lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(
     throw new RuntimeException("Weather API Key not set")
   )
@@ -54,8 +55,11 @@ class WeatherApi(wsClient: WSClient, environment: Environment) extends Execution
         case t : TimeoutException => Left(t)
       }
     retry.Backoff(max = requestRetryMax, delay = requestRetryDelay, base = requestRetryBackoffBase)(fetchRequest).flatMap {
-      case Left(error) => Future.failed(error)
-      case Right(json) => Future.successful(json)
+      case Left(error) =>
+        log.error(s"Error fetching $url: $error")
+        Future.failed(error)
+      case Right(json) =>
+        Future.successful(json)
     }
   }
 

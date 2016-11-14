@@ -76,7 +76,8 @@ class DevParametersHttpRequestHandler(
         !request.uri.startsWith("/px.gif")  && // diagnostics box
         !request.uri.startsWith("/tech-feedback") &&
         !request.uri.startsWith("/crosswords/search") &&
-        !request.uri.startsWith("/crosswords/lookup")
+        !request.uri.startsWith("/crosswords/lookup") &&
+        !request.uri.startsWith("/commercial/anx/anxresize.js") // this is used by commercial for advert resizing, served through api.nextgen
       ) {
         val illegalParams = request.queryString.keySet.filterNot(allowedParams.contains(_))
         if (illegalParams.nonEmpty) {

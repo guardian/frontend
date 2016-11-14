@@ -1,52 +1,54 @@
 'use strict';
 
-const https = require('https');
-const http = require('http');
+const request = require('request');
+const url = require('url');
 const promiseRetry = require('promise-retry');
+const once = require('lodash/once');
 
-const hostname = 'https://amp.theguardian.com';
-const localHostname = 'http://localhost:9000';
+exports.get = opts => {
+    const options = Object.assign({
+        endpoint: '',
+        host: exports.hosts.dev
+    }, opts);
 
-const isDev = process.env.NODE_ENV === 'dev' || false;
+    return fetch(options);
+};
 
-exports.get = endpoint => makeRequest(endpoint).then(getBody);
+exports.hosts = {
+    dev: 'http://localhost:9000',
+    amp: 'https://amp.theguardian.com',
+    prod: 'https://www.theguardian.com'
+};
 
-function makeRequest(endpoint) {
+function fetch(options) {
+
+    const onError = once(error => {
+        if(options.host === exports.hosts.dev) {
+            try {
+                require('megalog').error(`Are you running the article or dev-build app? \n \n ${error.message}`, {
+                    heading: 'A 200 was not returned'
+                });
+            } catch(e) {}
+        }
+        throw error
+    });
+
     return promiseRetry(retry => {
         return new Promise((resolve, reject) => {
-            const errorMessage = `Unable to fetch ${endpoint}`;
-            const reqObj = isDev ? http.get : https.get;
-            let reqEndpoint;
+            const errorMessage = `Unable to fetch ${options.endpoint}`;
 
-            if (isDev) {
-                reqEndpoint = localHostname + endpoint + '?amp=1'
-            } else {
-                reqEndpoint = hostname + endpoint
-            }
+            request(options.host + options.endpoint + '?amp', (error, resp, body) => {
+                if (error || resp.statusCode !== 200) {
+                    const errorDetails = error && error.message || '';
+                    const statusCodeMessage = resp ? ` Status code was ${resp && resp.statusCode || ''}` : '';
 
-            const req = reqObj(reqEndpoint, res => {
-                if (res.statusCode !== 200) {
-                    res.resume(); // must consume data, see https://nodejs.org/api/http.html#http_class_http_clientrequest
-                    reject(new Error(errorMessage + ` Status code was ${res.statusCode}`));
+                    reject(new Error(errorMessage + statusCodeMessage + '\n' + errorDetails));
                 } else {
-                    resolve(res);
+                    resolve(body);
                 }
             });
-            req.on('error', error => {
-                reject(new Error(errorMessage + ` ${error.message}`));
-            });
-            req.end();
         }).catch(retry);
     }, {
         retries: 2
-    });
-}
-
-function getBody(res) {
-    let body = '';
-    return new Promise((resolve, reject) => {
-        res.on('data', chunk => body += chunk)
-            .on('end', () => resolve(body))
-            .on('error', reject);
-    });
+    }).catch(onError);
 }

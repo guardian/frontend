@@ -12,7 +12,8 @@ define([
             injector
                 .mock('common/modules/analytics/google', {
                     trackSamePageLinkClick: sinon.spy(),
-                    trackExternalLinkClick: sinon.spy()
+                    trackExternalLinkClick: sinon.spy(),
+                    trackSponsorLogoLinkClick: sinon.spy()
                 })
                 .require([
                     'common/utils/mediator',
@@ -99,5 +100,25 @@ define([
 
             expect(google.trackExternalLinkClick).toHaveBeenCalledOnce();
         });
+
+        it('should log a clickstream event for a sponsor logo link', function () {
+            interactionTracking.init();
+
+            var el = document.createElement('a');
+            el.setAttribute('data-sponsor', 'Sponsor');
+
+            var clickSpec = {
+                    target: el,
+                    samePage: false,
+                    sameHost: false,
+                    validTarget: true,
+                    tag: 'tag'
+                };
+
+            mediator.emit('module:clickstream:click', clickSpec);
+
+            expect(google.trackSponsorLogoLinkClick).toHaveBeenCalledOnce();
+        });
+
     });
 });
