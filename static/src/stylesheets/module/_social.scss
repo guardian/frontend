@@ -122,7 +122,8 @@ category: Common
             margin: auto;
         }
 
-        &:hover {
+        &:hover,
+        &:focus {
             background-color: $neutral-3;
         }
     }
