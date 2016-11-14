@@ -91,19 +91,9 @@ define([
 
         var thankyouCount = getValue('gu.thankyouCount') || 0;
 
-        var makeUrl = function() {
-            var membershipUrl = 'https://membership.theguardian.com/supporter?';
-            var contributeUrl = 'https://contribute.theguardian.com/?';
-            var urlPrefix =  isPayingMember ? membershipUrl : contributeUrl;
-            return urlPrefix + 'INTCMP=epic_thankyou_' + thankyouCount;
-        };
-
-
-
         var messages  =  {
             title: 'Thank you',
             p1: 'Your crucial financial support makes our journalism possible. We do it because we believe, like you, that the world has never needed fearless, independent media more.',
-            p2: 'If you know someone who might share that perspective and want to support us, why not tell them how they can by <a target=\"_blank\" href=\"' + makeUrl() + '\">sharing this link?</a>'
         };
 
         this.variants = [

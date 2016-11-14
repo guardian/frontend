@@ -180,6 +180,9 @@ if (taskModules.filter(module => module !== null).length) {
             if (!verbose) {
                 console.log(e.stdout);
             }
+            if (e.stderr.length) {
+                console.log(e.stderr);
+            }
             process.exit(1);
         });
 } else {
