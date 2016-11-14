@@ -586,28 +586,28 @@
 
 
 .byline {
-    @include fs-bodyHeading(1);
+    @include fs-bodyHeading(2);
     margin-bottom: 0;
+    float: left;
+    margin-right: $gs-gutter/4;
     padding-top: $gs-baseline/3;
     line-height: 20px;
     color: $neutral-2;
 
     @include mq(tablet) {
-        @include fs-bodyHeading(2, true);
         line-height: 22px;
     }
 
     @include mq(leftCol) {
         clear: both;
+        float: none;
+        margin-right: 0;
+        display: block;
         padding-top: $gs-baseline/6;
         border-top: 1px dotted $neutral-5;
         box-sizing: border-box;
         padding-bottom: $gs-baseline;
         min-height: $gs-baseline*4;
-    }
-
-    @include mq($until: leftCol) {
-        display: inline;
     }
 
     .content__meta-container--twitter &,
@@ -1092,14 +1092,23 @@
         }
 
         @include mq($until: leftCol) {
-            padding: 0 3px;
+            float: left;
+            position: relative;
+            margin-top: -$gs-baseline/4;
+            margin-bottom: -$gs-baseline/2;
+            width: 32px;
+            height: 32px;
+            padding: 0;
             border: 0;
             background-color: transparent !important;
-
+            //background-color: red !important;
             svg {
-                position: relative;
-                vertical-align: middle;
-                bottom: -1px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                margin: auto;
             }
         }
 
@@ -1201,7 +1210,10 @@
 
     @include mq($until: leftCol) {
         border: 0;
-        display: inline;
+        padding-top: $gs-baseline/2;
+        float: left;
+
+
     }
 }
 

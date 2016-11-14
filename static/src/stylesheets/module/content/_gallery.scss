@@ -16,6 +16,11 @@
         display: block;
         width: gs-span(1);
     }
+
+    .meta__twitter .button,
+    .meta__email .button {
+        margin-top: -$gs-baseline/2;
+    }
 }
 
 .gallery__divider {
