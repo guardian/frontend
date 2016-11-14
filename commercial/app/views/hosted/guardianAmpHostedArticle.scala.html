@@ -23,7 +23,7 @@
     </head>
     <body>
         <div class="main-body">
-                <!--[if (gt IE 9)|(IEMobile)]><!-->
+            <!--[if (gt IE 9)|(IEMobile)]><!-->
             <style>
                 .hosted-tone {
                     color: @{page.campaign.fontColour.brandColour};
@@ -48,8 +48,12 @@
                     color: @{page.campaign.fontColour.brandColour};
                 }
 
-                .hosted-page ~ .survey-overlay-simple .survey-text__header {
+                .survey-container .survey-text__header {
                     background-color: @{page.campaign.fontColour.brandColour};
+                }
+
+                .survey-container::before {
+                    border-bottom-color: @{page.campaign.fontColour.brandColour};
                 }
 
                 .hosted-article-page p.intro + p::first-letter {
@@ -58,11 +62,6 @@
 
                 .from-content-api ul > li:before {
                     background-color: @{page.campaign.fontColour.brandColour};
-                }
-
-                .hosted__next-page__carousel-arrows .inline-icon {
-                    fill: @{page.campaign.fontColour.brandColour};
-                    border-color: @{page.campaign.fontColour.brandColour};
                 }
 
                 /* To prevent video element from jumping */
@@ -76,9 +75,9 @@
                     }
                 }
             </style>
-                <!--<![endif]-->
+            <!--<![endif]-->
 
-            @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-article-page hosted-page--bright" else "hosted-article-page", page)
+            @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-article-page hosted-page--bright" else "hosted-article-page", page, isAMP = true)
             <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
 
                 <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
@@ -93,7 +92,7 @@
                             <div class="content__main-column content__main-column--article js-content-main-column">
                                 <div class="content__meta-container js-content-meta js-football-meta u-cf content__meta-container--showcase">
                                     <div class="meta__extras" data-component="share">
-                                    @guardianHostedShareButtons(page)
+                                        @guardianHostedShareButtons(page)
                                     </div>
                                 </div>
 
@@ -119,10 +118,7 @@
                                 }
                                 </div>
                                 <div class="hosted__standfirst">
-                                    <div class="hosted__terms">​Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our
-                                        <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
-                                            <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn js-hosted-about hosted-tone" data-link-name="terms-and-conditions-text-link">commercial content explainer.</button>
-                                        </div>
+                                    <div class="hosted__terms">​Hosted content is used to describe content that is paid for and supplied by the advertiser.
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +136,6 @@
                 </article>
 
                 @guardianHostedCta(page, page.cta)
-                @guardianHostedOnwardOverlay(page)
 
                 <amp-font
                     layout="nodisplay"
