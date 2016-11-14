@@ -19,7 +19,19 @@ define(function (
         }
         return fieldsObject;
     }
+
+    function getGoogleAnalyticsEventAction(mediaEvent) {
+        var action = mediaEvent.mediaType + ' ';
+        if (mediaEvent.isPreroll) {
+            action += 'preroll';
+        } else {
+            action += 'content';
+        }
+        return action;
+    }
+
     return {
-        buildGoogleAnalyticsEvent: buildGoogleAnalyticsEvent
+        buildGoogleAnalyticsEvent: buildGoogleAnalyticsEvent,
+        getGoogleAnalyticsEventAction: getGoogleAnalyticsEventAction
     };
 });

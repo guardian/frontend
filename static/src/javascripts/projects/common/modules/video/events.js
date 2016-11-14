@@ -111,16 +111,6 @@ define([
         bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, true);
     }
 
-    function getGoogleAnalyticsEventAction(mediaEvent) {
-        var action = mediaEvent.mediaType + ' ';
-        if (mediaEvent.isPreroll) {
-            action += 'preroll';
-        } else {
-            action += 'content';
-        }
-        return action;
-    }
-
     function bindGoogleAnalyticsEvents(player, canonicalUrl) {
         var events = {
             'play': 'metric1',
@@ -136,7 +126,7 @@ define([
         }).forEach(function(playerEvent) {
             player.on(playerEvent, function(_, mediaEvent) {
                 ga(gaTracker + '.send', 'event', gaHelper.buildGoogleAnalyticsEvent(mediaEvent, events, canonicalUrl,
-                    'guardian-videojs', getGoogleAnalyticsEventAction, mediaEvent.mediaId));
+                    'guardian-videojs', gaHelper.getGoogleAnalyticsEventAction, mediaEvent.mediaId));
             });
         });
     }
