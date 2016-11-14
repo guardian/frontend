@@ -19,10 +19,12 @@ Only if we detect we should run enhance.
 
 define([
     'Promise',
-    'domReady'
+    'domReady',
+    'raven'
 ], function (
     Promise,
-    domReady
+    domReady,
+    raven
 ) {
     // curl’s promise API is broken, so we must cast it to a real Promise
     // https://github.com/cujojs/curl/issues/293
@@ -32,6 +34,11 @@ define([
 
     var guardian = window.guardian;
     var config = guardian.config;
+
+    // global variable for sharing modules across bundles
+    window.guardian.app = window.guardian.app || {
+        raven: raven
+    };
 
     var domReadyPromise = new Promise(function (resolve) { domReady(resolve); });
 
@@ -55,16 +62,14 @@ define([
             });
         }
 
-        return promiseRequire(['raven'])
-            .then(function (raven) {
-                return promiseRequire(['bootstraps/commercial'])
-                    .then(raven.wrap(
-                        { tags: { feature: 'commercial' } },
-                        function (commercial) {
-                            commercial.init();
-                        }
-                    ));
-            });
+        return promiseRequire(['bootstraps/commercial'])
+            .then(raven.wrap(
+                    { tags: { feature: 'commercial' } },
+                    function (commercial) {
+                        commercial.init();
+                    }
+                )
+            );
     };
 
     var bootEnhanced = function () {
