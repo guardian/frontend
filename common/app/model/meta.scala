@@ -6,6 +6,7 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.commercial.{AdUnitMaker, BrandHunter, Branding}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
+import contentapi.{Content => CapiContent}
 import conf.Configuration
 import cricketPa.CricketTeams
 import model.content.MediaAtom
@@ -17,37 +18,20 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
-import play.twirl.api.Html
 
 object Commercial {
 
-  private def make(metadata: MetaData, tags: Tags, maybeApiContent: Option[contentapi.Content]): model.Commercial = {
-
-    val section = Some(metadata.sectionId)
-
-    val isInappropriateForSponsorship =
-      maybeApiContent exists (_.fields.flatMap(_.isInappropriateForSponsorship).getOrElse(false))
+  def make(tags: Tags, apiContent: CapiContent): model.Commercial = {
+    val isInappropriateForSponsorship: Boolean = apiContent.fields.exists(_.isInappropriateForSponsorship.contains(true))
 
     model.Commercial(
-      tags,
-      metadata,
       isInappropriateForSponsorship,
       hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags)
     )
   }
 
-  def make(metadata: MetaData, tags: Tags, apiContent: contentapi.Content): model.Commercial = {
-    make(metadata, tags, Some(apiContent))
-  }
-
-  def make(metadata: MetaData, tags: Tags): model.Commercial = {
-    make(metadata, tags, None)
-  }
-
-  def make(section: Section): model.Commercial = {
+  val empty: model.Commercial = {
     model.Commercial(
-      tags = Tags(Nil),
-      metadata = section.metadata,
       isInappropriateForSponsorship = false,
       hasInlineMerchandise = false
     )
@@ -55,11 +39,8 @@ object Commercial {
 }
 
 final case class Commercial(
-  tags: Tags,
-  metadata: MetaData,
   isInappropriateForSponsorship: Boolean,
-  hasInlineMerchandise: Boolean
-)
+  hasInlineMerchandise: Boolean)
 
 /**
  * MetaData represents a page on the site, whether facia or content
@@ -239,9 +220,6 @@ final case class MetaData (
       sectionId == "identity" ||
       contentType.toLowerCase == "survey" ||
       contentType.toLowerCase == "signup"
-
-  // Special means "Next Gen platform only".
-  private val special = id.contains("-sp-")
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs

@@ -263,8 +263,6 @@ object ContentTypeFormat {
 
        val sharelinks = ShareLinks.apply(tags, fields, metadata)
        val commercial = Commercial.apply(
-         tags,
-         metadata,
          jsonCommercial.isInappropriateForSponsorship,
          jsonCommercial.hasInlineMerchandise
        )
