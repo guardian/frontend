@@ -57,6 +57,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-membership-engagement-international-experiment",
+    "Test varying the number of visits before showing the membership engagement banner",
+    owners = Seq(Owner.withGithub("rupert.bates")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 17),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-epic-post-election-copy-test",
     "Test a version of the epic centered around the election result against one that is not related to the election",
     owners = Seq(Owner.withGithub("desbo")),
