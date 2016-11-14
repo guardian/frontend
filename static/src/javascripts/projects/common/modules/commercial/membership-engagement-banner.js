@@ -102,7 +102,7 @@ define([
 
         function show(edition, message) {
             var content = {
-                buttonCaption: "Become a Supporter",
+                buttonCaption: 'Become a Supporter',
                 linkHref: formatEndpointUrl(edition, message),
                 messageText: message.messageText,
                 campaignCode: message.campaign,
