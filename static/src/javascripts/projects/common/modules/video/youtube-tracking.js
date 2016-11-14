@@ -45,24 +45,41 @@ define([
 
         forEach(eventsList, function(event) {
             mediator.once(buildEventId(event, videoId), function(id) {
-                ophanRecord(event, id);
+                var mediaEvent = MediaEvent(videoId, "video", event);
+                ophanRecord(mediaEvent);
                 ga(gaTracker + '.send', 'event',
-                    gaHelper.buildGoogleAnalyticsEvent(event, events, videoId,
+                    gaHelper.buildGoogleAnalyticsEvent(mediaEvent, events.metricMap, id,
                         'gu-video-youtube', eventAction, id));
             });
         });
 
-        function ophanRecord(event, id) {
+        function ophanRecord(event) {
             require(['ophan/ng'], function (ophan) {
                 var eventObject = {
                     video: {
-                        id: 'gu-video-youtube-' + id,
-                        eventType: 'video:content:' + event
+                        id: 'gu-video-youtube-' + event.mediaId,
+                        eventType: 'video:content:' + event.eventType
                     }
                 };
                 ophan.record(eventObject);
             });
         }
+    }
+
+    /**
+     *
+     * @param mediaId {string}
+     * @param mediaType {string} audio|video
+     * @param eventType {string} e.g. firstplay, firstend
+     * @param isPreroll {boolean}
+     * @returns {{mediaId: string, mediaType: string, eventType: string, isPreroll: boolean}}
+     */
+    function MediaEvent(mediaId, mediaType, eventType) {
+        return {
+            mediaId: mediaId,
+            mediaType: mediaType,
+            eventType: eventType
+        };
     }
 
     function init(videoId) {
