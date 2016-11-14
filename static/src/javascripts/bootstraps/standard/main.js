@@ -12,9 +12,9 @@
 // For this file, performance and breadth of support should take priority over *anything*…
 
 define([
-    'raven',
     'qwery',
     'fastdom',
+    'common/utils/raven',
     'common/modules/user-prefs',
     'common/modules/ui/images',
     'common/utils/storage',
@@ -28,9 +28,9 @@ define([
     'common/modules/navigation/newHeaderNavigation',
     'common/utils/detect'
 ], function (
-    raven,
     qwery,
     fastdom,
+    raven,
     userPrefs,
     images,
     storage,
