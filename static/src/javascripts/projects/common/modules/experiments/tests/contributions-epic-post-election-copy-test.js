@@ -37,7 +37,7 @@ define([
 
         this.id = 'ContributionsEpicPostElectionCopyTest';
         this.start = '2016-11-09';
-        this.expiry = '2016-11-14';
+        this.expiry = '2016-11-18';
         this.author = 'Sam Desborough';
         this.description = 'Test a version of the epic centered around the election result against one that is not related to the election';
         this.showForSensitive = false;
