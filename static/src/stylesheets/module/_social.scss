@@ -101,35 +101,38 @@ category: Common
     float: right;
     padding-bottom: 0;
     height: 32px;
-
-    .inline-close {
-        display: inline-block;
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        position: relative;
-        background-color: $neutral-4;
-        box-sizing: border-box;
-
-        svg {
-            fill: $neutral-2;
-            width: 16px;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            margin: auto;
-        }
-
-        &:hover,
-        &:focus {
-            background-color: $neutral-3;
-        }
-    }
 }
 
-.social--expanded-top {
+.social-tray__icon {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    position: relative;
+    background-color: $neutral-4;
+    box-sizing: border-box;
+
+    .social-tray__button:focus &,
+    .social-tray__button:hover & {
+        background-color: $neutral-3;
+    }
+
+}
+
+.social-tray__icon__svg {
+    fill: $neutral-2;
+    width: 16px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+}
+
+
+
+    .social--expanded-top {
     position: absolute;
     padding-left: $gs-gutter/4;
     padding-right: calc(#{$gs-gutter/4} - 3px);
