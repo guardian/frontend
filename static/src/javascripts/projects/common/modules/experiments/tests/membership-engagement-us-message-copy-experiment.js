@@ -5,6 +5,7 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/config',
+    'common/utils/cookies',
     'common/modules/commercial/commercial-features',
     'common/utils/mediator'
 ], function (
@@ -14,6 +15,7 @@ define([
     qwery,
     $,
     config,
+    cookies,
     commercialFeatures,
     mediator
 ) {
@@ -34,6 +36,7 @@ define([
         this.canRun = function () {
             return config.page.edition.toLowerCase() === 'us' &&
                 commercialFeatures.canReasonablyAskForMoney &&
+                !cookies.get('gu.contributions.contrib-timestamp') && //exclude users who have already contributed
                 config.page.contentType !== 'signup';
         };
 
