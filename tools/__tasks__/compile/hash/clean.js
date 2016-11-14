@@ -1,7 +1,9 @@
 const path = require('path');
+const rimraf = require('rimraf');
+
 const {hash} = require('../../config').paths;
 
 module.exports = {
     description: 'Clear asset hash artefacts',
-    task: `rm -rf ${path.resolve(hash, 'assets')}`
+    task: () => rimraf.sync(path.resolve(hash, 'assets'))
 };

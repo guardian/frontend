@@ -1,7 +1,13 @@
 const path = require('path');
+const rimraf = require('rimraf');
+
 const {target, hash, src} = require('../../config').paths;
 
 module.exports = {
     description: 'Clear image build artefacts',
-    task: `rm -rf ${path.resolve(src, 'stylesheets', 'icons')} ${path.resolve(target, 'images')} ${path.resolve(hash, 'images')}`
+    task: () => {
+        rimraf.sync(path.resolve(src, 'stylesheets', 'icons'));
+        rimraf.sync(path.resolve(target, 'images'));
+        rimraf.sync(path.resolve(hash, 'images'));
+    }
 };
