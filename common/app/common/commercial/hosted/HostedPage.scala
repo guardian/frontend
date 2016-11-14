@@ -1,6 +1,5 @@
 package common.commercial.hosted
 
-import java.awt.Color
 import java.net.URLEncoder
 
 import com.gu.contentapi.client.model.v1.Content
@@ -57,7 +56,7 @@ case class HostedCampaign(
   name: String,
   owner: String,
   logoUrl: String,
-  fontColour: FontColour
+  fontColour: Colour
 )
 
 object HostedCampaign {
@@ -74,25 +73,8 @@ object HostedCampaign {
         name = section.webTitle,
         owner = sponsorship.sponsorName,
         logoUrl = sponsorship.sponsorLogo,
-        fontColour = FontColour(hostedTag.paidContentCampaignColour getOrElse "")
+        fontColour = Colour(hostedTag.paidContentCampaignColour getOrElse "")
       )
     }
-  }
-}
-
-case class FontColour(brandColour: String) {
-
-  lazy val shouldHaveBrightFont = !isBrandColourBright
-
-  private val isBrandColourBright = {
-    val hexColour = brandColour.stripPrefix("#")
-    val rgb = Integer.parseInt(hexColour, 16)
-    val c = new Color(rgb)
-    // the conversion in java.awt.Color uses HSB colour space, whereas we want HSL here
-    // see http://www.niwa.nu/2013/05/math-behind-colorspace-conversions-rgb-hsl/
-    val min = Math.min(Math.min(c.getRed, c.getGreen), c.getBlue)
-    val max = Math.max(Math.max(c.getRed, c.getGreen), c.getBlue)
-    val lightness = (min + max).toDouble / 510
-    lightness > 0.5
   }
 }

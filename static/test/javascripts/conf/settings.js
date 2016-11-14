@@ -49,7 +49,8 @@ module.exports = function (config) {
                     dir: 'tmp/coverage/'
                 },
                 {type: 'text-summary'}
-            ]
+            ],
+            includeAllSources: true
         },
         preprocessors: {
             'static/src/javascripts/!(*components|vendor)/**/*.js': ['coverage'],

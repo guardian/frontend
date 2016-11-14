@@ -80,6 +80,7 @@
     "postcss-reporter": "^1.4.1",
     "require-dir": "^0.3.0",
     "requirejs": "^2.3.2",
+    "rimraf": "^2.5.4",
     "sass-lint": "^1.9.1",
     "sorted-object": "^1.0.0",
     "split": "^1.0.0",

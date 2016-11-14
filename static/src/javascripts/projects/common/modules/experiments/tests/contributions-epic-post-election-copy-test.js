@@ -37,7 +37,7 @@ define([
 
         this.id = 'ContributionsEpicPostElectionCopyTest';
         this.start = '2016-11-09';
-        this.expiry = '2016-11-14';
+        this.expiry = '2016-11-18';
         this.author = 'Sam Desborough';
         this.description = 'Test a version of the epic centered around the election result against one that is not related to the election';
         this.showForSensitive = false;
@@ -48,7 +48,7 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'We learn to what extend using messages that chime with current events have an impact on contributor/supporter conversion';
         this.canRun = function () {
-            var whitelistedKeywordIds = [
+            var includedKeywordIds = [
                 'australia-news/australia-news',
                 'politics/politics',
                 'politics/eu-referendum',
@@ -65,9 +65,17 @@ define([
                 'world/world'
             ];
 
+            var excludedKeywordIds = ['music/leonard-cohen'];
+
             var hasKeywordsMatch = function() {
                 var pageKeywords = config.page.keywordIds;
-                return pageKeywords && intersection(whitelistedKeywordIds, pageKeywords.split(',')).length > 0;
+                if (typeof(pageKeywords) != 'undefined') {
+                    var keywordList = pageKeywords.split(',');
+                    return intersection(excludedKeywordIds, keywordList).length == 0 &&
+                        intersection(includedKeywordIds, keywordList).length > 0;
+                } else {
+                    return false;
+                }
             };
 
             var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
@@ -75,14 +83,19 @@ define([
             return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && hasKeywordsMatch();
         };
 
+        var contributeUrlPrefix = 'co_global_epic_';
+        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_post_';
 
+
+        var makeUrl = function(urlPrefix, intcmp) {
+            return urlPrefix + 'INTCMP=' + intcmp;
+        };
 
         var membershipUrl = 'https://membership.theguardian.com/supporter?';
         var contributeUrl = 'https://contribute.theguardian.com/?';
 
         var messages  = {
-            control:  '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-            election: '…we have a favour to ask. Never has the world needed fearless, independent journalism more. And never has there been a greater need for people to support it. Help us hold the new US president to account, sort fact from fiction, amplify under-represented voices, and ensure we all understand the forces behind this divisive election. While more people are reading the Guardian than ever, far fewer are paying for it and our journalism takes time, money and hard work to produce. But we do it because we believe our perspective matters – because it may well be your perspective too.'
+            control:  '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
         };
 
         var cta = {
@@ -90,8 +103,33 @@ define([
                 p2: 'Fund our journalism and together we can keep the world informed.',
                 p3: '',
                 cta1: 'Become a Supporter',
-                cta2: 'Make a contribution'
+                cta2: 'Make a contribution',
+                intcmp1: makeUrl(membershipUrl, membershipUrlPrefix + 'equal_postelection_1c'),
+                intcmp2:  makeUrl(contributeUrl, contributeUrlPrefix + 'equal_postelection_1c'),
+                hidden: ''
+            },
+
+            justContribute: {
+                p2: 'Fund our journalism and together we can keep the world informed.',
+                p3: '',
+                cta1: 'Make a contribution',
+                cta2: '',
+                intcmp1:  makeUrl(contributeUrl, contributeUrlPrefix + 'equal_postelection_1c_backup'),
+                intcmp2: '',
+                hidden: 'hidden'
+            },
+
+            justSupporter: {
+                p2: 'Fund our journalism and together we can keep the world informed.',
+                p3: '',
+                cta1: 'Become a Supporter',
+                cta2: '',
+                intcmp1: makeUrl(membershipUrl, membershipUrlPrefix + 'equal_postelection_1c_backup'),
+                intcmp2: '',
+                hidden: 'hidden'
             }
+
+
         };
 
         var componentWriter = function (component) {
@@ -106,55 +144,35 @@ define([
             });
         };
 
-        var makeUrl = function(urlPrefix, intcmp) {
-            return urlPrefix + 'INTCMP=' + intcmp;
-        };
+
 
         var completer = function (complete) {
             mediator.on('contributions-embed:insert', complete);
         };
 
-        var contributeUrlPrefix = 'co_global_epic_';
-        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_post_';
 
         this.variants = [
             {
                 id: 'control',
 
                 test: function () {
+                    var epicType = cta.equal;
+                    if(config.switches.turnOffSupporterEpic){
+                        epicType = cta.justContribute;
+                    }
+                    if(config.switches.turnOffContributionsEpic){
+                        epicType = cta.justSupporter;
+                    }
+
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: makeUrl(membershipUrl, membershipUrlPrefix + 'equal_postelection_1b'),
-                        linkUrl2: makeUrl(contributeUrl, contributeUrlPrefix + 'equal_postelection_1b'),
+                        linkUrl1: epicType.intcmp1,
+                        linkUrl2: epicType.intcmp2,
                         p1: messages.control,
-                        p2: cta.equal.p2,
-                        p3: cta.equal.p3,
-                        cta1: cta.equal.cta1,
-                        cta2: cta.equal.cta2,
-                        hidden: ''
-                    }));
-                    componentWriter(component);
-                },
-
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
-
-                success: completer
-            },
-
-            {
-                id: 'election',
-
-                test: function () {
-                    var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: makeUrl(membershipUrl, membershipUrlPrefix + 'equal_postelection_4'),
-                        linkUrl2: makeUrl(contributeUrl, contributeUrlPrefix + 'equal_postelection_4'),
-                        p1: messages.election,
-                        p2: cta.equal.p2,
-                        p3: cta.equal.p3,
-                        cta1: cta.equal.cta1,
-                        cta2: cta.equal.cta2,
-                        hidden: ''
+                        p2:epicType.p2,
+                        p3: epicType.p3,
+                        cta1: epicType.cta1,
+                        cta2: epicType.cta2,
+                        hidden: epicType.hidden
                     }));
                     componentWriter(component);
                 },

@@ -1,7 +1,12 @@
 const path = require('path');
+const rimraf = require('rimraf');
+
 const {target, hash} = require('../../config').paths;
 
 module.exports = {
     description: 'Clear font build artefacts',
-    task: `rm -rf ${path.resolve(target, 'fonts')} ${path.resolve(hash, 'fonts')}`
+    task: () => {
+        rimraf.sync(path.resolve(target, 'fonts'));
+        rimraf.sync(path.resolve(hash, 'fonts'));
+    }
 };
