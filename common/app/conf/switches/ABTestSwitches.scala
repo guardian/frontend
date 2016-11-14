@@ -11,7 +11,7 @@ trait ABTestSwitches {
     "Promote the comments with a sticky bottom banner",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 11, 11),
+    sellByDate = new LocalDate(2016, 11, 14),
     exposeClientSide = true
   )
 
@@ -71,7 +71,7 @@ trait ABTestSwitches {
     "Test a version of the epic centered around the election result against one that is not related to the election",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 14),
+    sellByDate =  new LocalDate(2016, 11, 17),
     exposeClientSide = true
   )
 
