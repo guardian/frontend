@@ -195,7 +195,7 @@ define([
     function userHasMadeEnoughVisits(edition) {
         if (edition == 'INT') {
             var internationalTestVariant = ab.testCanBeRun('MembershipEngagementInternationalExperiment') ? ab.getTestVariantId('MembershipEngagementInternationalExperiment') : undefined;
-            if (internationalTestVariant == 'first')
+            if (internationalTestVariant == '1st_article')
                 return true;
         }
 
