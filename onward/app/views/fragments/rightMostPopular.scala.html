@@ -9,7 +9,7 @@
 
 @popular.map { pop =>
     <div class="js-right-most-popular right-most-popular right-most-popular--image component--rhc hide-on-childrens-books-site" data-component="right-most-popular" data-importance="-1">
-        <h3 class="content__meta-heading">Most popular</h3>
+        <h3 class="content__meta-heading">Most viewed</h3>
         <ul class="right-most-popular__items u-unstyled" data-link-name="Right hand most popular">
             @pop.trails.take(5).zipWithRowInfo.map{ case(trail, row) =>
                 <li class="right-most-popular-item" data-link-name="trail | @row.rowNum">

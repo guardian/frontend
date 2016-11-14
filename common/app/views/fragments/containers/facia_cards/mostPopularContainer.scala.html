@@ -2,33 +2,36 @@
 @import common.LinkTo
 @import model.MostPopular
 
-<div class="fc-container__header js-container__header">
-    @containerDefinition.displayName.map { title =>
-        <div class="fc-container__header__title">
-            <span tabindex="0">
-                @containerDefinition.href.map { href =>
-                    <a data-link-name="section heading" href="@LinkTo{/@href}">popular</a>
-                }.getOrElse{
-                    popular
-                }
-            </span>
-        </div>
-    }
-</div>
+@defining("most viewed") { containerTitle =>
 
-<div class="fc-container__body fc-container--rolled-up-hide js-popular-trails">
-@defining(Seq(
-    MostPopular(
-        containerDefinition.displayName.getOrElse("popular"),
-        "popular",
-        containerDefinition.items.take(10)
-    ),
-    MostPopular(
-        "across the guardian",
-        "popular",
-        Nil
-    )
-)){ popular =>
-    @fragments.collections.popular(popular, Some(containerDefinition))
+    <div class="fc-container__header js-container__header">
+        @containerDefinition.displayName.map { title =>
+            <div class="fc-container__header__title">
+                <span tabindex="0">
+                    @containerDefinition.href.map { href =>
+                    <a data-link-name="section heading" href="@LinkTo {/@href}">@containerTitle</a>
+                    }.getOrElse {
+                        @containerTitle
+                    }
+                </span>
+            </div>
+        }
+    </div>
+
+    <div class="fc-container__body fc-container--rolled-up-hide js-popular-trails">
+    @defining(Seq(
+        MostPopular(
+            containerDefinition.displayName.getOrElse(containerTitle),
+            containerTitle,
+            containerDefinition.items.take(10)
+        ),
+        MostPopular(
+            "across the guardian",
+            containerTitle,
+            Nil
+        )
+    )) { popular =>
+        @fragments.collections.popular(popular, Some(containerDefinition))
+    }
+    </div>
 }
-</div>
