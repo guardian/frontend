@@ -336,7 +336,7 @@ object Content {
     val metadata = MetaData.make(fields, apiContent)
     val elements = Elements.make(apiContent)
     val tags = Tags.make(apiContent)
-    val commercial = Commercial.make(metadata, tags, apiContent)
+    val commercial = Commercial.make(tags, apiContent)
     val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
     val sharelinks = ShareLinks(tags, fields, metadata)
     val atoms = Atoms.make(apiContent)

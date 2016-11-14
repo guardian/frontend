@@ -11,7 +11,7 @@ trait ABTestSwitches {
     "Promote the comments with a sticky bottom banner",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 11, 11),
+    sellByDate = new LocalDate(2016, 11, 14),
     exposeClientSide = true
   )
 
@@ -41,7 +41,7 @@ trait ABTestSwitches {
     "Test alternate short messages on membership engagement banner",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = On, // so we don't inadvertently turn off during deployment
-    sellByDate = new LocalDate(2016, 11, 10), // Thursday night
+    sellByDate = new LocalDate(2016, 11, 17), // Thursday night
     exposeClientSide = true
   )
 
@@ -64,5 +64,16 @@ trait ABTestSwitches {
     sellByDate =  new LocalDate(2016, 11, 14),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-thank-you",
+    "Test a version of the epic centered around the election result against one that is not related to the election",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 17),
+    exposeClientSide = true
+  )
+
 
 }
