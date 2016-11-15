@@ -493,7 +493,7 @@ trait FeatureSwitches {
     "Turning this on will hide the Become a Supporter button on the epic, leaving just the Contribute button",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 14),
+    sellByDate = new LocalDate(2016, 11, 22),
     exposeClientSide = true
   )
 
@@ -503,7 +503,7 @@ trait FeatureSwitches {
     "Turning this on will hide the Make a Contribution button on the epic, leaving just the Become a Supporter button",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 14),
+    sellByDate = new LocalDate(2016, 11, 22),
     exposeClientSide = true
   )
 }
