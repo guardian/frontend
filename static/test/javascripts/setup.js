@@ -40,17 +40,3 @@ window.guardian = {
         onDetect: []
     }
 };
-
-// Omniture variables expected on the page
-
-/*eslint-disable camelcase*/
-window.s_account = 'guardiangu-network';
-/*eslint-enable camelcase*/
-
-/*eslint-disable no-unused-vars*/
-window.s = {
-    tl: function (a, b, c) {
-
-    }
-};
-/*eslint-enable no-unused-vars*/
