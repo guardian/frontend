@@ -13,7 +13,7 @@ define([
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
     'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
-    'common/modules/experiments/tests/contributions-epic-post-election-copy-test',
+    'common/modules/experiments/tests/contributions-epic-limited-impressions',
     'common/modules/experiments/tests/contributions-epic-thank-you'
 ], function (reportError,
              config,
@@ -29,7 +29,7 @@ define([
              MembershipEngagementMessageCopyExperiment,
              MembershipEngagementUSMessageCopyExperiment,
              MembershipEngagementInternationalExperiment,
-             ContributionsEpicPostElectionCopyTest,
+             ContributionsEpicLimitedImpressions,
              ContributionsEpicThankYou) {
 
     var TESTS = [
@@ -39,7 +39,7 @@ define([
         new MembershipEngagementMessageCopyExperiment(),
         new MembershipEngagementUSMessageCopyExperiment(),
         new MembershipEngagementInternationalExperiment(),
-        new ContributionsEpicPostElectionCopyTest(),
+        new ContributionsEpicLimitedImpressions(),
         new ContributionsEpicThankYou()
     ];
 
