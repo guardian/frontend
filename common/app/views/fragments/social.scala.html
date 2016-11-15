@@ -2,7 +2,7 @@
 
 <ul class="social social--@position js-social--@position u-unstyled u-cf" data-component="social">
     @sharelinks.visible.map { link => @ShareLink(Nil, link) }
-    @if(sharelinks.hidden.isEmpty) { Html("") } else {
+    @if(!sharelinks.hidden.isEmpty) {
         @SocialMore
         @sharelinks.hidden.map { link => @ShareLink(List("social--hidden", "js-social__secondary"), link) }
     }
