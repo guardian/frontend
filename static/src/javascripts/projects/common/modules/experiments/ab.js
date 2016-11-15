@@ -7,7 +7,6 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-    'common/modules/experiments/tests/discussion-promote-bottom-banner',
     'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
@@ -23,7 +22,6 @@ define([
              mvtCookie,
              memoize,
              noop,
-             DiscussionPromoteBottomBanner,
              HostedOnwardJourney,
              WeekendReadingEmail,
              MembershipEngagementMessageCopyExperiment,
@@ -31,9 +29,7 @@ define([
              MembershipEngagementInternationalExperiment,
              ContributionsEpicPostElectionCopyTest,
              ContributionsEpicThankYou) {
-
     var TESTS = [
-        new DiscussionPromoteBottomBanner(),
         new HostedOnwardJourney(),
         new WeekendReadingEmail(),
         new MembershipEngagementMessageCopyExperiment(),
