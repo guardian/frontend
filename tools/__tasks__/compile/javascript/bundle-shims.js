@@ -21,7 +21,7 @@ module.exports = {
             path.resolve(path.dirname(require.resolve('JSON2')), 'json2.js')
         ].map(file => readFileP(file, 'utf8')))
             .then(srcs => srcs.join(';'))
-            // .then(src => uglify.minify(src, {fromString: true}).code)
+            .then(src => uglify.minify(src, {fromString: true}).code)
             .then(src => writeFileP(path.resolve(dest, 'es5-html5.js'), src));
     }
 };
