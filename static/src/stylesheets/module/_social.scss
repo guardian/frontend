@@ -63,18 +63,28 @@ category: Common
     }
 }
 
-.social-icon.social-icon--more { // Need extra specificity here
-    @include social-icon($neutral-6);
-    border-radius: 50%;
-    color: $neutral-2;
-    display: inline-block;
-    line-height: 32px;
-    text-align: center;
+.social-icon {
+    
+    &.social-icon--more {
+        @include social-icon($neutral-6);
+        border-radius: 50%;
+        display: inline-block;
+        line-height: 32px;
+        text-align: center;
+        &:hover {
+            color: $neutral-2;
+        }
+    }
 
-    &:hover {
-        color: $neutral-2;
+    .social-icon--more__svg {
+        fill: $neutral-2;
+        /* Match the icon height for centering */
+        height: 21px;
+        width: 24px;
     }
 }
+
+
 
 .social--hidden {
     display: none;
