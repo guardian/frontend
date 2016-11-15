@@ -47,7 +47,13 @@
     }
 
     .commentcount2__heading .inline-icon {
+        margin-top: 1px;
         margin-right: -2px;
+
+        svg {
+            width: 18px;
+            height: 18px
+        }
     }
 
     .commentcount2__value,
