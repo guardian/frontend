@@ -7,16 +7,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-discussion-promote-comments",
-    "Promote the comments with a sticky bottom banner",
-    owners = Seq(Owner.withGithub("nicl")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 11, 15),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-weekend-reading-email",
     "Try out two formats for the Weekend Reading email",
     owners = Seq(Owner.withGithub("katebee")),
