@@ -114,7 +114,7 @@ define([
 
     function testCanBeRun(test) {
         var expired = (new Date() - new Date(test.expiry)) > 0,
-            isSensitive = config.page.shouldHideAdverts;
+            isSensitive = config.page.isSensitive;
 
         return ((isSensitive ? test.showForSensitive : true)
             && isTestSwitchedOn(test)) && !expired && test.canRun();
