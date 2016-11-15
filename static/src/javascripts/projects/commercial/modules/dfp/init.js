@@ -2,7 +2,7 @@ define([
     'Promise',
     'qwery',
     'bonzo',
-    'raven',
+    'common/utils/raven',
     'common/utils/config',
     'common/utils/fastdom-promise',
     'common/modules/commercial/commercial-features',
@@ -20,10 +20,21 @@ define([
     'commercial/modules/messenger/viewport',
     'commercial/modules/messenger/click',
     'commercial/modules/messenger/background'
-], function (Promise, qwery, bonzo, raven, config, fastdom, commercialFeatures,
-             buildPageTargeting, dfpEnv, onSlotRender, onSlotLoad, PrebidService,
-             ophanTracking) {
-
+], function (
+    Promise,
+    qwery,
+    bonzo,
+    raven,
+    config,
+    fastdom,
+    commercialFeatures,
+    buildPageTargeting,
+    dfpEnv,
+    onSlotRender,
+    onSlotLoad,
+    PrebidService,
+    ophanTracking
+) {
     return init;
 
     function init() {

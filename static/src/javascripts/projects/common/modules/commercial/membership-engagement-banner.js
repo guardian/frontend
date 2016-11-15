@@ -32,7 +32,7 @@ define([
 
         var endpoints = {
             UK: 'https://membership.theguardian.com/uk/supporter',
-            US: 'https://membership.theguardian.com/us/supporter',
+            US: 'https://contribute.theguardian.com',
             AU: 'https://membership.theguardian.com/au/supporter',
             INT: 'https://membership.theguardian.com/supporter'
         };
@@ -45,19 +45,23 @@ define([
         var messages = {
             UK: {
                 campaign: 'Coffee_49',
-                messageText: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for just £49 per year.'
+                messageText: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for just £49 per year.',
+                buttonCaption: 'Become a Supporter'
             },
             US: {
-                campaign: 'control',
-                messageText: 'If you use it, if you like it, then why not pay for it? It’s only fair.'
+                campaign: 'mem_us_banner',
+                messageText: 'If you use it, if you like it, then why not pay for it? It’s only fair.',
+                buttonCaption: 'Make a Contribution'
             },
             AU: {
                 campaign: 'mem_au_banner',
-                messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia Member for just $100 a year.'
+                messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia Member for just $100 a year.',
+                buttonCaption: 'Become a Supporter'
             },
             INT: {
                 campaign: 'mem_int_banner',
-                messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $69/€49 per year.'
+                messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $69/€49 per year.',
+                buttonCaption: 'Become a Supporter'
             }
         };
 
@@ -72,22 +76,8 @@ define([
                 };
                 var campaignCode = 'gdnwb_copts_mem_banner_ukbanner__' + variant;
                 content.campaignCode = campaignCode;
-                content.linkHref = endpoints['UK'] + '?INTCMP=' + campaignCode;
+                content.linkHref = formatEndpointUrl('UK', campaignCode);
                 content.messageText = variant === 'control' ? undefined : variantMessages[variant];
-            }
-        }
-
-        function doUsCopyTest(content) {
-            var variant = getVariant('MembershipEngagementUsMessageCopyExperiment');
-            if (variant && variant !== notInTest) {
-                var usVariantMessages = {
-                    informed: 'Fund our journalism and together we can keep the world informed.'
-                };
-                var campaignCode = 'co_us_engageb_' + variant;
-                content.campaignCode = campaignCode;
-                content.linkHref = 'https://contribute.theguardian.com?INTCMP=' + campaignCode;
-                content.buttonCaption = 'Make a Contribution';
-                content.messageText = variant === 'control' ? undefined : usVariantMessages[variant];
             }
         }
 
@@ -96,22 +86,21 @@ define([
             if (variant && variant !== notInTest) {
                 var campaignCode = 'gdnwb_copts_mem_banner_ROWbanner__' + variant;
                 content.campaignCode = campaignCode;
-                content.linkHref = endpoints['INT'] + '?INTCMP=' + campaignCode;
+                content.linkHref = formatEndpointUrl('INT', campaignCode);
             }
         }
 
         function show(edition, message) {
             var content = {
-                buttonCaption: 'Become a Supporter',
-                linkHref: formatEndpointUrl(edition, message),
+                linkHref: formatEndpointUrl(edition, message.campaign),
                 messageText: message.messageText,
                 campaignCode: message.campaign,
+                buttonCaption: message.buttonCaption,
                 colourClass: thisInstanceColour(),
                 arrowWhiteRight: svgs('arrowWhiteRight')
             };
 
             doUkCopyTest(content);
-            doUsCopyTest(content);
             doInternationalTest(content);
 
             var renderedBanner = template(messageTemplate, content);
@@ -157,8 +146,8 @@ define([
             return (storage.local.get('gu.alreadyVisited') || 0) >= 10;
         }
 
-        function formatEndpointUrl(edition, message) {
-            return endpoints[edition] + '?INTCMP=' + message.campaign + '_prominent';
+        function formatEndpointUrl(edition, campaignCode) {
+            return endpoints[edition] + '?INTCMP=' + campaignCode;
         }
 
         function thisInstanceColour() {
