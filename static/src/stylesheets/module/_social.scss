@@ -82,9 +82,8 @@ category: Common
 
     .social-icon--more__svg {
         fill: $neutral-2;
-        /* Match the icon height for centering */
-        height: 21px;
-        width: 24px;
+        top: -3px; // Tweak for centering, half circle height
+        width: 68%; // Scale the more icon
     }
 }
 
