@@ -95,10 +95,7 @@
         @*
         If there is internal link click data in session storage, send a click event.?:
 
-        We rely on the fact that this inline JS runs before the Omniture code.
-        The Omniture code removes the entry from session storage after it has read it.
-
-        TODO: When we get rid of Omniture, we should delete the entry from session storage here.
+        We remove the entry from session storage after reading it.
         *@
 
         try {
@@ -113,6 +110,7 @@
                         dimension12: referrerVars.value.path
                     });
                 }
+                window.sessionStorage.removeItem(NG_STORAGE_KEY);
             }
         } catch (e) { }
 
