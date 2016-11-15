@@ -128,10 +128,9 @@ const stdouts = [];
 // run commands with output to stdout if verbose is true
 const exec = task => {
     const [cmd, ...args] = task.trim().split(' ');
-
     if (logEverything) {
         return execa(cmd, args, {
-            stdio: [process.stdin, process.stdout, 'pipe']
+            stdio: [process.stdin, process.stdout, process.stderr]
         });
     }
 

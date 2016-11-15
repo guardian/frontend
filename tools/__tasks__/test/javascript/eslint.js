@@ -1,4 +1,6 @@
+const execa = require('execa');
+
 module.exports = {
     description: 'Test eslint configs',
-    task: 'node dev/eslint-rules/tests/*'
+    task: () => execa.shell('node ./dev/eslint-rules/tests/*')
 };
