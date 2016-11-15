@@ -43,7 +43,7 @@ define([
         this.showForSensitive = false;
         this.audience = 1;
         this.audienceOffset = 0;
-        this.successMeasure = 'Impressions to number of contributions/supporter signups';
+        this.successMeasure = 'Impressions to number of contributions/supporter sign ups';
         this.audienceCriteria = 'Global';
         this.dataLinkNames = '';
         this.idealOutcome = 'We learn to what extend using messages that chime with current events have an impact on contributor/supporter conversion';
@@ -95,15 +95,19 @@ define([
         var messages  = {
             control: {
                 title: 'Since you’re here …',
-                p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
+                p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+                intcmp: '_control'
             },
             despair: {
                 title: 'After despair …',
-                p1: '… comes action. When US policy on climate change, race and immigration, reproductive rights, gun control, surveillance and LGBT rights all hang in the balance, journalism rooted in progressive values has never been more important. Now is the time to fund our fearless reporting and diverse voices, to help us hold President-elect Donald Trump and his administration to account. The Guardian’s independent, investigative journalism is expensive and difficult to produce. But we do it because we believe our perspective matters.'
+                p1: '… comes action. When US policy on climate change, race and immigration, reproductive rights, gun control, surveillance and LGBT rights all hang in the balance, journalism rooted in progressive values has never been more important. Now is the time to fund our fearless reporting and diverse voices, to help us hold President-elect Donald Trump and his administration to account. The Guardian’s independent, investigative journalism is expensive and difficult to produce. But we do it because we believe our perspective matters.',
+                intcmp: '_despair'
             },
             belief: {
                 title: 'When politicians defy belief …',
-                p1: '… you need journalism that defies politicians. President-elect Donald Trump has threatened to weaken first amendment protections for reporters. He has said he will sue news organisations. He has labelled the press “dishonest” and “scum”. At times like this, free and fearless investigative journalism is never more important. The Guardian is not for dividend. We have no billionaire owner. All proceeds are reinvested in our independent journalism, which over the next four years will continue to uncover the truth, sort fact from fiction, and hold the new administration to account.'
+                p1: '… you need journalism that defies politicians. President-elect Donald Trump has threatened to weaken first amendment protections for reporters. He has said he will sue news organisations. He has labelled the press “dishonest” and “scum”. At times like this, free and fearless investigative journalism is never more important. The Guardian is not for dividend. We have no billionaire owner. All proceeds are reinvested in our independent journalism, which over the next four years will continue to uncover the truth, sort fact from fiction, and hold the new administration to account.',
+                intcmp: '_belief'
+
             }
         };
 
@@ -113,8 +117,8 @@ define([
                 p3: '',
                 cta1: 'Become a Supporter',
                 cta2: 'Make a contribution',
-                intcmp1: makeUrl(membershipUrl, membershipUrlPrefix + 'equal_postelection_1c'),
-                intcmp2:  makeUrl(contributeUrl, contributeUrlPrefix + 'equal_postelection_1c'),
+                url1: makeUrl(membershipUrl, membershipUrlPrefix + 'equal_postelectiontwo'),
+                url2:  makeUrl(contributeUrl, contributeUrlPrefix + 'equal_postelectiontwo'),
                 hidden: ''
             },
 
@@ -123,8 +127,8 @@ define([
                 p3: '',
                 cta1: 'Make a contribution',
                 cta2: '',
-                intcmp1:  makeUrl(contributeUrl, contributeUrlPrefix + 'equal_postelection_1c_backup'),
-                intcmp2: '',
+                url1:  makeUrl(contributeUrl, contributeUrlPrefix + 'equal_postelectiontwo_backup'),
+                url2: '',
                 hidden: 'hidden'
             },
 
@@ -133,8 +137,8 @@ define([
                 p3: '',
                 cta1: 'Become a Supporter',
                 cta2: '',
-                intcmp1: makeUrl(membershipUrl, membershipUrlPrefix + 'equal_postelection_1c_backup'),
-                intcmp2: '',
+                url1: makeUrl(membershipUrl, membershipUrlPrefix + 'equal_postelectiontwo_backup'),
+                url2: '',
                 hidden: 'hidden'
             }
 
@@ -179,8 +183,8 @@ define([
                     var ctaType = getCta();
                     var message = messages.control;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.intcmp1,
-                        linkUrl2: ctaType.intcmp2,
+                        linkUrl1: ctaType.url1 + message.intcmp,
+                        linkUrl2: ctaType.url2 + message.intcmp,
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,
@@ -207,8 +211,8 @@ define([
                     var ctaType = getCta();
                     var message = messages.despair;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.intcmp1,
-                        linkUrl2: ctaType.intcmp2,
+                        linkUrl1: ctaType.url1 + message.intcmp,
+                        linkUrl2: ctaType.url2 + message.intcmp,
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,
@@ -235,8 +239,8 @@ define([
                     var ctaType = getCta();
                     var message = messages.belief;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.intcmp1,
-                        linkUrl2: ctaType.intcmp2,
+                        linkUrl1: ctaType.url1 + message.intcmp,
+                        linkUrl2: ctaType.url2 + message.intcmp,
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,
