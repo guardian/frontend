@@ -39,6 +39,10 @@ category: Common
 ```
 */
 
+.meta__social {
+    min-height: 45px; // Height of social + padding + 1px border to ensure layout is kept when opening overlay
+}
+
 .social {
     overflow-y: hidden;
     height: 32px;
@@ -64,7 +68,7 @@ category: Common
 }
 
 .social-icon {
-    
+
     &.social-icon--more {
         @include social-icon($neutral-6);
         border-radius: 50%;
