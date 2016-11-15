@@ -30,7 +30,16 @@
             overflow: visible; // opacity cuts borders off on chrome otherwise
             box-sizing: border-box;
 
-            &:hover {
+            &:hover,
+            &:focus {
+                background-color: transparent;
+                border-color: $neutral-6;
+            }
+        }
+
+        .social-tray__button:hover,
+        .social-tray__button:focus {
+            .social-icon--more {
                 background-color: transparent;
                 border-color: $neutral-6;
             }
