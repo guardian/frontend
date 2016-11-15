@@ -3,7 +3,7 @@ define([
     'bonzo',
     'fastdom',
     'common/utils/fastdom-promise',
-    'raven',
+    'common/utils/raven',
     'Promise',
     'common/utils/$',
     'common/utils/config',
