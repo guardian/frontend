@@ -23,6 +23,7 @@
         @* Required for outbrain served in an amp-iframe *@
         <script custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js" async></script>
         <script custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async></script>
+        <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
         <script src="https://cdn.ampproject.org/v0.js" async></script>
     </head>
     <body>
@@ -53,60 +54,60 @@
             <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
         </amp-analytics>
 
-        <div class="main-body">
-            <!--[if (gt IE 9)|(IEMobile)]><!-->
-            <style>
-                .hosted-tone {
-                    color: @{page.campaign.fontColour.brandColour};
-                }
+        <!--[if (gt IE 9)|(IEMobile)]><!-->
+        <style>
+            .hosted-tone {
+                color: @{page.campaign.fontColour.brandColour};
+            }
 
-                .hosted-tone-bg {
-                    background-color: @{page.campaign.fontColour.brandColour};
-                }
+            .hosted-tone-bg {
+                background-color: @{page.campaign.fontColour.brandColour};
+            }
 
-                .hosted-tone-btn {
-                    color: @{page.campaign.fontColour.brandColour};
-                    border: 1px solid @{page.campaign.fontColour.brandColour};
-                }
+            .hosted-tone-btn {
+                color: @{page.campaign.fontColour.brandColour};
+                border: 1px solid @{page.campaign.fontColour.brandColour};
+            }
 
-                .hosted__banner .hosted-tone-btn,
-                .hosted-tone-btn:focus,
-                .hosted-tone-btn:hover {
-                    background-color: @{page.campaign.fontColour.brandColour};
-                }
+            .hosted__banner .hosted-tone-btn,
+            .hosted-tone-btn:focus,
+            .hosted-tone-btn:hover {
+                background-color: @{page.campaign.fontColour.brandColour};
+            }
 
-                .hosted-page .hosted__link {
-                    color: @{page.campaign.fontColour.brandColour};
-                }
+            .hosted-page .hosted__link {
+                color: @{page.campaign.fontColour.brandColour};
+            }
 
-                .survey-container .survey-text__header {
-                    background-color: @{page.campaign.fontColour.brandColour};
-                }
+            .survey-container .survey-text__header {
+                background-color: @{page.campaign.fontColour.brandColour};
+            }
 
-                .survey-container::before {
-                    border-bottom-color: @{page.campaign.fontColour.brandColour};
-                }
+            .survey-container::before {
+                border-bottom-color: @{page.campaign.fontColour.brandColour};
+            }
 
-                .hosted-article-page p.intro + p::first-letter {
-                    background-color: @{page.campaign.fontColour.brandColour};
-                }
+            .hosted-article-page p.intro + p::first-letter {
+                background-color: @{page.campaign.fontColour.brandColour};
+            }
 
-                .from-content-api ul > li:before {
-                    background-color: @{page.campaign.fontColour.brandColour};
-                }
+            .from-content-api ul > li:before {
+                background-color: @{page.campaign.fontColour.brandColour};
+            }
 
-                /* To prevent video element from jumping */
+            /* To prevent video element from jumping */
+            video {
+                width: 370px;
+            }
+
+            @@media (min-width: 740px) { /* Tablet bp and above */
                 video {
-                    width: 370px;
+                    width : 600px;
                 }
-
-                @@media (min-width: 740px) { /* Tablet bp and above */
-                    video {
-                        width : 600px;
-                    }
-                }
-            </style>
-            <!--<![endif]-->
+            }
+        </style>
+        <!--<![endif]-->
+        <div class="main-body">
 
             @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-article-page hosted-page--bright" else "hosted-article-page", page, isAMP = true)
             <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">

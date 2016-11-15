@@ -30,6 +30,7 @@ object HostedMetadata {
       description = Some(description),
       contentType = contentType,
       iosType = Some(contentType),
+      isHosted = true,
       javascriptConfigOverrides = Map(
         "isHosted" -> JsBoolean(true),
         "toneIds" -> JsString(toneIds),

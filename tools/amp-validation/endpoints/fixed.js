@@ -61,6 +61,11 @@ module.exports = (() => {
         /*
             Paid for by hosted pages
          */
-        '/somerset-county-council-partner-zone/2016/sep/21/somerset-offers-opportunities-develop-social-work-career'
+        '/somerset-county-council-partner-zone/2016/sep/21/somerset-offers-opportunities-develop-social-work-career',
+
+        /*
+            Hosted article page
+         */
+        '/advertiser-content/audi-history-of-audi/audi-and-innovation'
     ];
 })();

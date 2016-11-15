@@ -257,7 +257,6 @@
     @fragments.amp.stylesheets.richLinks()
     @fragments.amp.stylesheets.ads()
     @fragments.amp.stylesheets.glabs()
-    @fragments.amp.stylesheets.hosted()
     @fragments.amp.stylesheets.tables()
     @fragments.amp.stylesheets.inlineSvgs()
     @fragments.amp.stylesheets.social()
@@ -268,6 +267,9 @@
     @fragments.amp.stylesheets.header()
     @if(metaData.contentType == "LiveBlog") {
         @fragments.amp.stylesheets.liveBlog()
+    }
+    @if(metaData.isHosted) {
+        @fragments.amp.stylesheets.hosted()
     }
 
 </style>
