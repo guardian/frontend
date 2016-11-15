@@ -20,7 +20,7 @@ Only if we detect we should run enhance.
 define([
     'Promise',
     'domReady',
-    'raven'
+    'common/utils/raven'
 ], function (
     Promise,
     domReady,
@@ -34,11 +34,6 @@ define([
 
     var guardian = window.guardian;
     var config = guardian.config;
-
-    // global variable for sharing modules across bundles
-    window.guardian.app = window.guardian.app || {
-        raven: raven
-    };
 
     var domReadyPromise = new Promise(function (resolve) { domReady(resolve); });
 
