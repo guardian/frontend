@@ -62,10 +62,4 @@ module.exports = function (grunt) {
         grunt.task.run('pagespeed' + target);
     });
     grunt.registerTask('analyse', ['analyse:css', 'analyse:js', 'analyse:performance']);
-
-    /**
-     * Miscellaneous tasks
-     */
-    grunt.registerTask('emitAbTestInfo', 'shell:abTestInfo');
-
 };

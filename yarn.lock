@@ -3130,12 +3130,6 @@ grunt-px-to-rem@0.4.0:
     chalk "~1.0.0"
     postcss "~4.0.6"
 
-grunt-shell@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/grunt-shell/-/grunt-shell-1.1.1.tgz#dbf13236601ea12c1a8d9160dd5e57775a614f5f"
-  dependencies:
-    chalk "^0.5.1"
-
 grunt-svgmin@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/grunt-svgmin/-/grunt-svgmin-4.0.0.tgz#aeadd8d165415d53eeb929ea6bc9e4ed7cf93e23"
