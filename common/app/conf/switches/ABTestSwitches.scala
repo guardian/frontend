@@ -31,17 +31,7 @@ trait ABTestSwitches {
     "Test alternate short messages on membership engagement banner",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = On, // so we don't inadvertently turn off during deployment
-    sellByDate = new LocalDate(2016, 11, 17), // Thursday night
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-membership-engagement-us-message-copy-experiment",
-    "Test alternate short messages on US membership engagement banner",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 15),
+    sellByDate = new LocalDate(2016, 12, 1), // Thursday 1st December
     exposeClientSide = true
   )
 
@@ -50,8 +40,8 @@ trait ABTestSwitches {
     "ab-membership-engagement-international-experiment",
     "Test varying the number of visits before showing the membership engagement banner",
     owners = Seq(Owner.withGithub("rupert.bates")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 17),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 12, 1), // Thursday 1st December
     exposeClientSide = true
   )
 

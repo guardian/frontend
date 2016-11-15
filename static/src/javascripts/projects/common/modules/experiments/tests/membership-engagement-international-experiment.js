@@ -20,7 +20,7 @@ define([
     return function () {
         this.id = 'MembershipEngagementInternationalExperiment';
         this.start = '2016-11-10';
-        this.expiry = '2016-11-17';
+        this.expiry = '2016-12-1';
         this.author = 'Rupert Bates';
         this.description = 'Test varying the number of visits before showing the membership engagement banner';
         this.audience = 1;    // 100% (of International audience)
