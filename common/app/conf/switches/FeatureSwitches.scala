@@ -11,7 +11,7 @@ trait FeatureSwitches {
     "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 15),
+    sellByDate = new LocalDate(2017, 1, 17),
     exposeClientSide = true
   )
 
