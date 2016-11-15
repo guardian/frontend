@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "JSON2": "^0.1.0",
+    "es5-shim": "^4.5.9",
+    "html5shiv": "^3.7.3",
     "hyperscript-helpers": "^3.0.0",
     "immutable": "^3.8.1",
     "monapt": "^0.5.4",
