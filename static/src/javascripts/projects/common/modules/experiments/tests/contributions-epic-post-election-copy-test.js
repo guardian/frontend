@@ -43,7 +43,7 @@ define([
         this.showForSensitive = false;
         this.audience = 1;
         this.audienceOffset = 0;
-        this.successMeasure = 'Impressions to number of contributions/supporter sign ups';
+        this.successMeasure = 'Impressions to number of contributions / supporter sign ups';
         this.audienceCriteria = 'Global';
         this.dataLinkNames = '';
         this.idealOutcome = 'We learn to what extend using messages that chime with current events have an impact on contributor/supporter conversion';
