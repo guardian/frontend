@@ -11,7 +11,7 @@ trait ABTestSwitches {
     "Promote the comments with a sticky bottom banner",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 11, 14),
+    sellByDate = new LocalDate(2016, 11, 15),
     exposeClientSide = true
   )
 
