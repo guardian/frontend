@@ -1,10 +1,16 @@
 define([
-    'raven',
+    'common/utils/raven',
     'common/utils/config',
     'common/utils/user-timing',
     'common/modules/analytics/beacon',
     'commercial/modules/dfp/get-advert-by-id'
-], function (raven, config, userTiming, beacon, getAdvertById) {
+], function (
+    raven,
+    config,
+    userTiming,
+    beacon,
+    getAdvertById
+) {
 
     var performanceLog = {
             viewId: 'unknown',
@@ -12,10 +18,10 @@ define([
             modules: [],
             adverts: [],
             baselines: []
-        },
-        initial = new Date().getTime(), // For backwards compatibility below, whilst we still use the old ophan format.
-        primaryBaseline = 'primary',
-        secondaryBaseline = 'secondary';
+        };
+    var initial = new Date().getTime(); // For backwards compatibility below; whilst we still use the old ophan format.
+    var primaryBaseline = 'primary';
+    var secondaryBaseline = 'secondary';
 
     function trackPerformance(googletag) {
 
