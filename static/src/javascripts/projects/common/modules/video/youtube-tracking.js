@@ -45,7 +45,7 @@ define([
 
         forEach(eventsList, function(event) {
             mediator.once(buildEventId(event, videoId), function(id) {
-                var mediaEvent = MediaEvent(videoId, "video", event);
+                var mediaEvent = MediaEvent(videoId, 'video', event);
                 ophanRecord(mediaEvent);
                 ga(gaTracker + '.send', 'event',
                     gaHelper.buildGoogleAnalyticsEvent(mediaEvent, events.metricMap, id,
