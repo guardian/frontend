@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const pify = require('pify');
+const uglify = require('uglify-js');
 
 const readFileP = pify(fs.readFile);
 const writeFileP = pify(fs.writeFile);
@@ -15,5 +16,8 @@ module.exports = {
         path.resolve(src, 'javascripts', 'components', 'JSON-js', 'json2.js')
     ].map(file => readFileP(file, 'utf8')))
         .then(srcs => srcs.join(';'))
+        .then(src => uglify.minify(src, {
+            fromString: true
+        }).code)
         .then(src => writeFileP(path.resolve(target, 'javascripts', 'es5-html5.js'), src))
 };

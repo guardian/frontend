@@ -6,7 +6,6 @@ module.exports = {
         require('./copy'),
         require('./bundle'),
         require('./bundle-app'),
-        require('./bundle-shims'),
-        require('./minify')
+        require('./bundle-shims')
     ]
 };
