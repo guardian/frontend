@@ -27,10 +27,10 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-engagement-message-copy-experiment",
+    "ab-membership-engagement-message-copy-experiment-restart",
     "Test alternate short messages on membership engagement banner",
     owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = On, // so we don't inadvertently turn off during deployment
+    safeState = Off,
     sellByDate = new LocalDate(2016, 12, 1), // Thursday 1st December
     exposeClientSide = true
   )

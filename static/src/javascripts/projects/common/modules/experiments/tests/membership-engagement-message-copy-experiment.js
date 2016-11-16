@@ -18,8 +18,8 @@ define([
     mediator
 ) {
     return function () {
-        this.id = 'MembershipEngagementMessageCopyExperiment';
-        this.start = '2016-11-10';
+        this.id = 'MembershipEngagementMessageCopyExperimentRestart';
+        this.start = '2016-11-16';
         this.expiry = '2016-12-1';
         this.author = 'Justin Pinner';
         this.description = 'Test alternate short messages on engagement banner';
@@ -47,27 +47,27 @@ define([
 
         this.variants = [
             {
-                id: 'control',
+                id: 'control_2',
                 test: function () {},
                 success: success.bind(this)
             },
             {
-                id: 'Get_round_to',
+                id: 'Get_round_to_2',
                 test: function () {},
                 success: success.bind(this)
             },
             {
-                id: 'Give_upfront',
+                id: 'Give_upfront_2',
                 test: function () {},
                 success: success.bind(this)
             },
             {
-                id: 'Together_informed',
+                id: 'Together_informed_2',
                 test: function () {},
                 success: success.bind(this)
             },
             {
-                id: 'Coffee_5',
+                id: 'Coffee_5_2',
                 test: function () {},
                 success: success.bind(this)
             }
