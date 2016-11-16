@@ -50,10 +50,4 @@ module.exports = function (grunt) {
     if (options.isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
     }
-
-    /**
-     * Miscellaneous tasks
-     */
-    grunt.registerTask('emitAbTestInfo', 'shell:abTestInfo');
-
 };

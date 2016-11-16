@@ -36,7 +36,6 @@
     "grunt-mkdir": "0.1.2",
     "grunt-postcss": "^0.8.0",
     "grunt-px-to-rem": "0.4.0",
-    "grunt-shell": "1.1.1",
     "grunt-svgmin": "^4.0.0",
     "grunt-text-replace": "0.3.12",
     "grunt-webfontjson": "0.0.4",
