@@ -3,8 +3,9 @@ files:
   ignore:
     # Do not lint external files.
     - 'static/src/stylesheets/components/**/*.scss'
+    - 'static/src/stylesheets/icons/**/*.scss'
 options:
-  formatter: compact
+  formatter: stylish
   merge-default-rules: false
 rules:
 

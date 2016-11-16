@@ -10,9 +10,8 @@ define([
     'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
-    'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
-    'common/modules/experiments/tests/contributions-epic-post-election-copy-test',
+    'common/modules/experiments/tests/contributions-epic-limited-impressions',
     'common/modules/experiments/tests/contributions-epic-thank-you'
 ], function (reportError,
              config,
@@ -25,17 +24,15 @@ define([
              HostedOnwardJourney,
              WeekendReadingEmail,
              MembershipEngagementMessageCopyExperiment,
-             MembershipEngagementUSMessageCopyExperiment,
              MembershipEngagementInternationalExperiment,
-             ContributionsEpicPostElectionCopyTest,
+             ContributionsEpicLimitedImpressions,
              ContributionsEpicThankYou) {
     var TESTS = [
         new HostedOnwardJourney(),
         new WeekendReadingEmail(),
         new MembershipEngagementMessageCopyExperiment(),
-        new MembershipEngagementUSMessageCopyExperiment(),
         new MembershipEngagementInternationalExperiment(),
-        new ContributionsEpicPostElectionCopyTest(),
+        new ContributionsEpicLimitedImpressions(),
         new ContributionsEpicThankYou()
     ];
 
@@ -110,7 +107,7 @@ define([
 
     function testCanBeRun(test) {
         var expired = (new Date() - new Date(test.expiry)) > 0,
-            isSensitive = config.page.shouldHideAdverts;
+            isSensitive = config.page.isSensitive;
 
         return ((isSensitive ? test.showForSensitive : true)
             && isTestSwitchedOn(test)) && !expired && test.canRun();

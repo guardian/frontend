@@ -26,7 +26,7 @@ define([
              arrowRight,
              config,
             cookies,
-            userFeatures,
+            userFeatures, 
              ElementInview) {
 
     return function () {
@@ -35,7 +35,7 @@ define([
 
         this.id = 'ContributionsEpicThankYou';
         this.start = '2016-11-09';
-        this.expiry = '2016-11-17';
+        this.expiry = '2016-11-22';
         this.author = 'Jonathan Rankin';
         this.description = 'Send out a thank you to our existing members/contributors, with a social share';
         this.showForSensitive = false;
