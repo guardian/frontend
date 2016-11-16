@@ -69,7 +69,7 @@ define([
             var variant = getVariant('MembershipEngagementMessageCopyExperimentRestart');
             if (variant && variant !== notInTest) {
                 var variantMessages = {
-                    Get_round_to_2: 'Not got round to supporting us yet? Now is the time. Give £5 a month today',
+                    Get_round_to_2: 'Not got around to supporting us yet? Now is the time. Give £5 a month today',
                     Give_upfront_2: 'Give £5 a month to help support our journalism and make the Guardian’s future more secure',
                     Together_informed_2: 'Together we can keep the world informed. Give £5 a month to support our journalism',
                     Coffee_5_2: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for £5 a month'
