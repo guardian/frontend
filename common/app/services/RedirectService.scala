@@ -40,13 +40,13 @@ class RedirectService extends Logging with ExecutionContexts {
 
   // protocol fixed to http so that lookups to dynamo find existing
   // redirects which were originally all stored as http://...
-  private val expectedSourceProtocol = "http://"
+  private val expectedSourceHost = "http://www.theguardian.com"
   private lazy val tableName = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
 
 
   def destinationFor(source: String): Future[Option[Destination]] =
     ScanamoAsync
-      .get[Destination](DynamoDB.asyncClient)(tableName)('source -> (expectedSourceProtocol + source))
+      .get[Destination](DynamoDB.asyncClient)(tableName)('source -> (expectedSourceHost + source))
       .map({
         case Some(Right(destination)) => Some(destination)
         case _ => None
