@@ -2979,10 +2979,6 @@ grunt-legacy-util@~0.2.0:
     underscore.string "~2.2.1"
     which "~1.0.5"
 
-grunt-mkdir@0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/grunt-mkdir/-/grunt-mkdir-0.1.2.tgz#073dc2c9440b73c9bdbcceaca73cdf4d08e07241"
-
 grunt-postcss@^0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/grunt-postcss/-/grunt-postcss-0.8.0.tgz#8f30a8af607903ce0c45f01f0be42c60e31ceb0e"
