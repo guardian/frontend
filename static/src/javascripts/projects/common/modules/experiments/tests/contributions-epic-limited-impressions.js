@@ -49,7 +49,8 @@ define([
         this.idealOutcome = 'We improve our conversion rate by not showing the epic to those less likely to contribute (i.e those who have seen it more than 4 times).';
         this.canRun = function () {
             var includedKeywordIds = [
-                'us-news/us-elections-2016'
+                'us-news/us-elections-2016',
+                'us-news/us-politics'
             ];
 
             var excludedKeywordIds = ['music/leonard-cohen'];
