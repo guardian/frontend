@@ -37,7 +37,7 @@ case class QuizAnswersPage(
     )
   }
 
-  val shares: Seq[ShareLink] = if (results.isKnowledge) knowledgeShares else personalityShares
+  val shares: ShareLinkMeta = if (results.isKnowledge) ShareLinkMeta(knowledgeShares, Nil) else ShareLinkMeta(personalityShares, Nil)
 }
 
 class QuizController(contentApiClient: ContentApiClient) extends Controller with ExecutionContexts with Logging {

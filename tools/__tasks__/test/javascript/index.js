@@ -26,10 +26,7 @@ module.exports = {
             ].map(set => ({
                 description: `Run ${set} tests`,
                 task: () => exec('karma', ['start', `./static/test/javascripts/conf/${set}.js`, '--single-run'])
-            })).concat({
-                description: 'Test eslint configs',
-                task: () => exec('grunt', ['shell:eslintTests'])
-            }),
+            })).concat([require('./eslint')]),
             concurrent: true
         }
     ]

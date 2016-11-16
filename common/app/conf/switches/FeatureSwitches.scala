@@ -477,16 +477,7 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val ElectionAppDelay = Switch(
-    SwitchGroup.Feature,
-    "election-app-delay",
-    "Delay loading app.js until interactive is ready - SHORT TERM HACK FOR US ELECTIONS",
-    owners = Seq(Owner.withGithub("wpf500")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 15),
-    exposeClientSide = false
-  )
-
+  //Owner Michael McNamara
   val AmpInteractivePlaceHolderAttribute = Switch(
     SwitchGroup.Feature,
     "amp-interactive-placeholder-attribute",
@@ -496,8 +487,7 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2016, 12, 15),
     exposeClientSide = true
   )
-
-
+  
   val turnOffSupporterEpic = Switch(
     SwitchGroup.Membership,
     "turn-off-supporter-epic",

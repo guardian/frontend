@@ -38,7 +38,6 @@ module.exports = function (grunt) {
             staticMappings: {
                 replace: 'grunt-text-replace',
                 sasslint: 'grunt-sass-lint',
-                cssmetrics: 'grunt-css-metrics',
                 assetmonitor: 'grunt-asset-monitor',
                 /*eslint-disable camelcase*/
                 px_to_rem: 'grunt-px-to-rem',
@@ -51,21 +50,4 @@ module.exports = function (grunt) {
     if (options.isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
     }
-
-    /**
-     * Analyse tasks
-     */
-    grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
-    grunt.registerTask('analyse:js', ['compile:js', 'bytesize:js']);
-    grunt.registerTask('analyse:performance', function (app) {
-        var target = app ? ':' + app : '';
-        grunt.task.run('pagespeed' + target);
-    });
-    grunt.registerTask('analyse', ['analyse:css', 'analyse:js', 'analyse:performance']);
-
-    /**
-     * Miscellaneous tasks
-     */
-    grunt.registerTask('emitAbTestInfo', 'shell:abTestInfo');
-
 };
