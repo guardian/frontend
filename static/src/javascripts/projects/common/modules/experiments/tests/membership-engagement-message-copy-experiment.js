@@ -19,14 +19,14 @@ define([
 ) {
     return function () {
         this.id = 'MembershipEngagementMessageCopyExperiment';
-        this.start = '2016-10-26';
-        this.expiry = '2016-11-8';
+        this.start = '2016-11-10';
+        this.expiry = '2016-12-1';
         this.author = 'Justin Pinner';
         this.description = 'Test alternate short messages on engagement banner';
-        this.audience = 0.6;    // 60% (of UK audience)
-        this.audienceOffset = 0.3;  // allow offset to engage different readers from MembershipEngagementWarpFactorOne test
+        this.audience = 1;    // 100% (of UK audience)
+        this.audienceOffset = 0;
         this.successMeasure = 'More membership sign-ups';
-        this.audienceCriteria = '60 percent of (non-member) UK edition readers';
+        this.audienceCriteria = '100 percent of (non-member) UK edition readers';
         this.dataLinkNames = '';
         this.idealOutcome = 'More readers engage with the banner and then complete membership sign-up';
         this.hypothesis = 'More persuasive copy will improve membership conversions from impressions';
@@ -52,17 +52,22 @@ define([
                 success: success.bind(this)
             },
             {
-                id: 'fairer',
+                id: 'Get_round_to',
                 test: function () {},
                 success: success.bind(this)
             },
             {
-                id: 'appreciate',
+                id: 'Give_upfront',
                 test: function () {},
                 success: success.bind(this)
             },
             {
-                id: 'secure',
+                id: 'Together_informed',
+                test: function () {},
+                success: success.bind(this)
+            },
+            {
+                id: 'Coffee_5',
                 test: function () {},
                 success: success.bind(this)
             }

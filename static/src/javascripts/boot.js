@@ -19,10 +19,12 @@ Only if we detect we should run enhance.
 
 define([
     'Promise',
-    'domReady'
+    'domReady',
+    'common/utils/raven'
 ], function (
     Promise,
-    domReady
+    domReady,
+    raven
 ) {
     // curl’s promise API is broken, so we must cast it to a real Promise
     // https://github.com/cujojs/curl/issues/293
@@ -55,16 +57,14 @@ define([
             });
         }
 
-        return promiseRequire(['raven'])
-            .then(function (raven) {
-                return promiseRequire(['bootstraps/commercial'])
-                    .then(raven.wrap(
-                        { tags: { feature: 'commercial' } },
-                        function (commercial) {
-                            commercial.init();
-                        }
-                    ));
-            });
+        return promiseRequire(['bootstraps/commercial'])
+            .then(raven.wrap(
+                    { tags: { feature: 'commercial' } },
+                    function (commercial) {
+                        commercial.init();
+                    }
+                )
+            );
     };
 
     var bootEnhanced = function () {

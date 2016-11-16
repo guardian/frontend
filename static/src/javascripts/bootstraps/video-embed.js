@@ -83,7 +83,10 @@ define([
             var player,
                 mouseMoveIdle,
                 $el = bonzo(el).addClass('vjs'),
-                mediaId = $el.attr('data-media-id');
+                mediaId = $el.attr('data-media-id'),
+                canonicalUrl = $el.attr('data-canonical-url'),
+                gaEventLabel = canonicalUrl,
+                mediaType = el.tagName.toLowerCase();
 
             bonzo(el).addClass('vjs');
 
@@ -128,7 +131,9 @@ define([
 
                 }
 
+                events.addContentEvents(player, mediaId, mediaType);
                 events.bindContentEvents(player);
+                events.bindGoogleAnalyticsEvents(player, gaEventLabel);
             });
 
             mouseMoveIdle = debounce(function () { player.removeClass('vjs-mousemoved'); }, 500);
