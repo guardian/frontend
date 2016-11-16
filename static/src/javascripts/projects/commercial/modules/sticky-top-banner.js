@@ -17,7 +17,7 @@ define([
 ) {
     var topSlotId = 'dfp-ad--top-above-nav';
     var updateQueued = false;
-    var win, header, headerHeight, topSlot, topSlotHeight, stickyBanner, scrollY;
+    var win, header, headerHeight, navigation, topSlot, topSlotHeight, stickyBanner, scrollY;
 
     return {
         init: init,
@@ -31,6 +31,7 @@ define([
         topSlot = document.getElementById(topSlotId);
         if (topSlot && detect.isBreakpoint({ min: 'desktop' })) {
             header = document.getElementById('header');
+            navigation = document.getElementsByClassName('js-navigation');
             stickyBanner = topSlot.parentNode;
 
             // First, let's assign some default values so that everything
@@ -45,7 +46,8 @@ define([
 
     function initState() {
         return fastdom.read(function () {
-            headerHeight = header.offsetHeight;
+            var navigationHeight = (navigation && navigation[0] && navigation[0].offsetHeight) || 0;
+            headerHeight = header.offsetHeight - navigationHeight;
             return topSlot.offsetHeight;
         })
         .then(function (currentHeight) {
