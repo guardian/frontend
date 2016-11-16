@@ -26,7 +26,7 @@ define([
              arrowRight,
              config,
             cookies,
-            userFeatures,
+            userFeatures, 
              ElementInview) {
 
     return function () {
@@ -35,7 +35,7 @@ define([
 
         this.id = 'ContributionsEpicThankYou';
         this.start = '2016-11-09';
-        this.expiry = '2016-11-17';
+        this.expiry = '2016-11-22';
         this.author = 'Jonathan Rankin';
         this.description = 'Send out a thank you to our existing members/contributors, with a social share';
         this.showForSensitive = false;
@@ -91,19 +91,9 @@ define([
 
         var thankyouCount = getValue('gu.thankyouCount') || 0;
 
-        var makeUrl = function() {
-            var membershipUrl = 'https://membership.theguardian.com/supporter?';
-            var contributeUrl = 'https://contribute.theguardian.com/?';
-            var urlPrefix =  isPayingMember ? membershipUrl : contributeUrl;
-            return urlPrefix + 'INTCMP=epic_thankyou_' + thankyouCount;
-        };
-
-
-
         var messages  =  {
             title: 'Thank you',
             p1: 'Your crucial financial support makes our journalism possible. We do it because we believe, like you, that the world has never needed fearless, independent media more.',
-            p2: 'If you know someone who might share that perspective and want to support us, why not tell them how they can by <a target=\"_blank\" href=\"' + makeUrl() + '\">sharing this link?</a>'
         };
 
         this.variants = [

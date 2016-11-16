@@ -1,3 +1,4 @@
+/* global guardian */
 define([
     'helpers/injector'
 ], function (
@@ -8,29 +9,27 @@ define([
     describe('Space filler', function () {
         var spaceFiller,
             spaceFinder,
-            raven,
+            raven = guardian.app.raven,
             Promise,
             rules = {},
             spacefinderResult,
             writeError = new Error('Mock writer exception');
 
         beforeEach(function (done) {
+            spyOn(raven, 'captureException');
+
             injector.require([
                 'common/modules/article/space-filler',
                 'common/modules/article/spacefinder',
-                'raven',
                 'Promise'
             ], function () {
                 spaceFiller = arguments[0];
                 spaceFinder = arguments[1];
-                raven = arguments[2];
-                Promise = arguments[3];
+                Promise = arguments[2];
 
                 spyOn(spaceFinder, 'findSpace').and.callFake(function () {
                     return spacefinderResult;
                 });
-
-                spyOn(raven, 'captureException');
 
                 done();
             });
