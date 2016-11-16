@@ -52,8 +52,7 @@ body {
     .email-sub__form--footer,
     .email-sub__form--article,
     .email-sub__form--plain,
-    .email-sub__form--plaindark,
-    .email-sub__form--plaintone {
+    .email-sub__form--plaindark {
         // Rounded inline input
         .email-sub__text-input {
             border-right: 0;
@@ -146,20 +145,9 @@ body {
 * IFRAME PLAIN MODS
 */
 .email-sub--plain,
-.email-sub--plaindark,
-.email-sub--plaintone {
+.email-sub--plaindark {
     .email-sub__header,
     .email-sub__label,
-    .email-sub__small {
-        display: none;
-    }
-}
-
-/**
-* IFRAME NEWSLETTER MODS
-*/
-.email-sub--newsletters {
-    .email-sub__header,
     .email-sub__small {
         display: none;
     }

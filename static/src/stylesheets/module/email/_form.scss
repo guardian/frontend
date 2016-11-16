@@ -260,10 +260,6 @@
         padding: $gs-baseline $gs-gutter $gs-baseline $icon-padding;
     }
 
-    .email-sub__text-input {
-        border-color: $neutral-3;
-    }
-
     .email-sub__message__headline,
     .email-sub__message__description {
         color: $neutral-1;
@@ -323,60 +319,6 @@
 
     .email-sub__message__headline {
         color: #ffffff;
-    }
-}
-
-// PLAINTONE MODS
-.email-sub__form--plaintone {
-    .email-sub__text-input {
-        border-color: $neutral-3;
-  }
-}
-
-// NEWSLETTER MODS
-.email-sub--newsletters {
-    padding: 0;
-
-    .email-sub__text-input {
-        border-radius: 65.5rem;
-        display: block;
-        width: 100%;
-    }
-
-    .email-sub__submit-input {
-        border-radius: 65.5rem;
-        display: block;
-        width: 100%;
-        float: none;
-        position: absolute;
-        top: 3rem;
-        border: 0;
-    }
-
-    .email-sub__text-input {
-        vertical-align: middle;
-    }
-
-    .email-sub__label,
-    .label__icon {
-        display: none;
-    }
-
-    .email-sub__message__headline {
-        margin: $gs-baseline / 2;
-        color: $neutral-1;
-        vertical-align: middle;
-        position: absolute;
-    }
-
-    .email-sub__message--success {
-        height: 2em;
-        position: relative;
-        margin: $gs-baseline 0;
-    }
-
-    .inline-icon {
-        margin-left: $gs-baseline / 2;
     }
 }
 
