@@ -1,4 +1,4 @@
-@(metaData: model.MetaData)
+@(metaData: model.MetaData, mainPicture: String, ctaImage: Option[String], brandColour: String)
 <style amp-custom>
     body {
         font-family: Georgia,serif;
@@ -269,7 +269,7 @@
         @fragments.amp.stylesheets.liveBlog()
     }
     @if(metaData.isHosted) {
-        @fragments.amp.stylesheets.hosted()
+        @fragments.amp.stylesheets.hosted(mainPicture, ctaImage, brandColour)
     }
 
 </style>

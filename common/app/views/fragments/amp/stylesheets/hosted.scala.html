@@ -1,3 +1,44 @@
+@(mainPicture: String, ctaImage: Option[String], brandColour: String)
+
+.hosted-tone {
+    color: @brandColour;
+}
+
+.hosted-tone-bg {
+    background-color: @brandColour;
+}
+
+.hosted-tone-btn {
+    color: @brandColour;
+    border: 1px solid @brandColour;
+}
+
+.hosted__banner .hosted-tone-btn,
+.hosted-tone-btn:focus,
+.hosted-tone-btn:hover {
+    background-color: @brandColour;
+}
+
+.hosted-page .hosted__link {
+    color: @brandColour;
+}
+
+.survey-container .survey-text__header {
+    background-color: @brandColour;
+}
+
+.survey-container::before {
+    border-bottom-color: @brandColour;
+}
+
+.hosted-article-page p.intro + p::first-letter {
+    background-color: @brandColour;
+}
+
+.from-content-api ul > li:before {
+    background-color: @brandColour;
+}
+
 .content--article {
     background: #f6f6f6;
 }
@@ -13,18 +54,6 @@
 
 .hosted-page + footer {
     display: none;
-}
-
-.hosted__banner .hosted-tone-btn,
-.hosted-tone-btn:focus,
-.hosted-tone-btn:hover {
-    color:  #333333;
-}
-
-.hosted__banner .hosted-tone-btn svg,
-.hosted-tone-btn:focus svg,
-.hosted-tone-btn:hover svg {
-    fill: #333333;
 }
 
 .hosted-page--bright .hosted__banner .hosted-tone-btn,
@@ -189,6 +218,7 @@
     position: relative;
     background-size: cover;
     background-position: left;
+    background-image: url(@ctaImage);
 }
 
 .hosted__banner:after {
@@ -527,6 +557,7 @@
     margin-bottom: 10px;
     background-size: cover;
     background-position: center center;
+    background-image: url(@mainPicture);
 }
 
 .hosted-article-page .media-primary.media-primary--showcase:after {
