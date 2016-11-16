@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "JSON2": "^0.1.0",
+    "es5-shim": "^4.5.9",
+    "html5shiv": "^3.7.3",
     "hyperscript-helpers": "^3.0.0",
     "immutable": "^3.8.1",
     "monapt": "^0.5.4",
@@ -31,7 +34,6 @@
     "grunt": "0.4.5",
     "grunt-asset-hash": "0.1.6",
     "grunt-asset-monitor": "0.2.0",
-    "grunt-contrib-uglify": "0.9.1",
     "grunt-frequency-graph": "^0.1.6",
     "grunt-mkdir": "0.1.2",
     "grunt-postcss": "^0.8.0",
@@ -84,6 +86,7 @@
     "strip-ansi": "^3.0.1",
     "svgo": "0.4.5",
     "time-grunt": "1.2.0",
+    "uglify-js": "^2.7.4",
     "webpack": "^1.13.1",
     "yargs": "^6.0.0"
   },
