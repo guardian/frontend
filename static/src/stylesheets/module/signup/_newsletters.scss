@@ -145,6 +145,12 @@
         margin: 0;
         padding: 0;
 
+        &:hover,
+        &:focus {
+            border-color: darken($news-main-1, 10%);
+            background-color: darken($news-main-1, 10%);
+        }
+
         &.lozenge--is-updating {
             display: inherit;
             font-size: 0;
