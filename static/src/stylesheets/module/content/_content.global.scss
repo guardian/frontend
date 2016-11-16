@@ -22,37 +22,56 @@
 
     .commentcount2__heading,
     .sharecount__heading {
-        @include fs-textSans(1);
-        line-height: 15px;
         height: 15px;
         margin: 0;
         position: relative;
-        padding-left: 18px;
 
         .inline-icon {
             position: absolute;
-            left: 0;
+            top: 0;
+            right: 0;
         }
 
         @include mq(leftCol) {
             padding-left: $gs-gutter * .75;
+            padding-right: 0;
+
+            .inline-icon {
+                left: 0;
+            }
         }
     }
 
-    .inline-icon {
-        margin: 2px 0 0 -2px;
+    .sharecount__heading .inline-icon {
+        margin-top: -3px;
+    }
+
+    .commentcount2__heading .inline-icon {
+        margin-top: 1px;
+        margin-right: -2px;
+
+        svg {
+            width: 18px;
+            height: 18px
+        }
     }
 
     .commentcount2__value,
     .sharecount__value {
-        // design is off font scale
-        font-family: $f-serif-headline;
-        font-size: 18px;
-        font-weight: 500;
+        @include fs-textSans(6);
+        font-weight: bold;
+        letter-spacing: -1px;
+        padding-top: $gs-baseline/5;
+        display: block;
+        text-align: right;
+
+        @include mq(leftCol) {
+            text-align: left;
+        }
     }
 
     .sharecount__value {
-        color: $neutral-1;
+        color: $neutral-2;
     }
 
     .sharecount__value--short {

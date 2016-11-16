@@ -1,3 +1,5 @@
+@import '../social-icons';
+
 .content--media {
     .content__head__comment-count {
         display: none;
@@ -26,19 +28,20 @@
     &:not(.paid-content--advertisement-feature) {
         .social-icon {
             overflow: visible; // opacity cuts borders off on chrome otherwise
-            background-color: transparent;
-            fill: $neutral-3;
-            border: 1px solid $neutral-2;
             box-sizing: border-box;
-            transition: border-color .15s ease-out;
 
-            &:hover {
+            &:hover,
+            &:focus {
                 background-color: transparent;
                 border-color: $neutral-6;
             }
+        }
 
-            .inline-icon {
-                fill: $neutral-3;
+        .social-tray__button:hover,
+        .social-tray__button:focus {
+            .social-icon--more {
+                background-color: transparent;
+                border-color: $neutral-6;
             }
         }
     }

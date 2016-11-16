@@ -225,7 +225,6 @@ GET            /metrics/afg                                                     
 GET            /deduped                                                                                                          controllers.admin.WhatIsDeduped.index()
 GET            /deduped/*path                                                                                                    controllers.admin.WhatIsDeduped.dedupedFor(path)
 GET            /radiator                                                                                                         controllers.admin.RadiatorController.renderRadiator()
-GET            /radiator/pingdom                                                                                                 controllers.admin.RadiatorController.pingdom()
 GET            /radiator/commit/*hash                                                                                            controllers.admin.RadiatorController.commitDetail(hash)
 GET            /deploys-radiator/api/deploys                                                                                     controllers.admin.DeploysRadiatorController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
 GET            /deploys-radiator/api/builds/:number                                                                              controllers.admin.DeploysRadiatorController.getBuild(number)

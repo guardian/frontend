@@ -540,18 +540,17 @@
 }
 
 .meta__numbers {
-    border-top: 1px dotted $neutral-5;
-    height: $gs-baseline * 3;
     padding: $gs-baseline / 2 0;
+    position: absolute;
+    right: 0;
+    top: 0;
 
-    @include mq(tablet, leftCol) {
-        position: absolute;
-        right: 0;
-        top: 0;
-        border: 0;
-    }
     @include mq(leftCol) {
+        border-top: 1px dotted $neutral-5;
         border-bottom: 1px dotted $neutral-5;
+        position: static;
+        height: 36px;
+        padding: $gs-baseline / 4 0;
     }
 }
 
@@ -1033,6 +1032,7 @@
 .meta__extras {
     position: relative;
     clear: both;
+    min-height: 45px;
 
     .content__head--crossword & {
         clear: none;
@@ -1275,6 +1275,24 @@
 
         .old-article-message--clock svg {
             fill: $neutral-3;
+        }
+    }
+
+    .meta__social {
+        .social--expanded-top {
+            background-color: $neutral-1;
+        }
+
+        .social__tray-close .inline-close {
+            background-color: darken($neutral-1, 5%);
+
+            &:hover {
+                background-color: $multimedia-support-5;
+            }
+
+            svg {
+                fill: $neutral-4;
+            }
         }
     }
 }
