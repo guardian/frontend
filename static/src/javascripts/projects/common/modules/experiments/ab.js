@@ -11,7 +11,7 @@ define([
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
-    'common/modules/experiments/tests/contributions-epic-post-election-copy-test',
+    'common/modules/experiments/tests/contributions-epic-limited-impressions',
     'common/modules/experiments/tests/contributions-epic-thank-you'
 ], function (reportError,
              config,
@@ -25,14 +25,14 @@ define([
              WeekendReadingEmail,
              MembershipEngagementMessageCopyExperiment,
              MembershipEngagementInternationalExperiment,
-             ContributionsEpicPostElectionCopyTest,
+             ContributionsEpicLimitedImpressions,
              ContributionsEpicThankYou) {
     var TESTS = [
         new HostedOnwardJourney(),
         new WeekendReadingEmail(),
         new MembershipEngagementMessageCopyExperiment(),
         new MembershipEngagementInternationalExperiment(),
-        new ContributionsEpicPostElectionCopyTest(),
+        new ContributionsEpicLimitedImpressions(),
         new ContributionsEpicThankYou()
     ];
 
@@ -107,7 +107,7 @@ define([
 
     function testCanBeRun(test) {
         var expired = (new Date() - new Date(test.expiry)) > 0,
-            isSensitive = config.page.shouldHideAdverts;
+            isSensitive = config.page.isSensitive;
 
         return ((isSensitive ? test.showForSensitive : true)
             && isTestSwitchedOn(test)) && !expired && test.canRun();

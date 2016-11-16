@@ -47,21 +47,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-post-election-copy-test-two",
-    "Try out 2 new epic variants and try an beat our control",
+    "ab-contributions-epic-limited-impressions",
+    "Run the epic with a limit of 4 impressions per user (for non US, US there is no limit)",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 17),
+    sellByDate =  new LocalDate(2016, 11, 22),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
     "ab-contributions-epic-thank-you",
-    "Test a version of the epic centered around the election result against one that is not related to the election",
+    "Show a thank you message to our supporters at the end of artciles, just saying thanks!",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 17),
+    sellByDate =  new LocalDate(2016, 11, 22),
     exposeClientSide = true
   )
 
