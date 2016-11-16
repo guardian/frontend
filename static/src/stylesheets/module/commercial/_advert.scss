@@ -116,7 +116,7 @@
 }
 
 .advert__kicker {
-    &:after {
+    &::after {
         content: '/';
         display: inline-block;
         margin-left: .2em;
