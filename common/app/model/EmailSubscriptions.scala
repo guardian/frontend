@@ -212,7 +212,6 @@ object EmailSubscriptions {
       listId = "3744",
       subscribedTo = subscribedListIds.exists{ x => x == "3743" || x == "3744" },
       tone = Some("feature"),
-      imageFilename = Some("3744.png"),
       signupPage = Some("/signup/weekendreading"),
       exampleUrl = Some("/membership/series/weekend-reading/latest/email")
     ),
@@ -302,7 +301,6 @@ object EmailSubscriptions {
       frequency = "Every Wednesday",
       listId = "2211",
       subscribedTo = subscribedListIds.exists{ x => x == "2211" },
-      imageFilename = Some("2211.png"),
       signupPage = Some("/travel/2016/aug/18/sign-up-to-the-flyer"),
       exampleUrl = Some("/travel/series/the-flyer/latest/email")
     ),
@@ -361,7 +359,6 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "2313" },
       subheading = Some("UK"),
       tone = Some("comment"),
-      imageFilename = Some("2313.png"),
       signupPage = Some("/commentisfree/2014/jan/29/comment-is-free-daily-roundup")
     ),
     EmailSubscription(
@@ -374,7 +371,6 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "3228" },
       subheading = Some("US"),
       tone = Some("comment"),
-      imageFilename = Some("3228.png"),
       signupPage = Some("/commentisfree/2015/may/11/sign-up-for-the-best-of-opinion-us-daily-email")
     ),
     EmailSubscription(
@@ -387,7 +383,6 @@ object EmailSubscriptions {
       subscribedTo = subscribedListIds.exists{ x => x == "2976" },
       subheading = Some("AUS"),
       tone = Some("comment"),
-      imageFilename = Some("2976.png"),
       signupPage = Some("/commentisfree/2014/dec/04/best-of-comment-is-free-australia-subscribe-by-email")
     ),
     EmailSubscription(

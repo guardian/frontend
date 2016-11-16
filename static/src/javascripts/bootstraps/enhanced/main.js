@@ -2,7 +2,7 @@ define([
     'fastdom',
     'bean',
     'qwery',
-    'raven',
+    'common/utils/raven',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // ab-test-info is a node app that parses javascript ab-tests and
 // extracts test object data to a JSON output file.
 
@@ -8,8 +10,8 @@ var esprima = require("esprima"),
     mkdirp = require("mkdirp");
     path = require("path");
 
-var srcPath = process.argv[2],
-    outputFile = process.argv[3],
+var srcPath = 'static/src/javascripts/projects/common/modules/experiments/tests',
+    outputFile = 'static/abtests.json',
     abtest = {};
 
 // This traverse() is based on the esprima example 'detectnestedternary'.

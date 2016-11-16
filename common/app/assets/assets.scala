@@ -139,8 +139,6 @@ object css {
 
 object js {
   val curl: String = Get(LoadFromClasspath("assets/curl-domReady.js").map(RelativePathEscaper.escapeLeadingDotPaths))
-  val omnitureJs: String = Get(LoadFromClasspath("assets/vendor/omniture/omniture.js"))
-  val analyticsJs: String = Get(LoadFromClasspath("assets/projects/common/modules/analytics/analytics.js"))
 }
 
 object Get {

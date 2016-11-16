@@ -7,7 +7,7 @@ define([
 ) {
 
     var contributionsEpicPostElectionCopyTest = {
-        name: 'ContributionsEpicPostElectionCopyTest',
+        name: 'ContributionsEpicLimitedImpressions',
         variants: ['control']
     };
 
