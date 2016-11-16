@@ -63,8 +63,6 @@ object MetaDataFormat {
     id: String,
     url: String,
     webUrl: String,
-    // todo remove section property in another PR
-    section: String,
     sectionSummary: Option[SectionSummary],
     webTitle: String,
     analyticsName: String,
@@ -103,7 +101,7 @@ object MetaDataFormat {
       part1.id,
       part1.url,
       part1.webUrl,
-      Some(SectionSummary.fromId(part1.section)),
+      part1.sectionSummary,
       part1.webTitle,
       part1.analyticsName,
       part1.adUnitSuffix,
@@ -141,8 +139,6 @@ object MetaDataFormat {
           meta.id,
           meta.url,
           meta.webUrl,
-          // todo remove section property in another PR
-          meta.sectionId,
           meta.section,
           meta.webTitle,
           meta.analyticsName,
