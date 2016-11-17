@@ -137,7 +137,12 @@
             }
             var size = slot.getAttribute("data-ad-size");
             var adUnitName = slot.getAttribute("data-ad-unit");
-            var slotDeclaration = "googletag.cmd.push(function() { googletag.defineSlot('/59666047/" + adUnitName + "', " + (buildTargetSize(size)) + ", '" + slotName + "')" + (buildCustomTargeting()) + (buildSegments()) + ".addService(googletag.pubads()); });";
+            var slotDeclaration = "googletag.cmd.push(function() {" +
+                "googletag.defineSlot('/59666047/" + adUnitName + "', " + (buildTargetSize(size)) + ", '" + slotName + "')" +
+                (buildCustomTargeting()) +
+                (buildSegments()) +
+                ".addService(googletag.pubads());" +
+                " });";
             return insertScript(slotDeclaration);
         }
 
