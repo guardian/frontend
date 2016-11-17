@@ -51,8 +51,7 @@ class TopStoriesController(contentApiClient: ContentApiClient) extends Controlle
     val page = SimplePage( MetaData.make(
       "top-stories",
       Some(SectionSummary.fromId("top-stories")),
-      "Top Stories",
-      "GFE:Top Stories"
+      "Top Stories"
     ))
 
     val htmlResponse: () => Html = () => views.html.topStories(page, trails)

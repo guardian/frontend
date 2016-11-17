@@ -17,8 +17,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
   val page = SimplePage(MetaData.make(
     "most-read",
     Some(SectionSummary.fromId("most-read")),
-    "Most read",
-    "GFE:Most Read"
+    "Most read"
   ))
 
   def renderHtml(path: String) = render(path)

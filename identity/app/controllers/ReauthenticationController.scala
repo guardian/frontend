@@ -25,7 +25,7 @@ class ReauthenticationController(returnUrlVerifier: ReturnUrlVerifier,
                                  val messagesApi: MessagesApi)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with Forms {
 
-  val page = IdentityPage("/reauthenticate", "Re-authenticate", "reauthenticate")
+  val page = IdentityPage("/reauthenticate", "Re-authenticate")
 
   val form = Form(
     Forms.single(
