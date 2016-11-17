@@ -10,13 +10,6 @@ define([
     $
 ) {
 
-    var STATES = {
-        'ENDED': _onPlayerEnded,
-        'PLAYING': _onPlayerPlaying,
-        'PAUSED': _onPlayerPaused
-    };
-
-    var progressTracker = {};
     var players = {};
 
     function init() {
@@ -29,7 +22,61 @@ define([
                 players[youtubeId] = youtubePlayer.init(el,
                     {
                         onPlayerStateChange: function (event) {
-                            Object.keys(STATES).forEach(checkState.bind(null, youtubeId, atomId, event.data, event.target));
+
+                            var STATES = {
+                                'ENDED': onPlayerEnded,
+                                'PLAYING': onPlayerPlaying,
+                                'PAUSED': onPlayerPaused
+                            };
+
+                            var progressTracker = {};
+
+                            function checkState(state, status) {
+                                if (state === window.YT.PlayerState[status] && STATES[status]) {
+                                    STATES[status]();
+                                }
+                            }
+
+                            function onPlayerPlaying() {
+                                setProgressTracker();
+                                tracking.track('play', atomId);
+                            }
+
+                            function onPlayerPaused() {
+                                killProgressTracker(false, youtubeId);
+                            }
+
+                            function onPlayerEnded() {
+                                killProgressTracker(false, youtubeId);
+                                tracking.track('end', atomId);
+                            }
+
+                            function setProgressTracker()  {
+                                killProgressTracker(true);
+                                progressTracker.id = youtubeId;
+                                progressTracker.tracker = setInterval(recordPlayerProgress.bind(null), 1000);
+                            }
+
+                            function killProgressTracker(force, id) {
+                                if (progressTracker.tracker &&
+                                    (force || id === progressTracker.id)) {
+                                    clearInterval(progressTracker.tracker);
+                                    progressTracker = {};
+                                }
+                            }
+
+                            function recordPlayerProgress() {
+                                var player = event.target;
+                                var currentTime = player.getCurrentTime();
+                                var percentPlayed = Math.round(((currentTime / player.duration) * 100));
+
+                                if (percentPlayed > 0 && percentPlayed < 100 &&
+                                    percentPlayed % 25 === 0) {
+                                    tracking.track(percentPlayed, atomId);
+                                }
+                            }
+
+                            Object.keys(STATES).forEach(checkState.bind(null, event.data));
                         },
                         onPlayerReady: function (event) {
                             var player = event.target;
@@ -40,50 +87,6 @@ define([
                     , youtubeId);
             });
         });
-    }
-
-    function checkState(id, atomId, state, player, status) {
-        if (state === window.YT.PlayerState[status] && STATES[status]) {
-            STATES[status](id, atomId, player);
-        }
-    }
-
-    function _onPlayerPlaying(id, atomId, player) {
-        setProgressTracker(id, atomId, player);
-        tracking.track('play', atomId);
-    }
-
-    function _onPlayerPaused(id) {
-        killProgressTracker(false, id);
-    }
-
-    function _onPlayerEnded(id, atomId) {
-        killProgressTracker(false, id);
-        tracking.track('end', atomId);
-    }
-
-    function setProgressTracker(id, atomId, player)  {
-        killProgressTracker(true);
-        progressTracker.id = id;
-        progressTracker.tracker = setInterval(recordPlayerProgress.bind(null, atomId, player), 1000);
-    }
-
-    function killProgressTracker(force, id) {
-        if (progressTracker.tracker &&
-            (force || id === progressTracker.id)) {
-            clearInterval(progressTracker.tracker);
-            progressTracker = {};
-        }
-    }
-
-    function recordPlayerProgress(atomId, player) {
-        var currentTime = player.getCurrentTime();
-        var percentPlayed = Math.round(((currentTime / player.duration) * 100));
-
-        if (percentPlayed > 0 && percentPlayed < 100 &&
-            percentPlayed % 25 === 0) {
-            tracking.track(percentPlayed, atomId);
-        }
     }
 
     return {
