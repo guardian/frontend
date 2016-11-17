@@ -9,7 +9,6 @@ class NavigationTest extends FlatSpec with Matchers with OptionValues {
     Navigation.topLevelItem(Uk.briefNav, SimplePage(MetaData.make(
       id = "technology/games",
       section = Some(SectionSummary.fromId("technology")),
-      analyticsName = "",
       webTitle= "")
     )).value.name.title shouldEqual "culture"
   }

@@ -8,7 +8,6 @@ class MetaDataTest extends FlatSpec with Matchers {
     MetaData.make(
       id,
       section = Some(SectionSummary.fromId(section)),
-      analyticsName = "n",
       webTitle = "t")
   }
 

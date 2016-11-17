@@ -27,7 +27,7 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
   import EmailPrefsData._
   import authenticatedActions.authAction
 
-  val page = IdentityPage("/email-prefs", "Email preferences", "email-prefs")
+  val page = IdentityPage("/email-prefs", "Email preferences")
   protected def formActionUrl(idUrlBuilder: IdentityUrlBuilder, idRequest: IdentityRequest): String = idUrlBuilder.buildUrl("/email-prefs", idRequest)
 
   def preferences = CSRFAddToken {

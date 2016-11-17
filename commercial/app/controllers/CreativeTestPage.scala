@@ -25,7 +25,6 @@ case class TestPage(specifiedKeywords : List[String] = Nil) extends model.Standa
     description = None,
     section = Some(SectionSummary.fromId("Comercial components test page")),
     webTitle = webTitle,
-    analyticsName = "analytics name",
     isFront = true,
     contentType = contentType,
     javascriptConfigOverrides = newMetaData)

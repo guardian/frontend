@@ -26,7 +26,6 @@ case class ThreadedCommentPage(val discussionComments: DiscussionComments)
       id = id,
       section = Some(SectionSummary.fromId("Global")),
       webTitle = discussionComments.discussion.title,
-      analyticsName = s"GFE:Article:Comment discussion threaded page ${discussionComments.pagination.currentPage}",
       url = Some(s"/discussion$id"),
       pagination = Some(discussionComments.pagination))
 }
@@ -38,7 +37,6 @@ case class UnthreadedCommentPage(val discussionComments: DiscussionComments)
       id = id,
       section = Some(SectionSummary.fromId("Discussion")),
       webTitle = discussionComments.discussion.title,
-      analyticsName = s"GFE:Article:Comment discussion unthreaded page ${discussionComments.pagination.currentPage}",
       url = Some(s"/discussion$id"),
       pagination = Some(discussionComments.pagination))
 }
