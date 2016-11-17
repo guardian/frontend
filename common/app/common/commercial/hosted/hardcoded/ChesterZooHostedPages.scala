@@ -1,6 +1,7 @@
 package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
+import common.commercial.{Dimensions, Logo}
 import conf.switches.Switches
 
 object ChesterZooHostedPages {
@@ -9,7 +10,10 @@ object ChesterZooHostedPages {
     id = "chester-zoo-act-for-wildlife",
     name = "What we fight for",
     owner = "Chester Zoo",
-    logoUrl = "https://static.theguardian.com/commercial/hosted/act-for-wildlife/AFW+with+CZ+portrait+with+padding.png",
+    logo = Logo(
+      "https://static.theguardian.com/commercial/hosted/act-for-wildlife/AFW+with+CZ+portrait+with+padding.png",
+      Some(Dimensions(width = 280, height = 261))
+    ),
     fontColour = Colour("#E31B22")
   )
 

@@ -16,8 +16,7 @@ class WallchartController(competitionsService: CompetitionsService) extends Cont
       val page = new FootballPage(
         competition.url.stripSuffix("/"),
         "football",
-        s"${competition.fullName} wallchart",
-        "GFE:Football:automatic:wallchart"
+        s"${competition.fullName} wallchart"
       )
       val competitionStages = new CompetitionStage(competitionsService.competitions).stagesFromCompetition(competition)
 

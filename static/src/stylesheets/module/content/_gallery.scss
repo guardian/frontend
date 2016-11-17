@@ -235,7 +235,10 @@
         position: relative;
         border: 0 none;
         height: auto;
-        padding: 0;
+    }
+
+    .meta__number {
+        text-align: right;
     }
 
     .meta__social {

@@ -18,7 +18,7 @@ class PublicProfileController(idUrlBuilder: IdentityUrlBuilder,
   with ExecutionContexts
   with SafeLogging{
 
-  def page(url: String, username: String) = IdentityPage(url,  s"$username's public profile", "public profile")
+  def page(url: String, username: String) = IdentityPage(url,  s"$username's public profile")
 
   def renderProfileFromVanityUrl(vanityUrl: String, activityType: String) = renderPublicProfilePage(
     "/user/" + vanityUrl,

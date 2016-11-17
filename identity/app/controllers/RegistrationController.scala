@@ -12,7 +12,6 @@ import play.api.data._
 import scala.concurrent.Future
 import services._
 import form.Mappings
-import tracking.Omniture
 
 class RegistrationController( returnUrlVerifier : ReturnUrlVerifier,
                              userCreationService : UserCreationService,
@@ -23,7 +22,7 @@ class RegistrationController( returnUrlVerifier : ReturnUrlVerifier,
                              val messagesApi: MessagesApi )
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
-  val page = IdentityPage("/register", "Register", "register")
+  val page = IdentityPage("/register", "Register")
 
   private val passwordKey = "user.password"
   private val emailKey = "user.primaryEmailAddress"
@@ -60,7 +59,7 @@ class RegistrationController( returnUrlVerifier : ReturnUrlVerifier,
     val registrationError = request.getQueryString("error")
     val groupCode = idRequest.groupCode.orElse(group)
 
-    NoCache(Ok(views.html.registration(Omniture.registrationStart(page, idRequest), idRequest, idUrlBuilder, filledForm, registrationError, groupCode)))
+    NoCache(Ok(views.html.registration(page, idRequest, idUrlBuilder, filledForm, registrationError, groupCode)))
   }
 
   def renderRegistrationConfirmation(returnUrl: String) = Action{ implicit request =>

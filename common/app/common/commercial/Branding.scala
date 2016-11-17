@@ -72,6 +72,11 @@ case class Logo(url: String, dimensions: Option[Dimensions])
 object Logo {
 
   implicit val logoFormat = Json.format[Logo]
+
+  def make(url: String, dimensions: Option[SponsorshipLogoDimensions]) = Logo(
+    url,
+    dimensions map (d => Dimensions(d.width, d.height))
+  )
 }
 
 case class Branding(
@@ -119,9 +124,6 @@ object Branding {
 
   def make(sectionOrTagName: String)(sponsorship: ApiSponsorship): Branding = {
 
-    def mkLogo(url: String, dimensions: Option[SponsorshipLogoDimensions]) =
-      Logo(url, dimensions map (d => Dimensions(d.width, d.height)))
-
     Branding(
       sponsorshipType = sponsorship.sponsorshipType match {
         case ApiSponsorshipType.PaidContent => PaidContent
@@ -129,9 +131,9 @@ object Branding {
         case _ => Sponsored
       },
       sponsorName = sponsorship.sponsorName,
-      sponsorLogo = mkLogo(sponsorship.sponsorLogo, sponsorship.sponsorLogoDimensions),
+      sponsorLogo = Logo.make(sponsorship.sponsorLogo, sponsorship.sponsorLogoDimensions),
       highContrastSponsorLogo = sponsorship.highContrastSponsorLogo map { url =>
-        mkLogo(url, sponsorship.highContrastSponsorLogoDimensions)
+        Logo.make(url, sponsorship.highContrastSponsorLogoDimensions)
       },
       sponsorLink = sponsorship.sponsorLink,
       aboutThisLink = sponsorship.aboutLink getOrElse "/sponsored-content",

@@ -16,7 +16,6 @@ case class CommercialPage() extends StandalonePage {
     id = "commercial-templates",
     section = Some(SectionSummary.fromId("admin")),
     webTitle = "Commercial Templates",
-    analyticsName = "Commercial Templates",
     javascriptConfigOverrides = Map(
       "keywordIds" -> JsString("live-better"),
       "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng")))

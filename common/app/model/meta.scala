@@ -94,7 +94,6 @@ object MetaData {
     id: String,
     section: Option[SectionSummary],
     webTitle: String,
-    analyticsName: String,
     url: Option[String] = None,
     canonicalUrl: Option[String] = None,
     shouldGoogleIndex: Boolean = true,
@@ -120,7 +119,6 @@ object MetaData {
       webUrl = s"${Configuration.site.host}$resolvedUrl",
       webTitle = webTitle,
       section = section,
-      analyticsName = analyticsName,
       adUnitSuffix = adUnitSuffix getOrElse section.map(_.id).getOrElse(""),
       canonicalUrl = canonicalUrl,
       shouldGoogleIndex = shouldGoogleIndex,
@@ -151,7 +149,6 @@ object MetaData {
       sectionSummary,
       webTitle = apiContent.webTitle,
       membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
-      analyticsName = s"GFE:$sectionId:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = sectionId,
       description = apiContent.fields.flatMap(_.trailText),
       cacheTime = {
@@ -171,7 +168,6 @@ final case class MetaData (
   webUrl: String,
   section: Option[SectionSummary],
   webTitle: String,
-  analyticsName: String,
   adUnitSuffix: String,
   iosType: Option[String] = Some("Article"),
   pagination: Option[Pagination] = None,
@@ -234,7 +230,6 @@ final case class MetaData (
     ("adUnit", JsString(AdUnitMaker.make(id, adUnitSuffix))),
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
-    ("analyticsName", JsString(analyticsName)),
     ("isFront", JsBoolean(isFront)),
     ("isSurging", JsString(isSurging.mkString(","))),
     ("contentType", JsString(contentType))
@@ -269,9 +264,9 @@ final case class MetaData (
   )) getOrElse Nil)
 
   def linkedData: List[LinkedData] = List(
-    Guardian()) ++ (iosType.map(_ => List(
+    Guardian()) ++ iosType.map(_ => List(
     WebPage(webUrl, PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
-  )).getOrElse(Nil))
+  )).getOrElse(Nil)
 
   def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
 
@@ -361,7 +356,6 @@ case class CommercialExpiryPage(id: String) extends StandalonePage {
     id,
     section = Some(SectionSummary.fromId("global")),
     webTitle = "This page has been removed",
-    analyticsName = "GFE:Gone",
     shouldGoogleIndex = false
   )
 }
@@ -379,7 +373,6 @@ case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) ext
 case class MediaAtomEmbedPage(atom: MediaAtom) extends Page {
   override val metadata = MetaData.make(id = atom.id,
     webTitle = atom.title,
-    analyticsName = atom.id,
     section = None)
 }
 
@@ -391,10 +384,9 @@ case class TagCombiner(
 ) extends StandalonePage {
 
   override val metadata: MetaData = MetaData.make(
-    id,
-    leftTag.metadata.section,
-    s"${leftTag.name} + ${rightTag.name}",
-    s"GFE:${leftTag.metadata.sectionId}:${leftTag.name} + ${rightTag.name}",
+    id = id,
+    section = leftTag.metadata.section,
+    webTitle = s"${leftTag.name} + ${rightTag.name}",
     pagination = pagination,
     description = Some(GuardianContentTypes.TagIndex)
   )

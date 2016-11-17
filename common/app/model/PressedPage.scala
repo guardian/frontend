@@ -49,10 +49,6 @@ object PressedPage {
       webTitle = seoData.webTitle,
       //For network fronts we want the string "Network Front"
       //This allows us to change webTitle in tool easily on fronts
-      analyticsName = if (isNetworkFront)
-          s"GFE:${GuardianContentTypes.NetworkFront}"
-        else
-          s"GFE:${seoData.webTitle.capitalize}",
       description = seoData.description,
       isFront = true,
       isPressedPage = true,

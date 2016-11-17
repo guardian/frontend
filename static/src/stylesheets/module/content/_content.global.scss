@@ -63,11 +63,6 @@
         letter-spacing: -1px;
         padding-top: $gs-baseline/5;
         display: block;
-        text-align: right;
-
-        @include mq(leftCol) {
-            text-align: left;
-        }
     }
 
     .sharecount__value {
@@ -100,34 +95,53 @@
     height: 100%;
     text-align: left;
     float: left;
+    min-width: 15px; // Min width is the width of the icons
     padding-right: ($gs-gutter / 2) + 1px;
+
+    @include mq($until: leftCol) {
+        text-align: right;
+    }
 
     @include mq(leftCol, wide) {
         padding-right: 6px;
     }
 
-    .meta__extras--crossword & {
-        border-left: 1px solid $neutral-7;
-        float: right;
-        padding-left: $gs-gutter / 2;
+    // Use margin-right for the space between penultimate and last child
+    //so that meta-numbers on the right don't have a space if last item
+    // is hidden
+
+    &:nth-last-child(2) {
+        padding-right: 0;
     }
 
     &:last-child {
+        margin-left: ($gs-gutter / 2) + 1px;
         padding-right: 0;
+
+        @include mq(leftCol, wide) {
+            margin-left: 6px;
+        }
+    }
+}
+
+.meta__extras--crossword {
+    border-top: 1px dotted $neutral-5;
+    display: flex;
+    justify-content: space-between;
+
+    .meta__social,
+    .meta__numbers {
+        border: 0 none;
+    }
+
+    .meta__number {
+        border-left: 1px solid $neutral-7;
+        padding-left: $gs-gutter / 2;
+        text-align: right;
     }
 }
 
 .meta__save-for-later {
-
-    .content--interactive & {
-        @include mq(leftCol) {
-            $social-width: 35px;
-
-            position: absolute;
-            top: 1px;
-            left: $social-width * 6;
-        }
-    }
 
     .content--liveblog & {
         @include mq(desktop) {
@@ -135,12 +149,6 @@
             left: 0;
             top: 0;
             border-top: 1px dotted $neutral-5;
-        }
-    }
-
-    .meta__extras--crossword & {
-        @include mq(tablet) {
-            float: left;
         }
     }
 

@@ -18,8 +18,7 @@ class RelatedController(val contentApiClient: ContentApiClient, val mostReadAgen
   private val page = SimplePage(MetaData.make(
     "related-content",
     Some(SectionSummary.fromId("related-content")),
-    "Related content",
-    "GFE:Related content")
+    "Related content")
   )
 
   def renderHtml(path: String) = render(path)
