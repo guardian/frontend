@@ -72,15 +72,15 @@
     color: #ffffff;
 }
 
-.hosted-page--bright .survey-container .survey-text__header {
+.hosted-page--bright .survey-text__header {
     color: #ffffff;
 }
 
-.hosted-page--bright .survey-container .survey-text__header .site-message__close-btn {
+.hosted-page--bright .survey-text__header .site-message__close-btn {
     border-color: #ffffff;
 }
 
-.hosted-page--bright .survey-container .survey-text__header .inline-cross {
+.hosted-page--bright .survey-text__header .inline-cross {
     fill: #ffffff;
 }
 
@@ -111,7 +111,6 @@
     font-weight: 600;
     letter-spacing: .5px;
     line-height: 16px;
-
     margin: 0;
     text-align: left;
     color: rgba(255, 255, 255, .5);
@@ -363,11 +362,15 @@
     width: 100%;
 }
 
-.hosted__label.paidfor-label {
+.paidfor-label {
+    position: relative;
+    cursor: pointer;
+    align-items: center;
     float: left;
     margin-left: 10px;
     margin-top: 20px;
     border: 0;
+    display: flex;
 }
 
 .hosted__label-btn.paidfor-label__btn {
@@ -391,6 +394,10 @@
     padding: 0;
     cursor: pointer;
     z-index: 1051;
+}
+
+.paidfor-input {
+    display: none;
 }
 
 .paidfor-input:checked ~ .survey-container {
@@ -476,11 +483,11 @@
     margin: 0 0 0 90px;
 }
 
-    .hosted-video__next-page-title {
+.hosted-video__next-page-title {
     padding: 10px;
     font-size: 18px;
     line-height: 20px;
-    }
+}
 
 .hosted__header {
     width: 100%;
@@ -525,7 +532,6 @@
     font-weight: 600;
     letter-spacing: .5px;
     line-height: 16px;
-
     height: auto;
     padding-top: 5px;
     padding-bottom: 8px;
