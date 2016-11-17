@@ -123,6 +123,10 @@
     &:last-child {
         margin-left: ($gs-gutter / 2) + 1px;
         padding-right: 0;
+
+        @include mq(leftCol, wide) {
+            margin-left: 6px;
+        }
     }
 }
 
