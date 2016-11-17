@@ -126,6 +126,10 @@
             return targeting;
         }
 
+        function buildAdtestTargeting() {
+            var adtest = slot.getAttribute('data-adtest');
+            return adtest ? ".setTargeting('at', '" + adtest + "')" : "";
+        }
 
         function insertAdConfig() {
             var isFirstAd = scripts.length === 1;
@@ -140,6 +144,7 @@
             var slotDeclaration = "googletag.cmd.push(function() {" +
                 "googletag.defineSlot('/59666047/" + adUnitName + "', " + (buildTargetSize(size)) + ", '" + slotName + "')" +
                 (buildCustomTargeting()) +
+                (buildAdtestTargeting()) +
                 (buildSegments()) +
                 ".addService(googletag.pubads());" +
                 " });";
