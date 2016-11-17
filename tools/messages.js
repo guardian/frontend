@@ -77,18 +77,11 @@ switch (process.argv[2]) {
         }, 'error');
         break;
 
-    case 'dependency-update':
-        notify('Run `make install`.', {
-            heading: 'Dependencies have changed'
-        }, 'warn');
-        break;
-
     case 'pasteup':
         notify('You will need to release a new version of pasteup to NPM once you’ve merged this branch to master.\n\nTo begin a new release, run `make pasteup`.', {
             heading: 'Pasteup files have changed'
         }, 'info');
         break;
-
 
     case 'install-steps':
       notify('Please run the following to complete your installation:', {
