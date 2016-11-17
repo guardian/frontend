@@ -1,5 +1,6 @@
 package common.commercial.hosted.hardcoded
 
+import common.commercial.{Dimensions, Logo}
 import common.commercial.hosted._
 import conf.Static
 
@@ -15,7 +16,10 @@ object LeffeHostedPages {
     id = "leffe-rediscover-time",
     name = "Leffe - Rediscover Time",
     owner = "Leffe",
-    logoUrl = Static("images/commercial/leffe.jpg"),
+    logo = Logo(
+      Static("images/commercial/leffe.jpg"),
+      Some(Dimensions(width = 132, height = 132))
+    ),
     fontColour = Colour("#dec190")
   )
 

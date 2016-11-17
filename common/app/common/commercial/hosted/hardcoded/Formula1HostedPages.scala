@@ -1,5 +1,6 @@
 package common.commercial.hosted.hardcoded
 
+import common.commercial.{Dimensions, Logo}
 import common.commercial.hosted._
 
 object Formula1HostedPages {
@@ -8,7 +9,10 @@ object Formula1HostedPages {
     id = "singapore-grand-prix",
     name = "Singapore Grand Prix",
     owner = "First Stop Singapore",
-    logoUrl = "https://static.theguardian.com/commercial/hosted/formula1-singapore/Logos-SGP-SA-1.jpg",
+    logo = Logo(
+      "https://static.theguardian.com/commercial/hosted/formula1-singapore/Logos-SGP-SA-1.jpg",
+      Some(Dimensions(width = 500, height = 500))
+    ),
     fontColour = Colour("#063666")
   )
 
