@@ -24,12 +24,12 @@ define([
         fastdom.read(function () {
             $('.atom--media--youtube').each(function (el) {
                 var atomId = el.getAttribute('data-media-atom-id');
-                var videoId = el.firstElementChild.id;
+                var youtubeId = el.firstElementChild.id;
                 tracking.init(atomId);
-                players[videoId] = youtubePlayer.init(el,
+                players[youtubeId] = youtubePlayer.init(el,
                     {
                         onPlayerStateChange: function (event) {
-                            Object.keys(STATES).forEach(checkState.bind(null, videoId, atomId, event.data, event.target));
+                            Object.keys(STATES).forEach(checkState.bind(null, youtubeId, atomId, event.data, event.target));
                         },
                         onPlayerReady: function (event) {
                             var player = event.target;
@@ -37,7 +37,7 @@ define([
                             player.duration = player.getDuration();
                         }
                     }
-                    , videoId);
+                    , youtubeId);
             });
         });
     }
