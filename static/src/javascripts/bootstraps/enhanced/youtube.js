@@ -22,20 +22,20 @@ define([
     function init() {
 
         fastdom.read(function () {
-                        $('.atom--media--youtube').each(function (el) {
-                            var atomId = el.getAttribute('data-media-atom-id');
-                            var videoId = el.firstElementChild.id;
-                            tracking.init(atomId);
-                            players[videoId] = youtubePlayer.init(el,
-                                {
-                                    onPlayerStateChange: function (event) {
-                                        Object.keys(STATES).forEach(checkState.bind(null, videoId, atomId, event.data, event.target));
-                                    },
-                                    onPlayerReady: function (event) {
-                                        var player = event.target;
-                                        // Record the duration for percentage calculation.
-                                        player.duration = player.getDuration();
-                                    }
+            $('.atom--media--youtube').each(function (el) {
+                var atomId = el.getAttribute('data-media-atom-id');
+                var videoId = el.firstElementChild.id;
+                tracking.init(atomId);
+                players[videoId] = youtubePlayer.init(el,
+                    {
+                        onPlayerStateChange: function (event) {
+                            Object.keys(STATES).forEach(checkState.bind(null, videoId, atomId, event.data, event.target));
+                        },
+                        onPlayerReady: function (event) {
+                            var player = event.target;
+                            // Record the duration for percentage calculation.
+                            player.duration = player.getDuration();
+                        }
                     }
                     , videoId);
             });
@@ -77,13 +77,13 @@ define([
     }
 
     function recordPlayerProgress(atomId, player) {
-            var currentTime = player.getCurrentTime();
-            var percentPlayed = Math.round(((currentTime / player.duration) * 100));
+        var currentTime = player.getCurrentTime();
+        var percentPlayed = Math.round(((currentTime / player.duration) * 100));
 
-            if (percentPlayed > 0 && percentPlayed < 100 &&
-                percentPlayed % 25 === 0) {
-                tracking.track(percentPlayed, atomId);
-            }
+        if (percentPlayed > 0 && percentPlayed < 100 &&
+            percentPlayed % 25 === 0) {
+            tracking.track(percentPlayed, atomId);
+        }
     }
 
     return {
