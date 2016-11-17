@@ -18,12 +18,16 @@ function getSVG (iconPath) {
             if (err) {
                 reject(err);
             } else {
-                svgo.optimize(data, result => {
-                    resolve({
-                        name: path.parse(iconPath).name,
-                        data: result
+                try {
+                    svgo.optimize(data, result => {
+                        resolve({
+                            name: path.parse(iconPath).name,
+                            data: result
+                        });
                     });
-                });
+                } catch (e) {
+                    reject(e);
+                }
             }
         });
     });
