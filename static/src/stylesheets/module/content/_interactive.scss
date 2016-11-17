@@ -31,6 +31,10 @@
         border: 0 none;
     }
 
+    .meta__number {
+        text-align: right;
+    }
+
     .content__section-label,
     .content__series-label {
         @include mq(desktop) {
