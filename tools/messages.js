@@ -71,23 +71,10 @@ switch (process.argv[2]) {
         }, 'info');
         break;
 
-    case 'install':
-        notify(
-            'All 3rd party dependencies have been installed.', {
-            heading: 'make install'
-        }, 'info');
-        break;
-
     case 'should-yarn':
         notify('Run `make install` and include any changes to `/yarn.locl` in your commit.', {
             heading: 'Dependencies have changed'
         }, 'error');
-        break;
-
-    case 'dependency-update':
-        notify('Run `make install`.', {
-            heading: 'Dependencies have changed'
-        }, 'warn');
         break;
 
     case 'pasteup':
@@ -95,7 +82,6 @@ switch (process.argv[2]) {
             heading: 'Pasteup files have changed'
         }, 'info');
         break;
-
 
     case 'install-steps':
       notify('Please run the following to complete your installation:', {

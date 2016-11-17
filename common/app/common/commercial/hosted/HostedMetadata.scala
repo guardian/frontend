@@ -25,7 +25,6 @@ object HostedMetadata {
       id = item.id,
       section = sectionId map SectionSummary.fromId,
       webTitle = item.webTitle,
-      analyticsName = s"GFE:${sectionId.getOrElse("")}:$contentType:${item.webTitle}",
       url = Some(s"/${item.id}"),
       description = Some(description),
       contentType = contentType,

@@ -13,8 +13,7 @@ case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam)
   override val metadata = MetaData.make(
     id = s"/sport/cricket/match/$matchId/${team.wordsForUrl}",
     section = Some(SectionSummary.fromId("cricket")),
-    webTitle = s"${theMatch.competitionName}, ${theMatch.venueName}",
-    analyticsName = s"GFE:Cricket:automatic:match:${dateFormat.print(theMatch.gameDate)}:${theMatch.homeTeam.name} v ${theMatch.awayTeam.name}")
+    webTitle = s"${theMatch.competitionName}, ${theMatch.venueName}")
 }
 
 class CricketMatchController(cricketStatsJob: CricketStatsJob) extends Controller with Logging with ExecutionContexts {

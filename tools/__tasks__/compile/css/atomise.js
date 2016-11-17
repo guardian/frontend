@@ -1,4 +1,4 @@
 module.exports = {
     description: 'Atomise CSS',
-    task: 'grunt shell:atomiseCSS'
+    task: 'make atomise-css'
 };

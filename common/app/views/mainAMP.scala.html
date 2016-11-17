@@ -1,8 +1,7 @@
 @(page: model.Page, related: model.RelatedContent, content: model.Content)(body: Html)(implicit request: RequestHeader)
 
-@import common.{AnalyticsHost, CanonicalLink, LinkTo}
+@import common.{CanonicalLink, LinkTo}
 @import conf.Configuration
-@import views.support.OmnitureAnalyticsData
 @import views.support.FBPixel
 
 <!doctype html>
@@ -36,22 +35,11 @@
     <body class="guardian-egyptian-loading">
         @*
         Baseline pageview confidence pixel.
-        This, along with the corresponding pixels for GA/Omniture/Ophan,
+        This, along with the corresponding pixels for GA/Ophan,
         are used to generate the confidence graphs on the frontend dashboard.
         *@
         <amp-pixel src="@{Configuration.debug.beaconUrl}/count/pv.gif"></amp-pixel>
 
-        @defining(s"${request.host}${request.path}") { path =>
-            @defining({
-                val params = OmnitureAnalyticsData(page, "No Javascript", path, "GoogleAMP", Map(("r", "DOCUMENT_REFERRER")))
-                val omnitureAccount = Configuration.javascript.pageData("guardian.page.omnitureAccount")
-                s"${AnalyticsHost()}/b/ss/$omnitureAccount/1/H.25.3/?$params"
-            }) { omnitureCall =>
-                <amp-pixel src="@Html(omnitureCall)"></amp-pixel>
-                @* Omniture pageview confidence pixel *@
-                <amp-pixel src="@{Configuration.debug.beaconUrl}/count/pva.gif"></amp-pixel>
-            }
-        }
         <amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
         <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
 

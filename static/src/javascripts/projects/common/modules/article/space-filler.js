@@ -1,14 +1,14 @@
 define([
+    'common/utils/raven',
     'common/utils/fastdom-promise',
     'common/utils/QueueAsync',
     'Promise',
-    'raven',
     'common/modules/article/spacefinder'
 ], function (
+    raven,
     fastdom,
     QueueAsync,
     Promise,
-    raven,
     spacefinder
 ) {
     var queue;

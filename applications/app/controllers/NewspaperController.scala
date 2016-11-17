@@ -17,8 +17,7 @@ class NewspaperController(contentApiClient: ContentApiClient) extends Controller
     val guardianPage = SimplePage(MetaData.make(
       "theguardian",
       Some(SectionSummary.fromId("todayspaper")),
-      "Main section | News | The Guardian",
-      "GFE: Newspaper books Main Section"
+      "Main section | News | The Guardian"
     ))
     val todaysPaper = newspaperQuery.fetchLatestGuardianNewspaper.map(p => TodayNewspaper(guardianPage, p))
 
@@ -30,8 +29,7 @@ class NewspaperController(contentApiClient: ContentApiClient) extends Controller
     val observerPage = SimplePage(MetaData.make(
       "theobserver",
       Some(SectionSummary.fromId("theobserver")),
-      "Main section | From the Observer | The Guardian",
-      "GFE: Observer Newspaper books Main Section"
+      "Main section | From the Observer | The Guardian"
     ))
 
     val todaysPaper = newspaperQuery.fetchLatestObserverNewspaper.map(p => TodayNewspaper(observerPage, p))
@@ -46,14 +44,12 @@ class NewspaperController(contentApiClient: ContentApiClient) extends Controller
       case "theguardian" => SimplePage(MetaData.make(
         "theguardian",
         Some(SectionSummary.fromId("todayspaper")),
-        "Top Stories | From the Guardian | The Guardian",
-        "GFE: Newspaper books Top Stories"
+        "Top Stories | From the Guardian | The Guardian"
       ))
       case "theobserver" => SimplePage(MetaData.make(
         "theobserver",
         Some(SectionSummary.fromId("theobserver")),
-        "News | From the Observer | The Guardian",
-        "GFE: Observer Newspaper books Top Stories"
+        "News | From the Observer | The Guardian"
       ))
     }
 

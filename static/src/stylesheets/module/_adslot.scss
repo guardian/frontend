@@ -347,6 +347,12 @@
     }
 }
 
+.ad-slot--books-inline {
+    @include mq(mobileLandscape) {
+        width: gs-span(2);
+    }
+}
+
 .fc-container--sponsored .fc-container:first-child,
 .fc-container--advertisement-feature .fc-container:first-child,
 .fc-container--foundation-supported .fc-container:first-child,

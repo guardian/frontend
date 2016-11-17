@@ -4,7 +4,6 @@
 @import views.html.hosted._
 @import common.{AnalyticsHost, CanonicalLink, LinkTo}
 @import conf.Configuration
-@import views.support.OmnitureAnalyticsData
 @import views.support.FBPixel
 
 <!doctype html>
@@ -15,7 +14,7 @@
         <meta name="amp-3p-iframe-src" content="https://www.theguardian.com/amp/remote.html">
         @fragments.metaData(page, amp = true)
         <title>@views.support.Title(page)</title>
-        @fragments.amp.stylesheets.main(page, page.mainPicture, page.cta.image, page.campaign.fontColour.brandColour)
+        @fragments.amp.stylesheets.main(page, page.mainPicture, page.cta.image, page.campaign.fontColour.hexCode)
         <script custom-element="amp-font" src="https://cdn.ampproject.org/v0/amp-font-0.1.js" async></script>
         <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
         <script custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js" async></script>
@@ -29,22 +28,11 @@
     <body>
         @*
         Baseline pageview confidence pixel.
-        This, along with the corresponding pixels for GA/Omniture/Ophan,
+        This, along with the corresponding pixels for GA/Ophan,
         are used to generate the confidence graphs on the frontend dashboard.
         *@
         <amp-pixel src="@{Configuration.debug.beaconUrl}/count/pv.gif"></amp-pixel>
 
-            @defining(s"${request.host}${request.path}") { path =>
-                @defining({
-                    val params = OmnitureAnalyticsData(page, "No Javascript", path, "GoogleAMP", Map(("r", "DOCUMENT_REFERRER")))
-                    val omnitureAccount = Configuration.javascript.pageData("guardian.page.omnitureAccount")
-                    s"${AnalyticsHost()}/b/ss/$omnitureAccount/1/H.25.3/?$params"
-                }) { omnitureCall =>
-                    <amp-pixel src="@Html(omnitureCall)"></amp-pixel>
-                    @* Omniture pageview confidence pixel *@
-                    <amp-pixel src="@{Configuration.debug.beaconUrl}/count/pva.gif"></amp-pixel>
-                }
-            }
         <amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
         <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
 
@@ -56,8 +44,8 @@
 
         <div class="main-body">
 
-            @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-article-page hosted-page--bright" else "hosted-article-page", page, isAMP = true)
-            <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
+            @guardianHostedHeader(if(page.campaign.fontColour.isDark) "hosted-article-page hosted-page--bright" else "hosted-article-page", page, isAMP = true)
+            <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.isDark) {hosted-page--bright}">
 
                 <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
                     <div class="media-primary media-content media-primary--showcase">
@@ -79,7 +67,6 @@
                                     <p class="intro">@Html(page.standfirst)</p>
 
                                     @page.pageName match {
-                                        case "meet-the-characters-of-zootropolis" => { @zootropolisPage(page) }
                                         case "overview" => { @singaporeF1Overview() }
                                         case "offtrack" => { @singaporeF1Offtrack() }
                                         case "packages" => { @singaporeF1Packages() }

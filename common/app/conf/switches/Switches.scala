@@ -164,8 +164,7 @@ with ABTestSwitches
 with CommercialSwitches
 with DiscussionSwitches
 with PerformanceSwitches
-with MonitoringSwitches
-with MembershipSwitches {
+with MonitoringSwitches {
 
   def all: Seq[Switch] = Switch.allSwitches
 

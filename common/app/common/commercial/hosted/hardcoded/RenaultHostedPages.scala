@@ -1,5 +1,6 @@
 package common.commercial.hosted.hardcoded
 
+import common.commercial.{Dimensions, Logo}
 import common.commercial.hosted._
 import conf.Static
 
@@ -13,8 +14,11 @@ object RenaultHostedPages {
     id = "renault-car-of-the-future",
     name = "Discover your Renault Zoe",
     owner = "Renault",
-    logoUrl = Static("images/commercial/logo_renault.jpg"),
-    fontColour = FontColour("#ffc421")
+    logo = Logo(
+      Static("images/commercial/logo_renault.jpg"),
+      Some(Dimensions(width = 132, height = 132))
+    ),
+    fontColour = Colour("#ffc421")
   )
 
   private val cta = HostedCallToAction(
@@ -28,7 +32,7 @@ object RenaultHostedPages {
   private val videoSrcRoot = "https://cdn.theguardian.tv/interactive"
 
   private val teaserWithoutNextPage: HostedVideoPage = {
-    val id = s"commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser"
+    val id = "commercial/advertiser-content/renault-car-of-the-future/design-competition-teaser"
     val pageName = teaserPageName
     val standfirst = "Who better to dream up the cars of tomorrow than the people who'll be buying them? Students at " +
                      "Central St Martins are working with Renault to design the interior for cars that will drive " +
@@ -74,7 +78,7 @@ object RenaultHostedPages {
   }
 
   private val episode1WithoutNextPage: HostedVideoPage = {
-    val id = s"commercial/advertiser-content/renault-car-of-the-future/design-competition-episode1"
+    val id = "commercial/advertiser-content/renault-car-of-the-future/design-competition-episode1"
     val pageName = episode1PageName
     val standfirst = "Renault challenged Central St Martins students to dream up the car of the future. The winning " +
                      "design will be announced at Clerkenwell Design Week (and on this site). Watch this short video " +
@@ -119,7 +123,7 @@ object RenaultHostedPages {
   }
 
   private val episode2WithoutNextPage: HostedVideoPage = {
-    val id = s"commercial/advertiser-content/renault-car-of-the-future/design-competition-episode2"
+    val id = "commercial/advertiser-content/renault-car-of-the-future/design-competition-episode2"
     val pageName = episode2PageName
     val standfirst = "A group of Central St Martins students took part in a competition to dream up the car of the " +
                      "future. The winning design is radical and intriguing. Meet the team whose blue-sky thinking may" +

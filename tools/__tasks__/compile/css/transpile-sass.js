@@ -18,16 +18,26 @@ const renderSass = (filePath, dest) => new Promise((resolve, reject) => {
         file: filePath,
         outFile: dest
     }, options), (err, result) => {
-        if (err) reject(err);
-        resolve(result.css.toString());
+        if (err) {
+            reject(err);
+        } else {
+            try {
+                resolve(result.css.toString());
+            } catch (e) {
+                reject(e);
+            }
+        }
     });
 });
 
 const saveSass = (sass, dest) => new Promise((resolve, reject) => {
     mkdirp.sync(path.parse(dest).dir);
     fs.writeFile(dest, sass, err => {
-        if (err) reject(err);
-        resolve();
+        if (err) {
+            reject(err);
+        } else {
+            resolve();
+        }
     });
 });
 

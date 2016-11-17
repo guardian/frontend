@@ -203,7 +203,7 @@ $hosted-video-height: 540px;
 }
 
 .hosted__glogotext {
-    @include f-headlineSans;
+    @include f-textSans;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: .5px;
@@ -550,7 +550,7 @@ $hosted-video-height: 540px;
 
 // Headings
 .hosted__heading {
-    @include f-headlineSans;
+    @include f-textSans;
 
     margin: 0;
     font-size: 22px;
@@ -576,7 +576,7 @@ $hosted-video-height: 540px;
 }
 
 .hosted__heading--small {
-    @include f-headlineSans;
+    @include f-textSans;
 
     font-size: 18px;
     line-height: 1;
@@ -685,7 +685,7 @@ $hosted-video-height: 540px;
 
 .hosted__cta-text,
 .hosted__cta-label {
-    @include f-headlineSans;
+    @include f-textSans;
 
     font-size: 25px;
     font-weight: bold;
@@ -711,7 +711,7 @@ $hosted-video-height: 540px;
 
 .hosted__cta-btn-text {
     @include circular;
-    @include f-headlineSans;
+    @include f-textSans;
     position: relative;
     display: inline-block;
     padding: 6px 45px 6px 14px;
@@ -857,7 +857,7 @@ $hosted-video-height: 540px;
 }
 
 .hosted__label-btn.paidfor-label__btn {
-    @include f-headlineSans;
+    @include f-textSans;
     font-size: 16px;
 
     &.popup__toggle {
@@ -927,7 +927,7 @@ $hosted-video-height: 540px;
 }
 
 .hosted__next-page {
-    @include f-headlineSans;
+    @include f-textSans;
 }
 
 .hosted-video-page .hosted__next-page-placeholder,
@@ -1009,4 +1009,8 @@ $nextPageThumbWidthMobile: #{$nextPageThumbHeightMobile * 5 / 3};
         font-size: 18px;
         line-height: 20px;
     }
+}
+
+.hosted__link {
+    display: inline-block;
 }

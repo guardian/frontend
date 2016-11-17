@@ -7,42 +7,30 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-    'common/modules/experiments/tests/discussion-promote-bottom-banner',
     'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/weekend-reading-email',
-    'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
-    'common/modules/experiments/tests/membership-engagement-us-message-copy-experiment',
-    'common/modules/experiments/tests/contributions-membership-epic-cta-united-states',
-    'common/modules/experiments/tests/contributions-membership-epic-cta-rest-of-world'
-
-
-], function (
-    reportError,
-    config,
-    cookies,
-    mediator,
-    store,
-    mvtCookie,
-    memoize,
-    noop,
-    DiscussionPromoteBottomBanner,
-    HostedOnwardJourney,
-    WeekendReadingEmail,
-    MembershipEngagementMessageCopyExperiment,
-    MembershipEngagementUSMessageCopyExperiment,
-    ContributionsMembershipEpicCtaUnitedStates,
-    ContributionsMembershipEpicCtaRestOfWorld
-
-) {
-
+    'common/modules/experiments/tests/membership-engagement-international-experiment',
+    'common/modules/experiments/tests/contributions-epic-limited-impressions',
+    'common/modules/experiments/tests/contributions-epic-thank-you'
+], function (reportError,
+             config,
+             cookies,
+             mediator,
+             store,
+             mvtCookie,
+             memoize,
+             noop,
+             HostedOnwardJourney,
+             WeekendReadingEmail,
+             MembershipEngagementInternationalExperiment,
+             ContributionsEpicLimitedImpressions,
+             ContributionsEpicThankYou) {
     var TESTS = [
-        new DiscussionPromoteBottomBanner(),
         new HostedOnwardJourney(),
         new WeekendReadingEmail(),
-        new MembershipEngagementMessageCopyExperiment(),
-        new MembershipEngagementUSMessageCopyExperiment(),
-        new ContributionsMembershipEpicCtaUnitedStates(),
-        new ContributionsMembershipEpicCtaRestOfWorld()
+        new MembershipEngagementInternationalExperiment(),
+        new ContributionsEpicLimitedImpressions(),
+        new ContributionsEpicThankYou()
     ];
 
     var participationsKey = 'gu.ab.participations';
@@ -67,7 +55,9 @@ define([
     function removeParticipation(test) {
         var participations = getParticipations();
         var filteredParticipations = Object.keys(participations)
-            .filter(function (participation) { return participation !== test.id; })
+            .filter(function (participation) {
+                return participation !== test.id;
+            })
             .reduce(function (result, input) {
                 result[input] = participations[input];
                 return result;
@@ -80,14 +70,14 @@ define([
         // renamed/deleted from the backend
         Object.keys(getParticipations()).forEach(function (k) {
             if (typeof config.switches['ab' + k] === 'undefined') {
-                removeParticipation({ id: k });
+                removeParticipation({id: k});
             } else {
                 var testExists = TESTS.some(function (element) {
                     return element.id === k;
                 });
 
                 if (!testExists) {
-                    removeParticipation({ id: k });
+                    removeParticipation({id: k});
                 }
             }
         });
@@ -114,10 +104,10 @@ define([
 
     function testCanBeRun(test) {
         var expired = (new Date() - new Date(test.expiry)) > 0,
-            isSensitive = config.page.shouldHideAdverts;
+            isSensitive = config.page.isSensitive;
 
         return ((isSensitive ? test.showForSensitive : true)
-            && isTestSwitchedOn(test)) && !expired && test.canRun() ;
+            && isTestSwitchedOn(test)) && !expired && test.canRun();
     }
 
     function getId(test) {
@@ -214,7 +204,7 @@ define([
         var data = {};
         data[test.id] = abData(variantId, String(complete));
 
-        return function() {
+        return function () {
             recordOphanAbEvent(data);
         };
     }
@@ -242,7 +232,7 @@ define([
      *
      * @return {String} variant ID
      */
-    var variantIdFor = memoize(function(test) {
+    var variantIdFor = memoize(function (test) {
         var smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset;
         var largestTestId = smallestTestId + mvtCookie.getMvtNumValues() * test.audience;
         var mvtCookieId = mvtCookie.getMvtValue();
@@ -299,7 +289,7 @@ define([
      * @returns {boolean}
      */
     function defersImpression(test) {
-        return test.variants.every(function(variant) {
+        return test.variants.every(function (variant) {
             return typeof variant.impression === 'function';
         });
     }
@@ -334,7 +324,9 @@ define([
 
     // These kinds of tests are both server and client side.
     function getServerSideTests() {
-        return Object.keys(config.tests).filter(function (test) { return !!config.tests[test]; });
+        return Object.keys(config.tests).filter(function (test) {
+            return !!config.tests[test];
+        });
     }
 
     function not(f) {
@@ -367,12 +359,12 @@ define([
             });
         },
 
-        forceVariantCompleteFunctions: function(testId, variantId) {
+        forceVariantCompleteFunctions: function (testId, variantId) {
             var test = getTest(testId);
 
             var variant = test && test.variants.filter(function (v) {
-                return v.id.toLowerCase() === variantId.toLowerCase();
-            })[0];
+                    return v.id.toLowerCase() === variantId.toLowerCase();
+                })[0];
 
             var impression = variant && variant.impression || noop;
             var complete = variant && variant.success || noop;
@@ -405,7 +397,7 @@ define([
             getActiveTests().forEach(run);
         },
 
-        registerCompleteEvents: function() {
+        registerCompleteEvents: function () {
             getActiveTests().forEach(registerCompleteEvent(true));
         },
 

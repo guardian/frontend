@@ -63,7 +63,6 @@ define([
         // GA and Omniture will both pick it up on next page load,
         // then Omniture will remove it from storage.
         var storeObj = {
-            pageName: this.s.pageName,
             path: loc.pathname,
             tag: spec.tag || 'untracked',
             time: new Date().getTime()

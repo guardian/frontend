@@ -11,7 +11,7 @@ trait FeatureSwitches {
     "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 15),
+    sellByDate = new LocalDate(2017, 1, 17),
     exposeClientSide = true
   )
 
@@ -61,7 +61,7 @@ trait FeatureSwitches {
     "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition (for web only).",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 10),
+    sellByDate = new LocalDate(2016, 12, 13),
     exposeClientSide = true
   )
 
@@ -477,13 +477,23 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val ElectionAppDelay = Switch(
-    SwitchGroup.Feature,
-    "election-app-delay",
-    "Delay loading app.js until interactive is ready - SHORT TERM HACK FOR US ELECTIONS",
-    owners = Seq(Owner.withGithub("wpf500")),
+  val turnOffSupporterEpic = Switch(
+    SwitchGroup.Membership,
+    "turn-off-supporter-epic",
+    "Turning this on will hide the Become a Supporter button on the epic, leaving just the Contribute button",
+    owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 14),
-    exposeClientSide = false
+    sellByDate = new LocalDate(2016, 11, 22),
+    exposeClientSide = true
+  )
+
+  val turnOffContributionsEpic = Switch(
+    SwitchGroup.Membership,
+    "turn-off-contributions-epic",
+    "Turning this on will hide the Make a Contribution button on the epic, leaving just the Become a Supporter button",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 22),
+    exposeClientSide = true
   )
 }

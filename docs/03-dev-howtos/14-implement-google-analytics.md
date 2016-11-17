@@ -102,7 +102,7 @@ The comments event is a custom event defined in [analytics/discussion](https://g
 
 Most discussion events can be tracked with click events so the only GA custom event for discussion is for 'scroll'.
 
-The custom category for tracking a user scrolling to the comments is *ElementView* with an action of *Onpage item* and a label of *Scroll to comments*.
+The custom category for tracking a user scrolling to the comments is *element view* with an action of *onpage item* and a label of *scroll to comments*.
 
 ### Forsee
 
