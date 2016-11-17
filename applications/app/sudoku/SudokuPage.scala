@@ -7,7 +7,6 @@ class SudokuPage(val sudoku: Sudoku) extends StandalonePage {
   override val metadata = MetaData.make(
     id = sudoku.id,
     section = Some(SectionSummary.fromId("sudokus")),
-    analyticsName = sudoku.id,
     webTitle = sudoku.title,
     javascriptConfigOverrides = Map(
     "section" -> JsString("lifeandstyle"),

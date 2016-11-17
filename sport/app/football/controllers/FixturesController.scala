@@ -12,7 +12,7 @@ import play.api.mvc.{Action, AnyContent}
 class FixturesController(val competitionsService: CompetitionsService) extends MatchListController with CompetitionFixtureFilters {
 
   private def fixtures(date: LocalDate) = new FixturesList(date, competitionsService.competitions)
-  private val page = new FootballPage("football/fixtures", "football", "All fixtures", "GFE:Football:automatic:fixtures")
+  private val page = new FootballPage("football/fixtures", "football", "All fixtures")
 
   def allFixturesForJson(year: String, month: String, day: String) = allFixturesFor(year, month, day)
   def allFixturesFor(year: String, month: String, day: String): Action[AnyContent] =
@@ -55,13 +55,13 @@ class FixturesController(val competitionsService: CompetitionsService) extends M
 
   private def renderCompetitionFixtures(competitionName: String, competition: Competition, date: LocalDate) = Action { implicit request =>
     val fixtures = new CompetitionFixturesList(date, competitionsService.competitions, competition.id)
-    val page = new FootballPage(s"football/$competitionName/fixtures", "football", s"${competition.fullName} fixtures", "GFE:Football:automatic:competition fixtures")
+    val page = new FootballPage(s"football/$competitionName/fixtures", "football", s"${competition.fullName} fixtures")
     renderMatchList(page, fixtures, filters)
   }
 
   private def renderTeamFixtures(teamName: String, team: FootballTeam, date: LocalDate) = Action { implicit request =>
     val fixtures = new TeamFixturesList(date, competitionsService.competitions, team.id)
-    val page = new FootballPage(s"football/$teamName/fixtures", "football", s"${team.name} fixtures", "GFE:Football:automatic:team fixtures")
+    val page = new FootballPage(s"football/$teamName/fixtures", "football", s"${team.name} fixtures")
     renderMatchList(page, fixtures, filters)
   }
 
@@ -73,8 +73,7 @@ class FixturesController(val competitionsService: CompetitionsService) extends M
       val page = new FootballPage(
         s"football/${team.id}/fixtures",
         "football",
-        s"${team.name} fixtures",
-        "GFE:Football:automatic:team fixtures"
+        s"${team.name} fixtures"
       )
       renderMatchList(page, fixtures, filters)
     }.getOrElse(NotFound)

@@ -18,7 +18,7 @@ class EmailVerificationController( api: IdApiClient,
   import ValidationState._
   import authenticatedActions.authActionWithUser
 
-  val page = IdentityPage("/verify-email", "Verify Email", "verify-email")
+  val page = IdentityPage("/verify-email", "Verify Email")
 
   def verify(token: String) = Action.async {
     implicit request =>

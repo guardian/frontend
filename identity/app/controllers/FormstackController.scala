@@ -19,7 +19,7 @@ class FormstackController(returnUrlVerifier: ReturnUrlVerifier,
 
   import authenticatedActions.authAction
 
-  val page = IdentityPage("/form", "Form", "formstack")
+  val page = IdentityPage("/form", "Form")
 
   def formstackForm(formReference: String, composer: Boolean) = authAction.async { implicit request =>
     if (Switches.IdentityFormstackSwitch.isSwitchedOn) {

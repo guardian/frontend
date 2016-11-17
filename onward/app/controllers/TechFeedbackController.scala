@@ -11,8 +11,7 @@ class TechFeedbackController extends Controller with Logging {
     val page = model.SimplePage(MetaData.make(
       request.path,
       Some(SectionSummary.fromId("info")),
-      "Thanks for your report",
-      "GFE:Tech Feedback"
+      "Thanks for your report"
     ))
     Cached(900)(RevalidatableResult.Ok(views.html.feedback(page, path)))
   }
