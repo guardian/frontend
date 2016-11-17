@@ -112,7 +112,16 @@
         padding-left: $gs-gutter / 2;
     }
 
+    // Use margin-right for the space between penultimate and last child
+    //so that meta-numbers on the right don't have a space if last item
+    // is hidden
+
+    &:nth-last-child(2) {
+        padding-right: 0;
+    }
+
     &:last-child {
+        margin-left: ($gs-gutter / 2) + 1px;
         padding-right: 0;
     }
 }
