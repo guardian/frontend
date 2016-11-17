@@ -1,4 +1,7 @@
+const mkdirp = require('mkdirp');
+const {target} = require('../../config').paths;
+
 module.exports = {
     description: 'Create CSS target directory',
-    task: 'grunt mkdir:css'
+    task: () => mkdirp.sync(`${target}/stylesheets`)
 };

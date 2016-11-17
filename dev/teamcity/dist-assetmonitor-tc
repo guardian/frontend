@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+./grunt-tc assetmonitor:common
+
+exit 0 #always ignore grunt tasks result

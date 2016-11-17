@@ -1,4 +1,4 @@
-var isTeamcityReporterEnabled = process.env.KARMA_TEAMCITY_REPORTER === 'true',
+var isTeamcityReporterEnabled = process.env.TEAMCITY === 'true',
     karmaReporters = [ isTeamcityReporterEnabled ? 'teamcity' : 'spec' ];
 
 module.exports = function (config) {
@@ -49,7 +49,8 @@ module.exports = function (config) {
                     dir: 'tmp/coverage/'
                 },
                 {type: 'text-summary'}
-            ]
+            ],
+            includeAllSources: true
         },
         preprocessors: {
             'static/src/javascripts/!(*components|vendor)/**/*.js': ['coverage'],

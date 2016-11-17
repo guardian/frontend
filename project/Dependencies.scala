@@ -8,7 +8,7 @@ object Dependencies {
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
   val awsVersion = "1.11.7"
-  val faciaVersion = "2.0.3"
+  val faciaVersion = "2.0.4"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
@@ -70,6 +70,7 @@ object Dependencies {
   val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.3.0"
   val targetingClient = "com.gu" %% "targeting-client-play24" % "0.8.0"
+  val scanamo = "com.gu" %% "scanamo" % "0.8.0"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"

@@ -1,4 +1,10 @@
 module.exports = {
-    description: 'Hash assets',
-    task: 'grunt asset_hash'
+    description: 'Version assets',
+    task: [
+        require('./clean'),
+        {
+            description: 'Hash assets',
+            task: 'grunt asset_hash'
+        }
+    ]
 };

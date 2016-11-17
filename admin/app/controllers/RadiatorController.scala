@@ -63,18 +63,4 @@ class RadiatorController(wsClient: WSClient) extends Controller with Logging wit
       )))
     }
   }
-
-  def pingdom() = Action.async { implicit request =>
-    val url = Configuration.pingdom.url + "/checks"
-    val user = Configuration.pingdom.user
-    val password = Configuration.pingdom.password
-    val apiKey = Configuration.pingdom.apiKey
-
-    wsClient.url(url)
-      .withAuth(user, password,  WSAuthScheme.BASIC)
-      .withHeaders("App-Key" ->  apiKey)
-      .get().map { response =>
-        NoCache(Ok(Json.parse(response.body)))
-      }
-  }
 }

@@ -17,7 +17,7 @@
 }
 
 @defining(model.article) { article =>
-  @defining(isPaidContent(article, model)) { isPaidContent =>
+  @defining(isPaidContent(model)) { isPaidContent =>
 
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
@@ -57,7 +57,7 @@
 
                         @fragments.witnessCallToAction(article.content)
 
-                        @fragments.contentMeta(article, model)
+                        @fragments.contentMeta(article, model, amp = amp)
 
                         @if(article.tags.isNews && !article.elements.hasMainEmbed && article.elements.elements("main").isEmpty) {
                             <hr class="content__hr hide-until-leftcol" />

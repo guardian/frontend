@@ -1,4 +1,4 @@
 module.exports = {
     description: 'Update caniuse DB',
-    task: 'grunt shell:updateCanIUse'
+    task: 'npm update caniuse-db'
 };
