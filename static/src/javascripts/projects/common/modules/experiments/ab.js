@@ -9,7 +9,6 @@ define([
     'lodash/utilities/noop',
     'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/weekend-reading-email',
-    'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
     'common/modules/experiments/tests/contributions-epic-limited-impressions',
     'common/modules/experiments/tests/contributions-epic-thank-you'
@@ -23,14 +22,12 @@ define([
              noop,
              HostedOnwardJourney,
              WeekendReadingEmail,
-             MembershipEngagementMessageCopyExperiment,
              MembershipEngagementInternationalExperiment,
              ContributionsEpicLimitedImpressions,
              ContributionsEpicThankYou) {
     var TESTS = [
         new HostedOnwardJourney(),
         new WeekendReadingEmail(),
-        new MembershipEngagementMessageCopyExperiment(),
         new MembershipEngagementInternationalExperiment(),
         new ContributionsEpicLimitedImpressions(),
         new ContributionsEpicThankYou()
