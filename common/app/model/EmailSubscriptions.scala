@@ -246,6 +246,7 @@ object EmailSubscriptions {
       description = "Rely on Close up to bring you Guardian film news, reviews and much, much more.",
       frequency = "Every Friday",
       listId = "40",
+      tone = Some("media"),
       subscribedTo = subscribedListIds.exists{ x => x == "40" }
     ),
     EmailSubscription(
