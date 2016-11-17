@@ -11,7 +11,8 @@ define([
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
     'common/modules/experiments/tests/contributions-epic-limited-impressions',
-    'common/modules/experiments/tests/contributions-epic-thank-you'
+    'common/modules/experiments/tests/contributions-epic-thank-you',
+    'common/modules/experiments/tests/platform-sticky-ad-viewability'
 ], function (reportError,
              config,
              cookies,
@@ -24,13 +25,16 @@ define([
              WeekendReadingEmail,
              MembershipEngagementInternationalExperiment,
              ContributionsEpicLimitedImpressions,
-             ContributionsEpicThankYou) {
+             ContributionsEpicThankYou,
+             PlatformStickyAdViewability
+    ) {
     var TESTS = [
         new HostedOnwardJourney(),
         new WeekendReadingEmail(),
         new MembershipEngagementInternationalExperiment(),
         new ContributionsEpicLimitedImpressions(),
-        new ContributionsEpicThankYou()
+        new ContributionsEpicThankYou(),
+        new PlatformStickyAdViewability()
     ];
 
     var participationsKey = 'gu.ab.participations';
