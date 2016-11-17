@@ -2,14 +2,12 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/google',
-    'common/utils/robust',
-    'common/utils/config'
+    'common/utils/robust'
 ], function (
     mediator,
     storage,
     google,
-    robust,
-    config
+    robust
 ) {
     var NG_STORAGE_KEY = 'gu.analytics.referrerVars';
     var loc = document.location;
@@ -65,7 +63,6 @@ define([
         // GA and Omniture will both pick it up on next page load,
         // then Omniture will remove it from storage.
         var storeObj = {
-            pageName: config.page.analyticsName,
             path: loc.pathname,
             tag: spec.tag || 'untracked',
             time: new Date().getTime()
