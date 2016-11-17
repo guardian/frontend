@@ -5,6 +5,7 @@ import java.net.URLEncoder
 import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery, Video}
 import common.Logging
+import common.commercial.Logo
 import conf.Configuration.site
 import model.StandalonePage
 
@@ -55,7 +56,7 @@ case class HostedCampaign(
   id: String,
   name: String,
   owner: String,
-  logoUrl: String,
+  logo: Logo,
   fontColour: Colour
 )
 
@@ -72,7 +73,7 @@ object HostedCampaign {
         id = section.id.stripPrefix("advertiser-content/"),
         name = section.webTitle,
         owner = sponsorship.sponsorName,
-        logoUrl = sponsorship.sponsorLogo,
+        logo = Logo.make(sponsorship.sponsorLogo, sponsorship.sponsorLogoDimensions),
         fontColour = Colour(hostedTag.paidContentCampaignColour getOrElse "")
       )
     }
