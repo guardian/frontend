@@ -68,7 +68,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 10
+    val s3ConfigVersion = 11
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -229,7 +229,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object sonobi {
-    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//mtrx.go.sonobi.com/morpheus.theguardian.2919.js")
+    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12911.js")
   }
 
   object frontend {
@@ -585,13 +585,6 @@ class GuardianConfiguration extends Logging {
           None
       }
     }
-  }
-
-  object pingdom {
-    lazy val url = configuration.getMandatoryStringProperty("pingdom.url")
-    lazy val user = configuration.getMandatoryStringProperty("pingdom.user")
-    lazy val password  = configuration.getMandatoryStringProperty("pingdom.password")
-    lazy val apiKey = configuration.getMandatoryStringProperty("pingdom.apikey")
   }
 
   object riffraff {

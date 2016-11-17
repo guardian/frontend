@@ -32,6 +32,7 @@ object SwitchGroup {
   val Monitoring = SwitchGroup("Monitoring")
   val Performance = SwitchGroup("Performance")
   val ServerSideABTests = SwitchGroup("Server-side A/B Tests")
+  val Membership = SwitchGroup("Membership")
 }
 
 

@@ -1,30 +1,9 @@
 package conf.switches
 
-import common.Edition
 import conf.switches.SwitchGroup.ABTests
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
-
-  val ABDiscussionExternalFrontend = Switch(
-    SwitchGroup.ABTests,
-    "ab-discussion-external-frontend",
-    "Standalone frontend discussion",
-    owners = Seq(Owner.withGithub("piuccio")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 11, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-discussion-promote-comments",
-    "Promote the comments with a sticky bottom banner",
-    owners = Seq(Owner.withGithub("nicl")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 11, 9),
-    exposeClientSide = true
-  )
 
   Switch(
     ABTests,
@@ -33,16 +12,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 11, 21),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-membership-engagement-warp-factor-one",
-    "The first level of prominent membership engagement messaging",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = On, // so we don't inadvertently turn off during deployment
-    sellByDate = new LocalDate(2016, 11, 4),  // Friday 4th 23:59:59
     exposeClientSide = true
   )
 
@@ -61,28 +30,18 @@ trait ABTestSwitches {
     "ab-membership-engagement-message-copy-experiment",
     "Test alternate short messages on membership engagement banner",
     owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 8),
+    safeState = On, // so we don't inadvertently turn off during deployment
+    sellByDate = new LocalDate(2016, 12, 1), // Thursday 1st December
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-membership-engagement-us-message-copy-experiment",
-    "Test alternate short messages on US membership engagement banner",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 15),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-countries-uk",
-    "Test whether different messages perform better/worse in different countries",
-    owners = Seq(Owner.withGithub("philwills")),
+    "ab-membership-engagement-international-experiment",
+    "Test varying the number of visits before showing the membership engagement banner",
+    owners = Seq(Owner.withGithub("rupert.bates")),
     safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 4),
+    sellByDate = new LocalDate(2016, 12, 1), // Thursday 1st December
     exposeClientSide = true
   )
 
@@ -97,22 +56,24 @@ trait ABTestSwitches {
   )
 
   Switch(
+  ABTests,
+    "ab-contributions-epic-limited-impressions",
+    "Run the epic with a limit of 4 impressions per user (for non US, US there is no limit)",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 22),
+    exposeClientSide = true
+  )
+  
+  Switch(
     ABTests,
-    "ab-contributions-countries-america",
-    "Test whether different messages perform better/worse in different countries",
-    owners = Seq(Owner.withGithub("philwills")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 4),
+    "ab-contributions-epic-thank-you",
+    "Show a thank you message to our supporters at the end of artciles, just saying thanks!",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 22),
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-contributions-membership-epic",
-    "Find the optimal way of offering Contributions along side Membership in the Epic component",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 7),
-    exposeClientSide = true
-  )
+
 }

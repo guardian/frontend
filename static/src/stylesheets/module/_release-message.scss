@@ -466,38 +466,45 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         border-color: #333333;
     }
 }
+
 .site-message--adblock-message,
 .site-message--membership-message-default {
     background: $membership-default;
 }
+
 .site-message--membership-message-deep-purple {
     background: #7d0068;
 }
+
 .site-message--membership-message-yellow {
     @include site-message-dark-text;
     background: #fff200;
 }
+
 .site-message--membership-message-vibrant-blue {
     @include site-message-dark-text;
     background: #4bc6df;
 }
+
 .site-message--membership-message-light-blue {
     @include site-message-dark-text;
     background: #aad8f1;
 }
+
 .site-message--membership-message-teal {
     @include site-message-dark-text;
     background: #69d1ca;
 }
+
 .site-message--contributions-message {
     @include site-message-dark-text;
     background: #ffbb00;
 }
 
 /*
- * Prominent membership messaging AB tests
+ * Prominent membership message as a feature
  */
-.site-message--membership-message.prominent-level-1 {
+.site-message--membership-prominent {
     .site-message__message {
         @include mq($until: tablet) {
             padding-left: 5px;
@@ -561,41 +568,50 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         width: auto;
         @include mq($from: mobile) {
             font-size: 12px;
-            line-height: 20px;
-            height: 20px;
+            line-height: 24px;
+            height: 24px;
             margin-top: 3px;
+            padding-left: 9px;
             svg {
                 position: relative;
-                top: -4px;
-                height: 20px;
-                width: 20px;
+                top: -3px;
+                height: 24px;
+                width: 14px;
+                padding-left: 5px;
+                padding-right: 5px;
             }
         }
         @include mq($from: tablet) {
             font-size: 14px;
-            line-height: 24px;
-            height: 24px;
+            line-height: 28px;
+            height: 28px;
             margin-top: 5px;
             top: -5px;
+            padding-left: 12px;
             svg {
-                top: -3px;
-                height: 24px;
-                width: 28px;
+                top: -2px;
+                height: 28px;
+                width: 18px;
+                padding-left: 10px;
+                padding-right: 5px;
             }
         }
         @include mq($from: desktop) {
             font-size: 14px;
-            line-height: 28px;
-            height: 28px;
+            line-height: 36px;
+            height: 36px;
             margin-top: 10px;
             top: -5px;
+            padding-left: 15px;
             svg {
-                top: -2px;
-                height: 28px;
-                width: 28px;
+                top: 3px;
+                height: 36px;
+                width: 20px;
+                padding-left: 10px;
+                padding-right: 7px;
             }
         }
-        padding: 1px 24px;
+        padding-right: 10px;
         position: relative;
         cursor: pointer;
         background-color: transparent;
@@ -603,6 +619,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         a {
             text-decoration: none;
         }
+    }
+
+    #membership__engagement-message-text {
+        margin-right: 16px;
     }
 
     .message-button-rounded__cta.yellow {
@@ -643,7 +663,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 }
 
-.site-message--membership-message.prominent-level-1.yellow {
+.site-message--membership-prominent.yellow {
     @include site-message-dark-text;
     background-color: #ffce4b;
     svg {
@@ -651,10 +671,12 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         fill: #000000;
     }
 }
-.site-message--membership-message.prominent-level-1.purple {
+
+.site-message--membership-prominent.purple {
     background-color: #7d0068;
 }
-.site-message--membership-message.prominent-level-1.bright-blue {
+
+.site-message--membership-prominent.bright-blue {
     @include site-message-dark-text;
     background-color: #4bc6df;
     svg {
@@ -662,7 +684,8 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         fill: #000000;
     }
 }
-.site-message--membership-message.prominent-level-1.dark-blue {
+
+.site-message--membership-prominent.dark-blue {
     background-color: #005689;
 }
 
@@ -784,7 +807,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         }
     }
 }
-
 
 .adblock-sticky__quote {
     @include clearfix;

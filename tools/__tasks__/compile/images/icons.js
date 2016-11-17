@@ -2,7 +2,7 @@
 
 /* eslint-disable no-console */
 
-const {static: staticDir, root} = require('../../config').paths;
+const {src, root} = require('../../config').paths;
 
 const fs = require('fs');
 const path = require('path');
@@ -81,18 +81,18 @@ module.exports = {
             description: `Spriting ${target}`,
             concurrent: true,
             task: () => {
-                const src = path.join(staticDir, 'src', 'images', target);
-                const dest = path.join(staticDir, 'src', 'stylesheets', 'icons');
+                const srcPath = path.join(src, 'images', target);
+                const destPath = path.join(src, 'stylesheets', 'icons');
                 const fileName = `_${target}-icons-svg.scss`;
 
-                const iconPaths = glob.sync(path.join(src, '*.svg'));
+                const iconPaths = glob.sync(path.join(srcPath, '*.svg'));
 
-                mkdirp.sync(dest);
+                mkdirp.sync(destPath);
 
                 return Promise.all(iconPaths.map(getSVG))
                     .then(sortSVGs)
                     .then(svgs => svgs.map(generateSassForSVG).join('').trim())
-                    .then(sass => saveSass(sass, dest, fileName));
+                    .then(sass => saveSass(sass, destPath, fileName));
             }
         };
     })

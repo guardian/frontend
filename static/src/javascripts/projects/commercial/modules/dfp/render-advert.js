@@ -1,8 +1,8 @@
 define([
     'bonzo',
     'qwery',
-    'raven',
     'Promise',
+    'common/utils/raven',
     'common/utils/fastdom-promise',
     'common/utils/closest',
     'common/modules/commercial/ad-sizes',
@@ -13,8 +13,8 @@ define([
 ], function (
     bonzo,
     qwery,
-    raven,
     Promise,
+    raven,
     fastdom,
     closest,
     adSizes,

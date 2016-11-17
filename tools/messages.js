@@ -71,13 +71,6 @@ switch (process.argv[2]) {
         }, 'info');
         break;
 
-    case 'install':
-        notify(
-            'All 3rd party dependencies have been installed.', {
-            heading: 'make install'
-        }, 'info');
-        break;
-
     case 'should-yarn':
         notify('Run `make install` and include any changes to `/yarn.locl` in your commit.', {
             heading: 'Dependencies have changed'

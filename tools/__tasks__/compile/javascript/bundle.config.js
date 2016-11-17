@@ -19,7 +19,6 @@
         raven: 'components/raven-js/raven',
         classnames: 'components/classnames/index',
         reqwest: 'components/reqwest/reqwest',
-        stripe: 'vendor/stripe/stripe.min',
         svgs: '../../../common/conf/assets/inline-svgs',
 
         // video

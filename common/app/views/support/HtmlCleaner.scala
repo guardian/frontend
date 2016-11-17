@@ -602,25 +602,6 @@ object MembershipEventCleaner extends HtmlCleaner {
     }
 }
 
-object ChaptersLinksCleaner extends HtmlCleaner {
-  def slugify(text: String): String = {
-    Normalizer.normalize(text, Normalizer.Form.NFKD)
-      .toLowerCase
-      .replaceAll("[^0-9a-z ]", "")
-      .trim.replaceAll(" +", "-")
-  }
-
-  override def clean(document: Document): Document = {
-    val autoaChapters = document.getElementsByClass("auto-chapter")
-
-    autoaChapters.foreach { ch =>
-      val h2 = ch.getElementsByTag("h2")
-      h2.attr("id", slugify(h2.text()))
-    }
-    document
-  }
-}
-
 case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean, amp: Boolean = false)(implicit val request: RequestHeader) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))

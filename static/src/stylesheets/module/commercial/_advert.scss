@@ -115,6 +115,18 @@
     }
 }
 
+.advert__kicker {
+    &::after {
+        content: '/';
+        display: inline-block;
+        margin-left: .2em;
+        color: mix(#ffffff, $news-support-6, 20%);
+
+    }
+
+    color: $paid-card-kicker;
+}
+
 .advert--branded {
     padding-bottom: $gs-row-height + $gs-baseline * 5; //96px = $gs-row-height + height of the logo
 }
