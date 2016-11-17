@@ -38,7 +38,7 @@ define([
                                     }
                     }
                     , videoId);
-            })
+            });
         });
     }
 
@@ -77,8 +77,8 @@ define([
     }
 
     function recordPlayerProgress(atomId, player) {
-            var currentTime = player.getCurrentTime(),
-                percentPlayed = Math.round(((currentTime / player.duration) * 100));
+            var currentTime = player.getCurrentTime();
+            var percentPlayed = Math.round(((currentTime / player.duration) * 100));
 
             if (percentPlayed > 0 && percentPlayed < 100 &&
                 percentPlayed % 25 === 0) {
@@ -88,5 +88,5 @@ define([
 
     return {
         init: init
-    }
+    };
 });
