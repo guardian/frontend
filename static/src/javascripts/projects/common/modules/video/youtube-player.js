@@ -2,39 +2,18 @@ define([
     'fastdom',
     'Promise',
     'common/utils/$',
-    'common/utils/load-script',
-    'common/modules/video/youtube-tracking'
+    'common/utils/load-script'
 ], function (
     fastdom,
     Promise,
     $,
-    loadScript,
-    tracking
+    loadScript
 ) {
     var scriptId = 'youtube-script';
     var scriptSrc = 'https://www.youtube.com/iframe_api';
     var promise = new Promise(function(resolve) {
         window.onYouTubeIframeAPIReady = resolve;
     });
-
-    var players = {},
-        progressTracker = {};
-
-    var STATES = {
-        'ENDED': _onPlayerEnded,
-        'PLAYING': _onPlayerPlaying,
-        'PAUSED': _onPlayerPaused
-    };
-
-    fastdom.read(function() {
-        $('.atom--media--youtube').each(function(el) {
-            init(el, tracking, el.firstElementChild.id, initTracking);
-        });
-    });
-
-    function initTracking(atomId) {
-        tracking.init(atomId);
-    }
 
     function loadYoutubeJs() {
         fastdom.write(function () {
@@ -54,13 +33,7 @@ define([
         return wrapper;
     }
 
-    function checkState(id, atomId, state, status) {
-        if (state === window.YT.PlayerState[status] && STATES[status]) {
-            STATES[status](id, atomId);
-        }
-    }
-
-    function _onPlayerStateChange(event, handlers, wrapper, videoId, atomId) {
+    function _onPlayerStateChange(event, handlers, wrapper) {
         //change class according to the current state
         //TODO: Fix this so we can add poster image.
         fastdom.write(function () {
@@ -70,17 +43,14 @@ define([
             wrapper.classList.add('youtube__video-started');
         });
 
-        Object.keys(STATES).forEach(checkState.bind(null, videoId, atomId, event.data));
+
 
         if (handlers && typeof handlers.onPlayerStateChange === 'function') {
             handlers.onPlayerStateChange(event);
         }
     }
 
-    function _onPlayerReady(event, handlers, wrapper, videoId) {
-
-        // Record the duration for percentage calculation.
-        players[videoId].duration = players[videoId].player.getDuration();
+    function _onPlayerReady(event, handlers, wrapper) {
 
         fastdom.write(function () {
             wrapper.classList.add('youtube__video-ready');
@@ -90,58 +60,21 @@ define([
         }
     }
 
-    function _onPlayerPlaying(id, atomId) {
-        setProgressTracker(id, atomId);
-        tracking.track('play', atomId);
-    }
-
-    function _onPlayerPaused(id) {
-        killProgressTracker(false, id);
-    }
-
-    function _onPlayerEnded(id, atomId) {
-        killProgressTracker(false, id);
-        tracking.track('end', atomId);
-    }
-
-    function setProgressTracker(id, atomId)  {
-        killProgressTracker(true);
-        progressTracker.id = id;
-        progressTracker.tracker = setInterval(recordPlayerProgress.bind(null, id, atomId), 1000);
-    }
-
-    function killProgressTracker(force, id) {
-        if (progressTracker.tracker &&
-            (force || id === progressTracker.id)) {
-            clearInterval(progressTracker.tracker);
-            progressTracker = {};
-        }
-    }
-
-    function init(el, handlers, videoId, tracking) {
+    function init(el, handlers, videoId) {
         //wrap <iframe/> in a div with dynamically updating class attributes
         loadYoutubeJs();
         var wrapper = prepareWrapper(el);
-        var atomId = el.getAttribute('data-media-atom-id');
-
-        if (tracking && typeof tracking === 'function') {
-            tracking(atomId);
-        }
 
         return promise.then(function () {
             function onPlayerStateChange(event) {
-                _onPlayerStateChange(event, handlers, wrapper, videoId, atomId);
+                _onPlayerStateChange(event, handlers, wrapper);
             }
 
             function onPlayerReady(event) {
-                _onPlayerReady(event, handlers, wrapper, videoId);
+                _onPlayerReady(event, handlers, wrapper);
             }
 
-            players[videoId] = {
-                player: setupPlayer(videoId, onPlayerReady, onPlayerStateChange)
-            };
-
-            return players[videoId].player;
+            return setupPlayer(videoId, onPlayerReady, onPlayerStateChange);
         });
     }
 
@@ -152,17 +85,6 @@ define([
                 'onStateChange': onPlayerStateChange
             }
         });
-    }
-
-    function recordPlayerProgress(id, atomId) {
-
-        var currentTime = players[id].player.getCurrentTime(),
-            percentPlayed = Math.round(((currentTime / players[id].duration) * 100));
-
-        if (percentPlayed > 0 && percentPlayed < 100 &&
-            percentPlayed % 25 === 0) {
-            tracking.track(percentPlayed, atomId);
-        }
     }
 
     return {

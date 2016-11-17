@@ -162,6 +162,14 @@ define([
             });
         }
 
+        fastdom.read(function() {
+            if ( $('.atom--media--youtube').length > 0) {
+                require(['bootstraps/enhanced/youtube'], function (youtube) {
+                    bootstrapContext('youtube', youtube);
+                });
+            }
+        });
+
         // Mark the end of synchronous execution.
         userTiming.mark('App End');
     };
