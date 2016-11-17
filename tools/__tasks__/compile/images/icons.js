@@ -15,13 +15,20 @@ const svgo = new SVGO();
 function getSVG (iconPath) {
     return new Promise((resolve, reject) => {
         fs.readFile(iconPath, { encoding: 'utf-8' }, (err, data) => {
-            if (err) { reject(err); }
-            svgo.optimize(data, result => {
-                resolve({
-                    name: path.parse(iconPath).name,
-                    data: result
-                });
-            });
+            if (err) {
+                reject(err);
+            } else {
+                try {
+                    svgo.optimize(data, result => {
+                        resolve({
+                            name: path.parse(iconPath).name,
+                            data: result
+                        });
+                    });
+                } catch (e) {
+                    reject(e);
+                }
+            }
         });
     });
 }
@@ -67,8 +74,11 @@ function saveSass (sass, dest, fileName) {
                     ${sass}
                 }
             `.trim().replace(/ {16}/g, ''), err => {
-                if (err) reject(err);
-                resolve();
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
             }
         );
     });
