@@ -16,12 +16,6 @@
 
 .newsletter-card__example {
     display: inline;
-
-    &.is-not-enhanced {
-        float: right;
-        margin-top: -5.5rem;
-        width: 80%;
-    }
 }
 
 .newsletter-card__wrapper {
@@ -150,21 +144,7 @@
             border-color: darken($news-main-1, 10%);
             background-color: darken($news-main-1, 10%);
         }
-
-        &.lozenge--is-updating {
-            display: inherit;
-            font-size: 0;
-            height: 2.43rem;
-            background-color: $neutral-5;
-            border: 1px solid $neutral-3;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 40px;
-        }
     }
-
-
-
 
     .newsletter-card__lozenge--submit {
         -webkit-border-radius: 0 62.5rem 62.5rem 0;
@@ -189,12 +169,13 @@
     .inline-arrow-right {
         fill: $news-main-1;
         position: absolute;
-        height: 2rem;
-        line-height: 2rem;
+        height: $gs-baseline;
+        line-height: $gs-baseline;
     }
 }
 
 .newsletter-card__preview {
+    // when you must align a SVG with the text... magic numbers
     line-height: 2rem;
     width: 6rem;
     height: 2.2rem;
