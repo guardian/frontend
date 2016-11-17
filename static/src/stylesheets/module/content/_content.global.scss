@@ -128,16 +128,6 @@
 
 .meta__save-for-later {
 
-    .content--interactive & {
-        @include mq(leftCol) {
-            $social-width: 35px;
-
-            position: absolute;
-            top: 1px;
-            left: $social-width * 6;
-        }
-    }
-
     .content--liveblog & {
         @include mq(desktop) {
             position: relative;
