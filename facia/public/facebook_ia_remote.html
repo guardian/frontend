@@ -99,9 +99,15 @@
             return script.text = content;
         }
 
-        function buildTargetSize(size) {
-            var formatted = size.replace(/\s*,\s*/g, "],[").replace(/\s*x\s*/g, ",");
-            return "[[" + formatted + "]]";
+        function buildTargetSize(sizes) {
+            return "[" +
+                sizes
+                .split(',')
+                .map(function (size) {
+                    return size === "fluid" ? "'fluid'" : "[" + size.replace('x', ',') + "]"
+                })
+                .join(',') +
+            "]";
         }
 
         function buildCustomTargeting() {
