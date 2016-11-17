@@ -67,6 +67,11 @@ define([
 
                             function recordPlayerProgress() {
                                 var player = event.target;
+
+                                if (!player.duration) {
+                                    player.duration = player.getDuration();
+                                }
+
                                 var currentTime = player.getCurrentTime();
                                 var percentPlayed = Math.round(((currentTime / player.duration) * 100));
 
@@ -77,11 +82,6 @@ define([
                             }
 
                             Object.keys(STATES).forEach(checkState.bind(null, event.data));
-                        },
-                        onPlayerReady: function (event) {
-                            var player = event.target;
-                            // Record the duration for percentage calculation.
-                            player.duration = player.getDuration();
                         }
                     }
                     , youtubeId);
