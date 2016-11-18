@@ -18,6 +18,7 @@ list: # PRIVATE
 # Install all 3rd party dependencies.
 install: check-node check-yarn
 	@yarn install
+	@echo ''
 
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
@@ -105,6 +106,10 @@ validate-sass: install # PRIVATE
 # Lint all JS.
 validate-javascript: install # PRIVATE
 	@./tools/run-task lint/javascript
+
+# Lint all assets.
+fix: install
+	@./tools/run-task lint/javascript-fix
 
 validate-amp: install # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
