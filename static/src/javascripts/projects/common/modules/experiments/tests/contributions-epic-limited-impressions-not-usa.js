@@ -53,14 +53,20 @@ define([
                 'us-news/us-politics'
             ];
 
+            var includedNonKeywordTagIds = [
+                'uk-news/series/the-new-world-of-work'
+            ];
+
             var excludedKeywordIds = ['music/leonard-cohen'];
 
             var hasKeywordsMatch = function() {
                 var pageKeywords = config.page.keywordIds;
-                if (typeof(pageKeywords) != 'undefined') {
+                var pageNonKeywordTagIds = config.page.nonKeywordTagIds;
+                if (typeof(pageKeywords) !== 'undefined' && typeof(pageNonKeywordTagIds) !== 'undefined') {
                     var keywordList = pageKeywords.split(',');
-                    return intersection(excludedKeywordIds, keywordList).length == 0 &&
-                        intersection(includedKeywordIds, keywordList).length > 0;
+                    var nonKeywordTagIdsList = pageNonKeywordTagIds.split(',');
+                    return (intersection(excludedKeywordIds, keywordList).length == 0 
+                        && (intersection(includedKeywordIds, keywordList).length > 0) || intersection(includedNonKeywordTagIds, nonKeywordTagIdsList).length > 0);
                 } else {
                     return false;
                 }
