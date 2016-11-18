@@ -477,6 +477,17 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  //Owner Michael McNamara
+  val AmpInteractivePlaceHolderAttribute = Switch(
+    SwitchGroup.Feature,
+    "amp-interactive-placeholder-attribute",
+    "Adds a placeholder attribute to interactives on amp so that they are allowed to display in the top part of the page",
+    owners = Seq(Owner.withGithub("michaelwmcnamara")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 15),
+    exposeClientSide = true
+  )
+  
   val turnOffSupporterEpic = Switch(
     SwitchGroup.Membership,
     "turn-off-supporter-epic",
