@@ -9,7 +9,7 @@ object HostedAmp {
 
   def ampify(html: String): String = {
 
-    def ampifyImage(img: Element): Element = img.tagName("amp-img").attr("layout", "fixed")
+    def ampifyImage(img: Element): Element = img.tagName("amp-img").attr("layout", "responsive")
 
     val doc = Jsoup.parseBodyFragment(html)
     val imgs = doc.select("img")
