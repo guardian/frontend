@@ -33,18 +33,18 @@ define([
 
     return function () {
 
-        this.id = 'ContributionsEpicUsaCta';
-        this.start = '2016-11-15';
+        this.id = 'ContributionsEpicUsaCtaFakeNews';
+        this.start = '2016-11-18';
         this.expiry = '2016-11-22';
         this.author = 'Jonathan Rankin';
-        this.description = 'Test just contributions vs contributions or membership in the US';
+        this.description = 'Test just contributions vs contributions or membership in the US, and test a new copy variant against the control';
         this.showForSensitive = false;
         this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Impressions to number of contributions / supporter sign ups';
         this.audienceCriteria = 'Just the US';
         this.dataLinkNames = '';
-        this.idealOutcome = 'We prove or disprove our hypothesis that just offering contributions will result in an overall boost in money taken in the USA';
+        this.idealOutcome = 'We prove or disprove our hypothesis that just offering contributions will result in an overall boost in money taken in the USA, whilst simultanously running a test to try and beat the epic control copy';
         this.canRun = function () {
             var includedKeywordIds = [
                 'us-news/us-elections-2016',
@@ -55,7 +55,7 @@ define([
 
             var hasKeywordsMatch = function() {
                 var pageKeywords = config.page.keywordIds;
-                if (typeof(pageKeywords) != 'undefined') {
+                if (typeof(pageKeywords) !== 'undefined') {
                     var keywordList = pageKeywords.split(',');
                     return intersection(excludedKeywordIds, keywordList).length == 0 &&
                         intersection(includedKeywordIds, keywordList).length > 0;
@@ -69,8 +69,8 @@ define([
             return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && hasKeywordsMatch();
         };
 
-        var contributeUrlPrefix = 'co_global_epic_usa_cta';
-        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_usa_cta';
+        var contributeUrlPrefix = 'co_global_epic_usa_cta_fake';
+        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_usa_cta_fake';
 
 
         var makeUrl = function(urlPrefix, intcmp) {
@@ -87,10 +87,10 @@ define([
                 intcmp: '_control'
             },
 
-            justContribute: {
+            fake: {
                 title: 'Since you’re here …',
-                p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-                intcmp: '_justContribute'
+                p1: '… we have a small favour to ask. In these post-truth times, when fake news swirls, we need independent journalism more than ever. But while more people are reading the Guardian, far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. Our journalism takes time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+                intcmp: '_fake'
             }
         };
 
@@ -163,14 +163,14 @@ define([
 
         this.variants = [
             {
-                id: 'control',
+                id: 'mixed-control',
 
                 test: function () {
                     var ctaType = getCta();
                     var message = messages.control;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.url1 + message.intcmp,
-                        linkUrl2: ctaType.url2 + message.intcmp,
+                        linkUrl1: ctaType.url1 + message.intcmp + '_mixed',
+                        linkUrl2: ctaType.url2 + message.intcmp + '_mixed',
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,
@@ -190,14 +190,68 @@ define([
             },
 
             {
-                id: 'justContribute',
+                id: 'mixed-fake',
+
+                test: function () {
+                    var ctaType = getCta();
+                    var message = messages.fake;
+                    var component = $.create(template(contributionsEpicEqualButtons, {
+                        linkUrl1: ctaType.url1 + message.intcmp + '_mixed',
+                        linkUrl2: ctaType.url2 + message.intcmp + '_mixed',
+                        title: message.title,
+                        p1: message.p1,
+                        p2:ctaType.p2,
+                        p3: ctaType.p3,
+                        cta1: ctaType.cta1,
+                        cta2: ctaType.cta2,
+                        hidden: ctaType.hidden
+                    }));
+                    componentWriter(component);
+                },
+
+                impression: function(track) {
+                    mediator.on('contributions-embed:insert', track);
+                },
+
+                success: completer
+            },
+
+            {
+                id: 'just-contribute-control',
 
                 test: function () {
                     var ctaType = cta.justContribute;
-                    var message = messages.justContribute;
+                    var message = messages.control;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.url1 + message.intcmp,
-                        linkUrl2: ctaType.url2 + message.intcmp,
+                        linkUrl1: ctaType.url1 + message.intcmp + '_contribute',
+                        linkUrl2: ctaType.url2 + message.intcmp + '_contribute',
+                        title: message.title,
+                        p1: message.p1,
+                        p2:ctaType.p2,
+                        p3: ctaType.p3,
+                        cta1: ctaType.cta1,
+                        cta2: ctaType.cta2,
+                        hidden: ctaType.hidden
+                    }));
+                    componentWriter(component);
+                },
+
+                impression: function(track) {
+                    mediator.on('contributions-embed:insert', track);
+                },
+
+                success: completer
+            },
+
+            {
+                id: 'just-contribute-fake',
+
+                test: function () {
+                    var ctaType = cta.justContribute;
+                    var message = messages.fake;
+                    var component = $.create(template(contributionsEpicEqualButtons, {
+                        linkUrl1: ctaType.url1 + message.intcmp + '_contribute',
+                        linkUrl2: ctaType.url2 + message.intcmp + '_contribute',
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,
