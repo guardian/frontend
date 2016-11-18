@@ -30,7 +30,7 @@ define([
     return function () {
         this.id = 'RecommendedForYou';
         this.start = '2016-08-02';
-        this.expiry = '2016-09-23';
+        this.expiry = '2016-12-23';
         this.author = 'Joseph Smith';
         this.description = 'Add a personalised container to fronts';
         this.audience = 0;
