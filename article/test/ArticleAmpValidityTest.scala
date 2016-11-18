@@ -17,6 +17,6 @@ import org.scalatest.DoNotDiscover
     "/football/2016/jul/10/france-portugal-euro-2016-match-report", // Match summary
     "/us-news/live/2016/aug/12/donald-trump-republicans-hillary-clinton-us-election-live", // Live blog
     "/sport/live/2016/aug/20/rio-2016-olympics-day-15-mo-farah-relays-tom-daley-nicola-adams-football-live", // Sport live blog
-    "/somerset-county-council-partner-zone/2016/sep/21/somerset-offers-opportunities-develop-social-work-career" // Paid for by hosted page
+    "/somerset-county-council-partner-zone/2016/sep/21/somerset-offers-opportunities-develop-social-work-career" // Paid for by page
   ).foreach(testAmpPageValidity)
 }

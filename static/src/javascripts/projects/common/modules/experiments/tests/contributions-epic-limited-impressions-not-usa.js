@@ -35,7 +35,7 @@ define([
 
     return function () {
 
-        this.id = 'ContributionsEpicLimitedImpressions';
+        this.id = 'ContributionsEpicLimitedImpressionsNotUsa';
         this.start = '2016-11-15';
         this.expiry = '2016-11-22';
         this.author = 'Jonathan Rankin';
@@ -44,7 +44,7 @@ define([
         this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Impressions to number of contributions / supporter sign ups';
-        this.audienceCriteria = 'Global';
+        this.audienceCriteria = 'Everywhere but the US';
         this.dataLinkNames = '';
         this.idealOutcome = 'We improve our conversion rate by not showing the epic to those less likely to contribute (i.e those who have seen it more than 4 times).';
         this.canRun = function () {
@@ -53,14 +53,20 @@ define([
                 'us-news/us-politics'
             ];
 
+            var includedNonKeywordTagIds = [
+                'uk-news/series/the-new-world-of-work'
+            ];
+
             var excludedKeywordIds = ['music/leonard-cohen'];
 
             var hasKeywordsMatch = function() {
                 var pageKeywords = config.page.keywordIds;
-                if (typeof(pageKeywords) != 'undefined') {
+                var pageNonKeywordTagIds = config.page.nonKeywordTagIds;
+                if (typeof(pageKeywords) !== 'undefined' && typeof(pageNonKeywordTagIds) !== 'undefined') {
                     var keywordList = pageKeywords.split(',');
-                    return intersection(excludedKeywordIds, keywordList).length == 0 &&
-                        intersection(includedKeywordIds, keywordList).length > 0;
+                    var nonKeywordTagIdsList = pageNonKeywordTagIds.split(',');
+                    return (intersection(excludedKeywordIds, keywordList).length == 0 
+                        && (intersection(includedKeywordIds, keywordList).length > 0) || intersection(includedNonKeywordTagIds, nonKeywordTagIdsList).length > 0);
                 } else {
                     return false;
                 }
@@ -88,9 +94,7 @@ define([
                         mediator.emit('contributions-embed:view');
                         setValue('gu.epicViewCount', epicViewCounter + 1);
                     });
-
                 });
-
             });
         }
 
@@ -105,8 +109,7 @@ define([
         var makeUrl = function(urlPrefix, intcmp) {
             return urlPrefix + 'INTCMP=' + intcmp;
         };
-
-
+        
         var membershipUrl = 'https://membership.theguardian.com/supporter?';
         var contributeUrl = 'https://contribute.theguardian.com/?';
 
@@ -159,7 +162,7 @@ define([
                 contentType: 'application/json',
                 crossOrigin: true
             }).then(function (resp) {
-                if ((epicViewCount < 4) || ('country' in resp && resp.country === 'US')){
+                if (epicViewCount < 4 && 'country' in resp && resp.country !== 'US'){
                     fastdom.write(function () {
                         var submetaElement = $('.submeta');
                         if (submetaElement.length > 0) {
@@ -171,8 +174,6 @@ define([
                 }
             });
         };
-
-
 
         var completer = function (complete) {
             mediator.on('contributions-embed:view', complete);

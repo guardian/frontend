@@ -15,7 +15,7 @@ import scala.concurrent.Future
 import scala.util.control.NonFatal
 
 class HostedContentController(contentApiClient: ContentApiClient)
-  extends Controller with ExecutionContexts with Logging {
+  extends Controller with ExecutionContexts with Logging with implicits.Requests {
 
   private def cacheDuration: Int = 60
 
@@ -25,7 +25,13 @@ class HostedContentController(contentApiClient: ContentApiClient)
     hostedPage map {
       case Some(page: HostedVideoPage) => cached(guardianHostedVideo(page))
       case Some(page: HostedGalleryPage) => cached(guardianHostedGallery(page))
-      case Some(page: HostedArticlePage) => cached(guardianHostedArticle(page))
+      case Some(page: HostedArticlePage) =>
+        if(request.isAmp) {
+          cached(guardianAmpHostedArticle(page))
+        }
+        else {
+          cached(guardianHostedArticle(page))
+        }
       case _ => NoCache(NotFound)
     }
   }

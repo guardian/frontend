@@ -6,7 +6,6 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/mediator',
     'common/utils/user-timing',
     'common/utils/robust',
     'common/modules/experiments/ab',
@@ -21,7 +20,6 @@ define([
     $,
     config,
     detect,
-    mediator,
     userTiming,
     robust,
     ab,
@@ -161,6 +159,14 @@ define([
                 bootstrapContext('accessibility', accessibility);
             });
         }
+
+        fastdom.read(function() {
+            if ( $('.atom--media--youtube').length > 0) {
+                require(['bootstraps/enhanced/youtube'], function (youtube) {
+                    bootstrapContext('youtube', youtube);
+                });
+            }
+        });
 
         // Mark the end of synchronous execution.
         userTiming.mark('App End');

@@ -6,8 +6,8 @@ define([
     ab
 ) {
 
-    var contributionsEpicPostElectionCopyTest = {
-        name: 'ContributionsEpicLimitedImpressions',
+    var contributionsEpicLimitedImpressionsNotUsa = {
+        name: 'ContributionsEpicLimitedImpressionsNotUsa',
         variants: ['control']
     };
 
@@ -16,8 +16,13 @@ define([
         variants: ['control']
     };
 
+    var contributionsEpicUsaCta = {
+        name: 'ContributionsEpicUsaCta',
+        variants: ['control', 'justContribute']
+    };
+
     function userIsInAClashingAbTest() {
-        var clashingTests = [contributionsEpicPostElectionCopyTest, contributionsEpicThankyou];
+        var clashingTests = [contributionsEpicLimitedImpressionsNotUsa, contributionsEpicThankyou, contributionsEpicUsaCta];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 
