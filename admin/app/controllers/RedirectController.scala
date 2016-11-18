@@ -24,13 +24,13 @@ class RedirectController(redirects: RedirectService) extends Controller with Log
 
   def redirectPost() = Action { implicit request =>
 
-    redirectForm.bindFromRequest().get.trim match {
+    val message = redirectForm.bindFromRequest().get.trim match {
       case PageRedirect(from, "") if from.nonEmpty  => redirects.remove(from)
       case PageRedirect(from, to) if from.nonEmpty  => redirects.set(PermanentRedirect(from, to))
-      case _ =>
+      case _ => "Redirect request failed, please enter a value for 'From'"
     }
 
-    SeeOther(routes.RedirectController.redirect().url)
+    Ok(views.html.redirects(redirectForm, urlMsgs = List(message)))
   }
 
   def redirectBatchPost() = Action { implicit request =>

@@ -52,13 +52,35 @@ class RedirectService extends Logging with ExecutionContexts {
         case _ => None
       })
 
-  def set(destination: Destination) = {
-    log.info(s"Setting redirect in: $tableName to: ${destination.source} -> ${destination.location}")
-    Scanamo.put(DynamoDB.syncClient)(tableName)(destination)
+  private def normaliseSource(source: String): Option[String] = {
+    val FullURL = """(https?://)?www\.theguardian\.com(.*)""".r
+
+    source match {
+      case FullURL(_, path) => Some(expectedSourceHost + path)
+      case _ => None
+    }
   }
 
-  def remove(source: String) = {
-    log.info(s"Removing redirect in: $tableName to: $source")
-    Scanamo.delete(DynamoDB.syncClient)(tableName)('source -> source)
+  private def normaliseDestination(destination: Destination): Option[Destination] = {
+    val pathOnly = normaliseSource(destination.source)
+
+    destination match {
+      case PermanentRedirect(_, location) => pathOnly.map(PermanentRedirect(_, location))
+      case ArchiveRedirect(_, location) => pathOnly.map(ArchiveRedirect(_, location))
+    }
   }
+
+  def set(destination: Destination): String =
+    normaliseDestination(destination).map { dest =>
+      log.info(s"Setting redirect in: $tableName to: ${dest.source} -> ${dest.location}")
+      Scanamo.put(DynamoDB.syncClient)(tableName)(dest)
+      "Redirect create request successfully sent"
+    }.getOrElse("'From' value does not conform to correct format")
+
+  def remove(source: String): String =
+    normaliseSource(source).map { src =>
+      log.info(s"Removing redirect in: $tableName to: $src")
+      Scanamo.delete(DynamoDB.syncClient)(tableName)('source -> src)
+      "Redirect remove request successfully sent"
+    }.getOrElse("'From' value does not conform to correct format")
 }
