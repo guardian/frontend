@@ -37,8 +37,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-limited-impressions-not-usa",
-    "Run the epic with a limit of 4 impressions per user",
+    "ab-contributions-epic-fake-news",
+    "Try and beat the epic copy with e version that mentions the hot topic of fake news",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate =  new LocalDate(2016, 11, 22),
@@ -47,8 +47,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-usa-cta",
-    "Test just contributions vs contributions or membership in the US'",
+    "ab-contributions-epic-usa-cta-fake-news",
+    "Test just contributions vs contributions or membership in the US, and test a new copy variant against the control",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate =  new LocalDate(2016, 11, 22),
