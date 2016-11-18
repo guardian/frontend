@@ -10,7 +10,8 @@ define([
     'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
-    'common/modules/experiments/tests/contributions-epic-limited-impressions',
+    'common/modules/experiments/tests/contributions-epic-limited-impressions-not-usa',
+    'common/modules/experiments/tests/contributions-epic-usa-cta',
     'common/modules/experiments/tests/contributions-epic-thank-you',
     'common/modules/experiments/tests/platform-sticky-ad-viewability'
 ], function (reportError,
@@ -24,7 +25,8 @@ define([
              HostedOnwardJourney,
              WeekendReadingEmail,
              MembershipEngagementInternationalExperiment,
-             ContributionsEpicLimitedImpressions,
+             ContributionsEpicLimitedImpressionsNotUsa,
+             ContributionsEpicUsaCta,
              ContributionsEpicThankYou,
              PlatformStickyAdViewability
     ) {
@@ -32,7 +34,8 @@ define([
         new HostedOnwardJourney(),
         new WeekendReadingEmail(),
         new MembershipEngagementInternationalExperiment(),
-        new ContributionsEpicLimitedImpressions(),
+        new ContributionsEpicLimitedImpressionsNotUsa(),
+        new ContributionsEpicUsaCta(),
         new ContributionsEpicThankYou(),
         new PlatformStickyAdViewability()
     ];

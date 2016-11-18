@@ -37,8 +37,18 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-limited-impressions",
-    "Run the epic with a limit of 4 impressions per user (for non US, US there is no limit)",
+    "ab-contributions-epic-limited-impressions-not-usa",
+    "Run the epic with a limit of 4 impressions per user",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 22),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-usa-cta",
+    "Test just contributions vs contributions or membership in the US'",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate =  new LocalDate(2016, 11, 22),
