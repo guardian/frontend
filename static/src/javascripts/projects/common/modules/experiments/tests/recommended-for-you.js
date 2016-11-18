@@ -8,6 +8,8 @@ define([
     'common/utils/template',
     'common/views/svg',
     'common/utils/mediator',
+    'common/modules/onward/history',
+    'common/utils/ajax',
     'text!common/views/experiments/recommended-for-you.html',
     'inlineSvg!svgs/icon/profile-36',
     'inlineSvg!svgs/icon/arrow-right',
@@ -22,6 +24,8 @@ define([
     template,
     svg,
     mediator,
+    history,
+    ajax,
     recommendedForYouTemplate,
     profileIcon,
     rightArrowIcon,
@@ -48,6 +52,44 @@ define([
             return config.page.contentType === 'Network Front' && $opinionSection.length && !hasGivenFeedback();
         };
 
+        var endpoint = "http://engine.mobile-aws.guardianapis.com/recommendations";
+
+        function imageFromItem(item) {
+            function imageFromTemplate(img) {
+                return img.replace('#{width}', 220).replace('#{height}', 146).replace('#{quality}', 0.8)
+            }
+            if (item.headerImage) {
+                return '<img src="' + imageFromTemplate(item.headerImage.urlTemplate) + '"/>';
+            } else if (item.headerVideo) {
+                return '<img src="' + imageFromTemplate(item.headerVideo.stillImage.urlTemplate) + '"/>';
+            } else {
+                return svg(guardianLogo);
+            }
+        }
+
+        function getRecommendations(data) {
+            var request = ajax({
+                url: endpoint,
+                type: 'json',
+                method: 'post',
+                crossOrigin: true,
+                data: JSON.stringify(data),
+                contentType: 'application/json'
+            });
+            request.then(function (resp) {
+                var items = resp.content.slice(0, 4);
+                for (var i = 0; i < items.length; i++) {
+                    items[i].image = imageFromItem(items[i].item);
+                }
+                insertSection(
+                    'We can recommend you a set of unique stories based on your reading history',
+                    'user-history',
+                    'Turn on',
+                    items
+                );
+            });
+            return request;
+        }
         function hasGivenFeedback() {
             return !!storage.local.get('gu.hasGivenRecommendedForYouFeedback');
         }
@@ -83,13 +125,14 @@ define([
             });
         }
 
-        function insertSection(description, variant, yesCta) {
+        function insertSection(description, variant, yesCta, items) {
             $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
                 profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
                 guardianLogo: svg(guardianLogo),
                 description: description,
                 variant: variant,
-                yesCta: yesCta
+                yesCta: yesCta,
+                items: items
             }));
 
             return fastdom.write(function() {
@@ -114,22 +157,20 @@ define([
             {
                 id: 'user-choice',
                 test: function () {
-                    insertSection(
-                        'Tell us what you’re interested in and we’ll recommend you a set of unique stories',
-                        'user-choice',
-                        'Get started ' + svg(rightArrowIcon, ['i-right'])
-                    );
+                    getRecommendations({
+                        'pageSize': 4,
+                        'articles': history.test.getHistory().map(function(v) { return v[0] })
+                    });
                 },
                 success: success
             },
             {
                 id: 'user-history',
                 test: function () {
-                    insertSection(
-                        'We can recommend you a set of unique stories based on your reading history',
-                        'user-history',
-                        'Turn on'
-                    );
+                    getRecommendations({
+                        'pageSize': 4,
+                        'articles': history.test.getHistory().map(function(v) { return v[0] })
+                    });
                 },
                 success: success
             }
