@@ -102,8 +102,8 @@ define([
 
 
 
-        var contributeUrlPrefix = 'co_global_epic_fake-non-us';
-        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_fake-non-us';
+        var contributeUrlPrefix = 'co_global_epic_fake_not_us';
+        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_fake_not_us';
 
 
         var makeUrl = function(urlPrefix, intcmp) {
