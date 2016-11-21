@@ -1,3 +1,3 @@
-define(['bootstraps/standard/main-webpack'], function(boot) {
+define(['bootstraps/standard/main'], function(boot) {
     boot();
 });
