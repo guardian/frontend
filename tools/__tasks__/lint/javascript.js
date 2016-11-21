@@ -12,7 +12,7 @@ const config = [
 
 const handleFailure = (ctx, e) => {
     ctx.messages.push(`${chalk.blue('make fix')} can correct simple errors automatically.`);
-    ctx.messages.push('Also, your editor may be able to catch eslint errors as you work:\n   http://eslint.org/docs/user-guide/integrations#editors');
+    ctx.messages.push(`Your editor may be able to catch eslint errors as you work:\n${chalk.underline('http://eslint.org/docs/user-guide/integrations#editors')}`);
     return Promise.reject(e);
 };
 

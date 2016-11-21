@@ -18,7 +18,6 @@ list: # PRIVATE
 # Install all 3rd party dependencies.
 install: check-node check-yarn
 	@yarn install
-	@echo ''
 
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
