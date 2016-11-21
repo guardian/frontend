@@ -297,7 +297,7 @@ Finally, to tell curl - the module loader - where to fetch a bundle from, when h
 'bootstraps/enhanced/facia':         '@Static("javascripts/bootstraps/enhanced/facia.js")'
 ```
 
-Run make compile and add `useHashedAssets=true` to your devOverrides to test the bundle as it would run on PROD.
+Run `make compile` and add `assets.useHashedBundles=true` to your devOverrides in frontend.conf to test the bundle as it would run on PROD.
 
 ### Components
 
