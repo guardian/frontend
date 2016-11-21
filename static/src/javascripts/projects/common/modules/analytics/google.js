@@ -34,6 +34,13 @@ define([
         });
     }
 
+    function trackSponsorLogoLinkClick(target) {
+        var sponsorName = target.dataset.sponsor;
+        ga(send, 'event', 'Click', 'Sponsor Logo', sponsorName, {
+            nonInteraction: true
+        });
+    }
+
     function trackNativeAdLinkClick(slotName, tag) {
         ga(send, 'event', 'Click', 'Native Ad', tag, {
             nonInteraction: true,
@@ -45,6 +52,7 @@ define([
         trackNonClickInteraction: trackNonClickInteraction,
         trackSamePageLinkClick: trackSamePageLinkClick,
         trackExternalLinkClick: trackExternalLinkClick,
+        trackSponsorLogoLinkClick: trackSponsorLogoLinkClick,
         trackNativeAdLinkClick: trackNativeAdLinkClick
     };
 });

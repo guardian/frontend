@@ -15,7 +15,7 @@ case class QuizAnswersPage(
   inputs: form.Inputs,
   contentPage: String,
   quiz: Quiz) extends model.StandalonePage {
-  override val metadata = MetaData.make("quiz atom", Some(SectionSummary.fromId("quizzes")), quiz.title, "GFE: Quizzes")
+  override val metadata = MetaData.make("quiz atom", Some(SectionSummary.fromId("quizzes")), quiz.title)
 
   val results: form.QuizResults = form.checkUsersAnswers(inputs, quiz)
 
@@ -37,7 +37,7 @@ case class QuizAnswersPage(
     )
   }
 
-  val shares: Seq[ShareLink] = if (results.isKnowledge) knowledgeShares else personalityShares
+  val shares: ShareLinkMeta = if (results.isKnowledge) ShareLinkMeta(knowledgeShares, Nil) else ShareLinkMeta(personalityShares, Nil)
 }
 
 class QuizController(contentApiClient: ContentApiClient) extends Controller with ExecutionContexts with Logging {

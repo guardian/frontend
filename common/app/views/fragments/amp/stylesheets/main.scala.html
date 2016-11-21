@@ -1,4 +1,8 @@
-@(metaData: model.MetaData)
+@(page: model.Page, mainPicture: String, ctaImage: Option[String], brandColour: String)(implicit request: RequestHeader)
+
+@import common.Edition
+@import common.commercial.PaidContent
+
 <style amp-custom>
     body {
         font-family: Georgia,serif;
@@ -251,22 +255,28 @@
         display: none;
     }
 
-    @fragments.amp.stylesheets.tones()
-    @fragments.amp.stylesheets.embeds()
-    @fragments.amp.stylesheets.quotes()
-    @fragments.amp.stylesheets.richLinks()
-    @fragments.amp.stylesheets.ads()
-    @fragments.amp.stylesheets.glabs()
-    @fragments.amp.stylesheets.tables()
     @fragments.amp.stylesheets.inlineSvgs()
     @fragments.amp.stylesheets.social()
-    @fragments.amp.stylesheets.footer()
-    @fragments.amp.stylesheets.onward()
     @fragments.amp.stylesheets.fonts()
-    @fragments.amp.stylesheets.buttons()
-    @fragments.amp.stylesheets.header()
-    @if(metaData.contentType == "LiveBlog") {
-        @fragments.amp.stylesheets.liveBlog()
+    @if(page.metadata.isHosted) {
+        @fragments.amp.stylesheets.hosted(mainPicture, ctaImage, brandColour)
+    } else {
+        @fragments.amp.stylesheets.tones()
+        @fragments.amp.stylesheets.embeds()
+        @fragments.amp.stylesheets.quotes()
+        @fragments.amp.stylesheets.richLinks()
+        @fragments.amp.stylesheets.ads()
+        @fragments.amp.stylesheets.tables()
+        @fragments.amp.stylesheets.footer()
+        @fragments.amp.stylesheets.onward()
+        @fragments.amp.stylesheets.buttons()
+        @fragments.amp.stylesheets.header()
+        @if(page.metadata.contentType == "LiveBlog") {
+            @fragments.amp.stylesheets.liveBlog()
+        }
+        @if(page.branding(Edition(request)).exists(_.sponsorshipType == PaidContent)) {
+            @fragments.amp.stylesheets.glabs()
+        }
     }
 
 </style>

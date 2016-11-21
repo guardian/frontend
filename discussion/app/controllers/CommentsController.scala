@@ -6,12 +6,13 @@ import discussion.api.DiscussionApiException._
 import discussion.model.{BlankComment, DiscussionAbuseReport, DiscussionKey}
 import discussion.{ThreadedCommentPage, UnthreadedCommentPage}
 import model.Cached.RevalidatableResult
-import model.{Cached, MetaData, NoCache, SectionSummary, SimplePage, TinyResponse}
+import model._
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.validation._
 import play.api.mvc.{Action, RequestHeader, Result}
 import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
+import conf.switches.Switches.LongCacheCommentsSwitch
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
@@ -65,8 +66,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
   val reportAbusePage = SimplePage(MetaData.make(
     "/reportAbuse",
     Some(SectionSummary.fromId("Discussion")),
-    "Report Abuse",
-    "GFE: Report Abuse"
+    "Report Abuse"
   ))
   def reportAbuseForm(commentId: Int) = CSRFAddToken({
     Action {
@@ -81,8 +81,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
   val reportAbuseThankYouPage = SimplePage(MetaData.make(
     "/reportAbuseThankYou",
     Some(SectionSummary.fromId("Discussion")),
-    "Report Abuse Thank You",
-    "GFE: Report Abuse Thank You"
+    "Report Abuse Thank You"
   ))
 
 
@@ -131,7 +130,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
       } else {
         UnthreadedCommentPage(comments)
       }
-      Cached(60) {
+      Cached(cacheTime(request)) {
         if (request.isJson) {
           JsonComponent(
             "commentsHtml" -> views.html.discussionComments.commentsList(page, renderPagination = false).toString,
@@ -152,7 +151,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
     discussionApi.commentsFor(key, DiscussionParams(topComments = true)).map { comments =>
       val page = UnthreadedCommentPage(comments)
 
-      Cached(60) {
+      Cached(cacheTime(request)) {
         if (request.isJson) {
           JsonComponent(views.html.discussionComments.topCommentsList(page))
         } else {
@@ -160,5 +159,12 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
         }
       }
     } recover toResult
+  }
+
+  // caches "closed" comment threads for an hour.
+  // if the thread is switched on again the url changes and it cache busts itself.
+  private def cacheTime(request: RequestHeader) = {
+    val commentsClosed = request.getParameter("commentable").contains("false")
+    if (commentsClosed && LongCacheCommentsSwitch.isSwitchedOn) CacheTime(3800) else CacheTime(60)
   }
 }

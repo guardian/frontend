@@ -1,6 +1,7 @@
 package common.commercial.hosted.hardcoded
 
 import common.commercial.hosted._
+import common.commercial.{Dimensions, Logo}
 
 object VisitBritainHostedPages {
 
@@ -12,8 +13,11 @@ object VisitBritainHostedPages {
     id = "visit-britain",
     name = "#OMGB. Home of Amazing Moments. Great Britain & Northern Ireland",
     owner = "OMGB",
-    logoUrl = "https://static.theguardian.com/commercial/hosted/visit-britain/OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg",
-    fontColour = FontColour("#E41F13")
+    logo = Logo(
+      "https://static.theguardian.com/commercial/hosted/visit-britain/OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg",
+      Some(Dimensions(width = 1378, height = 957))
+    ),
+    fontColour = Colour("#E41F13")
   )
 
   private val activityImages: List[HostedGalleryImage] = List(
@@ -220,7 +224,7 @@ object VisitBritainHostedPages {
   }
 
   val cityGallery: HostedGalleryPage = {
-    val id = s"advertiser-content/visit-britain/city"
+    val id = "advertiser-content/visit-britain/city"
     val images = cityImages
     val pageName = cityPageName
     val title = "Take a city break from the norm"

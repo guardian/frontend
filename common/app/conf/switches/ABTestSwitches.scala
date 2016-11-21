@@ -1,30 +1,9 @@
 package conf.switches
 
-import common.Edition
 import conf.switches.SwitchGroup.ABTests
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
-
-  val ABDiscussionExternalFrontend = Switch(
-    SwitchGroup.ABTests,
-    "ab-discussion-external-frontend",
-    "Standalone frontend discussion",
-    owners = Seq(Owner.withGithub("piuccio")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 11, 7),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-discussion-promote-comments",
-    "Promote the comments with a sticky bottom banner",
-    owners = Seq(Owner.withGithub("nicl")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 11, 9),
-    exposeClientSide = true
-  )
 
   Switch(
     ABTests,
@@ -48,51 +27,54 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-engagement-message-copy-experiment",
-    "Test alternate short messages on membership engagement banner",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 8),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-membership-engagement-us-message-copy-experiment",
-    "Test alternate short messages on US membership engagement banner",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 15),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-countries-uk",
-    "Test whether different messages perform better/worse in different countries",
-    owners = Seq(Owner.withGithub("philwills")),
+    "ab-membership-engagement-international-experiment",
+    "Test varying the number of visits before showing the membership engagement banner",
+    owners = Seq(Owner.withGithub("rupert.bates")),
     safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 4),
+    sellByDate = new LocalDate(2016, 12, 1), // Thursday 1st December
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-contributions-countries-america",
-    "Test whether different messages perform better/worse in different countries",
-    owners = Seq(Owner.withGithub("philwills")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 4),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-membership-epic-brexit",
-    "Find the optimal way of offering Contributions along side Membership in the Epic component on articles about Brexit",
+    "ab-contributions-epic-fake-news",
+    "Try and beat the epic copy with e version that mentions the hot topic of fake news",
     owners = Seq(Owner.withGithub("jranks123")),
-    safeState = On,
-    sellByDate =  new LocalDate(2016, 11, 7),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 22),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-usa-cta-fake-news",
+    "Test just contributions vs contributions or membership in the US, and test a new copy variant against the control",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 22),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-thank-you",
+    "Show a thank you message to our supporters at the end of artciles, just saying thanks!",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 22),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-platform-sticky-ad-viewability",
+    "Test the affect of showing the navigation on the viewability of the sticky top ad",
+    owners = Seq(Owner.withGithub("gtrufitt"), Owner.withName("Gareth Trufitt")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 24),
+    exposeClientSide = true
+  )
+
+
+
 }

@@ -17,8 +17,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
   val page = SimplePage(MetaData.make(
     "most-read",
     Some(SectionSummary.fromId("most-read")),
-    "Most read",
-    "GFE:Most Read"
+    "Most read"
   ))
 
   def renderHtml(path: String) = render(path)
@@ -93,7 +92,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
       JsonComponent(
         "items" -> JsArray(Seq(
           Json.obj(
-            "displayName" -> "popular",
+            "displayName" -> "most viewed",
             "showContent" -> mostPopular.nonEmpty,
             "content" ->  JsArray(mostPopular.map(content => isCuratedContent(content.faciaContent)))
           )

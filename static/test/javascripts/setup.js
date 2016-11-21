@@ -38,19 +38,17 @@ window.guardian = {
     adBlockers: {
         active: undefined,
         onDetect: []
+    },
+    app: {
+        raven: {
+            captureException: function() {},
+            wrap: function (options, callback) {
+                if (typeof options === 'function') {
+                    return options;
+                } else {
+                    return callback;
+                }
+            }
+        }
     }
 };
-
-// Omniture variables expected on the page
-
-/*eslint-disable camelcase*/
-window.s_account = 'guardiangu-network';
-/*eslint-enable camelcase*/
-
-/*eslint-disable no-unused-vars*/
-window.s = {
-    tl: function (a, b, c) {
-
-    }
-};
-/*eslint-enable no-unused-vars*/

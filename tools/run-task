@@ -67,18 +67,41 @@ if the task is array of other tasks, you can specify that its tasks should run c
 }
 */
 
+process.env.FORCE_COLOR = true;
+
 const path = require('path');
 
 const yargs = require('yargs');
 const Listr = require('listr');
 const execa = require('execa');
+const chalk = require('chalk');
+const figures = require('figures');
+const uniq = require('lodash.uniq');
 
 const tasksIdentifier = '__tasks__';
 
-const {dev: IS_DEV, verbose, stdout, _: TASKS} = yargs
+const {dev: IS_DEV, verbose: IS_VERBOSE, debug: IS_DEBUG, stdout: IS_STDOUT, _: TASKS} = yargs
     .option('dev', {
         demand: false,
         describe: 'Prefer the dev version of the task, if it exits.',
+        type: 'boolean',
+        nargs: 0
+    })
+    .option('verbose', {
+        demand: false,
+        describe: 'Log everything there is to log with a simple format for the output.',
+        type: 'boolean',
+        nargs: 0
+    })
+    .option('debug', {
+        demand: false,
+        describe: 'Log everything there is to log.',
+        type: 'boolean',
+        nargs: 0
+    })
+    .option('stdout', {
+        demand: false,
+        describe: 'Log all stdout once the tasks are finished.',
         type: 'boolean',
         nargs: 0
     })
@@ -94,25 +117,25 @@ const {dev: IS_DEV, verbose, stdout, _: TASKS} = yargs
     .version().alias('v', 'version')
     .argv;
 
+const logEverything = IS_VERBOSE || IS_DEBUG;
+
 const taskSrc = path.resolve(__dirname, tasksIdentifier);
 
 // don't duplicate tasks
 const cache = [];
 
-// collect these for use later on, if we want them
-const stdouts = [];
-
 // run commands with output to stdout if verbose is true
-const cmd = task => {
-    const [binary, ...options] = task.trim().split(' ');
-    if (verbose) {
-        return execa(binary, options, {
-            stdio: [process.stdin, process.stdout, 'pipe']
+const exec = (task, stdouts) => {
+    const [cmd, ...args] = task.trim().split(' ');
+    if (logEverything) {
+        return execa(cmd, args, {
+            stdio: [process.stdin, process.stdout, process.stderr]
         });
     }
-    const exec = execa(binary, options);
-    exec.then(({stdout}) => stdouts.push(stdout));
-    return exec;
+
+    return execa.stdout(cmd, args).then(result => {
+        if (result) stdouts.push(result);
+    });
 };
 
 // turn a list of our tasks into objects listr can use
@@ -129,13 +152,13 @@ function listrify(steps, {concurrent = false, verbose = false} = {}) {
             if (Array.isArray(task)) {
                 return { title, task: () => listrify(task.map(_task => {
                     if (_task.task) return _task;
-                    if (typeof _task === 'string') return { title, task: () => cmd(_task), skip};
+                    if (typeof _task === 'string') return { title, task: ctx => exec(_task, ctx.stdouts), skip};
                     return { title, task: _task, skip};
                 }), {concurrent}), skip};
             }
 
             // treat tasks that are strings as terminal commands
-            if (typeof task === 'string') return { title, task: () => cmd(task), skip};
+            if (typeof task === 'string') return { title, task: ctx => exec(task, ctx.stdouts), skip};
 
             // assume the task is a function
             // if it's not, listr will blow up anyway, which is fine
@@ -162,26 +185,41 @@ const getTasksFromModule = taskName => {
         }
         return require(modulePath);
     } catch (e) {
-        console.log(e);
-        return null;
+        // we can't find any modules, or something else has gone wrong in resolving it
+        // so output an erroring task
+        return {
+            description: `${chalk.red(taskName)} failed:`,
+            task: () => Promise.reject(e)
+        };
     }
 };
 
 const taskModules = TASKS.map(getTasksFromModule);
 
-if (taskModules.filter(module => module !== null).length) {
-    listrify(taskModules, {verbose}).run()
-        .then(() => {
-            if (stdout) {
-                stdouts.forEach(stdout => console.log(stdout));
-            }
-        })
-        .catch(e => {
-            if (!verbose) {
-                console.log(e.stdout);
-            }
-            process.exit(1);
-        });
-} else {
-    console.log(`Cannot find tasks for '${TASKS}'?`);
-}
+listrify(taskModules, {verbose: IS_VERBOSE}).run({
+    messages: [],
+    stdouts: []
+}).catch(e => {
+    if (e) {
+        if (!e.stderr && !e.stdout) console.log(e);
+        // if we're logging everything already, this stuff would already be in the terminal
+        // if we're not, we should show it at this point
+        else if (!logEverything) {
+            if (e.stderr) console.error(`\n${e.stderr.trim()}`);
+            if (e.stdout) console.log(`\n${e.stdout.trim()}`);
+        }
+    }
+    return Object.assign(e.context, {error: true});
+}).then(ctx => {
+    if (IS_STDOUT) ctx.stdouts.forEach(stdout => console.log(stdout.toString()));
+
+    if (ctx.messages.length) {
+        console.log('');
+        uniq(ctx.messages).forEach(message => console.log(chalk.dim(`${figures.arrowRight} ${message.split('\n').join('\n  ')}`)));
+    }
+
+    if (ctx.error) {
+        console.log('');
+        process.exit(1);
+    }
+});

@@ -8,7 +8,7 @@ import play.api.mvc.{Action, Controller}
 
 class CompetitionListController(val competitionsService: CompetitionsService) extends Controller with CompetitionListFilters with Logging with ExecutionContexts {
 
-  val page = new FootballPage("football/competitions", "football", "Leagues & competitions", "GFE:Football:automatic:Leagues & competitions")
+  val page = new FootballPage("football/competitions", "football", "Leagues & competitions")
 
   val competitionList = List(
     "English",

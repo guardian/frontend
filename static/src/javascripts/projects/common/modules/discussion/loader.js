@@ -2,9 +2,9 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'raven',
     'Promise',
     'common/utils/$',
+    'common/utils/raven',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -27,9 +27,9 @@ define([
     bean,
     bonzo,
     qwery,
-    raven,
     Promise,
     $,
+    raven,
     config,
     detect,
     mediator,
@@ -69,7 +69,7 @@ Loader.prototype.initTopComments = function() {
         this.gotoComment(commentId);
     });
 
-    return fetchJson('/discussion/top-comments/' + this.getDiscussionId() + '.json', {
+    return fetchJson('/discussion/top-comments/' + this.getDiscussionId() + '.json?commentable=' + config.page.commentable, {
         mode: 'cors'
     }).then(
         function render(resp) {

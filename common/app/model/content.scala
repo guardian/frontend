@@ -336,7 +336,7 @@ object Content {
     val metadata = MetaData.make(fields, apiContent)
     val elements = Elements.make(apiContent)
     val tags = Tags.make(apiContent)
-    val commercial = Commercial.make(metadata, tags, apiContent)
+    val commercial = Commercial.make(tags, apiContent)
     val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
     val sharelinks = ShareLinks(tags, fields, metadata)
     val atoms = Atoms.make(apiContent)
@@ -459,7 +459,6 @@ object Article {
 
     content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some(ArticleSchemas(content.tags)),
       iosType = Some("Article"),
@@ -520,20 +519,6 @@ final case class Article (
     leftColElements.isDefined
   }
 
-  lazy val chapterHeadings: Map[String, String] = {
-    val jsoupChapterCleaner = ChaptersLinksCleaner.clean(soupedBody)
-    val chapterElements = jsoupChapterCleaner.getElementsByClass("auto-chapter")
-    chapterElements.flatMap { el =>
-      val headingElOpt = el.getElementsByTag("h2").headOption
-      headingElOpt.flatMap { headingEl =>
-        val attributes = headingEl.attributes()
-        if(attributes.hasKey("id")) {
-          Some((attributes.get("id"), headingEl.text()))
-        } else None
-      }
-    }.toMap
-  }
-
   private lazy val soupedBody = Jsoup.parseBodyFragment(fields.body)
   lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").nonEmpty
 
@@ -553,7 +538,6 @@ object Audio {
 
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some("https://schema.org/AudioObject"),
       javascriptConfigOverrides = javascriptConfig
@@ -607,7 +591,6 @@ object Video {
 
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some("http://schema.org/VideoObject"),
       javascriptConfigOverrides = javascriptConfig,
@@ -690,7 +673,6 @@ object Gallery {
     }
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some("https://schema.org/ImageGallery"),
       openGraphImages = lightbox.openGraphImages,
@@ -856,7 +838,6 @@ object Interactive {
     )
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       twitterPropertiesOverrides = twitterProperties,
       contentWithSlimHeader = true
@@ -889,7 +870,6 @@ object ImageContent {
     )
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       javascriptConfigOverrides = javascriptConfig,
       twitterPropertiesOverrides = Map("twitter:card" -> "photo")
@@ -918,7 +898,6 @@ object CrosswordContent {
     val metadata = content.metadata.copy(
       id = crossword.id,
       section = Some(SectionSummary.fromId("crosswords")),
-      analyticsName = crossword.id,
       webTitle = crossword.name,
       contentType = contentType,
       iosType = None

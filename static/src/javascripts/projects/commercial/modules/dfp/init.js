@@ -2,7 +2,7 @@ define([
     'Promise',
     'qwery',
     'bonzo',
-    'raven',
+    'common/utils/raven',
     'common/utils/config',
     'common/utils/fastdom-promise',
     'common/modules/commercial/commercial-features',
@@ -20,25 +20,44 @@ define([
     'commercial/modules/messenger/viewport',
     'commercial/modules/messenger/click',
     'commercial/modules/messenger/background'
-], function (Promise, qwery, bonzo, raven, config, fastdom, commercialFeatures,
-             buildPageTargeting, dfpEnv, onSlotRender, onSlotLoad, PrebidService,
-             ophanTracking) {
-
+], function (
+    Promise,
+    qwery,
+    bonzo,
+    raven,
+    config,
+    fastdom,
+    commercialFeatures,
+    buildPageTargeting,
+    dfpEnv,
+    onSlotRender,
+    onSlotLoad,
+    PrebidService,
+    ophanTracking
+) {
     return init;
 
     function init() {
+
+        var removeAdSlots = function () {
+            bonzo(qwery(dfpEnv.adSlotSelector)).remove();
+        };
+
         if (commercialFeatures.dfpAdvertising) {
             var initialTag = dfpEnv.sonobiEnabled ? setupSonobi() : Promise.resolve();
-            return initialTag.then(setupAdvertising);
+            return initialTag.then(setupAdvertising).catch(function(){
+                // A promise error here, from a failed module load,
+                // could be a network problem or an intercepted request.
+                // Abandon the init sequence.
+                return fastdom.write(removeAdSlots);
+            });
         }
 
-        return fastdom.write(function () {
-            bonzo(qwery(dfpEnv.adSlotSelector)).remove();
-        });
+        return fastdom.write(removeAdSlots);
     }
 
     function setupSonobi() {
-        return Promise.resolve(require(['js!sonobi.js']));
+        return new Promise.resolve(require(['js!sonobi.js']));
     }
 
     function setupAdvertising() {

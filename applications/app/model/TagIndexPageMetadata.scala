@@ -8,7 +8,6 @@ object SubjectIndexPageMetaData {
   def make(page: String): MetaData = MetaData.make(
     id = s"index/$indexFolder/$page",
     section = Some(SectionSummary.fromId(tagType)),
-    analyticsName = tagType,
     webTitle = page.capitalize,
     customSignPosting = signPosting)
 }
@@ -21,7 +20,6 @@ object ContributorsIndexPageMetaData {
   def make(page: String): MetaData = MetaData.make(
     id = s"index/$indexFolder/$page",
     section = Some(SectionSummary.fromId(tagType)),
-    analyticsName = tagType,
     webTitle = page.capitalize,
     customSignPosting = signPosting)
 }

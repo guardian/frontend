@@ -11,7 +11,7 @@ trait FeatureSwitches {
     "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 15),
+    sellByDate = new LocalDate(2017, 1, 17),
     exposeClientSide = true
   )
 
@@ -22,16 +22,6 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val ChapterHeadingsSwitch = Switch(
-    SwitchGroup.Feature,
-    "chapter-headings",
-    "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 7),
     exposeClientSide = false
   )
 
@@ -71,7 +61,7 @@ trait FeatureSwitches {
     "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition (for web only).",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 10),
+    sellByDate = new LocalDate(2016, 12, 13),
     exposeClientSide = true
   )
 
@@ -487,4 +477,34 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  //Owner Michael McNamara
+  val AmpInteractivePlaceHolderAttribute = Switch(
+    SwitchGroup.Feature,
+    "amp-interactive-placeholder-attribute",
+    "Adds a placeholder attribute to interactives on amp so that they are allowed to display in the top part of the page",
+    owners = Seq(Owner.withGithub("michaelwmcnamara")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 15),
+    exposeClientSide = true
+  )
+  
+  val turnOffSupporterEpic = Switch(
+    SwitchGroup.Membership,
+    "turn-off-supporter-epic",
+    "Turning this on will hide the Become a Supporter button on the epic, leaving just the Contribute button",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 22),
+    exposeClientSide = true
+  )
+
+  val turnOffContributionsEpic = Switch(
+    SwitchGroup.Membership,
+    "turn-off-contributions-epic",
+    "Turning this on will hide the Make a Contribution button on the epic, leaving just the Become a Supporter button",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 11, 22),
+    exposeClientSide = true
+  )
 }

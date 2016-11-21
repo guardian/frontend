@@ -178,7 +178,6 @@ object RenderOtherStatus {
       id = request.path,
       section = Some(SectionSummary.fromId("news")),
       webTitle = "This page has been removed",
-      analyticsName = "GFE:Gone",
       canonicalUrl
     ))
   }
