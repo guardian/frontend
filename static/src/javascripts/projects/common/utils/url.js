@@ -44,6 +44,23 @@ define([
                 }
             },
 
+            // equivalent to pushQueryString but uses history.replaceState to
+            // overwrite history
+            replaceQueryString: function (params) {
+                if (!params.querystring) {
+                    return;
+                }
+                if (supportsPushState) {
+                    if (model.getCurrentQueryString() !== params.querystring) {
+                        history.replaceState(
+                                params.state || {},
+                                params.title || window.title,
+                                params.querystring + window.location.hash
+                        );
+                    }
+                }
+            },
+
             // take an object, construct into a query, e.g. {page: 1, pageSize: 10} => page=1&pageSize=10
             constructQuery: function (query) {
                 return Object.keys(query).map(function (param) {
@@ -79,7 +96,8 @@ define([
         constructQuery: model.constructQuery,
         back: model.back,
         hasHistorySupport: supportsPushState,
-        pushQueryString: model.pushQueryString
+        pushQueryString: model.pushQueryString,
+        replaceQueryString: model.replaceQueryString
     };
 
 });
