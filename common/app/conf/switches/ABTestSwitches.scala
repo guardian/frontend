@@ -27,21 +27,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-fake-news",
-    "Try and beat the epic copy with e version that mentions the hot topic of fake news",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-contributions-epic-usa-cta",
+    "Test just contributions vs contributions or membership vs just membership in the US",
+    owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 22),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-usa-cta-fake-news",
-    "Test just contributions vs contributions or membership in the US, and test a new copy variant against the control",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 22),
+    sellByDate =  new LocalDate(2016, 11, 25),
     exposeClientSide = true
   )
 
