@@ -12,14 +12,14 @@ const mkdirpp = pify(mkdirp);
 
 const {hash, target} = require('../../config').paths;
 
-function getSrcHashes (fileMapping, file) {
+function getSrcHash (fileMapping, file) {
     const fileHash = hasha.fromFileSync(path.resolve(target, file), {algorithm: 'md5'});
     return Object.assign(fileMapping, {
         [file]: path.join(path.dirname(file), fileHash, path.basename(file))
     });
 }
 
-function assignSourceMaps (fileMapping, file) {
+function assignSourceMap (fileMapping, file) {
     return Object.assign(fileMapping, {
         [file]: `${fileMapping[file.replace(/\.map$/, '')]}.map`
     });
@@ -45,8 +45,8 @@ module.exports = {
                 const srcFiles = glob.sync('**/!(*.map)', {nodir: true, cwd: target});
                 const sourceMaps = glob.sync('**/*.map', {nodir: true, cwd: target});
 
-                const srcFileMapping = srcFiles.reduce(getSrcHashes, {});
-                const assetFileMapping = sourceMaps.reduce(assignSourceMaps, srcFileMapping);
+                const srcFileMapping = srcFiles.reduce(getSrcHash, {});
+                const assetFileMapping = sourceMaps.reduce(assignSourceMap, srcFileMapping);
 
                 return Promise.all(
                     Object.keys(assetFileMapping)
