@@ -13,8 +13,7 @@ define([
     'common/utils/cookies',
     'common/utils/ajax',
     'common/modules/commercial/commercial-features',
-    'lodash/arrays/intersection',
-    'common/utils/element-inview'
+    'lodash/arrays/intersection'
 
 ], function (bean,
              qwery,
@@ -30,43 +29,40 @@ define([
              cookies,
              ajax,
              commercialFeatures,
-             intersection,
-             ElementInview) {
+             intersection) {
 
     return function () {
 
-        this.id = 'ContributionsEpicFakeNews';
+        this.id = 'ContributionsEpicUsaCtaThreeWay';
         this.start = '2016-11-18';
-        this.expiry = '2016-11-22';
-        this.author = 'Jonathan Rankin';
-        this.description = 'Try and beat the epic copy with a version that mentions the hot topic of fake news';
+        this.expiry = '2016-11-25';
+        this.author = 'Phil Wills';
+        this.description = 'Test just contributions vs contributions or membership or just membership in the US';
         this.showForSensitive = false;
         this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Impressions to number of contributions / supporter sign ups';
-        this.audienceCriteria = 'Everywhere but the US';
+        this.audienceCriteria = 'Just the US';
         this.dataLinkNames = '';
-        this.idealOutcome = 'We find a message that beats our copy, and learn that we can beat the current control copy with news-relevant references in the copy';
+        this.idealOutcome = 'We prove or disprove our hypothesis that just offering contributions will result in an overall boost in money taken in the USA';
         this.canRun = function () {
             var includedKeywordIds = [
                 'us-news/us-elections-2016',
                 'us-news/us-politics'
             ];
 
-            var includedNonKeywordTagIds = [
-                'uk-news/series/the-new-world-of-work'
+            var includedSeriesIds = [
+                'us-news/series/diy-abortion-in-america'
             ];
 
             var excludedKeywordIds = ['music/leonard-cohen'];
 
             var hasKeywordsMatch = function() {
                 var pageKeywords = config.page.keywordIds;
-                var pageNonKeywordTagIds = config.page.nonKeywordTagIds;
-                if (typeof(pageKeywords) !== 'undefined' && typeof(pageNonKeywordTagIds) !== 'undefined') {
+                if (typeof(pageKeywords) !== 'undefined') {
                     var keywordList = pageKeywords.split(',');
-                    var nonKeywordTagIdsList = pageNonKeywordTagIds.split(',');
-                    return (intersection(excludedKeywordIds, keywordList).length == 0
-                        && (intersection(includedKeywordIds, keywordList).length > 0) || intersection(includedNonKeywordTagIds, nonKeywordTagIdsList).length > 0);
+                    return intersection(excludedKeywordIds, keywordList).length == 0 &&
+                        (intersection(includedKeywordIds, keywordList).length > 0 || includedSeriesIds.indexOf(config.page.seriesId) !== -1);
                 } else {
                     return false;
                 }
@@ -77,33 +73,8 @@ define([
             return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && hasKeywordsMatch();
         };
 
-        function getValue(name){
-            return parseInt(cookies.get(name));
-        }
-
-        function setValue(name, value){
-            cookies.add(name, value, 7);
-        }
-
-        function addInviewListener(epicViewCounter) {
-            mediator.on('contributions-embed:insert', function () {
-                $('.contributions__epic').each(function (el) {
-                    //top offset of 18 ensures view only counts when half of element is on screen
-                    var elementInview = ElementInview(el, window, {top: 18});
-                    elementInview.on('firstview', function () {
-                        mediator.emit('contributions-embed:view');
-                        setValue('gu.epicViewCount', epicViewCounter + 1);
-                    });
-                });
-            });
-        }
-
-        var epicViewCount = getValue('gu.epicViewCount') || 0;
-
-
-
-        var contributeUrlPrefix = 'co_global_epic_fake_not_us';
-        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_fake_not_us';
+        var contributeUrlPrefix = 'co_global_epic_usa_cta_three_way';
+        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_usa_cta_three_way';
 
 
         var makeUrl = function(urlPrefix, intcmp) {
@@ -116,14 +87,7 @@ define([
         var messages  = {
             control: {
                 title: 'Since you’re here …',
-                p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-                intcmp: '_control'
-            },
-
-            fake: {
-                title: 'Since you’re here …',
-                p1: '… we have a small favour to ask. In these post-truth times, when fake news swirls, we need independent journalism more than ever. But while more people are reading the Guardian, far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. Our journalism takes time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-                intcmp: '_fake'
+                p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
             }
         };
 
@@ -143,7 +107,7 @@ define([
                 p3: '',
                 cta1: 'Make a contribution',
                 cta2: '',
-                url1:  makeUrl(contributeUrl, contributeUrlPrefix + '_backup'),
+                url1:  makeUrl(contributeUrl, contributeUrlPrefix),
                 url2: '',
                 hidden: 'hidden'
             },
@@ -153,7 +117,7 @@ define([
                 p3: '',
                 cta1: 'Become a Supporter',
                 cta2: '',
-                url1: makeUrl(membershipUrl, membershipUrlPrefix + '_backup'),
+                url1: makeUrl(membershipUrl, membershipUrlPrefix),
                 url2: '',
                 hidden: 'hidden'
             }
@@ -168,12 +132,11 @@ define([
                 contentType: 'application/json',
                 crossOrigin: true
             }).then(function (resp) {
-                if (epicViewCount < 4 && 'country' in resp && resp.country !== 'US'){
+                if ('country' in resp && resp.country === 'US'){
                     fastdom.write(function () {
                         var submetaElement = $('.submeta');
                         if (submetaElement.length > 0) {
                             component.insertBefore(submetaElement);
-                            addInviewListener(epicViewCount);
                             mediator.emit('contributions-embed:insert', component);
                         }
                     });
@@ -185,27 +148,16 @@ define([
             mediator.on('contributions-embed:view', complete);
         };
 
-        var getCta = function() {
-            if (config.switches.turnOffSupporterEpic) {
-                return cta.justContribute;
-            }
-            if (config.switches.turnOffContributionsEpic) {
-                return cta.justSupporter;
-            }
-            return cta.equal;
-        };
-
-
         this.variants = [
             {
-                id: 'control',
+                id: 'mixed',
 
                 test: function () {
-                    var ctaType = getCta();
+                    var ctaType = cta.equal;
                     var message = messages.control;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.url1 + message.intcmp,
-                        linkUrl2: ctaType.url2 + message.intcmp,
+                        linkUrl1: ctaType.url1 + '_mixed',
+                        linkUrl2: ctaType.url2 + '_mixed',
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,
@@ -225,14 +177,41 @@ define([
             },
 
             {
-                id: 'fake',
+                id: 'just-contribute',
 
                 test: function () {
-                    var ctaType = getCta();
-                    var message = messages.fake;
+                    var ctaType = cta.justContribute;
+                    var message = messages.control;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.url1 + message.intcmp,
-                        linkUrl2: ctaType.url2 + message.intcmp,
+                        linkUrl1: ctaType.url1 + '_contribute',
+                        linkUrl2: ctaType.url2 + '_contribute',
+                        title: message.title,
+                        p1: message.p1,
+                        p2:ctaType.p2,
+                        p3: ctaType.p3,
+                        cta1: ctaType.cta1,
+                        cta2: ctaType.cta2,
+                        hidden: ctaType.hidden
+                    }));
+                    componentWriter(component);
+                },
+
+                impression: function(track) {
+                    mediator.on('contributions-embed:insert', track);
+                },
+
+                success: completer
+            },
+
+            {
+                id: 'just-supporter',
+
+                test: function () {
+                    var ctaType = cta.justSupporter;
+                    var message = messages.control;
+                    var component = $.create(template(contributionsEpicEqualButtons, {
+                        linkUrl1: ctaType.url1 + '_supporter',
+                        linkUrl2: ctaType.url2 + '_supporter',
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,
