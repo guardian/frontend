@@ -64,14 +64,8 @@ window.curlConfig = {
             }
             'foresee.js':                        'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                      '@{Configuration.javascript.config("googletagJsUrl")}',
-            'sonobi.js':                        '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
-            'ophan/ng': '@{
-                if (WebpackSwitch.isSwitchedOn) {
-                    Static("javascripts/vendor/ophan/ophan.ng.js")
-                } else {
-                    Configuration.javascript.config("ophanJsUrl")
-                }
-            }',
+            'sonobi.js':                         '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
+            'ophan/ng':                          '@{Configuration.javascript.config("ophanJsUrl")}',
             react:                               '@Static("javascripts/vendor/react/react.js")',
             'discussion-frontend-react':         '@DiscussionAsset("discussion-frontend.react.amd")',
             'discussion-frontend-preact':        '@DiscussionAsset("discussion-frontend.preact.amd")',
@@ -103,13 +97,7 @@ window.curlConfig = {
             'foresee.js':                   'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
             'sonobi.js':                    '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
-            'ophan/ng': '@{
-                if (WebpackSwitch.isSwitchedOn) {
-                    Static("javascripts/vendor/ophan/ophan.ng.js")
-                } else {
-                    Configuration.javascript.config("ophanJsUrl")
-                }
-            }',
+            'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',
             'discussion-frontend-react':    '@DiscussionAsset("discussion-frontend.react.amd")',
             'discussion-frontend-preact':   '@DiscussionAsset("discussion-frontend.preact.amd")',
             svgs:                           '../inline-svgs',
