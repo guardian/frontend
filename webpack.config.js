@@ -38,6 +38,9 @@ module.exports = {
             inlineSvg:                  'projects/common/utils/inlineSvg'
         }
     },
+    externals: {
+        xhr2: {}
+    },
     output: {
         path: __dirname + '/static/target/javascripts',
         filename: 'entry-webpack.js'
