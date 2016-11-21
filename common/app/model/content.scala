@@ -459,7 +459,6 @@ object Article {
 
     content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some(ArticleSchemas(content.tags)),
       iosType = Some("Article"),
@@ -539,7 +538,6 @@ object Audio {
 
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some("https://schema.org/AudioObject"),
       javascriptConfigOverrides = javascriptConfig
@@ -593,7 +591,6 @@ object Video {
 
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some("http://schema.org/VideoObject"),
       javascriptConfigOverrides = javascriptConfig,
@@ -676,7 +673,6 @@ object Gallery {
     }
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some("https://schema.org/ImageGallery"),
       openGraphImages = lightbox.openGraphImages,
@@ -842,7 +838,6 @@ object Interactive {
     )
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       twitterPropertiesOverrides = twitterProperties,
       contentWithSlimHeader = true
@@ -875,7 +870,6 @@ object ImageContent {
     )
     val metadata = content.metadata.copy(
       contentType = contentType,
-      analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       javascriptConfigOverrides = javascriptConfig,
       twitterPropertiesOverrides = Map("twitter:card" -> "photo")
@@ -904,7 +898,6 @@ object CrosswordContent {
     val metadata = content.metadata.copy(
       id = crossword.id,
       section = Some(SectionSummary.fromId("crosswords")),
-      analyticsName = crossword.id,
       webTitle = crossword.name,
       contentType = contentType,
       iosType = None

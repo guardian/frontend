@@ -27,7 +27,6 @@ object Section {
       section = Some(SectionSummary.fromCapiSection(section)),
       pagination = pagination,
       webTitle = webTitle,
-      analyticsName = s"GFE:$id",
       adUnitSuffix = adUnitSuffix,
       contentType = "Section",
       isFront = true,

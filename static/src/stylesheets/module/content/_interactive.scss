@@ -20,13 +20,19 @@
 
     }
 
-    .meta__numbers {
-        position: relative;
+    .meta__extras {
         border-top: 1px dotted $neutral-5;
+        display: flex;
+        justify-content: space-between;
+    }
 
-        @include mq(leftCol) {
-            border-bottom: 0;
-        }
+    .meta__social,
+    .meta__numbers {
+        border: 0 none;
+    }
+
+    .meta__number {
+        text-align: right;
     }
 
     .content__section-label,
@@ -37,43 +43,21 @@
     }
 
     .content__meta-container {
+        border: 0 none;
         margin-left: 0;
         width: 100%;
-        border-top: 0;
-        border-bottom: 0;
 
         .meta__number {
-            @include mq(tablet) {
-                float: right;
-                border-left: 1px solid $neutral-5;
-                padding-left: $gs-gutter / 2;
-
-                &:first-child {
-                    padding-right: 0;
-                }
-            }
-
             @include mq($until: mobile) {
                 position: relative;
                 top: $gs-baseline;
-            }
-
-            &:last-child {
-                padding-right: $gs-gutter / 2;
-            }
-        }
-
-        .meta__social {
-            @include mq(tablet) {
-                float: left;
-                position: relative;
-                z-index: 2;
             }
         }
 
         @include mq(leftCol) {
             position: relative;
         }
+
         .commentcount {
             top: $gs-baseline / 3;
 
@@ -83,12 +67,6 @@
                 padding-top: $gs-baseline / 3;
                 margin-bottom: $gs-baseline;
                 border-top: 1px dotted $neutral-5;
-            }
-        }
-
-        @include mq(desktop) {
-            .meta__social {
-                margin-right: ($gs-gutter / 2) + 2px;
             }
         }
     }

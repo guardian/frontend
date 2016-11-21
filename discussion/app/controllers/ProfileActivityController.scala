@@ -12,8 +12,7 @@ class ProfileActivityController(val discussionApi: DiscussionApiLike) extends Di
     metadata = MetaData.make(
       id = s"discussion/profile/${profile.userId}/$pageType",
       section = Some(SectionSummary.fromId("Discussion")),
-      webTitle = s"${profile.displayName}'s activity",
-      analyticsName = s"GFE:Article:Profile activity page"
+      webTitle = s"${profile.displayName}'s activity"
     )
   )
 

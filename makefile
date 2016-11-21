@@ -50,36 +50,36 @@ watch: compile-dev
 # *********************** ASSETS ***********************
 
 # Compile all assets for production.
-compile: check-node
+compile: install
 	@./tools/run-task compile
 
 # Compile all assets for development.
-compile-dev: check-node
+compile-dev: install
 	@./tools/run-task compile --dev
 
-compile-javascript: check-node # PRIVATE
+compile-javascript: install # PRIVATE
 	@./tools/run-task compile/javascript
 
-compile-javascript-dev: check-node # PRIVATE
+compile-javascript-dev: install # PRIVATE
 	@./tools/run-task compile/javascript --dev
 
-compile-css: check-node # PRIVATE
+compile-css: install # PRIVATE
 	@./tools/run-task compile/css
 
-compile-images: check-node # PRIVATE
+compile-images: install # PRIVATE
 	@./tools/run-task compile/images
 
-compile-svgs: check-node # PRIVATE
+compile-svgs: install # PRIVATE
 	@./tools/run-task compile/inline-svgs
 
-compile-fonts: check-node # PRIVATE
+compile-fonts: install # PRIVATE
 	@./tools/run-task compile/fonts
 
-atomise-css: check-node # PRIVATE
+atomise-css: install # PRIVATE
 	@node tools/atomise-css
 
 # * Not ready for primetime use yet... *
-pasteup: check-node # PRIVATE
+pasteup: install # PRIVATE
 	@cd static/src/stylesheets/pasteup && npm --silent i && node publish.js
 
 
@@ -87,24 +87,28 @@ pasteup: check-node # PRIVATE
 # *********************** CHECKS ***********************
 
 # Run the JS test suite.
-test: check-node
+test: install
 	@./tools/run-task test/javascript
 
 # Check the JS test suite coverage.
-coverage: check-node
+coverage: install
 	@./tools/run-task test/javascript/coverage --stdout
 
 # Lint all assets.
-validate: check-node
+validate: install
 	@./tools/run-task lint
 
 # Lint all SCSS.
-validate-sass: check-node # PRIVATE
+validate-sass: install # PRIVATE
 	@./tools/run-task lint/sass
 
 # Lint all JS.
-validate-javascript: check-node # PRIVATE
+validate-javascript: install # PRIVATE
 	@./tools/run-task lint/javascript
 
-validate-amp: check-node # PRIVATE
+# Lint all assets.
+fix: install
+	@./tools/run-task lint/javascript-fix
+
+validate-amp: install # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js

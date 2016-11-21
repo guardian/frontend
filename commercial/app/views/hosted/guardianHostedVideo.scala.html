@@ -90,7 +90,7 @@
                         </div>
                         <div class="hostedbadge hostedbadge--shouldscale">
                             <a href="@page.cta.url" data-link-name="hosted-logo-top-left" target="_blank">
-                                <img class="hostedbadge__logo" src="@{page.campaign.logoUrl}" alt="logo @{page.campaign.owner}">
+                                <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
                             </a>
                         </div>
                     </div>
@@ -151,7 +151,7 @@
                 <div class="js-onward-placeholder hosted__next-page-placeholder"></div>
             }
         </section>
-        @guardianHostedCta(page, page.cta)
+        @guardianHostedCta(page, page.cta, isAMP = false)
         @guardianHostedOnwardOverlay(page)
     </div>
 

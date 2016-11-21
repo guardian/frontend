@@ -107,11 +107,8 @@ function release(release) {
             if (stderr) {
                 console.error(stderr);
             }
-            if (e) {
-                reject(e);
-            } else {
-                resolve(stdout);
-            }
+            if (e) return reject(e);
+            resolve(stdout);
         });
     });
 }

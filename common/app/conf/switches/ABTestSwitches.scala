@@ -7,31 +7,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-weekend-reading-email",
-    "Try out two formats for the Weekend Reading email",
-    owners = Seq(Owner.withGithub("katebee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 21),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-hosted-onward-journey",
     "Show more pages from the campaign in Hosted Article/Video pages, using a carousel or popup",
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 1, 18),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-membership-engagement-message-copy-experiment",
-    "Test alternate short messages on membership engagement banner",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = On, // so we don't inadvertently turn off during deployment
-    sellByDate = new LocalDate(2016, 12, 1), // Thursday 1st December
     exposeClientSide = true
   )
 
@@ -47,8 +27,18 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-limited-impressions",
-    "Run the epic with a limit of 4 impressions per user (for non US, US there is no limit)",
+    "ab-contributions-epic-fake-news",
+    "Try and beat the epic copy with e version that mentions the hot topic of fake news",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 22),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-usa-cta-fake-news",
+    "Test just contributions vs contributions or membership in the US, and test a new copy variant against the control",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate =  new LocalDate(2016, 11, 22),
@@ -64,6 +54,17 @@ trait ABTestSwitches {
     sellByDate =  new LocalDate(2016, 11, 22),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-platform-sticky-ad-viewability",
+    "Test the affect of showing the navigation on the viewability of the sticky top ad",
+    owners = Seq(Owner.withGithub("gtrufitt"), Owner.withName("Gareth Trufitt")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 11, 24),
+    exposeClientSide = true
+  )
+
 
 
 }

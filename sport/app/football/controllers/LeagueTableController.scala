@@ -55,8 +55,7 @@ class LeagueTableController(val competitionsService: CompetitionsService) extend
     val page = new FootballPage(
       "football/tables",
       "football",
-      "All tables",
-      "GFE:Football:automatic:tables"
+      "All tables"
     )
 
     val groups = loadTables.map { table =>
@@ -79,8 +78,7 @@ class LeagueTableController(val competitionsService: CompetitionsService) extend
     val page = new FootballPage(
       "football/teams",
       "football",
-      "All teams",
-      "GFE:Football:automatic:teams"
+      "All teams"
     )
 
     val groups = loadTables.map { table =>
@@ -103,8 +101,7 @@ class LeagueTableController(val competitionsService: CompetitionsService) extend
       val page = new FootballPage(
         "football/tables",
         "football",
-        s"${table.competition.fullName} table",
-        "GFE:Football:automatic:competition tables"
+        s"${table.competition.fullName} table"
       )
 
       val smallTableGroup = table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
@@ -133,8 +130,7 @@ class LeagueTableController(val competitionsService: CompetitionsService) extend
       val page = new FootballPage(
         "football/tables",
         "football",
-        s"${table.competition.fullName} table",
-        "GFE:Football:automatic:competition tables"
+        s"${table.competition.fullName} table"
       )
       val groupTable = Table(table.competition, Seq(group), hasGroups = true)
       val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(groupTable), table.competition.url, filters, Some(table.competition)))

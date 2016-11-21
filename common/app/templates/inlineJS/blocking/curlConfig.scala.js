@@ -18,6 +18,7 @@ window.curlConfig = {
             'bootstraps/enhanced/football':      '@Static("javascripts/bootstraps/enhanced/football.js")',
             'bootstraps/enhanced/image-content': '@Static("javascripts/bootstraps/enhanced/image-content.js")',
             'bootstraps/enhanced/membership':    '@Static("javascripts/bootstraps/enhanced/membership.js")',
+            'bootstraps/enhanced/youtube':       '@Static("javascripts/bootstraps/enhanced/youtube.js")',
             'bootstraps/enhanced/sudoku':        '@Static("javascripts/bootstraps/enhanced/sudoku.js")',
             'bootstraps/enhanced/media/main':    '@Static("javascripts/bootstraps/enhanced/media/main.js")',
             'bootstraps/enhanced/article':       '@Static("javascripts/bootstraps/enhanced/article.js")',

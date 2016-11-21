@@ -8,11 +8,11 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/hosted-onward-journey',
-    'common/modules/experiments/tests/weekend-reading-email',
-    'common/modules/experiments/tests/membership-engagement-message-copy-experiment',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
-    'common/modules/experiments/tests/contributions-epic-limited-impressions',
-    'common/modules/experiments/tests/contributions-epic-thank-you'
+    'common/modules/experiments/tests/contributions-epic-fake-news',
+    'common/modules/experiments/tests/contributions-epic-usa-cta-fake-news',
+    'common/modules/experiments/tests/contributions-epic-thank-you',
+    'common/modules/experiments/tests/platform-sticky-ad-viewability'
 ], function (reportError,
              config,
              cookies,
@@ -22,18 +22,19 @@ define([
              memoize,
              noop,
              HostedOnwardJourney,
-             WeekendReadingEmail,
-             MembershipEngagementMessageCopyExperiment,
              MembershipEngagementInternationalExperiment,
-             ContributionsEpicLimitedImpressions,
-             ContributionsEpicThankYou) {
+             ContributionsEpicFakeNews,
+             ContributionsEpicUsaCtaFakeNews,
+             ContributionsEpicThankYou,
+             PlatformStickyAdViewability
+    ) {
     var TESTS = [
         new HostedOnwardJourney(),
-        new WeekendReadingEmail(),
-        new MembershipEngagementMessageCopyExperiment(),
         new MembershipEngagementInternationalExperiment(),
-        new ContributionsEpicLimitedImpressions(),
-        new ContributionsEpicThankYou()
+        new ContributionsEpicFakeNews(),
+        new ContributionsEpicUsaCtaFakeNews(),
+        new ContributionsEpicThankYou(),
+        new PlatformStickyAdViewability()
     ];
 
     var participationsKey = 'gu.ab.participations';

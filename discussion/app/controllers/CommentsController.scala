@@ -66,8 +66,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
   val reportAbusePage = SimplePage(MetaData.make(
     "/reportAbuse",
     Some(SectionSummary.fromId("Discussion")),
-    "Report Abuse",
-    "GFE: Report Abuse"
+    "Report Abuse"
   ))
   def reportAbuseForm(commentId: Int) = CSRFAddToken({
     Action {
@@ -82,8 +81,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
   val reportAbuseThankYouPage = SimplePage(MetaData.make(
     "/reportAbuseThankYou",
     Some(SectionSummary.fromId("Discussion")),
-    "Report Abuse Thank You",
-    "GFE: Report Abuse Thank You"
+    "Report Abuse Thank You"
   ))
 
 

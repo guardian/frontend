@@ -44,8 +44,8 @@ define([
 
         var messages = {
             UK: {
-                campaign: 'Coffee_49',
-                messageText: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for just £49 per year.',
+                campaign: 'mem_uk_banner',
+                messageText: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for £5 a month.',
                 buttonCaption: 'Become a Supporter'
             },
             US: {
@@ -64,22 +64,6 @@ define([
                 buttonCaption: 'Become a Supporter'
             }
         };
-
-        function doUkCopyTest(content) {
-            var variant = getVariant('MembershipEngagementMessageCopyExperiment');
-            if (variant && variant !== notInTest) {
-                var variantMessages = {
-                    Get_round_to: 'Not got round to supporting us yet? Now is the time. Give £5 a month today',
-                    Give_upfront: 'Give £5 a month to help support our journalism and make the Guardian’s future more secure',
-                    Together_informed: 'Together we can keep the world informed. Give £5 a month to support our journalism',
-                    Coffee_5: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for £5 a month'
-                };
-                var campaignCode = 'gdnwb_copts_mem_banner_ukbanner__' + variant;
-                content.campaignCode = campaignCode;
-                content.linkHref = formatEndpointUrl('UK', campaignCode);
-                content.messageText = variant === 'control' ? undefined : variantMessages[variant];
-            }
-        }
 
         function doInternationalTest(content) {
             var variant = getVariant('MembershipEngagementInternationalExperiment');
@@ -100,7 +84,6 @@ define([
                 arrowWhiteRight: svgs('arrowWhiteRight')
             };
 
-            doUkCopyTest(content);
             doInternationalTest(content);
 
             var renderedBanner = template(messageTemplate, content);
