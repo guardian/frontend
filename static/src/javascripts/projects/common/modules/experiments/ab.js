@@ -22,7 +22,6 @@ define([
              memoize,
              noop,
              HostedOnwardJourney,
-             WeekendReadingEmail,
              MembershipEngagementInternationalExperiment,
              ContributionsEpicFakeNews,
              ContributionsEpicUsaCtaFakeNews,
