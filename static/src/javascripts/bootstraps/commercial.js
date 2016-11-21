@@ -9,7 +9,7 @@ define([
     'commercial/modules/article-body-adverts',
     'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/init',
-    'commercial/modules/dfp/load',
+    'commercial/modules/dfp/fill-advert-slots',
     'commercial/modules/front-commercial-components',
     'commercial/modules/gallery-adverts',
     'commercial/modules/hosted/about',
@@ -36,7 +36,7 @@ define([
     articleBodyAdverts,
     closeDisabledSlots,
     dfpInit,
-    dfpLoad,
+    fillAdvertSlots,
     frontCommercialComponents,
     galleryAdverts,
     hostedAbout,
@@ -66,7 +66,7 @@ define([
     ];
 
     var secondaryModules = [
-        ['cm-load', dfpLoad],
+        ['cm-fill-advert-slots', fillAdvertSlots.init],
         ['cm-paidforBand', paidforBand.init],
         ['cm-paidContainers', paidContainers.init],
         ['cm-ready', function () {
