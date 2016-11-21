@@ -10,7 +10,6 @@ define([
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/on-slot-render',
     'commercial/modules/dfp/on-slot-load',
-    'commercial/modules/dfp/PrebidService',
     'commercial/modules/dfp/ophan-tracking',
 
     // These are cross-frame protocol messaging routines:
@@ -32,7 +31,6 @@ define([
     dfpEnv,
     onSlotRender,
     onSlotLoad,
-    PrebidService,
     ophanTracking
 ) {
     return init;
@@ -70,13 +68,7 @@ define([
                 ophanTracking.addTag('sonobi');
             } else {
                 require(['js!googletag.js']);
-
-                if (dfpEnv.prebidEnabled) {
-                    dfpEnv.prebidService = new PrebidService();
-                    ophanTracking.addTag('prebid');
-                } else {
-                    ophanTracking.addTag('waterfall');
-                }
+                ophanTracking.addTag('waterfall');
             }
 
             window.googletag.cmd.push = raven.wrap({deep: true}, window.googletag.cmd.push);
