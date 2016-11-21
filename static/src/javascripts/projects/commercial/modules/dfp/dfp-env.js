@@ -18,7 +18,7 @@ define([
         prebidEnabled: config.page.edition == 'US' && !('tests' in config && config.tests.commercialHbSonobi),
 
         /* sonobiEnabled: boolean. Set to true if sonobi real-time-bidding is enabled*/
-        sonobiEnabled: config.tests.sonobiHeaderBidding,
+        sonobiEnabled: config.switches.sonobiHeaderBidding,
 
         /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
         lazyLoadEnabled: false,
