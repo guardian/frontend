@@ -86,7 +86,6 @@
     "svgo": "^0.7.1",
     "time-grunt": "1.2.0",
     "uglify-js": "^2.7.4",
-    "webpack": "^1.13.1",
     "yargs": "^6.0.0"
   },
   "optionalDependencies": {
