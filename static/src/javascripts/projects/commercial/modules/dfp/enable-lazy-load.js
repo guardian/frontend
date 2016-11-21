@@ -1,13 +1,14 @@
 define([
+    'common/utils/add-event-listener',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/lazy-load'
-], function (dfpEnv, lazyLoad) {
+], function (addEventListener, dfpEnv, lazyLoad) {
     return enableLazyLoad;
 
     function enableLazyLoad() {
         if (!dfpEnv.lazyLoadEnabled) {
             dfpEnv.lazyLoadEnabled = true;
-            window.addEventListener('scroll', lazyLoad);
+            addEventListener(window, 'scroll', lazyLoad, { passive: true });
             lazyLoad();
         }
     }
