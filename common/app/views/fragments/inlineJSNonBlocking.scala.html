@@ -1,9 +1,10 @@
 @import common.InlineJs
 @import conf.switches.Switches.{IdentityProfileNavigationSwitch,WebpackSwitch}
 @import conf.Configuration
+@import model.Page
 @import templates.inlineJS.nonBlocking.js._
 
-@()(implicit request: RequestHeader)
+@(page: Page)(implicit request: RequestHeader)
 
 @**
  * Use this fragment to add JavaScript that can improve the perceived rendering speed
@@ -30,7 +31,12 @@
 // Ophan pageview ID and browser ID are needed by Google Analytics, which runs just after this script tag
 @InlineJs(ophanConfig().body, "ophanConfig.js")
 
-@if(WebpackSwitch.isSwitchedOn) {
+@if(WebpackSwitch.isSwitchedOn &&
+    (
+        page.metadata.contentType == "Article" ||
+        page.metadata.contentType == "LiveBlog"
+    )
+) {
     @HtmlFormat.raw(common.Assets.js.curl)
 
     [].slice.apply(document.querySelectorAll('figure.interactive[data-interactive]')).forEach(function (el) {
