@@ -37,7 +37,9 @@
         page.metadata.contentType == "LiveBlog"
     )
 ) {
-    @HtmlFormat.raw(common.Assets.js.curl)
+    @if(Configuration.assets.useHashedBundles) {
+        @HtmlFormat.raw(common.Assets.js.curl)
+    }
 
     [].slice.apply(document.querySelectorAll('figure.interactive[data-interactive]')).forEach(function (el) {
         require([el.getAttribute('data-interactive')], function (interactive) {
