@@ -33,7 +33,7 @@ define([
 
     return function () {
 
-        this.id = 'ContributionsEpicUsaCta';
+        this.id = 'ContributionsEpicUsaCtaThreeWay';
         this.start = '2016-11-18';
         this.expiry = '2016-11-25';
         this.author = 'Phil Wills';
@@ -87,8 +87,7 @@ define([
         var messages  = {
             control: {
                 title: 'Since you’re here …',
-                p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-                intcmp: '_control'
+                p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
             }
         };
 
@@ -108,7 +107,7 @@ define([
                 p3: '',
                 cta1: 'Make a contribution',
                 cta2: '',
-                url1:  makeUrl(contributeUrl, contributeUrlPrefix + '_backup'),
+                url1:  makeUrl(contributeUrl, contributeUrlPrefix),
                 url2: '',
                 hidden: 'hidden'
             },
@@ -118,7 +117,7 @@ define([
                 p3: '',
                 cta1: 'Become a Supporter',
                 cta2: '',
-                url1: makeUrl(membershipUrl, membershipUrlPrefix + '_backup'),
+                url1: makeUrl(membershipUrl, membershipUrlPrefix),
                 url2: '',
                 hidden: 'hidden'
             }
@@ -157,8 +156,8 @@ define([
                     var ctaType = cta.equal;
                     var message = messages.control;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.url1 + message.intcmp + '_mixed',
-                        linkUrl2: ctaType.url2 + message.intcmp + '_mixed',
+                        linkUrl1: ctaType.url1 + '_mixed',
+                        linkUrl2: ctaType.url2 + '_mixed',
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,
@@ -184,8 +183,8 @@ define([
                     var ctaType = cta.justContribute;
                     var message = messages.control;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.url1 + message.intcmp + '_contribute',
-                        linkUrl2: ctaType.url2 + message.intcmp + '_contribute',
+                        linkUrl1: ctaType.url1 + '_contribute',
+                        linkUrl2: ctaType.url2 + '_contribute',
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,
@@ -211,8 +210,8 @@ define([
                     var ctaType = cta.justSupporter;
                     var message = messages.control;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.url1 + message.intcmp + '_supporter',
-                        linkUrl2: ctaType.url2 + message.intcmp + '_supporter',
+                        linkUrl1: ctaType.url1 + '_supporter',
+                        linkUrl2: ctaType.url2 + '_supporter',
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,

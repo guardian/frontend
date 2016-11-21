@@ -12,13 +12,13 @@ define([
         variants: ['control']
     };
 
-    var contributionsEpicUsaCta = {
-        name: 'ContributionsEpicUsaCta',
+    var ContributionsEpicUsaCtaThreeWay = {
+        name: 'ContributionsEpicUsaCtaThreeWay',
         variants: ['mixed', 'just-contribute', 'just-supporter']
     };
 
     function userIsInAClashingAbTest() {
-        var clashingTests = [contributionsEpicThankyou, contributionsEpicUsaCta];
+        var clashingTests = [contributionsEpicThankyou, ContributionsEpicUsaCtaThreeWay];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 

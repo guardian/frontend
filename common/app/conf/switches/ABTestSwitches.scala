@@ -27,7 +27,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-usa-cta",
+    "ab-contributions-epic-usa-cta-three-way",
     "Test just contributions vs contributions or membership vs just membership in the US",
     owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
