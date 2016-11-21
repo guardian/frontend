@@ -73,8 +73,8 @@ define([
             return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && hasKeywordsMatch();
         };
 
-        var contributeUrlPrefix = 'co_global_epic_usa_cta';
-        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_usa_cta';
+        var contributeUrlPrefix = 'co_global_epic_usa_cta_three_way';
+        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_usa_cta_three_way';
 
 
         var makeUrl = function(urlPrefix, intcmp) {
