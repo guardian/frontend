@@ -54,7 +54,7 @@ define([
                 if (needsMessage) {
                     window.console.warn(message);
                 }
-            })
+            });
         }
 
         return promiseRequire(['bootstraps/commercial'])
