@@ -363,7 +363,7 @@ class GuardianConfiguration extends Logging {
     lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
     lazy val frontendAssetsMap = configuration.getStringProperty("discussion.frontend.assetsMap")
     lazy val frontendAssetsMapRefreshInterval = 5.seconds
-    lazy val frontendAssetsVersion = "v1.4.0"
+    lazy val frontendAssetsVersion = "v1.5.0"
   }
 
   object witness {
@@ -654,4 +654,3 @@ object ManifestData {
   lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
   lazy val revision = ManifestFile.asKeyValuePairs.getOrElse("Revision", "DEV").dequote.trim
 }
-

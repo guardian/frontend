@@ -6,20 +6,17 @@ class AdSuffixHandlingForFrontsTest extends FlatSpec with Matchers  {
   val NetworkFronts = MetaData.make(
     id = "",
     section = None,
-    analyticsName = "",
     webTitle = "")
 
 
   val SectionFront = MetaData.make(
     id = "",
     section = Some(SectionSummary.fromId("business")),
-    analyticsName = "",
     webTitle= "")
 
   val TagFront = MetaData.make(
     id = "",
     section = Some(SectionSummary.fromId("education")),
-    analyticsName = "",
     webTitle = "")
 
   "Editionalised Network Front pages" should "have editions in the ad unit suffix and end with 'front'" in {

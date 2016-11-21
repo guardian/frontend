@@ -3,9 +3,10 @@
 
 @(media: model.content.MediaAtom)(implicit request: RequestHeader)
 
-    <div class="@RenderClasses(Map(
+    <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
         "u-responsive-ratio" -> true,
-        "u-responsive-ratio--hd" -> true
+        "u-responsive-ratio--hd" -> true,
+        "atom--media--youtube" -> true
     ))">
 
         @defining(if(!host.isEmpty) "&origin=" + host else "") { origin =>

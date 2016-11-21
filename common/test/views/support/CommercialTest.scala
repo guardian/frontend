@@ -9,7 +9,6 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
   private def metaDataFromId(pageId: String): MetaData = MetaData.make(
     id = pageId,
     section = Some(SectionSummary.fromId("section")),
-    analyticsName = "analyticsName",
     webTitle = "webTitle")
 
   def pageShouldRequestAdSizes(pageId: String)(sizes: Seq[String]): Unit = {

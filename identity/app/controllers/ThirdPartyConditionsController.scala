@@ -27,7 +27,7 @@ class ThirdPartyConditionsController(returnUrlVerifier: ReturnUrlVerifier,
 
   import authenticatedActions.{agreeAction, authAction}
 
-  val page = IdentityPage("/agree", "Terms and Conditions", "agree")
+  val page = IdentityPage("/agree", "Terms and Conditions")
 
   def renderAgree(groupCode: String) = CSRFAddToken {
     agreeAction(redirectToSignInWithThirdPartyConditions).async { implicit request =>

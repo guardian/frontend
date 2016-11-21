@@ -104,7 +104,7 @@ define([
                     nextVideoAutoplay.triggerAutoplay(event.target.getCurrentTime.bind(event.target), duration);
                 }
             }
-        });
+        }, el.id);
     }
 
     return {

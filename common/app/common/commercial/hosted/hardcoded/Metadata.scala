@@ -27,7 +27,6 @@ object Metadata {
       webTitle = pageTitle,
       section = Some(SectionSummary.fromId(campaignId)),
       contentType = Video,
-      analyticsName = s"GFE:$campaignId:$Video:$pageName",
       description = Some(standfirst),
       javascriptConfigOverrides = Map(
         "isHosted" -> JsBoolean(true),
@@ -59,7 +58,6 @@ object Metadata {
     webTitle = pageTitle,
     section = Some(SectionSummary.fromId(campaign.id)),
     contentType = Article.name,
-    analyticsName = s"GFE:${campaign.id}:${Article.name}:$pageName",
     description = Some(standfirst),
     javascriptConfigOverrides = Map(
       "isHosted" -> JsBoolean(true),
@@ -89,7 +87,6 @@ object Metadata {
       webTitle = pageTitle,
       section = Some(SectionSummary.fromId(sectionId)),
       contentType = Gallery.name,
-      analyticsName = s"GFE:$sectionId:$Gallery:$pageName",
       description = Some(pageTitle),
       javascriptConfigOverrides = Map(
         "isHosted" -> JsBoolean(true),

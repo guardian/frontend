@@ -59,7 +59,7 @@ module.exports = (() => {
         '/sport/live/2016/aug/20/rio-2016-olympics-day-15-mo-farah-relays-tom-daley-nicola-adams-football-live', // Sport live blog
 
         /*
-            Paid for by hosted pages
+            Paid for by pages
          */
         '/somerset-county-council-partner-zone/2016/sep/21/somerset-offers-opportunities-develop-social-work-career'
     ];
