@@ -64,9 +64,9 @@ window.curlConfig = {
             }
             'foresee.js':                        'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                      '@{Configuration.javascript.config("googletagJsUrl")}',
-            'sonobi.js':                         '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
-            'ophan/ng':                          '@{Configuration.javascript.config("ophanJsUrl")}',
+            'sonobi.js':                        '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
             react:                               '@Static("javascripts/vendor/react/react.js")',
+            'ophan/ng':                          '@{Configuration.javascript.config("ophanJsUrl")}',
             'prebid.js':                         '@Static("javascripts/vendor/prebid/0.8.1/prebid.js")',
             'discussion-frontend-react':         '@DiscussionAsset("discussion-frontend.react.amd")',
             'discussion-frontend-preact':        '@DiscussionAsset("discussion-frontend.preact.amd")',
