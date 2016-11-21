@@ -16,7 +16,7 @@ const exec = (cmd, args) => {
 module.exports = {
     description: 'Test JS app',
     task: [
-        require('../../compile/inline-svgs/copy'),
+        require('../../compile/inline-svgs'),
         {
             description: 'Run tests',
             task: [

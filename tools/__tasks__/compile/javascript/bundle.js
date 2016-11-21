@@ -182,6 +182,18 @@ const bundles = [{
     name: 'bootstraps/admin',
     out: target + '/javascripts/bootstraps/admin.js'
 }, {
+    name: 'bootstraps/enhanced/youtube',
+    out: target + '/javascripts/bootstraps/enhanced/youtube.js',
+    exclude: [
+        'boot',
+        'bootstraps/standard/main',
+        'bootstraps/commercial',
+        'bootstraps/enhanced/main',
+        'text',
+        'inlineSvg'
+    ]
+},
+    {
     name: 'bootstraps/enhanced/media/main',
     out: target + '/javascripts/bootstraps/enhanced/media/main.js',
     exclude: [
