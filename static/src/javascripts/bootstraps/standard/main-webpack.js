@@ -14,6 +14,7 @@
 define([
     'qwery',
     'fastdom',
+    'common/utils/raven',
     'common/modules/user-prefs',
     'common/modules/ui/images',
     'common/utils/storage',
@@ -28,6 +29,7 @@ define([
 ], function (
     qwery,
     fastdom,
+    raven,
     userPrefs,
     images,
     storage,
@@ -45,8 +47,6 @@ define([
         var config = guardian.config;
 
         userTiming.mark('standard start');
-
-        // TODO: reinstate raven config!
 
         var oldOnError = window.onerror;
         window.onerror = function (message, filename, lineno, colno, error) {
