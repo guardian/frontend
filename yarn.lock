@@ -1452,6 +1452,15 @@ core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
 
+cp-file:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/cp-file/-/cp-file-4.1.0.tgz#d41498d4befd8444e34fb66c20f70e9db2e3467d"
+  dependencies:
+    graceful-fs "^4.1.2"
+    mkdirp "^0.5.0"
+    nested-error-stacks "^1.0.1"
+    pify "^2.3.0"
+
 cp-file@^3.1.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/cp-file/-/cp-file-3.2.0.tgz#6f83616254624f0ad58aa4aa8d076f026be7e188"
@@ -2920,10 +2929,6 @@ graphviz@0.0.7:
   dependencies:
     temp "~0.4.0"
 
-grunt-asset-hash@0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/grunt-asset-hash/-/grunt-asset-hash-0.1.6.tgz#84080c50774cb57bea6d662db5ea96a60e7891eb"
-
 grunt-asset-monitor@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/grunt-asset-monitor/-/grunt-asset-monitor-0.2.0.tgz#952b93241bd76e1f9c69fff2b6cade0d93e65f99"
@@ -3242,7 +3247,7 @@ has@^1.0.1:
   dependencies:
     function-bind "^1.0.2"
 
-hasha@~2.2.0:
+hasha, hasha@~2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/hasha/-/hasha-2.2.0.tgz#78d7cbfc1e6d66303fe79837365984517b2f6ee1"
   dependencies:
