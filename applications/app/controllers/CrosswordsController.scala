@@ -51,7 +51,7 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
 
 class CrosswordPageController(val contentApiClient: ContentApiClient) extends CrosswordController {
 
-  def noResults()(implicit request: RequestHeader) = InternalServerError("Content API query returned an error.")
+  def noResults()(implicit request: RequestHeader) = NoCache(NotFound)
 
   def crossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     renderCrosswordPage(crosswordType, id)
