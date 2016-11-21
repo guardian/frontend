@@ -1,10 +1,11 @@
 @import common.commercial.hosted.HostedArticlePage
-@import common.commercial.hosted.hardcoded.Support.makeshiftPage
-@import conf.Configuration
-@import model.hosted.HostedAmp.ampify
-@import views.html.hosted._
-@import views.support.FBPixel
 @(page: HostedArticlePage)(implicit request: RequestHeader)
+@import model.hosted.HostedAmp.ampify
+@import common.commercial.hosted.hardcoded.Support.makeshiftPage
+@import views.html.hosted._
+@import common.{AnalyticsHost, CanonicalLink, LinkTo}
+@import conf.Configuration
+@import views.support.FBPixel
 
 <!doctype html>
 <html AMP>
