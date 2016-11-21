@@ -46,7 +46,7 @@
 
     <div class="main-body">
 
-      @guardianHostedHeader(if(page.campaign.fontColour.isDark) "hosted-video-page hosted-page--bright" else "hosted-video-page", page)
+      @guardianHostedHeader(if(page.campaign.fontColour.isDark) "hosted-video-page hosted-page--bright" else "hosted-video-page", page, isAMP = true)
       <div class="hosted-page l-side-margins hosted__side hosted-video-page @if(page.campaign.fontColour.isDark) {hosted-page--bright}">
         <section class="hosted-tone--dark">
             <div class="host hosted__container--full">
@@ -79,45 +79,6 @@
                             <div class="hosted__youtube-play-button"></div>
                         </div>
                     }
-                    <div class="hosted-fading js-hosted-fading">
-                        <div class="hosted__video-overlay"></div>
-                        <div class="hosted__meta">
-                            <h1 class="hosted__heading">@{page.video.title}</h1>
-                        </div>
-                        <div class="hostedbadge hostedbadge--shouldscale">
-                            <a href="@page.cta.url" data-link-name="hosted-logo-top-left" target="_blank">
-                                <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
-                            </a>
-                        </div>
-                    </div>
-                    @for(nextPage <- page.nextVideo) {
-                    <div class="hosted-next-autoplay js-hosted-next-autoplay" data-link-name="Next video autoplay">
-                        <div class="hosted-next-autoplay__cancel">
-                            <button class="site-message__close-btn js-autoplay-cancel" data-link-name="Cancel autoplay of the next video">
-                                <span>Hide</span>
-                            </button>
-                        </div>
-                        <div class="hosted-next-autoplay__next-in-series">
-                            <div class="hosted-next-autoplay__subheader">@{page.cta.label}</div>
-                            <a href="@{page.cta.url}" rel="nofollow" class="hosted-next-autoplay__tile hosted-tone-btn" data-link-name="@{page.campaign.name}" target="_blank">
-                                @{if(page.cta.btnText.isDefined) page.cta.btnText else s"Visit ${page.campaign.owner} now"}@fragments.inlineSvg("arrow-right", "icon", List(""))
-                            </a>
-                        </div>
-                        <div class="hosted-next-autoplay__video">
-                            <div class="hosted-next-autoplay__header">
-                                <div class="hosted-next-autoplay__continue hosted-tone">Continue watching</div>
-                                <h2 class="hosted-next-autoplay__subheader">@{nextPage.title}</h2>
-                            </div>
-                            <a href="@{nextPage.url}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.title}">
-                                <img class="hosted-next-autoplay__poster-img" src="@{nextPage.imageUrl}">
-                                <div class="hosted-next-autoplay__poster-timer hosted-tone-btn js-autoplay-timer" data-next-page="@{nextPage.url}">10s</div>
-                            </a>
-                            <a href="@{nextPage.url}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{nextPage.title}" target="_blank">
-                                Watch now
-                            </a>
-                        </div>
-                    </div>
-                    }
                 </div>
             </div>
         </section>
@@ -133,10 +94,7 @@
                 </div>
                 <div class="hosted__standfirst">
                     <p class="hosted__text">@Html(page.standfirst)</p>
-                    <div class="hosted__terms">Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our
-                        <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
-                            <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn js-hosted-about" data-link-name="terms-and-conditions-text-link">commercial content explainer.</button>
-                        </div>
+                    <div class="hosted__terms">Hosted content is used to describe content that is paid for and supplied by the advertiser.
                     </div>
                 </div>
             </div>
@@ -148,7 +106,6 @@
             }
         </section>
         @guardianHostedCta(page, page.cta, isAMP = false)
-        @guardianHostedOnwardOverlay(page)
 
         <amp-font
             layout="nodisplay"
