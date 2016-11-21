@@ -14,12 +14,12 @@ define([
 
     function init() {
         if (commercialFeatures.dfpAdvertising) {
-            return loadAdvertising();
+            return fillAdvertSlots();
         }
         return Promise.resolve();
     }
 
-    function loadAdvertising() {
+    function fillAdvertSlots() {
 
         return new Promise(function(resolve) {
             window.googletag.cmd.push(
