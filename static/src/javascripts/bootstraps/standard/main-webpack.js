@@ -61,6 +61,15 @@ define([
             window.addEventListener = window.attachEvent;
         }
 
+        // Report unhandled promise rejections
+        // https://github.com/cujojs/when/blob/master/docs/debug-api.md#browser-window-events
+        window.addEventListener('unhandledRejection', function (event) {
+            var error = event.detail.reason;
+            if (error && !error.reported) {
+                raven.captureException(error);
+            }
+        });
+
         //
         // Set adtest query if url param declares it.
         //
