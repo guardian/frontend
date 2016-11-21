@@ -23,11 +23,16 @@ class RedirectController(redirects: RedirectService) extends Controller with Log
   }
 
   def redirectPost() = Action { implicit request =>
+    val failMessage = "Request failed, please ensure you have followed the instructions and try again."
 
     val message = redirectForm.bindFromRequest().get.trim match {
-      case PageRedirect(from, "") if from.nonEmpty  => redirects.remove(from)
-      case PageRedirect(from, to) if from.nonEmpty  => redirects.set(PermanentRedirect(from, to))
-      case _ => "Redirect request failed, please enter a value for 'From'"
+      case PageRedirect(from, "") if from.nonEmpty  =>
+        val success = redirects.remove(from)
+        if(success) "Redirect successfully removed" else failMessage
+      case PageRedirect(from, to) if from.nonEmpty  =>
+        val success = redirects.set(PermanentRedirect(from, to))
+        if(success) "Redirect successfully set" else failMessage
+      case _ => failMessage
     }
 
     Ok(views.html.redirects(redirectForm, urlMsgs = List(message)))

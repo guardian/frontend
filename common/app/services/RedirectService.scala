@@ -70,17 +70,17 @@ class RedirectService extends Logging with ExecutionContexts {
     }
   }
 
-  def set(destination: Destination): String =
-    normaliseDestination(destination).map { dest =>
+  def set(destination: Destination): Boolean =
+    normaliseDestination(destination).exists { dest =>
       log.info(s"Setting redirect in: $tableName to: ${dest.source} -> ${dest.location}")
       Scanamo.put(DynamoDB.syncClient)(tableName)(dest)
-      "Redirect successfully set"
-    }.getOrElse("'From' value does not conform to correct format")
+      true
+    }
 
-  def remove(source: String): String =
-    normaliseSource(source).map { src =>
+  def remove(source: String): Boolean =
+    normaliseSource(source).exists { src =>
       log.info(s"Removing redirect in: $tableName to: $src")
       Scanamo.delete(DynamoDB.syncClient)(tableName)('source -> src)
-      "Redirect successfully removed"
-    }.getOrElse("'From' value does not conform to correct format")
+      true
+    }
 }
