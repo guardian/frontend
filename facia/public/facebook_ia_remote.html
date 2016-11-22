@@ -10,6 +10,7 @@
     <script>
         var settings = parseParameters();
         var config = {};
+        var googletag = googletag || { cmd: [] };
 
         function parseParameters() {
             var params = {};
@@ -50,83 +51,71 @@
             };
         }
 
-        function buildSegments() {
+        function buildSegments(slot) {
             var filling, kruxSegments, output, ref;
-            var targeting = "";
             kruxSegments = (ref = localStorage.getItem('kxsegs')) != null ? ref : "";
             if (kruxSegments !== "") {
-                filling = kruxSegments.split(',').join("','");
-                output = "['" + filling + "']";
-                targeting += ".setTargeting('x', " + output + ")";
+                filling = kruxSegments.split(',');
+                slot.setTargeting('x', filling);
             }
-            return targeting;
-        }
-
-        function insertScript(content) {
-            var script = document.createElement("script");
-            script.type = "text/javascript";
-            document.body.appendChild(script);
-            return script.text = content;
         }
 
         function buildTargetSize(sizes) {
-            return "[" +
-                sizes
-                .split(',')
-                .map(function (size) {
-                    return size === "fluid" ? "'fluid'" : "[" + size.replace('x', ',') + "]"
-                })
-                .join(',') +
-            "]";
+            return sizes
+            .split(',')
+            .map(function (size) {
+                return size === 'fluid' ? 'fluid' : size.split('x')
+            });
         }
 
-        function buildCustomTargeting() {
+        function buildCustomTargeting(slot) {
             var attr, i, key, len, match, value;
-            var targeting = "";
             var ref = Object.keys(settings);
             for (i = 0, len = ref.length; i < len; i++) {
                 attr = ref[i];
                 match = attr.match(/^data-ad-target-(.+)$/);
                 if (match != null) {
                     key = match[1];
-                    value = settings[attr].replace(/\s*,\s*/g, "','");
-                    targeting += ".setTargeting('" + key + "',['" + value + "'])";
+                    value = settings[attr].split(',');
+                    slot.setTargeting(key, value);
                 }
             }
-            return targeting;
         }
 
-        function buildAdtestTargeting() {
-            var adtest = settings.at;
-            return adtest ? ".setTargeting('at', '" + adtest + "')" : "";
+        function buildAdtestTargeting(slot) {
+            if (settings.at) {
+                slot.setTargeting('at', settings.at);
+            }
         }
 
         function insertAdConfig() {
             var isFirstAd = true;
             if (isFirstAd) {
-                var pageLevelCodePart1 = "var googletag = googletag || { cmd: [] };";
-                insertScript(pageLevelCodePart1);
-                var pageLevelCodePart2 = "googletag.cmd.push(function() { googletag.pubads().enableAsyncRendering(); googletag.pubads().collapseEmptyDivs(); googletag.enableServices(); });";
-                insertScript(pageLevelCodePart2);
+                googletag.cmd.push(function() {
+                    googletag.pubads().enableAsyncRendering();
+                    googletag.pubads().collapseEmptyDivs();
+                    googletag.enableServices();
+                });
             }
             var size = settings['data-ad-size'];
             var adUnitName = settings['data-ad-unit'];
-            var slotDeclaration = "googletag.cmd.push(function() {" +
-                "googletag.defineSlot('/59666047/" + adUnitName + "', " + (buildTargetSize(size)) + ", 'ad-slot-1')" +
-                (buildCustomTargeting()) +
-                (buildAdtestTargeting()) +
-                (buildSegments()) +
-                ".addService(googletag.pubads());" +
-                " });";
-            return insertScript(slotDeclaration);
+
+            googletag.cmd.push(function() {
+                var slot = googletag.defineSlot('/59666047/' + adUnitName, buildTargetSize(size), 'ad-slot-1');
+                buildCustomTargeting(slot);
+                buildAdtestTargeting(slot);
+                buildSegments(slot);
+                slot.addService(googletag.pubads());
+            });
         }
 
         function insertAd() {
             var slotDiv = document.createElement("div");
             slotDiv.setAttribute('id', 'ad-slot-1');
             document.body.appendChild(slotDiv);
-            var slotCode = "googletag.cmd.push(function() { googletag.display('ad-slot-1'); });";
-            return insertScript(slotCode);
+            googletag.cmd.push(function() {
+                googletag.display('ad-slot-1');
+            });
         }
 
         function init() {
