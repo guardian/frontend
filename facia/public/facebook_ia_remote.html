@@ -38,30 +38,30 @@
         }
 
         function toTitleCase(str) {
-            return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+            return str.replace(/\w\S*/g, function(txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            });
         }
 
         function exposeMetaDataForKrux() {
-            config = {
-                'pageId' : settings.url,
-                'edition' : toTitleCase(settings.edition),
-                'seriesId' : settings.se,
-                'contentType' : toTitleCase(settings.ct),
-                'keywordIds' : settings.keywordIds,
-                'keywords' : settings.k.split(',').map(toTitleCase),
-                'authorIds' : settings.authorIds,
-                'blogIds' : settings.bl,
-                'referrer' : 'facebook-ia',
-                'section' : settings.section
+            window.config = {
+                pageId: settings.url,
+                edition: toTitleCase(settings.edition),
+                seriesId: settings.se,
+                contentType: toTitleCase(settings.ct),
+                keywordIds: settings.keywordIds,
+                keywords: settings.k.split(',').map(toTitleCase),
+                authorIds: settings.authorIds,
+                blogIds: settings.bl,
+                referrer: 'facebook-ia',
+                section: settings.section
             };
         }
 
         function buildSegments(slot) {
-            var filling, kruxSegments, output, ref;
-            kruxSegments = (ref = localStorage.getItem('kxsegs')) != null ? ref : "";
-            if (kruxSegments !== "") {
-                filling = kruxSegments.split(',');
-                slot.setTargeting('x', filling);
+            var kruxSegments = localStorage.getItem('kxsegs');
+            if (kruxSegments !== null) {
+                slot.setTargeting('x', kruxSegments.split(','));
             }
         }
 
