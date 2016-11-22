@@ -97,7 +97,7 @@ define([
     }
 
     function setListeners() {
-        ophanTracking.trackPerformance(window.googletag);
+        ophanTracking.setListeners(window.googletag);
 
         var pubads = window.googletag.pubads();
         pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));

@@ -20,7 +20,7 @@ define([
     var primaryBaseline = 'primary';
     var secondaryBaseline = 'secondary';
 
-    function init(googletag) {
+    function setListeners(googletag) {
         googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(reportTrackingData));
     }
 
@@ -118,7 +118,7 @@ define([
     }
 
     return {
-        init : init,
+        setListeners : setListeners,
         moduleCheckpoint : moduleCheckpoint,
         moduleStart: moduleStart,
         moduleEnd: moduleEnd,
