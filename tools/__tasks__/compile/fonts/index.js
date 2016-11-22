@@ -12,6 +12,7 @@ const writeFile = pify(fs.writeFile);
 const {target, src} = require('../../config').paths;
 const mimeTypes = {
 	woff: 'application/x-font-woff',
+	woff2: 'application/x-font-woff',
 	ttf: 'font/opentype',
 	otf: 'font/opentype',
 	eot: 'application/vnd.ms-fontobject'
@@ -24,7 +25,7 @@ const generateCSS = (fontFamily, font) =>
         .then(data => postcss([perfectionist({format: 'compressed'})]).process(`
                 @font-face {
                     font-family: ${fontFamily};
-                    src: url(data:${mimeTypes[font.format]};base64,${data.toString()});
+                    src: url(data:${mimeTypes[path.extname(font.file).substr(1)]};base64,${data.toString()});
                     ${[
                         'font-weight',
                         'font-style',
