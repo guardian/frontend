@@ -10,36 +10,27 @@
 <div id="c" style="position:absolute;top:0;left:0;bottom:0;right:0;">
 
     <script>
-        var scripts = parseParameters();
-
-        var slot = scripts[scripts.length - 1];
-
-        var slotName = "ad-slot-" + scripts.length;
-
-        var config = {} ;
+        var settings = parseParameters();
+        var config = {};
 
         function parseParameters() {
-            var script = document.createElement("script");
-            script.id = "ad-slot-id";
-
+            var params = {};
             var args = window.location.hash.substr(1).split('&');
             var i, argsLength = args.length;
 
             for (i = 0; i < argsLength; ++i) {
                 var arg = args[i].split("=");
-                var argName = arg[0];
+                var argName = decodeURIComponent(arg[0]);
                 var argValue = decodeURIComponent(arg[1]);
 
-                var currValue = script.getAttribute(argName);
-                if (currValue) {
-                    script.setAttribute(argName, currValue + "," + argValue);
+                if (params[argName] !== undefined) {
+                    params[argName] += ',' + argValue;
                 } else {
-                    script.setAttribute(argName, argValue);
+                    params[argName] = argValue;
                 }
             }
-            document.getElementsByTagName("div")[0].appendChild(script);
 
-            return document.querySelectorAll("script[id$='" + script.id + "']");
+            return params;
         }
 
         function toTitleCase(str) {
@@ -48,16 +39,16 @@
 
         function exposeMetaDataForKrux() {
             config = {
-                'pageId' : slot.getAttribute("url"),
-                'edition' : toTitleCase(slot.getAttribute("edition")),
-                'seriesId' : slot.getAttribute("se"),
-                'contentType' : toTitleCase(slot.getAttribute("ct")),
-                'keywordIds' : slot.getAttribute("keywordIds"),
-                'keywords' : slot.getAttribute("k").split(',').map(function (x) { return toTitleCase(x)}),
-                'authorIds' : slot.getAttribute("authorIds"),
-                'blogIds' : slot.getAttribute("bl"),
+                'pageId' : settings.url,
+                'edition' : toTitleCase(settings.edition),
+                'seriesId' : settings.se,
+                'contentType' : toTitleCase(settings.ct),
+                'keywordIds' : settings.keywordIds,
+                'keywords' : settings.k.split(',').map(toTitleCase),
+                'authorIds' : settings.authorIds,
+                'blogIds' : settings.bl,
                 'referrer' : 'facebook-ia',
-                'section' : slot.getAttribute("section")
+                'section' : settings.section
             };
         }
 
@@ -94,8 +85,8 @@
 
         function insertScript(content) {
             var script = document.createElement("script");
-            slot.parentElement.appendChild(script);
             script.type = "text/javascript";
+            document.body.appendChild(script);
             return script.text = content;
         }
 
@@ -113,13 +104,13 @@
         function buildCustomTargeting() {
             var attr, i, key, len, match, value;
             var targeting = "";
-            var ref = slot.attributes;
+            var ref = Object.keys(settings);
             for (i = 0, len = ref.length; i < len; i++) {
                 attr = ref[i];
-                match = attr.name.match(/^data-ad-target-(.+)$/);
+                match = attr.match(/^data-ad-target-(.+)$/);
                 if (match != null) {
                     key = match[1];
-                    value = attr.value.replace(/\s*,\s*/g, "','");
+                    value = settings[attr].replace(/\s*,\s*/g, "','");
                     targeting += ".setTargeting('" + key + "',['" + value + "'])";
                 }
             }
@@ -127,22 +118,22 @@
         }
 
         function buildAdtestTargeting() {
-            var adtest = slot.getAttribute('at');
+            var adtest = settings.at;
             return adtest ? ".setTargeting('at', '" + adtest + "')" : "";
         }
 
         function insertAdConfig() {
-            var isFirstAd = scripts.length === 1;
+            var isFirstAd = true;
             if (isFirstAd) {
                 var pageLevelCodePart1 = "var googletag = googletag || {}; googletag.cmd = googletag.cmd || []; (function() { var gads = document.createElement(\"script\"); gads.async = true; gads.type = \"text/javascript\"; var useSSL = \"https:\" == document.location.protocol; gads.src = (useSSL ? \"https:\" : \"http:\") + \"//www.googletagservices.com/tag/js/gpt.js\"; var node = document.getElementsByTagName(\"script\")[0]; node.parentNode.insertBefore(gads, node); })();";
                 insertScript(pageLevelCodePart1);
                 var pageLevelCodePart2 = "googletag.cmd.push(function() { googletag.pubads().enableAsyncRendering(); googletag.pubads().collapseEmptyDivs(); googletag.enableServices(); });";
                 insertScript(pageLevelCodePart2);
             }
-            var size = slot.getAttribute("data-ad-size");
-            var adUnitName = slot.getAttribute("data-ad-unit");
+            var size = settings['data-ad-size'];
+            var adUnitName = settings['data-ad-unit'];
             var slotDeclaration = "googletag.cmd.push(function() {" +
-                "googletag.defineSlot('/59666047/" + adUnitName + "', " + (buildTargetSize(size)) + ", '" + slotName + "')" +
+                "googletag.defineSlot('/59666047/" + adUnitName + "', " + (buildTargetSize(size)) + ", 'ad-slot-1')" +
                 (buildCustomTargeting()) +
                 (buildAdtestTargeting()) +
                 (buildSegments()) +
@@ -153,9 +144,9 @@
 
         function insertAd() {
             var slotDiv = document.createElement("div");
-            slotDiv.setAttribute("id", slotName);
-            slot.parentElement.appendChild(slotDiv);
-            var slotCode = "googletag.cmd.push(function() { googletag.display('" + slotName + "'); });";
+            slotDiv.setAttribute('id', 'ad-slot-1');
+            document.body.appendChild(slotDiv);
+            var slotCode = "googletag.cmd.push(function() { googletag.display('ad-slot-1'); });";
             return insertScript(slotCode);
         }
 
