@@ -132,6 +132,26 @@ define([
         });
     }
 
+    // moduleStart() and moduleEnd() can be used for measuring modules ad-hoc,
+    // when they don't align to a baseline.
+    function moduleStart(moduleName) {
+        var timerStart = userTiming.getCurrentTime();
+        performanceLog.modules.push({
+            name: moduleName,
+            start: timerStart
+        });
+    }
+
+    function moduleEnd(moduleName) {
+        var timerEnd = userTiming.getCurrentTime();
+        var module = performanceLog.modules.find(function(module){
+            return module.name === moduleName
+        });
+        if (module) {
+            module.duration = timerEnd - module.start;
+        }
+    }
+
     // updateAdvertMetric() is called whenever the advert timings need to be updated.
     // It may be called multiple times for the same advert, so that we effectively update
     // the object with additional timings.
@@ -195,6 +215,8 @@ define([
     return {
         trackPerformance : trackPerformance,
         moduleCheckpoint : moduleCheckpoint,
+        moduleStart: moduleStart,
+        moduleEnd: moduleEnd,
         updateAdvertMetric : updateAdvertMetric,
         addStartTimeBaseline : addStartTimeBaseline,
         addEndTimeBaseline : addEndTimeBaseline,
