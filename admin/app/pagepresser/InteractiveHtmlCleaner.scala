@@ -60,10 +60,9 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
       val source = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("resources/r2/interactiveSwfScript.js"), "UTF-8").getLines().mkString
       Some(source)
     } catch {
-      case ex: Exception => {
+      case ex: Exception =>
         log.error(ex.getMessage)
         None
-      }
     }
     swfScriptOpt.foreach { script =>
       val html = "<script type=\"text/javascript\">" + script + "</script>"

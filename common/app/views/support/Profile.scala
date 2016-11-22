@@ -201,7 +201,7 @@ object ImgSrc extends Logging with implicits.Strings {
   }
 
   def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybePath: Option[String] = None, maybeImageMedia: Option[ImageMedia] = None, hidpi: Boolean = false) = {
-    val isPng = maybePath.map(path => path.toLowerCase.endsWith("png")).getOrElse(false)
+    val isPng = maybePath.exists(path => path.toLowerCase.endsWith("png"))
     breakpointWidth.toPixels(breakpointWidths)
       .map(browserWidth => Profile(width = Some(browserWidth), hidpi = hidpi, isPng = isPng))
       .map { profile => {

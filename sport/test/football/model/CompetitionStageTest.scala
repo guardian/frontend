@@ -84,7 +84,7 @@ import test.{WithTestFootballClient, WithTestWsClient, FootballTestData}
     "for groups" - {
       "adds leagueTableEntries for groups to group stage" in {
         val stages = competitionStage.stagesFromCompetition(groupStage)
-        stages(0).asInstanceOf[Groups].groupTables.map(_._2).flatten.toSet should equal (groupStage.leagueTable.toSet)
+        stages(0).asInstanceOf[Groups].groupTables.flatMap(_._2).toSet should equal (groupStage.leagueTable.toSet)
       }
 
       "if there are multiple stages" - {
@@ -93,8 +93,8 @@ import test.{WithTestFootballClient, WithTestWsClient, FootballTestData}
           matches = currentGroupMatches ++ futureGroupMatches(Stage("2"))
         )
         val stages = competitionStage.stagesFromCompetition(comp)
-        val leagueTableEntries0 = stages(0).asInstanceOf[Groups].groupTables.map(_._2).flatten.toSet
-        val leagueTableEntries1 = stages(1).asInstanceOf[Groups].groupTables.map(_._2).flatten.toSet
+        val leagueTableEntries0 = stages(0).asInstanceOf[Groups].groupTables.flatMap(_._2).toSet
+        val leagueTableEntries1 = stages(1).asInstanceOf[Groups].groupTables.flatMap(_._2).toSet
 
         "adds correct leagueTableEntries to each group stage if there are multiple stages" in {
           leagueTableEntries0 should equal (comp.leagueTable.filter(_.stageNumber == "1").toSet)

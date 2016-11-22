@@ -54,7 +54,7 @@ object EmailHelpers {
   }
 
   def img(src: String, alt: Option[String] = None) = Html {
-    s"""<img width="580" class="full-width" src="${src}" ${alt.map(alt => s"""alt="$alt"""").getOrElse("")}>"""
+    s"""<img width="580" class="full-width" src="$src" ${alt.map(alt => s"""alt="$alt"""").getOrElse("")}>"""
   }
 
   object Images {

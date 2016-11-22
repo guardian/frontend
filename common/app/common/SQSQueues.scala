@@ -62,7 +62,7 @@ class MessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)(implicit e
 
   protected def receiveMessages(receiveRequest: ReceiveMessageRequest) = {
     client.receiveMessageFuture(receiveRequest.withQueueUrl(queueUrl)) map { response =>
-      response.getMessages.asScala.toSeq
+      response.getMessages.asScala
     }
   }
 

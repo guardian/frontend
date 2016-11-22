@@ -40,7 +40,7 @@ class AtomCleanerTest extends FlatSpec with Matchers with FakeRequests {
   "AtomsCleaner" should "create YouTube template" in {
     Switches.UseAtomsSwitch.switchOn()
     val result: Document = clean(doc, youTubeAtom, amp = false)
-    result.select("iframe").attr("id") shouldBe("youtube-nQuN9CUsdVg")
+    result.select("iframe").attr("id") shouldBe "youtube-nQuN9CUsdVg"
     result.select("iframe").attr("src") should include("enablejsapi=1")
   }
 

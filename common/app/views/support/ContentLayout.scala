@@ -8,11 +8,10 @@ object ContentLayout {
     def showBottomSocialButtons: Boolean = {
       content match {
         case l: Article if l.isLiveBlog => true
-        case a: Article => {
+        case a: Article =>
           val bodyLength = Jsoup.parseBodyFragment(a.content.fields.body).select("> *").text().length
           val mainMediaOffset = if(a.elements.hasMainPicture || a.elements.hasMainVideo || a.hasVideoAtTop) 700 else 0
           bodyLength + mainMediaOffset > 1200
-        }
         case i: ImageContent => false
         case a: Audio => false
         case v: Video => false

@@ -44,11 +44,10 @@ class OptaFeed(wsClient: WSClient) extends ExecutionContexts with Logging {
         .map { response =>
         response.status match {
           case 200 => response.body
-          case _ => {
+          case _ =>
             val error = s"Opta endpointOpt returned: ${response.status}, $endpoint"
             log.warn(error)
             throw RugbyOptaFeedException(error)
-          }
         }
       }
     }.getOrElse(Future.failed(RugbyOptaFeedException("No endpoint for rugby found")))
