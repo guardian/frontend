@@ -9,8 +9,6 @@ import play.api.data.Forms._
 import services.RedirectService.PermanentRedirect
 import services.RedirectService
 
-import scala.util.Success
-
 
 case class PageRedirect(from: String, to: String) {
   lazy val trim = this.copy(from = from.trim, to = to.trim)
@@ -29,15 +27,11 @@ class RedirectController(redirects: RedirectService) extends Controller with Log
 
     val message = redirectForm.bindFromRequest().get.trim match {
       case PageRedirect(from, "") if from.nonEmpty  =>
-        redirects.remove(from) match {
-          case Success(_) => "Redirect successfully removed"
-          case _ => failMessage
-        }
+        val success = redirects.remove(from)
+        if(success) "Redirect successfully removed" else failMessage
       case PageRedirect(from, to) if from.nonEmpty  =>
-        redirects.set(PermanentRedirect(from, to)) match {
-          case Success(_) => "Redirect successfully set"
-          case _ => failMessage
-        }
+        val success = redirects.set(PermanentRedirect(from, to))
+        if(success) "Redirect successfully set" else failMessage
       case _ => failMessage
     }
 
