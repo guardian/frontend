@@ -145,7 +145,7 @@ define([
     function moduleEnd(moduleName) {
         var timerEnd = userTiming.getCurrentTime();
         var module = performanceLog.modules.find(function(module){
-            return module.name === moduleName
+            return module.name === moduleName;
         });
         if (module) {
             module.duration = timerEnd - module.start;
