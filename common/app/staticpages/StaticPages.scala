@@ -26,7 +26,6 @@ object StaticPages {
       id = id,
       section = Option(SectionSummary(id="newsletter-signup-page", activeBrandings=None)),
       webTitle = "Sign up for Guardian emails",
-      analyticsName = "newsletter-signup-page",
       contentType = "Signup",
       iosType = None,
       shouldGoogleIndex = false))

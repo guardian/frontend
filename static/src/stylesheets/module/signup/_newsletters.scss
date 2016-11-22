@@ -116,8 +116,8 @@
 
     .newsletter-card__text-input {
         @include fs-textSans(2);
-        -webkit-border-radius: 62.5rem 0 0 62.5rem;
-        border-radius: 62.5rem 0 0 62.5rem;
+        -webkit-border-radius: 1000px 0 0 1000px;
+        border-radius: 1000px 0 0 1000px;
         border: 1px solid $neutral-3;
         border-right: 0;
         float: left;
@@ -131,8 +131,8 @@
         color: #ffffff;
         border: 1px solid $news-main-1;
         background-color: $news-main-1;
-        -webkit-border-radius: 62.5rem;
-        border-radius: 62.5rem;
+        -webkit-border-radius: 1000px;
+        border-radius: 1000px;
         border-width: 1px;
         height: 3em;
         width: 48%;
@@ -147,8 +147,8 @@
     }
 
     .newsletter-card__lozenge--submit {
-        -webkit-border-radius: 0 62.5rem 62.5rem 0;
-        border-radius: 0 62.5rem 62.5rem 0;
+        -webkit-border-radius: 0 1000px 1000px 0;
+        border-radius: 0 1000px 1000px 0;
         border-left: 0;
         margin-right: 0;
         width: 40%;
@@ -210,8 +210,8 @@
 
     .inline-icon {
         background-color: $neutral-3;
-        -webkit-border-radius: 62.5rem;
-        border-radius: 62.5rem;
+        -webkit-border-radius: 1000px;
+        border-radius: 1000px;
         fill: $neutral-1;
         height: $gs-baseline * 3;
         left: 0;
@@ -392,15 +392,18 @@
 
 //  TONE SPECIFIC MODS - BREXIT
 .newsletter-card--tone-brexit {
-    border-top-color: #FF0;
+    $brexit-main-1: #00C0F2;
+    $brexit-main-2: #FF0;
+
+    border-top-color: $brexit-main-2;
 
     .newsletter-card__imagewrapper {
-        background-color: #00C0F2;
+        background-color: $brexit-main-1;
     }
 
     .newsletter-image {
         circle {
-            fill: #FF0;
+            fill: $brexit-main-2;
         }
 
         path {
@@ -410,29 +413,29 @@
 
     .newsletter-card__signup {
         .newsletter-card__lozenge {
-            border-color: #00C0F2;
-            background-color: #00C0F2;
+            border-color: $brexit-main-1;
+            background-color: $brexit-main-1;
 
             &:hover,
             &:focus {
-                border-color: darken(#00C0F2, 10%);
-                background-color: darken(#00C0F2, 10%);
+                border-color: darken($brexit-main-1, 10%);
+                background-color: darken($brexit-main-1, 10%);
             }
         }
     }
 
     .newsletter-card__lozenge--preview {
-        border-color: #00C0F2;
-        color: #00C0F2;
+        border-color: $brexit-main-1;
+        color: $brexit-main-1;
 
         &:hover,
         &:focus,
         &:active {
-            border-color: #00C0F2;
+            border-color: $brexit-main-1;
         }
 
         .inline-arrow-right {
-            fill: #00C0F2;
+            fill: $brexit-main-1;
         }
     }
 }
