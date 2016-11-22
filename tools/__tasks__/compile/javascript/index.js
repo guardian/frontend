@@ -6,6 +6,7 @@ module.exports = {
         require('./copy'),
         require('./bundle'),
         require('./bundle-app'),
+        require('./rename-boot-sourcemap'),
         require('./bundle-shims')
     ]
 };

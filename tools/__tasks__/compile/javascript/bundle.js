@@ -12,7 +12,8 @@ const bundles = [{
     exclude: [
         'text',
         'inlineSvg'
-    ]
+    ],
+    generateSourceMaps: true
 }, {
     name: 'bootstraps/commercial',
     out: target + '/javascripts/bootstraps/commercial.js',
