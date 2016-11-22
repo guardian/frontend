@@ -46,8 +46,8 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'People will visit more often';
 
-        var endpoint = "http://engine.mobile-aws.guardianapis.com/recommendations";
-        var cachedRecommendationsKey = "gu.cachedRecommendations";
+        var endpoint = 'http://engine.mobile-aws.guardianapis.com/recommendations';
+        var cachedRecommendationsKey = 'gu.cachedRecommendations';
         var numberOfRecommendations = 4;
 
         var $opinionSection;
@@ -85,7 +85,7 @@ define([
         function getRemoteRecommendations() {
             var reqBody = {
                 'pageSize': numberOfRecommendations,
-                'articles': history.test.getHistory().map(function(item) { return item[0] })
+                'articles': history.test.getHistory().map(item => item[0])
             };
 
             var request = fetch(endpoint, {
@@ -109,12 +109,12 @@ define([
                     'expiry': expiry,
                     'items': items
                 }
-            )
+            );
         }
 
         function imageUrlFromItem(item) {
             function imageFromTemplate(img) {
-                return img.replace('#{width}', 220).replace('#{height}', 146).replace('#{quality}', 0.8)
+                return img.replace('#{width}', 220).replace('#{height}', 146).replace('#{quality}', 0.8);
             }
             if (item.headerImage) {
                 return imageFromTemplate(item.headerImage.urlTemplate);
@@ -150,7 +150,6 @@ define([
             return fastdom.write(function() {
                 $recommendedForYouSection.insertBefore($opinionSection);
                 setupComponentAttentionTracking('recommended-for-you_user-history');
-                bindButtonEvents();
                 mediator.emit('recommended-for-you:insert');
             });
         }
