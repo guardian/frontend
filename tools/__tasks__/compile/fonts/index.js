@@ -53,7 +53,7 @@ module.exports = {
 
                 return Promise.all(typeFaces.map(typeFace => {
                     const generateCSSwithFontFamily = generateCSS.bind(null, typeFace['font-family']);
-                    const dest = path.resolve(target, 'fonts', `${typeFace.dest}.json`);
+                    const dest = path.resolve(target, 'fonts', `${typeFace.dest}`);
 
                     // the way this actually works, with the `guFont` callback, feels like
                     // an anachronism. should be looked at when fonts are revisited...
