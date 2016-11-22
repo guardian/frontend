@@ -2,12 +2,14 @@ define([
     'bean',
     'fastdom',
     'common/utils/$',
+    'common/utils/fetch',
     'common/utils/config',
     'common/modules/identity/api'
 ], function (
     bean,
     fastdom,
     $,
+    fetch,
     config,
     Id
 ) {
@@ -37,7 +39,8 @@ define([
           $('.' + classes.signupButton, $form).addClass(classes.styleSignup);
           $('.' + classes.previewButton, $meta).addClass('is-hidden');
           buttonEl.setAttribute('type', 'submit');
-          bean.on(buttonEl, 'click', function () {
+          bean.on(buttonEl, 'click', function (event) {
+              event.preventDefault();
               subscribeToEmail(buttonEl);
           });
       });
@@ -66,13 +69,31 @@ define([
       });
     }
 
-    function subscribeToEmail(buttonEl) {
-        bean.on(buttonEl, 'click', function () {
-          var $form = buttonEl.form;
-          if (validate($form)) {
-            addSubscriptionMessage(buttonEl);
-          }
+    function submitForm(form, buttonEl) {
+        var formQueryString =
+            'email=' + form.email.value + '&' +
+            'listId=' + form.listId.value;
+        return fetch(
+            config.page.ajaxUrl + '/email',
+            {
+                method: 'post',
+                body: formQueryString,
+                headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(function (response) {
+            if (response.ok) {
+                addSubscriptionMessage(buttonEl);
+            }
         });
+    }
+
+    function subscribeToEmail(buttonEl) {
+        var $form = buttonEl.form;
+        if (validate($form)) {
+            submitForm($form, buttonEl);
+        }
     }
 
     function showSecondStageSignup(buttonEl) {
