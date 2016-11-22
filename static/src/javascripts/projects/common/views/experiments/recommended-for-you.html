@@ -14,9 +14,9 @@
                         <div class="fc-item fc-item--has-image fc-item--has-sublinks-1 js-fc-item tone-news--item fc-item--list-media-mobile fc-item--standard-tablet fc-item--rfy fc-item--rfy-feedback js-snappable">
                             <div class="fc-item__container">
                                 <div class="js-feedback fc-item__content">
-                                    <p><%= description %></p>
-                                    <button class="js-feedback-button js-feedback-button-yes button button--tertiary button--large button--get-started" data-link-name="<%= variant %>-get-started"><%= yesCta %></button>
-                                    <button class="js-feedback-button js-feedback-button-no button button--tertiary button--large button--no-thanks" data-link-name="<%= variant %>-no-thanks">No thanks</button>
+                                    <p>We can recommend you a set of unique stories based on your reading history</p>
+                                    <button class="js-feedback-button js-feedback-button-yes button button--tertiary button--large button--get-started" data-link-name="user-history-get-started">Turn on</button>
+                                    <button class="js-feedback-button js-feedback-button-no button button--tertiary button--large button--no-thanks" data-link-name="user-history-no-thanks">No thanks</button>
                                 </div>
                             </div>
                         </div>
@@ -26,31 +26,18 @@
                     <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
                         <div class="fc-item fc-item--has-image fc-item--has-sublinks-1 js-fc-item tone-news--item fc-item--list-media-mobile fc-item--standard-tablet fc-item--rfy js-snappable">
                             <div class="fc-item__container">
-                                <div class="fc-item__media-wrapper"><%= item.image %></div>
+                                <div class="fc-item__media-wrapper"><% if (item.imageUrl) { %><img src="<%= item.imageUrl %>" /><% } else { %><%= guardianLogo %><% } %></div>
                                 <div class="fc-item__content">
                                     <div class="fc-item__header">
-                                        <h2 class="fc-item__title"><a href="/<%= item.item.id %>" class="fc-item__link" data-link-name="article">
-                                            <span class="u-faux-block-link__cta fc-item__headline"><span class="js-headline-text"><%= item.item.title %></span></span></a></h2>
+                                        <h2 class="fc-item__title"><a href="/<%= item.id %>" class="fc-item__link" data-link-name="article">
+                                            <span class="u-faux-block-link__cta fc-item__headline"><span class="js-headline-text"><%= item.title %></span></span></a></h2>
                                     </div>
-                                    <div class="fc-item__standfirst"><%= item.item.standFirst %></div>
+                                    <div class="fc-item__standfirst"><%= item.standFirst %></div>
                                 </div>
                             </div>
                         </div>
                     </li>
                     <% }) %>
-
-                    <!--<li class="fc-slice__item l-row__item l-row__item&#45;&#45;span-1 u-faux-block-link hide-until-tablet">-->
-                        <!--<div class="fc-item fc-item&#45;&#45;has-image fc-item&#45;&#45;has-sublinks-1 js-fc-item tone-news&#45;&#45;item fc-item&#45;&#45;list-media-mobile fc-item&#45;&#45;standard-tablet fc-item&#45;&#45;rfy fc-item&#45;&#45;rfy-feedback js-snappable">-->
-                            <!--<div class="fc-item__container">-->
-                                <!--<div class="js-feedback fc-item__content">-->
-                                    <!--<h2>recommended <span class="rfy-light-blue">for&nbsp;you</span></h2>-->
-                                    <!--<p><%= description %></p>-->
-                                    <!--<button class="js-feedback-button js-feedback-button-yes button button&#45;&#45;tertiary button&#45;&#45;large button&#45;&#45;get-started" data-link-name="<%= variant %>-get-started"><%= yesCta %></button>-->
-                                    <!--<button class="js-feedback-button js-feedback-button-no button button&#45;&#45;tertiary button&#45;&#45;large button&#45;&#45;no-thanks" data-link-name="<%= variant %>-no-thanks">No thanks</button>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</li>-->
                 </ul>
             </div>
         </div>
