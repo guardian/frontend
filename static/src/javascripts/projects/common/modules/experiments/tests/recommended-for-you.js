@@ -39,7 +39,7 @@ define([
         this.expiry = '2016-12-23';
         this.author = 'Joseph Smith';
         this.description = 'Add a personalised container to fronts';
-        this.audience = 1;
+        this.audience = 0;
         this.audienceOffset = 0;
         this.successMeasure = 'Visit frequency';
         this.audienceCriteria = 'All users';
