@@ -21,11 +21,11 @@ const mimeTypes = {
 const typeFaces = require('./index.config');
 
 const generateCSS = (fontFamily, font) =>
-    readFile(path.resolve(src, 'fonts', `${font.file}`), 'base64')
+    readFile(path.resolve(src, 'fonts', `${font.src}`), 'base64')
         .then(data => postcss([perfectionist({format: 'compressed'})]).process(`
                 @font-face {
                     font-family: ${fontFamily};
-                    src: url(data:${mimeTypes[path.extname(font.file).substr(1)]};base64,${data.toString()});
+                    src: url(data:${mimeTypes[path.extname(font.src).substr(1)]};base64,${data.toString()});
                     ${[
                         'font-weight',
                         'font-style',
@@ -54,7 +54,7 @@ module.exports = {
                        .then(fontsCSS => fontsCSS.join(''))
                        .then(CSS =>
                            writeFile(
-                               path.resolve(target, 'fonts', `${typeFace.filename}.json`),
+                               path.resolve(target, 'fonts', `${typeFace.dest}.json`),
                                `guFont(${JSON.stringify({css: CSS})});\n`)
                        )
                ));
