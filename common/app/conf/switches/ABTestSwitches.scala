@@ -37,16 +37,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-thank-you",
-    "Show a thank you message to our supporters at the end of artciles, just saying thanks!",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 22),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-platform-sticky-ad-viewability",
     "Test the affect of showing the navigation on the viewability of the sticky top ad",
     owners = Seq(Owner.withGithub("gtrufitt"), Owner.withName("Gareth Trufitt")),
@@ -54,7 +44,4 @@ trait ABTestSwitches {
     sellByDate =  new LocalDate(2016, 11, 24),
     exposeClientSide = true
   )
-
-
-
 }
