@@ -85,7 +85,7 @@ define([
         function getRemoteRecommendations() {
             var reqBody = {
                 'pageSize': numberOfRecommendations,
-                'articles': history.test.getHistory().map(item => item[0])
+                'articles': history.test.getHistory().map(function (item) { return item[0]; })
             };
 
             var request = fetch(endpoint, {
@@ -96,9 +96,9 @@ define([
                 headers: { 'Content-Type': 'application/json' }
             });
 
-            return request.then(response =>
-                response.json().then(body => body.content.slice(0, numberOfRecommendations).map(itemFromRecommendationItem))
-            );
+            return request.then(function (response) {
+                return response.json().then(function (body) { return body.content.slice(0, numberOfRecommendations).map(itemFromRecommendationItem); });
+            });
         }
 
         function cacheRecommendations(items) {
