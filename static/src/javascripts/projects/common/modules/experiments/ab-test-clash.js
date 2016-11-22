@@ -7,18 +7,13 @@ define([
 ) {
 
 
-    var contributionsEpicThankyou = {
-        name: 'ContributionsEpicThankYou',
-        variants: ['control']
-    };
-
     var ContributionsEpicUsaCtaThreeWay = {
         name: 'ContributionsEpicUsaCtaThreeWay',
         variants: ['mixed', 'just-contribute', 'just-supporter']
     };
 
     function userIsInAClashingAbTest() {
-        var clashingTests = [contributionsEpicThankyou, ContributionsEpicUsaCtaThreeWay];
+        var clashingTests = [ContributionsEpicUsaCtaThreeWay];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 
