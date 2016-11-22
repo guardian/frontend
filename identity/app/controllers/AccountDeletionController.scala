@@ -45,7 +45,7 @@ class AccountDeletionController(
 
       selectDeletionType.map { _ match {
           case AutoDeletion => Ok(views.html.accountDeletion(page, idRequest, idUrlBuilder, form, Nil))
-          case e:ManualDeletion => Forbidden(s"Cannot Delete because $e")
+          case e:ManualDeletion => Ok(views.html.accountDeletionManual(page, idRequest, idUrlBuilder))
         }
       }
     }
