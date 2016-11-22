@@ -72,7 +72,7 @@ define([
                 'common/modules/commercial/dfp/get-adverts',
                 'common/modules/commercial/dfp/get-creative-ids',
                 'common/utils/config',
-                'commercial/modules/dfp/ophan-tracking',
+                'commercial/modules/dfp/performance-logging',
                 'common/modules/commercial/commercial-features',
                 'common/utils/detect',
                 'commercial/modules/close-disabled-slots',
@@ -85,7 +85,7 @@ define([
                     getCreativeIDs: arguments[3]
                 };
                 config = arguments[4];
-                var ophanTracking = arguments[5];
+                var performanceLogging = arguments[5];
                 commercialFeatures = arguments[6];
                 detect = arguments[7];
                 closeDisabledSlots = arguments[8];
@@ -157,7 +157,7 @@ define([
                     enableServices: sinon.spy(),
                     display: sinon.spy()
                 };
-                ophanTracking.trackPerformance = function () {
+                performanceLogging.setListeners = function () {
                     // noop
                 };
 

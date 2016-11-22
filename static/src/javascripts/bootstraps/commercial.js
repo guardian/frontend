@@ -25,7 +25,7 @@ define([
     'commercial/modules/third-party-tags',
     'commercial/modules/paidfor-band',
     'commercial/modules/paid-containers',
-    'commercial/modules/dfp/ophan-tracking'
+    'commercial/modules/dfp/performance-logging'
 ], function (
     Promise,
     config,
@@ -53,7 +53,7 @@ define([
     thirdPartyTags,
     paidforBand,
     paidContainers,
-    ophanTracking
+    performanceLogging
 ) {
     var primaryModules = [
         ['cm-thirdPartyTags', thirdPartyTags.init],
@@ -100,7 +100,7 @@ define([
 
     function loadModules(modules, baseline) {
 
-        ophanTracking.addStartTimeBaseline(baseline);
+        performanceLogging.addStartTimeBaseline(baseline);
 
         var modulePromises = [];
 
@@ -113,7 +113,7 @@ define([
             robust.catchErrorsAndLog(moduleName, function () {
                 var modulePromise = moduleInit(moduleName).then(function(){
                     if (!hasCustomTiming) {
-                        ophanTracking.moduleCheckpoint(moduleName, baseline);
+                        performanceLogging.moduleCheckpoint(moduleName, baseline);
                     }
                 });
 
@@ -123,7 +123,7 @@ define([
 
        return Promise.all(modulePromises)
            .then(function(moduleLoadResult){
-               ophanTracking.addEndTimeBaseline(baseline);
+               performanceLogging.addEndTimeBaseline(baseline);
                return moduleLoadResult;
            });
     }
@@ -139,8 +139,8 @@ define([
             // Stub the command queue
             window.googletag = { cmd: [] };
 
-            loadModules(primaryModules, ophanTracking.primaryBaseline).then(function(){
-                loadModules(secondaryModules, ophanTracking.secondaryBaseline);
+            loadModules(primaryModules, performanceLogging.primaryBaseline).then(function(){
+                loadModules(secondaryModules, performanceLogging.secondaryBaseline);
             });
         }
     };

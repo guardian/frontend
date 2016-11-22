@@ -12,7 +12,7 @@ define([
     'commercial/modules/dfp/on-slot-load',
     'commercial/modules/dfp/PrebidService',
     'commercial/modules/dfp/prepare-sonobi-tag',
-    'commercial/modules/dfp/ophan-tracking',
+    'commercial/modules/dfp/performance-logging',
 
     // These are cross-frame protocol messaging routines:
     'commercial/modules/messenger/get-stylesheet',
@@ -35,7 +35,7 @@ define([
     onSlotLoad,
     PrebidService,
     prepareSonobiTag,
-    ophanTracking
+    performanceLogging
 ) {
     return {
         init: init,
@@ -49,27 +49,27 @@ define([
         }
 
         function moduleCompleted() {
-            ophanTracking.moduleEnd(moduleName);
+            performanceLogging.moduleEnd(moduleName);
         }
 
         function setupAdvertising() {
             // Use Custom Timing to time the googletag code without the sonobi pre-loading.
-            ophanTracking.moduleStart(moduleName);
+            performanceLogging.moduleStart(moduleName);
 
             return new Promise(function(resolve) {
 
                 if (dfpEnv.sonobiEnabled) {
                     // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
                     require(['js!googletag.js']);
-                    ophanTracking.addTag('sonobi');
+                    performanceLogging.addTag('sonobi');
                 } else {
                     require(['js!googletag.js']);
 
                     if (dfpEnv.prebidEnabled) {
                         dfpEnv.prebidService = new PrebidService();
-                        ophanTracking.addTag('prebid');
+                        performanceLogging.addTag('prebid');
                     } else {
-                        ophanTracking.addTag('waterfall');
+                        performanceLogging.addTag('waterfall');
                     }
                 }
 
@@ -97,7 +97,7 @@ define([
     }
 
     function setListeners() {
-        ophanTracking.setListeners(window.googletag);
+        performanceLogging.setListeners(window.googletag);
 
         var pubads = window.googletag.pubads();
         pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
