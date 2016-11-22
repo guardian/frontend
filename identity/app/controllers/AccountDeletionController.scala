@@ -35,6 +35,7 @@ class AccountDeletionController(
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
     import authenticatedActions._
+    import views.html.fragments.profile.deletion._
 
     val page = IdentityPage("/delete", "Delete Account", "delete")
 
@@ -45,8 +46,8 @@ class AccountDeletionController(
         val form = accountDeletionForm.bindFromFlash.getOrElse(accountDeletionForm)
 
         selectDeletionType.map { _ match {
-            case AutoDeletion => NoCache(Ok(views.html.accountDeletion(page, idRequest, idUrlBuilder, form, Nil)))
-            case e:ManualDeletion => Ok(views.html.accountDeletionManual(page, idRequest, idUrlBuilder))
+            case AutoDeletion => NoCache(Ok(accountDeletion(page, idRequest, idUrlBuilder, form, Nil)))
+            case e:ManualDeletion => Ok(accountDeletionManual(page, idRequest, idUrlBuilder))
           }
         }
       }
@@ -63,7 +64,7 @@ class AccountDeletionController(
     }
 
     def renderAccountDeletionConfirmForm = Action.async { implicit request =>
-      Future(Ok(views.html.accountDeletionConfirm(page, idRequestParser(request), idUrlBuilder)))
+      Future(Ok(accountDeletionConfirm(page, idRequestParser(request), idUrlBuilder)))
     }
 
     private def deleteAccount[A](
@@ -126,16 +127,15 @@ class AccountDeletionController(
     case object AutoDeletion extends DeletionType
     case class ManualDeletion(hasComment: Boolean, hasJob: Boolean, isSubscriber: Boolean, isMember: Boolean) extends DeletionType
 
-    /**
-      * Users can delete account themselves if they
-      *   - have never commented, and
-      *   - do not have a jobs account
-      *   - do not have active digipack subscriptions
-      *   - do not have active membership, and
-      */
+
+    /* Users can delete account themselves if they
+         - have never commented, and
+         - do not have a jobs account, and
+         - do not have active digipack subscriptions, and
+         - do not have active membership */
     private def selectDeletionType[A](implicit request: AuthenticatedActions.AuthRequest[A]): Future[DeletionType] =
       for {
-        hasComment <- discussionApi.myProfile(request.headers).map { _.privateFields.fold(true)(_.hasCommented) } // assume user has commented if cannot read private fields
+        hasComment <- discussionApi.myProfile(request.headers).map { _.privateFields.fold(true)(_.hasCommented) }
         hasJob <- Future.successful(request.user.user.userGroups.find(_.packageCode == "GRS").fold(false)(_ => true))
         isSubscriber <- identityApiClient.userIsSubscriber(request.user.auth)
         isMember <- identityApiClient.userIsMember(request.user.auth)
