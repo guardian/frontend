@@ -477,23 +477,14 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val turnOffSupporterEpic = Switch(
-    SwitchGroup.Membership,
-    "turn-off-supporter-epic",
-    "Turning this on will hide the Become a Supporter button on the epic, leaving just the Contribute button",
-    owners = Seq(Owner.withGithub("jranks123")),
+  //Owner Michael McNamara
+  val AmpInteractivePlaceHolderAttribute = Switch(
+    SwitchGroup.Feature,
+    "amp-interactive-placeholder-attribute",
+    "Adds a placeholder attribute to interactives on amp so that they are allowed to display in the top part of the page",
+    owners = Seq(Owner.withGithub("michaelwmcnamara")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 22),
-    exposeClientSide = true
-  )
-
-  val turnOffContributionsEpic = Switch(
-    SwitchGroup.Membership,
-    "turn-off-contributions-epic",
-    "Turning this on will hide the Make a Contribution button on the epic, leaving just the Become a Supporter button",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 22),
+    sellByDate = new LocalDate(2016, 12, 15),
     exposeClientSide = true
   )
 }

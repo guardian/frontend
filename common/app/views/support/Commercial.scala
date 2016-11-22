@@ -46,19 +46,34 @@ object Commercial {
   def listSponsorLogosOnPage(page: Page)(implicit request: RequestHeader): Option[Seq[String]] = {
 
     val edition = Edition(request)
+    def sponsor(branding: Edition => Option[Branding]) = branding(edition) map (_.sponsorName)
 
-    val pageSponsor: Option[String] = page.branding(edition) map (_.sponsorName)
+    val pageSponsor = sponsor(page.branding)
 
     val allSponsors = page match {
       case front: PressedPage =>
-        val containerSponsors = front.collections.flatMap(_.branding(edition)) map (_.sponsorName)
-        pageSponsor map {
-          _ +: containerSponsors
-        } orElse {
-          if (containerSponsors.isEmpty) None else Some(containerSponsors)
+
+        val containerSponsors = front.collections.flatMap { container =>
+          sponsor(container.branding)
         }
-      case _ =>
-        pageSponsor map (Seq(_))
+
+        val cardSponsors = front.collections.flatMap { container =>
+          val hasBrandedTag = container.config.showBranding
+          lazy val hasNoSponsor = container.branding(edition).isEmpty
+          lazy val hasOnlyPaidContent = container.curatedPlusBackfillDeduplicated.forall {
+            _.branding(edition).exists(_.sponsorshipType == PaidContent)
+          }
+          if (hasBrandedTag && hasNoSponsor && hasOnlyPaidContent) {
+            container.curatedPlusBackfillDeduplicated.flatMap { card =>
+              sponsor(card.branding)
+            }
+          } else Nil
+        }
+
+        val allSponsorsOnPage = pageSponsor.toList ++ containerSponsors ++ cardSponsors
+        if (allSponsorsOnPage.isEmpty) None else Some(allSponsorsOnPage.distinct)
+
+      case _ => pageSponsor map (Seq(_))
     }
 
     allSponsors map (_ map escapeJavaScript)

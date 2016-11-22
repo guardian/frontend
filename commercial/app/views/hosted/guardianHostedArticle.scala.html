@@ -29,7 +29,10 @@
         color: @{page.campaign.fontColour.hexCode};
     }
 
-    .hosted-page ~ .survey-overlay-simple .survey-text__header {
+    .hosted-page ~ .survey-overlay-simple .
+
+
+    survey-text__header {
         background-color: @{page.campaign.fontColour.hexCode};
     }
 
@@ -118,7 +121,7 @@
             </div>
         </article>
 
-        @guardianHostedCta(page, page.cta)
+        @guardianHostedCta(page, page.cta, isAMP = false)
         @guardianHostedOnwardOverlay(page)
     </div>
 }

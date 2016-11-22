@@ -9,10 +9,10 @@ define([
     'lodash/utilities/noop',
     'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/recommended-for-you',
-    'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
-    'common/modules/experiments/tests/contributions-epic-limited-impressions',
-    'common/modules/experiments/tests/contributions-epic-thank-you'
+    'common/modules/experiments/tests/contributions-epic-usa-cta-three-way',
+    'common/modules/experiments/tests/contributions-epic-thank-you',
+    'common/modules/experiments/tests/platform-sticky-ad-viewability'
 ], function (reportError,
              config,
              cookies,
@@ -23,17 +23,18 @@ define([
              noop,
              HostedOnwardJourney,
              RecommendedForYou,
-             WeekendReadingEmail,
              MembershipEngagementInternationalExperiment,
-             ContributionsEpicLimitedImpressions,
-             ContributionsEpicThankYou) {
+             ContributionsEpicUsaCtaThreeWay,
+             ContributionsEpicThankYou,
+             PlatformStickyAdViewability
+    ) {
     var TESTS = [
         new HostedOnwardJourney(),
         new RecommendedForYou(),
-        new WeekendReadingEmail(),
         new MembershipEngagementInternationalExperiment(),
-        new ContributionsEpicLimitedImpressions(),
-        new ContributionsEpicThankYou()
+        new ContributionsEpicUsaCtaThreeWay(),
+        new ContributionsEpicThankYou(),
+        new PlatformStickyAdViewability()
     ];
 
     var participationsKey = 'gu.ab.participations';
