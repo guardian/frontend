@@ -847,9 +847,7 @@
 }
 
 .creative__background-parent {
-    transform: translate3d(0, 0, 0);
-    will-change: transform;
-    contain: strict;
+    contain: size layout style;
     position: absolute;
     top: 0;
     left: 0;

@@ -33,11 +33,11 @@ define([
 
     return function () {
 
-        this.id = 'ContributionsEpicUsaCta';
-        this.start = '2016-11-15';
-        this.expiry = '2016-11-22';
-        this.author = 'Jonathan Rankin';
-        this.description = 'Test just contributions vs contributions or membership in the US';
+        this.id = 'ContributionsEpicUsaCtaThreeWay';
+        this.start = '2016-11-18';
+        this.expiry = '2016-11-25';
+        this.author = 'Phil Wills';
+        this.description = 'Test just contributions vs contributions or membership or just membership in the US';
         this.showForSensitive = false;
         this.audience = 1;
         this.audienceOffset = 0;
@@ -51,14 +51,18 @@ define([
                 'us-news/us-politics'
             ];
 
+            var includedSeriesIds = [
+                'us-news/series/diy-abortion-in-america'
+            ];
+
             var excludedKeywordIds = ['music/leonard-cohen'];
 
             var hasKeywordsMatch = function() {
                 var pageKeywords = config.page.keywordIds;
-                if (typeof(pageKeywords) != 'undefined') {
+                if (typeof(pageKeywords) !== 'undefined') {
                     var keywordList = pageKeywords.split(',');
                     return intersection(excludedKeywordIds, keywordList).length == 0 &&
-                        intersection(includedKeywordIds, keywordList).length > 0;
+                        (intersection(includedKeywordIds, keywordList).length > 0 || includedSeriesIds.indexOf(config.page.seriesId) !== -1);
                 } else {
                     return false;
                 }
@@ -69,8 +73,8 @@ define([
             return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && hasKeywordsMatch();
         };
 
-        var contributeUrlPrefix = 'co_global_epic_usa_cta';
-        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_usa_cta';
+        var contributeUrlPrefix = 'co_global_epic_usa_cta_three_way';
+        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_usa_cta_three_way';
 
 
         var makeUrl = function(urlPrefix, intcmp) {
@@ -83,14 +87,7 @@ define([
         var messages  = {
             control: {
                 title: 'Since you’re here …',
-                p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-                intcmp: '_control'
-            },
-
-            justContribute: {
-                title: 'Since you’re here …',
-                p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-                intcmp: '_justContribute'
+                p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
             }
         };
 
@@ -110,7 +107,7 @@ define([
                 p3: '',
                 cta1: 'Make a contribution',
                 cta2: '',
-                url1:  makeUrl(contributeUrl, contributeUrlPrefix + '_backup'),
+                url1:  makeUrl(contributeUrl, contributeUrlPrefix),
                 url2: '',
                 hidden: 'hidden'
             },
@@ -120,7 +117,7 @@ define([
                 p3: '',
                 cta1: 'Become a Supporter',
                 cta2: '',
-                url1: makeUrl(membershipUrl, membershipUrlPrefix + '_backup'),
+                url1: makeUrl(membershipUrl, membershipUrlPrefix),
                 url2: '',
                 hidden: 'hidden'
             }
@@ -151,26 +148,16 @@ define([
             mediator.on('contributions-embed:view', complete);
         };
 
-        var getCta = function() {
-            if (config.switches.turnOffSupporterEpic) {
-                return cta.justContribute;
-            }
-            if (config.switches.turnOffContributionsEpic) {
-                return cta.justSupporter;
-            }
-            return cta.equal;
-        };
-
         this.variants = [
             {
-                id: 'control',
+                id: 'mixed',
 
                 test: function () {
-                    var ctaType = getCta();
+                    var ctaType = cta.equal;
                     var message = messages.control;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.url1 + message.intcmp,
-                        linkUrl2: ctaType.url2 + message.intcmp,
+                        linkUrl1: ctaType.url1 + '_mixed',
+                        linkUrl2: ctaType.url2 + '_mixed',
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,
@@ -190,14 +177,41 @@ define([
             },
 
             {
-                id: 'justContribute',
+                id: 'just-contribute',
 
                 test: function () {
                     var ctaType = cta.justContribute;
-                    var message = messages.justContribute;
+                    var message = messages.control;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.url1 + message.intcmp,
-                        linkUrl2: ctaType.url2 + message.intcmp,
+                        linkUrl1: ctaType.url1 + '_contribute',
+                        linkUrl2: ctaType.url2 + '_contribute',
+                        title: message.title,
+                        p1: message.p1,
+                        p2:ctaType.p2,
+                        p3: ctaType.p3,
+                        cta1: ctaType.cta1,
+                        cta2: ctaType.cta2,
+                        hidden: ctaType.hidden
+                    }));
+                    componentWriter(component);
+                },
+
+                impression: function(track) {
+                    mediator.on('contributions-embed:insert', track);
+                },
+
+                success: completer
+            },
+
+            {
+                id: 'just-supporter',
+
+                test: function () {
+                    var ctaType = cta.justSupporter;
+                    var message = messages.control;
+                    var component = $.create(template(contributionsEpicEqualButtons, {
+                        linkUrl1: ctaType.url1 + '_supporter',
+                        linkUrl2: ctaType.url2 + '_supporter',
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,

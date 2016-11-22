@@ -106,5 +106,9 @@ validate-sass: install # PRIVATE
 validate-javascript: install # PRIVATE
 	@./tools/run-task lint/javascript
 
+# Lint all assets.
+fix: install
+	@./tools/run-task lint/javascript-fix
+
 validate-amp: install # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
