@@ -16,7 +16,7 @@
     <h1 class="identity-title">Are you sure you want to delete your account?</h1>
 
     <div class="identity-section">
-        Please note that deleting your account will not cancel any of the following you may have:
+        Please note, if you have any of the following, deleting your account will have no effect on them:
         <ul>
             <li><a href="https://www.theguardian.com/subscriber-direct/subscription-frequently-asked-questions">Paper subscription</a></li>
             <li><a href="https://www.theguardian.com/info/2013/aug/12/1">Guardian in-app purchases made through Google, Apple or Amazon app stores</a></li>
@@ -27,6 +27,7 @@
     </div>
 
     <form class="form" novalidate action="@idUrlBuilder.buildUrl("/delete", idRequest)" role="main" method="post">
+        @views.html.helper.CSRF.formField
         <fieldset class="fieldset">
 
             <div class="fieldset__heading">

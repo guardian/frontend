@@ -3,10 +3,10 @@ package services
 import com.softwaremill.macwire._
 import conf.IdentityConfigurationComponents
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
-import discussion.DiscussionApi
 import idapiclient.IdApiComponents
 import model.SaveForLaterDataBuilder
 import play.api.libs.ws.WSClient
+import discussion.DiscussionApi
 
 trait IdentityServices extends IdentityConfigurationComponents with IdApiComponents {
 

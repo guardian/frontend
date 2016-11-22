@@ -6,8 +6,7 @@
 @import views.support.ContentFooterContainersLayout
 
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
-@*    @fragments.discussionFooter(content.content, content.trail.isCommentable, content.trail.isClosedForComments, content.content.shortUrlId) *@
-    @fragments.discussionFooter(content.content, true, false, content.content.shortUrlId)
+    @fragments.discussionFooter(content.content, content.trail.isCommentable, content.trail.isClosedForComments, content.content.shortUrlId)
 
     @ContentFooterContainersLayout(content.content, related, isPaidContent) {
         @fragments.storyPackagePlaceholder(content, related, isPaidContent)

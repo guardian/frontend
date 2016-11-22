@@ -13,6 +13,7 @@ import play.api.data.validation._
 import play.api.data.{Form, Forms}
 import play.api.i18n.MessagesApi
 import play.api.mvc._
+import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services._
 import utils.SafeLogging
 import scala.concurrent.Future
@@ -39,24 +40,26 @@ class AccountDeletionController(
 
     val accountDeletionForm = Form(Forms.single("password" -> Forms.text.verifying(Constraints.nonEmpty)))
 
-    def renderAccountDeletionForm = authActionWithUser.async { implicit request =>
-      val idRequest = idRequestParser(request)
-      val form = accountDeletionForm.bindFromFlash.getOrElse(accountDeletionForm)
+    def renderAccountDeletionForm = CSRFAddToken { authActionWithUser.async { implicit request =>
+        val idRequest = idRequestParser(request)
+        val form = accountDeletionForm.bindFromFlash.getOrElse(accountDeletionForm)
 
-      selectDeletionType.map { _ match {
-          case AutoDeletion => Ok(views.html.accountDeletion(page, idRequest, idUrlBuilder, form, Nil))
-          case e:ManualDeletion => Ok(views.html.accountDeletionManual(page, idRequest, idUrlBuilder))
+        selectDeletionType.map { _ match {
+            case AutoDeletion => NoCache(Ok(views.html.accountDeletion(page, idRequest, idUrlBuilder, form, Nil)))
+            case e:ManualDeletion => Ok(views.html.accountDeletionManual(page, idRequest, idUrlBuilder))
+          }
         }
       }
     }
 
-    def processAccountDeletionForm = authActionWithUser.async { implicit request =>
-      val idRequest = idRequestParser(request)
-      val boundForm = accountDeletionForm.bindFromRequest
+    def processAccountDeletionForm = CSRFCheck { authActionWithUser.async { implicit request =>
+        val idRequest = idRequestParser(request)
+        val boundForm = accountDeletionForm.bindFromRequest
 
-      boundForm.fold(
-        formWithErrors => Future.successful(SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url).flashing(formWithErrors.toFlash)),
-        password => deleteAccount(boundForm, EmailPassword(request.user.user.primaryEmailAddress, password, None), idRequest))
+        boundForm.fold(
+          formWithErrors => Future.successful(SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url).flashing(formWithErrors.toFlash)),
+          password => deleteAccount(boundForm, EmailPassword(request.user.user.primaryEmailAddress, password, None), idRequest))
+      }
     }
 
     def renderAccountDeletionConfirmForm = Action.async { implicit request =>

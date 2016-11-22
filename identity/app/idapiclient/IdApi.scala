@@ -3,14 +3,12 @@ package idapiclient
 import com.gu.identity.model.{EmailList, LiftJsonConfig, SavedArticles, Subscriber, User}
 import client.{Anonymous, Auth, Parameters, Response}
 import client.connection.{Http, HttpResponse}
-
-import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext, Future}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
-import idapiclient.responses.{AccessTokenResponse, CookiesResponse, MemSub}
+import idapiclient.responses.{CookiesResponse, MemSub}
 import client.connection.util.{ApiHelpers, ExecutionContexts}
 import conf.IdentityConfiguration
-import net.liftweb.json.JsonAST.{JNothing, JValue}
+import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Serialization.write
 import net.liftweb.json._
 import utils.SafeLogging
