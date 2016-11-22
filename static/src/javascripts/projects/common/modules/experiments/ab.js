@@ -8,10 +8,8 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/hosted-onward-journey',
-    'common/modules/experiments/tests/weekend-reading-email',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
-    'common/modules/experiments/tests/contributions-epic-fake-news',
-    'common/modules/experiments/tests/contributions-epic-usa-cta-fake-news',
+    'common/modules/experiments/tests/contributions-epic-usa-cta-three-way',
     'common/modules/experiments/tests/contributions-epic-thank-you',
     'common/modules/experiments/tests/platform-sticky-ad-viewability'
 ], function (reportError,
@@ -23,19 +21,15 @@ define([
              memoize,
              noop,
              HostedOnwardJourney,
-             WeekendReadingEmail,
              MembershipEngagementInternationalExperiment,
-             ContributionsEpicFakeNews,
-             ContributionsEpicUsaCtaFakeNews,
+             ContributionsEpicUsaCtaThreeWay,
              ContributionsEpicThankYou,
              PlatformStickyAdViewability
     ) {
     var TESTS = [
         new HostedOnwardJourney(),
-        new WeekendReadingEmail(),
         new MembershipEngagementInternationalExperiment(),
-        new ContributionsEpicFakeNews(),
-        new ContributionsEpicUsaCtaFakeNews(),
+        new ContributionsEpicUsaCtaThreeWay(),
         new ContributionsEpicThankYou(),
         new PlatformStickyAdViewability()
     ];
