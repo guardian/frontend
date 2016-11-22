@@ -1,7 +1,6 @@
 package common
 
 import common.editions.{Au, Us, International}
-import common.Edition.editionRegex
 import conf.Configuration
 import layout.ContentCard
 import model.Trail
@@ -48,11 +47,7 @@ trait LinkTo extends Logging {
     val id = if (pathString.startsWith("/")) pathString.substring(1) else pathString
     val editionalisedPath = Editionalise(clean(id), edition)
 
-    val url = s"$host/$editionalisedPath"
-    url match {
-      case ProdURL() => url.replace("http://", "https://")
-      case _ => url
-    }
+    s"$host/$editionalisedPath"
   }
 
   private def clean(path: String) = path match {
