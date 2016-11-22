@@ -51,34 +51,29 @@
         <section class="hosted-tone--dark">
             <div class="host hosted__container--full">
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
-                    @page.video.youtubeId.map { youtubeId =>
-                        <iframe id="hosted-video-@youtubeId"
-                        data-duration="@{page.video.duration}"
-                        class="js-hosted-youtube-video hosted__youtube-video"
-                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(environment.isProd && !environment.isPreview) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
-                        frameborder="0"
-                        allowfullscreen=""></iframe>
-                        @guardianHostedControlButtons(page)
-                    }.getOrElse {
-                        <video
-                        data-duration="@{page.video.duration}"
-                        data-media-id="@{page.video.mediaId}"
-                        controls="controls"
-                        preload="auto"
-                        style="width: 100%;"
-                        data-block-video-ads="true"
-                        poster="@{page.video.posterUrl}"
-                        class="vjs-hosted__video hosted__video gu-media--video vjs vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
-                            @for(source <- page.video.sources) {
-                                <source type="@source.mimeType" src="@source.url">
-                            }
-                        </video>
-                    }
-                    @if(page.video.youtubeId.isDefined && !Option(page.video.posterUrl).getOrElse("").isEmpty){
-                        <div class="hosted__youtube-poster-image" style="background-image: url(@page.video.posterUrl);">
-                            <div class="hosted__youtube-play-button"></div>
+                @page.video.youtubeId.map { youtubeId =>
+                    <amp-youtube
+                    data-videoid="@youtubeId"
+                    layout="responsive"
+                    width="480" height="270">
+                    </amp-youtube>
+                }.getOrElse {
+                    <amp-video
+                    controls
+                    width="5"
+                    height="3"
+                    layout="responsive"
+                    poster="@{page.video.posterUrl}"
+                    >
+                        <div fallback>
+                            Sorry, your browser is unable to play this video.<br/>
+                            Please <a href="http://whatbrowser.org/">upgrade</a> to a modern browser and try again.
                         </div>
-                    }
+                        @for(source <- page.video.sources) {
+                            <source type="@source.mimeType" src="@source.url">
+                        }
+                    </amp-video>
+                }
                 </div>
             </div>
         </section>
@@ -105,7 +100,7 @@
                 <div class="js-onward-placeholder hosted__next-page-placeholder"></div>
             }
         </section>
-        @guardianHostedCta(page, page.cta, isAMP = false)
+        @guardianHostedCta(page, page.cta, isAMP = true)
 
         <amp-font
             layout="nodisplay"
