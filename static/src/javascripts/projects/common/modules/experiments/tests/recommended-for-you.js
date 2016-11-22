@@ -34,12 +34,12 @@ define([
     fetch
 ) {
     return function () {
-        this.id = 'RecommendedForYou';
+        this.id = 'RecommendedForYouRecommendations';
         this.start = '2016-08-02';
         this.expiry = '2016-12-23';
         this.author = 'Joseph Smith';
         this.description = 'Add a personalised container to fronts';
-        this.audience = 0;
+        this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Visit frequency';
         this.audienceCriteria = 'All users';

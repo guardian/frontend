@@ -37,11 +37,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-recommended-for-you",
-    "Test demand for a personalised container on fronts",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 9, 23),
+    "ab-recommended-for-you-recommendations",
+    "Test personalised container on fronts",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 1, 10),
     exposeClientSide = true
   )
 
@@ -54,7 +54,7 @@ trait ABTestSwitches {
     sellByDate =  new LocalDate(2016, 11, 22),
     exposeClientSide = true
   )
-  
+
   Switch(
     ABTests,
     "ab-contributions-epic-thank-you",
