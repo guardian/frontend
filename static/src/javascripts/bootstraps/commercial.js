@@ -8,7 +8,8 @@ define([
     'commercial/modules/article-aside-adverts',
     'commercial/modules/article-body-adverts',
     'commercial/modules/close-disabled-slots',
-    'commercial/modules/dfp/init',
+    'commercial/modules/dfp/prepare-googletag',
+    'commercial/modules/dfp/prepare-sonobi-tag',
     'commercial/modules/dfp/fill-advert-slots',
     'commercial/modules/front-commercial-components',
     'commercial/modules/gallery-adverts',
@@ -35,7 +36,8 @@ define([
     articleAsideAdverts,
     articleBodyAdverts,
     closeDisabledSlots,
-    dfpInit,
+    prepareGoogletag,
+    prepareSonobiTag,
     fillAdvertSlots,
     frontCommercialComponents,
     galleryAdverts,
@@ -55,7 +57,8 @@ define([
 ) {
     var primaryModules = [
         ['cm-thirdPartyTags', thirdPartyTags.init],
-        ['cm-init', dfpInit],
+        ['cm-prepare-sonobi-tag', prepareSonobiTag.init],
+        ['cm-prepare-googletag', prepareGoogletag.init, prepareGoogletag.customTiming],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
@@ -104,10 +107,14 @@ define([
         modules.forEach(function (pair) {
 
             var moduleName = pair[0];
+            var moduleInit = pair[1];
+            var hasCustomTiming = pair[2];
 
             robust.catchErrorsAndLog(moduleName, function () {
-                var modulePromise = pair[1]().then(function(){
-                    ophanTracking.moduleCheckpoint(moduleName, baseline);
+                var modulePromise = moduleInit(moduleName).then(function(){
+                    if (!hasCustomTiming) {
+                        ophanTracking.moduleCheckpoint(moduleName, baseline);
+                    }
                 });
 
                 modulePromises.push(modulePromise);
