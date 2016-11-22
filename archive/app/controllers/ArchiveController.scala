@@ -37,19 +37,19 @@ class ArchiveController(redirects: RedirectService) extends Controller with Logg
 
       // if we do not have a location in the database then follow these rules
       path match {
-        case Gallery(gallery)      => redirectTo(gallery, "gallery")
-        case Century(century)      => redirectTo(century, "century")
-        case Guardian(endOfUrl)    => redirectTo(endOfUrl, "guardian")
-        case Lowercase(lower)      => redirectTo(lower, "lowercase")
+        case Gallery(gallery)      => redirectTo(gallery)
+        case Century(century)      => redirectTo(century)
+        case Guardian(endOfUrl)    => redirectTo(endOfUrl)
+        case Lowercase(lower)      => redirectTo(lower)
 
         // Googlebot hits a bunch of really old combiners and combiner RSS
         // bounce these to the section
-        case CombinerSectionRss(section)                => redirectTo(s"$section/rss", "combinerrss")
-        case CombinerSection(section)                   => redirectTo(section, "combinersection")
-        case Combiner(combiner)                         => redirectTo(combiner, "combiner")
-        case DatedSpecialIndexPage(section, rest, _)    => redirectTo(section, "datedspecialindexpage", rest, "all")
-        case SectionSpecialIndex(section, _)            => redirectTo(section, "sectionspecialindex", "all")
-        case NewspaperPage(paper, date, book)           => redirectTo(paper, "newspaperpage", book, date, "all")
+        case CombinerSectionRss(section)                => redirectTo(s"$section/rss")
+        case CombinerSection(section)                   => redirectTo(section)
+        case Combiner(combiner)                         => redirectTo(combiner)
+        case DatedSpecialIndexPage(section, rest, _)    => redirectTo(section, rest, "all")
+        case SectionSpecialIndex(section, _)            => redirectTo(section, "all")
+        case NewspaperPage(paper, date, book)           => redirectTo(paper, book, date, "all")
 
         case _ =>
           log404(request)
@@ -72,7 +72,7 @@ class ArchiveController(redirects: RedirectService) extends Controller with Logg
     case _ => false
   }
 
-  def retainShortUrlCampaign(path: String, redirectLocation: String ): String = {
+  def retainShortUrlCampaign(path: String, redirectLocation: String): String = {
     // if the path is a short url with a campaign, and the destination doesn't have a campaign, pass it through the redirect.
     val shortUrlWithCampaign = """.*www\.theguardian\.com/p/[\w\d]+/([\w\d]+)$""".r
     val urlWithCampaignParam = """.*www\.theguardian\.com.*?.*CMP=.*$""".r
@@ -129,11 +129,11 @@ class ArchiveController(redirects: RedirectService) extends Controller with Logg
     }
   }
 
-  private def redirectTo(path: String, identifier: String, pathSuffixes: String*)(implicit request: RequestHeader): Result = {
+  private def redirectTo(path: String, pathSuffixes: String*)(implicit request: RequestHeader): Result = {
     val endOfPath = if(pathSuffixes.isEmpty) "" else s"/${pathSuffixes.mkString("/")}"
     val redirect = LinkTo(path) + endOfPath
 
-    log.info(s"""Archive $redirectHttpStatus, "$identifier" redirect to $redirect""")
+    log.info(s"""Archive $redirectHttpStatus, redirect to $redirect""")
     Cached(CacheTime.ArchiveRedirect)(WithoutRevalidationResult(Redirect(redirect, redirectHttpStatus)))
   }
 
