@@ -7,16 +7,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-weekend-reading-email",
-    "Try out two formats for the Weekend Reading email",
-    owners = Seq(Owner.withGithub("katebee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 21),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-hosted-onward-journey",
     "Show more pages from the campaign in Hosted Article/Video pages, using a carousel or popup",
     owners = Seq(Owner.withGithub("lps88")),
@@ -37,31 +27,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-fake-news",
-    "Try and beat the epic copy with e version that mentions the hot topic of fake news",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-contributions-epic-usa-cta-three-way",
+    "Test just contributions vs contributions or membership vs just membership in the US",
+    owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 22),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-usa-cta-fake-news",
-    "Test just contributions vs contributions or membership in the US, and test a new copy variant against the control",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 22),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-thank-you",
-    "Show a thank you message to our supporters at the end of artciles, just saying thanks!",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 22),
+    sellByDate =  new LocalDate(2016, 11, 25),
     exposeClientSide = true
   )
 
@@ -74,7 +44,4 @@ trait ABTestSwitches {
     sellByDate =  new LocalDate(2016, 11, 24),
     exposeClientSide = true
   )
-
-
-
 }

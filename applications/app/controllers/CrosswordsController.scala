@@ -5,7 +5,7 @@ import common.{Edition, ExecutionContexts, Logging}
 import conf.Static
 import contentapi.ContentApiClient
 import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
-import model.Cached.RevalidatableResult
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.{DateTime, LocalDate}
 import play.api.data.Forms._
@@ -51,7 +51,7 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
 
 class CrosswordPageController(val contentApiClient: ContentApiClient) extends CrosswordController {
 
-  def noResults()(implicit request: RequestHeader) = InternalServerError("Content API query returned an error.")
+  def noResults()(implicit request: RequestHeader) = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
 
   def crossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     renderCrosswordPage(crosswordType, id)
