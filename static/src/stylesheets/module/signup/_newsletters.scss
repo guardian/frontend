@@ -65,8 +65,14 @@
         margin: auto;
         padding-top: 15%;
         height: 80%;
-        width: 60px;
+        width: 80px;
+
+        @include mq(desktop) {
+            width: 60px;
+        }
     }
+
+
 }
 
 .newsletter-image {
