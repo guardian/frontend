@@ -63,22 +63,22 @@
     svg {
         display: block;
         margin: auto;
-        display: block;
-        margin: auto;
-        padding-top: 10%;
+        padding-top: 15%;
         height: 80%;
-        width: 40%;
+        width: 60px;
     }
 }
 
 .newsletter-image {
     position: relative;
     width: 100%;
+
 }
 
 .newsletter-card__name {
     @include fs-header(5);
     font-weight: 900;
+    line-height: 24px;
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline / 2;
 }
@@ -104,7 +104,7 @@
     background-color: $comment-support-2;
     border-bottom: 1px solid $neutral-3;
     padding: $gs-gutter / 2;
-    padding-bottom: $gs-baseline * 2;
+    padding-bottom: $gs-baseline;
     height: gs-height(1);
 
     * {
@@ -269,6 +269,9 @@
         circle {
             fill: $features-support-3;
         }
+        path {
+            fill:  $features-support-1;
+        }
     }
 
     .newsletter-card__signup {
@@ -305,11 +308,15 @@
     border-top-color: $comment-support-4;
 
     .newsletter-card__imagewrapper {
-        background-color: $comment-support-3;
+        background-color: $comment-support-4;
     }
 
     .newsletter-image {
         circle {
+            fill: $comment-support-2;
+        }
+
+        path {
             fill: $comment-support-4;
         }
     }
@@ -407,7 +414,7 @@
         }
 
         path {
-            fill: $multimedia-main-1;
+            fill: $brexit-main-1;
         }
     }
 
