@@ -19,11 +19,11 @@ const mimeTypes = {
 
 const typeFaces = require('./index.config');
 
-const generateCSS = font =>
+const generateCSS = (fontFamily, font) =>
     readFile(path.resolve(src, 'fonts', `${font.file}`), 'base64')
         .then(data => postcss([perfectionist({format: 'compressed'})]).process(`
                 @font-face {
-                    font-family: ${font['font-family']};
+                    font-family: ${fontFamily};
                     src: url(data:${mimeTypes[font.format]};base64,${data.toString()});
                     ${[
                         'font-weight',
@@ -49,7 +49,7 @@ module.exports = {
            task: () => {
                mkdirp.sync(`${target}/fonts`);
                return Promise.all(typeFaces.map(typeFace =>
-                   Promise.all(typeFace.fonts.map(generateCSS))
+                   Promise.all(typeFace.fonts.map(generateCSS.bind(null, typeFace['font-family'])))
                        .then(fontsCSS => fontsCSS.join(''))
                        .then(CSS =>
                            writeFile(

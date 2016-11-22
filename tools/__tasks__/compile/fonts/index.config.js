@@ -1,18 +1,16 @@
 module.exports = [
 	{
 		filename: 'GuardianTextEgyptianWeb.woff2',
+        'font-family': '"Guardian Text Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Egyptian Web"',
 				file: 'hinting-off/kerning-on/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-style': 'italic',
 				file: 'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-weight': '700',
 				file: 'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff2',
 				format: 'woff'
@@ -20,18 +18,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextEgyptianWeb.woff',
+        'font-family': '"Guardian Text Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Egyptian Web"',
 				file: 'hinting-off/kerning-on/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-style': 'italic',
 				file: 'hinting-off/kerning-on/ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-weight': '700',
 				file: 'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
 				format: 'woff'
@@ -39,18 +35,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextEgyptianWeb.ttf',
+        'font-family': '"Guardian Text Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Egyptian Web"',
 				file: 'hinting-off/kerning-on/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-style': 'italic',
 				file: 'hinting-off/kerning-on/ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-weight': '700',
 				file: 'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
 				format: 'ttf'
@@ -58,19 +52,17 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianEgyptianWeb.woff2',
+        'font-family': '"Guardian Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '200',
 				file: 'hinting-off/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '400',
 				file: 'hinting-off/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '500',
 				file: 'hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff2',
 				format: 'woff'
@@ -78,7 +70,6 @@ module.exports = [
 			// This weight contains only a certain set of chars
 			// since it is used only in one place (section names)
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '900',
 				file: 'hinting-off/kerning-on/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.woff2',
 				format: 'woff'
@@ -86,19 +77,17 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianEgyptianWeb.woff',
+        'font-family': '"Guardian Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '200',
 				file: 'hinting-off/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '400',
 				file: 'hinting-off/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '500',
 				file: 'hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff',
 				format: 'woff'
@@ -106,7 +95,6 @@ module.exports = [
 			// This weight contains only a certain set of chars
 			// since it is used only in one place (section names)
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '900',
 				file: 'hinting-off/kerning-on/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.woff',
 				format: 'woff'
@@ -114,19 +102,17 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianEgyptianWeb.ttf',
+        'font-family': '"Guardian Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '200',
 				file: 'hinting-off/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '400',
 				file: 'hinting-off/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '500',
 				file: 'hinting-off/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.ttf',
 				format: 'ttf'
@@ -134,7 +120,6 @@ module.exports = [
 			// This weight contains only a certain set of chars
 			// since it is used only in one place (section names)
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '900',
 				file: 'hinting-off/kerning-on/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.ttf',
 				format: 'ttf'
@@ -142,18 +127,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextSansWeb.woff2',
+        'font-family': '"Guardian Text Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Sans Web"',
 				file: 'hinting-off/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-style': 'italic',
 				file: 'hinting-off/kerning-on/latin1/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-weight': '700',
 				file: 'hinting-off/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.woff2',
 				format: 'woff'
@@ -161,18 +144,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextSansWeb.woff',
+        'font-family': '"Guardian Text Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Sans Web"',
 				file: 'hinting-off/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-style': 'italic',
 				file: 'hinting-off/kerning-on/ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-weight': '700',
 				file: 'hinting-off/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.woff',
 				format: 'woff'
@@ -180,18 +161,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextSansWeb.ttf',
+        'font-family': '"Guardian Text Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Sans Web"',
 				file: 'hinting-off/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-style': 'italic',
 				file: 'hinting-off/kerning-on/ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-weight': '700',
 				file: 'hinting-off/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.ttf',
 				format: 'ttf'
@@ -199,45 +178,43 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianSansWeb.woff2',
+        'font-family': '"Guardian Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Sans Web"',
 				file: 'hinting-off/kerning-on/latin1/GuardianSansWeb/GuardianSansWeb-Regular.woff2',
 				format: 'woff'
 			}
 		]
 	}, {
 		filename: 'GuardianSansWeb.woff',
+        'font-family': '"Guardian Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Sans Web"',
 				file: 'hinting-off/kerning-on/ascii/GuardianSansWeb/GuardianSansWeb-Regular.woff',
 				format: 'woff'
 			}
 		]
 	}, {
 		filename: 'GuardianSansWeb.ttf',
+        'font-family': '"Guardian Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Sans Web"',
 				file: 'hinting-off/kerning-on/ascii/GuardianSansWeb/GuardianSansWeb-Regular.ttf',
 				format: 'ttf'
 			}
 		]
 	}, {
 		filename: 'GuardianTextEgyptianWebCleartypeHinted.woff2',
+        'font-family': '"Guardian Text Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Egyptian Web"',
 				file: 'hinting-cleartype/kerning-on/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-style': 'italic',
 				file: 'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-weight': '700',
 				file: 'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff2',
 				format: 'woff'
@@ -245,18 +222,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextEgyptianWebCleartypeHinted.woff',
+        'font-family': '"Guardian Text Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Egyptian Web"',
 				file: 'hinting-cleartype/kerning-on/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-style': 'italic',
 				file: 'hinting-cleartype/kerning-on/ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-weight': '700',
 				file: 'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
 				format: 'woff'
@@ -264,18 +239,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextEgyptianWebCleartypeHinted.ttf',
+        'font-family': '"Guardian Text Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Egyptian Web"',
 				file: 'hinting-cleartype/kerning-on/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-style': 'italic',
 				file: 'hinting-cleartype/kerning-on/ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-weight': '700',
 				file: 'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
 				format: 'ttf'
@@ -283,19 +256,17 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianEgyptianWebCleartypeHinted.woff2',
+        'font-family': '"Guardian Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '200',
 				file: 'hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '400',
 				file: 'hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '500',
 				file: 'hinting-cleartype/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff2',
 				format: 'woff'
@@ -303,7 +274,6 @@ module.exports = [
 			// This weight contains only a certain set of chars
 			// since it is used only in one place (section names)
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '900',
 				file: 'hinting-cleartype/kerning-on/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.woff2',
 				format: 'woff'
@@ -311,19 +281,17 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianEgyptianWebCleartypeHinted.woff',
+        'font-family': '"Guardian Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '200',
 				file: 'hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '400',
 				file: 'hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '500',
 				file: 'hinting-cleartype/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff',
 				format: 'woff'
@@ -331,7 +299,6 @@ module.exports = [
 			// This weight contains only a certain set of chars
 			// since it is used only in one place (section names)
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '900',
 				file: 'hinting-cleartype/kerning-on/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.woff',
 				format: 'woff'
@@ -339,19 +306,17 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianEgyptianWebCleartypeHinted.ttf',
+        'font-family': '"Guardian Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '200',
 				file: 'hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '400',
 				file: 'hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '500',
 				file: 'hinting-cleartype/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.ttf',
 				format: 'ttf'
@@ -359,7 +324,6 @@ module.exports = [
 			// This weight contains only a certain set of chars
 			// since it is used only in one place (section names)
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '900',
 				file: 'hinting-cleartype/kerning-on/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.ttf',
 				format: 'ttf'
@@ -367,18 +331,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextSansWebCleartypeHinted.woff2',
+        'font-family': '"Guardian Text Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Sans Web"',
 				file: 'hinting-cleartype/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-style': 'italic',
 				file: 'hinting-cleartype/kerning-on/latin1/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-weight': '700',
 				file: 'hinting-cleartype/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.woff2',
 				format: 'woff'
@@ -386,18 +348,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextSansWebCleartypeHinted.woff',
+        'font-family': '"Guardian Text Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Sans Web"',
 				file: 'hinting-cleartype/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-style': 'italic',
 				file: 'hinting-cleartype/kerning-on/ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-weight': '700',
 				file: 'hinting-cleartype/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.woff',
 				format: 'woff'
@@ -405,18 +365,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextSansWebCleartypeHinted.ttf',
+        'font-family': '"Guardian Text Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Sans Web"',
 				file: 'hinting-cleartype/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-style': 'italic',
 				file: 'hinting-cleartype/kerning-on/ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-weight': '700',
 				file: 'hinting-cleartype/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.ttf',
 				format: 'ttf'
@@ -424,45 +382,43 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianSansWebCleartypeHinted.woff2',
+        'font-family': '"Guardian Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Sans Web"',
 				file: 'hinting-cleartype/kerning-on/latin1/GuardianSansWeb/GuardianSansWeb-Regular.woff2',
 				format: 'woff'
 			}
 		]
 	}, {
 		filename: 'GuardianSansWebCleartypeHinted.woff',
+        'font-family': '"Guardian Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Sans Web"',
 				file: 'hinting-cleartype/kerning-on/ascii/GuardianSansWeb/GuardianSansWeb-Regular.woff',
 				format: 'woff'
 			}
 		]
 	}, {
 		filename: 'GuardianSansWebCleartypeHinted.ttf',
+        'font-family': '"Guardian Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Sans Web"',
 				file: 'hinting-cleartype/kerning-on/ascii/GuardianSansWeb/GuardianSansWeb-Regular.ttf',
 				format: 'ttf'
 			}
 		]
 	}, {
 		filename: 'GuardianTextEgyptianWebAutoHinted.woff2',
+        'font-family': '"Guardian Text Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Egyptian Web"',
 				file: 'hinting-auto/kerning-on/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-style': 'italic',
 				file: 'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-weight': '700',
 				file: 'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff2',
 				format: 'woff'
@@ -470,18 +426,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextEgyptianWebAutoHinted.woff',
+        'font-family': '"Guardian Text Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Egyptian Web"',
 				file: 'hinting-auto/kerning-on/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-style': 'italic',
 				file: 'hinting-auto/kerning-on/ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-weight': '700',
 				file: 'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
 				format: 'woff'
@@ -489,18 +443,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextEgyptianWebAutoHinted.ttf',
+        'font-family': '"Guardian Text Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Egyptian Web"',
 				file: 'hinting-auto/kerning-on/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-style': 'italic',
 				file: 'hinting-auto/kerning-on/ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Text Egyptian Web"',
 				'font-weight': '700',
 				file: 'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
 				format: 'ttf'
@@ -508,19 +460,17 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianEgyptianWebAutoHinted.woff2',
+        'font-family': '"Guardian Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '200',
 				file: 'hinting-auto/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '400',
 				file: 'hinting-auto/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '500',
 				file: 'hinting-auto/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff2',
 				format: 'woff'
@@ -528,7 +478,6 @@ module.exports = [
 			// This weight contains only a certain set of chars
 			// since it is used only in one place (section names)
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '900',
 				file: 'hinting-auto/kerning-on/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.woff2',
 				format: 'woff'
@@ -536,19 +485,17 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianEgyptianWebAutoHinted.woff',
+        'font-family': '"Guardian Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '200',
 				file: 'hinting-auto/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '400',
 				file: 'hinting-auto/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '500',
 				file: 'hinting-auto/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff',
 				format: 'woff'
@@ -556,7 +503,6 @@ module.exports = [
 			// This weight contains only a certain set of chars
 			// since it is used only in one place (section names)
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '900',
 				file: 'hinting-auto/kerning-on/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.woff',
 				format: 'woff'
@@ -564,19 +510,17 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianEgyptianWebAutoHinted.ttf',
+        'font-family': '"Guardian Egyptian Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '200',
 				file: 'hinting-auto/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '400',
 				file: 'hinting-auto/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '500',
 				file: 'hinting-auto/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.ttf',
 				format: 'ttf'
@@ -584,7 +528,6 @@ module.exports = [
 			// This weight contains only a certain set of chars
 			// since it is used only in one place (section names)
 			{
-				'font-family': '"Guardian Egyptian Web"',
 				'font-weight': '900',
 				file: 'hinting-auto/kerning-on/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.ttf',
 				format: 'ttf'
@@ -592,18 +535,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextSansWebAutoHinted.woff2',
+        'font-family': '"Guardian Text Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Sans Web"',
 				file: 'hinting-auto/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-style': 'italic',
 				file: 'hinting-auto/kerning-on/latin1/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff2',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-weight': '700',
 				file: 'hinting-auto/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.woff2',
 				format: 'woff'
@@ -611,18 +552,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextSansWebAutoHinted.woff',
+        'font-family': '"Guardian Text Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Sans Web"',
 				file: 'hinting-auto/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-style': 'italic',
 				file: 'hinting-auto/kerning-on/ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff',
 				format: 'woff'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-weight': '700',
 				file: 'hinting-auto/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.woff',
 				format: 'woff'
@@ -630,18 +569,16 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianTextSansWebAutoHinted.ttf',
+        'font-family': '"Guardian Text Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Text Sans Web"',
 				file: 'hinting-auto/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-style': 'italic',
 				file: 'hinting-auto/kerning-on/ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.ttf',
 				format: 'ttf'
 			}, {
-				'font-family': '"Guardian Text Sans Web"',
 				'font-weight': '700',
 				file: 'hinting-auto/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.ttf',
 				format: 'ttf'
@@ -649,27 +586,27 @@ module.exports = [
 		]
 	}, {
 		filename: 'GuardianSansWebAutoHinted.woff2',
+        'font-family': '"Guardian Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Sans Web"',
 				file: 'hinting-auto/kerning-on/latin1/GuardianSansWeb/GuardianSansWeb-Regular.woff2',
 				format: 'woff'
 			}
 		]
 	}, {
 		filename: 'GuardianSansWebAutoHinted.woff',
+        'font-family': '"Guardian Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Sans Web"',
 				file: 'hinting-auto/kerning-on/ascii/GuardianSansWeb/GuardianSansWeb-Regular.woff',
 				format: 'woff'
 			}
 		]
 	}, {
 		filename: 'GuardianSansWebAutoHinted.ttf',
+        'font-family': '"Guardian Sans Web"',
 		fonts: [
 			{
-				'font-family': '"Guardian Sans Web"',
 				file: 'hinting-auto/kerning-on/ascii/GuardianSansWeb/GuardianSansWeb-Regular.ttf',
 				format: 'ttf'
 			}
