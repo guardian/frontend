@@ -37,6 +37,9 @@
         page.metadata.contentType == "LiveBlog"
     )
 ) {
+
+    //TODO: We're loading curl twice (once here, once in app-webpack.js) as interactives depend on it and app-webpack.js
+    //      may not have loaded in time. This problem will go away when we stop using curl to load the JS application
     @if(Configuration.assets.useHashedBundles) {
         @HtmlFormat.raw(common.Assets.js.curl)
     }
