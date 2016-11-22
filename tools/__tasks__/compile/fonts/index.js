@@ -10,22 +10,23 @@ const readFile = pify(fs.readFile);
 const writeFile = pify(fs.writeFile);
 
 const {target, src} = require('../../config').paths;
+
 const mimeTypes = {
 	woff: 'application/x-font-woff',
 	woff2: 'application/x-font-woff',
-	ttf: 'font/opentype',
-	otf: 'font/opentype',
-	eot: 'application/vnd.ms-fontobject'
+	ttf: 'font/opentype'
 };
 
 const typeFaces = require('./index.config');
+
+const toDataURI = (src, data) => `url(data:${mimeTypes[path.extname(src).substr(1)]};base64,${data.toString()})`;
 
 const generateCSS = (fontFamily, font) =>
     readFile(path.resolve(src, 'fonts', `${font.src}`), 'base64')
         .then(data => postcss([perfectionist({format: 'compressed'})]).process(`
                 @font-face {
                     font-family: ${fontFamily};
-                    src: url(data:${mimeTypes[path.extname(font.src).substr(1)]};base64,${data.toString()});
+                    src: ${toDataURI(font.src, data)};
                     ${[
                         'font-weight',
                         'font-style',
@@ -48,16 +49,18 @@ module.exports = {
         {
            description: 'Create webfont JSON',
            task: () => {
-               mkdirp.sync(`${target}/fonts`);
-               return Promise.all(typeFaces.map(typeFace =>
-                   Promise.all(typeFace.fonts.map(generateCSS.bind(null, typeFace['font-family'])))
+                mkdirp.sync(`${target}/fonts`);
+
+                return Promise.all(typeFaces.map(typeFace => {
+                    const generateCSSwithFontFamily = generateCSS.bind(null, typeFace['font-family']);
+                    const dest = path.resolve(target, 'fonts', `${typeFace.dest}.json`);
+
+                    // the way this actually works, with the `guFont` callback, feels like
+                    // an anachronism. should be looked at when fonts are revisited...
+                    return Promise.all(typeFace.fonts.map(generateCSSwithFontFamily))
                        .then(fontsCSS => fontsCSS.join(''))
-                       .then(CSS =>
-                           writeFile(
-                               path.resolve(target, 'fonts', `${typeFace.dest}.json`),
-                               `guFont(${JSON.stringify({css: CSS})});\n`)
-                       )
-               ));
+                       .then(CSS => writeFile(dest, `guFont(${JSON.stringify({css: CSS})});`));
+                }));
            }
        }
     ]
