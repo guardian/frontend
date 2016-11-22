@@ -9,13 +9,17 @@
 <body style="margin:0">
     <div id="ad-slot-1"></div>
     <script>
-        var settings = parseParameters();
-        var config = {};
-        var googletag = googletag || { cmd: [] };
+    (function (window, document, undefined) {
+        var settings = parseParameters(window.location);
+        var googletag = window.googletag = window.googletag || { cmd: [] };
 
-        function parseParameters() {
+        window.Krux || ((window.Krux=function(){Krux.q.push(arguments)}).q=[]);
+
+        init();
+
+        function parseParameters(location) {
             var params = {};
-            var args = window.location.hash.substr(1).split('&');
+            var args = location.hash.substr(1).split('&');
             var i, argsLength = args.length;
 
             for (i = 0; i < argsLength; ++i) {
@@ -113,10 +117,8 @@
             exposeMetaDataForKrux();
             insertAd();
         }
-
-        init();
-
+    }(window, window.document));
     </script>
-<script>if (window.docEndCallback) window.docEndCallback()</script>
+    <script>if (window.docEndCallback) window.docEndCallback()</script>
 </body>
 </html>
