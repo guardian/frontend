@@ -7,6 +7,7 @@ import common.{ExecutionContexts, Logging}
 import conf.Configuration
 
 import scala.concurrent.Future
+import scala.util.Try
 
 
 object RedirectService {
@@ -52,35 +53,34 @@ class RedirectService extends Logging with ExecutionContexts {
         case _ => None
       })
 
-  private def normaliseSource(source: String): Option[String] = {
+  private def normaliseSource(source: String): String = {
     val FullURL = """(https?://)?www\.theguardian\.com(.*)""".r
 
     source match {
-      case FullURL(_, path) => Some(expectedSourceHost + path)
-      case _ => None
+      case FullURL(_, path) => expectedSourceHost + path
     }
   }
 
-  private def normaliseDestination(destination: Destination): Option[Destination] = {
+  private def normaliseDestination(destination: Destination): Destination = {
     val pathOnly = normaliseSource(destination.source)
 
     destination match {
-      case PermanentRedirect(_, location) => pathOnly.map(PermanentRedirect(_, location))
-      case ArchiveRedirect(_, location) => pathOnly.map(ArchiveRedirect(_, location))
+      case PermanentRedirect(_, location) => PermanentRedirect(pathOnly, location)
+      case ArchiveRedirect(_, location) => ArchiveRedirect(pathOnly, location)
     }
   }
 
-  def set(destination: Destination): Boolean =
-    normaliseDestination(destination).exists { dest =>
+  def set(destination: Destination): Try[Unit] =
+    Try({
+      val dest = normaliseDestination(destination)
       log.info(s"Setting redirect in: $tableName to: ${dest.source} -> ${dest.location}")
       Scanamo.put(DynamoDB.syncClient)(tableName)(dest)
-      true
-    }
+    })
 
-  def remove(source: String): Boolean =
-    normaliseSource(source).exists { src =>
+  def remove(source: String): Try[Unit] =
+    Try({
+      val src = normaliseSource(source)
       log.info(s"Removing redirect in: $tableName to: $src")
       Scanamo.delete(DynamoDB.syncClient)(tableName)('source -> src)
-      true
-    }
+    })
 }
