@@ -10,7 +10,6 @@ define([
     'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
     'common/modules/experiments/tests/contributions-epic-usa-cta-three-way',
-    'common/modules/experiments/tests/contributions-epic-thank-you',
     'common/modules/experiments/tests/platform-sticky-ad-viewability'
 ], function (reportError,
              config,
@@ -23,14 +22,12 @@ define([
              HostedOnwardJourney,
              MembershipEngagementInternationalExperiment,
              ContributionsEpicUsaCtaThreeWay,
-             ContributionsEpicThankYou,
              PlatformStickyAdViewability
     ) {
     var TESTS = [
         new HostedOnwardJourney(),
         new MembershipEngagementInternationalExperiment(),
         new ContributionsEpicUsaCtaThreeWay(),
-        new ContributionsEpicThankYou(),
         new PlatformStickyAdViewability()
     ];
 
