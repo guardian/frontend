@@ -7,6 +7,7 @@
     <script async src="https://www.googletagservices.com/tag/js/gpt.js"></script>
 </head>
 <body style="margin:0">
+    <div id="ad-slot-1"></div>
     <script>
         var settings = parseParameters();
         var config = {};
@@ -88,40 +89,28 @@
             }
         }
 
-        function insertAdConfig() {
-            var isFirstAd = true;
-            if (isFirstAd) {
-                googletag.cmd.push(function() {
-                    googletag.pubads().enableAsyncRendering();
-                    googletag.pubads().collapseEmptyDivs();
-                    googletag.enableServices();
-                });
-            }
+        function insertAd() {
             var size = settings['data-ad-size'];
             var adUnitName = settings['data-ad-unit'];
 
             googletag.cmd.push(function() {
-                var slot = googletag.defineSlot('/59666047/' + adUnitName, buildTargetSize(size), 'ad-slot-1');
-                buildCustomTargeting(slot);
-                buildAdtestTargeting(slot);
-                buildSegments(slot);
-                slot.addService(googletag.pubads());
-            });
-        }
+                googletag.pubads().enableAsyncRendering();
+                googletag.pubads().collapseEmptyDivs();
+                googletag.enableServices();
 
-        function insertAd() {
-            var slotDiv = document.createElement("div");
-            slotDiv.setAttribute('id', 'ad-slot-1');
-            document.body.appendChild(slotDiv);
-            googletag.cmd.push(function() {
-                googletag.display('ad-slot-1');
+                Krux(function () {
+                    var slot = googletag.defineSlot('/59666047/' + adUnitName, buildTargetSize(size), 'ad-slot-1');
+                    buildCustomTargeting(slot);
+                    buildAdtestTargeting(slot);
+                    buildSegments(slot);
+                    slot.addService(googletag.pubads());
+                    googletag.display('ad-slot-1');
+                });
             });
         }
 
         function init() {
             exposeMetaDataForKrux();
-
-            insertAdConfig();
             insertAd();
         }
 
