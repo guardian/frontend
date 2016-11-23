@@ -48,7 +48,7 @@ define([
             bonzo(qwery(dfpEnv.adSlotSelector)).remove();
         }
 
-        function moduleCompleted() {
+        function moduleEnd() {
             performanceLogging.moduleEnd(moduleName);
         }
 
@@ -78,7 +78,7 @@ define([
                 window.googletag.cmd.push(
                     setListeners,
                     setPageTargeting,
-                    moduleCompleted,
+                    moduleEnd,
                     resolve
                 );
             });
