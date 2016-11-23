@@ -64,7 +64,7 @@ define([
         this.removeState('loading');
 
         var activeTab = $('.tabs__tab--selected');
-        if (activeTab.data('stream-type') != streamType) {
+        if (activeTab.data('stream-type') !== streamType) {
            selectTab(streamType, this.defaultOptions.streamType);
         }
 
@@ -101,7 +101,7 @@ define([
         var from = $('.tabs__tab--selected');
         var to = $('a[data-stream-type=' + streamType + ']');
 
-        if (to.length == 0) {
+        if (to.length === 0) {
             to = $('a[data-stream-type=' + fallback + ']');
         }
 
