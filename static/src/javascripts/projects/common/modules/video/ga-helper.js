@@ -2,7 +2,7 @@ define(function (
 ) {
     function buildGoogleAnalyticsEvent(mediaEvent, metrics, canonicalUrl, player, eventAction, videoId) {
 
-        var category = 'Media';
+        var category = 'media';
         var playerName = player;
         var action = eventAction(mediaEvent);
         var fieldsObject = {

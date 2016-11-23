@@ -100,7 +100,7 @@ class ResetPasswordController(  api : IdApiClient,
   }
 
   private def redirectToPasswordResetRequest(formWithErrors: Form[String]) = NoCache(
-    SeeOther("/reset")
+    SeeOther(routes.ResetPasswordController.renderPasswordResetRequestForm().url)
       .flashing(formWithErrors.toFlash)
   )
 
@@ -135,7 +135,7 @@ class ResetPasswordController(  api : IdApiClient,
                 form.withError(error.context.getOrElse(""), error.description)
               }
               NoCache(
-                SeeOther("/reset")
+                SeeOther(routes.ResetPasswordController.renderPasswordResetRequestForm().url)
                   .flashing(formWithError.toFlash)
               )
             }
