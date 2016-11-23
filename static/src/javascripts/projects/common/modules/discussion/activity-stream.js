@@ -65,7 +65,7 @@ define([
 
         var activeTab = $('.tabs__tab--selected');
         if (activeTab.data('stream-type') !== streamType) {
-           selectTab(streamType, this.defaultOptions.streamType);
+           selectTab(streamType === 'comments' ? 'discussions' : streamType);
         }
 
         // update opts
@@ -97,19 +97,14 @@ define([
         });
     }
 
-    function selectTab(streamType, fallback) {
-        var from = $('.tabs__tab--selected');
-        var to = $('a[data-stream-type=' + streamType + ']');
+    function selectTab(streamType) {
+        // Blur so that when pressing forward/back the focus is not retained on
+        // the old tab Note, without the focus first, the blur doesn't seem to
+        // work for some reason
+        $('.js-activity-stream-change').focus().blur();
 
-        if (to.length === 0) {
-            to = $('a[data-stream-type=' + fallback + ']');
-        }
-
-        from.removeClass('tabs__tab--selected');
-        var link = $('a', from);
-        link.blur();
-
-        bonzo(to).parent().addClass('tabs__tab--selected');
+        $('.tabs__tab--selected').removeClass('tabs__tab--selected');
+        bonzo($('a[data-stream-type=' + streamType + ']')).parent().addClass('tabs__tab--selected');
     }
 
     return ActivityStream;
