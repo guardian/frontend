@@ -46,6 +46,6 @@ class MediaAtomEmbedController(contentApiClient: ContentApiClient) extends Contr
 
     val page: MediaAtomEmbedPage = MediaAtomEmbedPage(model)
 
-    Cached(600)(RevalidatableResult.Ok(views.html.fragments.atoms.mediaEmbed(page, displayCaption = true)))
+    Cached(600)(RevalidatableResult.Ok(views.html.fragments.atoms.mediaEmbed(page, displayCaption = false)))
   }
 }
