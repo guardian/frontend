@@ -91,7 +91,7 @@ class AccountDeletionController(
         EitherT(exactTargetService.unsubscribeFromAllLists(emailPasswdAuth.email)).leftMap(_ => FailedToRemoveFromAllEmailLists)
 
       def deleteAccountProper(): EitherT[Future, AccountDeletionFailures, Unit] =
-        EitherT.fromEither(identityApiClient.deleteAccount(request.user.auth)).leftMap(_ => FailedToDeleteAccount)
+        EitherT.fromEither(identityApiClient.deleteAccount(request.user.auth, emailPasswdAuth)).leftMap(_ => FailedToDeleteAccount)
 
       def clearCookiesAndDisplaySuccessForm() =
         NoCache(SeeOther(routes.AccountDeletionController.renderAccountDeletionConfirmForm().url))

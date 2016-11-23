@@ -187,7 +187,8 @@ abstract class IdApi(conf: IdentityConfiguration, http: Http, jsonBodyParser: Js
   def deleteTelephone(auth: Auth): Future[Response[Unit]] =
     delete("user/me/telephoneNumber", Some(auth)) map extractUnit
 
-  def deleteAccount(auth: Auth): Future[Response[Unit]] = delete("user/me", Some(auth)) map extractUnit
+  def deleteAccount(auth: Auth, emailPassword: EmailPassword): Future[Response[Unit]] =
+    delete("user/me", Some(auth), body = Some(write(emailPassword))) map extractUnit
 
   // THIRD PARTY SIGN-IN
   def addUserToGroup(groupCode: String, auth: Auth): Future[Response[Unit]] = {
