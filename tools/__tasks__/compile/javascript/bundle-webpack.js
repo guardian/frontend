@@ -5,35 +5,35 @@ const rjs = require('requirejs');
 const {target} = require('../../config').paths;
 
 const bundles = [{
-    name: 'boot-webpack',
-    out: target + '/javascripts/boot-webpack.js',
-    insertRequire: ['boot-webpack'],
+    name: 'boot-rjs',
+    out: target + '/javascripts/boot-rjs.js',
+    insertRequire: ['boot-rjs'],
     exclude: [
         'text',
         'inlineSvg'
     ]
 }, {
     name: 'bootstraps/commercial',
-    out: target + '/javascripts/bootstraps/commercial-webpack.js',
+    out: target + '/javascripts/bootstraps/commercial-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'text',
         'inlineSvg'
     ]
 }, {
     name: 'bootstraps/enhanced/main',
-    out: target + '/javascripts/bootstraps/enhanced/main-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/main-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'text',
         'inlineSvg'
     ]
 }, {
     name: 'bootstraps/enhanced/article',
-    out: target + '/javascripts/bootstraps/enhanced/article-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/article-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -41,9 +41,9 @@ const bundles = [{
     ]
 }, {
     name: 'bootstraps/enhanced/article-minute',
-    out: target + '/javascripts/bootstraps/enhanced/article-minute-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/article-minute-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -51,9 +51,9 @@ const bundles = [{
     ]
 }, {
     name: 'bootstraps/enhanced/crosswords',
-    out: target + '/javascripts/bootstraps/enhanced/crosswords-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/crosswords-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -61,9 +61,9 @@ const bundles = [{
     ]
 }, {
     name: 'bootstraps/enhanced/liveblog',
-    out: target + '/javascripts/bootstraps/enhanced/liveblog-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/liveblog-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -71,9 +71,9 @@ const bundles = [{
     ]
 }, {
     name: 'bootstraps/enhanced/gallery',
-    out: target + '/javascripts/bootstraps/enhanced/gallery-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/gallery-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -81,9 +81,9 @@ const bundles = [{
     ]
 }, {
     name: 'bootstraps/enhanced/trail',
-    out: target + '/javascripts/bootstraps/enhanced/trail-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/trail-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -91,9 +91,9 @@ const bundles = [{
     ]
 }, {
     name: 'bootstraps/enhanced/profile',
-    out: target + '/javascripts/bootstraps/enhanced/profile-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/profile-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -101,9 +101,9 @@ const bundles = [{
     ]
 }, {
     name: 'bootstraps/enhanced/sudoku',
-    out: target + '/javascripts/bootstraps/enhanced/sudoku-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/sudoku-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -111,9 +111,9 @@ const bundles = [{
     ]
 }, {
     name: 'bootstraps/enhanced/image-content',
-    out: target + '/javascripts/bootstraps/enhanced/image-content-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/image-content-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -121,9 +121,9 @@ const bundles = [{
     ]
 }, {
     name: 'bootstraps/enhanced/facia',
-    out: target + '/javascripts/bootstraps/enhanced/facia-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/facia-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -131,9 +131,9 @@ const bundles = [{
     ]
 }, {
     name: 'bootstraps/enhanced/football',
-    out: target + '/javascripts/bootstraps/enhanced/football-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/football-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -141,9 +141,9 @@ const bundles = [{
     ]
 }, {
     name: 'bootstraps/enhanced/preferences',
-    out: target + '/javascripts/bootstraps/enhanced/preferences-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/preferences-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -151,9 +151,9 @@ const bundles = [{
     ]
 }, {
     name: 'bootstraps/enhanced/membership',
-    out: target + '/javascripts/bootstraps/enhanced/membership-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/membership-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -161,15 +161,15 @@ const bundles = [{
     ]
 }, {
     name: 'bootstraps/enhanced/ophan',
-    out: target + '/javascripts/bootstraps/enhanced/ophan-webpack.js'
+    out: target + '/javascripts/bootstraps/enhanced/ophan-rjs.js'
 }, {
     name: 'bootstraps/admin',
-    out: target + '/javascripts/bootstraps/admin-webpack.js'
+    out: target + '/javascripts/bootstraps/admin-rjs.js'
 }, {
     name: 'bootstraps/enhanced/youtube',
-    out: target + '/javascripts/bootstraps/enhanced/youtube-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/youtube-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -177,9 +177,9 @@ const bundles = [{
     ]
 }, {
     name: 'bootstraps/enhanced/media/main',
-    out: target + '/javascripts/bootstraps/enhanced/media/main-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/media/main-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -189,9 +189,9 @@ const bundles = [{
     preserveLicenseComments: false
 }, {
     name: 'bootstraps/video-embed',
-    out: target + '/javascripts/bootstraps/video-embed-webpack.js',
+    out: target + '/javascripts/bootstraps/video-embed-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'text',
         'inlineSvg'
     ],
@@ -199,9 +199,9 @@ const bundles = [{
     preserveLicenseComments: false
 }, {
     name: 'bootstraps/enhanced/accessibility',
-    out: target + '/javascripts/bootstraps/enhanced/accessibility-webpack.js',
+    out: target + '/javascripts/bootstraps/enhanced/accessibility-rjs.js',
     exclude: [
-        'boot-webpack',
+        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'bootstraps/enhanced/facia',
@@ -211,7 +211,7 @@ const bundles = [{
 }];
 
 module.exports = {
-    description: 'Create JS bundles to run alongside Webpack-bundled app',
+    description: 'Create r.js bundles to run alongside Webpack-bundled app',
     task: bundles.sort((a,b) => a.name < b.name ? -1 : 1).map(bundle => {
         const options = Object.keys(bundle).reduce((command, optionName) =>
             `${optionName}=${bundle[optionName].toString()} ${command}`
