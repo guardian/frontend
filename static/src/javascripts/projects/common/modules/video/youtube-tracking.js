@@ -33,7 +33,7 @@ define([
                 'end': 'metric6'
             },
             baseEventObject: {
-                eventCategory: 'Media',
+                eventCategory: 'media',
                 eventAction: eventAction(),
                 eventLabel: videoId,
                 dimension19: videoId,
