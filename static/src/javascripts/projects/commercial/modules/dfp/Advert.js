@@ -1,8 +1,8 @@
 define([
     'Promise',
     'common/utils/user-timing',
-    'commercial/modules/dfp/ophan-tracking'
-], function (Promise, userTiming, ophanTracking) {
+    'commercial/modules/dfp/performance-logging'
+], function (Promise, userTiming, performanceLogging) {
     Advert.startLoading = startLoading;
     Advert.stopLoading = stopLoading;
     Advert.startRendering = startRendering;
@@ -49,7 +49,7 @@ define([
             return advert.isRendered = isRendered;
         });
 
-        ophanTracking.updateAdvertMetric(advert, 'createTime', userTiming.getCurrentTime());
+        performanceLogging.updateAdvertMetric(advert, 'createTime', userTiming.getCurrentTime());
 
         return Object.seal(advert);
     }
@@ -73,6 +73,6 @@ define([
     function stopRendering(advert, isRendered) {
         advert.isRendering = false;
         advert.whenRenderedResolver(isRendered);
-        ophanTracking.updateAdvertMetric(advert, 'stopRendering', userTiming.getCurrentTime());
+        performanceLogging.updateAdvertMetric(advert, 'stopRendering', userTiming.getCurrentTime());
     }
 });

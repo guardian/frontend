@@ -11,16 +11,15 @@ define([
     'commercial/modules/dfp/display-ads',
     'commercial/modules/dfp/refresh-on-resize'
 ], function (Promise, qwery, sha1, identity, commercialFeatures, dfpEnv, Advert, queueAdvert, displayLazyAds, displayAds, refreshOnResize) {
-    return load;
 
-    function load() {
+    function init() {
         if (commercialFeatures.dfpAdvertising) {
-            return loadAdvertising();
+            return fillAdvertSlots();
         }
         return Promise.resolve();
     }
 
-    function loadAdvertising() {
+    function fillAdvertSlots() {
 
         return new Promise(function(resolve) {
             window.googletag.cmd.push(
@@ -55,4 +54,8 @@ define([
             window.googletag.pubads().setPublisherProvidedId(hashedId);
         }
     }
+
+    return {
+        init: init
+    };
 });
