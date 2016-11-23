@@ -8,7 +8,7 @@ define([
     var prom = null;
 
     function setupSonobi() {
-        return new Promise.resolve(require(['js!sonobi.js']));
+        return Promise.resolve(require(['js!sonobi.js']));
     }
 
     function init() {
