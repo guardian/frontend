@@ -53,6 +53,16 @@
     <div id="ad-slot-1"></div>
     <script>
     (function (window, localStorage, guardian, undefined) {
+        var dfpConfig = {
+            url: guardian.url,
+            edition: guardian.edition.toLowerCase(),
+            se: guardian.se,
+            ct: guardian.ct,
+            co: guardian.authorIds,
+            bl: guardian.bl,
+            k: guardian.k.split(','),
+            at: guardian.at
+        };
 
         insertAd();
 
@@ -76,19 +86,19 @@
             var ref = Object.keys(guardian);
             for (i = 0, len = ref.length; i < len; i++) {
                 attr = ref[i];
-                match = attr.match(/^data-ad-target-(.+)$/);
-                if (match != null) {
-                    key = match[1];
+                match = attr.indexOf('data-ad-target-') === 0;
+                if (match) {
+                    key = attr.substr(15);
                     value = guardian[attr].split(',');
-                    slot.setTargeting(key, value);
+                    dfpConfig[key] = value;
                 }
             }
-        }
 
-        function buildAdtestTargeting(slot) {
-            if (guardian.at) {
-                slot.setTargeting('at', guardian.at);
-            }
+            Object.keys(dfpConfig).forEach(function (key) {
+                if (dfpConfig[key]) {
+                    slot.setTargeting(key, dfpConfig[key]);
+                }
+            })
         }
 
         function insertAd() {
@@ -103,7 +113,6 @@
                 window.Krux(function () {
                     var slot = googletag.defineSlot('/59666047/' + adUnitName, buildTargetSize(size), 'ad-slot-1');
                     buildCustomTargeting(slot);
-                    buildAdtestTargeting(slot);
                     buildSegments(slot);
                     slot.addService(googletag.pubads());
                     window.googletag.display('ad-slot-1');
