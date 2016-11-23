@@ -3,38 +3,40 @@
 <head>
     <meta charset="utf-8">
     <meta name="robots" content="noindex">
-    <script async class="kxct" data-id="J_RxuxWJ" data-timing="async" data-version="1.9" src="https://cdn.krxd.net/controltag?confid=J_RxuxWJ"></script>
-    <script async src="https://www.googletagservices.com/tag/js/gpt.js"></script>
-</head>
-<body style="margin:0">
-    <div id="ad-slot-1"></div>
     <script>
-    (function (window, document, undefined) {
-        var settings = parseParameters(window.location);
-        var googletag = window.googletag = window.googletag || { cmd: [] };
-
+    (function (window) {
+        var guardian = window.guardian = parseParameters(window.location);
+        var googletag = window.googletag = { cmd: [] };
         window.Krux || ((window.Krux=function(){Krux.q.push(arguments)}).q=[]);
-
-        init();
+        window.config = {
+            pageId: guardian.url,
+            edition: toTitleCase(guardian.edition),
+            seriesId: guardian.se,
+            contentType: toTitleCase(guardian.ct),
+            keywordIds: guardian.keywordIds,
+            keywords: guardian.k.split(',').map(toTitleCase),
+            authorIds: guardian.authorIds,
+            blogIds: guardian.bl,
+            referrer: 'facebook-ia',
+            section: guardian.section
+        };
 
         function parseParameters(location) {
-            var params = {};
-            var args = location.hash.substr(1).split('&');
-            var i, argsLength = args.length;
-
-            for (i = 0; i < argsLength; ++i) {
-                var arg = args[i].split("=");
+            return location.hash.substr(1)
+            .split('&')
+            .reduce(function (result, arg_i) {
+                var arg = arg_i.split("=");
                 var argName = decodeURIComponent(arg[0]);
                 var argValue = decodeURIComponent(arg[1]);
 
-                if (params[argName] !== undefined) {
-                    params[argName] += ',' + argValue;
+                if (result[argName] !== undefined) {
+                    result[argName] += ',' + argValue;
                 } else {
-                    params[argName] = argValue;
+                    result[argName] = argValue;
                 }
-            }
 
-            return params;
+                return result;
+            }, {});
         }
 
         function toTitleCase(str) {
@@ -42,21 +44,17 @@
                 return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
             });
         }
+    }(window))
+    </script>
+    <script async class="kxct" data-id="J_RxuxWJ" data-timing="async" data-version="1.9" src="https://cdn.krxd.net/controltag?confid=J_RxuxWJ"></script>
+    <script async src="https://www.googletagservices.com/tag/js/gpt.js"></script>
+</head>
+<body style="margin:0">
+    <div id="ad-slot-1"></div>
+    <script>
+    (function (window, localStorage, guardian, undefined) {
 
-        function exposeMetaDataForKrux() {
-            window.config = {
-                pageId: settings.url,
-                edition: toTitleCase(settings.edition),
-                seriesId: settings.se,
-                contentType: toTitleCase(settings.ct),
-                keywordIds: settings.keywordIds,
-                keywords: settings.k.split(',').map(toTitleCase),
-                authorIds: settings.authorIds,
-                blogIds: settings.bl,
-                referrer: 'facebook-ia',
-                section: settings.section
-            };
-        }
+        insertAd();
 
         function buildSegments(slot) {
             var kruxSegments = localStorage.getItem('kxsegs');
@@ -75,49 +73,45 @@
 
         function buildCustomTargeting(slot) {
             var attr, i, key, len, match, value;
-            var ref = Object.keys(settings);
+            var ref = Object.keys(guardian);
             for (i = 0, len = ref.length; i < len; i++) {
                 attr = ref[i];
                 match = attr.match(/^data-ad-target-(.+)$/);
                 if (match != null) {
                     key = match[1];
-                    value = settings[attr].split(',');
+                    value = guardian[attr].split(',');
                     slot.setTargeting(key, value);
                 }
             }
         }
 
         function buildAdtestTargeting(slot) {
-            if (settings.at) {
-                slot.setTargeting('at', settings.at);
+            if (guardian.at) {
+                slot.setTargeting('at', guardian.at);
             }
         }
 
         function insertAd() {
-            var size = settings['data-ad-size'];
-            var adUnitName = settings['data-ad-unit'];
+            var size = guardian['data-ad-size'];
+            var adUnitName = guardian['data-ad-unit'];
 
-            googletag.cmd.push(function() {
-                googletag.pubads().enableAsyncRendering();
-                googletag.pubads().collapseEmptyDivs();
-                googletag.enableServices();
+            window.googletag.cmd.push(function() {
+                window.googletag.pubads().enableAsyncRendering();
+                window.googletag.pubads().collapseEmptyDivs();
+                window.googletag.enableServices();
 
-                Krux(function () {
+                window.Krux(function () {
                     var slot = googletag.defineSlot('/59666047/' + adUnitName, buildTargetSize(size), 'ad-slot-1');
                     buildCustomTargeting(slot);
                     buildAdtestTargeting(slot);
                     buildSegments(slot);
                     slot.addService(googletag.pubads());
-                    googletag.display('ad-slot-1');
+                    window.googletag.display('ad-slot-1');
                 });
             });
         }
 
-        function init() {
-            exposeMetaDataForKrux();
-            insertAd();
-        }
-    }(window, window.document));
+    }(window, window.localStorage, window.guardian));
     </script>
     <script>if (window.docEndCallback) window.docEndCallback()</script>
 </body>
