@@ -49,10 +49,13 @@ define([
 
     function moduleEnd(moduleName) {
         var timerEnd = userTiming.getCurrentTime();
-        var module = performanceLog.modules.find(function(module){
-            return module.name === moduleName;
-        });
-        if (module) {
+
+        var moduleIndex = performanceLog.modules.map(function (module) {
+            return module.name;
+        }).indexOf(moduleName);
+
+        if (moduleIndex != -1) {
+            var module = performanceLog.modules[moduleIndex];
             module.duration = timerEnd - module.start;
         }
     }
