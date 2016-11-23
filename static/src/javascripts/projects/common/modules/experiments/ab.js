@@ -10,7 +10,8 @@ define([
     'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
     'common/modules/experiments/tests/contributions-epic-usa-cta-three-way',
-    'common/modules/experiments/tests/platform-sticky-ad-viewability'
+    'common/modules/experiments/tests/platform-sticky-ad-viewability',
+    'common/modules/experiments/tests/uk-membership-engagement-message-test-10'
 ], function (reportError,
              config,
              cookies,
@@ -22,13 +23,15 @@ define([
              HostedOnwardJourney,
              MembershipEngagementInternationalExperiment,
              ContributionsEpicUsaCtaThreeWay,
-             PlatformStickyAdViewability
+             PlatformStickyAdViewability,
+             UkMembershipEngagementMessageTest10
     ) {
     var TESTS = [
         new HostedOnwardJourney(),
         new MembershipEngagementInternationalExperiment(),
         new ContributionsEpicUsaCtaThreeWay(),
-        new PlatformStickyAdViewability()
+        new PlatformStickyAdViewability(),
+        new UkMembershipEngagementMessageTest10
     ];
 
     var participationsKey = 'gu.ab.participations';

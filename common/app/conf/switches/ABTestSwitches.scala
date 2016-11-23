@@ -44,4 +44,14 @@ trait ABTestSwitches {
     sellByDate =  new LocalDate(2016, 11, 24),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-uk-memb-engagement-msg-copy-test-10",
+    "Test alternate short messages on membership engagement banner",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 8), // Thursday 8th December
+    exposeClientSide = true
+  )
 }
