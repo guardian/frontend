@@ -20,12 +20,7 @@ Nicole Sullivan's OOCSS CSS markup extraction pattern.
 
 .media,
 .media__body {
-    @if $old-ie {
-        overflow: visible;
-        zoom: 1;
-    } @else {
-        overflow: hidden;
-    }
+    @include clearfix;
 }
 
 .media__img {
