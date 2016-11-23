@@ -5,8 +5,6 @@ module.exports = {
         require('./mkdir'),
         require('../images'),
         require('./transpile-sass'),
-        require('./atomise'),
-        require('./remify'),
-        require('./postcss')
+        require('./atomise')
     ]
 };

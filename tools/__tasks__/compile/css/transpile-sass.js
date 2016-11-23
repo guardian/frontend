@@ -1,61 +1,94 @@
 const fs = require('fs');
 const path = require('path');
+
 const sass = require('node-sass');
 const mkdirp = require('mkdirp');
 const glob = require('glob');
+const postcss = require('postcss');
+const autoprefixer = require('autoprefixer');
+const pxtorem = require('postcss-pxtorem');
+const pify = require('pify');
 
 const {src, target} = require('../../config').paths;
 const sassDir = path.resolve(src, 'stylesheets');
 
-const options = {
+const sassDefaults = {
     outputStyle: 'compressed',
     sourceMap: true,
     precision: 5
 };
 
-const renderSass = (filePath, dest) => new Promise((resolve, reject) => {
-    sass.render(Object.assign({
-        file: filePath,
-        outFile: dest
-    }, options), (err, result) => {
-        if (err) return reject(err);
-        try {
-            resolve(result.css.toString());
-        } catch (e) {
-            reject(e);
+const browserslist = [
+    'Firefox >= 26',
+    'Explorer >= 10',
+    'Safari >= 5',
+    'Chrome >= 36',
+
+    'iOS >= 5',
+    'Android >= 2',
+    'BlackBerry >= 6',
+    'ExplorerMobile >= 7',
+
+    '> 2% in US',
+    '> 2% in AU',
+    '> 2% in GB'
+];
+
+const remifications = {
+    replace: true,
+    root_value: 16,
+    unit_precision: 5,
+    prop_white_list: []
+};
+
+
+const renderSass = pify(sass.render);
+const saveCSS = pify(fs.writeFile);
+const getFiles = query => glob.sync(path.resolve(sassDir, query));
+
+const compile = (query, {browsers, remify = true}) => Promise.all(
+    getFiles(query).map(filePath => {
+        const dest = path.resolve(target, 'stylesheets', path.relative(sassDir, filePath).replace('scss', 'css'));
+        const postCSSplugins = [autoprefixer({browsers})];
+        const sassOptions = Object.assign({
+            file: filePath,
+            outFile: dest
+        }, sassDefaults);
+
+        if (remify) {
+            postCSSplugins.push(pxtorem(remifications));
         }
-    });
-});
 
-const saveSass = (sass, dest) => new Promise((resolve, reject) => {
-    mkdirp.sync(path.parse(dest).dir);
-    fs.writeFile(dest, sass, err => {
-        if (err) return reject(err);
-        resolve();
-    });
-});
-
-
-function transpile (filePath) {
-    const dest = path.resolve(target, 'stylesheets', path.relative(sassDir, filePath).replace('scss', 'css'));
-    return renderSass(filePath, dest)
-        .then(sass => saveSass(sass, dest));
-}
+        mkdirp.sync(path.parse(dest).dir);
+        return renderSass(sassOptions)
+            .then(result => postcss(postCSSplugins).process(result.css.toString()))
+            .then(result => saveCSS(dest, result.css));
+    })
+);
 
 module.exports = {
     description: 'Transpile Sass',
     task: [{
         description: 'Old IE',
-        task: () => Promise.all(glob.sync(path.resolve(sassDir, 'old-ie.*.scss')).map(transpile))
+        task: () => compile('old-ie.*.scss', {
+            browsers: 'Explorer 8',
+            remify: false
+        })
     }, {
         description: 'IE9',
-        task: () => Promise.all(glob.sync(path.resolve(sassDir, 'ie9.*.scss')).map(transpile))
+        task: () => compile('ie9.*.scss', {
+            browsers: 'Explorer 9'
+        })
     }, {
         description: 'Modern',
-        task: () => Promise.all(glob.sync(path.resolve(sassDir, '!(_|ie9|old-ie)*.scss')).map(transpile))
+        task: () => compile('!(_|ie9|old-ie)*.scss', {
+            browsers: browserslist
+        })
     }, {
         description: 'Inline',
-        task: () => Promise.all(glob.sync(path.resolve(sassDir, 'inline', '*.scss')).map(transpile))
+        task: () => compile('inline/*.scss', {
+            browsers: browserslist
+        })
     }],
     concurrent: true
 };
