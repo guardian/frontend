@@ -12,13 +12,6 @@ window.curlConfig = {
             'bootstraps/enhanced/media/videojs-global'
 
         ],
-    } else {
-        @if(WebpackSwitch.isSwitchedOn) {
-            preloads: [
-                'js!@Static("javascripts/entry-webpack.js")'
-
-            ],
-        }
     }
     paths: {
         @if(Configuration.assets.useHashedBundles) {
