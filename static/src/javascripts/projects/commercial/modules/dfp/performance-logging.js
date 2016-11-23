@@ -92,7 +92,7 @@ define([
     }
 
     function addEndTimeBaseline(baselineName) {
-        performanceLog.baselines.map(function(baseline) {
+        performanceLog.baselines.forEach(function(baseline) {
             if (baseline.name === baselineName) {
                 baseline.endTime = userTiming.getCurrentTime();
             }
