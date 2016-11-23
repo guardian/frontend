@@ -17,7 +17,6 @@ trait LinkTo extends Logging {
 
   lazy val host = Configuration.site.host
 
-  private val ProdURL = "^http[s]?://www.theguardian.com/.*$".r
   private val GuardianUrl = "^(http[s]?://www.theguardian.com)?(/.*)?$".r
   private val RssPath = "^(/.+)?(/rss)".r
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
