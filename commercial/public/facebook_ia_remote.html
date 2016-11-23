@@ -67,7 +67,7 @@
             return sizes
             .split(',')
             .map(function (size) {
-                return size === 'fluid' ? 'fluid' : size.split('x')
+                return size === 'fluid' ? 'fluid' : size.split('x').map(Number)
             });
         }
 
