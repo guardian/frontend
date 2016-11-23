@@ -4,7 +4,7 @@ import actions.AuthenticatedActions
 import com.exacttarget.fuelsdk.ETSubscriber
 import common.ExecutionContexts
 import conf.IdentityConfiguration
-import discussion.DiscussionApi
+import discussion.api.DiscussionApi
 import form.Mappings
 import idapiclient.responses.CookiesResponse
 import idapiclient.{EmailPassword, IdApiClient}
@@ -37,7 +37,7 @@ class AccountDeletionController(
     import authenticatedActions._
     import views.html.fragments.profile.deletion._
 
-    val page = IdentityPage("/delete", "Delete Account", "delete")
+    val page = IdentityPage("/delete", "Delete Account", Some("delete"))
 
     val accountDeletionForm = Form(Forms.single("password" -> Forms.text.verifying(Constraints.nonEmpty)))
 

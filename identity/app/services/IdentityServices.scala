@@ -6,7 +6,7 @@ import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import idapiclient.IdApiComponents
 import model.SaveForLaterDataBuilder
 import play.api.libs.ws.WSClient
-import discussion.DiscussionApi
+import discussion.api.DiscussionApi
 
 trait IdentityServices extends IdentityConfigurationComponents with IdApiComponents {
 
