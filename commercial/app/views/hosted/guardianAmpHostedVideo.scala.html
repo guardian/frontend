@@ -93,12 +93,6 @@
                     </div>
                 </div>
             </div>
-
-            @page.nextPage.map { nextPage =>
-                @hostedOnwardJourney(List(makeshiftPage(nextPage, page.campaign)), 1, 1)
-            }.getOrElse {
-                <div class="js-onward-placeholder hosted__next-page-placeholder"></div>
-            }
         </section>
         @guardianHostedCta(page, page.cta, isAMP = true)
 
