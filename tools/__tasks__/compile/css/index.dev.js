@@ -4,7 +4,7 @@ module.exports = {
         require('./clean'),
         require('./mkdir'),
         require('../images'),
-        require('./transpile-sass'),
+        require('./compile-sass'),
         require('./atomise')
     ]
 };

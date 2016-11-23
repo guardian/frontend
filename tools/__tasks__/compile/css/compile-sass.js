@@ -67,7 +67,7 @@ const compile = (query, {browsers, remify = true}) => Promise.all(
 );
 
 module.exports = {
-    description: 'Transpile Sass',
+    description: 'Compile Sass',
     task: [{
         description: 'Old IE',
         task: () => compile('old-ie.*.scss', {

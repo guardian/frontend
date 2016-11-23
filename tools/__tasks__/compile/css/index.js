@@ -5,7 +5,7 @@ module.exports = {
         require('./mkdir'),
         require('../images'),
         require('./update-caniuse'),
-        require('./transpile-sass'),
+        require('./compile-sass'),
         require('./atomise')
     ]
 };
