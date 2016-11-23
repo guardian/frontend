@@ -125,25 +125,27 @@ class AccountDeletionController(
 
     sealed trait DeletionType
     case object AutoDeletion extends DeletionType
-    case class ManualDeletion(hasComment: Boolean, hasJob: Boolean, isSubscriber: Boolean, isMember: Boolean) extends DeletionType
+    case class ManualDeletion(hasSavedArticles: Boolean, hasComment: Boolean, hasJob: Boolean, isSubscriber: Boolean, isMember: Boolean) extends DeletionType
 
 
     /* Users can delete account themselves if they
+         - has no saved articles, and
          - have never commented, and
          - do not have a jobs account, and
          - do not have active digipack subscriptions, and
          - do not have active membership */
     private def selectDeletionType[A](implicit request: AuthenticatedActions.AuthRequest[A]): Future[DeletionType] =
       for {
+        hasSavedArticles <- identityApiClient.hasNonDefaultSavedArticles(request.user.auth)
         hasComment <- discussionApi.myProfile(request.headers).map { _.privateFields.fold(true)(_.hasCommented) }
         hasJob <- Future.successful(request.user.user.userGroups.find(_.packageCode == "GRS").fold(false)(_ => true))
         isSubscriber <- identityApiClient.userIsSubscriber(request.user.auth)
         isMember <- identityApiClient.userIsMember(request.user.auth)
       } yield {
-        if (!hasComment && !hasJob && !isSubscriber && !isMember)
+        if (!hasSavedArticles && !hasComment && !hasJob && !isSubscriber && !isMember)
           AutoDeletion
         else
-          ManualDeletion(hasComment, hasJob, isSubscriber, isMember)
+          ManualDeletion(hasSavedArticles, hasComment, hasJob, isSubscriber, isMember)
       }
 
     private def renderFormWithUnableToDeleteAccountError(boundForm: Form[String]) =

@@ -1,6 +1,6 @@
 package idapiclient
 
-import com.gu.identity.model.{EmailList, LiftJsonConfig, SavedArticles, Subscriber, User}
+import com.gu.identity.model._
 import client.{Anonymous, Auth, Parameters, Response}
 import client.connection.{Http, HttpResponse}
 import scala.concurrent.{ExecutionContext, Future}
@@ -61,6 +61,18 @@ abstract class IdApi(conf: IdentityConfiguration, http: Http, jsonBodyParser: Js
 
     val response = http.POST(apiUrl(apiPath), Some(updatedSavedArticles), params, headers)
     response map extractSavedArticles }
+
+  def hasNonDefaultSavedArticles(auth: Auth) = {
+    def hasNoSavedArticles(savedArticles: List[SavedArticle]) = {savedArticles.isEmpty}
+
+    def hasOnlyDefaultSavedArticle(savedArticles: List[SavedArticle]) =
+      savedArticles.length == 1 && savedArticles.head.shortUrl == "/p/4ab7x"
+
+    savedArticles(auth).map(_.fold(
+      {_ => true},
+      { prefs => hasNoSavedArticles(prefs.articles) || hasOnlyDefaultSavedArticle(prefs.articles)})
+    ).map(result => !result)
+  }
 
   // USERS
 
