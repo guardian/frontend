@@ -970,7 +970,7 @@ $caption-button-size: 32px;
         .caption--main.caption--img {
             position: absolute;
             background: rgba($multimedia-support-5, .8);
-            color: white;
+            color: #ffffff;
             display: none;
             padding: $gs-baseline/2 $gs-gutter*2 $gs-baseline $gs-gutter/2;
             max-width: 100%;
@@ -980,7 +980,7 @@ $caption-button-size: 32px;
             }
 
             a {
-                color: white;
+                color: #ffffff;
             }
 
             &.caption--img {
@@ -991,10 +991,6 @@ $caption-button-size: 32px;
             &:before {
                 content: none;
             }
-        }
-
-        input[id="show-caption"]:checked ~ .reveal-caption {
-            background-color: $multimedia-support-5;
         }
 
         input[id="show-caption"]:checked ~ .caption--main {
@@ -1032,10 +1028,10 @@ $caption-button-size: 32px;
             position: absolute;
             left: 50%;
             bottom: 0;
-            margin-left: -6px;
-            border-bottom: 6px solid $neutral-2;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
+            margin-left: -$gs-baseline/2;
+            border-bottom: $gs-baseline/2 solid $neutral-2;
+            border-left: $gs-baseline/2 solid transparent;
+            border-right: $gs-baseline/2 solid transparent;
         }
     }
 }
