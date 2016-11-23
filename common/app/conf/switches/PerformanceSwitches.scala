@@ -223,7 +223,7 @@ trait PerformanceSwitches {
     "webpack",
     "If this switch is on, website will serve standard JavaScript that has been bundled by Webpack",
     owners = Seq(Owner.withGithub("siadcock")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2017, 1, 9),
     exposeClientSide = true
   )
