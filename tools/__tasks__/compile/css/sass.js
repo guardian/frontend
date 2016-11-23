@@ -49,19 +49,19 @@ const getFiles = query => glob.sync(path.resolve(sassDir, query));
 const compile = (query, {browsers, remify = true}) => Promise.all(
     getFiles(query).map(filePath => {
         const dest = path.resolve(target, 'stylesheets', path.relative(sassDir, filePath).replace('scss', 'css'));
-        const postCSSplugins = [autoprefixer({browsers})];
         const sassOptions = Object.assign({
             file: filePath,
             outFile: dest
         }, sassDefaults);
 
+        const postcssPlugins = [autoprefixer({browsers})];
         if (remify) {
-            postCSSplugins.push(pxtorem(remifications));
+            postcssPlugins.push(pxtorem(remifications));
         }
 
         mkdirp.sync(path.parse(dest).dir);
         return renderSass(sassOptions)
-            .then(result => postcss(postCSSplugins).process(result.css.toString()))
+            .then(result => postcss(postcssPlugins).process(result.css.toString()))
             .then(result => saveCSS(dest, result.css));
     })
 );
