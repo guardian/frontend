@@ -35,6 +35,7 @@ window.curlConfig = {
                 'bootstraps/enhanced/trail':            '@Static("javascripts/bootstraps/enhanced/trail-webpack.js")',
                 'bootstraps/enhanced/gallery':          '@Static("javascripts/bootstraps/enhanced/gallery-webpack.js")',
                 'bootstraps/enhanced/profile':          '@Static("javascripts/bootstraps/enhanced/profile-webpack.js")',
+                'ophan/ng':                             '@Static("javascripts/vendor/ophan/ophan.ng.js")',
             } else {
                 'bootstraps/enhanced/main':             '@Static("javascripts/bootstraps/enhanced/main.js")',
                 'bootstraps/enhanced/crosswords' :      '@Static("javascripts/bootstraps/enhanced/crosswords.js")',
@@ -54,12 +55,12 @@ window.curlConfig = {
                 'bootstraps/enhanced/trail':            '@Static("javascripts/bootstraps/enhanced/trail.js")',
                 'bootstraps/enhanced/gallery':          '@Static("javascripts/bootstraps/enhanced/gallery.js")',
                 'bootstraps/enhanced/profile':          '@Static("javascripts/bootstraps/enhanced/profile.js")',
+                'ophan/ng':                             '@{Configuration.javascript.config("ophanJsUrl")}',
             }
             'foresee.js':                       'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                     '@{Configuration.javascript.config("googletagJsUrl")}',
             'sonobi.js':                        '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
             react:                              '@Static("javascripts/vendor/react/react.js")',
-            'ophan/ng':                         '@{Configuration.javascript.config("ophanJsUrl")}',
             'prebid.js':                        '@Static("javascripts/vendor/prebid/0.8.1/prebid.js")',
             'discussion-frontend-react':        '@DiscussionAsset("discussion-frontend.react.amd")',
             'discussion-frontend-preact':       '@DiscussionAsset("discussion-frontend.preact.amd")',
