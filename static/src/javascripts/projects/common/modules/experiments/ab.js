@@ -31,7 +31,7 @@ define([
         new MembershipEngagementInternationalExperiment(),
         new ContributionsEpicUsaCtaThreeWay(),
         new PlatformStickyAdViewability(),
-        new UkMembershipEngagementMessageTest10
+        new UkMembershipEngagementMessageTest10()
     ];
 
     var participationsKey = 'gu.ab.participations';
