@@ -21,18 +21,6 @@ define([
         }, this);
     }
 
-    function prepareWrapper(el) {
-        var wrapper = document.createElement('div');
-        wrapper.className += el.className;
-
-        fastdom.write(function () {
-            el.parentNode.insertBefore(wrapper, el);
-            wrapper.appendChild(el);
-        });
-
-        return wrapper;
-    }
-
     function _onPlayerStateChange(event, handlers, wrapper) {
         //change class according to the current state
         //TODO: Fix this so we can add poster image.
@@ -61,17 +49,15 @@ define([
     }
 
     function init(el, handlers, videoId) {
-        //wrap <iframe/> in a div with dynamically updating class attributes
         loadYoutubeJs();
-        var wrapper = prepareWrapper(el);
 
         return promise.then(function () {
             function onPlayerStateChange(event) {
-                _onPlayerStateChange(event, handlers, wrapper);
+                _onPlayerStateChange(event, handlers, el);
             }
 
             function onPlayerReady(event) {
-                _onPlayerReady(event, handlers, wrapper);
+                _onPlayerReady(event, handlers, el);
             }
 
             return setupPlayer(videoId, onPlayerReady, onPlayerStateChange);
