@@ -12,6 +12,9 @@
 @headline(pressedContent: PressedContent) = {
     <h3 class="headline">
         @defining(FaciaCardHeader.fromTrail(pressedContent, None)) { header =>
+            @if(header.isGallery) { @icon("camera") }
+            @if(header.isGallery) { @fragments.inlineSvg("camera", "icon") }
+
             @kicker(header, Seq())
             @if(header.kicker.isDefined) {
                 <span class="kicker-separator">/</span>
