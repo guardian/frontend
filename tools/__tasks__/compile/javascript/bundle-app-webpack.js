@@ -8,8 +8,9 @@ const writeFileP = pify(fs.writeFile);
 const {src, target} = require('../../config').paths;
 
 module.exports = {
-    description: 'Concatenate Webpack-bundled standard, curl etc into app-webpack.js',
+    description: 'Concatenate Webpack-bundled standard, curl and boot etc into app-webpack.js',
     task: () => Promise.all([
+        path.resolve(target, 'javascripts', 'entry-webpack.js'),
         path.resolve(src, 'javascripts', 'components', 'curl', 'curl-domReady.js'),
         path.resolve(target, 'javascripts', 'boot-webpack.js')
     ].map(file => readFileP(file, 'utf8')))
