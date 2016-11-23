@@ -5,8 +5,7 @@ define([
     'common/utils/closest',
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/track-ad-render',
-    'commercial/modules/messenger',
-    'common/modules/experiments/ab'
+    'commercial/modules/messenger'
 ], function (
     Promise,
     config,
@@ -14,8 +13,7 @@ define([
     closest,
     fastdom,
     trackAdRender,
-    messenger,
-    ab
+    messenger
 ) {
     var topSlotId = 'dfp-ad--top-above-nav';
     var updateQueued = false;
@@ -48,7 +46,7 @@ define([
 
     function initState() {
         return fastdom.read(function () {
-            var navigationHeight = ab.isInVariant('PlatformStickyAdViewability', 'variant') && (navigation && navigation[0] && navigation[0].offsetHeight) || 0;
+            var navigationHeight = (navigation && navigation[0] && navigation[0].offsetHeight) || 0;
             headerHeight = header.offsetHeight - navigationHeight;
             return topSlot.offsetHeight;
         })
