@@ -117,8 +117,8 @@ class AccountDeletionController(
 
       (for {
         _ <- checkUserEnteredCorrectPassword()
-        _ <- unauthenticateUser()
         _ <- removeFromAllMalingLists()
+        _ <- unauthenticateUser()
         _ <- deleteAccountProper()
       } yield ()).fold(processFailures, _ => clearCookiesAndDisplaySuccessForm)
     }
