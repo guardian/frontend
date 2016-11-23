@@ -51,7 +51,7 @@ class MediaController(contentApiClient: ContentApiClient) extends Controller wit
 
   private def renderMedia(model: MediaPage)(implicit request: RequestHeader): Result = {
     val htmlResponse = () => views.html.media(model)
-    val jsonResponse = () => views.html.fragments.mediaBody(model)
+    val jsonResponse = () => views.html.fragments.mediaBody(model, displayCaption = false)
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 
