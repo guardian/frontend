@@ -1,7 +1,7 @@
 const webpack  = require('webpack');
 
 module.exports = {
-    entry: './static/src/javascripts/entry-webpack.js',
+    entry: './static/src/javascripts/boot-webpack.js',
     resolve: {
         modulesDirectories: ['static/src/javascripts'],
         alias: {
@@ -43,7 +43,7 @@ module.exports = {
     },
     output: {
         path: __dirname + '/static/target/javascripts',
-        filename: 'entry-webpack.js'
+        filename: 'boot-webpack.js'
     },
     plugins: [
         new webpack.optimize.UglifyJsPlugin(),
