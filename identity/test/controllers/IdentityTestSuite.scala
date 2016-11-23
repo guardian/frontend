@@ -5,7 +5,8 @@ import test.SingleServerSuite
 
 class IdentityTestSuite extends Suites(
   new EditProfileControllerTest,
-  new EmailControllerTest
+  new EmailControllerTest,
+  new SignoutControllerTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19010
 }

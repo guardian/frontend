@@ -23,6 +23,15 @@
             .map(function(xs) { return xs[1] })[0];
     }
 
+    function getAnalyticsEdition() {
+        return (guardian.config.page.edition || '').toLowerCase();
+    }
+
+    function getAnalyticsTitle() {
+        var analyticsTitle = (guardian.config.page.webTitle || '').toLowerCase();
+        return (analyticsTitle === 'network front') ? getAnalyticsEdition() + ' ' + analyticsTitle : analyticsTitle;
+    }
+
     var identityId = null;
     if (guardian.config.user) {
         identityId = guardian.config.user.id;
@@ -49,7 +58,7 @@
     @for(trackerName <- Seq(GoogleAnalyticsAccount.editorialProd.trackerName, GoogleAnalyticsAccount.editorialTest.trackerName)) {
         ga('@{trackerName}.set', 'forceSSL', true);
 
-        ga('@{trackerName}.set', 'title', guardian.config.page.webTitle);
+        ga('@{trackerName}.set', 'title', getAnalyticsTitle());
 
         @***************************************************************************************
         * Custom dimensions common to all platforms across the whole Guardian estate           *
@@ -78,6 +87,7 @@
         ga('@{trackerName}.set', 'dimension26', (!!guardian.config.page.isHosted).toString());
         ga('@{trackerName}.set', 'dimension27', navigator.userAgent);
         ga('@{trackerName}.set', 'dimension29', window.location.href);
+        ga('@{trackerName}.set', 'dimension30', getAnalyticsEdition());
         @for(sponsorLogos <- listSponsorLogosOnPage(page)) {
           ga('@{trackerName}.set', 'dimension31', '@Html(sponsorLogos.mkString("|"))');
         }

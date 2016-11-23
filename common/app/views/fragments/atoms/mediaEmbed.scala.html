@@ -1,7 +1,7 @@
 @import conf.Static
 @import model.MediaAtomEmbedPage
 
-@(page: MediaAtomEmbedPage)(implicit request: RequestHeader)
+@(page: MediaAtomEmbedPage, displayCaption: Boolean)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 <html lang="en-GB" class="gu-video-embed-html">
@@ -15,7 +15,7 @@
         <base target="_parent"/>
     </head>
     <body>
-        @views.html.fragments.atoms.media(page.atom)
+        @views.html.fragments.atoms.media(page.atom, displayCaption = displayCaption)
 
         @fragments.analytics.base(page)
     </body>

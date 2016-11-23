@@ -5,8 +5,8 @@ define([
     'commercial/modules/dfp/queue-advert',
     'commercial/modules/dfp/load-advert',
     'commercial/modules/dfp/enable-lazy-load',
-    'commercial/modules/dfp/ophan-tracking'
-], function (mediator, dfpEnv, Advert, queueAdvert, loadAdvert, enableLazyLoad, ophanTracking) {
+    'commercial/modules/dfp/performance-logging'
+], function (mediator, dfpEnv, Advert, queueAdvert, loadAdvert, enableLazyLoad, performanceLogging) {
     return addSlot;
 
     function addSlot(adSlot) {
@@ -30,11 +30,11 @@ define([
         dfpEnv.adverts.push(advert);
         queueAdvert(advert);
         if (dfpEnv.shouldLazyLoad()) {
-            ophanTracking.updateAdvertMetric(advert, 'loadingMethod', 'add-slot-lazy');
+            performanceLogging.updateAdvertMetric(advert, 'loadingMethod', 'add-slot-lazy');
             enableLazyLoad();
         } else {
-            ophanTracking.updateAdvertMetric(advert, 'loadingMethod', 'add-slot-instant');
-            ophanTracking.updateAdvertMetric(advert, 'lazyWaitComplete', 0);
+            performanceLogging.updateAdvertMetric(advert, 'loadingMethod', 'add-slot-instant');
+            performanceLogging.updateAdvertMetric(advert, 'lazyWaitComplete', 0);
             loadAdvert(advert);
         }
     }

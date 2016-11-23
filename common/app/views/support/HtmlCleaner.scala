@@ -602,7 +602,7 @@ object MembershipEventCleaner extends HtmlCleaner {
     }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean, amp: Boolean = false)(implicit val request: RequestHeader) extends HtmlCleaner {
+case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false)(implicit val request: RequestHeader) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
