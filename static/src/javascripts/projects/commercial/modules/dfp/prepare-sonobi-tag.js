@@ -1,21 +1,20 @@
 define([
+    'Promise',
     'common/modules/commercial/commercial-features',
-    'commercial/modules/dfp/dfp-env'
+    'commercial/modules/dfp/dfp-env',
+    'lodash/functions/memoize'
 ], function(
+    Promise,
     commercialFeatures,
-    dfpEnv
+    dfpEnv,
+    memoize
 ){
-    var prom = null;
-
-    function setupSonobi() {
+    var setupSonobi = memoize(function () {
         return Promise.resolve(require(['js!sonobi.js']));
-    }
+    });
 
     function init() {
-        if (!prom) {
-            prom = dfpEnv.sonobiEnabled && commercialFeatures.dfpAdvertising ? setupSonobi() : Promise.resolve();
-        }
-        return prom;
+        return dfpEnv.sonobiEnabled && commercialFeatures.dfpAdvertising ? setupSonobi() : Promise.resolve();
     }
 
     return {
