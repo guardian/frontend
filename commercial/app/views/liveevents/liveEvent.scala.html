@@ -28,12 +28,14 @@
                         <div class="advert__meta advert__meta--scarcity">Last few tickets remaining</div>
                     }
                 }
-                <div class="advert__standfirst">
-                    <strong>@event.displayPriceRange</strong>
-                </div>
-                <span class="advert__more button button--small button--primary">
-                    Book now @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
-                </span>
+                @for(displayPriceRange <- event.displayPriceRange) {
+                    <div class="advert__standfirst">
+                        <strong>displayPriceRange</strong>
+                    </div>
+                    <span class="advert__more button button--small button--primary">
+                        Book now @fragments.inlineSvg("arrow-right", "icon", List("i-right"))
+                    </span>
+                }
             </a>
         </div>
     </aside>
