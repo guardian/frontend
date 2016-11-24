@@ -24,7 +24,7 @@ trait Requests {
 
     lazy val isAmp: Boolean = r.getQueryString("amp").isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host)
 
-    lazy val isEmail: Boolean = r.getQueryString("format").contains("email") || r.path.endsWith(EMAIL_SUFFIX)
+    lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(EMAIL_SUFFIX)
 
     lazy val isModified = isJson || isRss || isEmail
 
