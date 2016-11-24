@@ -39,6 +39,6 @@ class ExactTargetService(conf: IdentityConfiguration) extends ExecutionContexts 
     ).fold(createAndUnsubscribe)(result => unsubscribe(result.getObject))
   }
 
-  private val etClient =
+  private lazy val etClient =
     conf.exactTargetUserhelp.factory.getOrElse(throw new RuntimeException("Missing Exact Target Userhelp configuration"))
 }
