@@ -4,11 +4,11 @@ module.exports = {
         require('./clean'),
         require('../inline-svgs'),
         require('./copy'),
-        require('./bundle'),
+        require('./bundle-rjs'),
         require('./bundle-webpack'),
         require('./webpack'),
-        require('./bundle-app'),
-        require('./bundle-app-webpack'),
+        require('./concat-rjs'),
+        require('./concat-webpack'),
         require('./bundle-shims')
     ]
 };
