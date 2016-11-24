@@ -34,7 +34,7 @@ check-node: # PRIVATE
 
 # Make sure yarn is installed, and it's at least v0.16.
 check-yarn: # PRIVATE
-	@if [ -z "$$(which yarn)" ] || [ $$(echo $$(yarn --version | cut -d . -f 1,2) '< 0.17' | bc) = 1 ]; then npm i -g yarn@\$<=0.17; fi
+	@if [ -z "$$(which yarn)" ] || [ $$(echo $$(yarn --version | cut -d . -f 1,2) '< 0.17' | bc) = 1 ]; then npm i -g yarn@~0.17; fi
 
 # *********************** DEVELOPMENT ***********************
 
