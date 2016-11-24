@@ -2,13 +2,11 @@ define([
     'admin/bootstraps/abtests',
     'admin/bootstraps/radiator',
     'admin/bootstraps/commercial-browser-performance',
-    'admin/bootstraps/commercial-programmatic-performance',
     'domReady'
 ], function (
     abTests,
     radiator,
     commercialBrowserPerformance,
-    commercialProgrammaticPerformance,
     domReady
 ) {
     domReady(function () {
