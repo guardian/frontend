@@ -23,7 +23,13 @@ class HostedContentController(contentApiClient: ContentApiClient)
     (implicit request: Request[AnyContent]): Future[Result] = {
     def cached(html: Html) = Cached(cacheDuration)(RevalidatableResult.Ok(html))
     hostedPage map {
-      case Some(page: HostedVideoPage) => cached(guardianHostedVideo(page))
+      case Some(page: HostedVideoPage) =>
+        if(request.isAmp) {
+          cached(guardianAmpHostedVideo(page))
+        }
+        else {
+          cached(guardianHostedVideo(page))
+        }
       case Some(page: HostedGalleryPage) => cached(guardianHostedGallery(page))
       case Some(page: HostedArticlePage) =>
         if(request.isAmp) {

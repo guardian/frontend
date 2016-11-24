@@ -22,27 +22,27 @@ define([
     }
 
     function trackSamePageLinkClick(target, tag) {
-        ga(send, 'event', 'Click', 'In Page', tag, {
+        ga(send, 'event', 'click', 'in page', tag, {
             nonInteraction: true, // to avoid affecting bounce rate
             dimension13: extractLinkText(target)
         });
     }
 
     function trackExternalLinkClick(target, tag) {
-        ga(send, 'event', 'Click', 'External', tag, {
+        ga(send, 'event', 'click', 'external', tag, {
             dimension13: extractLinkText(target)
         });
     }
 
     function trackSponsorLogoLinkClick(target) {
         var sponsorName = target.dataset.sponsor;
-        ga(send, 'event', 'Click', 'Sponsor Logo', sponsorName, {
+        ga(send, 'event', 'click', 'sponsor logo', sponsorName, {
             nonInteraction: true
         });
     }
 
     function trackNativeAdLinkClick(slotName, tag) {
-        ga(send, 'event', 'Click', 'Native Ad', tag, {
+        ga(send, 'event', 'click', 'native ad', tag, {
             nonInteraction: true,
             dimension25: slotName
         });
