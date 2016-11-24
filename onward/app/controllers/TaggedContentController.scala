@@ -19,7 +19,9 @@ class TaggedContentController(val contentApiClient: ContentApiClient, val mostRe
         case Nil    => Cached(300) { JsonNotFound() }
         case trails => render(trails)
       }
-    } getOrElse(Future { BadRequest })
+    } getOrElse Future {
+      BadRequest
+    }
   }
 
   private def render(trails: Seq[ContentType])(implicit request: RequestHeader) = Cached(300) {

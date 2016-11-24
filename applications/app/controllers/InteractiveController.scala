@@ -6,7 +6,7 @@ import contentapi.ContentApiClient
 import conf.switches.Switches
 import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
 import model._
-import play.api.libs.ws.{WSClient}
+import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import conf.Configuration.interactive.cdnPath
@@ -31,10 +31,9 @@ class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClie
     wsClient.url(serviceWorkerPath).get().map { response =>
       Cached (365.days) {
         response.status match {
-          case 200 => {
+          case 200 =>
             val contentType = response.allHeaders("Content-Type").mkString(",")
             RevalidatableResult(Ok(response.body).as(contentType), response.body)
-          }
           case otherStatus => WithoutRevalidationResult(new Status(otherStatus))
         }
       }

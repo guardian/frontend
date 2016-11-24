@@ -135,8 +135,6 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
     val result = archiveController.lookup("/news/datablog/2013/jun/19/week")(TestRequest())
     status(result) should be (301)
 
-    println(location(result))
-
     location(result) should be ("/news/datablog/2013/jun/19/all")
 
     val result2 = archiveController.lookup("/news/2013/jun/19/week")(TestRequest())

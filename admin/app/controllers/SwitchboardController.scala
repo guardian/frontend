@@ -46,12 +46,12 @@ class SwitchboardController(akkaAsync: AkkaAsync) extends Controller with Loggin
     } else {
       log.info("saving switchboard")
 
-      val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse("unknown user (dev-build?)")
+      val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
       val updates: Seq[String] = request.body.asFormUrlEncoded.map { params =>
           Switches.all map { switch =>
               switch.name + "=" + params.get(switch.name).map(v => "on").getOrElse("off")
           }
-      } getOrElse(Nil)
+      } getOrElse Nil
 
       Future {
         saveSwitchesOrError(requester, updates)
@@ -71,7 +71,7 @@ class SwitchboardController(akkaAsync: AkkaAsync) extends Controller with Loggin
     val changes = updates filterNot { current contains _ }
     SwitchNotification.onSwitchChanges(akkaAsync)(requester, Configuration.environment.stage, changes)
     changes foreach { change =>
-      log.info(s"Switch change by ${requester}: ${change}")
+      log.info(s"Switch change by $requester: $change")
     }
 
     Redirect(routes.SwitchboardController.renderSwitchboard())

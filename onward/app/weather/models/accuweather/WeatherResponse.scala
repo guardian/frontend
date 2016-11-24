@@ -16,7 +16,7 @@ case class WeatherResponse(
   Temperature: Map[String, Temperature]
 ) {
   def temperatureForEdition(edition: Edition) = edition match {
-    case Us => Temperature.get("Imperial").get
-    case _ => Temperature.get("Metric").get
+    case Us => Temperature("Imperial")
+    case _ => Temperature("Metric")
   }
 }

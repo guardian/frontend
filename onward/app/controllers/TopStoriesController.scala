@@ -67,7 +67,7 @@ class TopStoriesController(contentApiClient: ContentApiClient) extends Controlle
 
   private def renderTopStoriesTrails(trails: Seq[PressedContent])(implicit request: RequestHeader) = {
     val trailsLength = request.getQueryString("page-size").map{ _.toInt }.getOrElse(trails.size)
-    val response = if (request.getQueryString("view") == Some("link"))
+    val response = if (request.getQueryString("view").contains("link"))
       () => views.html.fragments.trailblocks.link(trails, trailsLength)
     else
       () => views.html.fragments.trailblocks.headline(trails, trailsLength)

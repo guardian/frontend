@@ -2,7 +2,7 @@ package common
 
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
-import views.support.{StripHtmlTagsAndUnescapeEntities}
+import views.support.StripHtmlTagsAndUnescapeEntities
 
 class StripHtmlTagsAndUnescapeEntitiesTest extends FlatSpec with Matchers {
 

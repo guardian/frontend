@@ -14,7 +14,7 @@ object Cors extends Results with implicits.Requests {
 
     request.headers.get("Origin") match {
       case None => result
-      case Some(requestOrigin) => {
+      case Some(requestOrigin) =>
         val allowedOrigin = ajax.corsOrigins.find(_ == requestOrigin).getOrElse("*")
         val headers = allowedMethods.map("Access-Control-Allow-Methods" -> _).toList ++ List(
           "Access-Control-Allow-Origin" -> allowedOrigin,
@@ -22,7 +22,6 @@ object Cors extends Results with implicits.Requests {
           "Access-Control-Allow-Credentials" -> "true")
 
         result.withHeaders(headers: _*)
-      }
     }
   }
 }

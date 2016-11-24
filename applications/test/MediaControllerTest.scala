@@ -23,7 +23,7 @@ import scala.util.matching.Regex
   }
 
   it should "return JSON when .json format is supplied" in {
-    val fakeRequest = TestRequest(s"${videoUrl}.json")
+    val fakeRequest = TestRequest(s"$videoUrl.json")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
@@ -51,7 +51,7 @@ import scala.util.matching.Regex
     contentAsString(result) should include(""""isPodcast":false""")
   }
 
-  it should("strip newline characters out of src urls for videos") in {
+  it should "strip newline characters out of src urls for videos" in {
      val result = mediaController.render(videoUrlWithDodgyOctpusUrl)(TestRequest(videoUrlWithDodgyOctpusUrl))
      status(result) should be (200)
      contentAsString(result) should include ("https://multimedia.guardianapis.com/interactivevideos/video.php?octopusid=10040285&amp;format=video/m3u8")
