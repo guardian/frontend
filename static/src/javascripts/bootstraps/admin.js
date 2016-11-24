@@ -22,10 +22,6 @@ define([
             case '/commercial/performance/browser-dashboard':
                 commercialBrowserPerformance.init();
                 break;
-
-            case '/commercial/performance/programmatic-dashboard':
-                commercialProgrammaticPerformance.init();
-                break;
         }
     });
 });
