@@ -122,7 +122,7 @@
                     }
                 </figcaption>
             } else {
-                <figcaption class="caption caption--img" itemprop="description">
+                <figcaption class="caption caption--img @if(isMain) {caption--main}" itemprop="description">
                     @img.caption.map(Html(_))
                     @if(img.displayCredit && !img.creditEndsWithCaption) {
                         @img.credit.map(Html(_))
