@@ -462,3 +462,9 @@
         min-height: 250px;
     }
 }
+
+.ad-slot--offset-right {
+    @include mq(wide) {
+        margin-right: -25em;
+    }
+}
