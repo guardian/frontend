@@ -38,7 +38,6 @@ module.exports = function (grunt) {
             staticMappings: {
                 replace: 'grunt-text-replace',
                 sasslint: 'grunt-sass-lint',
-                assetmonitor: 'grunt-asset-monitor',
                 /*eslint-disable camelcase*/
                 px_to_rem: 'grunt-px-to-rem',
                 /*eslint-enable camelcase*/
