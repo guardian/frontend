@@ -1002,8 +1002,7 @@ $caption-button-size: 32px;
             flex-wrap: wrap;
             border-bottom: 0;
 
-            & > div,
-            & > p {
+            .meta__extras {
                 flex: 1 0 auto;
                 width: 100%;
             }
