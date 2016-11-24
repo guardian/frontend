@@ -107,7 +107,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   def cleanAmpEmbed(document: Document) = {
     document.getElementsByClass("element-embed")
-      .filter(_.getElementsByTag("iframe").length != 0)
+      .filter(_.getElementsByTag("iframe").nonEmpty)
       .foreach(_.getElementsByTag("iframe").map(_.remove))
   }
 
@@ -137,7 +137,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   def cleanAmpInteractives(document: Document) = {
 
     document.getElementsByClass("element-interactive").filter { element: Element =>
-      element.getElementsByTag("a").length !=0
+      element.getElementsByTag("a").nonEmpty
     }.foreach { interactive: Element =>
       val link = interactive.getElementsByTag("a")
       val linkToInteractive = link.first().attr("href")

@@ -63,7 +63,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         ParentClasses.foldLeft(Set(): Set[String]) { case (classes, (childClass, parentClass)) =>
           if (allElements.exists(_.hasClass(childClass))) classes + parentClass
           else classes
-        } foreach(block.addClass)
+        } foreach block.addClass
 
         // Check if the heading has a number and is an embed or quote
         if ((block.hasClass("block--minute-article--embed") || block.hasClass("block--minute-article--quote")) && headingHasNumber) {

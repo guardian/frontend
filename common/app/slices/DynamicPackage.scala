@@ -7,7 +7,7 @@ object DynamicPackage extends DynamicContainer {
     val byGroup = segmentByGroup(stories)
     val snap = byGroup.getOrElse(1, Seq.empty)
 
-    if (snap.length > 0) {
+    if (snap.nonEmpty) {
       Some((FullMedia50, stories.drop(1)))
     } else {
       None

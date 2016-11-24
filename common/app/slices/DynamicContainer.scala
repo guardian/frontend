@@ -20,7 +20,7 @@ private [slices] trait DynamicContainer {
     val huges = byGroup.getOrElse(3, Seq.empty)
     val veryBigs = byGroup.getOrElse(2, Seq.empty)
 
-    if (huges.length > 0) {
+    if (huges.nonEmpty) {
       Some((FullMedia100, stories.drop(1)))
     } else if (veryBigs.length == 1) {
       Some((FullMedia75, stories.drop(1)))

@@ -17,7 +17,7 @@ class Assets(base: String, mapResource: String, useHashedBundles: Boolean = Conf
   def apply(path: String): String = {
     val target =
       if (useHashedBundles) {
-        lookup.getOrElse(path, throw new AssetNotFoundException(path))
+        lookup.getOrElse(path, throw AssetNotFoundException(path))
       } else {
         path
       }
@@ -45,7 +45,7 @@ class CssMap(mapResource: String) extends Logging {
   lazy val lookup: Map[String, List[String]] = Get(cssMap(mapResource))
 
   def apply(className: String): String = {
-      className + ' ' + lookup.getOrElse(className, throw new CssClassNotFoundException(className)).mkString(" ")
+      className + ' ' + lookup.getOrElse(className, throw CssClassNotFoundException(className)).mkString(" ")
   }
 
   def jsonToAssetMap(json: String): Try[Map[String, List[String]]] =

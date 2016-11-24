@@ -82,7 +82,7 @@ import tools.MatchListFeatureTools
       goTo("/football/results") { browser =>
         import browser._
         Then("any links I click should be tracked")
-        $("a").filter(link => !Option(link.getAttribute("data-link-name")).isDefined).foreach { link =>
+        $("a").filter(link => Option(link.getAttribute("data-link-name")).isEmpty).foreach { link =>
           fail(s"Link with text ${link.getText} has no data-link-name")
         }
       }

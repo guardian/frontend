@@ -45,7 +45,7 @@ class PaBrowserController(val wsClient: WSClient, val environment: Environment) 
   }
 
   private def getOneOrFail(submission: Map[String, scala.Seq[String]], key: String): String = {
-    URLDecoder.decode(submission.get(key).getOrElse { throw new Exception("Missing required submission parameter, %s".format(key)) }.head, "UTF-8")
+    URLDecoder.decode(submission.getOrElse(key, throw new Exception("Missing required submission parameter, %s".format(key))).head, "UTF-8")
   }
 
   private def getOne(submission: Map[String, scala.Seq[String]], key: String): Option[String] = {

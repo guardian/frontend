@@ -19,7 +19,7 @@
 }
 
 @branding.label
-<a class="badge__link" href="@branding.sponsorLink" data-sponsor="@branding.sponsorName">
+<a class="badge__link" href="@branding.sponsorLink" data-sponsor="@branding.sponsorName.toLowerCase">
     @if(request.isAmp) {
         @if(onDarkBackground && branding.highContrastSponsorLogo.nonEmpty) {
             @for(highContrastLogo <- branding.highContrastSponsorLogo) {

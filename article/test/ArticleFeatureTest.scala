@@ -484,7 +484,7 @@ import collection.JavaConversions._
 
         Then("There should be a placeholder for related content")
         val relatedLink = findFirst("[data-test-id=related-content]")
-        relatedLink.getText() should be (empty)
+        relatedLink.getText should be (empty)
       }
     }
 

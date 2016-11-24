@@ -37,11 +37,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-platform-sticky-ad-viewability",
-    "Test the affect of showing the navigation on the viewability of the sticky top ad",
-    owners = Seq(Owner.withGithub("gtrufitt"), Owner.withName("Gareth Trufitt")),
+    "ab-uk-memb-engagement-msg-copy-test-10",
+    "Test alternate short messages on membership engagement banner",
+    owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 24),
+    sellByDate = new LocalDate(2016, 12, 8), // Thursday 8th December
     exposeClientSide = true
   )
 }

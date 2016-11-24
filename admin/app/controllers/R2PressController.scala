@@ -67,13 +67,12 @@ class R2PressController(akkaAsync: AkkaAsync) extends Controller with Logging wi
       form("r2url").map { r2Url =>
         r2Url.trim match {
           // TODO: other validation?
-          case url if url.nonEmpty => {
+          case url if url.nonEmpty =>
             if (isTakedown(body)) {
               R2PressedPageTakedownNotifier.enqueue(akkaAsync)(url)
             } else {
               R2PagePressNotifier.enqueue(akkaAsync)(R2PressMessage(url, isFromPreservedSource(body), isConvertToHttps(body)))
             }
-          }
           case _ => "URL was not specified"
         }
       }

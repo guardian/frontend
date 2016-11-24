@@ -55,13 +55,13 @@ class DfpApiValidationTest extends FlatSpec with Matchers {
     val guLineItem = lineItem(List("1", "2", "3"))
     val dfpLineItem = makeDfpLineItem(List("1", "2", "3", "4"))
 
-    DataValidation.isGuLineItemValid(guLineItem, dfpLineItem) shouldBe (false)
+    DataValidation.isGuLineItemValid(guLineItem, dfpLineItem) shouldBe false
   }
 
   "isGuLineItemValid" should "return true when the adunit targeting does match the dfp line item" in {
     val guLineItem = lineItem(List("1", "2", "3"))
     val dfpLineItem = makeDfpLineItem(List("1", "2", "3"))
 
-    DataValidation.isGuLineItemValid(guLineItem, dfpLineItem) shouldBe (true)
+    DataValidation.isGuLineItemValid(guLineItem, dfpLineItem) shouldBe true
   }
 }
