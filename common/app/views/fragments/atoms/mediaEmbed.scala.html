@@ -1,5 +1,7 @@
 @import conf.Static
 @import model.MediaAtomEmbedPage
+@import conf.Configuration
+@import templates.inlineJS.blocking.js.curlConfig
 
 @(page: MediaAtomEmbedPage, displayCaption: Boolean)(implicit request: RequestHeader)
 
@@ -16,6 +18,73 @@
     </head>
     <body>
         @views.html.fragments.atoms.media(page.atom, displayCaption = displayCaption)
+ <script>
+        var guardian = {
+            isEmbed: true,
+            isModernBrowser: (
+                'querySelector' in document
+                && 'addEventListener' in window
+                && 'localStorage' in window
+                && 'sessionStorage' in window
+                && 'bind' in Function
+                && (
+                    ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
+                    || 'XDomainRequest' in window
+                )
+            ),
+            config: @Html(templates.js.javaScriptConfig(model.MediaAtomEmbedPage(page.atom)).body),
+            adBlockers: { onDetect: [] }
+
+        };
+        @* Decide the Ophan PV ID here so we can share it with Google Analytics *@
+        guardian.config.ophan = {
+            // This is duplicated from
+            // https://github.com/guardian/ophan/blob/master/tracker-js/assets/coffee/ophan/transmit.coffee
+            // Please do not change this without talking to the Ophan project first.
+            pageViewId: new Date().getTime().toString(36) + 'xxxxxxxxxxxx'.replace(/x/g, function () {
+                return Math.floor(Math.random() * 36).toString(36);
+            })
+        };
+        @* Find the Ophan browser ID as well, for sharing with GA *@
+        @Html(templates.inlineJS.nonBlocking.js.ophanConfig().body)
+
+        var docClass = document.documentElement.className;
+
+        @* Get iframes parent url: http://www.nczonline.net/blog/2013/04/16/getting-the-url-of-an-iframes-parent/ *@
+        var parentUrl = (!!window.parent && window.parent !== window) ? document.referrer : '';
+
+        @* Hack to correctly track external embeds which have been incorrectly embedded on theguardian.com *@
+        var sAccount = (/www\.theguardian\.com/.test(parentUrl)) ? 'guardiangu-network' : 'guardiangu-thirdpartyapps';
+
+        window.s_account = sAccount;
+
+        function hasSvgSupport() {
+            var ns = {'svg': 'http://www.w3.org/2000/svg'};
+            return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+        }
+
+        if (hasSvgSupport()) {
+            docClass += 'svg';
+        }
+
+        document.documentElement.className = docClass;
+        </script>
+
+        <script>
+            @Html(curlConfig().body)
+
+            @if(Configuration.assets.useHashedBundles) {
+                window.curl.paths['bootstraps/enhanced/youtube'] = '@Static("javascripts/bootstraps/enhanced/youtube.js")';
+                window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
+            } else {
+                window.curl.paths['bootstraps/enhanced/youtube'] = '@{Configuration.assets.path}javascripts/bootstraps/enhanced/youtube.js';
+                window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
+            }
+            @Html(common.Assets.js.curl)
+            require(['bootstraps/enhanced/youtube'], function(bootstrap) {
+                bootstrap.init();
+            });
+        </script>
 
         @fragments.analytics.base(page)
     </body>
