@@ -7,7 +7,7 @@
 @import views.support.EmailHelpers._
 @import views.support.TrailCssClasses.toneClass
 @import views.html.fragments.items.elements.facia_cards.kicker
-@import model.pressed.{FreeHtmlKicker, ItemKicker, KickerProperties}
+@import model.pressed.Feature
 
 @headline(pressedContent: PressedContent) = {
     <h3 class="headline">
@@ -18,6 +18,14 @@
             }
 
             @if(header.isGallery) { @icon("gallery") }
+            @if(header.isAudio) { @icon("podcast") }
+            @if(header.isVideo) { @icon("video") }
+            @if(header.quoted) {
+                @pressedContent.card.cardStyle match {
+                    case Feature => { @icon("quote-feature") }
+                    case _ => { @icon("quote") }
+                }
+            }
         }
         @pressedContent.header.headline
     </h3>
