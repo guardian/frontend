@@ -82,9 +82,9 @@ define([
         fastdom.read(function () {
             $('.atom--media--youtube').each(function (el) {
                 var atomId = el.getAttribute('data-media-atom-id');
-                var iframe = el.firstElementChild;
+                var iframe = el.querySelector('iframe');
                 var youtubeId = iframe.id;
-                
+
                 tracking.init(atomId);
 
                 youtubePlayer.init(iframe, {
