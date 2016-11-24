@@ -149,7 +149,7 @@ The analytics for Dotcom are defined in [analytics/base.scala.html](https://gith
 
 ### Bootstraps
 
-In [javascripts/bootstraps](b.com/guardian/frontend/tree/master/static/src/javascripts/bootstraps) we define all the entry points for each bundle described in [requirejs.js](https://github.com/guardian/frontend/blob/master/grunt-configs/requirejs.js).
+In [javascripts/bootstraps](b.com/guardian/frontend/tree/master/static/src/javascripts/bootstraps) we define all the entry points for each bundle described in [tools/__tasks__/compile/javascript/bundle.js](https://github.com/guardian/frontend/blob/master/tools/__tasks__/compile/javascript/bundle.js).
 
 The top level entry points which call the bootstrap initialisation of all other bundles are [enhanced/main.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/enhanced/main.js), [standard/main.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/standard/main.js), [admin.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/admin.js) (for frontend.gutools, not theguardian.com), [commercial.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/commercial.js) and [video-embed.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/video-embed.js) (initialised when there is a video embed from [videoEmbed.scala.html](https://github.com/guardian/frontend/blob/master/applications/app/views/videoEmbed.scala.html)).
 
