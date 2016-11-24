@@ -784,6 +784,10 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
         }
 
         @include mq($from: $mobile-medium) {
+            max-height: $gs-baseline*4;
+        }
+
+        @include mq($from: mobileLandscape) {
             max-height: $gs-baseline*4.5;
         }
     }
@@ -824,6 +828,10 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     }
 
     @include mq($mobile-medium) {
+        font-size: 16px;
+    }
+
+    @include mq(mobileLandscape) {
         font-size: 18px;
     }
 
@@ -995,6 +1003,10 @@ $caption-button-size: 32px;
 
         input[id="show-caption"]:checked ~ .caption--main {
             display: block;
+        }
+
+        input[id="show-caption"]:checked ~ .reveal-caption {
+            background-color: $multimedia-support-5;
         }
 
         .content__meta-container {
