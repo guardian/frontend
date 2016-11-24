@@ -130,7 +130,7 @@ object Eventbrite extends ExecutionContexts with Logging {
   trait TicketHandler {
     def tickets: Seq[Ticket]
 
-    lazy val displayPriceRange: Option[String] = {
+    val displayPriceRange: Option[String] = {
 
       def determinePriceRange: String = {
 
