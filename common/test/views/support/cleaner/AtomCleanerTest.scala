@@ -32,7 +32,7 @@ class AtomCleanerTest extends FlatSpec with Matchers with FakeRequests {
 
 
  private def clean(document: Document, atom:Option[Atoms], amp: Boolean): Document = {
-    val cleaner = AtomsCleaner(youTubeAtom, shouldFence = false, amp = amp)(TestRequest())
+    val cleaner = AtomsCleaner(youTubeAtom, amp = amp)(TestRequest())
     cleaner.clean(document)
     document
   }
@@ -42,6 +42,7 @@ class AtomCleanerTest extends FlatSpec with Matchers with FakeRequests {
     val result: Document = clean(doc, youTubeAtom, amp = false)
     result.select("iframe").attr("id") shouldBe("youtube-nQuN9CUsdVg")
     result.select("iframe").attr("src") should include("enablejsapi=1")
+    result.select("figcaption").html should include("Bird")
   }
 
   "AtomsCleaner" should "use amp-iframe markup if amp is true" in {

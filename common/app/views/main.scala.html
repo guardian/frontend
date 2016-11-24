@@ -48,6 +48,10 @@
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
+        @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
+            @fragments.commercial.pageSkin()
+        }
+
         @page match {
             case page: model.ContentPage if (page.item.content.isImmersiveGallery && !page.item.content.tags.isInteractive) => {
                 <div class="immersive-header-container">
@@ -109,11 +113,6 @@
         @fragments.inlineJSNonBlocking()
 
         @fragments.analytics.base(page)
-
-        @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
-            @fragments.commercial.pageSkin()
-        }
-
     </body>
     </html>
 }
