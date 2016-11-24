@@ -9,8 +9,7 @@
     "hyperscript-helpers": "^3.0.0",
     "immutable": "^3.8.1",
     "monapt": "^0.5.4",
-    "virtual-dom": "^2.1.1",
-    "webpack": "^1.13.3"
+    "virtual-dom": "^2.1.1"
   },
   "devDependencies": {
     "amphtml-validator": "^1.0.10",
@@ -86,6 +85,7 @@
     "svgo": "^0.7.1",
     "time-grunt": "1.2.0",
     "uglify-js": "^2.7.4",
+    "webpack": "^1.13.3",
     "yargs": "^6.0.0"
   },
   "optionalDependencies": {
