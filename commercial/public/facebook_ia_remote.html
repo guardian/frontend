@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="robots" content="noindex">
     <script>
-    (function (window) {
+    (function (window, undefined) {
         var guardian = window.guardian = parseParameters(window.location);
         var googletag = window.googletag = { cmd: [] };
         window.Krux || ((window.Krux=function(){Krux.q.push(arguments)}).q=[]);
@@ -52,7 +52,7 @@
 <body style="margin:0">
     <div id="ad-slot-1"></div>
     <script>
-    (function (window, localStorage, guardian, undefined) {
+    (function (window, localStorage, guardian) {
         var dfpConfig = {
             url: guardian.url,
             edition: guardian.edition.toLowerCase(),
