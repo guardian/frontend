@@ -586,7 +586,7 @@
 .byline {
     @include fs-bodyHeading(2);
     margin-bottom: 0;
-    display: inline;
+    display: inline-block;
     padding-top: $gs-baseline/3;
     line-height: 20px;
     color: $neutral-2;
@@ -1113,7 +1113,7 @@
 
         @include mq($until: leftCol) {
             position: relative;
-            margin-top: -4px;
+            margin-top: -$gs-baseline/4;
             margin-bottom: -$gs-baseline/2;
             width: 32px;
             height: 32px;
