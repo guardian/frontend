@@ -53,6 +53,14 @@
                         layout="responsive"
                         width="@page.images(i).width.getOrElse(5)"
                         height="@page.images(i).height.getOrElse(3)">
+                            @if(i == 0) {
+                                <div class="hosted-gallery__meta">
+                                    <div class="hosted-gallery__meta-text">
+                                        <h1 class="hosted-gallery__heading">@{page.title}</h1>
+                                        <h3 class="hosted-gallery__sub-heading">@{page.standfirst}</h3>
+                                    </div>
+                                </div>
+                            }
                             <div class="hosted-gallery__caption">
                                 <input type="checkbox" value="" id="info-button-@i" class="info-button-checkbox">
                                 <label for="info-button-@i" class="hosted-gallery__info-button">
@@ -60,7 +68,7 @@
                                     @fragments.inlineSvg("cross", "icon", List("inline-cross inline-icon "))
                                 </label>
                                 <div class="hosted-gallery__image-title">
-                                    @page.images(i).title
+                                @page.images(i).title
                                 </div>
                                 <div class="hosted-gallery__caption-text">
                                     @Html(page.images(i).caption)
