@@ -42,8 +42,8 @@ const remifications = {
 };
 
 
-const renderSass = pify(sass.render);
-const saveCSS = pify(fs.writeFile);
+const sassRenderP = pify(sass.render);
+const writeFileP = pify(fs.writeFile);
 const getFiles = query => glob.sync(path.resolve(sassDir, query));
 
 const compile = (query, {browsers, remify = true}) => Promise.all(
@@ -60,9 +60,9 @@ const compile = (query, {browsers, remify = true}) => Promise.all(
         }
 
         mkdirp.sync(path.parse(dest).dir);
-        return renderSass(sassOptions)
+        return sassRenderP(sassOptions)
             .then(result => postcss(postcssPlugins).process(result.css.toString()))
-            .then(result => saveCSS(dest, result.css));
+            .then(result => writeFileP(dest, result.css));
     })
 );
 
