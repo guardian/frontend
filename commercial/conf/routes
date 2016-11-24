@@ -54,3 +54,6 @@ GET         /commercial/anx/anxresize.js                                    comm
 GET         /commercial/advertiser-content/:campaignName/:pageName          commercial.controllers.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET         /advertiser-content/:campaignName/:pageName                     commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET         /advertiser-content/:campaignName/:pageName/:cType/onward.json  commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
+
+# Off-platform ads
+GET         /facebook-ia/remote.html                                        controllers.Assets.at(path="/public", file="facebook_ia_remote.html")
