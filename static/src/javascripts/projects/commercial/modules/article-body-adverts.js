@@ -40,26 +40,46 @@ define([
         replaceTopSlot = detect.isBreakpoint({max : 'phablet'});
     }
 
-    function getRules() {
+    function getRules(breakpoint) {
         var prevSlot;
-        return {
-            bodySelector: '.js-article__body',
-            slotSelector: ' > p',
-            minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
-            minBelow: 300,
-            selectors: {
-                ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 100 : 0, minBelow: 250},
-                ' .ad-slot': {minAbove: 500, minBelow: 500},
-                ' > :not(p):not(h2):not(.ad-slot)': {minAbove: 35, minBelow: 400}
-            },
-            filter: function(slot) {
-                if (!prevSlot || Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >= this.selectors[' .ad-slot'].minBelow) {
-                    prevSlot = slot;
-                    return true;
+        var rules = {
+            wide: {
+                bodySelector: '.js-article__body',
+                slotSelector: ' > p',
+                minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
+                minBelow: 300,
+                selectors: {
+                    ' .ad-slot': {minAbove: 500, minBelow: 500},
+                },
+                filter: function(slot) {
+                    if (!prevSlot || Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >= this.selectors[' .ad-slot'].minBelow) {
+                        prevSlot = slot;
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
+            },
+            default: {
+                bodySelector: '.js-article__body',
+                slotSelector: ' > p',
+                minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
+                minBelow: 300,
+                selectors: {
+                    ' > h2': {minAbove: detect.getBreakpoint() === 'mobile' ? 100 : 0, minBelow: 250},
+                    ' .ad-slot': {minAbove: 500, minBelow: 500},
+                    ' > :not(p):not(h2):not(.ad-slot)': {minAbove: 35, minBelow: 400}
+                },
+                filter: function(slot) {
+                    if (!prevSlot || Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >= this.selectors[' .ad-slot'].minBelow) {
+                        prevSlot = slot;
+                        return true;
+                    }
+                    return false;
+                }
             }
         };
+
+        return rules[breakpoint] || rules.default;
     }
 
     function getInlineMerchRules() {
@@ -74,7 +94,7 @@ define([
 
     function getLongArticleRules() {
         if (!longArticleRules) {
-            longArticleRules = getRules();
+            longArticleRules = getRules(detect.getBreakpoint());
             longArticleRules.selectors[' .ad-slot'].minAbove =
             longArticleRules.selectors[' .ad-slot'].minBelow = detect.getViewport().height;
         }
@@ -129,6 +149,16 @@ define([
 
         function insertion (ad, para) {
             para.parentNode.insertBefore(ad, para);
+
+            // HACK: If the ad is at least 3000px down the page,
+            // and we are on the wide breakpoint, offset it to the right-hand
+            // column
+            var offset = ad.getBoundingClientRect().top + window.pageYOffset;
+            if (detect.getBreakpoint() === 'wide'
+            && !config.page.isImmersive
+            && offset >= 3000) {
+                ad.classList.add('ad-slot--offset-right');
+            }
         }
 
         // If on mobile we will
@@ -167,7 +197,7 @@ define([
     // received a response from DFP
     var waitForMerch = memoize(function () {
         return trackAdRender('dfp-ad--im').then(function (isLoaded) {
-            return isLoaded ? 0 : addArticleAds(2, getRules());
+            return isLoaded ? 0 : addArticleAds(2, getRules(detect.getBreakpoint()));
         }).then(function (countAdded) {
             return countAdded === 2 ?
                 addArticleAds(8, getLongArticleRules()).then(function (countAdded) {
@@ -188,7 +218,7 @@ define([
             return Promise.resolve(false);
         }
 
-        var rules = getRules();
+        var rules = getRules(detect.getBreakpoint());
 
         boot();
 
