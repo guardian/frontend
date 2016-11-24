@@ -18,8 +18,6 @@ define([
         'PAUSED': onPlayerPaused
     };
 
-    var progressTracker = {};
-
     function checkState(atomId, state, status) {
         if (state === window.YT.PlayerState[status] && STATES[status]) {
             STATES[status](atomId);
@@ -84,11 +82,12 @@ define([
         fastdom.read(function () {
             $('.atom--media--youtube').each(function (el) {
                 var atomId = el.getAttribute('data-media-atom-id');
-                var youtubeId = el.firstElementChild.id;
+                var iframe = el.firstElementChild;
+                var youtubeId = iframe.id;
                 
                 tracking.init(atomId);
-                
-                youtubePlayer.init(el, {
+
+                youtubePlayer.init(iframe, {
                     onPlayerReady: onPlayerReady.bind(null, atomId),
                     onPlayerStateChange: onPlayerStateChange.bind(null, atomId)
                 }, youtubeId);
