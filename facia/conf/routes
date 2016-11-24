@@ -12,7 +12,6 @@ GET        /_fronts_cdn_healthcheck                                             
 GET        /_agentcontents                                                          controllers.FaciaController.renderAgentContents
 
 GET        /humans.txt                                                              controllers.Assets.at(path="/public", file="humans.txt")
-GET        /facebook-ia/remote.html                                                 controllers.Assets.at(path="/public", file="facebook_ia_remote.html")
 
 # AMP
 GET        /container/count/:count/offset/:offset/mf2.json                                      controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition = "")
@@ -35,10 +34,3 @@ GET        /*path/deduped.json                                                  
 GET        /*path.json                                                              controllers.FaciaController.renderFrontJson(path)
 GET        /                                                                        controllers.FaciaController.rootEditionRedirect()
 GET        /*path                                                                   controllers.FaciaController.renderFront(path)
-
-# Iframe buster and 3rd-party ads
-GET         /rockabox/rockabox_buster.html                                  controllers.Assets.at(path="/public", file="rockabox_buster.html")
-GET         /external/eyeblaster/addineyeV2.html                            controllers.Assets.at(path="/public", file="addineyeV2.html")
-
-# Off-platform ads
-GET         /amp/remote.html                                                controllers.Assets.at(path="/public", file="amp_remote.html")
