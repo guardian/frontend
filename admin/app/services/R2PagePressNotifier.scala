@@ -14,11 +14,10 @@ object R2PagePressNotifier extends Logging {
       log.info(msg)
       msg
     } catch {
-      case e: Exception => {
+      case e: Exception =>
         val msg = s"Failed to add ${message.url} to the r2 page press queue"
         log.error(msg, e)
         msg
-      }
     }
   }
 

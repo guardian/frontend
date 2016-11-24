@@ -55,7 +55,7 @@ class ArticleController(contentApiClient: ContentApiClient) extends Controller w
     val mostRecent = newBlocks.headOption.map { block =>
       "mostRecentBlockId" -> s"block-${block.id}"
     }
-    Cached(page)(JsonComponent((allPagesJson ++ livePageJson ++ mostRecent): _*))
+    Cached(page)(JsonComponent(allPagesJson ++ livePageJson ++ mostRecent: _*))
   }
 
   case class TextBlock(
@@ -221,7 +221,7 @@ class ArticleController(contentApiClient: ContentApiClient) extends Controller w
       case minute: Article if minute.isTheMinute =>
         Left(MinutePage(minute, StoryPackages(minute, response)))
         // Enable an email format for 'Minute' content (which are actually composed as a LiveBlog), without changing the non-email display of the page
-      case liveBlog: Article if (liveBlog.isLiveBlog && request.isEmail) =>
+      case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog, response)))
       case liveBlog: Article if liveBlog.isLiveBlog =>
         range.map {

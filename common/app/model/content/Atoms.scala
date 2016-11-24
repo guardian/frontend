@@ -136,7 +136,7 @@ object Quiz extends common.Logging {
   private def transformAssets(quizAsset: Option[atomapi.quiz.Asset]): Option[QuizImageMedia] = quizAsset.flatMap { asset =>
     val parseResult = Json.parse(asset.data).validate[Image]
     parseResult match {
-      case parsed: JsSuccess[Image] => {
+      case parsed: JsSuccess[Image] =>
         val image = parsed.get
         val typeData = image.fields.mapValues(value => value.toString) - "caption"
 
@@ -151,11 +151,9 @@ object Quiz extends common.Logging {
           url = plainAsset.secureUrl.orElse(plainAsset.url))
         }
         if (assets.nonEmpty) Some(QuizImageMedia(ImageMedia(allImages = assets))) else None
-      }
-      case error: JsError => {
+      case error: JsError =>
         log.warn("Quiz atoms: asset json read errors: " + JsError.toFlatForm(error).toString())
         None
-      }
     }
   }
 

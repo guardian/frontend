@@ -160,7 +160,7 @@ object Parser {
       teamOpt = teams.find(team => team.id == (teamNode \ "@team_id").text)
       team <- teamOpt
     } yield {
-      val teamScoreNode = (teamNode \ "@score")
+      val teamScoreNode = teamNode \ "@score"
       val teamScore = if (teamScoreNode.nonEmpty) Some(teamScoreNode.text.toInt) else None
       team.copy(score = teamScore)
     }

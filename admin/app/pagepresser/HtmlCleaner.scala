@@ -94,10 +94,9 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
       document
     }
     catch {
-      case e: Exception => {
+      case e: Exception =>
         log.warn("Unable to convert links for document from http to protocol relative url.")
         document
-      }
     }
   }
 

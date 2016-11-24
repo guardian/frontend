@@ -43,10 +43,9 @@ class FastlyStatisticService(wsClient: WSClient) extends ExecutionContexts with 
           .withRequestTimeout(20000)
 
         val response: Future[Option[String]] = request.get().map { resp => Some(resp.body) }.recover {
-          case e: Throwable => {
+          case e: Throwable =>
             log.error(s"Error with request to api.fastly.com: ${e.getMessage}")
             None
-          }
         }
         response
       }

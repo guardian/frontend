@@ -22,7 +22,7 @@ import services.OphanApi
   lazy val relatedController = new RelatedController(testContentApiClient, new MostReadAgent(new OphanApi(wsClient)))
 
   it should "serve JSON when .json format is supplied" in {
-    val fakeRequest = FakeRequest(GET, s"/related/${article}.json")
+    val fakeRequest = FakeRequest(GET, s"/related/$article.json")
       .withHeaders("host" -> "http://localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
