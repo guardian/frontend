@@ -230,14 +230,14 @@ const bundles = [{
 }];
 
 module.exports = {
-    description: 'Create JS bundles',
+    description: 'Create r.js bundles',
     task: bundles.sort((a,b) => a.name < b.name ? -1 : 1).map(bundle => {
         const options = Object.keys(bundle).reduce((command, optionName) =>
             `${optionName}=${bundle[optionName].toString()} ${command}`
         , '');
         return {
             description: bundle.name,
-            task: `r.js -o ${path.join(__dirname, 'bundle.config.js')} ${options}`
+            task: `r.js -o ${path.join(__dirname, 'rjs.config.js')} ${options}`
         };
     }),
     concurrent: true
