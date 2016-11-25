@@ -56,10 +56,10 @@ object SwitchNotification extends Notification {
   lazy val topic: String = Configuration.aws.notificationSns
 
   def onSwitchChanges(akkaAsync: AkkaAsync)(requester: String, stage: String, changes: Seq[String]) {
-    val subject = s"${stage.toUpperCase}: Switch changes by ${requester}"
+    val subject = s"${stage.toUpperCase}: Switch changes by $requester"
     val message =
       s"""
-          |The following updates have been made to the ${stage.toUpperCase} switches by ${requester}.
+          |The following updates have been made to the ${stage.toUpperCase} switches by $requester.
           |
           |${ changes mkString "\n" }
           |

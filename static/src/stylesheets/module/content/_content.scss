@@ -387,7 +387,6 @@
     box-sizing: border-box;
     padding-top: $gs-baseline / 6;
     margin-bottom: $gs-baseline / 2;
-    clear: left; // a dateline may be preceded by a floated badge.
 
     time {
         display: inline-block;
@@ -587,8 +586,7 @@
 .byline {
     @include fs-bodyHeading(2);
     margin-bottom: 0;
-    float: left;
-    margin-right: $gs-gutter/4;
+    display: inline-block;
     padding-top: $gs-baseline/3;
     line-height: 20px;
     color: $neutral-2;
@@ -599,7 +597,6 @@
 
     @include mq(leftCol) {
         clear: both;
-        float: none;
         margin-right: 0;
         display: block;
         padding-top: $gs-baseline/6;
@@ -1115,7 +1112,6 @@
         }
 
         @include mq($until: leftCol) {
-            float: left;
             position: relative;
             margin-top: -$gs-baseline/4;
             margin-bottom: -$gs-baseline/2;

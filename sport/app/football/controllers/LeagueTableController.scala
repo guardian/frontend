@@ -45,7 +45,7 @@ class LeagueTableController(val competitionsService: CompetitionsService) extend
         "International friendlies"
     )
 
-  def sortedCompetitions:Seq[Competition] = tableOrder.map(leagueName => competitionsService.competitions.find(_.fullName == leagueName)).flatten
+  def sortedCompetitions:Seq[Competition] = tableOrder.flatMap(leagueName => competitionsService.competitions.find(_.fullName == leagueName))
 
   private def loadTables: Seq[Table] = sortedCompetitions.filter(_.hasLeagueTable).map { Table(_) }
 

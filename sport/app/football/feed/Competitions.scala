@@ -89,8 +89,8 @@ object Competitions {
     val competitions = comps
   }
 }
- 
-// when updating this code, think about whether the mobile apps api needs to be updated too 
+
+// when updating this code, think about whether the mobile apps api needs to be updated too
 // (https://github.com/guardian/mobile-apps-api/blob/master/mobile-football/app/data/pa/Competitions.scala)
 
 object CompetitionsProvider {
@@ -159,14 +159,12 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
       mostRecentCompetitionSeasons(allComps).map { season =>
         competitionAgents.find(_.competition.id == season.id).map { agent =>
           val newCompetition = agent.competition.startDate match {
-            case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) => {
+            case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) =>
               log.info(s"updating competition: ${season.id} season: ${season.seasonId} startDate was: ${existingStartDate.toString} now: ${season.startDate.toString}")
               agent.update(agent.competition.copy(startDate = Some(season.startDate)))
-            }
-            case None => {
+            case None =>
               log.info(s"setting competition: ${season.id} season: ${season.seasonId} startDate was: None now: ${season.startDate.toString}")
               agent.update(agent.competition.copy(startDate = Some(season.startDate)))
-            }
             case _ =>
           }
         }

@@ -22,7 +22,7 @@ import play.api.test.Helpers._
   }
 
   it should "return JSON when .json format is supplied" in {
-    val fakeRequest = FakeRequest(GET, s"/embed/card/${article}.json")
+    val fakeRequest = FakeRequest(GET, s"/embed/card/$article.json")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 

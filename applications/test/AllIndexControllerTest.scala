@@ -93,7 +93,6 @@ import play.api.test.Helpers._
 
   it should "correctly serve all pages for `default editionalised sections` in the International edition" in {
     val result = allIndexController.all("commentisfree")(TestRequest("/commentisfree/all").withHeaders("X-Gu-Edition" -> "INT"))
-    println(header("location", result))
     status(result) should be(OK)
   }
 

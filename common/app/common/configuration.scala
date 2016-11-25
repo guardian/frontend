@@ -72,7 +72,7 @@ object GuardianConfiguration extends Logging {
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
-    lazy val identity = new AwsApplication(stack, app, stage, awsRegion)
+    lazy val identity = AwsApplication(stack, app, stage, awsRegion)
     lazy val commonS3Config = S3ConfigurationSource(identity, configBucket, Configuration.aws.mandatoryCredentials, Some(s3ConfigVersion))
     lazy val config = new CM(List(userPrivate, runtimeOnly, commonS3Config), PlayDefaultLogger).load.resolve
 
@@ -175,7 +175,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object debug {
-    lazy val enabled: Boolean = configuration.getStringProperty("debug.enabled").map(_.toBoolean).getOrElse(true)
+    lazy val enabled: Boolean = configuration.getStringProperty("debug.enabled").forall(_.toBoolean)
     lazy val beaconUrl: String = configuration.getStringProperty("beacon.url").getOrElse("")
   }
 
@@ -630,7 +630,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object Logstash {
-    lazy val enabled = configuration.getStringProperty("logstash.enabled").map(_.toBoolean).getOrElse(false)
+    lazy val enabled = configuration.getStringProperty("logstash.enabled").exists(_.toBoolean)
     lazy val stream = configuration.getStringProperty("logstash.stream.name")
     lazy val streamRegion = configuration.getStringProperty("logstash.stream.region")
   }

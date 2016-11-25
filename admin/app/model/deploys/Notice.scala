@@ -73,7 +73,7 @@ case class SlackNotice(build: TeamCityBuild,
   val whoIsIn = s"Who is in? ${build.committers.mkString(", ")}"
   val buildLink = s"<${build.link}|build #${build.number}>"
 
-  override val desc = s"Slack notification: ${hookUrl}"
+  override val desc = s"Slack notification: $hookUrl"
 
   override def send(wsClient: WSClient)(step: NoticeStep) = {
     wsClient.url(hookUrl.toString)
@@ -99,13 +99,13 @@ case class SlackNotice(build: TeamCityBuild,
     val json = step match {
       case BuildStarted =>
           Json.obj(
-            "text" -> s"${buildLink} STARTED (${whoIsIn})"
+            "text" -> s"$buildLink STARTED ($whoIsIn)"
           )
       case BuildFinished =>
           Json.obj(
             "attachments" -> Seq(
               Json.obj(
-                "fallback" -> JsString(s"[${build.projectName}] ${buildLink} ${statusIcon} ${build.status} ($whoIsIn)"),
+                "fallback" -> JsString(s"[${build.projectName}] $buildLink $statusIcon ${build.status} ($whoIsIn)"),
                 "title" -> JsString(s"[${build.projectName}] build #${build.number} ${build.status}"),
                 "color" -> JsString(color),
                 "title_link" -> JsString(build.link),
@@ -115,11 +115,11 @@ case class SlackNotice(build: TeamCityBuild,
           )
       case DeployFinishedCode =>
           Json.obj(
-            "text" -> s"${buildLink} was deployed to <http://m.code.dev-theguardian.com|CODE> (${whoIsIn})"
+            "text" -> s"$buildLink was deployed to <http://m.code.dev-theguardian.com|CODE> ($whoIsIn)"
           )
       case DeployFinishedProd =>
           Json.obj(
-            "text" -> s"${buildLink} was deployed to <http://www.theguardian.com|PROD> (${whoIsIn})"
+            "text" -> s"$buildLink was deployed to <http://www.theguardian.com|PROD> ($whoIsIn)"
           )
     }
     jsonBodyBasics ++ json

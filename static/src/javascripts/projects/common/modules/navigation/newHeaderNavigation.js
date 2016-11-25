@@ -137,61 +137,15 @@ define([
         }
     }
 
-    function moveTargetListToTop(targetListId) {
-        menuItems.forEach(function (listItem, index) {
-
-            fastdom.read(function () {
-                var itemId = listItem.getAttribute('id');
-
-                if (itemId === targetListId) {
-                    fastdom.write(function () {
-                        var parent = listItem.parentNode;
-                        var menuContainer = qwery('.js-main-menu')[0];
-
-                        // Using flexbox to reorder lists based on what is clicked.
-                        parent.style.order = '-' + index;
-
-                        // Make sure when the menu is open, the user is always scrolled to the top
-                        menuContainer.scrollTop = 0;
-                    });
-                }
-            });
-        });
-    }
-
     function bindMenuItemClickEvents() {
         menuItems.forEach(function (item) {
             item.addEventListener('click', closeAllOtherPrimaryLists.bind(null, item));
         });
     }
 
-    function bindPrimaryItemsClickEvents() {
-        var primaryItems = qwery('.js-open-section-in-menu');
-
-        primaryItems.forEach(function (primaryItem) {
-
-            primaryItem.addEventListener('click', function () {
-                fastdom.read(function () {
-                    var id = primaryItem.getAttribute('aria-controls');
-                    var menuToOpen = document.getElementById(id);
-                    var menuButton = qwery('.js-navigation-button', menuToOpen)[0];
-
-                    fastdom.write(function () {
-                        menuToOpen.setAttribute('open', '');
-                        moveTargetListToTop(id);
-                        menuButton.focus();
-                        // Prevents scrolling on the body
-                        html.classList.add('nav-is-open');
-                    });
-                });
-            });
-        });
-    }
-
     function init() {
         enhanceCheckboxesToButtons();
         bindMenuItemClickEvents();
-        bindPrimaryItemsClickEvents();
         userAccount();
     }
 

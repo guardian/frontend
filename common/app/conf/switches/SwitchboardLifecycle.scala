@@ -36,10 +36,9 @@ class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobSchedule
         nextState.get(switch.name) match {
           case Some("on") => switch.switchOn()
           case Some("off") => switch.switchOff()
-          case other => {
+          case other =>
             log.warn(s"Badly configured switch ${switch.name}, setting to safe state.")
             switch.switchToSafeState()
-          }
         }
       }
     }

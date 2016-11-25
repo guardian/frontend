@@ -9,7 +9,8 @@ define([
     'lodash/utilities/noop',
     'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
-    'common/modules/experiments/tests/contributions-epic-usa-cta-three-way'
+    'common/modules/experiments/tests/contributions-epic-usa-cta-three-way',
+    'common/modules/experiments/tests/uk-membership-engagement-message-test-10'
 ], function (reportError,
              config,
              cookies,
@@ -20,12 +21,14 @@ define([
              noop,
              HostedOnwardJourney,
              MembershipEngagementInternationalExperiment,
-             ContributionsEpicUsaCtaThreeWay
+             ContributionsEpicUsaCtaThreeWay,
+             UkMembershipEngagementMessageTest10
     ) {
     var TESTS = [
         new HostedOnwardJourney(),
         new MembershipEngagementInternationalExperiment(),
-        new ContributionsEpicUsaCtaThreeWay()
+        new ContributionsEpicUsaCtaThreeWay(),
+        new UkMembershipEngagementMessageTest10()
     ];
 
     var participationsKey = 'gu.ab.participations';

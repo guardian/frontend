@@ -26,7 +26,7 @@ define([
         onScroll: onScroll
     };
 
-    function init(_window) {
+    function init(moduleName, _window) {
         win = _window || window;
         topSlot = document.getElementById(topSlotId);
         if (topSlot && detect.isBreakpoint({ min: 'desktop' })) {

@@ -282,7 +282,7 @@ case class ContentCard(
   def withTimeStamp = copy(timeStampDisplay = Some(DateOrTimeAgo))
 
   def showDisplayElement =
-    cardTypes.allTypes.exists(_.canShowMedia) && !displaySettings.imageHide && !cutOut.isDefined
+    cardTypes.allTypes.exists(_.canShowMedia) && !displaySettings.imageHide && cutOut.isEmpty
 
   def showStandfirst = cardTypes.allTypes.exists(_.showStandfirst)
 
@@ -299,7 +299,7 @@ case class ContentCard(
   val isMediaLink = mediaType.nonEmpty
 
   val hasVideoMainMedia = displayElement match {
-    case Some(a: InlineVideo) if (!isMediaLink) => true
+    case Some(a: InlineVideo) if !isMediaLink => true
     case _ => false
   }
 }
