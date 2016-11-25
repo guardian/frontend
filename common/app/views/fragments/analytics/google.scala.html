@@ -24,7 +24,8 @@
     }
 
     function getAnalyticsEdition() {
-        return (guardian.config.page.edition || '').toLowerCase();
+        var edition = (guardian.config.page.edition || '').toLowerCase()
+        return edition === 'int' ? 'international' : edition;
     }
 
     function getAnalyticsTitle() {
