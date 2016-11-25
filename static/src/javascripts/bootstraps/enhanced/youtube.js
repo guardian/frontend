@@ -59,8 +59,7 @@ define([
         var currentTime = player.getCurrentTime();
         var percentPlayed = Math.round(((currentTime / player.duration) * 100));
 
-        if (percentPlayed > 0 && percentPlayed < 100 &&
-            players[atomId].pendingTrackingCalls.length &&
+        if (players[atomId].pendingTrackingCalls.length &&
             percentPlayed >= players[atomId].pendingTrackingCalls[0]) {
             tracking.track(players[atomId].pendingTrackingCalls[0], atomId);
             players[atomId].pendingTrackingCalls.shift();
