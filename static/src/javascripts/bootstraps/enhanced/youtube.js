@@ -60,17 +60,17 @@ define([
         var percentPlayed = Math.round(((currentTime / player.duration) * 100));
 
         if (percentPlayed > 0 && percentPlayed < 100 &&
-            percentPlayed % 25 === 0,
-            players[atomId].trackingCalls.indexOf(percentPlayed) === -1) {
-            players[atomId].trackingCalls.push(percentPlayed);
-            tracking.track(percentPlayed, atomId);
+            players[atomId].pendingTrackingCalls.length &&
+            percentPlayed >= players[atomId].pendingTrackingCalls[0]) {
+            tracking.track(players[atomId].pendingTrackingCalls[0], atomId);
+            players[atomId].pendingTrackingCalls.shift();
         }
     }
 
     function onPlayerReady(atomId, event) {
         players[atomId] = {
             player: event.target,
-            trackingCalls: []
+            pendingTrackingCalls: [25, 50]
         };
     }
 
