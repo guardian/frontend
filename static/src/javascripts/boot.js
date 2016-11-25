@@ -28,7 +28,7 @@ define([
 ) {
     // curl’s promise API is broken, so we must cast it to a real Promise
     // https://github.com/cujojs/curl/issues/293
-    const promiseRequire = function (moduleIds) {
+    var promiseRequire = function (moduleIds) {
         return Promise.resolve(require(moduleIds));
     };
 
