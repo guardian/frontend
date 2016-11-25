@@ -1,5 +1,6 @@
 @import common.InlineJs
-@import conf.switches.Switches.{AsyncCss, FontSwitch, WebpackSwitch}
+@import conf.switches.Switches.{AsyncCss, FontSwitch}
+@import mvt.WebpackTest
 @import model.Page.getContent
 @import templates.inlineJS.blocking.js.{applyRenderConditions, config, curlConfig, enableStylesheets, loadFonts, shouldEnhance}
 @import templates.inlineJS.blocking.polyfills.js.{classlist, details, matches, raf, setTimeout}
@@ -68,7 +69,7 @@
         (function (document) {
             var script = document.createElement('script');
             var ref = document.getElementsByTagName('script')[0];
-            @if(WebpackSwitch.isSwitchedOn) {
+            @if(WebpackTest.isParticipating) {
                 script.src = '@Static("javascripts/app-webpack.js")';
             } else {
                 script.src = '@Static("javascripts/app.js")';

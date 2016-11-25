@@ -76,7 +76,7 @@ define([
          *  Interactives are content, we want them booting as soon (and as stable) as possible.
          */
 
-        if (!config.switches.webpack && /Article|LiveBlog/.test(config.page.contentType)) {
+        if (!config.switches.abWebpack && /Article|LiveBlog/.test(config.page.contentType)) {
             qwery('figure.interactive').forEach(function (el) {
                 var mainJS = el.getAttribute('data-interactive');
                 if (!mainJS) {

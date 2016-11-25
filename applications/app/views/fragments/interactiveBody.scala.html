@@ -1,6 +1,6 @@
 @(page: InteractivePage)(implicit request: RequestHeader)
 @import common.Edition
-@import conf.switches.Switches.WebpackSwitch
+@import mvt.WebpackTest
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
 @import views.InteractiveBodyCleaner
@@ -68,7 +68,7 @@
         </div>
     }
 
-    @if(WebpackSwitch.isSwitchedOff) {
+    @if(WebpackTest.isParticipating) {
         <script>
             @HtmlFormat.raw(common.Assets.js.curl)
 

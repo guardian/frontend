@@ -1,7 +1,7 @@
 @()(implicit request: RequestHeader)
 @import conf.Static
 @import conf.Configuration
-@import conf.switches.Switches.WebpackSwitch
+@import mvt.WebpackTest
 
 window.curlConfig = {
     baseUrl: '@{Configuration.assets.path}javascripts',
@@ -16,7 +16,7 @@ window.curlConfig = {
     paths: {
         @if(Configuration.assets.useHashedBundles) {
 
-            @if(WebpackSwitch.isSwitchedOn) {
+            @if(WebpackTest.isParticipating) {
                 'bootstraps/enhanced/main':             '@Static("javascripts/bootstraps/enhanced/main-rjs.js")',
                 'bootstraps/enhanced/crosswords' :      '@Static("javascripts/bootstraps/enhanced/crosswords-rjs.js")',
                 'bootstraps/enhanced/accessibility':    '@Static("javascripts/bootstraps/enhanced/accessibility-rjs.js")',
