@@ -1,14 +1,6 @@
 {
-    "env": {
-        "production": {
+
             "presets": [
-                "latest"
+                [ "latest", { "es2015": { "modules": "amd" }}]
             ]
-        },
-        "development": {
-            "plugins": [
-                "transform-async-to-generator"
-            ]
-        }
-    }
 }
