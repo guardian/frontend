@@ -7,6 +7,7 @@ module.exports = {
     description: 'Clear JS build artefacts',
     task: () => {
         rimraf.sync(path.resolve(target, 'javascripts'));
+        rimraf.sync(path.resolve(target, 'babel'));
         rimraf.sync(path.resolve(hash, 'javascripts'));
     }
 };
