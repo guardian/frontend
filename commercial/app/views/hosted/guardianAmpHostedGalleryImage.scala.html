@@ -20,6 +20,17 @@
             </div>
         }
 
+        @if(index == page.images.length - 1) {
+            <div class="hosted-gallery__meta">
+                <div class="hosted-gallery__meta-text">
+                    <div class="hosted__cta-wrapper hosted__cta-btn-wrapper">
+                        <span class="hosted__cta-label">@{page.cta.label}</span>
+                        <a href="@{page.cta.url}" class="hosted__cta-btn-text hosted-tone-btn">@{page.cta.btnText} @fragments.inlineSvg("external-link", "icon")</a>
+                    </div>
+                </div>
+            </div>
+        }
+
         <div class="hosted-gallery__caption">
             <input type="checkbox" value="" id="info-button-@index" class="info-button-checkbox"/>
             <label for="info-button-@index" class="hosted-gallery__info-button">
