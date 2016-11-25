@@ -155,7 +155,7 @@ The top level entry points which call the bootstrap initialisation of all other 
 
 ### app.js
 
-- [Builds a bundle](https://github.com/guardian/frontend/blob/master/grunt-configs/requirejs.js#L47) for [standard/main bootstrap](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/standard/main.js)
+- [Builds a bundle](https://github.com/guardian/frontend/blob/master/tools/__tasks__/compile/javascript/bundle.js#L10) for [standard/main bootstrap](https://github.com/guardian/frontend/blob/master/static/src/javascripts/bootstraps/standard/main.js)
 	- Includes the [boot.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/boot.js) in the bundle
 
 ```js
@@ -173,7 +173,7 @@ boot: {
 }
 ```
 
-- And [concatenates that](https://github.com/guardian/frontend/blob/master/grunt-configs/concat.js#L8) with the [curl-domReady.js](https://github.com/cujojs/curl) (Curl module loader that waits for domReady)
+- And [concatenates that](https://github.com/guardian/frontend/blob/master/tools/__tasks__/compile/javascript/bundle-app.js) with the [curl-domReady.js](https://github.com/cujojs/curl) (Curl module loader that waits for domReady)
 
 ```js
 app: {
