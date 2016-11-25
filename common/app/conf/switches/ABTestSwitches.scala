@@ -31,7 +31,7 @@ trait ABTestSwitches {
     "Test just contributions vs contributions or membership vs just membership in the US",
     owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 25),
+    sellByDate =  new LocalDate(2016, 11, 28),
     exposeClientSide = true
   )
 
