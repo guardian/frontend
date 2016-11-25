@@ -37,6 +37,7 @@ define([
     function onPlayerEnded(atomId) {
         killProgressTracker(atomId);
         tracking.track('end', atomId);
+        players[atomId].pendingTrackingCalls = [25, 50];
     }
 
     function setProgressTracker(atomId)  {
@@ -51,6 +52,11 @@ define([
 
     function recordPlayerProgress(atomId) {
         var player = players[atomId].player;
+        var pendingTrackingCalls = players[atomId].pendingTrackingCalls;
+
+        if (!pendingTrackingCalls.length) {
+            return;
+        }
 
         if (!player.duration) {
             player.duration = player.getDuration();
@@ -59,10 +65,9 @@ define([
         var currentTime = player.getCurrentTime();
         var percentPlayed = Math.round(((currentTime / player.duration) * 100));
 
-        if (players[atomId].pendingTrackingCalls.length &&
-            percentPlayed >= players[atomId].pendingTrackingCalls[0]) {
-            tracking.track(players[atomId].pendingTrackingCalls[0], atomId);
-            players[atomId].pendingTrackingCalls.shift();
+        if (percentPlayed >= pendingTrackingCalls[0]) {
+            tracking.track(pendingTrackingCalls[0], atomId);
+            pendingTrackingCalls.shift();
         }
     }
 
