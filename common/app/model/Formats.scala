@@ -240,7 +240,8 @@ object ContentTypeFormat {
     thumbnailPath: Option[String],
     discussionId: Option[String],
     isCommentable: Boolean,
-    isClosedForComments: Boolean
+    isClosedForComments: Boolean,
+    firstPublicationDate: DateTime
   )
 
   private val readsContent: Reads[Content] = {
@@ -272,7 +273,9 @@ object ContentTypeFormat {
         jsonTrail.thumbnailPath,
         jsonTrail.discussionId,
         jsonTrail.isCommentable,
-        jsonTrail.isClosedForComments)
+        jsonTrail.isClosedForComments,
+       jsonTrail.firstPublicationDate
+       )
 
        Content.apply(trail, metadata, tags, commercial, elements, fields, sharelinks,
         jsonContent.atoms,
@@ -344,7 +347,8 @@ object ContentTypeFormat {
           content.trail.thumbnailPath,
           content.trail.discussionId,
           content.trail.isCommentable,
-          content.trail.isClosedForComments
+          content.trail.isClosedForComments,
+          content.trail.firstPublicationDate
         ),
         content.elements,
         content.metadata,

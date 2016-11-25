@@ -68,7 +68,8 @@ object Trail {
       commercial = commercial,
       fields = fields,
       metadata = metadata,
-      elements = elements
+      elements = elements,
+      firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJodaDateTime).orNull
     )
   }
 }
@@ -87,7 +88,8 @@ final case class Trail (
   thumbnailPath: Option[String] = None,
   discussionId: Option[String] = None,
   isCommentable: Boolean = false,
-  isClosedForComments: Boolean = false
+  isClosedForComments: Boolean = false,
+  firstPublicationDate: DateTime
 ){
   /** TODO - this should be set in the Facia tool */
   lazy val showByline: Boolean = tags.isComment
