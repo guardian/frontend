@@ -28,6 +28,6 @@ import play.api.test._
   val hostedYoutubeId = "advertiser-content/explore-canada-food-busker-in-canada/duelling-bagels"
   testAmpPageValidity(hostedYoutubeId)
 
-  val hostedGalleryId = "advertiser-content/chester-zoo-act-for-wildlife/what-we-fight-for"
+  val hostedGalleryId = "advertiser-content/visit-britain/coast"
   testAmpPageValidity(hostedGalleryId)
 }
