@@ -1,5 +1,5 @@
 ({
-    baseUrl: '../../../../static/target/babel',
+    baseUrl: '../../../../static/transpiled/javascripts',
     paths: {
         admin: 'projects/admin',
         common: 'projects/common',

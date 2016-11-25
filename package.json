@@ -95,6 +95,7 @@
   },
   "scripts": {
     "postinstall": "./tools/run-task githooks",
+    "babel-watch": "BABEL_ENV=production babel ./static/src/javascripts --watch -d ./static/transpiled/javascripts --ignore bower_components/,components/,vendor/ >/dev/null 2>&1",
     "sass-watch": "node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true",
     "css-watch": "gulp --cwd ./dev watch:css",
     "browser-sync": "browser-sync start --config ./dev/bs-config.js",
