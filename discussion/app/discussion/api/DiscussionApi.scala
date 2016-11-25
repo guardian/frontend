@@ -11,6 +11,7 @@ import discussion.util.Http
 import play.api.libs.json.{JsNull, JsNumber, JsObject}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.{Cookie, Headers, RequestHeader}
+import scala.concurrent.duration._
 
 import scala.concurrent.Future
 

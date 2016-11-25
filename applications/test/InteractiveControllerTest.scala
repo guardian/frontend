@@ -16,7 +16,7 @@ import conf.Configuration.interactive.cdnPath
   with PrivateMethodTester {
 
   val url = "lifeandstyle/ng-interactive/2016/mar/12/stephen-collins-cats-cartoon"
-  val interactiveController = new InteractiveController(testContentApiClient, wsClient)
+  lazy val interactiveController = new InteractiveController(testContentApiClient, wsClient)
   val getWebWorkerPath = PrivateMethod[String]('getWebWorkerPath)
 
   "Interactive Controller" should "200 when content type is 'interactive'" in {
