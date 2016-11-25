@@ -211,14 +211,14 @@ const bundles = [{
 }];
 
 module.exports = {
-    description: 'Create r.js bundles to run alongside Webpack-bundled app',
+    description: 'Create r.js bundles for Webpack',
     task: bundles.sort((a,b) => a.name < b.name ? -1 : 1).map(bundle => {
         const options = Object.keys(bundle).reduce((command, optionName) =>
             `${optionName}=${bundle[optionName].toString()} ${command}`
         , '');
         return {
             description: bundle.name,
-            task: `r.js -o ${path.join(__dirname, 'bundle.config.js')} ${options}`
+            task: `r.js -o ${path.join(__dirname, 'rjs.config.js')} ${options}`
         };
     }),
     concurrent: true

@@ -8,7 +8,7 @@ const writeFileP = pify(fs.writeFile);
 const {src, target} = require('../../config').paths;
 
 module.exports = {
-    description: 'Concatenate Webpack-bundled standard, curl and boot etc into app-webpack.js',
+    description: 'Create app.js for Webpack',
     task: () => Promise.all([
         path.resolve(target, 'javascripts', 'boot-webpack.js'),
         path.resolve(src, 'javascripts', 'components', 'curl', 'curl-domReady.js'),
