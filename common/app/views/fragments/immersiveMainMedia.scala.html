@@ -10,9 +10,10 @@
 
 @defining((
     page.item.tags.isTheMinuteArticle,
+    page.item.tags.isUsMinuteBriefing,
     page.item.elements.hasMainEmbed,
     page.item.fields.main.nonEmpty
-)) { case (isTheMinuteArticle, hasEmbed, hasMainMedia) =>
+)) { case (isTheMinuteArticle, isUsMinuteBriefing, hasEmbed, hasMainMedia) =>
 
     <div class="@RenderClasses(Map(
             "content--minute-article" -> isTheMinuteArticle,
@@ -85,7 +86,7 @@
                         "content__headline--immersive--with-main-media" -> hasMainMedia
                     ), "content__headline", "content__headline--immersive", "content__headline--immersive-article")
                 ">
-                    @if(isTheMinuteArticle) {
+                    @if(isUsMinuteBriefing) {
                         <a href="@LinkTo {/us-news/series/the-campaign-minute-2016}" class="logo--minute-article">
                             <span class="u-h">The Minute - </span>
                             @fragments.inlineSvg("minute-logo", "logo")

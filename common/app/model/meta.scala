@@ -565,8 +565,9 @@ final case class Tags(
   lazy val isRugbyMatch = (isMatchReport || isLiveBlog) &&
     tags.exists(t => t.id == "sport/rugby-union")
 
-  lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
+  lazy val isClimateChangeSeries = tags.exists(t => t.id == "environment/series/keep-it-in-the-ground")
   lazy val isTheMinuteArticle = tags.exists(t => t.id == "tone/minute")
+  lazy val isUsMinuteBriefing = tags.exists(t => t.id == "us-news/series/the-campaign-minute-2016")
 
   lazy val isUSElection = tags.exists(t => t.id == "us-news/us-elections-2016")
   lazy val isAusElection = tags.exists(t => t.id == "australia-news/australian-election-2016")
