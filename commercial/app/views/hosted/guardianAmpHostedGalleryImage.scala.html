@@ -1,5 +1,6 @@
 @import common.commercial.hosted.HostedGalleryImage
 @import views.support.ImgSrc
+@import views.html.hosted._
 @import common.commercial.hosted.HostedGalleryPage
 
 @(picture: model.ImageMedia, image: HostedGalleryImage, index: Int, page: HostedGalleryPage)
@@ -44,6 +45,7 @@
                 @Html(image.caption)
                 @if(image.caption.nonEmpty && image.credit.nonEmpty){<br/>}
                 @image.credit
+                @guardianHostedShareButtons(page)
             </div>
         </div>
 
