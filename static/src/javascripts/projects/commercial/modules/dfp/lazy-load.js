@@ -6,9 +6,9 @@ define([
     'common/utils/user-timing',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/load-advert',
-    'commercial/modules/dfp/ophan-tracking',
+    'commercial/modules/dfp/performance-logging',
     'commercial/modules/dfp/get-advert-by-id'
-], function (fastdom, throttle, config, detect, userTiming, dfpEnv, loadAdvert, ophanTracking, getAdvertById) {
+], function (fastdom, throttle, config, detect, userTiming, dfpEnv, loadAdvert, performanceLogging, getAdvertById) {
     /* nbOfFrames: integer. Number of refresh frames we want to throttle the scroll handler */
     var nbOfFrames = 6;
 
@@ -54,7 +54,7 @@ define([
 
             lazyLoad.forEach(function(advertId) {
                 var advert = getAdvertById(advertId);
-                ophanTracking.updateAdvertMetric(advert, 'lazyWaitComplete', userTiming.getCurrentTime());
+                performanceLogging.updateAdvertMetric(advert, 'lazyWaitComplete', userTiming.getCurrentTime());
                 loadAdvert(advert);
             });
         });

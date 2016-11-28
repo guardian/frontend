@@ -31,12 +31,11 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem) extends ExecutionCont
         .map { response =>
           response.status match {
           case 200 => response.body
-          case _ => {
+          case _ =>
             val error = s"PA endpoint returned: ${response.status}, $endpoint"
             log.warn(error)
             throw CricketFeedException(error)
           }
-        }
       }
     }).getOrElse(Future.failed(CricketFeedException("No cricket api key found")))
   }
@@ -75,8 +74,8 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem) extends ExecutionCont
         .map { response =>
 
         response.status match {
-          case 200 => { XML.loadString(response.body) \\ "match" map (content =>
-            (content \ "@id").text ) }
+          case 200 => XML.loadString(response.body) \\ "match" map (content =>
+            (content \ "@id").text )
 
           case 204 => Nil // No content for this date range.
 

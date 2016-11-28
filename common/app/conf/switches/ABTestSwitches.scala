@@ -31,30 +31,28 @@ trait ABTestSwitches {
     "Test just contributions vs contributions or membership vs just membership in the US",
     owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 25),
+    sellByDate =  new LocalDate(2016, 11, 28),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-contributions-epic-thank-you",
-    "Show a thank you message to our supporters at the end of artciles, just saying thanks!",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-uk-memb-engagement-msg-copy-test-10",
+    "Test alternate short messages on membership engagement banner",
+    owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 22),
+    sellByDate = new LocalDate(2016, 12, 8), // Thursday 8th December
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-platform-sticky-ad-viewability",
-    "Test the affect of showing the navigation on the viewability of the sticky top ad",
-    owners = Seq(Owner.withGithub("gtrufitt"), Owner.withName("Gareth Trufitt")),
+    "ab-au-memb-engagement-msg-copy-test-8",
+    "Test alternate short messages on AU membership engagement banner",
+    owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 24),
+    sellByDate = new LocalDate(2016, 12, 22), // Thursday 22nd December
     exposeClientSide = true
   )
-
-
 
 }

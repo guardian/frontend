@@ -59,7 +59,7 @@ trait DynamicContainerTest extends FlatSpec with Matchers with GeneratorDrivenPr
       val byGroup = Story.segmentByGroup(stories)
       val largerStories = byGroup.getOrElse(3, Seq.empty) ++ byGroup.getOrElse(2, Seq.empty)
 
-      whenever(largerStories.length > 0) {
+      whenever(largerStories.nonEmpty) {
         val smallerStories = stories.dropWhile(_.group >= 2)
 
         val overFlows = (if (byGroup.contains(3)) {

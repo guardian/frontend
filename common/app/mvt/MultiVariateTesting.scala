@@ -16,25 +16,36 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-object ABNewNavVariant extends TestDefinition(
-  name = "ab-new-nav-variant",
-  description = "users in this test will see the new header first variant",
+object ABNewNavVariantThree extends TestDefinition(
+  name = "ab-new-nav-variant-three",
+  description = "users in this test will see the new header third variant",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2016, 12, 8) // Thursday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header").contains("variant")
+    request.headers.get("X-GU-ab-new-header").contains("variantthree")
   }
 }
 
-object ABNewNavVariantTwo extends TestDefinition(
-  name = "ab-new-nav-variant-two",
-  description = "users in this test will see the new header second variant",
+object ABNewNavVariantFour extends TestDefinition(
+  name = "ab-new-nav-variant-four",
+  description = "users in this test will see the new header fourth variant",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2016, 12, 8) // Thursday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header").contains("varianttwo")
+    request.headers.get("X-GU-ab-new-header").contains("variantfour")
+  }
+}
+
+object ABNewNavVariantFive extends TestDefinition(
+  name = "ab-new-nav-variant-five",
+  description = "users in this test will see the new header fifth variant",
+  owners = Seq(Owner.withGithub("natalialkb")),
+  sellByDate = new LocalDate(2016, 12, 8) // Thursday
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-new-header").contains("variantfive")
   }
 }
 
@@ -60,28 +71,6 @@ object CommercialClientLoggingVariant extends TestDefinition(
   }
 }
 
-object CommercialHeaderBiddingSonobiVariant extends TestDefinition(
-  name = "commercial-hb-sonobi",
-  description = "A test variant for the sonobi header-bidding integration",
-  owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2016, 11, 30) // Wednesday
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-comm-hb-test").contains("sonobi")
-  }
-}
-
-object CommercialHeaderBiddingControl extends TestDefinition(
-  name = "commercial-hb-control",
-  description = "A control group for the header bidding test",
-  owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
-  sellByDate = new LocalDate(2016, 11, 30) // Wednesday
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-comm-hb-test").contains("control")
-  }
-}
-
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -95,12 +84,11 @@ trait ServerSideABTests {
 
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
-    ABNewNavVariant,
-    ABNewNavVariantTwo,
+    ABNewNavVariantThree,
+    ABNewNavVariantFour,
+    ABNewNavVariantFive,
     ABNewNavControl,
-    CommercialClientLoggingVariant,
-    CommercialHeaderBiddingSonobiVariant,
-    CommercialHeaderBiddingControl
+    CommercialClientLoggingVariant
   )
 }
 

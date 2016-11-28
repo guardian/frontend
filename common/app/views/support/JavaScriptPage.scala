@@ -29,8 +29,8 @@ object JavaScriptPage {
       val maybeSponsorshipType = page.branding(edition).map(_.sponsorshipType.name)
       maybeSponsorshipType.map("sponsorshipType" -> JsString(_))
     }
-    val allowUserGeneratedContent = content.map(_.allowUserGeneratedContent).getOrElse(false)
-    val requiresMembershipAccess = content.map(_.metadata.requiresMembershipAccess).getOrElse(false)
+    val allowUserGeneratedContent = content.exists(_.allowUserGeneratedContent)
+    val requiresMembershipAccess = content.exists(_.metadata.requiresMembershipAccess)
     val membershipAccess = content.flatMap(_.metadata.membershipAccess).getOrElse("")
 
     val cardStyle = content.map(_.cardStyle.toneString).getOrElse("")

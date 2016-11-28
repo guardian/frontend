@@ -15,7 +15,7 @@ define([
         adSlotSelector: '.js-ad-slot',
 
         /* sonobiEnabled: boolean. Set to true if sonobi real-time-bidding is enabled*/
-        sonobiEnabled: 'tests' in config && config.tests.commercialHbSonobi,
+        sonobiEnabled: config.switches.sonobiHeaderBidding,
 
         /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
         lazyLoadEnabled: false,

@@ -61,6 +61,14 @@ module.exports = (() => {
         /*
             Paid for by pages
          */
-        '/somerset-county-council-partner-zone/2016/sep/21/somerset-offers-opportunities-develop-social-work-career'
+        '/somerset-county-council-partner-zone/2016/sep/21/somerset-offers-opportunities-develop-social-work-career',
+
+        /*
+            Hosted pages
+         */
+        '/advertiser-content/audi-history-of-audi/audi-and-innovation', //hosted article page
+        '/advertiser-content/chester-zoo-act-for-wildlife/what-we-fight-for', //hosted gallery page
+        '/advertiser-content/chester-zoo-act-for-wildlife/making-wildlife-friendly-habitats', //hosted video non-youtube page
+        '/advertiser-content/explore-canada-food-busker-in-canada/duelling-bagels' //hosted video youtube page
     ];
 })();

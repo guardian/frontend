@@ -21,26 +21,14 @@ define([
         }, this);
     }
 
-    function prepareWrapper(el) {
-        var wrapper = document.createElement('div');
-        wrapper.className += el.className;
-
-        fastdom.write(function () {
-            el.parentNode.insertBefore(wrapper, el);
-            wrapper.appendChild(el);
-        });
-
-        return wrapper;
-    }
-
-    function _onPlayerStateChange(event, handlers, wrapper) {
+    function _onPlayerStateChange(event, handlers, el) {
         //change class according to the current state
         //TODO: Fix this so we can add poster image.
         fastdom.write(function () {
             ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(function (status) {
-                wrapper.classList.toggle('youtube__video-' + status.toLocaleLowerCase(), event.data === window.YT.PlayerState[status]);
+                el.classList.toggle('youtube__video-' + status.toLocaleLowerCase(), event.data === window.YT.PlayerState[status]);
             });
-            wrapper.classList.add('youtube__video-started');
+            el.classList.add('youtube__video-started');
         });
 
 
@@ -50,10 +38,10 @@ define([
         }
     }
 
-    function _onPlayerReady(event, handlers, wrapper) {
+    function _onPlayerReady(event, handlers, el) {
 
         fastdom.write(function () {
-            wrapper.classList.add('youtube__video-ready');
+            el.classList.add('youtube__video-ready');
         });
         if (handlers && typeof handlers.onPlayerReady === 'function') {
             handlers.onPlayerReady(event);
@@ -61,17 +49,15 @@ define([
     }
 
     function init(el, handlers, videoId) {
-        //wrap <iframe/> in a div with dynamically updating class attributes
         loadYoutubeJs();
-        var wrapper = prepareWrapper(el);
 
         return promise.then(function () {
             function onPlayerStateChange(event) {
-                _onPlayerStateChange(event, handlers, wrapper);
+                _onPlayerStateChange(event, handlers, el);
             }
 
             function onPlayerReady(event) {
-                _onPlayerReady(event, handlers, wrapper);
+                _onPlayerReady(event, handlers, el);
             }
 
             return setupPlayer(videoId, onPlayerReady, onPlayerStateChange);

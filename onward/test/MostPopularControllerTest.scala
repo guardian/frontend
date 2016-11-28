@@ -31,7 +31,7 @@ import services.OphanApi
   }
 
   it should "return JSON when .json format is supplied" in {
-    val fakeRequest = FakeRequest(GET, s"/most-read/${tag}.json")
+    val fakeRequest = FakeRequest(GET, s"/most-read/$tag.json")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
