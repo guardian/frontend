@@ -2,7 +2,7 @@ package controllers
 
 import common._
 import model.Cached.WithoutRevalidationResult
-import model.{TinyResponse, Cached}
+import model.{Cors, TinyResponse, Cached}
 import play.api.mvc._
 
 import scala.concurrent.ExecutionContext.Implicits
@@ -13,9 +13,7 @@ class QuizzesController extends Controller with Logging {
 
   implicit val ec = Implicits.global
 
-  def results(quizId: String) = Action.async { implicit request =>
-    Future.successful(Cached(3600)(WithoutRevalidationResult(NotFound(""))))
-  }
+  def results(quizId: String) = Action { implicit request => Cors(NotFound("")) }
 
   def update() = Action.async(parse.json) { implicit request =>
     Future.successful(Cached(3600)(WithoutRevalidationResult(NotFound(""))))
