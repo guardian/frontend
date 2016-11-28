@@ -393,8 +393,11 @@ object NewNavigation {
       SectionsLink("us-news", News),
       SectionsLink("cities", News),
       SectionsLink("global-development", News),
+      SectionsLink("sustainable-business", News),
+      SectionsLink("law", News),
 
       SectionsLink("commentisfree", Opinion),
+      SectionsLink("index", Opinion),
 
       SectionsLink("sport", Sport),
       SectionsLink("football", Sport),
@@ -407,9 +410,10 @@ object NewNavigation {
       SectionsLink("artanddesign", Arts),
       SectionsLink("stage", Arts),
 
-      SectionsLink("lifestyle", Life),
+      SectionsLink("lifeandstyle", Life),
       SectionsLink("fashion", Life),
-      SectionsLink("travel", Life)
+      SectionsLink("travel", Life),
+      SectionsLink("society", Life)
     )
 
     def getSectionLinks(sectionName: String, edition: Edition) = {
@@ -418,7 +422,7 @@ object NewNavigation {
       }
 
       if (sectionList.isEmpty) {
-        ("", List())
+        ("News", News.getEditionalisedNavLinks(edition).drop(1))
       } else {
         val section = sectionList.head
         val parentSections = section.parentSection.getEditionalisedNavLinks(edition).drop(1)

@@ -875,7 +875,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
         line-height: 1.5em;
 
         &:after {
-            float: right;
             padding: 0 $gs-gutter/10;
         }
     }
@@ -895,15 +894,19 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 
 // Scrolly variant
 .tertiary__variant-three {
-    .tertiary-navigation__item:last-of-type .tertiary-navigation__link {
-        margin-right: $gutter-small + $veggie-burger-small;
+    .tertiary-navigation__item {
+        flex: 0 0 auto;
 
-        @include mq($mobile-medium) {
-            margin-right: $gutter-medium + $veggie-burger-medium - $gs-gutter/2;
-        }
+        &:last-of-type .tertiary-navigation__link {
+            margin-right: $gutter-small + $veggie-burger-small;
 
-        @include mq(mobileLandscape) {
-            margin-right: $gutter-large + $veggie-burger-medium - $gs-gutter/2;
+            @include mq($mobile-medium) {
+                margin-right: $gutter-medium + $veggie-burger-medium - $gs-gutter/2;
+            }
+
+            @include mq(mobileLandscape) {
+                margin-right: $gutter-large + $veggie-burger-medium - $gs-gutter/2;
+            }
         }
     }
 }
