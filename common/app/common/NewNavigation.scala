@@ -422,7 +422,7 @@ object NewNavigation {
       }
 
       if (sectionList.isEmpty) {
-        ("", List())
+        ("News", News.getEditionalisedNavLinks(edition).drop(1))
       } else {
         val section = sectionList.head
         val parentSections = section.parentSection.getEditionalisedNavLinks(edition).drop(1)
