@@ -54,10 +54,8 @@
 
             @if(Configuration.assets.useHashedBundles) {
                 window.curl.paths['bootstraps/enhanced/youtube'] = '@Static("javascripts/bootstraps/enhanced/youtube.js")';
-                window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
             } else {
                 window.curl.paths['bootstraps/enhanced/youtube'] = '@{Configuration.assets.path}javascripts/bootstraps/enhanced/youtube.js';
-                window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
             }
             @Html(common.Assets.js.curl)
             require(['bootstraps/enhanced/youtube'], function(bootstrap) {
