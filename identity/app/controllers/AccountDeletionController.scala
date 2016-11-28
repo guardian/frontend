@@ -21,13 +21,12 @@ import scalaz.EitherT
 import scalaz.std.scalaFuture._
 
 class AccountDeletionController(
-    api: IdApiClient,
     idRequestParser: IdRequestParser,
     idUrlBuilder: IdentityUrlBuilder,
     authenticationService: AuthenticationService,
     authenticatedActions: AuthenticatedActions,
     val messagesApi: MessagesApi,
-    identityApiClient: IdApiClient,
+    idApiClient: IdApiClient,
     signinService : PlaySigninService,
     conf: IdentityConfiguration,
     discussionApi: DiscussionApi,
@@ -80,18 +79,18 @@ class AccountDeletionController(
 
       def checkUserEnteredCorrectPassword(): EitherT[Future, AccountDeletionFailures, Unit] =
         (for {
-          auth <- EitherT.fromEither(identityApiClient.authBrowser(emailPasswdAuth, idRequest.trackingData))
+          auth <- EitherT.fromEither(idApiClient.authBrowser(emailPasswdAuth, idRequest.trackingData))
           _ <- EitherT.fromEither(signinService.getCookies(Future.successful(Right(auth)), true))
         } yield ()).leftMap(_ => FailedToEnterCorrectPassword)
 
       def unauthenticateUser(): EitherT[Future, AccountDeletionFailures, CookiesResponse] =
-        EitherT.fromEither(api.unauth(emailPasswdAuth, idRequest.trackingData)).leftMap(_ => FailedToUnauthenticateUser)
+        EitherT.fromEither(idApiClient.unauth(emailPasswdAuth, idRequest.trackingData)).leftMap(_ => FailedToUnauthenticateUser)
 
       def removeFromAllMalingLists(): EitherT[Future, AccountDeletionFailures, ETSubscriber] =
         EitherT(exactTargetService.unsubscribeFromAllLists(emailPasswdAuth.email)).leftMap(_ => FailedToRemoveFromAllEmailLists)
 
       def deleteAccountProper(): EitherT[Future, AccountDeletionFailures, Unit] =
-        EitherT.fromEither(identityApiClient.deleteAccount(request.user.auth, emailPasswdAuth)).leftMap(_ => FailedToDeleteAccount)
+        EitherT.fromEither(idApiClient.deleteAccount(request.user.auth, emailPasswdAuth)).leftMap(_ => FailedToDeleteAccount)
 
       def clearCookiesAndDisplaySuccessForm() =
         NoCache(SeeOther(routes.AccountDeletionController.renderAccountDeletionConfirmForm().url))
@@ -136,11 +135,11 @@ class AccountDeletionController(
          - do not have active membership */
     private def selectDeletionType[A](implicit request: AuthenticatedActions.AuthRequest[A]): Future[DeletionType] =
       for {
-        hasSavedArticles <- identityApiClient.hasNonDefaultSavedArticles(request.user.auth)
+        hasSavedArticles <- idApiClient.hasNonDefaultSavedArticles(request.user.auth)
         hasComment <- discussionApi.myProfile(request.headers).map { _.privateFields.fold(true)(_.hasCommented) }
         hasJob <- Future.successful(request.user.user.userGroups.find(_.packageCode == "GRS").fold(false)(_ => true))
-        isSubscriber <- identityApiClient.userIsSubscriber(request.user.auth)
-        isMember <- identityApiClient.userIsMember(request.user.auth)
+        isSubscriber <- idApiClient.userIsSubscriber(request.user.auth)
+        isMember <- idApiClient.userIsMember(request.user.auth)
       } yield {
         if (!hasSavedArticles && !hasComment && !hasJob && !isSubscriber && !isMember)
           AutoDeletion
