@@ -1,12 +1,10 @@
 package controllers
 
 import actions.AuthenticatedActions
-import com.exacttarget.fuelsdk.ETSubscriber
 import common.ExecutionContexts
 import conf.IdentityConfiguration
 import discussion.api.DiscussionApi
 import form.Mappings
-import idapiclient.responses.CookiesResponse
 import idapiclient.{EmailPassword, IdApiClient}
 import model.{IdentityPage, NoCache}
 import play.api.data.validation._
@@ -17,8 +15,6 @@ import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services._
 import utils.SafeLogging
 import scala.concurrent.Future
-import scalaz.EitherT
-import scalaz.std.scalaFuture._
 
 class AccountDeletionController(
     idRequestParser: IdRequestParser,
@@ -40,13 +36,14 @@ class AccountDeletionController(
 
     val accountDeletionForm = Form(Forms.single("password" -> Forms.text.verifying(Constraints.nonEmpty)))
 
-    def renderAccountDeletionForm = CSRFAddToken { authActionWithUser.async { implicit request =>
+    def renderAccountDeletionForm = CSRFAddToken {
+      authActionWithUser.async { implicit request =>
         val idRequest = idRequestParser(request)
         val form = accountDeletionForm.bindFromFlash.getOrElse(accountDeletionForm)
 
-        selectDeletionType.map { _ match {
-            case AutoDeletion => NoCache(Ok(accountDeletion(page, idRequest, idUrlBuilder, form, Nil)))
-            case ManualDeletion => Ok(accountDeletionManual(page, idRequest, idUrlBuilder))
+        autoDeletionCriteriaSatisfied.map { _ match {
+            case true => renderAutoDeletionForm(form)
+            case false => renderManualDeletionForm
           }
         }
       }
@@ -66,86 +63,48 @@ class AccountDeletionController(
       Future(Ok(accountDeletionConfirm(page, idRequestParser(request), idUrlBuilder)))
     }
 
-    private def deleteAccount[A](
-        boundForm: Form[String],
-        emailPasswdAuth: EmailPassword,
-        idRequest: IdentityRequest)(implicit request: AuthenticatedActions.AuthRequest[A]) = {
-
-      sealed trait AccountDeletionFailures
-      case object FailedToEnterCorrectPassword extends AccountDeletionFailures
-      case object FailedToUnauthenticateUser extends AccountDeletionFailures
-      case object FailedToDeleteAccount extends AccountDeletionFailures
-      case object FailedToRemoveFromAllEmailLists extends AccountDeletionFailures
-
-      def checkUserEnteredCorrectPassword(): EitherT[Future, AccountDeletionFailures, Unit] =
-        (for {
-          auth <- EitherT.fromEither(idApiClient.authBrowser(emailPasswdAuth, idRequest.trackingData))
-          _ <- EitherT.fromEither(signinService.getCookies(Future.successful(Right(auth)), true))
-        } yield ()).leftMap(_ => FailedToEnterCorrectPassword)
-
-      def unauthenticateUser(): EitherT[Future, AccountDeletionFailures, CookiesResponse] =
-        EitherT.fromEither(idApiClient.unauth(emailPasswdAuth, idRequest.trackingData)).leftMap(_ => FailedToUnauthenticateUser)
-
-      def removeFromAllMalingLists(): EitherT[Future, AccountDeletionFailures, ETSubscriber] =
-        EitherT(exactTargetService.unsubscribeFromAllLists(emailPasswdAuth.email)).leftMap(_ => FailedToRemoveFromAllEmailLists)
-
-      def deleteAccountProper(): EitherT[Future, AccountDeletionFailures, Unit] =
-        EitherT.fromEither(idApiClient.deleteAccount(request.user.auth, emailPasswdAuth)).leftMap(_ => FailedToDeleteAccount)
-
-      def clearCookiesAndDisplaySuccessForm() =
-        NoCache(SeeOther(routes.AccountDeletionController.renderAccountDeletionConfirmForm().url))
-          .discardingCookies(cookiesToDiscard: _*)
-
-      def processFailures(failure: AccountDeletionFailures) = failure match {
-          case FailedToEnterCorrectPassword =>
-            SeeOther(routes.AccountDeletionController.renderAccountDeletionForm ().url)
-              .flashing(boundForm.withError ("password", "Password is incorrect").toFlash)
-
-          case FailedToUnauthenticateUser =>
-            logger.error(s"Failed to un-authenticate user ${request.user.user.id} during account deletion.")
-            renderFormWithUnableToDeleteAccountError(boundForm)
-
-          case FailedToRemoveFromAllEmailLists =>
-            logger.error(s"Failed to remove user ${request.user.user.id} from all mailing lists during account deletion.")
-            renderFormWithUnableToDeleteAccountError(boundForm)
-
-          case FailedToDeleteAccount =>
-            logger.error(s"Failed to delete account for user ${request.user.user.id}")
-            renderFormWithUnableToDeleteAccountError(boundForm)
+  private def deleteAccount[A](boundForm: Form[String], emailPasswdAuth: EmailPassword, idRequest: IdentityRequest)(implicit request: AuthenticatedActions.AuthRequest[A]): Future[Result] =
+      signinService.getCookies(idApiClient.authBrowser(emailPasswdAuth, idRequest.trackingData), true).flatMap {_ match {
+          case Left(_) => Future(SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url).flashing(boundForm.withError("password", "Password is incorrect").toFlash))
+          case Right(_) => exactTargetService.unsubscribeFromAllLists(emailPasswdAuth.email).flatMap {_ match {
+              case Left(_) => Future(renderFormWithUnableToDeleteAccountError(boundForm))
+              case Right(_) => idApiClient.unauth(emailPasswdAuth, idRequest.trackingData).flatMap {_ match {
+                  case Left(_) => Future(renderFormWithUnableToDeleteAccountError(boundForm))
+                  case Right(_) => idApiClient.deleteAccount(request.user.auth, emailPasswdAuth).flatMap {_ match {
+                      case Left(_) => Future(renderFormWithUnableToDeleteAccountError(boundForm))
+                      case Right(_) => Future(renderAutoDeletionConfirm)
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
-
-      (for {
-        _ <- checkUserEnteredCorrectPassword()
-        _ <- removeFromAllMalingLists()
-        _ <- unauthenticateUser()
-        _ <- deleteAccountProper()
-      } yield ()).fold(processFailures, _ => clearCookiesAndDisplaySuccessForm)
-    }
-
-    sealed trait DeletionType
-    case object AutoDeletion extends DeletionType
-    case object ManualDeletion extends DeletionType
-
-
-    /* Users can delete account themselves if they
-         - has no saved articles, and
-         - have never commented, and
-         - do not have a jobs account, and
-         - do not have active digipack subscriptions, and
-         - do not have active membership */
-    private def selectDeletionType[A](implicit request: AuthenticatedActions.AuthRequest[A]): Future[DeletionType] =
-      for {
-        noSavedArticles <- idApiClient.hasNoSavedArticles(request.user.auth)
-        noComments <- discussionApi.myProfile(request.headers).map { _.privateFields.fold(false)(profile => !(profile.hasCommented)) }
-        noJob <- Future.successful(request.user.user.userGroups.find(_.packageCode == "GRS").fold(true)(_ => false))
-        notSubscriber <- idApiClient.userIsNotSubscriber(request.user.auth)
-        notMember <- idApiClient.userIsNotMember(request.user.auth)
-      } yield {
-        if (noSavedArticles && noComments && noJob && notSubscriber && notMember)
-          AutoDeletion
-        else
-          ManualDeletion
       }
+
+
+  private def renderManualDeletionForm[A](implicit request: AuthenticatedActions.AuthRequest[A]) = {
+    val idRequest = idRequestParser(request)
+    Ok(accountDeletionManual(page, idRequest, idUrlBuilder))
+  }
+
+  private def renderAutoDeletionForm[A](form: Form[String])(implicit request: AuthenticatedActions.AuthRequest[A]) = {
+    val idRequest = idRequestParser(request)
+    NoCache(Ok(accountDeletion(page, idRequest, idUrlBuilder, form, Nil)))
+  }
+
+  private def renderAutoDeletionConfirm[A](implicit request: AuthenticatedActions.AuthRequest[A]) =
+    NoCache(SeeOther(routes.AccountDeletionController.renderAccountDeletionConfirmForm().url)).discardingCookies(cookiesToDiscard: _*)
+
+  private def autoDeletionCriteriaSatisfied[A](implicit request: AuthenticatedActions.AuthRequest[A]): Future[Boolean] =
+    for {
+      noSavedArticles <- idApiClient.hasNoSavedArticles(request.user.auth)
+      noComments <- discussionApi.myProfile(request.headers).map {_.privateFields.fold(false)(profile => !(profile.hasCommented))}
+      noJob <- Future.successful(request.user.user.userGroups.find(_.packageCode == "GRS").fold(true)(_ => false))
+      notSubscriber <- idApiClient.userIsNotSubscriber(request.user.auth)
+      notMember <- idApiClient.userIsNotMember(request.user.auth)
+    } yield (noSavedArticles && noComments && noJob && notSubscriber && notMember)
+
 
     private def renderFormWithUnableToDeleteAccountError(boundForm: Form[String]) =
       SeeOther(routes.AccountDeletionController.renderAccountDeletionForm ().url)

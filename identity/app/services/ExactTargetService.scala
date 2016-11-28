@@ -1,25 +1,24 @@
 package services
 
+import client.{Error, Response}
 import com.exacttarget.fuelsdk.{ETResponse, ETSubscriber}
 import utils.SafeLogging
 import common.ExecutionContexts
 import conf.IdentityConfiguration
 import scala.concurrent.Future
-import scalaz.\/
 
 class ExactTargetService(conf: IdentityConfiguration) extends ExecutionContexts with SafeLogging {
 
-  type UnsubscribeError = ETResponse[ETSubscriber]
-
-  def unsubscribeFromAllLists(email: String): Future[UnsubscribeError \/ ETSubscriber] = Future {
+  def unsubscribeFromAllLists(email: String): Future[Response[ETSubscriber]] = Future {
 
     def unsubscribe(subscriber: ETSubscriber) = {
       subscriber.setStatus(ETSubscriber.Status.UNSUBSCRIBED)
       val response = etClient.update(subscriber)
 
-      Option(response.getResult).fold[UnsubscribeError \/ ETSubscriber]
-        {\/.left(response)}
-        {result => \/.right(result.getObject)}
+      Option(response.getResult) match {
+        case None => Left(List(Error(response.getResponseMessage, response.getResponseMessage, response.getResponseCode.toInt)))
+        case Some(etResult) => Right(etResult.getObject)
+      }
     }
 
     def createAndUnsubscribe() = {
@@ -29,14 +28,16 @@ class ExactTargetService(conf: IdentityConfiguration) extends ExecutionContexts 
       subscriber.setStatus(ETSubscriber.Status.UNSUBSCRIBED)
       val response = etClient.create(subscriber)
 
-      Option(response.getResult).fold[UnsubscribeError \/ ETSubscriber]
-        {\/.left(response)}
-        {result => \/.right(result.getObject)}
+      Option(response.getResult) match {
+        case None => Left(List(Error(response.getResponseMessage, response.getResponseMessage, response.getResponseCode.toInt)))
+        case Some(etResult) => Right(etResult.getObject)
+      }
     }
 
-    Option(
-      etClient.retrieve(classOf[ETSubscriber], s"emailAddress=$email").getResult
-    ).fold(createAndUnsubscribe)(result => unsubscribe(result.getObject))
+    Option(etClient.retrieve(classOf[ETSubscriber], s"emailAddress=$email")) match {
+      case None => createAndUnsubscribe
+      case Some(etResult) => unsubscribe(etResult.getObject)
+    }
   }
 
   private lazy val etClient =

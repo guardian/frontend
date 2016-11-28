@@ -64,7 +64,7 @@ abstract class IdApi(conf: IdentityConfiguration, http: Http, jsonBodyParser: Js
 
   def hasNoSavedArticles(auth: Auth) = // besides the default one
     savedArticles(auth).map { _ match {
-      case Left(_) => false
+      case Left(error) => true
       case Right(prefs) => prefs.articles.isEmpty || (prefs.articles.length == 1 && prefs.articles.head.shortUrl == "/p/4ab7x")
     }
   }
