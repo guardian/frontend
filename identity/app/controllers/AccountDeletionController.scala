@@ -6,7 +6,7 @@ import conf.IdentityConfiguration
 import discussion.api.DiscussionApi
 import form.Mappings
 import idapiclient.{EmailPassword, IdApiClient}
-import model.{IdentityPage, NoCache}
+import model.{IdentityPage, NoCache, SignoutDiscaringCookies}
 import play.api.data.validation._
 import play.api.data.{Form, Forms}
 import play.api.i18n.MessagesApi
@@ -94,7 +94,7 @@ class AccountDeletionController(
   }
 
   private def renderAutoDeletionConfirm[A](implicit request: AuthenticatedActions.AuthRequest[A]) =
-    NoCache(SeeOther(routes.AccountDeletionController.renderAccountDeletionConfirmForm().url)).discardingCookies(cookiesToDiscard: _*)
+    NoCache(SeeOther(routes.AccountDeletionController.renderAccountDeletionConfirmForm().url)).discardingCookies(SignoutDiscaringCookies(conf.id.domain): _*)
 
   private def autoDeletionCriteriaSatisfied[A](implicit request: AuthenticatedActions.AuthRequest[A]): Future[Boolean] =
     for {
@@ -110,11 +110,4 @@ class AccountDeletionController(
       SeeOther(routes.AccountDeletionController.renderAccountDeletionForm ().url)
         .flashing(boundForm.withGlobalError(
           "We are experiencing technical difficulties. Your account has not been deleted. Please try again later or contact Userhelp.").toFlash)
-
-    private val cookiesToDiscard = List(
-      DiscardingCookie("GU_U", "/", Some(conf.id.domain), secure = false),
-      DiscardingCookie("SC_GU_U", "/", Some(conf.id.domain), secure = true),
-      DiscardingCookie("GU_ID_CSRF", "/", Some(conf.id.domain), secure = true),
-      DiscardingCookie("gu_user_features_expiry", "/", Some(conf.id.domain), secure = false),
-      DiscardingCookie("gu_paying_member", "/", Some(conf.id.domain), secure = false))
 }

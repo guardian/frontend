@@ -8,6 +8,7 @@ import conf.IdentityConfiguration
 import utils.SafeLogging
 import idapiclient.{UserCookie, IdApiClient}
 import scala.concurrent.Future
+import model.SignoutDiscaringCookies
 
 class SignoutController(returnUrlVerifier: ReturnUrlVerifier,
                         conf: IdentityConfiguration,
@@ -33,20 +34,8 @@ class SignoutController(returnUrlVerifier: ReturnUrlVerifier,
     }
   }
 
-  private def performSignout(request: RequestHeader) = {
-    val payingMemberCookies = List(
-      DiscardingCookie("gu_user_features_expiry", "/", Some(conf.id.domain), secure = false),
-      DiscardingCookie("gu_paying_member", "/", Some(conf.id.domain), secure = false)
-      )
-
-    val cookiesToDiscard =
-      DiscardingCookie("GU_U", "/", Some(conf.id.domain), secure = false) ::
-      DiscardingCookie("SC_GU_U", "/", Some(conf.id.domain), secure = true) ::
-      DiscardingCookie("GU_ID_CSRF", "/", Some(conf.id.domain), secure = true) ::
-      payingMemberCookies
-
+  private def performSignout(request: RequestHeader) =
     NoCache(Found(
       returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
-    ).discardingCookies(cookiesToDiscard:_*))
-  }
+    ).discardingCookies(SignoutDiscaringCookies(conf.id.domain):_*))
 }
