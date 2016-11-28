@@ -1,4 +1,5 @@
 const webpack  = require('webpack');
+const path = require('path');
 
 module.exports = {
     entry: './static/src/javascripts/boot-webpack.js',
@@ -42,7 +43,7 @@ module.exports = {
         xhr2: {}
     },
     output: {
-        path: __dirname + '/static/target/javascripts',
+        path: path.join(__dirname, 'static', 'target', 'javascripts'),
         filename: 'boot-webpack.js'
     },
     plugins: [
