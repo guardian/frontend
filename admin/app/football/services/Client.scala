@@ -53,11 +53,10 @@ private case class TestClient(wsClient: WSClient, environment: Environment) exte
     }
 
     environment.getExistingFile(s"/admin/test/football/testdata/$filename.xml") match {
-      case Some(file) => {
+      case Some(file) =>
         val xml = scala.io.Source.fromFile(file, "UTF-8").getLines().mkString
         Future(xml)(context)
-      }
-      case None => {
+      case None =>
         Logger.warn(s"Missing fixture for API response: $suffix ($filename)")
         val response = realClient.get(realApiCallPath)(context)
         response.onComplete {
@@ -68,7 +67,6 @@ private case class TestClient(wsClient: WSClient, environment: Environment) exte
           case Failure(writeError) => throw writeError
         }(context)
         response
-      }
     }
   }
 
@@ -93,12 +91,12 @@ trait PaFootballClient {
   lazy val client: Client = if (mode == Mode.Test) TestClient(wsClient, environment) else RealClient(wsClient)
 
   def fetchCompetitionsAndTeams: Future[(List[Season], List[Team])] = for {
-    competitions <- client.competitions.map(PA.filterCompetitions _)
+    competitions <- client.competitions.map(PA.filterCompetitions)
     competitionTeams <- Future.traverse(competitions) {
       comp => client.teams(comp.competitionId, comp.startDate, comp.endDate).recover {
         case e: PaClientErrorsException =>
           // 'No data' is returned as an error by PA API. Therefore we ignore exception and return an empty list
-          log.error(s"PA Client error when fetching teams for competition ${comp}: ", e)
+          log.error(s"PA Client error when fetching teams for competition $comp: ", e)
           List()
       }
     }

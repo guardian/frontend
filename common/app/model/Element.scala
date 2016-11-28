@@ -89,7 +89,7 @@ final case class VideoMedia(videoAssets: List[VideoAsset]) {
   val blockVideoAds = videoAssets.exists(_.blockVideoAds)
 
   val encodings: Seq[Encoding] = {
-    videoAssets.toList.collect {
+    videoAssets.collect {
       case video: VideoAsset => video.encoding
     }.flatten.sorted
   }
@@ -106,7 +106,7 @@ final case class VideoMedia(videoAssets: List[VideoAsset]) {
   val largestVideo: Option[VideoAsset] = videoAssets.headOption
 
   val source: Option[String] = videoAssets.headOption.flatMap(_.source)
-  val embeddable: Boolean = videoAssets.headOption.map(_.embeddable).getOrElse(false)
+  val embeddable: Boolean = videoAssets.headOption.exists(_.embeddable)
   val caption: Option[String] = largestVideo.flatMap(_.caption)
 }
 
@@ -120,7 +120,7 @@ final case class AudioMedia(audioAssets: List[AudioAsset]) {
 
   val duration: Int = audioAssets.headOption.map(_.duration).getOrElse(0)
   val encodings: Seq[Encoding] = {
-    audioAssets.toList.collect {
+    audioAssets.collect {
       case audio: AudioAsset => Encoding(audio.url.getOrElse(""), audio.mimeType.getOrElse(""))
     }.sorted
   }

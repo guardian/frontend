@@ -49,6 +49,10 @@
         }
     }
 
+    .badge--alt {
+        border-color: $neutral-1;
+    }
+
     .brandbadge__header,
     .brandbadge__help {
         color: $neutral-6;

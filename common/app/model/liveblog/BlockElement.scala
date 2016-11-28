@@ -41,8 +41,8 @@ object BlockElement {
 
       case Audio => Some(AudioBlockElement(element.assets.map(AudioAsset.make)))
 
-      case Video => {
-        if (element.assets.length > 0) {
+      case Video =>
+        if (element.assets.nonEmpty) {
           Some(GuVideoBlockElement(
             element.assets.map(VideoAsset.make),
             ImageMedia(element.assets.filter(_.mimeType.exists(_.startsWith("image"))).zipWithIndex.map {
@@ -53,7 +53,6 @@ object BlockElement {
         }
 
         else Some(VideoBlockElement(videoDataFor(element)))
-      }
 
       case Embed => element.embedTypeData.map(d => EmbedBlockElement(d.html, d.safeEmbedCode, d.alt))
 

@@ -24,68 +24,27 @@
         }
     }
 
-    @* TODO: if this feature is proven successful, this should be refactored to remove the logic from the template as much as possible *@
-    @if(mvt.ABNewNavVariant.isParticipating || mvt.ABNewNavVariantTwo.isParticipating) {
-        <div class="mobile-only">
-            @defining(Edition(request).navigation) { navigation =>
-
-                @NewNavigation.getSubSectionOrSectionLink(navigation, page).map { sectionLink =>
-                    @if(!(item.content.isImmersive && item.content.tags.isArticle)) {
-
-                        <div class="content__section-label @if(item.content.tags.isGallery) { content__section-label--gallery }">
-                            <a class="content__section-label__link"
-                                data-link-name="article section"
-                                href="@LinkTo(sectionLink.href)">
-                                    @sectionLink.title
-                            </a>
-                        </div>
-                    }
-
-                    @if(item.content.blogOrSeriesTag.isDefined) {
-
-                        @if(item.content.blogOrSeriesTag.get.name.toLowerCase() == sectionLink.title.toLowerCase()) {
-                            @ObserverOrSectionLabel()
-                        } else {
-                            @item.content.blogOrSeriesTag.map { series =>
-                                <div class="content__series-label @if(item.content.isImmersive && item.content.tags.isArticle) { content__series-label--immersive-article }">
-                                    <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
-                                </div>
-                            }.getOrElse {
-                                @ObserverOrSectionLabel()
-                            }
-                        }
-                    } else {
-                        @ObserverOrSectionLabel()
-                    }
-                }
-            }
+    @if(!(item.content.isImmersive && item.content.tags.isArticle)) {
+        <div class="content__section-label @if(item.content.tags.isGallery) { content__section-label--gallery }">
+            <a class="content__section-label__link"
+                data-link-name="article section"
+                href="@LinkTo {/@item.content.sectionLabelLink}">
+                    @Html(Localisation(item.content.sectionLabelName))
+            </a>
         </div>
     }
 
-    <div class="@if(mvt.ABNewNavVariant.isParticipating || mvt.ABNewNavVariantTwo.isParticipating) {hide-on-mobile}">
-
-        @if(!(item.content.isImmersive && item.content.tags.isArticle)) {
-            <div class="content__section-label @if(item.content.tags.isGallery) { content__section-label--gallery }">
-                <a class="content__section-label__link"
-                    data-link-name="article section"
-                    href="@LinkTo {/@item.content.sectionLabelLink}">
-                        @Html(Localisation(item.content.sectionLabelName))
-                </a>
+    @item.content.blogOrSeriesTag.map { series =>
+    <div class="content__series-label @if(item.content.isImmersive && item.content.tags.isArticle) { content__series-label--immersive-article }">
+        <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
+    </div>
+    }.getOrElse {
+        @if(item.content.isFromTheObserver) {
+            <div class="content__series-label">
+                <a class="content__series-label__link" href="http://observer.theguardian.com">The Observer</a>
             </div>
         }
-
-        @item.content.blogOrSeriesTag.map { series =>
-        <div class="content__series-label @if(item.content.isImmersive && item.content.tags.isArticle) { content__series-label--immersive-article }">
-            <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
-        </div>
-        }.getOrElse {
-            @if(item.content.isFromTheObserver) {
-                <div class="content__series-label">
-                    <a class="content__series-label__link" href="http://observer.theguardian.com">The Observer</a>
-                </div>
-            }
-        }
-    </div>
+    }
 </div>
 
 @ObserverOrSectionLabel() = {

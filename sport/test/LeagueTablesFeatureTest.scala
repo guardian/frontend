@@ -31,7 +31,7 @@ import org.scalatest._
         teams should contain("Man C")
         teams should contain("Chelsea")
 
-        teams should not contain ("Wigan") // 5th in prem league not visible
+        teams should not contain "Wigan" // 5th in prem league not visible
 
         And("I should have a generic H1, with league name H2s")
 
@@ -56,7 +56,7 @@ import org.scalatest._
 
         And("I should see a nice SEO h1 el on the page, describing the current competition")
         $("h1").getTexts should contain("Premier League")
-        $("h1").getTexts should not contain("Championship League")
+        $("h1").getTexts should not contain "Championship League"
       }
     }
 

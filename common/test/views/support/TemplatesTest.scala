@@ -110,17 +110,17 @@ class TemplatesTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   it should "not add the dropcap span when the paragraph is does not begin with a letter" in {
     val body = withJsoup(bodyWithMarkup)(DropCaps(true, false)).body.trim
-    body should not include ("""<span class="drop-cap__inner">""")
+    body should not include """<span class="drop-cap__inner">"""
   }
 
   it should "not add the dropcap span when first body element is not a paragraph" in {
     val body = withJsoup(bodyWithHeadingBeforePara)(DropCaps(true, false)).body.trim
-    body should not include ("""<span class="drop-cap__inner">""")
+    body should not include """<span class="drop-cap__inner">"""
   }
 
   it should "not add the dropcap span when when the article is not a feature" in {
     val body = withJsoup(bodyWithoutInlines)(DropCaps(false, false)).body.trim
-    body should not include ("""<span class="drop-cap__inner">""")
+    body should not include """<span class="drop-cap__inner">"""
   }
 
   it should "add the dropcap span when the paragraph begins with a double quote mark" in {

@@ -272,7 +272,8 @@ object ContentTypeFormat {
         jsonTrail.thumbnailPath,
         jsonTrail.discussionId,
         jsonTrail.isCommentable,
-        jsonTrail.isClosedForComments)
+        jsonTrail.isClosedForComments
+       )
 
        Content.apply(trail, metadata, tags, commercial, elements, fields, sharelinks,
         jsonContent.atoms,

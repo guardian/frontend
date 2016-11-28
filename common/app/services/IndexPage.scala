@@ -103,7 +103,7 @@ object IndexPage {
         )
 
         (newMpuState, ((containerConfig, collection), Fixed(container)))
-    }._2.toSeq
+    }._2
 
     val front = Front.fromConfigsAndContainers(
       containerDefinitions,

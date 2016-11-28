@@ -34,7 +34,7 @@ object RefreshFrontsJob extends Logging with ExecutionContexts {
   }
 
   def runFrequency(akkaAsync: AkkaAsync)(frontType: FrontType): Boolean = {
-    if (Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
+    if (Configuration.aws.frontPressSns.exists(_.nonEmpty)) {
       log.info(s"Putting press jobs on Facia Cron $frontType")
       for (update <- getAllCronUpdates.filter(_.frontType == frontType)) {
         log.info(s"Pressing $update")

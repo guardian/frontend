@@ -29,9 +29,7 @@ object PA extends Collections {
     ("721", "International friendlies"),
     ("870", "Women's World Cup 2015")
   )
-  def competitionName(season: Season): String = {
-    competitionNames.get(season.id).getOrElse(season.name)
-  }
+  def competitionName(season: Season): String = competitionNames.getOrElse(season.id, season.name)
 
   val approvedCompetitions = List(
     "100", "500", "510", "300", "301", "101", "102",

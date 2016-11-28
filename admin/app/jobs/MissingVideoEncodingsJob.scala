@@ -47,7 +47,7 @@ class VideoEncodingsJob(contentApiClient: ContentApiClient, wsClient: WSClient) 
      apiVideoResponse.onSuccess {
        case allVideoContent =>
          val missingVideoEncodings = Future.sequence(allVideoContent.map { video =>
-           val videoAssets = video.elements.videos.filter(_.properties.isMain).flatMap(_.videos.videoAssets).map(_.url).flatten
+           val videoAssets = video.elements.videos.filter(_.properties.isMain).flatMap(_.videos.videoAssets).flatMap(_.url)
 
            val missingVideoAsssets = Future.sequence(
              videoAssets.map { encoding =>
@@ -58,12 +58,12 @@ class VideoEncodingsJob(contentApiClient: ContentApiClient, wsClient: WSClient) 
              }).map(_.flatten)
 
            missingVideoAsssets.map {
-             missingEncodings => missingEncodings.map { missingEncoding => new MissingEncoding(video, missingEncoding)}
+             missingEncodings => missingEncodings.map { missingEncoding => MissingEncoding(video, missingEncoding)}
            }
          }).map(_.flatten)
 
          missingVideoEncodings.onSuccess { case missingEncodings =>
-           missingEncodings.map { case missingEncoding: MissingEncoding =>
+           missingEncodings.map { missingEncoding: MissingEncoding =>
              DynamoDbStore.haveSeenMissingEncoding(missingEncoding.encodingSrc, missingEncoding.url) map {
                case true => log.debug(s"Already seen missing encoding: ${missingEncoding.encodingSrc} for url: ${missingEncoding.url}")
                case false =>
