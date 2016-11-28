@@ -38,7 +38,7 @@
         }
 
         @if(!item.trail.shouldHidePublicationDate) {
-            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.tags.isLiveBlog, item.fields.isLive)
+            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
         }
     }
 
