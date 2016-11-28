@@ -831,6 +831,12 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     color: $neutral-4;
     display: block;
 
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        color: #ffffff;
+    }
+
     .tertiary-navigation__item:first-of-type & {
         color: $news-support-1;
     }
@@ -875,6 +881,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
         line-height: 1.5em;
 
         &:after {
+            margin-left: -.1em;
             padding: 0 $gs-gutter/10;
         }
     }
