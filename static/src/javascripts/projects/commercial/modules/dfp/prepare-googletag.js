@@ -10,7 +10,6 @@ define([
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/on-slot-render',
     'commercial/modules/dfp/on-slot-load',
-    'commercial/modules/dfp/ophan-tracking',
     'commercial/modules/dfp/prepare-sonobi-tag',
     'commercial/modules/dfp/performance-logging',
 
@@ -33,7 +32,6 @@ define([
     dfpEnv,
     onSlotRender,
     onSlotLoad,
-    ophanTracking,
     prepareSonobiTag,
     performanceLogging
 ) {
@@ -61,10 +59,10 @@ define([
                 if (dfpEnv.sonobiEnabled) {
                     // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
                     require(['js!googletag.js']);
-                    ophanTracking.addTag('sonobi');
+                    performanceLogging.addTag('sonobi');
                 } else {
                     require(['js!googletag.js']);
-                    ophanTracking.addTag('waterfall');
+                    performanceLogging.addTag('waterfall');
                 }
 
                 window.googletag.cmd.push = raven.wrap({deep: true}, window.googletag.cmd.push);
