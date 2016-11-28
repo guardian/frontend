@@ -20,6 +20,8 @@ case class PrePurgeTestResult(url: String, passed: Boolean)
 
 class PageDecacheController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
 
+  val authActions = new AuthActions(wsClient)
+
   def renderPageDecache(url: Option[String] = None) = Action.async { implicit request =>
     url match {
       case Some(s) => renderPrePurgeTestResult(s)
@@ -44,7 +46,7 @@ class PageDecacheController(wsClient: WSClient) extends Controller with Logging 
     }.getOrElse(successful(InternalServerError("Couldn't get router URL - please go back and try again")))
   }
 
-  def decache() = AuthActions.AuthActionTest.async { implicit request =>
+  def decache() = authActions.AuthActionTest.async { implicit request =>
     getSubmittedUrl(request).map(new URI(_)).map{ urlToDecache =>
 
       new CdnPurge(wsClient)

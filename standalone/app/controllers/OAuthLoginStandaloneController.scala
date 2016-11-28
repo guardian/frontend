@@ -17,7 +17,7 @@ class OAuthLoginStandaloneController(val wsClient: WSClient) extends OAuthLoginC
       cred.oauthSecret,       // The client secret from the dev console
       cred.oauthCallback,     // The redirect URL Google send users back to (must be the same as
       // that configured in the developer console)
-      Some("guardian.co.uk"), // Google App domain to restrict login
+      "guardian.co.uk", // Google App domain to restrict login
       None
     )
   }
