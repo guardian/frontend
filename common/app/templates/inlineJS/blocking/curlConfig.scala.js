@@ -32,7 +32,6 @@ window.curlConfig = {
             'sonobi.js':                        '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
             react:                               '@Static("javascripts/vendor/react/react.js")',
             'ophan/ng':                          '@{Configuration.javascript.config("ophanJsUrl")}',
-            'prebid.js':                         '@Static("javascripts/vendor/prebid/0.8.1/prebid.js")',
             'discussion-frontend-react':         '@DiscussionAsset("discussion-frontend.react.amd")',
             'discussion-frontend-preact':        '@DiscussionAsset("discussion-frontend.preact.amd")',
 
@@ -64,7 +63,6 @@ window.curlConfig = {
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
             'sonobi.js':                    '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
             'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',
-            'prebid.js':                    'vendor/prebid/0.8.1/prebid.js',
             'discussion-frontend-react':    '@DiscussionAsset("discussion-frontend.react.amd")',
             'discussion-frontend-preact':   '@DiscussionAsset("discussion-frontend.preact.amd")',
             svgs:                           '../inline-svgs',

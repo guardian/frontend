@@ -58,10 +58,6 @@ define([
                 // No implementation
             });
 
-            injector.mock('common/modules/commercial/dfp/PrebidService', function MockPrebidService() {
-                // No implementation
-            });
-
             injector.mock('common/modules/commercial/dfp/apply-creative-template', function () {
                 return Promise.resolve();
             });
