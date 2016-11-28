@@ -4,7 +4,6 @@ import common.GuardianConfiguration
 import com.gu.email.exacttarget.ExactTargetFactory
 import java.net.URI
 import utils.SafeLogging
-import com.exacttarget.fuelsdk.{ETClient, ETConfiguration}
 
 class IdentityConfiguration extends GuardianConfiguration with SafeLogging {
 
@@ -21,17 +20,4 @@ class IdentityConfiguration extends GuardianConfiguration with SafeLogging {
     }
   }
 
-  // Userhelp - 'Guardian Admin' ET Account integrated with subscriptions.dev@guardian.co.uk AppCentre
-  object exactTargetUserhelp {
-    lazy val factory = for {
-      clientId <- configuration.getStringProperty("exacttargetuserhelp.clientId")
-      clientSecret <- configuration.getStringProperty("exacttargetuserhelp.clientSecret")
-    } yield {
-      logger.info(s"Found configuration for ExactTarget Userhelp Admin")
-      val etConf = new ETConfiguration()
-      etConf.set("clientId", clientId)
-      etConf.set("clientSecret", clientSecret)
-      new ETClient(etConf)
-    }
-  }
 }

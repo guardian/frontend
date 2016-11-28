@@ -1,7 +1,7 @@
 package idapiclient
 
 import com.gu.identity.model._
-import client.{Anonymous, Auth, Parameters, Response}
+import client.{Error, Anonymous, Auth, Parameters, Response}
 import client.connection.{Http, HttpResponse}
 import scala.concurrent.{ExecutionContext, Future}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
@@ -169,6 +169,22 @@ abstract class IdApi(conf: IdentityConfiguration, http: Http, jsonBodyParser: Js
   def deleteSubscription(userId: String, emailList: EmailList, auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] = {
     delete(urlJoin("useremails", userId, "subscriptions"), Some(auth), Some(trackingParameters), Some(write(emailList))) map extractUnit
   }
+
+  def deleteAllSubscriptions(userId: String, auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] =
+    userEmails(userId, trackingParameters).flatMap { _ match {
+        case Right(subscriber) =>
+          val listIds = subscriber.subscriptions.map(_.listId)
+          val unsubscribeResponse = listIds.map { id => deleteSubscription(userId, EmailList(id), auth, trackingParameters) }
+          Future.sequence(unsubscribeResponse).map { responses =>
+            if (responses.exists(_.isLeft))
+              Left(List(Error("Could not unsubscribe from all emailing lists", "")))
+            else
+              Right(())
+          }
+
+        case Left(_) => Future(Left(List(Error("Could not unsubscribe from all emailing lists", ""))))
+      }
+    }
 
   def updateUserEmails(userId: String, subscriber: Subscriber, auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] =
     post(urlJoin("useremails", userId), Some(auth), Some(trackingParameters), Some(write(subscriber))) map extractUnit

@@ -25,8 +25,7 @@ class AccountDeletionController(
     idApiClient: IdApiClient,
     signinService : PlaySigninService,
     conf: IdentityConfiguration,
-    discussionApi: DiscussionApi,
-    exactTargetService: ExactTargetService)
+    discussionApi: DiscussionApi)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
     import authenticatedActions._
@@ -66,7 +65,7 @@ class AccountDeletionController(
   private def deleteAccount[A](boundForm: Form[String], emailPasswdAuth: EmailPassword, idRequest: IdentityRequest)(implicit request: AuthenticatedActions.AuthRequest[A]): Future[Result] =
       signinService.getCookies(idApiClient.authBrowser(emailPasswdAuth, idRequest.trackingData), true).flatMap {_ match {
           case Left(_) => Future(SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url).flashing(boundForm.withError("password", "Password is incorrect").toFlash))
-          case Right(_) => exactTargetService.unsubscribeFromAllLists(emailPasswdAuth.email).flatMap {_ match {
+          case Right(_) => idApiClient.deleteAllSubscriptions(request.user.user.id, request.user.auth, idRequest.trackingData).flatMap {_ match {
               case Left(_) => Future(renderFormWithUnableToDeleteAccountError(boundForm))
               case Right(_) => idApiClient.unauth(emailPasswdAuth, idRequest.trackingData).flatMap {_ match {
                   case Left(_) => Future(renderFormWithUnableToDeleteAccountError(boundForm))
