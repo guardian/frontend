@@ -50,7 +50,7 @@ object EmailHelpers {
   }
 
   def icon(name: String) = Html {
-    s"""<img src="${Static(s"images/email/icons/$name.png")}" class="float-left icon icon-$name">"""
+    s"""<img src="${Static(s"images/email/icons/$name.png")}" class="icon icon-$name">"""
   }
 
   def img(src: String, alt: Option[String] = None) = Html {
