@@ -148,7 +148,7 @@ define([
         });
 
         it('should not set Observer flag for Guardian content', function () {
-            config.page.publication = 'theguardian.com';
+            config.page.publication = 'The Guardian';
             expect(buildPageTargeting().ob).toEqual(undefined);
         });
 
