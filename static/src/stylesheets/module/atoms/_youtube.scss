@@ -1,14 +1,22 @@
 @import '../../icons/video-icons-svg';
 
-@mixin fade-in {
+@mixin hide {
+    visibility: hidden;
+    opacity: 0;
+}
+
+@mixin show {
     visibility: visible;
     opacity: 1;
+}
+
+@mixin fade-in {
+    @include show;
     transition: opacity 1s linear, visibility 0s;
 }
 
 @mixin fade-out {
-    visibility: hidden;
-    opacity: 0;
+    @include hide;
     transition: opacity 1s linear, visibility 1s;
 }
 
@@ -26,17 +34,38 @@
 	.atom--media--youtube--iframe {
 		top: 1px;
 
-		&.youtube__video-started:not(.youtube__video-ended) {
-		    ~ .atom--media--youtube--overlay {
-		        @include fade-out;
-	        	transition-delay: 500ms;
-	        	transition-duration: 500ms;	    
-	        }
-		}
+        &:not(.youtube__video-ready),
+        &.youtube__video-ended {
+            ~ .atom--media--youtube--overlay .atom--media--youtube--controls {
+                 @include hide;
+            }
+        }
+
+        &.youtube__video-ready:not(.youtube__video-started) {
+            ~ .atom--media--youtube--overlay .atom--media--youtube--controls {
+                @include fade-in;    
+            }
+        }
+
+        &.youtube__video-started:not(.youtube__video-ended) {
+            ~ .atom--media--youtube--overlay,
+            ~ .atom--media--youtube--overlay .atom--media--youtube--controls {
+                @include fade-out;
+                transition-delay: 500ms;
+                transition-duration: 500ms;     
+            }
+        }
+
+        &.youtube__video-ended.youtube__video-started {
+            ~ .atom--media--youtube--overlay .atom--media--youtube--controls {
+                @include fade-in;
+            }
+        }
+
 	}
 
 	.atom--media--youtube--overlay {
-		pointer-events: none;
+		// pointer-events: none;
 
 		.atom--media--youtube--placeholder {
 			background-size: cover;
@@ -51,6 +80,12 @@
 		    height: 100%;
 		    box-sizing: border-box;
 		    text-align: center;
+
+            &:hover {
+                .atom--media--youtube--play-button {
+                    transform: translate(-50%, -50%) scale(1.15);
+                }
+            }
 
             .atom--media--youtube--play-button {
                 // Magic numbers are used here to draw the play arrow and circle as pseudo elements.

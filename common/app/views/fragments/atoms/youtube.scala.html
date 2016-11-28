@@ -15,14 +15,15 @@
             allowfullscreen="">
             </iframe>
 
-            <div class="atom--media--youtube--overlay">
-                @media.posterUrl.map { image =>
+            
+            @media.posterUrl.map { image =>
+                <div class="atom--media--youtube--overlay">
                     <div class="atom--media--youtube--placeholder" style="background-image: url(@image)"></div>
-                }
-                <div class="atom--media--youtube--controls">
-                    <div class="atom--media--youtube--play-button"></div>
+                    <div class="atom--media--youtube--controls">
+                        <div class="atom--media--youtube--play-button"></div>
+                    </div>
                 </div>
-            </div>
+            }
     </div>
 
 

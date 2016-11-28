@@ -71,11 +71,16 @@ define([
         }
     }
 
-    function onPlayerReady(atomId, event) {
+    function onPlayerReady(atomId, overlay, event) {
         players[atomId] = {
             player: event.target,
             pendingTrackingCalls: [25, 50]
         };
+        if (overlay) {
+            overlay.addEventListener('click', function () {
+                event.target.playVideo();
+            });
+        }
     }
 
     function onPlayerStateChange(atomId, event) {
@@ -87,12 +92,13 @@ define([
             $('.atom--media--youtube').each(function (el) {
                 var atomId = el.getAttribute('data-media-atom-id');
                 var iframe = el.querySelector('iframe');
+                var overlay = el.querySelector('.atom--media--youtube--overlay');
                 var youtubeId = iframe.id;
 
                 tracking.init(atomId);
 
                 youtubePlayer.init(iframe, {
-                    onPlayerReady: onPlayerReady.bind(null, atomId),
+                    onPlayerReady: onPlayerReady.bind(null, atomId, overlay),
                     onPlayerStateChange: onPlayerStateChange.bind(null, atomId)
                 }, youtubeId);
             });
