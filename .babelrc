@@ -5,6 +5,11 @@
             "plugins": [
                 "transform-async-to-generator"
             ]
+        },
+        "admin": {
+            "presets": [
+                "latest"
+            ]
         }
     }
 }
