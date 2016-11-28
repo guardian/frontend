@@ -1,18 +1,3 @@
-const execa = require('execa');
-const split = require('split');
-require('any-observable/register/rxjs-all'); // eslint-disable-line import/no-unassigned-import
-const Observable = require('any-observable');
-const streamToObservable = require('stream-to-observable');
-
-const exec = (cmd, args) => {
-	const cp = execa(cmd, args);
-
-	return Observable.merge(
-		streamToObservable(cp.stdout.pipe(split()), {await: cp}),
-		streamToObservable(cp.stderr.pipe(split()), {await: cp})
-	).filter(Boolean);
-};
-
 module.exports = {
     description: 'Test JS app',
     task: [
@@ -25,7 +10,7 @@ module.exports = {
                 'facia'
             ].map(set => ({
                 description: `Run ${set} tests`,
-                task: () => exec('karma', ['start', `./static/test/javascripts/conf/${set}.js`, '--single-run'])
+                task: `karma start ./static/test/javascripts/conf/${set}.js --single-run`
             })).concat([require('./eslint')]),
             concurrent: true
         }
