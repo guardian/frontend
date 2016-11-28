@@ -170,6 +170,7 @@ define([
                 ref:     getReferrer(),
                 co:      parseIds(page.authorIds),
                 bl:      parseIds(page.blogIds),
+                ob:      config.page.publication === 'The Observer' ? 't' : '',
                 ms:      formatTarget(page.source),
                 fr:      getVisitedValue(),
                 tn:      uniq(compact([page.sponsorshipType].concat(parseIds(page.tones)))),
