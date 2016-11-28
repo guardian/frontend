@@ -27,6 +27,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-recommended-for-you-recommendations",
+    "Test personalised container on fronts",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-epic-usa-cta-three-way",
     "Test just contributions vs contributions or membership vs just membership in the US",
     owners = Seq(Owner.withGithub("philwills")),
