@@ -726,6 +726,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
         overflow: hidden;
 
         @include mq($from: mobile, $until: mobileLandscape) {
+            height: $gs-baseline*2.5;
             height: 9.8vw;
         }
 
