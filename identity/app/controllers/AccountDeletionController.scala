@@ -46,7 +46,7 @@ class AccountDeletionController(
 
         selectDeletionType.map { _ match {
             case AutoDeletion => NoCache(Ok(accountDeletion(page, idRequest, idUrlBuilder, form, Nil)))
-            case e:ManualDeletion => Ok(accountDeletionManual(page, idRequest, idUrlBuilder))
+            case ManualDeletion => Ok(accountDeletionManual(page, idRequest, idUrlBuilder))
           }
         }
       }
@@ -124,7 +124,7 @@ class AccountDeletionController(
 
     sealed trait DeletionType
     case object AutoDeletion extends DeletionType
-    case class ManualDeletion(hasSavedArticles: Boolean, hasComment: Boolean, hasJob: Boolean, isSubscriber: Boolean, isMember: Boolean) extends DeletionType
+    case object ManualDeletion extends DeletionType
 
 
     /* Users can delete account themselves if they
@@ -135,16 +135,16 @@ class AccountDeletionController(
          - do not have active membership */
     private def selectDeletionType[A](implicit request: AuthenticatedActions.AuthRequest[A]): Future[DeletionType] =
       for {
-        hasSavedArticles <- idApiClient.hasNonDefaultSavedArticles(request.user.auth)
-        hasComment <- discussionApi.myProfile(request.headers).map { _.privateFields.fold(true)(_.hasCommented) }
-        hasJob <- Future.successful(request.user.user.userGroups.find(_.packageCode == "GRS").fold(false)(_ => true))
-        isSubscriber <- idApiClient.userIsSubscriber(request.user.auth)
-        isMember <- idApiClient.userIsMember(request.user.auth)
+        noSavedArticles <- idApiClient.hasNoSavedArticles(request.user.auth)
+        noComments <- discussionApi.myProfile(request.headers).map { _.privateFields.fold(false)(profile => !(profile.hasCommented)) }
+        noJob <- Future.successful(request.user.user.userGroups.find(_.packageCode == "GRS").fold(true)(_ => false))
+        notSubscriber <- idApiClient.userIsNotSubscriber(request.user.auth)
+        notMember <- idApiClient.userIsNotMember(request.user.auth)
       } yield {
-        if (!hasSavedArticles && !hasComment && !hasJob && !isSubscriber && !isMember)
+        if (noSavedArticles && noComments && noJob && notSubscriber && notMember)
           AutoDeletion
         else
-          ManualDeletion(hasSavedArticles, hasComment, hasJob, isSubscriber, isMember)
+          ManualDeletion
       }
 
     private def renderFormWithUnableToDeleteAccountError(boundForm: Form[String]) =

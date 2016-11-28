@@ -62,16 +62,11 @@ abstract class IdApi(conf: IdentityConfiguration, http: Http, jsonBodyParser: Js
     val response = http.POST(apiUrl(apiPath), Some(updatedSavedArticles), params, headers)
     response map extractSavedArticles }
 
-  def hasNonDefaultSavedArticles(auth: Auth) = {
-    def hasNoSavedArticles(savedArticles: List[SavedArticle]) = {savedArticles.isEmpty}
-
-    def hasOnlyDefaultSavedArticle(savedArticles: List[SavedArticle]) =
-      savedArticles.length == 1 && savedArticles.head.shortUrl == "/p/4ab7x"
-
-    savedArticles(auth).map(_.fold(
-      {_ => true},
-      { prefs => hasNoSavedArticles(prefs.articles) || hasOnlyDefaultSavedArticle(prefs.articles)})
-    ).map(result => !result)
+  def hasNoSavedArticles(auth: Auth) = // besides the default one
+    savedArticles(auth).map { _ match {
+      case Left(_) => false
+      case Right(prefs) => prefs.articles.isEmpty || (prefs.articles.length == 1 && prefs.articles.head.shortUrl == "/p/4ab7x")
+    }
   }
 
   // USERS
@@ -196,23 +191,15 @@ abstract class IdApi(conf: IdentityConfiguration, http: Http, jsonBodyParser: Js
   }
 
   // Membership & Subscription
-  def userIsMember(auth: Auth): Future[Boolean] = {
-    http.GET(
-      s"${conf.id.membersDataApiUrl}/user-attributes/me/mma-membership",
-      None,
-      buildHeaders(Some(auth))).map { response =>
-      response.fold(err => false, okResult => parse(okResult.body).extractOpt[MemSub].fold(false)(_ => true))
+  def userIsNotMember(auth: Auth): Future[Boolean] =
+    http.GET(s"${conf.id.membersDataApiUrl}/user-attributes/me/mma-membership", None, buildHeaders(Some(auth))).map { response =>
+      response.fold(err => false, okResult => parse(okResult.body).extractOpt[MemSub].fold(true)(_ => false))
     }
-  }
 
-  def userIsSubscriber(auth: Auth): Future[Boolean] = {
-    http.GET(
-      s"${conf.id.membersDataApiUrl}/user-attributes/me/mma-digitalpack",
-      None,
-      buildHeaders(Some(auth))).map { response =>
-      response.fold(err => false, okResult => parse(okResult.body).extractOpt[MemSub].fold(false)(_ => true))
+  def userIsNotSubscriber(auth: Auth): Future[Boolean] =
+    http.GET(s"${conf.id.membersDataApiUrl}/user-attributes/me/mma-digitalpack", None, buildHeaders(Some(auth))).map { response =>
+        response.fold(err => false, okResult => parse(okResult.body).extractOpt[MemSub].fold(true)(_ => false))
     }
-  }
 
   def post(apiPath: String,
            auth: Option[Auth] = None,
