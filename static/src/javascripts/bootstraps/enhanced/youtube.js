@@ -76,11 +76,43 @@ define([
             player: event.target,
             pendingTrackingCalls: [25, 50]
         };
+
         if (overlay) {
             overlay.addEventListener('click', function () {
                 event.target.playVideo();
             });
+
+            setDuration(players[atomId].player.getDuration(), overlay);
         }
+    }
+
+    function setDuration(duration, overlay) {
+        var times = [];
+
+        var hours = Math.floor(duration / 3600);
+
+        if (hours) {
+            times.push(hours);
+        }
+
+        duration = duration - hours * 3600;
+
+        var minutes = Math.floor(duration / 60);
+
+        times.push(formatTime(minutes));
+
+        duration = duration - minutes * 60;
+
+        times.push(formatTime(duration));
+
+        var formattedDuration = times.join(':');
+        var durationElem = overlay.querySelector('.atom--media--youtube--duration');
+
+        durationElem.innerText = formattedDuration;
+    }
+
+    function formatTime(time) {
+        return ("0" + time).slice(-2);
     }
 
     function onPlayerStateChange(atomId, event) {
