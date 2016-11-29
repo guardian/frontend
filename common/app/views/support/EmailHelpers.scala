@@ -35,7 +35,7 @@ object EmailHelpers {
   def imageUrlFromPressedContent(pressedContent: PressedContent): Option[String] = {
     for {
       InlineImage(imageMedia) <- InlineImage.fromFaciaContent(pressedContent)
-      url <- EmailImage.bestFor(imageMedia)
+      url <- FrontEmailImage.bestFor(imageMedia)
     } yield url
   }
 
@@ -55,6 +55,10 @@ object EmailHelpers {
 
   def img(src: String, alt: Option[String] = None) = Html {
     s"""<img width="580" class="full-width" src="$src" ${alt.map(alt => s"""alt="$alt"""").getOrElse("")}>"""
+  }
+
+  def imgFromPressedContent(pressedContent: PressedContent) = imageUrlFromPressedContent(pressedContent).map { url =>
+    img(src = url, alt = Some(pressedContent.header.headline))
   }
 
   object Images {

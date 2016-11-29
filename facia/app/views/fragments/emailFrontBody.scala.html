@@ -37,9 +37,7 @@
     @paddedRow {
         @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
             <a @Html(href) class="facia-card facia-card--large @toneClass(pressedContent)">
-                @imageUrlFromPressedContent(pressedContent).map { url =>
-                    <img width="580" class="full-width" src="@url" />
-                }
+                @imgFromPressedContent(pressedContent)
                 @headline(pressedContent)
                 @pressedContent.card.trailText.map { trailText =>
                     <h4 class="trail-text">@trailText</h4>
