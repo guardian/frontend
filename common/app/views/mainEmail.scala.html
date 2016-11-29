@@ -34,6 +34,11 @@
         @if(page.metadata.isFront) {
             @fragments.email.stylesheets.front(page)
             @fragments.email.stylesheets.tones()
+
+            @* This is a temporary override to test two alternative email designs 29/11/2016 *@
+            @if(request.getQueryString("format").contains("email-connected")) {
+                @fragments.email.stylesheets.connectedStyleOverride()
+            }
         }
     </head>
 
