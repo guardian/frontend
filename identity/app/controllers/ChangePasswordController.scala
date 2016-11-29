@@ -20,7 +20,9 @@ class ChangePasswordController( api: IdApiClient,
                                 authenticationService: AuthenticationService,
                                 idRequestParser: IdRequestParser,
                                 idUrlBuilder: IdentityUrlBuilder,
-                                val messagesApi: MessagesApi)
+                                val messagesApi: MessagesApi,
+                                csrfCheck: CSRFCheck,
+                                csrfAddToken: CSRFAddToken)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms with I18nSupport{
 
   import authenticatedActions.authAction
@@ -49,7 +51,7 @@ class ChangePasswordController( api: IdApiClient,
       )
   )
 
-  def displayForm() = CSRFAddToken {
+  def displayForm() = csrfAddToken.apply {
     authAction.async {
       implicit request =>
 
@@ -70,7 +72,7 @@ class ChangePasswordController( api: IdApiClient,
     NoCache(Ok(views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)))
   }
 
-  def submitForm() = CSRFCheck{
+  def submitForm() = csrfCheck {
     authAction.async {
       implicit request =>
         val idRequest = idRequestParser(request)
