@@ -21,16 +21,16 @@
     height: 36px;
 }
 
-@@media (max-width: 480px) {
+@media (max-width: 480px) {
     .main-header .logo-wrapper {
         right: 10px;
     }
 }
 
-@* Kicker style nav *@
-.main-header {
-    height: 68px;
-}
+//@* Kicker style nav *@
+ .main-header {
+     height: 68px;
+ }
 
 .main-navigation {
     position: absolute;
@@ -65,13 +65,13 @@
     white-space: pre;
 }
 
-@@media (max-width: 480px) {
+@media (max-width: 480px) {
     .main-navigation {
         left: 10px;
     }
 }
 
-@@media (max-width: 390px) {
+@media (max-width: 390px) {
     .main-navigation .main-navigation_link{
         font-size: 20px;
     }
@@ -84,7 +84,7 @@
     }
 }
 
-@@media (max-width: 360px) {
+@media (max-width: 360px) {
     .main-navigation .main-navigation_link{
         font-size: 18px;
     }
@@ -100,7 +100,7 @@
     }
 }
 
-@@media (max-width: 340px) {
+@media (max-width: 340px) {
     .main-header .logo-wrapper svg {
         width: 140px;
         height: 27px;
