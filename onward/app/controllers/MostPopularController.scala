@@ -15,7 +15,8 @@ import scala.concurrent.Future
 class MostPopularController(contentApiClient: ContentApiClient,
                             geoMostPopularAgent: GeoMostPopularAgent,
                             dayMostPopularAgent: DayMostPopularAgent,
-                            mostPopularAgent: MostPopularAgent)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
+                            mostPopularAgent: MostPopularAgent)
+                           (implicit env: Environment) extends Controller with Logging with ExecutionContexts {
   val page = SimplePage(MetaData.make(
     "most-read",
     Some(SectionSummary.fromId("most-read")),

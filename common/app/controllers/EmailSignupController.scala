@@ -140,7 +140,7 @@ class EmailFormService(wsClient: WSClient) {
   }
 }
 
-class EmailSignupController(wsClient: WSClient, env: Environment) extends Controller with ExecutionContexts with Logging {
+class EmailSignupController(wsClient: WSClient)(implicit env: Environment) extends Controller with ExecutionContexts with Logging {
   val emailFormService = new EmailFormService(wsClient)
   val emailForm: Form[EmailForm] = Form(
     mapping(
@@ -152,16 +152,13 @@ class EmailSignupController(wsClient: WSClient, env: Environment) extends Contro
   )
 
   def renderPage() = Action { implicit request =>
-    implicit lazy val env: Environment = env
     Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage)))
   }
 
   def renderForm(emailType: String, listId: Int) = Action { implicit request =>
-    implicit lazy val env: Environment = env
     Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))}
 
   def subscriptionResult(result: String) = Action { implicit request =>
-    implicit lazy val env: Environment = env
     Cached(7.days)(result match {
       case "success" => RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, Subscribed))
       case "invalid" => RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, InvalidEmail))
