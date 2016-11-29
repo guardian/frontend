@@ -62,7 +62,8 @@ object Fields {
       shouldHideReaderRevenue = apiContent.fields.flatMap(_.shouldHideReaderRevenue),
       legallySensitive = apiContent.fields.flatMap(_.legallySensitive),
       firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJodaDateTime),
-      lang = apiContent.fields.flatMap(_.lang)
+      lang = apiContent.fields.flatMap(_.lang),
+      rightToLeftLang = apiContent.fields.flatMap(_.lang).filter(_.equals("ar"))
     )
   }
 }
@@ -82,7 +83,8 @@ final case class Fields(
   shouldHideReaderRevenue: Option[Boolean],
   legallySensitive: Option[Boolean],
   firstPublicationDate: Option[DateTime],
-  lang: Option[String]
+  lang: Option[String],
+  rightToLeftLang: Option[String]
 ){
   lazy val shortUrlId = shortUrl.replaceFirst("^[a-zA-Z]+://gu.com", "") //removing scheme://gu.com
 
