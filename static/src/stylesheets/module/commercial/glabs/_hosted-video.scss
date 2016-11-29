@@ -44,6 +44,18 @@
         @include mq(leftCol) {
             width: 300px;
         }
+        @include mq($until: tablet) {
+            margin: $gs-gutter 0 0;
+            padding: 0 $gs-gutter $gs-baseline/2;
+            background-color: $neutral-7;
+            .hosted__next-page__carousel-arrows {
+                right: $gs-gutter;
+            }
+            .hosted__next-page-header--border {
+                margin-left: -$gs-gutter;
+                width: 150%;
+            }
+        }
     }
 
 }

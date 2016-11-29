@@ -838,6 +838,7 @@ $hosted-video-height: 540px;
     margin-left: 10px;
     color: #ffffff;
     border: 0;
+    padding-top: 2px;
 
     @include mq(mobile) {
         margin-top: 20px;
