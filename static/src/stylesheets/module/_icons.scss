@@ -15,14 +15,7 @@ figcaption:before {
             height: 10px;
         }
     }
-}
-
-.caption--img:before {
-    @include icon(image);
-    content: '';
-    vertical-align: top;
-    margin-top: 1px;
-}
+} 
 
 .centered-icon {
     svg {

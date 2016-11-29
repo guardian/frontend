@@ -117,10 +117,9 @@
             color: $neutral-2;
 
             &:before {
-                @include icon(image);
+                @include icon(information-circle-grey);
                 content: '';
                 vertical-align: top;
-                margin-top: 1px;
             }
         }
 

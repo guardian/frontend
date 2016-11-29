@@ -167,11 +167,31 @@
 .caption {
     @include fs-textSans(1);
     color: $neutral-2;
-}
 
-.caption--img {
-    @include mq(leftCol) {
-        padding-bottom: $gs-baseline * 2;
+    .inline-information {
+        position: relative;
+        display: inline-block;
+        margin-right: $gs-gutter/5;
+        margin-bottom: -$gs-baseline/6;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: $neutral-2;
+
+        svg {
+            width: 4px;
+            fill: #ffffff;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+
+            .tonal--tone-media & {
+                fill: $multimedia-support-5;
+            }
+        }
     }
 }
 
