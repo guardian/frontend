@@ -23,11 +23,8 @@
 .hosted-video-page {
     .hosted__headerwrap {
         .hostedbadge {
-            @include mq(leftCol) {
+            @include mq(leftCol, wide) {
                 margin-left: 100px;
-            }
-            @include mq(wide) {
-                margin-left: 20px;
             }
         }
         .hostedbadge__logo {
@@ -38,13 +35,12 @@
         }
     }
 
-    .hosted__next-page {
+    .hosted__next-page-wrapper {
         margin: $gs-baseline $gs-gutter;
         position: relative;
-        @include mq(leftCol) {
-            width: 300px;
-        }
-        @include mq($until: tablet) {
+        order: 3;
+        overflow: hidden;
+        @include mq($until: leftCol) {
             margin: $gs-gutter 0 0;
             padding: 0 $gs-gutter $gs-baseline/2;
             background-color: $neutral-7;
@@ -56,8 +52,30 @@
                 width: 150%;
             }
         }
+        @include mq(leftCol) {
+            width: 300px;
+        }
+        @include mq(wide) {
+            margin-left: 170px;
+        }
     }
 
+    .hosted__container.host {
+        position: relative;
+        background: transparent;
+        color: #ffffff;
+
+        @include mq($until: desktop) {
+            padding: 0;
+        }
+    }
+
+    .hosted__glogo,
+    .hosted__next-page-wrapper {
+        @include mq(leftCol, wide) {
+            margin-right: 80px;
+        }
+    }
 }
 
 .hosted__youtube-poster-image {

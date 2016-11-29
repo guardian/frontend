@@ -1,6 +1,6 @@
 $hosted-stripe: 28px;
-$hosted-video-width: 960px;
-$hosted-video-height: 540px;
+$hosted-video-width: 980px;
+$hosted-video-height: 551px;
 
 @import '_hosted-video.scss';
 @import '_hosted-gallery.scss';
@@ -222,28 +222,6 @@ $hosted-video-height: 540px;
     }
 }
 
-.hosted-video-page {
-    .hosted__container.host {
-        position: relative;
-        background: transparent;
-        color: #ffffff;
-
-        @include mq($until: desktop) {
-            padding: 0;
-        }
-    }
-
-    .hosted__glogo {
-        @include mq(leftCol) {
-            margin-right: 90px;
-        }
-
-        @include mq(wide) {
-            margin-right: 170px;
-        }
-    }
-}
-
 .hosted__container--content {
     @include mq($until: leftCol) {
         display: flex;
@@ -269,6 +247,7 @@ $hosted-video-height: 540px;
             padding-bottom: $hosted-video-height;
             margin: 0 auto;
             overflow: hidden;
+
         }
     }
 }
@@ -530,10 +509,6 @@ $hosted-video-height: 540px;
 
     .hostedbadge {
         position: absolute;
-
-        @include mq(desktop) {
-            margin-left: $gs-gutter / 2;
-        }
     }
     .hostedbadge__logo.hostedbadge__logo {
         position: relative;
@@ -929,11 +904,6 @@ $hosted-video-height: 540px;
     @include f-textSans;
 }
 
-.hosted-video-page .hosted__next-page-placeholder,
-.hosted-video-page .hosted__next-page {
-    order: 3;
-}
-
 .hosted__next-page--more-from {
     font-weight: bolder;
 }
@@ -989,16 +959,6 @@ $nextPageThumbWidthMobile: #{$nextPageThumbHeightMobile * 5 / 3};
     margin: 0 0 0 $nextPageThumbWidth;
     @include mq($until: phablet) {
         margin-left: $nextPageThumbWidthMobile;
-    }
-}
-
-.hosted-video__next-page-title {
-    padding: 10px;
-    font-size: 20px;
-    line-height: 23px;
-    @include mq($until: phablet) {
-        font-size: 18px;
-        line-height: 20px;
     }
 }
 
