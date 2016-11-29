@@ -8,8 +8,9 @@ import org.scalatest.{FlatSpec, Matchers}
 import test.TestRequest
 import views.support.AtomsCleaner
 import conf.switches.Switches
+import play.api.Environment
 
-class AtomCleanerTest extends FlatSpec with Matchers with FakeRequests {
+class AtomCleanerTest (implicit env: Environment) extends FlatSpec with Matchers with FakeRequests {
   val youTubeAtom = Some(Atoms(quizzes = Nil,
     media = Seq(MediaAtom(id = "887fb7b4-b31d-4a38-9d1f-26df5878cf9c",
       defaultHtml = "<iframe width=\"420\" height=\"315\"\n src=\"https://www.youtube.com/embed/nQuN9CUsdVg\" frameborder=\"0\"\n allowfullscreen=\"\">\n</iframe>",
@@ -32,7 +33,7 @@ class AtomCleanerTest extends FlatSpec with Matchers with FakeRequests {
 
 
  private def clean(document: Document, atom:Option[Atoms], amp: Boolean): Document = {
-    val cleaner = AtomsCleaner(youTubeAtom, amp = amp)(TestRequest())
+    val cleaner = AtomsCleaner(youTubeAtom, amp = amp)(TestRequest(), env)
     cleaner.clean(document)
     document
   }

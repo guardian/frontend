@@ -1,6 +1,6 @@
-@(env: String, charts: Seq[tools.Chart], title: Option[String] = None)(implicit request: RequestHeader)
+@(charts: Seq[tools.Chart], title: Option[String] = None)(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Dashboard", env, isAuthed = true, hasCharts = true) {
+@admin_main("Dashboard", isAuthed = true, hasCharts = true) {
 
     @title.map{ title =>
         <h3>@title</h3>

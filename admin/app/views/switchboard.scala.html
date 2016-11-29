@@ -1,8 +1,8 @@
 @import conf.switches.Switch
-@(env: String, lastModified: Long)(implicit flash: Flash, request: RequestHeader)
+@(lastModified: Long)(implicit flash: Flash, request: RequestHeader, env: play.api.Environment)
 @import controllers.admin.routes.UncachedAssets
 @defining(conf.switches.Switches.grouped){ switchGroups =>
-    @admin_main("Switchboard", env, isAuthed = true) {
+    @admin_main("Switchboard", isAuthed = true) {
     <link href="@UncachedAssets.at("css/switchboard.css")" rel="stylesheet">
     <link href="@UncachedAssets.at("css/radiator.css")" rel="stylesheet">
     @if(flash.get("error").isDefined) { <h1 style="color:#bd362f">@flash.get("error").get</h1> }

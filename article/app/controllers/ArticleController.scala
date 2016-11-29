@@ -1,7 +1,7 @@
 package controllers
 
 import _root_.liveblog._
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
+import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
@@ -11,6 +11,7 @@ import model._
 import model.liveblog.BodyBlock
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
+import play.api.Environment
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
@@ -34,7 +35,7 @@ class ArticleController(contentApiClient: ContentApiClient) extends Controller w
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Some(Canonical))(render(path, _))
+  override def renderItem(path: String)(implicit request: RequestHeader, env: Environment): Future[Result] = mapModel(path, Some(Canonical))(render(path, _))
 
 
   private def renderNewerUpdates(page: PageWithStoryPackage, lastUpdateBlockId: SinceBlockId, isLivePage: Option[Boolean])(implicit request: RequestHeader): Result = {
