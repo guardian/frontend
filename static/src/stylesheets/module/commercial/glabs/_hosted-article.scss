@@ -120,6 +120,7 @@
                 @include icon(information-circle-grey);
                 content: '';
                 vertical-align: top;
+                margin-right: $gs-gutter/5;
             }
         }
 
