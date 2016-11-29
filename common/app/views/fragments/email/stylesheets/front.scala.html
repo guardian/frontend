@@ -1,4 +1,6 @@
-@()
+@(page: model.Page)
+
+@import model.EmailAddons.EmailContentType
 
 <style>
     body, .body {
@@ -20,27 +22,28 @@
     }
 
     .container-title {
-        color: #005689;
+        color: #323333;
         padding-top: 4px;
     }
     .container-title--not-first {
-        border-top: 3px solid #4bc6df;
+        border-top: 3px solid @page.toneColour;
     }
 
     .facia-card {
         display: block;
         text-decoration: none;
+        padding-bottom: 20px;
     }
 
     .headline, .trail-text {
-        font-weight: bold;
         font-size: 16px;
         line-height: 20px;
         margin: 0;
         color: inherit;
     }
 
-    .facia-card .headline {
+    .facia-card .headline,
+    .facia-card .trail-text {
         padding: 5px 10px;
     }
 
@@ -48,11 +51,6 @@
         font-size: 20px;
         line-height: 24px;
         color: inherit;
-        padding: 5px 10px;
-    }
-
-    .facia-card--large .trail-text {
-        padding: 5px 10px 20px;
     }
 
     .kicker-separator {

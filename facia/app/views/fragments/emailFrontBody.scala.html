@@ -48,21 +48,10 @@
 }
 
 @faciaCardSmall(pressedContent: PressedContent) = {
-    @paddedRow(Seq("sub-grid")) {
+    @paddedRow {
         @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
             <a @Html(href) class="facia-card @toneClass(pressedContent)">
-                <table>
-                    <tr>
-                        <td class="seven sub-columns">
-                            @headline(pressedContent)
-                        </td>
-                        <td class="five sub-columns last">
-                            @imageUrlFromPressedContent(pressedContent).map { url =>
-                                <img width="580" class="full-width" src="@url" />
-                            }
-                        </td>
-                    </tr>
-                </table>
+                @headline(pressedContent)
             </a>
         }
     }
