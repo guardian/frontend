@@ -23,8 +23,9 @@ define([
             try {
                 return nativeGetOwnPropertyNames(obj);
             } catch (e) {
+                // continue regardless of error
+                return [];
             }
-            return [];
         };
         return Promise.resolve();
     }
