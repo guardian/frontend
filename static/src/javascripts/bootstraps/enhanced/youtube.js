@@ -112,7 +112,7 @@ define([
     }
 
     function formatTime(time) {
-        return ("0" + time).slice(-2);
+        return ('0' + time).slice(-2);
     }
 
     function onPlayerStateChange(atomId, event) {
