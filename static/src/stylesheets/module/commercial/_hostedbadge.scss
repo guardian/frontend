@@ -8,11 +8,12 @@
     &:focus {
         text-decoration: none;
     }
-}
-
-.hostedbadge--shouldscale {
     @include mq(desktop) {
         width: 132px;
+        .hostedbadge__info {
+            text-align: center;
+            margin: 2px 0;
+        }
     }
 }
 
@@ -25,14 +26,12 @@
     font-size: 14px;
     font-weight: 600;
     letter-spacing: .5px;
-    line-height: 16px;
-
+    line-height: 15px;
     height: auto;
-    padding-top: $gs-gutter / 4;
-    padding-bottom: $gs-gutter / 2.5;
+    padding: 5px 6px 4px;
     color: $neutral-1;
     margin: 0;
-    text-align: center;
+    text-align: left;
 }
 
 .hostedbadge .hostedbadge__logo {

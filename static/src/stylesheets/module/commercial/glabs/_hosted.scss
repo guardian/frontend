@@ -131,7 +131,7 @@ $hosted-video-height: 540px;
 .hosted__banner .hosted-tone-btn,
 .hosted-tone-btn:focus,
 .hosted-tone-btn:hover {
-    color:  #333333;
+    color: #333333;
     svg {
         fill: #333333;
     }
@@ -912,9 +912,7 @@ $hosted-video-height: 540px;
 }
 
 .hosted__next-page--header {
-    padding-bottom: 10px;
-    margin: $gs-baseline 0 10px;
-    border-bottom: 1px solid #eeeeee;
+    margin-bottom: 10px;
 }
 
 .hosted__container .host__body {
@@ -933,14 +931,6 @@ $hosted-video-height: 540px;
 .hosted-video-page .hosted__next-page-placeholder,
 .hosted-video-page .hosted__next-page {
     order: 3;
-}
-
-.hosted__next-page {
-    @include mq(leftCol) {
-        width: 300px;
-    }
-    margin: 0 $gs-gutter $gs-gutter;
-    position: relative;
 }
 
 .hosted__next-page--more-from {

@@ -37,6 +37,15 @@
             }
         }
     }
+
+    .hosted__next-page {
+        margin: $gs-baseline $gs-gutter;
+        position: relative;
+        @include mq(leftCol) {
+            width: 300px;
+        }
+    }
+
 }
 
 .hosted__youtube-poster-image {
