@@ -129,6 +129,7 @@ case object KeepItInTheGround extends ArticleEmailMetadata {
 
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
+  override val banner = Some("the-flyer.png")
 }
 
 object EmailAddons {
