@@ -118,9 +118,18 @@
         font-size: 4rem;
     }
 
-    &.content__headline--advertisement{
-      font-family: $f-sans-serif-headline;
-      font-weight: 200;
+    &.content__headline--advertisement {
+        font-family: $f-sans-serif-headline;
+        font-weight: 200;
+    }
+}
+
+.paid-for-label__immersive {
+    font-size: 1rem;
+    color: $paid-article-brand;
+
+    @include mq($from: desktop) {
+      font-size: 1.2rem;
     }
 }
 
@@ -173,7 +182,7 @@
     }
 
     &.content__standfirst--advertisement {
-      font-family: $f-sans-serif-text;
+        font-family: $f-sans-serif-text;
     }
 }
 
