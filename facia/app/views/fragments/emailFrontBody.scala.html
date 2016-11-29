@@ -1,6 +1,8 @@
 @import layout.{FaciaCard, FaciaCardHeader}
 @import model.pressed.PressedContent
 @import layout.EditionalisedLink
+@import model.EmailAddons.EmailContentType
+
 @(page: model.PressedPage)(implicit request: RequestHeader)
 
 @import conf.Static
@@ -48,28 +50,17 @@
 }
 
 @faciaCardSmall(pressedContent: PressedContent) = {
-    @paddedRow(Seq("sub-grid")) {
+    @paddedRow {
         @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
             <a @Html(href) class="facia-card @toneClass(pressedContent)">
-                <table>
-                    <tr>
-                        <td class="seven sub-columns">
-                            @headline(pressedContent)
-                        </td>
-                        <td class="five sub-columns last">
-                            @imageUrlFromPressedContent(pressedContent).map { url =>
-                                <img width="580" class="full-width" src="@url" />
-                            }
-                        </td>
-                    </tr>
-                </table>
+                @headline(pressedContent)
             </a>
         }
     }
 }
 
 @fullRow {
-    <img width="580" class="full-width" src="@Static("images/email/banners/generic.png")">
+    @img(src = page.banner, alt = page.email.map(_.name))
 }
 
 @page.frontProperties.onPageDescription.map { description =>

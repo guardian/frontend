@@ -68,7 +68,7 @@
         </div>
     }
 
-    @if(WebpackTest.isParticipating) {
+    @if(!WebpackTest.isParticipating) {
         <script>
             @HtmlFormat.raw(common.Assets.js.curl)
 
