@@ -106,7 +106,7 @@ define([
         times.push(formatTime(duration));
 
         var formattedDuration = times.join(':');
-        var durationElem = overlay.querySelector('.atom--media--youtube--duration');
+        var durationElem = overlay.querySelector('.atom--media--youtube--control-bar--duration');
 
         durationElem.innerText = formattedDuration;
     }

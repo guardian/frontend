@@ -126,10 +126,73 @@
             }
         }
 
-        .atom--media--youtube--duration {
+        .atom--media--youtube--control-bar {
             position: absolute;
-            left: 4px;
-            bottom: 4px;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 34px;
+
+            &::before,
+            &::after,
+            .atom--media--youtube--control-bar--content {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                left: 0;
+            }
+
+            &::before {
+                content: '';
+                opacity: 0.1;
+                background: #333333;
+                z-index: 0;
+            }
+
+            &::after {
+                content: '';
+                opacity: 0.7;
+                @include simple-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, 0.5));
+            }
+            
+            .atom--media--youtube--control-bar--content {
+                z-index: 1;
+
+                .atom--media--youtube--control-bar--icon {
+                    float: left;
+                    height: 100%;
+                    width: 30px;
+
+                    svg {
+                        fill: $media-default;
+                        width: 16px;
+                        height: 10px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        margin-left: 8px;
+                    }
+                }
+
+                .atom--media--youtube--control-bar--duration {
+                    @include font($f-sans-serif-text, bold, 16, 34);
+                    color: $media-default;
+                    float: left;
+                    padding-left: 8px;
+                    text-shadow: 0 0 16px rgba(51,51,51,0.25);
+
+                    &::before {
+                        content: '';
+                        width: 2px;
+                        height: 16px;
+                        opacity: 0.5;
+                        position: absolute;
+                        left: 30px;
+                        background-color: #ffbb00;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+                }
+            }
         }
 	}
 }
