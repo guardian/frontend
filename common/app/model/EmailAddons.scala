@@ -129,8 +129,6 @@ case object KeepItInTheGround extends ArticleEmailMetadata {
 
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
-  override val banner = Some("the-flyer.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "travel/series/the-flyer")
 }
 
 object EmailAddons {
