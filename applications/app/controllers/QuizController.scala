@@ -5,6 +5,7 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import model._
 import model.content.{Atoms, Quiz}
+import play.api.Environment
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import quiz.form
 import views.support.RenderOtherStatus
@@ -40,7 +41,7 @@ case class QuizAnswersPage(
   val shares: ShareLinkMeta = if (results.isKnowledge) ShareLinkMeta(knowledgeShares, Nil) else ShareLinkMeta(personalityShares, Nil)
 }
 
-class QuizController(contentApiClient: ContentApiClient) extends Controller with ExecutionContexts with Logging {
+class QuizController(contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with ExecutionContexts with Logging {
 
   def submit(quizId: String, path: String) = Action.async { implicit request =>
     form.playForm.bindFromRequest.fold(

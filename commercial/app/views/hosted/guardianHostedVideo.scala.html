@@ -3,7 +3,7 @@
 @import conf.Configuration.environment
 @import conf.Configuration.site.host
 @import views.html.hosted._
-@(page: HostedVideoPage)(implicit request: RequestHeader)
+@(page: HostedVideoPage)(implicit request: RequestHeader, env: play.api.Environment)
 
 @main(page, Some("commercial")) { } {
     <!--[if (gt IE 9)|(IEMobile)]><!-->

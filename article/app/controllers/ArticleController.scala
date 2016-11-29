@@ -31,11 +31,11 @@ case class ArticlePage(article: Article, related: RelatedContent) extends PageWi
 case class LiveBlogPage(article: Article, currentPage: LiveBlogCurrentPage, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController(contentApiClient: ContentApiClient) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class ArticleController(contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
-  override def renderItem(path: String)(implicit request: RequestHeader, env: Environment): Future[Result] = mapModel(path, Some(Canonical))(render(path, _))
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Some(Canonical))(render(path, _))
 
 
   private def renderNewerUpdates(page: PageWithStoryPackage, lastUpdateBlockId: SinceBlockId, isLivePage: Option[Boolean])(implicit request: RequestHeader): Result = {
@@ -184,7 +184,7 @@ class ArticleController(contentApiClient: ContentApiClient) extends Controller w
 
   // range: None means the url didn't include /live/, Some(...) means it did.  Canonical just means no url parameter
   // if we switch to using blocks instead of body for articles, then it no longer needs to be Optional
-  def mapModel(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
+  def mapModel(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader, env: Environment): Future[Result] = {
     lookup(path, range) map responseToModelOrResult(range) recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)

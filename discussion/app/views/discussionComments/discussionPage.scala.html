@@ -1,7 +1,7 @@
 @import common.LinkTo
 @import discussion.CommentPage
 
-@(page: CommentPage)(implicit request: RequestHeader)
+@(page: CommentPage)(implicit request: RequestHeader, env: play.api.Environment)
 @main(page){
 } {
 <div class="content content--comments">

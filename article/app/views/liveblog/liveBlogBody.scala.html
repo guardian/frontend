@@ -2,7 +2,7 @@
 @import model.Badges.badgeFor
 @import _root_.liveblog.Canonical
 
-@(model: LiveBlogPage, amp: Boolean = false)(implicit request: RequestHeader)
+@(model: LiveBlogPage, amp: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import common.{Edition, LinkTo}
 @import conf.switches.Switches._
