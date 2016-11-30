@@ -5,12 +5,14 @@ import model.content.{Atoms, MediaAsset, MediaAtom}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
-import test.TestRequest
+import test.{TestRequest, WithTestEnvironment}
 import views.support.AtomsCleaner
 import conf.switches.Switches
-import play.api.Environment
 
-class AtomCleanerTest (implicit env: Environment) extends FlatSpec with Matchers with FakeRequests {
+class AtomCleanerTest extends FlatSpec
+  with Matchers
+  with WithTestEnvironment
+  with FakeRequests {
   val youTubeAtom = Some(Atoms(quizzes = Nil,
     media = Seq(MediaAtom(id = "887fb7b4-b31d-4a38-9d1f-26df5878cf9c",
       defaultHtml = "<iframe width=\"420\" height=\"315\"\n src=\"https://www.youtube.com/embed/nQuN9CUsdVg\" frameborder=\"0\"\n allowfullscreen=\"\">\n</iframe>",
