@@ -9,7 +9,7 @@ $rounded-adjustment: .66em;
 $tones: (
     (analysis, $analysis-accent, $news-default),
     (comment, $comment-support-4, $comment-support-4),
-    (feature, $feature-default, $feature-accent),
+    (feature, $feature-default, $feature-accent, $feature-mute),
     (live, $live-default, $live-accent),
     (media, $neutral-1, $neutral-1),
     (news, $news-default, $news-default),

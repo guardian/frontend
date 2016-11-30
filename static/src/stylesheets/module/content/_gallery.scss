@@ -235,6 +235,7 @@
         position: relative;
         border: 0 none;
         height: auto;
+        padding: $gs-baseline/2 0;
     }
 
     .meta__number {
@@ -243,6 +244,17 @@
 
     .meta__social {
         border: 0;
+    }
+
+    .badge--alt {
+        margin-top: 0;
+        margin-bottom: $gs-baseline;
+        border-top: 1px dotted $neutral-1;
+
+        @include mq(desktop) {
+            position: absolute;
+            width: gs-span(3);
+        }
     }
 
 }

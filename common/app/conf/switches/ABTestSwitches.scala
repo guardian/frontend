@@ -27,44 +27,42 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-fake-news",
-    "Try and beat the epic copy with e version that mentions the hot topic of fake news",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-recommended-for-you-recommendations",
+    "Test personalised container on fronts",
+    owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 22),
+    sellByDate = new LocalDate(2017, 1, 10),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-contributions-epic-usa-cta-fake-news",
-    "Test just contributions vs contributions or membership in the US, and test a new copy variant against the control",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-contributions-epic-usa-cta-three-way",
+    "Test just contributions vs contributions or membership vs just membership in the US",
+    owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 22),
+    sellByDate =  new LocalDate(2016, 12, 5),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-contributions-epic-thank-you",
-    "Show a thank you message to our supporters at the end of artciles, just saying thanks!",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-uk-memb-engagement-msg-copy-test-10",
+    "Test alternate short messages on membership engagement banner",
+    owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 22),
+    sellByDate = new LocalDate(2016, 12, 8), // Thursday 8th December
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-platform-sticky-ad-viewability",
-    "Test the affect of showing the navigation on the viewability of the sticky top ad",
-    owners = Seq(Owner.withGithub("gtrufitt"), Owner.withName("Gareth Trufitt")),
+    "ab-au-memb-engagement-msg-copy-test-8",
+    "Test alternate short messages on AU membership engagement banner",
+    owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 24),
+    sellByDate = new LocalDate(2016, 12, 22), // Thursday 22nd December
     exposeClientSide = true
   )
-
-
 
 }

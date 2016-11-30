@@ -86,9 +86,8 @@ case class BodyBlock(
   }
 
   lazy val url: Option[String] = elements.collectFirst {
-    case TextBlockElement(Some(html)) if Jsoup.parse(html).getElementsByTag("a").size() == 1 => {
+    case TextBlockElement(Some(html)) if Jsoup.parse(html).getElementsByTag("a").size() == 1 =>
       Jsoup.parse(html).getElementsByTag("a").get(0).attr("href")
-    }
   }
 
   def republishedDate(timezone: DateTimeZone): Option[LiveBlogDate] = {

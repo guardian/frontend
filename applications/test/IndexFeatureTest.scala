@@ -16,7 +16,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
         $(s".facia-container--$sponsorshipType").size should be (1)
 
         And(s"the ${sponsorshipType.replace("-", " ")} badge should be displayed")
-        $(".js-sponsored-front") should have size (1)
+        $(".js-sponsored-front") should have size 1
         $(s".facia-container--$sponsorshipType").getAttribute("data-sponsorship") should be (sponsorshipType)
       }
 

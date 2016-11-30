@@ -5,7 +5,7 @@ import common.{Edition, ExecutionContexts, Logging}
 import conf.Static
 import contentapi.ContentApiClient
 import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
-import model.Cached.RevalidatableResult
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.{DateTime, LocalDate}
 import play.api.data.Forms._
@@ -34,7 +34,7 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
        yield f(crossword, content)
        maybeCrossword getOrElse noResults
     } recover { case t: Throwable =>
-      log.error(s"Error retrieving ${crosswordType} crossword id ${id} from API", t)
+      log.error(s"Error retrieving $crosswordType crossword id $id from API", t)
       noResults
     }
   }
@@ -51,7 +51,7 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
 
 class CrosswordPageController(val contentApiClient: ContentApiClient) extends CrosswordController {
 
-  def noResults()(implicit request: RequestHeader) = InternalServerError("Content API query returned an error.")
+  def noResults()(implicit request: RequestHeader) = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
 
   def crossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     renderCrosswordPage(crosswordType, id)
@@ -60,7 +60,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient) extends Cr
   def accessibleCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(RevalidatableResult.Ok(views.html.accessibleCrossword(
-        new CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
+        CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
         AccessibleCrosswordRows(crossword)
       )))
     }
@@ -71,7 +71,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient) extends Cr
       Cached(3.days)(RevalidatableResult.Ok(views.html.printableCrossword(
         CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
         CrosswordSvg(crossword, None, None, false),
-        new LocalDate().getYear()
+        new LocalDate().getYear
       )))
     }
   }

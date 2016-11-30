@@ -19,10 +19,8 @@ class ResultsController(val competitionsService: CompetitionsService) extends Ma
   private def byType[A](ifAll: => A)(ifCompetition: Competition => A)(ifTeam: FootballTeam => A)(tag: Option[String]): Option[A] = {
     tag.fold(Option(ifAll)) {
       competitionOrTeam(_).map {
-        _ match {
-          case Left(competition) => ifCompetition(competition)
-          case Right(team) => ifTeam(team)
-        }
+        case Left(competition) => ifCompetition(competition)
+        case Right(team) => ifTeam(team)
       }
     }
   }

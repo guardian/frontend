@@ -55,7 +55,7 @@ class RelatedController(val contentApiClient: ContentApiClient, val mostReadAgen
       "items" -> JsArray(Seq(
         Json.obj(
           "displayName" -> "related content",
-          "showContent" -> (!relatedTrails.isEmpty),
+          "showContent" -> relatedTrails.nonEmpty,
           "content" -> relatedTrails.map( collection => isCuratedContent(collection.faciaContent))
         )
       ))

@@ -12,11 +12,11 @@ class TagIndexController extends Controller with ExecutionContexts with Logging 
   private def forTagType(keywordType: String, title: String, page: String, metadata: MetaData) = Action { implicit request =>
     TagIndexesS3.getIndex(keywordType, page) match {
       case Left(TagIndexNotFound) =>
-        log.error(s"404 error serving tag index page for $keywordType ${page}")
+        log.error(s"404 error serving tag index page for $keywordType $page")
         NotFound
 
       case Left(TagIndexReadError(error)) =>
-        log.error(s"JSON parse error serving tag index page for $keywordType ${page}: $error")
+        log.error(s"JSON parse error serving tag index page for $keywordType $page: $error")
         InternalServerError
 
       case Right(tagPage) =>

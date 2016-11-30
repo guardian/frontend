@@ -15,7 +15,7 @@ class AnalyticsController extends Controller with Logging with ExecutionContexts
   def renderQuality() = Action.async { implicit request =>
       val charts = List("browsersTop25", "operatingSystemsTop25")
       val response = charts.map { chartName =>
-        (chartName -> QualityData.getReport(chartName).getOrElse(""))
+        chartName -> QualityData.getReport(chartName).getOrElse("")
       }.toMap
 
       Future(NoCache(Ok(views.html.quality("PROD", response))))

@@ -6,23 +6,14 @@ define([
     ab
 ) {
 
-    var contributionsEpicFakeNews = {
-        name: 'ContributionsEpicFakeNews',
-        variants: ['control', 'fake']
-    };
 
-    var contributionsEpicThankyou = {
-        name: 'ContributionsEpicThankYou',
-        variants: ['control']
-    };
-
-    var contributionsEpicUsaCtaFakeNews = {
-        name: 'ContributionsEpicUsaCtaFakeNews',
-        variants: ['mixed-control', 'mixed-fake', 'just-contribute-control', 'just-contribute-fake']
+    var ContributionsEpicUsaCtaThreeWay = {
+        name: 'ContributionsEpicUsaCtaThreeWay',
+        variants: ['mixed', 'just-contribute', 'just-supporter']
     };
 
     function userIsInAClashingAbTest() {
-        var clashingTests = [contributionsEpicFakeNews, contributionsEpicThankyou, contributionsEpicUsaCtaFakeNews];
+        var clashingTests = [ContributionsEpicUsaCtaThreeWay];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 

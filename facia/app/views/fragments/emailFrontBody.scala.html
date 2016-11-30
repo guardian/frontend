@@ -1,13 +1,15 @@
 @import layout.{FaciaCard, FaciaCardHeader}
 @import model.pressed.PressedContent
 @import layout.EditionalisedLink
+@import model.EmailAddons.EmailContentType
+
 @(page: model.PressedPage)(implicit request: RequestHeader)
 
 @import conf.Static
 @import views.support.EmailHelpers._
 @import views.support.TrailCssClasses.toneClass
 @import views.html.fragments.items.elements.facia_cards.kicker
-@import model.pressed.{FreeHtmlKicker, ItemKicker, KickerProperties}
+@import model.pressed.Feature
 
 @headline(pressedContent: PressedContent) = {
     <h3 class="headline">
@@ -15,6 +17,16 @@
             @kicker(header, Seq())
             @if(header.kicker.isDefined) {
                 <span class="kicker-separator">/</span>
+            }
+
+            @if(header.isGallery) { @icon("gallery") }
+            @if(header.isAudio) { @icon("podcast") }
+            @if(header.isVideo) { @icon("video") }
+            @if(header.quoted) {
+                @pressedContent.card.cardStyle match {
+                    case Feature => { @icon("quote-feature") }
+                    case _ => { @icon("quote") }
+                }
             }
         }
         @pressedContent.header.headline
@@ -25,9 +37,7 @@
     @paddedRow {
         @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
             <a @Html(href) class="facia-card facia-card--large @toneClass(pressedContent)">
-                @imageUrlFromPressedContent(pressedContent).map { url =>
-                    <img width="580" class="full-width" src="@url" />
-                }
+                @imgFromPressedContent(pressedContent)
                 @headline(pressedContent)
                 @pressedContent.card.trailText.map { trailText =>
                     <h4 class="trail-text">@trailText</h4>
@@ -38,28 +48,17 @@
 }
 
 @faciaCardSmall(pressedContent: PressedContent) = {
-    @paddedRow(Seq("sub-grid")) {
+    @paddedRow {
         @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
             <a @Html(href) class="facia-card @toneClass(pressedContent)">
-                <table>
-                    <tr>
-                        <td class="seven sub-columns">
-                            @headline(pressedContent)
-                        </td>
-                        <td class="five sub-columns last">
-                            @imageUrlFromPressedContent(pressedContent).map { url =>
-                                <img width="580" class="full-width" src="@url" />
-                            }
-                        </td>
-                    </tr>
-                </table>
+                @headline(pressedContent)
             </a>
         }
     }
 }
 
 @fullRow {
-    <img width="580" class="full-width" src="@Static("images/email/banners/generic.png")">
+    @img(src = page.banner, alt = page.email.map(_.name))
 }
 
 @page.frontProperties.onPageDescription.map { description =>

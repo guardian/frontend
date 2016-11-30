@@ -8,7 +8,7 @@ import test.ConfiguredTestSuite
 @DoNotDiscover class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues with ConfiguredTestSuite {
   "the live matches list" - {
     "for today" - {
-      val matches = new MatchDayList(competitions.competitions, today)
+      val matches = MatchDayList(competitions.competitions, today)
 
       "matches should be ordered by datetime" in {
         val matchDates = matches.relevantMatches.map { case (fMatch, _) => fMatch.date }
@@ -47,7 +47,7 @@ import test.ConfiguredTestSuite
     }
 
     "if there are no matches on the given day" - {
-      val matches = new MatchDayList(competitions.competitions, today.minusDays(20))
+      val matches = MatchDayList(competitions.competitions, today.minusDays(20))
 
       "should be empty" in {
         matches.relevantMatches.size should equal(0)
@@ -56,7 +56,7 @@ import test.ConfiguredTestSuite
   }
 
   "the competition group matches" - {
-    val matches = new CompetitionRoundMatchesList(competitions.competitions, competition1, round2)
+    val matches = CompetitionRoundMatchesList(competitions.competitions, competition1, round2)
 
     "should get all matches for the specified round and competition" in {
       matches.relevantMatches.map { case (fMatch, _) => fMatch.id } should equal(List("3", "8", "12"))
