@@ -14,6 +14,7 @@ import scala.concurrent.Future
 import services._
 import form.Mappings
 import play.api.Environment
+import play.api.libs.crypto.CryptoConfig
 
 class RegistrationController(returnUrlVerifier : ReturnUrlVerifier,
                              userCreationService : UserCreationService,
@@ -21,8 +22,8 @@ class RegistrationController(returnUrlVerifier : ReturnUrlVerifier,
                              idRequestParser : TorNodeLoggingIdRequestParser,
                              idUrlBuilder : IdentityUrlBuilder,
                              signinService : PlaySigninService,
-                             val messagesApi: MessagesApi)
-                            (implicit env: Environment)
+                             val messagesApi: MessagesApi,
+                             val cryptoConfig: CryptoConfig)(implicit env: Environment)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
   val page = IdentityPage("/register", "Register")

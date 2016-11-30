@@ -8,10 +8,11 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 @DoNotDiscover class LeagueTableControllerTest
   extends FlatSpec
     with Matchers
+    with ConfiguredTestSuite
     with FootballTestData
     with WithTestFootballClient
     with BeforeAndAfterAll
-	with WithMaterializer
+	  with WithMaterializer
     with WithTestEnvironment
     with WithTestWsClient {
 

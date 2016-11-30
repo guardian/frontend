@@ -15,6 +15,8 @@ import utils.SafeLogging
 import form.Mappings
 import play.api.Environment
 
+import play.api.libs.crypto.CryptoConfig
+
 import scala.concurrent.Future
 
 
@@ -23,8 +25,8 @@ class SigninController(returnUrlVerifier: ReturnUrlVerifier,
                        idRequestParser: IdRequestParser,
                        idUrlBuilder: IdentityUrlBuilder,
                        signInService : PlaySigninService,
-                       val messagesApi: MessagesApi)
-                      (implicit env: Environment)
+                       val messagesApi: MessagesApi,
+                       val cryptoConfig: CryptoConfig)(implicit env: Environment)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with Forms {
 
   val page = IdentityPage("/signin", "Sign in")
