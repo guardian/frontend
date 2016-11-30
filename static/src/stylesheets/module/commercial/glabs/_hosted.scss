@@ -469,7 +469,7 @@ $hosted-video-height: 551px;
     }
 
     .hosted__heading {
-        font-size: 24px;
+        font-size: 28px;
         line-height: 22px;
     }
 }
@@ -528,16 +528,12 @@ $hosted-video-height: 551px;
 
 // Headings
 .hosted__heading {
-    @include f-textSans;
+    @include f-headlineSans;
+    letter-spacing: -0.5px;
 
     margin: 0;
-    font-size: 22px;
-    line-height: 24px;
-
-    @include mq(tablet) {
-        font-size: 26px;
-        line-height: 26px;
-    }
+    font-size: 28px;
+    line-height: 28px;
 
     @include mq(desktop) {
         font-size: 36px;
