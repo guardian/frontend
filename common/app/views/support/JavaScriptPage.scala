@@ -7,7 +7,6 @@ import conf.Configuration.environment
 import model._
 import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 import play.api.mvc.RequestHeader
-import play.api.Mode.Dev
 
 object JavaScriptPage {
 
