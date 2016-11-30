@@ -68,10 +68,12 @@ define([
         boot();
 
         if (config.page.hasInlineMerchandise) {
-            addInlineMerchAd();
-        } else {
-            addInlineAds();
+            var im = addInlineMerchAd();
+            im.then(waitForMerch);
+            return im;
         }
+
+        addInlineAds();
 
         return Promise.resolve(true);
     }
@@ -204,12 +206,7 @@ define([
             waitForLinks: true,
             waitForInteractives: true,
             domWriter: isMobile ? writerOverride : false
-        })
-        .then(function (countAdded) {
-            addSlots();
-            return countAdded;
-        })
-        .then(waitForMerch);
+        });
     }
 
     function addInlineAds() {
