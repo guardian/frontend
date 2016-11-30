@@ -195,6 +195,9 @@
         }
     }
     .from-content-api {
+        & > ul li {
+            margin-bottom: 0;
+        }
         ul > li:before {
             border-radius: 0;
             width: 8px;
@@ -204,9 +207,6 @@
         h2 {
             @include f-headlineSans;
         }
-    }
-    .from-content-api > ul li {
-        margin-bottom: 0;
     }
 
     .gu-image {
