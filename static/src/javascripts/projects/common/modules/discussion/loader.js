@@ -280,7 +280,11 @@ Loader.prototype.ready = function() {
     mediator.on('discussion:commentbox:post:success', this.removeState.bind(this, 'empty'));
 
     mediator.on('module:clickstream:click', function(clickspec) {
-        if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
+        if (
+            clickspec &&
+            'hash' in clickspec.target &&
+            clickspec.target.hash === '#comments'
+        ) {
             this.removeTruncation();
         }
     }.bind(this));
