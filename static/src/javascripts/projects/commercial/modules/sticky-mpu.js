@@ -24,7 +24,7 @@ define([
             return;
         }
 
-        return fastdom.read(function () {
+        return stickyMpu.whenRendered = fastdom.read(function () {
             return (referenceElement[config.page.hasShowcaseMainElement ? 'offsetHeight' : 'offsetTop']) + $adSlot[0].offsetHeight;
         }).then(function (newHeight) {
             return fastdom.write(function () {
