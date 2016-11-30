@@ -32,12 +32,12 @@ define([
     }
 
     function showSignupForm(buttonEl) {
-      var $form = buttonEl.form;
-      var $meta = $.ancestor(buttonEl, 'js-newsletter-meta');
+      var form = buttonEl.form;
+      var meta = $.ancestor(buttonEl, 'js-newsletter-meta');
       fastdom.write(function () {
-          $('.' + classes.textInput, $form).removeClass('is-hidden').focus();
-          $('.' + classes.signupButton, $form).addClass(classes.styleSignup);
-          $('.' + classes.previewButton, $meta).addClass('is-hidden');
+          $('.' + classes.textInput, form).removeClass('is-hidden').focus();
+          $('.' + classes.signupButton, form).addClass(classes.styleSignup);
+          $('.' + classes.previewButton, meta).addClass('is-hidden');
           buttonEl.setAttribute('type', 'submit');
           bean.on(buttonEl, 'click', function (event) {
               event.preventDefault();
@@ -61,11 +61,11 @@ define([
     }
 
     function addSubscriptionMessage(buttonEl) {
-      var $meta = $.ancestor(buttonEl, classes.wrapper);
+      var meta = $.ancestor(buttonEl, classes.wrapper);
       fastdom.write(function () {
         $(buttonEl.form).addClass('is-hidden');
-        $('.' + classes.previewButton, $meta).addClass('is-hidden');
-        $('.' + classes.signupConfirm, $meta).removeClass('is-hidden');
+        $('.' + classes.previewButton, meta).addClass('is-hidden');
+        $('.' + classes.signupConfirm, meta).removeClass('is-hidden');
       });
     }
 
@@ -90,9 +90,9 @@ define([
     }
 
     function subscribeToEmail(buttonEl) {
-        var $form = buttonEl.form;
-        if (validate($form)) {
-            submitForm($form, buttonEl);
+        var form = buttonEl.form;
+        if (validate(form)) {
+            submitForm(form, buttonEl);
         }
     }
 
