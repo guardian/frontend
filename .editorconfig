@@ -18,5 +18,8 @@ indent_size = 2
 [package.json]
 indent_size = 2
 
+[riff-raff.yaml]
+indent_size = 2
+
 [makefile]
 indent_style = tab
