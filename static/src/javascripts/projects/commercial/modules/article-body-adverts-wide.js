@@ -69,10 +69,11 @@ define([
 
         if (config.page.hasInlineMerchandise) {
             addInlineMerchAd();
-            return Promise.resolve(true);
+        } else {
+            addInlineAds();
         }
 
-        return addInlineAds();
+        return Promise.resolve(true);
     }
 
     function boot() {
