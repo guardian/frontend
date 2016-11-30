@@ -69,7 +69,7 @@ Loader.prototype.initTopComments = function() {
         this.gotoComment(commentId);
     });
 
-    return fetchJson('/discussion/top-comments/' + this.getDiscussionId() + '.json?commentable=' + config.page.commentable, {
+    return fetchJson('/discussion/top-comments/' + this.getDiscussionId() + '.json', {
         mode: 'cors'
     }).then(
         function render(resp) {
