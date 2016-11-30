@@ -1,13 +1,13 @@
 @mixin hosted-fade-in {
     visibility: visible;
     opacity: 1;
-    transition: opacity 1s linear, visibility 0s;
+    transition: opacity 1s linear, visibility 0s, margin 200ms ease;
 }
 
 @mixin hosted-fade-out {
     visibility: hidden;
     opacity: 0;
-    transition: opacity 1s linear, visibility 1s;
+    transition: opacity 1s linear, visibility 1s, margin 200ms ease;
 }
 
 @mixin hosted-slide-in {
@@ -76,6 +76,28 @@
             margin-right: 80px;
         }
     }
+
+    .hosted__video .vjs-control.vjs-current-time {
+        @include mq(leftCol) {
+            margin-left: 17px;
+        }
+    }
+
+    .hosted__video.gu-media--video:not(.vjs-playing) .vjs-play-control {
+        @include mq($until: leftCol) {
+            margin-left: -50px;
+        }
+        @include mq($until: mobileLandscape) {
+            margin-left: -35px;
+        }
+    }
+
+    .hosted__video.gu-media--video .vjs-progress-control {
+        @include mq(leftCol) {
+            left: 100px;
+        }
+    }
+
 }
 
 .hosted__youtube-poster-image {
@@ -149,8 +171,13 @@
     background-color: unset;
     font-size: 16px;
     padding-top: 2px;
-    left: 88px;
+    left: 98px;
     pointer-events: none;
+    padding-left: 2px;
+
+    @include mq($until: leftCol) {
+        left: $gs-gutter;
+    }
 }
 
 .youtube__video-started:not(.youtube__video-ended) {
