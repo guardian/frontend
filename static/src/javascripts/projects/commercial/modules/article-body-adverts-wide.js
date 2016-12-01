@@ -40,9 +40,7 @@ define([
     /* The promise resolves either when an inline merch slot has been added and
        a DFP call has returned, or directly if no inline slot has been added */
     var waitForMerch = memoize(function (imSlot) {
-        return imSlot ?
-            trackAdRender('dfp-ad--im').then(addInlineAds) :
-            addInlineAds();
+        return imSlot ? trackAdRender('dfp-ad--im') : Promise.resolve(true);
     });
 
     /* bodyAds is a counter that keeps track of the number of inline MPUs
@@ -70,7 +68,7 @@ define([
 
         if (config.page.hasInlineMerchandise) {
             var im = addInlineMerchAd();
-            im.then(waitForMerch);
+            im.then(waitForMerch).then(addInlineAds);
             return im;
         }
 
