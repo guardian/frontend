@@ -45,6 +45,7 @@ trait Controllers
   with OnwardControllers
   with FootballControllers
   with RugbyControllers
+  with FrontendComponents
   with CricketControllers {
   self: BuiltInComponents =>
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
