@@ -51,7 +51,7 @@ trait FrontendComponents
   lazy val jobScheduler = new JobScheduler(environment)
   lazy val akkaAsync = new AkkaAsync(environment, actorSystem)
   lazy val appMetrics = ApplicationMetrics()
-  lazy val guardianConf = new GuardianConfiguration
+  lazy val guardianConf = new GuardianConfiguration(configuration, environment)
   lazy val mode = environment.mode
 
   // this is a workaround to make wsapi and the actorsystem available to the injector.
