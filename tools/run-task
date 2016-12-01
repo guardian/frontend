@@ -139,7 +139,7 @@ const exec = (task, stdouts) => {
 };
 
 // turn a list of our tasks into objects listr can use
-function listrify(steps, {concurrent = false, verbose = false} = {}) {
+function listrify(steps, {concurrent = false} = {}) {
     const listrTasks = steps
         .map(step => {
             const { description: title, task, concurrent } = step;
@@ -154,7 +154,7 @@ function listrify(steps, {concurrent = false, verbose = false} = {}) {
                     if (_task.task) return _task;
                     if (typeof _task === 'string') return { title, task: ctx => exec(_task, ctx.stdouts), skip};
                     return { title, task: _task, skip};
-                }), {concurrent}), skip};
+                }), {concurrent: IS_VERBOSE ? false : concurrent}), skip};
             }
 
             // treat tasks that are strings as terminal commands
@@ -166,9 +166,9 @@ function listrify(steps, {concurrent = false, verbose = false} = {}) {
         });
 
     return new Listr(listrTasks, {
-        concurrent,
+        concurrent: IS_VERBOSE ? false : concurrent,
         collapse: true,
-        renderer: verbose ? 'verbose' : 'default'
+        renderer: IS_VERBOSE ? 'verbose' : 'default'
     });
 }
 
@@ -196,7 +196,7 @@ const getTasksFromModule = taskName => {
 
 const taskModules = TASKS.map(getTasksFromModule);
 
-listrify(taskModules, {verbose: IS_VERBOSE}).run({
+listrify(taskModules).run({
     messages: [],
     stdouts: []
 }).catch(e => {
