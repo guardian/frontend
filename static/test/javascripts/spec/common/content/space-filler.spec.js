@@ -1,4 +1,3 @@
-/* global guardian */
 define([
     'helpers/injector'
 ], function (
