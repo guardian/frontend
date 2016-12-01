@@ -7,7 +7,13 @@ import discussion.model.DiscussionKey
 import play.api.libs.crypto.CSRFTokenSigner
 import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 
-@DoNotDiscover class CommentPageControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite with BeforeAndAfterAll with WithMaterializer with WithTestWsClient {
+@DoNotDiscover class CommentPageControllerTest extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithMaterializer
+  with WithTestEnvironment
+  with WithTestWsClient {
 
   lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
   lazy val csrfCheck = new CSRFCheck(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])

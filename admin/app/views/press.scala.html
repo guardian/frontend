@@ -1,6 +1,6 @@
-@()(implicit request: RequestHeader)
+@()(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Facia Press pages", "PROD", isAuthed = true) {
+@admin_main("Facia Press pages", isAuthed = true) {
     <ul>
         <li>
             This is used to manually press the facia pages

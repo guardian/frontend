@@ -21,7 +21,12 @@ import test._
 import scala.concurrent.Future
 
 //TODO test form validation and population of form fields.
-@DoNotDiscover class EditProfileControllerTest extends WordSpec with ShouldMatchers with MockitoSugar with OptionValues with ConfiguredServer {
+@DoNotDiscover class EditProfileControllerTest extends WordSpec
+  with ShouldMatchers
+  with MockitoSugar
+  with OptionValues
+  with WithTestEnvironment
+  with ConfiguredServer {
 
   lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
   lazy val csrfAddToken = new CSRFAddToken(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])

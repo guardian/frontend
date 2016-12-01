@@ -4,9 +4,11 @@ import java.security.MessageDigest
 
 import com.google.javascript.jscomp._
 import conf.switches.Switches
-import play.api.{Application, Play}
+import play.api.Application
 import play.twirl.api.Html
 import play.twirl.api.JavaScriptFormat.{Appendable => Javascript}
+import play.api.Environment
+import play.api.Mode.Dev
 
 import scala.collection.concurrent.TrieMap
 import scala.util.Try
@@ -95,9 +97,9 @@ object JsMinifier {
 object InlineJs {
   private val memoizedMap: TrieMap[String, String] = TrieMap()
 
-  def withFileNameHint(codeToCompile: String, fileName: String)(implicit application: Application): Html = {
+  def withFileNameHint(codeToCompile: String, fileName: String)(implicit env: Environment): Html = {
     if (codeToCompile.trim.nonEmpty) {
-      if (Play.isDev) {
+      if (env.mode == Dev) {
         Html(optimizeJs(codeToCompile, fileName))
       } else {
         val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
@@ -116,6 +118,6 @@ object InlineJs {
     }
   }
 
-  def apply(codeToCompile: String, fileName: String = "input.js")(implicit application: Application): Html = withFileNameHint(codeToCompile, fileName)
-  def apply(codeToCompile: Javascript, fileName: String)(implicit application: Application): Html = this(codeToCompile.body, fileName)
+  def apply(codeToCompile: String, fileName: String = "input.js")(implicit env: Environment): Html = withFileNameHint(codeToCompile, fileName)
+  def apply(codeToCompile: Javascript, fileName: String)(implicit env: Environment): Html = this(codeToCompile.body, fileName)
 }

@@ -7,13 +7,13 @@ import org.scalatest._
 
 @DoNotDiscover class FixturesControllerTest
   extends FreeSpec
-  with ConfiguredTestSuite
-  with ShouldMatchers
-  with FootballTestData
-  with WithTestFootballClient
-  with WithMaterializer
-  with BeforeAndAfterAll
-  with WithTestWsClient {
+    with ShouldMatchers
+    with FootballTestData
+    with WithTestFootballClient
+    with BeforeAndAfterAll
+	with WithMaterializer
+    with WithTestEnvironment
+    with WithTestWsClient {
 
   val fixturesUrl = "/football/fixtures"
   val fixtureForUrl = "/football/fixtures/2012/oct/20"

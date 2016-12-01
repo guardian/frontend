@@ -4,11 +4,13 @@ import com.softwaremill.macwire._
 import conf.FootballClient
 import contentapi.ContentApiClient
 import feed.CompetitionsService
+import play.api.Environment
 
 trait FootballControllers {
   def competitionsService: CompetitionsService
   def footballClient: FootballClient
   def contentApiClient: ContentApiClient
+  implicit def environment: Environment
   lazy val fixturesController = wire[FixturesController]
   lazy val resultsController = wire[ResultsController]
   lazy val matchDayController = wire[MatchDayController]

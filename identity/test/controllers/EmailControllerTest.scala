@@ -24,7 +24,11 @@ import client.{Auth, Error}
 import idapiclient.TrackingData
 import actions.AuthenticatedActions
 
-@DoNotDiscover class EmailControllerTest extends WordSpec with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
+@DoNotDiscover class EmailControllerTest extends WordSpec
+  with ShouldMatchers
+  with MockitoSugar
+  with WithTestEnvironment
+  with ConfiguredTestSuite {
 
   lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
   lazy val csrfCheck = new CSRFCheck(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])

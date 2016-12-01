@@ -10,9 +10,10 @@ import scala.util.matching.Regex
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
-  with BeforeAndAfterAll
+  with BeforeAndAfterAll 
   with WithMaterializer
   with WithTestWsClient
+  with WithTestEnvironment
   with WithTestContentApiClient {
 
   val videoUrl = "uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"

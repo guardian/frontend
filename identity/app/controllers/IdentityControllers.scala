@@ -5,12 +5,17 @@ import com.softwaremill.macwire._
 import form.FormComponents
 import formstack.FormStackComponents
 import idapiclient.IdApiComponents
+import play.api.Environment
 import play.api.libs.ws.WSClient
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.IdentityServices
 
-trait IdentityControllers extends IdApiComponents with IdentityServices with FormStackComponents with FormComponents {
+trait IdentityControllers extends IdApiComponents
+  with IdentityServices
+  with FormStackComponents
+  with FormComponents {
   def wsClient: WSClient
+  implicit def environment: Environment
 
   def csrfCheck: CSRFCheck
   def csrfAddToken: CSRFAddToken

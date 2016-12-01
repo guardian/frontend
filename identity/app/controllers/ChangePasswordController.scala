@@ -1,19 +1,21 @@
 package controllers
 
 import common.ExecutionContexts
-import model.{NoCache, IdentityPage}
+import model.{IdentityPage, NoCache}
 import play.api.mvc._
-import play.api.data.{Forms, Form}
+import play.api.data.{Form, Forms}
 import play.api.data.Forms._
 import services._
 import utils.SafeLogging
 import form.Mappings
 import idapiclient.IdApiClient
-import play.filters.csrf.{CSRFCheck, CSRFAddToken}
+import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import actions.AuthenticatedActions
-import play.api.i18n.{MessagesApi, Messages, I18nSupport}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
+
 import scala.concurrent.Future
 import idapiclient.requests.PasswordUpdate
+import play.api.Environment
 
 class ChangePasswordController( api: IdApiClient,
                                 authenticatedActions: AuthenticatedActions,
@@ -22,7 +24,7 @@ class ChangePasswordController( api: IdApiClient,
                                 idUrlBuilder: IdentityUrlBuilder,
                                 val messagesApi: MessagesApi,
                                 csrfCheck: CSRFCheck,
-                                csrfAddToken: CSRFAddToken)
+                                csrfAddToken: CSRFAddToken)(implicit env: Environment)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms with I18nSupport{
 
   import authenticatedActions.authAction

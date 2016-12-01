@@ -2,7 +2,7 @@
 @import views.html.fragments.reportCommentForm
 
 
-@(commentId: Int, page: SimplePage, userForm: Form[discussion.model.DiscussionAbuseReport], errorMessage: Option[String] = None)(implicit request: RequestHeader)
+@(commentId: Int, page: SimplePage, userForm: Form[discussion.model.DiscussionAbuseReport], errorMessage: Option[String] = None)(implicit request: RequestHeader, env: play.api.Environment)
 @main(page) { } {
 
 

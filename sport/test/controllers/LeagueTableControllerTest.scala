@@ -7,13 +7,13 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class LeagueTableControllerTest
   extends FlatSpec
-  with ConfiguredTestSuite
-  with Matchers
-  with FootballTestData
-  with WithTestFootballClient
-  with WithMaterializer
-  with BeforeAndAfterAll
-  with WithTestWsClient {
+    with Matchers
+    with FootballTestData
+    with WithTestFootballClient
+    with BeforeAndAfterAll
+	with WithMaterializer
+    with WithTestEnvironment
+    with WithTestWsClient {
 
   lazy val leagueTableController = new LeagueTableController(testCompetitionsService)
 
