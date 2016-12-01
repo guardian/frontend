@@ -138,7 +138,7 @@ define([
     function getLongArticleRules() {
         var longArticleRules = getRules();
         longArticleRules.selectors[' .ad-slot'].minAbove =
-        longArticleRules.selectors[' .ad-slot'].minBelow = detect.getViewport().height;
+        longArticleRules.selectors[' .ad-slot'].minBelow = Math.max(500, detect.getViewport().height);
         return longArticleRules;
     }
 
