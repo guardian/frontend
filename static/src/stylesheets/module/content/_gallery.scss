@@ -168,6 +168,8 @@
 }
 
 .gallery__img-container {
+    position: relative;
+
     @include mq(desktop) {
         padding-bottom: 2.5rem;
     }
@@ -402,7 +404,7 @@
     padding-bottom: $gs-baseline*2;
 }
 
-.gallery2__fullscreen,
+.gallery__fullscreen,
 .article__fullscreen {
     top: 0;
     right: 0;
@@ -428,7 +430,7 @@
     }
 
     @include mq(desktop) {
-        .gallery2__img-container:hover &,
+        &:hover,
         .article__img-container:hover & {
             background-color: $media-default;
 
@@ -440,5 +442,16 @@
 
     @if $old-ie {
         display: none;
+    }
+}
+
+@include mq(desktop) {
+    .gallery__fullscreen {
+        opacity: 0;
+        transition: opacity .15s ease-out;
+
+        .gallery__img-container:hover & {
+            opacity: 1;
+        }
     }
 }

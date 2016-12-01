@@ -37,7 +37,7 @@ define([
     function onPlayerEnded(atomId) {
         killProgressTracker(atomId);
         tracking.track('end', atomId);
-        players[atomId].pendingTrackingCalls = [25, 50];
+        players[atomId].pendingTrackingCalls = [25, 50, 75];
     }
 
     function setProgressTracker(atomId)  {
@@ -74,7 +74,7 @@ define([
     function onPlayerReady(atomId, event) {
         players[atomId] = {
             player: event.target,
-            pendingTrackingCalls: [25, 50]
+            pendingTrackingCalls: [25, 50, 75]
         };
     }
 
