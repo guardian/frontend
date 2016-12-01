@@ -1,21 +1,13 @@
 define([
     'raven',
+    'common/utils/config',
     'common/utils/detect'
 ], function (
     raven,
+    config,
     detect
 ) {
-    var guardian = window.guardian;
-    var config = guardian.config;
-    var app = guardian.app = guardian.app || {};
-
-    if (app.raven) {
-        return app.raven;
-    }
-
-    // attach raven to global object
-    app.raven = raven;
-    app.raven.config(
+    raven.config(
         'https://' + config.page.sentryPublicApiKey + '@' + config.page.sentryHost,
         {
             whitelistUrls: [
@@ -55,7 +47,7 @@ define([
     );
 
     // Report uncaught exceptions
-    app.raven.install();
+    raven.install();
 
-    return app.raven;
+    return raven;
 });
