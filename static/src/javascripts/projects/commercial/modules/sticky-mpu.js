@@ -1,12 +1,14 @@
 define([
     'common/utils/config',
     'common/utils/closest',
+    'common/utils/mediator',
     'common/utils/fastdom-promise',
     'common/modules/ui/sticky',
     'commercial/modules/messenger'
 ], function (
     config,
     closest,
+    mediator,
     fastdom,
     Sticky,
     messenger
@@ -24,7 +26,7 @@ define([
             return;
         }
 
-        return stickyMpu.whenRendered = fastdom.read(function () {
+        fastdom.read(function () {
             return (referenceElement[config.page.hasShowcaseMainElement ? 'offsetHeight' : 'offsetTop']) + $adSlot[0].offsetHeight;
         }).then(function (newHeight) {
             return fastdom.write(function () {
@@ -36,6 +38,7 @@ define([
             stickyElement = new Sticky($adSlot[0], options);
             stickyElement.init();
             messenger.register('set-ad-height', onAppNexusResize);
+            mediator.emit('page:commercial:sticky-mpu');
             return stickyElement;
         });
     }
@@ -50,6 +53,10 @@ define([
             });
         }
     }
+
+    stickyMpu.whenRendered = new Promise(function (resolve) {
+        mediator.on('page:commercial:sticky-mpu', resolve);
+    });
 
     return stickyMpu;
 
