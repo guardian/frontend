@@ -33,8 +33,7 @@ define([
 
         this.canRun = function () {
             return config.page.edition.toLowerCase() === 'int' &&
-                commercialFeatures.canReasonablyAskForMoney &&
-                config.page.contentType.toLowerCase() !== 'signup';
+                commercialFeatures.canReasonablyAskForMoney;
         };
 
         var success = function (complete) {
