@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "amphtml-validator": "^1.0.10",
+    "any-observable": "^0.2.0",
     "autoprefixer": "^6.3.7",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
@@ -79,6 +80,8 @@
     "sass-lint": "^1.9.1",
     "semver": "^5.3.0",
     "sorted-object": "^1.0.0",
+    "split": "^1.0.0",
+    "stream-to-observable": "^0.2.0",
     "strip-ansi": "^3.0.1",
     "svgo": "^0.7.1",
     "time-grunt": "1.2.0",
