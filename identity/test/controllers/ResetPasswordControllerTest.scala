@@ -6,7 +6,7 @@ import org.scalatest.mock.MockitoSugar
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import idapiclient.{IdApiClient, TrackingData}
-import test.{Fake, I18NTestComponents, TestRequest, WithTestEnvironment}
+import test.{Fake, I18NTestComponents, TestRequest, WithTestEnvironment, WithTestCryptoConfig}
 import play.api.test._
 import play.api.test.Helpers._
 import client.Error
@@ -16,10 +16,12 @@ import com.gu.identity.model.User
 import org.mockito.{ArgumentMatcher, Matchers}
 import services.{AuthenticationService, IdRequestParser, IdentityRequest, IdentityUrlBuilder}
 
-class ResetPasswordControllerTest extends path.FreeSpec
+class ResetPasswordControllerTest
+  extends path.FreeSpec
   with ShouldMatchers
+  with MockitoSugar
   with WithTestEnvironment
-  with MockitoSugar {
+  with WithTestCryptoConfig {
 
   val api = mock[IdApiClient]
   val requestParser = mock[IdRequestParser]
@@ -28,7 +30,14 @@ class ResetPasswordControllerTest extends path.FreeSpec
   val authenticationService = mock[AuthenticationService]
   val identityRequest = IdentityRequest(trackingData, None, None, Some("123.456.789.10"), Some(false), true)
 
-  lazy val resetPasswordController = new ResetPasswordController(api, requestParser, idUrlBuilder, authenticationService, I18NTestComponents.messagesApi)
+  lazy val resetPasswordController = new ResetPasswordController(
+    api,
+    requestParser,
+    idUrlBuilder,
+    authenticationService,
+    I18NTestComponents.messagesApi,
+    testCryptoConfig)
+
   when(requestParser.apply(anyObject())).thenReturn(identityRequest)
 
   val userNotFound = List(Error("Not found", "Resource not found", 404))
