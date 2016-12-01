@@ -1,7 +1,7 @@
-@(path: String, height: Int)(implicit request: RequestHeader)
+@(path: String)(implicit request: RequestHeader)
 @import common.AmpLinkTo
 
-<amp-list src="@AmpLinkTo(path)" height="@height" layout="fixed-height">
+<amp-list src="@AmpLinkTo(path)" height="148" layout="fixed-height">
     <template type="amp-mustache">
         {{^trails}}
             <div></div>
