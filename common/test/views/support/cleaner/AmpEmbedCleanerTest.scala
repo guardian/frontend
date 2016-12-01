@@ -10,13 +10,8 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
   val googleMapsUrl = "https://www.google.com/maps/embed/v1/place?center=-3.9834936%2C12.7024497&key=AIzaSyBctFF2JCjitURssT91Am-_ZWMzRaYBm4Q&zoom=5&q=Democratic+Republic+of+the+Congo"
 
-  val interactiveWithoutiFrameWrapper = """<figure class="element element-interactive interactive" data-interactive="https://foo.bar/foo/bar/boot.js" data-canonical-url="https://foo.bar/foo/bar/boot.js">
-                                          |<figcaption class="caption caption--img caption--main">
-                                          |Our comprehensive
-                                          |<a href="https://someinteractive.url/foo/ng-interactive/bar/foobar">interactive results page</a>: follow the results as they come in.
-                                          |</figcaption>
-                                          |</figure>"""
-
+  val dataInteractiveIframeWrapper = "http://foo.bar/iframe-wrapper/foo/bar"
+  val dataInteractiveNoIframeWrapper = "http://foo.bar/foo/bar"
 
 
   private def clean(document: Document): Document = {
@@ -100,25 +95,27 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   /////////////////////////////
 
   "AmpEmbedCleaner" should "create an amp-iframe element if interactive has a valid url and iframe wrapper" in {
-    val interactiveValidUrlPlusiFrameWrapper = """<figure class="element element-interactive interactive" data-interactive="http://foo.bar/iframe-wrapper/foo/bar" data-canonical-url="https://interactive.guim.co.uk/maps/embed/nov/2016-11-29T06:47:36.html" data-alt="Site of plane crash in Colombia">
-                                         | <a href="https://myinteractive.url/some/stuff" data-link-name="in body link" class="u-underline">Interactive name</a>
-                                         |</figure> """
+    val interactiveValidUrlPlusiFrameWrapper = s"""<html><body><figure class="element element-interactive interactive"
+         | data-interactive="$dataInteractiveIframeWrapper" data-canonical-url="https://interactive.guim.co.uk/maps/embed/nov/2016-11-29T06:47:36.html" data-alt="Site of plane crash in Colombia">
+         | <a href="https://myinteractive.url/some/stuff" data-link-name="in body link" class="u-underline"> Interactive name</a>
+         | </figure></body></html>""".stripLineEnd.stripMargin
     val result = clean(Jsoup.parse(interactiveValidUrlPlusiFrameWrapper))
     result.getElementsByTag("amp-iframe").size should be(1)
   }
 
   "AmpEmbedCleaner" should "not create an amp-iframe element if interactive only has an iframe wrapper" in {
-    val interactiveSansUrl = """<figure class="element element-interactive interactive" data-interactive="http://foo.bar/iframe-wrapper/foo/bar" data-canonical-url="https://interactive.guim.co.uk/maps/embed/nov/2016-11-29T06:47:36.html" data-alt="Site of plane crash in Colombia">
-                                                 |data-link-name="in body link" class="u-underline">Interactive name</a>
-                                                 |</figure> """
+    val interactiveSansUrl = s"""<html><body><figure class="element element-interactive interactive"
+         | data-interactive="$dataInteractiveIframeWrapper" data-canonical-url="https://interactive.guim.co.uk/maps/embed/nov/2016-11-29T06:47:36.html" data-alt="Site of plane crash in Colombia">
+         | </figure></body></html>""".stripLineEnd.stripMargin
     val result = clean(Jsoup.parse(interactiveSansUrl))
     result.getElementsByTag("amp-iframe").size should be(0)
   }
 
   "AmpEmbedCleaner" should "not create an amp-iframe element if interactive does not have an iframe wrapper" in {
-    val interactiveSansiFrameWrapper = """<figure class="element element-interactive interactive" data-interactive="http://foo.bar//foo/bar" data-canonical-url="https://interactive.guim.co.uk/maps/embed/nov/2016-11-29T06:47:36.html" data-alt="Site of plane crash in Colombia">
-                               |<a href="https://myinteractive.url/some/stuff" data-link-name="in body link" class="u-underline">Interactive name</a>
-                               |</figure> """
+    val interactiveSansiFrameWrapper = s"""<html><body><figure class="element element-interactive interactive"
+         | data-interactive="$dataInteractiveNoIframeWrapper" data-canonical-url="https://interactive.guim.co.uk/maps/embed/nov/2016-11-29T06:47:36.html" data-alt="Site of plane crash in Colombia">
+         | <a href="https://myinteractive.url/some/stuff" data-link-name="in body link" class="u-underline">Interactive name</a>
+         | </figure></body></html>""".stripLineEnd.stripMargin
     val result = clean(Jsoup.parse(interactiveSansiFrameWrapper))
     result.getElementsByTag("amp-iframe").size should be(0)
   }
