@@ -42,12 +42,14 @@ object ListIds {
   val greenLight = 28
   val povertyMatters = 113
   val theLongRead = 3322
+  val weekendReading = 3743
   val morningMail = 2636
   val australianPolitics = 1866
 
   val theBreakdown = 219
   val theSpin = 220
 
+  val documentaries = 3745
   val sleeveNotes = 39
   val closeUp = 40
   val filmToday = 1950
@@ -72,37 +74,6 @@ object ListIds {
   val UsElection = 3599
 
   val morningMailUk = 3640
-
-  val allWithoutTrigger: List[Int] = List(
-    theBestOfOpinion,
-    theFiver,
-    mediaBriefing,
-    greenLight,
-    povertyMatters,
-    theLongRead,
-    morningMail,
-    australianPolitics,
-    theBreakdown,
-    theSpin,
-    sleeveNotes,
-    closeUp,
-    filmToday,
-    bookmarks,
-    artWeekly,
-    zipFile,
-    theFlyer,
-    moneyTalks,
-    fashionStatement,
-    crosswordEditorUpdate,
-    theObserverFoodMonthly,
-    firstDogOnTheMoon,
-    bestOfOpinionAUS,
-    bestOfOpinionUS,
-    theGuardianMasterclasses,
-    theGuardianGardener,
-    theGuardianBookshop,
-    UsElection,
-    morningMailUk)
 }
 
 object EmailTypes {
