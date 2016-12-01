@@ -11,7 +11,7 @@ $header-height: 48px;
     text-align: right;
 }
 
-.hosted__glogo svg {
+.hosted__glogo .inline-logo__svg {
     fill: #ffffff;
     width: 115px;
     height: 40px;
@@ -51,17 +51,16 @@ $header-height: 48px;
     position: relative;
     background-size: cover;
     background-position: left;
-}
-
-.hosted__banner:after {
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 0;
-    background: linear-gradient(transparent 100px, rgba(0, 0, 0, .5));
+    &::after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 0;
+        background: linear-gradient(transparent 100px, rgba(0, 0, 0, .5));
+    }
 }
 
 .hosted__cta-wrapper {
@@ -81,7 +80,7 @@ $header-height: 48px;
 }
 
 .hosted__cta.button {
-    padding: 4px;
+    padding: 9px 6px 4px;
     height: 26px;
     width: 26px;
     margin: 6px;
@@ -89,7 +88,7 @@ $header-height: 48px;
     line-height: 26px;
 }
 
-.hosted__cta.button svg {
+.hosted__cta__svg {
     fill: #333333;
     width: 16px;
     height: 16px;
@@ -121,7 +120,7 @@ $header-height: 48px;
         top: 6px;
         right: 16px;
     }
-    .inline-icon svg {
+    .inline-icon__svg {
         width: 20px;
         height: 20px;
     }
@@ -235,17 +234,6 @@ $header-height: 48px;
         box-sizing: border-box;
         overflow: scroll;
 
-        .survey-logo {
-            position: absolute;
-            bottom: 25px;
-            right: 20px;
-        }
-
-        .survey-logo svg {
-            fill: #333333;
-            width: 26px;
-        }
-
         .survey-icon {
             text-align: center;
             padding-top: 16px;
@@ -253,7 +241,7 @@ $header-height: 48px;
             line-height: 10px;
         }
 
-        .survey-icon svg {
+        .inline-paid-content__svg {
             width: 240px;
             height: 154px;
         }
@@ -303,14 +291,15 @@ $header-height: 48px;
         top: 4px;
         right: 8px;
 
-        svg {
-            fill: #333333;
-            margin-top: 4px;
-            width: 20px;
-            height: 20px;
-        }
-
     }
+
+    .inline-cross__svg {
+        fill: #333333;
+        margin-top: 4px;
+        width: 20px;
+        height: 20px;
+    }
+
     .lightbox {
         background: rgba(0, 0, 0, 0.8);
         width: 100%;
@@ -814,7 +803,6 @@ $header-height: 48px;
     margin-top: $gs-baseline;
 }
 
-
 .hosted-page--bright {
     &.hosted-gallery-page .hosted-tone-btn,
     .hosted__banner .hosted-tone-btn,
@@ -822,9 +810,9 @@ $header-height: 48px;
         color: #ffffff;
     }
 
-    &.hosted-gallery-page .hosted-tone-btn svg,
-    .hosted__banner .hosted-tone-btn svg,
-    .hosted-tone-btn:focus svg {
+    &.hosted-gallery-page .inline-icon__svg,
+    .hosted__banner .inline-icon__svg,
+    .hosted-tone-btn:focus .inline-icon__svg {
         fill: #ffffff;
     }
 
@@ -837,7 +825,7 @@ $header-height: 48px;
         .site-message__close-btn {
             border-color: #ffffff;
         }
-        .inline-cross svg {
+        .inline-cross__svg {
             fill: #ffffff;
         }
     }
