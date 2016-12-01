@@ -7,6 +7,7 @@ sealed trait EmailMetadata[T] extends Product with Serializable {
   def name: String
   def banner: Option[String] = None
   def address: Option[String] = None
+  def toneColour: Option[String] = None
   def test(c: T): Boolean
 }
 
@@ -129,11 +130,14 @@ case object KeepItInTheGround extends ArticleEmailMetadata {
 
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
+  override val banner = Some("the-flyer.png")
+  override val toneColour = Some("#ffbdc6")
 }
 
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
+  private val defaultToneColour = "#005689"
   private val articleEmails     = Seq(
     ArtWeekly,
     DocumentariesUpdate,
@@ -171,6 +175,8 @@ object EmailAddons {
       val banner = email flatMap (_.banner) getOrElse defaultBanner
       Static(s"images/email/banners/$banner")
     }
+
+    lazy val toneColour = email flatMap (_.toneColour) getOrElse defaultToneColour
 
     lazy val address = email flatMap (_.address) getOrElse defaultAddress
   }

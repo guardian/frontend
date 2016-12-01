@@ -7,16 +7,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-hosted-onward-journey",
-    "Show more pages from the campaign in Hosted Article/Video pages, using a carousel or popup",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 18),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-membership-engagement-international-experiment",
     "Test varying the number of visits before showing the membership engagement banner",
     owners = Seq(Owner.withGithub("rupert.bates")),
@@ -41,7 +31,7 @@ trait ABTestSwitches {
     "Test just contributions vs contributions or membership vs just membership in the US",
     owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 28),
+    sellByDate =  new LocalDate(2016, 12, 5),
     exposeClientSide = true
   )
 
