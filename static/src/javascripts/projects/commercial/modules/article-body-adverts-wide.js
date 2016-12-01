@@ -31,14 +31,14 @@ define([
     mostPopular,
     memoize
 ) {
+    /* We keep a handle on the main column to compute offsets afterwards */
     var mainColumn = qwery('.js-content-main-column')[0];
+
+    /* We keep track of inline MPUs so that we can offset them to the right later */
     var inlineSlots = [];
 
-    // If a merchandizing component has been rendered but is empty,
-    // we allow a second pass for regular inline ads. This is because of
-    // the decoupling between the spacefinder algorithm and the targeting
-    // in DFP: we can only know if a slot can be removed after we have
-    // received a response from DFP
+    /* The promise resolves either when an inline merch slot has been added and
+       a DFP call has returned, or directly if no inline slot has been added */
     var waitForMerch = memoize(function (imSlot) {
         return imSlot ?
             trackAdRender('dfp-ad--im').then(addInlineAds) :
@@ -48,6 +48,7 @@ define([
     /* bodyAds is a counter that keeps track of the number of inline MPUs
      * inserted dynamically. */
     var bodyAds;
+
     var isWide;
     var isMobile;
     var replaceTopSlot;
