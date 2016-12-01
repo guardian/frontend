@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, Section => ApiSection, ItemResponse}
+import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, Content => ApiContent, Section => ApiSection}
 import common.{Edition, ExecutionContexts, Logging}
 import conf.Static
 import contentapi.ContentApiClient
@@ -8,6 +8,7 @@ import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, 
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.{DateTime, LocalDate}
+import play.api.Environment
 import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
@@ -39,7 +40,7 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
     }
   }
 
-  def renderCrosswordPage(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[Result] = {
+  def renderCrosswordPage(crosswordType: String, id: Int)(implicit request: RequestHeader, env: Environment): Future[Result] = {
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(RevalidatableResult.Ok(views.html.crossword(
         CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
@@ -49,7 +50,7 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
   }
 }
 
-class CrosswordPageController(val contentApiClient: ContentApiClient) extends CrosswordController {
+class CrosswordPageController(val contentApiClient: ContentApiClient)(implicit env: Environment) extends CrosswordController {
 
   def noResults()(implicit request: RequestHeader) = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
 
@@ -92,7 +93,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient) extends Cr
   }
 }
 
-class CrosswordSearchController(val contentApiClient: ContentApiClient) extends CrosswordController {
+class CrosswordSearchController(val contentApiClient: ContentApiClient)(implicit env: Environment) extends CrosswordController {
   val searchForm = Form(
     mapping(
       "crossword_type" -> nonEmptyText,

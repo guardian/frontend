@@ -7,7 +7,6 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-    'common/modules/experiments/tests/hosted-onward-journey',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
     'common/modules/experiments/tests/contributions-epic-usa-cta-three-way',
@@ -21,7 +20,6 @@ define([
              mvtCookie,
              memoize,
              noop,
-             HostedOnwardJourney,
              RecommendedForYou,
              MembershipEngagementInternationalExperiment,
              ContributionsEpicUsaCtaThreeWay,
@@ -29,7 +27,6 @@ define([
              AuMembershipEngagementMessageTest8
     ) {
     var TESTS = [
-        new HostedOnwardJourney(),
         new RecommendedForYou(),
         new MembershipEngagementInternationalExperiment(),
         new ContributionsEpicUsaCtaThreeWay(),

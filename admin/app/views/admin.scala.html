@@ -1,8 +1,8 @@
-@(env: String)(implicit request: RequestHeader)
+@()(implicit request: RequestHeader, env: play.api.Environment)
 
 @import conf.switches.Switches.R2PagePressServiceSwitch
 @import conf.Configuration
-@admin_main("Frontend Admin", env, isAuthed = true) {
+@admin_main("Frontend Admin", isAuthed = true) {
     <div class="row">
 
         <div class="col-md-4">

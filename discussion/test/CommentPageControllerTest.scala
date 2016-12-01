@@ -6,7 +6,12 @@ import controllers.CommentsController
 import discussion.model.DiscussionKey
 import play.filters.csrf.CSRFConfig
 
-@DoNotDiscover class CommentPageControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient {
+@DoNotDiscover class CommentPageControllerTest extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithTestEnvironment
+  with WithTestWsClient {
 
   "Discussion" should "return 200" in {
     val commentsController = new CommentsController(CSRFConfig.fromConfiguration(app.configuration), new DiscussionApiStub(wsClient))

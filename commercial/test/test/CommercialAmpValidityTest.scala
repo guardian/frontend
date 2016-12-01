@@ -6,7 +6,9 @@ import play.api.mvc._
 import play.api.test.Helpers._
 import play.api.test._
 
-@DoNotDiscover class CommercialAmpValidityTest extends AmpValidityTest with WithTestContentApiClient {
+@DoNotDiscover class CommercialAmpValidityTest extends AmpValidityTest
+  with WithTestEnvironment
+  with WithTestContentApiClient {
 
   override protected def getContentString[T](path: String)(block: (String) => T): T = {
     val controller = new HostedContentController(testContentApiClient)

@@ -4,7 +4,7 @@
 @import views.FootballHelpers._
 
 
-@(page: MatchPage, competition: Option[model.Competition])(implicit request: RequestHeader)
+@(page: MatchPage, competition: Option[model.Competition])(implicit request: RequestHeader, env: play.api.Environment)
 
 @team(players: Seq[LineUpPlayer]) = {
     <ul class="team-list u-unstyled">

@@ -1,10 +1,10 @@
 @import layout.DedupedFrontResult
-@(environment: String, dedupedFrontResult: DedupedFrontResult)(implicit request: RequestHeader)
+@(dedupedFrontResult: DedupedFrontResult)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import layout.DedupedContainerResult
 @import layout.DedupedItem
 
-@admin_main(s"Deduped For ${dedupedFrontResult.path}", environment, isAuthed = true) {
+@admin_main(s"Deduped For ${dedupedFrontResult.path}", isAuthed = true) {
 
     <div class="container">
         <div><a href="@controllers.admin.routes.WhatIsDeduped.index()">Back</a></div>
