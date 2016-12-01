@@ -1,4 +1,4 @@
-@(page: model.Page)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader, env: play.api.Environment)
 
 @main(page){ }{
     @fragments.emailLandingBody()
