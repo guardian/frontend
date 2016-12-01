@@ -27,6 +27,7 @@ GET        /commercial/books/book.json                                          
 GET        /commercial/books/books.json                                                        commercial.controllers.BookOffersController.renderBooks
 GET        /advertiser-content/:campaignName/:pageName                                         commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET        /advertiser-content/:campaignName/:pageName/:cType/onward.json                      commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
+GET        /advertiser-content/:campaignName/:pageName/:cType/amp/onward.json                  commercial.controllers.HostedContentController.fetchAmpOnwardComponent(campaignName, pageName, cType)
 
 
 # Onward

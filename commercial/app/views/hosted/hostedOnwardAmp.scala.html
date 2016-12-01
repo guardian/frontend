@@ -1,7 +1,7 @@
-@(path: String)(implicit request: RequestHeader)
+@(hostPageType: String, hostPageId: String)(implicit request: RequestHeader)
 @import common.AmpLinkTo
 
-<amp-list src="@AmpLinkTo(path)" width="400" height="148" layout="responsive">
+<amp-list src="@AmpLinkTo.ajaxUrl(s"/$hostPageId/$hostPageType/amp/onward.json")" width="400" height="148" layout="responsive">
     <template type="amp-mustache">
         {{^trails}}
             <div></div>

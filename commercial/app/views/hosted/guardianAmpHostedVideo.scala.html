@@ -1,8 +1,6 @@
 @import common.commercial.hosted.HostedVideoPage
 @import views.html.hosted._
 @import views.support.FBPixel
-@import conf.Configuration.environment
-@import conf.Configuration.site.host
 @(page: HostedVideoPage)(implicit request: RequestHeader, env: play.api.Environment)
 
 <!doctype html>
@@ -81,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            @hostedOnwardAmp(s"${page.url}/video/onward.json")
+            @hostedOnwardAmp("video", page.id)
         </section>
         @guardianHostedCta(page, page.cta, isAMP = true)
       </div>

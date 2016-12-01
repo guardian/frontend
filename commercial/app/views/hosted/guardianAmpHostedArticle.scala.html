@@ -1,10 +1,7 @@
 @import common.commercial.hosted.HostedArticlePage
 @(page: HostedArticlePage)(implicit request: RequestHeader, env: play.api.Environment)
 @import model.hosted.HostedAmp.ampify
-@import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import views.html.hosted._
-@import common.{AnalyticsHost, CanonicalLink, LinkTo}
-@import conf.Configuration
 @import views.support.FBPixel
 
 <!doctype html>
@@ -64,7 +61,7 @@
 
                                 </div>
                                 <div class="hide-on-desktop">
-                                    @hostedOnwardAmp(s"${page.url}/article/onward.json")
+                                    @hostedOnwardAmp("article", page.id)
                                 </div>
                                 <div class="hosted__standfirst">
                                     <div class="hosted__terms">​Hosted content is used to describe content that is paid for and supplied by the advertiser.
@@ -72,7 +69,7 @@
                                 </div>
                             </div>
                             <div class="content__secondary-column">
-                                @hostedOnwardAmp(s"${page.url}/article/onward.json")
+                                @hostedOnwardAmp("article", page.id)
                             </div>
                         </div>
                     </div>
