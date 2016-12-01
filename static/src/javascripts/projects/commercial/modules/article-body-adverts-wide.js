@@ -4,7 +4,6 @@ define([
     'commercial/modules/sticky-mpu',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/steady-page',
     'common/utils/fastdom-promise',
     'common/modules/article/space-filler',
     'common/modules/commercial/ad-sizes',
@@ -20,7 +19,6 @@ define([
     stickyMpu,
     config,
     detect,
-    steadyPage,
     fastdom,
     spaceFiller,
     adSizes,
@@ -147,59 +145,30 @@ define([
         return spaceFiller.fillSpace(rules, insertInlineAds, {
             waitForImages: true,
             waitForLinks: true,
-            waitForInteractives: true,
-            domWriter: isMobile ? writerOverride : false
+            waitForInteractives: true
         });
 
         function insertInlineAds(paras) {
-            var promises = paras
+            var slots = paras
             .slice(0, Math.min(paras.length, count))
             .map(function (para) {
                 return insertAdAtPara(para, getSlotName(), 'inline');
             });
 
-            return Promise.all(promises)
-            .then(function (slots) {
-                slots.forEach(function (slot) {
-                    inlineSlots.push(slot);
-                });
-            });
+            if (isWide) {
+                inlineSlots.push.apply(inlineSlots, slots);
+            }
         }
     }
 
     function insertAdAtPara(para, name, type) {
         var ad = createSlot(name, type);
-
-        // If on mobile we will
-        // insert ad using steady page
-        // to avoid jumping the user
-        if (isMobile) {
-            return steadyPage.insert(ad, function() {
-                insertion(ad, para);
-                return ad;
-            });
-        } else {
-            // If we're not on mobile we insert and resolve the promise immediately
-            return new Promise(function (resolve) {
-                insertion(ad, para);
-                resolve(ad);
-            });
-        }
-
-        function insertion (ad, para) {
-            para.parentNode.insertBefore(ad, para);
-        }
+        para.parentNode.insertBefore(ad, para);
+        return ad;
     }
 
     function addSlots() {
         qwery('.js-ad-slot', mainColumn).forEach(addSlot);
-    }
-
-    // If we're on mobile, we want to use steady-page right before dom insertion
-    // when we have the adslot so we provide a non-fastdom writer as
-    // fastdom is handled in steady-page
-    function writerOverride (writerCallback) {
-        return writerCallback();
     }
 
     function addInlineMerchAd() {
@@ -208,8 +177,7 @@ define([
         }, {
             waitForImages: true,
             waitForLinks: true,
-            waitForInteractives: true,
-            domWriter: isMobile ? writerOverride : false
+            waitForInteractives: true
         });
     }
 
