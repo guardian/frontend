@@ -1,4 +1,4 @@
-@(crosswordPage: crosswords.CrosswordPage, svg: Seq[scala.xml.Node])(implicit request: RequestHeader)
+@(crosswordPage: crosswords.CrosswordPage, svg: Seq[scala.xml.Node])(implicit request: RequestHeader, env: play.api.Environment)
 
 @import play.api.libs.json._
 @import views.html.fragments.crosswords._

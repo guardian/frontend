@@ -5,12 +5,14 @@ import common._
 import conf.switches.Switches
 import conf.Configuration
 import play.api.mvc._
+
 import scala.concurrent.Future
 import services.SwitchNotification
 import tools.Store
 import model.NoCache
+import play.api.Environment
 
-class SwitchboardController(akkaAsync: AkkaAsync) extends Controller with Logging with ExecutionContexts {
+class SwitchboardController(akkaAsync: AkkaAsync)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 
@@ -29,7 +31,7 @@ class SwitchboardController(akkaAsync: AkkaAsync) extends Controller with Loggin
       }
 
       val lastModified = switchesWithLastModified.map(_._2).map(_.getMillis).getOrElse(System.currentTimeMillis)
-      NoCache(Ok(views.html.switchboard(Configuration.environment.stage, lastModified)))
+      NoCache(Ok(views.html.switchboard(lastModified)))
     }
   }
 
@@ -46,12 +48,12 @@ class SwitchboardController(akkaAsync: AkkaAsync) extends Controller with Loggin
     } else {
       log.info("saving switchboard")
 
-      val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse("unknown user (dev-build?)")
+      val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
       val updates: Seq[String] = request.body.asFormUrlEncoded.map { params =>
           Switches.all map { switch =>
               switch.name + "=" + params.get(switch.name).map(v => "on").getOrElse("off")
           }
-      } getOrElse(Nil)
+      } getOrElse Nil
 
       Future {
         saveSwitchesOrError(requester, updates)
@@ -71,7 +73,7 @@ class SwitchboardController(akkaAsync: AkkaAsync) extends Controller with Loggin
     val changes = updates filterNot { current contains _ }
     SwitchNotification.onSwitchChanges(akkaAsync)(requester, Configuration.environment.stage, changes)
     changes foreach { change =>
-      log.info(s"Switch change by ${requester}: ${change}")
+      log.info(s"Switch change by $requester: $change")
     }
 
     Redirect(routes.SwitchboardController.renderSwitchboard())

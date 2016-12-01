@@ -14,6 +14,7 @@ import org.scalatest.time.{Millis, Span}
   with ScalaFutures
   with BeforeAndAfterAll
   with WithTestWsClient
+  with WithTestEnvironment
   with WithTestContentApiClient {
 
   "CrosswordData" - {
@@ -35,10 +36,10 @@ import org.scalatest.time.{Millis, Span}
 
         val entriesMap = crossword.entries.map(entry => (entry.id, entry)).toMap
 
-        entriesMap.get("2-down").get.separatorLocations.get.get(",").get should be (Seq(4, 8))
-        entriesMap.get("10-across").get.separatorLocations.get.get(",").get should be (Seq(3, 9))
-        entriesMap.get("23-down").get.separatorLocations.get.get(",").get should be (Seq(4))
-        entriesMap.get("21-across").get.separatorLocations.get.get(",").get should be (Seq(4, 7))
+        entriesMap("2-down").separatorLocations.get(",") should be (Seq(4, 8))
+        entriesMap("10-across").separatorLocations.get(",") should be (Seq(3, 9))
+        entriesMap("23-down").separatorLocations.get(",") should be (Seq(4))
+        entriesMap("21-across").separatorLocations.get(",") should be (Seq(4, 7))
       }
     }
 

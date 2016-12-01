@@ -1,5 +1,5 @@
 @import model.ArticleSchemas
-@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
+@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import common.LinkTo
 @import views.BodyCleaner
@@ -39,10 +39,25 @@
                 @fragments.guBand()
             }
 
-            @fragments.headTonal(article, model, isPaidContent, amp = amp)
+            @if(!(mvt.ABNewNavVariantThree.isParticipating || mvt.ABNewNavVariantFour.isParticipating || mvt.ABNewNavVariantFive.isParticipating)) {
+                @fragments.headTonal(article, model, isPaidContent, amp = amp)
 
-            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                @fragments.mainMedia(article, amp)
+                @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                    @fragments.mainMedia(article, amp)
+                }
+            } else {
+                <div class="hide-on-mobile">
+                    @fragments.headTonal(article, model, isPaidContent, amp = amp)
+
+                    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                        @fragments.mainMedia(article, amp)
+                    }
+                </div>
+                <div class="mobile-only">
+                    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                        @fragments.mainMedia(article, amp)
+                    }
+                </div>
             }
 
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
@@ -53,6 +68,12 @@
 
                         @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
                             @fragments.mainMedia(article, amp)
+                        }
+
+                        @if(mvt.ABNewNavVariantThree.isParticipating || mvt.ABNewNavVariantFour.isParticipating || mvt.ABNewNavVariantFive.isParticipating) {
+                            <div class="mobile-only">
+                                @fragments.headTonal(article, model, isPaidContent, amp = amp)
+                            </div>
                         }
 
                         @fragments.witnessCallToAction(article.content)

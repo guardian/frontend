@@ -18,7 +18,7 @@ object LogbackConfig {
                                    bufferSize: Int)
 
   def makeCustomFields(customFields: Map[String, String]): String = {
-    "{" + (for((k, v) <- customFields) yield(s""""${k}":"${v}"""")).mkString(",") + "}"
+    "{" + (for((k, v) <- customFields) yield s""""${k}":"${v}"""").mkString(",") + "}"
   }
 
   def asLogBack(l: SLFLogger): Option[LogbackLogger] = l match {
@@ -69,9 +69,9 @@ object LogbackConfig {
           )
           lb.addAppender(appender)
           lb.info("Configured Logback")
-        } getOrElse(PlayLogger.info("not running using logback"))
+        } getOrElse PlayLogger.info("not running using logback")
       } catch {
-        case ex: Throwable => PlayLogger.info(s"Error while adding Logback Kinesis appender: ${ex}")
+        case ex: Throwable => PlayLogger.info(s"Error while adding Logback Kinesis appender: $ex")
       }
     } else {
       PlayLogger.info("Logging disabled")

@@ -9,6 +9,7 @@ import play.api.libs.json.{Format, JsObject, Json}
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import JsonComponent.withRefreshStatus
+import play.api.Environment
 
 import scala.concurrent.Future
 
@@ -16,7 +17,7 @@ case class MediaPage(media: ContentType, related: RelatedContent) extends Conten
   override lazy val item = media
 }
 
-class MediaController(contentApiClient: ContentApiClient) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class MediaController(contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
   def render(path: String) = Action.async { implicit request => renderItem(path) }

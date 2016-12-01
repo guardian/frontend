@@ -1,4 +1,4 @@
-@(page: model.Page, savedArticleForm: Form[SavedArticleData], pageData: model.SaveForLaterPageData)(implicit request: RequestHeader)
+@(page: model.Page, savedArticleForm: Form[SavedArticleData], pageData: model.SaveForLaterPageData)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import common.SimplePagePaths
 @import controllers.SaveForLaterCleaner

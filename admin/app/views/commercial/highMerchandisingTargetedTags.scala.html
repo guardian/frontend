@@ -1,7 +1,7 @@
-@(env: String, report: common.dfp.HighMerchandisingTargetedTagsReport)(implicit request: RequestHeader)
+@(report: common.dfp.HighMerchandisingTargetedTagsReport)(implicit request: RequestHeader, env: play.api.Environment)
 @import tools.DfpLink
 
-@admin_main("Commercial High Slot", env, isAuthed = true, hasCharts = false) {
+@admin_main("Commercial High Slot", isAuthed = true, hasCharts = false) {
 
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at(" css/commercial.css")">
 

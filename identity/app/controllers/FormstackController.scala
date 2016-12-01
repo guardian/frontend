@@ -4,17 +4,20 @@ import actions.AuthenticatedActions
 import play.api.mvc._
 import model.IdentityPage
 import common.ExecutionContexts
-import services.{IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
+import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
 import utils.SafeLogging
+
 import scala.concurrent.Future
 import formstack.{FormstackApi, FormstackForm}
 import conf.switches.Switches
+import play.api.Environment
 
 class FormstackController(returnUrlVerifier: ReturnUrlVerifier,
                           idRequestParser: IdRequestParser,
                           idUrlBuilder: IdentityUrlBuilder,
                           authenticatedActions: AuthenticatedActions,
                           formStackApi: FormstackApi)
+                         (implicit env: Environment)
   extends Controller with ExecutionContexts with SafeLogging {
 
   import authenticatedActions.authAction

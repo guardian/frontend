@@ -1,8 +1,8 @@
-@(environment: String)(implicit request: RequestHeader)
+@()(implicit request: RequestHeader, env: play.api.Environment)
 
 @import controllers.admin.routes.UncachedWebAssets
 
-@admin_main("CSS reports", environment) {
+@admin_main("CSS reports") {
     <style>
         html {
             overflow-y: scroll;

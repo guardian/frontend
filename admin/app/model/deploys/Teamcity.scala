@@ -25,9 +25,9 @@ case class TeamCityBuild(number: String,
                          revision: String,
                          commits: List[Commit]) {
 
-  val isSuccess = (status == "SUCCESS")
+  val isSuccess = status == "SUCCESS"
   def committers() = commits.map(_.username).distinct
-  def link = s"${Configuration.teamcity.host}/viewLog.html?buildId=${id}"
+  def link = s"${Configuration.teamcity.host}/viewLog.html?buildId=$id"
 }
 
 object TeamCityBuild {
@@ -83,7 +83,7 @@ class TeamcityService(httpClient: HttpLike) {
   def getBuilds(project: String, count: Int = 10): Future[Seq[TeamCityBuild]] = {
     GET[TeamCityBuilds](
       path = "builds",
-      queryString = Map("locator" -> s"buildType:(id:$project),count:$count") + ("fields" -> s"build(${buildFields})")
+      queryString = Map("locator" -> s"buildType:(id:$project),count:$count") + ("fields" -> s"build($buildFields)")
     ).map(_.builds)
   }
 

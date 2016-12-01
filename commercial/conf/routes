@@ -57,7 +57,6 @@ GET         /advertiser-content/:campaignName/:pageName/:cType/onward.json  comm
 
 # Iframe buster and 3rd-party ads
 GET         /rockabox/rockabox_buster.html                                  controllers.Assets.at(path="/public", file="rockabox_buster.html")
-GET         /external/eyeblaster/addineyeV2.html                            controllers.Assets.at(path="/public", file="addineyeV2.html")
 
 # Off-platform ads
 GET         /amp/remote.html                                                controllers.Assets.at(path="/public", file="amp_remote.html")

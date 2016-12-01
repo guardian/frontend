@@ -4,6 +4,7 @@ import contentapi.{CapiHttpClient, PreviewContentApi}
 import play.api.mvc.{Action, Controller}
 import common.{ExecutionContexts, Logging}
 import model.NoCache
+import play.api.Environment
 import play.api.libs.ws.WSClient
 import tools.LoadBalancer
 
@@ -18,7 +19,7 @@ object TestFailed{
   def apply(name: String, messages: String*) = EndpointStatus(name, false, messages:_*)
 }
 
-class TroubleshooterController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
+class TroubleshooterController(wsClient: WSClient)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
 
   val previewContentApi = new PreviewContentApi(new CapiHttpClient(wsClient))
 
@@ -32,7 +33,7 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
 
     val loadBalancers = LoadBalancer.all.filter(_.testPath.isDefined)
 
-    val thisLoadBalancer = loadBalancers.find(_.project == id).headOption
+    val thisLoadBalancer = loadBalancers.find(_.project == id)
 
     val directToLoadBalancer = thisLoadBalancer.map(testOnLoadBalancer(_, pathToTest, id))
       .getOrElse(Future.successful(TestFailed("Can find the appropriate loadbalancer")))
@@ -65,21 +66,21 @@ class TroubleshooterController(wsClient: WSClient) extends Controller with Loggi
         if (result.isOk)
           result
         else
-          TestFailed(result.name, result.messages.toSeq :+
+          TestFailed(result.name, result.messages :+
             "NOTE: if hitting the Router you MUST set Host header to 'www.theguardian.com' or else you will get '403 Forbidden'":_*)
       }
     }
 
     LoadBalancer("frontend-router")
       .flatMap(_.url)
-      .map(fetchWithRouterUrl(_))
+      .map(fetchWithRouterUrl)
       .getOrElse(Future.successful(TestFailed("Can get Frontend router url")))
 
   }
 
   private def testOnLoadBalancer(thisLoadBalancer: LoadBalancer, testPath: String, id: String): Future[EndpointStatus] = {
     thisLoadBalancer.url.map { url =>
-      httpGet(s"Can fetch directly from ${thisLoadBalancer.name} load balancer", s"http://${url}$testPath")
+      httpGet(s"Can fetch directly from ${thisLoadBalancer.name} load balancer", s"http://$url$testPath")
     }.getOrElse(Future(TestFailed(s"Can get ${thisLoadBalancer.name}'s loadbalancer url")))
   }
 

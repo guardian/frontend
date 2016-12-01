@@ -270,7 +270,6 @@
         @fragments.amp.stylesheets.footer()
         @fragments.amp.stylesheets.onward()
         @fragments.amp.stylesheets.buttons()
-        @fragments.amp.stylesheets.header()
         @if(page.metadata.contentType == "LiveBlog") {
             @fragments.amp.stylesheets.liveBlog()
         }
@@ -278,5 +277,8 @@
             @fragments.amp.stylesheets.glabs()
         }
     }
+
+    @* proper inlined AMP styles *@
+    @Html(common.Assets.css.amp)
 
 </style>

@@ -68,7 +68,7 @@ private[conf] case class HealthCheckResult(url: String,
   }
   def formattedDate: String = expiration match {
     case HealthCheckExpires.Never => "Never expires"
-    case _ => if (expired) s"${date} (Expired)" else date.toString
+    case _ => if (expired) s"$date (Expired)" else date.toString
   }
 }
 
@@ -153,7 +153,7 @@ class CachedHealthCheck(policy: HealthCheckPolicy, healthChecks: SingleHealthChe
     Future.successful {
       val results = cache.get
       val response = results.map {
-        case r: HealthCheckResult => s"GET ${r.url} '${r.formattedResult}' '${r.formattedDate}'"
+        r: HealthCheckResult => s"GET ${r.url} '${r.formattedResult}' '${r.formattedDate}'"
       }
         .mkString("\n")
       if(successful(results)) Ok(response) else ServiceUnavailable(response)

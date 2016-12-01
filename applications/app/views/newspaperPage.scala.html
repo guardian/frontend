@@ -1,10 +1,10 @@
-@(paper: controllers.TodayNewspaper)(implicit request: RequestHeader)
+@(paper: controllers.TodayNewspaper)(implicit request: RequestHeader, env: play.api.Environment)
 
 @main(paper.page) { } {
 
     @for(bookSection <- paper.bookSections) {
 
-        @fragments.containers.facia_cards.container(bookSection, pageId = paper.page.metadata.sectionId)
+        @fragments.containers.facia_cards.container(bookSection)
 
     }
 }

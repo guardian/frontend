@@ -7,8 +7,9 @@ import common.ExecutionContexts
 import form._
 import idapiclient.IdApiClient
 import model._
+import play.api.Environment
 import play.api.data.Form
-import play.api.i18n.{ MessagesApi, I18nSupport }
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{AnyContent, Controller, Request}
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services._
@@ -27,6 +28,7 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
                             idRequestParser: IdRequestParser,
                             val messagesApi: MessagesApi,
                             implicit val profileFormsMapping: ProfileFormsMapping)
+                           (implicit env: Environment)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
 
   import authenticatedActions._

@@ -130,22 +130,32 @@ object Eventbrite extends ExecutionContexts with Logging {
   trait TicketHandler {
     def tickets: Seq[Ticket]
 
-    val displayPriceRange = {
+    val displayPriceRange: Option[String] = {
 
-      def format(price: Double): String = f"£$price%,.2f"
+      def determinePriceRange: String = {
 
-      val prices = tickets.map(_.price)
-      val (low, high) = (prices.min, prices.max)
+        def format(price: Double): String = f"£$price%,.2f"
 
-      if (low == high) {
-        format(high)
+        val prices: Seq[Double] = tickets.map(_.price)
+        val (low, high) = (prices.min, prices.max)
+
+        if (low == high)
+          format(high)
+        else
+          s"${format(low)} to ${format(high)}"
       }
-      else {
-        s"${format(low)} to ${format(high)}"
-      }
+
+      if (tickets.isEmpty)
+        None
+      else
+        Some(determinePriceRange)
     }
 
-    val ratioTicketsLeft = 1 - (tickets.map(_.quantitySold).sum.toDouble / tickets.map(_.quantityTotal).sum)
+    val ratioTicketsLeft: Option[Double] =
+      if (tickets.isEmpty)
+        None
+      else
+        Some(1 - (tickets.map(_.quantitySold).sum.toDouble / tickets.map(_.quantityTotal).sum))
   }
 
   trait EventHandler {

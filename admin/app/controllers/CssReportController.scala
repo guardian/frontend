@@ -5,7 +5,8 @@ import conf.Configuration
 import org.joda.time.LocalDate
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
-import css_report.{SelectorReport, CssReport}
+import css_report.{CssReport, SelectorReport}
+import play.api.Environment
 
 object CssReportsIndex {
   implicit val jsonWrites = Json.writes[CssReportsIndex]
@@ -36,9 +37,9 @@ case class CssReportResponse(
   selectors: Map[String, UsedAndUnused]
 )
 
-class CssReportController extends Controller with ExecutionContexts {
+class CssReportController (implicit env: Environment) extends Controller with ExecutionContexts {
   def entry = Action { implicit request =>
-    Ok(views.html.cssReport(Configuration.environment.stage))
+    Ok(views.html.cssReport())
   }
 
   def index = Action.async { implicit request =>

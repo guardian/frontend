@@ -41,7 +41,7 @@ object FootballTestData {
 
   private val today = new org.joda.time.DateTime(zone)
 
-  private val team = new MatchDayTeam("1", "Team name", None, None, None, None)
+  private val team = MatchDayTeam("1", "Team name", None, None, None, None)
 
   private val matchDay = MatchDay("1234", today.toDateTime, None, Stage("1"), Round("1", None), "1", true, false, true, false, true, "KO", None, team, team, None, None, None)
 

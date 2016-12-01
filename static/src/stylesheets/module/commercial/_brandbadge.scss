@@ -232,8 +232,7 @@
     }
 
     > .badge__link {
-        border-bottom: 1px dotted $neutral-5;
-        margin: 3 / 4 * $gs-baseline 0 $gs-baseline / 3;
+        margin: 3 / 4 * $gs-baseline 0 $gs-baseline;
     }
 
     > .badge__help {
@@ -286,9 +285,12 @@
 .content--media--video:not(.paid-content--advertisement-feature),
 .content--media--audio:not(.paid-content--advertisement-feature),
 .content--gallery:not(.paid-content--advertisement-feature) {
-    .badge,
+    .badge {
+        color: $neutral-3;
+    }
+
     .badge__help {
-        color: $neutral-6;
+        color: #ffffff;
     }
 }
 

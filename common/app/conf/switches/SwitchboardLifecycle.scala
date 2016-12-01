@@ -4,7 +4,7 @@ import app.LifecycleComponent
 import common._
 import conf.Configuration
 import play.api.inject.ApplicationLifecycle
-
+import scala.concurrent.duration._
 import scala.concurrent.{Future, ExecutionContext}
 
 class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)
@@ -15,6 +15,9 @@ class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobSchedule
   }}
 
   override def start(): Unit = {
+
+    Switches.all.foreach(_.failInitializationAfter(2.minutes)(akkaAsync))
+
     jobs.deschedule("SwitchBoardRefreshJob")
     //run every minute, 47 seconds after the minute
     jobs.schedule("SwitchBoardRefreshJob", "47 * * * * ?") {
@@ -36,10 +39,9 @@ class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobSchedule
         nextState.get(switch.name) match {
           case Some("on") => switch.switchOn()
           case Some("off") => switch.switchOff()
-          case other => {
+          case other =>
             log.warn(s"Badly configured switch ${switch.name}, setting to safe state.")
             switch.switchToSafeState()
-          }
         }
       }
     }

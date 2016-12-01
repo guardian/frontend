@@ -12,7 +12,8 @@ import play.api.test.Helpers._
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithTestWsClient
-  with WithTestContentApiClient {
+  with WithTestContentApiClient
+  with WithTestEnvironment {
 
   private val PermanentRedirect = 301
   private val TemporaryRedirect = 302
@@ -93,7 +94,6 @@ import play.api.test.Helpers._
 
   it should "correctly serve all pages for `default editionalised sections` in the International edition" in {
     val result = allIndexController.all("commentisfree")(TestRequest("/commentisfree/all").withHeaders("X-Gu-Edition" -> "INT"))
-    println(header("location", result))
     status(result) should be(OK)
   }
 

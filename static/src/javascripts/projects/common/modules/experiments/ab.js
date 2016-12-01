@@ -7,10 +7,11 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-    'common/modules/experiments/tests/hosted-onward-journey',
+    'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
     'common/modules/experiments/tests/contributions-epic-usa-cta-three-way',
     'common/modules/experiments/tests/uk-membership-engagement-message-test-10',
+    'common/modules/experiments/tests/au-membership-engagement-message-test-8',
     'common/modules/experiments/tests/its-raining-inline-ads'
 ], function (reportError,
              config,
@@ -20,17 +21,19 @@ define([
              mvtCookie,
              memoize,
              noop,
-             HostedOnwardJourney,
+             RecommendedForYou,
              MembershipEngagementInternationalExperiment,
              ContributionsEpicUsaCtaThreeWay,
              UkMembershipEngagementMessageTest10,
+             AuMembershipEngagementMessageTest8,
              ItsRainingInlineAds
     ) {
     var TESTS = [
-        new HostedOnwardJourney(),
+        new RecommendedForYou(),
         new MembershipEngagementInternationalExperiment(),
         new ContributionsEpicUsaCtaThreeWay(),
         new UkMembershipEngagementMessageTest10(),
+        new AuMembershipEngagementMessageTest8(),
         new ItsRainingInlineAds()
     ];
 

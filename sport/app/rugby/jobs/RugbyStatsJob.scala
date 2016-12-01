@@ -114,7 +114,7 @@ class RugbyStatsJob(optaFeed: OptaFeed) extends ExecutionContexts with Logging {
 
   def getAllResults(): Seq[Match] = fixturesAndResultsMatches.get.values.toList.filter(_.status == Status.Result)
 
-  def getScoreEvents(rugbyMatch: Match): Seq[ScoreEvent] = pastScoreEvents.get().get(rugbyMatch.key).getOrElse(Seq.empty)
+  def getScoreEvents(rugbyMatch: Match): Seq[ScoreEvent] = pastScoreEvents.get().getOrElse(rugbyMatch.key, Seq.empty)
 
   def getMatchStat(rugbyMatch: Match): Option[MatchStat] = pastMatchesStat.get().get(rugbyMatch.key)
 

@@ -1,9 +1,9 @@
 @import conf.switches.Switch
-@(env: String, switch: Switch, lastModified: Long)(implicit flash: Flash, request: RequestHeader)
+@(switch: Switch, lastModified: Long)(implicit flash: Flash, request: RequestHeader, env: play.api.Environment)
 
 @import controllers.admin.routes.UncachedAssets
 
-@admin_main("Switchboard - Plista", env, isAuthed = true) {
+@admin_main("Switchboard - Plista", isAuthed = true) {
 <link href="@UncachedAssets.at("css/switchboard.css")" rel="stylesheet">
 <link href="@UncachedAssets.at("css/radiator.css")" rel="stylesheet">
 @if(flash.get("error").isDefined) { <h1 style="color:#bd362f">@flash.get("error").get</h1> }
