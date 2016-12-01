@@ -78,7 +78,6 @@ define([
 
     function boot() {
         bodyAds = 0;
-        inlineAd = 0;
         isWide = detect.getBreakpoint() === 'wide';
         replaceTopSlot = isMobile = !isWide && detect.isBreakpoint({ max: 'tablet' });
         getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;
