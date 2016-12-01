@@ -5,11 +5,16 @@ import com.softwaremill.macwire._
 import form.FormComponents
 import formstack.FormStackComponents
 import idapiclient.IdApiComponents
+import play.api.Environment
 import play.api.libs.ws.WSClient
 import services.IdentityServices
 
-trait IdentityControllers extends IdApiComponents with IdentityServices with FormStackComponents with FormComponents {
+trait IdentityControllers extends IdApiComponents
+  with IdentityServices
+  with FormStackComponents
+  with FormComponents {
   def wsClient: WSClient
+  implicit def environment: Environment
 
   lazy val authenticatedActions = wire[AuthenticatedActions]
   lazy val changePasswordController = wire[ChangePasswordController]

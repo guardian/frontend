@@ -11,6 +11,7 @@ import org.scalatest._
     with FootballTestData
     with WithTestFootballClient
     with BeforeAndAfterAll
+    with WithTestEnvironment
     with WithTestWsClient {
 
   val fixturesUrl = "/football/fixtures"

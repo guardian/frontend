@@ -3,7 +3,7 @@
 @import model.ImageAsset
 @import com.gu.contentapi.client.model.v1.Asset
 @import com.gu.contentapi.client.model.v1.AssetType
-@(page: HostedGalleryPage)(implicit request: RequestHeader)
+@(page: HostedGalleryPage)(implicit request: RequestHeader, env: play.api.Environment)
 @import views.html.hosted._
 @import conf.Configuration
 @import views.support.FBPixel

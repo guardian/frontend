@@ -1,0 +1,54 @@
+stacks:
+- frontend
+regions:
+- eu-west-1
+
+templates:
+  frontend:
+    type: autoscaling
+    parameters:
+      bucket: aws-frontend-artifacts
+    dependencies:
+    - static
+
+deployments:
+  admin:
+    template: frontend
+  admin-jobs:
+    template: frontend
+  applications:
+    template: frontend
+  archive:
+    template: frontend
+  article:
+    template: frontend
+  commercial:
+    template: frontend
+  diagnostics:
+    template: frontend
+  discussion:
+    template: frontend
+  facia:
+    template: frontend
+  facia-press:
+    template: frontend
+  identity:
+    template: frontend
+  onward:
+    template: frontend
+# this only exists in prod - a dummy zero sized ASG exists in code
+  preview:
+    template: frontend
+  rss:
+    template: frontend
+  sport:
+    template: frontend
+  static:
+    type: aws-s3
+    parameters:
+      bucket: aws-frontend-static
+      cacheControl: public, max-age=315360000
+      prefixStack: false
+# this only exists in prod - a dummy zero sized ASG exists in code
+  training-preview:
+    template: frontend

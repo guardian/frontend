@@ -1,7 +1,7 @@
 @import model.Page
 @import rugby.model.{Match, ScoreEvent}
 
-@(page: Page, theMatch: Match, homeTeamScorers: Seq[ScoreEvent], awayTeamScorers: Seq[ScoreEvent])(implicit request: RequestHeader)
+@(page: Page, theMatch: Match, homeTeamScorers: Seq[ScoreEvent], awayTeamScorers: Seq[ScoreEvent])(implicit request: RequestHeader, env: play.api.Environment)
 
 @main(page, "football") { } {
     <div class="l-side-margins">

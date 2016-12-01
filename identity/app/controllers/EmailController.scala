@@ -1,19 +1,21 @@
 package controllers
 
 import actions.AuthenticatedActions
-import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
+import services.{IdRequestParser, IdentityRequest, IdentityUrlBuilder, ReturnUrlVerifier}
 import conf.IdentityConfiguration
 import idapiclient.IdApiClient
 import common.ExecutionContexts
 import utils.SafeLogging
 import play.api.mvc._
+
 import scala.concurrent.Future
 import model.{EmailSubscriptions, IdentityPage}
 import play.api.data._
 import client.Error
 import com.gu.identity.model.{EmailList, Subscriber}
+import play.api.Environment
 import play.filters.csrf._
-import play.api.i18n.{MessagesApi, I18nSupport}
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json._
 
 class EmailController(returnUrlVerifier: ReturnUrlVerifier,
@@ -23,6 +25,7 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
                       idUrlBuilder: IdentityUrlBuilder,
                       authenticatedActions: AuthenticatedActions,
                       val messagesApi: MessagesApi)
+                     (implicit env: Environment)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
   import EmailPrefsData._
   import authenticatedActions.authAction

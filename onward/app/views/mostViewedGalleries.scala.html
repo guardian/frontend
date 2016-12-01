@@ -1,6 +1,6 @@
 @import model.Page
 
-@(page: Page, container: Html)(implicit request: RequestHeader)
+@(page: Page, container: Html)(implicit request: RequestHeader, env: play.api.Environment)
 
 @main(page, Some("facia")){
 }{

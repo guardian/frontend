@@ -1,10 +1,11 @@
 package controllers.admin
 
 import common.{ExecutionContexts, Logging}
+import play.api.Environment
 import play.api.mvc.{Action, Controller}
 import tools._
 
-class AnalyticsConfidenceController extends Controller with Logging with ExecutionContexts {
+class AnalyticsConfidenceController(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
   def renderConfidence() = Action.async { implicit request =>
     for {
       omniture <- CloudWatch.omnitureConfidence
@@ -33,7 +34,7 @@ class AnalyticsConfidenceController extends Controller with Logging with Executi
         }
       }
 
-      Ok(views.html.lineCharts("PROD", Seq(omnitureGraph, ophanGraph, googleGraph)))
+      Ok(views.html.lineCharts(Seq(omnitureGraph, ophanGraph, googleGraph)))
     }
   }
 }

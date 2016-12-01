@@ -7,13 +7,16 @@ import services.{IdRequestParser, IdentityUrlBuilder}
 import utils.SafeLogging
 import model.{Cached, IdentityPage}
 import idapiclient.IdApiClient
+
 import scala.concurrent.Future
 import com.gu.identity.model.User
 import client.Response
+import play.api.Environment
 
 class PublicProfileController(idUrlBuilder: IdentityUrlBuilder,
                               identityApiClient: IdApiClient,
                               idRequestParser: IdRequestParser)
+                             (implicit env: Environment)
   extends Controller
   with ExecutionContexts
   with SafeLogging{

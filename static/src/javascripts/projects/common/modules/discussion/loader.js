@@ -105,7 +105,7 @@ Loader.prototype.initMainComments = function() {
     this.comments.on('untruncate-thread', this.removeTruncation.bind(this));
 
     this.on('click,', '.js-discussion-author-link', this.removeTruncation.bind(this));
-    this.on('click', '.js-discussion-change-page, .js-discussion-show-button, .d-show-more-replies__button', function () {
+    this.on('click', '.js-discussion-change-page, .js-discussion-show-button', function () {
         mediator.emit('discussion:comments:get-more-replies');
         self.removeTruncation();
     });
@@ -280,7 +280,11 @@ Loader.prototype.ready = function() {
     mediator.on('discussion:commentbox:post:success', this.removeState.bind(this, 'empty'));
 
     mediator.on('module:clickstream:click', function(clickspec) {
-        if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
+        if (
+            clickspec &&
+            'hash' in clickspec.target &&
+            clickspec.target.hash === '#comments'
+        ) {
             this.removeTruncation();
         }
     }.bind(this));

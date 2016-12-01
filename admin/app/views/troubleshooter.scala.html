@@ -1,7 +1,7 @@
-@(loadbalancers: Seq[tools.LoadBalancer])(implicit request: RequestHeader)
+@(loadbalancers: Seq[tools.LoadBalancer])(implicit request: RequestHeader, env: play.api.Environment)
 @import tools.LoadBalancer
 
-@admin_main("Troubleshooting", "PROD", isAuthed = true) {
+@admin_main("Troubleshooting", isAuthed = true) {
 
     @loadbalancers.map{ lb =>
         <div class="row-fluid">

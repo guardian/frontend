@@ -1,7 +1,9 @@
 @import common.commercial.hosted.HostedVideoPage
 @import views.html.hosted._
 @import views.support.FBPixel
-@(page: HostedVideoPage)(implicit request: RequestHeader)
+@import conf.Configuration.environment
+@import conf.Configuration.site.host
+@(page: HostedVideoPage)(implicit request: RequestHeader, env: play.api.Environment)
 
 <!doctype html>
 <html AMP>

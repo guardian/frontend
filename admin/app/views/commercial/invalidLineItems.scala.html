@@ -2,13 +2,12 @@
 @import common.dfp.PageSkinSponsorship
 @import common.dfp.{HighMerchandisingLineItem, GuLineItem}
 
-@(env: String,
-  invalidPageskins: Seq[PageSkinSponsorship],
+@(invalidPageskins: Seq[PageSkinSponsorship],
   invalidTopAbove: Seq[GuLineItem],
   invalidHighMerchandising: Seq[HighMerchandisingLineItem],
-  unknownInvalidLineItems: Seq[GuLineItem])(implicit request: RequestHeader)
+  unknownInvalidLineItems: Seq[GuLineItem])(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Line Item Problems", env, isAuthed = true, hasCharts = false) {
+@admin_main("Line Item Problems", isAuthed = true, hasCharts = false) {
 
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at(" css/commercial.css")">
 

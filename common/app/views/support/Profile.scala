@@ -129,6 +129,7 @@ object FacebookOpenGraphImage extends ShareImage(FacebookShareImageLogoOverlay.i
 object EmailImage extends Profile(width = Some(580), autoFormat = false) {
   override val qualityparam = "q=40"
 }
+
 object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) {
   override val fitParam = "fit=crop"
   override val qualityparam = "q=40"
@@ -140,6 +141,10 @@ object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) {
     val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
+}
+
+object FrontEmailImage extends Profile(width = Some(500), autoFormat = false) {
+  override val qualityparam = "q=40"
 }
 
 // The imager/images.js base image.

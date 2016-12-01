@@ -1,18 +1,21 @@
 package services
 
 import com.gu.contentapi.client.GuardianContentApiError
-import com.gu.contentapi.client.model.v1.{Section => ApiSection, ItemResponse, SearchResponse}
+import com.gu.contentapi.client.model.v1.{ItemResponse, SearchResponse, Section => ApiSection}
 import common._
 import contentapi.{ContentApiClient, QueryDefaults, SectionTagLookUp, SectionsLookUp}
 import implicits.Collections
 import model._
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
+import play.api.Environment
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 
 import scala.concurrent.Future
 
 trait Index extends ConciergeRepository with Collections {
+
+  implicit def env: Environment
 
   val contentApiClient: ContentApiClient
   val sectionsLookUp: SectionsLookUp
