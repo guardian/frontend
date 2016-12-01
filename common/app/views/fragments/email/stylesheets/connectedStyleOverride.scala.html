@@ -208,5 +208,18 @@
     }
     .tone-dead .trail-text {
         color: #000000;
-    }    
+    }
+
+    /*  Media Queries */
+
+    @@media only screen and (max-width: 600px) {
+        table[class="body"] .container {
+            width: 100% !important;
+        }
+
+        .container-title, p {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+    }
 </style>
