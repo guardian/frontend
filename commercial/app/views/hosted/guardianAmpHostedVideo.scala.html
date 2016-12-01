@@ -66,11 +66,6 @@
             </div>
         </section>
         <section class="host host--legacy hosted__container hosted__container--content">
-            <header class="host__header hosted__social">
-                <div class="meta__social hosted__social-wrapper" data-component="share">
-                    @guardianHostedShareButtons(page)
-                </div>
-            </header>
             <div class="host__body">
                 <div class="hosted__meta">
                     <h1 class="hosted__heading hosted-tone">@{page.video.title}</h1>
@@ -81,7 +76,12 @@
                     </div>
                 </div>
             </div>
-            @hostedOnwardAmp(s"${page.url}/video/onward.json")
+            <header class="host__header hosted__social">
+                <div class="meta__social hosted__social-wrapper" data-component="share">
+                    @guardianHostedShareButtons(page)
+                </div>
+            </header>
+            @hostedOnwardAmp(s"${page.url}/video/onward.json", 100)
         </section>
         @guardianHostedCta(page, page.cta, isAMP = true)
       </div>

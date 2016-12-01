@@ -63,21 +63,17 @@
                                     }
 
                                 </div>
-                                <div class="hide-on-desktop">
-                                    @hostedOnwardAmp(s"${page.url}/article/onward.json")
-                                </div>
                                 <div class="hosted__standfirst">
                                     <div class="hosted__terms">​Hosted content is used to describe content that is paid for and supplied by the advertiser.
                                     </div>
                                 </div>
                             </div>
-                            <div class="content__secondary-column">
-                                @hostedOnwardAmp(s"${page.url}/article/onward.json")
-                            </div>
+                            @hostedOnwardAmp(s"${page.url}/article/onward.json", 148)
                         </div>
                     </div>
                 </article>
                 @guardianHostedCta(page, page.cta, isAMP = true)
+            </div>
         </div>
     </body>
 </html>
