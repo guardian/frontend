@@ -190,14 +190,20 @@ define([
         })
         .then(function () {
             if (isWide && inlineSlots.length) {
-                offsetAds();
+                offsetAds()
+                .then(function () {
+                    // Prevent memory leak
+                    inlineSlots = null;
+                });
             }
             addSlots();
         });
     }
 
     function offsetAds() {
-        Promise.all([
+        /* We want the height of the right-hand column, so we must wait for
+           everything in it to be rendered */
+        return Promise.all([
             stickyMpu.whenRendered,
             mostPopular.whenRendered
         ])
@@ -209,6 +215,8 @@ define([
                 }, 0);
             });
         })
+        /* Next, we want to offset to the right all the inline slots *below*
+           the components in the right-hand column */
         .then(function (rhHeight) {
             return fastdom.read(function () {
                 var mainColumnOffset = mainColumn.getBoundingClientRect().top;
@@ -224,7 +232,7 @@ define([
             });
         })
         .then(function (slotIndex) {
-            fastdom.write(function () {
+            return fastdom.write(function () {
                 inlineSlots.slice(slotIndex).forEach(function (slot) {
                     slot.classList.add('ad-slot--offset-right');
                 });
