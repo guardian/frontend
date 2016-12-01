@@ -50,6 +50,7 @@ define([
     var isWide;
     var isMobile;
     var replaceTopSlot;
+    var getSlotName;
 
     return {
         init: init,
@@ -82,6 +83,17 @@ define([
         inlineAd = 0;
         isWide = detect.getBreakpoint() === 'wide';
         replaceTopSlot = isMobile = !isWide && detect.isBreakpoint({ max: 'tablet' });
+        getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;
+    }
+
+    function getSlotNameForMobile() {
+        bodyAds += 1;
+        return bodyAds === 1 ? 'top-above-nav' : 'inline' + (bodyAds - 1);
+    }
+
+    function getSlotNameForDesktop() {
+        bodyAds += 1;
+        return 'inline' + bodyAds;
     }
 
     function getRules(isMerch) {
@@ -143,14 +155,7 @@ define([
             var promises = paras
             .slice(0, Math.min(paras.length, count))
             .map(function (para) {
-                var adDefinition;
-                if (replaceTopSlot && bodyAds === 0) {
-                    adDefinition = 'top-above-nav';
-                } else {
-                    adDefinition = 'inline' + (replaceTopSlot ? bodyAds : bodyAds + 1);
-                }
-                bodyAds += 1;
-                return insertAdAtPara(para, adDefinition, 'inline');
+                return insertAdAtPara(para, getSlotName(), 'inline');
             });
 
             return Promise.all(promises)
