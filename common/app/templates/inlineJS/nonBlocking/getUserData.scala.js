@@ -1,3 +1,7 @@
+@()(implicit env: play.api.Environment)
+
+@import play.api.Mode.Dev
+
 // If the browser cuts the mustard and supports `atob`
 // then read the user data from cookies and add it to `guardian`
 
@@ -38,5 +42,5 @@ try {
         }
     })(guardian.isEnhanced && 'atob' in window, document, window);
 } catch (e) {
-    @if(play.Play.isDev) {throw (e)}
+    @if(env.mode == Dev) {throw (e)}
 }
