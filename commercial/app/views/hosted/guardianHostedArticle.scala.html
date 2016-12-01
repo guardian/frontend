@@ -29,10 +29,7 @@
         color: @{page.campaign.fontColour.hexCode};
     }
 
-    .hosted-page ~ .survey-overlay-simple .
-
-
-    survey-text__header {
+    .hosted-page ~ .survey-overlay-simple .survey-text__header {
         background-color: @{page.campaign.fontColour.hexCode};
     }
 
@@ -59,6 +56,15 @@
             width : 600px;
         }
     }
+
+    .quoted {
+        background-color: @{page.campaign.fontColour.hexCode};
+    }
+
+    .quoted::before {
+        color: @{page.campaign.fontColour.hexCode};
+    }
+
     </style>
     <!--<![endif]-->
     @guardianHostedHeader(if(page.campaign.fontColour.isDark) "hosted-article-page hosted-page--bright" else "hosted-article-page", page)

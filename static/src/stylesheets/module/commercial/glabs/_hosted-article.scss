@@ -207,6 +207,27 @@
         h2 {
             @include f-headlineSans;
         }
+        .quoted {
+            p {
+                margin: 0 0 0 $gs-gutter;
+                background-color: $neutral-8;
+                padding: 30px 0 0 $gs-gutter * .5;
+                font-weight: lighter;
+                font-style: normal;
+                font-size: 28px;
+                line-height: 28px;
+                color: $neutral-1;
+                position: relative;
+
+                &:before {
+                    content: open-quote;
+                    font-size: 34px;
+                    position: absolute;
+                    top: 0;
+                    left: 10px;
+                }
+            }
+        }
     }
 
     .gu-image {
