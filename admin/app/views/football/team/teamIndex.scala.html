@@ -1,4 +1,4 @@
-@(teams: List[pa.Team])
+@(teams: List[pa.Team])(implicit env: play.api.Environment)
 
 @views.html.football.main("Teams") {
     <hgroup class="page-header">

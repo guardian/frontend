@@ -1,8 +1,8 @@
 @import jobs.MissingEncoding
 
-@(env: String, encodingData: List[MissingEncoding])(implicit request: RequestHeader)
+@(encodingData: List[MissingEncoding])(implicit request: RequestHeader, env: play.api.Environment)
 
-    @admin_main("Videos with missing encodings", env, isAuthed = true )  {
+    @admin_main("Videos with missing encodings", isAuthed = true )  {
 
     <h1>The following return 404s</h1>
     <br/>

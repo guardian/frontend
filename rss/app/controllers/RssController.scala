@@ -4,10 +4,12 @@ import common._
 import contentapi.{ContentApiClient, SectionsLookUp}
 import model.Cached.RevalidatableResult
 import model._
+import play.api.Environment
 import play.api.mvc.{RequestHeader, Result}
 import services.IndexPage
 
-class RssController(val contentApiClient: ContentApiClient, val sectionsLookUp: SectionsLookUp) extends IndexControllerCommon {
+class RssController(val contentApiClient: ContentApiClient, val sectionsLookUp: SectionsLookUp, playEnv: Environment) extends IndexControllerCommon {
+  override val env: Environment = playEnv
   override protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Result = Cached(model.page) {
     val body = TrailsToRss(model.page.metadata, model.trails.map(_.trail))
     RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)

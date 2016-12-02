@@ -1,19 +1,21 @@
 package controllers
 
-import play.api.mvc.{Controller, Action}
+import play.api.mvc.{Action, Controller}
 import idapiclient.IdApiClient
-import services.{ReturnUrlVerifier, AuthenticationService, IdentityUrlBuilder, IdRequestParser}
+import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
 import common.ExecutionContexts
 import utils.SafeLogging
 import model.IdentityPage
 import actions.AuthenticatedActions
+import play.api.Environment
 
-class EmailVerificationController( api: IdApiClient,
-                                   authenticatedActions: AuthenticatedActions,
-                                   authenticationService: AuthenticationService,
-                                   idRequestParser: IdRequestParser,
-                                   idUrlBuilder: IdentityUrlBuilder,
-                                   returnUrlVerifier: ReturnUrlVerifier)
+class EmailVerificationController(api: IdApiClient,
+                                  authenticatedActions: AuthenticatedActions,
+                                  authenticationService: AuthenticationService,
+                                  idRequestParser: IdRequestParser,
+                                  idUrlBuilder: IdentityUrlBuilder,
+                                  returnUrlVerifier: ReturnUrlVerifier)
+                                 (implicit env: Environment)
   extends Controller with ExecutionContexts with SafeLogging {
   import ValidationState._
   import authenticatedActions.authActionWithUser

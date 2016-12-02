@@ -13,6 +13,8 @@ import play.api.Environment
 
 class PaBrowserController(val wsClient: WSClient, val environment: Environment) extends Controller with ExecutionContexts with PaFootballClient with Logging {
 
+  implicit val env: Environment = environment
+
   def browserSubstitution() = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.getOrElse { throw new Exception("Could not read POST submission") }
     val query = getOneOrFail(submission, "query")

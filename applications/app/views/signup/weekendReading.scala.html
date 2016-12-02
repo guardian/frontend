@@ -1,6 +1,6 @@
 @import model.Page
 
-@(signupPage: Page)(implicit request: RequestHeader)
+@(signupPage: Page)(implicit request: RequestHeader, env: play.api.Environment)
 
 @main(signupPage, projectName = Some("signup")) { } {
     <div class="illustration-container">

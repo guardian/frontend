@@ -16,7 +16,7 @@ trait AdminControllers {
   def wsClient: WSClient
   def videoEncodingsJob: VideoEncodingsJob
   def ophanApi: OphanApi
-  def environment: Environment
+  implicit def environment: Environment
   def redirects: RedirectService
   implicit val messages: Messages
   lazy val oAuthLoginController = wire[OAuthLoginAdminController]

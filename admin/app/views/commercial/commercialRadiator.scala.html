@@ -1,6 +1,6 @@
-@(env: String, confidenceGraph: tools.AwsLineChart)(implicit request: RequestHeader)
+@(confidenceGraph: tools.AwsLineChart)(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Commercial Radiator", env, isAuthed = true, hasCharts = true) {
+@admin_main("Commercial Radiator", isAuthed = true, hasCharts = true) {
     <h3>Commercial Radiator</h3>
     @fragments.lineChart(confidenceGraph)
 }
