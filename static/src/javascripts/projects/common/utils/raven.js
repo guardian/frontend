@@ -25,8 +25,7 @@ define([
             tags: {
                 edition: config.page.edition,
                 contentType: config.page.contentType,
-                revisionNumber: config.page.revisionNumber,
-                loaderType: 'Curl'
+                revisionNumber: config.page.revisionNumber
             },
             dataCallback: function (data) {
                 if (data.culprit) {
