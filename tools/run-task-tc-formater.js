@@ -6,12 +6,13 @@ const render = tasks => {
 	for (const task of tasks) {
         task.subscribe(event => {
             if (event.type === 'SUBTASKS') {
+                console.log(`##teamcity[blockOpened name='${task.title}']`);
                 render(task.subtasks);
                 return;
             }
             if (event.type === 'STATE') {
                 if (task.isPending()) {
-                    console.log(`##teamcity[blockOpened name='${task.title}']`);
+                    console.log(`##teamcity[message text='${task.title}']`);
                 }
                 if (task.hasFailed()) {
                     console.log(`##teamcity[message text='|'${task.title}|' failed' status='ERROR']`);
