@@ -78,37 +78,37 @@ define([
         };
 
         if (overlay) {
-            setDuration(players[atomId].player.getDuration(), overlay);
+            var formattedDuration = getFormattedDuration(players[atomId].player.getDuration());
+            setDuration(formattedDuration, overlay);
         }
     }
 
-    function setDuration(duration, overlay) {
+    function getFormattedDuration(durationInSeconds) {
         var times = [];
-
-        var hours = Math.floor(duration / 3600);
+        var hours = Math.floor(durationInSeconds / 3600);
+        var minutes = Math.floor((durationInSeconds - hours * 3600) / 60);
+        var seconds = (durationInSeconds - hours * 3600) - (minutes * 60);
 
         if (hours) {
             times.push(hours);
-        }
+            times.push(formatTime(minutes));
+        } else {
+            times.push(minutes);
+        }    
+        times.push(formatTime(seconds));
 
-        duration = duration - hours * 3600;
-
-        var minutes = Math.floor(duration / 60);
-
-        times.push(formatTime(minutes));
-
-        duration = duration - minutes * 60;
-
-        times.push(formatTime(duration));
-
-        var formattedDuration = times.join(':');
-        var durationElem = overlay.querySelector('.atom--media--youtube--bottom-bar--duration');
-
-        durationElem.innerText = formattedDuration;
+        return times.join(':');
     }
 
     function formatTime(time) {
         return ('0' + time).slice(-2);
+    }
+
+
+    function setDuration(formattedDuration, overlay) {
+        var durationElem = overlay.querySelector('.atom--media--youtube--bottom-bar--duration');
+
+        durationElem.innerText = formattedDuration;
     }
 
     function onPlayerStateChange(atomId, event) {
