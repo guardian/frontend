@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/adblock-banner-confg',
+    'common/modules/commercial/adblock-banner-config',
     'common/modules/adblock-banner'
 ], function (adblockBannerConfig, AdblockBanner) {
 

@@ -4,7 +4,7 @@ define([
 ], function (
     Injector,
     storage
-) {
+) {s;
     describe('Build Page Targeting', function () {
 
         var buildPageTargeting,
