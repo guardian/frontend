@@ -7,7 +7,6 @@ const cliCursor = require('cli-cursor');
 const render = tasks => {
 	for (const task of tasks) {
         task.subscribe(event => {
-            console.log(event);
             if (event.type === 'SUBTASKS') {
                 render(task.subtasks);
                 return;
