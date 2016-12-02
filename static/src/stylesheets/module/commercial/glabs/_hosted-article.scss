@@ -214,16 +214,14 @@
                 @include f-bodyCopy;
                 font-style: normal;
                 font-size: 30px;
-                line-height: 30px;
+                line-height: 34px;
                 margin: 0 0 0 $gs-gutter;
                 background-color: $neutral-8;
                 padding: 30px 0 0 $gs-gutter * .5;
                 color: $neutral-1;
                 position: relative;
 
-                &:before {
-                    content: "";
-                    background-image: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDExIDI2IDIyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Im03LjAzIDIxLjk3OGMuNzQyIDAgMS40MzguMTM5IDIuMDg4LjQxOC42NS4yNzggMS4yMTMuNjU2IDEuNjkgMS4xMzQuNDc3LjQ3Ny44NTUgMS4wMzQgMS4xMzQgMS42Ny4yNzguNjM2LjQxOCAxLjMxMi40MTggMi4wMjggMCAuNzQyLS4xNDYgMS40MzgtLjQzOCAyLjA4OC0uMjkyLjY1LS42ODkgMS4yMTMtMS4xOTMgMS42OS0uNTA0LjQ3Ny0xLjA4Ljg1NS0xLjczIDEuMTM0LS42NS4yNzgtMS4zNDYuNDE4LTIuMDg4LjQxOC0uOTU1IDAtMS44MS0uMTg2LTIuNTY1LS41NTctLjc1Ni0uMzcxLTEuMzk5LS44NjItMS45MjktMS40NzItLjUzLS42MS0uOTQxLTEuMzA2LTEuMjMzLTIuMDg4LS4yOTItLjc4Mi0uNDM4LTEuNTcxLS40MzgtMi4zNjYgMC0xLjIyLjIzMi0yLjUxMi42OTYtMy44NzguNDY0LTEuMzY2IDEuMTE0LTIuNzE4IDEuOTQ5LTQuMDU3LjgzNS0xLjMzOSAxLjgzLTIuNTk4IDIuOTgzLTMuNzc4IDEuMTUzLTEuMTggMi40Mi0yLjE4MSAzLjc5OC0zbC42NzYuNjM2LTcuMDQgMTAuNzM5LjE5OS4xOTljLjQyNC0uMzE4LjkwMi0uNTU3IDEuNDMyLS43MTYuNTMtLjE1OSAxLjA2MS0uMjM5IDEuNTkxLS4yMzltMTMuMTIgMGMuNzQyIDAgMS40MzguMTM5IDIuMDg4LjQxOC42NS4yNzggMS4yMTMuNjU2IDEuNjkgMS4xMzQuNDc3LjQ3Ny44NTUgMS4wMzQgMS4xMzQgMS42Ny4yNzguNjM2LjQxOCAxLjMxMi40MTggMi4wMjggMCAuNzQyLS4xNDYgMS40MzgtLjQzOCAyLjA4OC0uMjkyLjY1LS42ODkgMS4yMTMtMS4xOTMgMS42OS0uNTA0LjQ3Ny0xLjA4Ljg1NS0xLjczIDEuMTM0LS42NS4yNzgtMS4zNDYuNDE4LTIuMDg4LjQxOC0uOTU1IDAtMS44MS0uMTg2LTIuNTY1LS41NTctLjc1Ni0uMzcxLTEuMzk5LS44NjItMS45MjktMS40NzItLjUzLS42MS0uOTQxLTEuMzA2LTEuMjMzLTIuMDg4LS4yOTItLjc4Mi0uNDM4LTEuNTcxLS40MzgtMi4zNjYgMC0xLjIyLjIzMi0yLjUxMi42OTYtMy44NzguNDY0LTEuMzY2IDEuMTE0LTIuNzE4IDEuOTQ5LTQuMDU3LjgzNS0xLjMzOSAxLjgzLTIuNTk4IDIuOTgzLTMuNzc4IDEuMTUzLTEuMTggMi40Mi0yLjE4MSAzLjc5OC0zbC42NzYuNjM2LTcuMDQgMTAuNzM5LjE5OS4xOTljLjQyNC0uMzE4LjkwMi0uNTU3IDEuNDMyLS43MTYuNTMtLjE1OSAxLjA2MS0uMjM5IDEuNTkxLS4yMzkiIGZpbGw9IiNlODJmMTgiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==);
+                .inline-hosted-quote {
                     position: absolute;
                     top: 0;
                     left: 10px;

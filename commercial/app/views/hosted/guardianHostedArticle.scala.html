@@ -2,6 +2,7 @@
 @(page: HostedArticlePage)(implicit request: RequestHeader)
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import views.html.hosted._
+@import model.hosted.HostedArticleQuotes.prepareQuotes
 
 @main(page, Some("commercial")) { } {
     <!--[if (gt IE 9)|(IEMobile)]><!-->
@@ -61,7 +62,7 @@
         background-color: @{page.campaign.fontColour.hexCode};
     }
 
-    blockquote p::before {
+    blockquote .inline-hosted-quote svg {
         fill: @{page.campaign.fontColour.hexCode};
     }
 
@@ -92,7 +93,12 @@
                             <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ‘lorem ipsum’ will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
 
                             <blockquote>
-                                <p class="pullquote-paragraph">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its.</p>
+                                <p class="pullquote-paragraph">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its.
+                                    <span class="inline-hosted-quote inline-icon ">
+                                        <svg viewBox="0 11 26 22" xmlns="http://www.w3.org/2000/svg" class="inline-hosted-quote__svg inline-icon__svg">
+                                            <path d="m7.03 21.978c.742 0 1.438.139 2.088.418.65.278 1.213.656 1.69 1.134.477.477.855 1.034 1.134 1.67.278.636.418 1.312.418 2.028 0 .742-.146 1.438-.438 2.088-.292.65-.689 1.213-1.193 1.69-.504.477-1.08.855-1.73 1.134-.65.278-1.346.418-2.088.418-.955 0-1.81-.186-2.565-.557-.756-.371-1.399-.862-1.929-1.472-.53-.61-.941-1.306-1.233-2.088-.292-.782-.438-1.571-.438-2.366 0-1.22.232-2.512.696-3.878.464-1.366 1.114-2.718 1.949-4.057.835-1.339 1.83-2.598 2.983-3.778 1.153-1.18 2.42-2.181 3.798-3l.676.636-7.04 10.739.199.199c.424-.318.902-.557 1.432-.716.53-.159 1.061-.239 1.591-.239m13.12 0c.742 0 1.438.139 2.088.418.65.278 1.213.656 1.69 1.134.477.477.855 1.034 1.134 1.67.278.636.418 1.312.418 2.028 0 .742-.146 1.438-.438 2.088-.292.65-.689 1.213-1.193 1.69-.504.477-1.08.855-1.73 1.134-.65.278-1.346.418-2.088.418-.955 0-1.81-.186-2.565-.557-.756-.371-1.399-.862-1.929-1.472-.53-.61-.941-1.306-1.233-2.088-.292-.782-.438-1.571-.438-2.366 0-1.22.232-2.512.696-3.878.464-1.366 1.114-2.718 1.949-4.057.835-1.339 1.83-2.598 2.983-3.778 1.153-1.18 2.42-2.181 3.798-3l.676.636-7.04 10.739.199.199c.424-.318.902-.557 1.432-.716.53-.159 1.061-.239 1.591-.239" fill="#e82f18" fill-rule="evenodd"></path>
+                                        </svg> </span>
+                                </p>
                             </blockquote>
 
                             <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ‘lorem ipsum’ will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
@@ -101,7 +107,7 @@
                                 case "overview" => { @singaporeF1Overview() }
                                 case "offtrack" => { @singaporeF1Offtrack() }
                                 case "packages" => { @singaporeF1Packages() }
-                                case _ => { @Html(page.body) }
+                                case _ => { @Html(prepareQuotes(page.body)) }
                             }
 
                         </div>
