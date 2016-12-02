@@ -104,7 +104,7 @@ define([
             frontCommercialComponents.init()
             .then(function () {
                 expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
-                expect($('.ad-slot', $fixturesContainer).attr('data-wide')).toBe('1,1');
+                expect($('.ad-slot', $fixturesContainer).attr('data-wide')).toBe('2,2');
             })
             .then(done)
             .catch(done.fail);

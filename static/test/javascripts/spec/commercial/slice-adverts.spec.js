@@ -124,12 +124,12 @@ define([
                 $('.ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
-                    expect($adSlot.data('mobile')).toEqual('1,1|300,250|fluid');
+                    expect($adSlot.data('mobile')).toEqual('1,1|2,2|300,250|fluid');
                 });
                 $('.ad-slot--inline2', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
-                    expect($adSlot.data('mobile')).toEqual('1,1|300,250|fluid');
+                    expect($adSlot.data('mobile')).toEqual('1,1|2,2|300,250|fluid');
                 });
             })
             .then(done)
@@ -143,12 +143,12 @@ define([
                 $('.ad-slot--top-above-nav', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
-                    expect($adSlot.data('mobile')).toEqual('1,1|300,250|88,70|88,71|fluid');
+                    expect($adSlot.data('mobile')).toEqual('1,1|2,2|300,250|88,70|88,71|fluid');
                 });
                 $('.ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
 
-                    expect($adSlot.data('mobile')).toEqual('1,1|300,250|fluid');
+                    expect($adSlot.data('mobile')).toEqual('1,1|2,2|300,250|fluid');
                 });
             })
             .then(done)
