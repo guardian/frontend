@@ -10,6 +10,7 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
     'common/modules/experiments/tests/contributions-epic-usa-cta-three-way',
+    'common/modules/experiments/tests/contributions-epic-observer-anniversary',
     'common/modules/experiments/tests/uk-membership-engagement-message-test-10',
     'common/modules/experiments/tests/au-membership-engagement-message-test-8'
 ], function (reportError,
@@ -23,6 +24,7 @@ define([
              RecommendedForYou,
              MembershipEngagementInternationalExperiment,
              ContributionsEpicUsaCtaThreeWay,
+             ContributionsEpicObserverAnniversary,
              UkMembershipEngagementMessageTest10,
              AuMembershipEngagementMessageTest8
     ) {
@@ -30,6 +32,7 @@ define([
         new RecommendedForYou(),
         new MembershipEngagementInternationalExperiment(),
         new ContributionsEpicUsaCtaThreeWay(),
+        new ContributionsEpicObserverAnniversary(),
         new UkMembershipEngagementMessageTest10(),
         new AuMembershipEngagementMessageTest8()
     ];
