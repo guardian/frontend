@@ -281,4 +281,7 @@
     @* proper inlined AMP styles *@
     @Html(common.Assets.css.amp)
 
+    @if(page.metadata.isHosted) {
+        @Html(common.Assets.css.hostedAmp)
+    }
 </style>
