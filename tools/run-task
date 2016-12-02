@@ -180,7 +180,7 @@ function listrify(steps, {concurrent = false} = {}) {
         });
 
     return new Listr(listrTasks, {
-        concurrent: IS_TEAMCITY ? false : concurrent,
+        concurrent: concurrent,
         collapse: true,
         renderer: IS_TEAMCITY ? require('./run-task-tc-formater') : 'default'
     });
