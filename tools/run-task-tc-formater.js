@@ -21,7 +21,7 @@ const render = tasks => {
                 if (task.isSkipped()) {
                     console.log(`skipping ${task.title}`);
                 }
-                if (task.isCompleted()) {
+                if (task.isCompleted() && !task.hasFailed() && !task.isSkipped()) {
                     console.log(`##teamcity[blockClosed name='${task.title}']`);
                 }
             }
