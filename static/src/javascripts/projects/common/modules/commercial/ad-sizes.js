@@ -9,6 +9,7 @@ define(function () {
 
         // dfp proprietary ad sizes
         fluid:                  AdSize(0, 0),
+        outOfPage:              AdSize(1, 1),
 
         // guardian proprietary ad sizes
         merchandisingHighAdFeature: AdSize(88, 89),
@@ -17,8 +18,7 @@ define(function () {
         inlineMerchandising:    AdSize(88, 85),
         fabric:                 AdSize(88, 71),
         fluid250:               AdSize(88, 70),
-        outOfPage:              AdSize(2, 2),
-        empty:                  AdSize(1, 1)
+        empty:                  AdSize(2, 2)
     };
     adSizes['970x250'] = adSizes.billboard;
     adSizes['728x90'] = adSizes.leaderboard;
