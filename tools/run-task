@@ -180,7 +180,7 @@ function listrify(steps, {concurrent = false} = {}) {
         });
 
     return new Listr(listrTasks, {
-        concurrent: concurrent,
+        concurrent,
         collapse: true,
         renderer: IS_TEAMCITY ? require('./run-task-tc-formater') : 'default'
     });
@@ -213,8 +213,7 @@ const taskModules = TASKS.map(getTasksFromModule);
 listrify(taskModules).run({
     messages: [],
     stdouts: []
-})
-.catch(e => {
+}).catch(e => {
     if (e) {
         if (!verbose) {
             if (!e.stderr && !e.stdout) console.log(e);
@@ -223,8 +222,7 @@ listrify(taskModules).run({
         }
     }
     return Object.assign(e.context, {error: true});
-})
-.then(ctx => {
+}).then(ctx => {
     if (IS_STDOUT) ctx.stdouts.forEach(stdout => console.log(stdout.toString().trim()));
 
     if (ctx.messages.length) {
@@ -236,5 +234,4 @@ listrify(taskModules).run({
         console.log('');
         process.exit(1);
     }
-})
-;
+});

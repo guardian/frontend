@@ -5,7 +5,6 @@ const chalk = require('chalk');
 const config = '--rulesdir dev/eslint-rules --quiet --color';
 
 const error = ctx => {
-    console.log('ERROR MESSAE');
     ctx.messages.push(`${chalk.blue('make fix')} can correct simple errors automatically.`);
     ctx.messages.push(`Your editor may be able to catch eslint errors as you work:\n${chalk.underline('http://eslint.org/docs/user-guide/integrations#editors')}`);
 };
