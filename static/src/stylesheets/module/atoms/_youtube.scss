@@ -33,32 +33,47 @@
 
 	.atom--media--youtube--iframe {
 		top: 1px;
+        z-index: 0;
 
         &:not(.youtube__video-ready),
         &.youtube__video-ended {
-            ~ .atom--media--youtube--overlay .atom--media--youtube--controls {
-                 @include hide;
+            ~ .atom--media--youtube--overlay {
+                .atom--media--youtube--play-button,
+                .atom--media--youtube--bottom-bar {
+                     @include hide;
+                }
             }
         }
 
         &.youtube__video-ready:not(.youtube__video-started) {
-            ~ .atom--media--youtube--overlay .atom--media--youtube--controls {
-                @include fade-in;    
+            ~ .atom--media--youtube--overlay {
+                cursor: pointer;
+
+                .atom--media--youtube--play-button,
+                .atom--media--youtube--bottom-bar {
+                    @include fade-in;    
+                }
             }
         }
 
         &.youtube__video-started:not(.youtube__video-ended) {
-            ~ .atom--media--youtube--overlay,
-            ~ .atom--media--youtube--overlay .atom--media--youtube--controls {
-                @include fade-out;
-                transition-delay: 500ms;
-                transition-duration: 500ms;     
+            ~ .atom--media--youtube--overlay {
+                .atom--media--youtube--placeholder,
+                .atom--media--youtube--play-button,
+                .atom--media--youtube--bottom-bar {
+                    @include fade-out;
+                    transition-delay: 500ms;
+                    transition-duration: 500ms;     
+                }
             }
         }
 
         &.youtube__video-ended.youtube__video-started {
-            ~ .atom--media--youtube--overlay .atom--media--youtube--controls {
-                @include fade-in;
+            ~ .atom--media--youtube--overlay {
+                .atom--media--youtube--play-button,
+                .atom--media--youtube--bottom-bar {
+                    @include fade-in;
+                }
             }
         }
 	}
@@ -71,126 +86,116 @@
 		background-size: cover;
         background-position: 50% 50%;
         background-repeat: no-repeat;
+        z-index: 1;
+        text-align: center;
 	}
 
-	.atom--media--youtube--controls {
-	    cursor: pointer;
-	    position: absolute;
-	    width: 100%;
-	    height: 100%;
-	    box-sizing: border-box;
-	    text-align: center;
+    .atom--media--youtube--play-button {
+        // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
+        @include video-play-button-size($vjs-small-button-size);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+        user-select: none;
+        overflow: hidden !important;
+        display: inline-block;
+        z-index: 2;
 
-        .atom--media--youtube--play-button {
-            // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
+        @include mq(mobileLandscape) {
+            @include video-play-button-size($vjs-large-button-size);
+        }
+
+        &:before {
+            @include circular;
             @include video-play-button-size($vjs-small-button-size);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
-            user-select: none;
-            overflow: hidden !important;
-            display: inline-block;
-
+            content: '';
+            display: block;
             @include mq(mobileLandscape) {
                 @include video-play-button-size($vjs-large-button-size);
             }
-
-            &:before {
-                @include circular;
-                @include video-play-button-size($vjs-small-button-size);
-                content: '';
-                display: block;
-                @include mq(mobileLandscape) {
-                    @include video-play-button-size($vjs-large-button-size);
-                }
-                background-color: $media-default;
-            }
-
-            &:after {
-                content: '';
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-40%, -50%);
-                border-style: solid;
-                border-width: 1em 0 1em 2.4em;
-                border-color: transparent transparent transparent $neutral-1;
-
-                @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
-                    border-radius: .2em;
-                }
-            }
+            background-color: $media-default;
         }
 
-        .atom--media--youtube--control-bar {
+        &:after {
+            content: '';
             position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            height: 34px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-40%, -50%);
+            border-style: solid;
+            border-width: 1em 0 1em 2.4em;
+            border-color: transparent transparent transparent $neutral-1;
 
-            &::before,
-            &::after,
-            .atom--media--youtube--control-bar--content {
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                left: 0;
-            }
-
-            &::before {
-                content: '';
-                opacity: 0.1;
-                background: #333333;
-                z-index: 0;
-            }
-
-            &::after {
-                content: '';
-                opacity: 0.7;
-                @include simple-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, 0.5));
-            }
-            
-            .atom--media--youtube--control-bar--content {
-                z-index: 1;
-
-                .atom--media--youtube--control-bar--icon {
-                    float: left;
-                    height: 100%;
-                    width: 30px;
-
-                    svg {
-                        fill: $media-default;
-                        width: 16px;
-                        height: 10px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        margin-left: 8px;
-                    }
-                }
-
-                .atom--media--youtube--control-bar--duration {
-                    @include font($f-sans-serif-text, bold, 16, 34);
-                    color: $media-default;
-                    float: left;
-                    padding-left: 8px;
-                    text-shadow: 0 0 16px rgba(51,51,51,0.25);
-
-                    &::before {
-                        content: '';
-                        width: 2px;
-                        height: 16px;
-                        opacity: 0.5;
-                        position: absolute;
-                        left: 30px;
-                        background-color: #ffbb00;
-                        top: 50%;
-                        transform: translateY(-50%);
-                    }
-                }
+            @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
+                border-radius: .2em;
             }
         }
-	}
+    }
+
+    .atom--media--youtube--bottom-bar {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 34px;
+        z-index: 2;
+
+        &::before,
+        &::after {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            z-index: -1;
+        }
+
+        &::before {
+            content: '';
+            opacity: 0.1;
+            background: $neutral-1;
+        }
+
+        &::after {
+            content: '';
+            opacity: 0.7;
+            @include simple-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, 0.5));
+        }
+    }
+
+    .atom--media--youtube--bottom-bar--icon {
+        float: left;
+        height: 100%;
+        width: 30px;
+
+        svg {
+            fill: $media-default;
+            width: 16px;
+            height: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 8px;
+        }
+    }
+
+    .atom--media--youtube--bottom-bar--duration {
+        @include font($f-sans-serif-text, bold, 16, 34);
+        color: $media-default;
+        float: left;
+        padding-left: 8px;
+        text-shadow: 0 0 16px rgba(51,51,51,0.25);
+
+        &::before {
+            content: '';
+            width: 2px;
+            height: 16px;
+            opacity: 0.5;
+            position: absolute;
+            left: 30px;
+            background-color: $multimedia-main-2;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
 }
