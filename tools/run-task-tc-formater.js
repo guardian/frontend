@@ -14,9 +14,11 @@ const render = tasks => {
             if (event.type === 'STATE') {
                 if (task.isPending()) {
                     console.log(`##teamcity[blockOpened name='${task.title}']`);
+                    console.log(`##teamcity[message text='Running |'${task.title}|'' status='ERROR']`);
                 }
                 if (task.hasFailed()) {
-                    console.log(`##teamcity[buildProblem description='${task.title} failed']`);
+                    console.log(`##teamcity[message text='|'${task.title}|' failed' status='ERROR']`);
+                    console.log(`##teamcity[buildProblem description='|'${task.title}|' failed']`);
                 }
                 if (task.isSkipped()) {
                     console.log(`skipping ${task.title}`);
@@ -29,42 +31,6 @@ const render = tasks => {
                console.log(event.data);
            }
         });
-
-		// task.subscribe(
-		// 	event => {
-		// 		if (event.type === 'SUBTASKS') {
-		// 			render(task.subtasks);
-		// 			return;
-		// 		}
-        //         console.log(task);
-        //         if (event.type === 'STATE') {
-        //             switch (task.state) {
-        //                 case 'pending':
-        //                     console.log(`##teamcity[blockOpened name='${task.title}']`);
-        //                     break;
-        //                 case 'failed':
-        //                     console.log(`##teamcity[blockClosed name='${task.title}']`);
-        //                     console.log(`##teamcity[buildProblem description='${task.title} failed']`);
-        //                     if (task.output) console.log(task.output);
-        //                     break;
-        //                 case 'skipped':
-        //                     console.log(`skipping ${task.title}`);
-        //                     if (task.output) console.log(task.output);
-        //                     console.log(`##teamcity[blockClosed name='${task.title}']`);
-        //                     break;
-        //                 case 'completed':
-        //                     console.log(`##teamcity[blockClosed name='${task.title}']`);
-        //                     break;
-        //                 default:
-        //             }
-        //         } else if (event.type === 'DATA') {
-        //             console.log(event.data);
-        //         }
-		// 	},
-		// 	err => {
-        //         console.log(`##teamcity[buildProblem description='${err}']`);
-		// 	}
-		// );
 	}
 };
 
