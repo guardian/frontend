@@ -14,7 +14,7 @@ const render = tasks => {
             if (event.type === 'STATE') {
                 if (task.isPending()) {
                     console.log(`##teamcity[blockOpened name='${task.title}']`);
-                    console.log(`##teamcity[message text='Running |'${task.title}|'' status='ERROR']`);
+                    console.log(`##teamcity[message text='Running |'${task.title}|'']`);
                 }
                 if (task.hasFailed()) {
                     console.log(`##teamcity[message text='|'${task.title}|' failed' status='ERROR']`);
