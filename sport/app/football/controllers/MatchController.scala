@@ -9,6 +9,7 @@ import model.TeamMap.findTeamIdByUrlName
 import model._
 import org.joda.time.format.DateTimeFormat
 import pa.{FootballMatch, LineUp, LineUpTeam}
+import play.api.Environment
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
 
@@ -45,7 +46,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
   )
 }
 
-class MatchController(competitionsService: CompetitionsService) extends Controller with Football with Requests with Logging with ExecutionContexts {
+class MatchController(competitionsService: CompetitionsService)(implicit env: Environment) extends Controller with Football with Requests with Logging with ExecutionContexts {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 

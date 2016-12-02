@@ -13,6 +13,7 @@ import services.OphanApi
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithTestWsClient
+  with WithTestEnvironment
   with WithTestContentApiClient {
 
   val tag = "technology"

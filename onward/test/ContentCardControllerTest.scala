@@ -11,6 +11,7 @@ import play.api.test.Helpers._
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithTestWsClient
+  with WithTestEnvironment
   with WithTestContentApiClient {
 
   val article = "/world/2014/nov/18/hereford-hospital-patient-tested-for-ebola"

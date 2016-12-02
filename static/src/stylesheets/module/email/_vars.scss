@@ -8,11 +8,12 @@ $rounded-adjustment: .66em;
 
 $tones: (
     (analysis, $analysis-accent, $news-default),
-    (comment, $comment-support-4, $comment-support-4),
-    (feature, $feature-default, $feature-accent),
+    (comment, $comment-support-4, $comment-support-4, $comment-support-4),
+    (feature, $feature-default, $feature-accent, $feature-mute),
     (live, $live-default, $live-accent),
     (media, $neutral-1, $neutral-1),
     (news, $news-default, $news-default),
     (review, $review-background, darken($review-background, 10%)),
-    (special-feature, $news-support-6, $news-support-6)
+    (special-feature, $news-support-6, $news-support-6),
+    (plaindark, $neutral-4, $neutral-4, $neutral-4, $multimedia-main-1)
 );

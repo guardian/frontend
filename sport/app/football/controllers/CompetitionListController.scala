@@ -3,10 +3,11 @@ package football.controllers
 import common._
 import conf.switches.Switches
 import feed.CompetitionsService
+import play.api.Environment
 import play.api.mvc.{Action, Controller}
 
 
-class CompetitionListController(val competitionsService: CompetitionsService) extends Controller with CompetitionListFilters with Logging with ExecutionContexts {
+class CompetitionListController(val competitionsService: CompetitionsService)(implicit env: Environment) extends Controller with CompetitionListFilters with Logging with ExecutionContexts {
 
   val page = new FootballPage("football/competitions", "football", "Leagues & competitions")
 

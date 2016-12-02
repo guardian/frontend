@@ -1,4 +1,6 @@
-@(item: model.MetaData)(implicit request: RequestHeader)
+@(item: model.MetaData)(implicit request: RequestHeader, env: play.api.Environment)
+
+@import play.api.Mode.Dev
 
 // Determine whether we want to run the enhanced app or not.
 // It can come either from a preference in localStorage (see `enhancedKey`)
@@ -57,7 +59,7 @@
     window.shouldEnhance = mustNotEnhance() ? false : mustEnhance() ? true : couldEnhance() && weWantToEnhance();
 
     // just so we can tell…
-    @if(play.Play.isDev()) {
+    @if(env.mode == Dev) {
         window.console && window.console.info(`THIS IS ${window.shouldEnhance ? 'ENHANCED' : 'STANDARD ONLY'}`);
     }
 })(window);

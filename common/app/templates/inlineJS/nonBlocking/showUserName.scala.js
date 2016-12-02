@@ -1,3 +1,7 @@
+@()(implicit env: play.api.Environment)
+
+@import play.api.Mode.Dev
+
 try {
     ((isVeryModern, document, window) => {
         var user = window.guardian.config.user;
@@ -33,6 +37,6 @@ try {
         }
     })('classList' in document.documentElement, document, window);
 } catch (e) {
-    @if(play.Play.isDev) {throw (e)}
+    @if(env.mode == Dev) {throw (e)}
 }
 

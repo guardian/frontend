@@ -1,4 +1,4 @@
-@(page: InteractivePage)(implicit request: RequestHeader)
+@(page: InteractivePage)(implicit request: RequestHeader, env: play.api.Environment)
 @import common.Edition
 @import mvt.WebpackTest
 @import views.support.RenderClasses
@@ -68,7 +68,7 @@
         </div>
     }
 
-    @if(WebpackTest.isParticipating) {
+    @if(!WebpackTest.isParticipating) {
         <script>
             @HtmlFormat.raw(common.Assets.js.curl)
 
