@@ -1,6 +1,6 @@
 define([
     'helpers/injector',
-    'common/utils/storag'
+    'common/utils/storage'
 ], function (
     Injector,
     storage
