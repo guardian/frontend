@@ -89,7 +89,7 @@ define([
 
         var cta = {
             equal: {
-                p2: 'If everyone who reads our reporting, who likes it, helps to pay for it, our future would be much more secure. You can give money to the Guardian in less than a minute.',
+                p2: 'If everyone who reads our reporting, who likes it, helps to pay for it, our future would be much more secure.',
                 p3: '',
                 cta1: 'Become a Supporter',
                 cta2: 'Make a contribution',
