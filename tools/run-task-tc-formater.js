@@ -1,9 +1,5 @@
 /* eslint-disable no-console */
 
-'use strict';
-const figures = require('figures');
-const cliCursor = require('cli-cursor');
-
 const render = tasks => {
 	for (const task of tasks) {
         task.subscribe(event => {
@@ -35,23 +31,19 @@ const render = tasks => {
 };
 
 class TeamCityRenderer {
-
-	constructor(tasks) {
+	constructor (tasks) {
 		this._tasks = tasks;
 	}
 
-	get nonTTY() {
+	get nonTTY () {
 		return true;
 	}
 
-	render() {
-		cliCursor.hide();
+	render () {
 		render(this._tasks);
 	}
 
-	end() {
-		cliCursor.show();
-	}
+	end () {}
 }
 
 module.exports = TeamCityRenderer;
