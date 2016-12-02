@@ -120,6 +120,8 @@ define([
                 return imageFromTemplate(item.headerImage.urlTemplate);
             } else if (item.headerVideo) {
                 return imageFromTemplate(item.headerVideo.stillImage.urlTemplate);
+            } else if (item.video) {
+                return imageFromTemplate(item.video.stillImage.urlTemplate);
             } else {
                 return null;
             }
