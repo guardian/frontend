@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+const figures = require('figures');
+const chalk = require('chalk');
 
 const render = tasks => {
 	for (const task of tasks) {
@@ -19,6 +21,7 @@ const render = tasks => {
                     console.log(task.output);
                 }
                 if (task.isCompleted() && !task.hasFailed() && !task.isSkipped()) {
+                    console.log(`##teamcity[message text='${chalk.green(figures.tick)}']`);
                     console.log(`##teamcity[blockClosed name='${task.title}']`);
                 }
             }
