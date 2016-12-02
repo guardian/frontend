@@ -6,7 +6,7 @@
     @include mq(tablet) {
         margin: 10px 0;
     }
-    
+
     background-color: $neutral-3;
 
     line-height: 14px;
@@ -62,7 +62,7 @@
         height: 76px;
 
         @include mq(tablet) {
-            height: 76px;
+            height: 96px;
         }
 
         @include mq(desktop) {
