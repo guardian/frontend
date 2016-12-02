@@ -6,13 +6,12 @@ const render = tasks => {
 	for (const task of tasks) {
         task.subscribe(event => {
             if (event.type === 'SUBTASKS') {
-                console.log(`##teamcity[blockOpened name='${task.title}']`);
                 render(task.subtasks);
                 return;
             }
             if (event.type === 'STATE') {
                 if (task.isPending()) {
-                    console.log(`##teamcity[message text='${task.title}']`);
+                    console.log(`##teamcity[blockOpened name='${task.title}']`);
                 }
                 if (task.hasFailed()) {
                     console.log(`##teamcity[message text='|'${task.title}|' failed' status='ERROR']`);
@@ -22,7 +21,7 @@ const render = tasks => {
                     console.log(task.output);
                 }
                 if (task.isCompleted() && !task.hasFailed() && !task.isSkipped()) {
-                    console.log(`##teamcity[message text='${chalk.green(figures.tick)}']`);
+                    console.log(`##teamcity[message text='${chalk.green(figures.tick)} ${task.title}']`);
                     console.log(`##teamcity[blockClosed name='${task.title}']`);
                 }
             }
