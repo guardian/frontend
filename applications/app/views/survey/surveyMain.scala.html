@@ -2,7 +2,7 @@
 @import model.Page
 @import templates.inlineJS.blocking.js.enableStylesheets
 
-@(surveyPage: Page)(body: Html)(implicit request: RequestHeader)
+@(surveyPage: Page)(body: Html)(implicit request: RequestHeader, env: play.api.Environment)
 
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
@@ -35,7 +35,7 @@
 
         @fragments.footer(surveyPage)
 
-        @fragments.inlineJSNonBlocking()
+        @fragments.inlineJSNonBlocking(surveyPage)
 
     </body>
 </html>

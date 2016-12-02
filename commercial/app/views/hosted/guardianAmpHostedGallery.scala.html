@@ -1,0 +1,63 @@
+@import common.commercial.hosted.HostedGalleryPage
+@import model.ImageMedia
+@import model.ImageAsset
+@import com.gu.contentapi.client.model.v1.Asset
+@import com.gu.contentapi.client.model.v1.AssetType
+@(page: HostedGalleryPage)(implicit request: RequestHeader, env: play.api.Environment)
+@import views.html.hosted._
+@import conf.Configuration
+@import views.support.FBPixel
+
+<!doctype html>
+<html AMP>
+    <head>
+        @* "utf-8" meta tag needs to be first according to AMP spec *@
+        <meta charset="utf-8">
+        <meta name="amp-3p-iframe-src" content="https://www.theguardian.com/amp/remote.html">
+        @fragments.metaData(page, amp = true)
+        <title>@views.support.Title(page)</title>
+        @fragments.amp.stylesheets.main(page, page.images.head.url, page.cta.image, page.campaign.fontColour.hexCode)
+        <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
+        <script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async ></script>
+        <script custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async></script>
+        <script custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js" async></script>
+        <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+        <script src="https://cdn.ampproject.org/v0.js" async></script>
+    </head>
+    <body>
+        @*
+        Baseline pageview confidence pixel.
+        This, along with the corresponding pixels for GA/Ophan,
+        are used to generate the confidence graphs on the frontend dashboard.
+        *@
+        <amp-pixel src="@{
+            Configuration.debug.beaconUrl
+        }/count/pv.gif"></amp-pixel>
+
+        <amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
+        <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
+
+        @fragments.amp.hostedGoogleAnalytics(page)
+
+        <amp-analytics id="comscore" type="comscore">
+            <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
+        </amp-analytics>
+
+        <div class="main-body hosted-gallery-page__main-body">
+
+            @guardianHostedHeader(if(page.campaign.fontColour.isDark) "hosted-gallery-page hosted-page--bright" else "hosted-gallery-page", page, isAMP = true)
+            <div class="hosted-page hosted-gallery-page--container hosted-gallery-page @if(page.campaign.fontColour.isDark) {hosted-page--bright}">
+
+                <amp-carousel width="500" height="300"
+                layout="responsive"
+                type="slides">
+                    @for(i <- page.images.indices) {
+                        @guardianAmpHostedGalleryImage(
+                            ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some(page.images(i).url)), 0))),
+                            page.images(i), i, page)
+                    }
+                </amp-carousel>
+            </div>
+        </div>
+    </body>
+</html>

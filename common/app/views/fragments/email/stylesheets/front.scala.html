@@ -1,8 +1,10 @@
-@()
+@(page: model.Page)
+
+@import model.EmailAddons.EmailContentType
 
 <style>
     body, .body {
-        background: #e5e5e5;
+        background: #ffffff;
     }
 
     .full-width {
@@ -11,36 +13,37 @@
 
     .container,
     .panel {
-        background: #eaeaea;
+        background: #ffffff;
     }
 
     .panel {
-        padding: 5px 10px !important;
+        padding: 5px 0 !important;
         border: none;
     }
 
     .container-title {
-        color: #005689;
+        color: #323333;
         padding-top: 4px;
     }
     .container-title--not-first {
-        border-top: 3px solid #4bc6df;
+        border-top: 3px solid @page.toneColour;
     }
 
     .facia-card {
         display: block;
         text-decoration: none;
+        padding-bottom: 20px;
     }
 
     .headline, .trail-text {
-        font-weight: bold;
         font-size: 16px;
         line-height: 20px;
         margin: 0;
         color: inherit;
     }
 
-    .facia-card .headline {
+    .facia-card .headline,
+    .facia-card .trail-text {
         padding: 5px 10px;
     }
 
@@ -48,14 +51,36 @@
         font-size: 20px;
         line-height: 24px;
         color: inherit;
-        padding: 5px 10px;
-    }
-
-    .facia-card--large .trail-text {
-        padding: 5px 10px 20px;
     }
 
     .kicker-separator {
         font-weight: normal;
+    }
+
+    .headline .icon {
+        height: 0.8em;
+    }
+
+
+    /* Reduce max width */
+
+    table.twelve {
+        width: 500px;
+    }
+
+    table.twelve center {
+        min-width: 500px;
+    }
+
+    .block-grid {
+        max-width: 500px;
+    }
+
+    center {
+        min-width: 500px;
+    }
+
+    table.container {
+        width: 500px;
     }
 </style>

@@ -1,11 +1,11 @@
-@(env: String)(implicit flash: Flash, request: RequestHeader)
+@()(implicit flash: Flash, request: RequestHeader, env: play.api.Environment)
 
 @link(cssClass: String) = {
     <a class="@cssClass" href="@controllers.admin.commercial.routes.DfpDataController.flushCache()" role="button">
         Flush!</a>
 }
 
-@admin_main("DFP Data Cache Flush", env, isAuthed = true) {
+@admin_main("DFP Data Cache Flush", isAuthed = true) {
 
     <h1>DFP Data Cache Flush</h1>
 

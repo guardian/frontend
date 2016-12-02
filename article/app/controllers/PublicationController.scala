@@ -4,6 +4,7 @@ import common.{ExecutionContexts, Logging}
 import implicits.{Dates, ItemResponses}
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
+import play.api.Environment
 import play.api.mvc.{Action, Controller}
 import services._
 
@@ -13,7 +14,7 @@ class PublicationController(
   bookAgent: NewspaperBookTagAgent,
   bookSectionAgent: NewspaperBookSectionTagAgent,
   articleController: ArticleController
-) extends Controller
+  )(implicit env: Environment) extends Controller
   with ExecutionContexts
   with ItemResponses
   with Dates

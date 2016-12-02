@@ -4,8 +4,9 @@ import org.scalatest.{ShouldMatchers, path}
 import services._
 import idapiclient.IdApiClient
 import org.scalatest.mock.MockitoSugar
-import test.{TestRequest, Fake}
+import test.{Fake, TestRequest, WithTestEnvironment}
 import play.api.mvc.{Request, RequestHeader}
+
 import scala.concurrent.Future
 import org.mockito.Mockito._
 import org.mockito.Matchers
@@ -14,7 +15,10 @@ import idapiclient.TrackingData
 import client.Error
 import actions.AuthenticatedActions
 
-class EmailVerificationControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+class EmailVerificationControllerTest extends path.FreeSpec
+  with ShouldMatchers
+  with WithTestEnvironment
+  with MockitoSugar {
   val api = mock[IdApiClient]
   val idRequestParser = mock[IdRequestParser]
   val authenticatedActions = mock[AuthenticatedActions]
@@ -44,9 +48,9 @@ class EmailVerificationControllerTest extends path.FreeSpec with ShouldMatchers 
       "should display the validation completed page" in {
         status(result) should be(OK)
         contentAsString(result) should include(EmailValidatedMessage)
-        contentAsString(result) should not include("Your email confirmation link has expired")
-        contentAsString(result) should not include("Sorry, this email confirmation link is not recognised.")
-        contentAsString(result) should not include("Resend my verification email")
+        contentAsString(result) should not include "Your email confirmation link has expired"
+        contentAsString(result) should not include "Sorry, this email confirmation link is not recognised."
+        contentAsString(result) should not include "Resend my verification email"
       }
     }
 

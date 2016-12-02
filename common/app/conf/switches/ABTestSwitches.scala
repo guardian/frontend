@@ -7,16 +7,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-hosted-onward-journey",
-    "Show more pages from the campaign in Hosted Article/Video pages, using a carousel or popup",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 18),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-membership-engagement-international-experiment",
     "Test varying the number of visits before showing the membership engagement banner",
     owners = Seq(Owner.withGithub("rupert.bates")),
@@ -27,11 +17,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-recommended-for-you-recommendations",
+    "Test personalised container on fronts",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-epic-usa-cta-three-way",
     "Test just contributions vs contributions or membership vs just membership in the US",
     owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 25),
+    sellByDate =  new LocalDate(2016, 12, 5),
     exposeClientSide = true
   )
 
@@ -44,4 +44,15 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2016, 12, 8), // Thursday 8th December
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-au-memb-engagement-msg-copy-test-8",
+    "Test alternate short messages on AU membership engagement banner",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 22), // Thursday 22nd December
+    exposeClientSide = true
+  )
+
 }

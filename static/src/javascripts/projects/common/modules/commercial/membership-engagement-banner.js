@@ -92,6 +92,24 @@ define([
             }
         }
 
+        function doAuCopyTest(content) {
+            var variant = getVariant('AuMembEngagementMsgCopyTest8');
+            if (variant && variant !== notInTest) {
+                var variantMessages = {
+                    fearless_10: 'We need you to help support our fearless independent journalism. Become a Guardian Australia member for just $10 a month',
+                    stories_that_matter: 'We need your help to tell the stories that matter. Support Guardian Australia now',
+                    power_to_account: 'We need your help to hold power to account. Become a Guardian Australia supporter',
+                    independent_journalism: 'Support quality, independent journalism in Australia by becoming a supporter'
+                };
+                var campaignCode = 'gdnwb_copts_mem_banner_aubanner__' + variant;
+                content.campaignCode = campaignCode;
+                content.linkHref = formatEndpointUrl('AU', campaignCode);
+                if (variant !== 'control') {
+                    content.messageText = variantMessages[variant];
+                }
+            }
+        }
+
         function show(edition, message) {
             var content = {
                 linkHref: formatEndpointUrl(edition, message.campaign),
@@ -104,6 +122,7 @@ define([
 
             doInternationalTest(content);
             doUkCopyTest(content);
+            doAuCopyTest(content);
 
             var renderedBanner = template(messageTemplate, content);
             var messageShown = new Message(

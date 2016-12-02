@@ -1,4 +1,4 @@
-@(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean)(implicit request: RequestHeader)
+@(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean)(implicit request: RequestHeader, env: play.api.Environment)
 
 @{
     media match {

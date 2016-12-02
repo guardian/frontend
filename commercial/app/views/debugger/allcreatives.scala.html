@@ -1,4 +1,4 @@
-@(page: model.Page)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import play.api.libs.json.{JsObject, Json}
 
@@ -239,9 +239,9 @@
                             Toneclass: 'commercial--tone-brand',
                             component_title: 'The Guardian Bookshop',
                             omniture_id: '[%OmnitureID%]',
-                            base_url: 'http://www.guardianbookshop.co.uk/',
+                            base_url: 'https://bookshop.theguardian.com/',
                             offer_title: 'Title',
-                            offer_url: 'http://www.guardianbookshop.co.uk/',
+                            offer_url: 'https://bookshop.theguardian.com/',
                             offer_image: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKCToPeYcRABGAEyCL27FJtXKuKj',
                             offer_meta: 'Meta',
                             offer_button: 'yes',

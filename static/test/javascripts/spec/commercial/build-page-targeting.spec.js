@@ -38,18 +38,19 @@ define([
                     krux = arguments[7];
 
                     config.page = {
-                        edition:     'US',
-                        contentType: 'Video',
-                        isSurging:   true,
-                        source: 'ITN',
-                        tones: 'News',
-                        authorIds: 'profile/gabrielle-chan',
-                        sponsorshipType: 'advertisement-features',
-                        seriesId: 'film/series/filmweekly',
-                        pageId: 'football/series/footballweekly',
-                        keywordIds: 'uk-news/prince-charles-letters,uk/uk,uk/prince-charles',
-                        blogIds: 'a/blog',
-                        videoDuration: 63
+                        authorIds:          'profile/gabrielle-chan',
+                        blogIds:            'a/blog',
+                        contentType:        'Video',
+                        edition:            'US',
+                        isSurging:          true,
+                        keywordIds:         'uk-news/prince-charles-letters,uk/uk,uk/prince-charles',
+                        pageId:             'football/series/footballweekly',
+                        publication:        'The Observer',
+                        seriesId:           'film/series/filmweekly',
+                        source:             'ITN',
+                        sponsorshipType:    'advertisement-features',
+                        tones:              'News',
+                        videoDuration:      63
                     };
 
                     config.ophan = {
@@ -140,6 +141,15 @@ define([
 
         it('should set correct krux params', function () {
             expect(buildPageTargeting().x).toEqual(['E012712', 'E012390', 'E012478']);
+        });
+
+        it('should set Observer flag for Observer content', function () {
+            expect(buildPageTargeting().ob).toEqual('t');
+        });
+
+        it('should not set Observer flag for Guardian content', function () {
+            config.page.publication = 'The Guardian';
+            expect(buildPageTargeting().ob).toEqual(undefined);
         });
 
         it('should remove empty values', function () {

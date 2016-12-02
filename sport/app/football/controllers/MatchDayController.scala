@@ -6,9 +6,10 @@ import org.joda.time.LocalDate
 import model._
 import football.model._
 import common.{Edition, JsonComponent}
+import play.api.Environment
 
 
-class MatchDayController(val competitionsService: CompetitionsService) extends MatchListController with CompetitionLiveFilters {
+class MatchDayController(val competitionsService: CompetitionsService)(implicit env: Environment) extends MatchListController with CompetitionLiveFilters {
 
   def liveMatchesJson() = liveMatches()
   def liveMatches(): Action[AnyContent] =

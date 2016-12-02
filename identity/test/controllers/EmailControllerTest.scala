@@ -4,7 +4,6 @@ import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.cookie.GuUCookieData
 import org.mockito.Matchers
 import org.scalatest.{DoNotDiscover, ShouldMatchers, WordSpec}
-import org.scalatestplus.play.ConfiguredServer
 import services._
 import services.{ReturnUrlVerifier, IdRequestParser, IdentityUrlBuilder}
 import idapiclient.{ScGuU, IdApiClient}
@@ -23,7 +22,11 @@ import client.{Auth, Error}
 import idapiclient.TrackingData
 import actions.AuthenticatedActions
 
-@DoNotDiscover class EmailControllerTest extends WordSpec with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
+@DoNotDiscover class EmailControllerTest extends WordSpec
+  with ShouldMatchers
+  with MockitoSugar
+  with WithTestEnvironment
+  with ConfiguredTestSuite {
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val conf = mock[IdentityConfiguration]

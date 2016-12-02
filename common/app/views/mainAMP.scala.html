@@ -1,4 +1,4 @@
-@(page: model.Page, related: model.RelatedContent, content: model.Content)(body: Html)(implicit request: RequestHeader)
+@(page: model.Page, related: model.RelatedContent, content: model.Content)(body: Html)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import common.{CanonicalLink, LinkTo}
 @import conf.Configuration

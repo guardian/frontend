@@ -268,7 +268,8 @@
 
 .email-sub__form--article,
 .email-sub__form--plain,
-.email-sub__form--plaindark
+.email-sub__form--plaindark,
+.email-sub__form--plaintone
 {
     .label__icon {
         display: inline-block;
@@ -324,6 +325,17 @@
     }
 }
 
+// PLAIN-TONE MODS
+.email-sub__form--plaintone {
+    padding: 0;
+
+    .email-sub__submit-input {
+        background-color: $neutral-4;
+        border-color: $neutral-4;
+        color: $neutral-1;
+    }
+}
+
 // POST-ARTICLE
 
 .email-sub__iframe--post-article {
@@ -362,7 +374,7 @@
 }
 
 // TONE SPECIFIC MODS
-@each $tone-class, $tone-colour-accent, $tone-colour-headline in $tones {
+@each $tone-class, $tone-colour-accent, $tone-colour-headline, $tone-colour-border, $tone-colour-text in $tones {
 
 
     .email-sub--tone-#{$tone-class} {
@@ -396,6 +408,18 @@
 
         .email-sub__small {
             color: $tone-colour-headline;
+        }
+    }
+
+    .email-sub--tone-#{$tone-class}.email-sub--plaintone {
+
+        .email-sub__text-input {
+            border-color: $tone-colour-border;
+        }
+
+        .email-sub__submit-input {
+            border-color: $tone-colour-border;
+            color: $tone-colour-text;
         }
     }
 }

@@ -1,3 +1,7 @@
+@()(implicit env: play.api.Environment)
+
+@import play.api.Mode.Dev
+
 try {
     ((document, window) => {
         if (typeof window.getComputedStyle !== 'function') {
@@ -47,5 +51,5 @@ try {
         });
     })(document, window);
 } catch (e) {
-    @if(play.Play.isDev) {throw (e)}
+    @if(env.mode == Dev) {throw (e)}
 }

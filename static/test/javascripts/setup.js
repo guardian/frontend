@@ -38,17 +38,5 @@ window.guardian = {
     adBlockers: {
         active: undefined,
         onDetect: []
-    },
-    app: {
-        raven: {
-            captureException: function() {},
-            wrap: function (options, callback) {
-                if (typeof options === 'function') {
-                    return options;
-                } else {
-                    return callback;
-                }
-            }
-        }
     }
 };

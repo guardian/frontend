@@ -1,4 +1,4 @@
-@(page: model.PressedPage)(implicit request: RequestHeader)
+@(page: model.PressedPage)(implicit request: RequestHeader, env: play.api.Environment)
 
 @main(page, projectName = Option("facia")){
     @fragments.frontHead(page)

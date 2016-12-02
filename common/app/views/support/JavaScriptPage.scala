@@ -5,8 +5,6 @@ import common.Maps.RichMap
 import conf.Configuration
 import conf.Configuration.environment
 import model._
-import play.api.Play
-import play.api.Play.current
 import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 import play.api.mvc.RequestHeader
 
@@ -58,7 +56,7 @@ object JavaScriptPage {
     javascriptConfig ++ config ++ commercialMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
-      ("isDev", JsBoolean(Play.isDev)),
+      ("isDev", JsBoolean(!environment.isProd)),
       ("isProd", JsBoolean(Configuration.environment.isProd)),
       ("idUrl", JsString(Configuration.id.url)),
       ("beaconUrl", JsString(Configuration.debug.beaconUrl)),

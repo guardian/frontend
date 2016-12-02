@@ -24,6 +24,7 @@ object Metadata {
     val pageTitle = s"Advertiser content hosted by the Guardian: ${video.title} - video"
     MetaData.make(
       id,
+      isHosted= true,
       webTitle = pageTitle,
       section = Some(SectionSummary.fromId(campaignId)),
       contentType = Video,
@@ -55,6 +56,7 @@ object Metadata {
     mainPicture: String
   ): MetaData = MetaData.make(
     id,
+    isHosted= true,
     webTitle = pageTitle,
     section = Some(SectionSummary.fromId(campaign.id)),
     contentType = Article.name,
@@ -84,6 +86,7 @@ object Metadata {
     val sectionId = campaign.id
     MetaData.make(
       id,
+      isHosted= true,
       webTitle = pageTitle,
       section = Some(SectionSummary.fromId(sectionId)),
       contentType = Gallery.name,

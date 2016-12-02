@@ -10,7 +10,6 @@ define([
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/on-slot-render',
     'commercial/modules/dfp/on-slot-load',
-    'commercial/modules/dfp/PrebidService',
     'commercial/modules/dfp/prepare-sonobi-tag',
     'commercial/modules/dfp/performance-logging',
 
@@ -33,7 +32,6 @@ define([
     dfpEnv,
     onSlotRender,
     onSlotLoad,
-    PrebidService,
     prepareSonobiTag,
     performanceLogging
 ) {
@@ -64,13 +62,7 @@ define([
                     performanceLogging.addTag('sonobi');
                 } else {
                     require(['js!googletag.js']);
-
-                    if (dfpEnv.prebidEnabled) {
-                        dfpEnv.prebidService = new PrebidService();
-                        performanceLogging.addTag('prebid');
-                    } else {
-                        performanceLogging.addTag('waterfall');
-                    }
+                    performanceLogging.addTag('waterfall');
                 }
 
                 window.googletag.cmd.push = raven.wrap({deep: true}, window.googletag.cmd.push);

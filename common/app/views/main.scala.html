@@ -1,4 +1,4 @@
-@(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
+@(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import common.{Edition, Navigation, commercial}
 @import conf.switches.Switches.{BreakingNewsSwitch}
@@ -110,7 +110,7 @@
 
         @fragments.footer(page)
 
-        @fragments.inlineJSNonBlocking()
+        @fragments.inlineJSNonBlocking(page)
 
         @fragments.analytics.base(page)
     </body>

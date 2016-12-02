@@ -1,9 +1,9 @@
-@(env: String)(implicit request: RequestHeader)
+@()(implicit request: RequestHeader, env: play.api.Environment)
 @import conf.AdminConfiguration.pa
 @import org.joda.time.DateTime
 @import views.support.Format
 
-@admin_main("Cricket Troubleshooter", env, isAuthed = true) {
+@admin_main("Cricket Troubleshooter", isAuthed = true) {
 
 @defining((Format(DateTime.now(), "yyyy-MM-dd"), Format(DateTime.now().minusYears(1), "yyyy-MM-dd"), "a359844f-fc07-9cfa-d4cc-9a9ac0d5d075")){ case (today, lastYear, englandTeam) =>
 

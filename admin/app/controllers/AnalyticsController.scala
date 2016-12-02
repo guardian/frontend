@@ -6,10 +6,11 @@ import model.NoCache
 
 import scala.concurrent.Future
 import model.quality.QualityData
+import play.api.Environment
 
-class AnalyticsController extends Controller with Logging with ExecutionContexts {
+class AnalyticsController(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
   def abtests() = Action.async { implicit request =>
-    Future(NoCache(Ok(views.html.abtests("PROD"))))
+    Future(NoCache(Ok(views.html.abtests())))
   }
 
   def renderQuality() = Action.async { implicit request =>
@@ -18,7 +19,7 @@ class AnalyticsController extends Controller with Logging with ExecutionContexts
         chartName -> QualityData.getReport(chartName).getOrElse("")
       }.toMap
 
-      Future(NoCache(Ok(views.html.quality("PROD", response))))
+      Future(NoCache(Ok(views.html.quality(response))))
 
   }
 

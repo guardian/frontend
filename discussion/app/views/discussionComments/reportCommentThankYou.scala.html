@@ -1,6 +1,6 @@
 @import _root_.model.SimplePage
 @import conf.Configuration
-@(webUrl: String, page: SimplePage)(implicit request: RequestHeader)
+@(webUrl: String, page: SimplePage)(implicit request: RequestHeader, env: play.api.Environment)
 @main(page) { } {
 
 

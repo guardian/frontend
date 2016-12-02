@@ -8,8 +8,9 @@ import play.api.mvc._
 import services.SwitchNotification
 import tools.Store
 import model.NoCache
+import play.api.Environment
 
-class SwitchboardPlistaController(akkaAsync: AkkaAsync) extends Controller with Logging with ExecutionContexts {
+class SwitchboardPlistaController(akkaAsync: AkkaAsync)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
 
   def renderSwitchboard() = Action { implicit request =>
     log.info("loaded plista Switchboard")
@@ -23,7 +24,7 @@ class SwitchboardPlistaController(akkaAsync: AkkaAsync) extends Controller with 
       case _ => Switches.PlistaForOutbrainAU.switchOff()
     }
 
-    NoCache(Ok(views.html.switchboardPlista(Configuration.environment.stage, Switches.PlistaForOutbrainAU, lastModified)))
+    NoCache(Ok(views.html.switchboardPlista(Switches.PlistaForOutbrainAU, lastModified)))
   }
 
   def save() = Action { implicit request =>
