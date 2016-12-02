@@ -121,8 +121,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
             Cached(CacheTime.Facia)(JsonFront(faciaPage))
           else if (request.isEmail) {
             Cached(CacheTime.Facia) {
-           // RevalidatableResult.Ok(InlineStyles(views.html.frontEmail(faciaPage)))
-              RevalidatableResult.Ok(views.html.frontEmail(faciaPage))
+            RevalidatableResult.Ok(InlineStyles(views.html.frontEmail(faciaPage)))
             }
           }
           else {
