@@ -168,7 +168,7 @@ function listrify(steps, {concurrent = false} = {}) {
     return new Listr(listrTasks, {
         concurrent: IS_VERBOSE ? false : concurrent,
         collapse: true,
-        renderer: IS_VERBOSE ? 'verbose' : 'default'
+        renderer: IS_VERBOSE ? require('./run-task-tc-formater') : 'default'
     });
 }
 
