@@ -528,6 +528,7 @@ $header-height: 48px;
         font-size: 12px;
         line-height: 16px;
         color: $neutral-2;
+        margin-top: 3px;
     }
 
     .content__meta-container {
@@ -803,6 +804,13 @@ $header-height: 48px;
 
 .hosted-gallery-page .hosted__cta-btn-text {
     margin-top: $gs-baseline;
+}
+
+.hosted__terms-link {
+    font-size: inherit;
+    border: 0;
+    background: transparent;
+    padding: 0;
 }
 
 .hosted-page--bright {
