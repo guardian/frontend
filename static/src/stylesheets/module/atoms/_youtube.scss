@@ -63,6 +63,10 @@
         }
 	}
 
+    .atom--media--youtube--overlay {
+        pointer-events: none;
+    }
+
 	.atom--media--youtube--placeholder {
 		background-size: cover;
         background-position: 50% 50%;
@@ -76,12 +80,6 @@
 	    height: 100%;
 	    box-sizing: border-box;
 	    text-align: center;
-
-        &:hover {
-            .atom--media--youtube--play-button {
-                transform: translate(-50%, -50%) scale(1.15);
-            }
-        }
 
         .atom--media--youtube--play-button {
             // Magic numbers are used here to draw the play arrow and circle as pseudo elements.

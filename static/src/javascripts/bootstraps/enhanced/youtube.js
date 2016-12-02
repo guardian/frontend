@@ -78,10 +78,6 @@ define([
         };
 
         if (overlay) {
-            overlay.addEventListener('click', function () {
-                event.target.playVideo();
-            });
-
             setDuration(players[atomId].player.getDuration(), overlay);
         }
     }
