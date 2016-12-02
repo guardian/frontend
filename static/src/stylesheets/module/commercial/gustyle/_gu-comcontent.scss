@@ -9,6 +9,10 @@
         @include font-size(13, 10);
         font-weight: normal;
     }
+
+    .hostedbadge {
+        width: 80px;
+    }
 }
 
 .gu-display__hosted-bright .hostedbadge__info {
@@ -226,8 +230,8 @@ $mobile-max-container-width: gs-span(8);
     }
 
     .gu-display__logo-pos--bottom-right {
-        top: -27px;
-        height: 27px;
+        top: -29px;
+        height: 29px;
     }
 
     .gu-display__content {
