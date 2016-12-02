@@ -202,8 +202,10 @@ listrify(taskModules).run({
 }).catch(e => {
     if (e) {
         if (!e.stderr && !e.stdout) console.log(e);
-        if (e.stderr) console.error(`\n${e.stderr.trim()}`);
-        if (e.stdout) console.log(`\n${e.stdout.trim()}`);
+        if (!logEverything) {
+            if (e.stderr) console.error(`\n${e.stderr.trim()}`);
+            if (e.stdout) console.log(`\n${e.stdout.trim()}`);
+        }
     }
     return Object.assign(e.context, {error: true});
 }).then(ctx => {
