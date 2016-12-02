@@ -408,11 +408,6 @@ $minute-headline-colour: #ffffff;
         }
     }
 
-    .svg  & .caption--img:before {
-        @extend %svg-i-camera-white-large !optional;
-        margin-right: 5px;
-    }
-
     // Embeds
 
     .tweet-main-image {

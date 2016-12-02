@@ -5,11 +5,8 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatestplus.play.OneAppPerSuite
-import play.api.Play
 
 class UrlsTest extends FlatSpec with Matchers with OneAppPerSuite {
-
-  Play.unsafeApplication
 
   "Urls" should "be created relative for articles" in {
 
