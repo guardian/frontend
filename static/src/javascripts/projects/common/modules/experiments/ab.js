@@ -11,6 +11,7 @@ define([
     'common/modules/experiments/tests/membership-engagement-international-experiment',
     'common/modules/experiments/tests/contributions-epic-usa-cta-three-way',
     'common/modules/experiments/tests/contributions-epic-observer-anniversary',
+    'common/modules/experiments/tests/contributions-epic-brexit-supreme',
     'common/modules/experiments/tests/uk-membership-engagement-message-test-10',
     'common/modules/experiments/tests/au-membership-engagement-message-test-8'
 ], function (reportError,
@@ -25,6 +26,7 @@ define([
              MembershipEngagementInternationalExperiment,
              ContributionsEpicUsaCtaThreeWay,
              ContributionsEpicObserverAnniversary,
+             ContributionsEpicBrexitSupreme,
              UkMembershipEngagementMessageTest10,
              AuMembershipEngagementMessageTest8
     ) {
@@ -33,6 +35,7 @@ define([
         new MembershipEngagementInternationalExperiment(),
         new ContributionsEpicUsaCtaThreeWay(),
         new ContributionsEpicObserverAnniversary(),
+        new ContributionsEpicBrexitSupreme(),
         new UkMembershipEngagementMessageTest10(),
         new AuMembershipEngagementMessageTest8()
     ];

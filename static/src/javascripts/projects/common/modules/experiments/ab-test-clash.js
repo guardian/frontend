@@ -17,8 +17,13 @@ define([
         variants: ['mixed']
     };
 
+    var ContributionsEpicBrexitSupreme = {
+        name: 'ContributionsEpicBrexitSupreme',
+        variants: ['mixed']
+    };
+
     function userIsInAClashingAbTest() {
-        var clashingTests = [ContributionsEpicUsaCtaThreeWay, ContributionsEpicObserverAnniversary];
+        var clashingTests = [ContributionsEpicUsaCtaThreeWay, ContributionsEpicObserverAnniversary, ContributionsEpicBrexitSupreme];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 
