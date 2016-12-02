@@ -128,18 +128,23 @@ object SubscribeLink {
 trait AmpLinkTo extends LinkTo {
   override lazy val host = Configuration.amp.baseUrl
 
-  def pvBeaconUrl(implicit request: RequestHeader): String = {
-    val beaconHost = Configuration.debug.beaconUrl
-    val isLocalBeacon = beaconHost.isEmpty
-    val path = "count/pv.gif"
-    if (isLocalBeacon) s"//${request.host}/$path" else s"$beaconHost/$path"
-  }
-}
-
-object AmpLinkTo extends AmpLinkTo {
-
   override def processUrl(url: String, edition: Edition) = {
     val ampUrl = if (host.isEmpty) s"$url?amp=1" else url
     super.processUrl(ampUrl, edition)
   }
+
+  private def nonAmpUrl(serviceHost: String, path: String)(implicit request: RequestHeader): String = {
+    val isLocalEnv = serviceHost.isEmpty
+    if (isLocalEnv) s"//${request.host}$path" else s"$serviceHost$path"
+  }
+
+  def pvBeaconUrl(implicit request: RequestHeader): String = {
+    nonAmpUrl(serviceHost = Configuration.debug.beaconUrl, path = "/count/pv.gif")
+  }
+
+  def ajaxUrl(path: String)(implicit request: RequestHeader): String = {
+    nonAmpUrl(serviceHost = Configuration.ajax.url, path)
+  }
 }
+
+object AmpLinkTo extends AmpLinkTo

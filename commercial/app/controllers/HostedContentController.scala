@@ -78,26 +78,9 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit env: 
     renderPage(page)
   }
 
-  def renderOnwardComponent(campaignName: String, pageName: String, contentType: String) = Action.async {
+  private def fetchOnwardComponent(campaignName: String, pageName: String, contentType: String)
+    (onwardView: (Seq[HostedPage], Int, Int, RequestHeader) => RevalidatableResult) = Action.async {
     implicit request =>
-
-      def onwardView(trails: Seq[HostedPage], defaultRowCount: Int, maxRowCount: Int): RevalidatableResult = {
-        if (request.isAmp) {
-          def toJson(trail: HostedPage) = Json.obj(
-            "title" -> trail.title,
-            "url" -> trail.url,
-            "imageUrl" -> trail.imageUrl
-          )
-          JsonComponent {
-            "items" -> JsArray(Seq(Json.obj(
-              "owner" -> trails.headOption.map(_.campaign.owner),
-              "trails" -> JsArray(trails.take(defaultRowCount).map(toJson))
-            )))
-          }
-        } else {
-          JsonComponent(hostedOnwardJourney(trails, defaultRowCount, maxRowCount))
-        }
-      }
 
       val capiResponse = {
         val sectionId = s"advertiser-content/$campaignName"
@@ -117,10 +100,10 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit env: 
           contentType match {
             case "video" =>
               val trails = HostedTrails.fromContent(itemId, results)
-              Cached(cacheDuration)(onwardView(trails, 1, 1))
+              Cached(cacheDuration)(onwardView(trails, 1, 1, request))
             case "article" =>
               val trails = HostedTrails.fromContent(itemId, results)
-              Cached(cacheDuration)(onwardView(trails, 2, 4))
+              Cached(cacheDuration)(onwardView(trails, 2, 4, request))
             case "gallery" =>
               val trails = HostedTrails.fromContent(itemId, trailCount = 2, results)
               Cached(cacheDuration)(JsonComponent(hostedGalleryOnward(trails)))
@@ -131,5 +114,29 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit env: 
           Cached(0)(JsonNotFound())
         }
       }
+  }
+
+  def renderOnwardComponent(campaignName: String, pageName: String, contentType: String) = {
+    fetchOnwardComponent(campaignName, pageName, contentType) {
+      (trails, defaultRowCount, maxRowCount, request) =>
+        JsonComponent(hostedOnwardJourney(trails, defaultRowCount, maxRowCount)(request))(request)
+    }
+  }
+
+  def fetchAmpOnwardComponent(campaignName: String, pageName: String, contentType: String) = {
+    fetchOnwardComponent(campaignName, pageName, contentType) {
+      (trails, defaultRowCount, maxRowCount, request) =>
+        def toJson(trail: HostedPage) = Json.obj(
+          "title" -> trail.title,
+          "url" -> trail.url,
+          "imageUrl" -> trail.imageUrl
+        )
+        JsonComponent {
+          "items" -> JsArray(Seq(Json.obj(
+            "owner" -> trails.headOption.map(_.campaign.owner),
+            "trails" -> JsArray(trails.take(defaultRowCount).map(toJson))
+          )))
+        }(request)
+    }
   }
 }
