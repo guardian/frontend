@@ -233,6 +233,8 @@ $header-height: 48px;
         background-color: #ffffff;
         box-sizing: border-box;
         overflow: scroll;
+        max-width: #{600 - 2 * $gs-gutter};
+        margin: 0 auto;
 
         .survey-icon {
             text-align: center;
