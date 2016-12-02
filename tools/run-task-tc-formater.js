@@ -10,17 +10,15 @@ const render = tasks => {
             if (event.type === 'STATE') {
                 if (task.isPending()) {
                     console.log(`##teamcity[blockOpened name='${task.title}']`);
-                        console.log('##teamcity[message text=\'Running...\']');
                 }
                 if (task.hasFailed()) {
                     console.log(`##teamcity[message text='|'${task.title}|' failed' status='ERROR']`);
                     console.log(`##teamcity[buildProblem description='|'${task.title}|' failed']`);
                 }
                 if (task.isSkipped()) {
-                    console.log('skipping' + task.output);
+                    console.log(task.output);
                 }
                 if (task.isCompleted() && !task.hasFailed() && !task.isSkipped()) {
-                    console.log('##teamcity[message text=\'...done.\']');
                     console.log(`##teamcity[blockClosed name='${task.title}']`);
                 }
             }
