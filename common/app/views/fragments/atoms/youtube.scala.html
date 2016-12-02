@@ -15,24 +15,19 @@
             allowfullscreen="">
             </iframe>
 
-
             @media.posterUrl.map { image =>
                 <div class="atom--media--youtube--overlay">
                     <div class="atom--media--youtube--placeholder" style="background-image: url(@image)"></div>
                     <div class="atom--media--youtube--controls">
                         <div class="atom--media--youtube--play-button">Play Video</div>
-
                         <div class="atom--media--youtube--control-bar">
-
                             <div class="atom--media--youtube--control-bar--content">
                                 <div class="atom--media--youtube--control-bar--icon">
                                     @fragments.inlineSvg("video-icon", "icon")
                                 </div>
-                                <div class="atom--media--youtube--control-bar--duration">
-                                </div>
+                                <div class="atom--media--youtube--control-bar--duration"></div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             }
