@@ -1,6 +1,6 @@
 define(['common/modules/lazyload', 'bonzo'], function (lazyload, bonzo) {
     describe('Lazy Load', function () {
-
+s;
         var $container = bonzo(bonzo.create('<div id="lazy-load-container"></div>')),
             server;
 
@@ -24,7 +24,7 @@ define(['common/modules/lazyload', 'bonzo'], function (lazyload, bonzo) {
                 url: 'fixtures/lazy-load',
                 container: $container[0],
                 success: function () {
-                    expect($container.hasClass('lazylad')).toBeTruthy();
+                    expect($container.hasClass('lazyloaded')).toBeTruthy();
                     expect($container.html()).toBe('<span>foo</span>');
                     done();
                 }
