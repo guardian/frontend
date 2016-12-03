@@ -88,7 +88,7 @@ define([
     function update(newHeight) {
         return fastdom.read(function () {
             topSlotStyles || (topSlotStyles = win.getComputedStyle(topSlot));
-            return newHeight + parseInt(adStyles.paddingTop) + parseInt(adStyles.paddingBottom);
+            return newHeight + parseInt(topSlotStyles.paddingTop) + parseInt(topSlotStyles.paddingBottom);
         })
         .then(resizeStickyBanner);
     }
