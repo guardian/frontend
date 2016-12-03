@@ -9,7 +9,9 @@
     "hyperscript-helpers": "^3.0.0",
     "immutable": "^3.8.1",
     "monapt": "^0.5.4",
-    "virtual-dom": "^2.1.1"
+    "request": "^2.79.0",
+    "virtual-dom": "^2.1.1",
+    "webshot": "^0.18.0"
   },
   "devDependencies": {
     "amphtml-validator": "^1.0.10",
