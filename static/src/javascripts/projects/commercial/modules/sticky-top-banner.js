@@ -57,13 +57,8 @@ define([
         });
     }
 
-    // The height of the top slot changes on 2 occasions:
-    // 1. when the ad is rendered: the ad slot may be manipulated in many ways
-    //    and its geomatry may change
-    // 2. when the ad is dynamically resized: the creative may send a message
-    //    at any point to signal a change of height. Rubicon ads use a legacy
-    //    version of the message system for handling this
-    //
+    // Register a message listener for when the creative wants to resize
+    // its container
     // We also listen for scroll events if we need to, to snap the slot in
     // place when it reaches the end of the header.
     function setupListeners() {
