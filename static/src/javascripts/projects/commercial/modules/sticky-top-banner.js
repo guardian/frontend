@@ -17,7 +17,7 @@ define([
 ) {
     var topSlotId = 'dfp-ad--top-above-nav';
     var updateQueued = false;
-    var win, header, headerHeight, topSlot, topSlotHeight, stickyBanner, scrollY;
+    var win, header, headerHeight, topSlot, topSlotHeight, topSlotStyles, stickyBanner, scrollY;
 
     return {
         init: init,
@@ -84,17 +84,18 @@ define([
     }
 
     function onResize(specs, _, iframe) {
-        update(specs.height, closest(iframe, '.js-ad-slot'));
+        if (topSlot.contains(iframe)) {
+            update(specs.height);
+            messenger.unregister('resize', onResize);
+        }
     }
 
-    function update(newHeight, adSlot) {
-        return adSlot.id === topSlotId ?
-            fastdom.read(function () {
-                var adStyles = win.getComputedStyle(adSlot);
-                return newHeight + parseInt(adStyles.paddingTop) + parseInt(adStyles.paddingBottom);
-            })
-            .then(resizeStickyBanner) :
-            Promise.resolve(-1);
+    function update(newHeight) {
+        return fastdom.read(function () {
+            topSlotStyles || (topSlotStyles = win.getComputedStyle(topSlot));
+            return newHeight + parseInt(adStyles.paddingTop) + parseInt(adStyles.paddingBottom);
+        })
+        .then(resizeStickyBanner);
     }
 
     function onScroll() {
