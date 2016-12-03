@@ -12,7 +12,6 @@ define([
     messenger
 ) {
     var stickyElement = null;
-    var rightSlotId = 'dfp-ad--right';
     var rightSlot;
 
     function stickyMpu($adSlot) {
