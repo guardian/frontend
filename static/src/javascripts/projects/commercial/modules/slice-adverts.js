@@ -17,7 +17,6 @@ define([
 ) {
     var containerSelector = '.fc-container:not(.fc-container--commercial)';
     var sliceSelector = '.js-fc-slice-mpu-candidate';
-    var containerGap = 1;
 
     return {
         init: init
@@ -28,13 +27,8 @@ define([
             return Promise.resolve(false);
         }
 
-        var prefs               = userPrefs.get('container-states') || {};
-        var isMobile            = detect.isBreakpoint({max : 'phablet'});
-        var isNetworkFront      = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
-        // The server-rendered top slot is above nav. For mobile, we remove that server-rendered top slot,
-        // and substitute it with a slot that accepts both ordinary MPUs and the 'fabric' ads (88x71s) that take the
-        // top slot in responsive takeovers. Beware, this substitute slot is still called 'top-above-nav'.
-        var replaceTopSlot      = (config.page.isFront && isMobile);
+        var prefs = userPrefs.get('container-states') || {};
+        var isMobile = detect.isBreakpoint({ max : 'phablet' });
 
         // Get all containers
         containers = qwery(containerSelector)
@@ -47,7 +41,7 @@ define([
             return Promise.resolve(false);
         }
 
-        return replaceTopSlot ?
+        return isMobile ?
              insertOnMobile(containers, getSlotNameOnMobile) :
              insertOnDesktop(containers, getSlotNameOnDesktop);
     }
