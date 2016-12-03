@@ -60,7 +60,7 @@ define([
         it('should add listeners and classes', function (done) {
             sticky.init(moduleName, mockWindow)
             .then(function () {
-                expect(register.calls.count()).toBe(2);
+                expect(register.calls.count()).toBe(1);
                 expect(mockWindow.addEventListener).toHaveBeenCalled();
                 expect(header.classList.contains('l-header--animate')).toBe(true);
                 expect(stickyBanner.classList.contains('sticky-top-banner-ad--animate')).toBe(true);
