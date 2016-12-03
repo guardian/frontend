@@ -80,7 +80,13 @@ define([
 
     // On destkop, a slot is inserted when there is a slice available
     function insertOnDesktop(containers, getSlotName) {
-        var slots = containers
+        var isNetworkFront = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
+        var slots;
+
+        // Remove first container on network fronts
+        containers = containers.slice(isNetworkFront ? 1 : 0);
+
+        slots = containers
         // get all ad slices
         .reduce(function (result, container) {
             var slice = container.querySelector(sliceSelector);
