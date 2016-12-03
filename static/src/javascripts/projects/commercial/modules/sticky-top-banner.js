@@ -39,6 +39,7 @@ define([
             // Second, start listening for height and scroll changes
             .then(setupListeners);
         } else {
+            topSlot = null;
             return Promise.resolve();
         }
     }
