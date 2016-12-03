@@ -53,11 +53,14 @@ define([
 
             var excludedKeywordIds = [];
 
+            var excludedSeriesIds = ['theobserver/series/the-observer-at-225'];
+
             var tagsMatch = function() {
                 var pageKeywords = config.page.keywordIds;
                 if (typeof(pageKeywords) !== 'undefined') {
                     var keywordList = pageKeywords.split(',');
                     return intersection(excludedKeywordIds, keywordList).length == 0 &&
+                        excludedSeriesIds.indexOf(config.page.seriesId) === -1 &&
                         (intersection(includedKeywordIds, keywordList).length > 0 || includedSeriesIds.indexOf(config.page.seriesId) !== -1);
                 } else {
                     return false;

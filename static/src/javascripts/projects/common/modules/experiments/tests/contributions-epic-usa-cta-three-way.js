@@ -55,7 +55,7 @@ define([
                 'us-news/series/diy-abortion-in-america'
             ];
 
-            var excludedKeywordIds = ['music/leonard-cohen'];
+            var excludedKeywordIds = ['music/leonard-cohen', 'politics/eu-referendum'];
 
             var hasKeywordsMatch = function() {
                 var pageKeywords = config.page.keywordIds;
