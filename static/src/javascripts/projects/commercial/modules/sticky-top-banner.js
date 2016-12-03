@@ -67,7 +67,6 @@ define([
     // We also listen for scroll events if we need to, to snap the slot in
     // place when it reaches the end of the header.
     function setupListeners() {
-        messenger.register('set-ad-height', onRubiconResize);
         messenger.register('resize', onResize);
         if (!config.page.hasSuperStickyBanner) {
             win.addEventListener('scroll', onScroll);
@@ -82,15 +81,6 @@ define([
             })
             .then(resizeStickyBanner);
         }
-    }
-
-    function onRubiconResize(specs, _, iframe) {
-        update(parseInt(specs.height), closest(iframe, '.js-ad-slot'))
-        .then(function (ret) {
-            if( ret > -1 ) {
-                messenger.unregister('set-ad-height', onRubiconResize);
-            }
-        });
     }
 
     function onResize(specs, _, iframe) {
