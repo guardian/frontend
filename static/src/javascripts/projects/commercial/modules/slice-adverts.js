@@ -17,6 +17,7 @@ define([
 ) {
     var containerSelector = '.fc-container:not(.fc-container--commercial)';
     var sliceSelector = '.js-fc-slice-mpu-candidate';
+    var isNetworkFront = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
 
     return {
         init: init
@@ -48,10 +49,11 @@ define([
 
     // On mobile, a slot is inserted after each container
     function insertOnMobile(containers, getSlotName) {
+        var hasThrasher = containers[0].classList.contains('fc-container--thrasher');
         var slots;
 
         // Remove first container if it is a thrasher, and limit to max 10 MPUs
-        containers = containers.slice(containers[0].classList.contains('fc-container--thrasher') ? 1 : 0, 10);
+        containers = containers.slice(isNetworkFront && hasThrasher ? 1 : 0, 10);
 
         slots = containers
         .map(function (container, index) {
@@ -80,7 +82,6 @@ define([
 
     // On destkop, a slot is inserted when there is a slice available
     function insertOnDesktop(containers, getSlotName) {
-        var isNetworkFront = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
         var slots;
 
         // Remove first container on network fronts
