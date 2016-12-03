@@ -48,10 +48,12 @@ define([
 
     // On mobile, a slot is inserted after each container
     function insertOnMobile(containers, getSlotName) {
+        var slots;
+
         // Remove first container if it is a thrasher, and limit to max 10 MPUs
         containers = containers.slice(containers[0].classList.contains('fc-container--thrasher') ? 1 : 0, 10);
 
-        adSlots = containers
+        slots = containers
         .map(function (container, index) {
             var adName = getSlotName(index);
             var classNames = ['container-inline', 'mobile'];
@@ -70,7 +72,7 @@ define([
         });
 
         return fastdom.write(function () {
-            adSlots.forEach(function (slot, index) {
+            slots.forEach(function (slot, index) {
                 containers[index].parentNode.insertBefore(slot, containers[index].nextSibling);
             });
         });
