@@ -85,7 +85,7 @@ define([
         var slots;
 
         // Remove first container on network fronts
-        containers = containers.slice(isNetworkFront ? 1 : 0);
+        containers = containers.slice(isNetworkFront ? 1 : 0, 10);
 
         slots = containers
         // get all ad slices
