@@ -15,7 +15,7 @@ define([
     userPrefs,
     commercialFeatures
 ) {
-    var containerSelector = '.fc-container';
+    var containerSelector = '.fc-container:not(.fc-container--commercial)';
     var sliceSelector = '.js-fc-slice-mpu-candidate';
     var containerGap = 1;
 
