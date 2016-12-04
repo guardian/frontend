@@ -1,20 +1,14 @@
-const request = require('request');
+const tcpp = require('tcp-ping');
+const pify = require('pify');
 
-function checkNetwork() {
-    return new Promise((resolve, reject) => {
-        request('http://www.theguardian.com', {
-            timeout: 30000
-        }, (err, response) => {
-            if (!err && response.statusCode == 200) {
-                return resolve('Network found');
-            } else {
-                return reject(new Error('Couldn\`t hit the network - is your server running?'));
-            }
-        });
-    });
-}
+const domain = 'localhost';
+const port = 9000;
 
 module.exports = {
-    description: 'Checking the network...',
-    task: checkNetwork
+    description: `Probing ${domain} on port ${port}...`,
+    task: () => pify(tcpp.probe, {multiArgs: true})(domain, port).then((result) => {
+        if (!result[0]) {
+            throw new Error('Cannot reach the network - is your server running?');
+        }
+    })
 };
