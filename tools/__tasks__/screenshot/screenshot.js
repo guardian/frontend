@@ -1,4 +1,5 @@
 const webshot = require('webshot');
+const pify = require('pify');
 
 /**
  * TODO
@@ -7,13 +8,6 @@ const webshot = require('webshot');
  *  - Generate copy paste into github
  *  - Screenshot 'components' by classname (captureSelector)
  */
-const webshotOptions = {
-        shotSize: {
-            width: 'window',
-            height: 'all'
-        },
-        timeout: 120000 // We're going to wait two minutes before bailing on the screenshot
-    };
 
 const {paths, breakpoints, host, screenshotsDir} = require('./config');
 
@@ -22,27 +16,25 @@ function takeScreenshots() {
         paths.map((path) => {
             return Object.keys(breakpoints).map((breakpointName) => {
 
-                const options = Object.assign({}, webshotOptions, {
+                const options = {
+                    shotSize: {
+                        width: 'window',
+                        height: 'all'
+                    },
+                    timeout: 120000, // We're going to wait two minutes before bailing on the screenshot
                     windowSize: {
                         width: breakpoints[breakpointName]
                     }
-                });
+                }
 
                 return {
                     description: `Screenshotting ${path} on ${breakpointName}`,
-                    task: () => {
-                        return new Promise((resolve, reject) => {
-                            return webshot(host + path, `${screenshotsDir}/${encodeURIComponent(path)}/${breakpointName}.png`, options, (err) => {
-                                if (err) {
-                                    return reject(err);
-                                } else {
-                                    return resolve();
-                                }
-                            });
-                        });
-                    }
+                    task: () => pify(webshot)(host + path, `${screenshotsDir}/${encodeURIComponent(path)}/${breakpointName}.png`, options).then((err) => {
+                       if (err) {
+                           throw new Error(err);
+                       }
+                    })
                 };
-
             });
         });
 
