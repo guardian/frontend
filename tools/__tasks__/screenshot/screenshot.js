@@ -7,25 +7,6 @@ const webshot = require('webshot');
  *  - Generate copy paste into github
  *  - Screenshot 'components' by classname (captureSelector)
  */
-const environment = 'prod'; // Hardcode this for the moment
-const domain = {
-        prod: 'www.theguardian.com',
-        code: 'm.code.dev-theguardian.com',
-        dev: 'localhost:9000'
-    }[environment];
-const host = 'http://' + domain + '/';
-const paths = [
-        'uk',
-        'us',
-        'au'
-    ];
-const breakpoints = {
-        wide: 1300,
-        desktop: 980,
-        tablet: 740,
-        mobile: 320
-    };
-const screenshotsDir = 'screenshots';
 const webshotOptions = {
         shotSize: {
             width: 'window',
@@ -34,7 +15,7 @@ const webshotOptions = {
         timeout: 120000 // We're going to wait two minutes before bailing on the screenshot
     };
 
-
+const {paths, breakpoints, host, screenshotsDir} = require('./config');
 
 function takeScreenshots() {
     const taskArray =
