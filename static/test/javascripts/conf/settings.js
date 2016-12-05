@@ -1,7 +1,7 @@
 var isTeamcityReporterEnabled = process.env.TEAMCITY === 'true',
-     karmaReporters = [ isTeamcityReporterEnabled ? 'teamcity' : 'teamcity' ];
+    karmaReporters = [ isTeamcityReporterEnabled ? 'teamcity' : 'spec' ];
 
- module.exports = function (config) {
+module.exports = function (config) {
     return {
         // root of project
         basePath: './../../../../',
