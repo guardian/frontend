@@ -544,6 +544,17 @@ import collection.JavaConversions._
       }
     }
 
+    scenario("Twitter cards for live blogs") {
+      Given("I am on an article that is a live blog")
+      goTo("/us-news/live/2016/nov/11/donald-trump-news-us-politics-live") { browser =>
+        import browser._
+        Then("I should still see a large image twitter card")
+        $("meta[name='twitter:site']").getAttributes("content").head should be("@guardian")
+        $("meta[name='twitter:card']").getAttributes("content").head should be("summary_large_image")
+        $("meta[name='twitter:app:url:googleplay']").getAttributes("content").head should startWith("guardian://www.theguardian.com/us-news")
+      }
+    }
+
     scenario("Canonical url") {
       Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
       goTo("/world/2013/sep/15/obama-rouhani-united-nations-meeting?view=mobile") { browser =>

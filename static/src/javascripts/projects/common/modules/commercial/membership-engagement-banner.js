@@ -99,7 +99,7 @@ define([
                     fearless_10: 'We need you to help support our fearless independent journalism. Become a Guardian Australia member for just $10 a month',
                     stories_that_matter: 'We need your help to tell the stories that matter. Support Guardian Australia now',
                     power_to_account: 'We need your help to hold power to account. Become a Guardian Australia supporter',
-                    independent_journalism: 'Support quality, independent journalism in Australia by becoming a supporter'
+                    independent_journalism: 'Support quality, independent journalism in Australia by becoming a member'
                 };
                 var campaignCode = 'gdnwb_copts_mem_banner_aubanner__' + variant;
                 content.campaignCode = campaignCode;
