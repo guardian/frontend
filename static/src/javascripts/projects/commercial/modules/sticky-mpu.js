@@ -12,12 +12,14 @@ define([
     messenger
 ) {
     var stickyElement = null;
-    var rightSlotId = 'dfp-ad--right';
+    var rightSlot;
 
     function stickyMpu($adSlot) {
         if ($adSlot.data('name') !== 'right' || stickyElement) {
             return;
         }
+
+        rightSlot = $adSlot[0];
 
         var referenceElement = document.querySelector(config.page.hasShowcaseMainElement ? '.media-primary' : '.content__article-body,.js-liveblog-body-content');
         if (!referenceElement) {
@@ -35,19 +37,15 @@ define([
             var options = config.page.isAdvertisementFeature ? {top: 43} : {};
             stickyElement = new Sticky($adSlot[0], options);
             stickyElement.init();
-            messenger.register('set-ad-height', onAppNexusResize);
+            messenger.register('resize', onResize);
             return stickyElement;
         });
     }
 
-    function onAppNexusResize(specs, _, iframe) {
-        var adSlot = closest(iframe, '.js-ad-slot');
-        if (adSlot.id === rightSlotId) {
-            messenger.unregister('set-ad-height', onAppNexusResize);
-            fastdom.write(function () {
-                iframe.style.height = specs.height + 'px';
-                stickyElement.updatePosition();
-            });
+    function onResize(specs, _, iframe) {
+        if (rightSlot.contains(iframe)) {
+            messenger.unregister('resize', onResize);
+            stickyElement.updatePosition();
         }
     }
 
