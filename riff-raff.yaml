@@ -9,7 +9,7 @@ templates:
     parameters:
       bucket: aws-frontend-artifacts
     dependencies:
-    - static
+    - frontend-static
 
 deployments:
   admin:
