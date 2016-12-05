@@ -18,27 +18,13 @@
             @if(header.kicker.isDefined) {
                 <span class="kicker-separator">/</span>
             }
-            @if(header.isGallery) {
-              @if(request.getQueryString("format").contains("email-connected")) {
-                @icon("gallery-connected")
-              } else {
-                @icon("gallery")
-              }
+
+            @defining(if (request.getQueryString("format").contains("email-connected")) "-connected" else "") { suffix =>
+                @if(header.isGallery) { @icon("gallery" + suffix) }
+                @if(header.isAudio) { @icon("podcast" + suffix) }
+                @if(header.isVideo) { @icon("video" + suffix) }
             }
-            @if(header.isAudio) {
-              @if(request.getQueryString("format").contains("email-connected")) {
-                @icon("podcast-connected")
-              } else {
-                @icon("podcast")
-              }
-            }
-            @if(header.isVideo) {
-              @if(request.getQueryString("format").contains("email-connected")) {
-                @icon("video-connected")
-              } else {
-                @icon("video")
-              }
-            }
+
             @if(header.quoted) {
                 @pressedContent.card.cardStyle match {
                     case Feature => { @icon("quote-feature") }
