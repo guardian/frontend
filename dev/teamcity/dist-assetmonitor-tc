@@ -4,6 +4,6 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-node ./tools/asset-monitor
+./grunt-tc assetmonitor:common
 
-exit 0 #always ignore a failure
+exit 0 #always ignore grunt tasks result
