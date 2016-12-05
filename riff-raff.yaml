@@ -43,7 +43,7 @@ deployments:
     template: frontend
   sport:
     template: frontend
-  static:
+  frontend-static:
     type: aws-s3
     parameters:
       bucket: aws-frontend-static
