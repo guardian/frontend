@@ -59,6 +59,7 @@ final case class CrosswordSearchPage(override val metadata: MetaData) extends St
     "Beale",
     "Biggles",
     "Boatman",
+    "Bogus",
     "Bonxie",
     "Brendan",
     "Brummie",
@@ -96,14 +97,17 @@ final case class CrosswordSearchPage(override val metadata: MetaData) extends St
     "Picaroon",
     "Pinkie",
     "Plodge",
+    "Provis",
     "Puck",
     "Qaos",
     "Quantum",
     "Rover",
     "Rufus",
+    "Screw",
     "Shed",
     "Taupi",
     "Tramp",
-    "Troll"
+    "Troll",
+    "Vlad"
   )
 }
