@@ -53,7 +53,8 @@
     ***************************************************************************************@
     @for(tracker <- Seq(GoogleAnalyticsAccount.editorialProd, GoogleAnalyticsAccount.editorialTest)) {
         ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName', {
-            'sampleRate': @{ if (env.mode == Dev) 100 else tracker.samplePercentage }
+            'sampleRate': @{ if (env.mode == Dev) 100 else tracker.samplePercentage },
+            'siteSpeedSampleRate': @{ if (env.mode == Dev) 100 else tracker.siteSpeedSamplePercentage }
         });
     }
 

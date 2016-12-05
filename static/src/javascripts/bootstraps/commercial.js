@@ -26,7 +26,8 @@ define([
     'commercial/modules/third-party-tags',
     'commercial/modules/paidfor-band',
     'commercial/modules/paid-containers',
-    'commercial/modules/dfp/performance-logging'
+    'commercial/modules/dfp/performance-logging',
+    'common/modules/analytics/google'
 ], function (
     Promise,
     config,
@@ -55,7 +56,8 @@ define([
     thirdPartyTags,
     paidforBand,
     paidContainers,
-    performanceLogging
+    performanceLogging,
+    ga
 ) {
     var primaryModules = [
         ['cm-thirdPartyTags', thirdPartyTags.init],
@@ -77,6 +79,9 @@ define([
         ['cm-ready', function () {
             mediator.emit('page:commercial:ready');
             userTiming.mark('commercial end');
+            robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
+                ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
+            });
             return Promise.resolve();
         }]
     ];
@@ -141,6 +146,9 @@ define([
             }
 
             userTiming.mark('commercial start');
+            robust.catchErrorsAndLog('ga-user-timing-commercial-start', function () {
+                ga.trackPerformance('Javascript Load', 'commercialStart', 'Commercial start parse time');
+            });
 
             // Stub the command queue
             window.googletag = { cmd: [] };

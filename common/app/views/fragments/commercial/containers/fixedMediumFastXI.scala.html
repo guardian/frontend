@@ -10,16 +10,11 @@
                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
                             optAdvertClassNames = Some(Seq("paidfor")),
                             useCardBranding = !containerModel.isSingleSponsorContainer))
-    @containerModel.content.initialCards.slice(1, 2).map(card => views.html.fragments.commercial.cards.itemCard(
+    @containerModel.content.initialCards.slice(1, 3).map(card => views.html.fragments.commercial.cards.itemCard(
                             card,
                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
                             optAdvertClassNames = Some(Seq("paidfor")),
-                            useCardBranding = !containerModel.isSingleSponsorContainer))
-    @containerModel.content.initialCards.slice(2, 3).map(card => views.html.fragments.commercial.cards.itemCard(
-                            card,
-                            omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
-                            optClassNames = Some(Seq("hide-until-tablet")),
-                            optAdvertClassNames = Some(Seq("paidfor")),
+                            minimiseOnMobile = true,
                             useCardBranding = !containerModel.isSingleSponsorContainer))
 </div>
 <div class="adverts__row hide-until-tablet">
