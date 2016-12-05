@@ -7,7 +7,7 @@ define([
     var cases = [{
         entries: ['', '', '', '', 'l', '', 'e'],
         word: 'liberal',
-        expected: [{ value: 'l', entred: true }, { value: 'i', entered: false }, { value: 'b', entered: false }, { value: 'e', entered: true }, { value: 'r', entered: false }, { value: 'a', entered: false }, { value: 'l', entered: false }]
+        expected: [{ value: 'l', entered: true }, { value: 'i', entered: false }, { value: 'b', entered: false }, { value: 'e', entered: true }, { value: 'r', entered: false }, { value: 'a', entered: false }, { value: 'l', entered: false }]
     },
 
     // when there's an incorrect entry we should still highlight the correct ones
