@@ -73,7 +73,7 @@
     "postcss": "^5.2.6",
     "postcss-atomised": "^0.3.1",
     "postcss-pxtorem": "^3.3.1",
-    "postcss-reporter": "^2.0.0",
+    "postcss-reporter": "^1.4.1",
     "require-dir": "^0.3.0",
     "requirejs": "^2.3.2",
     "rimraf": "^2.5.4",
