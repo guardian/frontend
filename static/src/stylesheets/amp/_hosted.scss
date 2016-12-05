@@ -446,7 +446,6 @@ $badge-width: 80px;
     .media-primary.media-primary--showcase {
         position: relative;
         height: 378px;
-        margin-bottom: 10px;
         background-size: cover;
         background-position: center center;
         &::after {
@@ -466,15 +465,12 @@ $badge-width: 80px;
         color: #ffffff;
     }
 
-    .gs-container {
-        height: 100%;
-    }
-
     .title {
         @include side-margins;
+        margin-bottom: $gs-baseline;
         position: absolute;
         z-index: 3;
-        bottom: 20px;
+        bottom: 0;
         color: #ffffff;
         font-size: 32px;
         line-height: 36px;
@@ -498,7 +494,7 @@ $badge-width: 80px;
     }
 
     .content__meta-container {
-        margin-top: #{4 * $gs-baseline}
+        margin-top: $gs-baseline
     }
 
     .meta__extras {
@@ -536,6 +532,10 @@ $badge-width: 80px;
 
     h1 {
         line-height: 28px;
+    }
+
+    .hosted__standfirst {
+        margin-bottom: $gs-baseline
     }
 
     .hosted__terms {
