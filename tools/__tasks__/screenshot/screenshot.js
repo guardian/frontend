@@ -9,7 +9,7 @@ const pify = require('pify');
  *  - Screenshot 'components' by classname (captureSelector)
  */
 
-const {paths, breakpoints, host, screenshotsDir} = require('./config');
+const {paths, breakpoints, host, screenshotsDir, environment} = require('./config');
 
 function takeScreenshots() {
     const taskArray =
@@ -24,8 +24,9 @@ function takeScreenshots() {
                     timeout: 120000, // We're going to wait two minutes before bailing on the screenshot
                     windowSize: {
                         width: breakpoints[breakpointName]
-                    }
-                }
+                    },
+                    takeShotOnCallback: environment === 'dev' ? true : false
+                };
 
                 return {
                     description: `Screenshotting ${path} on ${breakpointName}`,

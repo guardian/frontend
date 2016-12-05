@@ -23,6 +23,7 @@ const paths = [
 ];
 
 module.exports = {
+    environment: environment,
     domain: domain,
     port: port,
     host: host,
