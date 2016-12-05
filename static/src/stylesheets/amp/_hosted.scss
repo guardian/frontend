@@ -1,4 +1,6 @@
 $header-height: 48px;
+$thumb-width: 90px;
+$badge-width: 80px;
 
 .hosted-page {
     @include f-textSans;
@@ -370,14 +372,14 @@ $header-height: 48px;
 
 .hosted__next-page-thumb {
     height: 54px;
-    width: 90px;
+    width: $thumb-width;
     object-fit: cover;
     position: absolute;
     margin-right: 6px;
 }
 
 .hosted__next-page-title {
-    margin: 0 0 0 90px;
+    margin: 0 0 0 $thumb-width;
 }
 
 .hosted__header {
@@ -406,7 +408,7 @@ $header-height: 48px;
     align-self: flex-end;
     position: relative;
     margin-left: 20px;
-    width: 80px;
+    width: $badge-width;
     z-index: 1015;
 }
 
@@ -640,7 +642,8 @@ $header-height: 48px;
 
 .hosted-gallery-page__main-body {
     position: absolute;
-    max-width: 800px;
+    /* allow for landscape view */
+    max-width: 768px;
     top: 0;
     bottom: 0;
     left: 0;
