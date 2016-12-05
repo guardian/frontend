@@ -7,6 +7,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-its-raining-inline-ads",
+    "Display more inline ads on the wide breakpoint",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 14),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-membership-engagement-international-experiment",
     "Test varying the number of visits before showing the membership engagement banner",
     owners = Seq(Owner.withGithub("rupert.bates")),
