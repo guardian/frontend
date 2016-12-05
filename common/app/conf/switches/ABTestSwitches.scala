@@ -11,7 +11,7 @@ trait ABTestSwitches {
     "Test varying the number of visits before showing the membership engagement banner",
     owners = Seq(Owner.withGithub("rupert.bates")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 1, 15),
+    sellByDate = new LocalDate(2017, 1, 16),
     exposeClientSide = true
   )
 
