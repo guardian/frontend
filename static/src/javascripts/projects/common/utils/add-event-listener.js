@@ -6,7 +6,7 @@ define(function () {
                 supportsOptions = true;
             }
         });
-        window.addEventListener("test", null, opts);
+        window.addEventListener('test', null, opts);
     } catch (e) { /* noop */ }
 
     return addEventListener;
@@ -19,7 +19,7 @@ define(function () {
         } else if (options.once) {
             node.addEventListener(eventName, function boundEventHandler(evt) {
                 eventHandler.call(this, evt);
-                node.removeEventListener(eventName, boundEventHandler)
+                node.removeEventListener(eventName, boundEventHandler);
             }, options.capture);
         } else {
             node.addEventListener(eventName, eventHandler, options.capture);
