@@ -32,7 +32,17 @@ define([
                 success: success.bind(this)
             },
             {
-                id: 'shower',
+                id: 'geo',
+                test: function () {},
+                success: success.bind(this)
+            },
+            {
+                id: 'nogeo',
+                test: function () {},
+                success: success.bind(this)
+            },
+            {
+                id: 'none',
                 test: function () {},
                 success: success.bind(this)
             }

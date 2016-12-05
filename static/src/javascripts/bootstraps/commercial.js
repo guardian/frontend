@@ -131,7 +131,7 @@ define([
 
     function isItRainingAds() {
         var testName = 'ItsRainingInlineAds';
-        return ab.testCanBeRun(testName) && ab.getTestVariantId(testName) === 'shower';
+        return ab.testCanBeRun(testName) && ['geo', 'nogeo'].indexOf(ab.getTestVariantId(testName)) > -1;
     }
 
     return {
