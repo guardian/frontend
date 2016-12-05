@@ -32,6 +32,7 @@
 	}
 
 	.youtube-media-atom__iframe {
+        top: 1px;
 		z-index: 0;
 
         &:not(.youtube__video-ready),
