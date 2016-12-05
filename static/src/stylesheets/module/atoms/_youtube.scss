@@ -20,47 +20,46 @@
     transition: opacity 1s linear, visibility 1s;
 }
 
-.atom--media--youtube {
+.youtube-media-atom {
 	position: relative;
 
-	.atom--media--youtube--iframe,
-	.atom--media--youtube--overlay,
-	.atom--media--youtube--placeholder {
+	.youtube-media-atom__iframe,
+	.youtube-media-atom__overlay,
+	.youtube-media-atom__placeholder {
         height: 100%;
         width: 100%;
         position: absolute;
 	}
 
-	.atom--media--youtube--iframe {
-		top: 1px;
-        z-index: 0;
+	.youtube-media-atom__iframe {
+		z-index: 0;
 
         &:not(.youtube__video-ready),
         &.youtube__video-ended {
-            ~ .atom--media--youtube--overlay {
-                .atom--media--youtube--play-button,
-                .atom--media--youtube--bottom-bar {
+            ~ .youtube-media-atom__overlay {
+                .youtube-media-atom__play-button,
+                .youtube-media-atom__bottom-bar {
                      @include hide;
                 }
             }
         }
 
         &.youtube__video-ready:not(.youtube__video-started) {
-            ~ .atom--media--youtube--overlay {
+            ~ .youtube-media-atom__overlay {
                 cursor: pointer;
 
-                .atom--media--youtube--play-button,
-                .atom--media--youtube--bottom-bar {
+                .youtube-media-atom__play-button,
+                .youtube-media-atom__bottom-bar {
                     @include fade-in;    
                 }
             }
         }
 
         &.youtube__video-started:not(.youtube__video-ended) {
-            ~ .atom--media--youtube--overlay {
-                .atom--media--youtube--placeholder,
-                .atom--media--youtube--play-button,
-                .atom--media--youtube--bottom-bar {
+            ~ .youtube-media-atom__overlay {
+                .youtube-media-atom__placeholder,
+                .youtube-media-atom__play-button,
+                .youtube-media-atom__bottom-bar {
                     @include fade-out;
                     transition-delay: 500ms;
                     transition-duration: 500ms;     
@@ -69,20 +68,20 @@
         }
 
         &.youtube__video-ended.youtube__video-started {
-            ~ .atom--media--youtube--overlay {
-                .atom--media--youtube--play-button,
-                .atom--media--youtube--bottom-bar {
+            ~ .youtube-media-atom__overlay {
+                .youtube-media-atom__play-button,
+                .youtube-media-atom__bottom-bar {
                     @include fade-in;
                 }
             }
         }
 	}
 
-    .atom--media--youtube--overlay {
+    .youtube-media-atom__overlay {
         pointer-events: none;
     }
 
-	.atom--media--youtube--placeholder {
+	.youtube-media-atom__placeholder {
 		background-size: cover;
         background-position: 50% 50%;
         background-repeat: no-repeat;
@@ -90,7 +89,7 @@
         text-align: center;
 	}
 
-    .atom--media--youtube--play-button {
+    .youtube-media-atom__play-button {
         // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
         @include video-play-button-size($vjs-small-button-size);
         position: absolute;
@@ -134,7 +133,7 @@
         }
     }
 
-    .atom--media--youtube--bottom-bar {
+    .youtube-media-atom__bottom-bar {
         position: absolute;
         left: 0;
         bottom: 0;
@@ -164,7 +163,7 @@
         }
     }
 
-    .atom--media--youtube--bottom-bar--icon {
+    .youtube-media-atom__bottom-bar__icon {
         float: left;
         height: 100%;
         width: 30px;
@@ -179,7 +178,7 @@
         }
     }
 
-    .atom--media--youtube--bottom-bar--duration {
+    .youtube-media-atom__bottom-bar__duration {
         @include font($f-sans-serif-text, bold, 16, 34);
         color: $media-default;
         float: left;

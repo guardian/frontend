@@ -6,24 +6,24 @@
     <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
         "u-responsive-ratio" -> true,
         "u-responsive-ratio--hd" -> true,
-        "atom--media--youtube" -> true
+        "youtube-media-atom" -> true
     ))">
 
         @defining(if(!host.isEmpty) "&origin=" + host else "") { origin =>
-            <iframe class="atom--media--youtube--iframe" id="youtube-@media.assets.head.id" width="100%" height="100%"
+            <iframe class="youtube-media-atom__iframe" id="youtube-@media.assets.head.id" width="100%" height="100%"
             src="https://www.youtube.com/embed/@media.assets.head.id?modestbranding=1&enablejsapi=1&rel=0&showinfo=0@origin" frameborder="0"
             allowfullscreen="">
             </iframe>
 
             @media.posterUrl.map { image =>
-                <div class="atom--media--youtube--overlay">
-                    <div class="atom--media--youtube--placeholder" style="background-image: url(@image)"></div>
-                    <div class="atom--media--youtube--play-button">Play Video</div>
-                    <div class="atom--media--youtube--bottom-bar">
-                        <div class="atom--media--youtube--bottom-bar--icon">
+                <div class="youtube-media-atom__overlay">
+                    <div class="youtube-media-atom__placeholder" style="background-image: url(@image)"></div>
+                    <div class="youtube-media-atom__play-button">Play Video</div>
+                    <div class="youtube-media-atom__bottom-bar">
+                        <div class="youtube-media-atom__bottom-bar__icon">
                             @fragments.inlineSvg("video-icon", "icon")
                         </div>
-                        <div class="atom--media--youtube--bottom-bar--duration"></div>
+                        <div class="youtube-media-atom__bottom-bar__duration"></div>
                     </div>
                 </div>
             }

@@ -104,9 +104,8 @@ define([
         return ('0' + time).slice(-2);
     }
 
-
     function setDuration(formattedDuration, overlay) {
-        var durationElem = overlay.querySelector('.atom--media--youtube--bottom-bar--duration');
+        var durationElem = overlay.querySelector('.youtube-media-atom__bottom-bar__duration');
 
         durationElem.innerText = formattedDuration;
     }
@@ -117,10 +116,10 @@ define([
 
     function init() {
         fastdom.read(function () {
-            $('.atom--media--youtube').each(function (el) {
+            $('.youtube-media-atom').each(function (el) {
                 var atomId = el.getAttribute('data-media-atom-id');
                 var iframe = el.querySelector('iframe');
-                var overlay = el.querySelector('.atom--media--youtube--overlay');
+                var overlay = el.querySelector('.youtube-media-atom__overlay');
                 var youtubeId = iframe.id;
 
                 tracking.init(atomId);
