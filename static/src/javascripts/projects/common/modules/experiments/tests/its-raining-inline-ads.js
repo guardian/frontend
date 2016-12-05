@@ -5,16 +5,16 @@ define([
 ) {
     return function () {
         this.id = 'ItsRainingInlineAds';
-        this.start = '2016-11-30';
-        this.expiry = '2017-01-03';
+        this.start = '2016-12-06';
+        this.expiry = '2016-12-13';
         this.author = 'Regis Kuckaertz';
         this.description = 'Compare the performance of two inline ad insertion strategies';
-        this.audience = .5;
+        this.audience = .4;
         this.audienceOffset = 0;
-        this.successMeasure = 'Advertising revenue will go through the roof';
+        this.successMeasure = 'Advertising revenue will go through the roof without impacting viewability and click-through rate';
         this.audienceCriteria = '';
         this.dataLinkNames = '';
-        this.idealOutcome = 'We will make Katherine Le Ruez and Theresa Malone extremely happy';
+        this.idealOutcome = 'We see a sensible increade in ad impressions without noticeable drop in viewability and CTR';
         this.hypothesis = 'The current spacefinder rules are too restrictive and a lot of articles don\'t have a single inline MPU';
 
         this.canRun = function () {
