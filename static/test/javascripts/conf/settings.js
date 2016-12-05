@@ -1,4 +1,7 @@
-module.exports = function (config) {
+var isTeamcityReporterEnabled = process.env.TEAMCITY === 'true',
+     karmaReporters = [ isTeamcityReporterEnabled ? 'teamcity' : 'teamcity' ];
+
+ module.exports = function (config) {
     return {
         // root of project
         basePath: './../../../../',
@@ -38,7 +41,7 @@ module.exports = function (config) {
         captureTimeout: 60000,
         singleRun: false,
 
-        reporters: 'spec',
+        reporters: karmaReporters,
         coverageReporter: {
             reporters: [
                 {
