@@ -9,7 +9,7 @@ import test.ConfiguredTestSuite
 @DoNotDiscover class ResultsListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues with ConfiguredTestSuite {
   "the all results list" - {
     "for today" - {
-      val results = new ResultsList(today, competitions.competitions)
+      val results = ResultsList(today, competitions.competitions)
 
       "matches should be *reverse* ordered by datetime" in {
         val matchDates = results.relevantMatches.map { case (fMatch, _) => fMatch.date }
@@ -33,7 +33,7 @@ import test.ConfiguredTestSuite
     }
 
     "the day after results" - {
-      val results = new ResultsList(today.plusDays(1), competitions.competitions)
+      val results = ResultsList(today.plusDays(1), competitions.competitions)
 
       "should find nothing for 'prevPage'" in {
         results.previousPage should be(None)
@@ -43,7 +43,7 @@ import test.ConfiguredTestSuite
 
   "the competition results list" - {
     "given test competition '500'" - {
-      val results = new CompetitionResultsList(today, competitions.competitions, "500")
+      val results = CompetitionResultsList(today, competitions.competitions, "500")
 
       "should be showing the correct matches from the test data" in {
         results.relevantMatches.map { case (fmatch, _) =>
@@ -68,7 +68,7 @@ import test.ConfiguredTestSuite
     }
 
     "given test competition '100'" - {
-      val results = new CompetitionResultsList(today, competitions.competitions, "100")
+      val results = CompetitionResultsList(today, competitions.competitions, "100")
 
       "should be showing the correct matches from the test data" in {
         results.relevantMatches.map { case (fmatch, _) =>
@@ -85,7 +85,7 @@ import test.ConfiguredTestSuite
   }
 
   "the team results list" - {
-    val results = new TeamResultsList(today, competitions.competitions, spurs.id)
+    val results = TeamResultsList(today, competitions.competitions, spurs.id)
 
     "should be showing the correct matches from the test data" in {
       results.relevantMatches.map { case (fmatch, _) =>

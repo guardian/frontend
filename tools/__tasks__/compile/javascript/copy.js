@@ -11,7 +11,8 @@ module.exports = {
             'omniture/**/*',
             'prebid/**/*',
             'stripe/**/*',
-            'react/**/*'
+            'react/**/*',
+            'ophan/**/*'
         ], path.resolve(target, 'javascripts', 'vendor'), {
             cwd: path.resolve(src, 'javascripts', 'vendor'),
             parents: true,

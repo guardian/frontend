@@ -5,6 +5,7 @@ import common.{Edition, _}
 import contentapi.ContentApiClient
 import controllers.ImageContentPage
 import model.{ApiContent2Is, Content, ImageContent, StoryPackages}
+import play.api.Environment
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 
 import scala.concurrent.Future
@@ -13,7 +14,7 @@ trait ImageQuery extends ConciergeRepository {
 
   val contentApiClient: ContentApiClient
 
-  def image(edition: Edition, path: String)(implicit request: RequestHeader): Future[Either[ImageContentPage, PlayResult]] = {
+  def image(edition: Edition, path: String)(implicit request: RequestHeader, env: Environment): Future[Either[ImageContentPage, PlayResult]] = {
     log.info(s"Fetching image content: $path for edition ${edition.id}")
     val response = contentApiClient.getResponse(contentApiClient.item(path, edition)
       .showFields("all")

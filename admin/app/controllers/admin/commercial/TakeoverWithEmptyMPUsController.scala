@@ -1,30 +1,24 @@
 package controllers.admin.commercial
 
 import common.dfp.TakeoverWithEmptyMPUs
-import conf.Configuration.environment
+import play.api.Environment
 import play.api.i18n.Messages
 import play.api.mvc.{Action, Controller}
 
-class TakeoverWithEmptyMPUsController(implicit val messages: Messages) extends Controller {
+class TakeoverWithEmptyMPUsController(implicit val messages: Messages, env: Environment) extends Controller {
 
   def viewList() = Action { implicit request =>
-    Ok(views.html.commercial.takeoverWithEmptyMPUs(
-      environment.stage, TakeoverWithEmptyMPUs.fetchSorted())
-    )
+    Ok(views.html.commercial.takeoverWithEmptyMPUs(TakeoverWithEmptyMPUs.fetchSorted()))
   }
 
   def viewForm() = Action { implicit request =>
-    Ok(views.html.commercial.takeoverWithEmptyMPUsCreate(
-      environment.stage, TakeoverWithEmptyMPUs.form)
-    )
+    Ok(views.html.commercial.takeoverWithEmptyMPUsCreate(TakeoverWithEmptyMPUs.form))
   }
 
   def create() = Action { implicit request =>
     TakeoverWithEmptyMPUs.form.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.commercial.takeoverWithEmptyMPUsCreate(
-          environment.stage, formWithErrors)
-        )
+        BadRequest(views.html.commercial.takeoverWithEmptyMPUsCreate(formWithErrors))
       },
       takeover => {
         TakeoverWithEmptyMPUs.create(takeover)

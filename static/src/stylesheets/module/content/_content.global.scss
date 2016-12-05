@@ -96,31 +96,9 @@
     text-align: left;
     float: left;
     min-width: 15px; // Min width is the width of the icons
-    padding-right: ($gs-gutter / 2) + 1px;
 
     @include mq($until: leftCol) {
         text-align: right;
-    }
-
-    @include mq(leftCol, wide) {
-        padding-right: 6px;
-    }
-
-    // Use margin-right for the space between penultimate and last child
-    //so that meta-numbers on the right don't have a space if last item
-    // is hidden
-
-    &:nth-last-child(2) {
-        padding-right: 0;
-    }
-
-    &:last-child {
-        margin-left: ($gs-gutter / 2) + 1px;
-        padding-right: 0;
-
-        @include mq(leftCol, wide) {
-            margin-left: 6px;
-        }
     }
 }
 
@@ -164,7 +142,5 @@
 .meta__number:not(.u-h) + .meta__number {
     border-left: 1px solid $neutral-7;
     padding-left: $gs-gutter / 2;
-    @include mq(leftCol, wide) {
-        padding-left: 6px;
-    }
+    margin-left: $gs-gutter / 2;
 }

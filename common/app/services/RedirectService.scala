@@ -40,25 +40,47 @@ class RedirectService extends Logging with ExecutionContexts {
 
   // protocol fixed to http so that lookups to dynamo find existing
   // redirects which were originally all stored as http://...
-  private val expectedSourceProtocol = "http://"
+  private val expectedSourceHost = "http://www.theguardian.com"
   private lazy val tableName = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
 
 
   def destinationFor(source: String): Future[Option[Destination]] =
     ScanamoAsync
-      .get[Destination](DynamoDB.asyncClient)(tableName)('source -> (expectedSourceProtocol + source))
+      .get[Destination](DynamoDB.asyncClient)(tableName)('source -> (expectedSourceHost + source))
       .map({
         case Some(Right(destination)) => Some(destination)
         case _ => None
       })
 
-  def set(destination: Destination) = {
-    log.info(s"Setting redirect in: $tableName to: ${destination.source} -> ${destination.location}")
-    Scanamo.put(DynamoDB.syncClient)(tableName)(destination)
+  private def normaliseSource(source: String): Option[String] = {
+    val FullURL = """(https?://)?www\.theguardian\.com(.*)""".r
+
+    source match {
+      case FullURL(_, path) => Some(expectedSourceHost + path)
+      case _ => None
+    }
   }
 
-  def remove(source: String) = {
-    log.info(s"Removing redirect in: $tableName to: $source")
-    Scanamo.delete(DynamoDB.syncClient)(tableName)('source -> source)
+  private def normaliseDestination(destination: Destination): Option[Destination] = {
+    val pathOnly = normaliseSource(destination.source)
+
+    destination match {
+      case PermanentRedirect(_, location) => pathOnly.map(PermanentRedirect(_, location))
+      case ArchiveRedirect(_, location) => pathOnly.map(ArchiveRedirect(_, location))
+    }
   }
+
+  def set(destination: Destination): Boolean =
+    normaliseDestination(destination).exists { dest =>
+      log.info(s"Setting redirect in: $tableName to: ${dest.source} -> ${dest.location}")
+      Scanamo.put(DynamoDB.syncClient)(tableName)(dest)
+      true
+    }
+
+  def remove(source: String): Boolean =
+    normaliseSource(source).exists { src =>
+      log.info(s"Removing redirect in: $tableName to: $src")
+      Scanamo.delete(DynamoDB.syncClient)(tableName)('source -> src)
+      true
+    }
 }

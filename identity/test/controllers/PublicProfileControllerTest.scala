@@ -8,15 +8,19 @@ import org.mockito.Mockito._
 import org.mockito.Matchers
 import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
-import com.gu.identity.model.{UserDates, PublicFields, User}
+import com.gu.identity.model.{PublicFields, User, UserDates}
 import services.IdentityRequest
-import test.{TestRequest, Fake}
+import test.{Fake, TestRequest, WithTestEnvironment}
 import org.joda.time.DateTime
+
 import scala.concurrent.Future
 import scala.util.Left
 import client.Auth
 
-class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+class PublicProfileControllerTest extends path.FreeSpec
+  with ShouldMatchers
+  with WithTestEnvironment
+  with MockitoSugar {
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val api = mock[IdApiClient]
   val idRequestParser = mock[IdRequestParser]

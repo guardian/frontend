@@ -484,7 +484,7 @@ import collection.JavaConversions._
 
         Then("There should be a placeholder for related content")
         val relatedLink = findFirst("[data-test-id=related-content]")
-        relatedLink.getText() should be (empty)
+        relatedLink.getText should be (empty)
       }
     }
 
@@ -541,6 +541,17 @@ import collection.JavaConversions._
         $("meta[name='twitter:card']").getAttributes("content").head should be("summary_large_image")
         $("meta[name='twitter:app:url:googleplay']").getAttributes("content").head should startWith("guardian://www.theguardian.com/world")
         $("meta[name='twitter:image']").getAttributes("content").head should include("2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg")
+      }
+    }
+
+    scenario("Twitter cards for live blogs") {
+      Given("I am on an article that is a live blog")
+      goTo("/us-news/live/2016/nov/11/donald-trump-news-us-politics-live") { browser =>
+        import browser._
+        Then("I should still see a large image twitter card")
+        $("meta[name='twitter:site']").getAttributes("content").head should be("@guardian")
+        $("meta[name='twitter:card']").getAttributes("content").head should be("summary_large_image")
+        $("meta[name='twitter:app:url:googleplay']").getAttributes("content").head should startWith("guardian://www.theguardian.com/us-news")
       }
     }
 

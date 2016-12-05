@@ -10,6 +10,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with BeforeAndAfterAll
   with WithTestWsClient
   with WithTestFootballClient
+  with WithTestEnvironment
   with FootballTestData {
 
   val matchController = new MatchController(testCompetitionsService)

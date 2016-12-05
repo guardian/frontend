@@ -52,8 +52,8 @@ class SeriesController(contentApiClient: ContentApiClient) extends Controller wi
       .showFields("all")
     ).map { response =>
         response.tag.flatMap { tag =>
-          val trails = response.results.getOrElse(Nil) filterNot (isCurrentStory(_)) map (RelatedContentItem(_))
-          if (!trails.isEmpty) {
+          val trails = response.results.getOrElse(Nil) filterNot isCurrentStory map (RelatedContentItem(_))
+          if (trails.nonEmpty) {
             Some(Series(seriesId, Tag.make(tag,None), RelatedContent(trails)))
           } else { None }
         }

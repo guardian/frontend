@@ -5,11 +5,14 @@ import model.content.{Atoms, MediaAsset, MediaAtom}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
-import test.TestRequest
+import test.{TestRequest, WithTestEnvironment}
 import views.support.AtomsCleaner
 import conf.switches.Switches
 
-class AtomCleanerTest extends FlatSpec with Matchers with FakeRequests {
+class AtomCleanerTest extends FlatSpec
+  with Matchers
+  with WithTestEnvironment
+  with FakeRequests {
   val youTubeAtom = Some(Atoms(quizzes = Nil,
     media = Seq(MediaAtom(id = "887fb7b4-b31d-4a38-9d1f-26df5878cf9c",
       defaultHtml = "<iframe width=\"420\" height=\"315\"\n src=\"https://www.youtube.com/embed/nQuN9CUsdVg\" frameborder=\"0\"\n allowfullscreen=\"\">\n</iframe>",
@@ -32,7 +35,7 @@ class AtomCleanerTest extends FlatSpec with Matchers with FakeRequests {
 
 
  private def clean(document: Document, atom:Option[Atoms], amp: Boolean): Document = {
-    val cleaner = AtomsCleaner(youTubeAtom, shouldFence = false, amp = amp)(TestRequest())
+    val cleaner = AtomsCleaner(youTubeAtom, amp = amp)(TestRequest(), env)
     cleaner.clean(document)
     document
   }
@@ -40,8 +43,9 @@ class AtomCleanerTest extends FlatSpec with Matchers with FakeRequests {
   "AtomsCleaner" should "create YouTube template" in {
     Switches.UseAtomsSwitch.switchOn()
     val result: Document = clean(doc, youTubeAtom, amp = false)
-    result.select("iframe").attr("id") shouldBe("youtube-nQuN9CUsdVg")
+    result.select("iframe").attr("id") shouldBe "youtube-nQuN9CUsdVg"
     result.select("iframe").attr("src") should include("enablejsapi=1")
+    result.select("figcaption").html should include("Bird")
   }
 
   "AtomsCleaner" should "use amp-iframe markup if amp is true" in {

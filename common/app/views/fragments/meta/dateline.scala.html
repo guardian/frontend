@@ -2,7 +2,7 @@
 @import org.joda.time.DateTime
 @import views.support.{AuFriendlyFormat, Format}
 
-@(webPublicationDate: DateTime, lastModified: DateTime, hasBeenModified: Boolean, isLiveBlog: Boolean = false, isLive: Boolean = false, isMinute: Boolean = false)(implicit request: RequestHeader)
+@(webPublicationDate: DateTime, lastModified: DateTime, hasBeenModified: Boolean, firstPublicationDate: Option[DateTime], isLiveBlog: Boolean = false, isLive: Boolean = false, isMinute: Boolean = false)(implicit request: RequestHeader)
 
 <p class="@if(!isMinute){content__dateline}@if(isMinute){content__dateline--minute-article}" aria-hidden="true">
     <time itemprop="datePublished" datetime='@Format(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")'
@@ -16,12 +16,16 @@
     @if(isLiveBlog) {
         <meta itemprop="coverageStartTime" content="@Format(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")">
     }
-    @if(hasBeenModified && !isMinute) {
-        <time itemprop="dateModified" datetime='@Format(lastModified, "yyyy-MM-dd'T'HH:mm:ssZ")'
-        data-timestamp="@lastModified.getMillis" class="content__dateline-lm js-lm u-h">
-            Last modified on @Format(lastModified, "EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(lastModified)</span>
-        </time>
+
+    @if(hasBeenModified && firstPublicationDate.getOrElse("") != webPublicationDate && !isMinute) {
+        @defining(firstPublicationDate.getOrElse(webPublicationDate)) { firstPublicationDate =>
+            <time datetime='@Format(firstPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")'
+            data-timestamp="@firstPublicationDate.getMillis" class="content__dateline-lm js-lm u-h">
+                First published on @Format(firstPublicationDate, "EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(firstPublicationDate)</span>
+            </time>
+        }
     }
+
     @if(isLiveBlog && !isLive) {
         <meta itemprop="coverageEndTime" content="@Format(lastModified, "yyyy-MM-dd'T'HH:mm:ssZ")">
     }

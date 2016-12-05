@@ -206,4 +206,14 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val sonobiSwitch: Switch = Switch(
+    group = SwitchGroup.Commercial,
+    name = "sonobi-header-bidding",
+    description = "Turn on Sonobi header bidding",
+    owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31), //Friday
+    exposeClientSide = true
+  )
+
 }

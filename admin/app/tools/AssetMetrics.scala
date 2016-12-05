@@ -47,7 +47,7 @@ object AssetMetrics {
   }
 
   private def metrics(dimension: Dimension, yLabel: String = "") = metricResults(dimension).map(_.map { result =>
-    new AssetMetric(result.getLabel, result, yLabel)
+    AssetMetric(result.getLabel, result, yLabel)
   })
 
   // Public methods

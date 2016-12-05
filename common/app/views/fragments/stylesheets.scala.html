@@ -1,6 +1,7 @@
-@(projectName: Option[String], isCrossword: Boolean = false)(implicit request: RequestHeader)
+@(projectName: Option[String], isCrossword: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import conf.switches.Switches._
+@import play.api.Mode.Dev
 
 @* any images in head need to go here (or they'll be relative to the page)} *@
 <style class="js-loggable">
@@ -50,7 +51,7 @@
   - Include IE Mobile [|(IEMobile)]
 *@
 <!--[if (gt IE 9)|(IEMobile)]><!-->
-@if(play.Play.isDev() || !InlineCriticalCss.isSwitchedOn) {
+@if(env.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
     <link rel="stylesheet" id="head-css" data-reload="head@projectName.map("." + _).getOrElse(".content")" type="text/css" href="@Static("stylesheets/head" + projectName.map("." + _).getOrElse(".content") + ".css")" />
 } else {
     <style class="js-loggable">

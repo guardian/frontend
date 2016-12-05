@@ -33,8 +33,7 @@ object ThrottledTask extends common.ExecutionContexts {
 class ThrottledTask extends Actor with common.ExecutionContexts {
 
   override def receive = {
-    case exec: ThrottledTask.ExecuteTask => {
+    case exec: ThrottledTask.ExecuteTask =>
       exec.task() pipeTo sender()
-    }
   }
 }

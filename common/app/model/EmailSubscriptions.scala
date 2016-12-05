@@ -207,8 +207,8 @@ object EmailSubscriptions {
       teaser = "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture",
       description = "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture.",
       frequency = "Every Saturday",
-      listId = "3744",
-      subscribedTo = subscribedListIds.exists{ x => x == "3743" || x == "3744" },
+      listId = "3743",
+      subscribedTo = subscribedListIds.exists{ x => x == "3743" },
       tone = Some("feature"),
       signupPage = Some("/signup/weekendreading"),
       exampleUrl = Some("/membership/series/weekend-reading/latest/email")

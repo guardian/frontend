@@ -121,7 +121,7 @@ case class CompetitionResultsList(date: LocalDate, competitions: Seq[Competition
 }
 
 case class TeamResultsList(date: LocalDate, competitions: Seq[Competition], teamId: String, teamUrl:Option[String] = None) extends Results with TeamList {
-  override val baseUrl: String = teamUrl.fold("/football/results")(url => s"${url}/results")
+  override val baseUrl: String = teamUrl.fold("/football/results")(url => s"$url/results")
   override val daysToDisplay = 20
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     fMatch.isResult && fMatch.hasTeam(teamId)

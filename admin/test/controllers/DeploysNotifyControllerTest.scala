@@ -49,7 +49,7 @@ import scala.concurrent.Future
 
   val controller = new DeploysNotifyControllerStub(wsClient)
 
-    s"POST /deploys-radiator/api/builds/${existingBuild}/notify" when {
+    s"POST /deploys-radiator/api/builds/$existingBuild/notify" when {
 
       "No Api key is supplied" should {
         val body = Json.parse("""{"step": "deploy-finished-code",
@@ -60,7 +60,7 @@ import scala.concurrent.Future
                                 | "hookUrl": "https://hooks.slack.com/services/X/Y/Z"
                                 | }}]}""".stripMargin)
         val headers = FakeHeaders(Seq("Content-Type" -> "application/json"))
-        val postNotifyRequest = FakeRequest("POST", s"/deploys-radiator/api/builds/${existingBuild}/notify", headers, body)
+        val postNotifyRequest = FakeRequest("POST", s"/deploys-radiator/api/builds/$existingBuild/notify", headers, body)
         "returns 401" in {
           val response = call(controller.notifyStep(existingBuild), postNotifyRequest)
           status(response) should be(UNAUTHORIZED)
@@ -76,7 +76,7 @@ import scala.concurrent.Future
                                 | "hookUrl": "https://hooks.slack.com/services/X/Y/Z"
                                 | }}]}""".stripMargin)
         val headers = FakeHeaders(Seq("Content-Type" -> "application/json", "X-Gu-Api-Key" -> fakeApiKey))
-        val postNotifyRequest = FakeRequest("POST", s"/deploys-radiator/api/builds/${existingBuild}/notify", headers, body)
+        val postNotifyRequest = FakeRequest("POST", s"/deploys-radiator/api/builds/$existingBuild/notify", headers, body)
         "returns 400" in {
           val response = call(controller.notifyStep(existingBuild), postNotifyRequest)
           status(response) should be(BAD_REQUEST)
@@ -86,7 +86,7 @@ import scala.concurrent.Future
       "notices info is not provided doesn't exist" should {
         val body = Json.parse("""{"step": "deploy-finished-code"}""")
         val headers = FakeHeaders(Seq("Content-Type" -> "application/json", "X-Gu-Api-Key" -> fakeApiKey))
-        val postNotifyRequest = FakeRequest("POST", s"/deploys-radiator/api/builds/${existingBuild}/notify", headers, body)
+        val postNotifyRequest = FakeRequest("POST", s"/deploys-radiator/api/builds/$existingBuild/notify", headers, body)
         "returns 400" in {
           val response = call(controller.notifyStep(existingBuild), postNotifyRequest)
           status(response) should be(BAD_REQUEST)
@@ -99,7 +99,7 @@ import scala.concurrent.Future
                                 | "type": "doesn't exist"
                                 | }]}""".stripMargin)
         val headers = FakeHeaders(Seq("Content-Type" -> "application/json", "X-Gu-Api-Key" -> fakeApiKey))
-        val postNotifyRequest = FakeRequest("POST", s"/deploys-radiator/api/builds/${existingBuild}/notify", headers, body)
+        val postNotifyRequest = FakeRequest("POST", s"/deploys-radiator/api/builds/$existingBuild/notify", headers, body)
         "returns 400" in {
           val response = call(controller.notifyStep(existingBuild), postNotifyRequest)
           status(response) should be(BAD_REQUEST)
@@ -114,7 +114,7 @@ import scala.concurrent.Future
                                 | "username": "TestUser"
                                 | }}]}""".stripMargin)
         val headers = FakeHeaders(Seq("Content-Type" -> "application/json", "X-Gu-Api-Key" -> fakeApiKey))
-        val postNotifyRequest = FakeRequest("POST", s"/deploys-radiator/api/builds/${existingBuild}/notify", headers, body)
+        val postNotifyRequest = FakeRequest("POST", s"/deploys-radiator/api/builds/$existingBuild/notify", headers, body)
         "returns 400" in {
           val response = call(controller.notifyStep(existingBuild), postNotifyRequest)
           status(response) should be(BAD_REQUEST)
@@ -130,7 +130,7 @@ import scala.concurrent.Future
                                 | "hookUrl": "https://hooks.slack.com/services/X/Y/Z"
                                 | }}]}""".stripMargin)
         val headers = FakeHeaders(Seq("Content-Type" -> "application/json", "X-Gu-Api-Key" -> fakeApiKey))
-        val postNotifyRequest = FakeRequest("POST", s"/deploys-radiator/api/builds/${existingBuild}/notify", headers, body)
+        val postNotifyRequest = FakeRequest("POST", s"/deploys-radiator/api/builds/$existingBuild/notify", headers, body)
         "returns 200" in {
           val response = call(controller.notifyStep(existingBuild), postNotifyRequest)
           status(response) should be(OK)
@@ -148,7 +148,7 @@ import scala.concurrent.Future
                                 | "hookUrl": "https://hooks.slack.com/services/X/Y/Z"
                                 | }}]}""".stripMargin)
         val headers = FakeHeaders(Seq("Content-Type" -> "application/json"))
-        val postNotifyRequest = FakeRequest("POST", s"/deploys-radiator/api/builds/${existingBuild}/notify?api-key=${fakeApiKey}", headers, body)
+        val postNotifyRequest = FakeRequest("POST", s"/deploys-radiator/api/builds/$existingBuild/notify?api-key=$fakeApiKey", headers, body)
         "returns 200" in {
           val response = call(controller.notifyStep(existingBuild), postNotifyRequest)
           status(response) should be(OK)

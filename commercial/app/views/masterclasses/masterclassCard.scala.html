@@ -15,10 +15,13 @@
         }
     }
     <div class="advert__meta">
-        <strong>@event.readableDate</strong> &#20; <span class="commercial--tone__highlight">@event.displayPriceRange</span><br/>
+        <strong>@event.readableDate</strong>
+        @for(displayPriceRange <- event.displayPriceRange){&#20; <span class="commercial--tone__highlight">@displayPriceRange</span><br/> }
         @event.venue.description
-        @if(event.ratioTicketsLeft <= 0.1){
-            <br><span class="lineitem__scarcity">Last few tickets remaining</span>
+        @for(ratioTicketsLeft <- event.ratioTicketsLeft) {
+            @if(ratioTicketsLeft <= 0.1) {
+                <br><span class="lineitem__scarcity">Last few tickets remaining</span>
+            }
         }
     </div>
     <span class="advert__more button button--primary button--small">

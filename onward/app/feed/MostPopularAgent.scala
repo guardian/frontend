@@ -12,7 +12,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient) extends Logging with 
 
   private val agent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
-  def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().get(edition.id).getOrElse(Nil)
+  def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().getOrElse(edition.id, Nil)
 
   def refresh() {
     log.info("Refreshing most popular.")
@@ -70,7 +70,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
       Future.sequence(mostRead).map { contentSeq =>
         val validContents = contentSeq.flatten
-        if (validContents.size > 0) {
+        if (validContents.nonEmpty) {
 
           // Add each country code to the map.
           ophanPopularAgent send ( currentMap => {
@@ -94,7 +94,7 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
   private val countries = Seq("GB", "US", "AU")
 
-  def mostPopular(country: String): Seq[RelatedContentItem] = ophanPopularAgent().get(country).getOrElse(Nil)
+  def mostPopular(country: String): Seq[RelatedContentItem] = ophanPopularAgent().getOrElse(country, Nil)
 
   def refresh() {
     log.info("Refreshing most popular for the day.")
@@ -122,7 +122,7 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
       Future.sequence(mostRead).map { contentSeq =>
         val validContents = contentSeq.flatten
-        if (validContents.size > 0) {
+        if (validContents.nonEmpty) {
 
           // Add each country code to the map.
           ophanPopularAgent send ( currentMap => {
@@ -142,7 +142,7 @@ class MostPopularExpandableAgent(contentApiClient: ContentApiClient) extends Log
 
   private val agent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
-  def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().get(edition.id).getOrElse(Nil)
+  def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().getOrElse(edition.id, Nil)
 
   def refresh() {
     log.info("Refreshing most popular.")

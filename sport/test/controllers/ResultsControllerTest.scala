@@ -6,7 +6,7 @@ import play.api.libs.json.JsValue
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import test.{WithTestFootballClient, WithTestWsClient, FootballTestData}
+import test.{FootballTestData, WithTestEnvironment, WithTestFootballClient, WithTestWsClient}
 
 import scala.concurrent.Future
 
@@ -16,6 +16,7 @@ import scala.concurrent.Future
     with FootballTestData
     with WithTestFootballClient
     with BeforeAndAfterAll
+    with WithTestEnvironment
     with WithTestWsClient {
 
   val resultsController = new ResultsController(testCompetitionsService)

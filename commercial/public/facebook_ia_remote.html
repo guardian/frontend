@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+    <script>
+    (function (window, undefined) {
+        var guardian = window.guardian = parseParameters(window.location);
+        var googletag = window.googletag = { cmd: [] };
+        window.Krux || ((window.Krux=function(){Krux.q.push(arguments)}).q=[]);
+        window.config = {
+            pageId: guardian.url,
+            edition: toTitleCase(guardian.edition),
+            seriesId: guardian.se,
+            contentType: toTitleCase(guardian.ct),
+            keywordIds: guardian.keywordIds,
+            keywords: guardian.k.split(',').map(toTitleCase),
+            authorIds: guardian.authorIds,
+            blogIds: guardian.bl,
+            referrer: 'facebook-ia',
+            section: guardian.section
+        };
+
+        function parseParameters(location) {
+            return location.hash.substr(1)
+            .split('&')
+            .reduce(function (result, arg_i) {
+                var arg = arg_i.split("=");
+                var argName = decodeURIComponent(arg[0]);
+                var argValue = decodeURIComponent(arg[1]);
+
+                if (result[argName] !== undefined) {
+                    result[argName] += ',' + argValue;
+                } else {
+                    result[argName] = argValue;
+                }
+
+                return result;
+            }, {});
+        }
+
+        function toTitleCase(str) {
+            return str.replace(/\w\S*/g, function(txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            });
+        }
+    }(window))
+    </script>
+    <script async class="kxct" data-id="J_RxuxWJ" data-timing="async" data-version="1.9" src="https://cdn.krxd.net/controltag?confid=J_RxuxWJ"></script>
+    <script async src="https://www.googletagservices.com/tag/js/gpt.js"></script>
+</head>
+<body style="margin:0">
+    <div id="ad-slot-1"></div>
+    <script>
+    (function (window, localStorage, guardian) {
+        var dfpConfig = {
+            url: guardian.url,
+            edition: guardian.edition.toLowerCase(),
+            se: guardian.se,
+            ct: guardian.ct,
+            co: guardian.authorIds,
+            bl: guardian.bl,
+            k: guardian.k.split(','),
+            at: guardian.at
+        };
+
+        insertAd();
+
+        function buildSegments(slot) {
+            var kruxSegments = localStorage.getItem('kxsegs');
+            if (kruxSegments !== null) {
+                slot.setTargeting('x', kruxSegments.split(','));
+            }
+        }
+
+        function buildTargetSize(sizes) {
+            return sizes
+            .split(',')
+            .map(function (size) {
+                return size === 'fluid' ? 'fluid' : size.split('x').map(Number)
+            });
+        }
+
+        function buildCustomTargeting(slot) {
+            var attr, i, key, len, match, value;
+            var ref = Object.keys(guardian);
+            for (i = 0, len = ref.length; i < len; i++) {
+                attr = ref[i];
+                match = attr.indexOf('data-ad-target-') === 0;
+                if (match) {
+                    key = attr.substr(15);
+                    value = guardian[attr].split(',');
+                    dfpConfig[key] = value;
+                }
+            }
+
+            Object.keys(dfpConfig).forEach(function (key) {
+                if (dfpConfig[key]) {
+                    slot.setTargeting(key, dfpConfig[key]);
+                }
+            })
+        }
+
+        function insertAd() {
+            var size = guardian['data-ad-size'];
+            var adUnitName = guardian['data-ad-unit'];
+
+            window.googletag.cmd.push(function() {
+                window.googletag.pubads().enableAsyncRendering();
+                window.googletag.pubads().collapseEmptyDivs();
+                window.googletag.enableServices();
+
+                window.Krux(function () {
+                    var slot = googletag.defineSlot('/59666047/' + adUnitName, buildTargetSize(size), 'ad-slot-1');
+                    buildCustomTargeting(slot);
+                    buildSegments(slot);
+                    slot.addService(googletag.pubads());
+                    window.googletag.display('ad-slot-1');
+                });
+            });
+        }
+
+    }(window, window.localStorage, window.guardian));
+    </script>
+</body>
+</html>

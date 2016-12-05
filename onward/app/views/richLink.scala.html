@@ -1,14 +1,15 @@
-@(content: model.ContentType)(implicit request: RequestHeader)
+@(content: model.ContentType)(implicit request: RequestHeader, env: play.api.Environment)
 @import conf.switches.Switches._
 @import conf.Static
 @import conf.Configuration
+@import play.api.Mode.Dev
 
 <html class="svg">
     <head>
         <link rel="stylesheet" type="text/css" href="@Static("stylesheets/webfonts-hinting-off-kerning-on.css")" />
 
 
-        @if(play.Play.isDev() || !InlineCriticalCss.isSwitchedOn) {
+        @if(env.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
             <link rel="stylesheet" data-reload="head.rich-links" type="text/css" href="@Static("stylesheets/head.rich-links.css")" />
         } else {
             <style>

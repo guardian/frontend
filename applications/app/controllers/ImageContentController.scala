@@ -6,6 +6,7 @@ import conf._
 import conf.switches.Switches
 import contentapi.ContentApiClient
 import model._
+import play.api.Environment
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import services.ImageQuery
 import views.support.RenderOtherStatus
@@ -16,7 +17,7 @@ case class ImageContentPage(image: ImageContent, related: RelatedContent) extend
   override lazy val item = image
 }
 
-class ImageContentController(val contentApiClient: ContentApiClient) extends Controller with RendersItemResponse with ImageQuery with Logging with ExecutionContexts {
+class ImageContentController(val contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with RendersItemResponse with ImageQuery with Logging with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
 

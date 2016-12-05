@@ -10,6 +10,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithTestWsClient
+  with WithTestEnvironment
   with WithTestContentApiClient{
 
   val galleryUrl = "news/gallery/2012/may/02/picture-desk-live-kabul-burma"
@@ -22,7 +23,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   }
 
   it should "return JSON when .json format is supplied" in {
-    val fakeRequest = TestRequest(s"/${galleryUrl}.json")
+    val fakeRequest = TestRequest(s"/$galleryUrl.json")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
     val result = galleryController.render(galleryUrl)(fakeRequest)
@@ -44,7 +45,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   }
 
   it should "return the lightbox JSON when /lightbox.json endpoint is hit" in {
-    val fakeRequest = TestRequest(s"/${galleryUrl}/lightbox.json")
+    val fakeRequest = TestRequest(s"/$galleryUrl/lightbox.json")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
     val result = galleryController.lightboxJson(galleryUrl)(fakeRequest)

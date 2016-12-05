@@ -1,7 +1,7 @@
 @import football.controllers.TablesPage
 @import views.support.`package`.Seq2zipWithRowInfo
 
-@(page: TablesPage)(implicit request: RequestHeader)
+@(page: TablesPage)(implicit request: RequestHeader, env: play.api.Environment)
 
 @main(page.page, "football"){
 }{

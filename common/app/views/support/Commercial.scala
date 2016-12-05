@@ -46,7 +46,7 @@ object Commercial {
   def listSponsorLogosOnPage(page: Page)(implicit request: RequestHeader): Option[Seq[String]] = {
 
     val edition = Edition(request)
-    def sponsor(branding: Edition => Option[Branding]) = branding(edition) map (_.sponsorName)
+    def sponsor(branding: Edition => Option[Branding]) = branding(edition) map (_.sponsorName.toLowerCase)
 
     val pageSponsor = sponsor(page.branding)
 

@@ -23,7 +23,7 @@ class VideoEndSlateController(contentApiClient: ContentApiClient) extends Contro
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
     log.info(s"Fetching video content in section: $sectionId" )
 
-    def isCurrentStory(content: ApiContent) = content.fields.flatMap(_.shortUrl).exists(_ == currentShortUrl)
+    def isCurrentStory(content: ApiContent) = content.fields.flatMap(_.shortUrl).contains(currentShortUrl)
 
     val promiseOrResponse = contentApiClient.getResponse(contentApiClient.search(edition)
       .section(sectionId)
@@ -47,7 +47,7 @@ class VideoEndSlateController(contentApiClient: ContentApiClient) extends Contro
 
   private def renderSectionTrails(trails: Seq[Video])(implicit request: RequestHeader) = {
     val sectionName = trails.headOption.map(t => t.trail.sectionName).getOrElse("")
-    val response = () => views.html.fragments.videoEndSlate(trails.take(4), "section", s"More ${sectionName} videos")
+    val response = () => views.html.fragments.videoEndSlate(trails.take(4), "section", s"More $sectionName videos")
     renderFormat(response, response, 900)
   }
 
@@ -61,9 +61,9 @@ class VideoEndSlateController(contentApiClient: ContentApiClient) extends Contro
 
   private def lookupSeries( edition: Edition, seriesId: String)(implicit request: RequestHeader): Future[Seq[Video]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
-    log.info(s"Fetching content in series: ${seriesId} the ShortUrl ${currentShortUrl}" )
+    log.info(s"Fetching content in series: $seriesId the ShortUrl $currentShortUrl" )
 
-    def isCurrentStory(content: ApiContent) = content.fields.flatMap(_.shortUrl).exists(_ == currentShortUrl)
+    def isCurrentStory(content: ApiContent) = content.fields.flatMap(_.shortUrl).contains(currentShortUrl)
 
     val promiseOrResponse = contentApiClient.getResponse(contentApiClient.item(seriesId, edition)
       .tag("type/video")

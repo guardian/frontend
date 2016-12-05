@@ -48,20 +48,17 @@ trait S3 extends Logging {
         result.close()
       }
     } catch {
-      case e: AmazonS3Exception if e.getStatusCode == 404 => {
+      case e: AmazonS3Exception if e.getStatusCode == 404 =>
         log.warn("not found at %s - %s" format(bucket, key))
         None
-      }
-      case e: AmazonS3Exception => {
+      case e: AmazonS3Exception =>
         val errorMsg = s"Unable to fetch S3 object (key: $key)"
         val hintMsg =   "Hint: your AWS credentials might be missing or expired. You can fetch new ones using Janus."
         log.error(errorMsg, e)
         println(errorMsg + " \n" + hintMsg)
         None
-      }
-      case e: Exception => {
+      case e: Exception =>
         throw e
-      }
     }
   }
 

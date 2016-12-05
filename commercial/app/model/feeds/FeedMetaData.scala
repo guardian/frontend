@@ -44,7 +44,7 @@ case class SoulmatesFeedMetaData(baseUrl: String, agent: SoulmatesAgent) extends
 case class BestsellersFeedMetaData(domain: String) extends FeedMetaData {
 
   val name = "bestsellers"
-  val url = s"http://$domain/bertrams/feed/independentsTop20"
+  val url = s"https://$domain/bertrams/feed/independentsTop20"
 
   override val fetchSwitch = Switches.GuBookshopFeedsSwitch
   override val parseSwitch = Switches.GuBookshopFeedsSwitch

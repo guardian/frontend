@@ -1,9 +1,9 @@
 @import common.dfp.InlineMerchandisingTargetedTagsReport
 @import tools.{CapiLink, SiteLink}
 
-@(env: String, report: InlineMerchandisingTargetedTagsReport)(implicit request: RequestHeader)
+@(report: InlineMerchandisingTargetedTagsReport)(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Commercial IM Slot", env, isAuthed = true, hasCharts = false) {
+@admin_main("Commercial IM Slot", isAuthed = true, hasCharts = false) {
 
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at(" css/commercial.css")">
 

@@ -7,13 +7,13 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-    'common/modules/experiments/tests/hosted-onward-journey',
-    'common/modules/experiments/tests/weekend-reading-email',
+    'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
-    'common/modules/experiments/tests/contributions-epic-fake-news',
-    'common/modules/experiments/tests/contributions-epic-usa-cta-fake-news',
-    'common/modules/experiments/tests/contributions-epic-thank-you',
-    'common/modules/experiments/tests/platform-sticky-ad-viewability'
+    'common/modules/experiments/tests/contributions-epic-usa-cta-three-way',
+    'common/modules/experiments/tests/contributions-epic-observer-anniversary',
+    'common/modules/experiments/tests/contributions-epic-brexit-supreme',
+    'common/modules/experiments/tests/uk-membership-engagement-message-test-10',
+    'common/modules/experiments/tests/au-membership-engagement-message-test-8'
 ], function (reportError,
              config,
              cookies,
@@ -22,22 +22,22 @@ define([
              mvtCookie,
              memoize,
              noop,
-             HostedOnwardJourney,
-             WeekendReadingEmail,
+             RecommendedForYou,
              MembershipEngagementInternationalExperiment,
-             ContributionsEpicFakeNews,
-             ContributionsEpicUsaCtaFakeNews,
-             ContributionsEpicThankYou,
-             PlatformStickyAdViewability
+             ContributionsEpicUsaCtaThreeWay,
+             ContributionsEpicObserverAnniversary,
+             ContributionsEpicBrexitSupreme,
+             UkMembershipEngagementMessageTest10,
+             AuMembershipEngagementMessageTest8
     ) {
     var TESTS = [
-        new HostedOnwardJourney(),
-        new WeekendReadingEmail(),
+        new RecommendedForYou(),
         new MembershipEngagementInternationalExperiment(),
-        new ContributionsEpicFakeNews(),
-        new ContributionsEpicUsaCtaFakeNews(),
-        new ContributionsEpicThankYou(),
-        new PlatformStickyAdViewability()
+        new ContributionsEpicUsaCtaThreeWay(),
+        new ContributionsEpicObserverAnniversary(),
+        new ContributionsEpicBrexitSupreme(),
+        new UkMembershipEngagementMessageTest10(),
+        new AuMembershipEngagementMessageTest8()
     ];
 
     var participationsKey = 'gu.ab.participations';

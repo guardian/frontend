@@ -3,10 +3,11 @@ package controllers
 import common._
 import controllers.front._
 import layout.{CollectionEssentials, FaciaContainer, Front}
-import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
+import play.api.Environment
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
@@ -21,6 +22,8 @@ import scala.concurrent.Future.successful
 trait FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections with implicits.Requests {
 
   val frontJsonFapi: FrontJsonFapi
+
+  implicit def env: Environment
 
   private def getEditionFromString(edition: String) = {
     val editionToFilterBy = edition match {
@@ -221,7 +224,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String): Future[Option[List[PressedCollection]]] =
       frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
         // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
-        Some(faciaPage.collections.filterNot(collection => (collection.curated ++ collection.backfill).length < 2 || collection.displayName == "most popular" || collection.displayName.toLowerCase.contains(containerNameToFilter.toLowerCase)).drop(offset).take(num))
+        Some(faciaPage.collections.filterNot(collection => (collection.curated ++ collection.backfill).length < 2 || collection.displayName == "most popular" || collection.displayName.toLowerCase.contains(containerNameToFilter.toLowerCase)).slice(offset, offset + num))
       })
 
   /* Google news hits this endpoint */
@@ -245,5 +248,5 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 }
 
-class FaciaControllerImpl(val frontJsonFapi: FrontJsonFapiLive) extends FaciaController
+class FaciaControllerImpl(val frontJsonFapi: FrontJsonFapiLive)(implicit val env: Environment) extends FaciaController
 

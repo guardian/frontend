@@ -1,16 +1,16 @@
-@(env: String)(implicit request: RequestHeader)
+@()(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
+@admin_main("Commercial", isAuthed = true, hasCharts = true) {
 
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
 
     <h1>Commercial</h1>
 
     <h3>Responsive advertising</h3>
-    
+
     <p>These are links to the responsive ads that we have created so far. All are served from DFP and are hidden behind cookies.</p>
     <p><a href="http://www.theguardian.com?adtest=clear&view=mobile">Click here to clear the cookie.</a></p>
-    
+
     <ul class="list-group">
         <li class="list-group-item">
             <h4><a href="http://www.theguardian.com/uk?adtest=demo_responsive">Google Android</a></h4>

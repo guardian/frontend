@@ -3,7 +3,7 @@
 @import templates.inlineJS.blocking.js.curlConfig
 @import views.support.{SeoOptimisedContentImage, StripHtmlTags, Video640}
 
-@(page: EmbedPage)(implicit request: RequestHeader)
+@(page: EmbedPage)(implicit request: RequestHeader, env: play.api.Environment)
 
 <!DOCTYPE html>
 <html lang="en-GB" class="gu-video-embed-html ">
@@ -87,11 +87,6 @@
 
         @* Get iframes parent url: http://www.nczonline.net/blog/2013/04/16/getting-the-url-of-an-iframes-parent/ *@
         var parentUrl = (!!window.parent && window.parent !== window) ? document.referrer : '';
-
-        @* Hack to correctly track external embeds which have been incorrectly embedded on theguardian.com *@
-        var sAccount = (/www\.theguardian\.com/.test(parentUrl)) ? 'guardiangu-network' : 'guardiangu-thirdpartyapps';
-
-        window.s_account = sAccount;
 
         function hasSvgSupport() {
             var ns = {'svg': 'http://www.w3.org/2000/svg'};

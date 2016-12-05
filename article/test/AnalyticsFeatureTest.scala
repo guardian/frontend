@@ -25,7 +25,7 @@ import conf.Configuration
       goTo("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
         Then("all links on the page should be decorated with the Omniture meta-data attribute")
         val anchorsWithNoDataLink = browser.find("a").filter(hasNoLinkName)
-        anchorsWithNoDataLink should have length (0)
+        anchorsWithNoDataLink should have length 0
       }
 
     }

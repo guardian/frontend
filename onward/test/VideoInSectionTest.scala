@@ -24,6 +24,6 @@ import play.api.test.Helpers._
   "Video In Section controller" should "exclude videos in the series specified" in {
     val result = mediaInSectionController.renderSectionMediaWithSeries("video", "fashion", "theguardian/series/how-to-dress")(TestRequest())
     status(result) should be (200)
-    contentAsString(result) should not include ("fashion-tips")
+    contentAsString(result) should not include "fashion-tips"
   }
 }

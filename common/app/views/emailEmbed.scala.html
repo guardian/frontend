@@ -1,12 +1,13 @@
-@(metaData: model.Page)(body: Html)(implicit request: RequestHeader)
+@(metaData: model.Page)(body: Html)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import conf.switches.Switches._
 @import common.InlineJs
 @import templates.inlineJS.blocking.js._
+@import play.api.Mode.Dev
 
 <!doctype html>
 <head>
-    @if(play.Play.isDev() || !InlineCriticalCss.isSwitchedOn) {
+    @if(env.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
         <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.email.css")" />
     } else {
         <style class="js-loggable">

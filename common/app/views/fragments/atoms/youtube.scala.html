@@ -1,7 +1,7 @@
 @import conf.Configuration.site.host
 @import views.support.RenderClasses
 
-@(media: model.content.MediaAtom)(implicit request: RequestHeader)
+@(media: model.content.MediaAtom, displayCaption: Boolean)(implicit request: RequestHeader)
 
     <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
         "u-responsive-ratio" -> true,
@@ -14,7 +14,11 @@
             src="https://www.youtube.com/embed/@media.assets.head.id?modestbranding=1&enablejsapi=1&rel=0&showinfo=0@origin" frameborder="0"
             allowfullscreen="">
             </iframe>
-
     </div>
+
+
+    @if(displayCaption) {
+        <figcaption class="caption caption--main" itemprop="description">@media.title</figcaption>
+    }
 }
 

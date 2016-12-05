@@ -41,7 +41,6 @@ module.exports = function (grunt) {
                 assetmonitor: 'grunt-asset-monitor',
                 /*eslint-disable camelcase*/
                 px_to_rem: 'grunt-px-to-rem',
-                frequency_graph: 'grunt-frequency-graph'
                 /*eslint-enable camelcase*/
             }
         }

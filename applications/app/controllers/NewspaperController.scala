@@ -5,10 +5,11 @@ import contentapi.ContentApiClient
 import layout.FaciaContainer
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, MetaData, SectionSummary, SimplePage}
+import play.api.Environment
 import play.api.mvc.{Action, Controller}
 import services.NewspaperQuery
 
-class NewspaperController(contentApiClient: ContentApiClient) extends Controller with Logging with ExecutionContexts {
+class NewspaperController(contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
 
   private val newspaperQuery = new NewspaperQuery(contentApiClient)
 
@@ -62,7 +63,7 @@ class NewspaperController(contentApiClient: ContentApiClient) extends Controller
   }
 
   def noContentForListExists(booksections: Seq[FaciaContainer]): Boolean = {
-    val (frontContainer, otherContainer) = booksections.partition(b => b.displayName == newspaperQuery.FRONT_PAGE_DISPLAY_NAME)
+    val (frontContainer, otherContainer) = booksections.partition(b => b.displayName.contains(newspaperQuery.FRONT_PAGE_DISPLAY_NAME))
     frontContainer.flatMap(_.items).isEmpty && otherContainer.flatMap(_.items).isEmpty
   }
 

@@ -35,6 +35,7 @@
 - [Implement Google Analytics](03-dev-howtos/14-implement-google-analytics.md)
 - [Overriding default configuration](03-dev-howtos/15-override-default-configuration.md)
 - [Updating the test database](03-dev-howtos/16-updating-test-database.md)
+- [Working with Google AMP](03-dev-howtos/17-working-with-amp.md)
 
 ##[Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)
@@ -60,6 +61,9 @@
 - [Javascript guidelines (Out of date)](99-archives/javascript-guidelines.md)
 - [Web Font Rendering Test (2013)](99-archives/web-font-rendering-tests.md)
 - [Website benchmark (July 2012)](99-archives/website-benchmark-2013.md)
+
+##[Egyptian webfont rendering tests](egyptian-webfont-rendering-tests/)
+- [](egyptian-webfont-rendering-tests/*.md)
 
 
 ---

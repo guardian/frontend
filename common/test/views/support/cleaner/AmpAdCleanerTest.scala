@@ -56,7 +56,7 @@ class AmpAdCleanerTest extends FlatSpec with Matchers {
   }
 
   "AmpAdCleaner" should "not break up small paragraphs with ads" in {
-    val doc = s"""<html><body>${s"<p>${tenChars}</p>" * (70 * 10)}</body></html>"""
+    val doc = s"""<html><body>${s"<p>$tenChars</p>" * (70 * 10)}</body></html>"""
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
 

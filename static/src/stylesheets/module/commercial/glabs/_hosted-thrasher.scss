@@ -24,7 +24,7 @@ $renaultColor: #ffc421;
             }
             @include mq(tablet) {
                 .has-flex & {
-                    flex: calc(100% - 20px);
+                    flex: 1;
                 }
             }
         }
@@ -47,7 +47,7 @@ $renaultColor: #ffc421;
             }
             @include mq(tablet) {
                 .has-flex & {
-                    flex: calc(50% - 20px);
+                    flex: 1;
                 }
             }
         }
@@ -70,7 +70,7 @@ $renaultColor: #ffc421;
             }
             @include mq(tablet) {
                 .has-flex & {
-                    flex: calc(33% - 20px);
+                    flex: 1;
                 }
             }
         }
@@ -100,7 +100,7 @@ $renaultColor: #ffc421;
             }
             @include mq(tablet) {
                 .has-flex & {
-                    flex: calc(25% - 20px);
+                    flex: 1;
                 }
             }
         }

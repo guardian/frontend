@@ -28,6 +28,9 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
         val figcaption = element.getElementsByTag("figcaption")
         if (figcaption.length < 1) {
           element.addClass("fig--no-caption")
+        } else {
+            val informationIcon = views.html.fragments.inlineSvg("information", "icon", List("centered-icon", "rounded-icon")).toString()
+            figcaption.prepend(informationIcon)
         }
       }
     })

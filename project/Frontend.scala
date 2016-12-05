@@ -1,6 +1,7 @@
 package com.gu
 
 import com.gu.Dependencies._
+import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
 import com.typesafe.sbt.web.Import._
 import play.routes.compiler.InjectedRoutesGenerator
 import play.sbt.Play.autoImport._
@@ -251,5 +252,29 @@ object Frontend extends Build with Prototypes {
     trainingPreview,
     rss,
     adminJobs
+  ).settings(
+    riffRaffBuildIdentifier := System.getenv().getOrDefault("BUILD_NUMBER", "0").replaceAll("\"",""),
+    riffRaffUploadArtifactBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity")),
+    riffRaffUploadManifestBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity")),
+    riffRaffManifestProjectName := s"dotcom:all",
+    riffRaffArtifactResources := Seq(
+      (riffRaffPackageType in admin).value -> s"${(name in admin).value}/${(riffRaffPackageType in admin).value.getName}",
+      (riffRaffPackageType in adminJobs).value -> s"${(name in adminJobs).value}/${(riffRaffPackageType in adminJobs).value.getName}",
+      (riffRaffPackageType in applications).value -> s"${(name in applications).value}/${(riffRaffPackageType in applications).value.getName}",
+      (riffRaffPackageType in archive).value -> s"${(name in archive).value}/${(riffRaffPackageType in archive).value.getName}",
+      (riffRaffPackageType in article).value -> s"${(name in article).value}/${(riffRaffPackageType in article).value.getName}",
+      (riffRaffPackageType in commercial).value -> s"${(name in commercial).value}/${(riffRaffPackageType in commercial).value.getName}",
+      (riffRaffPackageType in diagnostics).value -> s"${(name in diagnostics).value}/${(riffRaffPackageType in diagnostics).value.getName}",
+      (riffRaffPackageType in discussion).value -> s"${(name in discussion).value}/${(riffRaffPackageType in discussion).value.getName}",
+      (riffRaffPackageType in identity).value -> s"${(name in identity).value}/${(riffRaffPackageType in identity).value.getName}",
+      (riffRaffPackageType in facia).value -> s"${(name in facia).value}/${(riffRaffPackageType in facia).value.getName}",
+      (riffRaffPackageType in faciaPress).value -> s"${(name in faciaPress).value}/${(riffRaffPackageType in faciaPress).value.getName}",
+      (riffRaffPackageType in onward).value -> s"${(name in onward).value}/${(riffRaffPackageType in onward).value.getName}",
+      (riffRaffPackageType in preview).value -> s"${(name in preview).value}/${(riffRaffPackageType in preview).value.getName}",
+      (riffRaffPackageType in rss).value -> s"${(name in rss).value}/${(riffRaffPackageType in rss).value.getName}",
+      (riffRaffPackageType in sport).value -> s"${(name in sport).value}/${(riffRaffPackageType in sport).value.getName}",
+      (riffRaffPackageType in trainingPreview).value -> s"${(name in trainingPreview).value}/${(riffRaffPackageType in trainingPreview).value.getName}",
+      baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml"
+    )
   )
 }

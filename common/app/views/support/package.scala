@@ -16,6 +16,7 @@ import play.api.libs.json.Json._
 import play.api.libs.json.Writes
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
+import play.api.Environment
 
 import scala.collection.JavaConversions._
 
@@ -182,7 +183,7 @@ object RenderOtherStatus {
     ))
   }
 
-  def apply(result: Result)(implicit request: RequestHeader) = result.header.status match {
+  def apply(result: Result)(implicit request: RequestHeader, env: Environment) = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
     case 410 => Cached(60)(WithoutRevalidationResult(Ok(views.html.expired(gonePage))))

@@ -1,13 +1,14 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, Crossword, Section => ApiSection, ItemResponse}
+import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, Content => ApiContent, Section => ApiSection}
 import common.{Edition, ExecutionContexts, Logging}
 import conf.Static
 import contentapi.ContentApiClient
 import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
-import model.Cached.RevalidatableResult
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.{DateTime, LocalDate}
+import play.api.Environment
 import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
@@ -34,12 +35,12 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
        yield f(crossword, content)
        maybeCrossword getOrElse noResults
     } recover { case t: Throwable =>
-      log.error(s"Error retrieving ${crosswordType} crossword id ${id} from API", t)
+      log.error(s"Error retrieving $crosswordType crossword id $id from API", t)
       noResults
     }
   }
 
-  def renderCrosswordPage(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[Result] = {
+  def renderCrosswordPage(crosswordType: String, id: Int)(implicit request: RequestHeader, env: Environment): Future[Result] = {
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(RevalidatableResult.Ok(views.html.crossword(
         CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
@@ -49,9 +50,9 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
   }
 }
 
-class CrosswordPageController(val contentApiClient: ContentApiClient) extends CrosswordController {
+class CrosswordPageController(val contentApiClient: ContentApiClient)(implicit env: Environment) extends CrosswordController {
 
-  def noResults()(implicit request: RequestHeader) = InternalServerError("Content API query returned an error.")
+  def noResults()(implicit request: RequestHeader) = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
 
   def crossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     renderCrosswordPage(crosswordType, id)
@@ -60,7 +61,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient) extends Cr
   def accessibleCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(RevalidatableResult.Ok(views.html.accessibleCrossword(
-        new CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
+        CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
         AccessibleCrosswordRows(crossword)
       )))
     }
@@ -71,7 +72,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient) extends Cr
       Cached(3.days)(RevalidatableResult.Ok(views.html.printableCrossword(
         CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
         CrosswordSvg(crossword, None, None, false),
-        new LocalDate().getYear()
+        new LocalDate().getYear
       )))
     }
   }
@@ -92,7 +93,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient) extends Cr
   }
 }
 
-class CrosswordSearchController(val contentApiClient: ContentApiClient) extends CrosswordController {
+class CrosswordSearchController(val contentApiClient: ContentApiClient)(implicit env: Environment) extends CrosswordController {
   val searchForm = Form(
     mapping(
       "crossword_type" -> nonEmptyText,

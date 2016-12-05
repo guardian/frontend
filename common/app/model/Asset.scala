@@ -105,8 +105,8 @@ case class VideoAsset(
     }
   }
 
-  val durationSeconds: Int = fields.get("durationSeconds").getOrElse("0").toInt
-  val durationMinutes: Int = fields.get("durationMinutes").getOrElse("0").toInt
+  val durationSeconds: Int = fields.getOrElse("durationSeconds", "0").toInt
+  val durationMinutes: Int = fields.getOrElse("durationMinutes", "0").toInt
   // The video duration in seconds
   val duration: Int = durationSeconds + (durationMinutes * 60)
   val blockVideoAds: Boolean = fields.get("blockAds").exists(_.toBoolean)
@@ -130,8 +130,8 @@ case class AudioAsset(
   mimeType: Option[String]) {
 
   // The audio duration in seconds
-  val duration: Int = fields.get("durationSeconds").getOrElse("0").toInt +
-    (fields.get("durationMinutes").getOrElse("0").toInt * 60)
+  val duration: Int = fields.getOrElse("durationSeconds", "0").toInt +
+    (fields.getOrElse("durationMinutes", "0").toInt * 60)
 }
 
 object EmbedAsset {

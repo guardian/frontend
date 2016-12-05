@@ -1,4 +1,4 @@
-@(page: MediaPage)(implicit request: RequestHeader)
+@(page: MediaPage, displayCaption: Boolean)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import common.LinkTo
 @import model.{Audio, AudioPlayer, Video, VideoPlayer}
@@ -89,7 +89,7 @@
                                                 <meta itemprop="thumbnail" content="@Html(video.content.signedArticleImage)" />
                                                 <meta itemprop="thumbnailUrl" content="@Html(video.content.signedArticleImage)" />
 
-                                              @fragments.atoms.media(mediaAtom)
+                                              @fragments.atoms.media(mediaAtom, displayCaption = displayCaption)
                                             }
 
                                             @video.elements.mainVideo.map { videoElement =>
