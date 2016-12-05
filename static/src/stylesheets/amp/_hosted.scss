@@ -6,22 +6,32 @@ $badge-width: 80px;
     @include f-textSans;
 }
 
+@mixin side-margins {
+    margin-left: $gs-gutter/2;
+    margin-right: $gs-gutter/2;
+    @include mq(480px) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
+}
+
 .hosted__glogo {
-    display: inline-block;
     padding: $gs-baseline/3 $gs-gutter/2;
     background-color: $guardian-brand;
-    text-align: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .hosted__guardian-logo__svg {
     fill: #ffffff;
     width: 115px;
-    height: 40px;
+    height: 24px;
 }
 
 .hosted__glogo .inline-logo {
-    display: inline-block;
-    margin-top: -5px;
+    display: block;
 }
 
 .hosted__glogotext {
@@ -30,16 +40,7 @@ $badge-width: 80px;
     letter-spacing: .5px;
     line-height: 16px;
     margin: 0;
-    text-align: left;
     color: rgba(255, 255, 255, .5);
-}
-
-.hostedbadge {
-    position: absolute;
-}
-
-.hostedbadge__logo.hostedbadge__logo {
-    position: relative;
 }
 
 .hosted__heading {
@@ -66,10 +67,10 @@ $badge-width: 80px;
 }
 
 .hosted__cta-wrapper {
+    @include side-margins;
     padding-top: 140px;
     position: relative;
     z-index: 1;
-    margin-left: $gs-gutter;
 }
 
 .hosted__cta-btn-wrapper {
@@ -78,7 +79,7 @@ $badge-width: 80px;
 
 .hosted__cta.button,
 .hosted__cta.button:focus {
-    color: #333333;
+    color: $neutral-1;
 }
 
 .hosted__cta.button {
@@ -91,7 +92,7 @@ $badge-width: 80px;
 }
 
 .hosted__cta__svg {
-    fill: #333333;
+    fill: $neutral-1;
     width: 16px;
     height: 16px;
 }
@@ -146,6 +147,7 @@ $badge-width: 80px;
     }
     .hostedbadge {
         z-index: $zindex-ads;
+        height: 0;
     }
 }
 
@@ -169,17 +171,13 @@ $badge-width: 80px;
 }
 
 .hosted__standfirst {
-    width: auto;
-    padding: $gs-baseline $gs-gutter 0;
+    @include side-margins;
+    margin-top: $gs-baseline;
 }
 
 .hosted__meta {
-    position: relative;
-    width: auto;
-    padding: $gs-baseline $gs-gutter 0;
-    bottom: auto;
-    left: auto;
-    right: auto;
+    @include side-margins;
+    margin-top: $gs-baseline;
 }
 
 .hosted__container--content {
@@ -193,36 +191,35 @@ $badge-width: 80px;
 }
 
 .hosted__social.host__header {
-    padding: $gs-baseline $gs-gutter 0;
+    @include side-margins;
     margin-top: 10px;
 }
 
 .hosted__social-wrapper {
     border: 0;
-    padding: 10px 0;
+    padding: $gs-baseline 0;
     border-top: 1px solid #eeeeee;
     width: 100%;
 }
 
 .hosted__label {
-    position: relative;
-    cursor: pointer;
-    align-items: center;
-    float: left;
-    margin-left: 10px;
-    margin-top: 14px;
-    border: 0;
-    display: flex;
-    z-index: $zindex-content;
+    @include side-margins;
+    position: absolute;
+    left: $badge-width + $gs-gutter/2;
+    top: 0;
+    bottom: 0;
+    padding-top: $gs-baseline;
+    line-height: $header-height - $gs-baseline;
+    z-index: $zindex-ads;
+}
 
-    .hosted__tooltip-label {
-        font-size: 16px;
-        color: #ffffff;
-        border: none;
-        padding: 0;
-        cursor: pointer;
-        background: transparent;
-    }
+.hosted__tooltip-label {
+    font-size: 16px;
+    color: #ffffff;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
 }
 
 .hosted__header {
@@ -297,13 +294,13 @@ $badge-width: 80px;
     height: 42px;
     width: 42px;
     background: transparent;
-    border: 1px solid #333333;
+    border: 1px solid $neutral-1;
     color: #ffffff;
     float: right;
 }
 
 .hosted__lightbox-close__svg {
-    fill: #333333;
+    fill: $neutral-1;
     margin-top: 4px;
     width: 20px;
     height: 20px;
@@ -320,7 +317,7 @@ $badge-width: 80px;
     width: 350px;
     padding: 10px 10px 20px 10px;
     background: #ffffff;
-    color: #333333;
+    color: $neutral-1;
     text-align: left;
     &::before {
         width: 250px;
@@ -333,14 +330,8 @@ $badge-width: 80px;
     font-weight: 200;
 }
 
-.hosted__next-page--header {
-    padding-bottom: 10px;
-    margin: 12px 0 10px;
-    border-bottom: 1px solid #eeeeee;
-}
-
 .hosted__next-page {
-    margin: 0 $gs-gutter $gs-gutter;
+    @include side-margins;
     position: relative;
 }
 
@@ -357,7 +348,7 @@ $badge-width: 80px;
 
 .hosted__next-page--tile {
     display: block;
-    color: #333333;
+    color: $neutral-1;
     text-decoration: none;
     position: relative;
     min-height: 56px;
@@ -386,30 +377,23 @@ $badge-width: 80px;
     @include f-textSans;
     width: 100%;
     height: $header-height;
-    background-color: #333333;
+    background-color: $neutral-1;
     position: relative;
-}
-
-.has-no-flex .hosted__header .hostedbadge {
-    position: absolute;
-    top: 0;
-    margin-top: 30px;
 }
 
 .hosted__headerwrap {
     margin: 0 auto;
-    text-align: right;
     height: 100%;
     position: relative;
-    display: flex;
 }
 
 .hostedbadge {
-    align-self: flex-end;
-    position: relative;
-    margin-left: 20px;
+    @include side-margins;
+    position: absolute;
+    left: 0;
+    bottom: 0;
     width: $badge-width;
-    z-index: 1015;
+    z-index: $zindex-ads;
 }
 
 .hostedbadge:focus {
@@ -427,10 +411,9 @@ $badge-width: 80px;
     line-height: 16px;
     height: auto;
     padding-top: 5px;
-    padding-bottom: 8px;
-    color: #333333;
-    margin: 0;
-    text-align: center;
+    padding-bottom: 6px;
+    color: $neutral-1;
+    margin: 0 4px;
 }
 
 .hostedbadge .hostedbadge__logo {
@@ -441,33 +424,17 @@ $badge-width: 80px;
     background-color: #ffffff;
 }
 
-.hosted-header__spacer {
-    flex: 1;
-}
-
 .hosted__video video {
     width: 100%;
 }
 
 .hosted-page {
-    .content__article-body {
-        margin: 0;
-    }
-
-    .content__article-body .media-primary {
-        margin-left: -10px;
-    }
-
     .u-responsive-ratio img {
         width: 100%;
         height: 100%;
         position: absolute;
         top: 0;
         left: 0;
-    }
-
-    .content .gs-container {
-        padding: 0 10px;
     }
 }
 
@@ -504,8 +471,8 @@ $badge-width: 80px;
     }
 
     .title {
+        @include side-margins;
         position: absolute;
-        margin: auto;
         z-index: 3;
         bottom: 20px;
         color: #ffffff;
@@ -515,11 +482,7 @@ $badge-width: 80px;
     }
 
     .caption {
-        position: absolute;
-        left: 10px;
-        top: 390px;
-        right: unset;
-        padding: 0;
+        @include side-margins;
     }
 
     figure {
@@ -535,7 +498,7 @@ $badge-width: 80px;
     }
 
     .content__meta-container {
-        margin: #{4 * $gs-baseline} 0 $gs-baseline;
+        margin-top: #{4 * $gs-baseline}
     }
 
     .meta__extras {
@@ -575,10 +538,6 @@ $badge-width: 80px;
         line-height: 28px;
     }
 
-    .hosted__standfirst {
-        padding: 0;
-    }
-
     .hosted__terms {
         width: 100%;
         margin-top: 0;
@@ -602,17 +561,6 @@ $badge-width: 80px;
     }
 }
 
-.hosted__next-page {
-    margin: $gs-baseline 0;
-    position: relative;
-}
-
-.hosted__next-page--header {
-    margin: 0;
-    border: 0;
-    padding: 0;
-}
-
 .hosted__next-page-header--border {
     width: 100%;
     height: 10px;
@@ -629,8 +577,11 @@ $badge-width: 80px;
 .hosted-video-page {
     .hosted__next-page {
         margin: $gs-baseline 0 0;
-        padding: 0 $gs-gutter $gs-baseline;
+        padding: 0 $gs-gutter/2 $gs-baseline;
         background: $neutral-7;
+        @include mq(480px) {
+            padding: 0 $gs-gutter $gs-baseline;
+        }
     }
 
     .hosted__next-page-header--border {
@@ -658,9 +609,6 @@ $badge-width: 80px;
     bottom: 0;
     background: #3e3e3e;
     display: flex;
-    .hosted__headerwrap {
-        width: 100%;
-    }
 }
 
 .hosted__header.hosted-gallery-page {
