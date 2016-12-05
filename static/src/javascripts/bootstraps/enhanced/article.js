@@ -48,6 +48,8 @@ define([
             // only render when we have >1000px or more (enough space for ad + most popular)
             if (mainColumn[0] && mainColumn[0].offsetHeight > 1150 && detect.isBreakpoint({ min: 'desktop' })) {
                 geoMostPopular.render();
+            } else {
+                mediator.emit('modules:onward:geo-most-popular:cancel');
             }
         },
 
