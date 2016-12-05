@@ -17,10 +17,10 @@ object Fixtures {
       |      <Sector>158</Sector>
       |      <Sector>245</Sector>
       |    </Sectors>
-      |    <RecruiterLogoURL>http://jobs.theguardian.com/getasset/?uiAssetID=833D7672-6B21-4D81-BCE1-9CEF11CCEA21</RecruiterLogoURL>
+      |    <RecruiterLogoURL>https://jobs.theguardian.com/getasset/?uiAssetID=833D7672-6B21-4D81-BCE1-9CEF11CCEA21</RecruiterLogoURL>
       |    <SalaryDescription>Unpaid Voluntary Work</SalaryDescription>
       |    <LocationDescription>Rotherham/Sheffield</LocationDescription>
-      |    <RecruiterPageUrl>http://jobs.theguardian.com/employer/196643/</RecruiterPageUrl>
+      |    <RecruiterPageUrl>https://jobs.theguardian.com/employer/196643/</RecruiterPageUrl>
       |  </Job>
       |  <Job>
       |    <JobID>4302057</JobID>
@@ -37,7 +37,7 @@ object Fixtures {
       |    </Sectors>
       |    <SalaryDescription>Unpaid Voluntary Work</SalaryDescription>
       |    <LocationDescription>Rotherham/Sheffield</LocationDescription>
-      |    <RecruiterPageUrl>http://jobs.theguardian.com/employer/196644/</RecruiterPageUrl>
+      |    <RecruiterPageUrl>https://jobs.theguardian.com/employer/196644/</RecruiterPageUrl>
       |  </Job>
       |  <Job>
       |    <JobID>4365671</JobID>
@@ -53,10 +53,10 @@ object Fixtures {
       |      <Sector>600118</Sector>
       |      <Sector>600119</Sector>
       |    </Sectors>
-      |    <RecruiterLogoURL>http://jobs.theguardian.com/getasset/?uiAssetID=1D428A1F-65B4-4ADE-8CA3-91F2AE7423E3</RecruiterLogoURL>
+      |    <RecruiterLogoURL>https://jobs.theguardian.com/getasset/?uiAssetID=1D428A1F-65B4-4ADE-8CA3-91F2AE7423E3</RecruiterLogoURL>
       |    <SalaryDescription>Unpaid Voluntary Work</SalaryDescription>
       |    <LocationDescription>Rotherham/Sheffield</LocationDescription>
-      |    <RecruiterPageUrl>http://jobs.theguardian.com/employer/196645/</RecruiterPageUrl>
+      |    <RecruiterPageUrl>https://jobs.theguardian.com/employer/196645/</RecruiterPageUrl>
       |  </Job>
       |  <Job>
       |    <JobID>4411510</JobID>
@@ -67,10 +67,10 @@ object Fixtures {
       |      <Sector>166</Sector>
       |      <Sector>308</Sector>
       |    </Sectors>
-      |    <RecruiterLogoURL>http://jobs.theguardian.com/getasset/?uiAssetID=14357B35-BBA3-4F96-ADF3-F9ABC82C894C</RecruiterLogoURL>
+      |    <RecruiterLogoURL>https://jobs.theguardian.com/getasset/?uiAssetID=14357B35-BBA3-4F96-ADF3-F9ABC82C894C</RecruiterLogoURL>
       |    <SalaryDescription>Unpaid Voluntary Work</SalaryDescription>
       |    <LocationDescription>Rotherham/Sheffield</LocationDescription>
-      |    <RecruiterPageUrl>http://jobs.theguardian.com/employer/196646/</RecruiterPageUrl>
+      |    <RecruiterPageUrl>https://jobs.theguardian.com/employer/196646/</RecruiterPageUrl>
       |  </Job>
       |  <Job>
       |    <JobID>6061077</JobID>
@@ -88,10 +88,10 @@ object Fixtures {
       |      <Sector>241</Sector>
       |      <Sector>600114</Sector>
       |    </Sectors>
-      |    <RecruiterLogoURL>http://jobs.theguardian.com/getasset/?uiAssetID=59188A47-8B25-4F56-9F19-4BB278DB3269</RecruiterLogoURL>
+      |    <RecruiterLogoURL>https://jobs.theguardian.com/getasset/?uiAssetID=59188A47-8B25-4F56-9F19-4BB278DB3269</RecruiterLogoURL>
       |    <SalaryDescription>na</SalaryDescription>
       |    <LocationDescription>Kings Cross, Central London</LocationDescription>
-      |    <RecruiterPageUrl>http://jobs.theguardian.com/employer/230273/</RecruiterPageUrl>
+      |    <RecruiterPageUrl>https://jobs.theguardian.com/employer/230273/</RecruiterPageUrl>
       |  </Job>
       |</Jobs></rootnode>
       | """.stripMargin
@@ -103,8 +103,8 @@ object Fixtures {
       "We're only looking for outstanding individuals for the Aldi Management Programme.",
       Some("Rotherham/Sheffield"),
       "ALDI",
-      Some("http://jobs.theguardian.com/employer/196643/"),
-      "http://jobs.theguardian.com/getasset/?uiAssetID=833D7672-6B21-4D81-BCE1-9CEF11CCEA21",
+      Some("https://jobs.theguardian.com/employer/196643/"),
+      "https://jobs.theguardian.com/getasset/?uiAssetID=833D7672-6B21-4D81-BCE1-9CEF11CCEA21",
       Seq(149, 158, 245),
       "Unpaid Voluntary Work"
     ),
@@ -114,8 +114,8 @@ object Fixtures {
       "The Active Women's project helps young women access sports activities in their local area in Southampton. Volunteers will support the running of these sessions, as well as supporting the young women in accessing the sessions.",
       Some("Rotherham/Sheffield"),
       "CATCH 22",
-      Some("http://jobs.theguardian.com/employer/196645/"),
-      "http://jobs.theguardian.com/getasset/?uiAssetID=1D428A1F-65B4-4ADE-8CA3-91F2AE7423E3",
+      Some("https://jobs.theguardian.com/employer/196645/"),
+      "https://jobs.theguardian.com/getasset/?uiAssetID=1D428A1F-65B4-4ADE-8CA3-91F2AE7423E3",
       Seq(111, 112, 115, 219, 222, 600118, 600119),
       "Unpaid Voluntary Work"
     ),
@@ -125,8 +125,8 @@ object Fixtures {
       "Control some of the world’s most modern aircraft using radar & communications equipment",
       Some("Rotherham/Sheffield"),
       "RAF CAREERS",
-      Some("http://jobs.theguardian.com/employer/196646/"),
-      "http://jobs.theguardian.com/getasset/?uiAssetID=14357B35-BBA3-4F96-ADF3-F9ABC82C894C",
+      Some("https://jobs.theguardian.com/employer/196646/"),
+      "https://jobs.theguardian.com/getasset/?uiAssetID=14357B35-BBA3-4F96-ADF3-F9ABC82C894C",
       Seq(166, 308),
       "Unpaid Voluntary Work"
     )
