@@ -56,7 +56,6 @@
     "karma-requirejs": "^1.0.0",
     "karma-script-launcher": "^1.0.0",
     "karma-spec-reporter": "^0.0.26",
-    "karma-teamcity-reporter": "^1.0.0",
     "listr": "^0.8.0",
     "load-grunt-config": "0.17.1",
     "lodash": "^3.10.1",
