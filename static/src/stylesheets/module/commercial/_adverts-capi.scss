@@ -2,9 +2,49 @@
     .adverts__title {
         font-size: get-font-size(headline, 3);
     }
+
+    .adverts__body {
+        padding-bottom: $gs-baseline;
+    }
+
+    .adverts__row {
+        @include mq($until: tablet) {
+            flex-direction: column;
+
+            & > * {
+                flex-basis: auto;
+            }
+
+            & > * + * {
+                margin-top: $gs-baseline;
+            }
+
+            & > * + .advert,
+            & > * + * > .advert {
+                padding-top: $gs-baseline / 2;
+            }
+
+            & > * + :nth-child(even)::before {
+                content: none;
+            }
+        }
+    }
 }
 
 .adverts--paidfor {
+    @include mq($until: tablet) {
+        .adverts__stamp {
+            position: absolute;
+            top: $gs-baseline / 2;
+            right: $gs-gutter / 2;
+        }
+
+        .inline-glabs-logo > svg {
+            width: 75px;
+            height: 31px;
+        }
+    }
+
     @include mq(mobileLandscape, desktop) {
         > .adverts__header {
             flex-wrap: wrap;
