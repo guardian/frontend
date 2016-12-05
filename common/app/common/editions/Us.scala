@@ -56,8 +56,8 @@ object Us extends Edition(
   override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
-      NavItem(usElection2016),
       NavItem(us),
+      NavItem(usPolitics),
       NavItem(world, worldLocalNav),
       NavItem(opinion),
       NavItem(sports, Seq(soccer, mls, nfl, mlb, nba, nhl)),
@@ -78,8 +78,8 @@ object Us extends Edition(
 
   override def briefNav: Seq[NavItem] = Seq(
     NavItem(home),
-    NavItem(usElection2016),
     NavItem(us),
+    NavItem(usPolitics),
     NavItem(world, worldLocalNav),
     NavItem(opinion),
     NavItem(sports, Seq(soccer, mls, nfl, mlb, nba, nhl)),

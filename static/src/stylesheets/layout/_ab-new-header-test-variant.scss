@@ -968,25 +968,11 @@ $caption-button-size: 32px;
             width: $caption-button-size;
             height: $caption-button-size;
             z-index: 1;
-            background-color: rgba($neutral-1, .2);
+            background-color: rgba($neutral-1, .4);
             border-radius: 50%;
         }
         .reveal-caption--img {
             bottom: $gs-baseline/2;
-        }
-
-        .reveal-caption-icon__svg {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            margin: auto;
-        }
-
-        .inline-camera .reveal-caption-icon__svg {
-            // Optical alignment
-            top: -2px;
         }
 
         .caption--main.caption--video {

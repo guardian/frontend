@@ -11,7 +11,7 @@ trait ABTestSwitches {
     "Test varying the number of visits before showing the membership engagement banner",
     owners = Seq(Owner.withGithub("rupert.bates")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 12, 1), // Thursday 1st December
+    sellByDate = new LocalDate(2016, 12, 5),
     exposeClientSide = true
   )
 
@@ -32,6 +32,26 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
     sellByDate =  new LocalDate(2016, 12, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-observer-anniversary",
+    "Gather contributions and supporters around Observer 225th anniversary",
+    owners = Seq(Owner.withGithub("philwills")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 12, 12),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-brexit-supreme",
+    "Gather contributions and supporters around Brexit supreme court case",
+    owners = Seq(Owner.withGithub("philwills")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 12, 12),
     exposeClientSide = true
   )
 

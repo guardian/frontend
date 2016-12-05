@@ -99,6 +99,26 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit env: 
         }
       }
 
+      def galleryOnwardView(trails: Seq[HostedPage]): RevalidatableResult = {
+        if (request.isAmp) {
+          def toJson(trail: HostedPage) = Json.obj(
+            "url" -> trail.url,
+            "imageUrl" -> trail.imageUrl
+          )
+          JsonComponent {
+            val cta = trails.headOption.map(_.cta)
+            "items" -> JsArray(Seq(Json.obj(
+              "ctaText" -> cta.map(_.label),
+              "ctaLink" -> cta.map(_.url),
+              "buttonText" -> cta.map(_.btnText),
+              "trails" -> JsArray(trails.map(toJson))
+            )))
+          }
+        } else {
+          JsonComponent(hostedGalleryOnward(trails))
+        }
+      }
+
       val capiResponse = {
         val sectionId = s"advertiser-content/$campaignName"
         val query = baseQuery(sectionId)
@@ -123,7 +143,7 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit env: 
               Cached(cacheDuration)(onwardView(trails, 2, 4))
             case "gallery" =>
               val trails = HostedTrails.fromContent(itemId, trailCount = 2, results)
-              Cached(cacheDuration)(JsonComponent(hostedGalleryOnward(trails)))
+              Cached(cacheDuration)(galleryOnwardView(trails))
             case _ =>
               Cached(0)(JsonNotFound())
           }

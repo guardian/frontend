@@ -11,6 +11,7 @@
   optAdvertClassNames: Option[Seq[String]] = None,
   optClassNames: Option[Seq[String]] = None,
   optImgRatio: Option[String] = None,
+  minimiseOnMobile: Boolean = false,
   useCardBranding: Boolean)(implicit request: RequestHeader)
 
 <div class="@CssClassBuilder.advertContainer(optClassNames)">
@@ -23,10 +24,15 @@
                 @item.headline
             </h2>
             @for(description <- item.description) {
-                <div class="advert__standfirst">@Html(description)</div>
+                <div class="advert__standfirst
+                    @if(minimiseOnMobile){hide-until-tablet}
+                    ">@Html(description)</div>
             }
         </div>
-        <div class="advert__image-container @for(imgRatio <- optImgRatio){u-responsive-ratio u-responsive-ratio--@imgRatio}">
+        <div class="advert__image-container
+            @if(minimiseOnMobile){hide-until-tablet}
+            @for(imgRatio <- optImgRatio){u-responsive-ratio u-responsive-ratio--@imgRatio}
+            ">
             @image(
                 Seq("advert__image"),
                 FaciaWidths.mediaFromItemClasses(ItemClasses(mobile = Standard, tablet = cardType, desktop = Some(cardType))),

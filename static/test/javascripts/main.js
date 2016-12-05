@@ -37,8 +37,9 @@ requirejs.config({
         // plugins
         text:         'components/requirejs-text/text',
         inlineSvg:    'projects/common/utils/inlineSvg',
-        // skip the raven configuration module
-        'common/utils/raven':        'components/raven-js/raven',
+        // raven
+        raven:        'components/raven-js/raven',
+        'common/utils/raven':        '/base/static/test/javascripts/fixtures/raven'
     },
     shim: {
         googletag: {
