@@ -12,8 +12,18 @@ define([
         variants: ['mixed', 'just-contribute', 'just-supporter']
     };
 
+    var ContributionsEpicObserverAnniversary = {
+        name: 'ContributionsEpicObserverAnniversary',
+        variants: ['mixed']
+    };
+
+    var ContributionsEpicBrexitSupreme = {
+        name: 'ContributionsEpicBrexitSupreme',
+        variants: ['mixed']
+    };
+
     function userIsInAClashingAbTest() {
-        var clashingTests = [ContributionsEpicUsaCtaThreeWay];
+        var clashingTests = [ContributionsEpicUsaCtaThreeWay, ContributionsEpicObserverAnniversary, ContributionsEpicBrexitSupreme];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 
