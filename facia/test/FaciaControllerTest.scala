@@ -11,8 +11,15 @@ import services.ConfigAgent
 import org.scalatest._
 import controllers.FaciaControllerImpl
 
-@DoNotDiscover class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite
-  with BeforeAndAfterAll with FakeRequests with BeforeAndAfterEach with WithTestWsClient {
+@DoNotDiscover class FaciaControllerTest extends FlatSpec
+  with Matchers
+  with ExecutionContexts
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with FakeRequests
+  with BeforeAndAfterEach
+  with WithTestEnvironment
+  with WithTestWsClient {
 
   val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient))
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
@@ -141,7 +148,7 @@ import controllers.FaciaControllerImpl
 
   it should "render correct amount of fronts in mf2 format (no section or edition provided)" in {
     val count = 3
-    val request = FakeRequest("GET", s"/container/count/${count}/offset/0/mf2.json")
+    val request = FakeRequest("GET", s"/container/count/$count/offset/0/mf2.json")
     val result = faciaController.renderSomeFrontContainersMf2(count, 0)(request)
     status(result) should be(200)
     (contentAsJson(result) \ "items").as[JsArray].value.size should be(count)
@@ -150,7 +157,7 @@ import controllers.FaciaControllerImpl
   it should "render fronts in mf2 format (no edition provided)" in {
     val section = "music"
     val count = 3
-    val request = FakeRequest("GET", s"/container/count/${count}/offset/0/section/${section}/mf2.json")
+    val request = FakeRequest("GET", s"/container/count/$count/offset/0/section/$section/mf2.json")
     val result = faciaController.renderSomeFrontContainersMf2(count, 0, section)(request)
     status(result) should be(200)
     (contentAsJson(result) \ "items").as[JsArray].value.size should be(count)
@@ -159,7 +166,7 @@ import controllers.FaciaControllerImpl
   it should "render fronts in mf2 format (no section provided)" in {
     val edition = "uk"
     val count = 3
-    val request = FakeRequest("GET", s"/container/count/${count}/offset/0/edition/${edition}/mf2.json")
+    val request = FakeRequest("GET", s"/container/count/$count/offset/0/edition/$edition/mf2.json")
     val result = faciaController.renderSomeFrontContainersMf2(count, 0, edition = edition)(request)
     status(result) should be(200)
     (contentAsJson(result) \ "items").as[JsArray].value.size should be(count)
@@ -169,7 +176,7 @@ import controllers.FaciaControllerImpl
     val section = "media" // has to be an editionalised section
     val edition = "au"
     val count = 3
-    val request = FakeRequest("GET", s"/container/count/${count}/offset/0/section/${section}/edition/${edition}/mf2.json")
+    val request = FakeRequest("GET", s"/container/count/$count/offset/0/section/$section/edition/$edition/mf2.json")
     val result = faciaController.renderSomeFrontContainersMf2(count, 0, section, edition)(request)
     status(result) should be(200)
     (contentAsJson(result) \ "items").as[JsArray].value.size should be(count)

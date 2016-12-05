@@ -1,7 +1,7 @@
-@(env: String)(implicit request: RequestHeader)
+@()(implicit request: RequestHeader, env: play.api.Environment)
 @import conf.Configuration.commercial.testDomain
 
-@admin_main("Commercial Tools", env, isAuthed = true) {
+@admin_main("Commercial Tools", isAuthed = true) {
 
     <p><a href="@controllers.admin.routes.AdminIndexController.admin()">Admin</a></p>
 
@@ -17,7 +17,6 @@
                     <ul>
                         <li><a href="@controllers.admin.routes.CommercialController.renderCommercialRadiator()">Commercial Radiator</a></li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderBrowserPerformanceDashboard()">Real-user advert performance</a></li>
-                        <li><a href="@controllers.admin.routes.CommercialController.renderProgrammaticPerformanceDashboard()">Programmatic advert performance</a></li>
                      </ul>
                 </div>
             </div>

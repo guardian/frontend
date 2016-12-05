@@ -14,6 +14,7 @@ import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
+import controllers.Assets
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.CorsHttpErrorHandler
 import model.ApplicationIdentity
@@ -54,6 +55,7 @@ trait AppComponents extends FrontendComponents with CommercialControllers with C
 
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
+  lazy val assets = wire[Assets]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],

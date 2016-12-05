@@ -38,7 +38,7 @@
         }
 
         @if(!item.trail.shouldHidePublicationDate) {
-            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.tags.isLiveBlog, item.fields.isLive)
+            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
         }
     }
 
@@ -46,10 +46,10 @@
         <div class="meta__extras @if(!ageNotice.isEmpty){ meta__extras--notice }">
             <div class="meta__social" data-component="share">
                 @fragments.social(socialLinks, "top", iconModifier = iconModifier)
-                @if(item.content.tags.tags.exists(_.id == "tone/news")) {
-                    @fragments.contentAgeNotice(ageNotice)
-                }
             </div>
+            @if(item.content.tags.tags.exists(_.id == "tone/news")) {
+                @fragments.contentAgeNotice(ageNotice)
+            }
             @if(!item.content.isExplore) {
                 <div class="meta__numbers">
                     <div class="u-h meta__number js-sharecount">

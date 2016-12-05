@@ -1,12 +1,13 @@
 package controllers.admin
 
-import common.dfp.{GuLineItem, GuCreativeTemplate}
+import common.dfp.{GuCreativeTemplate, GuLineItem}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import conf.Configuration.environment
-import dfp.{DfpDataExtractor, CreativeTemplateAgent, DfpApi}
+import dfp.{CreativeTemplateAgent, DfpApi, DfpDataExtractor}
 import model._
 import ophan.SurgingContentAgent
+import play.api.Environment
 import play.api.libs.json.JsString
 import play.api.mvc.{Action, Controller}
 import tools._
@@ -21,40 +22,40 @@ case class CommercialPage() extends StandalonePage {
       "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng")))
 }
 
-class CommercialController extends Controller with Logging with ExecutionContexts {
+class CommercialController(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
 
   def renderCommercialMenu() = Action { implicit request =>
-    NoCache(Ok(views.html.commercial.commercialMenu(environment.stage)))
+    NoCache(Ok(views.html.commercial.commercialMenu()))
   }
 
   def renderFluidAds = Action { implicit request =>
-    NoCache(Ok(views.html.commercial.fluidAds(environment.stage)))
+    NoCache(Ok(views.html.commercial.fluidAds()))
   }
 
   def renderSpecialAdUnits = Action { implicit request =>
     val specialAdUnits = DfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot)
-    Ok(views.html.commercial.specialAdUnits(environment.stage, specialAdUnits))
+    Ok(views.html.commercial.specialAdUnits(specialAdUnits))
   }
 
   def renderPageskins = Action { implicit request =>
     val pageskinnedAdUnits = Store.getDfpPageSkinnedAdUnits()
 
-    NoCache(Ok(views.html.commercial.pageskins(environment.stage, pageskinnedAdUnits)))
+    NoCache(Ok(views.html.commercial.pageskins(pageskinnedAdUnits)))
   }
 
   def renderSurgingContent = Action { implicit request =>
     val surging = SurgingContentAgent.getSurging
-    NoCache(Ok(views.html.commercial.surgingpages(environment.stage, surging)))
+    NoCache(Ok(views.html.commercial.surgingpages(surging)))
   }
 
   def renderInlineMerchandisingTargetedTags = Action { implicit request =>
     val report = Store.getDfpInlineMerchandisingTargetedTagsReport()
-    NoCache(Ok(views.html.commercial.inlineMerchandisingTargetedTags(environment.stage, report)))
+    NoCache(Ok(views.html.commercial.inlineMerchandisingTargetedTags(report)))
   }
 
   def renderHighMerchandisingTargetedTags = Action { implicit request =>
     val report = Store.getDfpHighMerchandisingTargetedTagsReport()
-    NoCache(Ok(views.html.commercial.highMerchandisingTargetedTags(environment.stage, report)))
+    NoCache(Ok(views.html.commercial.highMerchandisingTargetedTags(report)))
   }
 
   def renderCreativeTemplates = Action { implicit request =>
@@ -63,7 +64,7 @@ class CommercialController extends Controller with Logging with ExecutionContext
     val templates = emptyTemplates.foldLeft(Seq.empty[GuCreativeTemplate]) { (soFar, template) =>
       soFar :+ template.copy(creatives = creatives.filter(_.templateId.get == template.id).sortBy(_.name))
     }.sortBy(_.name)
-    NoCache(Ok(views.html.commercial.templates(environment.stage, templates)))
+    NoCache(Ok(views.html.commercial.templates(templates)))
   }
 
   def renderAdTests = Action { implicit request =>
@@ -84,12 +85,12 @@ class CommercialController extends Controller with Logging with ExecutionContext
         hasStringTestValue.toSeq.sortBy { case (testValue, _) => testValue}
     }
 
-    NoCache(Ok(views.html.commercial.adTests(environment.stage, report.timestamp, sortedGroups)))
+    NoCache(Ok(views.html.commercial.adTests(report.timestamp, sortedGroups)))
   }
 
   def renderCommercialRadiator() = Action.async { implicit request =>
     for (adResponseConfidenceGraph <- CloudWatch.eventualAdResponseConfidenceGraph) yield {
-      Ok(views.html.commercial.commercialRadiator("PROD", adResponseConfidenceGraph))
+      Ok(views.html.commercial.commercialRadiator(adResponseConfidenceGraph))
     }
   }
 
@@ -97,12 +98,8 @@ class CommercialController extends Controller with Logging with ExecutionContext
     Ok(views.html.commercial.performance.browserDashboard())
   }
 
-  def renderProgrammaticPerformanceDashboard() = Action { implicit request =>
-    Ok(views.html.commercial.performance.programmaticDashboard())
-  }
-
   def renderKeyValues() = Action { implicit request =>
-    Ok(views.html.commercial.customTargetingKeyValues("PROD", Store.getDfpCustomTargetingKeyValues))
+    Ok(views.html.commercial.customTargetingKeyValues(Store.getDfpCustomTargetingKeyValues))
   }
 
   def renderKeyValuesCsv(key: String) = Action { implicit request =>
@@ -131,7 +128,6 @@ class CommercialController extends Controller with Logging with ExecutionContext
     val unidentifiedLineItems = invalidItemsMap.keySet -- pageskins.map(_.lineItemId) -- topAboveNav.map(_.id) -- highMerch.map(_.id)
 
     Ok(views.html.commercial.invalidLineItems(
-      "PROD",
       pageskins,
       topAboveNav,
       highMerch,

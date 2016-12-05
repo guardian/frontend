@@ -7,10 +7,13 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
-    'common/modules/experiments/tests/hosted-onward-journey',
+    'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
     'common/modules/experiments/tests/contributions-epic-usa-cta-three-way',
-    'common/modules/experiments/tests/platform-sticky-ad-viewability'
+    'common/modules/experiments/tests/contributions-epic-observer-anniversary',
+    'common/modules/experiments/tests/contributions-epic-brexit-supreme',
+    'common/modules/experiments/tests/uk-membership-engagement-message-test-10',
+    'common/modules/experiments/tests/au-membership-engagement-message-test-8'
 ], function (reportError,
              config,
              cookies,
@@ -19,16 +22,22 @@ define([
              mvtCookie,
              memoize,
              noop,
-             HostedOnwardJourney,
+             RecommendedForYou,
              MembershipEngagementInternationalExperiment,
              ContributionsEpicUsaCtaThreeWay,
-             PlatformStickyAdViewability
+             ContributionsEpicObserverAnniversary,
+             ContributionsEpicBrexitSupreme,
+             UkMembershipEngagementMessageTest10,
+             AuMembershipEngagementMessageTest8
     ) {
     var TESTS = [
-        new HostedOnwardJourney(),
+        new RecommendedForYou(),
         new MembershipEngagementInternationalExperiment(),
         new ContributionsEpicUsaCtaThreeWay(),
-        new PlatformStickyAdViewability()
+        new ContributionsEpicObserverAnniversary(),
+        new ContributionsEpicBrexitSupreme(),
+        new UkMembershipEngagementMessageTest10(),
+        new AuMembershipEngagementMessageTest8()
     ];
 
     var participationsKey = 'gu.ab.participations';

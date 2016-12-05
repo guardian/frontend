@@ -6,7 +6,9 @@ import play.api.mvc._
 import play.api.test.Helpers._
 import play.api.test._
 
-@DoNotDiscover class CommercialAmpValidityTest extends AmpValidityTest with WithTestContentApiClient {
+@DoNotDiscover class CommercialAmpValidityTest extends AmpValidityTest
+  with WithTestEnvironment
+  with WithTestContentApiClient {
 
   override protected def getContentString[T](path: String)(block: (String) => T): T = {
     val controller = new HostedContentController(testContentApiClient)
@@ -21,4 +23,13 @@ import play.api.test._
 
   val hostedArticleId = "advertiser-content/audi-history-of-audi/audi-and-innovation"
   testAmpPageValidity(hostedArticleId)
+
+  val hostedVideoId = "advertiser-content/chester-zoo-act-for-wildlife/making-wildlife-friendly-habitats"
+  testAmpPageValidity(hostedVideoId)
+
+  val hostedYoutubeId = "advertiser-content/explore-canada-food-busker-in-canada/duelling-bagels"
+  testAmpPageValidity(hostedYoutubeId)
+
+  val hostedGalleryId = "advertiser-content/visit-britain/coast"
+  testAmpPageValidity(hostedGalleryId)
 }

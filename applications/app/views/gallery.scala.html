@@ -1,4 +1,4 @@
-@(page: model.GalleryPage)(implicit request: RequestHeader)
+@(page: model.GalleryPage)(implicit request: RequestHeader, env: play.api.Environment)
 
 @main(page){ }{
     @if(page.gallery.content.isImmersiveGallery) {

@@ -7,21 +7,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-hosted-onward-journey",
-    "Show more pages from the campaign in Hosted Article/Video pages, using a carousel or popup",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 18),
+    "ab-membership-engagement-international-experiment",
+    "Test varying the number of visits before showing the membership engagement banner",
+    owners = Seq(Owner.withGithub("rupert.bates")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 12, 5),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-membership-engagement-international-experiment",
-    "Test varying the number of visits before showing the membership engagement banner",
-    owners = Seq(Owner.withGithub("rupert.bates")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 12, 1), // Thursday 1st December
+    "ab-recommended-for-you-recommendations",
+    "Test personalised container on fronts",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 10),
     exposeClientSide = true
   )
 
@@ -31,17 +31,48 @@ trait ABTestSwitches {
     "Test just contributions vs contributions or membership vs just membership in the US",
     owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 25),
+    sellByDate =  new LocalDate(2016, 12, 5),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-platform-sticky-ad-viewability",
-    "Test the affect of showing the navigation on the viewability of the sticky top ad",
-    owners = Seq(Owner.withGithub("gtrufitt"), Owner.withName("Gareth Trufitt")),
+    "ab-contributions-epic-observer-anniversary",
+    "Gather contributions and supporters around Observer 225th anniversary",
+    owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 24),
+    sellByDate =  new LocalDate(2016, 12, 12),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-brexit-supreme",
+    "Gather contributions and supporters around Brexit supreme court case",
+    owners = Seq(Owner.withGithub("philwills")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 12, 12),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-uk-memb-engagement-msg-copy-test-10",
+    "Test alternate short messages on membership engagement banner",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 8), // Thursday 8th December
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-au-memb-engagement-msg-copy-test-8",
+    "Test alternate short messages on AU membership engagement banner",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 22), // Thursday 22nd December
+    exposeClientSide = true
+  )
+
 }

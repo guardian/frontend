@@ -4,6 +4,7 @@ import java.io.File
 
 import play.api.mvc.{Action, Controller}
 import common.Logging
+import play.api.Environment
 import play.api.data._
 import play.api.data.Forms._
 import services.RedirectService.PermanentRedirect
@@ -13,7 +14,7 @@ import services.RedirectService
 case class PageRedirect(from: String, to: String) {
   lazy val trim = this.copy(from = from.trim, to = to.trim)
 }
-class RedirectController(redirects: RedirectService) extends Controller with Logging {
+class RedirectController(redirects: RedirectService)(implicit env: Environment) extends Controller with Logging {
 
 
   val redirectForm = Form(mapping("from" -> text, "to" -> text)(PageRedirect.apply)(PageRedirect.unapply))
@@ -23,14 +24,19 @@ class RedirectController(redirects: RedirectService) extends Controller with Log
   }
 
   def redirectPost() = Action { implicit request =>
+    val failMessage = "Request failed, please ensure you have followed the instructions and try again."
 
-    redirectForm.bindFromRequest().get.trim match {
-      case PageRedirect(from, "") if from.nonEmpty  => redirects.remove(from)
-      case PageRedirect(from, to) if from.nonEmpty  => redirects.set(PermanentRedirect(from, to))
-      case _ =>
+    val message = redirectForm.bindFromRequest().get.trim match {
+      case PageRedirect(from, "") if from.nonEmpty  =>
+        val success = redirects.remove(from)
+        if(success) "Redirect successfully removed" else failMessage
+      case PageRedirect(from, to) if from.nonEmpty  =>
+        val success = redirects.set(PermanentRedirect(from, to))
+        if(success) "Redirect successfully set" else failMessage
+      case _ => failMessage
     }
 
-    SeeOther(routes.RedirectController.redirect().url)
+    Ok(views.html.redirects(redirectForm, urlMsgs = List(message)))
   }
 
   def redirectBatchPost() = Action { implicit request =>

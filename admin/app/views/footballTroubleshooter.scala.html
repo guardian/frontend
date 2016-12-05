@@ -1,9 +1,9 @@
-@(env: String)(implicit request: RequestHeader)
+@()(implicit request: RequestHeader, env: play.api.Environment)
 @import conf.AdminConfiguration.pa
 @import org.joda.time.{DateTime, LocalDate}
 @import views.support.Format
 
-@admin_main("Football Troubleshooter", env, isAuthed = true) {
+@admin_main("Football Troubleshooter", isAuthed = true) {
 
 @defining((Format(DateTime.now(), "yyyyMMdd"), "Premier League", "100")){ case (today, competition, competitionId) =>
 

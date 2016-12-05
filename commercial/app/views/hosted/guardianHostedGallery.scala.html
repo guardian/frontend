@@ -1,5 +1,5 @@
 @import common.commercial.hosted.HostedGalleryPage
-@(page: HostedGalleryPage)(implicit request: RequestHeader)
+@(page: HostedGalleryPage)(implicit request: RequestHeader, env: play.api.Environment)
 @import views.html.hosted._
 
 @main(page, Some("commercial"))  { }  {

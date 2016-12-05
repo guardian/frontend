@@ -715,61 +715,339 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
  * Tertiary Nav
  ****************/
 
-.tertiary-navigation {
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    margin-bottom: -$gs-baseline/2;
-    margin-left: $gs-gutter / 2;
-    margin-right: $gs-gutter / 2;
+.tertiary-container {
+    overflow: hidden;
 
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
+    // Scrolly variant
+    &.tertiary__variant-three {
+        position: relative;
+        // Hides the scrollbar
+        height: $gs-baseline*2.5;
+        overflow: hidden;
+
+        @include mq($from: mobile, $until: mobileLandscape) {
+            height: $gs-baseline*2.5;
+            height: 9.8vw;
+        }
+
+        @include mq($from: mobileLandscape) {
+            height: $gs-baseline*3.3;
+        }
+
+        // Crazy radial hidey fade
+        &:after {
+            content: '';
+            position: absolute;
+            height: $gutter-small + $veggie-burger-small - $gs-gutter/2;
+            width: $gutter-small + $veggie-burger-small - $gs-gutter/2;
+            border-top-left-radius: 50%;
+            border-bottom-left-radius: 50%;
+            background-color: $neutral-2;
+            box-shadow: 0 0 20px 10px $neutral-2;
+            top: -30px;
+            right: 0;
+            pointer-events: none;
+
+            @include mq($mobile-medium) {
+                height: $gutter-medium + $veggie-burger-medium - $gs-gutter/2;
+                width: $gutter-medium + $veggie-burger-medium - $gs-gutter/2;
+                top: -40px;
+            }
+
+            @include mq(mobileLandscape) {
+                height: $gutter-large + $veggie-burger-medium - $gs-gutter/2;
+                width: $gutter-large + $veggie-burger-medium - $gs-gutter/2;
+                top: -50px;
+            }
+        }
+    }
+
+    // Single line limited variant, stacked variant
+    &.tertiary__variant-four,
+    &.tertiary__variant-five {
+        border-bottom: $gs-baseline/2 solid #747a81;
     }
 }
 
-.tertiary-navigation__item {
-    width: calc(50% - #{$gs-gutter / 2});
-    border-top: 1px solid $neutral-5;
-}
+.tertiary-navigation {
+    margin: 0;
+    background-color: #747a81;
+    padding-left: $gs-gutter/2;
+    padding-right: $gs-gutter/2;
+    list-style: none;
+    white-space: nowrap;
+    display: flex;
 
-.tertiary-navigation__text {
-    width: calc(100% - #{$gs-gutter});
-    float: left;
+    // Scrolly variant
+    .tertiary__variant-three & {
+        overflow-x: scroll;
+        padding-bottom: $gs-baseline*3;
+    }
+
+    // Stacked variant
+    .tertiary__variant-four & {
+        padding-top: $gs-baseline/2;
+        max-height: $gs-baseline*3.4;
+        flex-wrap: wrap;
+
+        @include mq($from: mobile, $until: mobileLandscape) {
+            max-height: $gs-baseline*4;
+            max-height: 14.8vw;
+        }
+
+        @include mq($from: mobileLandscape) {
+            max-height: $gs-baseline*5.5;
+        }
+    }
+
+    @include mq($from: mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
+    // Single line limited variant
+    .tertiary__variant-five & {
+        height: $gs-baseline * 2;
+        flex-wrap: wrap;
+        padding-right: $gutter-small + $veggie-burger-small;
+        overflow: hidden;
+
+        @include mq($from: mobile, $until: mobileLandscape) {
+            height: $gs-baseline * 2.2;
+            height:  8vw;
+            padding-right: $gutter-medium + $veggie-burger-small;
+        }
+
+        @include mq(mobileLandscape) {
+            height: $gs-baseline * 2.8;
+            padding-right: $gutter-large + $veggie-burger-medium;
+        }
+    }
 }
 
 .tertiary-navigation__link {
-    @include fs-textSans(5);
-    line-height: 18px;
-    font-weight: 600;
-    color: $news-main-1;
-    min-height: $gs-row-height;
-    padding-top: $gs-baseline / 3;
-    padding-bottom: $gs-baseline / 2;
+    position: relative;
+    @include fs-textSans(4);
+    color: $neutral-4;
     display: block;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        color: #ffffff;
+    }
+
+    @include mq($from: mobile, $until: mobileLandscape) {
+        font-size: 16px;
+        font-size: 5.1vw;
+    }
+
+    @include mq(mobileLandscape) {
+        font-size: 22px;
+    }
+
+    &:after {
+        pointer-events: none;
+        content: '/';
+        color: rgba(255, 255, 255, .3);
+    }
+
+    // Scrolly variant, Single line limited variant
+    .tertiary__variant-three &,
+    .tertiary__variant-five & {
+        line-height: 2.2em;
+        padding: 0 .4em;
+
+        @include mq($from: mobile, $until: mobileLandscape) {
+            line-height: 1.9em;
+        }
+
+        @include mq($from: mobileLandscape) {
+            line-height: 1.8em;
+        }
+
+        &:after {
+            position: absolute;
+            left: -.17em;
+        }
+    }
+
+    // Stacked variant
+    .tertiary__variant-four & {
+        line-height: 1.5em;
+
+        &:after {
+            margin-left: -.1em;
+            padding: 0 $gs-gutter/10;
+        }
+    }
 }
 
-.tertiary-navigation__icon {
-    background-color: $news-main-2;
-    height: $gs-gutter;
-    width: $gs-gutter;
-    float: right;
+// Scrolly variant, Single line limited variant
+.tertiary__variant-three,
+.tertiary__variant-five {
+    .tertiary-navigation__item:first-of-type .tertiary-navigation__link {
+        padding-left: 0;
 
-    &:before {
-        content: '';
-        display: block;
-        // Visually, this is the best size for this icon
-        width: 7px;
-        height: 7px;
-        border: 2px solid #ffffff;
-        transform: rotate(-45deg);
-        border-top: 0;
-        border-left: 0;
-        // Optically aligns the icon in it's container
-        margin-top: 5px;
-        margin-left: 4px;
+        &:after {
+            content: none;
+        }
+    }
+}
+
+// Scrolly variant
+.tertiary__variant-three {
+    .tertiary-navigation__item {
+        flex: 0 0 auto;
+
+        &:last-of-type .tertiary-navigation__link {
+            margin-right: $gutter-small + $veggie-burger-small;
+
+            @include mq($mobile-medium) {
+                margin-right: $gutter-medium + $veggie-burger-medium - $gs-gutter/2;
+            }
+
+            @include mq(mobileLandscape) {
+                margin-right: $gutter-large + $veggie-burger-medium - $gs-gutter/2;
+            }
+        }
+    }
+}
+
+// Stacked variant
+.tertiary__variant-four {
+    .tertiary-navigation__item:last-of-type .tertiary-navigation__link {
+        &:after {
+            content: '';
+        }
+    }
+}
+
+/****************
+ * Changes to an Article Body
+ ****************/
+
+$caption-button-size: 32px;
+.has-new-header {
+
+    // When the image is at the top of the article, the headline and byline are moved into a div with margins. This counteracts that
+    // TODO: If this change is kept after the test the template will have to be rewriten and these overrides won't be needed
+    .content__head {
+        @include mq($until: mobileLandscape) {
+            margin-right: -$gs-gutter /2;
+            margin-left: -$gs-gutter /2;
+        }
+
+        @include mq($from: mobileLandscape, $until: phablet) {
+            margin-right: -$gs-gutter;
+            margin-left: -$gs-gutter;
+        }
+    }
+
+    @include mq($from: phablet, $until: tablet) {
+        .media-primary,
+        .content__head {
+            margin-left: -$gs-gutter;
+            margin-right: -$gs-gutter;
+        }
+    }
+
+    @include mq($until: tablet) {
+        .content__headline {
+            padding-top: $gs-baseline/3;
+        }
+
+        .inline-expand-image,
+        .content__labels {
+            display: none;
+        }
+
+        .reveal-caption {
+            position: absolute;
+            right: $gs-gutter/4;
+            width: $caption-button-size;
+            height: $caption-button-size;
+            z-index: 1;
+            background-color: rgba($neutral-1, .4);
+            border-radius: 50%;
+        }
+        .reveal-caption--img {
+            bottom: $gs-baseline/2;
+        }
+
+        .caption--main.caption--video {
+            padding-bottom: 0;
+        }
+
+        .caption--main.caption--img {
+            position: absolute;
+            background: rgba($multimedia-support-5, .8);
+            color: #ffffff;
+            display: none;
+            padding: $gs-baseline/2 $gs-gutter*2 $gs-baseline $gs-gutter/2;
+            max-width: 100%;
+
+            @include mq($from: mobileLandscape) {
+                padding-left: $gs-gutter;
+            }
+
+            a {
+                color: #ffffff;
+            }
+
+            &.caption--img {
+                bottom: 0;
+                padding-bottom: $gs-baseline;
+            }
+
+            &:before {
+                content: none;
+            }
+        }
+
+        input[id="show-caption"]:checked ~ .caption--main {
+            display: block;
+        }
+
+        input[id="show-caption"]:checked ~ .reveal-caption {
+            background-color: $multimedia-support-5;
+        }
+
+        .content__meta-container {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 0;
+
+            .meta__extras,
+            .content__dateline {
+                flex: 1 0 auto;
+                width: 100%;
+            }
+        }
+
+        .meta__extras {
+            border-bottom: 1px dotted $neutral-4;
+            order: -1;
+
+            .meta__social {
+                border-top: 0;
+            }
+        }
+
+        // Padding above headline in galleries, because kicker is hidden
+        .tonal--tone-media .content__headline--gallery {
+            padding-top: $gs-baseline/2;
+        }
+
+        .section-indicator:after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            margin-left: -$gs-baseline/2;
+            border-bottom: $gs-baseline/2 solid #747a81;
+            border-left: $gs-baseline/2 solid transparent;
+            border-right: $gs-baseline/2 solid transparent;
+        }
     }
 }

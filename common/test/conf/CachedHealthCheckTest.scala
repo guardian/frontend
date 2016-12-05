@@ -26,8 +26,8 @@ import scala.util.Random
   def mockResult(statusCode: Int, date: DateTime = DateTime.now, expiration: HealthCheckExpiration = HealthCheckExpires.Duration(10.seconds)): HealthCheckResult = {
     val path = s"/path/${Random.alphanumeric.take(12).mkString}"
     statusCode match {
-      case 200 => new HealthCheckResult(path, HealthCheckResultTypes.Success(statusCode), date, expiration)
-      case _ => new HealthCheckResult(path, HealthCheckResultTypes.Failure(statusCode, "Something went bad"), date, expiration)
+      case 200 => HealthCheckResult(path, HealthCheckResultTypes.Success(statusCode), date, expiration)
+      case _ => HealthCheckResult(path, HealthCheckResultTypes.Failure(statusCode, "Something went bad"), date, expiration)
     }
   }
 

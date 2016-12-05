@@ -8,22 +8,23 @@ import play.api.mvc._
 import services.SwitchNotification
 import tools.Store
 import model.NoCache
+import play.api.Environment
 
-class SwitchboardPlistaController(akkaAsync: AkkaAsync) extends Controller with Logging with ExecutionContexts {
+class SwitchboardPlistaController(akkaAsync: AkkaAsync)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
 
   def renderSwitchboard() = Action { implicit request =>
     log.info("loaded plista Switchboard")
 
     val switchesWithLastModified = Store.getSwitchesWithLastModified
     val switchStates = Properties(switchesWithLastModified map {_._1} getOrElse "")
-    val lastModified = switchesWithLastModified map {_._2} map {_.getMillis} getOrElse(System.currentTimeMillis)
+    val lastModified = switchesWithLastModified map {_._2} map {_.getMillis} getOrElse System.currentTimeMillis
 
     switchStates.get(Switches.PlistaForOutbrainAU.name) foreach {
       case "on" => Switches.PlistaForOutbrainAU.switchOn()
       case _ => Switches.PlistaForOutbrainAU.switchOff()
     }
 
-    NoCache(Ok(views.html.switchboardPlista(Configuration.environment.stage, Switches.PlistaForOutbrainAU, lastModified)))
+    NoCache(Ok(views.html.switchboardPlista(Switches.PlistaForOutbrainAU, lastModified)))
   }
 
   def save() = Action { implicit request =>
@@ -41,7 +42,7 @@ class SwitchboardPlistaController(akkaAsync: AkkaAsync) extends Controller with 
         val update = Switches.PlistaForOutbrainAU.name + "=" + newState
 
         SwitchNotification.onSwitchChanges(akkaAsync)(requester, Configuration.environment.stage, List() :+ update)
-        log.info(s"Switch change by ${requester}: ${update}")
+        log.info(s"Switch change by $requester: $update")
       }
 
       Redirect("/dev/switchboard-plista")
@@ -67,7 +68,7 @@ class SwitchboardPlistaController(akkaAsync: AkkaAsync) extends Controller with 
 
       // for switches not present on this page, we need to persist their current values
       val currentState = Properties(remoteSwitches.map(_._1) getOrElse "")
-      val currentConfig = Switches.all.filterNot(_ == Switches.PlistaForOutbrainAU).map{switch => switch.name + "=" + currentState.get(switch.name).getOrElse("off")}
+      val currentConfig = Switches.all.filterNot(_ == Switches.PlistaForOutbrainAU).map{switch => switch.name + "=" + currentState.getOrElse(switch.name, "off")}
       val plistaConfig = Switches.PlistaForOutbrainAU.name + "=" + plistaSetting
 
       saveSwitchesOrError(currentConfig :+ plistaConfig, plistaSetting)

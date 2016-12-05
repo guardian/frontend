@@ -318,4 +318,4 @@ There are five projects in the Javascript architecture:
 
 ### Vendor
 
-Contains [vendor JS](https://github.com/guardian/frontend/tree/master/static/src/javascripts/vendor) from the likes of forsee, formstack, prebid and stripe.
+Contains [vendor JS](https://github.com/guardian/frontend/tree/master/static/src/javascripts/vendor) from the likes of forsee, formstack and stripe.

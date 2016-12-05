@@ -14,7 +14,7 @@ object ShortName {
 
   val names = Map("44" -> "Wolves")
 
-  def apply(team: Team) = names.get(team.id).getOrElse(team.name)
+  def apply(team: Team) = names.getOrElse(team.id, team.name)
 
 }
 
@@ -57,10 +57,10 @@ object MatchStatus extends Logging {
     ("Cancelled", "C") // A Match has been Cancelled.
   )
   // if we get a status we do not expect just take the first 2 letters
-  def apply(status: String): Html = Html(statuses.get(status).getOrElse {
+  def apply(status: String): Html = Html(statuses.getOrElse(status, {
     log.info(s"unknown match status $status")
     status.take(2)
-  })
+  }))
 
 }
 

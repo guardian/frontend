@@ -1,6 +1,6 @@
-@(form: play.api.data.Form[controllers.admin.PageRedirect], urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty)(implicit request: RequestHeader)
+@(form: play.api.data.Form[controllers.admin.PageRedirect], urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty)(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Redirector", conf.Configuration.environment.stage, isAuthed = true) {
+@admin_main("Redirector", isAuthed = true) {
     <ul>
         <li>
             This will <strong>only</strong> add the redirect to Next Gen Web. It will <strong>not</strong> add it to

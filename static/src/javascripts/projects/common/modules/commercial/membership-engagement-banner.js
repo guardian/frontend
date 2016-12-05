@@ -74,6 +74,42 @@ define([
             }
         }
 
+        function doUkCopyTest(content) {
+            var variant = getVariant('UkMembEngagementMsgCopyTest10');
+            if (variant && variant !== notInTest) {
+                var variantMessages = {
+                        post_truth_world: 'In a post-truth world, facts matter more than ever. Support the Guardian for £5 a month',
+                        now_is_the_time: 'If you’ve been thinking about supporting us, now is the time to do it. Support the Guardian for £5 a month',
+                        everyone_chipped_in: 'Not got around to supporting us yet? If everyone chipped in, our future would be more secure. Support the Guardian for £5 a month',
+                        free_and_open: 'By giving £5 a month you can help to keep the Guardian’s journalism free and open for all'
+                };
+                var campaignCode = 'gdnwb_copts_mem_banner_ukbanner__' + variant;
+                content.campaignCode = campaignCode;
+                content.linkHref = formatEndpointUrl('UK', campaignCode);
+                if (variant !== 'control') {
+                    content.messageText = variantMessages[variant];
+                }
+            }
+        }
+
+        function doAuCopyTest(content) {
+            var variant = getVariant('AuMembEngagementMsgCopyTest8');
+            if (variant && variant !== notInTest) {
+                var variantMessages = {
+                    fearless_10: 'We need you to help support our fearless independent journalism. Become a Guardian Australia member for just $10 a month',
+                    stories_that_matter: 'We need your help to tell the stories that matter. Support Guardian Australia now',
+                    power_to_account: 'We need your help to hold power to account. Become a Guardian Australia supporter',
+                    independent_journalism: 'Support quality, independent journalism in Australia by becoming a member'
+                };
+                var campaignCode = 'gdnwb_copts_mem_banner_aubanner__' + variant;
+                content.campaignCode = campaignCode;
+                content.linkHref = formatEndpointUrl('AU', campaignCode);
+                if (variant !== 'control') {
+                    content.messageText = variantMessages[variant];
+                }
+            }
+        }
+
         function show(edition, message) {
             var content = {
                 linkHref: formatEndpointUrl(edition, message.campaign),
@@ -85,6 +121,8 @@ define([
             };
 
             doInternationalTest(content);
+            doUkCopyTest(content);
+            doAuCopyTest(content);
 
             var renderedBanner = template(messageTemplate, content);
             var messageShown = new Message(

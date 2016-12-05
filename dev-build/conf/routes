@@ -42,7 +42,7 @@ GET            /crosswords/lookup                                               
 
 # Email paths
 GET            /email                                                                                                            controllers.EmailSignupController.renderPage()
-GET            /email/form/$emailType<article|footer|plain|plaindark>/:listId                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET            /email/form/$emailType<article|footer|plain|plaindark|plaintone>/:listId                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET            /email/:result                                                                                                    controllers.EmailSignupController.subscriptionResult(result: String)
 POST           /email                                                                                                            controllers.EmailSignupController.submit()
 OPTIONS        /email                                                                                                            controllers.EmailSignupController.options()
@@ -327,7 +327,6 @@ GET            /commercial/dfp/flush/view                                       
 GET            /commercial/dfp/flush                                                                                             controllers.admin.commercial.DfpDataController.flushCache()
 GET            /commercial/performance/radiator                                                                                  controllers.admin.CommercialController.renderCommercialRadiator()
 GET            /commercial/performance/browser-dashboard                                                                         controllers.admin.CommercialController.renderBrowserPerformanceDashboard()
-GET            /commercial/performance/programmatic-dashboard                                                                    controllers.admin.CommercialController.renderProgrammaticPerformanceDashboard()
 GET            /commercial/slot/:slotName                                                                                        controllers.admin.commercial.SlotController.viewSlot(slotName)
 GET            /commercial/adops/takeovers-empty-mpus                                                                            controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
 GET            /commercial/adops/takeovers-empty-mpus/create                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()

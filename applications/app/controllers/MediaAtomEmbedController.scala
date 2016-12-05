@@ -10,8 +10,9 @@ import play.api.mvc._
 import scala.concurrent.Future
 import contentapi.ContentApiClient
 import model.content.MediaAtom
+import play.api.Environment
 
-class MediaAtomEmbedController(contentApiClient: ContentApiClient) extends Controller with Logging with ExecutionContexts {
+class MediaAtomEmbedController(contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
 
   def render(id: String) = Action.async { implicit request =>
     lookup(s"atom/media/$id") map {
@@ -46,6 +47,6 @@ class MediaAtomEmbedController(contentApiClient: ContentApiClient) extends Contr
 
     val page: MediaAtomEmbedPage = MediaAtomEmbedPage(model)
 
-    Cached(600)(RevalidatableResult.Ok(views.html.fragments.atoms.mediaEmbed(page)))
+    Cached(600)(RevalidatableResult.Ok(views.html.fragments.atoms.mediaEmbed(page, displayCaption = false)))
   }
 }

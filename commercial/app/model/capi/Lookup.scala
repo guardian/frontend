@@ -54,10 +54,6 @@ class Lookup(contentApiClient: ContentApiClient) extends ExecutionContexts with 
         Nil
     }
 
-    result onSuccess {
-      case keywords => log.info(s"Looking up [$term] gave ${keywords.map(_.id)}")
-    }
-
     result
   }
 }

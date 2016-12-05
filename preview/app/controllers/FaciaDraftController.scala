@@ -3,6 +3,7 @@ package controllers.preview
 import contentapi.{ContentApiClient, SectionsLookUp}
 import controllers.{FaciaController, IndexController}
 import controllers.front.FrontJsonFapi
+import play.api.Environment
 import play.api.libs.ws.WSClient
 import services.ConfigAgent
 
@@ -10,7 +11,7 @@ class FrontJsonFapiDraft(val wsClient: WSClient) extends FrontJsonFapi {
   val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
 }
 
-class FaciaDraftController(val frontJsonFapi: FrontJsonFapi, contentApiClient: ContentApiClient, sectionsLookUp: SectionsLookUp) extends FaciaController {
+class FaciaDraftController(val frontJsonFapi: FrontJsonFapi, contentApiClient: ContentApiClient, sectionsLookUp: SectionsLookUp)(implicit val env: Environment) extends FaciaController {
 
   private val indexController = new IndexController(contentApiClient, sectionsLookUp)
 

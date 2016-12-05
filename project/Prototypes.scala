@@ -110,7 +110,7 @@ trait Prototypes {
 
   def frontendRootSettings= List(
     testAll := (test in Test).all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value,
-    uploadAll := riffRaffUpload.all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value,
+    uploadAll := riffRaffUpload.all(ScopeFilter(inAggregates(ThisProject, includeRoot = true))).value,
 
     testThenUpload := Def.taskDyn({
      testAll.result.value match {
@@ -146,7 +146,7 @@ trait Prototypes {
     }
   )
 
-  def root() = Project("root", base = file(".")).enablePlugins(PlayScala)
+  def root() = Project("root", base = file(".")).enablePlugins(PlayScala, RiffRaffArtifact)
     .settings(frontendCompilationSettings)
     .settings(frontendRootSettings)
 

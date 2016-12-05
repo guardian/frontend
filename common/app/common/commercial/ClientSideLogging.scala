@@ -24,7 +24,7 @@ object ClientSideLogging extends Logging {
     } yield {
       report
     }
-    reports.toList
+    reports
   }
 
   def cleanUpReports(dateTime: DateTime): Unit = {

@@ -11,8 +11,9 @@
 @defining((
     page.item.tags.isTheMinuteArticle,
     page.item.elements.hasMainEmbed,
-    page.item.fields.main.nonEmpty
-)) { case (isTheMinuteArticle, hasEmbed, hasMainMedia) =>
+    page.item.fields.main.nonEmpty,
+    page.item.tags.series.headOption
+)) { case (isTheMinuteArticle, hasEmbed, hasMainMedia, optSeries) =>
 
     <div class="@RenderClasses(Map(
             "content--minute-article" -> isTheMinuteArticle,
@@ -86,10 +87,17 @@
                     ), "content__headline", "content__headline--immersive", "content__headline--immersive-article")
                 ">
                     @if(isTheMinuteArticle) {
-                        <a href="@LinkTo {/us-news/series/the-campaign-minute-2016}" class="logo--minute-article">
-                            <span class="u-h">The Minute - </span>
-                            @fragments.inlineSvg("minute-logo", "logo")
-                        </a>
+                        @optSeries.map { series =>
+                            <a href="@LinkTo { /@series.id }" class="logo--minute-article">
+                                <span class="u-h">The Minute - </span>
+                                @fragments.inlineSvg("minute-logo", "logo")
+                            </a>
+                        }.getOrElse {
+                            <div class="logo--minute-article">
+                                <span class="u-h">The Minute - </span>
+                                @fragments.inlineSvg("minute-logo", "logo")
+                            </div>
+                        }
                     }
                     @Html(page.item.trail.headline)
                 </h1>
@@ -97,7 +105,7 @@
                 @if(isTheMinuteArticle) {
 
                     @if(page.item.trail.shouldHidePublicationDate) {
-                        @fragments.meta.dateline(page.item.trail.webPublicationDate, page.item.fields.lastModified, page.item.content.hasBeenModified, page.item.tags.isLiveBlog, page.item.fields.isLive, isTheMinuteArticle)
+                        @fragments.meta.dateline(page.item.trail.webPublicationDate, page.item.fields.lastModified, page.item.content.hasBeenModified, page.item.fields.firstPublicationDate, page.item.tags.isLiveBlog, page.item.fields.isLive, isTheMinuteArticle)
                     }
 
                     @if(page.item.fields.standfirst.isDefined) {

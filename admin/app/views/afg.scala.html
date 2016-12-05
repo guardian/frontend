@@ -1,6 +1,6 @@
-@(env: String, body: String)(implicit request: RequestHeader)
+@(body: String)(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Dashboard", env, isAuthed = true, hasCharts = true) {
+@admin_main("Dashboard", isAuthed = true, hasCharts = true) {
 
     <h1 class="page-header"><i>In memoriam</i> Assets frequency graph</h1>
 

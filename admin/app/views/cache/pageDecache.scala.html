@@ -1,6 +1,6 @@
-@(maybeTestResult: Option[controllers.cache.PrePurgeTestResult] = None, message: String = "")(implicit request: RequestHeader)
+@(maybeTestResult: Option[controllers.cache.PrePurgeTestResult] = None, message: String = "")(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Purge Cache", "PROD", isAuthed = true) {
+@admin_main("Purge Cache", isAuthed = true) {
 
     <h1>Purge Cache</h1>
 

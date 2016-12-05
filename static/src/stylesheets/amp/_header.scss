@@ -1,0 +1,89 @@
+.main-header {
+    background: $guardian-brand;
+    position: relative;
+    height: 68px;
+
+    @include mq($until: 390px) {
+        height: 63px;
+    }
+
+    @include mq($until: 360px) {
+        height: 57px;
+    }
+
+    .logo-wrapper {
+        position: absolute;
+        right: $gs-gutter;
+        padding-top: $gs-baseline/3;
+        width: inherit;
+        text-align: right;
+
+        @include mq($until: mobileLandscape) {
+            right: $gs-gutter/2;
+        }
+
+        svg {
+            width: 190px;
+            height: $gs-row-height;
+
+            @include mq($until: 390px) {
+                width: 170px;
+                height: 32px;
+            }
+
+            @include mq($until: 360px) {
+                width: 160px;
+                height: 30px;
+            }
+
+            @include mq($until: 340px) {
+                width: 140px;
+                height: 27px;
+            }
+        }
+    }
+}
+
+.main-navigation {
+    position: absolute;
+    top: $gs-baseline/2;
+    left: $gs-gutter;
+    line-height: 1.1;
+
+    @include mq($until: mobileLandscape) {
+        left: $gs-gutter/2;
+    }
+
+    .main-navigation_link {
+        display: inline;
+        font-size: 22px;
+
+        @include mq($until: 390px) {
+            font-size: 20px;
+        }
+
+        @include mq($until: 360px) {
+            font-size: 18px;
+        }
+
+        a {
+            font-weight: 400;
+            color: $news-support-1;
+            display: inline-block;
+        }
+
+        &::after {
+            content: "/";
+            color: rgba(255,255,255,0.3);
+        }
+
+        &:last-of-type::after {
+            content:none;
+        }
+
+        &:nth-child(2)::after {
+            content: "\A";
+            white-space: pre;
+        }
+    }
+}

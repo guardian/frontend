@@ -204,7 +204,7 @@ trait CompetitionTestData {
   }
 
   def testCompetition(leagueTable: Seq[LeagueTableEntry], matches: List[FootballMatch]) = {
-    new Competition(
+    Competition(
       matches = matches,
       leagueTable = leagueTable,
       id = "1",
@@ -214,7 +214,7 @@ trait CompetitionTestData {
       nation = "English",
       startDate = Some(today.minusDays(50)),
       showInTeamsList = false,
-      tableDividers =  Nil
+      tableDividers = Nil
     )
   }
 

@@ -10,7 +10,7 @@
 
 <div class="content__meta-container content__meta-container--immersive js-content-meta u-cf">
     @if(!item.trail.shouldHidePublicationDate) {
-        @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, false, item.tags.isLiveBlog, item.fields.isLive)
+        @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, false, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
     }
 
     <div class="meta__numbers">

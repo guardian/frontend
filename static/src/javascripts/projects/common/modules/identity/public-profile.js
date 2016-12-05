@@ -18,14 +18,18 @@ define([
     mapValues
 ) {
     function getActivityStream(cb) {
-        var activityStream, opts = {
+        var activityStream, dataOpts = {
             userId: 'data-user-id',
             streamType: 'data-stream-type'
         };
         $('.js-activity-stream').each(function (el) {
-            (activityStream = new ActivityStream(mapValues(opts, function (key) {
+            var opts = mapValues(dataOpts, function (key) {
                 return el.getAttribute(key);
-            }))).fetch(el).then(function () {
+            });
+
+            opts.page = url.getUrlVars().page || 1;
+
+            (activityStream = new ActivityStream(opts)).fetch(el).then(function () {
                 bonzo(el).removeClass('activity-stream--loading');
             });
         }).addClass('activity-stream--loading');
@@ -49,8 +53,7 @@ define([
                 page: 1,
                 streamType: streamType
             }).then(function () {
-                url.pushUrl({}, null,
-                    '/user/id/' + activityStream.options.userId + (streamType !== 'discussions' ? '/' + streamType : ''), true);
+
             });
         });
     }

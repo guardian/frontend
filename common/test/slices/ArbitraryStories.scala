@@ -10,7 +10,7 @@ object ArbitraryStories {
   } yield Story(group, isBoosted)
 
   def storySeqGen(maxGroup: Int) =
-    Gen.listOf(storyGen(maxGroup)).map(_.toSeq.reverseSorted)
+    Gen.listOf(storyGen(maxGroup)).map(_.reverseSorted)
 
   implicit val arbitraryStory: Arbitrary[Story] = Arbitrary {
     storyGen(3)

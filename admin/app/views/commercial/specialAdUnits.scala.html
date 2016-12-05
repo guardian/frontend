@@ -1,7 +1,7 @@
-@(env: String, specialAdUnits: Seq[(String, String)])(implicit request: RequestHeader)
+@(specialAdUnits: Seq[(String, String)])(implicit request: RequestHeader, env: play.api.Environment)
 @import tools.DfpLink
 
-@admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
+@admin_main("Commercial", isAuthed = true, hasCharts = true) {
 
 <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
 

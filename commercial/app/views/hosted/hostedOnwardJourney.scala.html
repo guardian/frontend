@@ -1,37 +1,23 @@
 @import common.commercial.hosted.HostedPage
-@import layout.ContentWidths.GalleryMedia
-@import model.ImageMedia
-@import model.ImageAsset
-@import com.gu.contentapi.client.model.v1._
 @(trails: Seq[HostedPage], defaultRows: Int, maxRows: Int)(implicit request: RequestHeader)
 
 @if(trails.isEmpty) {
     <div></div>
 } else {
-    <div class="hosted__next-page hosted-article__next-page">
+    <div class="hosted__next-page">
         <div class="hosted__next-page--header">
             <div class="hosted__next-page-header--border hosted-tone-bg"></div>
             <h2 class="hosted__text hosted__next-page--more-from">More from</h2>
             <h2 class="hosted__next-page--client-name hosted-tone">@{trails.head.campaign.owner}</h2>
-        </div>
-        <div class="hosted__ab-test-control">
-            @for(trail <- trails.slice(0, defaultRows)) {
-                <a href="@{trail.url}" class="hosted__next-page--tile  js-hosted-onward-journey-link hosted-tone-bg" data-link-name="Next Hosted Page: @{trail.title}">
-                    <div class="hosted-next-page__wrapper">
-                        <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                        <p class="hosted__next-page-title">@{trail.title}</p>
-                    </div>
-                </a>
-            }
-        </div>
-        <div class="hosted__ab-test-variant-carousel">
             @if(trails.length > maxRows){
                 <div class="hosted__next-page__carousel-arrows">
                     @fragments.inlineSvg("arrow-right", "icon", List("arrow-left", "prev-oj-item"))
                     @fragments.inlineSvg("arrow-right", "icon", List("arrow-right", "next-oj-item"))
                 </div>
             }
-            <div class="hosted__next-page__carousel-wrapper js-carousel-wrapper">
+        </div>
+        <div class="hosted__next-page__carousel-wrapper">
+            <div class="hosted__next-page__carousel-pages js-carousel-pages">
                 @for(i <- trails.indices if i % maxRows == 0) {
                     <div class="carousel-page" style="left: @{i*100/maxRows}%;">
                         @for(trail <- trails.slice(i, i + maxRows)) {
@@ -45,43 +31,13 @@
                     </div>
                 }
             </div>
-            @if(trails.length > maxRows){
-                <div class="hosted__carousel-marker">
-                    @for(i <- trails.indices if i % maxRows == 0) {
-                        <div class="hosted__carousel-dot hosted-tone-btn hosted-tone-bg js-carousel-dot @{if(i == 0) "highlighted" else ""}"></div>
-                    }
-                </div>
-            }
         </div>
-        <div class="hosted__ab-test-variant-popup">
-            @for(trail <- trails.slice(0, defaultRows)) {
-                <a href="@{trail.url}" class="hosted__next-page--tile  js-hosted-onward-journey-link hosted-tone-bg" data-link-name="Next Hosted Page: @{trail.title}">
-                    <div class="hosted-next-page__wrapper">
-                        <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
-                        <p class="hosted__next-page-title">@{trail.title}</p>
-                    </div>
-                </a>
-            }
-            @if(trails.length > defaultRows){
-                <div class="hosted__see-all-onward js-hosted-see-all-onward hosted-tone-btn">See all</div>
-            }
-            <div class="u-h">
-                <div class="js-hosted-more-from-popup-content">
-                    @for(trail <- trails) {
-                        <a href="@{trail.url}" class="hosted__next-page-tile--popup js-hosted-onward-journey-link hosted-tone-bg" data-link-name="Next Hosted Page: @{trail.title}">
-                            <div class="hosted-next-page__wrapper">
-                                @fragments.image(
-                                    ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some(trail.imageUrl), typeData = Some(AssetFields(width = Some(5), height = Some(3)))), 0))),
-                                    Seq("hosted__next-page-thumb--popup"),
-                                    GalleryMedia.inline,
-                                    trail.title
-                                )
-                                <p class="hosted__next-page-title--popup">@{trail.title}</p>
-                            </div>
-                        </a>
-                    }
-                </div>
+        @if(trails.length > maxRows){
+            <div class="hosted__carousel-marker">
+                @for(i <- trails.indices if i % maxRows == 0) {
+                    <div class="hosted__carousel-dot hosted-tone-btn hosted-tone-bg js-carousel-dot @{if(i == 0) "highlighted" else ""}"></div>
+                }
             </div>
-        </div>
+        }
     </div>
 }

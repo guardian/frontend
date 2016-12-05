@@ -1,7 +1,7 @@
-@(env: String, surgingContent: ophan.SurgingContent)(implicit request: RequestHeader)
+@(surgingContent: ophan.SurgingContent)(implicit request: RequestHeader, env: play.api.Environment)
 @import _root_.dfp.printLondonTime
 
-@admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
+@admin_main("Commercial", isAuthed = true, hasCharts = true) {
 
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
 

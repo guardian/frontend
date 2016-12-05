@@ -48,7 +48,7 @@ object HostedVideoPage extends Logging {
         pageName = "only used in hardcoded content",
         standfirst,
         video = HostedVideo(
-          mediaId = campaignId,
+          mediaId = videoAtom.id,
           title = video.title,
           duration = video.duration.map(_.toInt) getOrElse 0,
           posterUrl = video.posterUrl getOrElse "",

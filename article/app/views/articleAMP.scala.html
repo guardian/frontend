@@ -1,4 +1,4 @@
-@(model: ArticlePage)(implicit request: RequestHeader)
+@(model: ArticlePage)(implicit request: RequestHeader, env: play.api.Environment)
 
 @mainAMP(model, model.related, model.article.content){
     @fragments.articleBody(model, amp = true)

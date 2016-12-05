@@ -1,8 +1,8 @@
-@(media: _root_.model.content.MediaAtom, amp: Boolean = false)(implicit request: RequestHeader)
+@(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean)(implicit request: RequestHeader, env: play.api.Environment)
 
 @{
     media match {
-            case youtube if media.assets.head.platform == "Youtube" => if(amp) views.html.fragments.atoms.ampYoutube(media) else views.html.fragments.atoms.youtube(media)
+            case youtube if media.assets.head.platform == "Youtube" => if(amp) views.html.fragments.atoms.ampYoutube(media) else views.html.fragments.atoms.youtube(media, displayCaption)
             case _ => views.html.fragments.atoms.genericMedia(media)
         }
 

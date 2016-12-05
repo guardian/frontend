@@ -62,7 +62,7 @@
 
                 @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
                     @containers.map { containerDefinition =>
-                        @container(containerDefinition, empty, pageId = index.page.metadata.url.drop(1))
+                        @container(containerDefinition, empty)
                     }
                 }
 

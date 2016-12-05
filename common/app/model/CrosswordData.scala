@@ -132,9 +132,9 @@ object CrosswordData {
       s"crosswords/$crosswordType/${crossword.number.toString}",
       crossword.number,
       crossword.name,
-      creator = (for (
+      creator = for (
         creator <- crossword.creator
-      ) yield CrosswordCreator(creator.name, creator.webUrl)),
+      ) yield CrosswordCreator(creator.name, creator.webUrl),
       crossword.date.toJodaDateTime,
       sortedNewEntries,
       crossword.solutionAvailable,

@@ -78,14 +78,12 @@ final case class Content(
   lazy val discussionId = Some(shortUrlId)
   lazy val isImmersiveGallery = {
     metadata.contentType.toLowerCase == "gallery" &&
-    (
-        {
-          val branding = tags.tags.flatMap { tag =>
-            BrandHunter.findBranding( tag.properties.activeBrandings, Edition.defaultEdition, None)
-          }.headOption
-          branding.isEmpty || branding.exists(_.sponsorshipType != PaidContent)
-        }
-    )
+    {
+      val branding = tags.tags.flatMap { tag =>
+        BrandHunter.findBranding(tag.properties.activeBrandings, Edition.defaultEdition, None)
+      }.headOption
+      branding.isEmpty || branding.exists(_.sponsorshipType != PaidContent)
+    }
   }
   lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
   lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore
@@ -224,7 +222,7 @@ final case class Content(
     ("isContent", JsBoolean(true)),
     ("wordCount", JsNumber(wordCount)),
     ("references", JsArray(javascriptReferences)),
-    ("showRelatedContent", JsBoolean(if (tags.isTheMinuteArticle) { false } else (showInRelated && !legallySensitive))),
+    ("showRelatedContent", JsBoolean(if (tags.isTheMinuteArticle) { false } else showInRelated && !legallySensitive)),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
     ("isExplore", JsBoolean(isExplore)),
@@ -373,9 +371,7 @@ object Content {
       imdb = references.get("imdb"),
       paFootballTeams = apiContent.references.filter(ref => ref.id.contains("pa-football-team")).map(ref => ref.id.split("/").last).distinct,
       javascriptReferences = apiContent.references.map(ref => Reference.toJavaScript(ref.id)),
-      wordCount = {
-        Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").size
-      },
+      wordCount = Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").length,
       hasStoryPackage = apifields.flatMap(_.hasStoryPackage).getOrElse(false),
       showByline = fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline,
       rawOpenGraphImage = {
@@ -438,7 +434,7 @@ object Article {
       ("isImmersive", JsBoolean(content.isImmersive)),
       ("isHosted", JsBoolean(false)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
-      ("videoDuration" -> videoDuration)
+      "videoDuration" -> videoDuration
     ) ++ bookReviewIsbn
 
     val opengraphProperties: Map[String, String] = Map(
@@ -451,11 +447,7 @@ object Article {
       ("article:author", tags.contributors.map(_.metadata.webUrl).mkString(","))
     )
 
-    val twitterProperties: Map[String, String] = if (content.tags.isLiveBlog) {
-      Map("twitter:card" -> "summary_large_image", "twitter:card" -> "summary")
-    } else {
-      Map("twitter:card" -> "summary_large_image")
-    }
+    val twitterProperties: Map[String, String] = Map("twitter:card" -> "summary_large_image")
 
     content.metadata.copy(
       contentType = contentType,
@@ -575,7 +567,7 @@ object Video {
     val javascriptConfig: Map[String, JsValue] = Map(
       "isPodcast" -> JsBoolean(content.tags.isPodcast),
       "source" -> JsString(source.getOrElse("")),
-      "embeddable" -> JsBoolean(elements.videos.find(_.properties.isMain).map(_.videos.embeddable).getOrElse(false)),
+      "embeddable" -> JsBoolean(elements.videos.find(_.properties.isMain).exists(_.videos.embeddable)),
       "videoDuration" -> elements.videos.find(_.properties.isMain).map{ v => JsNumber(v.videos.duration)}.getOrElse(JsNull))
 
     val optionalOpengraphProperties = if(content.metadata.webUrl.startsWith("https://")) Map("og:video:secure_url" -> content.metadata.webUrl) else Nil
@@ -775,7 +767,7 @@ case class GenericLightbox(
   lazy val mainFiltered = elements.mainPicture
     .filter(_.images.largestEditorialCrop.map(_.ratioWholeNumber).getOrElse(0) > 0.7)
     .filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth).toSeq
-  lazy val bodyFiltered: Seq[ImageElement] = elements.bodyImages.filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth).toSeq
+  lazy val bodyFiltered: Seq[ImageElement] = elements.bodyImages.filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth)
 
   val lightboxImages = if (properties.includeBodyImages) mainFiltered ++ bodyFiltered else mainFiltered
 
@@ -814,7 +806,7 @@ final case class Interactive(
   lazy val fallbackEl = {
     val noscriptEls = Jsoup.parseBodyFragment(fields.body).getElementsByTag("noscript")
 
-    if (noscriptEls.length > 0) {
+    if (noscriptEls.nonEmpty) {
       noscriptEls.html()
     } else {
       Jsoup.parseBodyFragment(fields.body).getElementsByTag("figure").html()

@@ -16,25 +16,36 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-object ABNewNavVariant extends TestDefinition(
-  name = "ab-new-nav-variant",
-  description = "users in this test will see the new header first variant",
+object ABNewNavVariantThree extends TestDefinition(
+  name = "ab-new-nav-variant-three",
+  description = "users in this test will see the new header third variant",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2016, 12, 8) // Thursday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header").contains("variant")
+    request.headers.get("X-GU-ab-new-header").contains("variantthree")
   }
 }
 
-object ABNewNavVariantTwo extends TestDefinition(
-  name = "ab-new-nav-variant-two",
-  description = "users in this test will see the new header second variant",
+object ABNewNavVariantFour extends TestDefinition(
+  name = "ab-new-nav-variant-four",
+  description = "users in this test will see the new header fourth variant",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2016, 12, 8) // Thursday
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header").contains("varianttwo")
+    request.headers.get("X-GU-ab-new-header").contains("variantfour")
+  }
+}
+
+object ABNewNavVariantFive extends TestDefinition(
+  name = "ab-new-nav-variant-five",
+  description = "users in this test will see the new header fifth variant",
+  owners = Seq(Owner.withGithub("natalialkb")),
+  sellByDate = new LocalDate(2016, 12, 8) // Thursday
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-new-header").contains("variantfive")
   }
 }
 
@@ -53,10 +64,32 @@ object CommercialClientLoggingVariant extends TestDefinition(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Seq(Owner.withGithub("rich-nguyen")),
-  sellByDate = new LocalDate(2016, 11, 30) // Wednesday
+  sellByDate = new LocalDate(2017, 2, 1)
   ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ccl").contains("ccl-A")
+  }
+}
+
+object WebpackTest extends TestDefinition(
+  name = "ab-webpack",
+  description = "for users in this test, website will serve standard JavaScript that has been bundled by Webpack",
+  owners = Seq(Owner.withGithub("siadcock")),
+  sellByDate = new LocalDate(2017, 1, 9)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-webpack").contains("webpack")
+  }
+}
+
+object WebpackControl extends TestDefinition(
+  name = "ab-webpack-control",
+  description = "control for Webpack test",
+  owners = Seq(Owner.withGithub("siadcock")),
+  sellByDate = new LocalDate(2017, 1, 9)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-webpack").contains("control")
   }
 }
 
@@ -73,10 +106,12 @@ trait ServerSideABTests {
 
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
-    ABNewNavVariant,
-    ABNewNavVariantTwo,
+    ABNewNavVariantThree,
+    ABNewNavVariantFour,
+    ABNewNavVariantFive,
     ABNewNavControl,
-    CommercialClientLoggingVariant
+    CommercialClientLoggingVariant,
+    WebpackTest
   )
 }
 

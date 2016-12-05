@@ -14,6 +14,7 @@ import scala.collection.JavaConversions._
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithTestWsClient
+  with WithTestEnvironment
   with WithTestContentApiClient {
 
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
@@ -57,7 +58,7 @@ import scala.collection.JavaConversions._
   }
 
   it should "return JSON when .json format is supplied" in {
-    val fakeRequest = FakeRequest("GET", s"${articleUrl}.json")
+    val fakeRequest = FakeRequest("GET", s"$articleUrl.json")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
     val result = articleController.renderJson(articleUrl)(fakeRequest)
@@ -76,7 +77,7 @@ import scala.collection.JavaConversions._
 
   it should "return the latest blocks of a live blog" in {
     val lastUpdateBlock = "block-56d03169e4b074a9f6b35baa"
-    val fakeRequest = FakeRequest(GET, s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?lastUpdate=${lastUpdateBlock}")
+    val fakeRequest = FakeRequest(GET, s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?lastUpdate=$lastUpdateBlock")
       .withHeaders("host" -> "localhost:9000")
 
     val result = articleController.renderLiveBlogJson("/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live", Some(lastUpdateBlock), None, Some(true))(fakeRequest)
@@ -87,7 +88,7 @@ import scala.collection.JavaConversions._
     // newer blocks
     content should include("block-56d03894e4b0bd5a0524cbab")
     content should include("block-56d039fce4b0d38537b1f61e")
-    content should not include("56d04877e4b0bd5a0524cbe2")// at the moment it only tries 5 either way, reverse this test once we use blocks:published-since
+    content should not include "56d04877e4b0bd5a0524cbe2" // at the moment it only tries 5 either way, reverse this test once we use blocks:published-since
 
     //this block
     content should not include lastUpdateBlock

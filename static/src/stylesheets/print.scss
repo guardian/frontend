@@ -38,8 +38,14 @@ figure {
     display: none !important;
 }
 
-.sudoku figure {
-    display: block !important;
+figure {
+    &.element-image,
+    &.media-primary,
+
+    .sudoku &,
+    .gallery__item & {
+        display: block !important;
+    }
 }
 
 * {
@@ -56,10 +62,20 @@ figure {
     position: static;
 }
 
-.responsive-img,
-.gu-image {
+.element-image {
+    display: block;
+    position: relative !important;
     width: 50% !important;
     margin-right: 10px !important;
+}
+
+.gu-image,
+.u-responsive-ratio img {
+    position: relative !important;
+}
+
+.is-immersive-interactive .element-interactive {
+    display: block !important;
 }
 
 figcaption {

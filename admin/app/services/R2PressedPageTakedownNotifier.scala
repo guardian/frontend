@@ -11,11 +11,10 @@ object R2PressedPageTakedownNotifier extends Logging {
       log.info(msg)
       msg
     } catch {
-      case e: Exception => {
+      case e: Exception =>
         val msg = s"Failed to add $path to the r2 pressed page takedown queue"
         log.error(msg, e)
         msg
-      }
     }
   }
 

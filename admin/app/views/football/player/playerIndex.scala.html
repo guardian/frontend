@@ -1,4 +1,4 @@
-@(competitions: List[pa.Season], teams: List[pa.Team])
+@(competitions: List[pa.Season], teams: List[pa.Team])(implicit env: play.api.Environment)
 
 @views.html.football.main("Player cards") {
     <div class="row">

@@ -6,6 +6,7 @@ import feed.CompetitionsService
 import play.api.mvc.{Action, Controller}
 import model._
 import model.Page
+import play.api.Environment
 
 case class TablesPage(
     page: Page,
@@ -16,7 +17,7 @@ case class TablesPage(
   lazy val singleCompetition = tables.size == 1
 }
 
-class LeagueTableController(val competitionsService: CompetitionsService) extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
+class LeagueTableController(val competitionsService: CompetitionsService)(implicit env: Environment) extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
 
     val tableOrder = Seq(
         "Premier League",
@@ -45,7 +46,7 @@ class LeagueTableController(val competitionsService: CompetitionsService) extend
         "International friendlies"
     )
 
-  def sortedCompetitions:Seq[Competition] = tableOrder.map(leagueName => competitionsService.competitions.find(_.fullName == leagueName)).flatten
+  def sortedCompetitions:Seq[Competition] = tableOrder.flatMap(leagueName => competitionsService.competitions.find(_.fullName == leagueName))
 
   private def loadTables: Seq[Table] = sortedCompetitions.filter(_.hasLeagueTable).map { Table(_) }
 
