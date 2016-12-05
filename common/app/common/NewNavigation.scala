@@ -26,7 +26,6 @@ object NewNavigation {
   var auPolitics = NavLink("australian politics", "/australia-news/australian-politics")
   var auImmigration = NavLink("immigration", "/australia-news/australian-immigration-and-asylum")
   var indigenousAustralia = NavLink("indigenous australia", "/australia-news/indigenous-australians")
-  var usElections = NavLink("US election", "/us-news/us-elections-2016")
   var usNews = NavLink("US news", "/us-news", uniqueSection = "us-news")
   var usPolitics = NavLink("US politics", "/us-news/us-politics")
 
@@ -122,7 +121,7 @@ object NewNavigation {
 
     val uk = List(headlines, ukNews, world, politics, environment, business, tech, science, money)
     val au = List(headlines, australiaNews, world, auPolitics, environment, economy, auImmigration, indigenousAustralia, media, tech)
-    val us = List(headlines, usElections, usNews, world, environment, business, usPolitics, tech, science, money)
+    val us = List(headlines, usNews, usPolitics, world, environment, business, tech, science, money)
     val int = List(headlines, world, ukNews, environment, business, tech, science, cities, globalDevelopment)
   }
 

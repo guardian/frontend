@@ -112,7 +112,7 @@
                 <input type="checkbox" id="show-caption" class="mobile-only u-h">
 
                 <label class="mobile-only reveal-caption reveal-caption--img" for="show-caption">
-                    @fragments.inlineSvg("camera", "icon", List("reveal-caption-icon"))
+                    @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon"))
                 </label>
 
                 <figcaption class="caption caption--main caption--img" itemprop="description">
@@ -123,6 +123,7 @@
                 </figcaption>
             } else {
                 <figcaption class="caption caption--img @if(isMain) {caption--main}" itemprop="description">
+                    @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon", "rounded-icon"))
                     @img.caption.map(Html(_))
                     @if(img.displayCredit && !img.creditEndsWithCaption) {
                         @img.credit.map(Html(_))
