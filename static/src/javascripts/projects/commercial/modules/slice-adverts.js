@@ -90,7 +90,7 @@ define([
         var slots;
 
         // Remove first container on network fronts
-        containers = containers.slice(isNetworkFront ? 1 : 0, 10);
+        containers = containers.slice(isNetworkFront ? 1 : 0);
 
         slots = containers
         // get all ad slices
@@ -101,6 +101,8 @@ define([
             }
             return result;
         }, [])
+        // Keep a maximum of 10 containers
+        .slice(0, 10)
         // create ad slots for the selected slices
         .map(function (slice, index) {
             var adName = getSlotName(index);
