@@ -78,6 +78,7 @@
     "requirejs": "^2.3.2",
     "rimraf": "^2.5.4",
     "sass-lint": "^1.9.1",
+    "semver": "^5.3.0",
     "sorted-object": "^1.0.0",
     "split": "^1.0.0",
     "stream-to-observable": "^0.2.0",

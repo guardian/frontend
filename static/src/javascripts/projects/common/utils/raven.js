@@ -1,20 +1,19 @@
 define([
     'raven',
+    'common/utils/config',
     'common/utils/detect'
 ], function (
     raven,
+    config,
     detect
 ) {
     var guardian = window.guardian;
-    var config = guardian.config;
-    var app = guardian.app = guardian.app || {};
 
-    if (app.raven) {
-        return app.raven;
-    }
+    var app = guardian.app = guardian.app || {};
 
     // attach raven to global object
     app.raven = raven;
+
     app.raven.config(
         'https://' + config.page.sentryPublicApiKey + '@' + config.page.sentryHost,
         {
@@ -26,8 +25,7 @@ define([
             tags: {
                 edition: config.page.edition,
                 contentType: config.page.contentType,
-                revisionNumber: config.page.revisionNumber,
-                loaderType: 'Curl'
+                revisionNumber: config.page.revisionNumber
             },
             dataCallback: function (data) {
                 if (data.culprit) {

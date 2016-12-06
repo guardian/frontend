@@ -5,7 +5,7 @@
 @import templates.inlineJS.blocking.js.{applyRenderConditions, config, curlConfig, enableStylesheets, loadFonts, shouldEnhance}
 @import templates.inlineJS.blocking.polyfills.js.{classlist, details, matches, raf, setTimeout}
 
-@(page: model.Page)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader, env: play.api.Environment)
 
 <!--[if lt IE 9]>
     <script src="@Static("javascripts/es5-html5.js")"></script>

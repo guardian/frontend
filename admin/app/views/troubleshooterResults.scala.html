@@ -1,6 +1,6 @@
-@(loadbalancer: Option[tools.LoadBalancer], results: Seq[controllers.admin.EndpointStatus])(implicit request: RequestHeader)
+@(loadbalancer: Option[tools.LoadBalancer], results: Seq[controllers.admin.EndpointStatus])(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Troubleshooting results", "PROD", isAuthed = true) {
+@admin_main("Troubleshooting results", isAuthed = true) {
 
     <div class="row-fluid">
         <h4>@loadbalancer.map(lb => s"${lb.name} (${lb.project})").getOrElse("Unknown loadbalancer")</h4>

@@ -42,7 +42,7 @@ define([
     };
 
     HostedCarousel.prototype.bindButtons = function() {
-        this.$carousel = $('.js-carousel-wrapper');
+        this.$carousel = $('.js-carousel-pages');
         this.$nextItem = $('.next-oj-item');
         this.$prevItem = $('.prev-oj-item');
         this.$dots = $('.js-carousel-dot');

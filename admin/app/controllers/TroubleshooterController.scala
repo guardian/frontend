@@ -4,6 +4,7 @@ import contentapi.{CapiHttpClient, PreviewContentApi}
 import play.api.mvc.{Action, Controller}
 import common.{ExecutionContexts, Logging}
 import model.NoCache
+import play.api.Environment
 import play.api.libs.ws.WSClient
 import tools.LoadBalancer
 
@@ -18,7 +19,7 @@ object TestFailed{
   def apply(name: String, messages: String*) = EndpointStatus(name, false, messages:_*)
 }
 
-class TroubleshooterController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
+class TroubleshooterController(wsClient: WSClient)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
 
   val previewContentApi = new PreviewContentApi(new CapiHttpClient(wsClient))
 

@@ -6,9 +6,10 @@ import play.api.mvc.{Action, Controller}
 import common.{ExecutionContexts, Logging}
 import model.Cached
 import football.model.CompetitionStage
+import play.api.Environment
 
 
-class WallchartController(competitionsService: CompetitionsService) extends Controller with Logging with ExecutionContexts {
+class WallchartController(competitionsService: CompetitionsService)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
 
   def renderWallchartEmbed(competitionTag: String) = renderWallchart(competitionTag, true)
   def renderWallchart(competitionTag: String, embed: Boolean = false) = Action { implicit request =>

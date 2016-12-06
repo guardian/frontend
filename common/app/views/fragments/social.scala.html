@@ -18,7 +18,7 @@
         target="_blank"
         title="@item.text">
             <span class='@if(item.css.matches("facebook|twitter|email")) {inline-icon__fallback button share-modal__item share-modal__item--@item.css} else { u-h }'>@item.userMessage</span>
-            @fragments.inlineSvg("share-" + item.css, "icon", List("rounded-icon", "social-icon", "social-icon--" + item.css) ++ iconModifier)
+            @fragments.inlineSvg("share-" + item.css, "icon", List("rounded-icon", "centered-icon", "social-icon", "social-icon--" + item.css) ++ iconModifier)
         </a>
     </li>
 }
@@ -26,7 +26,7 @@
 @SocialMore = {
     <li class="js-social__secondary social__item social--hidden social__item--more js-social__item--more">
         <button class="meta-button social-tray__button">
-            @fragments.inlineSvg("ellipsis-36", "icon", List("rounded-icon", "social-icon", "social-icon--more"))
+            @fragments.inlineSvg("ellipsis-36", "icon", List("rounded-icon", "centered-icon", "social-icon", "social-icon--more"))
             <span class="u-h">View more sharing options</span>
         </button>
     </li>
@@ -40,7 +40,7 @@
     <li class="social__item social__secondary js-social__secondary social--hidden social__tray-close js-social__tray-close">
         <button class="meta-button social-tray__button">
             <span class="u-h">Close</span>
-            @fragments.inlineSvg("close", "icon", List("inline-close--small", "social-tray__icon"))
+            @fragments.inlineSvg("close", "icon", List("inline-close--small", "centered-icon", "social-tray__icon"))
         </button>
     </li>
 }

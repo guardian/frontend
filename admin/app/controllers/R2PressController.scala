@@ -4,10 +4,11 @@ import java.io.File
 
 import common.{AkkaAsync, ExecutionContexts, Logging}
 import model.R2PressMessage
+import play.api.Environment
 import play.api.mvc.{Action, AnyContent, Controller}
 import services.{R2PagePressNotifier, R2PressedPageTakedownNotifier}
 
-class R2PressController(akkaAsync: AkkaAsync) extends Controller with Logging with ExecutionContexts {
+class R2PressController(akkaAsync: AkkaAsync)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
 
   def pressForm(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty) = Action { implicit request =>
     Ok(views.html.pressR2(urlMsgs, fileMsgs))

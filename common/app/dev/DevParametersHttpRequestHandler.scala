@@ -2,16 +2,17 @@ package dev
 
 import play.api.http.{HttpFilters, HttpConfiguration, HttpErrorHandler, DefaultHttpRequestHandler}
 import play.api.routing.Router
-import play.api.Play
 import play.api.mvc.RequestHeader
-import Play.isProd
 import common.CanonicalLink
+import play.api.Environment
+import play.api.Mode.Prod
 
 class DevParametersHttpRequestHandler(
     router: Router,
     errorHandler: HttpErrorHandler,
     configuration: HttpConfiguration,
-    filters: HttpFilters
+    filters: HttpFilters,
+    environment: Environment
   ) extends DefaultHttpRequestHandler(router, errorHandler, configuration, filters) with implicits.Requests {
 
 
@@ -66,25 +67,22 @@ class DevParametersHttpRequestHandler(
 
   override def routeRequest(request: RequestHeader) = {
 
-    Play.maybeApplication.foreach{ implicit application =>
-      // json requests have no SEO implication but will affect caching
-
-      if (
-        !isProd &&
-        !request.isJson &&
-        !request.uri.startsWith("/oauth2callback") &&
-        !request.uri.startsWith("/px.gif")  && // diagnostics box
-        !request.uri.startsWith("/tech-feedback") &&
-        !request.uri.startsWith("/crosswords/search") &&
-        !request.uri.startsWith("/crosswords/lookup") &&
-        !request.uri.startsWith("/commercial/anx/anxresize.js") // this is used by commercial for advert resizing, served through api.nextgen
-      ) {
-        val illegalParams = request.queryString.keySet.filterNot(allowedParams.contains(_))
-        if (illegalParams.nonEmpty) {
-          // it is pretty hard to spot what is happening in tests without this println
-          println(s"\n\nILLEGAL PARAMETER(S) FOUND : ${illegalParams.mkString(",")}\n\n")
-          throw new RuntimeException(s"illegal parameter(s) found ${illegalParams.mkString(",")}")
-        }
+    // json requests have no SEO implication but will affect caching
+    if (
+      environment.mode != Prod &&
+      !request.isJson &&
+      !request.uri.startsWith("/oauth2callback") &&
+      !request.uri.startsWith("/px.gif")  && // diagnostics box
+      !request.uri.startsWith("/tech-feedback") &&
+      !request.uri.startsWith("/crosswords/search") &&
+      !request.uri.startsWith("/crosswords/lookup") &&
+      !request.uri.startsWith("/commercial/anx/anxresize.js") // this is used by commercial for advert resizing, served through api.nextgen
+    ) {
+      val illegalParams = request.queryString.keySet.filterNot(allowedParams.contains(_))
+      if (illegalParams.nonEmpty) {
+        // it is pretty hard to spot what is happening in tests without this println
+        println(s"\n\nILLEGAL PARAMETER(S) FOUND : ${illegalParams.mkString(",")}\n\n")
+        throw new RuntimeException(s"illegal parameter(s) found ${illegalParams.mkString(",")}")
       }
     }
 

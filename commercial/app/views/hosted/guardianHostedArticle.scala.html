@@ -1,5 +1,5 @@
 @import common.commercial.hosted.HostedArticlePage
-@(page: HostedArticlePage)(implicit request: RequestHeader)
+@(page: HostedArticlePage)(implicit request: RequestHeader, env: play.api.Environment)
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import views.html.hosted._
 @import model.hosted.HostedArticleQuotes.prepareQuotes
@@ -80,7 +80,7 @@
             </div>
             <div class="content__main">
                 <div class="gs-container">
-                    <div class="content__main-column content__main-column--article js-content-main-column">
+                    <div class="hosted-article__main-column content__main-column content__main-column--article js-content-main-column">
                         <div class="content__meta-container js-content-meta js-football-meta u-cf content__meta-container--showcase">
                             <div class="meta__extras" data-component="share">
                             @guardianHostedShareButtons(page)
@@ -96,9 +96,15 @@
                                 case "packages" => { @singaporeF1Packages() }
                                 case _ => { @Html(prepareQuotes(page.body)) }
                             }
-
+                            <div class="hosted__standfirst">
+                                <div class="hosted__terms">​Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our
+                                    <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
+                                        <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn js-hosted-about hosted-tone" data-link-name="terms-and-conditions-text-link">commercial content explainer.</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="hide-on-desktop">
+                        <div class="hosted__onward-journey">
                             @if(page.nextPages.nonEmpty) {
                                 @hostedOnwardJourney(page.nextPages.map { nextPage =>
                                     makeshiftPage(nextPage, page.campaign)
@@ -107,28 +113,11 @@
                                 <div class="js-onward-placeholder"></div>
                             }
                         </div>
-                        <div class="hosted__standfirst">
-                            <div class="hosted__terms">​Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our
-                                <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
-                                    <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn js-hosted-about hosted-tone" data-link-name="terms-and-conditions-text-link">commercial content explainer.</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content__secondary-column">
-                        @if(page.nextPages.nonEmpty) {
-                            @hostedOnwardJourney(page.nextPages.map { nextPage =>
-                                makeshiftPage(nextPage, page.campaign)
-                            }, 2, 4)
-                        } else {
-                            <div class="js-onward-placeholder"></div>
-                        }
                     </div>
                 </div>
             </div>
         </article>
 
         @guardianHostedCta(page, page.cta, isAMP = false)
-        @guardianHostedOnwardOverlay(page)
     </div>
 }

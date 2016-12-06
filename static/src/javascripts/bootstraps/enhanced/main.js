@@ -11,7 +11,7 @@ define([
     'common/modules/experiments/ab',
     './common',
     './sport',
-    'enhanced-common'
+    'common/modules/analytics/google'
 ], function (
     fastdom,
     bean,
@@ -24,7 +24,8 @@ define([
     robust,
     ab,
     common,
-    sport
+    sport,
+    ga
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -37,6 +38,10 @@ define([
 
 
         userTiming.mark('App Begin');
+        robust.catchErrorsAndLog('ga-user-timing-enhanced-start', function () {
+            ga.trackPerformance('Javascript Load', 'enhancedStart', 'Enhanced start parse time');
+        });
+
         bootstrapContext('common', common);
 
         //
@@ -161,7 +166,7 @@ define([
         }
 
         fastdom.read(function() {
-            if ( $('.atom--media--youtube').length > 0) {
+            if ( $('.youtube-media-atom').length > 0) {
                 require(['bootstraps/enhanced/youtube'], function (youtube) {
                     bootstrapContext('youtube', youtube);
                 });
@@ -170,5 +175,8 @@ define([
 
         // Mark the end of synchronous execution.
         userTiming.mark('App End');
+        robust.catchErrorsAndLog('ga-user-timing-enhanced-end', function () {
+            ga.trackPerformance('Javascript Load', 'enhancedEnd', 'Enhanced end parse time');
+        });
     };
 });

@@ -90,6 +90,11 @@ define([
             return;
         }
 
+        // These legacy messages are converted into bona fide resize messages
+        if (isProgrammaticMessage(data)) {
+            data = toStandardMessage(data);
+        }
+
         if (!isValidPayload(data)) {
             return;
         }
@@ -144,27 +149,41 @@ define([
     function isValidPayload(payload) {
         return 'type' in payload &&
             'value' in payload &&
+            'id' in payload &&
             payload.type in listeners &&
-            (isStandardMessage() || isRubiconMessage());
-
-        function isStandardMessage() {
-            return 'id' in payload &&
-                /^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(payload.id);
-        }
-
-        function isRubiconMessage() {
-            return payload.type === 'set-ad-height' &&
-                'id' in payload.value &&
-                'height' in payload.value;
-        }
+            /^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(payload.id);
     }
 
-    // Incoming messages may contain the ID of the iframe into which the
+    // A legacy from programmatic ads running in friendly iframes. They can
+    // on occasion be larger than the size returned by DFP. And so they
+    // have been setup to send a message of the form:
+    // {
+    //   type: 'set-ad-height',
+    //   value: {
+    //     id:     <id of the enclosing iframe>
+    //     height: <new height of the creative>
+    //   }
+    // }
+    //
+    function isProgrammaticMessage(payload) {
+        return payload.type === 'set-ad-height' &&
+            'id' in payload.value &&
+            'height' in payload.value;
+    }
+
+    function toStandardMessage(payload) {
+        return {
+            id: 'aaaa0000-bb11-cc22-dd33-eeeeee444444',
+            type: 'resize',
+            iframeId: payload.value.id,
+            value: { height: +payload.value.height }
+        };
+    }
+
+    // Incoming messages contain the ID of the iframe into which the
     // source window is embedded.
     function getIframe(data) {
-        return data.type === 'set-ad-height' ?
-            document.getElementById(data.value.id) :
-            document.getElementById(data.iframeId);
+        return document.getElementById(data.iframeId);
     }
 
     // Cheap string formatting function. It accepts as its first argument

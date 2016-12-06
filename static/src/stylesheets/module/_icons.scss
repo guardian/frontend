@@ -17,24 +17,6 @@ figcaption:before {
     }
 }
 
-.caption--img:before {
-    @include icon(image);
-    content: '';
-    vertical-align: top;
-    margin-top: 1px;
-}
-
-.centered-icon {
-    svg {
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        margin: auto;
-        position: absolute;
-    }
-}
-
 // Quotes
 blockquote.quoted .inline-quote {
     fill: $neutral-2;

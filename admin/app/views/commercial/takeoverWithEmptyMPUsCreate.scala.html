@@ -1,8 +1,8 @@
 @import common.dfp.TakeoverWithEmptyMPUs
-@(env: String, takeoverForm: Form[TakeoverWithEmptyMPUs])(implicit messages: Messages, request: RequestHeader)
+@(takeoverForm: Form[TakeoverWithEmptyMPUs])(implicit messages: Messages, request: RequestHeader, env: play.api.Environment)
 @import helper._
 
-@admin_main("Create takeover with Empty MPUs", env, isAuthed = true) {
+@admin_main("Create takeover with Empty MPUs", isAuthed = true) {
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
     <h1>New Takeover with Empty MPUs</h1>
     @form(action = controllers.admin.commercial.routes.TakeoverWithEmptyMPUsController.create()) {

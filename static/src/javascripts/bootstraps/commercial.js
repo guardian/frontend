@@ -5,8 +5,10 @@ define([
     'common/utils/mediator',
     'common/utils/robust',
     'common/utils/user-timing',
+    'common/modules/experiments/ab',
     'commercial/modules/article-aside-adverts',
     'commercial/modules/article-body-adverts',
+    'commercial/modules/article-body-adverts-wide',
     'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/prepare-googletag',
     'commercial/modules/dfp/prepare-sonobi-tag',
@@ -17,7 +19,6 @@ define([
     'commercial/modules/hosted/video',
     'commercial/modules/hosted/gallery',
     'commercial/modules/hosted/onward-journey-carousel',
-    'commercial/modules/hosted/onward-journey-popup',
     'commercial/modules/hosted/onward',
     'commercial/modules/slice-adverts',
     'commercial/modules/liveblog-adverts',
@@ -25,7 +26,8 @@ define([
     'commercial/modules/third-party-tags',
     'commercial/modules/paidfor-band',
     'commercial/modules/paid-containers',
-    'commercial/modules/dfp/performance-logging'
+    'commercial/modules/dfp/performance-logging',
+    'common/modules/analytics/google'
 ], function (
     Promise,
     config,
@@ -33,8 +35,10 @@ define([
     mediator,
     robust,
     userTiming,
+    ab,
     articleAsideAdverts,
     articleBodyAdverts,
+    articleBodyAdvertsWide,
     closeDisabledSlots,
     prepareGoogletag,
     prepareSonobiTag,
@@ -45,7 +49,6 @@ define([
     hostedVideo,
     hostedGallery,
     hostedOJCarousel,
-    hostedOJPopup,
     hostedOnward,
     sliceAdverts,
     liveblogAdverts,
@@ -53,14 +56,15 @@ define([
     thirdPartyTags,
     paidforBand,
     paidContainers,
-    performanceLogging
+    performanceLogging,
+    ga
 ) {
     var primaryModules = [
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init],
         ['cm-prepare-googletag', prepareGoogletag.init, prepareGoogletag.customTiming],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
-        ['cm-articleBodyAdverts', articleBodyAdverts.init],
+        ['cm-articleBodyAdverts', isItRainingAds() ? articleBodyAdvertsWide.init : articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-galleryAdverts', galleryAdverts.init],
         ['cm-liveblogAdverts', liveblogAdverts.init],
@@ -75,6 +79,9 @@ define([
         ['cm-ready', function () {
             mediator.emit('page:commercial:ready');
             userTiming.mark('commercial end');
+            robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
+                ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
+            });
             return Promise.resolve();
         }]
     ];
@@ -85,7 +92,6 @@ define([
             ['cm-hostedVideo', hostedVideo.init],
             ['cm-hostedGallery', hostedGallery.init],
             ['cm-hostedOnward', hostedOnward.init],
-            ['cm-hostedOJPopup', hostedOJPopup.init],
             ['cm-hostedOJCarousel', hostedOJCarousel.init]);
     }
 
@@ -128,6 +134,11 @@ define([
            });
     }
 
+    function isItRainingAds() {
+        var testName = 'ItsRainingInlineAds';
+        return ab.testCanBeRun(testName) && ['geo', 'nogeo'].indexOf(ab.getTestVariantId(testName)) > -1;
+    }
+
     return {
         init: function () {
             if (!config.switches.commercial) {
@@ -135,6 +146,9 @@ define([
             }
 
             userTiming.mark('commercial start');
+            robust.catchErrorsAndLog('ga-user-timing-commercial-start', function () {
+                ga.trackPerformance('Javascript Load', 'commercialStart', 'Commercial start parse time');
+            });
 
             // Stub the command queue
             window.googletag = { cmd: [] };

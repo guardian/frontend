@@ -1,10 +1,12 @@
 define([
     'Promise',
+    'common/utils/config',
     'common/modules/commercial/commercial-features',
     'commercial/modules/dfp/dfp-env',
     'lodash/functions/memoize'
 ], function(
     Promise,
+    config,
     commercialFeatures,
     dfpEnv,
     memoize
@@ -18,6 +20,12 @@ define([
     // then the resulting "Access Denied" error will be caught. Without this, the error is always delivered to Sentry,
     // but does not pass through window.onerror. More info here: https://github.com/paulmillr/es6-shim/issues/333
     function catchPolyfillErrors(){
+
+        // Skip polyfill error-catch in dev environments.
+        if (config.page.isDev){
+            return Promise.resolve();
+        }
+
         var nativeGetOwnPropertyNames = Object.getOwnPropertyNames;
         Object.getOwnPropertyNames = function(obj){
             try {

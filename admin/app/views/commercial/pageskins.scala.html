@@ -1,4 +1,4 @@
-@(env: String, pageSkinnedAdUnits: common.dfp.PageSkinSponsorshipReport)(implicit request: RequestHeader)
+@(pageSkinnedAdUnits: common.dfp.PageSkinSponsorshipReport)(implicit request: RequestHeader, env: play.api.Environment)
 @import common.dfp._
 @import tools.{DfpLink, SiteLink}
 
@@ -32,7 +32,7 @@
   </li>
 }
 
-@admin_main("Pageskins", env, isAuthed = true) {
+@admin_main("Pageskins", isAuthed = true) {
 
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
 
