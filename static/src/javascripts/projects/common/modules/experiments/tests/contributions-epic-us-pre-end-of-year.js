@@ -12,8 +12,7 @@ define([
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/ajax',
-    'common/modules/commercial/commercial-features',
-    'lodash/arrays/intersection'
+    'common/modules/commercial/commercial-features'
 
 ], function (bean,
              qwery,
@@ -28,53 +27,29 @@ define([
              config,
              cookies,
              ajax,
-             commercialFeatures,
-             intersection) {
+             commercialFeatures) {
 
     return function () {
-
-        this.id = 'ContributionsEpicUsaCtaThreeWay';
-        this.start = '2016-11-18';
-        this.expiry = '2016-12-20';
-        this.author = 'Phil Wills';
-        this.description = 'Test just contributions vs contributions or membership or just membership in the US';
+        this.id = 'ContributionsEpicUsPreEndOfYear';
+        this.start = '2016-12-06';
+        this.expiry = '2016-12-12';
+        this.author = 'Guy Dawson';
+        this.description = 'Test which Epic variant to use in the US end of year campaign';
         this.showForSensitive = false;
-        this.audience = 0.7;
-        this.audienceOffset = 0;
-        this.successMeasure = 'Impressions to number of contributions / supporter sign ups';
-        this.audienceCriteria = 'Just the US';
+        this.audience = 0.1;
+        this.audienceOffset = 0.9;
+        this.successMeasure = 'Conversion rate (contributions / impressions)';
+        this.audienceCriteria = 'All';
         this.dataLinkNames = '';
-        this.idealOutcome = 'We prove or disprove our hypothesis that just offering contributions will result in an overall boost in money taken in the USA';
+        this.idealOutcome = 'We are able to determine which Epic variant to use in the US end of year campaign';
         this.canRun = function () {
-            var includedKeywordIds = [
-                'us-news/us-elections-2016',
-                'us-news/us-politics'
-            ];
-
-            var includedSeriesIds = [
-                'us-news/series/diy-abortion-in-america'
-            ];
-
-            var excludedKeywordIds = ['music/leonard-cohen', 'politics/eu-referendum'];
-
-            var hasKeywordsMatch = function() {
-                var pageKeywords = config.page.keywordIds;
-                if (typeof(pageKeywords) !== 'undefined') {
-                    var keywordList = pageKeywords.split(',');
-                    return intersection(excludedKeywordIds, keywordList).length == 0 &&
-                        (intersection(includedKeywordIds, keywordList).length > 0 || includedSeriesIds.indexOf(config.page.seriesId) !== -1);
-                } else {
-                    return false;
-                }
-            };
-
             var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
             var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle; // may render badly on other types
-            return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && hasKeywordsMatch();
+            return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate;
         };
 
-        var contributeUrlPrefix = 'co_global_epic_usa_cta_three_way';
-        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_usa_cta_three_way';
+        var contributeUrlPrefix = 'co_global_epic_us_pre_end_of_year';
+        var membershipUrlPrefix = 'gdnwb_copts_mem_epic_us_pre_end_of_year';
 
 
         var makeUrl = function(urlPrefix, intcmp) {
@@ -87,41 +62,28 @@ define([
         var messages  = {
             control: {
                 title: 'Since you’re here …',
-                p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
+                p1: '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
+            },
+            bolder: {
+                title: 'Since you’re here …',
+                p1: '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
+            },
+            endOfYear: {
+                title: 'Since you’re here …',
+                p1: '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
             }
         };
 
         var cta = {
             equal: {
-                p2: 'Fund our journalism and together we can keep the world informed.',
+                p2: 'If everyone who reads our reporting, who likes it, helps to pay for it, our future would be much more secure.',
                 p3: '',
                 cta1: 'Become a Supporter',
                 cta2: 'Make a contribution',
-                url1: makeUrl(membershipUrl, membershipUrlPrefix ),
-                url2:  makeUrl(contributeUrl, contributeUrlPrefix ),
-                hidden: ''
-            },
-
-            justContribute: {
-                p2: 'Fund our journalism and together we can keep the world informed.',
-                p3: '',
-                cta1: 'Make a contribution',
-                cta2: '',
-                url1:  makeUrl(contributeUrl, contributeUrlPrefix),
-                url2: '',
-                hidden: 'hidden'
-            },
-
-            justSupporter: {
-                p2: 'Fund our journalism and together we can keep the world informed.',
-                p3: '',
-                cta1: 'Become a Supporter',
-                cta2: '',
                 url1: makeUrl(membershipUrl, membershipUrlPrefix),
-                url2: '',
-                hidden: 'hidden'
+                url2:  makeUrl(contributeUrl, contributeUrlPrefix),
+                hidden: ''
             }
-
 
         };
 
@@ -150,14 +112,14 @@ define([
 
         this.variants = [
             {
-                id: 'mixed',
+                id: 'control',
 
                 test: function () {
                     var ctaType = cta.equal;
                     var message = messages.control;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.url1 + '_mixed',
-                        linkUrl2: ctaType.url2 + '_mixed',
+                        linkUrl1: ctaType.url1 + '_control',
+                        linkUrl2: ctaType.url2 + '_control',
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,
@@ -175,16 +137,15 @@ define([
 
                 success: completer
             },
-
             {
-                id: 'just-contribute',
+                id: 'bolder',
 
                 test: function () {
-                    var ctaType = cta.justContribute;
-                    var message = messages.control;
+                    var ctaType = cta.equal;
+                    var message = messages.bolder;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.url1 + '_contribute',
-                        linkUrl2: ctaType.url2 + '_contribute',
+                        linkUrl1: ctaType.url1 + '_bolder',
+                        linkUrl2: ctaType.url2 + '_bolder',
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,
@@ -202,16 +163,15 @@ define([
 
                 success: completer
             },
-
             {
-                id: 'just-supporter',
+                id: 'endOfYear',
 
                 test: function () {
-                    var ctaType = cta.justSupporter;
-                    var message = messages.control;
+                    var ctaType = cta.equal;
+                    var message = messages.endOfYear;
                     var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.url1 + '_supporter',
-                        linkUrl2: ctaType.url2 + '_supporter',
+                        linkUrl1: ctaType.url1 + '_end_of_year',
+                        linkUrl2: ctaType.url2 + '_end_of_year',
                         title: message.title,
                         p1: message.p1,
                         p2:ctaType.p2,

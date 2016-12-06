@@ -13,6 +13,8 @@ define([
     'common/modules/experiments/tests/contributions-epic-usa-cta-three-way',
     'common/modules/experiments/tests/contributions-epic-observer-anniversary',
     'common/modules/experiments/tests/contributions-epic-brexit-supreme',
+    'common/modules/experiments/tests/contributions-epic-us-pre-end-of-year',
+    'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/uk-membership-engagement-message-test-10',
     'common/modules/experiments/tests/au-membership-engagement-message-test-8',
     'common/modules/experiments/tests/its-raining-inline-ads'
@@ -30,6 +32,8 @@ define([
              ContributionsEpicUsaCtaThreeWay,
              ContributionsEpicObserverAnniversary,
              ContributionsEpicBrexitSupreme,
+             ContributionsEpicUsPreEndOfYear,
+             ContributionsEpicAlwaysAskStrategy,
              UkMembershipEngagementMessageTest10,
              AuMembershipEngagementMessageTest8,
              ItsRainingInlineAds
@@ -41,6 +45,8 @@ define([
         new ContributionsEpicUsaCtaThreeWay(),
         new ContributionsEpicObserverAnniversary(),
         new ContributionsEpicBrexitSupreme(),
+        new ContributionsEpicUsPreEndOfYear(),
+        new ContributionsEpicAlwaysAskStrategy(),
         new UkMembershipEngagementMessageTest10(),
         new AuMembershipEngagementMessageTest8(),
         new ItsRainingInlineAds()

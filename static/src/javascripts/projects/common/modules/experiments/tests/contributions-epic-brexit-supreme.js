@@ -39,7 +39,7 @@ define([
         this.author = 'Phil Wills';
         this.description = 'Appeal linked to the Brexit appeal in the Supreme Court';
         this.showForSensitive = false;
-        this.audience = 1;
+        this.audience = 0.7;
         this.audienceOffset = 0;
         this.successMeasure = 'N/A';
         this.audienceCriteria = 'All';

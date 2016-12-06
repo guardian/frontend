@@ -95,4 +95,23 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-contributions-epic-us-pre-end-of-year",
+    "Test which Epic variant to use in the US end of year campaign",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 12),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-always-ask-strategy",
+    "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 01, 06),
+    exposeClientSide = true
+  )
 }

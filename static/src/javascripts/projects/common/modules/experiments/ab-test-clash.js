@@ -22,8 +22,24 @@ define([
         variants: ['mixed']
     };
 
+    var ContributionsEpicUsPreEndOfYear = {
+        name: 'ContributionsEpicUsPreEndOfYear',
+        variants: ['control', 'bolder', 'endOfYear']
+    };
+
+    var ContributionsEpicAlwaysAskStrategy = {
+        name: 'ContributionsEpicAlwaysAskStragey',
+        variants: ['control']
+    };
+
     function userIsInAClashingAbTest() {
-        var clashingTests = [ContributionsEpicUsaCtaThreeWay, ContributionsEpicObserverAnniversary, ContributionsEpicBrexitSupreme];
+        var clashingTests = [
+            ContributionsEpicUsaCtaThreeWay,
+            ContributionsEpicObserverAnniversary,
+            ContributionsEpicBrexitSupreme,
+            ContributionsEpicUsPreEndOfYear,
+            ContributionsEpicAlwaysAskStrategy
+        ];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 
