@@ -17,7 +17,7 @@ define([
 ) {
     var containerSelector = '.fc-container:not(.fc-container--commercial)';
     var sliceSelector = '.js-fc-slice-mpu-candidate';
-    var isNetworkFront = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
+    var isNetworkFront;
 
     return {
         init: init
@@ -30,6 +30,8 @@ define([
 
         var prefs = userPrefs.get('container-states') || {};
         var isMobile = detect.isBreakpoint({ max : 'phablet' });
+
+        isNetworkFront = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
 
         // Get all containers
         containers = qwery(containerSelector)
