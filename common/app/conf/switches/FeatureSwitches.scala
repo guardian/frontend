@@ -503,7 +503,7 @@ trait FeatureSwitches {
   val RenderEmailConnectedStyle = Switch(
     SwitchGroup.Feature,
     "render-email-connected-style",
-    "Allows alternate email styling when passing ?format=email-connected",
+    "Allows alternate email styling when passing ?format=email-connected, for testing two email design variants",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 12, 20),
