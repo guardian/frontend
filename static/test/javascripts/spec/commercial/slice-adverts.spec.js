@@ -231,7 +231,7 @@ define([
                 var oldis = detect.isBreakpoint;
                 detect.isBreakpoint = function () {
                     return true;
-                }
+                };
                 sliceAdverts.init()
                 .then(function () {
                     expect(qwery('.fc-container-first+section>.ad-slot', $fixtureContainer).length).toBe(1);

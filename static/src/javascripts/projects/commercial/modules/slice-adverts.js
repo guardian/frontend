@@ -34,7 +34,7 @@ define([
         isNetworkFront = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
 
         // Get all containers
-        containers = qwery(containerSelector)
+        var containers = qwery(containerSelector)
         // Filter out closed ones
         .filter(function (container) {
             return prefs[container.getAttribute('data-id')] !== 'closed';
