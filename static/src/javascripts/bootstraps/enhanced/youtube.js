@@ -114,9 +114,15 @@ define([
         Object.keys(STATES).forEach(checkState.bind(null, atomId, event.data));
     }
 
-    function init() {
+    function checkElemsForVideos(elems) {
+        var elems = elems || [document.body];
+
+        elems.forEach(checkElemForVideo);
+    }
+
+    function checkElemForVideo(elem) {
         fastdom.read(function () {
-            $('.youtube-media-atom').each(function (el) {
+            $('.youtube-media-atom', elem).each(function (el) {
                 var atomId = el.getAttribute('data-media-atom-id');
                 var iframe = el.querySelector('iframe');
                 var overlay = el.querySelector('.youtube-media-atom__overlay');
@@ -132,7 +138,12 @@ define([
         });
     }
 
+    function init() {
+        checkElemsForVideos();
+    }
+
     return {
-        init: init
+        init: init,
+        checkElemsForVideos: checkElemsForVideos
     };
 });
