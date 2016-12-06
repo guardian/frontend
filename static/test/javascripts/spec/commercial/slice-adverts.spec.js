@@ -70,7 +70,8 @@ define([
         });
 
         it('should only create a maximum of 5 advert slots', function (done) {
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(5);
             })
@@ -83,7 +84,8 @@ define([
                 return 'desktop';
             };
 
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 $('.ad-slot', $fixtureContainer).each(function (adSlot) {
                     expect(bonzo(adSlot).parent().hasClass('fc-slice__item--no-mpu')).toBe(false);
@@ -94,7 +96,8 @@ define([
         });
 
         it('should have the correct ad names', function (done){
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
 
@@ -111,7 +114,8 @@ define([
             detect.isBreakpoint = function () {
                 return true;
             };
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
 
@@ -126,7 +130,8 @@ define([
         });
 
         it('should have the correct size mappings', function (done) {
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 $('.ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
@@ -148,7 +153,8 @@ define([
             detect.isBreakpoint = function () {
                 return true;
             };
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 $('.ad-slot--top-above-nav', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
@@ -167,7 +173,8 @@ define([
         });
 
         it('should have at least one non-advert containers between advert containers', function (done) {
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(1);
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
@@ -194,7 +201,8 @@ define([
             detect.isBreakpoint = function () {
                 return false;
             };
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
@@ -211,7 +219,8 @@ define([
             prefs[containerId] = 'closed';
             $('.fc-container-first', $fixtureContainer).attr('data-id', containerId);
             userPrefs.set('container-states', prefs);
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
                 expect(qwery('.fc-container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
@@ -232,7 +241,8 @@ define([
                 detect.isBreakpoint = function () {
                     return true;
                 };
-                sliceAdverts.init()
+                sliceAdverts.init();
+                sliceAdverts.init.whenRendered
                 .then(function () {
                     expect(qwery('.fc-container-first+section>.ad-slot', $fixtureContainer).length).toBe(1);
                     detect.isBreakpoint = oldis;
@@ -242,7 +252,8 @@ define([
             });
 
             it('is not added on desktop', function (done) {
-                sliceAdverts.init()
+                sliceAdverts.init();
+                sliceAdverts.init.whenRendered
                 .then(function () {
                     expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
                 })
@@ -255,7 +266,8 @@ define([
 
         //TODO: get data if we need to reintroduce this again
         xit('should add one slot for tablet, one slot for mobile after container', function (done) {
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 expect($('.fc-container-first .ad-slot', $fixtureContainer).hasClass('ad-slot--not-mobile'))
                     .toBe(true);

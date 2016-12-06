@@ -1,17 +1,23 @@
 define([
     'qwery',
+    'Promise',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/mediator',
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/create-slot',
+    'common/modules/commercial/dfp/add-slot',
     'common/modules/user-prefs',
     'common/modules/commercial/commercial-features'
 ], function (
     qwery,
+    Promise,
     config,
     detect,
+    mediator,
     fastdom,
     createSlot,
+    addSlot,
     userPrefs,
     commercialFeatures
 ) {
@@ -28,6 +34,10 @@ define([
             return Promise.resolve(false);
         }
 
+        init.whenRendered = new Promise(function (resolve) {
+            mediator.once('page:commercial:slice-adverts', resolve);
+        });
+
         var prefs = userPrefs.get('container-states') || {};
         var isMobile = detect.isBreakpoint({ max : 'phablet' });
 
@@ -42,11 +52,17 @@ define([
 
         if (containers.length === 0) {
             return Promise.resolve(false);
+        } else if (isMobile) {
+            insertOnMobile(containers, getSlotNameOnMobile)
+            .then(addSlots)
+            .then(done);
+        } else {
+            insertOnDesktop(containers, getSlotNameOnDesktop)
+            .then(addSlots)
+            .then(done);
         }
 
-        return isMobile ?
-             insertOnMobile(containers, getSlotNameOnMobile) :
-             insertOnDesktop(containers, getSlotNameOnDesktop);
+        return Promise.resolve(true);
     }
 
     // On mobile, a slot is inserted after each container
@@ -84,6 +100,7 @@ define([
             slots.forEach(function (slot, index) {
                 containers[index].parentNode.insertBefore(slot, containers[index].nextSibling);
             });
+            return slots.map(function (_) { return _.firstChild });
         });
     }
 
@@ -126,6 +143,7 @@ define([
                 item.slice.classList.remove('fc-slice__item--no-mpu');
                 item.slice.appendChild(item.slot);
             });
+            return slots.map(function (_) { return _.slot });
         });
     }
 
@@ -137,4 +155,11 @@ define([
         return 'inline' + (index + 1);
     }
 
+    function addSlots(slots) {
+        slots.forEach(addSlot);
+    }
+
+    function done() {
+        mediator.emit('page:commercial:slice-adverts');
+    }
 });
