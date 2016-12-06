@@ -146,7 +146,7 @@ $badge-width: 80px;
         text-decoration: none;
     }
     .hostedbadge {
-        z-index: $zindex-ads;
+        z-index: 0;
         height: 0;
     }
 }
