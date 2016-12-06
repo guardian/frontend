@@ -757,6 +757,10 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
         color: #ffffff;
     }
 
+    .tertiary-navigation__item--current-section & {
+        color: $news-support-1;
+    }
+
     @include mq($from: mobile, $until: mobileLandscape) {
         font-size: 16px;
         font-size: 5.1vw;
