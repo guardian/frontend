@@ -16,6 +16,7 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'We see a sensible increade in ad impressions without noticeable drop in viewability and CTR';
         this.hypothesis = 'The current spacefinder rules are too restrictive and a lot of articles don\'t have a single inline MPU';
+        this.showForSensitive = true;
 
         this.canRun = function () {
             return commercialFeatures.articleBodyAdverts;
