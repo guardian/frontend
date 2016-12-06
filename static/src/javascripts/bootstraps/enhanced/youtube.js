@@ -115,9 +115,9 @@ define([
     }
 
     function checkElemsForVideos(elems) {
-        var elems = elems || [document.body];
-
-        elems.forEach(checkElemForVideo);
+        if (elems && elems.length) {
+            elems.forEach(checkElemForVideo);
+        }
     }
 
     function checkElemForVideo(elem) {
@@ -139,7 +139,7 @@ define([
     }
 
     function init() {
-        checkElemsForVideos();
+        checkElemsForVideos([document.body]);
     }
 
     return {
