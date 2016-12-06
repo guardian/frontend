@@ -64,7 +64,7 @@ define([
     ready = function () {
         trail();
         articleLiveblogCommon();
-        if (isItRainingAds()) {
+        if (!shouldRemoveGeoMostPop()) {
             modules.initRightHandComponent();
         }
         modules.initCmpParam();
@@ -77,9 +77,9 @@ define([
         quiz.handleCompletion();
     };
 
-    function isItRainingAds() {
+    function shouldRemoveGeoMostPop() {
         var testName = 'ItsRainingInlineAds';
-        return ab.testCanBeRun(testName) && ['control', 'geo'].indexOf(ab.getTestVariantId(testName)) > -1;
+        return ab.testCanBeRun(testName) && ['nogeo', 'none'].indexOf(ab.getTestVariantId(testName)) > -1;
     }
 
     return {
