@@ -3,13 +3,15 @@ define([
     'fastdom',
     'qwery',
     'common/utils/$',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/fastdom-promise'
 ], function (
     bean,
     fastdom,
     qwery,
     $,
-    config
+    config,
+    fastdomPromise
 ) {
     return function () {
         this.id = 'EditorialEmailVariants';
@@ -37,6 +39,7 @@ define([
             }
         }
 
+        // use this if we are using the form, form will still work with no-JS
         function updateSignupForm(emailListID) {
             var emailListInput = qwery('.js-email-sub__listid-input')[0];
             var emailForm = qwery('.js-email-sub__form')[0];
@@ -45,19 +48,32 @@ define([
             passRefererParam(emailForm);
         }
 
+        // loads the correct iframe if we can...
+        function enhanceWebView(emailListID) {
+          return fastdomPromise.write(function () {
+              var insertionPoint = $('.js-email-sub__form')[0];
+              $(insertionPoint).addClass('is-hidden');
+              var emailForm = $.create(
+                    '<iframe src="/email/form/plaintone/' + emailListID +
+                    '" height="60px" width="100%" scrolling="no" frameborder="0" seamless' + 'class="iframed--overflow-hidden js-email-sub__iframe js-email-sub__iframe--article">' + '</iframe>'
+                  );
+              $(emailForm).insertAfter(insertionPoint);
+          });
+        }
+
         this.variants = [
             {
-                id: 'control',
+                id: 'card',
                 test: function () {
-                    var emailListID = 1234;
-                    updateSignupForm(emailListID);
+                    var emailListID = 3743;
+                    enhanceWebView(emailListID);
                 }
             },
             {
-                id: 'variant',
+                id: 'connected',
                 test: function () {
-                    var emailListID = 5678;
-                    updateSignupForm(emailListID);
+                    var emailListID = 3744;
+                    enhanceWebView(emailListID);
                 }
             }
         ];
