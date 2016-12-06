@@ -6,6 +6,7 @@ import org.joda.time.LocalDate
 trait ABTestSwitches {
 
   Switch(
+    ABTests,
     "ab-its-raining-inline-ads",
     "Display more inline ads on the wide breakpoint",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
