@@ -259,7 +259,10 @@ define([
         }
 
         function getCandidates() {
-            var candidates = qwery(rules.bodySelector + rules.slotSelector);
+            var candidates = qwery(rules.bodySelector + rules.slotSelector).filter(function(){
+                // don't suggest candidates that adFree trial users should not see
+                return !(config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser());
+            });
             if (rules.fromBottom) {
                 candidates.reverse();
             }
