@@ -49,7 +49,9 @@ define([
                     isFront: true
                 };
 
-                detect.isBreakpoint = mockIsBreakpoint('desktop');
+                detect.isBreakpoint = function () {
+                    return false;
+                };
 
                 commercialFeatures.sliceAdverts = true;
 
@@ -67,10 +69,10 @@ define([
             expect(sliceAdverts).toBeDefined();
         });
 
-        it('should only create a maximum of 3 advert slots', function (done) {
+        it('should only create a maximum of 5 advert slots', function (done) {
             sliceAdverts.init()
             .then(function () {
-                expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(3);
+                expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(5);
             })
             .then(done)
             .catch(done.fail);
@@ -105,7 +107,10 @@ define([
         });
 
         it('should have the correct ad names on mobile', function (done) {
-            detect.isBreakpoint = mockIsBreakpoint('mobile');
+            var oldis = detect.isBreakpoint;
+            detect.isBreakpoint = function () {
+                return true;
+            };
             sliceAdverts.init()
             .then(function () {
                 var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
@@ -113,6 +118,8 @@ define([
                 expect($adSlots[0].data('name')).toEqual('top-above-nav');
                 expect($adSlots[1].data('name')).toEqual('inline1');
                 expect($adSlots[2].data('name')).toEqual('inline2');
+
+                detect.isBreakpoint = oldis;
             })
             .then(done)
             .catch(done.fail);
@@ -137,7 +144,10 @@ define([
         });
 
         it('should have the correct size mappings on mobile', function (done) {
-            detect.isBreakpoint = mockIsBreakpoint('mobile');
+            var oldis = detect.isBreakpoint;
+            detect.isBreakpoint = function () {
+                return true;
+            };
             sliceAdverts.init()
             .then(function () {
                 $('.ad-slot--top-above-nav', $fixtureContainer).each(function (adSlot) {
@@ -150,6 +160,7 @@ define([
 
                     expect($adSlot.data('mobile')).toEqual('1,1|2,2|300,250|fluid');
                 });
+                detect.isBreakpoint = oldis;
             })
             .then(done)
             .catch(done.fail);
@@ -217,18 +228,20 @@ define([
             });
 
             it('is added on mobile', function (done) {
-                detect.isBreakpoint = mockIsBreakpoint('mobile');
+                var oldis = detect.isBreakpoint;
+                detect.isBreakpoint = function () {
+                    return true;
+                }
                 sliceAdverts.init()
                 .then(function () {
-                    expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(1);
+                    expect(qwery('.fc-container-first+section>.ad-slot', $fixtureContainer).length).toBe(1);
+                    detect.isBreakpoint = oldis;
                 })
                 .then(done)
                 .catch(done.fail);
             });
 
             it('is not added on desktop', function (done) {
-                detect.isBreakpoint = mockIsBreakpoint('desktop');
-
                 sliceAdverts.init()
                 .then(function () {
                     expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
@@ -252,29 +265,5 @@ define([
             .then(done)
             .catch(done.fail);
         });
-
-        function mockIsBreakpoint(current) {
-
-            return function (query) {
-                var maxBreakpoint = getBreakpoint(query.max);
-                var maxSize = maxBreakpoint ? maxBreakpoint.width : Infinity;
-
-                var minBreakpoint = getBreakpoint(query.min);
-                var minSize = minBreakpoint ? minBreakpoint.width : 0;
-
-                var mockSize = getBreakpoint(current).width;
-                return minSize <= mockSize && mockSize <= maxSize;
-            };
-
-            function getBreakpoint(name) {
-                var breakpoints = detect.breakpoints;
-                for (var i = 0; i < breakpoints.length; i++) {
-                    if (breakpoints[i].name === name) {
-                        return breakpoints[i];
-                    }
-                }
-                return undefined;
-            }
-        }
     });
 });
