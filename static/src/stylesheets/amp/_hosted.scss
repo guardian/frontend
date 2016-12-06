@@ -74,7 +74,7 @@ $badge-width: 80px;
 }
 
 .hosted__cta-btn-wrapper {
-    padding-top: 90px;
+    padding-top: 80px;
 }
 
 .hosted__cta.button,
@@ -107,6 +107,7 @@ $badge-width: 80px;
     display: block;
     color: #ffffff;
     line-height: 30px;
+    padding-bottom: $gs-baseline / 2;
 }
 
 .hosted__cta-btn-text {
@@ -252,6 +253,7 @@ $badge-width: 80px;
         padding: 6px 0 0 10px;
         height: 44px;
         text-align: left;
+        line-height: 1;
     }
 
     .survey-text {
@@ -333,6 +335,7 @@ $badge-width: 80px;
 .hosted__next-page {
     @include side-margins;
     position: relative;
+    margin-bottom: 2 * $gs-baseline;
 }
 
 .hosted__next-page--more-from {
