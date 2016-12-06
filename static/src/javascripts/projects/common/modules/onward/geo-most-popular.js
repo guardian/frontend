@@ -7,6 +7,7 @@ define([
     'qwery',
     'common/modules/component',
     'common/modules/experiments/ab',
+    'common/utils/config',
     'common/utils/mediator',
     'lodash/functions/once'
 ], function (
@@ -14,6 +15,7 @@ define([
     qwery,
     Component,
     ab,
+    config,
     mediator,
     once
 ) {
