@@ -280,7 +280,7 @@ $badge-width: 80px;
 }
 
 .hosted__lightbox {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, .8);
     width: 100%;
     height: 100%;
     position: absolute;
@@ -311,25 +311,6 @@ $badge-width: 80px;
 .hosted__lightbox-image__svg {
     width: 240px;
     height: 154px;
-}
-
-.hosted__popup.popup {
-    top: 110%;
-    left: 299%;
-    width: 350px;
-    padding: 10px 10px 20px 10px;
-    background: #ffffff;
-    color: $neutral-1;
-    text-align: left;
-    &::before {
-        width: 250px;
-        left: 29%;
-        border-bottom-color: #ffffff;
-    }
-}
-
-.hosted__popup-text {
-    font-weight: 200;
 }
 
 .hosted__next-page {
@@ -644,7 +625,7 @@ $badge-width: 80px;
     left: 0;
     right: 0;
     padding: $gs-baseline $gs-gutter 50px;
-    background: linear-gradient(to top, rgba(51, 51, 51, 0.9) 0%, rgba(51, 51, 51, 0.7) 70%, transparent 100%);
+    background: linear-gradient(to top, rgba(51, 51, 51, .9) 0%, rgba(51, 51, 51, .7) 70%, transparent 100%);
     @media (orientation: portrait) {
         padding-bottom: $gs-baseline;
     }
@@ -670,7 +651,7 @@ $badge-width: 80px;
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba(51, 51, 51, 0.9) 0%, rgba(51, 51, 51, 0.7) 70%, transparent 100%);
+    background: linear-gradient(to top, rgba(51, 51, 51, .9) 0%, rgba(51, 51, 51, .7) 70%, transparent 100%);
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
@@ -736,20 +717,20 @@ $badge-width: 80px;
 .info-button-checkbox,
 .hosted-gallery__info-button .inline-cross,
 .hosted-gallery__caption-text {
-    display: none
+    display: none;
 }
 
 .info-button-checkbox:checked {
     ~ .hosted-gallery__info-button {
         .icon-i {
-            display: none
+            display: none;
         }
         .inline-cross {
             display: block;
         }
     }
     ~ .hosted-gallery__image-title {
-        display: none
+        display: none;
 
     }
     ~ .hosted-gallery__caption-text {
