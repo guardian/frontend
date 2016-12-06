@@ -8,10 +8,13 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
-  val googleMapsUrl = "https://www.google.com/maps/embed/v1/place?center=-3.9834936%2C12.7024497&key=AIzaSyBctFF2JCjitURssT91Am-_ZWMzRaYBm4Q&zoom=5&q=Democratic+Republic+of+the+Congo"
-
+  val audioBoomTrackid = 2990345
+  val audioBoomUrl = s"https://audioboom.com/boos/${audioBoomTrackid.toString}-counter-terrorism-radio-advert-encourages-mothers-to-talk-to-their-daughters-about-travelling-to-syria/embed/v3?eid=AQAAAOmxBlUJoS0A"
+  val audioBoomUrlSansTrackid = s"https://audioboom.com/boos/foo-counter-terrorism-radio-advert-encourages-mothers-to-talk-to-their-daughters-about-travelling-to-syria/embed/v3?eid=AQAAAOmxBlUJoS0A"
   val dataInteractiveIframeWrapper = "http://foo.bar/iframe-wrapper/foo/bar"
   val dataInteractiveNoIframeWrapper = "http://foo.bar/foo/bar"
+  val googleMapsUrl = "https://www.google.com/maps/embed/v1/place?center=-3.9834936%2C12.7024497&key=AIzaSyBctFF2JCjitURssT91Am-_ZWMzRaYBm4Q&zoom=5&q=Democratic+Republic+of+the+Congo"
+  val soundcloudUrl = "http://www.soundcloud.com%2Ftracks%2F1234"
 
 
   private def clean(document: Document): Document = {
@@ -21,9 +24,17 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
   private def documentWithVideos(videoUrls: String*): Document = {
-    val doc = "<html><body>" +
-      videoUrls.map{ url: String => s"""<figure class="element-video" data-canonical-url="$url"><iframe></iframe></figure>""" }.mkString +
-      "</body></html>"
+    val doc = <html>
+                  <body>
+                     {
+                        videoUrls.map
+                        { url: String =>  <figure class="element-video" data-canonical-url={url}>
+                                                  <iframe></iframe>
+                                          </figure>
+                        }
+                     }
+                  </body>
+              </html>.toString()
     val document: Document = Jsoup.parse(doc)
     clean(document)
   }
@@ -95,42 +106,45 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   /////////////////////////////
 
   "AmpEmbedCleaner" should "create an amp-iframe element if interactive has a valid url and iframe wrapper" in {
-    val interactiveValidUrlPlusiFrameWrapper =
-          <html><body>
-            <figure class="element element-interactive interactive"
-                    data-interactive={dataInteractiveIframeWrapper}
-                    data-canonical-url="https://interactive.guim.co.uk/maps/embed/nov/2016-11-29T06:47:36.html"
-                    data-alt="Site of plane crash in Colombia">
-              <a href="https://myinteractive.url/some/stuff" data-link-name="in body link" class="u-underline"> Interactive name</a>
-            </figure>
-          </body></html>.toString
+    val interactiveValidUrlPlusiFrameWrapper = <html>
+                                                  <body>
+                                                    <figure class="element element-interactive interactive"
+                                                            data-interactive={dataInteractiveIframeWrapper}
+                                                            data-canonical-url="https://interactive.guim.co.uk/maps/embed/nov/2016-11-29T06:47:36.html"
+                                                            data-alt="Site of plane crash in Colombia">
+                                                      <a href="https://myinteractive.url/some/stuff" data-link-name="in body link" class="u-underline"> Interactive name</a>
+                                                    </figure>
+                                                  </body>
+                                               </html>.toString()
     val result = clean(Jsoup.parse(interactiveValidUrlPlusiFrameWrapper))
     result.getElementsByTag("amp-iframe").size should be(1)
   }
 
   "AmpEmbedCleaner" should "not create an amp-iframe element if interactive only has an iframe wrapper" in {
-    val interactiveSansUrl =
-          <html><body>
-            <figure class="element element-interactive interactive"
-                    data-interactive={dataInteractiveIframeWrapper}
-                    data-canonical-url="https://interactive.guim.co.uk/maps/embed/nov/2016-11-29T06:47:36.html"
-                    data-alt="Site of plane crash in Colombia">
-            </figure>
-          </body></html>.toString
+    val interactiveSansUrl = <html>
+                                  <body>
+                                        <figure class="element element-interactive interactive"
+                                                data-interactive={dataInteractiveIframeWrapper}
+                                                data-canonical-url="https://interactive.guim.co.uk/maps/embed/nov/2016-11-29T06:47:36.html"
+                                                data-alt="Site of plane crash in Colombia">
+                                        </figure>
+                                  </body>
+                                  </html>.toString()
     val result = clean(Jsoup.parse(interactiveSansUrl))
     result.getElementsByTag("amp-iframe").size should be(0)
   }
 
   "AmpEmbedCleaner" should "not create an amp-iframe element if interactive does not have an iframe wrapper" in {
-    val interactiveSansiFrameWrapper =
-          <html><body>
-            <figure class="element element-interactive interactive"
-                    data-interactive={dataInteractiveNoIframeWrapper}
-                    data-canonical-url="https://interactive.guim.co.uk/maps/embed/nov/2016-11-29T06:47:36.html"
-                    data-alt="Site of plane crash in Colombia">
-              <a href="https://myinteractive.url/some/stuff" data-link-name="in body link" class="u-underline">Interactive name</a>
-            </figure>
-          </body></html>.toString
+    val interactiveSansiFrameWrapper = <html>
+                                          <body>
+                                            <figure class="element element-interactive interactive"
+                                                    data-interactive={dataInteractiveNoIframeWrapper}
+                                                    data-canonical-url="https://interactive.guim.co.uk/maps/embed/nov/2016-11-29T06:47:36.html"
+                                                    data-alt="Site of plane crash in Colombia">
+                                              <a href="https://myinteractive.url/some/stuff" data-link-name="in body link" class="u-underline">Interactive name</a>
+                                            </figure>
+                                          </body>
+                                        </html>.toString()
     val result = clean(Jsoup.parse(interactiveSansiFrameWrapper))
     result.getElementsByTag("amp-iframe").size should be(0)
   }
@@ -142,27 +156,55 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   // Soundcloud cleaner
   /////////////////////////////
 
- "AmpEmbedCleaner" should "replace an iframe in an audio-element with an amp-soundcloud element" in {
-   val soundcloudUrl = "http://www.soundcloud.com%2Ftracks%2F1234"
-   val doc = s"""<html><body><figure class="element-audio"><iframe src="$soundcloudUrl"></iframe></figure></body></html>"""
+ "AmpEmbedCleaner" should "replace an iframe in an audio-element that has a src url from soundcloud.com, with an amp-soundcloud element" in {
+   val doc = <html>
+                <body>
+                  <figure class="element-audio">
+                    <iframe src={soundcloudUrl}></iframe>
+                  </figure>
+                </body>
+             </html>.toString()
    val document: Document = Jsoup.parse(doc)
    val result: Document = clean(document)
-
    result.getElementsByTag("amp-soundcloud").size should be(1)
  }
 
-  "AmpEmbedCleaner" should "not add a amp-soundcloud element if an audio element does not contain an iframe" in {
-    val doc = s"""<html><body><figure class="element-audio"></figure></body></html>"""
+  "AmpEmbedCleaner" should "not add a amp-soundcloud element if an audio element does not contain an iframe with src url from soundcloud.com" in {
+    val doc = <html>
+                <body>
+                  <figure class="element-audio">
+                    <iframe src={audioBoomUrl}></iframe>
+                  </figure>
+                </body>
+              </html>.toString()
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
+    println("result from soundcloud processing of audioboom url:\n" + result)
+    result.getElementsByTag("amp-soundcloud").size should be(0)
+  }
 
+
+  "AmpEmbedCleaner" should "not add a amp-soundcloud element if an audio element does not contain an iframe" in {
+    val doc = <html>
+                  <body>
+                    <figure class="element-audio"></figure>
+                  </body>
+              </html>.toString()
+    val document: Document = Jsoup.parse(doc)
+    val result: Document = clean(document)
     result.getElementsByTag("amp-soundcloud").size should be(0)
   }
 
   "AmpEmbedCleaner" should "create an amp-soundcloud element with a trackid from the iframe src" in {
     val trackId = "1234"
     val soundcloudUrl = s"https://www.soundcloud.com%2Ftracks%2F$trackId"
-    val doc = s"""<html><body><figure class="element-audio"><iframe src="$soundcloudUrl"></iframe></figure></body></html>"""
+    val doc = <html>
+                <body>
+                  <figure class="element-audio">
+                    <iframe src={soundcloudUrl}></iframe>
+                  </figure>
+                </body>
+              </html>.toString()
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
     result.getElementsByTag("amp-soundcloud").first.attr("data-trackid") should be(trackId)
@@ -170,38 +212,117 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
   "AmpEmbedCleaner" should "not create an amp-soundcloud element if trackid missing from iframe src" in {
     val soundcloudUrl = s"http://www.soundcloud.com/"
-    val doc = s"""<html><body><figure class="element-audio"><iframe src="$soundcloudUrl"></iframe></figure></body></html>"""
+    val doc = <html>
+                  <body>
+                    <figure class="element-audio">
+                      <iframe src="$soundcloudUrl"></iframe>
+                    </figure>
+                  </body>
+              </html>.toString()
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
-
     result.getElementsByTag("amp-soundcloud").size should be(0)
   }
+
+
+
+  /////////////////////////////
+  // Audioboom cleaner
+  /////////////////////////////
+
+  "AmpEmbedCleaner" should "replace an iframe in an audio-element that contains an audioboom url with an amp-iframe element" in {
+    val doc = <html>
+                  <body>
+                    <figure class="element-audio">
+                      <iframe frameborder="0" width="460" height="300" src={audioBoomUrl}></iframe>
+                    </figure>
+                  </body>
+              </html>.toString()
+    val document: Document = Jsoup.parse(doc)
+    val result: Document = clean(document)
+    println("result from audioboom test 1: \n" + result)
+    result.getElementsByTag("amp-iframe").size should be(1)
+  }
+
+  "AmpEmbedCleaner" should "not add an amp-iframe element if an does not contain an iframe with src url from audioboom.com" in {
+    val doc = <html>
+                  <body>
+                    <figure class="element-audio">
+                      <iframe src={soundcloudUrl}></iframe>
+                    </figure>
+                  </body>
+              </html>.toString()
+    val document: Document = Jsoup.parse(doc)
+    val result: Document = clean(document)
+    result.getElementsByTag("amp-iframe").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "not add an amp-iframe element if an audio element does not contain an iframe" in {
+    val doc = <html>
+                  <body>
+                    <figure class="element-audio"></figure>
+                  </body>
+              </html>.toString()
+    val document: Document = Jsoup.parse(doc)
+    val result: Document = clean(document)
+    result.getElementsByTag("amp-iframe").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "create an amp-iframe element with a data-main-player-id from the iframe src" in {
+    val doc = <html>
+                  <body>
+                    <figure class="element-audio">
+                      <iframe frameborder="0" width="460" height="300" src={audioBoomUrl}></iframe>
+                    </figure>
+                  </body>
+              </html>.toString()
+    val document: Document = Jsoup.parse(doc)
+    val result: Document = clean(document)
+    println("result.getElementsByTag(\"amp-iframe\").first.attr(\"data-main-player-id\")" + result.getElementsByTag("amp-iframe").first.attr("data-main-player-id").length)
+    //result.getElementsByTag("amp-iframe").first.attr("data-main-player-id") should be(audioBoomTrackid)
+    result.getElementsByTag("amp-iframe").first.attr("data-main-player-id").length should be(1)
+  }
+
+
 
   /////////////////////////////
   // Maps cleaner
   /////////////////////////////
 
   "AmpEmbedCleaner" should "replace an iframe in an map element with an amp-iframe element" in {
-    val doc = s"""<html><body><figure class="element-map"><iframe src="$googleMapsUrl"></iframe></figure></body></html>"""
+    val doc = <html>
+                  <body>
+                    <figure class="element-map">
+                      <iframe src={googleMapsUrl}></iframe>
+                    </figure>
+                  </body>
+              </html>.toString()
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
-
     result.getElementsByTag("amp-iframe").size should be(1)
   }
 
   "AmpEmbedCleaner" should "not add an amp-iframe element if an map element does not contain an iframe" in {
-    val doc = s"""<html><body><figure class="element-map"></figure></body></html>"""
+    val doc = <html>
+                  <body>
+                    <figure class="element-map"></figure>
+                  </body>
+              </html>.toString()
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
-
     result.getElementsByTag("amp-iframe").size should be(0)
   }
 
   "AmpEmbedCleaner" should "create an amp-iframe element with an iframe from the iframe src" in {
-    val doc = s"""<html><body><figure class="element-map"><iframe src="$googleMapsUrl"></iframe></figure></body></html>"""
+    val doc = <html>
+                  <body>
+                    <figure class="element-map">
+                      <iframe src={googleMapsUrl}></iframe>
+                    </figure>
+                  </body>
+              </html>.toString()
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
-
     result.getElementsByTag("amp-iframe").first.attr("src") should be(googleMapsUrl)
   }
 
@@ -209,7 +330,6 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   private def article() = {
     val contentApiItem = contentApi()
     val content = Content.make(contentApiItem)
-
     Article.make(content)
   }
 

@@ -5,6 +5,7 @@ import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpSrcCleaner, HtmlCleaner}
 import conf.switches.Switches.AmpInteractivePlaceHolderAttribute
 
+import scala.annotation.switch
 import scala.collection.JavaConversions._
 
 case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
@@ -85,14 +86,20 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }
 
     def getTrackIdFromUrl(soundcloudUrl: String): Option[String] = {
-      val pattern = ".*soundcloud.com%2Ftracks%2F(\\d+).*".r
+      val pattern = ".*api.soundcloud.com%2Ftracks%2F(\\d+).*".r
+      val alternatePattern = ".*api.soundcloud.com/tracks/(\\d+).*".r
       soundcloudUrl match {
-        case pattern(trackId) => Some(trackId)
+        case pattern(trackId) => {
+          Some(trackId)
+        }
+        case alternatePattern(trackId) => {
+          Some(trackId)
+        }
         case _ => None
       }
     }
 
-    def clean(document: Document) = {
+    def cleanAudioElement(document: Document) = {
       for {
         audioElement <- document.getElementsByClass("element-audio")
         iframeElement <- audioElement.getElementsByTag("iframe")
@@ -103,12 +110,77 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
         iframeElement.remove()
       }
     }
+
+    def cleanEmbedElement(document: Document) = {
+      for {
+        audioElement <- document.getElementsByClass("element-embed")
+        iframeElement <- audioElement.getElementsByTag("iframe")
+        trackId <- getTrackIdFromUrl(iframeElement.attr("src"))
+      } yield {
+        val soundcloudElement = createElement(document, trackId)
+        audioElement.appendChild(soundcloudElement)
+        iframeElement.remove()
+      }
+    }
   }
+
+  object AmpAudioElements {
+
+/*    def getSoundCloudTrackIdFromUrl(soundcloudUrl: String): Option[String] = {
+      val pattern = ".*soundcloud.com%2Ftracks%2F(\\d+).*".r
+      soundcloudUrl match {
+        case pattern(trackId) => Some(trackId)
+        case _ => None
+      }
+    }*/
+
+/*    def createSoundCloudElement(document: Document, trackId: String): Element = {
+      val soundcloud = document.createElement("amp-soundcloud")
+      soundcloud.attr("data-trackid", trackId)
+      soundcloud.attr("data-visual", "true")
+      soundcloud.attr("height", "300") // height is necessary if data-visual == true
+    }*/
+
+    def createAmpIframeElement(document: Document, src: String, width: String, height: String, frameborder: String): Element = {
+      val ampIframe = document.createElement("amp-iframe")
+      val attrs = Map(
+        "width" -> width,
+        "height" -> height,
+        "layout" -> "responsive",
+        "sandbox" -> "allow-scripts allow-same-origin allow-popups",
+        "frameborder" -> frameborder,
+        "src" -> src)
+      attrs.foreach {
+        case (key, value) => ampIframe.attr(key, value)
+      }
+      ampIframe
+    }
+
+    def clean(document: Document) = {
+      for {
+        audioElement <- document.getElementsByClass("element-audio")
+        iframeElement <- audioElement.getElementsByTag("iframe")
+      } yield {
+          val validIframe = iframeElement.hasAttr("src") && iframeElement.hasAttr("frameBorder") && iframeElement.hasAttr("width") && iframeElement.hasAttr("height")
+          if (validIframe) {
+            val src = iframeElement.attr("src")
+            val width = iframeElement.attr("width")
+            val height = iframeElement.attr("height")
+            val frameBorder = iframeElement.attr("frameborder")
+            iframeElement.replaceWith(createAmpIframeElement(document, src, width, height, frameBorder))
+          } else {
+              iframeElement.remove()
+            }
+          }
+    }
+   }
+
+
 
   def cleanAmpEmbed(document: Document) = {
     document.getElementsByClass("element-embed")
       .filter(_.getElementsByTag("iframe").nonEmpty)
-      .foreach(_.getElementsByTag("iframe").map(_.remove))
+      .foreach(_.getElementsByTag("iframe").foreach(_.remove()))
   }
 
   def cleanAmpInstagram(document: Document) = {
@@ -209,10 +281,12 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
     cleanAmpVideos(document)
     AmpExternalVideo.clean(document)
-    AmpSoundcloud.clean(document)
+    AmpAudioElements.clean(document)
     cleanAmpMaps(document)
     cleanAmpInstagram(document)
     cleanAmpInteractives(document)
+    AmpSoundcloud.cleanAudioElement(document)
+    AmpSoundcloud.cleanEmbedElement(document)
     cleanAmpEmbed(document)
 
     document
