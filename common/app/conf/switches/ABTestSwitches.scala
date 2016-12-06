@@ -107,11 +107,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-always-ask-strategy",
+    "ab-contributions-epic-always-ask-strategy",
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 01, 06),
+    sellByDate = new LocalDate(2017, 1, 6),
     exposeClientSide = true
   )
 }

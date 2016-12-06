@@ -28,7 +28,7 @@ define([
     };
 
     var ContributionsEpicAlwaysAskStrategy = {
-        name: 'ContributionsEpicAlwaysAskStragey',
+        name: 'ContributionsEpicAlwaysAskStrategy',
         variants: ['control']
     };
 

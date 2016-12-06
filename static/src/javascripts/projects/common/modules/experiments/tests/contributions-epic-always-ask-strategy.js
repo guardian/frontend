@@ -29,24 +29,23 @@ define([
              ajax,
              commercialFeatures) {
 
+    // We want to ensure the test always runs as this enables an easy data lake query to see whether a reader is in the
+    // test segment: check whether the ab_tests field contains a test with name ContributionsEpicAlwaysAskStrategy.
+    // This means having showForSensitive equal to true, and the canRun() function always returning true.
+    // The logic for whether the test-variant is displayed, is handled in the canBeDisplayed() function.
     return function () {
         this.id = 'ContributionsEpicAlwaysAskStrategy';
-        this.start = '2016-12-07';
+        this.start = '2016-12-06';
         this.expiry = '2017-01-06';
         this.author = 'Guy Dawson';
         this.description = 'Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period.';
-        this.showForSensitive = false;
+        this.showForSensitive = true;
         this.audience = 0.05;
         this.audienceOffset = 0.85;
         this.successMeasure = 'We are able to measure the positive and negative effects of this strategy.';
         this.audienceCriteria = 'All';
         this.dataLinkNames = '';
         this.idealOutcome = 'There are no negative effects and this is the optimum strategy!';
-
-        // Setting this to true enables an easy data lake query to see whether a reader is in the test segment:
-        // check whether the ab_tests field contains a test with name ContributionsEpicAlwaysAskStrategy.
-        // The logic for whether the test-variant is displayed, is contained in the test() function for the
-        // respective variant (see below).
         this.canRun = function () {
             return true;
         };
@@ -95,16 +94,22 @@ define([
             mediator.on('contributions-embed:view', complete);
         };
 
+        var canBeDisplayed = function() {
+            var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
+            var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle; // may render badly on other types
+            var isSensitive = config.page.isSensitive === true;
+            return userHasNeverContributed &&
+                commercialFeatures.canReasonablyAskForMoney &&
+                worksWellWithPageTemplate &&
+                !isSensitive;
+        };
+
         this.variants = [
             {
                 id: 'control',
 
                 test: function () {
-                    var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
-                    var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle; // may render badly on other types
-                    var canRun = userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate;
-
-                    if (canRun) {
+                    if (canBeDisplayed()) {
                         var ctaType = cta.equal;
                         var message = messages.control;
                         var component = $.create(template(contributionsEpicEqualButtons, {

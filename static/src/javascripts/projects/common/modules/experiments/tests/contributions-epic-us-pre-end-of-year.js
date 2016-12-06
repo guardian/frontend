@@ -61,22 +61,24 @@ define([
 
         var messages  = {
             control: {
-                title: 'Since you’re here …',
-                p1: '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
+                title: 'Since you’re here…',
+                p1: '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+                p2: 'If everyone who reads our reporting, who likes it, helps to pay for it our future would be much more secure.'
             },
             bolder: {
-                title: 'Since you’re here …',
-                p1: '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
+                title: 'Take a moment…',
+                p1: '…to support independent journalism. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. We need your support. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+                p2: 'If you read and like our reporting, help us make our future more secure.'
             },
             endOfYear: {
-                title: 'Since you’re here …',
-                p1: '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
+                title: 'As 2016 comes to a close…',
+                p1: '…we would like to ask for your support. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why now is the right time to ask. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+                p2: 'If everyone who reads our reporting – who believes in it – helps to support it, our future would be more secure.'
             }
         };
 
         var cta = {
             equal: {
-                p2: 'If everyone who reads our reporting, who likes it, helps to pay for it, our future would be much more secure.',
                 p3: '',
                 cta1: 'Become a Supporter',
                 cta2: 'Make a contribution',
@@ -122,7 +124,7 @@ define([
                         linkUrl2: ctaType.url2 + '_control',
                         title: message.title,
                         p1: message.p1,
-                        p2:ctaType.p2,
+                        p2: message.p2,
                         p3: ctaType.p3,
                         cta1: ctaType.cta1,
                         cta2: ctaType.cta2,
@@ -148,7 +150,7 @@ define([
                         linkUrl2: ctaType.url2 + '_bolder',
                         title: message.title,
                         p1: message.p1,
-                        p2:ctaType.p2,
+                        p2: message.p2,
                         p3: ctaType.p3,
                         cta1: ctaType.cta1,
                         cta2: ctaType.cta2,
@@ -174,7 +176,7 @@ define([
                         linkUrl2: ctaType.url2 + '_end_of_year',
                         title: message.title,
                         p1: message.p1,
-                        p2:ctaType.p2,
+                        p2: message.p2,
                         p3: ctaType.p3,
                         cta1: ctaType.cta1,
                         cta2: ctaType.cta2,
