@@ -85,7 +85,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     log.info(s"Serving Path: $path")
     if (shouldEditionRedirect(path))
       redirectTo(Editionalise(path, Edition(request)))
-    else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
+    else if (!ConfigAgent.shouldServeFront(path, request.isEmail) || request.getQueryString("page").isDefined)
       applicationsRedirect(path)
     else
       renderFrontPressResult(path)
