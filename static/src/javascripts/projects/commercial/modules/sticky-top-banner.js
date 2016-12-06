@@ -1,5 +1,6 @@
 define([
     'Promise',
+    'common/utils/add-event-listener',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/closest',
@@ -8,6 +9,7 @@ define([
     'commercial/modules/messenger'
 ], function (
     Promise,
+    addEventListener,
     config,
     detect,
     closest,
@@ -64,7 +66,7 @@ define([
     function setupListeners() {
         messenger.register('resize', onResize);
         if (!config.page.hasSuperStickyBanner) {
-            win.addEventListener('scroll', onScroll);
+            addEventListener(win, 'scroll', onScroll, { passive: true });
         }
         return trackAdRender(topSlotId).then(onTopAdRendered);
     }

@@ -5,8 +5,10 @@ define([
     'common/utils/mediator',
     'common/utils/robust',
     'common/utils/user-timing',
+    'common/modules/experiments/ab',
     'commercial/modules/article-aside-adverts',
     'commercial/modules/article-body-adverts',
+    'commercial/modules/article-body-adverts-wide',
     'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/prepare-googletag',
     'commercial/modules/dfp/prepare-sonobi-tag',
@@ -33,8 +35,10 @@ define([
     mediator,
     robust,
     userTiming,
+    ab,
     articleAsideAdverts,
     articleBodyAdverts,
+    articleBodyAdvertsWide,
     closeDisabledSlots,
     prepareGoogletag,
     prepareSonobiTag,
@@ -60,7 +64,7 @@ define([
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init],
         ['cm-prepare-googletag', prepareGoogletag.init, prepareGoogletag.customTiming],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
-        ['cm-articleBodyAdverts', articleBodyAdverts.init],
+        ['cm-articleBodyAdverts', isItRainingAds() ? articleBodyAdvertsWide.init : articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-galleryAdverts', galleryAdverts.init],
         ['cm-liveblogAdverts', liveblogAdverts.init],
@@ -128,6 +132,11 @@ define([
                performanceLogging.addEndTimeBaseline(baseline);
                return moduleLoadResult;
            });
+    }
+
+    function isItRainingAds() {
+        var testName = 'ItsRainingInlineAds';
+        return ab.testCanBeRun(testName) && ['geo', 'nogeo'].indexOf(ab.getTestVariantId(testName)) > -1;
     }
 
     return {
