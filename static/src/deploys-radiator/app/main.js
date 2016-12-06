@@ -37,33 +37,26 @@ const run = () => {
     const unifiedWhitelist = List([
         'all'
     ]);
-    const filterServerWhitelisted = (deploys) => deploys
-        .filter(deploy => serverWhitelist.contains(deploy.projectName))
+    const filterWhiteListed = (whitelist) => (deploys) => deploys
+        .filter(deploy => whitelist.contains(deploy.projectName))
         .toList();
-    const filterUnifiedWhitelisted = (deploys) => deploys
-        .filter(deploy => unifiedWhitelist.contains(deploy.projectName))
-        .toList();
+    const filterServer = filterWhiteListed(serverWhitelist);
+    const filterUnified = filterWhiteListed(unifiedWhitelist);
+    const timeOfMostRecent = (deploys) => getMostRecentDeploys(deploys).last().time.getTime();
     const mostRecentOf = (serverDeploys, unifiedDeploys) => {
         if (serverDeploys.isEmpty()) return unifiedDeploys;
         if (unifiedDeploys.isEmpty()) return serverDeploys;
-        const serverTime = serverDeploys.sort((a, b) => a.time.getTime() - b.time.getTime()).last().time.getTime();
-        const unifiedTime = unifiedDeploys.sort((a, b) => a.time.getTime() - b.time.getTime()).last().time.getTime();
-        if (serverTime > unifiedTime)
-            return serverDeploys;
-        else
-            return unifiedDeploys;
+        const serverTime = timeOfMostRecent(serverDeploys);
+        const unifiedTime = timeOfMostRecent(unifiedDeploys);
+        return (serverTime > unifiedTime) ? serverDeploys : unifiedDeploys;
     };
     const deploysPromise = Promise.all([
         getDeploys('CODE'),
         getDeploys('PROD')
     ]);
     const filteredDeploysPromise = deploysPromise.then(([codeDeploys, prodDeploys]) => {
-        const serverCodeDeploys = filterServerWhitelisted(codeDeploys);
-        const serverProdDeploys = filterServerWhitelisted(prodDeploys);
-        const unifiedCodeDeploys = filterUnifiedWhitelisted(codeDeploys);
-        const unifiedProdDeploys = filterUnifiedWhitelisted(prodDeploys);
-        const currentCodeDeploys = mostRecentOf(serverCodeDeploys, unifiedCodeDeploys);
-        const currentProdDeploys = mostRecentOf(serverProdDeploys, unifiedProdDeploys);
+        const currentCodeDeploys = mostRecentOf(filterServer(codeDeploys), filterUnified(codeDeploys));
+        const currentProdDeploys = mostRecentOf(filterServer(prodDeploys), filterUnified(prodDeploys));
         return [currentCodeDeploys, currentProdDeploys];
     });
     const latestDeploysPromise = filteredDeploysPromise.then(([codeDeploys, prodDeploys]) => {
