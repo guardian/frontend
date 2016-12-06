@@ -12,7 +12,8 @@ define([
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/ajax',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'common/utils/element-inview'
 
 ], function (bean,
              qwery,
@@ -27,7 +28,8 @@ define([
              config,
              cookies,
              ajax,
-             commercialFeatures) {
+             commercialFeatures,
+             ElementInview) {
 
     // We want to ensure the test always runs as this enables an easy data lake query to see whether a reader is in the
     // test segment: check whether the ab_tests field contains a test with name ContributionsEpicAlwaysAskStrategy.
@@ -40,7 +42,7 @@ define([
         this.author = 'Guy Dawson';
         this.description = 'Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period.';
         this.showForSensitive = true;
-        this.audience = 0.05;
+        this.audience = 0.02;
         this.audienceOffset = 0.85;
         this.successMeasure = 'We are able to measure the positive and negative effects of this strategy.';
         this.audienceCriteria = 'All';
@@ -53,6 +55,8 @@ define([
         var contributeUrlPrefix = 'co_global_epic_always_ask_strategy';
         var membershipUrlPrefix = 'gdnwb_copts_mem_epic_always_ask_strategy';
 
+        var epicViewedEvent = 'ContributionsEpicAlwaysAskStrategy:view';
+
 
         var makeUrl = function(urlPrefix, intcmp) {
             return urlPrefix + 'INTCMP=' + intcmp;
@@ -62,7 +66,7 @@ define([
         var contributeUrl = 'https://contribute.theguardian.com/?';
 
         var messages  = {
-            control: {
+            alwaysAsk: {
                 title: 'Since you’re here …',
                 p1: '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.'
             }
@@ -85,13 +89,19 @@ define([
                 var submetaElement = $('.submeta');
                 if (submetaElement.length > 0) {
                     component.insertBefore(submetaElement);
-                    mediator.emit('contributions-embed:insert', component);
+                    $('.contributions__epic').each(function (element) {
+                        // top offset of 18 ensures view only counts when half of element is on screen
+                        var elementInview = ElementInview(element, window, {top: 18});
+                        elementInview.on('firstview', function () {
+                            mediator.emit(epicViewedEvent);
+                        });
+                    });
                 }
             });
         };
 
         var completer = function (complete) {
-            mediator.on('contributions-embed:view', complete);
+            mediator.on(epicViewedEvent, complete);
         };
 
         var canBeDisplayed = function() {
@@ -108,16 +118,23 @@ define([
             {
                 id: 'control',
 
+                test: function() {},
+
+                success: completer
+            },
+            {
+                id: 'alwaysAsk',
+
                 test: function () {
                     if (canBeDisplayed()) {
                         var ctaType = cta.equal;
-                        var message = messages.control;
+                        var message = messages.alwaysAsk;
                         var component = $.create(template(contributionsEpicEqualButtons, {
-                            linkUrl1: ctaType.url1 + '_control',
-                            linkUrl2: ctaType.url2 + '_control',
+                            linkUrl1: ctaType.url1 + '_always_ask',
+                            linkUrl2: ctaType.url2 + '_always_ask',
                             title: message.title,
                             p1: message.p1,
-                            p2:ctaType.p2,
+                            p2: ctaType.p2,
                             p3: ctaType.p3,
                             cta1: ctaType.cta1,
                             cta2: ctaType.cta2,

@@ -12,7 +12,8 @@ define([
     'common/utils/config',
     'common/utils/cookies',
     'common/utils/ajax',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'common/utils/element-inview'
 
 ], function (bean,
              qwery,
@@ -27,7 +28,8 @@ define([
              config,
              cookies,
              ajax,
-             commercialFeatures) {
+             commercialFeatures,
+             ElementInview) {
 
     return function () {
         this.id = 'ContributionsEpicUsPreEndOfYear';
@@ -50,6 +52,9 @@ define([
 
         var contributeUrlPrefix = 'co_global_epic_us_pre_end_of_year';
         var membershipUrlPrefix = 'gdnwb_copts_mem_epic_us_pre_end_of_year';
+
+        var epicInsertedEvent = 'ContributionsEpicUsPreEndOfYear:insert';
+        var epicViewedEvent = 'ContributionsEpicUsPreEndOfYear:view';
 
 
         var makeUrl = function(urlPrefix, intcmp) {
@@ -101,15 +106,27 @@ define([
                         var submetaElement = $('.submeta');
                         if (submetaElement.length > 0) {
                             component.insertBefore(submetaElement);
-                            mediator.emit('contributions-embed:insert', component);
+                            mediator.emit(epicInsertedEvent, component);
+                            $('.contributions__epic').each(function (element) {
+                                // top offset of 18 ensures view only counts when half of element is on screen
+                                var elementInView = ElementInview(element, window, {top: 18});
+                                elementInView.on('firstview', function () {
+                                    mediator.emit(epicViewedEvent);
+                                });
+
+                            });
                         }
                     });
                 }
             });
         };
 
+        var initializer = function(track) {
+            mediator.on(epicInsertedEvent, track);
+        };
+
         var completer = function (complete) {
-            mediator.on('contributions-embed:view', complete);
+            mediator.on(epicViewedEvent, complete);
         };
 
         this.variants = [
@@ -133,9 +150,7 @@ define([
                     componentWriter(component);
                 },
 
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
+                impression: initializer,
 
                 success: completer
             },
@@ -159,9 +174,7 @@ define([
                     componentWriter(component);
                 },
 
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
+                impression: initializer,
 
                 success: completer
             },
@@ -185,9 +198,7 @@ define([
                     componentWriter(component);
                 },
 
-                impression: function(track) {
-                    mediator.on('contributions-embed:insert', track);
-                },
+                impression: initializer,
 
                 success: completer
             }
