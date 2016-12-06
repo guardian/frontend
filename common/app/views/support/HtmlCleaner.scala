@@ -1,7 +1,7 @@
 package views.support
 
 import java.text.Normalizer
-import java.net.URI
+import java.net.{URI, URLEncoder}
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
@@ -157,7 +157,8 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
 
   def findContainerFromId(id: String, src: String): Option[ImageElement] = {
     // It is possible that a single data media id can appear multiple times in the elements array.
-    val srcImagePath = new URI(src).getPath()
+    val encodedSrc = URLEncoder.encode(src, "UTF-8")
+    val srcImagePath = new URI(encodedSrc).getPath()
     val imageContainers = article.elements.bodyImages.filter(_.properties.id == id)
 
     // Try to match the container based on both URL and media ID.

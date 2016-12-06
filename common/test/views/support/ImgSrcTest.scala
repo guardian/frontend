@@ -109,6 +109,12 @@ class ImgSrcTest extends FlatSpec with Matchers with OneAppPerSuite {
     Item700.bestFor(gifImage) should be (Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif"))
   }
 
+  it should "not convert the URL of the image if it is an SVG" in {
+    ImageServerSwitch.switchOn()
+    val svgImage = ImageMedia.apply(Seq(ImageAsset.make(asset.copy(file = Some("https://static.guim.co.uk/ni/1399891635186/Conle-Buildings_1205.svg")),0)))
+    Item700.bestFor(svgImage) should be (Some("https://static.guim.co.uk/ni/1399891635186/Conle-Buildings_1205.svg"))
+  }
+
   it should "not convert the URL of the image if it is not one of ours" in {
     ImageServerSwitch.switchOn()
     val someoneElsesImage = ImageMedia(Seq(ImageAsset.make(asset.copy(file = Some("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")),0)))
