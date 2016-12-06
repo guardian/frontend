@@ -34,14 +34,39 @@ const run = () => {
         'rss',
         'sport'
     ]);
-    const filterWhitelisted = (deploys) => deploys
+    const unifiedWhitelist = List([
+        'all'
+    ]);
+    const filterServerWhitelisted = (deploys) => deploys
         .filter(deploy => serverWhitelist.contains(deploy.projectName))
         .toList();
+    const filterUnifiedWhitelisted = (deploys) => deploys
+        .filter(deploy => unifiedWhitelist.contains(deploy.projectName))
+        .toList();
+    const mostRecentOf = (serverDeploys, unifiedDeploys) => {
+        if (serverDeploys.isEmpty()) return unifiedDeploys;
+        if (unifiedDeploys.isEmpty()) return serverDeploys;
+        const serverTime = serverDeploys.sort((a, b) => a.time.getTime() - b.time.getTime()).last().time.getTime();
+        const unifiedTime = unifiedDeploys.sort((a, b) => a.time.getTime() - b.time.getTime()).last().time.getTime();
+        if (serverTime > unifiedTime)
+            return serverDeploys;
+        else
+            return unifiedDeploys;
+    };
     const deploysPromise = Promise.all([
-        getDeploys('CODE').then(filterWhitelisted),
-        getDeploys('PROD').then(filterWhitelisted)
+        getDeploys('CODE'),
+        getDeploys('PROD')
     ]);
-    const latestDeploysPromise = deploysPromise.then(([codeDeploys, prodDeploys]) => {
+    const filteredDeploysPromise = deploysPromise.then(([codeDeploys, prodDeploys]) => {
+        const serverCodeDeploys = filterServerWhitelisted(codeDeploys);
+        const serverProdDeploys = filterServerWhitelisted(prodDeploys);
+        const unifiedCodeDeploys = filterUnifiedWhitelisted(codeDeploys);
+        const unifiedProdDeploys = filterUnifiedWhitelisted(prodDeploys);
+        const currentCodeDeploys = mostRecentOf(serverCodeDeploys, unifiedCodeDeploys);
+        const currentProdDeploys = mostRecentOf(serverProdDeploys, unifiedProdDeploys);
+        return [currentCodeDeploys, currentProdDeploys];
+    });
+    const latestDeploysPromise = filteredDeploysPromise.then(([codeDeploys, prodDeploys]) => {
         const currentCodeDeploys = getMostRecentDeploys(codeDeploys);
         const currentProdDeploys = getMostRecentDeploys(prodDeploys);
         const latestCodeDeploy = currentCodeDeploys
@@ -57,7 +82,7 @@ const run = () => {
         getBuild(oldestProdDeploy.build)
     ])));
     const differencePromise = buildsPromise.then(([codeBuild, prodBuild]) => (getDifference(prodBuild.revision, codeBuild.revision).then(gitHubCommits => gitHubCommits.reverse().toList())));
-    return Promise.all([deploysPromise, latestDeploysPromise, differencePromise])
+    return Promise.all([filteredDeploysPromise, latestDeploysPromise, differencePromise])
         .then(([deploysPair, deployPair, commits]) => renderPage(deploysPair, deployPair, commits))
         .then(updateDom);
 };
