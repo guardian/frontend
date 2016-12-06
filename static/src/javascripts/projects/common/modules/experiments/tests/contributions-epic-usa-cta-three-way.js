@@ -35,7 +35,7 @@ define([
 
         this.id = 'ContributionsEpicUsaCtaThreeWay';
         this.start = '2016-11-18';
-        this.expiry = '2016-12-06';
+        this.expiry = '2016-12-20';
         this.author = 'Phil Wills';
         this.description = 'Test just contributions vs contributions or membership or just membership in the US';
         this.showForSensitive = false;
@@ -55,7 +55,7 @@ define([
                 'us-news/series/diy-abortion-in-america'
             ];
 
-            var excludedKeywordIds = ['music/leonard-cohen'];
+            var excludedKeywordIds = ['music/leonard-cohen', 'politics/eu-referendum'];
 
             var hasKeywordsMatch = function() {
                 var pageKeywords = config.page.keywordIds;

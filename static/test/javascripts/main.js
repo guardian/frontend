@@ -26,7 +26,6 @@ requirejs.config({
         picturefill:  'projects/common/utils/picturefill',
         Promise:      'components/when/Promise',
         qwery:        'components/qwery/qwery',
-        raven:        'components/raven-js/raven',
         reqwest:      'components/reqwest/reqwest',
         analytics:    'projects/common/modules/analytics/analytics',
         // Test specific paths
@@ -37,7 +36,10 @@ requirejs.config({
         svgs:         '../inline-svgs',
         // plugins
         text:         'components/requirejs-text/text',
-        inlineSvg:    'projects/common/utils/inlineSvg'
+        inlineSvg:    'projects/common/utils/inlineSvg',
+        // raven
+        raven:        'components/raven-js/raven',
+        'common/utils/raven':        '/base/static/test/javascripts/fixtures/raven'
     },
     shim: {
         googletag: {

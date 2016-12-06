@@ -42,14 +42,17 @@
                 @page.video.youtubeId.map { youtubeId =>
                     <amp-youtube
                     data-videoid="@youtubeId"
+                    data-param-modestbranding="1"
+                    data-param-showinfo="0"
+                    data-param-rel="0"
                     layout="responsive"
                     width="480" height="270">
                     </amp-youtube>
                 }.getOrElse {
                     <amp-video
                     controls
-                    width="5"
-                    height="3"
+                    width="16"
+                    height="9"
                     layout="responsive"
                     poster="@{page.video.posterUrl}"
                     >

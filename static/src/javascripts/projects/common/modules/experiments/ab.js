@@ -10,8 +10,11 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
     'common/modules/experiments/tests/contributions-epic-usa-cta-three-way',
+    'common/modules/experiments/tests/contributions-epic-observer-anniversary',
+    'common/modules/experiments/tests/contributions-epic-brexit-supreme',
     'common/modules/experiments/tests/uk-membership-engagement-message-test-10',
-    'common/modules/experiments/tests/au-membership-engagement-message-test-8'
+    'common/modules/experiments/tests/au-membership-engagement-message-test-8',
+    'common/modules/experiments/tests/its-raining-inline-ads'
 ], function (reportError,
              config,
              cookies,
@@ -23,15 +26,21 @@ define([
              RecommendedForYou,
              MembershipEngagementInternationalExperiment,
              ContributionsEpicUsaCtaThreeWay,
+             ContributionsEpicObserverAnniversary,
+             ContributionsEpicBrexitSupreme,
              UkMembershipEngagementMessageTest10,
-             AuMembershipEngagementMessageTest8
+             AuMembershipEngagementMessageTest8,
+             ItsRainingInlineAds
     ) {
     var TESTS = [
         new RecommendedForYou(),
         new MembershipEngagementInternationalExperiment(),
         new ContributionsEpicUsaCtaThreeWay(),
+        new ContributionsEpicObserverAnniversary(),
+        new ContributionsEpicBrexitSupreme(),
         new UkMembershipEngagementMessageTest10(),
-        new AuMembershipEngagementMessageTest8()
+        new AuMembershipEngagementMessageTest8(),
+        new ItsRainingInlineAds()
     ];
 
     var participationsKey = 'gu.ab.participations';

@@ -1,7 +1,7 @@
-@()
+@()(implicit env: play.api.Environment)
 @import conf.Static
 @import conf.switches.Switches._
-
+@import play.api.Mode.Dev
 /*eslint quotes: [2, "single"], curly: [2, "multi-line"], strict: 0*/
 /*eslint-env browser*/
 /*global self*/
@@ -41,7 +41,7 @@ var isRequestForAsset = (function () {
     var assetPathRegex = new RegExp('^@Configuration.assets.path');
     return function (request) {
         var url = new URL(request.url);
-        @if(play.Play.isDev()) {
+        @if(env.mode == Dev) {
             return assetPathRegex.test(url.pathname);
         } else {
             return assetPathRegex.test(url.href);
