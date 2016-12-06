@@ -18,13 +18,13 @@ define([
     once
 ) {
 
-    var promise = isItRainingAds() ?
+    var promise = shouldRemoveGeoMostPop() ?
+        Promise.resolve() :
         new Promise(function (resolve, reject) {
             mediator.on('modules:onward:geo-most-popular:ready', resolve);
             mediator.on('modules:onward:geo-most-popular:cancel', resolve);
             mediator.on('modules:onward:geo-most-popular:error', reject);
-        }) :
-        Promise.resolve();
+        });
 
     function GeoMostPopular() {
         mediator.emit('register:begin', 'geo-most-popular');
@@ -44,9 +44,9 @@ define([
     };
 
 
-    function isItRainingAds() {
+    function shouldRemoveGeoMostPop() {
         var testName = 'ItsRainingInlineAds';
-        return ab.testCanBeRun(testName) && ['control', 'geo'].indexOf(ab.getTestVariantId(testName)) > -1;
+        return ab.testCanBeRun(testName) && ['nogeo', 'none'].indexOf(ab.getTestVariantId(testName)) > -1;
     }
 
     return {
