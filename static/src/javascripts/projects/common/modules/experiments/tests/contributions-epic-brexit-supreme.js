@@ -53,11 +53,14 @@ define([
 
             var excludedKeywordIds = [];
 
+            var excludedSeriesIds = ['theobserver/series/the-observer-at-225'];
+
             var tagsMatch = function() {
                 var pageKeywords = config.page.keywordIds;
                 if (typeof(pageKeywords) !== 'undefined') {
                     var keywordList = pageKeywords.split(',');
                     return intersection(excludedKeywordIds, keywordList).length == 0 &&
+                        excludedSeriesIds.indexOf(config.page.seriesId) === -1 &&
                         (intersection(includedKeywordIds, keywordList).length > 0 || includedSeriesIds.indexOf(config.page.seriesId) !== -1);
                 } else {
                     return false;
@@ -89,7 +92,7 @@ define([
 
         var cta = {
             equal: {
-                p2: 'If everyone who reads our reporting, who likes it, helps to pay for it, our future would be much more secure. You can give money to the Guardian in less than a minute.',
+                p2: 'If everyone who reads our reporting, who likes it, helps to pay for it, our future would be much more secure.',
                 p3: '',
                 cta1: 'Become a Supporter',
                 cta2: 'Make a contribution',

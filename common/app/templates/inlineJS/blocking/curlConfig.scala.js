@@ -2,6 +2,7 @@
 @import conf.Static
 @import conf.Configuration
 @import mvt.WebpackTest
+@import conf.Configuration.environment
 
 window.curlConfig = {
     baseUrl: '@{Configuration.assets.path}javascripts',
@@ -59,7 +60,7 @@ window.curlConfig = {
             }
             'foresee.js':                       'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                     '@{Configuration.javascript.config("googletagJsUrl")}',
-            'sonobi.js':                        '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
+            'sonobi.js':                        '@{ if(!environment.isCode) Configuration.javascript.config("sonobiHeaderBiddingJsUrl") else "//mtrx.go.sonobi.com/morpheus.theguardian.12911_us_.js"}',
             react:                              '@Static("javascripts/vendor/react/react.js")',
             'discussion-frontend-react':        '@DiscussionAsset("discussion-frontend.react.amd")',
             'discussion-frontend-preact':       '@DiscussionAsset("discussion-frontend.preact.amd")',
@@ -90,7 +91,7 @@ window.curlConfig = {
             reqwest:                        'components/reqwest/reqwest',
             'foresee.js':                   'vendor/foresee/20150703/foresee-trigger.js',
             'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
-            'sonobi.js':                    '@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}',
+            'sonobi.js':                    '@{ if(!environment.isCode) Configuration.javascript.config("sonobiHeaderBiddingJsUrl") else "//mtrx.go.sonobi.com/morpheus.theguardian.12911_us_.js"}',
             'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',
             'discussion-frontend-react':    '@DiscussionAsset("discussion-frontend.react.amd")',
             'discussion-frontend-preact':   '@DiscussionAsset("discussion-frontend.preact.amd")',

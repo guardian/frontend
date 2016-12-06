@@ -111,7 +111,8 @@ object ActiveTests extends ServerSideABTests {
     ABNewNavVariantFive,
     ABNewNavControl,
     CommercialClientLoggingVariant,
-    WebpackTest
+    WebpackTest,
+    WebpackControl
   )
 }
 
