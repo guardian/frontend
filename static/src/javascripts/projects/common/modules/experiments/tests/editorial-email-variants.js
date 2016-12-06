@@ -37,15 +37,9 @@ define([
           });
         }
 
-        // loads the correct iframe if we can...
         function enhanceWebView(emailListID) {
-          var insertionPoint = $('.js-email-sub__iframe')[0];
-          $(insertionPoint).addClass('is-hidden');
-          var emailForm = $.create(
-                '<iframe src="/email/form/plaintone/' + emailListID +
-                '" height="60px" width="100%" scrolling="no" frameborder="0" seamless' + 'class="iframed--overflow-hidden js-email-sub__iframe js-email-sub__iframe--article">' + '</iframe>'
-              );
-          $(emailForm).insertAfter(insertionPoint);
+          var emailForm = $('.js-email-sub__iframe')[0];
+          emailForm.setAttribute('src', 'https://www.theguardian.com/email/form/plaintone/' + emailListID);
         }
 
         this.variants = [
