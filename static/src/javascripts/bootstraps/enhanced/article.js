@@ -48,6 +48,8 @@ define([
             // only render when we have >1000px or more (enough space for ad + most popular)
             if (mainColumn[0] && mainColumn[0].offsetHeight > 1150 && detect.isBreakpoint({ min: 'desktop' })) {
                 geoMostPopular.render();
+            } else {
+                mediator.emit('modules:onward:geo-most-popular:cancel');
             }
         },
 
@@ -62,7 +64,9 @@ define([
     ready = function () {
         trail();
         articleLiveblogCommon();
-        modules.initRightHandComponent();
+        if (isItRainingAds()) {
+            modules.initRightHandComponent();
+        }
         modules.initCmpParam();
         modules.initQuizListeners();
         richLinks.upgradeRichLinks();
@@ -72,6 +76,11 @@ define([
         mediator.emit('page:article:ready');
         quiz.handleCompletion();
     };
+
+    function isItRainingAds() {
+        var testName = 'ItsRainingInlineAds';
+        return ab.testCanBeRun(testName) && ['control', 'geo'].indexOf(ab.getTestVariantId(testName)) > -1;
+    }
 
     return {
         init: ready,
