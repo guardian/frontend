@@ -498,4 +498,15 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2016, 12, 20),
     exposeClientSide = true
   )
+
+  // Owner: Joseph Smith
+  val RenderEmailConnectedStyle = Switch(
+    SwitchGroup.Feature,
+    "render-email-connected-style",
+    "Allows alternate email styling when passing ?format=email-connected",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 20),
+    exposeClientSide = true
+  )
 }
