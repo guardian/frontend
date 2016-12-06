@@ -15,6 +15,7 @@ import play.api.mvc.{Action, Controller, Result}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import play.api.Environment
 
 object emailLandingPage extends StandalonePage {
   private val id = "email-landing-page"
@@ -110,7 +111,7 @@ class EmailFormService(wsClient: WSClient) {
   }
 }
 
-class EmailSignupController(wsClient: WSClient) extends Controller with ExecutionContexts with Logging {
+class EmailSignupController(wsClient: WSClient)(implicit env: Environment) extends Controller with ExecutionContexts with Logging {
   val emailFormService = new EmailFormService(wsClient)
   val emailForm: Form[EmailForm] = Form(
     mapping(
@@ -126,7 +127,7 @@ class EmailSignupController(wsClient: WSClient) extends Controller with Executio
   }
 
   def renderForm(emailType: String, listId: Int) = Action { implicit request =>
-      Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))}
+    Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))}
 
   def subscriptionResult(result: String) = Action { implicit request =>
     Cached(7.days)(result match {

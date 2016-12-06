@@ -48,7 +48,7 @@ aws s3 cp --acl bucket-owner-full-control --region=eu-west-1 --recursive $static
 aws s3api put-object --acl bucket-owner-full-control --region=eu-west-1 --bucket $RIFF_RAFF_BUILD_BUCKET --key dotcom:static/$BUILD_NUMBER/build.json  --body $static_folder/build.json
 
 # upload static files for the build - it is critical that this is done before the main sbt-riffraff-artifact plugin runs
-aws s3 cp --acl bucket-owner-full-control --region=eu-west-1 --recursive $static_folder/packages/frontend-static s3://$RIFF_RAFF_ARTIFACT_BUCKET/dotcom:all/$BUILD_NUMBER/static
+aws s3 cp --acl bucket-owner-full-control --region=eu-west-1 --recursive $static_folder/packages/frontend-static s3://$RIFF_RAFF_ARTIFACT_BUCKET/dotcom:all/$BUILD_NUMBER/frontend-static
 
 set +x
 echo "##teamcity[progressFinish 'asset publish']"

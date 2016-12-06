@@ -1,7 +1,7 @@
-@(env: String, keyValues: Seq[_root_.dfp.GuCustomTargetingKey])(implicit request: RequestHeader)
+@(keyValues: Seq[_root_.dfp.GuCustomTargetingKey])(implicit request: RequestHeader, env: play.api.Environment)
 @import tools.DfpLink
 
-@admin_main("Key Value Targeting", env, isAuthed = true, hasCharts = false) {
+@admin_main("Key Value Targeting", isAuthed = true, hasCharts = false) {
 
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at(" css/commercial.css")">
 

@@ -1,0 +1,27 @@
+@(path: String)(implicit request: RequestHeader)
+@import common.AmpLinkTo
+
+<amp-list src="@AmpLinkTo(path)" width="400" height="148" layout="responsive">
+    <template type="amp-mustache">
+        <div class="hosted-gallery__oj js-hosted-gallery-oj">
+            <div class="hosted-gallery__oj-cta hosted-tone-border">
+                <div class="hosted-gallery__cta-title">{{ctaText}}</div>
+                <a class="hosted-gallery__cta-link hosted-tone-bg" href="{{ctaLink}}" target="_blank" data-link-name="{{buttonText}}">
+                    {{buttonText}} @fragments.inlineSvg("external-link", "icon")
+                </a>
+            </div>
+            {{#trails}}
+                <a href="{{url}}" class="hosted-gallery__oj-next-gallery hosted-tone-border">
+                    <div class="hosted-gallery__next-gallery-title">
+                        <div class="hosted-gallery__oj-sub-header hosted-tone">More</div>
+                        <div class="hosted-gallery__cta-title">{{title}}</div>
+                    </div>
+                    <img class="hosted-gallery__next-gallery-image" src="{{imageUrl}}"/>
+                </a>
+            {{/trails}}
+            <div class="hosted-gallery__oj-close js-hosted-gallery-oj-close">
+                @fragments.inlineSvg("arrow-up", "icon", List("close"))
+            </div>
+        </div>
+    </template>
+</amp-list>

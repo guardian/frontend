@@ -1,12 +1,11 @@
-@(  env: String,
-    pageViewsChart: tools.FormattedChart,
+@(  pageViewsChart: tools.FormattedChart,
     lightboxLaunchesChart: tools.FormattedChart,
     sentryChart: tools.FormattedChart,
     shareChart: tools.FormattedChart,
     title: String,
-    reportTimestamp: Option[String])(implicit request: RequestHeader)
+    reportTimestamp: Option[String])(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Gallery Dashboard", env, isAuthed = true, hasCharts = true) {
+@admin_main("Gallery Dashboard", isAuthed = true, hasCharts = true) {
 
     <h3>@title</h3>
     <hr />

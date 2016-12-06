@@ -1,5 +1,5 @@
 @import model.ArticleSchemas
-@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
+@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import common.LinkTo
 @import views.BodyCleaner

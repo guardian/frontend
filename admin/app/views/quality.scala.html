@@ -1,6 +1,6 @@
-@(env: String, reports: Map[String, String])(implicit request: RequestHeader)
+@(reports: Map[String, String])(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Dashboard", env, isAuthed = true, hasCharts = true) {
+@admin_main("Dashboard", isAuthed = true, hasCharts = true) {
 
     <h1 class="page-header">Quality Dashboard</h1>
     <script src="https://code.highcharts.com/adapters/standalone-framework.js"></script>

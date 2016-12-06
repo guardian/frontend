@@ -10,6 +10,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithTestWsClient
+  with WithTestEnvironment
   with WithTestContentApiClient{
 
   val galleryUrl = "news/gallery/2012/may/02/picture-desk-live-kabul-burma"

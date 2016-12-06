@@ -1,7 +1,7 @@
-@(env: String)(implicit request: RequestHeader)
+@()(implicit request: RequestHeader, env: play.api.Environment)
 @import conf.Configuration.commercial.testDomain
 
-@admin_main("Commercial Tools", env, isAuthed = true) {
+@admin_main("Commercial Tools", isAuthed = true) {
 
     <p><a href="@controllers.admin.routes.AdminIndexController.admin()">Admin</a></p>
 

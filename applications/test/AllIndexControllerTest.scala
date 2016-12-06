@@ -12,7 +12,8 @@ import play.api.test.Helpers._
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithTestWsClient
-  with WithTestContentApiClient {
+  with WithTestContentApiClient
+  with WithTestEnvironment {
 
   private val PermanentRedirect = 301
   private val TemporaryRedirect = 302

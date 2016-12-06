@@ -1,6 +1,6 @@
-@(error: Option[String] = None, env: String)(implicit request: RequestHeader)
+@(error: Option[String] = None)(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Login", env) {
+@admin_main("Login") {
         @if(error.isDefined) {
             <div class="alert alert-error">
                 <p>@error.get</p>

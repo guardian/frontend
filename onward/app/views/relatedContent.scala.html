@@ -1,4 +1,4 @@
-@(page: model.Page, trails: Seq[model.pressed.PressedContent])(implicit request: RequestHeader)
+@(page: model.Page, trails: Seq[model.pressed.PressedContent])(implicit request: RequestHeader, env: play.api.Environment)
 
 @main(page){ }{
     <main itemprop="mainContentOfPage" role="main" class="monocolumn-wrapper content">

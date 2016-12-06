@@ -1,4 +1,4 @@
-@(page: MediaPage, displayCaption: Boolean)(implicit request: RequestHeader)
+@(page: MediaPage, displayCaption: Boolean)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import common.LinkTo
 @import model.{Audio, AudioPlayer, Video, VideoPlayer}

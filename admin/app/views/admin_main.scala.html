@@ -1,8 +1,9 @@
-@(title: String, env: String, isAuthed: Boolean = false, hasCharts: Boolean = false, autoRefresh: Boolean = false, loadJquery: Boolean =  true)(content: Html)(implicit request: RequestHeader)
+@(title: String, isAuthed: Boolean = false, hasCharts: Boolean = false, autoRefresh: Boolean = false, loadJquery: Boolean =  true)(content: Html)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import controllers.admin.routes.UncachedAssets
 @import controllers.admin.routes.UncachedWebAssets
 @import templates.inlineJS.blocking.js._
+@import play.api.Mode.Dev
 
 <!DOCTYPE html>
 
@@ -15,7 +16,7 @@
             <meta http-equiv="refresh" content="60">
         }
 
-        @if(Play.isDev){
+        @if(env.mode == Dev){
             <link rel="shortcut icon" type="image/png" href="@UncachedAssets.at("images/favicon-dev.ico")" />
         } else {
             <link rel="shortcut icon" type="image/png" href="@UncachedAssets.at("images/favicon.ico")" />
@@ -55,7 +56,7 @@
                     <div class="navbar-header">
                         <a class="navbar-brand" href="/admin">Home</a>
                     </div>
-                    <p class="navbar-text label label-warning">Environment: @env.toLowerCase</p>
+                    <p class="navbar-text label label-warning">Environment: @env.mode.toString.toLowerCase</p>
                     @if(isAuthed){
                         <ul class="nav navbar-nav navbar-right">
                             <li>

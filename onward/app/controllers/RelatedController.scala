@@ -6,6 +6,7 @@ import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model.Cached.RevalidatableResult
 import model._
+import play.api.Environment
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller, RequestHeader}
 import services._
@@ -13,7 +14,7 @@ import views.support.FaciaToMicroFormat2Helpers.isCuratedContent
 
 import scala.concurrent.duration._
 
-class RelatedController(val contentApiClient: ContentApiClient, val mostReadAgent: MostReadAgent) extends Controller with Related with Containers with Logging with ExecutionContexts {
+class RelatedController(val contentApiClient: ContentApiClient, val mostReadAgent: MostReadAgent)(implicit env: Environment) extends Controller with Related with Containers with Logging with ExecutionContexts {
 
   private val page = SimplePage(MetaData.make(
     "related-content",

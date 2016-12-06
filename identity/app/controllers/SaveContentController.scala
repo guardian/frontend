@@ -7,11 +7,11 @@ import com.gu.identity.model.SavedArticles
 import model._
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
-
 import common.ExecutionContexts
 import idapiclient.IdApiClient
 import implicits.Articles._
 import org.jsoup.nodes.Document
+import play.api.Environment
 import play.api.data.{Form, Forms}
 import play.api.mvc._
 import services._
@@ -29,6 +29,7 @@ class SaveContentController(api: IdApiClient,
                             savedArticleService: PlaySavedArticlesService,
                             idUrlBuilder: IdentityUrlBuilder,
                             pageDataBuilder: SaveForLaterDataBuilder)
+                           (implicit env: Environment)
   extends Controller with ExecutionContexts with SafeLogging {
 
   import SavedArticleData._

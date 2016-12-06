@@ -82,6 +82,17 @@ object WebpackTest extends TestDefinition(
   }
 }
 
+object WebpackControl extends TestDefinition(
+  name = "ab-webpack-control",
+  description = "control for Webpack test",
+  owners = Seq(Owner.withGithub("siadcock")),
+  sellByDate = new LocalDate(2017, 1, 9)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-webpack").contains("control")
+  }
+}
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -100,7 +111,8 @@ object ActiveTests extends ServerSideABTests {
     ABNewNavVariantFive,
     ABNewNavControl,
     CommercialClientLoggingVariant,
-    WebpackTest
+    WebpackTest,
+    WebpackControl
   )
 }
 

@@ -48,11 +48,24 @@ define([
         });
     }
 
+    // Track important user timing metrics so that we can be notified and measure over time in GA
+    // https://developers.google.com/analytics/devguides/collection/analyticsjs/user-timings
+    // Tracks into Behaviour > Site Speed > User Timings in GA
+    function trackPerformance(timingCategory, timingVar, timingLabel) {
+        // Feature detect Navigation Timing API support.
+        if (window.performance) {
+            // Value must be an integer - grabs the number of milliseconds since page load
+            var timeSincePageLoad = Math.round(window.performance.now());
+            ga(send, 'timing', timingCategory, timingVar, timeSincePageLoad, timingLabel);
+        }
+    }
+
     return {
         trackNonClickInteraction: trackNonClickInteraction,
         trackSamePageLinkClick: trackSamePageLinkClick,
         trackExternalLinkClick: trackExternalLinkClick,
         trackSponsorLogoLinkClick: trackSponsorLogoLinkClick,
-        trackNativeAdLinkClick: trackNativeAdLinkClick
+        trackNativeAdLinkClick: trackNativeAdLinkClick,
+        trackPerformance: trackPerformance
     };
 });

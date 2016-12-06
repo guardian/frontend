@@ -16,6 +16,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
   with MockitoSugar
   with BeforeAndAfterAll
   with WithTestWsClient
+  with WithTestEnvironment
   with WithTestContentApiClient {
 
   private val PermanentRedirect = 301

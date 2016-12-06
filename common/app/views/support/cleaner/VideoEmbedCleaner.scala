@@ -40,6 +40,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
     document.getElementsByClass("element-video").foreach { figure: Element =>
       val canonicalUrl = figure.attr("data-canonical-url")
+      val figcaption = figure.getElementsByTag("figcaption")
 
       figure.attr("data-component", "video-inbody-embed")
       figure.getElementsByClass("gu-video").foreach { element: Element =>
@@ -51,6 +52,11 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
 
         if (! canonicalUrl.isEmpty) {
           element.attr("data-canonical-url", new URL(canonicalUrl).getPath.stripPrefix("/"))
+        }
+
+        if (figcaption.nonEmpty) {
+            val informationIcon = views.html.fragments.inlineSvg("information", "icon", List("centered-icon", "rounded-icon")).toString()
+            figcaption.prepend(informationIcon)
         }
 
         val mediaId = element.attr("data-media-id")

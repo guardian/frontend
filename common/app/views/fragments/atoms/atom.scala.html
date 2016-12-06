@@ -1,4 +1,4 @@
-@(model: _root_.model.content.Atom, shouldFence: Boolean, amp: Boolean)(implicit request: RequestHeader)
+@(model: _root_.model.content.Atom, shouldFence: Boolean, amp: Boolean)(implicit request: RequestHeader, env: play.api.Environment)
 @import _root_.model.ShareLinkMeta
 @import _root_.model.content.{InteractiveAtom, MediaAtom, Quiz}
 

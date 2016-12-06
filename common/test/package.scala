@@ -115,6 +115,7 @@ object TestRequest {
 
 trait WithTestEnvironment {
   val testEnvironment: Environment = Environment.simple()
+  implicit val env = testEnvironment
 }
 
 trait WithTestWsClient {

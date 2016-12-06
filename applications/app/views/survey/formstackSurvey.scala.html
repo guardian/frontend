@@ -1,7 +1,7 @@
 @import model.Page
 @import conf.Configuration.Survey.formStackAccountName
 
-@(formName: String, surveyPage: Page)(implicit request: RequestHeader)
+@(formName: String, surveyPage: Page)(implicit request: RequestHeader, env: play.api.Environment)
 
     @surveyMain(surveyPage){
         <div class="l-side-margins">
