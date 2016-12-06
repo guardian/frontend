@@ -13,10 +13,10 @@ define([
      * @param test      an A/B test object (with an 'id' property)
      * @return {Array}  campaigns associated with this test
      */
-    function campaignsFor(test) {
+    function campaignsFor(id) {
         try {
             return config.page.campaigns.filter(function (campaign) {
-                return campaign.fields && clean(campaign.fields.campaignId) === clean(test.id);
+                return campaign.fields && clean(campaign.fields.campaignId) === clean(id);
             });
         } catch (e) {
             return [];
@@ -30,7 +30,7 @@ define([
      * @return {Boolean}
      */
     function isAbTestTargeted(test) {
-        return campaignsFor(test).length > 0;
+        return campaignsFor(test.id).length > 0;
     }
 
     return {
