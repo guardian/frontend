@@ -66,6 +66,7 @@ define([
                 id: 'card',
                 test: function () {
                     var emailListID = 3743;
+                    updateSignupForm(emailListID);
                     enhanceWebView(emailListID);
                 }
             },
@@ -73,6 +74,7 @@ define([
                 id: 'connected',
                 test: function () {
                     var emailListID = 3744;
+                    updateSignupForm(emailListID);
                     enhanceWebView(emailListID);
                 }
             }
