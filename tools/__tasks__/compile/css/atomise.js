@@ -88,6 +88,6 @@ module.exports = {
 
             // save it
             .then(atomisedCSS => pMkdirp(atomisedTarget)
-                .then(() => pFs.writeFile(`${atomisedTarget}/atomic.css`, atomisedCSS.css, 'utf8'))
+                .then(() => pFs.writeFile(`${atomisedTaret}/atomic.css`, atomisedCSS.css, 'utf8'))
             )
 };
