@@ -100,7 +100,7 @@ define([
             slots.forEach(function (slot, index) {
                 containers[index].parentNode.insertBefore(slot, containers[index].nextSibling);
             });
-            return slots.map(function (_) { return _.firstChild });
+            return slots.map(function (_) { return _.firstChild; });
         });
     }
 
@@ -143,7 +143,7 @@ define([
                 item.slice.classList.remove('fc-slice__item--no-mpu');
                 item.slice.appendChild(item.slot);
             });
-            return slots.map(function (_) { return _.slot });
+            return slots.map(function (_) { return _.slot; });
         });
     }
 
