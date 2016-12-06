@@ -27,7 +27,7 @@ define([
         this.idealOutcome = 'Similar quantity of users in each list in ExactTarget';
 
         this.canRun = function () {
-            return (config.page.webTitle.toLowerCase() === 'sign up for weekend reading');
+            return (config.page.webTitle.toLowerCase() === 'sign up for the flyer');
         };
 
         function updateExampleUrl(exampleUrl) {
