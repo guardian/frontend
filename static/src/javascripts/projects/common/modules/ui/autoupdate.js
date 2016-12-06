@@ -21,7 +21,7 @@ define([
     'lodash/functions/bindAll',
     'common/modules/ui/relativedates',
     'common/modules/ui/notification-counter',
-    'bootstraps/enhanced/youtube'
+    'common/modules/video/youtube'
 ], function (
     fastdom,
     bean,
