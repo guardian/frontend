@@ -37,12 +37,7 @@
             </nav>
         </div>
 
-        <div class="@RenderClasses(Map(
-            "tertiary-container" -> true,
-            "tertiary__variant-three" -> mvt.ABNewNavVariantThree.isParticipating,
-            "tertiary__variant-four" -> mvt.ABNewNavVariantFour.isParticipating,
-            "tertiary__variant-five" -> mvt.ABNewNavVariantFive.isParticipating
-        ))">
+        <div class="tertiary-container">
             <ul class="tertiary-navigation">
 
                 @if(page.metadata.isFront) {
