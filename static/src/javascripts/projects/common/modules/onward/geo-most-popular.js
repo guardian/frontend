@@ -7,6 +7,7 @@ define([
     'qwery',
     'common/modules/component',
     'common/modules/experiments/ab',
+    'common/utils/config',
     'common/utils/mediator',
     'lodash/functions/once'
 ], function (
@@ -14,17 +15,18 @@ define([
     qwery,
     Component,
     ab,
+    config,
     mediator,
     once
 ) {
 
-    var promise = isItRainingAds() ?
+    var promise = shouldRemoveGeoMostPop() ?
+        Promise.resolve() :
         new Promise(function (resolve, reject) {
             mediator.on('modules:onward:geo-most-popular:ready', resolve);
             mediator.on('modules:onward:geo-most-popular:cancel', resolve);
             mediator.on('modules:onward:geo-most-popular:error', reject);
-        }) :
-        Promise.resolve();
+        });
 
     function GeoMostPopular() {
         mediator.emit('register:begin', 'geo-most-popular');
@@ -44,9 +46,9 @@ define([
     };
 
 
-    function isItRainingAds() {
+    function shouldRemoveGeoMostPop() {
         var testName = 'ItsRainingInlineAds';
-        return ab.testCanBeRun(testName) && ['control', 'geo'].indexOf(ab.getTestVariantId(testName)) > -1;
+        return !config.page.isImmersive && ab.testCanBeRun(testName) && ['nogeo', 'none'].indexOf(ab.getTestVariantId(testName)) > -1;
     }
 
     return {

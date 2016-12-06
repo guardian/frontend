@@ -1,5 +1,6 @@
 define([
     'Promise',
+    'common/utils/add-event-listener',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/closest',
@@ -8,6 +9,7 @@ define([
     'commercial/modules/messenger'
 ], function (
     Promise,
+    addEventListener,
     config,
     detect,
     closest,
@@ -35,9 +37,11 @@ define([
 
             // First, let's assign some default values so that everything
             // is in good order before we start animating changes in height
-            return initState()
+            var promise = initState()
             // Second, start listening for height and scroll changes
             .then(setupListeners);
+            promise.then(onFirstRender);
+            return promise;
         } else {
             topSlot = null;
             return Promise.resolve();
@@ -64,18 +68,20 @@ define([
     function setupListeners() {
         messenger.register('resize', onResize);
         if (!config.page.hasSuperStickyBanner) {
-            win.addEventListener('scroll', onScroll);
+            addEventListener(win, 'scroll', onScroll, { passive: true });
         }
-        return trackAdRender(topSlotId).then(onTopAdRendered);
     }
 
-    function onTopAdRendered(isRendered) {
-        if (isRendered) {
-            return fastdom.read(function () {
-                return topSlot.offsetHeight;
-            })
-            .then(resizeStickyBanner);
-        }
+    function onFirstRender() {
+        trackAdRender(topSlotId)
+        .then(function (isRendered) {
+            if (isRendered) {
+                fastdom.read(function () {
+                    return topSlot.offsetHeight;
+                })
+                .then(resizeStickyBanner);
+            }
+        });
     }
 
     function onResize(specs, _, iframe) {
