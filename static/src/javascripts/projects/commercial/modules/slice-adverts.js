@@ -52,8 +52,13 @@ define([
         var hasThrasher = containers[0].classList.contains('fc-container--thrasher');
         var slots;
 
-        // Remove first container if it is a thrasher, and limit to max 10 MPUs
-        containers = containers.slice(isNetworkFront && hasThrasher ? 1 : 0, 10);
+        // Remove first container if it is a thrasher
+        containers = containers
+        .slice(isNetworkFront && hasThrasher ? 1 : 0)
+        // Filter every other container
+        .filter(function (_, index) { return index % 2 === 0; })
+        // Keep as much as 10 of them
+        .slice(0, 10);
 
         slots = containers
         .map(function (container, index) {
