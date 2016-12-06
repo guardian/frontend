@@ -7,17 +7,13 @@
 
 define([
     'common/utils/mediator',
-    'common/utils/take-while',
-    'common/utils/drop-while',
     'lodash/functions/memoize',
-    'lodash/functions/compose',
+    'lodash/functions/debounce',
     'Promise'
 ], function (
     mediator,
-    takeWhile,
-    dropWhile,
     memoize,
-    compose,
+    debounce,
     Promise
 ) {
 
@@ -70,6 +66,70 @@ define([
             }
         ],
         detect;
+
+    var breakpointNames = breakpoints.map(getBreakpointName);
+
+    var currentBreakpoint;
+    var currentTweakpoint;
+
+    if ('matchMedia' in window) {
+        initMediaQueryListeners();
+    } else {
+        updateBreakpoints();
+        window.addEventListener('resize', debounce(updateBreakpoints, 200));
+    }
+
+    function initMediaQueryListeners() {
+        breakpoints
+        .forEach(function (bp, index, bps) {
+            // We create mutually exclusive (min-width) and (max-width) media queries
+            // to facilitate the breakpoint/tweakpoint logic.
+            bp.mql = index < bps.length - 1 ?
+                window.matchMedia('(min-width:'+ bp.width +'px) and (max-width:'+ (bps[index+1].width - 1) +'px)') :
+                window.matchMedia('(min-width:'+ bp.width +'px)');
+            bp.listener = onMatchingBreakpoint.bind(bp);
+            bp.mql.addListener(bp.listener);
+            bp.listener(bp.mql);
+        });
+    }
+
+    function onMatchingBreakpoint(mql) {
+        if (mql.matches) {
+            updateBreakpoint(this);
+        }
+    }
+
+    function updateBreakpoint(breakpoint) {
+        // When a tweakpoint matches, then we must also find the corresponding breakpoint.
+        // When a breakpoint matches, then we must reset the tweakpoint
+        if (breakpoint.isTweakpoint) {
+            currentTweakpoint = breakpoint.name;
+            currentBreakpoint = findBreakpoint(currentTweakpoint);
+        } else {
+            currentBreakpoint = breakpoint.name;
+            currentTweakpoint = undefined;
+        }
+    }
+
+    function findBreakpoint(tweakpoint) {
+        var breakpointIndex = breakpointNames.indexOf(tweakpoint);
+        var breakpoint = breakpoints[breakpointIndex];
+        while (breakpointIndex >= 0 && breakpoint.isTweakpoint) {
+            breakpointIndex -= 1;
+            breakpoint = breakpoints[breakpointIndex];
+        }
+        return breakpoint.name;
+    }
+
+    function updateBreakpoints() {
+        // The implementation for browsers that don't support window.matchMedia is simpler,
+        // but relies on (1) the resize event, (2) layout and (2) hidden generated content
+        // on a pseudo-element
+        var bodyStyle = window.getComputedStyle(document.body, '::after');
+        var breakpointName = bodyStyle.content.substring(1, bodyStyle.content.length - 1);
+        var breakpointIndex = breakpointNames.indexOf(breakpointName);
+        updateBreakpoint(breakpoints[breakpointIndex]);
+    }
 
     /**
      *     Util: returns a function that:
@@ -222,38 +282,8 @@ define([
         return breakpoint.name;
     }
 
-    function reverseArray(arr) {
-        return arr.reverse();
-    }
-
     function getBreakpoint(includeTweakpoint) {
-        var viewportWidth = detect.getViewport().width;
-        var breakpoint;
-        if (includeTweakpoint) {
-            breakpoint = takeWhile(isMatchingBreakpoint, breakpoints).slice(-1)[0].name;
-        } else {
-            // Remember: (f ∘ g ∘ h)(x) = f(g(h(x)))
-            // If, 1. we take all breakpoints matching the viewport width, in increasing order
-            //     2. we reverse the array, effectively putting any tweakpoints first
-            //     3. we drop all tweakpoints from the beginning of the array
-            // Then, the first item is the largest breakpoint that is not a tweakpoint
-            var algo = compose(
-                dropWhile.bind(undefined, isTweakpoint),
-                reverseArray,
-                takeWhile.bind(undefined, isMatchingBreakpoint)
-            );
-            breakpoint = algo(breakpoints)[0].name;
-        }
-
-        return breakpoint;
-
-        function isMatchingBreakpoint(_) {
-            return _.width <= viewportWidth;
-        }
-
-        function isTweakpoint(_) {
-            return _.isTweakpoint;
-        }
+        return includeTweakpoint ? currentTweakpoint : currentBreakpoint;
     }
 
     /**
@@ -262,25 +292,13 @@ define([
      *     detect.isBreakpoint({min: 'tablet'}) // Will return true for tablet, desktop, leftCol, wide
      *     detect.isBreakpoint({max: 'tablet'}) // Will return true for mobile, mobileLandscape, tablet and phablet
      *
-     *     
+     *
      */
     function isBreakpoint(criteria) {
-        criteria.min = criteria.min || breakpoints[0].name;
-        criteria.max = criteria.max || breakpoints[breakpoints.length - 1].name;
-
-        var currentBreakpoint = getBreakpoint(true);
-        // If, 1. we drop all breakpoints smaller than the breakpoint range (min)
-        //     2. we reverse the array, and...
-        //     3. we drop all breakpoints larger than the breakpoint range (max)
-        // Then, we get the range of matching breakpoints (in reverse order but
-        // it doesn't matter)
-        var algo = compose(
-            dropWhile.bind(undefined, function (_) { return _ !== criteria.max; }),
-            reverseArray,
-            dropWhile.bind(undefined, function (_) { return _ !== criteria.min; })
-        );
-
-        return algo(breakpoints.map(getBreakpointName)).indexOf(currentBreakpoint) !== -1;
+        var indexMin = criteria.min ? breakpointNames.indexOf(criteria.min) : 0;
+        var indexMax = criteria.max ? breakpointNames.indexOf(criteria.max) : breakpointNames.length - 1;
+        var indexCur = breakpointNames.indexOf(currentTweakpoint || currentBreakpoint);
+        return indexMin <= indexCur && indexCur <= indexMax;
     }
 
     // Page Visibility
