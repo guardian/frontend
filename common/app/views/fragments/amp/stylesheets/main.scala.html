@@ -2,6 +2,7 @@
 
 @import common.Edition
 @import common.commercial.PaidContent
+@import conf.switches.Switches.InlineCriticalCss
 
 <style amp-custom>
     body {
@@ -281,3 +282,7 @@
     @Html(common.Assets.css.amp)
 
 </style>
+
+@if(play.Play.isDev() || !InlineCriticalCss.isSwitchedOn) {
+    <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp.css")" />
+}
