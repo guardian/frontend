@@ -1,5 +1,6 @@
 package views
 
+import common.Edition
 import model.Interactive
 import play.api.Environment
 import play.api.mvc.RequestHeader
@@ -20,8 +21,9 @@ object InteractiveBodyCleaner {
 
 object FrontsCleaner {
  def apply(page: IndexPage, html: String)(implicit request: RequestHeader, env: Environment) = {
-      withJsoup(BulletCleaner(html))(
-        CommercialComponentHigh(isAdvertisementFeature = false, isNetworkFront = false)
-      )
+    val edition = Edition(request)
+    withJsoup(BulletCleaner(html))(
+      CommercialComponentHigh(isAdvertisementFeature = false, isNetworkFront = false, hasPageSkin = page.page.metadata.hasPageSkin(edition))
+    )
   }
 }
