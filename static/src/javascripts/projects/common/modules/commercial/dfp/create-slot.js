@@ -107,10 +107,6 @@ define([
         definition = adSlotDefinitions[slotName] || adSlotDefinitions.inline;
         name = definition.name || name;
 
-        if (config.page.hasPageSkin && slotName === 'merchandising-high') {
-            definition.sizeMappings.wide = adSizes.empty;
-        }
-
         assign(attributes, definition.sizeMappings);
 
         if (definition.label === false) {
