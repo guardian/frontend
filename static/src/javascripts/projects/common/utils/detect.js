@@ -104,14 +104,12 @@ define([
     }
 
     function updateBreakpoint(breakpoint) {
-        // When a tweakpoint matches, then we must also find the corresponding breakpoint.
-        // When a breakpoint matches, then we must reset the tweakpoint
         if (breakpoint.isTweakpoint) {
             currentTweakpoint = breakpoint.name;
             currentBreakpoint = findBreakpoint(currentTweakpoint);
         } else {
-            currentBreakpoint = breakpoint.name;
-            currentTweakpoint = undefined;
+            currentBreakpoint =
+            currentTweakpoint = breakpoint.name;
         }
     }
 
