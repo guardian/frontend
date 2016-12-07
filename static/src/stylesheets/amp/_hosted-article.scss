@@ -26,7 +26,6 @@
     }
 
     .title {
-        @include side-margins;
         margin-bottom: $gs-baseline;
         position: absolute;
         z-index: 3;
@@ -38,7 +37,7 @@
     }
 
     .caption {
-        @include side-margins;
+        padding-bottom: 0;
     }
 
     figure {
@@ -50,7 +49,7 @@
         font-size: 12px;
         line-height: 16px;
         color: $neutral-2;
-        margin-top: 3px;
+        margin-top: $gs-baseline/4;
     }
 
     .content__meta-container {
@@ -100,7 +99,7 @@
     .hosted__terms {
         width: 100%;
         margin-top: 0;
-        padding: 10px 0;
+        padding: $gs-baseline 0;
         border-top: 2px solid #eeeeee;
     }
 

@@ -30,7 +30,7 @@
 
 .hosted-gallery__meta {
     color: white;
-    padding: 0 20px;
+    padding: 0 $gs-gutter;
     position: absolute;
     z-index: 1;
     left: 0;
@@ -48,7 +48,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: $gs-baseline $gs-gutter 50px;
+    padding: $gs-baseline $gs-gutter 4 * $gs-baseline;
     background: linear-gradient(to top, rgba(51, 51, 51, .9) 0%, rgba(51, 51, 51, .7) 70%, transparent 100%);
     @media (orientation: portrait) {
         padding-bottom: $gs-baseline;
@@ -57,7 +57,7 @@
 }
 
 .hosted-gallery__heading {
-    margin-bottom: 5px;
+    margin-bottom: $gs-baseline / 2;
     font-size: 26px;
     line-height: 28px;
 }
@@ -111,7 +111,7 @@
     text-align: right;
     flex: 1;
     align-self: center;
-    padding: 5px;
+    padding: $gs-baseline / 2;
 }
 
 .hosted-gallery__caption-text {

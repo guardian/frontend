@@ -3,7 +3,7 @@
 
 <div class="hosted__header @pageCssClass">
     <div class="hosted__headerwrap js-hosted-headerwrap">
-        <div class="hostedbadge hosted-tone-bg">
+        <div class="hostedbadge hosted-tone-bg content__hosted-body">
             <p class="hostedbadge__info">Advertiser content</p>
             <a href="@page.cta.url" data-link-name="hosted-logo-top-left" target="_blank">
             @if(isAMP) {
@@ -14,7 +14,7 @@
             </a>
         </div>
         @if(isAMP) {
-            <div class="hosted__label">
+            <div class="hosted__label content__hosted-body">
                 <button on="tap:hosted-about-lightbox" class="hosted__tooltip-label">About</button>
 
                 <amp-lightbox id="hosted-about-lightbox" layout="nodisplay">

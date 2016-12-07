@@ -71,17 +71,17 @@
         </section>
         <section class="host host--legacy hosted__container hosted__container--content">
             <div class="host__body">
-                <div class="hosted__meta">
+                <div class="hosted__meta content__hosted-body">
                     <h1 class="hosted__heading hosted-tone">@{page.video.title}</h1>
                 </div>
-                <div class="hosted__standfirst">
+                <div class="hosted__standfirst content__hosted-body">
                     <p class="hosted__text">@Html(page.standfirst)</p>
                     <div class="hosted__terms">​​Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our
                         <button on="tap:hosted-about-lightbox" class="hosted__terms-link hosted-tone">commercial content explainer</button>.
                     </div>
                 </div>
             </div>
-            <header class="host__header hosted__social">
+            <header class="host__header hosted__social content__hosted-body">
                 <div class="meta__social hosted__social-wrapper" data-component="share">
                     @guardianHostedShareButtons(page)
                 </div>

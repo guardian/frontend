@@ -1,21 +1,12 @@
-$header-height: 48px;
-$thumb-width: 90px;
-$badge-width: 80px;
-
-@mixin side-margins {
-    margin-left: $gs-gutter/2;
-    margin-right: $gs-gutter/2;
-    @include mq(480px) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
-    }
-}
+$header-height: 4 * $gs-baseline;
+$thumb-width: 1.5 * $gs-column-width;
+$badge-width: $gs-column-width + $gs-gutter;
 
 @import "hosted-article";
 @import "hosted-gallery";
 
-.hosted-page {
-    @include f-textSans;
+.hosted-page, .hosted__header {
+    font-family: Helvetica, Arial sans-serif;
 }
 
 .hosted__glogo {
@@ -53,7 +44,7 @@ $badge-width: 80px;
 }
 
 .hosted__banner {
-    height: 200px;
+    height: gs-height(5);
     position: relative;
     background-size: cover;
     background-position: left;
@@ -67,17 +58,17 @@ $badge-width: 80px;
         z-index: 0;
         background: linear-gradient(transparent 100px, rgba(0, 0, 0, .5));
     }
+    .hosted__cta-wrapper {
+        position: absolute;
+        bottom: 2 * $gs-baseline;
+        padding: 0;
+    }
 }
 
 .hosted__cta-wrapper {
-    @include side-margins;
     padding-top: 140px;
     position: relative;
     z-index: 1;
-}
-
-.hosted__cta-btn-wrapper {
-    padding-top: 80px;
 }
 
 .hosted__cta.button,
@@ -174,13 +165,8 @@ $badge-width: 80px;
     color: $neutral-2;
 }
 
-.hosted__standfirst {
-    @include side-margins;
-    margin-top: $gs-baseline;
-}
-
+.hosted__standfirst,
 .hosted__meta {
-    @include side-margins;
     margin-top: $gs-baseline;
 }
 
@@ -195,8 +181,7 @@ $badge-width: 80px;
 }
 
 .hosted__social.host__header {
-    @include side-margins;
-    margin-top: 10px;
+    margin-top: $gs-baseline;
 }
 
 .hosted__social-wrapper {
@@ -207,7 +192,6 @@ $badge-width: 80px;
 }
 
 .hosted__label {
-    @include side-margins;
     position: absolute;
     left: $badge-width + $gs-gutter/2;
     top: 0;
@@ -317,7 +301,6 @@ $badge-width: 80px;
 }
 
 .hosted__next-page {
-    @include side-margins;
     position: relative;
     margin-bottom: 2 * $gs-baseline;
 }
@@ -361,7 +344,6 @@ $badge-width: 80px;
 }
 
 .hosted__header {
-    @include f-textSans;
     width: 100%;
     height: $header-height;
     background-color: $neutral-1;
@@ -375,7 +357,6 @@ $badge-width: 80px;
 }
 
 .hostedbadge {
-    @include side-margins;
     position: absolute;
     left: 0;
     bottom: 0;
@@ -434,14 +415,14 @@ $badge-width: 80px;
 .hosted__next-page-title {
     font-size: 14px;
     line-height: 16px;
-    padding: 6px;
+    padding: $gs-baseline / 2;
     min-height: 42px;
 }
 
 .hosted-video-page {
     .hosted__next-page {
         margin: $gs-baseline 0 0;
-        padding: 0 $gs-gutter/2 $gs-baseline;
+        padding: 0 $gs-gutter / 2 $gs-baseline;
         background: $neutral-7;
         @include mq(480px) {
             padding: 0 $gs-gutter $gs-baseline;
