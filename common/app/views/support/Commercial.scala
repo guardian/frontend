@@ -14,6 +14,7 @@ object Commercial {
     case c: model.ContentPage if c.item.content.shouldHideAdverts => false
     case p: model.Page if p.metadata.sectionId == "identity" => false
     case s: model.SimplePage if s.metadata.contentType == "Signup" => false
+    case e: model.ContentPage if e.metadata.webTitle == "Sign up for The Flyer" => false
     case p: model.CommercialExpiryPage => false
     case _ => true
   }
