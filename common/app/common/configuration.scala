@@ -527,11 +527,7 @@ class GuardianConfiguration extends Logging {
       } catch {
         case ex: AmazonClientException =>
           log.error("amazon client cross account exception", ex)
-
-          // We really, really want to ensure that PROD is configured before saying a box is OK
-          if (Play.isProd) throw ex
-          // this means that on dev machines you only need to configure keys if you are actually going to use them
-          None
+          throw ex
       }
     }
   }
@@ -578,11 +574,7 @@ class GuardianConfiguration extends Logging {
       } catch {
         case ex: AmazonClientException =>
           log.error(ex.getMessage, ex)
-
-          // We really, really want to ensure that PROD is configured before saying a box is OK
-          if (Play.isProd) throw ex
-          // this means that on dev machines you only need to configure keys if you are actually going to use them
-          None
+          throw ex
       }
     }
   }
