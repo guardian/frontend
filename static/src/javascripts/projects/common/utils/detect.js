@@ -72,21 +72,25 @@ define([
     var currentBreakpoint;
     var currentTweakpoint;
 
-    if ('matchMedia' in window) {
-        initMediaQueryListeners();
-    } else {
-        updateBreakpoints();
-        window.addEventListener('resize', debounce(updateBreakpoints, 200));
+    init(window);
+
+    function init(win) {
+        if ('matchMedia' in win) {
+            initMediaQueryListeners(win);
+        } else {
+            updateBreakpoints.call(win);
+            win.addEventListener('resize', debounce(updateBreakpoints, 200));
+        }
     }
 
-    function initMediaQueryListeners() {
+    function initMediaQueryListeners(win) {
         breakpoints
         .forEach(function (bp, index, bps) {
             // We create mutually exclusive (min-width) and (max-width) media queries
             // to facilitate the breakpoint/tweakpoint logic.
             bp.mql = index < bps.length - 1 ?
-                window.matchMedia('(min-width:'+ bp.width +'px) and (max-width:'+ (bps[index+1].width - 1) +'px)') :
-                window.matchMedia('(min-width:'+ bp.width +'px)');
+                win.matchMedia('(min-width:'+ bp.width +'px) and (max-width:'+ (bps[index+1].width - 1) +'px)') :
+                win.matchMedia('(min-width:'+ bp.width +'px)');
             bp.listener = onMatchingBreakpoint.bind(bp);
             bp.mql.addListener(bp.listener);
             bp.listener(bp.mql);
@@ -412,7 +416,8 @@ define([
         isEnhanced: isEnhanced,
         adblockInUseSync: adblockInUseSync,
         adblockInUse: adblockInUse,
-        getReferrer: getReferrer
+        getReferrer: getReferrer,
+        init: init
     };
     return detect;
 });
