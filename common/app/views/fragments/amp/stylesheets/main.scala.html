@@ -1,8 +1,8 @@
-@(page: model.Page, mainPicture: String, ctaImage: Option[String], brandColour: String)(implicit request: RequestHeader)
+@(page: model.Page, mainPicture: String, ctaImage: Option[String], brandColour: String)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import common.Edition
 @import common.commercial.PaidContent
-@import conf.switches.Switches.InlineCriticalCss
+@import play.api.Mode.Dev
 
 <style amp-custom>
     body {
@@ -281,6 +281,11 @@
 
 </style>
 
-@if(play.Play.isDev() || !InlineCriticalCss.isSwitchedOn) {
+
+@*
+ * Please note that the tests will NOT pass validation with this line.
+ * It won't affect prod but please comment out this line when running tests in DEV
+ *@
+@if(env.mode == Dev) {
     <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp.css")" />
 }
