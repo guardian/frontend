@@ -37,12 +37,7 @@
             </nav>
         </div>
 
-        <div class="@RenderClasses(Map(
-            "tertiary-container" -> true,
-            "tertiary__variant-three" -> mvt.ABNewNavVariantThree.isParticipating,
-            "tertiary__variant-four" -> mvt.ABNewNavVariantFour.isParticipating,
-            "tertiary__variant-five" -> mvt.ABNewNavVariantFive.isParticipating
-        ))">
+        <div class="tertiary-container">
             <ul class="tertiary-navigation">
 
                 @if(page.metadata.isFront) {
@@ -61,7 +56,7 @@
                     }
                 }
                 @sections.map { link =>
-                    <li class="tertiary-navigation__item">
+                    <li class="tertiary-navigation__item @if((link.uniqueSection == page.metadata.sectionId) && !page.metadata.isFront){tertiary-navigation__item--current-section}">
                         <a class="tertiary-navigation__link" href="@LinkTo(link.url)" data-link-name="nav2 : tertiary : @link.title">
                         @Html(link.title)
                         </a>
