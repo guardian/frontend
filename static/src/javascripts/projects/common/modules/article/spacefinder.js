@@ -6,8 +6,7 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/commercial/dfp/track-ad-render',
-    'lodash/functions/memoize',
-    'common/modules/commercial/user-features'
+    'lodash/functions/memoize'
 ], function (
     qwery,
     bean,
@@ -16,8 +15,7 @@ define([
     config,
     mediator,
     trackAdRender,
-    memoize,
-    userFeatures
+    memoize
 ) {
     // total_hours_spent_maintaining_this = 64
     //
@@ -261,10 +259,7 @@ define([
         }
 
         function getCandidates() {
-            var candidates = qwery(rules.bodySelector + rules.slotSelector).filter(function(){
-                // don't suggest candidates that adFree trial users should not see
-                return !(config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser());
-            });
+            var candidates = qwery(rules.bodySelector + rules.slotSelector);
             if (rules.fromBottom) {
                 candidates.reverse();
             }

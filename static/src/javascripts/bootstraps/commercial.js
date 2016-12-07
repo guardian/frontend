@@ -27,7 +27,8 @@ define([
     'commercial/modules/paidfor-band',
     'commercial/modules/paid-containers',
     'commercial/modules/dfp/performance-logging',
-    'common/modules/analytics/google'
+    'common/modules/analytics/google',
+    'common/modules/commercial/user-features'
 ], function (
     Promise,
     config,
@@ -57,7 +58,8 @@ define([
     paidforBand,
     paidContainers,
     performanceLogging,
-    ga
+    ga,
+    userFeatures
 ) {
     var primaryModules = [
         ['cm-thirdPartyTags', thirdPartyTags.init],
@@ -142,6 +144,11 @@ define([
     return {
         init: function () {
             if (!config.switches.commercial) {
+                return;
+            }
+
+            if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
+                closeDisabledSlots.init();
                 return;
             }
 
