@@ -29,7 +29,7 @@ define([
 
     var ContributionsEpicAlwaysAskStrategy = {
         name: 'ContributionsEpicAlwaysAskStrategy',
-        variants: ['control']
+        variants: ['control', 'alwaysAsk']
     };
 
     function userIsInAClashingAbTest() {
