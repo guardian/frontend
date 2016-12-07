@@ -9,14 +9,14 @@ object SportConfiguration {
 
   object pa {
     lazy val footballHost = "http://football-api.gu-web.net/v1.5"
-    lazy val footballKey = configuration.getMandatoryStringProperty("pa.api.key")
-    lazy val cricketKey = configuration.getStringProperty("pa.cricket.api.key")
+    lazy val footballKey = guardianConfiguration.getMandatoryStringProperty("pa.api.key")
+    lazy val cricketKey = guardianConfiguration.getStringProperty("pa.cricket.api.key")
   }
 
   object optaRugby {
-    lazy val endpoint = configuration.getStringProperty("opta.rugby.api.endpoint")
-    lazy val apiKey = configuration.getStringProperty("opta.rugby.api.key")
-    lazy val apiUser = configuration.getStringProperty("opta.rugby.api.user")
+    lazy val endpoint = guardianConfiguration.getStringProperty("opta.rugby.api.endpoint")
+    lazy val apiKey = guardianConfiguration.getStringProperty("opta.rugby.api.key")
+    lazy val apiUser = guardianConfiguration.getStringProperty("opta.rugby.api.user")
   }
 
 }

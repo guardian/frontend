@@ -1,6 +1,6 @@
 package dev
 
-import play.api.http.{HttpFilters, HttpConfiguration, HttpErrorHandler, DefaultHttpRequestHandler}
+import play.api.http.{DefaultHttpRequestHandler, HttpConfiguration, HttpErrorHandler, HttpFilters}
 import play.api.routing.Router
 import play.api.mvc.RequestHeader
 import common.CanonicalLink

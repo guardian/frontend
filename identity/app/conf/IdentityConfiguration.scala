@@ -11,11 +11,11 @@ class IdentityConfiguration extends GuardianConfiguration with SafeLogging {
 
   object exacttarget {
     lazy val factory = for {
-      accountName <- configuration.getStringProperty("exacttarget.accountname")
-      password <- configuration.getStringProperty("exacttarget.password")
-      endpointUrl <- configuration.getStringProperty("exacttarget.endpoint")
+      accountName <- guardianConfiguration.getStringProperty("exacttarget.accountname")
+      password <- guardianConfiguration.getStringProperty("exacttarget.password")
+      endpointUrl <- guardianConfiguration.getStringProperty("exacttarget.endpoint")
     } yield {
-      logger.info(s"Found configuration for ExactTarget with endpoint $endpointUrl")
+      logger.info(s"Found guardianConfiguration for ExactTarget with endpoint $endpointUrl")
       new ExactTargetFactory(accountName, password, new URI(endpointUrl))
     }
   }
