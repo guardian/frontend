@@ -63,7 +63,7 @@ define([
         var contributeUrlPrefix = 'co_global_epic_always_ask_strategy';
         var membershipUrlPrefix = 'gdnwb_copts_mem_epic_always_ask_strategy';
 
-        var epicViewedEvent = 'ContributionsEpicAlwaysAskStrategy:view';
+        var epicViewedEvent = makeEvent('view');
 
         var membershipUrl = 'https://membership.theguardian.com/supporter?';
         var contributeUrl = 'https://contribute.theguardian.com/?';

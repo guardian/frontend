@@ -47,16 +47,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-usa-cta-three-way",
-    "Test just contributions vs contributions or membership vs just membership in the US",
-    owners = Seq(Owner.withGithub("philwills")),
-    safeState = Off,
-    sellByDate =  new LocalDate(2016, 12, 19),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-observer-anniversary",
     "Gather contributions and supporters around Observer 225th anniversary",
     owners = Seq(Owner.withGithub("philwills")),
