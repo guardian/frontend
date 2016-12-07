@@ -60,7 +60,6 @@ object JavaScriptPage {
       ("isProd", JsBoolean(Configuration.environment.isProd)),
       ("idUrl", JsString(Configuration.id.url)),
       ("beaconUrl", JsString(Configuration.debug.beaconUrl)),
-      ("isSSL", JsBoolean(Configuration.environment.secure)),
       ("assetsPath", JsString(Configuration.assets.path)),
       ("isPreview", JsBoolean(environment.isPreview)),
       ("allowUserGeneratedContent", JsBoolean(allowUserGeneratedContent)),

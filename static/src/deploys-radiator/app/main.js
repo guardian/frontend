@@ -34,14 +34,32 @@ const run = () => {
         'rss',
         'sport'
     ]);
-    const filterWhitelisted = (deploys) => deploys
-        .filter(deploy => serverWhitelist.contains(deploy.projectName))
-        .toList();
-    const deploysPromise = Promise.all([
-        getDeploys('CODE').then(filterWhitelisted),
-        getDeploys('PROD').then(filterWhitelisted)
+    const unifiedWhitelist = List([
+        'all'
     ]);
-    const latestDeploysPromise = deploysPromise.then(([codeDeploys, prodDeploys]) => {
+    const filterWhiteListed = (whitelist) => (deploys) => deploys
+        .filter(deploy => whitelist.contains(deploy.projectName))
+        .toList();
+    const filterServer = filterWhiteListed(serverWhitelist);
+    const filterUnified = filterWhiteListed(unifiedWhitelist);
+    const timeOfMostRecent = (deploys) => getMostRecentDeploys(deploys).last().time.getTime();
+    const mostRecentOf = (serverDeploys, unifiedDeploys) => {
+        if (serverDeploys.isEmpty()) return unifiedDeploys;
+        if (unifiedDeploys.isEmpty()) return serverDeploys;
+        const serverTime = timeOfMostRecent(serverDeploys);
+        const unifiedTime = timeOfMostRecent(unifiedDeploys);
+        return (serverTime > unifiedTime) ? serverDeploys : unifiedDeploys;
+    };
+    const deploysPromise = Promise.all([
+        getDeploys('CODE'),
+        getDeploys('PROD')
+    ]);
+    const filteredDeploysPromise = deploysPromise.then(([codeDeploys, prodDeploys]) => {
+        const currentCodeDeploys = mostRecentOf(filterServer(codeDeploys), filterUnified(codeDeploys));
+        const currentProdDeploys = mostRecentOf(filterServer(prodDeploys), filterUnified(prodDeploys));
+        return [currentCodeDeploys, currentProdDeploys];
+    });
+    const latestDeploysPromise = filteredDeploysPromise.then(([codeDeploys, prodDeploys]) => {
         const currentCodeDeploys = getMostRecentDeploys(codeDeploys);
         const currentProdDeploys = getMostRecentDeploys(prodDeploys);
         const latestCodeDeploy = currentCodeDeploys
@@ -57,7 +75,7 @@ const run = () => {
         getBuild(oldestProdDeploy.build)
     ])));
     const differencePromise = buildsPromise.then(([codeBuild, prodBuild]) => (getDifference(prodBuild.revision, codeBuild.revision).then(gitHubCommits => gitHubCommits.reverse().toList())));
-    return Promise.all([deploysPromise, latestDeploysPromise, differencePromise])
+    return Promise.all([filteredDeploysPromise, latestDeploysPromise, differencePromise])
         .then(([deploysPair, deployPair, commits]) => renderPage(deploysPair, deployPair, commits))
         .then(updateDom);
 };

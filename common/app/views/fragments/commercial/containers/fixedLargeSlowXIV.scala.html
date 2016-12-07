@@ -15,13 +15,21 @@
                             card,
                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
                             optAdvertClassNames = Some(Seq("paidfor")),
+                            minimiseOnMobile = true,
                             useCardBranding = !containerModel.isSingleSponsorContainer))
 </div>
-<div class="adverts__row hide-until-tablet">
-    @containerModel.content.initialCards.slice(2, 6).map(card => views.html.fragments.commercial.cards.itemCard(
+<div class="adverts__row">
+    @containerModel.content.initialCards.slice(2, 3).map(card => views.html.fragments.commercial.cards.itemCard(
                             card,
                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
                             optAdvertClassNames = Some(Seq("paidfor")),
+                            minimiseOnMobile = true,
+                            useCardBranding = !containerModel.isSingleSponsorContainer))
+    @containerModel.content.initialCards.slice(3, 6).map(card => views.html.fragments.commercial.cards.itemCard(
+                            card,
+                            omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
+                            optAdvertClassNames = Some(Seq("paidfor")),
+                            optClassNames = Some(Seq("hide-until-tablet")),
                             useCardBranding = !containerModel.isSingleSponsorContainer))
 </div>
 <div class="adverts__row hide-until-tablet">
