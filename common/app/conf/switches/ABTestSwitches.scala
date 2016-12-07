@@ -47,16 +47,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-observer-anniversary",
-    "Gather contributions and supporters around Observer 225th anniversary",
-    owners = Seq(Owner.withGithub("philwills")),
-    safeState = Off,
-    sellByDate =  new LocalDate(2016, 12, 12),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-brexit-supreme",
     "Gather contributions and supporters around Brexit supreme court case",
     owners = Seq(Owner.withGithub("philwills")),
