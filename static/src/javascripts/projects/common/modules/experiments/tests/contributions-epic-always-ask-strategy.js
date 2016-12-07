@@ -52,15 +52,18 @@ define([
             return true;
         };
 
+        function makeEvent(name) {
+            return this.id + ':' + name;
+        }
+
+        function makeUrl(urlPrefix, intcmp) {
+            return urlPrefix + 'INTCMP=' + intcmp;
+        }
+
         var contributeUrlPrefix = 'co_global_epic_always_ask_strategy';
         var membershipUrlPrefix = 'gdnwb_copts_mem_epic_always_ask_strategy';
 
         var epicViewedEvent = 'ContributionsEpicAlwaysAskStrategy:view';
-
-
-        var makeUrl = function(urlPrefix, intcmp) {
-            return urlPrefix + 'INTCMP=' + intcmp;
-        };
 
         var membershipUrl = 'https://membership.theguardian.com/supporter?';
         var contributeUrl = 'https://contribute.theguardian.com/?';
@@ -100,7 +103,7 @@ define([
             });
         };
 
-        var completer = function (complete) {
+        var registerViewListener = function (complete) {
             mediator.on(epicViewedEvent, complete);
         };
 
@@ -120,7 +123,7 @@ define([
 
                 test: function() {},
 
-                success: completer
+                success: registerViewListener
             },
             {
                 id: 'alwaysAsk',
@@ -144,7 +147,7 @@ define([
                     }
                 },
 
-                success: completer
+                success: registerViewListener
             }
         ];
     };
