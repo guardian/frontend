@@ -6,11 +6,18 @@ and follow the steps to get your credentials for Frontend and for CMS-Fronts.
 This will save you grief later on.
 
 ### Install and compile all third party dependencies
-Compile your assets and third party dependencies using the command:
+To install third party dependencies and compile your assets as they would on production, use this command:
 ```
-  make install
+  make compile
 ```
-The make command can also be used for a variety of useful things incliding testing and linting javascript.
+If you wish to install dependencies and compile the assets in compile -dev mode, to allow real-time code compilation for testing of local branches, use the following:
+
+```
+make install
+make compile
+```
+
+The make command can also be used for a variety of other useful things including testing and linting javascript.
 Run the command:
 ```
 make list
@@ -41,6 +48,8 @@ To run only the tests for a particular test suite, use the command:
 ```
   test-only *<name-of-your-test-suite>
 ```
+
+## Testing AMP
 
 ### Testing AMP Pages on local build
 Amp pages are available for articles and liveblogs.
@@ -98,6 +107,9 @@ google-search result to the amp page. The following will indicate you are on an 
 3) That styling, especially that of badges and graphical punctuation, such as quotes  look ok
 4) That images and other embeds display correctly - especially on narrow screens such as the iPhone5S
 
+
+## Device Testing
+
 ### How to test your devices on local
 - It is possible to use chrome emulator to get a good idea of how android devices behave and XCode the hardware simulators on XCode to do the same for iOS,
 However for significant frontend changes you should test on devices as much as possible. To do this you need to be able to make your localhost accessible.
@@ -105,18 +117,18 @@ A tool called `ngrok` is a good way to make a local port accessible to external 
 - To test on a variety of devices or to reproduce a bug on a particular set up, use https://www.browserstack.com. This site has a vaery large collection of various operating systems, browsers and devices. It contains a good record of old versions of these and has a mix of real and emulated devices. It is a very useful testing resource. Contact the dotcom team to get added to our user account for this tool
 
 ### What to test on
-A list of useful information on device testing follows
-[Our browser support principals](https://github.com/guardian/frontend/blob/master/docs/04-quality/02-browser-support-principles.md);
-[A list of what browsers we support](https://github.com/guardian/frontend/blob/master/docs/04-quality/01-browser-support.md);
-[Ranking of the current top browsers](https://github.com/guardian/frontend/blob/master/docs/04-quality/01-browser-support.md)
-[Breakdown of last seven days web traffic by type of device](https://dashboard.ophan.co.uk/graph/breakdown?days=7&device=Personal+computer&device=Smartphone&device=Tablet&by=device)
+A list of useful information on device testing follows:
+- [Our browser support principals](https://github.com/guardian/frontend/blob/master/docs/04-quality/02-browser-support-principles.md);
+- [A list of what browsers we support](https://github.com/guardian/frontend/blob/master/docs/04-quality/01-browser-support.md);
+- [Ranking of the current top browsers](https://github.com/guardian/frontend/blob/master/docs/04-quality/01-browser-support.md)
+- [Breakdown of last seven days web traffic by type of device](https://dashboard.ophan.co.uk/graph/breakdown?days=7&device=Personal+computer&device=Smartphone&device=Tablet&by=device)
 
 ### Good places/tricks to find bugs
 - iPhone - Safari is the most popular browser on iOS (which makes it one of the most popular ways to view our site) and even Chrome on iOS has to use the iOS Webkit framework.
  It is interesting from a testing perspective because it is a different operating system, different browser setup and different screen-size from the machine you are developing on.
  This combination often throws up interesting layout problems. In addition Safari often has less support for new features compared with Chrome, which can also lead to rendering errors.
 
-- Edge - a new browser from microsoft - meant to be a successor to IE. [As of Sept 2016](https://docs.google.com/a/guardian.co.uk/spreadsheets/d/1bheEcdkOAj6jA92U37_DsTpQDwk7awIAFkYKUE1fbsw/edit?usp=sharing) it has overtaken IE11 in popularity. However it gets much less exposure to our developers than Chrome Firefox and Safari. 
+- Edge - a new browser from microsoft - meant to be a successor to IE. [As of Sept 2016](https://docs.google.com/a/guardian.co.uk/spreadsheets/d/1bheEcdkOAj6jA92U37_DsTpQDwk7awIAFkYKUE1fbsw/edit?usp=sharing) it has overtaken IE11 in popularity. However it gets much less exposure to our developers than Chrome, Firefox and Safari. 
 
 - IE11 - This is the most popular IE version. IE is notorious for having less support for features and also being much less tolerant of small errors than Chrome, or Firefox. Often when a page renders on those browsers it will still have problems on IE.
 
@@ -147,7 +159,7 @@ Also make sure your change conforms to the [guardian-visual-glossary](https://gi
 ### Testing your local on CODE
 There are times when you are testing something locally that you just can’t find on our production content, for instance:
 	- Implementing new template or embed types.
-	- Testing hard to find ebed types - ie a Guardian Witness embed.
+	- Testing hard to find embed types - ie a Guardian Witness embed.
 	- Testing Triggered events - such as a liveblog update.
 To test these type of changes you can use a frontend.conf file to override the default build and tailor it to your needs.
 See [here](https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/15-override-default-configuration.md) for details.
