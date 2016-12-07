@@ -1270,12 +1270,6 @@ commander@2.9.0, commander@^2.2.0, commander@^2.8.1, commander@^2.9.0:
   dependencies:
     graceful-readlink ">= 1.0.0"
 
-commander@~1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-1.1.1.tgz#50d1651868ae60eccff0a2d9f34595376bc6b041"
-  dependencies:
-    keypress "0.1.x"
-
 comment-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/comment-regex/-/comment-regex-1.0.0.tgz#7dd70268c83648a9c4cc19bf472d52e64f63918d"
@@ -2829,12 +2823,6 @@ grunt-text-replace@0.3.12:
   version "0.3.12"
   resolved "https://registry.yarnpkg.com/grunt-text-replace/-/grunt-text-replace-0.3.12.tgz#8bc10689a3e09b80f184d7dd4d42a3d609cf58a5"
 
-grunt-webfontjson@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/grunt-webfontjson/-/grunt-webfontjson-0.0.4.tgz#107fe2dacf4a7faf0da9bdedd37d07a476d1895d"
-  dependencies:
-    webfontjson "0.0.4"
-
 grunt@0.4.5:
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/grunt/-/grunt-0.4.5.tgz#56937cd5194324adff6d207631832a9d6ba4e7f0"
@@ -3744,10 +3732,6 @@ karma-teamcity-reporter@^1.0.0:
 kew@~0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/kew/-/kew-0.7.0.tgz#79d93d2d33363d6fdd2970b335d9141ad591d79b"
-
-keypress@0.1.x:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/keypress/-/keypress-0.1.0.tgz#4a3188d4291b66b4f65edb99f806aa9ae293592a"
 
 kind-of@^3.0.2:
   version "3.0.4"
@@ -6465,12 +6449,6 @@ watchpack@^0.2.1:
     async "^0.9.0"
     chokidar "^1.0.0"
     graceful-fs "^4.1.2"
-
-webfontjson@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/webfontjson/-/webfontjson-0.0.4.tgz#8720b62634d9915fd68cb71be3ede965ca77aa0f"
-  dependencies:
-    commander "~1.1.1"
 
 webpack:
   version "1.13.3"
