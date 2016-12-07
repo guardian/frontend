@@ -124,13 +124,13 @@ define([
             });
         };
 
-        var initializer = function(track) {
+        function registerInsertionListener(track) {
             mediator.on(epicInsertedEvent, track);
-        };
+        }
 
-        var completer = function (complete) {
+        function registerViewListener(complete) {
             mediator.on(epicViewedEvent, complete);
-        };
+        }
 
         this.variants = [
             {
@@ -153,9 +153,9 @@ define([
                     componentWriter(component);
                 },
 
-                impression: initializer,
+                impression: registerInsertionListener,
 
-                success: completer
+                success: registerViewListener
             },
             {
                 id: 'bolder',
@@ -177,9 +177,9 @@ define([
                     componentWriter(component);
                 },
 
-                impression: initializer,
+                impression: registerInsertionListener,
 
-                success: completer
+                success: registerViewListener
             },
             {
                 id: 'endOfYear',
@@ -201,9 +201,9 @@ define([
                     componentWriter(component);
                 },
 
-                impression: initializer,
+                impression: registerInsertionListener,
 
-                success: completer
+                success: registerViewListener
             }
         ];
     };
