@@ -65,6 +65,7 @@ case class PressedPage (
   collections: List[PressedCollection]) extends StandalonePage {
 
   override val metadata: MetaData = PressedPage.makeMetadata(id, seoData, frontProperties, collections)
+  val isNetworkFront: Boolean = Edition.all.exists(_.networkFrontId == id)
 
   /** If a Facia front is a tag or section page, it ought to exist as a tag or section ID for one of its pieces of
     * content.
