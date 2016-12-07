@@ -52,9 +52,9 @@ define([
             return true;
         };
 
-        function makeEvent(name) {
+        var makeEvent = (function(name) {
             return this.id + ':' + name;
-        }
+        }).bind(this);
 
         function makeUrl(urlPrefix, intcmp) {
             return urlPrefix + 'INTCMP=' + intcmp;
