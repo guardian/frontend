@@ -23,6 +23,8 @@ class FrontsController(val wsClient: WSClient, val environment: Environment) ext
   val SNAP_TYPE = "json.html"
   val SNAP_CSS = "football"
 
+  implicit val env: Environment = environment
+
   def index = Action.async { implicit request =>
     fetchCompetitionsAndTeams.map {
       case (competitions, teams) => Cached(3600)(RevalidatableResult.Ok(views.html.football.fronts.index(competitions, teams)))
@@ -36,7 +38,7 @@ class FrontsController(val wsClient: WSClient, val environment: Environment) ext
 
   def resultsRedirect = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
-    val competitionId = submission.get("competition").get.head
+    val competitionId = submission("competition").head
     Cached(60)(WithoutRevalidationResult(SeeOther(s"/admin/football/fronts/results/$competitionId")))
   }
 

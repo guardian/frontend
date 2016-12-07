@@ -5,6 +5,7 @@ import feed.MostReadAgent
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import play.api.Environment
 import services.OphanApi
 
 @DoNotDiscover class RelatedControllerTest
@@ -13,7 +14,8 @@ import services.OphanApi
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithTestWsClient
-  with WithTestContentApiClient {
+  with WithTestContentApiClient
+  with WithTestEnvironment {
 
   val article = "uk/2012/aug/07/woman-torture-burglary-waterboard-surrey"
   val badArticle = "i/am/not/here"

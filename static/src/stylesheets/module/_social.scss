@@ -82,7 +82,7 @@ category: Common
 
     .social-icon--more__svg {
         fill: $neutral-2;
-        top: -3px; // Tweak for centering, half circle height
+        top: -1px; // Tweak for centering, half circle height
         width: 60%; // Scale the more icon
     }
 }
@@ -129,12 +129,6 @@ category: Common
 .social-tray__icon__svg {
     fill: $neutral-2;
     width: 16px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    margin: auto;
 }
 
 .social-tray__button {
@@ -210,13 +204,6 @@ category: Common
     svg {
         height: 88%;
         width: 88%;
-        vertical-align: middle;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        margin: auto;
     }
 
     .social-icon__label {

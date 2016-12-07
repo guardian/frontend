@@ -717,56 +717,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 
 .tertiary-container {
     overflow: hidden;
-
-    // Scrolly variant
-    &.tertiary__variant-three {
-        position: relative;
-        // Hides the scrollbar
-        height: $gs-baseline*2.5;
-        overflow: hidden;
-
-        @include mq($from: mobile, $until: mobileLandscape) {
-            height: $gs-baseline*2.5;
-            height: 9.8vw;
-        }
-
-        @include mq($from: mobileLandscape) {
-            height: $gs-baseline*3.3;
-        }
-
-        // Crazy radial hidey fade
-        &:after {
-            content: '';
-            position: absolute;
-            height: $gutter-small + $veggie-burger-small - $gs-gutter/2;
-            width: $gutter-small + $veggie-burger-small - $gs-gutter/2;
-            border-top-left-radius: 50%;
-            border-bottom-left-radius: 50%;
-            background-color: $neutral-2;
-            box-shadow: 0 0 20px 10px $neutral-2;
-            top: -30px;
-            right: 0;
-            pointer-events: none;
-
-            @include mq($mobile-medium) {
-                height: $gutter-medium + $veggie-burger-medium - $gs-gutter/2;
-                width: $gutter-medium + $veggie-burger-medium - $gs-gutter/2;
-                top: -40px;
-            }
-
-            @include mq(mobileLandscape) {
-                height: $gutter-large + $veggie-burger-medium - $gs-gutter/2;
-                width: $gutter-large + $veggie-burger-medium - $gs-gutter/2;
-                top: -50px;
-            }
-        }
-    }
-
-    // Single line limited variant, stacked variant
-    &.tertiary__variant-four,
-    &.tertiary__variant-five {
-        border-bottom: $gs-baseline/2 solid #747a81;
-    }
+    border-bottom: $gs-baseline/2 solid #747a81;
 }
 
 .tertiary-navigation {
@@ -777,51 +728,19 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     list-style: none;
     white-space: nowrap;
     display: flex;
-
-    // Scrolly variant
-    .tertiary__variant-three & {
-        overflow-x: scroll;
-        padding-bottom: $gs-baseline*3;
-    }
-
-    // Stacked variant
-    .tertiary__variant-four & {
         padding-top: $gs-baseline/2;
-        max-height: $gs-baseline*3.4;
-        flex-wrap: wrap;
+    max-height: $gs-baseline*3.4;
+    flex-wrap: wrap;
 
-        @include mq($from: mobile, $until: mobileLandscape) {
-            max-height: $gs-baseline*4;
-            max-height: 14.8vw;
-        }
-
-        @include mq($from: mobileLandscape) {
-            max-height: $gs-baseline*5.5;
-        }
+    @include mq($from: mobile, $until: mobileLandscape) {
+        max-height: $gs-baseline*4;
+        max-height: 14.8vw;
     }
 
     @include mq($from: mobileLandscape) {
+        max-height: $gs-baseline*5.5;
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
-    }
-
-    // Single line limited variant
-    .tertiary__variant-five & {
-        height: $gs-baseline * 2;
-        flex-wrap: wrap;
-        padding-right: $gutter-small + $veggie-burger-small;
-        overflow: hidden;
-
-        @include mq($from: mobile, $until: mobileLandscape) {
-            height: $gs-baseline * 2.2;
-            height:  8vw;
-            padding-right: $gutter-medium + $veggie-burger-small;
-        }
-
-        @include mq(mobileLandscape) {
-            height: $gs-baseline * 2.8;
-            padding-right: $gutter-large + $veggie-burger-medium;
-        }
     }
 }
 
@@ -830,6 +749,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     @include fs-textSans(4);
     color: $neutral-4;
     display: block;
+    line-height: 1.5em;
 
     &:hover,
     &:focus {
@@ -837,7 +757,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
         color: #ffffff;
     }
 
-    .tertiary-navigation__item:first-of-type & {
+    .tertiary-navigation__item--current-section & {
         color: $news-support-1;
     }
 
@@ -854,76 +774,14 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
         pointer-events: none;
         content: '/';
         color: rgba(255, 255, 255, .3);
-    }
-
-    // Scrolly variant, Single line limited variant
-    .tertiary__variant-three &,
-    .tertiary__variant-five & {
-        line-height: 2.2em;
-        padding: 0 .4em;
-
-        @include mq($from: mobile, $until: mobileLandscape) {
-            line-height: 1.9em;
-        }
-
-        @include mq($from: mobileLandscape) {
-            line-height: 1.8em;
-        }
-
-        &:after {
-            position: absolute;
-            left: -.17em;
-        }
-    }
-
-    // Stacked variant
-    .tertiary__variant-four & {
-        line-height: 1.5em;
-
-        &:after {
-            margin-left: -.1em;
-            padding: 0 $gs-gutter/10;
-        }
+        margin-left: -.1em;
+        padding: 0 $gs-gutter/10;
     }
 }
 
-// Scrolly variant, Single line limited variant
-.tertiary__variant-three,
-.tertiary__variant-five {
-    .tertiary-navigation__item:first-of-type .tertiary-navigation__link {
-        padding-left: 0;
-
-        &:after {
-            content: none;
-        }
-    }
-}
-
-// Scrolly variant
-.tertiary__variant-three {
-    .tertiary-navigation__item {
-        flex: 0 0 auto;
-
-        &:last-of-type .tertiary-navigation__link {
-            margin-right: $gutter-small + $veggie-burger-small;
-
-            @include mq($mobile-medium) {
-                margin-right: $gutter-medium + $veggie-burger-medium - $gs-gutter/2;
-            }
-
-            @include mq(mobileLandscape) {
-                margin-right: $gutter-large + $veggie-burger-medium - $gs-gutter/2;
-            }
-        }
-    }
-}
-
-// Stacked variant
-.tertiary__variant-four {
-    .tertiary-navigation__item:last-of-type .tertiary-navigation__link {
-        &:after {
-            content: '';
-        }
+.tertiary-navigation__item:last-of-type .tertiary-navigation__link {
+    &:after {
+        content: '';
     }
 }
 
@@ -972,25 +830,11 @@ $caption-button-size: 32px;
             width: $caption-button-size;
             height: $caption-button-size;
             z-index: 1;
-            background-color: rgba($neutral-1, .2);
+            background-color: rgba($neutral-1, .4);
             border-radius: 50%;
         }
         .reveal-caption--img {
             bottom: $gs-baseline/2;
-        }
-
-        .reveal-caption-icon__svg {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            margin: auto;
-        }
-
-        .inline-camera .reveal-caption-icon__svg {
-            // Optical alignment
-            top: -2px;
         }
 
         .caption--main.caption--video {

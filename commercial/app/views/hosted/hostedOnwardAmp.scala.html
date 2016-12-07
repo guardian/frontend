@@ -1,0 +1,27 @@
+@(path: String)(implicit request: RequestHeader)
+@import common.AmpLinkTo
+
+<amp-list src="@AmpLinkTo(path)" width="400" height="148" layout="responsive">
+    <template type="amp-mustache">
+        {{^trails}}
+            <div></div>
+        {{/trails}}
+        <div class="hosted__next-page hosted-article__next-page">
+            <div class="hosted__next-page--header">
+                <div class="hosted__next-page-header--border hosted-tone-bg"></div>
+                <h2 class="hosted__text hosted__next-page--more-from">More from</h2>
+                <h2 class="hosted__next-page--client-name hosted-tone">{{owner}}</h2>
+            </div>
+            <div class="hosted__ab-test-control">
+                {{#trails}}
+                    <a href="{{url}}" class="hosted__next-page--tile js-hosted-onward-journey-link hosted-tone-bg" data-link-name="Next Hosted Page: {{title}}">
+                        <div class="hosted-next-page__wrapper">
+                            <amp-img src="{{imageUrl}}" width="1290" height="774" layout="responsive" alt="Next Page: {{title}}" class="hosted__next-page-thumb"></amp-img>
+                            <p class="hosted__next-page-title">{{title}}</p>
+                        </div>
+                    </a>
+                {{/trails}}
+            </div>
+        </div>
+    </template>
+</amp-list>

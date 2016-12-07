@@ -7,11 +7,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-hosted-onward-journey",
-    "Show more pages from the campaign in Hosted Article/Video pages, using a carousel or popup",
-    owners = Seq(Owner.withGithub("lps88")),
+    "ab-its-raining-inline-ads",
+    "Display more inline ads on the wide breakpoint",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 18),
+    sellByDate = new LocalDate(2016, 12, 14),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-editorial-email-variants",
+    "Assign users to variants of our editorial emails",
+    owners = Seq(Owner.withGithub("katebee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 21),
     exposeClientSide = true
   )
 
@@ -20,8 +30,8 @@ trait ABTestSwitches {
     "ab-membership-engagement-international-experiment",
     "Test varying the number of visits before showing the membership engagement banner",
     owners = Seq(Owner.withGithub("rupert.bates")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 12, 1), // Thursday 1st December
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 16),
     exposeClientSide = true
   )
 
@@ -41,7 +51,27 @@ trait ABTestSwitches {
     "Test just contributions vs contributions or membership vs just membership in the US",
     owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 12, 5),
+    sellByDate =  new LocalDate(2016, 12, 19),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-observer-anniversary",
+    "Gather contributions and supporters around Observer 225th anniversary",
+    owners = Seq(Owner.withGithub("philwills")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 12, 12),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-brexit-supreme",
+    "Gather contributions and supporters around Brexit supreme court case",
+    owners = Seq(Owner.withGithub("philwills")),
+    safeState = Off,
+    sellByDate =  new LocalDate(2016, 12, 12),
     exposeClientSide = true
   )
 

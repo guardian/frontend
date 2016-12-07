@@ -1,10 +1,10 @@
 package controllers.admin
 
-import com.gu.googleauth.{GoogleAuthConfig, UserIdentity, Actions}
-import conf.Configuration
+import com.gu.googleauth.{Actions, GoogleAuthConfig, UserIdentity}
 import play.api.mvc.Security.AuthenticatedBuilder
-import play.api.mvc.{Call, Action, Controller}
+import play.api.mvc.{Action, Call, Controller}
 import model.NoCache
+import play.api.Environment
 
 object AuthActions extends Actions {
 
@@ -17,11 +17,11 @@ object AuthActions extends Actions {
   )
 }
 
-class AdminIndexController extends Controller {
+class AdminIndexController (implicit env: Environment) extends Controller {
 
   def index() = Action { Redirect("/admin") }
 
   def admin() = Action { implicit request =>
-    NoCache(Ok(views.html.admin(Configuration.environment.stage)))
+    NoCache(Ok(views.html.admin()))
   }
 }

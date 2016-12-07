@@ -301,9 +301,9 @@ object EmailSubscriptions {
       description = "Sign up to The Flyer for all the latest travel stories, plus find links to hundreds of UK hotel and restaurant reviews; insider tips on the world's best cities; a road-tripper's guide to the US; and highlights of our most inspiring top 10s.",
       frequency = "Every Wednesday",
       listId = "2211",
-      subscribedTo = subscribedListIds.exists{ x => x == "2211" },
+      subscribedTo = subscribedListIds.exists{ x => x == "2211" || x == "3806" || x == "3807" },
       signupPage = Some("/travel/2016/aug/18/sign-up-to-the-flyer"),
-      exampleUrl = Some("/travel/series/the-flyer/latest/email")
+      exampleUrl = Some("/email/the-flyer?format=email-connected")
     ),
     EmailSubscription(
       name = "Money Talks",

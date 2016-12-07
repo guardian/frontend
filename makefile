@@ -32,9 +32,9 @@ reinstall: uninstall install
 check-node: # PRIVATE
 	@./tools/check-node-version.js
 
-# Make sure yarn is installed, and it's at least v0.16.
+# Make sure yarn is installed, at the right version.
 check-yarn: # PRIVATE
-	@if [ -z "$$(which yarn)" ] || [ $$(echo $$(yarn --version | cut -d . -f 1,2) '< 0.17' | bc) = 1 ]; then npm i -g yarn@~0.17; fi
+	@./tools/check-yarn.js
 
 # *********************** DEVELOPMENT ***********************
 
@@ -76,7 +76,7 @@ compile-fonts: install # PRIVATE
 	@./tools/run-task compile/fonts
 
 atomise-css: install # PRIVATE
-	@node tools/atomise-css
+	@./tools/run-task compile/css/atomise
 
 # * Not ready for primetime use yet... *
 pasteup: install # PRIVATE

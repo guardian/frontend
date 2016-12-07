@@ -1,9 +1,10 @@
 define([
+    'common/utils/add-event-listener',
     'common/utils/closest',
     'common/utils/detect',
     'common/utils/fastdom-promise',
     'commercial/modules/messenger'
-], function (closest, detect, fastdom, messenger) {
+], function (addEventListener, closest, detect, fastdom, messenger) {
     // An intersection observer will allow us to efficiently send slot
     // coordinates for only those that are in the viewport.
     var w = window;
@@ -39,7 +40,7 @@ define([
 
     function addScrollListener(iframe, respond) {
         if (iframeCounter === 0) {
-            w.addEventListener('scroll', onScroll);
+            addEventListener(w, 'scroll', onScroll, { passive: true });
             if (useIO) {
                 observer = new w.IntersectionObserver(onIntersect);
             }

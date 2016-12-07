@@ -15,6 +15,7 @@ import play.api.mvc.{Action, Controller, Result}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import play.api.Environment
 
 object emailLandingPage extends StandalonePage {
   private val id = "email-landing-page"
@@ -49,6 +50,7 @@ object ListIds {
   val theBreakdown = 219
   val theSpin = 220
 
+  val documentaries = 3745
   val sleeveNotes = 39
   val closeUp = 40
   val filmToday = 1950
@@ -57,6 +59,8 @@ object ListIds {
 
   val zipFile = 1902
   val theFlyer = 2211
+  val theFlyerCards = 3806
+  val theFlyerConnected = 3807
   val moneyTalks = 1079
   val fashionStatement = 105
   val crosswordEditorUpdate = 101
@@ -73,37 +77,6 @@ object ListIds {
   val UsElection = 3599
 
   val morningMailUk = 3640
-
-  val allWithoutTrigger: List[Int] = List(
-    theBestOfOpinion,
-    theFiver,
-    mediaBriefing,
-    greenLight,
-    povertyMatters,
-    theLongRead,
-    morningMail,
-    australianPolitics,
-    theBreakdown,
-    theSpin,
-    sleeveNotes,
-    closeUp,
-    filmToday,
-    bookmarks,
-    artWeekly,
-    zipFile,
-    theFlyer,
-    moneyTalks,
-    fashionStatement,
-    crosswordEditorUpdate,
-    theObserverFoodMonthly,
-    firstDogOnTheMoon,
-    bestOfOpinionAUS,
-    bestOfOpinionUS,
-    theGuardianMasterclasses,
-    theGuardianGardener,
-    theGuardianBookshop,
-    UsElection,
-    morningMailUk)
 }
 
 object EmailTypes {
@@ -140,7 +113,7 @@ class EmailFormService(wsClient: WSClient) {
   }
 }
 
-class EmailSignupController(wsClient: WSClient) extends Controller with ExecutionContexts with Logging {
+class EmailSignupController(wsClient: WSClient)(implicit env: Environment) extends Controller with ExecutionContexts with Logging {
   val emailFormService = new EmailFormService(wsClient)
   val emailForm: Form[EmailForm] = Form(
     mapping(
@@ -156,7 +129,7 @@ class EmailSignupController(wsClient: WSClient) extends Controller with Executio
   }
 
   def renderForm(emailType: String, listId: Int) = Action { implicit request =>
-      Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))}
+    Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))}
 
   def subscriptionResult(result: String) = Action { implicit request =>
     Cached(7.days)(result match {
