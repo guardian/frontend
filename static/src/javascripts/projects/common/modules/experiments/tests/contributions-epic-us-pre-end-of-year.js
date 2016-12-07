@@ -50,16 +50,19 @@ define([
             return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate;
         };
 
+        function makeEvent(name) {
+            return this.id + ':' + name;
+        }
+
+        function makeUrl(urlPrefix, intcmp) {
+            return urlPrefix + 'INTCMP=' + intcmp;
+        }
+
         var contributeUrlPrefix = 'co_global_epic_us_pre_end_of_year';
         var membershipUrlPrefix = 'gdnwb_copts_mem_epic_us_pre_end_of_year';
 
-        var epicInsertedEvent = 'ContributionsEpicUsPreEndOfYear:insert';
-        var epicViewedEvent = 'ContributionsEpicUsPreEndOfYear:view';
-
-
-        var makeUrl = function(urlPrefix, intcmp) {
-            return urlPrefix + 'INTCMP=' + intcmp;
-        };
+        var epicInsertedEvent = makeEvent('insert');
+        var epicViewedEvent = makeEvent('view');
 
         var membershipUrl = 'https://membership.theguardian.com/supporter?';
         var contributeUrl = 'https://contribute.theguardian.com/?';
