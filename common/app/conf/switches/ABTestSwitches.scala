@@ -51,7 +51,7 @@ trait ABTestSwitches {
     "Gather contributions and supporters around Brexit supreme court case",
     owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 12, 12),
+    sellByDate =  new LocalDate(2016, 12, 16),
     exposeClientSide = true
   )
 
