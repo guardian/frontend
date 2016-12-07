@@ -35,7 +35,7 @@ define([
                             from: from
                         });
                     }
-                }
+                };
             }
         };
 
