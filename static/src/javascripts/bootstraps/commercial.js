@@ -136,7 +136,7 @@ define([
 
     function isItRainingAds() {
         var testName = 'ItsRainingInlineAds';
-        return ab.testCanBeRun(testName) && ['geo', 'nogeo'].indexOf(ab.getTestVariantId(testName)) > -1;
+        return !config.page.isImmersive && ab.testCanBeRun(testName) && ['geo', 'nogeo'].indexOf(ab.getTestVariantId(testName)) > -1;
     }
 
     return {
