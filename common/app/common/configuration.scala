@@ -150,7 +150,6 @@ class GuardianConfiguration extends Logging {
 
     lazy val stage = InstallationVars.stage
     lazy val projectName = Play.application.configuration.getString("guardian.projectName").getOrElse("frontend")
-    lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isProd = stage.equalsIgnoreCase("prod")
     lazy val isCode = stage.equalsIgnoreCase("code")
@@ -301,12 +300,6 @@ class GuardianConfiguration extends Logging {
     lazy val digitalPackUrl = configuration.getStringProperty("id.digitalpack.url").getOrElse("https://subscribe.theguardian.com")
     lazy val membersDataApiUrl = configuration.getStringProperty("id.members-data-api.url").getOrElse("https://members-data-api.theguardian.com")
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
-  }
-
-  object static {
-    lazy val path =
-      if (environment.secure) configuration.getMandatoryStringProperty("static.securePath")
-      else configuration.getMandatoryStringProperty("static.path")
   }
 
   object images {
