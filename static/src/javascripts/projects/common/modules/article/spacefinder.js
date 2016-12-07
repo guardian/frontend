@@ -6,7 +6,8 @@ define([
     'common/utils/config',
     'common/utils/mediator',
     'common/modules/commercial/dfp/track-ad-render',
-    'lodash/functions/memoize'
+    'lodash/functions/memoize',
+    'common/modules/commercial/user-features'
 ], function (
     qwery,
     bean,
@@ -15,7 +16,8 @@ define([
     config,
     mediator,
     trackAdRender,
-    memoize
+    memoize,
+    userFeatures
 ) {
     // total_hours_spent_maintaining_this = 64
     //
