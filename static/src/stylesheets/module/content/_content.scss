@@ -387,7 +387,6 @@
     box-sizing: border-box;
     padding-top: $gs-baseline / 6;
     margin-bottom: $gs-baseline / 2;
-    clear: left; // a dateline may be preceded by a floated sponsor logo
 
     time {
         display: inline-block;
@@ -440,6 +439,8 @@
         padding-top: $gs-baseline/6;
     }
 }
+
+.badge +.content__dateline { clear: left; }
 
 .content__meta-container .byline-img {
     @include circular;
