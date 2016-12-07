@@ -35,7 +35,7 @@ define([
 
         this.id = 'ContributionsEpicBrexitSupreme';
         this.start = '2016-12-02';
-        this.expiry = '2016-12-12';
+        this.expiry = '2016-12-16';
         this.author = 'Phil Wills';
         this.description = 'Appeal linked to the Brexit appeal in the Supreme Court';
         this.showForSensitive = false;
