@@ -654,7 +654,7 @@ case class CommercialComponentHigh(isAdvertisementFeature: Boolean, isNetworkFro
 
       containers.lift(containerIndex).map { case ((container, index)) => {
           container.after(adSlot)
-          adSlot.wrap(s"""<div class="fc-container"></div>""")
+          adSlot.wrap(s"""<div class="fc-container fc-container--commercial"></div>""")
         }
       }
 
