@@ -68,7 +68,7 @@ trait Knockout extends CompetitionStageLike {
   lazy val activeRound: Option[Round] = {
     rounds.find(r => roundMatches(r).exists(!_.isResult)).orElse(rounds.lastOption)
   }
-  def isActiveRound(round: Round): Boolean = activeRound.exists(_ == round)
+  def isActiveRound(round: Round): Boolean = activeRound.contains(round)
 }
 case class KnockoutList(competitions: Seq[Competition], matches: List[FootballMatch], rounds: List[Round]) extends Knockout {
   override def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(competitions, competition, round)

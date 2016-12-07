@@ -12,8 +12,7 @@ import scala.concurrent.Future
 
 object DynamoDbStore extends Logging with ExecutionContexts {
   val tableName = "missingVideoEncodings"
-  private val client = new AmazonDynamoDBAsyncClient(Configuration.aws.credentials.get)
-  client.setRegion(Region.getRegion(Regions.EU_WEST_1))
+  private val client = services.DynamoDB.asyncClient
 
   def storeMissingEncoding(videoSrc: String, webUrl: String): Unit = {
 

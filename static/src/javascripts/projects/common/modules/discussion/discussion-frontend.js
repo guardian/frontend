@@ -46,13 +46,6 @@ define([
             //   modify discussion-frontend to remove `fetch` polyfill and pass, if needed,
             //   opts.net = { json: fetchJson }
 
-            // Show the sticky banner only if we are in the AB test and other banners are not visible
-            var noOtherBanners = !otherBannersVisible();
-            opts.featureStickyBanner = ab.isInVariant('DiscussionPromoteComments', 'bottom-banner') && noOtherBanners;
-            opts.featureTopBanner = ab.isInVariant('DiscussionPromoteComments', 'top-banner') && noOtherBanners;
-            opts.featureStickyBadge = ab.isInVariant('DiscussionPromoteComments', 'bubble') && noOtherBanners;
-            opts.featureStickyBannerDismissable = true;
-
             frontend(opts)
             .then(onDiscussionFrontendLoad)
             .catch(function (error) {
@@ -61,20 +54,6 @@ define([
         }, function (error) {
             reportError(error, { feature: 'discussion' });
         });
-    }
-
-    function otherBannersVisible () {
-        var siteMessage = document.getElementsByClassName('js-site-message');
-        if (siteMessage.length && !siteMessage[0].classList.contains('is-hidden')) {
-            // Contribution banner is visible
-            return true;
-        }
-        var breakingNews = document.getElementsByClassName('js-breaking-news-placeholder');
-        if (breakingNews.length && !breakingNews[0].classList.contains('breaking-news--hidden')) {
-            // Breaking news alert is visible
-            return true;
-        }
-        return false;
     }
 
     return {

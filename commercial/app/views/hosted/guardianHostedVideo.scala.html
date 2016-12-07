@@ -3,54 +3,64 @@
 @import conf.Configuration.environment
 @import conf.Configuration.site.host
 @import views.html.hosted._
-@(page: HostedVideoPage)(implicit request: RequestHeader)
+@(page: HostedVideoPage)(implicit request: RequestHeader, env: play.api.Environment)
 
 @main(page, Some("commercial")) { } {
     <!--[if (gt IE 9)|(IEMobile)]><!-->
     <style>
     .hosted-tone {
-        color: @{page.campaign.fontColour.brandColour};
+        color: @{page.campaign.fontColour.hexCode};
     }
 
     .hosted-tone-bg {
-        background-color: @{page.campaign.fontColour.brandColour};
+        background-color: @{page.campaign.fontColour.hexCode};
     }
 
-    .hosted-tone-btn,
+    .hosted-tone-btn {
+        color: @{page.campaign.fontColour.hexCode};
+        border: 1px solid @{page.campaign.fontColour.hexCode};
+    }
+
+    .hosted__banner .hosted-tone-btn,
     .hosted-tone-btn:focus,
     .hosted-tone-btn:hover {
-        background-color: @{page.campaign.fontColour.brandColour};
-        border-color: @{page.campaign.fontColour.brandColour};
+        background-color: @{page.campaign.fontColour.hexCode};
     }
 
     .hosted-page .hosted-next-autoplay__video,
     .hosted-page .hosted-next-autoplay__next-in-series {
-        border-top: 1px solid @{page.campaign.fontColour.brandColour};
+        border-top: 1px solid @{page.campaign.fontColour.hexCode};
     }
 
-    .hosted-page .hosted__next-page--tile {
-        border-top-color: @{page.campaign.fontColour.brandColour};
+    .hosted-next-autoplay__tile svg {
+        fill: @{page.campaign.fontColour.hexCode};
     }
 
     .hosted-page .hosted__link {
-        color: @{page.campaign.fontColour.brandColour};
+        color: @{page.campaign.fontColour.hexCode};
     }
 
     .hosted-page ~ .survey-overlay-simple .survey-text__header {
-        background-color: @{page.campaign.fontColour.brandColour};
+        background-color: @{page.campaign.fontColour.hexCode};
+    }
+
+    .hosted__next-page__carousel-arrows .inline-icon {
+        fill: @{page.campaign.fontColour.hexCode};
+        border-color: @{page.campaign.fontColour.hexCode};
     }
     </style>
     <!--<![endif]-->
-    @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-video-page hosted-page--bright" else "hosted-video-page", page)
-    <div class="hosted-page l-side-margins hosted__side hosted-video-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
+    @guardianHostedHeader(if(page.campaign.fontColour.isDark) "hosted-video-page hosted-page--bright" else "hosted-video-page", page)
+    <div class="hosted-page l-side-margins hosted__side hosted-video-page @if(page.campaign.fontColour.isDark) {hosted-page--bright}">
         <section class="hosted-tone--dark">
             <div class="host hosted__container--full">
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
                     @page.video.youtubeId.map { youtubeId =>
                         <iframe id="hosted-video-@youtubeId"
+                        data-media-id="@{page.video.mediaId}"
                         data-duration="@{page.video.duration}"
                         class="js-hosted-youtube-video hosted__youtube-video"
-                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(environment.isProd) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
+                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(environment.isProd && !environment.isPreview) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
                         frameborder="0"
                         allowfullscreen=""></iframe>
                         @guardianHostedControlButtons(page)
@@ -79,9 +89,9 @@
                         <div class="hosted__meta">
                             <h1 class="hosted__heading">@{page.video.title}</h1>
                         </div>
-                        <div class="hostedbadge hostedbadge--shouldscale">
+                        <div class="hostedbadge">
                             <a href="@page.cta.url" data-link-name="hosted-logo-top-left" target="_blank">
-                                <img class="hostedbadge__logo" src="@{page.campaign.logoUrl}" alt="logo @{page.campaign.owner}">
+                                <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
                             </a>
                         </div>
                     </div>
@@ -137,12 +147,14 @@
             </div>
 
             @page.nextPage.map { nextPage =>
-                @hostedVideoOnward(Some(makeshiftPage(nextPage, page.campaign)))
+                <div class="hosted__next-page-wrapper">
+                    @hostedOnwardJourney(List(makeshiftPage(nextPage, page.campaign)), 1, 1)
+                </div>
             }.getOrElse {
-                <div class="js-onward-placeholder hosted__next-page-placeholder"></div>
+                <div class="js-onward-placeholder hosted__next-page-wrapper"></div>
             }
         </section>
-        @guardianHostedCta(page, page.cta)
+        @guardianHostedCta(page, page.cta, isAMP = false)
     </div>
 
 }

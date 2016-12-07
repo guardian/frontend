@@ -136,7 +136,8 @@ object DataMapper {
         (params map toParameter).toSeq
       }.getOrElse(Nil),
       snippet = dfpCreativeTemplate.getSnippet,
-      creatives = Nil
+      creatives = Nil,
+      isNative = dfpCreativeTemplate.getIsNativeEligible
     )
   }
 

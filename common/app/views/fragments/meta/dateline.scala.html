@@ -1,14 +1,8 @@
 @import common.RichRequestHeader
-@import conf.switches.Switches.AmpLiveBlogNewsArticleSwitch
 @import org.joda.time.DateTime
 @import views.support.{AuFriendlyFormat, Format}
 
-@(webPublicationDate: DateTime, lastModified: DateTime, hasBeenModified: Boolean, isLiveBlog: Boolean = false, isLive: Boolean = false, isMinute: Boolean = false)(implicit request: RequestHeader)
-
-@* Aug 2016: Google only supports NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/LiveBlogPosting *@
-@isAmpAndStructuredAsNewsArticle() = @{
-    request.isAmp && AmpLiveBlogNewsArticleSwitch.isSwitchedOn
-}
+@(webPublicationDate: DateTime, lastModified: DateTime, hasBeenModified: Boolean, firstPublicationDate: Option[DateTime], isLiveBlog: Boolean = false, isLive: Boolean = false, isMinute: Boolean = false)(implicit request: RequestHeader)
 
 <p class="@if(!isMinute){content__dateline}@if(isMinute){content__dateline--minute-article}" aria-hidden="true">
     <time itemprop="datePublished" datetime='@Format(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")'
@@ -19,18 +13,20 @@
             @Format(webPublicationDate, "EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(webPublicationDate)</span>
         }
     </time>
-    @* Aug 2016: disable coverage start time for AMP Live Blogs, which currently have an article type of NewsArticle *@
-    @if(isLiveBlog && !isAmpAndStructuredAsNewsArticle()) {
+    @if(isLiveBlog) {
         <meta itemprop="coverageStartTime" content="@Format(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")">
     }
-    @if(hasBeenModified && !isMinute) {
-        <time itemprop="dateModified" datetime='@Format(lastModified, "yyyy-MM-dd'T'HH:mm:ssZ")'
-        data-timestamp="@lastModified.getMillis" class="content__dateline-lm js-lm u-h">
-            Last modified on @Format(lastModified, "EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(lastModified)</span>
-        </time>
+
+    @if(hasBeenModified && firstPublicationDate.getOrElse("") != webPublicationDate && !isMinute) {
+        @defining(firstPublicationDate.getOrElse(webPublicationDate)) { firstPublicationDate =>
+            <time datetime='@Format(firstPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")'
+            data-timestamp="@firstPublicationDate.getMillis" class="content__dateline-lm js-lm u-h">
+                First published on @Format(firstPublicationDate, "EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(firstPublicationDate)</span>
+            </time>
+        }
     }
-    @* Aug 2016: disable coverage end time for AMP Live Blogs, which currently have an article type of NewsArticle *@
-    @if(isLiveBlog && !isLive && !isAmpAndStructuredAsNewsArticle()) {
+
+    @if(isLiveBlog && !isLive) {
         <meta itemprop="coverageEndTime" content="@Format(lastModified, "yyyy-MM-dd'T'HH:mm:ssZ")">
     }
 </p>

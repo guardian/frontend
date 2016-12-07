@@ -1,0 +1,58 @@
+.rounded-icon {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    border-radius: 50%;
+}
+
+.centered-icon {
+    svg {
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
+        position: absolute;
+    }
+}
+
+.inline-icon {
+    fill: #ffffff;
+}
+
+.caption {
+    .inline-information {
+        margin-right: $gs-gutter/10;
+        margin-top: -$gs-baseline/4;
+        width: 14px;
+        height: 14px;
+        background-color: $neutral-2;
+
+        &__svg {
+            width: 4px;
+            fill: #ffffff;
+        }
+    }
+}
+
+.control__icon-wrapper {
+    border: 1px solid rgba(255, 255, 255, .3);
+    float: left;
+    height: 36px;
+    width: 36px;
+    text-align: center;
+}
+
+.fc-item {
+    .inline-quote__svg {
+        width: 19px;
+        height: 12px;
+    }
+
+    .inline-video__svg,
+    .inline-camera__svg {
+        width: 17px;
+        height: 12px;
+        margin-right: $gs-gutter/5;
+    }
+}

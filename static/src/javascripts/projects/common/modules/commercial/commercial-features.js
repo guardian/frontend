@@ -70,19 +70,19 @@ define([
             isArticle &&
             !isLiveBlog &&
             !isHosted &&
-            switches.standardAdverts;
+            switches.commercial;
 
         this.articleAsideAdverts =
             this.dfpAdvertising &&
             !isMinuteArticle &&
             !isMatchReport &&
             !!(isArticle || isLiveBlog) &&
-            switches.standardAdverts;
+            switches.commercial;
 
         this.sliceAdverts =
             this.dfpAdvertising &&
             !isMinuteArticle &&
-            switches.standardAdverts;
+            switches.commercial;
 
         this.popularContentMPU =
             this.dfpAdvertising &&
@@ -91,13 +91,13 @@ define([
         this.videoPreRolls =
             externalAdvertising &&
             !sensitiveContent &&
-            switches.videoAdverts;
+            switches.commercial;
 
         this.frontCommercialComponents =
             this.dfpAdvertising &&
             !isMinuteArticle &&
             config.page.isFront &&
-            switches.commercialComponents;
+            switches.commercial;
 
         this.thirdPartyTags =
             externalAdvertising &&
@@ -111,7 +111,7 @@ define([
 
         this.commentAdverts =
             this.dfpAdvertising &&
-            switches.standardAdverts &&
+            switches.commercial &&
             !isMinuteArticle &&
             config.switches.discussion &&
             config.page.commentable &&
@@ -121,10 +121,10 @@ define([
         this.liveblogAdverts =
             isLiveBlog &&
             this.dfpAdvertising &&
-            switches.liveblogAdverts;
+            switches.commercial;
 
         this.canReasonablyAskForMoney = // eg become a supporter, give a contribution
-            !(userFeatures.isPayingMember() || config.page.isSensitive || config.page.isAdvertisementFeature);
+            !(userFeatures.isPayingMember() || config.page.shouldHideAdverts || config.page.isAdvertisementFeature);
 
         this.async = {
             canDisplayMembershipEngagementBanner : detect.adblockInUse.then(function (adblockUsed) {

@@ -25,23 +25,30 @@ define([
                 return window.location.search.replace(/^\?/, '');
             },
 
+            updateQueryString: function (params, historyFn) {
+                var querystringChanged = model.getCurrentQueryString() !== params.querystring;
+
+                if (params.querystring && querystringChanged && supportsPushState) {
+                    historyFn(
+                        params.state || {},
+                        params.title || window.title,
+                        params.querystring + window.location.hash
+                    );
+                }
+            },
+
             // this will replace anything after the root/domain of the URL
             // and add an item to the browser history.
             // params object requires a "querystring" property
             // and optionally takes a "state" and "title" property too
             pushQueryString: function (params) {
-                if (!params.querystring) {
-                    return;
-                }
-                if (supportsPushState) {
-                    if (model.getCurrentQueryString() !== params.querystring) {
-                        history.pushState(
-                                params.state || {},
-                                params.title || window.title,
-                                params.querystring + window.location.hash
-                        );
-                    }
-                }
+                return model.updateQueryString(params, history.pushState.bind(history));
+            },
+
+            // equivalent to pushQueryString but uses history.replaceState to
+            // overwrite history rather than history.pushState
+            replaceQueryString: function (params) {
+               return model.updateQueryString(params, history.replaceState.bind(history));
             },
 
             // take an object, construct into a query, e.g. {page: 1, pageSize: 10} => page=1&pageSize=10
@@ -79,7 +86,8 @@ define([
         constructQuery: model.constructQuery,
         back: model.back,
         hasHistorySupport: supportsPushState,
-        pushQueryString: model.pushQueryString
+        pushQueryString: model.pushQueryString,
+        replaceQueryString: model.replaceQueryString
     };
 
 });

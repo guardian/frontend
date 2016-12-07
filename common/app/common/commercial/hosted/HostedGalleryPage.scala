@@ -38,6 +38,8 @@ case class HostedGalleryPage(
 
 case class HostedGalleryImage(
   url: String,
+  width: Option[Int] = None,
+  height: Option[Int] = None,
   title: String,
   caption: String = "",
   credit: String = ""
@@ -74,6 +76,8 @@ object HostedGalleryPage extends Logging {
           val asset = element.assets.maxBy(_.typeData.flatMap(_.width).getOrElse(0))
           HostedGalleryImage(
             url = asset.file.getOrElse(""),
+            width = asset.typeData.flatMap(_.width),
+            height = asset.typeData.flatMap(_.height),
             title = asset.typeData.flatMap(_.altText).getOrElse(""),
             caption = asset.typeData.flatMap(_.caption).getOrElse(""),
             credit = asset.typeData.flatMap(_.credit).getOrElse("")

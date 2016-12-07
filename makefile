@@ -17,10 +17,7 @@ list: # PRIVATE
 
 # Install all 3rd party dependencies.
 install: check-node check-yarn
-	@echo 'Installing 3rd party dependencies…'
 	@yarn install
-	@echo '…done.'
-	@node tools/messages.js install
 
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
@@ -32,12 +29,12 @@ uninstall: # PRIVATE
 reinstall: uninstall install
 
 # Make sure we running a recent-enough version of Node.
-check-node:
-	@./dev/check-node-version.js
+check-node: # PRIVATE
+	@./tools/check-node-version.js
 
-# Make sure yarn is installed.
+# Make sure yarn is installed, at the right version.
 check-yarn: # PRIVATE
-	@if [ -z "$$(which yarn)" ]; then npm i -g yarn; fi
+	@./tools/check-yarn.js
 
 # *********************** DEVELOPMENT ***********************
 
@@ -53,36 +50,36 @@ watch: compile-dev
 # *********************** ASSETS ***********************
 
 # Compile all assets for production.
-compile: check-node
-	@./tools/assets/compile.js
+compile: install
+	@./tools/run-task compile
 
 # Compile all assets for development.
-compile-dev: check-node
-	@./tools/assets/compile.js --dev
+compile-dev: install
+	@./tools/run-task compile --dev
 
-compile-javascript: check-node # PRIVATE
-	@./tools/assets/compile.js javascript
+compile-javascript: install # PRIVATE
+	@./tools/run-task compile/javascript
 
-compile-javascript-dev: check-node # PRIVATE
-	@./tools/assets/compile.js javascript --dev
+compile-javascript-dev: install # PRIVATE
+	@./tools/run-task compile/javascript --dev
 
-compile-css: check-node # PRIVATE
-	@./tools/assets/compile.js css
+compile-css: install # PRIVATE
+	@./tools/run-task compile/css
 
-compile-images: check-node # PRIVATE
-	@./tools/assets/compile.js images
+compile-images: install # PRIVATE
+	@./tools/run-task compile/images
 
-compile-svgs: check-node # PRIVATE
-	@./tools/assets/compile.js inline-svgs
+compile-svgs: install # PRIVATE
+	@./tools/run-task compile/inline-svgs
 
-compile-fonts: check-node # PRIVATE
-	@./tools/assets/compile.js fonts
+compile-fonts: install # PRIVATE
+	@./tools/run-task compile/fonts
 
-atomise-css: check-node # PRIVATE
-	@node tools/atomise-css
+atomise-css: install # PRIVATE
+	@./tools/run-task compile/css/atomise
 
 # * Not ready for primetime use yet... *
-pasteup: check-node # PRIVATE
+pasteup: install # PRIVATE
 	@cd static/src/stylesheets/pasteup && npm --silent i && node publish.js
 
 
@@ -90,21 +87,28 @@ pasteup: check-node # PRIVATE
 # *********************** CHECKS ***********************
 
 # Run the JS test suite.
-test: check-node
-	@grunt test --dev
+test: install
+	@./tools/run-task test/javascript
+
+# Check the JS test suite coverage.
+coverage: install
+	@./tools/run-task test/javascript/coverage --stdout
 
 # Lint all assets.
-validate: check-node
-	@grunt validate
+validate: install
+	@./tools/run-task lint
 
 # Lint all SCSS.
-validate-sass: check-node # PRIVATE
-	@grunt validate:sass
-	@grunt validate:css
+validate-sass: install # PRIVATE
+	@./tools/run-task lint/sass
 
 # Lint all JS.
-validate-javascript: check-node # PRIVATE
-	@grunt validate:js
+validate-javascript: install # PRIVATE
+	@./tools/run-task lint/javascript
 
-validate-amp: check-node # PRIVATE
+# Lint all assets.
+fix: install
+	@./tools/run-task lint/javascript-fix
+
+validate-amp: install # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js

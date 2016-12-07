@@ -27,7 +27,6 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 config.page = {
                     contentType : 'Article',
                     isMinuteArticle : false,
-                    isSSL : false,
                     section : 'politics',
                     shouldHideAdverts : false,
                     isFront : false,
@@ -35,11 +34,8 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 };
 
                 config.switches = {
-                    commercialComponents : true,
                     outbrain : true,
-                    sponsored : true,
-                    standardAdverts : true,
-                    videoAdverts : true,
+                    commercial : true,
                     discussion : true
                 };
 

@@ -1,37 +1,24 @@
-# Testing externally on your localhost 
+# Testing externally on your localhost
 ====================================
 
-Prerequisites: [Ruby](https://www.ruby-lang.org/en/) & [RubyGems](http://rubygems.org/)
- 
-Install _proxylocal_:
-```bash    
-gem install proxylocal
-```
-If you're running Ubuntu you might need to add the RubyGem bin path to your PATH environment variable:
+There are a number of tools on the market for this. The one we recommended is ngrok.
+
+
+#To use ngrok:
+
+Install ngrok via their website: https://ngrok.com/download or use homebrew :
 ```bash
--- in .bashrc --
-export PATH=$PATH:/var/lib/gems/1.8/bin
+brew cask install ngrok
 ```
-In one terminal run the _core-navigation_ server on a given port:
+In sbt run your desired project:
 ```bash
-./sbt001
-> project core-navigation
-> run 9001
+./sbt
+> project article
+> run
 ```
-Then expose it to the world with proxylocal:
+In a separate terminal, run ngrok, assigning the port number you are using for frontend (default is 9000):
 ```bash
-proxylocal 9001
+ngrok http 9000
 ```
-Edit your article conf (ie. _article/conf/env/DEV.properties_) with the name of the proxylocal server you've been assigned:
-```
-guardian.page.coreNavigationUrl=http://kj56.t.proxylocal.com
-```
-Then run your article server on some other port:
-```bash
-> project article 
-> run 9002
-```
-Visit the proxylocal server you've been assigned:
-```bash
-open http://f601.t.proxylocal.com/
-```
+Copy the Forwarding url - ie "https://eb65c38f.ngrok.io"
+To end the tunnel use CTRL-C to kill it.

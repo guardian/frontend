@@ -32,3 +32,17 @@
         height: .6em;
     }
 }
+
+.content--media:not(.paid-content--advertisement-feature) {
+
+    .social-icon {
+        background-color: transparent;
+        fill: $neutral-3;
+        color: $neutral-3;
+        border: 1px solid $neutral-2;
+    }
+
+    .social-icon__svg {
+        fill: #bdbdbd;
+    }
+}

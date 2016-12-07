@@ -2,13 +2,11 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/analytics/google',
-    'common/modules/analytics/omniture',
     'common/utils/robust'
 ], function (
     mediator,
     storage,
     google,
-    omniture,
     robust
 ) {
     var NG_STORAGE_KEY = 'gu.analytics.referrerVars';
@@ -29,6 +27,10 @@ define([
             return;
         }
 
+        if (isSponsorLogoLinkClick(spec.target)) {
+            return google.trackSponsorLogoLinkClick(spec.target);
+        }
+
         if (spec.sameHost) {
             if (spec.samePage) {
                 trackSamePageLinkClick(spec);
@@ -40,17 +42,19 @@ define([
         }
     }
 
+    function isSponsorLogoLinkClick(target) {
+        return target.hasAttribute('data-sponsor');
+    }
+
     // used where we don't have an element to pass as a tag, eg. keyboard interaction
     function trackNonClickInteraction(actionName) {
         google.trackNonClickInteraction(actionName);
-        omniture.trackLinkImmediate(actionName);
     }
 
     function trackSamePageLinkClick(spec) {
         // Do not perform a same-page track link when there isn't a tag.
         if (spec.tag) {
             google.trackSamePageLinkClick(spec.target, spec.tag);
-            omniture.trackSamePageLinkClick(spec.target, spec.tag, {customEventProperties: spec.customEventProperties});
         }
     }
 
@@ -59,7 +63,6 @@ define([
         // GA and Omniture will both pick it up on next page load,
         // then Omniture will remove it from storage.
         var storeObj = {
-            pageName: this.s.pageName,
             path: loc.pathname,
             tag: spec.tag || 'untracked',
             time: new Date().getTime()
@@ -72,7 +75,6 @@ define([
         // and rely on Omniture to provide a 500 ms delay so they both get a chance to complete.
         // TODO when Omniture goes away, implement the delay ourselves.
         google.trackExternalLinkClick(spec.target, spec.tag);
-        omniture.trackExternalLinkClick(spec.target, spec.tag, {customEventProperties: spec.customEventProperties});
     }
 
     function init(options) {
@@ -80,7 +82,6 @@ define([
         if (options.location) {
             loc = options.location; // allow a fake location to be passed in for testing
         }
-        omniture.go();
         addHandlers();
         mediator.emit('analytics:ready');
     }

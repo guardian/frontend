@@ -1,13 +1,13 @@
 @mixin hosted-fade-in {
     visibility: visible;
     opacity: 1;
-    transition: opacity 1s linear, visibility 0s;
+    transition: opacity 1s linear, visibility 0s, margin 200ms ease;
 }
 
 @mixin hosted-fade-out {
     visibility: hidden;
     opacity: 0;
-    transition: opacity 1s linear, visibility 1s;
+    transition: opacity 1s linear, visibility 1s, margin 200ms ease;
 }
 
 @mixin hosted-slide-in {
@@ -23,11 +23,8 @@
 .hosted-video-page {
     .hosted__headerwrap {
         .hostedbadge {
-            @include mq(leftCol) {
+            @include mq(leftCol, wide) {
                 margin-left: 100px;
-            }
-            @include mq(wide) {
-                margin-left: 20px;
             }
         }
         .hostedbadge__logo {
@@ -37,6 +34,70 @@
             }
         }
     }
+
+    .hosted__next-page-wrapper {
+        margin: $gs-baseline $gs-gutter;
+        position: relative;
+        order: 3;
+        overflow: hidden;
+        @include mq($until: leftCol) {
+            margin: $gs-baseline 0 0;
+            padding: 0 $gs-gutter;
+            background-color: $neutral-7;
+            .hosted__next-page-header--border {
+                margin-left: -$gs-gutter;
+                width: 150%;
+            }
+            .hosted__carousel-marker {
+                margin-bottom: $gs-baseline/2;
+            }
+        }
+        @include mq(leftCol) {
+            width: 300px;
+        }
+        @include mq(wide) {
+            margin-left: 170px;
+        }
+    }
+
+    .hosted__container.host {
+        position: relative;
+        background: transparent;
+        color: #ffffff;
+
+        @include mq($until: desktop) {
+            padding: 0;
+        }
+    }
+
+    .hosted__glogo,
+    .hosted__next-page-wrapper {
+        @include mq(leftCol, wide) {
+            margin-right: 80px;
+        }
+    }
+
+    .hosted__video .vjs-control.vjs-current-time {
+        @include mq(leftCol) {
+            margin-left: 17px;
+        }
+    }
+
+    .hosted__video.gu-media--video:not(.vjs-playing) .vjs-play-control {
+        @include mq($until: leftCol) {
+            margin-left: -50px;
+        }
+        @include mq($until: mobileLandscape) {
+            margin-left: -35px;
+        }
+    }
+
+    .hosted__video.gu-media--video .vjs-progress-control {
+        @include mq(leftCol) {
+            left: 100px;
+        }
+    }
+
 }
 
 .hosted__youtube-poster-image {
@@ -110,8 +171,13 @@
     background-color: unset;
     font-size: 16px;
     padding-top: 2px;
-    left: 88px;
+    left: 98px;
     pointer-events: none;
+    padding-left: 2px;
+
+    @include mq($until: leftCol) {
+        left: $gs-gutter;
+    }
 }
 
 .youtube__video-started:not(.youtube__video-ended) {
@@ -259,32 +325,33 @@
         margin: 6px;
         padding-top: 6px;
     }
-    .hosted-next-autoplay__tile {
-        @include clearfix;
-        @include circular;
+}
+
+.hosted-next-autoplay__tile {
+    @include clearfix;
+    @include circular;
+    display: block;
+    float: left;
+    color: #333333;
+    line-height: 30px;
+    margin: 12px 0;
+    font-weight: 600;
+    padding: 4px 6px 4px 16px;
+
+    @include mq(desktop) {
+        margin: 24px 0;
+    }
+
+    .inline-arrow-right {
         display: block;
-        float: left;
-        color: #333333;
-        line-height: 30px;
-        margin: 12px 0;
-        font-weight: 600;
-        padding: 4px 6px 4px 16px;
+        float: right;
+        height: 30px;
+        width: 30px;
+        margin-left: 20px;
+    }
 
-        @include mq(desktop) {
-            margin: 24px 0;
-        }
-
-        .inline-arrow-right {
-            display: block;
-            float: right;
-            height: 30px;
-            width: 30px;
-            margin-left: 20px;
-        }
-
-        svg {
-            position: static;
-            fill: #333333;
-        }
+    svg {
+        position: static;
+        fill: #333333;
     }
 }

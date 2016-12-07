@@ -5,14 +5,16 @@ import implicits.Forms
 import play.api.mvc._
 import play.api.data._
 import play.api.data.validation.Constraints
-import model.{NoCache, IdentityPage}
+import model.{IdentityPage, NoCache}
 import common.ExecutionContexts
-import services.{PlaySigninService, IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
+import services.{IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
 import idapiclient.IdApiClient
-import play.api.i18n.{MessagesApi, Messages}
+import play.api.i18n.{Messages, MessagesApi}
 import idapiclient.EmailPassword
 import utils.SafeLogging
 import form.Mappings
+import play.api.Environment
+
 import scala.concurrent.Future
 
 
@@ -22,9 +24,10 @@ class SigninController(returnUrlVerifier: ReturnUrlVerifier,
                        idUrlBuilder: IdentityUrlBuilder,
                        signInService : PlaySigninService,
                        val messagesApi: MessagesApi)
+                      (implicit env: Environment)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with Forms {
 
-  val page = IdentityPage("/signin", "Sign in", "signin")
+  val page = IdentityPage("/signin", "Sign in")
 
   val form = Form(
     Forms.tuple(

@@ -1,9 +1,11 @@
 @import common.InlineJs
-@import conf.switches.Switches.IdentityProfileNavigationSwitch
+@import conf.switches.Switches.{IdentityProfileNavigationSwitch}
 @import conf.Configuration
+@import mvt.WebpackTest
+@import model.Page
 @import templates.inlineJS.nonBlocking.js._
 
-@()(implicit request: RequestHeader)
+@(page: Page)(implicit request: RequestHeader, env: play.api.Environment)
 
 @**
  * Use this fragment to add JavaScript that can improve the perceived rendering speed
@@ -20,14 +22,48 @@
     @InlineJs(showUserName().body, "showUserName.js")
 }
 
-@if(mvt.ABNewHeaderVariant.canRun) {
-    // editionalise new header navigation
-    @InlineJs(editionaliseMenu().body, "editionaliseMenu.js")
-}
-
 // ************* ANALYTICS *************
 
 // Ophan pageview ID and browser ID are needed by Google Analytics, which runs just after this script tag
 @InlineJs(ophanConfig().body, "ophanConfig.js")
 
+@if(WebpackTest.isParticipating &&
+    (
+        page.metadata.contentType == "Article" ||
+        page.metadata.contentType == "LiveBlog" ||
+        page.metadata.contentType == "Interactive"
+    )
+) {
+
+    //TODO: We're loading curl twice (once here, once in app-webpack.js) as interactives depend on it and app-webpack.js
+    //      may not have loaded in time. This problem will go away when we stop using curl to load the JS application
+    @if(Configuration.assets.useHashedBundles) {
+        @HtmlFormat.raw(common.Assets.js.curl)
+    }
+
+    [].slice.apply(document.querySelectorAll('figure.interactive[data-interactive]')).forEach(function (el) {
+        require([el.getAttribute('data-interactive')], function (interactive) {
+            interactive.boot(el, document, window.guardian.config);
+        }, function (err) {
+            console.log('Interactive failed', mainJS);
+            console.log('Error:', err);
+        });
+        require(['ophan/ng'], function(ophan) {
+            var a = el.querySelector('a');
+            var href = a && a.href;
+
+            if (href) {
+                ophan.trackComponentAttention(href, el);
+            }
+        });
+        [].slice.apply(document.querySelectorAll('iframe.interactive-atom-fence')).forEach(function (el) {
+            var srcdoc;
+            if (!el.srcdoc) {
+                srcdoc = el.getAttribute('srcdoc');
+                el.contentWindow.contents = srcdoc;
+                el.src = 'javascript:window["contents"]';
+            }
+        });
+    });
+}
 </script>

@@ -47,6 +47,7 @@ define([
     'common/modules/user-prefs',
     'common/modules/onward/breaking-news',
     'common/modules/social/pinterest',
+    'common/modules/social/hidden-share-toggle',
     'common/modules/save-for-later',
     'common/modules/commercial/membership-engagement-banner',
     'common/modules/email/email',
@@ -100,6 +101,7 @@ define([
     userPrefs,
     breakingNews,
     pinterest,
+    hiddenShareToggle,
     SaveForLater,
     membershipEngagementBanner,
     email,
@@ -190,10 +192,8 @@ define([
                 if (config.page.contentType !== 'Network Front') {
                     history.logSummary(config.page);
                 }
-
-                if (config.page.contentType === 'Video') {
-                    history.logHistory(config.page);
-                }
+                
+                history.logHistory(config.page);
             },
 
             showHistoryInMegaNav: function () {
@@ -235,9 +235,7 @@ define([
             },
 
             startRegister: function () {
-                if (!config.page.isSSL) {
-                    register.initialise();
-                }
+                register.initialise();
             },
 
             showMoreTagsLink: function () {
@@ -284,7 +282,9 @@ define([
 
             loadBreakingNews: function () {
                 if (config.switches.breakingNews && config.page.section !== 'identity' && !config.page.isHosted) {
-                    breakingNews();
+                    breakingNews().catch(function() {
+                        // breaking news may not load if local storage is unavailable - this is fine
+                    });
                 }
             },
 
@@ -384,6 +384,7 @@ define([
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-pinterest', modules.initPinterest],
+                ['c-hidden-share-toggle', hiddenShareToggle],
                 ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-engagement-banner', modules.membershipEngagementBanner],
                 ['c-email', modules.initEmail],

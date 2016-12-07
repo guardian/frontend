@@ -466,32 +466,227 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         border-color: #333333;
     }
 }
+
 .site-message--adblock-message,
 .site-message--membership-message-default {
     background: $membership-default;
 }
+
 .site-message--membership-message-deep-purple {
     background: #7d0068;
 }
+
 .site-message--membership-message-yellow {
     @include site-message-dark-text;
     background: #fff200;
 }
+
 .site-message--membership-message-vibrant-blue {
     @include site-message-dark-text;
     background: #4bc6df;
 }
+
 .site-message--membership-message-light-blue {
     @include site-message-dark-text;
     background: #aad8f1;
 }
+
 .site-message--membership-message-teal {
     @include site-message-dark-text;
     background: #69d1ca;
 }
+
 .site-message--contributions-message {
     @include site-message-dark-text;
     background: #ffbb00;
+}
+
+/*
+ * Prominent membership message as a feature
+ */
+.site-message--membership-prominent {
+    .site-message__message {
+        @include mq($until: tablet) {
+            padding-left: 5px;
+        }
+        @include mq($from: tablet) {
+            padding-left: 10px;
+        }
+    }
+    .site-message__media {
+        vertical-align: top;
+        @include mq($from: mobile) {
+            padding-top: 4px;
+        }
+        @include mq($from: tablet) {
+            display: table-cell;
+            padding-top: 1px;
+        }
+    }
+    .site-message__close {
+        vertical-align: top;
+        width: 36px;
+        height: 36px;
+        @include mq($from: mobile) {
+            padding-right: 10px;
+        }
+        @include mq($from: tablet) {
+            padding-right: 20px;
+        }
+    }
+    .site-message__inner {
+        padding-top: 5px;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-bottom: 10px;
+    }
+    .site-message__message--membership {
+        margin-right: 5px;
+        font-weight: 900;
+        @include mq($from: mobile) {
+            font-size: 16px;
+            line-height: 20px;
+            margin-right: 10px;
+        }
+        @include mq($from: tablet) {
+            font-size: 24px;
+            line-height: 28px;
+            margin-right: 20px;
+        }
+        @include mq($from: desktop) {
+            font-size: 28px;
+            line-height: 32px;
+            margin-right: 20px;
+        }
+    }
+    .message-button-rounded__cta {
+        @include clearfix;
+        @include circular;
+        @include fs-textSans(2);
+        border: 0;
+        display: inline-block;
+        width: auto;
+        @include mq($from: mobile) {
+            font-size: 12px;
+            line-height: 24px;
+            height: 24px;
+            margin-top: 3px;
+            padding-left: 9px;
+            svg {
+                position: relative;
+                top: -3px;
+                height: 24px;
+                width: 14px;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+        @include mq($from: tablet) {
+            font-size: 14px;
+            line-height: 28px;
+            height: 28px;
+            margin-top: 5px;
+            top: -5px;
+            padding-left: 12px;
+            svg {
+                top: -2px;
+                height: 28px;
+                width: 18px;
+                padding-left: 10px;
+                padding-right: 5px;
+            }
+        }
+        @include mq($from: desktop) {
+            font-size: 14px;
+            line-height: 36px;
+            height: 36px;
+            margin-top: 10px;
+            top: -5px;
+            padding-left: 15px;
+            svg {
+                top: 3px;
+                height: 36px;
+                width: 20px;
+                padding-left: 10px;
+                padding-right: 7px;
+            }
+        }
+        padding-right: 10px;
+        position: relative;
+        cursor: pointer;
+        background-color: transparent;
+        font-weight: bold;
+        a {
+            text-decoration: none;
+        }
+    }
+
+    #membership__engagement-message-text {
+        margin-right: 16px;
+    }
+
+    .message-button-rounded__cta.yellow {
+        svg path {
+            stroke: #000333;
+            fill: #000333;
+        }
+        background-color: #ff9b0b;
+    }
+    .message-button-rounded__cta.purple {
+        svg path {
+            stroke: #ffffff;
+            fill: #ffffff;
+        }
+        color: #ffffff;
+        background-color: #dc2a7d;
+    }
+    .message-button-rounded__cta.dark-blue {
+        svg path {
+            stroke: #000333;
+            fill: #000333;
+        }
+        color: #000333;
+        background-color: #4bc6df;
+    }
+    .message-button-rounded__cta.bright-blue {
+        svg path {
+            stroke: #ffffff;
+            fill: #ffffff;
+        }
+        color: #ffffff;
+        background-color: #005689;
+    }
+    .inline-arrow-white-right {
+        display: block;
+        float: right;
+        height: $gs-column-width/2;
+    }
+}
+
+.site-message--membership-prominent.yellow {
+    @include site-message-dark-text;
+    background-color: #ffce4b;
+    svg {
+        stroke: #000000;
+        fill: #000000;
+    }
+}
+
+.site-message--membership-prominent.purple {
+    background-color: #7d0068;
+}
+
+.site-message--membership-prominent.bright-blue {
+    @include site-message-dark-text;
+    background-color: #4bc6df;
+    svg {
+        stroke: #000000;
+        fill: #000000;
+    }
+}
+
+.site-message--membership-prominent.dark-blue {
+    background-color: #005689;
 }
 
 /*
@@ -612,7 +807,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         }
     }
 }
-
 
 .adblock-sticky__quote {
     @include clearfix;

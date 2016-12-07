@@ -7,7 +7,7 @@ object DynamicSlow extends DynamicContainer {
     if (stories.isEmpty) {
       Nil
     } else {
-      Seq(if (bigs.length == 0) {
+      Seq(if (bigs.isEmpty) {
         Hl4Hl4
       } else if (bigs.length == 1) {
         Hl4Half

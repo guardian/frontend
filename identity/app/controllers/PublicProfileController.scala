@@ -7,18 +7,21 @@ import services.{IdRequestParser, IdentityUrlBuilder}
 import utils.SafeLogging
 import model.{Cached, IdentityPage}
 import idapiclient.IdApiClient
+
 import scala.concurrent.Future
 import com.gu.identity.model.User
 import client.Response
+import play.api.Environment
 
 class PublicProfileController(idUrlBuilder: IdentityUrlBuilder,
                               identityApiClient: IdApiClient,
                               idRequestParser: IdRequestParser)
+                             (implicit env: Environment)
   extends Controller
   with ExecutionContexts
   with SafeLogging{
 
-  def page(url: String, username: String) = IdentityPage(url,  s"$username's public profile", "public profile")
+  def page(url: String, username: String) = IdentityPage(url,  s"$username's public profile")
 
   def renderProfileFromVanityUrl(vanityUrl: String, activityType: String) = renderPublicProfilePage(
     "/user/" + vanityUrl,

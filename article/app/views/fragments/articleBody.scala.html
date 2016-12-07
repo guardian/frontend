@@ -1,5 +1,5 @@
 @import model.ArticleSchemas
-@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
+@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import common.LinkTo
 @import views.BodyCleaner
@@ -17,7 +17,7 @@
 }
 
 @defining(model.article) { article =>
-  @defining(isPaidContent(article, model)) { isPaidContent =>
+  @defining(isPaidContent(model)) { isPaidContent =>
 
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
@@ -32,24 +32,32 @@
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
                 <meta itemprop="name" content="The Guardian">
-                @if(amp) {
-                    @* AMP doesn't support sameAs *@
-                    <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-                        <meta itemprop="url" content="https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2015/10/1/1443713974413/Guardiantitlepiecedigitalon.png">
-                    </div>
-                } else {
-                    <link itemprop="sameAs" href="http://www.theguardian.com">
-                }
+                @fragments.logo(amp)
             </div>
 
             @if(isPaidContent) {
                 @fragments.guBand()
             }
 
-            @fragments.headTonal(article, model, isPaidContent, amp = amp)
+            @if(!mvt.ABNewNavVariantFour.isParticipating) {
+                @fragments.headTonal(article, model, isPaidContent, amp = amp)
 
-            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                @fragments.mainMedia(article, amp)
+                @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                    @fragments.mainMedia(article, amp)
+                }
+            } else {
+                <div class="hide-on-mobile">
+                    @fragments.headTonal(article, model, isPaidContent, amp = amp)
+
+                    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                        @fragments.mainMedia(article, amp)
+                    }
+                </div>
+                <div class="mobile-only">
+                    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                        @fragments.mainMedia(article, amp)
+                    }
+                </div>
             }
 
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
@@ -62,11 +70,15 @@
                             @fragments.mainMedia(article, amp)
                         }
 
+                        @if(mvt.ABNewNavVariantFour.isParticipating) {
+                            <div class="mobile-only">
+                                @fragments.headTonal(article, model, isPaidContent, amp = amp)
+                            </div>
+                        }
+
                         @fragments.witnessCallToAction(article.content)
 
-                        @fragments.contentMeta(article, model)
-
-                        @fragments.chapterHeadings(article)
+                        @fragments.contentMeta(article, model, amp = amp)
 
                         @if(article.tags.isNews && !article.elements.hasMainEmbed && article.elements.elements("main").isEmpty) {
                             <hr class="content__hr hide-until-leftcol" />
@@ -96,7 +108,6 @@
                     </div>
 
                     <div class="content__secondary-column js-secondary-column" aria-hidden="true">
-                        @fragments.chapterHeadings(article)
                         <div class="ad-slot-container js-ad-slot-container"></div>
                         <div class="js-components-container"></div>
                     </div>

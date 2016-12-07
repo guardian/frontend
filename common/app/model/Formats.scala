@@ -63,9 +63,8 @@ object MetaDataFormat {
     id: String,
     url: String,
     webUrl: String,
-    section: String,
+    sectionSummary: Option[SectionSummary],
     webTitle: String,
-    analyticsName: String,
     adUnitSuffix: String,
     iosType: Option[String],
     pagination: Option[Pagination],
@@ -101,9 +100,8 @@ object MetaDataFormat {
       part1.id,
       part1.url,
       part1.webUrl,
-      Some(SectionSummary.fromId(part1.section)),
+      part1.sectionSummary,
       part1.webTitle,
-      part1.analyticsName,
       part1.adUnitSuffix,
       part1.iosType,
       part1.pagination,
@@ -139,9 +137,8 @@ object MetaDataFormat {
           meta.id,
           meta.url,
           meta.webUrl,
-          meta.sectionId,
+          meta.section,
           meta.webTitle,
-          meta.analyticsName,
           meta.adUnitSuffix,
           meta.iosType,
           meta.pagination,
@@ -263,8 +260,6 @@ object ContentTypeFormat {
 
        val sharelinks = ShareLinks.apply(tags, fields, metadata)
        val commercial = Commercial.apply(
-         tags,
-         metadata,
          jsonCommercial.isInappropriateForSponsorship,
          jsonCommercial.hasInlineMerchandise
        )
@@ -277,7 +272,8 @@ object ContentTypeFormat {
         jsonTrail.thumbnailPath,
         jsonTrail.discussionId,
         jsonTrail.isCommentable,
-        jsonTrail.isClosedForComments)
+        jsonTrail.isClosedForComments
+       )
 
        Content.apply(trail, metadata, tags, commercial, elements, fields, sharelinks,
         jsonContent.atoms,

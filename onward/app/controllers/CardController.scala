@@ -37,7 +37,7 @@ class CardController(wsClient: WSClient) extends Controller with Logging with Ex
       "gov.uk")
 
     host match {
-      case a if (whiteList.contains(a)) => wsClient.url(r).get().map { response =>
+      case a if whiteList.contains(a) => wsClient.url(r).get().map { response =>
           response.status match {
             case 200 => Cached(900) {
               val fragment = Jsoup.parseBodyFragment(response.body)
@@ -62,7 +62,7 @@ class CardController(wsClient: WSClient) extends Controller with Logging with Ex
           }
         }
 
-      case w if (w.startsWith("en.wikipedia.org")) => wsClient.url(r).get().map { response =>
+      case w if w.startsWith("en.wikipedia.org") => wsClient.url(r).get().map { response =>
           response.status match {
             case 200 => Cached(900) {
               val fragment = Jsoup.parseBodyFragment(response.body)

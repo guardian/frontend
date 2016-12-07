@@ -1,4 +1,4 @@
-@(env: String, templates: Seq[common.dfp.GuCreativeTemplate])(implicit request: RequestHeader)
+@(templates: Seq[common.dfp.GuCreativeTemplate])(implicit request: RequestHeader, env: play.api.Environment)
 @import model.{MetaData, SectionSummary, SimplePage}
 @import tools.DfpLink
 
@@ -6,8 +6,7 @@
     SimplePage(MetaData.make(
         id = "commercial-templates",
         section = Some(SectionSummary.fromId("admin")),
-        webTitle = "Commercial Templates",
-        analyticsName = "Commercial Templates"
+        webTitle = "Commercial Templates"
     ))
 ) { } {
 
@@ -17,14 +16,14 @@
             <div class="facia-container__inner">
                 <h1>Creative Templates</h1>
                 <p>This dashboard is to help debug DFP creative templates.<br />
-                    All unarchived custom creative templates are shown.</p>
+                    All unarchived custom creative templates are shown; native templates are indicated with a <b>*</b></p>
             </div>
 
             <div class="facia-container__inner">
                 <h2>Creative Templates: Contents</h2>
                 <ul>
                     @for(template <- templates) {
-                    <li><a href="#@template.name">@template.name</a></li>
+                    <li><a href="#@template.name">@template.name@if(template.isNative){<b>*</b>}</a></li>
                     }
                 </ul>
             </div>
@@ -34,7 +33,7 @@
                     <li class="container__border" >
                         <div class="facia-container__inner">
                             <h2 id="@template.name">
-                                @template.name (<a href="@DfpLink.creativeTemplate(template.id)">@template.id</a>)
+                                @template.name (<a href="@DfpLink.creativeTemplate(template.id)">@template.id</a>)@if(template.isNative){<b>*</b>}
                             </h2>
                             <p>@{template.description}</p>
                             @if(template.creatives.isEmpty){

@@ -1,8 +1,8 @@
 @(content: model.ContentType)(implicit request: RequestHeader)
-@import views.support.ContentLayout.ContentLayout
-@import common.LinkTo
+@import common.{LinkTo, RichRequestHeader}
 @import conf.switches.Switches.SaveForLaterSwitch
-@import common.RichRequestHeader
+@import model.ShareLinkMeta
+@import views.support.ContentLayout.ContentLayout
 
 @toneLink = {
     @if(content.tags.isArticle && !content.tags.isLiveBlog) {
@@ -27,7 +27,7 @@
             <hr/>
             <div class="u-cf">
                 <div data-component="share" class="submeta__share">
-                    @fragments.social(content.sharelinks.pageShares)
+                    @Social(content.sharelinks.pageShares)
                 </div>
                 @if(SaveForLaterSwitch.isSwitchedOn) {
                     <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
@@ -39,4 +39,8 @@
             @fragments.syndication(content)
         }
     </div>
+}
+
+@Social(shares: ShareLinkMeta) = {
+    @fragments.social(ShareLinkMeta.noneHidden(shares))
 }

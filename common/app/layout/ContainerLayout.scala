@@ -78,7 +78,7 @@ object ContainerLayout extends implicits.Collections {
       items: Seq[PressedContent]
   ) =
     ContainerDefinition.fromContainer(container, items) map {
-      case definition: ContainerDefinition =>
+      definition: ContainerDefinition =>
         fromContainerDefinition(definition, containerLayoutContext, config, items)
     }
 

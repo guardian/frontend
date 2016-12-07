@@ -2,7 +2,7 @@ package model
 
 import campaigns.ShortCampaignCodes
 import common.`package`._
-import conf.Configuration.facebook.{ appId => facebookAppId }
+import conf.Configuration.facebook.{appId => facebookAppId}
 
 case class ShareLink (
   platform: SharePlatform,
@@ -11,6 +11,16 @@ case class ShareLink (
   val css: String = platform.css
   val text: String = platform.text
   val userMessage: String = platform.userMessage
+}
+
+final case class ShareLinkMeta(
+  visible: Seq[ShareLink],
+  hidden: Seq[ShareLink]
+)
+
+object ShareLinkMeta {
+  def noneHidden(shares: ShareLinkMeta): ShareLinkMeta =
+    ShareLinkMeta(shares.visible ++ shares.hidden, Nil)
 }
 
 sealed trait SharePlatform {
@@ -135,12 +145,6 @@ final case class ShareLinks(
   metadata: MetaData
 ) {
 
-  private val pageShareOrder: List[SharePlatform] = if (tags.isGallery || tags.isImageContent) {
-    List(Facebook, Twitter, Email, PinterestPage, GooglePlus, WhatsApp, Messenger)
-  } else {
-    List(Facebook, Twitter, Email, LinkedIn, GooglePlus, WhatsApp, Messenger)
-  }
-
   private val elementShareOrder: List[SharePlatform] = if (tags.isLiveBlog) {
     List(Facebook, Twitter, GooglePlus)
   } else {
@@ -151,13 +155,7 @@ final case class ShareLinks(
     platform.campaign.flatMap(ShortCampaignCodes.getFullCampaign).map(campaign => Map("CMP" -> campaign)).getOrElse(Map.empty)
   }
 
-  def elementShares(elementId: String, mediaPath: Option[String]): Seq[ShareLink] = elementShareOrder.map( sharePlatform => {
-    val webUrlParams = campaignParams(sharePlatform)
-    val href = metadata.webUrl.addFragment(elementId).appendQueryParams(webUrlParams + ("page" -> s"with:$elementId"))
-    ShareLinks.create(sharePlatform, href = href, title = metadata.webTitle, mediaPath = mediaPath)
-  })
-
-  val pageShares: Seq[ShareLink] = pageShareOrder.map( sharePlatform => {
+  private def sharesToLinks(sharePlatforms: List[SharePlatform]): List[ShareLink] = sharePlatforms.map { sharePlatform =>
     val webUrlParams = campaignParams(sharePlatform)
     val href = metadata.webUrl.appendQueryParams(webUrlParams)
 
@@ -167,5 +165,16 @@ final case class ShareLinks(
     }
 
     ShareLinks.create(sharePlatform, href = href, title = contentTitle, mediaPath = None)
+  }
+
+  def elementShares(elementId: String, mediaPath: Option[String]): Seq[ShareLink] = elementShareOrder.map( sharePlatform => {
+    val webUrlParams = campaignParams(sharePlatform)
+    val href = metadata.webUrl.addFragment(elementId).appendQueryParams(webUrlParams + ("page" -> s"with:$elementId"))
+    ShareLinks.create(sharePlatform, href = href, title = metadata.webTitle, mediaPath = mediaPath)
   })
+
+  val pageShares: ShareLinkMeta = ShareLinkMeta(
+      sharesToLinks(List(Facebook, Twitter, Email)),
+      sharesToLinks(List(LinkedIn, PinterestPage, GooglePlus, WhatsApp, Messenger))
+    )
 }

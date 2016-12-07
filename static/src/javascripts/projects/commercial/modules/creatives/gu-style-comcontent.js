@@ -31,7 +31,21 @@ define([
         this.params  = params;
     };
 
+    var isDark = function(hex) {
+        var colour = (hex.charAt(0) == '#') ? hex.substring(1, 7) : hex;
+        var R = parseInt(colour.substring(0, 2), 16);
+        var G = parseInt(colour.substring(2, 4), 16);
+        var B = parseInt(colour.substring(4, 6), 16);
+
+        var min = Math.min(Math.min(R, G), B);
+        var max = Math.max(Math.max(R, G), B);
+        var lightness = (min + max) / 510;
+        return lightness < 0.5;
+
+    };
+
     GustyleComcontent.prototype.create = function () {
+        var brandColor = this.params.brandColor;
         var externalLinkIcon = svgs('externalLink', ['gu-external-icon']),
             templateOptions = {
                 articleContentColor: 'gu-display__content-color--' + this.params.articleContentColor,
@@ -40,6 +54,7 @@ define([
                 articleTextFontSize: 'gu-display__content-size--' + this.params.articleTextFontSize,
                 brandLogoPosition: 'gu-display__logo-pos--' + this.params.brandLogoPosition,
                 externalLinkIcon: externalLinkIcon,
+                contrastFontColour: brandColor && isDark(brandColor) ? 'gu-display__hosted-bright' : '',
                 isHostedBottom: this.params.adType === 'gu-style-hosted-bottom'
             };
         var templateToLoad = this.params.adType === 'gu-style' ? gustyleComcontentTpl : gustyleHostedTpl;

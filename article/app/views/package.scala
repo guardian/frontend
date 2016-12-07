@@ -4,6 +4,7 @@ import common.Edition
 import layout.ContentWidths
 import layout.ContentWidths.{Inline, LiveBlogMedia, MainMedia, Showcase}
 import model.Article
+import play.api.Environment
 import play.api.mvc.RequestHeader
 import views.support._
 import views.support.cleaner._
@@ -23,18 +24,19 @@ object MainMediaWidths {
 }
 
 object MainCleaner {
- def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader) = {
+ def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader, env: Environment) = {
       implicit val edition = Edition(request)
       withJsoup(BulletCleaner(html))(
         if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
         PictureCleaner(article, amp),
-        MainFigCaptionCleaner
+        MainFigCaptionCleaner,
+        AtomsCleaner(article.content.atoms, shouldFence = true, amp)
       )
   }
 }
 
 object BodyCleaner {
-  def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader) = {
+  def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader, env: Environment) = {
     implicit val edition = Edition(request)
 
     val shouldShowAds = !article.content.shouldHideAdverts && article.metadata.sectionId != "childrens-books-site"
@@ -50,14 +52,13 @@ object BodyCleaner {
       TableEmbedComplimentaryToP,
       R2VideoCleaner,
       PictureCleaner(article, amp),
-      AtomsCleaner(article.content.atoms, shouldFence = true),
+      AtomsCleaner(article.content.atoms, shouldFence = true, amp = amp),
       DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
       ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
       RichLinkCleaner(amp),
       MembershipEventCleaner,
       BlockquoteCleaner,
-      ChaptersLinksCleaner,
       PullquoteCleaner,
       CmpParamCleaner,
       ExploreVideos(article.isExplore),

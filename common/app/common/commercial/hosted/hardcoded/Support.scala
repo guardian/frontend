@@ -39,7 +39,6 @@ object Support {
       webUrl = "unused",
       section = None,
       webTitle = "unused",
-      analyticsName = "unused",
       adUnitSuffix = "unused"
     )
   }

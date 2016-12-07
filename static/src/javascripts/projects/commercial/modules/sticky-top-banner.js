@@ -1,250 +1,158 @@
 define([
-    'common/utils/fastdom-promise',
     'Promise',
-    'common/modules/commercial/dfp/track-ad-render',
-    'commercial/modules/messenger',
-    'common/modules/commercial/ad-sizes',
-    'common/utils/$',
-    'common/utils/create-store',
-    'common/utils/mediator',
+    'common/utils/add-event-listener',
     'common/utils/config',
     'common/utils/detect',
-    'lodash/objects/assign'
+    'common/utils/closest',
+    'common/utils/fastdom-promise',
+    'common/modules/commercial/dfp/track-ad-render',
+    'commercial/modules/messenger'
 ], function (
-    fastdom,
     Promise,
-    trackAdRender,
-    messenger,
-    adSizes,
-    $,
-    createStore,
-    mediator,
+    addEventListener,
     config,
     detect,
-    assign
+    closest,
+    fastdom,
+    trackAdRender,
+    messenger
 ) {
+    var topSlotId = 'dfp-ad--top-above-nav';
+    var updateQueued = false;
+    var win, header, headerHeight, topSlot, topSlotHeight, topSlotStyles, stickyBanner, scrollY;
 
-    // All ads are loaded via DFP, including the following types. DFP does
-    // report which ad slot size has been chosen, however there are several
-    // cases where an asynchronous resize may occur. This feature supports the
-    // following ad formats:
-    //
-    // Fluid ads break out of the iframe and resize asynchronously. There is no
-    // resize event, but we know they are always 250px high.
-    //
-    // Expandable ads expand (overflowing the banner) upon user interaction.
-    //
-    // Rubicon ads may resize asynchronously. They have a resize event we can
-    // subscribe to.
+    return {
+        init: init,
+        update: update,
+        resize: resizeStickyBanner,
+        onScroll: onScroll
+    };
 
-    var $adBanner = $('.js-top-banner');
-    var $adBannerInner = $('.ad-slot', $adBanner);
-    var $header = $('.js-header');
+    function init(moduleName, _window) {
+        win = _window || window;
+        topSlot = document.getElementById(topSlotId);
+        if (topSlot && detect.isBreakpoint({ min: 'desktop' })) {
+            header = document.getElementById('header');
+            stickyBanner = topSlot.parentNode;
 
-    var topAdRenderedPromise = trackAdRender('dfp-ad--top-above-nav');
-
-    var getAdIframe = function () { return $('iframe', $adBanner); };
-
-    // Rubicon ads are loaded via DFP like all other ads, but they can
-    // render themselves again at any time
-    var newRubiconAdHeightPromise;
-
-    var getLatestAdHeight = function () {
-        var $iframe = getAdIframe();
-        var slotWidth = $iframe.attr('width');
-        var slotHeight = $iframe.attr('height');
-        var slotSize = slotWidth + ',' + slotHeight;
-        // iframe may not have been injected at this point
-        var isFluid250 = adSizes.fluid250.toString() === slotSize;
-        var isFabricV1 = adSizes.fabric.toString() === slotSize;
-        var isFluidAd = $iframe.length > 0 && (isFluid250 || isFabricV1);
-
-        if (isFluidAd) {
-            // fluid ads are currently always 250px high. We can't just read the client height as fluid ads are
-            // injected asynchronously, so we can't be sure when they will be in the dom
-            var fluidAdInnerHeight = 250;
-            return fastdom.read(function () {
-                var label = $adBannerInner[0].getElementsByClassName('ad-slot__label');
-                return label.length ? label[0].offsetHeight : 0;
-            }).then(function (fluidAdPadding) {
-                return fluidAdInnerHeight + fluidAdPadding;
-            });
+            // First, let's assign some default values so that everything
+            // is in good order before we start animating changes in height
+            var promise = initState()
+            // Second, start listening for height and scroll changes
+            .then(setupListeners);
+            promise.then(onFirstRender);
+            return promise;
         } else {
-            var adHeightPromise = fastdom.read(function () { return $adBannerInner[0].clientHeight; });
-            // We can't calculate the height of Rubicon ads because they transition
-            // themselves, so we use the event instead.
-            return Promise.race([newRubiconAdHeightPromise, adHeightPromise]);
+            topSlot = null;
+            return Promise.resolve();
         }
-    };
+    }
 
-    var getScrollCoords = function () {
+    function initState() {
         return fastdom.read(function () {
-            return [window.pageXOffset, window.pageYOffset];
-        });
-    };
-
-    var getInitialState = function () {
-        var headerHeightPromise = fastdom.read(function () {
-            return $header.height();
-        });
-        return Promise.all([getLatestAdHeight(), headerHeightPromise, getScrollCoords()])
-            .then(function (args) {
-                var adHeight = args[0];
-                var headerHeight = args[1];
-                var scrollCoords = args[2];
-                return {
-                    shouldTransition: false,
-                    adHeight: adHeight,
-                    previousAdHeight: adHeight,
-                    headerHeight: headerHeight,
-                    scrollCoords: scrollCoords
-                };
-            });
-    };
-
-    var render = function (els, state) {
-        var transitionTimingFunction = 'cubic-bezier(0, 0, 0, .985)';
-        var transitionDuration = '1s';
-
-        els.$header.css({
-            'transition': state.shouldTransition
-                ? ['margin-top', transitionDuration, transitionTimingFunction].join(' ')
-                : '',
-            'margin-top': state.adHeight
-        });
-
-        var pageYOffset = state.scrollCoords[1];
-        var userHasScrolledPastHeader = pageYOffset > state.headerHeight;
-
-        els.$adBanner.addClass('sticky-top-banner-ad');
-        els.$adBanner.css({
-            'position': !config.page.hasSuperStickyBanner && userHasScrolledPastHeader ? 'absolute' : 'fixed',
-            'top': !config.page.hasSuperStickyBanner && userHasScrolledPastHeader ? state.headerHeight : '',
-            'height': state.adHeight,
-            // Stop the ad from overflowing while we transition
-            'overflow': state.shouldTransition ? 'hidden' : '',
-            'transition': state.shouldTransition
-                ? ['height', transitionDuration, transitionTimingFunction].join(' ')
-                : ''
-        });
-
-        var diff = state.adHeight - state.previousAdHeight;
-        var adHeightHasIncreased = diff > 0;
-        if (!state.shouldTransition && adHeightHasIncreased) {
-            // If we shouldn't transition, we want to offset their scroll position
-            var pageXOffset = state.scrollCoords[0];
-            els.window.scrollTo(pageXOffset, pageYOffset + diff);
-        }
-    };
-
-    var setupDispatchers = function (dispatch) {
-        mediator.on('window:throttledScroll', function () {
-            getScrollCoords().then(function (scrollCoords) {
-                dispatch({ type: 'SCROLL', scrollCoords: scrollCoords });
-            });
-        });
-
-        var dispatchNewAdHeight = function () {
-            getLatestAdHeight().then(function (adHeight) {
-                dispatch({ type: 'NEW_AD_HEIGHT', adHeight: adHeight });
-            });
-        };
-        topAdRenderedPromise.then(dispatchNewAdHeight);
-        newRubiconAdHeightPromise.then(dispatchNewAdHeight);
-
-        $adBanner[0].addEventListener('transitionend', function (event) {
-            // Protect against any other events which have bubbled
-            var isEventForAdBanner = event.target === $adBanner[0];
-            if (isEventForAdBanner) {
-                dispatch({ type: 'AD_BANNER_TRANSITION_END' });
-            }
-        });
-    };
-
-    function setupListeners() {
-        newRubiconAdHeightPromise = new Promise(function (resolve) {
-            messenger.register('set-ad-height', function onSetAdHeight(data) {
-                var $iframe = getAdIframe();
-                var isEventForTopAdBanner = data.id === $iframe[0].id;
-                if (isEventForTopAdBanner) {
-                    messenger.unregister('set-ad-height', onSetAdHeight);
-                    fastdom.read(function () {
-                        var padding = parseInt($adBannerInner.css('padding-top'))
-                            + parseInt($adBannerInner.css('padding-bottom'));
-                        var clientHeight = parseInt(data.height) + padding;
-                        resolve(clientHeight);
-                    });
-                }
-            });
+            headerHeight = header.offsetHeight;
+            return topSlot.offsetHeight;
+        })
+        .then(function (currentHeight) {
+            return Promise.all([
+                resizeStickyBanner(currentHeight),
+                onScroll()
+            ]);
         });
     }
 
-    var reducer = function (previousState, action) {
-        switch (action.type) {
-            case 'SCROLL':
-                return assign({}, previousState, {
-                    previousAdHeight: previousState.adHeight,
-                    scrollCoords: action.scrollCoords
-                });
-            case 'NEW_AD_HEIGHT':
-                var scrollIsAtTop = previousState.scrollCoords[1] === 0;
-                var previousAdHeight = previousState.adHeight;
-                var adHeight = action.adHeight;
-                var diff = adHeight - previousAdHeight;
-                var adHeightHasIncreased = diff > 0;
-                return assign({}, previousState, {
-                    // This flag must be set at the reducer level
-                    // so we can control over when it is cleared.
-                    shouldTransition: adHeightHasIncreased && scrollIsAtTop,
-                    adHeight: adHeight,
-                    previousAdHeight: previousAdHeight
-                });
-            case 'AD_BANNER_TRANSITION_END':
-                return assign({}, previousState, {
-                    shouldTransition: false,
-                    previousAdHeight: previousState.adHeight
-                });
-            default:
-                return previousState;
+    // Register a message listener for when the creative wants to resize
+    // its container
+    // We also listen for scroll events if we need to, to snap the slot in
+    // place when it reaches the end of the header.
+    function setupListeners() {
+        messenger.register('resize', onResize);
+        if (!config.page.hasSuperStickyBanner) {
+            addEventListener(win, 'scroll', onScroll, { passive: true });
         }
-    };
+    }
 
-    var initialise = function () {
-        // Although we check as much config as possible to decide whether to run sticky-top-banner,
-        // it is still entirely possible for the ad slot to be closed.
-        if (detect.isBreakpoint({ min: 'desktop' }) && $adBannerInner[0]) {
-            setupListeners();
-            return getInitialState().then(function (initialState) {
-                var store = createStore(reducer, initialState);
+    function onFirstRender() {
+        trackAdRender(topSlotId)
+        .then(function (isRendered) {
+            if (isRendered) {
+                fastdom.read(function () {
+                    return topSlot.offsetHeight;
+                })
+                .then(resizeStickyBanner);
+            }
+        });
+    }
 
-                setupDispatchers(store.dispatch);
+    function onResize(specs, _, iframe) {
+        if (topSlot.contains(iframe)) {
+            update(specs.height);
+            messenger.unregister('resize', onResize);
+        }
+    }
 
-                var elements = {
-                    $adBanner: $adBanner,
-                    $adBannerInner: $adBannerInner,
-                    $header: $header,
-                    window: window
-                };
-                var update = function () {
-                    return fastdom.write(function () {
-                        render(elements, store.getState());
-                    });
-                };
-                // Initial update
-                // Ensure we only start listening after the first update
-                update().then(function () {
-                    // Update when actions occur
-                    store.subscribe(update);
-                });
+    function update(newHeight) {
+        return fastdom.read(function () {
+            topSlotStyles || (topSlotStyles = win.getComputedStyle(topSlot));
+            return newHeight + parseInt(topSlotStyles.paddingTop) + parseInt(topSlotStyles.paddingBottom);
+        })
+        .then(resizeStickyBanner);
+    }
+
+    function onScroll() {
+        scrollY = win.pageYOffset;
+        if (!updateQueued) {
+            updateQueued = true;
+            return fastdom.write(function () {
+                updateQueued = false;
+                if (headerHeight < scrollY) {
+                    stickyBanner.style.position = 'absolute';
+                    stickyBanner.style.top = headerHeight + 'px';
+                } else {
+                    stickyBanner.style.position =
+                    stickyBanner.style.top = null;
+                }
+            })
+            .then(setupAnimation);
+        }
+    }
+
+    // Sudden changes in the layout can be jarring to the user, so we animate
+    // them for a better experience. We only do this if the slot is in view
+    // though.
+    function setupAnimation() {
+        return fastdom.write(function () {
+            if (scrollY <= headerHeight) {
+                header.classList.add('l-header--animate');
+                stickyBanner.classList.add('sticky-top-banner-ad--animate');
+            } else {
+                header.classList.remove('l-header--animate');
+                stickyBanner.classList.remove('sticky-top-banner-ad--animate');
+            }
+        });
+    }
+
+    // Because the top banner is not in the document flow, resizing it requires
+    // that we also make space for it. This is done by adjusting the top margin
+    // of the header.
+    // This is also the best place to adjust the scrolling position in case the
+    // user has scrolled past the header.
+    function resizeStickyBanner(newHeight) {
+        if (topSlotHeight !== newHeight) {
+            return fastdom.write(function () {
+                stickyBanner.classList.add('sticky-top-banner-ad');
+                stickyBanner.style.height =
+                header.style.marginTop = newHeight + 'px';
+
+                if (topSlotHeight !== undefined && headerHeight <= scrollY) {
+                    win.scrollBy(0, newHeight - topSlotHeight);
+                }
+
+                topSlotHeight = newHeight;
+                return newHeight;
             });
         } else {
-            return Promise.resolve();
+            return Promise.resolve(-1);
         }
-    };
-
-    return {
-        init: initialise,
-        // Needed for testing
-        render: render
-    };
+    }
 });

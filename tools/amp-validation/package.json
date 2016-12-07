@@ -4,7 +4,8 @@
   "description": "Utility that uses the amphtml-validator to validate AMP endpoints",
   "license": "Apache-2.0",
   "scripts": {
-      "start": "node index.js"
+    "start": "node index.js",
+    "top-traffic": "node top-traffic.js"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,9 @@
   "homepage": "https://github.com/guardian/frontend#readme",
   "dependencies": {
     "amphtml-validator": "^1.0.10",
-    "promise-retry": "^1.1.1"
+    "lodash": "^4.16.6",
+    "promise-retry": "^1.1.1",
+    "request": "^2.78.0"
   },
   "engines": {
     "node": ">=6"

@@ -12,8 +12,8 @@ header {
     font-size: 18px;
 }
 .navbar { display: none; }
-#pingdom li, #riffraff li { font-size: 30px; line-height: 30px; }
-#pingdom small, #riffraff small { font-size: 20px; }
+#riffraff li { font-size: 30px; line-height: 30px; }
+#riffraff small { font-size: 20px; }
 
 .down, .Failed { color: red; }
 .Running { color: orange; }
@@ -21,12 +21,10 @@ ul {
     margin: 0;
 }
 
-.pingdom-wrapper small,
 .riffraff-wrapper small {
 
 }
 
-#pingdom li,
 .riffraff li {
     width: 30px;
     height: 30px;
@@ -44,15 +42,12 @@ ul {
     line-height: 10px;
 }
 
-#pingdom li.up, .riffraff li.Completed {
+.riffraff li.Completed {
     background-color: #B8FAA0;
 }
 
-#pingdom li.down, .riffraff li.Failed {
+.riffraff li.Failed {
     background-color: red;
-}
-#pingdom li.paused {
-    background-color: lightgrey;
 }
 
 .riffraff li.Behind {
@@ -81,17 +76,12 @@ ul {
     background-color: orange;
 }
 
-.riffraff,
-#pingdom {
+.riffraff{
     overflow: hidden;
     padding: 0;
     margin-bottom: 20px;
     box-sizing: border-box;
 }
-#pingdom {
-    padding-right: 10px;
-}
-
 
 .riffraff li.Running {
     background-color: yellow;
@@ -153,9 +143,6 @@ a {
         width: 100%;
     }
 
-    .pingdom-wrapper {
-        width: 100%;
-    }
     .expiring-wrapper {
         float: left;
         width: 50%;

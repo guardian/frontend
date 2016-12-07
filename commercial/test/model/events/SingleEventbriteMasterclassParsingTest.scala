@@ -18,8 +18,8 @@ class SingleEventbriteMasterclassParsingTest extends FlatSpec with Matchers with
 
     masterclass.name should be("Travel writing weekend")
     masterclass shouldBe 'open
-    masterclass.displayPriceRange should be ("£400.00")
-    masterclass.ratioTicketsLeft should be (0.5)
+    masterclass.displayPriceRange should be (Some("£400.00"))
+    masterclass.ratioTicketsLeft should be (Some(0.5))
     masterclass.guardianUrl should be ("http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course")
     masterclass.readableDate should be ("20 April 2013")
     masterclass.capacity should be (18)
@@ -35,8 +35,8 @@ class SingleEventbriteMasterclassParsingTest extends FlatSpec with Matchers with
 
     masterclass.name should be("Travel writing weekend")
     masterclass shouldBe 'open
-    masterclass.displayPriceRange should be ("£400.00 to £2,600.00")
-    masterclass.ratioTicketsLeft should be (0.5)
+    masterclass.displayPriceRange should be (Some("£400.00 to £2,600.00"))
+    masterclass.ratioTicketsLeft should be (Some(0.5))
   }
 
   "Generated masterclass object" should "have a description text that is truncated to 250 chars" in {

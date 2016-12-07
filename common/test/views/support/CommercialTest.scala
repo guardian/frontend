@@ -1,6 +1,5 @@
 package views.support
 
-import common.Edition.defaultEdition
 import model.{MetaData, SectionSummary}
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers, OptionValues}
 import views.support.Commercial.topAboveNavSlot
@@ -10,21 +9,20 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
   private def metaDataFromId(pageId: String): MetaData = MetaData.make(
     id = pageId,
     section = Some(SectionSummary.fromId("section")),
-    analyticsName = "analyticsName",
     webTitle = "webTitle")
 
   def pageShouldRequestAdSizes(pageId: String)(sizes: Seq[String]): Unit = {
     val metaData = metaDataFromId(pageId)
-    topAboveNavSlot.adSizes(metaData, defaultEdition, None).get("desktop").value shouldBe sizes
+    topAboveNavSlot.adSizes.get("desktop").value shouldBe sizes
   }
 
   "topAboveNavSlot ad sizes" should "be variable for all pages" in {
     pageShouldRequestAdSizes("uk/culture")(
-      Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250", "88,71", "fluid")
+      Seq("1,1", "2,2", "88,70", "728,90", "940,230", "900,250", "970,250", "88,71", "fluid")
     )
     pageShouldRequestAdSizes(
       "business/2015/jul/07/eurozone-calls-on-athens-to-get-serious-over-greece-debt-crisis")(
-        Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250", "88,71", "fluid")
+        Seq("1,1", "2,2", "88,70", "728,90", "940,230", "900,250", "970,250", "88,71", "fluid")
       )
   }
 
@@ -44,11 +42,6 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
   // }
 
   they should "be default for any other page" in {
-    topAboveNavSlot.cssClasses(metaDataFromId("uk/culture"), defaultEdition, None, Nil) should
-      endWith("js-top-banner")
-    topAboveNavSlot.cssClasses(metaDataFromId(
-      "business/2015/jul/07/eurozone-calls-on-athens-to-get-serious-over-greece-debt-crisis"),
-      defaultEdition, None, Nil)
-      .should(endWith("js-top-banner"))
+    topAboveNavSlot.cssClasses should endWith("js-top-banner")
   }
 }

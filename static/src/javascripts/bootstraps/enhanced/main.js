@@ -2,17 +2,16 @@ define([
     'fastdom',
     'bean',
     'qwery',
-    'raven',
+    'common/utils/raven',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/mediator',
     'common/utils/user-timing',
     'common/utils/robust',
     'common/modules/experiments/ab',
     './common',
     './sport',
-    'enhanced-common'
+    'common/modules/analytics/google'
 ], function (
     fastdom,
     bean,
@@ -21,12 +20,12 @@ define([
     $,
     config,
     detect,
-    mediator,
     userTiming,
     robust,
     ab,
     common,
-    sport
+    sport,
+    ga
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -39,6 +38,10 @@ define([
 
 
         userTiming.mark('App Begin');
+        robust.catchErrorsAndLog('ga-user-timing-enhanced-start', function () {
+            ga.trackPerformance('Javascript Load', 'enhancedStart', 'Enhanced start parse time');
+        });
+
         bootstrapContext('common', common);
 
         //
@@ -162,7 +165,18 @@ define([
             });
         }
 
+        fastdom.read(function() {
+            if ( $('.youtube-media-atom').length > 0) {
+                require(['bootstraps/enhanced/youtube'], function (youtube) {
+                    bootstrapContext('youtube', youtube);
+                });
+            }
+        });
+
         // Mark the end of synchronous execution.
         userTiming.mark('App End');
+        robust.catchErrorsAndLog('ga-user-timing-enhanced-end', function () {
+            ga.trackPerformance('Javascript Load', 'enhancedEnd', 'Enhanced end parse time');
+        });
     };
 });

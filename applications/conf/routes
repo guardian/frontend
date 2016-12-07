@@ -33,7 +33,7 @@ POST           /notification/delete                                             
 
 # Email paths
 GET        /email                                                               controllers.EmailSignupController.renderPage()
-GET        /email/form/$emailType<article|footer|plain|plaindark>/:listId       controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/form/$emailType<article|footer|plain|plaindark|plaintone>/:listId       controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/:result                                                       controllers.EmailSignupController.subscriptionResult(result: String)
 POST       /email                                                               controllers.EmailSignupController.submit()
 OPTIONS    /email                                                               controllers.EmailSignupController.options()
@@ -44,6 +44,7 @@ GET        /index/contributors                                                  
 GET        /index/contributors/*contributor                                     controllers.TagIndexController.contributor(contributor)
 
 GET        /embed/video/*path                                                   controllers.EmbedController.render(path)
+GET        /embed/atom/media/:id                                                controllers.MediaAtomEmbedController.render(id)
 
 
 # Preferences
@@ -89,6 +90,8 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>/info.json              
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   controllers.MediaController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                        controllers.MediaController.render(path)
 
+# Interactive service worker
+GET        /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>           controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
 
 # Interactive paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json    controllers.InteractiveController.renderInteractiveJson(path)

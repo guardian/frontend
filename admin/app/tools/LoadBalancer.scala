@@ -16,22 +16,22 @@ object LoadBalancer extends Logging {
   import conf.Configuration.aws.credentials
 
     private val loadBalancers = Seq(
-      LoadBalancer("frontend-RouterLo-1HHMP4C9L33QJ", "Router", "frontend-router"),
+      LoadBalancer("frontend-PROD-router", "Router", "frontend-router"),
       LoadBalancer(
-        "frontend-ArticleL-T0BUR121RZIG", "Article", "frontend-article",
+        "frontend-PROD-article", "Article", "frontend-article",
         testPath = Some("/uk-news/2014/jan/21/drax-protesters-convictions-quashed-police-spy-mark-kennedy")
       ),
-      LoadBalancer("frontend-FaciaLoa-I92TZ7OEAX7W", "Front", "frontend-facia", testPath = Some("/uk")),
-      LoadBalancer("frontend-Applicat-V36EHVHAEI15", "Applications", "frontend-applications", testPath = Some("/books")),
-      LoadBalancer("frontend-Discussi-KC65SADEVHIE", "Discussion", "frontend-discussion"),
-      LoadBalancer("frontend-Identity-1ITBJ706CLQIC", "Identity", "frontend-identity"),
-      LoadBalancer("frontend-SportLoa-GLJK02HUD48W", "Sport", "frontend-sport"),
-      LoadBalancer("frontend-Commerci-12ZQ79RIOLIYE", "Commercial", "frontend-commercial"),
-      LoadBalancer("frontend-OnwardLo-14YIUHL6HIW63", "Onward", "frontend-onward"),
-      LoadBalancer("frontend-Diagnost-11YL3E40NW4C2", "Diagnostics", "frontend-diagnostics" ),
-      LoadBalancer("frontend-ArchiveL-C2GJNZE0TS7", "Archive", "frontend-archive"),
-      LoadBalancer("frontend-AdminJob-X3KHAAPYCDQK", "AdminJobs", "frontend-adminJobs"),
-      LoadBalancer("frontend-RssLoadB-13ARAHHNKEUTL", "Rss", "frontend-rss")
+      LoadBalancer("frontend-PROD-facia", "Front", "frontend-facia", testPath = Some("/uk")),
+      LoadBalancer("frontend-PROD-applications", "Applications", "frontend-applications", testPath = Some("/books")),
+      LoadBalancer("frontend-PROD-discussion", "Discussion", "frontend-discussion"),
+      LoadBalancer("frontend-PROD-identity", "Identity", "frontend-identity"),
+      LoadBalancer("frontend-PROD-sport", "Sport", "frontend-sport"),
+      LoadBalancer("frontend-PROD-commercial", "Commercial", "frontend-commercial"),
+      LoadBalancer("frontend-PROD-onward", "Onward", "frontend-onward"),
+      LoadBalancer("frontend-PROD-diagnostics", "Diagnostics", "frontend-diagnostics" ),
+      LoadBalancer("frontend-PROD-archive", "Archive", "frontend-archive"),
+      LoadBalancer("frontend-PROD-admin-jobs", "AdminJobs", "frontend-adminJobs"),
+      LoadBalancer("frontend-PROD-rss", "Rss", "frontend-rss")
     )
 
 

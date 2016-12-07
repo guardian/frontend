@@ -2,6 +2,7 @@
 define([
     'commercial/modules/hosted/next-video-autoplay',
     'common/modules/video/youtube-player',
+    'common/modules/video/youtube-tracking',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
@@ -10,67 +11,50 @@ define([
 ], function (
     nextVideoAutoplay,
     youtubePlayer,
+    tracking,
     $,
     detect,
     mediator,
     contains,
     forEach
 ) {
+    var eventsFired = [];
+
     function isDesktop() {
         return contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint());
     }
 
-    function initYoutubeEvents(videoId) {
-        var eventList = ['play', '25', '50', '75', 'end'];
-
-        forEach(eventList, function(event) {
-            mediator.once(event, function() {
-                ophanRecord(event);
-            });
-        });
-
-        function ophanRecord(event) {
-            require(['ophan/ng'], function (ophan) {
-                var eventObject = {
-                    video: {
-                        id: 'gu-video-youtube-' + videoId,
-                        eventType: 'video:content:' + event
-                    }
-                };
-                ophan.record(eventObject);
-            });
-        }
-    }
-
-    function sendPercentageCompleteEvents(youtubePlayer, playerTotalTime) {
+    function sendPercentageCompleteEvents(atomId, youtubePlayer, playerTotalTime) {
         var quartile = playerTotalTime / 4;
         var playbackEvents = {
-            'play': 0,
             '25': quartile,
             '50': quartile * 2,
-            '75': quartile * 3,
-            'end': playerTotalTime
+            '75': quartile * 3
         };
 
-        forEach(playbackEvents, function(value, key) {
-            if (youtubePlayer.getCurrentTime() > value) {
+        forEach(playbackEvents, function (value, key) {
+            if (!contains(eventsFired, key) && youtubePlayer.getCurrentTime() > value) {
+                tracking.track(key, atomId);
+                eventsFired.push(key);
                 mediator.emit(key);
             }
         });
     }
 
     function init(el) {
+        var atomId = $(el).data('media-id');
         var duration = $(el).data('duration');
         var $currentTime = $('.js-youtube-current-time');
+        var playTimer;
 
+        tracking.init(atomId);
         youtubePlayer.init(el, {
             onPlayerStateChange: function (event) {
-                var playTimer;
                 var player = event.target;
-                var ophanId = 'hosted-youtube-video';
 
                 //show end slate when movie finishes
                 if (event.data === window.YT.PlayerState.ENDED) {
+                    tracking.track('end', atomId);
                     $currentTime.text('0:00');
                     if (nextVideoAutoplay.canAutoplay()) {
                         //on mobile show the next video link in the end of the currently watching video
@@ -86,13 +70,11 @@ define([
                     $currentTime.text(minutes + (seconds < 10 ? ':0' : ':') + seconds);
                 }
 
-                //calculate completion and send event to ophan
                 if (event.data === window.YT.PlayerState.PLAYING) {
-                    initYoutubeEvents(player.getVideoData()['video_id']);
+                    tracking.track('play', atomId);
                     var playerTotalTime = player.getDuration();
-
-                    playTimer = setInterval(function() {
-                        sendPercentageCompleteEvents(player, playerTotalTime, ophanId);
+                    playTimer = setInterval(function () {
+                        sendPercentageCompleteEvents(atomId, player, playerTotalTime);
                     }, 1000);
                 } else {
                     clearTimeout(playTimer);
@@ -104,7 +86,7 @@ define([
                     nextVideoAutoplay.triggerAutoplay(event.target.getCurrentTime.bind(event.target), duration);
                 }
             }
-        });
+        }, el.id);
     }
 
     return {

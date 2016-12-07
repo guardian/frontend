@@ -1,5 +1,4 @@
 @import common.commercial.ContainerModel
-@import common.{NewNavigation, LinkTo, Edition, NavLink}
 @import layout.MetaDataHeader
 @import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, Video}
 @import views.html.fragments.commercial.containers.paidContainer
@@ -12,7 +11,8 @@
   frontId: Option[String] = None,
   isPaidFront: Boolean = false,
   maybeContainerModel: Option[ContainerModel] = None,
-  pageId: String = "")(implicit request: RequestHeader)
+  showFrontBranding: Boolean = false
+  )(implicit request: RequestHeader)
 
 @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
@@ -53,7 +53,7 @@
 
                     case _: Dynamic | _: Fixed => {
                         <div class="fc-container__inner">
-                            @standardContainer(containerDefinition, frontProperties, maybeContainerModel)
+                            @standardContainer(containerDefinition, frontProperties, maybeContainerModel, showFrontBranding)
                         </div>
                     }
 
@@ -81,62 +81,7 @@
                         </div>
                     }
                 }
-
-                @* TODO: If one of the new header variants is successful, please rewrite to move some of this logic outside the template *@
-                @defining((
-                    containerDefinition.index == 0,
-                    frontId.getOrElse(pageId)
-                    )) { case (isFirstContainer, id) =>
-
-                    @if((mvt.ABNewHeaderVariant.isParticipating || mvt.ABNewHeaderVariantTwo.isParticipating) && isFirstContainer) {
-
-                        <ul class="tertiary-navigation mobile-only">
-
-                            @defining(Edition(request)) { edition: Edition =>
-
-                                @id match {
-                                    case news if id == edition.networkFrontId => {
-                                        @NewNavigation.News.getEditionalisedNavLinks(edition).drop(1).map(link => tertiaryLink(link))
-                                    }
-                                    case opinion if id.contains("commentisfree") => {
-                                        @NewNavigation.Opinion.getEditionalisedNavLinks(edition).drop(1).map(link => tertiaryLink(link))
-                                    }
-                                    case sport if id.contains("sport") => {
-                                        @NewNavigation.Sport.getEditionalisedNavLinks(edition).drop(1).map(link => tertiaryLink(link))
-                                    }
-                                    case arts if id.contains("culture") => {
-                                        @NewNavigation.Arts.getEditionalisedNavLinks(edition).drop(1).map(link => tertiaryLink(link))
-                                    }
-                                    case life if id.contains("lifeandstyle") => {
-                                        @NewNavigation.Life.getEditionalisedNavLinks(edition).drop(1).map(link => tertiaryLink(link))
-                                    }
-                                    case _ => {
-                                        @NewNavigation.TertiaryNav.getTertiaryNavLinks(id).map { tertiaryLink =>
-
-                                            <li class="tertiary-navigation__item">
-                                                <a class="tertiary-navigation__link" href="@LinkTo(tertiaryLink.url)" data-link-name="nav2 : tertiary : @tertiaryLink.name">
-                                                    <span class="tertiary-navigation__text">@Html(tertiaryLink.name)</span>
-                                                    <i class="tertiary-navigation__icon rounded-icon"></i>
-                                                </a>
-                                            </li>
-                                        }
-                                    }
-                                }
-                            }
-                        </ul>
-
-                    }
-                }
             </section>
         }
     }
-}
-
-@tertiaryLink(link: NavLink) = {
-    <li class="tertiary-navigation__item">
-        <a class="tertiary-navigation__link" href="@LinkTo(link.url)" data-link-name="nav2 : tertiary : @link.name">
-            <span class="tertiary-navigation__text">@Html(link.name)</span>
-            <i class="tertiary-navigation__icon rounded-icon"></i>
-        </a>
-    </li>
 }

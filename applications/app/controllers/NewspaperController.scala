@@ -5,10 +5,11 @@ import contentapi.ContentApiClient
 import layout.FaciaContainer
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, MetaData, SectionSummary, SimplePage}
+import play.api.Environment
 import play.api.mvc.{Action, Controller}
 import services.NewspaperQuery
 
-class NewspaperController(contentApiClient: ContentApiClient) extends Controller with Logging with ExecutionContexts {
+class NewspaperController(contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
 
   private val newspaperQuery = new NewspaperQuery(contentApiClient)
 
@@ -17,8 +18,7 @@ class NewspaperController(contentApiClient: ContentApiClient) extends Controller
     val guardianPage = SimplePage(MetaData.make(
       "theguardian",
       Some(SectionSummary.fromId("todayspaper")),
-      "Main section | News | The Guardian",
-      "GFE: Newspaper books Main Section"
+      "Main section | News | The Guardian"
     ))
     val todaysPaper = newspaperQuery.fetchLatestGuardianNewspaper.map(p => TodayNewspaper(guardianPage, p))
 
@@ -30,8 +30,7 @@ class NewspaperController(contentApiClient: ContentApiClient) extends Controller
     val observerPage = SimplePage(MetaData.make(
       "theobserver",
       Some(SectionSummary.fromId("theobserver")),
-      "Main section | From the Observer | The Guardian",
-      "GFE: Observer Newspaper books Main Section"
+      "Main section | From the Observer | The Guardian"
     ))
 
     val todaysPaper = newspaperQuery.fetchLatestObserverNewspaper.map(p => TodayNewspaper(observerPage, p))
@@ -46,14 +45,12 @@ class NewspaperController(contentApiClient: ContentApiClient) extends Controller
       case "theguardian" => SimplePage(MetaData.make(
         "theguardian",
         Some(SectionSummary.fromId("todayspaper")),
-        "Top Stories | From the Guardian | The Guardian",
-        "GFE: Newspaper books Top Stories"
+        "Top Stories | From the Guardian | The Guardian"
       ))
       case "theobserver" => SimplePage(MetaData.make(
         "theobserver",
         Some(SectionSummary.fromId("theobserver")),
-        "News | From the Observer | The Guardian",
-        "GFE: Observer Newspaper books Top Stories"
+        "News | From the Observer | The Guardian"
       ))
     }
 
@@ -66,7 +63,7 @@ class NewspaperController(contentApiClient: ContentApiClient) extends Controller
   }
 
   def noContentForListExists(booksections: Seq[FaciaContainer]): Boolean = {
-    val (frontContainer, otherContainer) = booksections.partition(b => b.displayName == newspaperQuery.FRONT_PAGE_DISPLAY_NAME)
+    val (frontContainer, otherContainer) = booksections.partition(b => b.displayName.contains(newspaperQuery.FRONT_PAGE_DISPLAY_NAME))
     frontContainer.flatMap(_.items).isEmpty && otherContainer.flatMap(_.items).isEmpty
   }
 

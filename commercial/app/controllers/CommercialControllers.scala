@@ -7,6 +7,7 @@ import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import commercial.model.merchandise.jobs.JobsAgent
 import commercial.model.merchandise.travel.TravelOffersAgent
 import contentapi.ContentApiClient
+import play.api.Environment
 
 trait CommercialControllers {
   def contentApiClient: ContentApiClient
@@ -17,6 +18,7 @@ trait CommercialControllers {
   def masterclassAgent: MasterclassAgent
   def travelOffersAgent: TravelOffersAgent
   def jobsAgent: JobsAgent
+  implicit def environment: Environment
   lazy val bookOffersController = wire[BookOffersController]
   lazy val contentApiOffersController = wire[ContentApiOffersController]
   lazy val creativeTestPage = wire[CreativeTestPage]
@@ -29,4 +31,5 @@ trait CommercialControllers {
   lazy val soulmatesController = wire[SoulmatesController]
   lazy val travelOffersController = wire[TravelOffersController]
   lazy val trafficDriverController = wire[TrafficDriverController]
+  lazy val piggybackPixelController = wire[PiggybackPixelController]
 }

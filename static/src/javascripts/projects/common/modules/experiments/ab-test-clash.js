@@ -6,14 +6,24 @@ define([
     ab
 ) {
 
+
+    var ContributionsEpicUsaCtaThreeWay = {
+        name: 'ContributionsEpicUsaCtaThreeWay',
+        variants: ['mixed', 'just-contribute', 'just-supporter']
+    };
+
+    var ContributionsEpicObserverAnniversary = {
+        name: 'ContributionsEpicObserverAnniversary',
+        variants: ['mixed']
+    };
+
+    var ContributionsEpicBrexitSupreme = {
+        name: 'ContributionsEpicBrexitSupreme',
+        variants: ['mixed']
+    };
+
     function userIsInAClashingAbTest() {
-
-        var contributionsUsa1 = {
-            name: 'ContributionsUsa1', 
-            variants: ['control', 'vital', 'fresh', 'independent', 'chips']
-        };
-
-        var clashingTests = [contributionsUsa1];
+        var clashingTests = [ContributionsEpicUsaCtaThreeWay, ContributionsEpicObserverAnniversary, ContributionsEpicBrexitSupreme];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 

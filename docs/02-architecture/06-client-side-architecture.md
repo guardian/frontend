@@ -268,7 +268,7 @@ if ((config.isMedia || qwery('video, audio').length) && !config.page.isHosted) {
 }
 ```
 
-Each bundle is created via the [requirejs config](https://github.com/guardian/frontend/blob/master/grunt-configs/requirejs.js), e.g.:
+Each bundle is created via the [bundle.js config](https://github.com/guardian/frontend/blob/master/tools/__tasks__/compile/javascript/bundle.js), e.g.:
 
 ```js
 facia: {
@@ -291,6 +291,14 @@ and each must return an `init` function that is called from `enhanced.js` once r
 
 All the enhanced bootstraps are in [bootstraps/enhanced](https://github.com/guardian/frontend/tree/master/static/src/javascripts/bootstraps/enhanced), where you'll be able to see what each bootstrap initialises.
 
+Finally, to tell curl - the module loader - where to fetch a bundle from, when hashed, you will need to add it to the [curlConfig.scala.js](https://github.com/guardian/frontend/blob/master/common/app/templates/inlineJS/blocking/curlConfig.scala.js):
+
+```
+'bootstraps/enhanced/facia':         '@Static("javascripts/bootstraps/enhanced/facia.js")'
+```
+
+Run `make compile` and add `assets.useHashedBundles=true` to your devOverrides in frontend.conf to test the bundle as it would run on PROD.
+
 ### Components
 
 [Here be 3rd-party JS](https://github.com/guardian/frontend/tree/master/static/src/javascripts/components) such as bean, bonzo and fastdom.
@@ -310,4 +318,4 @@ There are five projects in the Javascript architecture:
 
 ### Vendor
 
-Contains [vendor JS](https://github.com/guardian/frontend/tree/master/static/src/javascripts/vendor) from the likes of forsee, formstack, prebid and stripe.
+Contains [vendor JS](https://github.com/guardian/frontend/tree/master/static/src/javascripts/vendor) from the likes of forsee, formstack and stripe.

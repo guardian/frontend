@@ -51,7 +51,7 @@ define([
 
             editions: {
                 US: {
-                    messageText: 'Become a supporter from just $4.99 per month to ensure quality journalism is available to all',
+                    messageText: 'Become a supporter from just $6.99 per month to ensure quality journalism is available to all',
                     trackingSuffix: '_US'
 
                 },
@@ -85,8 +85,8 @@ define([
                     adblockCoins: svgs('adblockCoinsUk')
                 },
                 INT: {
-                    monthlyCost: '$4.99',
-                    dailyCost: '16¢',
+                    monthlyCost: '$6.99',
+                    dailyCost: '22¢',
                     adblockCoins: svgs('adblockCoinsUs')
                 }
             }

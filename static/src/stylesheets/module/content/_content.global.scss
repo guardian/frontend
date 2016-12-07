@@ -22,37 +22,51 @@
 
     .commentcount2__heading,
     .sharecount__heading {
-        @include fs-textSans(1);
-        line-height: 15px;
         height: 15px;
         margin: 0;
         position: relative;
-        padding-left: 18px;
 
         .inline-icon {
             position: absolute;
-            left: 0;
+            top: 0;
+            right: 0;
         }
 
         @include mq(leftCol) {
             padding-left: $gs-gutter * .75;
+            padding-right: 0;
+
+            .inline-icon {
+                left: 0;
+            }
         }
     }
 
-    .inline-icon {
-        margin: 2px 0 0 -2px;
+    .sharecount__heading .inline-icon {
+        margin-top: -3px;
+    }
+
+    .commentcount2__heading .inline-icon {
+        margin-top: 1px;
+        margin-right: -2px;
+
+        svg {
+            width: 18px;
+            height: 18px
+        }
     }
 
     .commentcount2__value,
     .sharecount__value {
-        // design is off font scale
-        font-family: $f-serif-headline;
-        font-size: 18px;
-        font-weight: 500;
+        @include fs-textSans(6);
+        font-weight: bold;
+        letter-spacing: -1px;
+        padding-top: $gs-baseline/5;
+        display: block;
     }
 
     .sharecount__value {
-        color: $neutral-1;
+        color: $neutral-2;
     }
 
     .sharecount__value--short {
@@ -81,34 +95,31 @@
     height: 100%;
     text-align: left;
     float: left;
-    padding-right: ($gs-gutter / 2) + 1px;
+    min-width: 15px; // Min width is the width of the icons
 
-    @include mq(leftCol, wide) {
-        padding-right: 6px;
+    @include mq($until: leftCol) {
+        text-align: right;
+    }
+}
+
+.meta__extras--crossword {
+    border-top: 1px dotted $neutral-5;
+    display: flex;
+    justify-content: space-between;
+
+    .meta__social,
+    .meta__numbers {
+        border: 0 none;
     }
 
-    .meta__extras--crossword & {
+    .meta__number {
         border-left: 1px solid $neutral-7;
-        float: right;
         padding-left: $gs-gutter / 2;
-    }
-
-    &:last-child {
-        padding-right: 0;
+        text-align: right;
     }
 }
 
 .meta__save-for-later {
-
-    .content--interactive & {
-        @include mq(leftCol) {
-            $social-width: 35px;
-
-            position: absolute;
-            top: 1px;
-            left: $social-width * 6;
-        }
-    }
 
     .content--liveblog & {
         @include mq(desktop) {
@@ -116,12 +127,6 @@
             left: 0;
             top: 0;
             border-top: 1px dotted $neutral-5;
-        }
-    }
-
-    .meta__extras--crossword & {
-        @include mq(tablet) {
-            float: left;
         }
     }
 
@@ -137,7 +142,5 @@
 .meta__number:not(.u-h) + .meta__number {
     border-left: 1px solid $neutral-7;
     padding-left: $gs-gutter / 2;
-    @include mq(leftCol, wide) {
-        padding-left: 6px;
-    }
+    margin-left: $gs-gutter / 2;
 }

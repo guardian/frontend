@@ -23,7 +23,7 @@
                     @fragments.witnessCallToAction(page.item.content)
                     <ul class="gallery">
                         @page.item.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                            @galleryItem(Seq("inline1", "inline2"), 4, image, row.rowNum, page.item.lightbox.imageContainer(row.rowNum - 1))
+                            @galleryItem(4, image, row.rowNum, page.item.lightbox.imageContainer(row.rowNum - 1))
                         }
                     </ul>
                     @fragments.witnessCallToAction(page.item.content)
@@ -46,10 +46,10 @@
     }
 </div>
 <div class="l-side-margins">
-    @fragments.contentFooter(page.item, page.related, "media", isPaidContent(page.item, page))
+    @fragments.contentFooter(page.item, page.related, "media", isPaidContent(page))
 </div>
 
-@galleryItem(adSlots: Seq[String], adInterval: Int, image: ImageAsset, rowNum: Int, imageElement: ImageElement) = {
+@galleryItem(adInterval: Int, image: ImageAsset, rowNum: Int, imageElement: ImageElement) = {
 
     <li id="img-@rowNum" class="gallery__item js-gallery-item" data-link-name="Gallery item | @rowNum">
         <figure itemscope itemtype="http://schema.org/ImageObject">
@@ -83,17 +83,16 @@
                         GalleryMedia.inline,
                         image.altText.getOrElse("")
                     )
+                    @fragments.inlineSvg("expand-image", "icon", List("centered-icon", "rounded-icon", "gallery__fullscreen", "modern-visible", "hide-until-tablet"))
                 </a>
             }
         </figure>
     </li>
 
     @if(!page.item.content.shouldHideAdverts && rowNum % adInterval == 0) {
-        @adSlots.lift((rowNum / adInterval) - 1).map { adSlot =>
-            <li class="gallery__item gallery__item--advert">
-                <div class="gallery__img-container js-gallery-slot">
-                </div>
-            </li>
-        }
+        <li class="gallery__item gallery__item--advert">
+            <div class="gallery__img-container js-gallery-slot">
+            </div>
+        </li>
     }
 }

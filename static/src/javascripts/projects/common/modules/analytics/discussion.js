@@ -1,11 +1,9 @@
-/* global s */
 define([
     'bonzo',
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/assign',
     'common/utils/config',
-    'common/modules/analytics/omniture',
     'common/modules/identity/api',
     'lodash/functions/debounce'
 ], function (
@@ -14,7 +12,6 @@ define([
     mediator,
     assign,
     config,
-    omniture,
     Id,
     debounce
 ) {
@@ -37,87 +34,24 @@ define([
         var fieldsObject = assign({
             nonInteraction: true // to avoid affecting bounce rate
         }, (customDimensions || {}));
-        ga(gaTracker + '.send', 'event', 'ElementView', 'Onpage item', label, fieldsObject);
+        ga(gaTracker + '.send', 'event', 'element view', 'onpage item', label, fieldsObject);
     }
-
-    /**
-     * @param {Array.<string>}
-     * @return {string}
-     */
-    track.getLinkTrackVars = function (extras) {
-        extras = extras || [];
-        var linkTrackVars = ['prop6', 'prop19', 'prop75', 'eVar8',  'eVar19', 'eVar31', 'eVar51', 'eVar66'];
-        return ',' + linkTrackVars.concat(extras).join(',');
-    };
-
-    track.comment = function (comment) {
-        var commentType = comment.replyTo ? 'response' : 'comment';
-        var parentCommentAuthorId = comment.replyTo ? comment.replyTo.authorId : null;
-
-        // Add extra variables for discussion.
-        omniture.populateEventProperties('comment');
-        s.events += ',event51';
-        s.linkTrackVars += this.getLinkTrackVars(['eVar68']);
-        s.linkTrackEvents += ',event51';
-
-        s.eVar66 = Id.getUserFromCookie().id || null;
-        s.eVar68 = commentType;
-        s.eVar67 = parentCommentAuthorId;
-        s.tl(true, 'o', 'comment');
-    };
-
-    track.recommend = function (e) {
-        omniture.populateEventProperties('Recommend a comment');
-        s.events += ',event72';
-        s.linkTrackVars += this.getLinkTrackVars(['eVar65', 'eVar67']);
-        s.linkTrackEvents += ',event72';
-
-        s.eVar65 = 'recommendation';
-        s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
-        s.eVar67 = e.userId;
-        s.tl(true, 'o', 'Recommend a comment');
-    };
 
     track.jumpedToComments = function () {
         if (!track.seen) {
-            omniture.populateEventProperties('seen jump-to-comments');
-            s.events += ',event72';
-            s.linkTrackVars += this.getLinkTrackVars(['eVar65']);
-            s.linkTrackEvents += ',event72';
-
-            s.eVar65 = 'seen jump-to-comments';
-            s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
-            s.tl(true, 'o', 'seen jump-to-comments');
             track.seen = true;
         }
     };
 
     track.commentPermalink = function () {
         if (!track.seen) {
-            omniture.populateEventProperties('seen comment-permalink');
-            s.events += ',event72';
-            s.linkTrackVars += this.getLinkTrackVars(['eVar65']);
-            s.linkTrackEvents += ',event72';
-
-            s.eVar65 = 'seen comment-permalink';
-            s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
-            s.tl(true, 'o', 'seen comment-permalink');
             track.seen = true;
         }
     };
 
     track.scrolledToComments = function () {
         if (!track.seen) {
-            sendToGA('Scroll to comments');
-
-            omniture.populateEventProperties('seen scroll-top');
-            s.events += ',event72';
-            s.linkTrackVars += this.getLinkTrackVars(['eVar65']);
-            s.linkTrackEvents += ',event72';
-
-            s.eVar65 = 'seen scroll-top';
-            s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
-            s.tl(true, 'o', 'seen scroll-top');
+            sendToGA('scroll to comments');
             track.seen = true;
         }
     };
@@ -152,8 +86,6 @@ define([
 
     return {
         init: function () {
-            mediator.on('discussion:commentbox:post:success', track.comment.bind(track));
-            mediator.on('discussion:comment:recommend:success', track.recommend.bind(track));
             mediator.on('discussion:seen:comment-permalink', track.commentPermalink.bind(track));
             mediator.on('discussion:seen:comments-anchor', track.jumpedToComments.bind(track));
             mediator.on('discussion:seen:comments-scrolled-to', track.scrolledToComments.bind(track));

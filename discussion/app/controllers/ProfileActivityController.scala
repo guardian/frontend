@@ -1,7 +1,8 @@
 package controllers
 
 import common.JsonComponent
-import discussion.DiscussionApiLike
+import discussion.api.DiscussionApiLike
+import discussion.api.DiscussionApiException._
 import discussion.model.Profile
 import model.{Cached, MetaData, SectionSummary, SimplePage}
 import play.api.mvc.Action
@@ -11,8 +12,7 @@ class ProfileActivityController(val discussionApi: DiscussionApiLike) extends Di
     metadata = MetaData.make(
       id = s"discussion/profile/${profile.userId}/$pageType",
       section = Some(SectionSummary.fromId("Discussion")),
-      webTitle = s"${profile.displayName}'s activity",
-      analyticsName = s"GFE:Article:Profile activity page"
+      webTitle = s"${profile.displayName}'s activity"
     )
   )
 
@@ -25,7 +25,7 @@ class ProfileActivityController(val discussionApi: DiscussionApiLike) extends Di
           profileDiscussions
         ))
       }
-    }
+    } recover toResult
   }
 
   def profileReplies(userId: String) = Action.async { implicit request =>
@@ -37,7 +37,7 @@ class ProfileActivityController(val discussionApi: DiscussionApiLike) extends Di
           replies
         ))
       }
-    }
+    } recover toResult
   }
 
   def profileSearch(userId: String, q: String) = Action.async { implicit request =>
@@ -49,7 +49,7 @@ class ProfileActivityController(val discussionApi: DiscussionApiLike) extends Di
           comments
         ))
       }
-    }
+    } recover toResult
   }
 
   def profilePicks(userId: String) = Action.async { implicit request =>
@@ -61,6 +61,6 @@ class ProfileActivityController(val discussionApi: DiscussionApiLike) extends Di
           picks
         ))
       }
-    }
+    } recover toResult
   }
 }

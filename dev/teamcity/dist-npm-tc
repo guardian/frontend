@@ -6,5 +6,3 @@ set -o errexit
 
 echo "Install dependencies"
 make install
-
-./grunt-tc clean

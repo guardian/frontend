@@ -165,13 +165,15 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                      
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                               controllers.GalleryController.lightboxJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                                        controllers.GalleryController.renderJson(path)
 
+GET        /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>                controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
+
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                      controllers.ImageContentController.renderJson(path)
 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                   controllers.InteractiveController.renderInteractiveJson(path)
 
 # Email paths
 GET        /email                                                                              controllers.EmailSignupController.renderPage()
-GET        /email/form/$emailType<article|footer|plain|plaindark>/:listId                      controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/form/$emailType<article|footer|plain|plaindark|plaintone>/:listId                      controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/:result                                                                      controllers.EmailSignupController.subscriptionResult(result: String)
 POST       /email                                                                              controllers.EmailSignupController.submit()
 OPTIONS    /email                                                                              controllers.EmailSignupController.options()

@@ -1,11 +1,12 @@
-@(page: InteractivePage)(implicit request: RequestHeader)
+@(page: InteractivePage)(implicit request: RequestHeader, env: play.api.Environment)
 @import common.Edition
+@import mvt.WebpackTest
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
 @import views.InteractiveBodyCleaner
 @import views.support.Commercial._
 
-@body(page.interactive, page.item.content.isImmersive, isPaidContent(page.interactive, page))
+@body(page.interactive, page.item.content.isImmersive, isPaidContent(page))
 
 @bodyRaw(interactive: model.Interactive) = {
     @interactive.maybeBody.map { body =>
@@ -18,16 +19,18 @@
 
 @body(interactive: model.Interactive, isImmersive: Boolean, isPaidContent: Boolean) = {
     @if(isImmersive) {
-        <div class="@RenderClasses(Map("paid-content--advertisement-feature" -> isPaidContent))">
-            @bodyRaw(interactive)
-        </div>
+
+        @if(isPaidContent){ @fragments.guBand() }
+
+        @* Must not be wrapped in any elements to support full screen immersives *@
+        @bodyRaw(interactive)
     } else {
         <div class="l-side-margins">
             <article id="article" class="@RenderClasses(
                     Map(
                         "content--advertisement-feature" -> isPaidContent,
-                        "content--sponsored" -> isSponsoredContent(interactive, page),
-                        "content--foundation-supported" -> isFoundationFundedContent(interactive, page),
+                        "content--sponsored" -> isSponsoredContent(page),
+                        "content--foundation-supported" -> isFoundationFundedContent(page),
                         "paid-content--advertisement-feature" -> isPaidContent
                     ),
                     "content", "content--interactive", "tonal", s"tonal--${toneClass(interactive)}"
@@ -43,7 +46,7 @@
                 <div class="content__main tonal__main tonal__main--@toneClass(interactive)">
                     <div class="gs-container u-cf">
                         <div class="content__main-column">
-                            @fragments.contentMeta(interactive, page, showBadge = false)
+                            @fragments.contentMeta(interactive, page)
                         </div>
                     </div>
 
@@ -55,12 +58,28 @@
 
                     <div class="gs-container u-cf">
                         <div class="content__main-column content__meta-footer">
-                            @fragments.contentMeta(interactive, page, showBadge = false)
+                            @fragments.contentMeta(interactive, page)
                         </div>
                     </div>
                 </div>
             </article>
+
+            @fragments.contentFooter(interactive, page.related, isPaidContent = isPaidContent)
         </div>
-        @fragments.contentFooter(interactive, page.related, isPaidContent = isPaidContent)
+    }
+
+    @if(!WebpackTest.isParticipating) {
+        <script>
+            @HtmlFormat.raw(common.Assets.js.curl)
+
+            [].slice.apply(document.querySelectorAll('figure.interactive[data-interactive]')).forEach(function (el) {
+                require([el.getAttribute('data-interactive')], function (interactive) {
+                    interactive.boot(el, document, window.guardian.config);
+                }, function (err) {
+                    console.log('Interactive failed', mainJS);
+                    console.log('Error:', err);
+                });
+            });
+        </script>
     }
 }

@@ -19,7 +19,6 @@ object HostedPages {
 
   private val visitBritainCampaignName = "visit-britain"
   private val leffeCampaignName = "leffe-rediscover-time"
-  private val zootropolisCampaignName = "disney-zootropolis"
   private val singaporeGrandPrixCampaignName = "singapore-grand-prix"
   private val chesterZooCampaignName = "chester-zoo-act-for-wildlife"
 
@@ -27,7 +26,6 @@ object HostedPages {
     campaignName match {
       case `visitBritainCampaignName` => VisitBritainHostedPages.fromPageName(pageName)
       case `leffeCampaignName` => LeffeHostedPages.fromPageName(pageName)
-      case `zootropolisCampaignName` => ZootropolisHostedPages.fromPageName(pageName)
       case `singaporeGrandPrixCampaignName` => Formula1HostedPages.fromPageName(pageName)
       case `chesterZooCampaignName` => ChesterZooHostedPages.fromPageName(pageName)
       case _ => None;

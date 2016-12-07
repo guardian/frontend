@@ -1,6 +1,6 @@
 $hosted-stripe: 28px;
-$hosted-video-width: 960px;
-$hosted-video-height: 540px;
+$hosted-video-width: 980px;
+$hosted-video-height: 551px;
 
 @import '_hosted-video.scss';
 @import '_hosted-gallery.scss';
@@ -128,15 +128,22 @@ $hosted-video-height: 540px;
     display: none;
 }
 
+.hosted__banner .hosted-tone-btn,
+.hosted-tone-btn:focus,
+.hosted-tone-btn:hover {
+    color: #333333;
+    svg {
+        fill: #333333;
+    }
+}
+
 .hosted-page--bright {
-    .hosted-tone-btn {
-        &,
-        &:focus,
-        &:hover {
-            color: #ffffff;
-            svg {
-                fill: #ffffff;
-            }
+    .hosted__banner .hosted-tone-btn,
+    .hosted-tone-btn:focus,
+    .hosted-tone-btn:hover {
+        color: #ffffff;
+        svg {
+            fill: #ffffff;
         }
     }
 
@@ -183,7 +190,7 @@ $hosted-video-height: 540px;
     @include mq(mobile) {
         svg {
             width: 115px;
-            height: 40px
+            height: 40px;
         }
     }
 
@@ -196,7 +203,7 @@ $hosted-video-height: 540px;
 }
 
 .hosted__glogotext {
-    @include f-headlineSans;
+    @include f-textSans;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: .5px;
@@ -211,28 +218,6 @@ $hosted-video-height: 540px;
     .survey-container {
         @include mq(tablet) {
             top: 40%;
-        }
-    }
-}
-
-.hosted-video-page {
-    .hosted__container.host {
-        position: relative;
-        background: transparent;
-        color: #ffffff;
-
-        @include mq($until: desktop) {
-            padding: 0;
-        }
-    }
-
-    .hosted__glogo {
-        @include mq(leftCol) {
-            margin-right: 90px;
-        }
-
-        @include mq(wide) {
-            margin-right: 170px;
         }
     }
 }
@@ -262,6 +247,7 @@ $hosted-video-height: 540px;
             padding-bottom: $hosted-video-height;
             margin: 0 auto;
             overflow: hidden;
+
         }
     }
 }
@@ -456,13 +442,16 @@ $hosted-video-height: 540px;
 
 .hosted__meta {
     position: absolute;
-    left: 88px;
-    right: 88px;
+    left: 98px;
+    right: 98px;
     bottom: 44px;
     color: #ffffff;
 
     @include mq($until: tablet) {
         display: none;
+    }
+    @include mq($until: leftCol) {
+        left: $gs-gutter;
     }
 }
 
@@ -480,8 +469,8 @@ $hosted-video-height: 540px;
     }
 
     .hosted__heading {
-        font-size: 24px;
-        line-height: 22px;
+        font-size: 28px;
+        line-height: 28px;
     }
 }
 
@@ -523,10 +512,6 @@ $hosted-video-height: 540px;
 
     .hostedbadge {
         position: absolute;
-
-        @include mq(desktop) {
-            margin-left: $gs-gutter / 2;
-        }
     }
     .hostedbadge__logo.hostedbadge__logo {
         position: relative;
@@ -544,15 +529,11 @@ $hosted-video-height: 540px;
 // Headings
 .hosted__heading {
     @include f-headlineSans;
+    letter-spacing: -0.5px;
 
     margin: 0;
-    font-size: 22px;
-    line-height: 24px;
-
-    @include mq(tablet) {
-        font-size: 26px;
-        line-height: 26px;
-    }
+    font-size: 28px;
+    line-height: 28px;
 
     @include mq(desktop) {
         font-size: 36px;
@@ -569,7 +550,7 @@ $hosted-video-height: 540px;
 }
 
 .hosted__heading--small {
-    @include f-headlineSans;
+    @include f-textSans;
 
     font-size: 18px;
     line-height: 1;
@@ -678,7 +659,7 @@ $hosted-video-height: 540px;
 
 .hosted__cta-text,
 .hosted__cta-label {
-    @include f-headlineSans;
+    @include f-textSans;
 
     font-size: 25px;
     font-weight: bold;
@@ -704,7 +685,7 @@ $hosted-video-height: 540px;
 
 .hosted__cta-btn-text {
     @include circular;
-    @include f-headlineSans;
+    @include f-textSans;
     position: relative;
     display: inline-block;
     padding: 6px 45px 6px 14px;
@@ -726,6 +707,7 @@ $hosted-video-height: 540px;
     .hosted-page:not(.hosted-page--bright) & {
         background-color: #ffffff;
         border-color: #ffffff;
+        color: #333333;
     }
 }
 
@@ -744,6 +726,10 @@ $hosted-video-height: 540px;
     &:active,
     &:visited {
         text-decoration: none;
+    }
+
+    .hostedbadge {
+        z-index: $zindex-ads;
     }
 }
 
@@ -826,6 +812,7 @@ $hosted-video-height: 540px;
     margin-left: 10px;
     color: #ffffff;
     border: 0;
+    padding-top: 2px;
 
     @include mq(mobile) {
         margin-top: 20px;
@@ -845,7 +832,7 @@ $hosted-video-height: 540px;
 }
 
 .hosted__label-btn.paidfor-label__btn {
-    @include f-headlineSans;
+    @include f-textSans;
     font-size: 16px;
 
     &.popup__toggle {
@@ -900,9 +887,8 @@ $hosted-video-height: 540px;
 }
 
 .hosted__next-page--header {
-    padding-bottom: 10px;
-    margin: $gs-baseline 0 10px;
-    border-bottom: 1px solid #eeeeee;
+    margin-bottom: 10px;
+    position: relative;
 }
 
 .hosted__container .host__body {
@@ -915,18 +901,7 @@ $hosted-video-height: 540px;
 }
 
 .hosted__next-page {
-    @include f-headlineSans;
-}
-
-.hosted-video-page .hosted__next-page-placeholder,
-.hosted-video__next-page {
-    order: 3;
-}
-.hosted-video__next-page {
-    @include mq(leftCol) {
-        width: 300px;
-    }
-    margin: 0 $gs-gutter $gs-gutter;
+    @include f-textSans;
 }
 
 .hosted__next-page--more-from {
@@ -947,7 +922,6 @@ $nextPageThumbWidthMobile: #{$nextPageThumbHeightMobile * 5 / 3};
 .hosted__next-page .hosted__next-page--tile {
     display: block;
     color: #333333;
-    border-top: 2px solid;
     text-decoration: none;
     position: relative;
     min-height: $nextPageThumbHeight;
@@ -957,6 +931,14 @@ $nextPageThumbWidthMobile: #{$nextPageThumbHeightMobile * 5 / 3};
     }
     &:active {
         color: #333333;
+    }
+
+    .hosted-next-page__wrapper {
+        background: #ffffff;
+    }
+
+    &:hover .hosted-next-page__wrapper {
+        background: rgba(255, 255, 255, .9);
     }
 }
 
@@ -974,27 +956,12 @@ $nextPageThumbWidthMobile: #{$nextPageThumbHeightMobile * 5 / 3};
 }
 
 .hosted__next-page-title {
-    z-index: 1;
     margin: 0 0 0 $nextPageThumbWidth;
     @include mq($until: phablet) {
         margin-left: $nextPageThumbWidthMobile;
     }
 }
 
-.hosted-video__next-page-title {
-    padding: 10px;
-    font-size: 20px;
-    line-height: 23px;
-    @include mq($until: phablet) {
-        font-size: 18px;
-        line-height: 20px;
-    }
-}
-
-.hosted-next-page-bg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: .1;
-    z-index: 0;
+.hosted__link {
+    display: inline-block;
 }

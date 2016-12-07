@@ -1,9 +1,9 @@
 @import common.dfp.GuLineItem
 @import tools.DfpLink
 
-@(env: String, timestamp: Option[String], groupedLineItems: Seq[(String, Seq[GuLineItem])])(implicit request: RequestHeader)
+@(timestamp: String, groupedLineItems: Seq[(String, Seq[GuLineItem])])(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Ad Tests", env, isAuthed = true) {
+@admin_main("Ad Tests", isAuthed = true) {
 
 <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")" />
 

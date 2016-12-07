@@ -17,7 +17,6 @@ define([
     userPrefs,
     commercialFeatures
 ) {
-    var maxAdsToShow = 3;
     var containerSelector = '.fc-container';
     var sliceSelector = '.js-fc-slice-mpu-candidate';
     var containerGap = 1;
@@ -76,8 +75,6 @@ define([
 
                 return true;
             })
-            // limit to maxAdsToShow
-            .slice(0, maxAdsToShow)
             // create ad slots for the selected slices
             .map(function (item, index) {
                 var adName = replaceTopSlot ?

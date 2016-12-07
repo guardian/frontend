@@ -1,6 +1,7 @@
 @(page: model.Page)(body: Html)(implicit request: RequestHeader)
 
 @import common.{LinkTo, CanonicalLink}
+@import implicits.Requests.RichRequestHeader
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -12,14 +13,33 @@
         <link rel="canonical" href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))" />
         <title>@views.support.Title(page)</title>
 
+        @*
+         * Outlook doesn't support web fonts and also doesn't handle
+         * fallback fonts correctly, so all "Guardian Egyptian Text" will
+         * come out as Times New Roman despite the fallback font of Georgia.
+         * So for Outlook we explicitly set Georgia as the preferred font.
+         *@
+        <!--[if mso]>
+        <style>
+            h1, h2, h3, h4, h5, h6, p, blockquote {
+                font-family: Georgia, serif !important;
+            }
+        </style>
+        <![endif]-->
+
         @fragments.email.stylesheets.ink()
         @fragments.email.stylesheets.fonts()
         @fragments.email.stylesheets.main()
         @fragments.email.stylesheets.footer()
 
         @if(page.metadata.isFront) {
-            @fragments.email.stylesheets.front()
+            @fragments.email.stylesheets.front(page)
             @fragments.email.stylesheets.tones()
+
+            @* This is a temporary override to test two alternative email designs 29/11/2016 *@
+            @if(request.isEmailConnectedStyle) {
+                @fragments.email.stylesheets.connectedStyleOverride()
+            }
         }
     </head>
 

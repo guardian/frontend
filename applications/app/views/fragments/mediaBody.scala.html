@@ -1,4 +1,4 @@
-@(page: MediaPage)(implicit request: RequestHeader)
+@(page: MediaPage, displayCaption: Boolean)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import common.LinkTo
 @import model.{Audio, AudioPlayer, Video, VideoPlayer}
@@ -7,7 +7,7 @@
 @import views.support.{RenderClasses, SeoOptimisedContentImage, StripHtmlTags, Video640}
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }) { case (media, mediaType) =>
-    @defining(isPaidContent(media, page)) { isPaidContent =>
+    @defining(isPaidContent(page)) { isPaidContent =>
         <div class="l-side-margins @if(!isPaidContent) {l-side-margins--media}">
 
             <article id="article" class="@RenderClasses(
@@ -65,6 +65,14 @@
                                             <meta itemprop="datePublished" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
                                             <meta itemprop="name" content="@video.metadata.webTitle" />
                                             <meta itemprop="uploadDate" content="@video.trail.webPublicationDate.toString("yyyy-MM-dd")" />
+
+                                            @video.mediaAtom.map { ma =>
+                                                @ma.duration.map { duration =>
+                                                    <meta itemprop="duration" content="@ma.isoDuration" />
+                                                }
+                                            }
+
+
                                             @video.elements.mainVideo.map { mv =>
                                                 <meta itemprop="duration" content="@mv.videos.ISOduration" />
                                                 <meta itemprop="height" content="@mv.videos.height" />
@@ -76,6 +84,14 @@
                                                 <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img.images)" />
                                                 <meta itemprop="thumbnailUrl" content="@SeoOptimisedContentImage.bestFor(img.images)" />
                                             }
+                                            @video.mediaAtom.map { mediaAtom =>
+                                                @* TODO: Use poster URL for this once we have better image data in model *@
+                                                <meta itemprop="thumbnail" content="@Html(video.content.signedArticleImage)" />
+                                                <meta itemprop="thumbnailUrl" content="@Html(video.content.signedArticleImage)" />
+
+                                              @fragments.atoms.media(mediaAtom, displayCaption = displayCaption)
+                                            }
+
                                             @video.elements.mainVideo.map { videoElement =>
                                                 @fragments.media.video(
                                                     VideoPlayer(

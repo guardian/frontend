@@ -2,7 +2,7 @@
     "extends": "eslint:recommended",
     "parserOptions": {
         "sourceType": "module",
-        "ecmaVersion": 6
+        "ecmaVersion": 2017
     },
     "env": {
         "node": true,
@@ -10,13 +10,13 @@
         "commonjs": true
     },
     "rules": {
-        "semi": 2,
-        "quotes": [2, "single"],
-        "no-undef": 2,
-        "no-use-before-define": [2, "nofunc"],
-        "no-multi-spaces": 0,
-        "no-underscore-dangle": 0,
-        "key-spacing": 0,
-        "no-alert": 0
+        "semi": ["error", "always"],
+        "quotes": ["error", "single"],
+        "no-undef": "error",
+        "no-use-before-define": ["error", "nofunc"],
+        "no-multi-spaces": "off",
+        "no-underscore-dangle": "off",
+        "key-spacing": "off",
+        "no-alert": "off"
     }
 }

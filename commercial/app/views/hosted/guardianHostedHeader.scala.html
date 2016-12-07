@@ -1,17 +1,48 @@
 @import common.commercial.hosted.HostedPage
-@(pageCssClass: String, page: HostedPage)
+@(pageCssClass: String, page: HostedPage, isAMP: Boolean = false)
 
 <div class="hosted__header @pageCssClass">
     <div class="hosted__headerwrap js-hosted-headerwrap">
-        <div class="hostedbadge hostedbadge--shouldscale hosted-tone-bg">
+        <div class="hostedbadge hosted-tone-bg">
             <p class="hostedbadge__info">Advertiser content</p>
             <a href="@page.cta.url" data-link-name="hosted-logo-top-left" target="_blank">
-                <img class="hostedbadge__logo" src="@page.campaign.logoUrl" alt="logo @page.campaign.owner"/>
+            @if(isAMP) {
+                <amp-img layout="responsive" width="@{page.campaign.logo.dimensions.map(_.width)}" height="@{page.campaign.logo.dimensions.map(_.height)}" class="hostedbadge__logo" src="@page.campaign.logo.url" alt="logo @page.campaign.owner"></amp-img>
+            } else {
+                <img class="hostedbadge__logo" src="@page.campaign.logo.url" alt="logo @page.campaign.owner"/>
+            }
             </a>
         </div>
-        <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
-            <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn js-hosted-about" data-link-name="about-advertiser-content">About</button>
-        </div>
+        @if(isAMP) {
+            <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
+                <input type="checkbox" value="" id="hostedAboutTop" class="paidfor-input">
+                <label for="hostedAboutTop" class="tooltip-label">About</label>
+                <div class="survey-container" data-link-name="hosted page about overlay" role="dialog" aria-label="about hosted content">
+                    <h3 class="survey-text__header">
+                        Advertiser content
+                    </h3>
+                    <div class="survey-icon">
+                        @fragments.inlineSvg("paid-content", "commercial")
+                    </div>
+                    <div class="survey-text">
+                        <p class="survey-text__paragraph">
+                            Advertiser content is used to describe advertisement features that are paid for, produced and controlled by the advertiser rather than the publisher​.
+                        </p>
+                        <p class="survey-text__paragraph">
+                            They​ are subject to regulation by the Advertising Standards Authority in the UK, the Federal Trade Commission in the US and the Advertising Standards Bureau in Australia.
+                        </p>
+                        <p class="survey-text__paragraph">
+                            This content is produced by the advertiser and does not involve Guardian News and Media staff.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        } else {
+            <div class="paidfor-label paidfor-meta__more hosted__label has-popup">
+                <button class="u-button-reset paidfor-label__btn popup__toggle hosted__label-btn js-hosted-about" data-link-name="about-advertiser-content">
+                    About</button>
+            </div>
+        }
         <div class="hosted-header__spacer"></div>
         <a href="http://www.theguardian.com" data-link-name="guardian-logo-top-right" class="hosted__glogo">
             <p class="hosted__glogotext">Hosted by</p>

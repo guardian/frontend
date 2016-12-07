@@ -1,5 +1,4 @@
-@(item: model.ContentType, page: model.Page, showBadge: Boolean = true, showExtras: Boolean = true)(implicit request: RequestHeader)
-@import conf.switches.Switches.SaveForLaterSwitch
+@(item: model.ContentType, page: model.Page, showExtras: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
 @import model._
 @import views.support.Commercial.isPaidContent
 @import views.support.ContentOldAgeDescriber
@@ -9,6 +8,18 @@
         case v: Video   => { @fragments.meta.byline(v.bylineWithSource, v.tags) }
         case c          => { @fragments.meta.byline(c.trail.byline, c.tags) }
     }
+}
+
+@socialLinks() = @{
+    if (amp) ShareLinkMeta.noneHidden(item.sharelinks.pageShares) else item.sharelinks.pageShares
+}
+
+@iconModifier() = @{
+    if (item.content.isImmersiveGallery) List("social-icon-media") else Nil
+}
+
+@ageNotice() = @{
+    ContentOldAgeDescriber(item.content)
 }
 
 @metaBody() = {
@@ -21,24 +32,24 @@
 
         @if(item.content.tags.contributors.length == 1) {
             @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) {
-                <p class="meta__contact-header hide-until-leftcol">Contact author</p>
+                <p class="meta__contact-header">Contact author</p>
             }
             @fragments.meta.contactAuthor(item.tags)
         }
 
         @if(!item.trail.shouldHidePublicationDate) {
-            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.tags.isLiveBlog, item.fields.isLive)
+            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
         }
     }
 
     @if(showExtras) {
-        <div class="meta__extras">
+        <div class="meta__extras @if(!ageNotice.isEmpty){ meta__extras--notice }">
             <div class="meta__social" data-component="share">
-                @fragments.social(item.sharelinks.pageShares, "top", isGallery = item.content.isImmersiveGallery)
-                @if(item.content.tags.tags.exists(_.id == "tone/news")) {
-                    @fragments.contentAgeNotice(ContentOldAgeDescriber(item.content))
-                }
+                @fragments.social(socialLinks, "top", iconModifier = iconModifier)
             </div>
+            @if(item.content.tags.tags.exists(_.id == "tone/news")) {
+                @fragments.contentAgeNotice(ageNotice)
+            }
             @if(!item.content.isExplore) {
                 <div class="meta__numbers">
                     <div class="u-h meta__number js-sharecount">
@@ -48,9 +59,6 @@
                     }">
                     </div>
                 </div>
-                @if(SaveForLaterSwitch.isSwitchedOn && !item.content.isImmersiveGallery) {
-                    <div class="meta__save-for-later js-save-for-later" data-position="top"></div>
-                }
             }
         </div>
     }
@@ -68,7 +76,7 @@
 
 
     @if(
-        item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !isPaidContent(item, page))
+        item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !isPaidContent(page))
     ) {
         @fragments.commercial.badge(item, page)
     }

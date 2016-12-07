@@ -7,7 +7,8 @@
 - [How to deploy](01-start-here/03-how-to-deploy.md)
 - [Troubleshooting](01-start-here/04-troubleshooting.md)
 - [Development tips](01-start-here/05-development-tips.md)
-- [FAQs](01-start-here/06-faqs.md)
+- [Testing tips](01-start-here/06-testing-tips.md)
+- [FAQs](01-start-here/07-faqs.md)
 
 ##[Architecture](02-architecture/)
 - [The different applications composing the Guardian website](02-architecture/01-applications-architecture.md)
@@ -33,6 +34,8 @@
 - [Update configuration in s3](03-dev-howtos/13-Update-configuration-in-s3.md)
 - [Implement Google Analytics](03-dev-howtos/14-implement-google-analytics.md)
 - [Overriding default configuration](03-dev-howtos/15-override-default-configuration.md)
+- [Updating the test database](03-dev-howtos/16-updating-test-database.md)
+- [Working with Google AMP](03-dev-howtos/17-working-with-amp.md)
 
 ##[Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)

@@ -1,7 +1,6 @@
-@(page: model.Page)( implicit request:RequestHeader)
+@(page: model.Page)(implicit request:RequestHeader, env: play.api.Environment)
 @import conf.Configuration
 @import conf.Static
-@import conf.switches.Switches.BritishCouncilBeacon
 @import views.support.FBPixel
 
 
@@ -11,13 +10,11 @@
 
 @fragments.analytics.google(page)
 
-@fragments.analytics.omniture(page)
-
 @fragments.analytics.comscore(page)
 
 <script>
     @*
-        Basic Omniture runs on both Core & 'Full experience'
+        GA runs on both Core & 'Full experience'
         We just need to run Ophan here.
     *@
 
@@ -45,8 +42,3 @@
 
 <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>
 <img src="https://www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1" height="1" width="1" style="display:none" rel="nofollow" alt="" />
-
-@if(BritishCouncilBeacon.isSwitchedOn && page.metadata.url.contains("british-council-partner-zone")) {
-    <img alt="DCSIMG" id="DCSIMG" width="1" height="1"
-    src="http://statse.webtrendslive.com/dcsozkqgb00000sh0y1unaabw_9e3r/njs.gif?dcssip=www.guardian.co.uk&amp;dcsuri=/british-council-partner-zone&amp;WT.dl=0&amp;WT.es=www.guardian.co.uk/british-council-partner-zone&amp;WT.sp=Guardian_British_Council_Zone&amp;WT.js=No&amp;WT.tv=BC.nojs.1"/>
-}

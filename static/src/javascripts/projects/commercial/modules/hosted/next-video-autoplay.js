@@ -1,13 +1,13 @@
 define([
     'bean',
     'fastdom',
-    'common/modules/analytics/omniture',
-    'common/utils/$'
+    'common/utils/$',
+    'common/modules/analytics/google'
 ], function (
     bean,
     fastdom,
-    omniture,
-    $
+    $,
+    googleAnalytics
 ) {
     var nextVideoInterval;
     var $hostedNext = $('.js-hosted-next-autoplay');
@@ -39,7 +39,7 @@ define([
                 });
             }
             if (timeLeft <= 0){
-                omniture.trackLinkImmediate('Immediately play the next video');
+                googleAnalytics.trackNonClickInteraction('Immediately play the next video');
                 window.location = nextVideoPage;
             }
         }, 1000);

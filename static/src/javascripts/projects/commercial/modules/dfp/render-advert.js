@@ -1,10 +1,11 @@
 define([
     'bonzo',
     'qwery',
-    'raven',
     'Promise',
+    'common/utils/raven',
     'common/utils/fastdom-promise',
     'common/utils/closest',
+    'common/utils/mediator',
     'common/modules/commercial/ad-sizes',
     'commercial/modules/sticky-mpu',
     'commercial/modules/dfp/apply-creative-template',
@@ -13,10 +14,11 @@ define([
 ], function (
     bonzo,
     qwery,
-    raven,
     Promise,
+    raven,
     fastdom,
     closest,
+    mediator,
     adSizes,
     stickyMpu,
     applyCreativeTemplate,
@@ -66,6 +68,13 @@ define([
         } else {
             return addFluid(['ad-slot--facebook', 'ad-slot--revealer'])(_, advert);
         }
+    };
+
+    /**
+     * Resolve the stickyMpu.whenRendered promise
+     */
+    sizeCallbacks[adSizes.halfPage] = function () {
+        mediator.emit('page:commercial:sticky-mpu');
     };
 
     /**
@@ -125,12 +134,12 @@ define([
                 });
 
             function callSizeCallback() {
-                var size = slotRenderEvent.size.join(',');
-                if (size === '0,0') {
-                    size = 'fluid';
+                advert.size = slotRenderEvent.size.join(',');
+                if (advert.size === '0,0') {
+                    advert.size = 'fluid';
                 }
-                return Promise.resolve(sizeCallbacks[size] ?
-                    sizeCallbacks[size](slotRenderEvent, advert) :
+                return Promise.resolve(sizeCallbacks[advert.size] ?
+                    sizeCallbacks[advert.size](slotRenderEvent, advert) :
                     null
                 );
             }

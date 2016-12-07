@@ -1,9 +1,8 @@
 package common
 
 import akka.agent.Agent
-import play.api.libs.concurrent.{Akka => PlayAkka}
 import scala.concurrent.duration._
-import play.api.{Mode, Environment, Play}
+import play.api.{Mode, Environment}
 import scala.concurrent.ExecutionContext
 import akka.actor.ActorSystem
 
@@ -33,8 +32,3 @@ class AkkaAsync(env: Environment, actorSystem: ActorSystem) {
     actorSystem.scheduler.scheduleOnce(delay)(body)
   }
 }
-
-object AkkaAsync extends AkkaAsync(
-  env = Environment(Play.current.path, Play.current.classloader, Play.current.mode),
-  actorSystem = PlayAkka.system(Play.current)
-)

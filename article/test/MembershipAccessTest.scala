@@ -1,6 +1,5 @@
 package test
 
-import conf.switches.Switches
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest._
 
@@ -13,8 +12,6 @@ import org.scalatest._
 
     scenario("Membership access classname should be set on matching articles", ArticleComponents) {
 
-      Switches.MembersAreaSwitch.switchOn()
-
       Given("I am on an article under /membership/ with membershipAccess field set")
 
       goTo(accessUrl) { browser =>
@@ -25,23 +22,7 @@ import org.scalatest._
       }
     }
 
-    scenario("Membership access classname should not be set when MembersAreaSwitch is off", ArticleComponents) {
-
-      Switches.MembersAreaSwitch.switchOff()
-
-      Given("the MembersAreaSwitch is off")
-
-      goTo(accessUrl) { browser =>
-        import browser._
-
-        Then("The page should not have the access class name")
-        $(accessSelector).size shouldEqual 0
-      }
-    }
-
     scenario("Membership access classname should not be set when the article does not require membership access", ArticleComponents) {
-
-      Switches.MembersAreaSwitch.switchOn()
 
       Given("the article does not require membership access")
 
@@ -54,8 +35,6 @@ import org.scalatest._
     }
 
     scenario("Membership access classname should not be set on articles outside /membership", ArticleComponents) {
-
-      Switches.MembersAreaSwitch.switchOn()
 
       Given("the article is not under /membership")
 

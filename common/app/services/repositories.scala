@@ -1,18 +1,21 @@
 package services
 
 import com.gu.contentapi.client.GuardianContentApiError
-import com.gu.contentapi.client.model.v1.{Section => ApiSection, ItemResponse, SearchResponse}
+import com.gu.contentapi.client.model.v1.{ItemResponse, SearchResponse, Section => ApiSection}
 import common._
 import contentapi.{ContentApiClient, QueryDefaults, SectionTagLookUp, SectionsLookUp}
 import implicits.Collections
 import model._
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
+import play.api.Environment
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 
 import scala.concurrent.Future
 
 trait Index extends ConciergeRepository with Collections {
+
+  implicit def env: Environment
 
   val contentApiClient: ContentApiClient
   val sectionsLookUp: SectionsLookUp
@@ -74,7 +77,7 @@ trait Index extends ConciergeRepository with Collections {
           val tag1 = findTag(head.item, firstTag)
           val tag2 = findTag(head.item, secondTag)
           if (tag1.isDefined && tag2.isDefined) {
-            val page = new TagCombiner(s"$leftSide+$rightSide", tag1.get, tag2.get, pagination(response))
+            val page = TagCombiner(s"$leftSide+$rightSide", tag1.get, tag2.get, pagination(response))
             Left(IndexPage(page, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None))
           } else {
             Right(NotFound)
@@ -146,7 +149,7 @@ trait Index extends ConciergeRepository with Collections {
     val editorsPicksIds = editorsPicks.map(_.id)
     val latestContent = response.results.getOrElse(Nil).filterNot(c => editorsPicksIds contains c.id)
     val trails = (editorsPicks ++ latestContent).map(IndexPageItem(_))
-    val commercial = Commercial.make(section)
+    val commercial = Commercial.empty
 
     IndexPage(page = section, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None, commercial)
   }

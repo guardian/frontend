@@ -48,7 +48,7 @@ object HostedVideoPage extends Logging {
         pageName = "only used in hardcoded content",
         standfirst,
         video = HostedVideo(
-          mediaId = campaignId,
+          mediaId = videoAtom.id,
           title = video.title,
           duration = video.duration.map(_.toInt) getOrElse 0,
           posterUrl = video.posterUrl getOrElse "",
@@ -58,7 +58,6 @@ object HostedVideoPage extends Logging {
         cta = HostedCallToAction.fromAtom(ctaAtom),
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
-        nextPage = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1)).headOption,
         nextVideo = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1), contentType = Some(HostedContentType.Video)).headOption,
         metadata = HostedMetadata.fromContent(content).copy(openGraphImages = video.posterUrl.toList)
       )

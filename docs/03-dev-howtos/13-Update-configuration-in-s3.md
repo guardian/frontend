@@ -4,13 +4,8 @@ We store all our configuration in a single file in `s3`
 This contains all the configuration for each application and for each stage.
 
 To add or update a configuration item you need to:
-- Download the configuration file
-- This is located at
-```
-https://s3-eu-west-1.amazonaws.com/aws-frontend-store/config/eu-west-1-frontend.conf
-```
 
-- This can be done by hand via the console or using the [aws cli tools](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) - You need valid [Janus](https://janus.gutools.co.uk) credentials for `frontend` to do this
+- Get valid [Janus](https://janus.gutools.co.uk) credentials for frontend
 
 - Find the current version of the config file
 ```

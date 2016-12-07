@@ -21,10 +21,10 @@ case class CSSRule(selector: String, styles: ListMap[String, String]) {
     val ids = selector.count(_ == '#')
     val classes = selector.count(_ == '.')
     val attributes = selector.count(_ == '[')
-    val pseudos = (":^\\s".r.findAllIn(selector)).length
+    val pseudos = ":^\\s".r.findAllIn(selector).length
     val tags = "(^|\\s)([+~]?\\w)".r.findAllIn(selector.replaceAll("\\[(.*)\\]", "[]")).length
 
-    Seq(ids, (classes + attributes + pseudos), tags).map(_.toString).mkString.toInt
+    Seq(ids, classes + attributes + pseudos, tags).map(_.toString).mkString.toInt
   }
 
   override def toString() = s"$selector { ${CSSRule.styleStringFromMap(styles)} }"
@@ -35,7 +35,7 @@ object CSSRule {
     val rule = r.getCssText.split("\\{")
 
     for {
-      selectors <- rule.lift(0)
+      selectors <- rule.headOption
       styles <- rule.lift(1)
     } yield {
       selectors.split(",").map(selector => CSSRule(selector.trim, styleMapFromString(styles.stripSuffix("}").trim)))
@@ -47,7 +47,7 @@ object CSSRule {
       val split = style.split(":(?!(\\w)|(//))")
 
       for {
-        property <- split.lift(0)
+        property <- split.headOption
         value <- split.lift(1)
       } yield property.trim -> value.trim
     }.foldLeft(ListMap.empty[String, String])(_ + _)

@@ -1,5 +1,6 @@
-@(page: model.Page, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader)
+@(page: model.Page, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader, env: play.api.Environment)
 @import model.Page.getContent
+@import play.api.Mode.Dev
 
 <meta charset="utf-8" />
 <!--
@@ -20,7 +21,7 @@ http://developers.theguardian.com/join-the-team.html
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
 @fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
 
-@if(!play.Play.isDev()) {
+@if(!(env.mode == Dev)) {
     <link rel="prefetch" href="@Static("javascripts/app.js")">
 }
 

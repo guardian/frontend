@@ -132,13 +132,11 @@
 
     .paidfor-meta,
     .paidfor-meta__label,
-    .paidfor-label,
-    .paidfor-branding {
+    .paidfor-label {
         display: flex;
     }
 
-    .paidfor-meta__label,
-    .paidfor-branding {
+    .paidfor-meta__label {
         align-items: center;
     }
 
@@ -149,19 +147,6 @@
 
     .paidfor-meta__label {
         padding-left: 0;
-    }
-
-    .paidfor-branding {
-        padding: ($gs-baseline / 2) 0 ($gs-baseline / 2) ($gs-gutter / 2);
-
-        svg {
-            height: 24px;
-            width: 75px;
-
-            path {
-                fill: $neutral-1;
-            }
-        }
     }
 }
 

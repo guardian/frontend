@@ -1,14 +1,9 @@
-@import views.support.RenderClasses
+@(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean)(implicit request: RequestHeader, env: play.api.Environment)
 
-@(media: model.content.MediaAtom)(implicit request: RequestHeader)
+@{
+    media match {
+            case youtube if media.assets.head.platform == "Youtube" => if(amp) views.html.fragments.atoms.ampYoutube(media) else views.html.fragments.atoms.youtube(media, displayCaption)
+            case _ => views.html.fragments.atoms.genericMedia(media)
+        }
 
-<div class="@RenderClasses(Map(
-    "u-responsive-ratio" -> true,
-    "u-responsive-ratio--hd" -> true
-))">
-
-@Html(media.defaultHtml)
-
-</div>
-
-
+}

@@ -7,6 +7,7 @@
 @import views.html.fragments.containers.facia_cards.{container, containerScaffold}
 @import views.html.fragments.pagination
 @import views.support.RenderClasses
+@import views.support.Commercial.container.isFirstNonThrasherContainer
 
 @if(index.page.metadata.id == "help/accessibility-help") {
     @containerScaffold("Preferences", "accesibility preferences") {
@@ -28,9 +29,11 @@
                 }
 
                 @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
-                    @containers.map { containerDefinition =>
-                        @container(containerDefinition, frontProperties = FrontProperties.fromBranding(branding))
-                    }
+                        @containers.map { containerDefinition =>
+                            @container(containerDefinition,
+                                frontProperties = FrontProperties.fromBranding(branding),
+                                showFrontBranding = isFirstNonThrasherContainer(containerDefinition.index, containers))
+                        }
                 }
 
                 @index.page.metadata.pagination.map { paginationInstance =>
@@ -59,7 +62,7 @@
 
                 @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
                     @containers.map { containerDefinition =>
-                        @container(containerDefinition, empty, pageId = index.page.metadata.url.drop(1))
+                        @container(containerDefinition, empty)
                     }
                 }
 

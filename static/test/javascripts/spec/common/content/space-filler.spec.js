@@ -15,22 +15,23 @@ define([
             writeError = new Error('Mock writer exception');
 
         beforeEach(function (done) {
+
             injector.require([
                 'common/modules/article/space-filler',
                 'common/modules/article/spacefinder',
-                'raven',
-                'Promise'
+                'Promise',
+                'common/utils/raven'
             ], function () {
                 spaceFiller = arguments[0];
                 spaceFinder = arguments[1];
-                raven = arguments[2];
-                Promise = arguments[3];
+                Promise = arguments[2];
+                raven = arguments[3];
+
+                spyOn(raven, 'captureException');
 
                 spyOn(spaceFinder, 'findSpace').and.callFake(function () {
                     return spacefinderResult;
                 });
-
-                spyOn(raven, 'captureException');
 
                 done();
             });

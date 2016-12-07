@@ -15,8 +15,7 @@ import scala.collection.JavaConversions._
     val page = SimplePage(MetaData.make(
       id = "bla-bla",
       webTitle = "bla-bla",
-      section = Some(SectionSummary.fromId("football")),
-      analyticsName = "bla-bla"
+      section = Some(SectionSummary.fromId("football"))
     ))
 
     val tpl = views.html.fragments.nav.navigation(page)(FakeRequest("GET", "/bla-bla"))
@@ -35,8 +34,7 @@ import scala.collection.JavaConversions._
     val page = SimplePage(MetaData.make(
       id = "bla-bla",
       webTitle = "bla-bla",
-      section = Some(SectionSummary.fromId("football")),
-      analyticsName = "bla-bla"
+      section = Some(SectionSummary.fromId("football"))
     ))
 
     val tpl = views.html.fragments.nav.navigation(page)(FakeRequest("GET", "/bla-bla?_edition=US"))

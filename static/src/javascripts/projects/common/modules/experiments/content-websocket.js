@@ -1,15 +1,14 @@
 define([
     'bonzo',
-    'raven',
     'common/utils/$',
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/utils/raven'
 ], function (
     bonzo,
-    raven,
     $,
-    detect
+    detect,
+    raven
 ) {
-
     function connect(config) {
 
         if (!detect.hasWebSocket()) {
@@ -19,6 +18,7 @@ define([
         var $pushedContent,
             chatSocket   = new window.WebSocket(config.page.onwardWebSocket),
             receiveEvent = function (event) {
+
                 if (event && 'data' in event) {
                     var data = JSON.parse(event.data);
 

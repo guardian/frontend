@@ -80,11 +80,13 @@ Incrementing metrics in this way is done to give a truer account of the actions 
 
 The main entry point for click tracking is [analytics/interaction-tracking.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/analytics/interaction-tracking.js)
 
-Click events are:
+The click actions currently being tracked are:
 
-- In-page click (opening nav) that don't cause page load
-- Internal click (navigating to another internal page on gu.com)
+- In-page clicks (opening nav) that don't cause page load
+- Internal clicks (navigating to another internal page on gu.com)
 - External clicks (going to another domain)
+- Clicks on sponsors' logos (regardless of destination)
+- Clicks on native ads
 
 interaction-tracking.js is an abstraction over the top of [clickstream.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/ui/clickstream.js) that sends the events to both Omniture and Google.
 
@@ -100,7 +102,7 @@ The comments event is a custom event defined in [analytics/discussion](https://g
 
 Most discussion events can be tracked with click events so the only GA custom event for discussion is for 'scroll'.
 
-The custom category for tracking a user scrolling to the comments is *ElementView* with an action of *Onpage item* and a label of *Scroll to comments*.
+The custom category for tracking a user scrolling to the comments is *element view* with an action of *onpage item* and a label of *scroll to comments*.
 
 ### Forsee
 

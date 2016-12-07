@@ -13,6 +13,8 @@ import play.api.Environment
 
 class PaBrowserController(val wsClient: WSClient, val environment: Environment) extends Controller with ExecutionContexts with PaFootballClient with Logging {
 
+  implicit val env: Environment = environment
+
   def browserSubstitution() = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.getOrElse { throw new Exception("Could not read POST submission") }
     val query = getOneOrFail(submission, "query")
@@ -45,7 +47,7 @@ class PaBrowserController(val wsClient: WSClient, val environment: Environment) 
   }
 
   private def getOneOrFail(submission: Map[String, scala.Seq[String]], key: String): String = {
-    URLDecoder.decode(submission.get(key).getOrElse { throw new Exception("Missing required submission parameter, %s".format(key)) }.head, "UTF-8")
+    URLDecoder.decode(submission.getOrElse(key, throw new Exception("Missing required submission parameter, %s".format(key))).head, "UTF-8")
   }
 
   private def getOne(submission: Map[String, scala.Seq[String]], key: String): Option[String] = {

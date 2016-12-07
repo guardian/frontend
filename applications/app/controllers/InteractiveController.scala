@@ -3,22 +3,50 @@ package controllers
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common._
 import contentapi.ContentApiClient
-import conf._
 import conf.switches.Switches
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
+import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support.RenderOtherStatus
+import conf.Configuration.interactive.cdnPath
+import conf.Configuration.environment.isPreview
+import play.api.Environment
 
+import scala.concurrent.duration._
 import scala.concurrent.Future
 
 case class InteractivePage (interactive: Interactive, related: RelatedContent) extends ContentPage {
   override lazy val item = interactive
 }
 
-class InteractiveController(contentApiClient: ContentApiClient) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClient)(implicit env: Environment) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   def renderInteractiveJson(path: String): Action[AnyContent] = renderInteractive(path)
   def renderInteractive(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
+
+  def proxyInteractiveWebWorker(path: String, file: String): Action[AnyContent] = Action.async { implicit request =>
+    val timestamp = request.getQueryString("timestamp")
+    val serviceWorkerPath = getWebWorkerPath(path, file, timestamp)
+
+    wsClient.url(serviceWorkerPath).get().map { response =>
+      Cached (365.days) {
+        response.status match {
+          case 200 =>
+            val contentType = response.allHeaders("Content-Type").mkString(",")
+            RevalidatableResult(Ok(response.body).as(contentType), response.body)
+          case otherStatus => WithoutRevalidationResult(new Status(otherStatus))
+        }
+      }
+    }
+  }
+
+  private def getWebWorkerPath(path: String, file: String, timestamp: Option[String]): String = {
+    val stage = if (isPreview) "preview" else "live"
+    val deployPath = timestamp.map(ts => s"$path/$ts").getOrElse(path)
+
+    s"$cdnPath/service-workers/$stage/$deployPath/$file"
+  }
 
   private def lookup(path: String)
                     (implicit request: RequestHeader): Future[Either[InteractivePage, Result]] = {

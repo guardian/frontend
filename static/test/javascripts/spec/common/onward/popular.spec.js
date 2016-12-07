@@ -12,7 +12,7 @@ define([
                     '<div class="js-popular"></div><div class="ad-slot--inline"></div><div class="ad-slot--inline"></div>'
                 ]
             },
-            html = '<b>popular</b>',
+            html = '<b>most viewed</b>',
             server,
             injector = new Injector(),
             Popular, config, mediator, detect, commercialFeatures;
@@ -62,7 +62,7 @@ define([
             server.respondWith('/most-read/' + section + '.json', [200, {}, '{ "html": "' + html + '" }']);
             mediator.once('modules:popular:loaded', function (el) {
                 var innerHtml = el.innerHTML;
-                expect(innerHtml).toBe('popular');
+                expect(innerHtml).toBe('most viewed');
                 done();
             });
 
@@ -75,7 +75,7 @@ define([
             server.respondWith('/most-read.json', [200, {}, '{ "html": "' + html + '" }']);
             mediator.once('modules:popular:loaded', function (el) {
                 var innerHtml = el.innerHTML;
-                expect(innerHtml).toBe('popular');
+                expect(innerHtml).toBe('most viewed');
                 done();
             });
 

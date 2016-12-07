@@ -2,6 +2,7 @@ package commercial.controllers
 
 import conf.Configuration
 import model.{GuardianContentTypes, MetaData, SectionSummary}
+import play.api.Environment
 import play.api.libs.json.{JsString, JsValue}
 import play.api.mvc._
 
@@ -12,8 +13,8 @@ case class TestPage(specifiedKeywords : List[String] = Nil) extends model.Standa
   private val webTitle = "Commercial components"
 
   val allTheKeywords = webTitle :: specifiedKeywords
-  val capitalisedKeywords = (allTheKeywords).map(_.capitalize).mkString(",")
-  val lowerCaseKeywords = (allTheKeywords).map(_.toLowerCase).mkString(",")
+  val capitalisedKeywords = allTheKeywords.map(_.capitalize).mkString(",")
+  val lowerCaseKeywords = allTheKeywords.map(_.toLowerCase).mkString(",")
 
   val newMetaData: Map[String, JsValue] = Map(
     "keywords" -> JsString(capitalisedKeywords),
@@ -25,7 +26,6 @@ case class TestPage(specifiedKeywords : List[String] = Nil) extends model.Standa
     description = None,
     section = Some(SectionSummary.fromId("Comercial components test page")),
     webTitle = webTitle,
-    analyticsName = "analytics name",
     isFront = true,
     contentType = contentType,
     javascriptConfigOverrides = newMetaData)
@@ -33,7 +33,7 @@ case class TestPage(specifiedKeywords : List[String] = Nil) extends model.Standa
   val navSection: String = "Commercial"
 }
 
-class CreativeTestPage extends Controller {
+class CreativeTestPage (implicit env: Environment) extends Controller {
   def allComponents(keyword : List[String]) = Action{ implicit request =>
     if(Configuration.environment.stage.toLowerCase == "dev" || Configuration.environment.stage.toLowerCase == "code") {
       Ok(views.html.debugger.allcreatives(TestPage(keyword)))

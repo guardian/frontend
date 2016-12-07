@@ -1,10 +1,10 @@
 @import views.MainMediaWidths
-@(article: model.Article, amp: Boolean = false)(implicit request: RequestHeader)
+@(article: model.Article, amp: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import model.EndSlateComponents
-@import model.{AudioPlayer, VideoPlayer}
+@import model.{VideoPlayer}
 @import views.support.Video640
-@import views.{BodyCleaner, MainCleaner}
+@import views.{MainCleaner}
 
 @if(article.elements.hasMainEmbed || article.elements.elements("main").isEmpty) {
     <div class="media-primary">
@@ -42,7 +42,10 @@
 
 
                     @mainVideo.videos.caption.map { caption =>
-                        <figcaption data-link-name="Video caption link" class="caption caption--main" itemprop="description">@Html(caption)</figcaption>
+                        <figcaption data-link-name="Video caption link" class="caption caption--main caption--video" itemprop="description">
+                            @fragments.inlineSvg("information", "icon", List("rounded-icon", "centered-icon"))
+                            @Html(caption)
+                        </figcaption>
                     }
 
                 </figure>

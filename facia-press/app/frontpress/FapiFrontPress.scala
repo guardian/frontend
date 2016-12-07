@@ -101,6 +101,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
   val showFields = "body,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalPageCode"
   val searchApiQuery: AdjustSearchQuery = (searchQuery: SearchQuery) =>
     searchQuery
+      .showSection(true)
       .showFields(showFields)
       .showElements("all")
       .showTags("all")
@@ -108,6 +109,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
 
   val itemApiQuery: AdjustItemQuery = (itemQuery: ItemQuery) =>
     itemQuery
+      .showSection(true)
       .showFields(showFields)
       .showElements("all")
       .showTags("all")

@@ -2,7 +2,7 @@
 @import model.content.InteractiveAtom
 @import templates.inlineJS.nonBlocking.js.{interactiveFonts, interactiveResize}
 
-@(interactive: InteractiveAtom, shouldFence: Boolean)
+@(interactive: InteractiveAtom, shouldFence: Boolean)(implicit env: play.api.Environment)
 
 @iframeBody = {
     <!DOCTYPE html>
@@ -21,11 +21,8 @@
             @HtmlFormat.raw(interactive.html)
 
             @for(js <- interactive.mainJS) {
-                <script src="https://interactive.guim.co.uk/libs/require.js/2.3.2/require.min.js"></script>
                 <script>
-                    require(['@js'], function (interactive) {
-                        interactive.boot(document.body);
-                    });
+                    @HtmlFormat.raw(js)
                 </script>
             }
             <script>
@@ -38,10 +35,15 @@
 @if(shouldFence) {
     <iframe class="interactive-atom-fence" srcdoc="@iframeBody.toString"></iframe>
 } else {
-    <figure class="interactive interactive-atom" @for(js <- interactive.mainJS) { data-interactive="@js" }>
+    <figure class="interactive interactive-atom">
         <style>
             @HtmlFormat.raw(interactive.css)
         </style>
         @HtmlFormat.raw(interactive.html)
+        @for(js <- interactive.mainJS) {
+            <script>
+                @HtmlFormat.raw(js)
+            </script>
+        }
     </figure>
 }

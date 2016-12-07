@@ -1,4 +1,4 @@
-(function(){/*
+window.require || (function(){/*
  MIT License (c) copyright 2010-2013 B Cavalier & J Hann */
 (function(l){function p(){}function v(a,b){return 0==T.call(a).indexOf("[object "+b)}function x(a){return a&&"/"==a.charAt(a.length-1)?a.substr(0,a.length-1):a}function D(a,b){var d,c,f,g;d=1;c=a;"."==c.charAt(0)&&(f=!0,c=c.replace(U,function(a,b,c,f){c&&d++;return f||""}));if(f){f=b.split("/");g=f.length-d;if(0>g)return a;f.splice(g,d);return f.concat(c||[]).join("/")}return c}function C(a){var b=a.indexOf("!");return{g:a.substr(b+1),d:0<=b&&a.substr(0,b)}}function A(){}function y(a,b){A.prototype=
 a||N;var d=new A;A.prototype=N;for(var c in b)d[c]=b[c];return d}function E(){function a(a,b,d){c.push([a,b,d])}function b(a,b){for(var d,f=0;d=c[f++];)(d=d[a])&&d(b)}var d,c,f;d=this;c=[];f=function(d,n){a=d?function(a){a&&a(n)}:function(a,b){b&&b(n)};f=p;b(d?0:1,n);b=p;c=s};this.then=function(b,c,f){a(b,c,f);return d};this.h=function(a){d.B=a;f(!0,a)};this.f=function(a){d.pa=a;f(!1,a)};this.v=function(a){b(2,a)}}function z(a){return a instanceof E||a instanceof h}function t(a,b,d,c){z(a)?a.then(b,

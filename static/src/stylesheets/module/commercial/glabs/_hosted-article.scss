@@ -1,5 +1,3 @@
-$zootropolisColor: #2ec869; //need to remove references to brand colours here eventually, this stops it breaking for now
-
 .hosted-article-page {
     .media-primary.media-primary--showcase {
         position: relative;
@@ -22,6 +20,9 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         .gs-container {
             height: 100%;
         }
+    }
+    article.content--article {
+        background: #ffffff;
     }
     .title {
         @include fs-textSans(4);
@@ -97,7 +98,7 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         }
         .drop-cap {
             @include fs-textSans(4);
-            background-color: $zootropolisColor;
+            background-color: $neutral-2;
             display: inline-block;
             float: left;
             color: #ffffff;
@@ -118,10 +119,10 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
             color: $neutral-2;
 
             &:before {
-                @include icon(image);
+                @include icon(information-circle-grey);
                 content: '';
                 vertical-align: top;
-                margin-top: 1px;
+                margin-right: $gs-gutter/10;
             }
         }
 
@@ -168,33 +169,34 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         }
     }
 
-    .hide-on-desktop {
-        .hosted-article__next-page {
-            margin-top: 30px;
+    .hosted__onward-journey {
+        position: relative;
+        margin-top: $gs-baseline;
+
+        @include mq(tablet, desktop) {
+            margin-right: gs-span(1) + $gs-gutter;
+        }
+    }
+
+    @include mq(leftCol) {
+        .gs-container {
             position: relative;
         }
-        .hosted__next-page--header {
-            margin: 0;
+        .hosted-article__main-column {
+            position: static;
         }
-        .hosted__next-page--tile {
-            margin: 10px 0;
-        }
-    }
-    .content__secondary-column {
-        .hosted-article__next-page {
-            width: auto;
+        .hosted__onward-journey {
+            width: 300px;
             position: absolute;
-            margin: 70px 0;
-            top: 0;
-            right: 0;
-            left: #{2 * $gs-gutter};
-            .hosted__next-page--header,
-            .hosted__next-page--tile {
-                margin-right: 0;
-            }
+            top: 58px;
+            right: $gs-gutter;
         }
     }
+
     .from-content-api {
+        & > ul li {
+            margin-bottom: 0;
+        }
         ul > li:before {
             border-radius: 0;
             width: 8px;
@@ -204,32 +206,46 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         h2 {
             @include f-headlineSans;
         }
-    }
-    .hosted__next-page-header--border {
-        width: 100%;
-        height: 10px;
-        margin-bottom: 4px;
-    }
-    .hosted-article__next-page-title {
-        font-size: 16px;
-        line-height: 18px;
-        padding: 6px;
-        @include mq($until: phablet) {
-            font-size: 14px;
-            line-height: 16px;
+        blockquote {
+            margin: 0 0 10px 0;
+
+            p {
+                @include f-bodyCopy;
+                font-style: normal;
+                font-size: 30px;
+                line-height: 34px;
+                margin: 0 0 0 $gs-gutter;
+                background-color: #ffffff;
+                padding: 30px 0 0 $gs-gutter * .5;
+                color: $neutral-1;
+                position: relative;
+
+                .inline-hosted-quote {
+                    position: absolute;
+                    top: 0;
+                    left: 10px;
+                    display: block;
+                    width: 25px;
+                    height: 20px;
+                }
+            }
+
+            &.quoted {
+                p {
+                    @include f-textSans;
+                    font-size: 18px;
+                    line-height: 24px;
+                }
+            }
+
+            @include mq(leftCol) {
+                margin-left: -156px;
+            }
+
+            @include mq(wide) {
+                margin-left: -140px;
+            }
         }
-    }
-    .hosted-article__next-page .hosted__next-page--tile {
-        background: transparent;
-        border-top: 2px solid #e0e0e0;
-        margin-bottom: 10px;
-    }
-    .hosted-article__next-page .hosted__next-page--header {
-        border: 0;
-        padding: 0;
-    }
-    .from-content-api > ul li {
-        margin-bottom: 0;
     }
 
     .gu-image {
@@ -237,242 +253,33 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     }
 }
 
-.zootropolis {
-    @mixin animal-stripe {
-        position: absolute;
-        z-index: 1;
-        width: gs-span(5);
-        left: ($gs-column-width * .2) * -1;
-        height: 340px;
+.hosted__next-page-header--border {
+    width: 100%;
+    height: 10px;
+    margin-bottom: 4px;
+}
 
-        @include mq(tablet) {
-            left: $gs-column-width * -1;
-            top: 20px;
-            width: gs-span(11);
-        }
-
-        @include mq(desktop) {
-            left: ($gs-gutter * 3) * -1;
-            top: 20px;
-            width: gs-span(13);
-        }
-
-        @include mq(leftCol) {
-            left: ($gs-column-width * 4 + 20) * -1;
-            width: gs-span(16) + $gs-gutter * 2;
-        }
-    }
-    @mixin animal-stripe-character {
-        z-index: 2;
-        position: absolute;
-        padding-bottom: 0 !important; //u-responsive-ratio has inline styles which sets padding-bottom to 100% to keep the proper ratio but I dont need to care about this here
-    }
-    .animal {
-        position: relative;
-        margin-top: 30px;
-
-        &.con-artist {
-            .u-responsive-ratio {
-                @include animal-stripe-character;
-                top: -30px;
-                left: 26px;
-                height: 370px;
-                width: 282px;
-
-                img {
-                    height: 370px;
-                    width: 282px;
-                }
-
-                @include mq(desktop) {
-                    left: 176px;
-                }
-            }
-        }
-        &.rookie {
-            margin-top: 50px;
-            .u-responsive-ratio {
-                @include animal-stripe-character;
-                top: 0;
-                right: 116px;
-                height: 340px;
-                width: 240px;
-
-                img {
-                    height: 340px;
-                    width: 240px;
-                }
-
-                @include mq(desktop) {
-                    right: 300px;
-                }
-            }
-        }
-        &.buffalo {
-            margin-top: 140px;
-            .u-responsive-ratio {
-                @include animal-stripe-character;
-                top: -80px;
-                left: 0;
-                height: 420px;
-                width: 310px;
-
-                img {
-                    height: 420px;
-                    width: 310px;
-                }
-
-                @include mq(desktop) {
-                    top: -130px;
-                    left: 120px;
-                    height: 470px;
-                    width: 382px;
-
-                    img {
-                        height: 470px;
-                        width: 382px;
-                    }
-                }
-            }
-        }
-        &.dmv-employee {
-            margin-top: 40px;
-            @include mq(desktop) {
-                margin-top: 100px;
-            }
-            .u-responsive-ratio {
-                @include animal-stripe-character;
-                top: 24px;
-                right: 0;
-                height: 316px;
-                width: 408px;
-
-                img {
-                    height: 316px;
-                    width: 408px;
-                }
-
-                @include mq(desktop) {
-                    top: -110px;
-                    height: 450px;
-                    width: 550px;
-
-                    img {
-                        height: 450px;
-                        width: 550px;
-                    }
-                }
-            }
-        }
-        &.desk-clerk {
-            margin-top: 40px;
-            @include mq(desktop) {
-                margin-top: 190px;
-            }
-            .u-responsive-ratio {
-                @include animal-stripe-character;
-                top: -20px;
-                left: 0;
-                height: 360px;
-                width: 346px;
-
-                img {
-                    height: 360px;
-                    width: 346px;
-                }
-
-                @include mq(desktop) {
-                    top: -190px;
-                    left: 100px;
-                    height: 530px;
-                    width: 496px;
-
-                    img {
-                        height: 530px;
-                        width: 496px;
-                    }
-                }
-            }
-        }
-        &.pop-star {
-            margin-top: 160px;
-            .u-responsive-ratio {
-                @include animal-stripe-character;
-                top: -80px;
-                left: 0;
-                height: 420px;
-                width: 324px;
-
-                img {
-                    height: 420px;
-                    width: 324px;
-                }
-
-                @include mq(desktop) {
-                    top: -114px;
-                    height: 454px;
-                    width: 360px;
-
-                    img {
-                        height: 454px;
-                        width: 360px;
-                    }
-                }
-            }
-        }
-    }
-    .animal__stripe-odd {
-        @include animal-stripe;
-        background-color: #f26623;
-    }
-    .animal__stripe-even {
-        @include animal-stripe;
-        background-color: #3370b3;
-    }
-    .animal__info {
-        padding-top: 376px;
-    }
-    .animal__poster {
-        padding-right: 20px;
-        float: left;
-
-        @include mq(leftCol) {
-            position: absolute;
-            left: -160px;
-        }
-    }
-    .animal__header {
-        @include fs-textSans(4);
-        font-size: 26px;
-        line-height: 28px;
-        padding-bottom: 16px;
-        font-weight: bold;
-
-        @include mq(desktop) {
-            font-size: 30px;
-        }
-    }
-    .animal__download {
-        font-weight: 900;
-        color: #333333;
-        border-bottom: $zootropolisColor 2px solid;
-        text-decoration: none;
-    }
-    .hosted__cta-btn-text {
-        background-color: $zootropolisColor;
-        color: #ffffff;
-
-        .inline-icon {
-            fill: #ffffff;
-        }
+.hosted__next-page-title {
+    font-size: 16px;
+    line-height: 18px;
+    padding: 6px;
+    min-height: 60px;
+    @include mq($until: phablet) {
+        font-size: 14px;
+        line-height: 16px;
+        min-height: 42px;
     }
 }
 
-/* Hosted More From Carousel AB test */
-.hosted__next-video__carousel-arrows {
+.hosted__next-page .hosted__next-page--tile {
+    border-top: 2px solid #e0e0e0;
+    margin-bottom: 10px;
+}
+
+.hosted__next-page__carousel-arrows {
     position: absolute;
     right: 0;
-    top: 26px;
+    top: 19px;
 
     .inline-icon {
         display: inline-block;
@@ -490,9 +297,17 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
         -ms-transform: rotate(180deg);
         transform: rotate(180deg);
     }
+
+    .prev-oj-item {
+        opacity: .5;
+    }
 }
 
-.hosted__next-video__carousel-wrapper {
+.hosted__next-page__carousel-wrapper {
+    overflow: hidden;
+}
+
+.hosted__next-page__carousel-pages {
     position: relative;
     transform: translate(0, 0);
     transition: transform 1s ease;
@@ -508,15 +323,10 @@ $zootropolisColor: #2ec869; //need to remove references to brand colours here ev
     }
 }
 
-.ab-test-variant1 {
-    overflow: hidden;
-    .prev-oj-item {
-        opacity: .5;
-    }
-}
-
 .hosted__carousel-marker {
     text-align: center;
+    margin-top: -5px;
+    margin-bottom: -5px;
 }
 
 $dotSize: 8px;
@@ -526,22 +336,10 @@ $dotSize: 8px;
     height: $dotSize;
     border-radius: $dotSize;
     display: inline-block;
-    pointer-events: none;
+    cursor: pointer;
     border: 1px solid;
     transition: background-color 750ms ease;
     &:not(.highlighted) {
         background: transparent;
     }
-}
-
-.hosted__ab-test-control,
-.hosted__ab-test-variant1,
-.hosted__ab-test-variant2 {
-    display: none;
-}
-
-.hosted__next-page.ab-test-control .hosted__ab-test-control,
-.hosted__next-page.ab-test-variant1 .hosted__ab-test-variant1,
-.hosted__next-page.ab-test-variant2 .hosted__ab-test-variant2 {
-    display: block;
 }

@@ -1,101 +1,154 @@
 define([
     'helpers/fixtures',
-    'common/utils/$',
-    'commercial/modules/sticky-top-banner'
+    'helpers/injector'
 ], function (
     fixtures,
-    $,
-    newSticky
+    Injector
 ) {
     describe('Sticky ad banner', function () {
-        var fixture = {
+        var sticky, detect, header, stickyBanner, messenger, register;
+
+        var fixturesConfig = {
             id: 'sticky-ad-banner-test',
             fixtures: [
-                '<div class="ad-banner"><div class="ad-banner-inner"></div></div>' +
-                '<div class="header"></div>'
+                '<div id="top-banner-parent"><div id="dfp-ad--top-above-nav"></div></div>' +
+                '<div id="header" style="height: 500px"></div>'
             ]
         };
 
-        var elements;
-        beforeEach(function () {
-            fixtures.render(fixture);
-            elements = {
-                $adBanner: $('.ad-banner'),
-                $adBannerInner: $('.ad-banner-inner'),
-                $header: $('.header'),
-                // We can't scroll the Phantom window for some reason, so
-                // we mock window instead
-                window: { scrollTo: sinon.spy() }
-            };
+        var mockWindow = {
+            addEventListener: jasmine.createSpy('addEventListener'),
+            getComputedStyle: window.getComputedStyle.bind(window),
+            scrollBy: jasmine.createSpy('scrollBy'),
+            pageYOffset: 0
+        };
+
+        var moduleName = 'sticky-top-banner';
+
+        var injector = new Injector();
+        injector.mock('common/modules/commercial/dfp/track-ad-render', function () {
+            return Promise.resolve(true);
+        });
+
+        beforeEach(function (done) {
+            injector.require([
+                'common/utils/detect',
+                'commercial/modules/messenger',
+                'commercial/modules/sticky-top-banner'
+            ], function($1, $2, $3) {
+                detect = $1;
+                messenger = $2;
+                sticky = $3;
+
+                spyOn(detect, 'isBreakpoint').and.callFake(function () { return true; });
+                register = spyOn(messenger, 'register');
+
+                fixtures.render(fixturesConfig);
+
+                header = document.getElementById('header');
+                stickyBanner = document.getElementById('top-banner-parent');
+
+                done();
+            },
+            done.fail);
         });
 
         afterEach(function () {
-            fixtures.clean(fixture.id);
+            fixtures.clean(fixturesConfig.id);
         });
 
-        it('when the user is scrolled at the top, it should stick the ad banner', function () {
-            var state = {
-                shouldTransition: false,
-                adHeight: 200,
-                previousAdHeight: 200,
-                headerHeight: 200,
-                scrollCoords: [0,0]
-            };
-            newSticky.render(elements, state);
-
-            expect(elements.$adBanner.css('position')).toEqual('fixed');
-            expect(elements.$adBanner.css('height')).toEqual(state.adHeight + 'px');
-            expect(elements.$header.css('margin-top')).toEqual(state.adHeight + 'px');
+        it('should add listeners and classes', function (done) {
+            sticky.init(moduleName, mockWindow)
+            .then(function () {
+                expect(register.calls.count()).toBe(1);
+                expect(mockWindow.addEventListener).toHaveBeenCalled();
+                expect(header.classList.contains('l-header--animate')).toBe(true);
+                expect(stickyBanner.classList.contains('sticky-top-banner-ad--animate')).toBe(true);
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
-        it('when the user has scrolled past the sticky (fixed) zone, it should begin pushing the ad banner up', function () {
-            var state = {
-                shouldTransition: false,
-                adHeight: 200,
-                previousAdHeight: 200,
-                headerHeight: 200,
-                scrollCoords: [0,201]
-            };
-            newSticky.render(elements, state);
-
-            expect(elements.$adBanner.css('position')).toEqual('absolute');
-            expect(elements.$adBanner.css('top')).toEqual(state.headerHeight + 'px');
+        it('should not add classes when scrolled past the header', function (done) {
+            mockWindow.pageYOffset = 501;
+            sticky.init(moduleName, mockWindow)
+            .then(function () {
+                mockWindow.pageYOffset = 0;
+                expect(header.classList.contains('l-header--animate')).toBe(false);
+                expect(stickyBanner.classList.contains('sticky-top-banner-ad--animate')).toBe(false);
+            })
+            .then(done)
+            .catch(done.fail);
         });
 
-        describe('when an advertisement loads that is taller than the default ad slot', function () {
-            it('when the user is scrolled at the top, it should transition the banner height', function () {
-                var state = {
-                    shouldTransition: true,
-                    adHeight: 400,
-                    previousAdHeight: 200,
-                    headerHeight: 200,
-                    scrollCoords: [0,0]
-                };
-                newSticky.render(elements, state);
-
-                // Stop the ad from overflowing while we transition
-                expect(elements.$adBanner.css('overflow')).toEqual('hidden');
-                expect(elements.$adBanner.css('transition')).toEqual('height 1s cubic-bezier(0, 0, 0, 0.985)');
-                expect(elements.$header.css('transition')).toEqual('margin-top 1s cubic-bezier(0, 0, 0, 0.985)');
-
-                expect(elements.window.scrollTo.callCount).toEqual(0);
-            });
-
-            it('when the user is not scrolled at the top, it should scroll the user down to offset the height difference', function () {
-                var state = {
-                    shouldTransition: false,
-                    adHeight: 400,
-                    previousAdHeight: 200,
-                    headerHeight: 200,
-                    scrollCoords: [0,1]
-                };
-                newSticky.render(elements, state);
-
-                expect(elements.$adBanner.css('transition')).toEqual('all 0s ease 0s');
-                expect(elements.$header.css('transition')).toEqual('all 0s ease 0s');
-
-                expect(elements.window.scrollTo).toHaveBeenCalledWith(0, 201);
-            });
+        it('should set the slot height and the header top margin', function (done) {
+            var randomHeight = Math.random() * 500 | 0;
+            sticky.init(moduleName)
+            .then(function () {
+                return sticky.resize(randomHeight);
+            })
+            .then(function () {
+                expect(header.style.marginTop).toBe(randomHeight + 'px');
+                expect(stickyBanner.style.height).toBe(randomHeight + 'px');
+            })
+            .then(done)
+            .catch(done.fail);
         });
+
+        it('should adjust the scroll position', function (done) {
+            var randomHeight = Math.random() * 500 | 0;
+            mockWindow.pageYOffset = 501;
+            sticky.init(moduleName, mockWindow)
+            .then(function () {
+                return sticky.resize(randomHeight);
+            })
+            .then(function () {
+                mockWindow.pageYOffset = 0;
+                expect(mockWindow.scrollBy).toHaveBeenCalled();
+            })
+            .then(done)
+            .catch(done.fail);
+        });
+
+        it('should include height and paddings when setting the slot height', function (done) {
+            var pt = Math.random() * 50 | 0;
+            var pb = Math.random() * 50 | 0;
+            var h = Math.random() * 500 | 0;
+            var topSlot = document.getElementById('dfp-ad--top-above-nav');
+            topSlot.style.paddingTop = pt + 'px';
+            topSlot.style.paddingBottom = pb + 'px';
+            sticky.init(moduleName)
+            .then(function () {
+                return sticky.update(h, topSlot);
+            })
+            .then(function () {
+                expect(stickyBanner.style.height).toBe((h + pt + pb) + 'px');
+            })
+            .then(done)
+            .catch(done.fail);
+        });
+
+        it('should reset the banner position and top styles at the top of the page', function (done) {
+            sticky.onScroll()
+            .then(function () {
+                expect(stickyBanner.style.position).toBe('');
+                expect(stickyBanner.style.top).toBe('');
+            })
+            .then(done)
+            .catch(done.fail);
+        });
+
+        it('should position the banner absolutely past the header', function (done) {
+            mockWindow.pageYOffset = 501;
+            sticky.init(moduleName, mockWindow)
+            .then(sticky.onScroll)
+            .then(function () {
+                expect(stickyBanner.style.position).toBe('absolute');
+                expect(stickyBanner.style.top).toBe('500px');
+            })
+            .then(done)
+            .catch(done.fail);
+        });
+
     });
 });

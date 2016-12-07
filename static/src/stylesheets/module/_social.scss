@@ -1,3 +1,5 @@
+@import 'social-icons';
+
 /*doc
 ---
 title: Social
@@ -37,6 +39,10 @@ category: Common
 ```
 */
 
+.meta__social {
+    min-height: 45px; // Height of social + padding + 1px border to ensure layout is kept when opening overlay
+}
+
 .social {
     overflow-y: hidden;
     height: 32px;
@@ -44,12 +50,9 @@ category: Common
 
 .social__item {
     float: left;
-    min-width: 36px;
+    min-width: 32px;
     padding: 0 3px $gs-baseline/2 0;
-
-    @include mq(leftCol) {
-        min-width: 32px;
-    }
+    cursor: pointer;
 }
 
 .social__item--whatsapp {
@@ -64,10 +67,106 @@ category: Common
     }
 }
 
+.social-icon {
+
+    &.social-icon--more {
+        @include social-icon($neutral-6);
+        border-radius: 50%;
+        display: inline-block;
+        line-height: 32px;
+        text-align: center;
+        &:hover {
+            color: $neutral-2;
+        }
+    }
+
+    .social-icon--more__svg {
+        fill: $neutral-2;
+        top: -1px; // Tweak for centering, half circle height
+        width: 60%; // Scale the more icon
+    }
+}
+
+
+
+.social--hidden {
+    display: none;
+}
+
 .social__action {
     display: inline-block;
 }
 
+.social__saveforlater {
+    clear: left;
+    padding-bottom: 0;
+
+    .meta__save-for-later {
+        position: relative;
+        top: auto;
+        left: auto;
+        border: 0;
+        padding: 0;
+    }
+}
+
+.social__tray-close {
+    float: right;
+    padding-bottom: 0;
+    height: 32px;
+}
+
+.social-tray__icon {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    position: relative;
+    background-color: $neutral-4;
+    box-sizing: border-box;
+}
+
+.social-tray__icon__svg {
+    fill: $neutral-2;
+    width: 16px;
+}
+
+.social-tray__button {
+    &:hover,
+    &:focus {
+        .social-tray__icon,
+        .social-icon--more {
+            background-color: $neutral-3;
+        }
+    }
+}
+
+
+
+.social--expanded-top {
+    position: absolute;
+    padding-left: $gs-gutter/4;
+    padding-right: calc(#{$gs-gutter/4} - 3px);
+    left: -$gs-gutter/4;
+    height: auto;
+    background: $neutral-6;
+    z-index: $zindex-popover;
+    width: auto;
+    display: inline-block;
+    clear: both;
+    box-sizing: border-box;
+
+
+    @include mq(tablet) {
+        padding-left: $gs-gutter/2;
+        padding-right: calc(#{$gs-gutter/2} - 3px);
+        left: -$gs-gutter/2;
+    }
+
+    @include mq($from: leftCol) {
+        min-width: 227px;
+    }
+}
 
 /**
  * Social icons
@@ -105,13 +204,6 @@ category: Common
     svg {
         height: 88%;
         width: 88%;
-        vertical-align: middle;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        margin: auto;
     }
 
     .social-icon__label {
@@ -138,68 +230,6 @@ category: Common
 .social-icon__label {
     white-space: nowrap;
     font-weight: bold;
-}
-
-.social-icon--facebook {
-    background-color: $social-facebook;
-    &:hover {
-        background-color: darken($social-facebook, 10%);
-    }
-}
-
-.social-icon--gplus {
-    background-color: $social-gplus;
-    &:hover {
-        background-color: darken($social-gplus, 10%);
-    }
-
-    .content--media & {
-        display: block;
-    }
-}
-
-.social-icon--whatsapp {
-    background-color: $social-whatsapp;
-    &:hover {
-        background-color: darken($social-whatsapp, 10%);
-    }
-}
-
-.social-icon--messenger {
-    background-color: $social-messenger;
-    &:hover {
-        background-color: darken($social-messenger, 10%);
-    }
-}
-
-.social-icon--twitter {
-    background-color: $social-twitter;
-    &:hover {
-        background-color: darken($social-twitter, 10%);
-    }
-}
-
-.social-icon--linkedin {
-    background-color: $social-linkedin;
-
-    &:hover {
-        background-color: darken($social-linkedin, 10%);
-    }
-}
-
-.social-icon--pinterest {
-    background-color: $social-pinterest;
-
-    &:hover {
-        background-color: darken($social-pinterest, 10%);
-    }
-}
-
-.social-icon--email {
-    background-color: $social-email;
-    &:hover {
-        background-color: darken($social-email, 10%);
-    }
 }
 
 .selection-sharing {

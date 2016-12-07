@@ -3,9 +3,11 @@ package dfp
 import common.Edition
 import common.dfp._
 
-case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
+case class DfpDataExtractor(
+  lineItems: Seq[GuLineItem],
+  invalidLineItems: Seq[GuLineItem]) {
 
-  val isValid = lineItems.nonEmpty
+  val hasValidLineItems = lineItems.nonEmpty
 
   val inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = {
     lineItems.foldLeft(InlineMerchandisingTagSet()) { (soFar, lineItem) =>

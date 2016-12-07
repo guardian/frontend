@@ -5,8 +5,6 @@ import common.Maps.RichMap
 import conf.Configuration
 import conf.Configuration.environment
 import model._
-import play.api.Play
-import play.api.Play.current
 import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 import play.api.mvc.RequestHeader
 
@@ -29,8 +27,8 @@ object JavaScriptPage {
       val maybeSponsorshipType = page.branding(edition).map(_.sponsorshipType.name)
       maybeSponsorshipType.map("sponsorshipType" -> JsString(_))
     }
-    val allowUserGeneratedContent = content.map(_.allowUserGeneratedContent).getOrElse(false)
-    val requiresMembershipAccess = content.map(_.metadata.requiresMembershipAccess).getOrElse(false)
+    val allowUserGeneratedContent = content.exists(_.allowUserGeneratedContent)
+    val requiresMembershipAccess = content.exists(_.metadata.requiresMembershipAccess)
     val membershipAccess = content.flatMap(_.metadata.membershipAccess).getOrElse("")
 
     val cardStyle = content.map(_.cardStyle.toneString).getOrElse("")
@@ -58,11 +56,10 @@ object JavaScriptPage {
     javascriptConfig ++ config ++ commercialMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
-      ("isDev", JsBoolean(Play.isDev)),
+      ("isDev", JsBoolean(!environment.isProd)),
       ("isProd", JsBoolean(Configuration.environment.isProd)),
       ("idUrl", JsString(Configuration.id.url)),
       ("beaconUrl", JsString(Configuration.debug.beaconUrl)),
-      ("isSSL", JsBoolean(Configuration.environment.secure)),
       ("assetsPath", JsString(Configuration.assets.path)),
       ("isPreview", JsBoolean(environment.isPreview)),
       ("allowUserGeneratedContent", JsBoolean(allowUserGeneratedContent)),

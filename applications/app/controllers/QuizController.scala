@@ -5,6 +5,7 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import model._
 import model.content.{Atoms, Quiz}
+import play.api.Environment
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import quiz.form
 import views.support.RenderOtherStatus
@@ -15,7 +16,7 @@ case class QuizAnswersPage(
   inputs: form.Inputs,
   contentPage: String,
   quiz: Quiz) extends model.StandalonePage {
-  override val metadata = MetaData.make("quiz atom", Some(SectionSummary.fromId("quizzes")), quiz.title, "GFE: Quizzes")
+  override val metadata = MetaData.make("quiz atom", Some(SectionSummary.fromId("quizzes")), quiz.title)
 
   val results: form.QuizResults = form.checkUsersAnswers(inputs, quiz)
 
@@ -37,10 +38,10 @@ case class QuizAnswersPage(
     )
   }
 
-  val shares: Seq[ShareLink] = if (results.isKnowledge) knowledgeShares else personalityShares
+  val shares: ShareLinkMeta = if (results.isKnowledge) ShareLinkMeta(knowledgeShares, Nil) else ShareLinkMeta(personalityShares, Nil)
 }
 
-class QuizController(contentApiClient: ContentApiClient) extends Controller with ExecutionContexts with Logging {
+class QuizController(contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with ExecutionContexts with Logging {
 
   def submit(quizId: String, path: String) = Action.async { implicit request =>
     form.playForm.bindFromRequest.fold(
@@ -57,7 +58,7 @@ class QuizController(contentApiClient: ContentApiClient) extends Controller with
   private def renderQuiz(quizId: String, path: String, answers: form.Inputs)(implicit request: RequestHeader): Future[Result] = {
     val edition = Edition(request)
 
-    log.info(s"Fetching quiz atom: $quizId from content id: $path: ${RequestLog(request)}")
+    log.info(s"Fetching quiz atom: $quizId from content id: $path")
     val capiQuery = contentApiClient.item(path, edition).showAtoms("all")
     val result = contentApiClient.getResponse(capiQuery) map { itemResponse =>
       val maybePage: Option[QuizAnswersPage] = itemResponse.content.flatMap { content =>

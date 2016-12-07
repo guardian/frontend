@@ -41,7 +41,8 @@ define([
         this.prefs = 'messages';
         this.widthBasedMessage = opts.widthBasedMessage || false;
         this.cssModifierClass = opts.cssModifierClass || false;
-
+        this.customJs = opts.customJs || undefined;
+        this.customOpts = opts.customOpts || undefined;
         this.$footerMessage = $('.js-footer-message');
     };
 
@@ -94,6 +95,11 @@ define([
         } else {
             bean.on(document, 'click', '.js-site-message-close', this.acknowledge.bind(this));
         }
+
+        if (this.customJs) {
+            this.customJs(this.customOpts);
+        }
+
         if (this.type === 'modal') { this.bindModalListeners(); }
 
         // Tell the calling function that our message is shown

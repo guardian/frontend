@@ -24,7 +24,6 @@ define([
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/component',
-    'common/modules/analytics/omniture',
     'common/modules/experiments/ab',
     'common/modules/lazyload',
     'common/modules/ui/images',

@@ -8,7 +8,7 @@
 @defining(page.article) { article =>
     @fullRow {
         <a href="@article.metadata.webUrl" @page.email.map { email => title="View @email.name online"}>
-            <img width="580" class="full-width" src="@page.banner" @page.email.map { email => alt="View @email.name online"}>
+            @img(src = page.banner, alt = page.email.map(_.name))
         </a>
     }
 
@@ -38,7 +38,7 @@
                 <div class="meta__twitter">
                     <a href="http://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="button button--small button--secondary tone-colour">
                         @icon("twitter-bird")
-                        <div class="contact">@@@twitter</div>
+                        <span class="contact">@@@twitter</span>
                     </a>
                 </div>
             }
@@ -46,7 +46,7 @@
                 <div class="meta__email">
                     <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address" class="button button--small button--secondary tone-colour">
                         @icon("mail")
-                        <div class="contact">Email</div>
+                        <span class="contact">Email</span>
                     </a>
                 </div>
             }
@@ -81,9 +81,15 @@
                     }
 
                     case ImageBlockElement(media, data, showCredit) => {
-                        @EmailImage.bestFor(media).map { url =>
+                        @EmailImage.bestFor(media).map { imageUrl =>
                             @fullRow {
-                                <img width="580" class="full-width" src="@url" @data.get("alt").map { alt => alt="@alt" }>
+                                @if(article.isLiveBlog && block.url.isDefined) {
+                                    <a href="@block.url.getOrElse("#")">
+                                        @img(src = imageUrl, alt = data.get("alt"))
+                                    </a>
+                                } else {
+                                    @img(src = imageUrl, alt = data.get("alt"))
+                                }
                             }
 
                             @paddedRow {
@@ -108,10 +114,10 @@
                         @EmailVideoImage.bestFor(media).map { imageUrl =>
                             @fullRow {
                                 @data.get("url").fold {
-                                    <img width="580" class="full-width" src="@imageUrl" @data.get("alt").map { alt => alt="@alt" }>
+                                    @img(src = imageUrl, alt = data.get("alt"))
                                 }{ linkUrl =>
                                     <a href="@linkUrl">
-                                        <img width="580" class="full-width" src="@imageUrl" @data.get("alt").map { alt => alt="@alt" }>
+                                        @img(src = imageUrl, alt = data.get("alt"))
                                     </a>
                                 }
                             }

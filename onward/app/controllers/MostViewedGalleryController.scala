@@ -5,16 +5,16 @@ import feed.MostViewedGalleryAgent
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
 import model.pressed.CollectionConfig
+import play.api.Environment
 import play.api.mvc.{Action, Controller, RequestHeader}
 import services.CollectionConfigWithId
 import slices.{Fixed, FixedContainers}
 
-class MostViewedGalleryController(mostViewedGalleryAgent: MostViewedGalleryAgent) extends Controller with Logging with ExecutionContexts {
+class MostViewedGalleryController(mostViewedGalleryAgent: MostViewedGalleryAgent)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
 
   private val page = SimplePage(MetaData.make(
     "more galleries",
     Some(SectionSummary.fromId("inpictures")),
-    "more galleries",
     "more galleries"
   ))
   private val dataId: String = "multimedia/gallery"

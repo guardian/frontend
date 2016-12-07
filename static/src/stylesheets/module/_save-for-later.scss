@@ -1,37 +1,5 @@
 $sfl-button-height: 30px;
 
-@mixin sfl-button-style($foreground: $neutral-2, $background: #ffffff) {
-    .save-for-later__button {
-        color: $foreground;
-
-        .inline-icon {
-            border-color: $foreground;
-        }
-    }
-
-    .save-for-later__button--save,
-    .save-for-later__button--saved:hover {
-        .inline-icon {
-            fill: $foreground;
-            background-color: $background;
-        }
-    }
-
-    .save-for-later__button--saved,
-    .save-for-later__button--save:hover {
-        .inline-icon {
-            fill: $background;
-            background-color: $foreground;
-        }
-    }
-}
-
-@mixin sfl-button-toned($tone, $foreground: $news-main-1, $background: #ffffff) {
-    .tonal--tone-#{$tone} {
-        @include sfl-button-style($foreground, $background);
-    }
-}
-
 // size etc
 .save-for-later__button {
     @include button-height($sfl-button-height);
@@ -39,6 +7,7 @@ $sfl-button-height: 30px;
     border: 0;
     background-color: transparent;
     padding: 0;
+    color: $news-main-1;
 
     .inline-icon {
         text-align: center;
@@ -46,8 +15,8 @@ $sfl-button-height: 30px;
         margin-right: .5em;
         width: $sfl-button-height;
         height: $sfl-button-height;
-        border-width: 1px;
-        border-style: solid;
+        border: 1px solid $news-main-1;
+        fill: $news-main-1;
 
         svg {
             width: 8px;
@@ -55,32 +24,52 @@ $sfl-button-height: 30px;
     }
 }
 
-// colours per state
-@include sfl-button-style();
-@include sfl-button-toned(analysis, $analysis-accent);
-@include sfl-button-toned(comment, $comment-default);
-@include sfl-button-toned(dead, $live-default, $neutral-7);
-@include sfl-button-toned(editorial, $editorial-default);
-@include sfl-button-toned(feature, $feature-default);
-@include sfl-button-toned(letters, $comment-default);
-@include sfl-button-toned(live, $live-default, $neutral-8);
-@include sfl-button-toned(media, $media-default, $media-background);
-@include sfl-button-toned(news);
-@include sfl-button-toned(review, $review-background);
+.save-for-later__button--saved,
+.save-for-later__button--save:hover,
+.save-for-later__button--save:focus {
+    .inline-icon {
+        fill: #ffffff;
+        background-color: $news-main-1;
+    }
+}
 
-// Specific fix for pages that are special-report & media
-.content--media.tonal--tone-special-report {
-    .save-for-later__button {
-        color: $news-support-1;
+.social--expanded-top {
+    .save-for-later__button--saved,
+    .save-for-later__button--save:hover,
+    .save-for-later__button--save:focus {
         .inline-icon {
-            fill: $news-support-1;
-            border-color: $news-support-1;
-            background-color: $news-support-6;
+            fill: $neutral-5;
         }
-        &:hover {
+    }
+}
+
+// media tone
+.tonal--tone-media {
+    .save-for-later__button {
+        color: $neutral-4;
+
+        .inline-icon {
+            border-color: $neutral-2;
+            fill: $neutral-4;
+        }
+    }
+
+    .save-for-later__button--saved,
+    .save-for-later__button--save:hover,
+    .save-for-later__button--save:focus {
+        .inline-icon {
+            fill: $multimedia-support-5;
+            border-color: $neutral-4;
+            background-color: $neutral-4;
+        }
+    }
+
+    .social--expanded-top {
+        .save-for-later__button--saved,
+        .save-for-later__button--save:hover,
+        .save-for-later__button--save:focus {
             .inline-icon {
-                fill: $news-support-6;
-                background-color: $news-support-1;
+                fill: $neutral-1;
             }
         }
     }

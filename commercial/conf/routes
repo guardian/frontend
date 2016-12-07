@@ -35,19 +35,29 @@ GET         /commercial/api/liveevent.json                                  comm
 GET         /commercial/multi.json                                          commercial.controllers.Multi.renderMulti
 GET         /commercial/api/multi.json                                      commercial.controllers.Multi.getMulti
 # Content API merchandising components
-GET         /commercial/capi.json                                         commercial.controllers.ContentApiOffersController.itemsJson
-GET         /commercial/capi                                              commercial.controllers.ContentApiOffersController.itemsHtml
-GET         /commercial/capi-single.json                                  commercial.controllers.ContentApiOffersController.itemJson
-GET         /commercial/api/capi-single.json                              commercial.controllers.ContentApiOffersController.nativeJson
-GET         /commercial/api/capi-multiple.json                            commercial.controllers.ContentApiOffersController.nativeJsonMulti
-GET         /commercial/capi-single                                       commercial.controllers.ContentApiOffersController.itemHtml
-GET         /commercial/capi-single-merch.json                            commercial.controllers.ContentApiOffersController.itemJson
-GET         /commercial/capi-single-merch                                 commercial.controllers.ContentApiOffersController.itemHtml
-GET         /commercial/api/traffic-driver.json                           commercial.controllers.TrafficDriverController.renderJson
-GET         /commercial/paid.json                                         commercial.controllers.PaidContentCardController.cardJson
-GET         /commercial/paid                                              commercial.controllers.PaidContentCardController.cardHtml
+GET         /commercial/capi.json                                           commercial.controllers.ContentApiOffersController.itemsJson
+GET         /commercial/capi                                                commercial.controllers.ContentApiOffersController.itemsHtml
+GET         /commercial/capi-single.json                                    commercial.controllers.ContentApiOffersController.itemJson
+GET         /commercial/api/capi-single.json                                commercial.controllers.ContentApiOffersController.nativeJson
+GET         /commercial/api/capi-multiple.json                              commercial.controllers.ContentApiOffersController.nativeJsonMulti
+GET         /commercial/capi-single                                         commercial.controllers.ContentApiOffersController.itemHtml
+GET         /commercial/capi-single-merch.json                              commercial.controllers.ContentApiOffersController.itemJson
+GET         /commercial/capi-single-merch                                   commercial.controllers.ContentApiOffersController.itemHtml
+GET         /commercial/api/traffic-driver.json                             commercial.controllers.TrafficDriverController.renderJson
+GET         /commercial/paid.json                                           commercial.controllers.PaidContentCardController.cardJson
+GET         /commercial/paid                                                commercial.controllers.PaidContentCardController.cardHtml
+
+# Piggyback pixel from AppNexus, used for resizing mpus
+GET         /commercial/anx/anxresize.js                                    commercial.controllers.PiggybackPixelController.resize
 
 # Hosted content
 GET         /commercial/advertiser-content/:campaignName/:pageName          commercial.controllers.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET         /advertiser-content/:campaignName/:pageName                     commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET         /advertiser-content/:campaignName/:pageName/:cType/onward.json  commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
+
+# Iframe buster and 3rd-party ads
+GET         /rockabox/rockabox_buster.html                                  controllers.Assets.at(path="/public", file="rockabox_buster.html")
+
+# Off-platform ads
+GET         /amp/remote.html                                                controllers.Assets.at(path="/public", file="amp_remote.html")
+GET         /facebook-ia/remote.html                                        controllers.Assets.at(path="/public", file="facebook_ia_remote.html")

@@ -12,6 +12,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/robust',
+    'common/modules/analytics/google',
     'lodash/functions/debounce',
     'lodash/collections/contains',
     'common/views/svgs',
@@ -34,6 +35,7 @@ define([
     mediator,
     template,
     robust,
+    googleAnalytics,
     debounce,
     contains,
     svgs,
@@ -43,27 +45,6 @@ define([
     userPrefs,
     uniq
 ) {
-    var omniture;
-
-    /**
-     * The omniture module depends on common/modules/experiments/ab, so trying to
-     * require omniture directly inside an AB test gives you a circular dependency.
-     *
-     * This is a workaround to load omniture without making it a dependency of
-     * this module, which is required by an AB test.
-     */
-    function getOmniture() {
-        return new Promise(function (resolve) {
-            if (omniture) {
-                return resolve(omniture);
-            }
-
-            require('common/modules/analytics/omniture', function (omnitureM) {
-                omniture = omnitureM;
-                resolve(omniture);
-            });
-        });
-    }
 
     var state = {
         submitting: false
@@ -116,9 +97,7 @@ define([
 
             $(iframe).remove();
 
-            getOmniture().then(function (omniture) {
-                omniture.trackLinkImmediate('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | ' + analytics.signedIn + ' | form hidden');
-            });
+            googleAnalytics.trackNonClickInteraction('rtrt | email form inline | ' + analytics.formType + ' | ' + analytics.listId + ' | ' + analytics.signedIn + ' | form hidden');
 
         },
         ui = {
@@ -263,9 +242,8 @@ define([
 
                         state.submitting = true;
 
-                        return getOmniture().then(function (omniture) {
-                            omniture.trackLinkImmediate(analyticsInfo.replace('%action%', 'subscribe clicked'));
-
+                        return new Promise(function () {
+                            googleAnalytics.trackNonClickInteraction(analyticsInfo.replace('%action%', 'subscribe clicked'));
                             return fetch(config.page.ajaxUrl + url, {
                                 method: 'post',
                                 body: data,
@@ -279,12 +257,12 @@ define([
                                 }
                             })
                             .then(function () {
-                                omniture.trackLinkImmediate(analyticsInfo.replace('%action%', 'subscribe successful'));
+                                googleAnalytics.trackNonClickInteraction(analyticsInfo.replace('%action%', 'subscribe successful'));
                             })
                             .then(handleSubmit(true, $form))
                             .catch(function (error) {
                                 robust.log('c-email', error);
-                                omniture.trackLinkImmediate(analyticsInfo.replace('%action%', 'error'));
+                                googleAnalytics.trackNonClickInteraction(analyticsInfo.replace('%action%', 'error'));
                                 handleSubmit(false, $form)();
                             });
                         });

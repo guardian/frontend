@@ -12,7 +12,6 @@ object SimpleHtmlCleaner extends HtmlCleaner {
   override def clean(document: Document, convertToHttps: Boolean) = {
     universalClean(document)
     removeScripts(document)
-    createSimplePageTracking(document)
     removeByTagName(document, "noscript")
     if (convertToHttps) secureDocument(document)
     document

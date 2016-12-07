@@ -63,11 +63,11 @@ class FixturesAndResults(competitions: Competitions) extends Football {
 
       val now = LocalDate.now(Edition.defaultEdition.timezone)
       val fixturesComponent = fixtureExists option matchesComponent(
-        new TeamFixturesList(now, competitions.competitions, teamId, 2),
+        TeamFixturesList(now, competitions.competitions, teamId, 2),
         Some(s"Show more $teamName fixtures", s"/football/$tagId/fixtures")
       )
       val resultsComponent = resultExists option matchesComponent(
-        new TeamResultsList(now, competitions.competitions, teamId),
+        TeamResultsList(now, competitions.competitions, teamId),
         Some(s"Show more $teamName results", s"/football/$tagId/results")
       )
 
@@ -113,7 +113,8 @@ class FixturesAndResults(competitions: Competitions) extends Football {
           dateLinkPath = None,
           useShowMore = false,
           hasShowMoreEnabled = true,
-          showBranding = false
+          showBranding = false,
+          isThrasher = false
         )
       }
     }).flatten

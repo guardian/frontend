@@ -14,10 +14,10 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       goTo("/film/video/2013/aug/14/chloe-grace-moretz-kick-ass-2-video") { browser =>
         import browser._
         Then("the HTML5 video should be available")
-        $(".player video") should have size (1)
+        $(".player video") should have size 1
 
         And("the proposed sources should be plenty")
-        $(".player video source") should have size (5)
+        $(".player video source") should have size 5
       }
     }
 

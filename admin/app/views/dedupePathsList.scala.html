@@ -1,6 +1,6 @@
-@(environment: String, paths: List[String])(implicit request: RequestHeader)
+@(paths: List[String])(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("What is Deduped?", environment, isAuthed = true) {
+@admin_main("What is Deduped?", isAuthed = true) {
 
     <div class="container">
         <table class="table table-striped">

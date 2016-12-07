@@ -12,9 +12,9 @@
 // For this file, performance and breadth of support should take priority over *anything*…
 
 define([
-    'raven',
     'qwery',
     'fastdom',
+    'common/utils/raven',
     'common/modules/user-prefs',
     'common/modules/ui/images',
     'common/utils/storage',
@@ -26,11 +26,11 @@ define([
     'common/utils/robust',
     'common/utils/user-timing',
     'common/modules/navigation/newHeaderNavigation',
-    'common/utils/detect'
+    'common/modules/analytics/google'
 ], function (
-    raven,
     qwery,
     fastdom,
+    raven,
     userPrefs,
     images,
     storage,
@@ -42,62 +42,16 @@ define([
     robust,
     userTiming,
     newHeaderNavigation,
-    detect
+    ga
 ) {
     return function () {
         var guardian = window.guardian;
         var config = guardian.config;
 
         userTiming.mark('standard start');
-
-        //
-        // Raven
-        //
-
-        raven.config(
-            'https://' + config.page.sentryPublicApiKey + '@' + config.page.sentryHost,
-            {
-                whitelistUrls: [
-                    /localhost/, // will not actually log errors, but `shouldSendCallback` will be called
-                    /assets\.guim\.co\.uk/,
-                    /ophan\.co\.uk/
-                ],
-                tags: {
-                    edition:        config.page.edition,
-                    contentType:    config.page.contentType,
-                    revisionNumber: config.page.revisionNumber,
-                    loaderType:     'Curl'
-                },
-                dataCallback: function (data) {
-                    if (data.culprit) {
-                        data.culprit = data.culprit.replace(/\/[a-z\d]{32}(\/[^\/]+)$/, '$1');
-                    }
-                    data.tags.origin = (/j.ophan.co.uk/.test(data.culprit)) ? 'ophan' : 'app';
-                    return data;
-                },
-                shouldSendCallback: function (data) {
-                    var isDev = config.page.isDev;
-                    var isIgnored = typeof(data.tags.ignored) !== 'undefined' && data.tags.ignored;
-                    var adBlockerOn = detect.adblockInUseSync();
-
-                    if (isDev && !isIgnored) {
-                        // Some environments don't support or don't always expose the console object
-                        if (window.console && window.console.warn) {
-                            window.console.warn('Raven captured error.', data);
-                        }
-                    }
-
-                    return config.switches.enableSentryReporting &&
-                        Math.random() < 0.1 &&
-                        !isIgnored &&
-                        !adBlockerOn &&
-                        !isDev; // don't actually notify sentry in dev mode
-                }
-            }
-        );
-
-        // Report uncaught exceptions
-        raven.install();
+        robust.catchErrorsAndLog('ga-user-timing-standard-start', function () {
+            ga.trackPerformance('Javascript Load', 'standardStart', 'Standard start parse time');
+        });
 
         var oldOnError = window.onerror;
         window.onerror = function (message, filename, lineno, colno, error) {
@@ -127,7 +81,7 @@ define([
          *  Interactives are content, we want them booting as soon (and as stable) as possible.
          */
 
-        if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
+        if (!config.tests.abWebpack && /Article|LiveBlog/.test(config.page.contentType)) {
             qwery('figure.interactive').forEach(function (el) {
                 var mainJS = el.getAttribute('data-interactive');
                 if (!mainJS) {
@@ -305,5 +259,8 @@ define([
         newHeaderNavigation();
 
         userTiming.mark('standard end');
+        robust.catchErrorsAndLog('ga-user-timing-standard-end', function () {
+            ga.trackPerformance('Javascript Load', 'standardEnd', 'Standard end parse time');
+        });
     };
 });

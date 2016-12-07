@@ -5,10 +5,6 @@
 
     .js-off & {
         display: none;
-
-        &.ad-slot--force-display {
-            display: block;
-        }
     }
 }
 
@@ -73,9 +69,17 @@
 }
 
 .sticky-top-banner-ad {
+    transform: translate3d(0, 0, 0);
+    contain: layout;
     z-index: $zindex-popover;
     width: 100%;
-    position: relative;
+    position: fixed;
+    top: 0;
+}
+
+.sticky-top-banner-ad--animate {
+    will-change: transform;
+    transition: height 1s cubic-bezier(0, 0, 0, .985);
 }
 
 .ad-slot--top-banner-ad {
@@ -343,6 +347,12 @@
     }
 }
 
+.ad-slot--books-inline {
+    @include mq(mobileLandscape) {
+        width: gs-span(2);
+    }
+}
+
 .fc-container--sponsored .fc-container:first-child,
 .fc-container--advertisement-feature .fc-container:first-child,
 .fc-container--foundation-supported .fc-container:first-child,
@@ -450,5 +460,11 @@
 .ad-slot--fluid250 {
     @include mq(desktop) {
         min-height: 250px;
+    }
+}
+
+.ad-slot--offset-right {
+    @include mq(wide) {
+        margin-right: -25em;
     }
 }

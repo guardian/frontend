@@ -32,9 +32,11 @@
 }
 
 .popup--paidfor__title {
+    display: block;
     font-size: get-font-size(textSans, 3);
     line-height: get-line-height(textSans, 1);
     margin: 0 0 1em;
+    font-weight: normal;
 }
 
 .popup--paidfor__link {

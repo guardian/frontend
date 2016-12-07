@@ -68,11 +68,11 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 9
+    val s3ConfigVersion = 12
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
-    lazy val identity = new AwsApplication(stack, app, stage, awsRegion)
+    lazy val identity = AwsApplication(stack, app, stage, awsRegion)
     lazy val commonS3Config = S3ConfigurationSource(identity, configBucket, Configuration.aws.mandatoryCredentials, Some(s3ConfigVersion))
     lazy val config = new CM(List(userPrivate, runtimeOnly, commonS3Config), PlayDefaultLogger).load.resolve
 
@@ -150,7 +150,6 @@ class GuardianConfiguration extends Logging {
 
     lazy val stage = InstallationVars.stage
     lazy val projectName = Play.application.configuration.getString("guardian.projectName").getOrElse("frontend")
-    lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isProd = stage.equalsIgnoreCase("prod")
     lazy val isCode = stage.equalsIgnoreCase("code")
@@ -175,7 +174,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object debug {
-    lazy val enabled: Boolean = configuration.getStringProperty("debug.enabled").map(_.toBoolean).getOrElse(true)
+    lazy val enabled: Boolean = configuration.getStringProperty("debug.enabled").forall(_.toBoolean)
     lazy val beaconUrl: String = configuration.getStringProperty("beacon.url").getOrElse("")
   }
 
@@ -229,7 +228,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object sonobi {
-    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//mtrx.go.sonobi.com/morpheus.theguardian.2919.js")
+    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12911.js")
   }
 
   object frontend {
@@ -303,12 +302,6 @@ class GuardianConfiguration extends Logging {
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
   }
 
-  object static {
-    lazy val path =
-      if (environment.secure) configuration.getMandatoryStringProperty("static.securePath")
-      else configuration.getMandatoryStringProperty("static.path")
-  }
-
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
     val fallbackLogo = Static("images/fallback-logo.png")
@@ -363,7 +356,7 @@ class GuardianConfiguration extends Logging {
     lazy val d2Uid = configuration.getMandatoryStringProperty("discussion.d2Uid")
     lazy val frontendAssetsMap = configuration.getStringProperty("discussion.frontend.assetsMap")
     lazy val frontendAssetsMapRefreshInterval = 5.seconds
-    lazy val frontendAssetsVersion = "v1.4.0"
+    lazy val frontendAssetsVersion = "v1.5.0"
   }
 
   object witness {
@@ -399,13 +392,13 @@ class GuardianConfiguration extends Logging {
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
-    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v4.json"
+    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v5.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
     lazy val dfpMobileAppsAdUnitListKey = s"$dfpRoot/mobile-active-ad-units.csv"
     lazy val dfpFacebookIaAdUnitListKey = s"$dfpRoot/facebookia-active-ad-units.csv"
     lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
     lazy val dfpCustomTargetingKey = s"$dfpRoot/custom-targeting-key-values.json"
-    lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers-v1.json"
+    lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers-v2.json"
 
     lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
 
@@ -441,7 +434,8 @@ class GuardianConfiguration extends Logging {
   }
 
   object interactive {
-    lazy val url = "http://interactive.guim.co.uk/next-gen/"
+    lazy val cdnPath = "https://interactive.guim.co.uk"
+    lazy val url = s"$cdnPath/next-gen/"
   }
 
   object javascript {
@@ -526,11 +520,7 @@ class GuardianConfiguration extends Logging {
       } catch {
         case ex: AmazonClientException =>
           log.error("amazon client cross account exception", ex)
-
-          // We really, really want to ensure that PROD is configured before saying a box is OK
-          if (Play.isProd) throw ex
-          // this means that on dev machines you only need to configure keys if you are actually going to use them
-          None
+          throw ex
       }
     }
   }
@@ -577,20 +567,9 @@ class GuardianConfiguration extends Logging {
       } catch {
         case ex: AmazonClientException =>
           log.error(ex.getMessage, ex)
-
-          // We really, really want to ensure that PROD is configured before saying a box is OK
-          if (Play.isProd) throw ex
-          // this means that on dev machines you only need to configure keys if you are actually going to use them
-          None
+          throw ex
       }
     }
-  }
-
-  object pingdom {
-    lazy val url = configuration.getMandatoryStringProperty("pingdom.url")
-    lazy val user = configuration.getMandatoryStringProperty("pingdom.user")
-    lazy val password  = configuration.getMandatoryStringProperty("pingdom.password")
-    lazy val apiKey = configuration.getMandatoryStringProperty("pingdom.apikey")
   }
 
   object riffraff {
@@ -617,6 +596,7 @@ class GuardianConfiguration extends Logging {
     val ttlInSeconds = configuration.getIntegerProperty("png_resizer.image_ttl").getOrElse(86400)
   }
 
+
   object emailSignup {
     val url = configuration.getMandatoryStringProperty("email.signup.url")
   }
@@ -635,7 +615,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object Logstash {
-    lazy val enabled = configuration.getStringProperty("logstash.enabled").map(_.toBoolean).getOrElse(false)
+    lazy val enabled = configuration.getStringProperty("logstash.enabled").exists(_.toBoolean)
     lazy val stream = configuration.getStringProperty("logstash.stream.name")
     lazy val streamRegion = configuration.getStringProperty("logstash.stream.region")
   }
@@ -648,6 +628,11 @@ class GuardianConfiguration extends Logging {
   object Survey {
     lazy val formStackAccountName: String = "guardiannewsampampmedia"
   }
+
+  object Media {
+    lazy val externalEmbedHost = configuration.getMandatoryStringProperty("guardian.page.externalEmbedHost")
+  }
+
 }
 
 object ManifestData {

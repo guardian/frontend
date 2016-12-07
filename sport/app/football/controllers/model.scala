@@ -27,7 +27,6 @@ class FootballPage(
   id: String,
   section: String,
   webTitle: String,
-  analyticsName: String,
   pagination: Option[Pagination] = None,
   description: Option[String] = None) extends StandalonePage {
 
@@ -35,7 +34,6 @@ class FootballPage(
     id = id,
     section = Some(SectionSummary.fromId(section)),
     webTitle = webTitle,
-    analyticsName = analyticsName,
     pagination = pagination,
     description = description
   )

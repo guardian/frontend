@@ -36,7 +36,7 @@ class MostViewedAudioController(mostViewedAudioAgent: MostViewedAudioAgent) exte
 
   private def renderMostViewedAudio(audios: Seq[RelatedContentItem], mediaType: String)(implicit request: RequestHeader) = Cached(900) {
     val dataId = s"$mediaType/most-viewed"
-    val displayName = Some(s"popular in $mediaType")
+    val displayName = Some(s"most viewed in $mediaType")
     val config = CollectionConfig.empty.copy(displayName = displayName)
 
     val html = views.html.fragments.containers.facia_cards.container(

@@ -12,7 +12,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient) extends Logging with 
 
   private val agent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
-  def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().get(edition.id).getOrElse(Nil)
+  def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().getOrElse(edition.id, Nil)
 
   def refresh() {
     log.info("Refreshing most popular.")
@@ -36,11 +36,15 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
   // These are the only country codes (row must be lower-case) passed to us from the fastly service.
   // This allows us to choose carefully the codes that give us the most impact. The trade-off is caching.
-  private val countries = Seq("GB", "US", "AU", "CA", "IN", "NG", "row")
+  private val countries = Seq("GB", "US", "AU", "CA", "IN", "NG", "NZ", "row")
 
-  def mostPopular(country: String): Seq[RelatedContentItem] = ophanPopularAgent().get(country).getOrElse(Nil)
+  // Default country if the country does is not currently populated
+  private val defaultCountry: String = "row"
 
-  def refresh() {
+  def mostPopular(country: String): Seq[RelatedContentItem] =
+    ophanPopularAgent().getOrElse(country, ophanPopularAgent().getOrElse(defaultCountry, Nil))
+
+  def refresh(): Unit = {
     log.info("Refreshing most popular for countries.")
     countries foreach update
   }
@@ -66,7 +70,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
       Future.sequence(mostRead).map { contentSeq =>
         val validContents = contentSeq.flatten
-        if (validContents.size > 0) {
+        if (validContents.nonEmpty) {
 
           // Add each country code to the map.
           ophanPopularAgent send ( currentMap => {
@@ -90,7 +94,7 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
   private val countries = Seq("GB", "US", "AU")
 
-  def mostPopular(country: String): Seq[RelatedContentItem] = ophanPopularAgent().get(country).getOrElse(Nil)
+  def mostPopular(country: String): Seq[RelatedContentItem] = ophanPopularAgent().getOrElse(country, Nil)
 
   def refresh() {
     log.info("Refreshing most popular for the day.")
@@ -118,7 +122,7 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
       Future.sequence(mostRead).map { contentSeq =>
         val validContents = contentSeq.flatten
-        if (validContents.size > 0) {
+        if (validContents.nonEmpty) {
 
           // Add each country code to the map.
           ophanPopularAgent send ( currentMap => {
@@ -138,7 +142,7 @@ class MostPopularExpandableAgent(contentApiClient: ContentApiClient) extends Log
 
   private val agent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
-  def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().get(edition.id).getOrElse(Nil)
+  def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().getOrElse(edition.id, Nil)
 
   def refresh() {
     log.info("Refreshing most popular.")

@@ -1,8 +1,8 @@
 @import controllers.cache.ImageDecacheController
 
-@(messageType: ImageDecacheController.MessageType = ImageDecacheController.DefaultMessage, image: String = "", originImage: Option[String] = None)(implicit request: RequestHeader)
+@(messageType: ImageDecacheController.MessageType = ImageDecacheController.DefaultMessage, image: String = "", originImage: Option[String] = None)(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Clear image", "PROD", isAuthed = true) {
+@admin_main("Clear image", isAuthed = true) {
 
     <h1>Clear image</h1>
 

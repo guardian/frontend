@@ -18,6 +18,10 @@ Development Manager: Dominic Kendrick
 Twitter: @dominickendrick
 From: London, UK
 
+Development Manager: Mark Butler
+Twitter: @mark_j_butler
+Location: London, UK
+
 Engineer: Richard Nguyen
 Twitter: @Sherbet_Noin
 From: London, UK
@@ -145,10 +149,6 @@ Twitter: @aycenne
 From: Cork, Ireland
 Location: London, UK
 
-Developer: Rafe Kennedy
-Twitter: @rjmk_
-From: Reading, UK
-
 User Experience Architect: Alastair Jardine
 Twitter: @aj_ux
 From: London, UK
@@ -271,6 +271,10 @@ Location: London, UK
 
 Developer: Oliver Ash
 Twitter: @OliverJAsh
+From: London, UK
+
+Developer: Rafe Kennedy
+Twitter: @rjmk_
 From: London, UK
 
 Engineer / Dev Manager: James Pamplin

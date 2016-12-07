@@ -1,4 +1,4 @@
-@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
+@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import common.LinkTo
 @import views.BodyCleaner
@@ -6,7 +6,7 @@
 @import views.support.TrailCssClasses.toneClass
 
 @defining(model.article) { article =>
-  @defining(isPaidContent(article, model)) { isPaidContent =>
+  @defining(isPaidContent(model)) { isPaidContent =>
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
             class="content content--article content--immersive content--immersive-article tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
@@ -30,8 +30,6 @@
                         @if(article.tags.isNews && !article.elements.hasMainEmbed && article.elements.elements("main").isEmpty) {
                             <hr class="content__hr hide-until-leftcol" />
                         }
-
-                        @fragments.chapterHeadings(article)
 
                         <div class="content__article-body from-content-api js-article__body"
                              itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"

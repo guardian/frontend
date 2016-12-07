@@ -1,7 +1,7 @@
 @import common.dfp.LineItemReport
-@(env: String, slotReport: LineItemReport)(implicit request: RequestHeader)
+@(slotReport: LineItemReport)(implicit request: RequestHeader, env: play.api.Environment)
 
-@admin_main("Commercial: Desktop Top-Above-Nav Slot", env, isAuthed = true) {
+@admin_main("Commercial: Desktop Top-Above-Nav Slot", isAuthed = true) {
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
     <h2>Desktop Top-Above-Nav Slot</h2>
 

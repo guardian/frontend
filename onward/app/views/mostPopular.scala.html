@@ -1,14 +1,14 @@
-@(page: model.Page, popular: Seq[model.MostPopular])(implicit request: RequestHeader)
+@(page: model.Page, popular: Seq[model.MostPopular])(implicit request: RequestHeader, env: play.api.Environment)
 
 @import views.support.`package`._
 
 @main(page){
 }{
     <main itemprop="mainContentOfPage" role="main" class="monocolumn-wrapper content">
-        <h1 class="u-h">Most popular</h1>
+        <h1 class="u-h">Most viewed</h1>
     @popular.zipWithRowInfo.map{ case (section, info) =>
         <section class="zone-@section.section">
-            <h2 class="content__inline-section">Most popular @Html(section.heading)</h2>
+            <h2 class="content__inline-section">Most viewed @Html(section.heading)</h2>
             <div class="headline-list"
                  data-link-name="@section.heading">
                 <ul class="u-unstyled">

@@ -11,7 +11,7 @@ object Encoding extends HttpsUrl {
   )
 
   def apply(url: String, rawFormat:String): Encoding = {
-    val format = typeMapping.get(rawFormat).getOrElse(rawFormat)
+    val format = typeMapping.getOrElse(rawFormat, rawFormat)
     Encoding(format, ensureHttps(url), rawFormat)
   }
 }

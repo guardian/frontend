@@ -68,85 +68,6 @@
     }
 }
 
-.brandbadge--onside {
-    padding-bottom: $gs-baseline * 2;
-    border-bottom: 1px dotted $neutral-5;
-
-    @include mq(tablet) {
-        float: right;
-    }
-
-    @include mq(leftCol) {
-        float: left;
-        clear: left;
-        width: $left-column;
-        min-height: 0;
-        border-bottom-width: 0;
-        border-top: 1px dotted $neutral-5;
-    }
-
-    @include mq(wide) {
-        width: $left-column-wide;
-    }
-
-    @include mq(mobile, $until: leftCol) {
-        padding-bottom: $gs-baseline / 2;
-
-        .brandbadge__link {
-            margin-top: 6px;
-        }
-    }
-
-    .brandbadge__logo {
-        @include mq(mobile, $until: leftCol) {
-            max-height: 60px;
-        }
-    }
-    .content--media--video & {
-        min-height: 0;
-    }
-    .content--gallery:not(.paid-content--advertisement-feature) & {
-        border-top: 1px dotted $media-mute;
-        border-bottom: 0;
-        padding-top: $gs-baseline / 3;
-
-        @include mq(tablet) {
-            float: none;
-        }
-
-        @include mq(desktop) {
-            width: gs-span(3);
-            position: absolute;
-        }
-
-        .content__main-column > & {
-            @include mq(desktop) {
-                top: 100%;
-            }
-
-            @include mq(leftCol) {
-                left: -160px;
-            }
-
-            @include mq(wide) {
-                left: -240px;
-            }
-        }
-
-        .brandbadge__header {
-            font-weight: normal;
-        }
-    }
-}
-
-.content__main-column {
-    .brandbadge--onside {
-        @include mq(tablet) {
-            float: none;
-        }
-    }
-}
-
 .brandbadge--interactive {
     width: 140px;
     min-height: 135px;
@@ -311,8 +232,7 @@
     }
 
     > .badge__link {
-        border-bottom: 1px dotted $neutral-5;
-        margin: 3 / 4 * $gs-baseline 0 $gs-baseline / 3;
+        margin: 3 / 4 * $gs-baseline 0 $gs-baseline;
     }
 
     > .badge__help {
@@ -365,9 +285,12 @@
 .content--media--video:not(.paid-content--advertisement-feature),
 .content--media--audio:not(.paid-content--advertisement-feature),
 .content--gallery:not(.paid-content--advertisement-feature) {
-    .badge,
+    .badge {
+        color: $neutral-3;
+    }
+
     .badge__help {
-        color: $neutral-6;
+        color: #ffffff;
     }
 }
 

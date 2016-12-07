@@ -1,8 +1,12 @@
 <div id="site-message__message">
     <div class="site-message__message site-message__message--membership">
-        <%=messageText%>
+        <span id="membership__engagement-message-text">
+            <%=messageText%>
+        </span>
+        <span id="membership__engagement-message-button" class="message-button-rounded__cta prominent  <%=colourClass%>">
+            <span id="membership__engagement-message-button-caption"><%=buttonCaption%></span><%=arrowWhiteRight%>
+        </span>
     </div>
-    <a
-        id="membership__engagement-message-link"
-        class="u-faux-block-link__overlay" target="_blank" href="<%=linkHref%>" data-link-name="Read more"></a>
+    <a id="membership__engagement-message-link" class="u-faux-block-link__overlay" target="_blank" href="<%=linkHref%>" data-link-name="Read more link">
+    </a>
 </div>

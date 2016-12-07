@@ -88,12 +88,12 @@ GET         /commercial/dfp/flush/view                                          
 GET         /commercial/dfp/flush                                                                   controllers.admin.commercial.DfpDataController.flushCache()
 GET         /commercial/performance/radiator                                                        controllers.admin.CommercialController.renderCommercialRadiator()
 GET         /commercial/performance/browser-dashboard                                               controllers.admin.CommercialController.renderBrowserPerformanceDashboard()
-GET         /commercial/performance/programmatic-dashboard                                          controllers.admin.CommercialController.renderProgrammaticPerformanceDashboard()
 GET         /commercial/slot/:slotName                                                              controllers.admin.commercial.SlotController.viewSlot(slotName)
 GET         /commercial/adops/takeovers-empty-mpus                                                  controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
 GET         /commercial/adops/takeovers-empty-mpus/create                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
 POST        /commercial/adops/takeovers-empty-mpus/create                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
 POST        /commercial/adops/takeovers-empty-mpus/remove                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(takeoverStr)
+GET         /commercial/invalid-lineitems                                                           controllers.admin.CommercialController.renderInvalidItems()
 
 # Metrics
 GET         /metrics/loadbalancers                                                                  controllers.admin.MetricsController.renderLoadBalancers()
@@ -108,7 +108,6 @@ GET         /metrics/afg                                                        
 
 # Radiator
 GET         /radiator                                                                               controllers.admin.RadiatorController.renderRadiator()
-GET         /radiator/pingdom                                                                       controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                  controllers.admin.RadiatorController.commitDetail(hash)
 
 GET         /deploys-radiator/api/deploys                                                           controllers.admin.DeploysRadiatorController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])

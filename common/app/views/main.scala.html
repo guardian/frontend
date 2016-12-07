@@ -1,4 +1,4 @@
-@(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
+@(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import common.{Edition, Navigation, commercial}
 @import conf.switches.Switches.{BreakingNewsSwitch}
@@ -39,7 +39,7 @@
             ("has-localnav", navigation.filter(_.links.nonEmpty).nonEmpty),
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
             ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
-            ("has-new-header", mvt.ABNewHeaderVariant.isParticipating || mvt.ABNewHeaderVariantTwo.isParticipating),
+            ("has-new-header", mvt.ABNewNavVariantFour.isParticipating),
             ("is-immersive", getContent(page).exists(_.content.isImmersive)),
             ("is-immersive-interactive", getContent(page).exists(content => content.tags.isInteractive && content.content.isImmersive))))"
         itemscope itemtype="http://schema.org/WebPage">
@@ -47,6 +47,10 @@
         @fragments.message(page.metadata)
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
+
+        @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
+            @fragments.commercial.pageSkin()
+        }
 
         @page match {
             case page: model.ContentPage if (page.item.content.isImmersiveGallery && !page.item.content.tags.isInteractive) => {
@@ -106,14 +110,9 @@
 
         @fragments.footer(page)
 
-        @fragments.inlineJSNonBlocking()
+        @fragments.inlineJSNonBlocking(page)
 
         @fragments.analytics.base(page)
-
-        @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
-            @fragments.commercial.pageSkin()
-        }
-
     </body>
     </html>
 }

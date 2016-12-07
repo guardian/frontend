@@ -13,7 +13,7 @@ define([
     'lodash/collections/map',
     'lodash/functions/throttle',
     'lodash/collections/forEach',
-    'common/modules/analytics/omniture',
+    'common/modules/analytics/interaction-tracking',
     'common/utils/chain',
     'common/utils/load-css-promise'
 ], function (bean,
@@ -30,7 +30,7 @@ define([
              map,
              throttle,
              forEach,
-             omniture,
+             interactionTracking,
              chain,
              loadCssPromise) {
 
@@ -45,6 +45,7 @@ define([
 
         // ELEMENT BINDINGS
         this.$galleryEl = $('.js-hosted-gallery-container');
+        this.$galleryFrame = $('.js-hosted-gallery-frame');
         this.$header = $('.js-hosted-headerwrap');
         this.$imagesContainer = $('.js-hosted-gallery-images', this.$galleryEl);
         this.$captionContainer = $('.js-gallery-caption-bar');
@@ -60,6 +61,7 @@ define([
         this.$ctaFloat = $('.js-hosted-gallery-cta', this.$galleryEl)[0];
         this.$ojFloat = $('.js-hosted-gallery-oj', this.$galleryEl)[0];
         this.$meta = $('.js-hosted-gallery-meta', this.$galleryEl)[0];
+        this.ojClose = qwery('.js-hosted-gallery-oj-close', this.$ojFloat)[0];
 
         if (this.$galleryEl.length) {
             this.resize = this.trigger.bind(this, 'resize');
@@ -74,6 +76,7 @@ define([
             });
 
             bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
+            bean.on(this.ojClose, 'click', this.toggleOj.bind(this));
             bean.on(document.body, 'keydown', this.handleKeyEvents.bind(this));
             this.loadSurroundingImages(1, this.$images.length);
             this.setPageWidth();
@@ -87,6 +90,10 @@ define([
             }
         }
     }
+
+    HostedGallery.prototype.toggleOj = function () {
+        bonzo(this.$ojFloat).toggleClass('minimise-oj');
+    };
 
     HostedGallery.prototype.initScroll = function () {
         bean.on(this.nextBtn, 'click', function(){
@@ -104,7 +111,6 @@ define([
     HostedGallery.prototype.initSwipe = function () {
         var threshold, ox, dx, touchMove,
             updateTime = 20; // time in ms
-        this.swipeContainerWidth = this.$galleryEl.dim().width;
         this.$imagesContainer.css('width', this.$images.length + '00%');
 
         bean.on(this.$galleryEl[0], 'touchstart', function (e) {
@@ -188,14 +194,13 @@ define([
 
     HostedGallery.prototype.resizeImage = function (imgIndex) {
         var $imageDiv = this.$images[imgIndex],
-            $imagesContainer = this.$imagesContainer[0],
-            $gallery = this.$galleryEl[0],
+            $galleryFrame = this.$galleryFrame[0],
             $ctaFloat = this.$ctaFloat,
             $ojFloat = this.$ojFloat,
             $meta = this.$meta,
             $images = this.$images,
-            width = $gallery.clientWidth,
-            height = $imagesContainer.clientHeight,
+            width = $galleryFrame.clientWidth,
+            height = $galleryFrame.clientHeight,
             $sizer = $('.js-hosted-gallery-image-sizer', $imageDiv),
             imgRatio = this.imageRatios[imgIndex],
             ctaSize = getFrame(0),
@@ -306,7 +311,6 @@ define([
         'image': {
             enter: function () {
                 var that = this;
-                this.swipeContainerWidth = this.$galleryEl.dim().width;
 
                 // load prev/current/next
                 this.loadSurroundingImages(this.index, this.$images.length);
@@ -367,7 +371,7 @@ define([
 
     HostedGallery.prototype.trackNavBetweenImages = function (data) {
         if (data && data.nav) {
-            omniture.trackLinkImmediate(config.page.trackingPrefix + data.nav + ' - image ' + this.index);
+            interactionTracking.trackNonClickInteraction(config.page.trackingPrefix + data.nav + ' - image ' + this.index);
         }
     };
 
@@ -375,7 +379,7 @@ define([
         this.resizer = this.resizer || function () {
                 this.loadSurroundingImages(this.index, this.$images.length);
                 if (this.useSwipe) {
-                    this.swipeContainerWidth = this.$galleryEl.dim().width;
+                    this.swipeContainerWidth = this.$galleryFrame.dim().width;
                     this.translateContent(this.index, 0, 0);
                 }
                 this.setPageWidth();
@@ -390,25 +394,23 @@ define([
             height = $imagesContainer.clientHeight,
             $header = this.$header,
             $footer = this.$captionContainer,
-            $progress = this.$progress,
-            $ctaFloat = this.$ctaFloat,
-            $ojFloat = this.$ojFloat,
+            $galleryFrame = this.$galleryFrame,
             imgRatio = 5 / 3,
             imageWidth = width,
-            leftRight = 0;
+            leftRight = 0,
+            that = this;
         if (imgRatio < width / height) {
             imageWidth = height * imgRatio;
             leftRight = (width - imageWidth) / 2 + 'px';
         }
+        this.swipeContainerWidth = imageWidth;
         fastdom.write(function () {
             $header.css('width', imageWidth);
             $footer.css('margin', '0 ' + leftRight);
             $footer.css('width', 'auto');
-            $progress.css('right', leftRight);
-            bonzo($ctaFloat).css('left', leftRight);
-            bonzo($ojFloat).css('left', leftRight);
-            bonzo($ctaFloat).css('right', leftRight);
-            bonzo($ojFloat).css('right', leftRight);
+            $galleryFrame.css('left', leftRight);
+            $galleryFrame.css('right', leftRight);
+            that.loadSurroundingImages(that.index, that.$images.length);
         });
     };
 

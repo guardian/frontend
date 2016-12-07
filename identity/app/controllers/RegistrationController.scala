@@ -3,27 +3,29 @@ package controllers
 import client._
 import common.ExecutionContexts
 import com.gu.identity.model.User
-import utils.{ThirdPartyConditions, SafeLogging}
-import idapiclient.{ IdApiClient, EmailPassword }
-import model.{NoCache, IdentityPage}
+import utils.{SafeLogging, ThirdPartyConditions}
+import idapiclient.{EmailPassword, IdApiClient}
+import model.{IdentityPage, NoCache}
 import play.api.i18n.MessagesApi
 import play.api.mvc._
 import play.api.data._
+
 import scala.concurrent.Future
 import services._
 import form.Mappings
-import tracking.Omniture
+import play.api.Environment
 
-class RegistrationController( returnUrlVerifier : ReturnUrlVerifier,
+class RegistrationController(returnUrlVerifier : ReturnUrlVerifier,
                              userCreationService : UserCreationService,
                              api: IdApiClient,
                              idRequestParser : TorNodeLoggingIdRequestParser,
                              idUrlBuilder : IdentityUrlBuilder,
                              signinService : PlaySigninService,
-                             val messagesApi: MessagesApi )
+                             val messagesApi: MessagesApi)
+                            (implicit env: Environment)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
-  val page = IdentityPage("/register", "Register", "register")
+  val page = IdentityPage("/register", "Register")
 
   private val passwordKey = "user.password"
   private val emailKey = "user.primaryEmailAddress"
@@ -60,7 +62,7 @@ class RegistrationController( returnUrlVerifier : ReturnUrlVerifier,
     val registrationError = request.getQueryString("error")
     val groupCode = idRequest.groupCode.orElse(group)
 
-    NoCache(Ok(views.html.registration(Omniture.registrationStart(page, idRequest), idRequest, idUrlBuilder, filledForm, registrationError, groupCode)))
+    NoCache(Ok(views.html.registration(page, idRequest, idUrlBuilder, filledForm, registrationError, groupCode)))
   }
 
   def renderRegistrationConfirmation(returnUrl: String) = Action{ implicit request =>

@@ -1,76 +1,78 @@
 @import common.commercial.hosted.HostedGalleryPage
-@(page: HostedGalleryPage)(implicit request: RequestHeader)
+@(page: HostedGalleryPage)(implicit request: RequestHeader, env: play.api.Environment)
 @import views.html.hosted._
 
 @main(page, Some("commercial"))  { }  {
     <!--[if (gt IE 9)|(IEMobile)]><!-->
     <style>
     .hosted-tone {
-        color: @{page.campaign.fontColour.brandColour};
+        color: @{page.campaign.fontColour.hexCode};
     }
 
     .hosted-tone-bg {
-        background-color: @{page.campaign.fontColour.brandColour};
+        background-color: @{page.campaign.fontColour.hexCode};
     }
 
     .hosted-tone-border {
-        border-color: @{page.campaign.fontColour.brandColour};
+        border-color: @{page.campaign.fontColour.hexCode};
     }
 
     .hosted-tone-btn,
     .hosted-tone-btn:focus,
     .hosted-tone-btn:hover {
-        background-color: @{page.campaign.fontColour.brandColour};
-        border-color: @{page.campaign.fontColour.brandColour};
+        background-color: @{page.campaign.fontColour.hexCode};
+        border-color: @{page.campaign.fontColour.hexCode};
     }
 
     .hosted-page .hosted__link {
-        color: @{page.campaign.fontColour.brandColour};
+        color: @{page.campaign.fontColour.hexCode};
     }
 
     .hosted-page ~ .survey-overlay-simple .survey-text__header {
-        background-color: @{page.campaign.fontColour.brandColour};
+        background-color: @{page.campaign.fontColour.hexCode};
     }
     </style>
         <!--<![endif]-->
-    <div class="hosted-page hosted-gallery-page--container hosted-gallery-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
+    <div class="hosted-page hosted-gallery-page--container hosted-gallery-page @if(page.campaign.fontColour.isDark) {hosted-page--bright}">
         @guardianHostedHeader("hosted-gallery-page", page)
         <div class="l-side-margins hosted__side">
             <section class="hosted-tone--dark hosted-gallery__gallery-section">
                 <div class="js-hosted-gallery-container hosted-gallery__gallery-container">
-                    <div class="js-hosted-gallery-images hosted-gallery__images-container">
-                        @guardianHostedGalleryImage(page.images.head, {
-                            <div class="hosted-gallery__meta js-hosted-gallery-meta">
-                                <div class="content__main-column">
-                                    <h1 class="hosted-gallery__heading">{page.title}</h1>
-                                    <h3 class="hosted-gallery__sub-heading">{page.standfirst}</h3>
+                    <div class="js-hosted-gallery-frame hosted-gallery__gallery-frame">
+                        <div class="js-hosted-gallery-images hosted-gallery__images-container">
+                            @guardianHostedGalleryImage(page.images.head, if(page.standfirst.trim.isEmpty) {""} else {
+                                <div class="hosted-gallery__meta js-hosted-gallery-meta">
+                                    <div class="content__main-column">
+                                        <h1 class="hosted-gallery__heading">{page.title}</h1>
+                                        <h3 class="hosted-gallery__sub-heading">{page.standfirst}</h3>
+                                    </div>
+                                </div>
+                            }.toString)
+                            @for(i <- page.images.indices.tail) {
+                                @guardianHostedGalleryImage(page.images(i))
+                            }
+                        </div>
+                        <div class="hosted-gallery__scroll-container js-hosted-gallery-scroll-container">
+                            @for(i <- page.images.indices) {
+                                <div class="hosted-gallery__image--placeholder"></div>
+                            }
+                        </div>
+                        @guardianHostedGalleryCta(page.cta.label, page.cta.url, page.cta.btnText)
+                        <div class="hosted-gallery__progress js-hosted-gallery-progress">
+                            @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-up"))
+                            <div class="hosted-gallery__progress--wrapper">
+                                <div class="hosted-gallery__progress-border">
+                                    <div class="hosted-gallery__progress-border-static"></div>
+                                    <div class="hosted-gallery__progress-border-rotate js-hosted-gallery-rotating-border"></div>
                                 </div>
                             </div>
-                        }.toString)
-                        @for(i <- page.images.indices.tail) {
-                            @guardianHostedGalleryImage(page.images(i))
-                        }
-                    </div>
-                    <div class="hosted-gallery__scroll-container js-hosted-gallery-scroll-container">
-                        @for(i <- page.images.indices) {
-                            <div class="hosted-gallery__image--placeholder"></div>
-                        }
-                    </div>
-                    @guardianHostedGalleryCta(page.cta.label, page.cta.url, page.cta.btnText)
-                    <div class="hosted-gallery__progress js-hosted-gallery-progress">
-                        @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-up"))
-                        <div class="hosted-gallery__progress--wrapper">
-                            <div class="hosted-gallery__progress-border">
-                                <div class="hosted-gallery__progress-border-static"></div>
-                                <div class="hosted-gallery__progress-border-rotate js-hosted-gallery-rotating-border"></div>
+                            <div class="hosted-gallery__image-count js-hosted-gallery-image-count">
+                                1/@page.images.length
                             </div>
+                            @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-down"))
                         </div>
-                        <div class="hosted-gallery__image-count js-hosted-gallery-image-count">
-                            1/@page.images.length
-                        </div>
-                        @fragments.inlineSvg("arrow-right", "icon", List("inline-arrow-down"))
+                        @guardianHostedGalleryOj(page.cta.label, page.cta.url, page.cta.btnText, page.nextPages)
                     </div>
-                    @guardianHostedGalleryOj(page.cta.label, page.cta.url, page.cta.btnText, page.nextPages)
                 </div>
                 <div class="hosted__container hosted__container--content hosted-gallery__lower-bar js-gallery-caption-bar">
                     <header class="host__header hosted__social">
@@ -88,7 +90,7 @@
                                     </span>
                                 </div>
                                 <div class="hosted-gallery__caption-text">
-                                    @page.images(i).caption
+                                    @Html(page.images(i).caption)
                                     @if(page.images(i).caption.nonEmpty && page.images(i).credit.nonEmpty) {<br/>}
                                     @page.images(i).credit
                                 </div>

@@ -40,7 +40,7 @@ object IndexPage {
     date: DateTime,
     tzOverride: Option[DateTimeZone]
   ): IndexPage = {
-    IndexPage(page, contents, tags, date, tzOverride, commercial = Commercial.make(page.metadata, tags))
+    IndexPage(page, contents, tags, date, tzOverride, commercial = Commercial.empty)
   }
 
   def fastContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
@@ -103,7 +103,7 @@ object IndexPage {
         )
 
         (newMpuState, ((containerConfig, collection), Fixed(container)))
-    }._2.toSeq
+    }._2
 
     val front = Front.fromConfigsAndContainers(
       containerDefinitions,

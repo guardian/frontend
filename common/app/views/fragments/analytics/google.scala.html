@@ -1,5 +1,7 @@
-@(page: model.Page)
+@(page: model.Page)(implicit request: RequestHeader, env: play.api.Environment)
+@import views.support.Commercial.listSponsorLogosOnPage
 @import views.support.GoogleAnalyticsAccount
+@import play.api.Mode.Dev
 
 <script id='google_analytics'>
 
@@ -22,6 +24,16 @@
             .map(function(xs) { return xs[1] })[0];
     }
 
+    function getAnalyticsEdition() {
+        var edition = (guardian.config.page.edition || '').toLowerCase()
+        return edition === 'int' ? 'international' : edition;
+    }
+
+    function getAnalyticsTitle() {
+        var analyticsTitle = (guardian.config.page.webTitle || '');
+        return (analyticsTitle === 'Network Front') ? getAnalyticsEdition() + ' network front' : analyticsTitle;
+    }
+
     var identityId = null;
     if (guardian.config.user) {
         identityId = guardian.config.user.id;
@@ -41,14 +53,15 @@
     ***************************************************************************************@
     @for(tracker <- Seq(GoogleAnalyticsAccount.editorialProd, GoogleAnalyticsAccount.editorialTest)) {
         ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName', {
-            'sampleRate': @{ if (Play.isDev) 100 else tracker.samplePercentage }
+            'sampleRate': @{ if (env.mode == Dev) 100 else tracker.samplePercentage },
+            'siteSpeedSampleRate': @{ if (env.mode == Dev) 100 else tracker.siteSpeedSamplePercentage }
         });
     }
 
     @for(trackerName <- Seq(GoogleAnalyticsAccount.editorialProd.trackerName, GoogleAnalyticsAccount.editorialTest.trackerName)) {
         ga('@{trackerName}.set', 'forceSSL', true);
 
-        ga('@{trackerName}.set', 'title', guardian.config.page.webTitle);
+        ga('@{trackerName}.set', 'title', getAnalyticsTitle());
 
         @***************************************************************************************
         * Custom dimensions common to all platforms across the whole Guardian estate           *
@@ -75,6 +88,12 @@
         ga('@{trackerName}.set', 'dimension22', getQueryParam('CMP_BUNIT')); @* campaign business unit*@
         ga('@{trackerName}.set', 'dimension23', getQueryParam('CMP_TU')); @* campaign team*@
         ga('@{trackerName}.set', 'dimension26', (!!guardian.config.page.isHosted).toString());
+        ga('@{trackerName}.set', 'dimension27', navigator.userAgent);
+        ga('@{trackerName}.set', 'dimension29', window.location.href);
+        ga('@{trackerName}.set', 'dimension30', getAnalyticsEdition());
+        @for(sponsorLogos <- listSponsorLogosOnPage(page)) {
+          ga('@{trackerName}.set', 'dimension31', '@Html(sponsorLogos.mkString("|"))');
+        }
     }
 
     @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>
@@ -89,10 +108,7 @@
         @*
         If there is internal link click data in session storage, send a click event.?:
 
-        We rely on the fact that this inline JS runs before the Omniture code.
-        The Omniture code removes the entry from session storage after it has read it.
-
-        TODO: When we get rid of Omniture, we should delete the entry from session storage here.
+        We remove the entry from session storage after reading it.
         *@
 
         try {
@@ -107,6 +123,7 @@
                         dimension12: referrerVars.value.path
                     });
                 }
+                window.sessionStorage.removeItem(NG_STORAGE_KEY);
             }
         } catch (e) { }
 

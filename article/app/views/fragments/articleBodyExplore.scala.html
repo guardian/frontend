@@ -4,7 +4,7 @@
 @import views.support.Commercial.isPaidContent
 @import views.support.RenderClasses
 
-@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader)
+@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
 
 @defining(model.article) { article =>
     <div class="l-side-margins @if(article.content.elements.hasMainVideo){explore--video}">
@@ -24,6 +24,22 @@
 
             @fragments.headerImmersive(article)
 
+            @if(article.content.elements.hasMainVideo){
+              <div class="explore-series-standfirst explore-video-standfirst">
+                <div class="gs-container">
+                  <div class="content__main-column">
+                    <div class="explore-series-byline-image hide-on-mobile">
+                      @fragments.meta.bylineImage(article.content.tags)
+                    </div>
+                    <h1 class="explore-series-video-headline">
+                        @Html(article.content.trail.headline)
+                    </h1>
+                    @fragments.standfirst(article)
+                  </div>
+                </div>
+              </div>
+            }
+
             <div class="content__main">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column">
@@ -40,6 +56,6 @@
                 </div>
             </div>
         </article>
-        @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent(article, model))
+        @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent(model))
     </div>
 }

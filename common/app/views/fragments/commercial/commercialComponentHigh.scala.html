@@ -1,11 +1,11 @@
 @(isAdFeature: Boolean)
-@import conf.switches.Switches._
+@import conf.switches.Switches.CommercialSwitch
 
-@if(CommercialComponentsSwitch.isSwitchedOn) {
+@if(CommercialSwitch.isSwitchedOn) {
     @fragments.commercial.adSlot(
         "merchandising-high",
         Seq("commercial-component-high"),
-        if(isAdFeature) Map("mobile" -> Seq("1,1", "88,89", "fluid")) else Map("mobile" -> Seq("1,1", "88,87", "fluid")),
+        if(isAdFeature) Map("mobile" -> Seq("1,1", "2,2", "88,89", "fluid")) else Map("mobile" -> Seq("1,1", "2,2", "88,87", "fluid")),
         showLabel=false,
         refresh=false
     ){ }

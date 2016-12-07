@@ -17,7 +17,7 @@ import org.fluentlenium.core.domain.FluentWebElement
         $(s".facia-container--$sponsorshipType").size should be (1)
 
         And(s"the ${sponsorshipType.replace("-", " ")} badge should be displayed")
-        $(".js-sponsored-front") should have size (1)
+        $(".js-sponsored-front") should have size 1
         $(s".facia-container--$sponsorshipType").getAttribute("data-sponsorship") should be (sponsorshipType)
       }
 
@@ -28,7 +28,7 @@ import org.fluentlenium.core.domain.FluentWebElement
 
         Then("the container should be styled differently")
         // second container is sponsored
-        sponsoredContainer.getAttribute("class").split(" ") should contain (s"container--${sponsorshipType}")
+        sponsoredContainer.getAttribute("class").split(" ") should contain (s"container--$sponsorshipType")
 
         And(s"the ${sponsorshipType.replace("-", " ")} badge should be displayed")
         sponsoredContainer.getAttribute("class").split(" ") should contain ("js-sponsored-front")

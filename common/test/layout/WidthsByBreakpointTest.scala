@@ -2,8 +2,6 @@ package layout
 
 import layout.ContentWidths._
 import org.scalatest._
-import org.scalatest.concurrent.Eventually
-import test.SingleServerSuite
 
 class WidthsByBreakpointTest extends FreeSpec with ShouldMatchers {
   "ContentWidths" - {

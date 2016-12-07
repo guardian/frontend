@@ -2,69 +2,69 @@ package controllers
 
 import campaigns.ShortCampaignCodes
 import common._
-import model.Cached.{CacheableResult, WithoutRevalidationResult, RevalidatableResult}
+import model.Cached.{CacheableResult, WithoutRevalidationResult}
 import play.api.mvc._
-import services.{Archive, DynamoDB, Destination, GoogleBotMetric}
+import services.{GoogleBotMetric, RedirectService}
 import java.net.URLDecoder
-import model.Cached
+import javax.ws.rs.core.UriBuilder
+
+import model.{CacheTime, Cached}
+import org.apache.http.HttpStatus
+import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect}
+
 import scala.concurrent.Future
 
-class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with ExecutionContexts {
+class ArchiveController(redirects: RedirectService) extends Controller with Logging with ExecutionContexts {
 
-  private val R1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
-  private val ShortUrl = """^(www\.theguardian\.com/p/[\w\d]+).*$""".r
-  private val R1Redirect = """www\.theguardian\.com/[\w\d-]+(.*/[0|1]?,[\d]*,-?\d+,[\d]*.*)""".r
-  private val GoogleBot = """.*(Googlebot).*""".r
-  private val CombinerSection = """^(www.theguardian.com/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+$""".r
-  private val CombinerSectionRss = """^(www.theguardian.com/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+/rss$""".r
-  private val Guardian = """^www.theguardian.com/Guardian/(.*)$""".r
-  private val DatedSpecialIndexPage = """^www.theguardian.com(/[\w\d-]+)(/.*)/(week|lead)$""".r
-  private val SectionSpecialIndex = """^www.theguardian.com(/[\w\d-]+)/(week|lead)$""".r
-  private val NewspaperPage = "^www.theguardian.com(/theguardian|/theobserver)/(\\d{4}/\\w{3}/\\d{2})/(.+)".r
+  private val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
+  private val ShortUrl = """^(/p/[\w\d]+).*$""".r
+  private val R1Redirect = """^/[\w\d-]+(.*/[0|1]?,[\d]*,-?\d+,[\d]*.*)""".r
+  private val CombinerSection = """^(/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+$""".r
+  private val CombinerSectionRss = """^(/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+/rss$""".r
+  private val Guardian = """^/Guardian(/.*)$""".r
+  private val DatedSpecialIndexPage = """^(/[\w\d-]+)/(.*)/(week|lead)$""".r
+  private val SectionSpecialIndex = """^(/[\w\d-]+)/(week|lead)$""".r
+  private val NewspaperPage = "^(/theguardian|/theobserver)/(\\d{4}/\\w{3}/\\d{2})/(.+)".r
+
+  private val redirectHttpStatus = HttpStatus.SC_MOVED_PERMANENTLY
 
   def lookup(path: String) = Action.async{ implicit request =>
 
+    val cachedArchiveRedirect = Cached(CacheTime.ArchiveRedirect) _
+
     // lookup the path to see if we have a location for it in the database
-    lookupPath(path).map(_.map(Cached(300)(_)).getOrElse{
+    lookupPath(path).map(_.map(cachedArchiveRedirect).getOrElse {
 
       // if we do not have a location in the database then follow these rules
       path match {
-        case Gallery(gallery)                 => redirectTo(gallery, "gallery")
-        case Century(century)                 => redirectTo(century, "century")
-        case Guardian(endOfUrl)               => redirectTo(s"www.theguardian.com/$endOfUrl", "guardian")
-        case Lowercase(lower)                 => redirectTo(lower, "lowercase")
+        case Gallery(gallery)      => redirectTo(gallery)
+        case Century(century)      => redirectTo(century)
+        case Guardian(endOfUrl)    => redirectTo(endOfUrl)
+        case Lowercase(lower)      => redirectTo(lower)
 
         // Googlebot hits a bunch of really old combiners and combiner RSS
         // bounce these to the section
-        case CombinerSectionRss(section)      => redirectTo(s"$section/rss", "combinerrss")
-        case CombinerSection(section)         => redirectTo(section, "combinersection")
-        case Combiner(combiner)               => redirectTo(combiner, "combiner")
-        case DatedSpecialIndexPage(section, rest, _) => Cached(300)(WithoutRevalidationResult(Redirect(s"${LinkTo(section)}$rest/all", 301)))
-        case SectionSpecialIndex(section, _)  => Cached(300)(WithoutRevalidationResult(Redirect(s"${LinkTo(section)}/all", 301)))
-        case NewspaperPage(paper, date, book)       =>  Cached(300)(WithoutRevalidationResult(Redirect(s"${LinkTo(paper)}/$book/$date/all", 301)))
-
-          // edge cache test
-        case "automated-test/strict-transport-security" => Cached(300)(RevalidatableResult.Ok("<h1>test</h1>")).withHeaders("Strict-Transport-Security" -> "max-age=0", "X-Test-Response" -> "true")
+        case CombinerSectionRss(section)                => redirectTo(s"$section/rss")
+        case CombinerSection(section)                   => redirectTo(section)
+        case Combiner(combiner)                         => redirectTo(combiner)
+        case DatedSpecialIndexPage(section, rest, _)    => redirectTo(section, rest, "all")
+        case SectionSpecialIndex(section, _)            => redirectTo(section, "all")
+        case NewspaperPage(paper, date, book)           => redirectTo(paper, book, date, "all")
 
         case _ =>
           log404(request)
           // short cache time as we might just be waiting for the content api to index
-          Cached(10)(WithoutRevalidationResult(NotFound(views.html.notFound())))
+          Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
       }
     })
   }
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
-  def normalise(path: String, zeros: String = ""): String = {
-    val normalised = path match {
-      case R1ArtifactUrl(path, artifactOrContextId, extension) =>
-        val normalisedUrl = s"www.theguardian.com/$path/0,,$artifactOrContextId,$zeros.html"
-        Some(normalisedUrl)
-      case ShortUrl(path) =>
-        Some(path)
-      case _ => None
-    }
-    s"http://${normalised.getOrElse(path)}"
+  def normalise(path: String, zeros: String = ""): String = path match {
+    case R1ArtifactUrl(p, artifactOrContextId, extension) =>
+      s"/$p/0,,$artifactOrContextId,$zeros.html"
+    case ShortUrl(p) => p
+    case _ => path
   }
 
   def linksToItself(path: String, destination: String): Boolean = path match {
@@ -72,7 +72,7 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
     case _ => false
   }
 
-  def retainShortUrlCampaign(path: String, redirectLocation: String ): String = {
+  def retainShortUrlCampaign(path: String, redirectLocation: String): String = {
     // if the path is a short url with a campaign, and the destination doesn't have a campaign, pass it through the redirect.
     val shortUrlWithCampaign = """.*www\.theguardian\.com/p/[\w\d]+/([\w\d]+)$""".r
     val urlWithCampaignParam = """.*www\.theguardian\.com.*?.*CMP=.*$""".r
@@ -84,16 +84,15 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
     }
 
     path match {
-      case shortUrlWithCampaign(campaign) if !destinationHasCampaign => {
-        val uri = javax.ws.rs.core.UriBuilder.fromPath(redirectLocation)
+      case shortUrlWithCampaign(campaign) if !destinationHasCampaign =>
+        val uri = UriBuilder.fromPath(redirectLocation)
         ShortCampaignCodes.getFullCampaign(campaign).foreach(uri.replaceQueryParam("CMP", _))
         uri.build().toString
-      }
       case _ => redirectLocation
     }
   }
 
-  private def destinationFor(path: String): Future[Option[Destination]] = dynamoDB.destinationFor(normalise(path))
+  private def destinationFor(path: String): Future[Option[Destination]] = redirects.destinationFor(normalise(path))
 
   private object Combiner {
     def unapply(path: String): Option[String] = {
@@ -109,57 +108,54 @@ class ArchiveController(dynamoDB: DynamoDB) extends Controller with Logging with
   }
 
   private object Century {
-    private val CenturyUrlEx = """www.theguardian.com\/century(\/)?$""".r
-    private val CenturyDecadeUrlEx = """www.theguardian.com(\/\d{4}-\d{4})(\/)?$""".r
-    private val CenturyStoryUrlEx = """www.theguardian.com\/(\d{4}-\d{4})\/Story\/([0|1]?,[\d]*,-?\d+,[\d]*)(.*)""".r
-    private val ngCenturyFront = "www.theguardian.com/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century"
+    private val CenturyUrlEx = """/century(\/)?$""".r
+    private val CenturyDecadeUrlEx = """(\/\d{4}-\d{4})(\/)?$""".r
+    private val CenturyStoryUrlEx = """\/(\d{4}-\d{4})\/Story\/([0|1]?,[\d]*,-?\d+,[\d]*)(.*)""".r
+    private val ngCenturyFront = "/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century"
 
-    def unapply(path: String): Option[String] = {
-      path match {
-        case CenturyUrlEx(_) => Some(ngCenturyFront)
-        case CenturyDecadeUrlEx(_, _) => Some(ngCenturyFront)
-        case CenturyStoryUrlEx(decade, storyId, ext) => Some(s"www.theguardian.com/century/$decade/Story/$storyId$ext")
-        case _ =>  None
-      }
+    def unapply(path: String): Option[String] = path match {
+      case CenturyUrlEx(_) => Some(ngCenturyFront)
+      case CenturyDecadeUrlEx(_, _) => Some(ngCenturyFront)
+      case CenturyStoryUrlEx(decade, storyId, ext) => Some(s"/century/$decade/Story/$storyId$ext")
+      case _ =>  None
     }
   }
 
   private object Lowercase {
     def unapply(path: String): Option[String] = path.split("/").toList match {
-        case "www.theguardian.com" :: section :: other if section.exists(_.isUpper) =>
-          Some(s"www.theguardian.com/${section.toLowerCase}/${other.mkString("/")}")
+        case "" :: section :: other if section.exists(_.isUpper) =>
+          Some(s"/${section.toLowerCase}/${other.mkString("/")}")
         case _ => None
     }
   }
 
-  private def redirectTo(path: String, identifier: String)(implicit request: RequestHeader): Result = {
-    log.info(s"301, $identifier, ${RequestLog(request)}")
-    Cached(300)(WithoutRevalidationResult(Redirect(s"http://$path", 301)))
+  private def redirectTo(path: String, pathSuffixes: String*)(implicit request: RequestHeader): Result = {
+    val endOfPath = if(pathSuffixes.isEmpty) "" else s"/${pathSuffixes.mkString("/")}"
+    val redirect = LinkTo(path) + endOfPath
+
+    log.info(s"""Archive $redirectHttpStatus, redirect to $redirect""")
+    Cached(CacheTime.ArchiveRedirect)(WithoutRevalidationResult(Redirect(redirect, redirectHttpStatus)))
   }
 
-  private def logDestination(path: String, msg: String, destination: String) {
-    log.info(s"Destination: $msg : $path -> $destination")
-  }
 
-  private def log404(request: Request[AnyContent]) =
+  private def log404(request: Request[AnyContent]) = {
+    log.warn(s"Archive returned 404 for path: ${request.path}")
+
+    val GoogleBot = """.*(Googlebot).*""".r
     request.headers.get("User-Agent").getOrElse("no user agent") match {
-      case GoogleBot(_) =>
-        log.warn(s"404,${RequestLog(request)}")
-        GoogleBotMetric.Googlebot404Count.increment()
+      case GoogleBot(_) => GoogleBotMetric.Googlebot404Count.increment()
       case _ =>
-        log.info(s"404,${RequestLog(request)}")
     }
+  }
 
-  private def lookupPath(path: String) = destinationFor(path).map{ _.flatMap(processLookupDestination(path).lift)}
+  private def lookupPath(path: String) = destinationFor(path).map{ _.flatMap(processLookupDestination(path).lift) }
 
   def processLookupDestination(path: String) : PartialFunction[Destination, CacheableResult] = {
-      case services.Redirect(location) if !linksToItself(path, location) =>
+      case PermanentRedirect(_, location) if !linksToItself(path, location) =>
         val locationWithCampaign = retainShortUrlCampaign(path, location)
-        logDestination(path, "redirect", locationWithCampaign)
-        WithoutRevalidationResult(Redirect(locationWithCampaign, 301))
-      case Archive(archivePath) =>
+        WithoutRevalidationResult(Redirect(locationWithCampaign, redirectHttpStatus))
+      case ArchiveRedirect(_, archivePath) =>
         // http://wiki.nginx.org/X-accel
-        logDestination(path, "archive", archivePath)
         WithoutRevalidationResult(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath"))
   }
 

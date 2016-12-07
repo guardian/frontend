@@ -95,7 +95,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
         AdsStatusEmailJob(emailService).run()
       }
       jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
-        log.info(s"Starting ExpiringSwitchesEmailJob")
+        log.info("Starting ExpiringSwitchesEmailJob")
         ExpiringSwitchesEmailJob(emailService).run()
       }
 

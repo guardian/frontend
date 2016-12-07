@@ -11,9 +11,11 @@ import conf.Configuration
 import model.NoCache
 import conf.switches.{Switch, Switches}
 import model.deploys.{HttpClient, TeamCityBuild, TeamcityService}
+import play.api.Environment
+
 import scala.concurrent.Future
 
-class RadiatorController(wsClient: WSClient) extends Controller with Logging with Requests{
+class RadiatorController(wsClient: WSClient)(implicit env: Environment) extends Controller with Logging with Requests{
 
   // if you are reading this you are probably being rate limited...
   // you can read about github rate limiting here http://developer.github.com/v3/#rate-limiting
@@ -58,23 +60,8 @@ class RadiatorController(wsClient: WSClient) extends Controller with Logging wit
       val errorGraphs = Seq(router50x)
       val fastlyGraphs = fastlyErrors ++ fastlyHitMiss
       NoCache(Ok(views.html.radiator(
-        ciBuilds, errorGraphs, latencyGraphs, fastlyGraphs, cost, switchesExpiringSoon,
-        Configuration.environment.stage, apiKey
+        ciBuilds, errorGraphs, latencyGraphs, fastlyGraphs, cost, switchesExpiringSoon, apiKey
       )))
     }
-  }
-
-  def pingdom() = Action.async { implicit request =>
-    val url = Configuration.pingdom.url + "/checks"
-    val user = Configuration.pingdom.user
-    val password = Configuration.pingdom.password
-    val apiKey = Configuration.pingdom.apiKey
-
-    wsClient.url(url)
-      .withAuth(user, password,  WSAuthScheme.BASIC)
-      .withHeaders("App-Key" ->  apiKey)
-      .get().map { response =>
-        NoCache(Ok(Json.parse(response.body)))
-      }
   }
 }

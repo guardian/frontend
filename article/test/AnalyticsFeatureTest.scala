@@ -20,31 +20,12 @@ import conf.Configuration
 
     // Scenarios
 
-    scenario("Omniture tracks user actions") {
-
-      Given("I am on an article entitled 'Olympic opening ceremony will recreate countryside with real animals'")
-      goTo("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
-        import browser._
-
-        Then("the Omniture webbug should record my visit")
-        val webbug = findFirst("#omnitureNoScript img")
-
-        webbug.getAttribute("src") should startWith("https://hits-secure.theguardian.com/b/ss/guardiangudev-code/1/H.25.3/")
-
-        // test a few token properties in the web bug
-        webbug.getAttribute("src") should include("c11=sport")
-        webbug.getAttribute("src") should include("c8=1758359")
-        webbug.getAttribute("src") should include("pageName=GFE%3Asport%3AArticle%3Alondon-2012-olympic-opening-ceremony")
-
-      }
-    }
-
-    scenario("Ensure all clicked links are recorded by Omniture") {
+    scenario("Ensure all clicked links are recorded by Analytics") {
       Given("I am on an article entitled 'Olympic opening ceremony will recreate countryside with real animals'")
       goTo("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
         Then("all links on the page should be decorated with the Omniture meta-data attribute")
         val anchorsWithNoDataLink = browser.find("a").filter(hasNoLinkName)
-        anchorsWithNoDataLink should have length (0)
+        anchorsWithNoDataLink should have length 0
       }
 
     }

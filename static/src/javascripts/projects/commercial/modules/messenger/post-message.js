@@ -3,7 +3,7 @@ define([
 ], function (dfpOrigin) {
     return postMessage;
 
-    function postMessage(message, targetWindow) {
-        targetWindow.postMessage(JSON.stringify(message), dfpOrigin);
+    function postMessage(message, targetWindow, targetOrigin) {
+        targetWindow.postMessage(JSON.stringify(message), targetOrigin || dfpOrigin);
     }
 });

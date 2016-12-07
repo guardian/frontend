@@ -4,19 +4,13 @@
     sizeMapping: Map[String, Seq[String]],
     showLabel: Boolean = true,
     refresh: Boolean = true,
-    outOfPage: Boolean = false,
-    forceDisplay: Boolean = false,
-    contentSponsor: Option[String] = None,
-    paidForContentType: Option[String] = None
+    outOfPage: Boolean = false
 )(placeholderContent: Html)
-@import conf.switches.Switches._
 
 <div
     id="dfp-ad--@name"
-    class="js-ad-slot ad-slot ad-slot--dfp ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ")@if(forceDisplay) { ad-slot--force-display}"
+    class="js-ad-slot ad-slot ad-slot--dfp ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ")"
     data-link-name="ad slot @name"
-    @for(sponsor <- contentSponsor) { data-sponsor="@sponsor" }
-    @for(paidForType <- paidForContentType) { data-sponsorship="@paidForType" }
     data-test-id="ad-slot-@name"
     data-name="@name"
     @if(!showLabel){ data-label="false" }

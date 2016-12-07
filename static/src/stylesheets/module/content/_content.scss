@@ -387,7 +387,6 @@
     box-sizing: border-box;
     padding-top: $gs-baseline / 6;
     margin-bottom: $gs-baseline / 2;
-    clear: left; // a dateline may be preceded by a floated badge.
 
     time {
         display: inline-block;
@@ -424,7 +423,6 @@
 }
 
 .content__dateline-wpd--modified {
-    color: $news-default;
     cursor: pointer;
 
     &:hover,
@@ -541,18 +539,17 @@
 }
 
 .meta__numbers {
-    border-top: 1px dotted $neutral-5;
-    height: $gs-baseline * 3;
     padding: $gs-baseline / 2 0;
+    position: absolute;
+    right: 0;
+    top: 0;
 
-    @include mq(tablet, leftCol) {
-        position: absolute;
-        right: 0;
-        top: 0;
-        border: 0;
-    }
     @include mq(leftCol) {
+        border-top: 1px dotted $neutral-5;
         border-bottom: 1px dotted $neutral-5;
+        position: static;
+        height: 36px;
+        padding: $gs-baseline / 4 0;
     }
 }
 
@@ -587,19 +584,21 @@
 
 
 .byline {
-    @include fs-bodyHeading(1);
+    @include fs-bodyHeading(2);
     margin-bottom: 0;
+    display: inline-block;
     padding-top: $gs-baseline/3;
     line-height: 20px;
     color: $neutral-2;
 
     @include mq(tablet) {
-        @include fs-bodyHeading(2, true);
         line-height: 22px;
     }
 
     @include mq(leftCol) {
         clear: both;
+        margin-right: 0;
+        display: block;
         padding-top: $gs-baseline/6;
         border-top: 1px dotted $neutral-5;
         box-sizing: border-box;
@@ -760,6 +759,29 @@
         }
     }
 
+    .tone-media--item {
+        color: $neutral-1;
+
+        .rich-link__container:before{
+            background-color: $news-support-3
+        }
+
+        .rich-link__standfirst {
+            color: $neutral-1;
+            font-family: $f-sans-serif-text;
+        }
+
+        .rich-link__kicker, .rich-link__read-more-text {
+            color: $paid-article-richlink;
+        }
+
+        .rich-link__arrow-icon {
+            fill: $paid-article-richlink;
+        }
+    }
+
+
+
     .tone-news--item.rich-link {
         background: $paid-article-subheader;
     }
@@ -868,6 +890,12 @@
             &:hover {
                 background-color: $neutral-3;
                 border-color: $neutral-3;
+            }
+        }
+
+        .content__main-column--audio {
+            .caption--img {
+                color: $neutral-4;
             }
         }
 
@@ -1001,6 +1029,7 @@
 .meta__extras {
     position: relative;
     clear: both;
+    min-height: 45px;
 
     .content__head--crossword & {
         clear: none;
@@ -1083,14 +1112,22 @@
         }
 
         @include mq($until: leftCol) {
+            position: relative;
+            margin-top: -$gs-baseline/4;
+            margin-bottom: -$gs-baseline/2;
+            width: 32px;
+            height: 32px;
             padding: 0;
             border: 0;
-            border-radius: 0;
-            margin-right: 0;
             background-color: transparent !important;
 
             svg {
-                margin-top: $gs-baseline/4;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                margin: auto;
             }
         }
 
@@ -1101,6 +1138,10 @@
 
     .button--small .i-left {
         margin: 2px 4px 0 0;
+
+        @include mq($until: leftCol) {
+            margin: 0;
+        }
     }
 
     .button--small svg {
@@ -1122,6 +1163,10 @@
         margin-top: $gs-baseline/1.2;
         margin-bottom: $gs-baseline * 3/2;
         display: block;
+    }
+
+    @include mq($until: leftCol) {
+        margin: 0;
     }
 }
 
@@ -1181,6 +1226,14 @@
     .content__meta-container--bio & {
         margin-top: $gs-baseline;
     }
+
+    @include mq($until: leftCol) {
+        border: 0;
+        padding-top: $gs-baseline/2;
+        float: left;
+
+
+    }
 }
 
 .related .button--show-more {
@@ -1218,6 +1271,24 @@
 
         .old-article-message--clock svg {
             fill: $neutral-3;
+        }
+    }
+
+    .meta__social {
+        .social--expanded-top {
+            background-color: $neutral-1;
+        }
+
+        .social__tray-close .inline-close {
+            background-color: darken($neutral-1, 5%);
+
+            &:hover {
+                background-color: $multimedia-support-5;
+            }
+
+            svg {
+                fill: $neutral-4;
+            }
         }
     }
 }

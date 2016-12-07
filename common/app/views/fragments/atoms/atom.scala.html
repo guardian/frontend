@@ -1,15 +1,11 @@
-@(model: _root_.model.content.Atom, shouldFence: Boolean)(implicit request: RequestHeader)
-@import _root_.model.content.Quiz
-@import _root_.model.content.MediaAtom
-@import _root_.model.content.InteractiveAtom
+@(model: _root_.model.content.Atom, shouldFence: Boolean, amp: Boolean)(implicit request: RequestHeader, env: play.api.Environment)
+@import _root_.model.ShareLinkMeta
+@import _root_.model.content.{InteractiveAtom, MediaAtom, Quiz}
 
 @{
     model match {
-        case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None, showResults = false, Nil)
-        case media: MediaAtom => media match {
-            case youtube if media.assets.head.platform == "Youtube" => views.html.fragments.atoms.youtube(media)
-            case _ => views.html.fragments.atoms.media(media)
-        }
+        case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None, showResults = false, ShareLinkMeta(Nil, Nil))
+        case media: MediaAtom => views.html.fragments.atoms.media(media, amp, displayCaption = true)
         case interactive: InteractiveAtom => views.html.fragments.atoms.interactive(interactive, shouldFence)
         case _ =>
     }

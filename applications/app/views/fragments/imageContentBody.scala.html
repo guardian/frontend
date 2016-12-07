@@ -8,16 +8,16 @@
 <div class="l-side-margins l-side-margins--media">
     <article
         class="@RenderClasses(Map(
-            "content--advertisement-feature paid-content--advertisement-feature" -> isPaidContent(page.image, page),
-            "content--sponsored" -> isSponsoredContent(page.image, page),
-            "content--foundation-supported" -> isFoundationFundedContent(page.image, page)
+            "content--advertisement-feature paid-content--advertisement-feature" -> isPaidContent(page),
+            "content--sponsored" -> isSponsoredContent(page),
+            "content--foundation-supported" -> isFoundationFundedContent(page)
         ), "content content--media content--image tonal tonal--tone-media")"
         itemprop="mainContentOfPage"
         itemscope
         itemtype="@image.metadata.schemaType"
         role="main">
 
-        @if(isPaidContent(page.image, page)) {
+        @if(isPaidContent(page)) {
             @fragments.guBand()
         }
 
@@ -44,7 +44,7 @@
     </article>
 </div>
 <div class="l-side-margins">
-    @fragments.contentFooter(image, page.related, isPaidContent = isPaidContent(image, page))
+    @fragments.contentFooter(image, page.related, isPaidContent = isPaidContent(page))
 </div>
 
 }

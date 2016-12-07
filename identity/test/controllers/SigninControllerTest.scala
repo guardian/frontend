@@ -8,7 +8,8 @@ import org.mockito.Matchers._
 import services._
 import idapiclient.IdApiClient
 import play.api.test._
-import test.{I18NTestComponents, TestRequest, Fake}
+import test.{Fake, I18NTestComponents, TestRequest, WithTestEnvironment}
+
 import scala.concurrent.Future
 import client.Auth
 import conf.IdentityConfiguration
@@ -23,7 +24,10 @@ import play.api.test.Helpers._
 import play.api.mvc.RequestHeader
 
 
-class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+class SigninControllerTest extends path.FreeSpec
+  with ShouldMatchers
+  with WithTestEnvironment
+  with MockitoSugar {
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val requestParser = mock[IdRequestParser]
   val idUrlBuilder = mock[IdentityUrlBuilder]

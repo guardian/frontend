@@ -42,7 +42,7 @@ GET            /crosswords/lookup                                               
 
 # Email paths
 GET            /email                                                                                                            controllers.EmailSignupController.renderPage()
-GET            /email/form/$emailType<article|footer|plain|plaindark>/:listId                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET            /email/form/$emailType<article|footer|plain|plaindark|plaintone>/:listId                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET            /email/:result                                                                                                    controllers.EmailSignupController.subscriptionResult(result: String)
 POST           /email                                                                                                            controllers.EmailSignupController.submit()
 OPTIONS        /email                                                                                                            controllers.EmailSignupController.options()
@@ -225,7 +225,6 @@ GET            /metrics/afg                                                     
 GET            /deduped                                                                                                          controllers.admin.WhatIsDeduped.index()
 GET            /deduped/*path                                                                                                    controllers.admin.WhatIsDeduped.dedupedFor(path)
 GET            /radiator                                                                                                         controllers.admin.RadiatorController.renderRadiator()
-GET            /radiator/pingdom                                                                                                 controllers.admin.RadiatorController.pingdom()
 GET            /radiator/commit/*hash                                                                                            controllers.admin.RadiatorController.commitDetail(hash)
 GET            /deploys-radiator/api/deploys                                                                                     controllers.admin.DeploysRadiatorController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
 GET            /deploys-radiator/api/builds/:number                                                                              controllers.admin.DeploysRadiatorController.getBuild(number)
@@ -312,6 +311,7 @@ GET            /$path<commercial-containers>                                    
 GET            /commercial/advertiser-content/:campaignName/:pageName                                                            commercial.controllers.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName/:cType/onward.json                                                    commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
+GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize
 
 # Commercial Admin
 GET            /commercial                                                                                                       controllers.admin.CommercialController.renderCommercialMenu()
@@ -327,7 +327,6 @@ GET            /commercial/dfp/flush/view                                       
 GET            /commercial/dfp/flush                                                                                             controllers.admin.commercial.DfpDataController.flushCache()
 GET            /commercial/performance/radiator                                                                                  controllers.admin.CommercialController.renderCommercialRadiator()
 GET            /commercial/performance/browser-dashboard                                                                         controllers.admin.CommercialController.renderBrowserPerformanceDashboard()
-GET            /commercial/performance/programmatic-dashboard                                                                    controllers.admin.CommercialController.renderProgrammaticPerformanceDashboard()
 GET            /commercial/slot/:slotName                                                                                        controllers.admin.commercial.SlotController.viewSlot(slotName)
 GET            /commercial/adops/takeovers-empty-mpus                                                                            controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
 GET            /commercial/adops/takeovers-empty-mpus/create                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
@@ -362,6 +361,7 @@ GET            /series/*path.json                                               
 GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
+GET            /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>                                              controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
 
 #Notifications Store
 POST           /notification/store                                                                                               controllers.NotificationsController.saveSubscription()
@@ -370,6 +370,7 @@ POST           /notification/delete                                             
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
+GET            /embed/atom/media/:id                                                                                             controllers.MediaAtomEmbedController.render(id)
 GET            /index/subjects                                                                                                   controllers.TagIndexController.keywords()
 GET            /index/subjects/*index                                                                                            controllers.TagIndexController.keyword(index)
 GET            /index/contributors                                                                                               controllers.TagIndexController.contributors()

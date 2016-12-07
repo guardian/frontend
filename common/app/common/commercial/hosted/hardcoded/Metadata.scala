@@ -24,10 +24,10 @@ object Metadata {
     val pageTitle = s"Advertiser content hosted by the Guardian: ${video.title} - video"
     MetaData.make(
       id,
+      isHosted= true,
       webTitle = pageTitle,
       section = Some(SectionSummary.fromId(campaignId)),
       contentType = Video,
-      analyticsName = s"GFE:$campaignId:$Video:$pageName",
       description = Some(standfirst),
       javascriptConfigOverrides = Map(
         "isHosted" -> JsBoolean(true),
@@ -56,10 +56,10 @@ object Metadata {
     mainPicture: String
   ): MetaData = MetaData.make(
     id,
+    isHosted= true,
     webTitle = pageTitle,
     section = Some(SectionSummary.fromId(campaign.id)),
     contentType = Article.name,
-    analyticsName = s"GFE:${campaign.id}:${Article.name}:$pageName",
     description = Some(standfirst),
     javascriptConfigOverrides = Map(
       "isHosted" -> JsBoolean(true),
@@ -86,10 +86,10 @@ object Metadata {
     val sectionId = campaign.id
     MetaData.make(
       id,
+      isHosted= true,
       webTitle = pageTitle,
       section = Some(SectionSummary.fromId(sectionId)),
       contentType = Gallery.name,
-      analyticsName = s"GFE:$sectionId:$Gallery:$pageName",
       description = Some(pageTitle),
       javascriptConfigOverrides = Map(
         "isHosted" -> JsBoolean(true),

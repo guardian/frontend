@@ -48,7 +48,7 @@ class MostViewedSocialController(contentApiClient: ContentApiClient, mostPopular
               Fixed(container),
               CollectionConfigWithId(dataId, config),
               CollectionEssentials(
-                items.map(FaciaContentConvert.contentToFaciaContent(_)),
+                items.map(FaciaContentConvert.contentToFaciaContent),
                 Nil,
                 displayName,
                 None,

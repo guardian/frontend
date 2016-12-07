@@ -12,6 +12,6 @@ class AdminTestSuite extends Suites (
   new controllers.admin.DeploysRadiatorControllerTest,
   new controllers.admin.DeploysNotifyControllerTest
 ) with SingleServerSuite {
-    override lazy val port: Int = 19001
+    override lazy val port: Int = 19015
 }
 

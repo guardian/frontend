@@ -9,17 +9,18 @@
 .contributions__epic {
     border-top: 1px solid $multimedia-main-2;
     background-color: $comment-support-2;
-    padding: 0 $gs-gutter / 4 $gs-baseline $gs-gutter / 4;
+    margin-top: $gs-baseline * 2;
+    padding: ($gs-baseline / 3) $gs-gutter / 4 $gs-baseline $gs-gutter / 4;
 }
 
 
 .contributions__title {
-    @include fs-header(2);
-    margin: 0;
-}
+     @include fs-header(2);
+     margin: 0;
+ }
 
 .contributions__title--epic {
-    margin-bottom: $gs-baseline;
+    margin-bottom: 0;
 }
 
 .contributions__paragraph  {
@@ -30,8 +31,20 @@
     margin-top: $gs-baseline;
 }
 
+.contributions__paragraph--extra-copy {
+    margin-bottom: 0;
+}
+
+.contributions__hidden {
+    display: none;
+}
+
 .contributions__paragraph--epic {
     @include fs-bodyCopy(2);
+}
+
+.contributions__epic-link {
+    text-decoration: underline;
 }
 
 .contributions__option-button {
@@ -83,6 +96,9 @@
     display: flex;
     flex-direction: column;
 
+    @include mq($from: mobileLandscape) {
+        flex-direction: row;
+    }
 }
 
 .contributions__contribute {
@@ -128,6 +144,14 @@
     }
 }
 
+.contributions__contribute--epic-member {
+    width: 160px;
+}
+
+.contributions__contribute--epic-member-top {
+    margin-bottom: $gs-baseline/2;
+    margin-right: $gs-gutter/2;
+}
 
 .contributions__option-button--epic {
     &:hover {
@@ -149,20 +173,7 @@
     margin-bottom: $gs-baseline;
 }
 
-.contributions__contribute--no-buttons--today {
-    width: 150px;
-}
-
-.contributions__contribute--no-buttons--make {
-    width: 170px;
-}
-
-.contributions__contribute--no-buttons--control,
-.contributions__contribute--no-buttons--give {
-    width: 130px;
-}
-
-@include mq($from: phablet) {
+@include mq($from: mobileLandscape) {
     .contributions__option-button--bottom {
         width: 70px;
     }
@@ -178,6 +189,11 @@
     .contributions__contribute-embed--bottom {
         margin-top: 0;
     }
+
+    .contributions__contribute--epic-member-top {
+        margin-bottom: 0;
+    }
+
 }
 
 .contributions__button-group {

@@ -11,17 +11,19 @@ import play.api.data.validation._
 import play.api.data.Forms._
 import play.api.data.format.Formats._
 import form.Mappings
+import play.api.Environment
 import utils.SafeLogging
 import scala.concurrent.Future
 
-class ResetPasswordController(  api : IdApiClient,
-                                idRequestParser: IdRequestParser,
-                                idUrlBuilder: IdentityUrlBuilder,
-                                authenticationService: AuthenticationService,
-                                val messagesApi: MessagesApi)
+class ResetPasswordController(api : IdApiClient,
+                              idRequestParser: IdRequestParser,
+                              idUrlBuilder: IdentityUrlBuilder,
+                              authenticationService: AuthenticationService,
+                              val messagesApi: MessagesApi)
+                             (implicit env: Environment)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
-  val page = IdentityPage("/reset-password", "Reset Password", "reset-password")
+  val page = IdentityPage("/reset-password", "Reset Password")
 
   val requestPasswordResetForm = Form(
     Forms.single(

@@ -11,7 +11,7 @@ trait FeatureSwitches {
     "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 15),
+    sellByDate = new LocalDate(2017, 1, 17),
     exposeClientSide = true
   )
 
@@ -25,23 +25,13 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val ChapterHeadingsSwitch = Switch(
-    SwitchGroup.Feature,
-    "chapter-headings",
-    "If this switch is turned on, we will add a block of chapter headings to the top of article pages",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 7),
-    exposeClientSide = false
-  )
-
   val FacebookShareImageLogoOverlay = Switch(
     SwitchGroup.Feature,
     "facebook-share-image-logo-overlay",
     "If this switch is turned on, we will overlay the guardian logo along the bottom of images shared on facebook",
     owners = Seq(Owner.withGithub("dominickendrick")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 11, 7),
+    sellByDate = never,
     exposeClientSide = false
   )
 
@@ -51,7 +41,7 @@ trait FeatureSwitches {
     "If this switch is turned on, we will overlay the guardian logo along the bottom of images shared on twitter",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 11, 7),
+    sellByDate = never,
     exposeClientSide = false
   )
 
@@ -71,7 +61,7 @@ trait FeatureSwitches {
     "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition (for web only).",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 10),
+    sellByDate = new LocalDate(2016, 12, 13),
     exposeClientSide = true
   )
 
@@ -357,37 +347,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val LiveBlogAmpSwitch = Switch(
-    SwitchGroup.Feature,
-    "live-blog-amp",
-    "If this switch is on, link to amp pages will be in the metadata for live blogs",
-    owners = Seq(Owner.withGithub("SiAdcock")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 26),
-    exposeClientSide = false
-  )
-
-  // see https://github.com/guardian/frontend/pull/13916
-  val AmpLiveBlogNewsArticleSwitch = Switch(
-    SwitchGroup.Feature,
-    "live-blog-amp-news-article",
-    "If this switch is on, amp live blog articles have an itemtype of NewsArticle, and thus appear in Google's AMP carousel",
-    owners = Seq(Owner.withGithub("SiAdcock")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 26),
-    exposeClientSide = false
-  )
-
-  val LiveUpdateAmpSwitch = Switch(
-    SwitchGroup.Feature,
-    "live-update-amp",
-    "If this switch is on, amp-live-list will be included in live blogs",
-    owners = Seq(Owner.withGithub("SiAdcock")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 10, 26),
-    exposeClientSide = false
-  )
-
   val R2PagePressServiceSwitch = Switch(
     SwitchGroup.Feature,
     "r2-page-press-service",
@@ -514,8 +473,40 @@ trait FeatureSwitches {
     "Live blog chrome notifications - prod",
     owners = Seq(Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 11, 30),
+    sellByDate = new LocalDate(2017, 2, 1),
     exposeClientSide = true
   )
 
+  //Owner Michael McNamara
+  val AmpInteractivePlaceHolderAttribute = Switch(
+    SwitchGroup.Feature,
+    "amp-interactive-placeholder-attribute",
+    "Adds a placeholder attribute to interactives on amp so that they are allowed to display in the top part of the page",
+    owners = Seq(Owner.withGithub("michaelwmcnamara")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 15),
+    exposeClientSide = true
+  )
+
+  // Owner: Joseph Smith
+  val DisplayHiddenFrontsAsEmails = Switch(
+    SwitchGroup.Feature,
+    "display-hidden-fronts-as-emails",
+    "Allows hidden fronts to be rendered as email-friendly HTML by passing ?format=email",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 20),
+    exposeClientSide = true
+  )
+
+  // Owner: Joseph Smith
+  val RenderEmailConnectedStyle = Switch(
+    SwitchGroup.Feature,
+    "render-email-connected-style",
+    "Allows alternate email styling when passing ?format=email-connected, for testing two email design variants",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 20),
+    exposeClientSide = true
+  )
 }

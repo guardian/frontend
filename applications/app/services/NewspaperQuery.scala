@@ -140,7 +140,7 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends ExecutionContex
     } else date
   }
 
-  def getLatestGuardianPageFor(date: DateTime) = if(date.getDayOfWeek() == DateTimeConstants.SUNDAY) date.minusDays(1) else date
+  def getLatestGuardianPageFor(date: DateTime) = if(date.getDayOfWeek == DateTimeConstants.SUNDAY) date.minusDays(1) else date
 
 
   private def createSnap(date: DateTime, publication: String) = {
@@ -148,7 +148,7 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends ExecutionContex
     // else for theobserver get dates either sunday around the date and the previous Saturday.
     //filter out any dates in the future
     val daysAroundDateToFetchLinksFor = if(publication == "theguardian") List(1, -1) else List(7, -1, -7)
-    val datesAroundNewspaperDate = daysAroundDateToFetchLinksFor.map(date.plusDays(_))
+    val datesAroundNewspaperDate = daysAroundDateToFetchLinksFor.map(date.plusDays)
     datesAroundNewspaperDate.filter( d => d.isBeforeNow).map { d =>
       val displayFormat = d.toString(dateForFrontPagePattern)
       val hrefDateFormat = d.toString(hrefFormat).toLowerCase

@@ -90,7 +90,7 @@
                     </div>
                 }
 
-                @if(showBadge && !isPaidContent(item, page)) {
+                @if(showBadge && !isPaidContent(page)) {
                     @fragments.commercial.badge(item, page)
                 }
 
@@ -102,7 +102,7 @@
         @if(item.fields.standfirst.isDefined) {
             <div class="gs-container">
                 <div class="content__main-column">
-                    @if(showBadge && isPaidContent(item, page)) {
+                    @if(showBadge && isPaidContent(page)) {
                         <div class="content__meta-container js-content-meta js-football-meta u-cf">
                             @fragments.commercial.badge(item, page)
                         </div>

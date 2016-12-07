@@ -1,5 +1,6 @@
 package discussion
 
+import discussion.api.{DiscussionApiLike, DiscussionParams}
 import discussion.model.DiscussionKey
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec}
 import play.api.libs.ws.{WSClient, WSResponse}

@@ -5,17 +5,21 @@ import org.scalatest.{Matchers => ShouldMatchers}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import idapiclient.{TrackingData, IdApiClient}
-import test.{I18NTestComponents, TestRequest, Fake}
+import idapiclient.{IdApiClient, TrackingData}
+import test.{Fake, I18NTestComponents, TestRequest, WithTestEnvironment}
 import play.api.test._
 import play.api.test.Helpers._
 import client.Error
+
 import scala.concurrent.Future
 import com.gu.identity.model.User
 import org.mockito.{ArgumentMatcher, Matchers}
-import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, AuthenticationService}
+import services.{AuthenticationService, IdRequestParser, IdentityRequest, IdentityUrlBuilder}
 
-class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+class ResetPasswordControllerTest extends path.FreeSpec
+  with ShouldMatchers
+  with WithTestEnvironment
+  with MockitoSugar {
 
   val api = mock[IdApiClient]
   val requestParser = mock[IdRequestParser]

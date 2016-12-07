@@ -1,7 +1,7 @@
 package controllers
 
 import _root_.liveblog._
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
+import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
@@ -11,6 +11,7 @@ import model._
 import model.liveblog.BodyBlock
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
+import play.api.Environment
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
@@ -30,7 +31,7 @@ case class ArticlePage(article: Article, related: RelatedContent) extends PageWi
 case class LiveBlogPage(article: Article, currentPage: LiveBlogCurrentPage, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController(contentApiClient: ContentApiClient) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class ArticleController(contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
@@ -55,7 +56,7 @@ class ArticleController(contentApiClient: ContentApiClient) extends Controller w
     val mostRecent = newBlocks.headOption.map { block =>
       "mostRecentBlockId" -> s"block-${block.id}"
     }
-    Cached(page)(JsonComponent((allPagesJson ++ livePageJson ++ mostRecent): _*))
+    Cached(page)(JsonComponent(allPagesJson ++ livePageJson ++ mostRecent: _*))
   }
 
   case class TextBlock(
@@ -183,7 +184,7 @@ class ArticleController(contentApiClient: ContentApiClient) extends Controller w
 
   // range: None means the url didn't include /live/, Some(...) means it did.  Canonical just means no url parameter
   // if we switch to using blocks instead of body for articles, then it no longer needs to be Optional
-  def mapModel(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
+  def mapModel(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader, env: Environment): Future[Result] = {
     lookup(path, range) map responseToModelOrResult(range) recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
@@ -193,7 +194,6 @@ class ArticleController(contentApiClient: ContentApiClient) extends Controller w
   private def lookup(path: String, range: Option[BlockRange])(implicit request: RequestHeader): Future[ItemResponse] = {
     val edition = Edition(request)
 
-    log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
     val capiItem = contentApiClient.item(path, edition)
       .showTags("all")
       .showFields("all")
@@ -222,7 +222,7 @@ class ArticleController(contentApiClient: ContentApiClient) extends Controller w
       case minute: Article if minute.isTheMinute =>
         Left(MinutePage(minute, StoryPackages(minute, response)))
         // Enable an email format for 'Minute' content (which are actually composed as a LiveBlog), without changing the non-email display of the page
-      case liveBlog: Article if (liveBlog.isLiveBlog && request.isEmail) =>
+      case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog, response)))
       case liveBlog: Article if liveBlog.isLiveBlog =>
         range.map {

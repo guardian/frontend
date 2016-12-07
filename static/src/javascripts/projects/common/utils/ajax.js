@@ -1,11 +1,11 @@
 define([
-    'raven',
     'reqwest',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/raven'
 ], function (
-    raven,
     reqwest,
-    config
+    config,
+    raven
 ) {
     // This should no longer be used.
     // Prefer the new 'common/utils/fetch' or 'common/utils/fetch-json' library instead, which are es6 compliant.

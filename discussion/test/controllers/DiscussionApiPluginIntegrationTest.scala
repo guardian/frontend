@@ -1,7 +1,7 @@
 package controllers
 
 import conf.Configuration
-import discussion.DiscussionApiLike
+import discussion.api.DiscussionApiLike
 import discussion.model.Comment
 import org.scalatest._
 import test.{ConfiguredTestSuite, WithTestWsClient}

@@ -8,6 +8,18 @@
     }
 }
 
+.l-side-margins--gallery {
+    .content__meta-container {
+        position: relative;
+        width: auto;
+    }
+
+    .meta__extras {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
 // Overriding the default for media tones
 .tonal--tone-media .content__headline--gallery {
     font-weight: 200;
@@ -34,7 +46,7 @@
     }
 }
 
-.gallery2__fullscreen,
+.gallery__fullscreen,
 .article__fullscreen {
     position: absolute;
 }

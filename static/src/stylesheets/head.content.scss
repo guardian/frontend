@@ -7,6 +7,7 @@
    ========================================================================== */
 @import 'icons/_global-icons-svg';
 @import 'icons/video-icons-svg';
+@import 'module/_icons.head';
 
 /* ==========================================================================
    Global modules
@@ -19,7 +20,6 @@
 @import 'module/_social';
 @import 'module/_layout-hints';
 @import 'module/_live-pulse';
-@import 'module/_chapters';
 @import 'module/content/_article-immersive';
 @import 'module/content/_article-minute';
 @import 'module/content/_gallery.head.scss';
@@ -39,3 +39,5 @@
    ========================================================================== */
 
 @import 'module/atoms/_quiz';
+@import 'module/atoms/_interactive';
+@import 'module/atoms/_youtube';

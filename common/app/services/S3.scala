@@ -12,7 +12,7 @@ import com.amazonaws.services.s3.model._
 import com.amazonaws.util.StringInputStream
 import common.Logging
 import conf.Configuration
-import org.joda.time.DateTime
+import org.joda.time.{DateTime, DateTimeZone}
 import play.Play
 import play.api.libs.ws.{WSClient, WSRequest}
 import sun.misc.BASE64Encoder
@@ -48,20 +48,17 @@ trait S3 extends Logging {
         result.close()
       }
     } catch {
-      case e: AmazonS3Exception if e.getStatusCode == 404 => {
+      case e: AmazonS3Exception if e.getStatusCode == 404 =>
         log.warn("not found at %s - %s" format(bucket, key))
         None
-      }
-      case e: AmazonS3Exception => {
+      case e: AmazonS3Exception =>
         val errorMsg = s"Unable to fetch S3 object (key: $key)"
         val hintMsg =   "Hint: your AWS credentials might be missing or expired. You can fetch new ones using Janus."
         log.error(errorMsg, e)
         println(errorMsg + " \n" + hintMsg)
         None
-      }
-      case e: Exception => {
+      case e: Exception =>
         throw e
-      }
     }
   }
 
@@ -195,7 +192,7 @@ class SecureS3Request(wsClient: WSClient) extends implicits.Dates with Logging {
         case _ => Nil
       }
 
-      val date = DateTime.now.toHttpDateTimeString
+      val date = DateTime.now(DateTimeZone.UTC).toString("yyyyMMdd'T'HHmmss'Z'")
       val signedString = signAndBase64Encode(generateStringToSign(httpVerb, id, date, sessionTokenHeaders), credentials.getAWSSecretKey)
 
       Seq(

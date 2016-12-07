@@ -1,0 +1,83 @@
+@import common.commercial.hosted.HostedArticlePage
+@(page: HostedArticlePage)(implicit request: RequestHeader, env: play.api.Environment)
+@import model.hosted.HostedAmp.ampify
+@import common.commercial.hosted.hardcoded.Support.makeshiftPage
+@import views.html.hosted._
+@import common.{AnalyticsHost, CanonicalLink, LinkTo}
+@import conf.Configuration
+@import views.support.FBPixel
+
+<!doctype html>
+<html AMP>
+    <head>
+        @* "utf-8" meta tag needs to be first according to AMP spec *@
+        <meta charset="utf-8">
+        <meta name="amp-3p-iframe-src" content="https://www.theguardian.com/amp/remote.html">
+        @fragments.metaData(page, amp = true)
+        <title>@views.support.Title(page)</title>
+        @fragments.amp.stylesheets.main(page, page.mainPicture, page.cta.image, page.campaign.fontColour.hexCode)
+        <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
+        <script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async ></script>
+        <script custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async></script>
+        <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+        <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js" async ></script>
+        <script src="https://cdn.ampproject.org/v0.js" async></script>
+    </head>
+    <body>
+
+        <amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
+        <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
+        @fragments.amp.hostedGoogleAnalytics(page)
+        <amp-analytics id="comscore" type="comscore">
+            <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
+        </amp-analytics>
+
+        <div class="main-body">
+            @guardianHostedHeader(if(page.campaign.fontColour.isDark) "hosted-article-page hosted-page--bright" else "hosted-article-page", page, isAMP = true)
+            <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.isDark) {hosted-page--bright}">
+
+                <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
+                    <div class="media-primary media-content media-primary--showcase">
+                        <div class="gs-container">
+                            <h2 class="title content__main-column">@{page.title}</h2>
+                        </div>
+                        <span class="caption hosted-tone">@{page.mainPictureCaption}</span>
+                    </div>
+                    <div class="content__main">
+                        <div class="gs-container">
+                            <div class="content__main-column content__main-column--article js-content-main-column">
+                                <div class="content__meta-container js-content-meta js-football-meta u-cf content__meta-container--showcase">
+                                    <div class="meta__extras" data-component="share">
+                                        @guardianHostedShareButtons(page)
+                                    </div>
+                                </div>
+
+                                <div class="content__article-body from-content-api js-article__body">
+                                    <p class="intro">@Html(page.standfirst)</p>
+
+                                    @page.pageName match {
+                                        case "overview" => { @singaporeF1Overview() }
+                                        case "offtrack" => { @singaporeF1Offtrack() }
+                                        case "packages" => { @singaporeF1Packages() }
+                                        case _ => { @Html(ampify(page.body)) }
+                                    }
+
+                                </div>
+                                <div class="hide-on-desktop">
+                                    @hostedOnwardAmp(s"${page.url}/article/onward.json")
+                                </div>
+                                <div class="hosted__standfirst">
+                                    <div class="hosted__terms">​Hosted content is used to describe content that is paid for and supplied by the advertiser.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content__secondary-column">
+                                @hostedOnwardAmp(s"${page.url}/article/onward.json")
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                @guardianHostedCta(page, page.cta, isAMP = true)
+        </div>
+    </body>
+</html>

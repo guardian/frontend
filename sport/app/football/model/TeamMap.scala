@@ -20,7 +20,6 @@ object TeamMap extends ExecutionContexts with Logging {
     ("19", "Spurs"),
     ("5", "C Palace"),
     ("30", "Middlesbrough"),
-    ("84", "Peterboro"),
     ("44", "Wolves"),
     ("20", "MK Dons"),
     ("74", "Colchester"),
@@ -128,9 +127,7 @@ object TeamUrl {
 }
 
 class TeamNameBuilder(competitions: Competitions) {
-  def withTeam(team: FootballTeam) = {
-    TeamMap.shortNames.get(team.id).getOrElse(team.name)
-  }
+  def withTeam(team: FootballTeam) = TeamMap.shortNames.getOrElse(team.id, team.name)
 
   def withId(id: String) = competitions.findTeam(id).map(withTeam)
 }
@@ -141,7 +138,7 @@ object MatchUrl {
     (for {
       homeTeam: String <- TeamMap(theMatch.homeTeam).tag.flatMap(_.metadata.url)
       awayTeam: String <- TeamMap(theMatch.awayTeam).tag.flatMap(_.metadata.url)
-      if(homeTeam.startsWith("/football/") && awayTeam.startsWith("/football/"))
+      if homeTeam.startsWith("/football/") && awayTeam.startsWith("/football/")
     } yield {
       s"/football/match/${theMatch.date.toString("yyyy/MMM/dd").toLowerCase}/${homeTeam.replace("/football/", "")}-v-${awayTeam.replace("/football/", "")}"
     }).getOrElse(s"/football/match/${theMatch.id}")

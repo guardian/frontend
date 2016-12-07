@@ -4,7 +4,7 @@
         forms: controllers.ProfileForms,
         idRequest: services.IdentityRequest,
         idUrlBuilder: services.IdentityUrlBuilder
-)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+)(implicit request: RequestHeader, messages: play.api.i18n.Messages, env: play.api.Environment)
 
 @import views.html.fragments.form.{inputField, textareaField}
 @import views.html.fragments.registrationFooter
@@ -24,6 +24,7 @@
 }
 
 @main(page, projectName = Option("identity")){
+    <link rel="stylesheet" id="stripe-sprite" type="text/css" media="all" href="@Static("stylesheets/membership-icons.css")"/>
 }{
 
 <div class="identity-wrapper monocolumn-wrapper identity-wrapper--with-membership js-account-profile-forms">
@@ -48,12 +49,14 @@
 
             @content(2, "/account/edit")(fragments.profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm))
 
-            @content(3, "/membership/edit")(fragments.profile.membershipDetailsForm(idUrlBuilder, idRequest))
+            @content(3, "/membership/edit")(fragments.profile.membershipDetailsForm(idUrlBuilder, idRequest, user))
 
-            @content(4, "/digitalpack/edit")(fragments.profile.digitalPackDetailsForm(idUrlBuilder, idRequest))
+            @content(4, "/digitalpack/edit")(fragments.profile.digitalPackDetailsForm(idUrlBuilder, idRequest, user))
 
             @content(5, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm))
         </div>
     </div>
 </div>
+    <script src="https://checkout.stripe.com/checkout.js" async></script>
+
 }

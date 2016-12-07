@@ -1,4 +1,4 @@
-@(page: ImageContentPage)(implicit request: RequestHeader)
+@(page: ImageContentPage)(implicit request: RequestHeader, env: play.api.Environment)
 
 @main(page){ }{
     @fragments.imageContentBody(page)

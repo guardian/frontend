@@ -1,4 +1,4 @@
-@(liveMatches: List[pa.LiveMatch], fixtures: List[pa.Fixture], results: List[pa.Result])
+@(liveMatches: List[pa.LiveMatch], fixtures: List[pa.Fixture], results: List[pa.Result])(implicit env: play.api.Environment)
 
 @views.html.football.main("Matches") {
     <hgroup class="page-header">

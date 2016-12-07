@@ -10,18 +10,16 @@ set +x
 echo "##teamcity[progressStart 'asset validation and tests']"
 set -x
 
-./grunt-tc validate:sass validate:js test:unit
+./tools/run-task lint test --verbose
 
 set +x
 echo "##teamcity[progressFinish 'asset validation and tests']"
 
 echo "##teamcity[progressStart 'asset dist']"
 set -x
-./tools/assets/compile.js --verbose
-./grunt-tc emitAbTestInfo
+./tools/run-task compile --verbose
+./tools/ab-test-info/ab-test-info.js
 
 set +x
 echo "##teamcity[progressFinish 'asset dist']"
 set -x
-
-

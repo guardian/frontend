@@ -4,7 +4,7 @@ import campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.v1.{Section => ApiSection}
 import common.commercial.{BrandHunter, Branding}
 import common.{Edition, Pagination}
-import play.api.libs.json.{JsBoolean, JsString, JsValue}
+import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 
 object Section {
   def make(section: ApiSection, pagination: Option[Pagination] = None): Section = {
@@ -27,7 +27,6 @@ object Section {
       section = Some(SectionSummary.fromCapiSection(section)),
       pagination = pagination,
       webTitle = webTitle,
-      analyticsName = s"GFE:$id",
       adUnitSuffix = adUnitSuffix,
       contentType = "Section",
       isFront = true,
@@ -64,6 +63,8 @@ case class SectionSummary(
 )
 
 object SectionSummary {
+
+  implicit val jsonFormat = Json.format[SectionSummary]
 
   def fromCapiSection(section: ApiSection): SectionSummary = {
     SectionSummary(

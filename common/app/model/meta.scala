@@ -6,8 +6,10 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.commercial.{AdUnitMaker, BrandHunter, Branding}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
+import contentapi.{Content => CapiContent}
 import conf.Configuration
 import cricketPa.CricketTeams
+import model.content.MediaAtom
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import ophan.SurgingContentAgent
@@ -19,33 +21,17 @@ import play.api.mvc.RequestHeader
 
 object Commercial {
 
-  private def make(metadata: MetaData, tags: Tags, maybeApiContent: Option[contentapi.Content]): model.Commercial = {
-
-    val section = Some(metadata.sectionId)
-
-    val isInappropriateForSponsorship =
-      maybeApiContent exists (_.fields.flatMap(_.isInappropriateForSponsorship).getOrElse(false))
+  def make(tags: Tags, apiContent: CapiContent): model.Commercial = {
+    val isInappropriateForSponsorship: Boolean = apiContent.fields.exists(_.isInappropriateForSponsorship.contains(true))
 
     model.Commercial(
-      tags,
-      metadata,
       isInappropriateForSponsorship,
       hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags)
     )
   }
 
-  def make(metadata: MetaData, tags: Tags, apiContent: contentapi.Content): model.Commercial = {
-    make(metadata, tags, Some(apiContent))
-  }
-
-  def make(metadata: MetaData, tags: Tags): model.Commercial = {
-    make(metadata, tags, None)
-  }
-
-  def make(section: Section): model.Commercial = {
+  val empty: model.Commercial = {
     model.Commercial(
-      tags = Tags(Nil),
-      metadata = section.metadata,
       isInappropriateForSponsorship = false,
       hasInlineMerchandise = false
     )
@@ -53,11 +39,8 @@ object Commercial {
 }
 
 final case class Commercial(
-  tags: Tags,
-  metadata: MetaData,
   isInappropriateForSponsorship: Boolean,
-  hasInlineMerchandise: Boolean
-)
+  hasInlineMerchandise: Boolean)
 
 /**
  * MetaData represents a page on the site, whether facia or content
@@ -76,7 +59,8 @@ object Fields {
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
       isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
       sensitive = apiContent.fields.flatMap(_.sensitive),
-      legallySensitive = apiContent.fields.flatMap(_.legallySensitive)
+      legallySensitive = apiContent.fields.flatMap(_.legallySensitive),
+      firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJodaDateTime)
     )
   }
 }
@@ -93,7 +77,8 @@ final case class Fields(
   displayHint: String,
   isLive: Boolean,
   sensitive: Option[Boolean],
-  legallySensitive: Option[Boolean]
+  legallySensitive: Option[Boolean],
+  firstPublicationDate: Option[DateTime]
 ){
   lazy val shortUrlId = shortUrl.replaceFirst("^[a-zA-Z]+://gu.com", "") //removing scheme://gu.com
 
@@ -111,7 +96,6 @@ object MetaData {
     id: String,
     section: Option[SectionSummary],
     webTitle: String,
-    analyticsName: String,
     url: Option[String] = None,
     canonicalUrl: Option[String] = None,
     shouldGoogleIndex: Boolean = true,
@@ -137,7 +121,6 @@ object MetaData {
       webUrl = s"${Configuration.site.host}$resolvedUrl",
       webTitle = webTitle,
       section = section,
-      analyticsName = analyticsName,
       adUnitSuffix = adUnitSuffix getOrElse section.map(_.id).getOrElse(""),
       canonicalUrl = canonicalUrl,
       shouldGoogleIndex = shouldGoogleIndex,
@@ -168,7 +151,6 @@ object MetaData {
       sectionSummary,
       webTitle = apiContent.webTitle,
       membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
-      analyticsName = s"GFE:$sectionId:${id.substring(id.lastIndexOf("/") + 1)}",
       adUnitSuffix = sectionId,
       description = apiContent.fields.flatMap(_.trailText),
       cacheTime = {
@@ -188,7 +170,6 @@ final case class MetaData (
   webUrl: String,
   section: Option[SectionSummary],
   webTitle: String,
-  analyticsName: String,
   adUnitSuffix: String,
   iosType: Option[String] = Some("Article"),
   pagination: Option[Pagination] = None,
@@ -230,18 +211,13 @@ final case class MetaData (
 
   val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
-  val requiresMembershipAccess: Boolean = {
-    conf.switches.Switches.MembersAreaSwitch.isSwitchedOn && membershipAccess.nonEmpty
-  }
+  val requiresMembershipAccess: Boolean = membershipAccess.nonEmpty
 
   val hasSlimHeader: Boolean =
     contentWithSlimHeader ||
       sectionId == "identity" ||
       contentType.toLowerCase == "survey" ||
       contentType.toLowerCase == "signup"
-
-  // Special means "Next Gen platform only".
-  private val special = id.contains("-sp-")
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
@@ -256,7 +232,6 @@ final case class MetaData (
     ("adUnit", JsString(AdUnitMaker.make(id, adUnitSuffix))),
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
-    ("analyticsName", JsString(analyticsName)),
     ("isFront", JsBoolean(isFront)),
     ("isSurging", JsString(isSurging.mkString(","))),
     ("contentType", JsString(contentType))
@@ -291,9 +266,9 @@ final case class MetaData (
   )) getOrElse Nil)
 
   def linkedData: List[LinkedData] = List(
-    Guardian()) ++ (iosType.map(_ => List(
+    Guardian()) ++ iosType.map(_ => List(
     WebPage(webUrl, PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
-  )).getOrElse(Nil))
+  )).getOrElse(Nil)
 
   def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
 
@@ -383,7 +358,6 @@ case class CommercialExpiryPage(id: String) extends StandalonePage {
     id,
     section = Some(SectionSummary.fromId("global")),
     webTitle = "This page has been removed",
-    analyticsName = "GFE:Gone",
     shouldGoogleIndex = false
   )
 }
@@ -398,6 +372,12 @@ case class GalleryPage(
 
 case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
 
+case class MediaAtomEmbedPage(atom: MediaAtom) extends Page {
+  override val metadata = MetaData.make(id = atom.id,
+    webTitle = atom.title,
+    section = None)
+}
+
 case class TagCombiner(
   id: String,
   leftTag: Tag,
@@ -406,10 +386,9 @@ case class TagCombiner(
 ) extends StandalonePage {
 
   override val metadata: MetaData = MetaData.make(
-    id,
-    leftTag.metadata.section,
-    s"${leftTag.name} + ${rightTag.name}",
-    s"GFE:${leftTag.metadata.sectionId}:${leftTag.name} + ${rightTag.name}",
+    id = id,
+    section = leftTag.metadata.section,
+    webTitle = s"${leftTag.name} + ${rightTag.name}",
     pagination = pagination,
     description = Some(GuardianContentTypes.TagIndex)
   )

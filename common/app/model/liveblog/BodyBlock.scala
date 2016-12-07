@@ -2,11 +2,12 @@ package model.liveblog
 
 import java.util.Locale
 
-import com.gu.contentapi.client.model.v1.{BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks, Block}
+import com.gu.contentapi.client.model.v1.{Block, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import model.liveblog.BodyBlock._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}
+import org.jsoup.Jsoup
 
 object Blocks {
 
@@ -82,6 +83,11 @@ case class BodyBlock(
     case SummaryEvent => " is-summary"
     case KeyEvent => " is-key-event"
     case UnclassifiedEvent => ""
+  }
+
+  lazy val url: Option[String] = elements.collectFirst {
+    case TextBlockElement(Some(html)) if Jsoup.parse(html).getElementsByTag("a").size() == 1 =>
+      Jsoup.parse(html).getElementsByTag("a").get(0).attr("href")
   }
 
   def republishedDate(timezone: DateTimeZone): Option[LiveBlogDate] = {

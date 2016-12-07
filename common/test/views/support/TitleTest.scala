@@ -14,12 +14,11 @@ class TitleTest extends FlatSpec with Matchers with OneAppPerSuite {
   implicit val request = FakeRequest()
 
   it should "should create a 'default' title" in {
-    val page = SimplePage(MetaData.make("", None, "The title", "", None))
+    val page = SimplePage(MetaData.make("", None, "The title", None))
     //without pagination
     Title(page).body should be ("The title | The Guardian")
 
     val withPagination = SimplePage(MetaData.make(
-      analyticsName = "",
       webTitle = "The title",
       section = None,
       id = "",
@@ -64,8 +63,7 @@ class TitleTest extends FlatSpec with Matchers with OneAppPerSuite {
     val page = SimplePage(MetaData.make(
       id = "id",
       webTitle = "The Title",
-      section = Some(SectionSummary.fromId("The title")),
-      analyticsName = ""
+      section = Some(SectionSummary.fromId("The title"))
     ))
 
     Title(page).body should be ("The Title | The Guardian")
@@ -75,8 +73,7 @@ class TitleTest extends FlatSpec with Matchers with OneAppPerSuite {
     val page = SimplePage(MetaData.make(
       id = "id",
       webTitle = "The Title",
-      section = Some(SectionSummary.fromId("The title thing")),
-      analyticsName = ""
+      section = Some(SectionSummary.fromId("The title thing"))
     ))
 
     Title(page).body should be ("The Title | The title thing | The Guardian")
@@ -86,8 +83,7 @@ class TitleTest extends FlatSpec with Matchers with OneAppPerSuite {
     val page = SimplePage(MetaData.make(
       id = "id",
       webTitle = "the title",
-      section = Some(SectionSummary.fromId("the title thing")),
-      analyticsName = ""
+      section = Some(SectionSummary.fromId("the title thing"))
     ))
 
     Title(page).body should be ("the title | The title thing | The Guardian")

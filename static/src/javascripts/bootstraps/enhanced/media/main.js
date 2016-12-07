@@ -3,21 +3,20 @@ define([
     'bonzo',
     'fastdom',
     'common/utils/fastdom-promise',
-    'raven',
+    'common/utils/raven',
     'Promise',
     'common/utils/$',
     'common/utils/config',
     'common/utils/defer-to-analytics',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/url',
-    'common/utils/ajax',
     'common/modules/analytics/beacon',
-    'commercial/modules/build-page-targeting',
+    'common/modules/commercial/video-ad-url',
     'common/modules/commercial/commercial-features',
     'common/modules/component',
     'common/modules/experiments/ab',
     'common/modules/video/events',
+    'common/modules/video/metadata',
     'common/modules/media/videojs-plugins/fullscreener',
     'common/modules/media/videojs-plugins/skip-ad',
     'common/modules/video/video-container',
@@ -40,14 +39,13 @@ define([
     deferToAnalytics,
     detect,
     mediator,
-    urlUtils,
-    ajax,
     beacon,
-    buildPageTargeting,
+    videoAdUrl,
     commercialFeatures,
     Component,
     ab,
     events,
+    videoMetadata,
     fullscreener,
     skipAd,
     videoContainer,
@@ -57,24 +55,6 @@ define([
     videojs,
     loadingTmpl
 ) {
-    function getAdUrl() {
-        var queryParams = {
-            ad_rule:                 1,
-            correlator:              new Date().getTime(),
-            cust_params:             encodeURIComponent(urlUtils.constructQuery(buildPageTargeting())),
-            env:                     'vp',
-            gdfp_req:                1,
-            impl:                    's',
-            iu:                      config.page.adUnit,
-            output:                  'xml_vast2',
-            scp:                     encodeURIComponent('slot=video'),
-            sz:                      '400x300',
-            unviewed_position_start: 1
-        };
-
-        return 'https://' + config.page.dfpHost + '/gampad/ads?' + urlUtils.constructQuery(queryParams);
-    }
-
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
     }
@@ -97,7 +77,7 @@ define([
 
     function createVideoPlayer(el, options) {
         var player = videojs(el, options);
-        // Commenting out line below but reluctant to delete it
+
         var duration = parseInt(el.getAttribute('data-duration'), 10);
 
         player.ready(function () {
@@ -166,74 +146,26 @@ define([
         }
     }
 
-    function isGeoBlocked(el) {
-        var source = el.currentSrc;
-
-        // we currently only block to the uk
-        // these files are placed in a special location
-        if (source.indexOf('/ukonly/') !== -1) {
-            return new Promise(function(resolve) {
-                ajax({
-                    url: source,
-                    crossOrigin: true,
-                    method: 'head'
-                }).then(function() {
-                    resolve(false);
-                }, function (response) {
-                    // videos are blocked at the CDN level
-                    resolve(response.status === 403);
-                });
-            });
-        } else {
-            return new Promise(function (resolve) {
-                resolve(false);
-            });
-        }
-    }
-
     function enhanceVideo(el, autoplay, shouldPreroll) {
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs'),
             mediaId = $el.attr('data-media-id'),
-            showEndSlate = $el.attr('data-show-end-slate') === 'true',
             endSlateUri = $el.attr('data-end-slate'),
             embedPath = $el.attr('data-embed-path'),
             // we need to look up the embedPath for main media videos
             canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? embedPath : null),
             // the fallback to window.location.pathname should only happen for main media on fronts
             gaEventLabel = canonicalUrl || window.location.pathname,
-            shouldHideAdverts = $el.attr('data-block-video-ads') !== 'false',
             player,
             mouseMoveIdle,
             playerSetupComplete,
             withPreroll,
             blockVideoAds;
 
-        var videoInfo = new Promise(function(resolve) {
-            // We only have the canonical URL in videos embedded in articles / main media.
-            // These are set to the safest defaults that will always play video.
-            var defaultVideoInfo = {
-                expired: false,
-                shouldHideAdverts: shouldHideAdverts
-            };
-
-            if (!canonicalUrl) {
-                resolve(defaultVideoInfo);
-            } else {
-                var ajaxInfoUrl = config.page.ajaxUrl + '/' + canonicalUrl;
-
-                ajax({
-                    url: ajaxInfoUrl + '/info.json',
-                    type: 'json',
-                    crossOrigin: true
-                }).then(function(videoInfo) {
-                    resolve(videoInfo);
-                }, function() {
-                    // if this fails, don't stop, keep going.
-                    resolve(defaultVideoInfo);
-                });
-            }
-        });
+        //end-slate url follows the patten /video/end-slate/section/<section>.json?shortUrl=
+        //only show end-slate if page has a section i.e. not on the `/global` path
+        //e.g https://www.theguardian.com/global/video/2016/nov/01/what-happened-at-the-battle-of-orgreave-video-explainer
+        var showEndSlate = $el.attr('data-show-end-slate') === 'true' && !!config.page.section;
 
         player = createVideoPlayer(el, videojsOptions({
             plugins: {
@@ -247,7 +179,7 @@ define([
         events.addPrerollEvents(player, mediaId, mediaType);
         events.bindGoogleAnalyticsEvents(player, gaEventLabel);
 
-        videoInfo.then(function(videoInfo) {
+        videoMetadata.getVideoInfo($el).then(function(videoInfo) {
             if (videoInfo.expired) {
                 player.ready(function() {
                     player.error({
@@ -261,7 +193,7 @@ define([
                     player.controlBar.dispose();
                 });
             } else {
-                isGeoBlocked($el[0]).then(function (isVideoGeoBlocked) {
+                videoMetadata.isGeoBlocked(el).then(function (isVideoGeoBlocked) {
                     if (isVideoGeoBlocked) {
                         player.ready(function() {
                             player.error({
@@ -286,9 +218,7 @@ define([
                                 var vol;
 
                                 deferToAnalytics(function () {
-                                    events.initOmnitureTracking(player, mediaId);
                                     events.initOphanTracking(player, mediaId);
-
                                     events.bindGlobalEvents(player);
                                     events.bindContentEvents(player);
                                     if (withPreroll) {
@@ -321,28 +251,25 @@ define([
                                     }
 
                                     if (withPreroll) {
-                                        raven.wrap(
-                                            { tags: { feature: 'media' } },
-                                            function () {
-                                                player.ima({
-                                                    id: mediaId,
-                                                    adTagUrl: getAdUrl(),
-                                                    prerollTimeout: 1000,
-                                                    // We set this sightly higher so contrib-ads never timeouts before ima.
-                                                    contribAdsSettings: {
-                                                        timeout: 2000
-                                                    }
-                                                });
-                                                player.on('adstart', function() {
-                                                    player.skipAd(mediaType, 15);
-                                                });
-                                                player.ima.requestAds();
+                                        raven.wrap({ tags: { feature: 'media' } }, function () {
+                                            player.ima({
+                                                id: mediaId,
+                                                adTagUrl: videoAdUrl.get(),
+                                                prerollTimeout: 1000,
+                                                // We set this sightly higher so contrib-ads never timeouts before ima.
+                                                contribAdsSettings: {
+                                                    timeout: 2000
+                                                }
+                                            });
+                                            player.on('adstart', function() {
+                                                player.skipAd(mediaType, 15);
+                                            });
+                                            player.ima.requestAds();
 
-                                                // Video analytics event.
-                                                player.trigger(events.constructEventName('preroll:request', player));
-                                                resolve();
-                                            }
-                                        )();
+                                            // Video analytics event.
+                                            player.trigger(events.constructEventName('preroll:request', player));
+                                            resolve();
+                                        })();
                                     } else {
                                         resolve();
                                     }
@@ -389,18 +316,20 @@ define([
 
     function initEndSlate(player, endSlatePath) {
         var endSlate = new Component(),
-            endState = 'vjs-has-ended';
+            endStateClass = 'vjs-has-ended';
 
         endSlate.endpoint = endSlatePath;
-        endSlate.fetch(player.el(), 'html');
 
         player.one(events.constructEventName('content:play', player), function () {
+            endSlate.fetch(player.el(), 'html');
+
             player.on('ended', function () {
-                bonzo(player.el()).addClass(endState);
+                bonzo(player.el()).addClass(endStateClass);
             });
         });
+
         player.on('playing', function () {
-            bonzo(player.el()).removeClass(endState);
+            bonzo(player.el()).removeClass(endStateClass);
         });
     }
 
@@ -409,7 +338,7 @@ define([
     }
 
     function initMoreInSection() {
-        if (!config.isMedia || !config.page.showRelatedContent) {
+        if (!config.isMedia || !config.page.showRelatedContent || !config.page.section) {
             return;
         }
 
@@ -476,7 +405,9 @@ define([
         mediator.on('page:media:moreinloaded', initPlayButtons);
 
         initFacia();
+
         initMoreInSection();
+
         initOnwardContainer();
     }
 

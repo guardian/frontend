@@ -3,7 +3,10 @@
 // still logged to the console via browsers built-in logging for uncaught
 // exceptions. This is optional because sometimes we log errors for tracking
 // user data.
-define(['raven'], function (raven) {
+define([
+    'common/utils/raven'
+    ],
+    function (raven) {
     return function reportError(err, meta, shouldThrow) {
         if (shouldThrow === undefined) {
             shouldThrow = true;
@@ -17,5 +20,4 @@ define(['raven'], function (raven) {
             throw err;
         }
     };
-
 });

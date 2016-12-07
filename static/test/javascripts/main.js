@@ -17,7 +17,7 @@ requirejs.config({
         commercial:   'projects/commercial',
         bean:         'components/bean/bean',
         bonzo:        'components/bonzo/bonzo',
-        react:        '/base/static/public/javascripts/components/react/react',
+        react:        'vendor/react/react',
         EventEmitter: 'components/eventEmitter/EventEmitter',
         fastclick:    'components/fastclick/fastclick',
         fastdom:      'components/fastdom/index',
@@ -26,19 +26,20 @@ requirejs.config({
         picturefill:  'projects/common/utils/picturefill',
         Promise:      'components/when/Promise',
         qwery:        'components/qwery/qwery',
-        raven:        'components/raven-js/raven',
         reqwest:      'components/reqwest/reqwest',
         analytics:    'projects/common/modules/analytics/analytics',
         // Test specific paths
-        omniture:     'vendor/omniture',
-        stripe:       'vendor/stripe/stripe.min',
+        omniture:     'vendor/omniture/omniture',
         squire:       '/base/static/test/javascripts/components/squire/src/Squire',
         fixtures:     '/base/static/test/javascripts/fixtures',
         helpers:      '/base/static/test/javascripts/helpers',
         svgs:         '../inline-svgs',
         // plugins
         text:         'components/requirejs-text/text',
-        inlineSvg:    'projects/common/utils/inlineSvg'
+        inlineSvg:    'projects/common/utils/inlineSvg',
+        // raven
+        raven:        'components/raven-js/raven',
+        'common/utils/raven':        '/base/static/test/javascripts/fixtures/raven'
     },
     shim: {
         googletag: {

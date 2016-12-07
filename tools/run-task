@@ -1,0 +1,225 @@
+#!/usr/bin/env node
+/* eslint-disable no-console */
+
+/*
+This is lightweight task runner that uses listr to provide a UI,
+Tasks are defined in ./__tasks__/
+
+It takes one or more tasks to run as arguments, which should be paths within ./__tasks__ e.g.
+
+./run-task fakemodule/fakemodule
+    - runs the task defined in ./__tasks__/fakemodule/fakemodule.js
+
+You can pass a `--dev` flag to prefer a dev version, if it exists (suffix the filename with `.dev`) e.g.
+
+./run-task fakemodule/fakemodule --dev
+    - runs ./__tasks__/fakemodule/fakemodule.dev.js if it exists
+    - reverts to ./__tasks__/fakemodule/fakemodule.js if above fails
+
+Task definitions are standard node modules that in the format:
+module.exports = {
+    description: "a description",
+    task: // a task to run
+}
+
+Tasks can be:
+1. a string - treated a standard terminal command
+{
+    description: "run a terminal command",
+    task: "terminal command"
+}
+commands are run with execa, which checks for locally installed binaries (./node_modules)
+before global ones, the same as with npm scripts
+
+2. a javascript function - executed when the task runs
+{
+    description: "run a JS function",
+    task: () => {...}
+}
+
+3. a `require` statement for another task
+{
+    description: "run another task",
+    task: require('./another-task')
+}
+
+4. be an array of any of the above, or a new task object
+{
+    description: "my task",
+    task: [
+        require('./another-task'),
+        "command to run",
+        () => {...},
+        {
+            description: 'my subtask',
+            task: require('./sub-task/task')
+        }
+    ]
+}
+if the task is array of other tasks, you can specify that its tasks should run concurrently:
+{
+    description: "my concurrent task",
+    task: [
+        "command to run",
+        "other command to run",
+    ],
+    concurrent: true
+}
+*/
+
+process.env.FORCE_COLOR = true;
+
+const path = require('path');
+
+const yargs = require('yargs');
+const Listr = require('listr');
+const execa = require('execa');
+const chalk = require('chalk');
+const figures = require('figures');
+const uniq = require('lodash.uniq');
+
+const tasksIdentifier = '__tasks__';
+
+const {dev: IS_DEV, verbose: IS_VERBOSE, debug: IS_DEBUG, stdout: IS_STDOUT, _: TASKS} = yargs
+    .option('dev', {
+        demand: false,
+        describe: 'Prefer the dev version of the task, if it exits.',
+        type: 'boolean',
+        nargs: 0
+    })
+    .option('verbose', {
+        demand: false,
+        describe: 'Log everything there is to log with a simple format for the output.',
+        type: 'boolean',
+        nargs: 0
+    })
+    .option('debug', {
+        demand: false,
+        describe: 'Log everything there is to log.',
+        type: 'boolean',
+        nargs: 0
+    })
+    .option('stdout', {
+        demand: false,
+        describe: 'Log all stdout once the tasks are finished.',
+        type: 'boolean',
+        nargs: 0
+    })
+    .usage('Usage: $0 <task>[:target] [<task>[:target]] [--dev]')
+    .command('task', `Run a task defined in '${tasksIdentifier}'.`)
+    .example('$0 copy', 'Run all the copy tasks.')
+    .example('$0 javascript/copy', 'Run the javascript copy task.')
+    .example('$0 javascript/copy:quick', 'Run the `quick` target of the javascript copy task.')
+    .example('$0 javascript/copy --dev', 'Run the javascript copy task, and prefer the development version, if it exists.')
+    .example('$0 javascript/copy css/copy --dev', 'Run the javascript and css copy tasks, and prefer the development versions, if they exist.')
+    .demand(1)
+    .help().alias('h', 'help')
+    .version().alias('v', 'version')
+    .argv;
+
+const logEverything = IS_VERBOSE || IS_DEBUG;
+
+const taskSrc = path.resolve(__dirname, tasksIdentifier);
+
+// don't duplicate tasks
+const cache = [];
+
+// run commands with output to stdout if verbose is true
+const exec = (task, stdouts) => {
+    const [cmd, ...args] = task.trim().split(' ');
+    if (logEverything) {
+        return execa(cmd, args, {
+            stdio: [process.stdin, process.stdout, process.stderr]
+        });
+    }
+
+    return execa.stdout(cmd, args).then(result => {
+        if (result) stdouts.push(result);
+    });
+};
+
+// turn a list of our tasks into objects listr can use
+function listrify(steps, {concurrent = false, verbose = false} = {}) {
+    const listrTasks = steps
+        .map(step => {
+            const { description: title, task, concurrent } = step;
+
+            // if another task has included this one, don't run it again
+            const skip = cache.indexOf(step) !== -1 ? () => 'Skipping: already run by another task' : false;
+            cache.push(step);
+
+            // if the task is a set of subtasks, prepare them
+            if (Array.isArray(task)) {
+                return { title, task: () => listrify(task.map(_task => {
+                    if (_task.task) return _task;
+                    if (typeof _task === 'string') return { title, task: ctx => exec(_task, ctx.stdouts), skip};
+                    return { title, task: _task, skip};
+                }), {concurrent}), skip};
+            }
+
+            // treat tasks that are strings as terminal commands
+            if (typeof task === 'string') return { title, task: ctx => exec(task, ctx.stdouts), skip};
+
+            // assume the task is a function
+            // if it's not, listr will blow up anyway, which is fine
+            return { title, task, skip };
+        });
+
+    return new Listr(listrTasks, {
+        concurrent,
+        collapse: true,
+        renderer: verbose ? 'verbose' : 'default'
+    });
+}
+
+const getTasksFromModule = taskName => {
+    try {
+        let modulePath = path.resolve(taskSrc, taskName);
+        if (IS_DEV) {
+            try {
+                return require(modulePath + '.dev');
+            } catch (e) { /* do nothing */ }
+            try {
+                return require(modulePath + '/index.dev');
+            } catch (e) { /* do nothing */ }
+        }
+        return require(modulePath);
+    } catch (e) {
+        // we can't find any modules, or something else has gone wrong in resolving it
+        // so output an erroring task
+        return {
+            description: `${chalk.red(taskName)} failed:`,
+            task: () => Promise.reject(e)
+        };
+    }
+};
+
+const taskModules = TASKS.map(getTasksFromModule);
+
+listrify(taskModules, {verbose: IS_VERBOSE}).run({
+    messages: [],
+    stdouts: []
+}).catch(e => {
+    if (e) {
+        if (!e.stderr && !e.stdout) console.log(e);
+        // if we're logging everything already, this stuff would already be in the terminal
+        // if we're not, we should show it at this point
+        else if (!logEverything) {
+            if (e.stderr) console.error(`\n${e.stderr.trim()}`);
+            if (e.stdout) console.log(`\n${e.stdout.trim()}`);
+        }
+    }
+    return Object.assign(e.context, {error: true});
+}).then(ctx => {
+    if (IS_STDOUT) ctx.stdouts.forEach(stdout => console.log(stdout.toString()));
+
+    if (ctx.messages.length) {
+        console.log('');
+        uniq(ctx.messages).forEach(message => console.log(chalk.dim(`${figures.arrowRight} ${message.split('\n').join('\n  ')}`)));
+    }
+
+    if (ctx.error) {
+        console.log('');
+        process.exit(1);
+    }
+});

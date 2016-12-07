@@ -1,54 +1,75 @@
 @import common.commercial.hosted.HostedArticlePage
-@(page: HostedArticlePage)(implicit request: RequestHeader)
+@(page: HostedArticlePage)(implicit request: RequestHeader, env: play.api.Environment)
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import views.html.hosted._
+@import model.hosted.HostedArticleQuotes.prepareQuotes
 
 @main(page, Some("commercial")) { } {
     <!--[if (gt IE 9)|(IEMobile)]><!-->
     <style>
     .hosted-tone {
-        color: @{page.campaign.fontColour.brandColour};
+        color: @{page.campaign.fontColour.hexCode};
     }
 
     .hosted-tone-bg {
-        background-color: @{page.campaign.fontColour.brandColour};
+        background-color: @{page.campaign.fontColour.hexCode};
     }
 
-    .hosted-tone-btn,
+    .hosted-tone-btn {
+        color: @{page.campaign.fontColour.hexCode};
+        border: 1px solid @{page.campaign.fontColour.hexCode};
+    }
+
+    .hosted__banner .hosted-tone-btn,
     .hosted-tone-btn:focus,
     .hosted-tone-btn:hover {
-        background-color: @{page.campaign.fontColour.brandColour};
-        border-color: @{page.campaign.fontColour.brandColour};
-    }
-
-    .hosted-page .hosted__next-page--tile {
-        border-top-color: @{page.campaign.fontColour.brandColour};
+        background-color: @{page.campaign.fontColour.hexCode};
     }
 
     .hosted-page .hosted__link {
-        color: @{page.campaign.fontColour.brandColour};
+        color: @{page.campaign.fontColour.hexCode};
     }
 
     .hosted-page ~ .survey-overlay-simple .survey-text__header {
-        background-color: @{page.campaign.fontColour.brandColour};
+        background-color: @{page.campaign.fontColour.hexCode};
     }
 
     .hosted-article-page p.intro + p::first-letter {
-        background-color: @{page.campaign.fontColour.brandColour};
+        background-color: @{page.campaign.fontColour.hexCode};
     }
 
     .from-content-api ul > li:before {
-        background-color: @{page.campaign.fontColour.brandColour};
+        background-color: @{page.campaign.fontColour.hexCode};
     }
 
-    .hosted__next-video__carousel-arrows .inline-icon {
-        fill: @{page.campaign.fontColour.brandColour};
-        border-color: @{page.campaign.fontColour.brandColour};
+    .hosted__next-page__carousel-arrows .inline-icon {
+        fill: @{page.campaign.fontColour.hexCode};
+        border-color: @{page.campaign.fontColour.hexCode};
     }
+
+    /* To prevent video element from jumping */
+    video {
+        width: 370px;
+    }
+
+    @@media (min-width: 740px) { /* Tablet bp and above */
+        video {
+            width : 600px;
+        }
+    }
+
+    blockquote {
+        background-color: @{page.campaign.fontColour.hexCode};
+    }
+
+    blockquote .inline-hosted-quote svg {
+        fill: @{page.campaign.fontColour.hexCode};
+    }
+
     </style>
     <!--<![endif]-->
-    @guardianHostedHeader(if(page.campaign.fontColour.shouldHaveBrightFont) "hosted-article-page hosted-page--bright" else "hosted-article-page", page)
-    <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.shouldHaveBrightFont) {hosted-page--bright}">
+    @guardianHostedHeader(if(page.campaign.fontColour.isDark) "hosted-article-page hosted-page--bright" else "hosted-article-page", page)
+    <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.isDark) {hosted-page--bright}">
 
         <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
             <div class="media-primary media-content media-primary--showcase" style="background-image: url(@{page.mainPicture});">
@@ -59,7 +80,7 @@
             </div>
             <div class="content__main">
                 <div class="gs-container">
-                    <div class="content__main-column content__main-column--article js-content-main-column">
+                    <div class="hosted-article__main-column content__main-column content__main-column--article js-content-main-column">
                         <div class="content__meta-container js-content-meta js-football-meta u-cf content__meta-container--showcase">
                             <div class="meta__extras" data-component="share">
                             @guardianHostedShareButtons(page)
@@ -70,44 +91,33 @@
                             <p class="intro">@Html(page.standfirst)</p>
 
                             @page.pageName match {
-                                case "meet-the-characters-of-zootropolis" => { @zootropolisPage(page) }
                                 case "overview" => { @singaporeF1Overview() }
                                 case "offtrack" => { @singaporeF1Offtrack() }
                                 case "packages" => { @singaporeF1Packages() }
-                                case _ => { @Html(page.body) }
+                                case _ => { @Html(prepareQuotes(page.body)) }
                             }
-
+                            <div class="hosted__standfirst">
+                                <div class="hosted__terms">​Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our
+                                    <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
+                                        <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn js-hosted-about hosted-tone" data-link-name="terms-and-conditions-text-link">commercial content explainer.</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="hide-on-desktop">
+                        <div class="hosted__onward-journey">
                             @if(page.nextPages.nonEmpty) {
-                                @hostedArticleOnward(page.nextPages.map { nextPage =>
+                                @hostedOnwardJourney(page.nextPages.map { nextPage =>
                                     makeshiftPage(nextPage, page.campaign)
-                                })
+                                }, 2, 4)
                             } else {
                                 <div class="js-onward-placeholder"></div>
                             }
                         </div>
-                        <div class="hosted__standfirst">
-                            <div class="hosted__terms">​Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our
-                                <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
-                                    <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn js-hosted-about hosted-tone" data-link-name="terms-and-conditions-text-link">commercial content explainer.</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content__secondary-column">
-                        @if(page.nextPages.nonEmpty) {
-                            @hostedArticleOnward(page.nextPages.map { nextPage =>
-                                makeshiftPage(nextPage, page.campaign)
-                            })
-                        } else {
-                            <div class="js-onward-placeholder"></div>
-                        }
                     </div>
                 </div>
             </div>
         </article>
 
-        @guardianHostedCta(page, page.cta)
+        @guardianHostedCta(page, page.cta, isAMP = false)
     </div>
 }

@@ -3,6 +3,7 @@ package views.support
 import java.text.Normalizer
 import java.net.URI
 import java.util.regex.{Matcher, Pattern}
+
 import common.{Edition, LinkTo}
 import conf.switches.Switches._
 import layout.ContentWidths
@@ -12,6 +13,9 @@ import model.content.{Atom, Atoms}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
+import views.html.fragments.atoms.atom
+import play.api.Environment
+
 import scala.collection.JavaConversions._
 
 trait HtmlCleaner {
@@ -286,7 +290,7 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
             element.attr("width", "486")
             element.attr("data-conversation","none")
             // temporary fix to give tweets with an image a larger height
-            if (elem.firstImage.size > 0) {
+            if (elem.firstImage.isDefined) {
               element.attr("height", "437")
             } else {
               element.attr("height", "179")
@@ -300,7 +304,7 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
             val date = el.child(1).attr("class", "tweet-date")
             val user = el.ownText().replaceFirst("— ", "").split("""(?=\(@)""") // Remove the '-' and split at the '(@' username but keep delimiter
 
-            val userName = user.lift(0).getOrElse("")
+            val userName = user.headOption.getOrElse("")
             val userId = user.lift(1).getOrElse("")
 
             val userNameEl = document.createElement("span").attr("class", "tweet__user-name").text(userName)
@@ -430,8 +434,8 @@ case class ExploreVideos(isExplore: Boolean) extends HtmlCleaner{
       val videoCaptionSvg = views.html.fragments.inlineSvg("videoCaption", "membership", List("video-caption-bubble")).toString()
       //gets the videos and adds a new class
       document.getElementsByTag("figure").filter(_.hasClass("element-video"))foreach{ elementVideo =>
-          elementVideo.addClass("element-video--explore");
-          //gets the figcaption of the video and adds a new class
+          elementVideo.addClass("element-video--explore")
+        //gets the figcaption of the video and adds a new class
           elementVideo.children().filter(_.hasClass("caption"))foreach{ elementVideoCaption =>
             elementVideoCaption.addClass("caption-explore")
             elementVideoCaption.prepend(videoCaptionSvg)
@@ -483,9 +487,8 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
     if(isFeature) {
       val children = document.body().children().toList
       children.headOption match {
-        case Some(p) => {
+        case Some(p) =>
           if (p.nodeName() == "p") p.html(setDropCap(p))
-        }
         case _ =>
       }
     }
@@ -579,8 +582,8 @@ case class RichLinkCleaner(amp: Boolean = false) extends HtmlCleaner {
             val link = richLink.getElementsByTag("a").first()
             val href = link.attr("href")
             val html = views.html.fragments.richLinkDefault(link.text(), href).toString()
-            richLink.empty().prepend(html);
-          }
+            richLink.empty().prepend(html)
+        }
         )
     }
     document
@@ -599,26 +602,7 @@ object MembershipEventCleaner extends HtmlCleaner {
     }
 }
 
-object ChaptersLinksCleaner extends HtmlCleaner {
-  def slugify(text: String): String = {
-    Normalizer.normalize(text, Normalizer.Form.NFKD)
-      .toLowerCase
-      .replaceAll("[^0-9a-z ]", "")
-      .trim.replaceAll(" +", "-")
-  }
-
-  override def clean(document: Document): Document = {
-    val autoaChapters = document.getElementsByClass("auto-chapter")
-
-    autoaChapters.foreach { ch =>
-      val h2 = ch.getElementsByTag("h2")
-      h2.attr("id", slugify(h2.text()))
-    }
-    document
-  }
-}
-
-case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner {
+case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false)(implicit val request: RequestHeader, env: Environment) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
@@ -631,7 +615,7 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean)(implicit val
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomData <- findAtom(atomId)
       } {
-        val html = views.html.fragments.atoms.atom(atomData, shouldFence).toString()
+        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp).toString()
         bodyElement.remove()
         atomContainer.append(html)
       }

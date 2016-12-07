@@ -3,11 +3,10 @@ package views.support
 import common.Edition
 import common.Edition.defaultEdition
 import common.commercial.{Sponsored, _}
-import common.dfp._
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
-import model.{ContentType, MetaData, Page, Tags}
+import model.{Page, PressedPage}
+import org.apache.commons.lang.StringEscapeUtils._
 import play.api.mvc.RequestHeader
-
 
 object Commercial {
 
@@ -15,6 +14,7 @@ object Commercial {
     case c: model.ContentPage if c.item.content.shouldHideAdverts => false
     case p: model.Page if p.metadata.sectionId == "identity" => false
     case s: model.SimplePage if s.metadata.contentType == "Signup" => false
+    case e: model.ContentPage if e.metadata.webTitle == "Sign up for The Flyer" => false
     case p: model.CommercialExpiryPage => false
     case _ => true
   }
@@ -32,44 +32,67 @@ object Commercial {
   private def isBrandedContent(page: Page, edition: Edition, sponsorshipType: SponsorshipType): Boolean =
     page.branding(edition).exists(_.sponsorshipType == sponsorshipType)
 
-  def isPaidContent(item: ContentType, page: Page): Boolean =
-    isBrandedContent(page, defaultEdition, PaidContent)
+  def isPaidContent(page: Page): Boolean = isBrandedContent(page, defaultEdition, PaidContent)
 
-  def isSponsoredContent(item: ContentType, page: Page)(implicit request: RequestHeader): Boolean = {
-    val edition = Edition(request)
-    isBrandedContent(page, edition, Sponsored)
-  }
+  def isSponsoredContent(page: Page)(implicit request: RequestHeader): Boolean =
+    isBrandedContent(page, Edition(request), Sponsored)
 
-  def isFoundationFundedContent(item: ContentType, page: Page)(implicit request: RequestHeader): Boolean = {
+  def isFoundationFundedContent(page: Page)(implicit request: RequestHeader): Boolean =
     isBrandedContent(page, defaultEdition, Foundation)
+
+  def isBrandedContent(page: Page)(implicit request: RequestHeader): Boolean = {
+    isPaidContent(page) || isSponsoredContent(page) || isFoundationFundedContent(page)
   }
 
-  def isBrandedContent(item: ContentType, page: Page)(implicit request: RequestHeader): Boolean = {
-    isPaidContent(item, page) || isSponsoredContent(item, page) || isFoundationFundedContent(item, page)
-  }
+  def listSponsorLogosOnPage(page: Page)(implicit request: RequestHeader): Option[Seq[String]] = {
 
-  private def hasAdOfSize(slot: AdSlot,
-                          size: AdSize,
-                          metaData: MetaData,
-                          edition: Edition,
-                          sizesOverride: Seq[AdSize] = Nil): Boolean = {
-    val sizes = if (sizesOverride.nonEmpty) sizesOverride else metaData.sizeOfTakeoverAdsInSlot(slot, edition)
-    sizes contains size
+    val edition = Edition(request)
+    def sponsor(branding: Edition => Option[Branding]) = branding(edition) map (_.sponsorName.toLowerCase)
+
+    val pageSponsor = sponsor(page.branding)
+
+    val allSponsors = page match {
+      case front: PressedPage =>
+
+        val containerSponsors = front.collections.flatMap { container =>
+          sponsor(container.branding)
+        }
+
+        val cardSponsors = front.collections.flatMap { container =>
+          val hasBrandedTag = container.config.showBranding
+          lazy val hasNoSponsor = container.branding(edition).isEmpty
+          lazy val hasOnlyPaidContent = container.curatedPlusBackfillDeduplicated.forall {
+            _.branding(edition).exists(_.sponsorshipType == PaidContent)
+          }
+          if (hasBrandedTag && hasNoSponsor && hasOnlyPaidContent) {
+            container.curatedPlusBackfillDeduplicated.flatMap { card =>
+              sponsor(card.branding)
+            }
+          } else Nil
+        }
+
+        val allSponsorsOnPage = pageSponsor.toList ++ containerSponsors ++ cardSponsors
+        if (allSponsorsOnPage.isEmpty) None else Some(allSponsorsOnPage.distinct)
+
+      case _ => pageSponsor map (Seq(_))
+    }
+
+    allSponsors map (_ map escapeJavaScript)
   }
 
   object topAboveNavSlot {
 
-    def adSizes(metaData: MetaData, edition: Edition, maybeTags: Option[Tags]): Map[String, Seq[String]] = {
+    val adSizes: Map[String, Seq[String]] = {
       val fabricAdvertsTop = Seq("88,71")
       val fluidAdvertsTop = Seq("fluid")
       Map(
-        "tablet" -> (Seq("1,1", "88,70", "728,90") ++ fabricAdvertsTop ++ fluidAdvertsTop),
-        "desktop" -> (Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)
+        "tablet" -> (Seq("1,1", "2,2", "88,70", "728,90") ++ fabricAdvertsTop ++ fluidAdvertsTop),
+        "desktop" -> (Seq("1,1", "2,2", "88,70", "728,90", "940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)
       )
     }
 
     // The sizesOverride parameter is for testing only.
-    def cssClasses(metaData: MetaData, edition: Edition, maybeTags: Option[Tags], sizesOverride: Seq[AdSize] = Nil): String = {
+    val cssClasses: String = {
       val classes = Seq(
         "top-banner-ad-container",
         "js-top-banner"
@@ -115,6 +138,9 @@ object Commercial {
         }
       }.length
     }.getOrElse(0)
+
+    def isFirstNonThrasherContainer(containerIndex: Int, containers: Seq[FaciaContainer]): Boolean =
+      (containers filterNot (_.isThrasher) map (_.index)).min == containerIndex
   }
 
   object CssClassBuilder {

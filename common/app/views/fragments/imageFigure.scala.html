@@ -107,10 +107,29 @@
 @caption(picture: model.ImageMedia, imageOption: Option[ImageAsset], isMain: Boolean) = {
     @imageOption.map { img =>
         @if(img.showCaption) {
-            <figcaption class="caption@if(isMain){ caption--main} caption--img" itemprop="description">
-                @img.caption.map(Html(_))
-                @if(img.displayCredit && !img.creditEndsWithCaption) { @img.credit.map(Html(_)) }
-            </figcaption>
+            @if(isMain && mvt.ABNewNavVariantFour.isParticipating) {
+
+                <input type="checkbox" id="show-caption" class="mobile-only u-h">
+
+                <label class="mobile-only reveal-caption reveal-caption--img" for="show-caption">
+                    @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon"))
+                </label>
+
+                <figcaption class="caption caption--main caption--img" itemprop="description">
+                    @img.caption.map(Html(_))
+                    @if(img.displayCredit && !img.creditEndsWithCaption) {
+                        @img.credit.map(Html(_))
+                    }
+                </figcaption>
+            } else {
+                <figcaption class="caption caption--img @if(isMain) {caption--main}" itemprop="description">
+                    @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon", "rounded-icon"))
+                    @img.caption.map(Html(_))
+                    @if(img.displayCredit && !img.creditEndsWithCaption) {
+                        @img.credit.map(Html(_))
+                    }
+                </figcaption>
+            }
         }
     }
 }

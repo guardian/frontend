@@ -2,7 +2,8 @@ package controllers
 
 import model.Cached
 import common.JsonComponent
-import discussion.DiscussionApiLike
+import discussion.api.DiscussionApiLike
+import discussion.api.DiscussionApiException._
 import play.api.libs.json.{JsArray, JsObject}
 import play.api.mvc.Action
 
@@ -20,7 +21,7 @@ class CommentCountController(val discussionApi: DiscussionApiLike) extends Discu
               JsObject(Seq("counts" -> JsArray(counts.map(_.toJson))))
             )
           }
-      }
+      } recover toResult
   }
 
 }

@@ -7,17 +7,17 @@ import cricketPa.{CricketTeam, CricketTeams}
 import jobs.CricketStatsJob
 import model.Cached.RevalidatableResult
 import model._
+import play.api.Environment
 import play.api.mvc.{Action, Controller}
 
 case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam) extends StandalonePage {
   override val metadata = MetaData.make(
     id = s"/sport/cricket/match/$matchId/${team.wordsForUrl}",
     section = Some(SectionSummary.fromId("cricket")),
-    webTitle = s"${theMatch.competitionName}, ${theMatch.venueName}",
-    analyticsName = s"GFE:Cricket:automatic:match:${dateFormat.print(theMatch.gameDate)}:${theMatch.homeTeam.name} v ${theMatch.awayTeam.name}")
+    webTitle = s"${theMatch.competitionName}, ${theMatch.venueName}")
 }
 
-class CricketMatchController(cricketStatsJob: CricketStatsJob) extends Controller with Logging with ExecutionContexts {
+class CricketMatchController(cricketStatsJob: CricketStatsJob)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
 
   def renderMatchIdJson(date: String, teamId: String) = renderMatchId(date, teamId)
 

@@ -1,0 +1,38 @@
+@mixin social-icon($platform) {
+    background-color: $platform;
+    &:hover {
+        background-color: darken($platform, 10%);
+    }
+}
+
+.social-icon--facebook {
+    @include social-icon($social-facebook);
+}
+
+.social-icon--gplus {
+    @include social-icon($social-gplus);
+}
+
+.social-icon--whatsapp {
+    @include social-icon($social-whatsapp);
+}
+
+.social-icon--messenger {
+    @include social-icon($social-messenger);
+}
+
+.social-icon--twitter {
+    @include social-icon($social-twitter);
+}
+
+.social-icon--linkedin {
+    @include social-icon($social-linkedin);
+}
+
+.social-icon--pinterest {
+    @include social-icon($social-pinterest);
+}
+
+.social-icon--email {
+    @include social-icon($social-email);
+}

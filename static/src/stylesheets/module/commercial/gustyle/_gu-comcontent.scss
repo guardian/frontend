@@ -9,6 +9,14 @@
         @include font-size(13, 10);
         font-weight: normal;
     }
+
+    .hostedbadge {
+        width: 80px;
+    }
+}
+
+.gu-display__hosted-bright .hostedbadge__info {
+    color: #ffffff;
 }
 
 .gu-display__image-layer {
@@ -192,13 +200,16 @@ $mobile-max-container-width: gs-span(8);
     }
 
     // Gallery & Liveblog sections styles
-    &.ad-slot--gallery-inline,
     &.ad-slot--liveblog-inline {
         width: 100%;
         margin-left: auto;
         margin-right: auto;
         padding-top: 0;
         padding-bottom: 0;
+    }
+
+    &.ad-slot--gallery-inline {
+        margin-left: 0;
     }
 }
 
@@ -219,8 +230,8 @@ $mobile-max-container-width: gs-span(8);
     }
 
     .gu-display__logo-pos--bottom-right {
-        top: -27px;
-        height: 27px;
+        top: -29px;
+        height: 29px;
     }
 
     .gu-display__content {

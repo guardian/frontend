@@ -8,11 +8,11 @@ define([
     'text!common/views/email/iframe.html',
     'common/utils/template',
     'common/modules/article/space-filler',
-    'common/modules/analytics/omniture',
     'common/utils/robust',
     'common/modules/email/run-checks',
     'common/utils/page',
     'common/utils/storage',
+    'common/modules/analytics/google',
     'lodash/collections/find'
 ], function (
     $,
@@ -24,11 +24,11 @@ define([
     iframeTemplate,
     template,
     spaceFiller,
-    omniture,
     robust,
     emailRunChecks,
     page,
     storage,
+    googleAnalytics,
     find
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
@@ -156,14 +156,14 @@ define([
                     fastdom.write(function () {
                         listConfig.insertMethod($iframeEl);
 
-                        omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
+                        googleAnalytics.trackNonClickInteraction('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
                         emailRunChecks.setEmailInserted();
                         emailRunChecks.setEmailShown(listConfig.listName);
                     });
                 } else {
                     spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
                         $iframeEl.insertBefore(paras[0]);
-                        omniture.trackLinkImmediate('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
+                        googleAnalytics.trackNonClickInteraction('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
                         emailRunChecks.setEmailInserted();
                         emailRunChecks.setEmailShown(listConfig.listName);
                     });

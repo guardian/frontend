@@ -15,10 +15,17 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends Executio
       val expiringSwitches = Switches.all.filter(Switch.expiry(_).expiresSoon)
 
       if (expiringSwitches.nonEmpty) {
+
         val htmlBody = views.html.email.expiringSwitches(expiringSwitches).body.trim()
+
+        val recipients = {
+          val switchOwners = expiringSwitches.flatMap(_.owners.flatMap(_.email)).distinct
+          webEngineers +: switchOwners
+        }
+
         val eventualResult = emailService.send(
           from = webEngineers,
-          to = Seq(webEngineers),
+          to = recipients,
           subject = "Expiring Feature Switches",
           htmlBody = Some(htmlBody))
 
@@ -51,9 +58,9 @@ case class ExpiringSwitches(switches: Seq[Switch]) {
   def groupByPriority: Seq[ExpiringSwitchesGroup] = {
 
     val expiredSwitches = switches.filter(Switch.expiry(_).hasExpired)
-    val expiringTodaySwitches = switches.filter(Switch.expiry(_).daysToExpiry.exists(_ == 0))
-    val expiringTomorrowSwitches = switches.filter(Switch.expiry(_).daysToExpiry.exists(_ == 1))
-    val expiringInTwoDaysSwitches = switches.filter(Switch.expiry(_).daysToExpiry.exists(_ == 2))
+    val expiringTodaySwitches = switches.filter(Switch.expiry(_).daysToExpiry.contains(0))
+    val expiringTomorrowSwitches = switches.filter(Switch.expiry(_).daysToExpiry.contains(1))
+    val expiringInTwoDaysSwitches = switches.filter(Switch.expiry(_).daysToExpiry.contains(2))
     val otherSwitches = switches.filter(Switch.expiry(_).daysToExpiry.exists(expiration => expiration > 2 && expiration < 8))
 
     Seq(

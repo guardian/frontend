@@ -2,7 +2,6 @@ package dfp
 
 import common.AkkaAgent
 import common.dfp.GuCreativeTemplate
-import conf.switches.Switches.DfpCachingSwitch
 
 import scala.concurrent.Future
 
@@ -12,10 +11,8 @@ object CreativeTemplateAgent {
 
   def refresh(): Future[Seq[GuCreativeTemplate]] = {
     cache alterOff { oldData =>
-      if (DfpCachingSwitch.isSwitchedOn) {
-        val freshData = DfpApi.readActiveCreativeTemplates()
-        if (freshData.nonEmpty) freshData else oldData
-      } else oldData
+      val freshData = DfpApi.readActiveCreativeTemplates()
+      if (freshData.nonEmpty) freshData else oldData
     }
   }
 

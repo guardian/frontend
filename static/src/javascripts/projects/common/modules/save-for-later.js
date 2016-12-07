@@ -161,14 +161,22 @@ define([
                 } else {
                     $saver.html(template(saveButton, templateData));
 
-                    bean.one($saver[0], 'click', this.classes.saveThisArticleButton,
-                        this[options.isSaved ? 'deleteArticle' : 'saveArticle'].bind(this,
-                            config.page.pageId,
-                            shortUrl
-                        )
-                    );
+                    this.makeActive($saver[0], options);
                 }
             }.bind(this));
+        }.bind(this));
+    };
+
+    SaveForLater.prototype.makeActive = function (saver, options) {
+        fastdom.write(function () {
+            if (options.url) return saver.href = options.url;
+
+            bean.one(saver, 'click', this.classes.saveThisArticleButton,
+                this[options.isSaved ? 'deleteArticle' : 'saveArticle'].bind(this,
+                    config.page.pageId,
+                    shortUrl
+                )
+            );
         }.bind(this));
     };
 

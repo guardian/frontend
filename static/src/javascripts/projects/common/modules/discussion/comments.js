@@ -162,7 +162,8 @@ Comments.prototype.fetchComments = function(options) {
     var queryParams = {
         orderBy: orderBy,
         pageSize: options.pagesize || this.options.pagesize,
-        displayThreaded: this.options.threading !== 'unthreaded'
+        displayThreaded: this.options.threading !== 'unthreaded',
+        commentable: config.page.commentable
     };
 
     if (options.page) {

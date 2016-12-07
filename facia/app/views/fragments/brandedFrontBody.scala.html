@@ -2,6 +2,7 @@
 @import common.Edition
 @import common.commercial.{ContainerModel, PaidContent, Sponsored}
 @import views.support.RenderClasses
+@import views.support.Commercial.container.isFirstNonThrasherContainer
 
 @faciaPage.branding(Edition(request)) match {
 
@@ -28,7 +29,8 @@
                                     _.id == containerDefinition.dataId
                                 }.map {
                                     ContainerModel.fromPressedCollection(Edition(request))
-                                }
+                                },
+                                showFrontBranding = isFirstNonThrasherContainer(containerDefinition.index, collections)
                             )
                         }
 

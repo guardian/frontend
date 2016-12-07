@@ -256,22 +256,6 @@
             }
         }
 
-        @supports(scroll-snap-type: mandatory) {
-            @include mq($until: tablet) {
-                display: flex;
-                scroll-snap-type: mandatory;
-
-                > * {
-                    width: min-content;
-                    scroll-snap-align: start;
-                }
-
-                > * + * {
-                    margin-top: 0;
-                    margin-left: $gs-gutter;
-                }
-            }
-        }
     }
 
     .adverts__row--wrap {

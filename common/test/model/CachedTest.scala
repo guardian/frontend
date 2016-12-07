@@ -60,8 +60,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val page = SimplePage(MetaData.make(
       id = "",
       section = None,
-      webTitle = "",
-      analyticsName = ""))
+      webTitle = ""))
 
     page.metadata.cacheTime.cacheSeconds should be(60)
 

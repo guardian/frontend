@@ -2,8 +2,8 @@ define([
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/load-advert',
     'commercial/modules/dfp/enable-lazy-load',
-    'commercial/modules/dfp/ophan-tracking'
-], function (dfpEnv, loadAdvert, enableLazyLoad, ophanTracking) {
+    'commercial/modules/dfp/performance-logging'
+], function (dfpEnv, loadAdvert, enableLazyLoad, performanceLogging) {
     var advertsToInstantlyLoad = [
         'dfp-ad--pageskin-inread',
         'dfp-ad--merchandising-high',
@@ -22,11 +22,11 @@ define([
     function instantLoad() {
         var instantLoadAdverts = dfpEnv.advertsToLoad.filter(function(advert) {
             if (advertsToInstantlyLoad.indexOf(advert.id) > -1) {
-                ophanTracking.updateAdvertMetric(advert, 'loadingMethod', 'instant');
-                ophanTracking.updateAdvertMetric(advert, 'lazyWaitComplete', 0);
+                performanceLogging.updateAdvertMetric(advert, 'loadingMethod', 'instant');
+                performanceLogging.updateAdvertMetric(advert, 'lazyWaitComplete', 0);
                 return true;
             } else {
-                ophanTracking.updateAdvertMetric(advert, 'loadingMethod', 'lazy-load');
+                performanceLogging.updateAdvertMetric(advert, 'loadingMethod', 'lazy-load');
                 return false;
             }
         });

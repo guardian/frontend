@@ -5,8 +5,7 @@
     fastlyCharts: Seq[tools.AwsLineChart],
     cost: tools.MaximumMetric,
     switches: Seq[conf.switches.Switch],
-    env: String,
-    apiKey: String)(implicit request: RequestHeader)
+    apiKey: String)(implicit request: RequestHeader, env: play.api.Environment)
 
 @import org.joda.time.{DateTime, Days}
 
@@ -25,7 +24,7 @@
     }
 }
 
-@admin_main("theguardian.com radiator", env, isAuthed = true, hasCharts = true, autoRefresh = true) {
+@admin_main("theguardian.com radiator", isAuthed = true, hasCharts = true, autoRefresh = true) {
 
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/radiator.css")">
 
@@ -68,12 +67,7 @@
         @errorCharts.map{ chart => @fragments.lineChart(chart) }
     </div>
 
-    <br clear="all"/>
-
-    <div class="pingdom-wrapper">
-        <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
-        <ul id="pingdom"></ul>
-    </div>
+        <br clear="all"/>
 
     <div class="monitoring-wrapper">
         <form hidden>

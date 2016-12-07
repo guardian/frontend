@@ -27,7 +27,6 @@ class PollsHtmlCleaner(wsClient: WSClient) extends HtmlCleaner with implicits.WS
   override def clean(document: Document, convertToHttps: Boolean) = {
     universalClean(document)
     removeScripts(document)
-    createSimplePageTracking(document)
     removeByTagName(document, "noscript")
     fetchAndPressPollResult(document)
     if (convertToHttps) secureDocument(document)

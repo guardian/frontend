@@ -11,6 +11,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     with FootballTestData
     with WithTestFootballClient
     with BeforeAndAfterAll
+    with WithTestEnvironment
     with WithTestWsClient {
 
   val url = "/football/competitionsService"

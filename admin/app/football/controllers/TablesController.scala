@@ -15,6 +15,8 @@ import scala.concurrent.Future
 
 class TablesController(val wsClient: WSClient, val environment: Environment) extends Controller with ExecutionContexts with PaFootballClient with Logging {
 
+  implicit val env: Environment = environment
+
   def tablesIndex = Action.async { implicit request =>
     for {
       allCompetitions <- client.competitions
@@ -50,7 +52,7 @@ class TablesController(val wsClient: WSClient, val environment: Environment) ext
         client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>
           val entries = focus match {
             case "top" => tableEntries.take(5)
-            case "bottom" => tableEntries.reverse.take(5).reverse
+            case "bottom" => tableEntries.takeRight(5)
             case "none" => tableEntries
             case group if group.startsWith("group-") => tableEntries.filter(_.round.name.fold(false)(_.toLowerCase.replace(' ', '-') == group))
             case teamId => surroundingItems[LeagueTableEntry](2, tableEntries, _.team.id == teamId)
@@ -93,6 +95,6 @@ class TablesController(val wsClient: WSClient, val environment: Environment) ext
     val before = items.takeWhile(!equal(_))
     val after = items.reverse.takeWhile(!equal(_)).reverse
     val item = items.find(equal).get
-    before.reverse.take(surroundingNumber).reverse ++ List(item) ++ after.take(surroundingNumber)
+    before.takeRight(surroundingNumber) ++ List(item) ++ after.take(surroundingNumber)
   }
 }

@@ -1,17 +1,18 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
+import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
 import model._
+import play.api.Environment
 import play.api.mvc._
 import play.twirl.api.Html
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
 
-class GalleryController(contentApiClient: ContentApiClient) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class GalleryController(contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
   def render(path: String) = Action.async { implicit request => renderItem(path) }

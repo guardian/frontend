@@ -28,8 +28,7 @@ object CrosswordSearchPage {
     val metadata = MetaData.make (
       id = "crosswords/search",
       section = Some(SectionSummary.fromId("crosswords")),
-      webTitle = "Crosswords search",
-      analyticsName = "Crosswords search"
+      webTitle = "Crosswords search"
     )
 
     CrosswordSearchPage(metadata)
@@ -60,6 +59,7 @@ final case class CrosswordSearchPage(override val metadata: MetaData) extends St
     "Beale",
     "Biggles",
     "Boatman",
+    "Bogus",
     "Bonxie",
     "Brendan",
     "Brummie",
@@ -97,14 +97,17 @@ final case class CrosswordSearchPage(override val metadata: MetaData) extends St
     "Picaroon",
     "Pinkie",
     "Plodge",
+    "Provis",
     "Puck",
     "Qaos",
     "Quantum",
     "Rover",
     "Rufus",
+    "Screw",
     "Shed",
     "Taupi",
     "Tramp",
-    "Troll"
+    "Troll",
+    "Vlad"
   )
 }

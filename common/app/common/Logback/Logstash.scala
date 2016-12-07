@@ -50,7 +50,7 @@ object Logstash {
     Switches.LogstashLogging.isGuaranteedSwitchedOn.onComplete {
       case Success(isOn) =>
         if(isOn) {
-          config(playConfig).fold(PlayLogger.info("Logstash config is missing"))(LogbackConfig.init(_))
+          config(playConfig).fold(PlayLogger.info("Logstash config is missing"))(LogbackConfig.init)
         } else {
           PlayLogger.info("Logstash logging switch is Off")
         }

@@ -24,7 +24,7 @@ $renaultColor: #ffc421;
             }
             @include mq(tablet) {
                 .has-flex & {
-                    flex: calc(100% - 20px);
+                    flex: 1;
                 }
             }
         }
@@ -47,7 +47,7 @@ $renaultColor: #ffc421;
             }
             @include mq(tablet) {
                 .has-flex & {
-                    flex: calc(50% - 20px);
+                    flex: 1;
                 }
             }
         }
@@ -70,7 +70,7 @@ $renaultColor: #ffc421;
             }
             @include mq(tablet) {
                 .has-flex & {
-                    flex: calc(33% - 20px);
+                    flex: 1;
                 }
             }
         }
@@ -100,14 +100,14 @@ $renaultColor: #ffc421;
             }
             @include mq(tablet) {
                 .has-flex & {
-                    flex: calc(25% - 20px);
+                    flex: 1;
                 }
             }
         }
     }
 
     .hosted-thrasher__heading {
-        @include f-headlineSans;
+        @include f-textSans;
         margin: 0;
         font-size: 22px;
         line-height: 24px;
@@ -125,7 +125,7 @@ $renaultColor: #ffc421;
     }
 
     .hosted-thrasher__heading--small {
-        @include f-headlineSans;
+        @include f-textSans;
 
         font-size: 18px;
         line-height: 1;
@@ -219,7 +219,7 @@ $renaultColor: #ffc421;
     }
 
     .hosted-thrasher__faux-controls {
-        @include f-headlineSans;
+        @include f-textSans;
         position: absolute;
         bottom: 0;
         font-size: 16px;

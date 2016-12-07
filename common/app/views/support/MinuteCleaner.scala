@@ -56,14 +56,14 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         if (heading.text() == "Summary" || heading.text() == "Key event") {
           heading.remove()
         } else {
-          heading.html(regexCleaner(heading.first(), headingNumRegEx, "<span class=\"block--minute-article--counter\">$1 </span>"))
+          heading.html(regexCleaner(Option(heading.first()), headingNumRegEx, "<span class=\"block--minute-article--counter\">$1 </span>"))
         }
 
         // Add relevant classes
         ParentClasses.foldLeft(Set(): Set[String]) { case (classes, (childClass, parentClass)) =>
           if (allElements.exists(_.hasClass(childClass))) classes + parentClass
           else classes
-        } foreach(block.addClass)
+        } foreach block.addClass
 
         // Check if the heading has a number and is an embed or quote
         if ((block.hasClass("block--minute-article--embed") || block.hasClass("block--minute-article--quote")) && headingHasNumber) {
@@ -101,5 +101,9 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
 }
 
 object regexCleaner {
-  def apply(heading: Element, regEx: String, htmlToReplace: String): String = heading.html().replaceFirst(regEx, htmlToReplace)
+  def apply(heading: Option[Element], regEx: String, htmlToReplace: String): String =
+    heading
+      .map(_.html)
+      .getOrElse("")
+      .replaceFirst(regEx, htmlToReplace)
 }

@@ -52,7 +52,8 @@ body {
     .email-sub__form--footer,
     .email-sub__form--article,
     .email-sub__form--plain,
-    .email-sub__form--plaindark {
+    .email-sub__form--plaindark,
+    .email-sub__form--plaintone {
         // Rounded inline input
         .email-sub__text-input {
             border-right: 0;
@@ -63,7 +64,7 @@ body {
 
         .email-sub__submit-input {
             border-radius: 0 1000px 1000px 0;
-            border-left: 0;
+            border-left-width: 0px;
             float: left;
             margin-right: 0;
             width: 38%;
@@ -73,6 +74,7 @@ body {
         // because we know the email address already
         .email-sub__submit-input--solo {
             border-radius: 1000px;
+            border-left-width: 1px;
         }
 
         .email-sub__small--mark {
@@ -87,7 +89,8 @@ body {
 
     .email-sub__form--footer,
     .email-sub__form--plain,
-    .email-sub__form--plaindark {
+    .email-sub__form--plaindark,
+    .email-sub__form--plaintone {
         .email-sub__submit-input {
             padding-left: $gs-gutter / 2;
         }
@@ -98,7 +101,8 @@ body {
 @include mq(183px, 183px) {
     .email-sub__form--footer,
     .email-sub__form--plain,
-    .email-sub__form--plaindark {
+    .email-sub__form--plaindark,
+    .email-sub__form--plaintone {
         padding-right: $gs-gutter / 2;
 
         .email-sub__text-input {
@@ -139,14 +143,29 @@ body {
         }
     }
 
+    .email-sub--plaintone {
+       .email-sub__text-input {
+           border: thin solid;
+           border-radius: 1000px;
+           float: left;
+           width: 70%;
+       }
+
+       .email-sub__submit-input {
+           border: thin solid;
+           border-radius: 1000px;
+           width: 25%;
+           margin: 0 0 0 3%;
+       }
+   }
 }
 
 /**
 * IFRAME PLAIN MODS
 */
 .email-sub--plain,
-.email-sub--plaindark
-{
+.email-sub--plaindark,
+.email-sub--plaintone {
     .email-sub__header,
     .email-sub__label,
     .email-sub__small {

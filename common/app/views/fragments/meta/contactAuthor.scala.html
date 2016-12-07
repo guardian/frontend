@@ -5,15 +5,15 @@
         <div class="meta__twitter">
             <a href="http://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="button button--small button--secondary tone-colour">
                     @fragments.inlineSvg("twitter-bird", "icon", Seq("inline-tone-fill", "i-left"))
-                    <div class="contact">@@@twitter</div>
+                    <div class="contact hide-until-leftcol">@@@twitter</div>
             </a>
-      </div>
+        </div>
     }
     @profile.properties.emailAddress.map { email =>
         <div class="meta__email">
             <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address" class="button button--small button--secondary tone-colour">
                     @fragments.inlineSvg("mail", "icon", Seq("inline-tone-fill", "i-left"))
-                    <div class="contact">email</div>
+                    <div class="contact hide-until-leftcol">email</div>
             </a>
         </div>
     }

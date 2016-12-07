@@ -59,7 +59,7 @@ define([
             membershipMessages.init().then(function () {
                 var message = document.querySelector('.js-site-message');
                 expect(message).not.toBeNull();
-                expect(message.className).toContain('membership-message');
+                expect(message.className).toContain('membership-prominent');
                 expect(message.className).not.toContain('is-hidden');
             }).then(done);
         }

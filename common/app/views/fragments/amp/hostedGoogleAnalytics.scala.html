@@ -1,0 +1,34 @@
+@(hostedPage: common.commercial.hosted.HostedPage)(implicit request: RequestHeader)
+@import common.AmpLinkTo
+@import views.support.GoogleAnalyticsAccount
+
+@* TODO: Abstract this out so its shared with the main GA tracking *@
+<amp-analytics type="googleanalytics" id="google-analytics">
+    <script type="application/json">
+            {
+              "requests": {
+                "pageviewWithCustomDims": "${pageview}&cd3=${platform}&cd4=${sectionId}&cd5=${contentType}&cd6=${commissioningDesks}&cd7=${contentId}&cd8=${contributorIds}&cd9=${keywordIds}&cd10=${toneIds}&cd11=${seriesId}&cd26=${isHostedFlag}&cd29=${fullRequestUrl}"
+              },
+              "vars": {
+                "account": "@{GoogleAnalyticsAccount.editorialTracker.trackingId}"
+              },
+              "triggers": {
+                "trackPageview": {
+                  "on": "visible",
+                  "request": "pageviewWithCustomDims",
+                  "vars": {
+                    "title": "@{hostedPage.metadata.webTitle}",
+                    "platform": "AMP",
+                    "sectionId": "@{hostedPage.metadata.sectionId}",
+                    "contentType": "@{hostedPage.metadata.normalisedContentType}",
+                    "contentId": "@{hostedPage.metadata.id}",
+                    "isHostedFlag": "true",
+                    "fullRequestUrl": "@{request.domain}@{request.uri}"
+                  }
+                }
+              }
+            }
+            </script>
+</amp-analytics>
+@* GA pageview confidence pixel *@
+<amp-pixel src="@AmpLinkTo.pvBeaconUrl"></amp-pixel>
