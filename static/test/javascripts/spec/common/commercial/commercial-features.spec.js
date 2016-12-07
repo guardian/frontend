@@ -27,7 +27,6 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 config.page = {
                     contentType : 'Article',
                     isMinuteArticle : false,
-                    isSSL : false,
                     section : 'politics',
                     shouldHideAdverts : false,
                     isFront : false,
