@@ -39,7 +39,7 @@ define([
         this.author = 'Phil Wills';
         this.description = 'Appeal linked to the Observer\'s 225th anniversary';
         this.showForSensitive = false;
-        this.audience = 0.7;
+        this.audience = 0.88;
         this.audienceOffset = 0;
         this.successMeasure = 'N/A';
         this.audienceCriteria = 'UK';

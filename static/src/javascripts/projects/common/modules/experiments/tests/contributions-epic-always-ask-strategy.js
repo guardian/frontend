@@ -43,7 +43,7 @@ define([
         this.description = 'Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period.';
         this.showForSensitive = true;
         this.audience = 0.02;
-        this.audienceOffset = 0.85;
+        this.audienceOffset = 0.88;
         this.successMeasure = 'We are able to measure the positive and negative effects of this strategy.';
         this.audienceCriteria = 'All';
         this.dataLinkNames = '';
