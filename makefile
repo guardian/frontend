@@ -76,7 +76,7 @@ compile-fonts: install # PRIVATE
 	@./tools/run-task compile/fonts
 
 atomise-css: install # PRIVATE
-	@node tools/atomise-css
+	@./tools/run-task compile/css/atomise
 
 # * Not ready for primetime use yet... *
 pasteup: install # PRIVATE

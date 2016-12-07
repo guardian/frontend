@@ -79,7 +79,7 @@ define([
 
     function shouldRemoveGeoMostPop() {
         var testName = 'ItsRainingInlineAds';
-        return ab.testCanBeRun(testName) && ['nogeo', 'none'].indexOf(ab.getTestVariantId(testName)) > -1;
+        return !config.page.isImmersive && ab.testCanBeRun(testName) && ['nogeo', 'none'].indexOf(ab.getTestVariantId(testName)) > -1;
     }
 
     return {
