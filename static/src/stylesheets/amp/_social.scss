@@ -24,11 +24,11 @@
     text-align: center;
     height: 32px;
     width: 32px;
+}
 
-    svg {
-        height: 88%;
-        width: 88%;
-    }
+.social-icon__svg {
+    height: 88%;
+    width: 88%;
 }
 
 .meta__extras {
@@ -43,15 +43,15 @@
 
 .social-icon {
     &--facebook {
-        background-color: #3067a3;
+        background-color: $social-facebook;
     }
 
     &--messenger {
-        background-color: #0084ff;
+        background-color: $social-messenger;
     }
 
     &--twitter {
-        background-color: #03b3ee;
+        background-color: $social-twitter;
     }
 
     &--email {
@@ -59,19 +59,19 @@
     }
 
     &--pinterest {
-        background-color: #b9252c;
+        background-color: $social-pinterest;
     }
 
     &--linkedin {
-        background-color: #0071a1;
+        background-color: $social-linkedin;
     }
 
     &--gplus {
-        background-color: #e15440;
+        background-color: $social-gplus;
     }
 
     &--whatsapp {
-        background-color: #59cb3f;
+        background-color: $social-whatsapp;
     }
 }
 
