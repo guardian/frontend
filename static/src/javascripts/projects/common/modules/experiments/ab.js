@@ -7,6 +7,7 @@ define([
     'common/modules/analytics/mvt-cookie',
     'lodash/functions/memoize',
     'lodash/utilities/noop',
+    'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
     'common/modules/experiments/tests/contributions-epic-usa-cta-three-way',
@@ -23,6 +24,7 @@ define([
              mvtCookie,
              memoize,
              noop,
+             EditorialEmailVariants,
              RecommendedForYou,
              MembershipEngagementInternationalExperiment,
              ContributionsEpicUsaCtaThreeWay,
@@ -33,6 +35,7 @@ define([
              ItsRainingInlineAds
     ) {
     var TESTS = [
+        new EditorialEmailVariants(),
         new RecommendedForYou(),
         new MembershipEngagementInternationalExperiment(),
         new ContributionsEpicUsaCtaThreeWay(),
