@@ -47,21 +47,6 @@ define([
         },
         inline: inlineDefinition,
         mostpop: inlineDefinition,
-        'merchandising-high': {
-            label: false,
-            refresh: false,
-            sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.merchandisingHigh, adSizes.fluid)
-            }
-        },
-        'merchandising-high-ad-feature': {
-            name: 'merchandising-high',
-            label: false,
-            refresh: false,
-            sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.merchandisingHighAdFeature, adSizes.fluid)
-            }
-        },
         comments: inlineDefinition,
         'top-above-nav': {
             sizeMappings: {
