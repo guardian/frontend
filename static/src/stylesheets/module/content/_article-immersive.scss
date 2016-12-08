@@ -124,16 +124,6 @@
     }
 }
 
-.paid-for-label__immersive {
-    font-size: 1rem;
-    color: $paid-article-brand;
-
-    @include mq($from: desktop) {
-      font-size: 1.2rem;
-    }
-}
-
-
 .immersive-main-media__headline-container--dark {
     .content__headline--immersive-article {
         color: #ffffff;
