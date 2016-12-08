@@ -20,7 +20,8 @@ define([
     'lodash/collections/toArray',
     'lodash/functions/bindAll',
     'common/modules/ui/relativedates',
-    'common/modules/ui/notification-counter'
+    'common/modules/ui/notification-counter',
+    'common/modules/atoms/youtube'
 ], function (
     fastdom,
     bean,
@@ -39,7 +40,8 @@ define([
     toArray,
     bindAll,
     RelativeDates,
-    NotificationCounter
+    NotificationCounter,
+    youtube
 ) {
 
     return function (opts) {
@@ -115,6 +117,7 @@ define([
 
                 RelativeDates.init();
                 twitter.enhanceTweets();
+                youtube.checkElemsForVideos(elementsToAdd);
             });
         };
 
