@@ -125,7 +125,7 @@ define([
 
     function updateBreakpoints() {
         // The implementation for browsers that don't support window.matchMedia is simpler,
-        // but relies on (1) the resize event, (2) layout and (2) hidden generated content
+        // but relies on (1) the resize event, (2) layout and (3) hidden generated content
         // on a pseudo-element
         var bodyStyle = window.getComputedStyle(document.body, '::after');
         var breakpointName = bodyStyle.content.substring(1, bodyStyle.content.length - 1);
