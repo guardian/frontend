@@ -76,7 +76,7 @@ define([
         .slice(isNetworkFront && hasThrasher ? 1 : 0)
         // Filter every other container
         .filter(function (container) {
-            if (container.nextElementSibling.classList.contains('fc-container--commercial')) {
+            if (container.nextElementSibling && container.nextElementSibling.classList.contains('fc-container--commercial')) {
                 return false;
             }
 
