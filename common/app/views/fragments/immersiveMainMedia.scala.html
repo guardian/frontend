@@ -14,7 +14,7 @@
     page.item.elements.hasMainEmbed,
     page.item.fields.main.nonEmpty,
     page.item.tags.series.headOption,
-    page.item.tags.isImmersiveAdvertisement
+    page.item.tags.isAdvertisementFeature
 )) { case (isTheMinuteArticle, hasEmbed, hasMainMedia, optSeries, isAdFeature) =>
     <div class="@RenderClasses(Map(
             "content--minute-article" -> isTheMinuteArticle,
