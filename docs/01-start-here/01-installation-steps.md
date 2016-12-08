@@ -97,7 +97,6 @@ Mac:
 ```bash
 brew install node@6
 ```
-```
 
 #### Xcode (if on a Mac, one of the Node modules requires it)
 
