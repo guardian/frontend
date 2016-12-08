@@ -107,7 +107,7 @@
 @caption(picture: model.ImageMedia, imageOption: Option[ImageAsset], isMain: Boolean) = {
     @imageOption.map { img =>
         @if(img.showCaption) {
-            @if(isMain && (mvt.ABNewNavVariantThree.isParticipating || mvt.ABNewNavVariantFour.isParticipating || mvt.ABNewNavVariantFive.isParticipating)) {
+            @if(isMain && mvt.ABNewNavVariantFour.isParticipating) {
 
                 <input type="checkbox" id="show-caption" class="mobile-only u-h">
 

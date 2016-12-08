@@ -1,6 +1,7 @@
 package model
 
-import common.commercial.{BrandHunter, Branding}
+import common.Edition._
+import common.commercial.{PaidContent, BrandHunter, Branding}
 import common.{Edition, ExecutionContexts, Logging}
 import play.api.libs.json.Json
 
@@ -59,6 +60,11 @@ case class FrontProperties(
 ) {
   def branding(edition: Edition): Option[Branding] =
     BrandHunter.findBranding(activeBrandings, edition, publicationDate = None)
+
+  lazy val isAdvertisementFeature: Boolean = {
+    val branding = BrandHunter.findBranding(activeBrandings, defaultEdition, publicationDate = None)
+    branding.exists(_.sponsorshipType == PaidContent)
+  }
 }
 
 object FrontProperties {

@@ -440,6 +440,8 @@
     }
 }
 
+.badge +.content__dateline { clear: left; }
+
 .content__meta-container .byline-img {
     @include circular;
     position: relative;
