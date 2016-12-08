@@ -54,7 +54,7 @@
         display: none;
     }
 
-    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main,  .fc-container__inner, .content__comments-container, .fc-container__outbrain, .submeta, .witness-cta-wrapper {
+    .content__head .gs-container, .content__article-body, .content__hosted-body, .content__meta-container, .media-primary .caption--main,  .fc-container__inner, .content__comments-container, .fc-container__outbrain, .submeta, .witness-cta-wrapper {
         margin: 0 0.625rem;
     }
 
@@ -95,7 +95,7 @@
     }
 
     @@media (min-width: 30rem) {
-        .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main, .fc-container__inner, .fc-container__outbrain, .submeta, .witness-cta-wrapper {
+        .content__head .gs-container, .content__article-body, .content__hosted-body, .content__meta-container, .media-primary .caption--main, .fc-container__inner, .fc-container__outbrain, .submeta, .witness-cta-wrapper {
             margin: 0 20px;
         }
         .content__headline {
@@ -279,4 +279,7 @@
     @* proper inlined AMP styles *@
     @Html(common.Assets.css.amp)
 
+    @if(page.metadata.isHosted) {
+        @Html(common.Assets.css.hostedAmp)
+    }
 </style>

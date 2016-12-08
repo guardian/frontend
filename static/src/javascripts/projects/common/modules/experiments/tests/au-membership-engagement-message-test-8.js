@@ -20,7 +20,7 @@ define([
     return function () {
         this.id = 'AuMembEngagementMsgCopyTest8';
         this.start = '2016-11-24';
-        this.expiry = '2016-12-22';
+        this.expiry = '2017-1-5';
         this.author = 'Justin Pinner';
         this.description = 'Test alternate short messages on AU engagement banner (test 8)';
         this.audience = 1;    // 100% (of AU audience)

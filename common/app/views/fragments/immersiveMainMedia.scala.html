@@ -6,8 +6,9 @@
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
 @import views.support.Commercial.isPaidContent
+@import views.support.ImmersiveMainCleaner
 
-@(page: ContentPage)(implicit request: RequestHeader)
+@(page: ContentPage)(implicit request: RequestHeader, env: play.api.Environment)
 
 @defining((
     page.item.tags.isTheMinuteArticle,
@@ -61,7 +62,14 @@
                         <div class="immersive-main-media__loading-animation is-updating"></div>
                         <span class="u-h">Loading header</span>
                     </div>
-                    @Html(page.item.fields.main)
+                    @page.item match {
+                        case article: model.Article => {
+                            @ImmersiveMainCleaner(article, article.fields.main, amp=false)
+                        }
+                        case content => {
+                            @Html(content.fields.main)
+                        }
+                    }
                 }
             }
         </div>
