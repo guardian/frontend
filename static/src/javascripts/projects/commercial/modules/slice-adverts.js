@@ -68,13 +68,21 @@ define([
     // On mobile, a slot is inserted after each container
     function insertOnMobile(containers, getSlotName) {
         var hasThrasher = containers[0].classList.contains('fc-container--thrasher');
+        var includeNext = false;
         var slots;
 
         // Remove first container if it is a thrasher
         containers = containers
         .slice(isNetworkFront && hasThrasher ? 1 : 0)
         // Filter every other container
-        .filter(function (_, index) { return index % 2 === 0; })
+        .filter(function (container) {
+            if (container.nextElementSibling.classList.contains('fc-container--commercial')) {
+                return false;
+            }
+
+            includeNext = !includeNext;
+            return includeNext;
+        })
         // Keep as much as 10 of them
         .slice(0, 10);
 
