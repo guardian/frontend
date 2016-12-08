@@ -32,16 +32,16 @@ conditionallyValidate() {
 
 # Validate CSS
 CSS_SRC_PATTERN="\.scss$"
-conditionallyValidate "$CSS_SRC_PATTERN" "./tools/run-task lint/sass"
+conditionallyValidate "$CSS_SRC_PATTERN" "make install && ./tools/run-task lint/sass"
 cssValidateResult=$?
 
 # Validate JS
 JS_SRC_PATTERN="\.js$"
-conditionallyValidate "$JS_SRC_PATTERN" "./tools/run-task lint/javascript"
+conditionallyValidate "$JS_SRC_PATTERN" "make install && ./tools/run-task lint/javascript"
 jsValidateResult=$?
 
 # Test JS
-conditionallyValidate "[^/]\+/\(app\|test\)/assets/javascripts/.*$JS_SRC_PATTERN" "./tools/run-task test/javascript"
+conditionallyValidate "[^/]\+/\(app\|test\)/assets/javascripts/.*$JS_SRC_PATTERN" "make install && ./tools/run-task test/javascript"
 jsTestResult=$?
 
 # Exit code 1 means don't commit and 0 means do commit
