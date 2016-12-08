@@ -151,6 +151,105 @@ $ima-controls-height: 70px;
     }
 }
 
+.vjs-big-play-button__duration {
+    cursor: pointer;
+    display: inline-block;
+    z-index: 2;
+    padding: 0 10px 0 41px;
+    position: absolute;
+    bottom: 8px;
+    left: 5px;
+    line-height: 28px;
+    width: auto;
+    height: 44px;
+    color: #161616;
+    border-radius: 46px;
+    border: 0;
+    background-color: $media-default;
+    backface-visibility: hidden;
+
+    .vjs-has-started & {
+        padding-bottom: 0;
+        display: none;
+    }
+
+    &:before {
+        @include fs-textSans(4);
+        content: attr(data-formatted-duration);
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 20px;
+        margin-top: 14px;
+        padding-right: 7px;
+        padding-left: 8px;
+        margin-left: 4px;
+        border-left: 1px solid rgba(51, 51, 51, .6);
+        display: inline-block;
+    }
+    &:after {
+        content: '';
+        border: 1px solid;
+        border-width: 8px 8px 8px 18px;
+        border-color: transparent transparent transparent $neutral-1;
+        position: absolute;
+        top: 50%;
+        left: 14px;
+        transform: translateY(-50%);
+    }
+    .vjs-control-text {
+        display: none;
+    }
+    .gu-media--audio &,
+    .vjs-has-ended &,
+    .vjs-ad-playing &,
+    .vjs-playing &,
+    .vjs-has-started.vjs-using-native-controls &,
+    .vjs-ad-loading & {
+        display: none !important;
+    }
+    .l-row__item--span-3 & {
+        top: 42%;
+        left: 5%;
+    }
+}
+
+button.vjs-big-play-button__duration {
+    top: 45%;
+    left: 10px;
+    &:before {
+        margin-top: 0;
+  }
+}
+
+.video-headline {
+    position: absolute;
+    left: 5%;
+    top: 3.25rem;
+    width: 360px;
+    text-align: left;
+    &:before {
+        @include fs-headline(1);
+        content: attr(data-data-video-name);
+        z-index: 10;
+        font-size: 32px;
+        font-weight: 800;
+        line-height: 32px;
+        color: #ffffff;
+    }
+    .vjs-big-play-button {
+        left: 0;
+    }
+    &--gradient {
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: $neutral-1;
+        width: 100%;
+        height: 100%;
+        opacity: .3;
+    }
+}
+
 .vjs-fullscreen-clickbox {
     box-sizing: border-box;
     width: 100%;
@@ -1095,7 +1194,7 @@ $ima-controls-height: 70px;
 .gu-media--show-controls-at-start.vjs-paused {
     .vjs-control-bar {
         //Hides control bar but still shows the seeker
-        bottom: 0;
+        bottom: -3.95em;
     }
 
     .vjs-big-play-button .vjs-control-text {
