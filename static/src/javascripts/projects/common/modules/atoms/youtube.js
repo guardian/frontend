@@ -1,7 +1,7 @@
 define([
     'fastdom',
-    'common/modules/video/youtube-player',
-    'common/modules/video/youtube-tracking',
+    'common/modules/atoms/youtube-player',
+    'common/modules/atoms/youtube-tracking',
     'common/utils/$'
 ], function (
     fastdom,

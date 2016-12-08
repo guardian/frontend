@@ -1,5 +1,5 @@
 define([
-    'common/modules/video/youtube'
+    'common/modules/atoms/youtube'
 ], function (
     youtube
 ) {
