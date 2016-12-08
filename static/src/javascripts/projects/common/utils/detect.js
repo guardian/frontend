@@ -85,16 +85,16 @@ define([
 
     function initMediaQueryListeners(win) {
         breakpoints
-        .forEach(function (bp, index, bps) {
-            // We create mutually exclusive (min-width) and (max-width) media queries
-            // to facilitate the breakpoint/tweakpoint logic.
-            bp.mql = index < bps.length - 1 ?
-                win.matchMedia('(min-width:'+ bp.width +'px) and (max-width:'+ (bps[index+1].width - 1) +'px)') :
-                win.matchMedia('(min-width:'+ bp.width +'px)');
-            bp.listener = onMatchingBreakpoint.bind(bp);
-            bp.mql.addListener(bp.listener);
-            bp.listener(bp.mql);
-        });
+            .forEach(function (bp, index, bps) {
+                // We create mutually exclusive (min-width) and (max-width) media queries
+                // to facilitate the breakpoint/tweakpoint logic.
+                bp.mql = index < bps.length - 1 ?
+                    win.matchMedia('(min-width:'+ bp.width +'px) and (max-width:'+ (bps[index+1].width - 1) +'px)') :
+                    win.matchMedia('(min-width:'+ bp.width +'px)');
+                bp.listener = onMatchingBreakpoint.bind(bp);
+                bp.mql.addListener(bp.listener);
+                bp.listener(bp.mql);
+            });
     }
 
     function onMatchingBreakpoint(mql) {
