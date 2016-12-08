@@ -136,12 +136,12 @@ define([
 
         it('should respond to Rubicon messages with no IDs', function (done) {
             var payload = { type: 'set-ad-height', value: { id: 'test', height: '20px' } };
-            messenger.register('set-ad-height', routines.rubicon, { window: mockWindow });
+            messenger.register('resize', routines.rubicon, { window: mockWindow });
             onMessage({ origin: dfpOrigin, data: JSON.stringify(payload), source: mockFrame })
             .then(function () {
                 expect(mockFrame.postMessage).toHaveBeenCalled();
                 expect(response.result).toBe('rubicon');
-                messenger.unregister('set-ad-height', routines.respond, { window: mockWindow });
+                messenger.unregister('resize', routines.rubicon, { window: mockWindow });
             })
             .then(done)
             .catch(done.fail);

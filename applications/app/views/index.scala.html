@@ -3,5 +3,5 @@
 @main(index.page, projectName = Option("facia")){
     @fragments.indexHead(index)
 }{
-    @fragments.indexBody(index)
+    @views.FrontsCleaner(index, fragments.indexBody(index).toString)
 }
