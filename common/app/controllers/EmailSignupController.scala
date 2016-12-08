@@ -59,6 +59,8 @@ object ListIds {
 
   val zipFile = 1902
   val theFlyer = 2211
+  val theFlyerCards = 3806
+  val theFlyerConnected = 3807
   val moneyTalks = 1079
   val fashionStatement = 105
   val crosswordEditorUpdate = 101

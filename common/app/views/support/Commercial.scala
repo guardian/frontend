@@ -14,6 +14,7 @@ object Commercial {
     case c: model.ContentPage if c.item.content.shouldHideAdverts => false
     case p: model.Page if p.metadata.sectionId == "identity" => false
     case s: model.SimplePage if s.metadata.contentType == "Signup" => false
+    case e: model.ContentPage if e.metadata.webTitle == "Sign up for The Flyer" => false
     case p: model.CommercialExpiryPage => false
     case _ => true
   }
@@ -85,8 +86,8 @@ object Commercial {
       val fabricAdvertsTop = Seq("88,71")
       val fluidAdvertsTop = Seq("fluid")
       Map(
-        "tablet" -> (Seq("1,1", "88,70", "728,90") ++ fabricAdvertsTop ++ fluidAdvertsTop),
-        "desktop" -> (Seq("1,1", "88,70", "728,90", "940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)
+        "tablet" -> (Seq("1,1", "2,2", "88,70", "728,90") ++ fabricAdvertsTop ++ fluidAdvertsTop),
+        "desktop" -> (Seq("1,1", "2,2", "88,70", "728,90", "940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)
       )
     }
 

@@ -25,7 +25,8 @@ define([
     'common/utils/cookies',
     'common/utils/robust',
     'common/utils/user-timing',
-    'common/modules/navigation/newHeaderNavigation'
+    'common/modules/navigation/newHeaderNavigation',
+    'common/modules/analytics/google'
 ], function (
     qwery,
     fastdom,
@@ -40,13 +41,17 @@ define([
     cookies,
     robust,
     userTiming,
-    newHeaderNavigation
+    newHeaderNavigation,
+    ga
 ) {
     return function () {
         var guardian = window.guardian;
         var config = guardian.config;
 
         userTiming.mark('standard start');
+        robust.catchErrorsAndLog('ga-user-timing-standard-start', function () {
+            ga.trackPerformance('Javascript Load', 'standardStart', 'Standard start parse time');
+        });
 
         var oldOnError = window.onerror;
         window.onerror = function (message, filename, lineno, colno, error) {
@@ -254,5 +259,8 @@ define([
         newHeaderNavigation();
 
         userTiming.mark('standard end');
+        robust.catchErrorsAndLog('ga-user-timing-standard-end', function () {
+            ga.trackPerformance('Javascript Load', 'standardEnd', 'Standard end parse time');
+        });
     };
 });

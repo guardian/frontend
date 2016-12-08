@@ -43,6 +43,7 @@
 
                     @mainVideo.videos.caption.map { caption =>
                         <figcaption data-link-name="Video caption link" class="caption caption--main caption--video" itemprop="description">
+                            @fragments.inlineSvg("information", "icon", List("rounded-icon", "centered-icon"))
                             @Html(caption)
                         </figcaption>
                     }

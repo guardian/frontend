@@ -7,11 +7,31 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-its-raining-inline-ads",
+    "Display more inline ads on the wide breakpoint",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 14),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-editorial-email-variants",
+    "Assign users to variants of our editorial emails",
+    owners = Seq(Owner.withGithub("katebee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 21),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-membership-engagement-international-experiment",
     "Test varying the number of visits before showing the membership engagement banner",
     owners = Seq(Owner.withGithub("rupert.bates")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 12, 1), // Thursday 1st December
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 16),
     exposeClientSide = true
   )
 
@@ -27,11 +47,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-usa-cta-three-way",
-    "Test just contributions vs contributions or membership vs just membership in the US",
+    "ab-contributions-epic-brexit-supreme",
+    "Gather contributions and supporters around Brexit supreme court case",
     owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 12, 5),
+    sellByDate =  new LocalDate(2016, 12, 16),
     exposeClientSide = true
   )
 
@@ -41,7 +61,7 @@ trait ABTestSwitches {
     "Test alternate short messages on membership engagement banner",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 8), // Thursday 8th December
+    sellByDate = new LocalDate(2016, 12, 22), // Thursday 22nd December
     exposeClientSide = true
   )
 
@@ -55,4 +75,23 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-contributions-epic-us-pre-end-of-year",
+    "Test which Epic variant to use in the US end of year campaign",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 12),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-always-ask-strategy",
+    "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 6),
+    exposeClientSide = true
+  )
 }
