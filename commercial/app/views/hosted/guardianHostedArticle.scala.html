@@ -2,6 +2,7 @@
 @(page: HostedArticlePage)(implicit request: RequestHeader, env: play.api.Environment)
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import views.html.hosted._
+@import model.hosted.HostedArticleQuotes.prepareQuotes
 
 @main(page, Some("commercial")) { } {
     <!--[if (gt IE 9)|(IEMobile)]><!-->
@@ -56,6 +57,15 @@
             width : 600px;
         }
     }
+
+    blockquote {
+        background-color: @{page.campaign.fontColour.hexCode};
+    }
+
+    blockquote .inline-hosted-quote svg {
+        fill: @{page.campaign.fontColour.hexCode};
+    }
+
     </style>
     <!--<![endif]-->
     @guardianHostedHeader(if(page.campaign.fontColour.isDark) "hosted-article-page hosted-page--bright" else "hosted-article-page", page)
@@ -84,7 +94,7 @@
                                 case "overview" => { @singaporeF1Overview() }
                                 case "offtrack" => { @singaporeF1Offtrack() }
                                 case "packages" => { @singaporeF1Packages() }
-                                case _ => { @Html(page.body) }
+                                case _ => { @Html(prepareQuotes(page.body)) }
                             }
                             <div class="hosted__standfirst">
                                 <div class="hosted__terms">​Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our

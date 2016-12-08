@@ -235,9 +235,7 @@ define([
             },
 
             startRegister: function () {
-                if (!config.page.isSSL) {
-                    register.initialise();
-                }
+                register.initialise();
             },
 
             showMoreTagsLink: function () {

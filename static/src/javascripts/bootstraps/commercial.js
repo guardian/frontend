@@ -5,13 +5,14 @@ define([
     'common/utils/mediator',
     'common/utils/robust',
     'common/utils/user-timing',
+    'common/modules/experiments/ab',
     'commercial/modules/article-aside-adverts',
     'commercial/modules/article-body-adverts',
+    'commercial/modules/article-body-adverts-wide',
     'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/prepare-googletag',
     'commercial/modules/dfp/prepare-sonobi-tag',
     'commercial/modules/dfp/fill-advert-slots',
-    'commercial/modules/front-commercial-components',
     'commercial/modules/gallery-adverts',
     'commercial/modules/hosted/about',
     'commercial/modules/hosted/video',
@@ -33,13 +34,14 @@ define([
     mediator,
     robust,
     userTiming,
+    ab,
     articleAsideAdverts,
     articleBodyAdverts,
+    articleBodyAdvertsWide,
     closeDisabledSlots,
     prepareGoogletag,
     prepareSonobiTag,
     fillAdvertSlots,
-    frontCommercialComponents,
     galleryAdverts,
     hostedAbout,
     hostedVideo,
@@ -60,11 +62,10 @@ define([
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init],
         ['cm-prepare-googletag', prepareGoogletag.init, prepareGoogletag.customTiming],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
-        ['cm-articleBodyAdverts', articleBodyAdverts.init],
+        ['cm-articleBodyAdverts', isItRainingAds() ? articleBodyAdvertsWide.init : articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-galleryAdverts', galleryAdverts.init],
         ['cm-liveblogAdverts', liveblogAdverts.init],
-        ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
 
@@ -128,6 +129,11 @@ define([
                performanceLogging.addEndTimeBaseline(baseline);
                return moduleLoadResult;
            });
+    }
+
+    function isItRainingAds() {
+        var testName = 'ItsRainingInlineAds';
+        return !config.page.isImmersive && ab.testCanBeRun(testName) && ['geo', 'nogeo'].indexOf(ab.getTestVariantId(testName)) > -1;
     }
 
     return {

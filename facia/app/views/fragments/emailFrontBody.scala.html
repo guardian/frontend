@@ -5,11 +5,11 @@
 
 @(page: model.PressedPage)(implicit request: RequestHeader)
 
-@import conf.Static
 @import views.support.EmailHelpers._
 @import views.support.TrailCssClasses.toneClass
 @import views.html.fragments.items.elements.facia_cards.kicker
 @import model.pressed.Feature
+@import implicits.Requests.RichRequestHeader
 
 @headline(pressedContent: PressedContent) = {
     <h3 class="headline">
@@ -19,9 +19,12 @@
                 <span class="kicker-separator">/</span>
             }
 
-            @if(header.isGallery) { @icon("gallery") }
-            @if(header.isAudio) { @icon("podcast") }
-            @if(header.isVideo) { @icon("video") }
+            @defining(if (request.isEmailConnectedStyle) "-connected" else "") { suffix =>
+                @if(header.isGallery) { @icon("gallery" + suffix) }
+                @if(header.isAudio) { @icon("podcast" + suffix) }
+                @if(header.isVideo) { @icon("video" + suffix) }
+            }
+
             @if(header.quoted) {
                 @pressedContent.card.cardStyle match {
                     case Feature => { @icon("quote-feature") }
@@ -63,7 +66,7 @@
 
 @page.frontProperties.onPageDescription.map { description =>
     @paddedRow {
-        <p>@description</p>
+        <p class="introduction">@description</p>
     }
 }
 
