@@ -14,6 +14,11 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     width: 100%;
 }
 
+.new-header {
+    @include mobile-only;
+    background-color: $guardian-brand;
+}
+
 .new-header__inner {
     display: flex;
     justify-content: space-between;

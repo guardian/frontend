@@ -75,9 +75,6 @@ compile-svgs: install # PRIVATE
 compile-fonts: install # PRIVATE
 	@./tools/run-task compile/fonts
 
-atomise-css: install # PRIVATE
-	@./tools/run-task compile/css/atomise
-
 # * Not ready for primetime use yet... *
 pasteup: install # PRIVATE
 	@cd static/src/stylesheets/pasteup && npm --silent i && node publish.js
