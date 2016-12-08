@@ -22,13 +22,12 @@ define([
             $fixturesContainer;
 
         beforeEach(function (done) {
-            $fixturesContainer = fixtures.render(fixturesConfig);
-
             injector.require([
                 'commercial/modules/hosted/about'
             ], function () {
                 hostedAboutPopup = arguments[0];
 
+                $fixturesContainer = fixtures.render(fixturesConfig);
                 done();
             });
         });
@@ -42,17 +41,22 @@ define([
         });
 
         it('should hide popup after initialization', function (done) {
-            hostedAboutPopup.init().then(function () {
-                expect($('.js-survey-overlay', $fixturesContainer).hasClass('u-h')).toBe(true);
-                done();
-            });
+            hostedAboutPopup.init()
+                .then(function () {
+                    expect($('.js-survey-overlay', $fixturesContainer).hasClass('u-h')).toBeTruthy();
+                })
+                .then(done)
+                .catch(done.fail);
         });
 
         xit('should show popup after clicking on the button', function (done) {
-            hostedAboutPopup.init().then(function () {
-                expect($('.js-survey-overlay', $fixturesContainer).hasClass('u-h')).toBe(false);
-                done();
-            });
+            hostedAboutPopup.init()
+                .then(function () {
+                    document.querySelector('.js-hosted-about').click();
+                    expect($('.js-survey-overlay', $fixturesContainer).hasClass('u-h')).toBeFalsy();
+                })
+                .then(done)
+                .catch(done.fail);
         });
     });
 });
