@@ -85,7 +85,7 @@ pasteup: install # PRIVATE
 
 # Run the JS test suite.
 test: install
-	@./tools/run-task test/javascript
+	@./tools/run-task test/javascript --verbose
 
 # Check the JS test suite coverage.
 coverage: install
@@ -93,15 +93,15 @@ coverage: install
 
 # Lint all assets.
 validate: install
-	@./tools/run-task lint
+	@./tools/run-task lint --verbose
 
 # Lint all SCSS.
 validate-sass: install # PRIVATE
-	@./tools/run-task lint/sass
+	@./tools/run-task lint/sass --verbose
 
 # Lint all JS.
 validate-javascript: install # PRIVATE
-	@./tools/run-task lint/javascript
+	@./tools/run-task lint/javascript --verbose
 
 # Lint all assets.
 fix: install
