@@ -67,25 +67,24 @@
     .content__article-body p {
         font-size: 18px;
         line-height: 24px;
-    }
 
-    .content__article-body p.intro + p::first-letter {
-        display: inline-block;
-        float: left;
-        color: #000000;
-        padding: 10px 16px 12px;
-        font-size: 480%;
-        line-height: 68px;
-        width: 77px;
-        height: 77px;
-        margin-right: 8px;
-        margin-top: 4px;
-        text-align: center;
-    }
-
-    .content__article-body .intro {
-        font-size: 20px;
-        line-height: 24px;
+        &.intro {
+            font-size: 20px;
+            line-height: 24px;
+            + p::first-letter {
+                display: inline-block;
+                float: left;
+                color: #000000;
+                padding: 10px 16px 12px;
+                font-size: 480%;
+                line-height: 68px;
+                width: 77px;
+                height: 77px;
+                margin-right: 8px;
+                margin-top: 4px;
+                text-align: center;
+            }
+        }
     }
 
     h1 {

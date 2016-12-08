@@ -2,9 +2,6 @@ $header-height: 4 * $gs-baseline;
 $thumb-width: 1.5 * $gs-column-width;
 $badge-width: $gs-column-width + $gs-gutter;
 
-@import "hosted-article";
-@import "hosted-gallery";
-
 .hosted-page, .hosted__header {
     font-family: Helvetica, Arial sans-serif;
 }
@@ -58,16 +55,12 @@ $badge-width: $gs-column-width + $gs-gutter;
         z-index: 0;
         background: linear-gradient(transparent 100px, rgba(0, 0, 0, .5));
     }
-    .hosted__cta-wrapper {
-        position: absolute;
-        bottom: 2 * $gs-baseline;
-        padding: 0;
-    }
 }
 
 .hosted__cta-wrapper {
-    padding-top: 140px;
-    position: relative;
+    position: absolute;
+    bottom: 2 * $gs-baseline;
+    padding: 0;
     z-index: 1;
 }
 
@@ -100,7 +93,7 @@ $badge-width: $gs-column-width + $gs-gutter;
 .hosted__cta-label {
     display: block;
     color: #ffffff;
-    line-height: 30px;
+    line-height: 28px;
     padding-bottom: $gs-baseline / 2;
 }
 
@@ -215,10 +208,10 @@ $badge-width: $gs-column-width + $gs-gutter;
 
     .survey-container {
         position: absolute;
-        top: 20px;
-        left: 20px;
-        right: 20px;
-        max-height: calc(100% - 40px);
+        top: $gs-baseline;
+        left: $gs-gutter;
+        right: $gs-gutter;
+        max-height: calc(100% - #{2 * $gs-baseline});
         background-color: #ffffff;
         box-sizing: border-box;
         overflow: scroll;
@@ -237,8 +230,8 @@ $badge-width: $gs-column-width + $gs-gutter;
         font-size: 24px;
         font-weight: bold;
         margin: 0;
-        padding: 6px 0 0 10px;
-        height: 44px;
+        padding: $gs-baseline/2 $gs-gutter/2;
+        height: 38px;
         text-align: left;
         line-height: 1;
     }

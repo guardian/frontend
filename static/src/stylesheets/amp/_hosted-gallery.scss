@@ -119,6 +119,7 @@
     background: linear-gradient(to top, rgba(51, 51, 51, .5) 0%, rgba(51, 51, 51, .5) 70%, transparent 100%);
     .social {
         text-align: left;
+        padding-top: $gs-baseline/2;
     }
     a {
         color: #ffffff;
@@ -164,4 +165,10 @@
 
 .hosted-gallery-page .hosted__cta-btn-text {
     margin-top: $gs-baseline;
+}
+
+.hosted-gallery__cta-wrapper {
+    padding-top: 140px;
+    position: relative;
+    z-index: 1;
 }
