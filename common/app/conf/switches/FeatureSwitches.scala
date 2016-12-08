@@ -484,7 +484,7 @@ trait FeatureSwitches {
     "Adds a placeholder attribute to interactives on amp so that they are allowed to display in the top part of the page",
     owners = Seq(Owner.withGithub("michaelwmcnamara")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 15),
+    sellByDate = new LocalDate(2017, 1, 20),
     exposeClientSide = true
   )
 
@@ -507,6 +507,17 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = new LocalDate(2016, 12, 20),
+    exposeClientSide = true
+  )
+
+  //Owner Michael McNamara
+  val StressTestTailor = Switch(
+    SwitchGroup.Feature,
+    "stress-test-tailor-healthcheck",
+    "Sends a healthcheck metric for every page",
+    owners = Seq(Owner.withGithub("michaelwmcnamara")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 20),
     exposeClientSide = true
   )
 }
