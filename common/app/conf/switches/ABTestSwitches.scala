@@ -70,8 +70,8 @@ trait ABTestSwitches {
     "ab-au-memb-engagement-msg-copy-test-8",
     "Test alternate short messages on AU membership engagement banner",
     owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 22), // Thursday 22nd December
+    safeState = On, // the test is live - don't switch off accidentally
+    sellByDate = new LocalDate(2017, 1, 5), // Thursday 5th January
     exposeClientSide = true
   )
 
