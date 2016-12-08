@@ -1,10 +1,8 @@
 define([
-    'qwery',
     'common/utils/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
-    qwery,
     $,
     fixtures,
     Injector
@@ -12,9 +10,20 @@ define([
     var hostedAboutPopup,
         injector = new Injector();
 
-    describe('Article Aside Adverts', function () {
+    describe('Hosted About Popup', function () {
+
+        var fixturesConfig = {
+                id: 'hosted-about-popup',
+                fixtures: [
+                    '<div class="survey-overlay-simple js-survey-overlay u-h"></div>' +
+                    '<div class="js-hosted-about"></div>'
+                ]
+            },
+            $fixturesContainer;
 
         beforeEach(function (done) {
+            $fixturesContainer = fixtures.render(fixturesConfig);
+
             injector.require([
                 'commercial/modules/hosted/about'
             ], function () {
@@ -24,21 +33,24 @@ define([
             });
         });
 
+        afterEach(function () {
+            fixtures.clean(fixturesConfig.id);
+        });
+
         it('should exist', function () {
             expect(hostedAboutPopup).toBeDefined();
         });
 
-
-        xit('should show the popup', function (done) {
-            articleAsideAdverts.init().then(function () {
-                expect(qwery('.js-ad-slot-container > .ad-slot', $fixturesContainer).length).toBe(1);
+        it('should hide popup after initialization', function (done) {
+            hostedAboutPopup.init().then(function () {
+                expect($('.js-survey-overlay', $fixturesContainer).hasClass('u-h')).toBe(true);
                 done();
             });
         });
 
-        xit('should have the correct header text', function (done) {
-            articleAsideAdverts.init().then(function () {
-                expect($('.ad-slot', $fixturesContainer).data('name')).toBe('right');
+        xit('should show popup after clicking on the button', function (done) {
+            hostedAboutPopup.init().then(function () {
+                expect($('.js-survey-overlay', $fixturesContainer).hasClass('u-h')).toBe(false);
                 done();
             });
         });
