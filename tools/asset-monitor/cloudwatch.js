@@ -16,9 +16,12 @@ module.exports.configure = filename => new Promise((resolve, reject) => {
             secretAccessKey: module.exports.getProperty('aws.access.secret.key', data)
         });
 
-        cloudwatch = new AWS.CloudWatch();
-
-        resolve({});
+        try {
+            cloudwatch = new AWS.CloudWatch();
+            resolve({});
+        } catch (e) {
+            reject(e);
+        }
     });
 });
 
