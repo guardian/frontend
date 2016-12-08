@@ -3,8 +3,7 @@ package model
 import campaigns.PersonalInvestmentsCampaign
 import com.gu.facia.api.models._
 import common.Edition
-import common.Edition.defaultEdition
-import common.commercial.{BrandHunter, Branding, PaidContent}
+import common.commercial.Branding
 import conf.Configuration
 import contentapi.Paths
 import model.facia.PressedCollection
@@ -24,16 +23,11 @@ object PressedPage {
     val keywordIds: Seq[String] = frontKeywordIds(id)
     val contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 
-    val isAdvertisementFeature: Boolean = {
-      val branding = BrandHunter.findBranding(frontProperties.activeBrandings, defaultEdition, publicationDate = None)
-      branding.exists(_.sponsorshipType == PaidContent)
-    }
-
     val faciaPageMetaData: Map[String, JsValue] = Map(
       "keywords" -> JsString(seoData.webTitle.capitalize),
       "keywordIds" -> JsString(keywordIds.mkString(",")),
       "hasSuperStickyBanner" -> JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds)),
-      "isAdvertisementFeature" -> JsBoolean(isAdvertisementFeature)
+      "isAdvertisementFeature" -> JsBoolean(frontProperties.isAdvertisementFeature)
     )
 
     val openGraph: Map[String, String] = Map(
@@ -71,6 +65,7 @@ case class PressedPage (
   collections: List[PressedCollection]) extends StandalonePage {
 
   override val metadata: MetaData = PressedPage.makeMetadata(id, seoData, frontProperties, collections)
+  val isNetworkFront: Boolean = Edition.all.exists(_.networkFrontId == id)
 
   /** If a Facia front is a tag or section page, it ought to exist as a tag or section ID for one of its pieces of
     * content.

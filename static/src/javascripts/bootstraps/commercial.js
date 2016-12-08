@@ -13,7 +13,6 @@ define([
     'commercial/modules/dfp/prepare-googletag',
     'commercial/modules/dfp/prepare-sonobi-tag',
     'commercial/modules/dfp/fill-advert-slots',
-    'commercial/modules/front-commercial-components',
     'commercial/modules/gallery-adverts',
     'commercial/modules/hosted/about',
     'commercial/modules/hosted/video',
@@ -44,7 +43,6 @@ define([
     prepareGoogletag,
     prepareSonobiTag,
     fillAdvertSlots,
-    frontCommercialComponents,
     galleryAdverts,
     hostedAbout,
     hostedVideo,
@@ -70,7 +68,6 @@ define([
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-galleryAdverts', galleryAdverts.init],
         ['cm-liveblogAdverts', liveblogAdverts.init],
-        ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
 
