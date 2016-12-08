@@ -9,7 +9,6 @@ define([
     'commercial/modules/creatives/commercial-component',
     'commercial/modules/creatives/gu-style-comcontent',
     'commercial/modules/creatives/frame',
-    'commercial/modules/creatives/facebook',
     'commercial/modules/creatives/revealer',
     'commercial/modules/creatives/fabric-v1',
     'commercial/modules/creatives/fabric-expanding-v1',
