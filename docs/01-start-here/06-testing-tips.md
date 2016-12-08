@@ -13,8 +13,7 @@ To install third party dependencies and compile your assets as they would on pro
 If you wish to install dependencies and compile the assets in compile -dev mode, to allow real-time code compilation for testing of local branches, use the following:
 
 ```
-make install
-make compile
+make compile-dev
 ```
 
 The make command can also be used for a variety of other useful things including testing and linting javascript.
