@@ -49,7 +49,7 @@ define([
                 .catch(done.fail);
         });
 
-        xit('should show popup after clicking on the button', function (done) {
+        it('should show popup after clicking on the button', function (done) {
             hostedAboutPopup.init()
                 .then(function () {
                     document.querySelector('.js-hosted-about').click();
