@@ -2,10 +2,8 @@
 const figures = require('figures');
 const chalk = require('chalk');
 
-const taskName = title => chalk.dim(`[${title}]`);
 const log = (title, parents, message = '') => {
-    parents.length &&
-    console.log(chalk.dim(`${parents.slice(1).concat(['']).join(` ${figures.arrowRight} `)}${title}`) + ` ${message}`);
+    console.log(chalk.dim(`${parents.concat(['']).join(` ${figures.arrowRight} `)}${title}`) + ` ${message}`);
 };
 
 const render = (tasks, parents = []) => {
@@ -33,7 +31,7 @@ const render = (tasks, parents = []) => {
 	}
 };
 
-class TeamCityRenderer {
+class VerboseRenderer {
 	constructor (tasks) {
 		this._tasks = tasks;
 	}
@@ -49,4 +47,4 @@ class TeamCityRenderer {
 	end () {}
 }
 
-module.exports = TeamCityRenderer;
+module.exports = VerboseRenderer;
