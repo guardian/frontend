@@ -3,13 +3,15 @@ define([
     'common/utils/detect',
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'Promise'
 ], function (
     qwery,
     detect,
     fastdom,
     createSlot,
-    commercialFeatures
+    commercialFeatures,
+    Promise
 ) {
 
     return {

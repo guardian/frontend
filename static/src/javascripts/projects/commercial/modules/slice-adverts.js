@@ -6,7 +6,8 @@ define([
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/create-slot',
     'common/modules/user-prefs',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'Promise'
 ], function (
     bonzo,
     qwery,
@@ -15,7 +16,8 @@ define([
     fastdom,
     createSlot,
     userPrefs,
-    commercialFeatures
+    commercialFeatures,
+    Promise
 ) {
     var containerSelector = '.fc-container';
     var sliceSelector = '.js-fc-slice-mpu-candidate';
