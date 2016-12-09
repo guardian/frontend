@@ -108,8 +108,7 @@ define([
             currentTweakpoint = breakpoint.name;
             currentBreakpoint = findBreakpoint(currentTweakpoint);
         } else {
-            currentBreakpoint =
-            currentTweakpoint = breakpoint.name;
+            currentBreakpoint = currentTweakpoint = breakpoint.name;
         }
     }
 
