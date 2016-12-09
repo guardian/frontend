@@ -84,6 +84,12 @@ Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javas
 
 The frontend uses an `.nvmrc` which specifies Node 6.x as a requirement. If you use [NVM](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can just `nvm use` (or `nvm install` if you don't have 6 installed yet).
 
+To install nvm:
+
+```
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
+```
+
 You may find it useful to add [this script](https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb) to your `.bash_profile` – or wherever else is appropriate for your setup – to automatically switch Node versions if an `.nvmrc` is present.
 
 If you just want to use your system Node, you'll need to install v6:
@@ -120,19 +126,9 @@ git clone git@github.com:guardian/frontend.git
 cd frontend
 ```
 
-Install node dependencies:
-```
-npm install
-```
-
 Install additional dependencies:
 ```
 make install
-```
-
-If you get an error related to `node` try using a version of `node` <= `4.xx`. You can use [`nvm`](https://github.com/creationix/nvm) to set a node version per project.
-```
-brew install nvm
 ```
 
 After this, you can compile the assets:
