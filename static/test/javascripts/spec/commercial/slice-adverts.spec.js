@@ -49,7 +49,9 @@ define([
                     isFront: true
                 };
 
-                detect.isBreakpoint = mockIsBreakpoint('desktop');
+                detect.isBreakpoint = function () {
+                    return false;
+                };
 
                 commercialFeatures.sliceAdverts = true;
 
@@ -67,10 +69,11 @@ define([
             expect(sliceAdverts).toBeDefined();
         });
 
-        it('should only create a maximum of 3 advert slots', function (done) {
-            sliceAdverts.init()
+        it('should only create a maximum of 5 advert slots', function (done) {
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
-                expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(3);
+                expect(qwery('.ad-slot', $fixtureContainer).length).toEqual(5);
             })
             .then(done)
             .catch(done.fail);
@@ -81,7 +84,8 @@ define([
                 return 'desktop';
             };
 
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 $('.ad-slot', $fixtureContainer).each(function (adSlot) {
                     expect(bonzo(adSlot).parent().hasClass('fc-slice__item--no-mpu')).toBe(false);
@@ -92,7 +96,8 @@ define([
         });
 
         it('should have the correct ad names', function (done){
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
 
@@ -105,21 +110,28 @@ define([
         });
 
         it('should have the correct ad names on mobile', function (done) {
-            detect.isBreakpoint = mockIsBreakpoint('mobile');
-            sliceAdverts.init()
+            var oldis = detect.isBreakpoint;
+            detect.isBreakpoint = function () {
+                return true;
+            };
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 var $adSlots = $('.ad-slot', $fixtureContainer).map(function (slot) { return $(slot); });
 
                 expect($adSlots[0].data('name')).toEqual('top-above-nav');
                 expect($adSlots[1].data('name')).toEqual('inline1');
                 expect($adSlots[2].data('name')).toEqual('inline2');
+
+                detect.isBreakpoint = oldis;
             })
             .then(done)
             .catch(done.fail);
         });
 
         it('should have the correct size mappings', function (done) {
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 $('.ad-slot--inline1', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
@@ -137,8 +149,12 @@ define([
         });
 
         it('should have the correct size mappings on mobile', function (done) {
-            detect.isBreakpoint = mockIsBreakpoint('mobile');
-            sliceAdverts.init()
+            var oldis = detect.isBreakpoint;
+            detect.isBreakpoint = function () {
+                return true;
+            };
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 $('.ad-slot--top-above-nav', $fixtureContainer).each(function (adSlot) {
                     var $adSlot = bonzo(adSlot);
@@ -150,13 +166,15 @@ define([
 
                     expect($adSlot.data('mobile')).toEqual('1,1|2,2|300,250|fluid');
                 });
+                detect.isBreakpoint = oldis;
             })
             .then(done)
             .catch(done.fail);
         });
 
         it('should have at least one non-advert containers between advert containers', function (done) {
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(1);
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
@@ -183,7 +201,8 @@ define([
             detect.isBreakpoint = function () {
                 return false;
             };
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
@@ -200,7 +219,8 @@ define([
             prefs[containerId] = 'closed';
             $('.fc-container-first', $fixtureContainer).attr('data-id', containerId);
             userPrefs.set('container-states', prefs);
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 expect(qwery('.fc-container-third .ad-slot', $fixtureContainer).length).toBe(1);
                 expect(qwery('.fc-container-fifth .ad-slot', $fixtureContainer).length).toBe(1);
@@ -217,19 +237,23 @@ define([
             });
 
             it('is added on mobile', function (done) {
-                detect.isBreakpoint = mockIsBreakpoint('mobile');
-                sliceAdverts.init()
+                var oldis = detect.isBreakpoint;
+                detect.isBreakpoint = function () {
+                    return true;
+                };
+                sliceAdverts.init();
+                sliceAdverts.init.whenRendered
                 .then(function () {
-                    expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(1);
+                    expect(qwery('.fc-container-first+section>.ad-slot', $fixtureContainer).length).toBe(1);
+                    detect.isBreakpoint = oldis;
                 })
                 .then(done)
                 .catch(done.fail);
             });
 
             it('is not added on desktop', function (done) {
-                detect.isBreakpoint = mockIsBreakpoint('desktop');
-
-                sliceAdverts.init()
+                sliceAdverts.init();
+                sliceAdverts.init.whenRendered
                 .then(function () {
                     expect(qwery('.fc-container-first .ad-slot', $fixtureContainer).length).toBe(0);
                 })
@@ -242,7 +266,8 @@ define([
 
         //TODO: get data if we need to reintroduce this again
         xit('should add one slot for tablet, one slot for mobile after container', function (done) {
-            sliceAdverts.init()
+            sliceAdverts.init();
+            sliceAdverts.init.whenRendered
             .then(function () {
                 expect($('.fc-container-first .ad-slot', $fixtureContainer).hasClass('ad-slot--not-mobile'))
                     .toBe(true);
@@ -252,29 +277,5 @@ define([
             .then(done)
             .catch(done.fail);
         });
-
-        function mockIsBreakpoint(current) {
-
-            return function (query) {
-                var maxBreakpoint = getBreakpoint(query.max);
-                var maxSize = maxBreakpoint ? maxBreakpoint.width : Infinity;
-
-                var minBreakpoint = getBreakpoint(query.min);
-                var minSize = minBreakpoint ? minBreakpoint.width : 0;
-
-                var mockSize = getBreakpoint(current).width;
-                return minSize <= mockSize && mockSize <= maxSize;
-            };
-
-            function getBreakpoint(name) {
-                var breakpoints = detect.breakpoints;
-                for (var i = 0; i < breakpoints.length; i++) {
-                    if (breakpoints[i].name === name) {
-                        return breakpoints[i];
-                    }
-                }
-                return undefined;
-            }
-        }
     });
 });
