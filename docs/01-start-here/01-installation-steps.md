@@ -132,7 +132,7 @@ make install
 
 If you get an error related to `node` try using a version of `node` <= `4.xx`. You can use [`nvm`](https://github.com/creationix/nvm) to set a node version per project.
 ```
-brew install nvm
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
 ```
 
 After this, you can compile the assets:
