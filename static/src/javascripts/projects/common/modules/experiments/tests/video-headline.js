@@ -3,7 +3,7 @@ define([
 ], function () {
     return function () {
         this.id = 'VideoHeadline';
-        this.start = '2016-11-27';
+        this.start = '2016-12-08';
         this.expiry = '2017-01-20';
         this.author = 'Chris J Clarke';
         this.description = 'Test whether adding a headline in addition to the new play button increases plays';
