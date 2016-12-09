@@ -120,11 +120,6 @@ git clone git@github.com:guardian/frontend.git
 cd frontend
 ```
 
-Install node dependencies:
-```
-npm install
-```
-
 Install additional dependencies:
 ```
 make install
