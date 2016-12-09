@@ -6,8 +6,6 @@
 
 ## Screenshots
 
-## Request for comment
-
-<!-- AB test? https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/01-ab-testing.md -->
-<!-- AMP question? https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/17-working-with-amp.md -->
-<!-- Does this PR meet the contributing guidelines? https://github.com/guardian/frontend/blob/issue_pr_templates/.github/CONTRIBUTING.md#submission -->
+<!-- AB test? https://git.io/v1V0x -->
+<!-- AMP question? https://git.io/v1V0p -->
+<!-- Does this PR meet the contributing guidelines? https://git.io/v1VEJ -->
