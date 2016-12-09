@@ -77,6 +77,12 @@ define([
         mediator.emit('page:commercial:sticky-mpu');
     };
 
+    sizeCallbacks[adSizes.video] = function (_, advert) {
+        fastdom.write(function () {
+            advert.node.classList.add('u-h');
+        });
+    };
+
     /**
      * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
      * and their containers closed up.
