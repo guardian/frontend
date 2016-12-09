@@ -12,7 +12,7 @@ conditionallyValidate() {
     then
 
         # if remote-tracking branch exists,
-        # run grunt task if relevant file-types are different
+        # run task if relevant file-types are different
         git diff --cached --name-only "origin/$branch" | if grep $1
         then
             $2
@@ -21,7 +21,7 @@ conditionallyValidate() {
     else
 
         # if remote branch doesn't exist,
-        # run grunt task if symmetric difference from remote master contains relevant file-types
+        # run task if symmetric difference from remote master contains relevant file-types
         git diff --name-only "origin/master..." | if grep $1
         then
             $2
