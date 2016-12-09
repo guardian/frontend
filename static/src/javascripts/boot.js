@@ -17,6 +17,7 @@ Bundles we need to run: commercial + enhanced
 Only if we detect we should run enhance.
  */
 
+
 define([
     'Promise',
     'domReady',
