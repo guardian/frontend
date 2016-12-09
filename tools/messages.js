@@ -72,7 +72,7 @@ switch (process.argv[2]) {
         break;
 
     case 'should-yarn':
-        notify('Run `make install` and include any changes to `/yarn.locl` in your commit.', {
+        notify('Run `make install` and include any changes to `/yarn.lock` in your commit.', {
             heading: 'Dependencies have changed'
         }, 'error');
         break;

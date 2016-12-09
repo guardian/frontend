@@ -86,7 +86,7 @@
     "fsevents": "*"
   },
   "scripts": {
-    "postinstall": "./tools/run-task githooks",
+    "postinstall": "./tools/run-task githooks --verbose",
     "sass-watch": "node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true",
     "css-watch": "gulp --cwd ./dev watch:css",
     "browser-sync": "browser-sync start --config ./dev/bs-config.js",
