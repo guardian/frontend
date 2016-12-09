@@ -81,7 +81,6 @@ define([
 
         this.sliceAdverts =
             this.dfpAdvertising &&
-            !isMinuteArticle &&
             config.page.isFront &&
             switches.commercial;
 
