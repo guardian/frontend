@@ -15,7 +15,7 @@ conditionallyValidate() {
         # run task if relevant file-types are different
         git diff --cached --name-only "origin/$branch" | if grep $1
         then
-            $2
+            $2 && $3
         fi
 
     else
@@ -24,7 +24,7 @@ conditionallyValidate() {
         # run task if symmetric difference from remote master contains relevant file-types
         git diff --name-only "origin/master..." | if grep $1
         then
-            $2
+            $2 && $3
         fi
 
     fi
@@ -32,16 +32,16 @@ conditionallyValidate() {
 
 # Validate CSS
 CSS_SRC_PATTERN="\.scss$"
-conditionallyValidate "$CSS_SRC_PATTERN" "make install && ./tools/run-task lint/sass"
+conditionallyValidate "$CSS_SRC_PATTERN" "make install" "./tools/run-task lint/sass"
 cssValidateResult=$?
 
 # Validate JS
 JS_SRC_PATTERN="\.js$"
-conditionallyValidate "$JS_SRC_PATTERN" "make install && ./tools/run-task lint/javascript"
+conditionallyValidate "$JS_SRC_PATTERN" "make install" "./tools/run-task lint/javascript"
 jsValidateResult=$?
 
 # Test JS
-conditionallyValidate "[^/]\+/\(app\|test\)/assets/javascripts/.*$JS_SRC_PATTERN" "make install && ./tools/run-task test/javascript"
+conditionallyValidate "[^/]\+/\(app\|test\)/assets/javascripts/.*$JS_SRC_PATTERN" "make install" "./tools/run-task test/javascript"
 jsTestResult=$?
 
 # Exit code 1 means don't commit and 0 means do commit
