@@ -30,7 +30,7 @@ module.exports = (() => {
         '/stage/2016/aug/24/they-drink-it-in-the-congo-review-adam-brace', // Vimeo
         '/commentisfree/2016/aug/25/burkini-french-muslim-isis', // Videop
         //'/music/musicblog/2010/sep/02/wiley-ustream', // uStream
-        //'/world/2015/mar/16/london-teenagers-stopped-syria-parents-islamic-state', // audioboom
+        '/world/2015/mar/16/london-teenagers-stopped-syria-parents-islamic-state', // audioboom
         '/sport/2014/jul/03/tour-de-france-2014-yellow-jersey-contenders-chris-froome-stats-history', // infrostrada
         //'/education/live/2016/aug/25/gcse-results-day-2016-uk-students-get-their-grades-live',  // guardian witness
         '/lifeandstyle/2016/jun/04/dont-talk-politics-sex-ex-10-ways-ruin-a-date',  // gif

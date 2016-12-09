@@ -14,7 +14,9 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   val dataInteractiveIframeWrapper = "http://foo.bar/iframe-wrapper/foo/bar"
   val dataInteractiveNoIframeWrapper = "http://foo.bar/foo/bar"
   val googleMapsUrl = "https://www.google.com/maps/embed/v1/place?center=-3.9834936%2C12.7024497&key=AIzaSyBctFF2JCjitURssT91Am-_ZWMzRaYBm4Q&zoom=5&q=Democratic+Republic+of+the+Congo"
-  val soundcloudUrl = "http://www.soundcloud.com%2Ftracks%2F1234"
+  val soundcloudTrackid = 1234
+  val soundcloudUrlV1 = "http://api.soundcloud.com%2Ftracks%2F1234"
+  val soundcloudUrlV2 = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1234"
 
 
   private def clean(document: Document): Document = {
@@ -154,13 +156,15 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
   /////////////////////////////
   // Soundcloud cleaner
+  // Note: There are two formats of src url that have been encountered, testing has been adapted to check both of these
+  //        formats
   /////////////////////////////
 
- "AmpEmbedCleaner" should "replace an iframe in an audio-element that has a src url from soundcloud.com, with an amp-soundcloud element" in {
+ "AmpEmbedCleaner" should "replace an iframe in an audio-element that has a src url from soundcloud.com which matches the first pattern, with an amp-soundcloud element" in {
    val doc = <html>
                 <body>
                   <figure class="element-audio">
-                    <iframe src={soundcloudUrl}></iframe>
+                    <iframe src={soundcloudUrlV1}></iframe>
                   </figure>
                 </body>
              </html>.toString()
@@ -168,6 +172,19 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
    val result: Document = clean(document)
    result.getElementsByTag("amp-soundcloud").size should be(1)
  }
+
+  "AmpEmbedCleaner" should "replace an iframe in an audio-element that has a src url from soundcloud.com which matches the second pattern, with an amp-soundcloud element" in {
+    val doc = <html>
+      <body>
+        <figure class="element-audio">
+          <iframe src={soundcloudUrlV2}></iframe>
+        </figure>
+      </body>
+    </html>.toString()
+    val document: Document = Jsoup.parse(doc)
+    val result: Document = clean(document)
+    result.getElementsByTag("amp-soundcloud").size should be(1)
+  }
 
   "AmpEmbedCleaner" should "not add a amp-soundcloud element if an audio element does not contain an iframe with src url from soundcloud.com" in {
     val doc = <html>
@@ -179,10 +196,8 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
               </html>.toString()
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
-    println("result from soundcloud processing of audioboom url:\n" + result)
     result.getElementsByTag("amp-soundcloud").size should be(0)
   }
-
 
   "AmpEmbedCleaner" should "not add a amp-soundcloud element if an audio element does not contain an iframe" in {
     val doc = <html>
@@ -195,19 +210,30 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-soundcloud").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "create an amp-soundcloud element with a trackid from the iframe src" in {
-    val trackId = "1234"
-    val soundcloudUrl = s"https://www.soundcloud.com%2Ftracks%2F$trackId"
+  "AmpEmbedCleaner" should "create an amp-soundcloud element with a trackid from an iframe src that matches the first pattern" in {
     val doc = <html>
                 <body>
                   <figure class="element-audio">
-                    <iframe src={soundcloudUrl}></iframe>
+                    <iframe src={soundcloudUrlV1}></iframe>
                   </figure>
                 </body>
               </html>.toString()
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
-    result.getElementsByTag("amp-soundcloud").first.attr("data-trackid") should be(trackId)
+    result.getElementsByTag("amp-soundcloud").first.attr("data-trackid") should be(soundcloudTrackid.toString)
+  }
+
+  "AmpEmbedCleaner" should "create an amp-soundcloud element with a trackid from the iframe src that matches the second pattern" in {
+    val doc = <html>
+      <body>
+        <figure class="element-embed">
+          <iframe src={soundcloudUrlV2}></iframe>
+        </figure>
+      </body>
+    </html>.toString()
+    val document: Document = Jsoup.parse(doc)
+    val result: Document = clean(document)
+    result.getElementsByTag("amp-soundcloud").first.attr("data-trackid") should be(soundcloudTrackid.toString)
   }
 
   "AmpEmbedCleaner" should "not create an amp-soundcloud element if trackid missing from iframe src" in {
@@ -227,10 +253,10 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
 
   /////////////////////////////
-  // Audioboom cleaner
+  // Audio Embed cleaner
   /////////////////////////////
 
-  "AmpEmbedCleaner" should "replace an iframe in an audio-element that contains an audioboom url with an amp-iframe element" in {
+  "AmpEmbedCleaner" should "replace an iframe in an audio-element that is not a soundcloud embed with an amp-iframe element" in {
     val doc = <html>
                   <body>
                     <figure class="element-audio">
@@ -240,15 +266,14 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
               </html>.toString()
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
-    println("result from audioboom test 1: \n" + result)
     result.getElementsByTag("amp-iframe").size should be(1)
   }
 
-  "AmpEmbedCleaner" should "not add an amp-iframe element if an does not contain an iframe with src url from audioboom.com" in {
+  "AmpEmbedCleaner" should "not add an amp-iframe element if an audio embed contains an iframe with src url from soundcloud" in {
     val doc = <html>
                   <body>
                     <figure class="element-audio">
-                      <iframe src={soundcloudUrl}></iframe>
+                      <iframe src={soundcloudUrlV1}></iframe>
                     </figure>
                   </body>
               </html>.toString()
@@ -268,7 +293,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-iframe").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "create an amp-iframe element with a data-main-player-id from the iframe src" in {
+  "AmpEmbedCleaner" should "create an amp-iframe element with a data-main-player-id from the iframe src from an audioboom embed" in {
     val doc = <html>
                   <body>
                     <figure class="element-audio">
@@ -278,9 +303,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
               </html>.toString()
     val document: Document = Jsoup.parse(doc)
     val result: Document = clean(document)
-    println("result.getElementsByTag(\"amp-iframe\").first.attr(\"data-main-player-id\")" + result.getElementsByTag("amp-iframe").first.attr("data-main-player-id").length)
-    //result.getElementsByTag("amp-iframe").first.attr("data-main-player-id") should be(audioBoomTrackid)
-    result.getElementsByTag("amp-iframe").first.attr("data-main-player-id").length should be(1)
+    result.getElementsByTag("amp-iframe").first.attr("src") should be(audioBoomUrl)
   }
 
 

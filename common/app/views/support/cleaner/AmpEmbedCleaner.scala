@@ -85,6 +85,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       soundcloud.attr("height", "300") // height is necessary if data-visual == true
     }
 
+    // There are 2 url patterns that have been encountered in soundcloud embeds.
     def getTrackIdFromUrl(soundcloudUrl: String): Option[String] = {
       val pattern = ".*api.soundcloud.com%2Ftracks%2F(\\d+).*".r
       val alternatePattern = ".*api.soundcloud.com/tracks/(\\d+).*".r
@@ -99,6 +100,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       }
     }
 
+    // Two types of soundcloud embed have been encountered. element-audio and element-embed.
+    // This object now has two "clean" functions to cater for the two types. Both must be run.
     def cleanAudioElement(document: Document) = {
       for {
         audioElement <- document.getElementsByClass("element-audio")
@@ -124,22 +127,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }
   }
 
+  // This creates an amp-iframe for audio embeds that are not Soundcloud embeds - for example Audioboom embeds
   object AmpAudioElements {
-
-/*    def getSoundCloudTrackIdFromUrl(soundcloudUrl: String): Option[String] = {
-      val pattern = ".*soundcloud.com%2Ftracks%2F(\\d+).*".r
-      soundcloudUrl match {
-        case pattern(trackId) => Some(trackId)
-        case _ => None
-      }
-    }*/
-
-/*    def createSoundCloudElement(document: Document, trackId: String): Element = {
-      val soundcloud = document.createElement("amp-soundcloud")
-      soundcloud.attr("data-trackid", trackId)
-      soundcloud.attr("data-visual", "true")
-      soundcloud.attr("height", "300") // height is necessary if data-visual == true
-    }*/
 
     def createAmpIframeElement(document: Document, src: String, width: String, height: String, frameborder: String): Element = {
       val ampIframe = document.createElement("amp-iframe")
@@ -281,12 +270,13 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
     cleanAmpVideos(document)
     AmpExternalVideo.clean(document)
+    AmpSoundcloud.cleanAudioElement(document)
     AmpAudioElements.clean(document)
+    AmpSoundcloud.cleanEmbedElement(document)
     cleanAmpMaps(document)
     cleanAmpInstagram(document)
     cleanAmpInteractives(document)
-    AmpSoundcloud.cleanAudioElement(document)
-    AmpSoundcloud.cleanEmbedElement(document)
+    //run cleanAmpEmbed last as it has a generic action and can remove some embed types that are actioned by the other objects
     cleanAmpEmbed(document)
 
     document
