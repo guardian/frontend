@@ -42,7 +42,7 @@ define([
             fixtures.clean(fixturesConfig.id);
         });
 
-        it('should exist', function () {
+        it('should exist', function (done) {
             expect(nextVideoAutoplay).toBeDefined();
             done();
         });
