@@ -9,7 +9,7 @@ module.exports = {
         cpy(['curl-domReady.js'], conf, {
             cwd: path.resolve(src, 'javascripts', 'components', 'curl')
         }),
-        cpy(['atomic.css', '**/head*.css', 'inline/**/*.css'], path.resolve(conf, 'inline-stylesheets'), {
+        cpy(['**/head*.css', 'inline/**/*.css'], path.resolve(conf, 'inline-stylesheets'), {
             cwd: path.resolve(target, 'stylesheets')
         }),
         cpy(['**/assets.map'], path.resolve(conf), {

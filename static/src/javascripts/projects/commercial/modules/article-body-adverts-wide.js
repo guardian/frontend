@@ -45,7 +45,7 @@ define([
      * inserted dynamically. */
     var bodyAds;
 
-    var isWide;
+    var isDesktop;
     var isMobile;
     var replaceTopSlot;
     var getSlotName;
@@ -78,8 +78,8 @@ define([
 
     function boot() {
         bodyAds = 0;
-        isWide = detect.getBreakpoint() === 'wide';
-        replaceTopSlot = isMobile = !isWide && detect.isBreakpoint({ max: 'phablet' });
+        isDesktop = detect.isBreakpoint({ min: 'desktop' });
+        replaceTopSlot = isMobile = !isDesktop && detect.isBreakpoint({ max: 'phablet' });
         getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;
     }
 
@@ -114,7 +114,7 @@ define([
             }
         };
 
-        if (!isMerch && isWide) {
+        if (!isMerch && isDesktop) {
             rules.minBelow = 100;
             rules.selectors = {
                 ' .ad-slot': { minAbove: 500, minBelow: 500 }
@@ -154,7 +154,7 @@ define([
                 return insertAdAtPara(para, getSlotName(), 'inline');
             });
 
-            if (isWide) {
+            if (isDesktop) {
                 inlineSlots.push.apply(inlineSlots, slots);
             }
         }
@@ -188,7 +188,7 @@ define([
             }
         })
         .then(function () {
-            if (isWide && inlineSlots.length) {
+            if (isDesktop && inlineSlots.length) {
                 offsetAds()
                 .then(function () {
                     // Prevent memory leak

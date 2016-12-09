@@ -80,7 +80,7 @@ const uniq = require('lodash.uniq');
 
 const tasksIdentifier = '__tasks__';
 
-const {dev: IS_DEV, teamcity: IS_TEAMCITY, debug: IS_DEBUG, stdout: IS_STDOUT, _: TASKS} = yargs
+const {dev: IS_DEV, teamcity: IS_TEAMCITY, debug: IS_DEBUG, verbose: IS_VERBOSE, stdout: IS_STDOUT, _: TASKS} = yargs
     .option('dev', {
         demand: false,
         describe: 'Prefer the dev version of the task, if it exits.',
@@ -117,7 +117,7 @@ const {dev: IS_DEV, teamcity: IS_TEAMCITY, debug: IS_DEBUG, stdout: IS_STDOUT, _
     .version().alias('v', 'version')
     .argv;
 
-const verbose = IS_TEAMCITY || IS_DEBUG;
+const VERBOSE = IS_VERBOSE || IS_TEAMCITY || IS_DEBUG;
 
 const taskSrc = path.resolve(__dirname, tasksIdentifier);
 
@@ -128,7 +128,7 @@ const cache = [];
 const exec = (task, onError, ctx) => {
     const [cmd, ...args] = task.trim().split(' ');
 
-    if (verbose) {
+    if (VERBOSE) {
         return execa(cmd, args, {
             stdio: [process.stdin, process.stdout, process.stderr]
         });
@@ -160,7 +160,7 @@ function listrify(steps, {concurrent = false} = {}) {
                     if (_task.task) return _task;
                     if (typeof _task === 'string') return { title, task: ctx => exec(_task, onError, ctx), skip};
                     return { title, task: _task, skip};
-                }), {concurrent: IS_TEAMCITY ? false : concurrent}), skip };
+                }), {concurrent: VERBOSE ? false : concurrent}), skip };
             }
 
             // treat tasks that are strings as terminal commands
@@ -173,7 +173,7 @@ function listrify(steps, {concurrent = false} = {}) {
                     resolve(task(ctx));
                 } catch (e) {
                     if (typeof onError === 'function') onError(ctx);
-                    if (verbose) console.log(e);
+                    if (VERBOSE) console.log(e);
                     reject(e);
                 }
             }), skip };
@@ -182,7 +182,7 @@ function listrify(steps, {concurrent = false} = {}) {
     return new Listr(listrTasks, {
         concurrent,
         collapse: true,
-        renderer: IS_TEAMCITY ? require('./run-task-tc-formater') : 'default'
+        renderer: IS_TEAMCITY ? require('./run-task-tc-formater') : IS_VERBOSE ? require('./run-task-verbose-formater') : 'default'
     });
 }
 
@@ -215,7 +215,7 @@ listrify(taskModules).run({
     stdouts: []
 }).catch(e => {
     if (e) {
-        if (!verbose) {
+        if (!VERBOSE) {
             if (!e.stderr && !e.stdout) console.log(e);
             if (e.stderr) console.error(`\n${e.stderr.trim()}`);
             if (e.stdout) console.log(`\n${e.stdout.trim()}`);

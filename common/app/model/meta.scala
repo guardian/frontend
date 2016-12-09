@@ -569,6 +569,8 @@ final case class Tags(
 
   lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
   lazy val isTheMinuteArticle = tags.exists(t => t.id == "tone/minute")
+  //this is for the immersive header to access this info
+  lazy val isAdvertisementFeature = tags.exists( t => t.id == "tone/advertisement-features" )
 
   lazy val isUSElection = tags.exists(t => t.id == "us-news/us-elections-2016")
   lazy val isAusElection = tags.exists(t => t.id == "australia-news/australian-election-2016")

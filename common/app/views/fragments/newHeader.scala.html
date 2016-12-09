@@ -1,10 +1,9 @@
 @(page: model.Page)(implicit request: RequestHeader)
 
-@import conf.Atomise
 @import common.{LinkTo, NewNavigation, NavLink, Edition}
 @import views.support.RenderClasses
 
-<header class="@Atomise("New-header")" role="banner">
+<header class="new-header" role="banner">
     @defining(
         NewNavigation.SectionLinks.getSectionLinks(page.metadata.sectionId, Edition(request))
     ) { case (currentTopLevelSection, sections) =>

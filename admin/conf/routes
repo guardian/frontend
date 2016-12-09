@@ -65,7 +65,6 @@ POST        /dev/switchboard-plista                                             
 GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.abtests()
 GET         /analytics/confidence                                                                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET         /analytics/content/video                                                                controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
-GET         /analytics/quality                                                                      controllers.admin.AnalyticsController.renderQuality()
 
 
 # Facia

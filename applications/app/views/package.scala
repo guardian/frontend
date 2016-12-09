@@ -19,7 +19,7 @@ object InteractiveBodyCleaner {
   }
 }
 
-object FrontsCleaner {
+object IndexCleaner {
  def apply(page: IndexPage, html: String)(implicit request: RequestHeader, env: Environment) = {
     val edition = Edition(request)
     withJsoup(BulletCleaner(html))(

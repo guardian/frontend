@@ -7,7 +7,7 @@ const src = path.resolve(root, 'git-hooks');
 const target = path.resolve(root, '.git', 'hooks');
 
 module.exports = {
-    description: 'Update githooks',
+    description: 'Sync .git/hooks',
     task: () => {
 
         // always try and remove any old ones
