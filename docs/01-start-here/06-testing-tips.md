@@ -1,5 +1,13 @@
 # Testing tips
 
+1. [Running localhost] (#running-localhost)
+2. [Testing AMP] (#testing-amp)
+3. [Device Testing](#device-testing)
+4. [Testing local on CODE] (#testing-your-local-on-code)
+
+
+# Running localhost
+
 ### Get credentials from janus
 Before you do anything else on your local frontend build, navigate to the janus page
 and follow the steps to get your credentials for Frontend and for CMS-Fronts.
@@ -48,7 +56,7 @@ To run only the tests for a particular test suite, use the command:
   test-only *<name-of-your-test-suite>
 ```
 
-## Testing AMP
+# Testing AMP
 
 ### Testing AMP Pages on local build
 Amp pages are available for articles and liveblogs.
@@ -107,7 +115,7 @@ google-search result to the amp page. The following will indicate you are on an 
 4) That images and other embeds display correctly - especially on narrow screens such as the iPhone5S
 
 
-## Device Testing
+# Device Testing
 
 ### How to test your devices on local
 - It is possible to use chrome emulator to get a good idea of how android devices behave and XCode the hardware simulators on XCode to do the same for iOS,
@@ -117,8 +125,8 @@ A tool called `ngrok` is a good way to make a local port accessible to external 
 
 ### What to test on
 A list of useful information on device testing follows:
-- [Our browser support principals](https://github.com/guardian/frontend/blob/master/docs/04-quality/02-browser-support-principles.md);
-- [A list of what browsers we support](https://github.com/guardian/frontend/blob/master/docs/04-quality/01-browser-support.md);
+- [Our browser support principals](https://github.com/guardian/frontend/blob/master/docs/04-quality/02-browser-support-principles.md)
+- [A list of what browsers we support](https://github.com/guardian/frontend/blob/master/docs/04-quality/01-browser-support.md)
 - [Ranking of the current top browsers](https://github.com/guardian/frontend/blob/master/docs/04-quality/01-browser-support.md)
 - [Breakdown of last seven days web traffic by type of device](https://dashboard.ophan.co.uk/graph/breakdown?days=7&device=Personal+computer&device=Smartphone&device=Tablet&by=device)
 
@@ -155,7 +163,8 @@ This is useful as it makes it very easy to check if a problem is unique to your 
 If you are testing embeds, it can be hard to find examples to test on. [This page](https://s3-eu-west-1.amazonaws.com/capi-wpt-querybot/pageElementSamplePages.html) gives a list of example pages that contain a particular embed.
 Also make sure your change conforms to the [guardian-visual-glossary](https://github.com/guardian/frontend/blob/master/docs/01-start-here/02-guardian-visual-glossary.md)
 
-### Testing your local on CODE
+
+# Testing your local on CODE
 There are times when you are testing something locally that you just can’t find on our production content, for instance:
 	- Implementing new template or embed types.
 	- Testing hard to find embed types - ie a Guardian Witness embed.
