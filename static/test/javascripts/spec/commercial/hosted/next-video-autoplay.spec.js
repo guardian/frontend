@@ -43,7 +43,6 @@ define([
         });
 
         it('should exist', function () {
-            console.log(nextVideoAutoplay);
             expect(nextVideoAutoplay).toBeDefined();
         });
 
