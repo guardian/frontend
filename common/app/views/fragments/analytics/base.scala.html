@@ -41,8 +41,8 @@
     </div>
 </noscript>
 
-@if(Configuration.environment.isProd){<img src="https://tailor.guardianapis.com/test" alt="" style="display : none ;" rel="nofollow"/>}
-@if(Configuration.environment.isCode){<img src="http://code.tailor.guardianapis.com/test" alt="" style="display : none ;" rel="nofollow"/>}
+@if(StressTestTailor.isSwitchedOn && Configuration.environment.isProd){<img src="https://tailor.guardianapis.com/test" alt="" style="display : none ;" rel="nofollow"/>}
+@if(StressTestTailor.isSwitchedOn && Configuration.environment.isCode){<img src="http://code.tailor.guardianapis.com/test" alt="" style="display : none ;" rel="nofollow"/>}
 
 <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>
 <img src="https://www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1" height="1" width="1" style="display:none" rel="nofollow" alt="" />
