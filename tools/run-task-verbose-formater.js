@@ -15,7 +15,7 @@ const render = (tasks, parents = []) => {
             }
             if (event.type === 'STATE') {
                 if (task.isPending()) {
-                    log(task.title, parents);
+                    log(task.title, parents, chalk.dim('...'));
                 }
                 if (task.hasFailed()) {
                     log(task.title, parents, chalk.red(figures.cross));
@@ -23,9 +23,12 @@ const render = (tasks, parents = []) => {
                 if (task.isSkipped()) {
                     log(task.title, parents, `${chalk.dim(figures.arrowDown)} (${task.output})`);
                 }
+                if (task.isCompleted() && !task.hasFailed() && !task.isSkipped()) {
+                    log(task.title, parents, chalk.dim.green(figures.tick));
+                }
             }
             if (event.type === 'DATA') {
-               log(task.title, parents, event.data);
+               console.log(event.data);
            }
         });
 	}
