@@ -44,6 +44,7 @@ define([
 
         it('should exist', function () {
             expect(nextVideoAutoplay).toBeDefined();
+            done();
         });
 
         xit('should trigger autoplay when there is a next video', function (done) {
