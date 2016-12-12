@@ -67,9 +67,7 @@ module.exports = (() => {
             Hosted pages
          */
         '/advertiser-content/audi-history-of-audi/audi-and-innovation', //hosted article page
-        '/advertiser-content/chester-zoo-act-for-wildlife/ensuring-a-future-for-south-asian-wildlife', //hosted article page with video
-        '/advertiser-content/chester-zoo-act-for-wildlife/what-we-fight-for', //hosted gallery page
-        '/advertiser-content/chester-zoo-act-for-wildlife/making-wildlife-friendly-habitats', //hosted video non-youtube page
+        '/advertiser-content/colonial-first-state-the-next-chapter/steve-liebmann-former-australian-television-anchor-on-the-ext-chapter', //hosted video non-youtube page
         '/advertiser-content/explore-canada-food-busker-in-canada/duelling-bagels' //hosted video youtube page
     ];
 })();
