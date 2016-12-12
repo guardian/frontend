@@ -4,6 +4,7 @@ import java.io.File
 
 import play.api.mvc.{Action, Controller}
 import common.Logging
+import play.api.Environment
 import play.api.data._
 import play.api.data.Forms._
 import services.RedirectService.{PermanentRedirect => GuardianRedirect}
@@ -12,7 +13,7 @@ import services.RedirectService
 case class PageRedirect(from: String, to: String) {
   lazy val trim = this.copy(from = from.trim, to = to.trim)
 }
-class RedirectController(redirects: RedirectService) extends Controller with Logging {
+class RedirectController(redirects: RedirectService)(implicit env: Environment) extends Controller with Logging {
 
 
   val redirectForm = Form(mapping("from" -> text, "to" -> text)(PageRedirect.apply)(PageRedirect.unapply))

@@ -1,0 +1,53 @@
+@import common.commercial.hosted.HostedGalleryImage
+@import views.support.ImgSrc
+@import views.html.hosted._
+@import common.commercial.hosted.HostedGalleryPage
+
+@(picture: model.ImageMedia, image: HostedGalleryImage, index: Int, page: HostedGalleryPage)
+
+@picture.largestImage.map { largestImage =>
+    <amp-img src="@ImgSrc.getAmpImageUrl(picture)"
+    layout="responsive"
+    width="@largestImage.width"
+    height="@largestImage.height"
+    alt="@image.title">
+
+        @if(index == 0) {
+            <div class="hosted-gallery__meta">
+                <div class="hosted-gallery__meta-text">
+                    <h1 class="hosted-gallery__heading">@{page.title}</h1>
+                    <h3 class="hosted-gallery__sub-heading">@{page.standfirst}</h3>
+                </div>
+            </div>
+        }
+
+        @if(index == page.images.length - 1) {
+            <div class="hosted-gallery__meta">
+                <div class="hosted-gallery__meta-text">
+                    <div class="hosted__cta-wrapper hosted__cta-btn-wrapper">
+                        <span class="hosted__cta-label">@{page.cta.label}</span>
+                        <a href="@{page.cta.url}" class="hosted__cta-btn-text hosted-tone-btn">@{page.cta.btnText} @fragments.inlineSvg("external-link", "icon")</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="hosted-gallery__caption">
+            <input type="checkbox" value="" id="info-button-@index" class="info-button-checkbox"/>
+            <label for="info-button-@index" class="hosted-gallery__info-button">
+                <span class="icon-i">i</span>
+                @fragments.inlineSvg("cross", "icon", List("inline-cross inline-icon "))
+            </label>
+            <div class="hosted-gallery__image-title">
+                @image.title
+            </div>
+            <div class="hosted-gallery__caption-text">
+                @Html(image.caption)
+                @if(image.caption.nonEmpty && image.credit.nonEmpty){<br/>}
+                @image.credit
+                @guardianHostedShareButtons(page)
+            </div>
+        </div>
+
+    </amp-img>
+}

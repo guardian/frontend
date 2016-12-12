@@ -47,6 +47,8 @@ define([
                 return !urlHost || urlHost === host;
             },
             getClickSpec = function (spec, forceValid) {
+
+                // element was removed from the DOM
                 if (!spec.el) {
                     return false;
                 }

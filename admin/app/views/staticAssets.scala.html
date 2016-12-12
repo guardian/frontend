@@ -1,4 +1,4 @@
-@(env: String, metrics: Seq[tools.AssetMetric])(implicit request: RequestHeader)
+@(metrics: Seq[tools.AssetMetric])(implicit request: RequestHeader, env: play.api.Environment)
 
 @change(metric: tools.AssetMetric) = {
     @defining(metric.change) { change =>
@@ -48,7 +48,7 @@
 }
 
 
-@admin_main("Dashboard", env, isAuthed = true, hasCharts = true) {
+@admin_main("Dashboard", isAuthed = true, hasCharts = true) {
 
     <h1 class="page-header">Static assets</h1>
 

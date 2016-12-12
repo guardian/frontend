@@ -5,9 +5,10 @@ import common.`package`._
 import campaigns.ShortCampaignCodes
 import contentapi.ContentApiClient
 import model.Cached
-import play.api.mvc.{RequestHeader, Action, Controller}
+import play.api.Environment
+import play.api.mvc.{Action, Controller, RequestHeader}
 
-class ShortUrlsController(contentApiClient: ContentApiClient) extends Controller with Logging with ExecutionContexts {
+class ShortUrlsController(contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
 
   def redirectShortUrl(shortUrl: String) = Action.async { implicit request =>
     redirectUrl(shortUrl, request.queryString)

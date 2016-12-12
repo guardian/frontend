@@ -192,10 +192,8 @@ define([
                 if (config.page.contentType !== 'Network Front') {
                     history.logSummary(config.page);
                 }
-
-                if (config.page.contentType === 'Video') {
-                    history.logHistory(config.page);
-                }
+                
+                history.logHistory(config.page);
             },
 
             showHistoryInMegaNav: function () {

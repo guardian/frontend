@@ -8,7 +8,8 @@ import org.mockito.Matchers._
 import services._
 import idapiclient.IdApiClient
 import play.api.test._
-import test.{I18NTestComponents, TestRequest, Fake}
+import test._
+
 import scala.concurrent.Future
 import client.Auth
 import conf.IdentityConfiguration
@@ -23,7 +24,13 @@ import play.api.test.Helpers._
 import play.api.mvc.RequestHeader
 
 
-class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+class SigninControllerTest
+  extends path.FreeSpec
+  with ShouldMatchers
+  with MockitoSugar
+  with WithTestEnvironment
+  with WithTestCryptoConfig {
+
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val requestParser = mock[IdRequestParser]
   val idUrlBuilder = mock[IdentityUrlBuilder]
@@ -33,7 +40,15 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
   val identityRequest = IdentityRequest(trackingData, Some("http://example.com/return"), None, None, Some(false), true)
   val signInService = new PlaySigninService(conf)
 
-  lazy val signinController = new SigninController(returnUrlVerifier, api, requestParser, idUrlBuilder, signInService, I18NTestComponents.messagesApi)
+  lazy val signinController = new SigninController(
+    returnUrlVerifier,
+    api,
+    requestParser,
+    idUrlBuilder,
+    signInService,
+    I18NTestComponents.messagesApi,
+    testCryptoConfig)
+
   when(requestParser.apply(anyObject())).thenReturn(identityRequest)
   when(returnUrlVerifier.getVerifiedReturnUrl(any[RequestHeader])).thenReturn(None)
 

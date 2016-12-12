@@ -11,6 +11,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
+  with WithTestEnvironment
   with WithTestContentApiClient {
 
   val cartoonUrl = "commentisfree/cartoon/2013/jul/15/iain-duncan-smith-benefits-cap"

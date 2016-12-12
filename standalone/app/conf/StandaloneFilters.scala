@@ -1,12 +1,14 @@
 package conf
 
 import akka.stream.Materializer
-import com.gu.googleauth.{UserIdentity, FilterExemption}
+import com.gu.googleauth.FilterExemption
 import common.ExecutionContexts
-import googleAuth.GoogleAuthFilters
+import googleAuth.GoogleAuthFilters.AuthFilterWithExemptions
 import play.api.Environment
 import play.api.http.HttpFilters
+import play.api.libs.crypto.CryptoConfig
 import play.api.mvc.{Filter, RequestHeader, Result}
+
 import scala.concurrent.Future
 
 // OBVIOUSLY this is only for the preview server
@@ -32,12 +34,13 @@ object FilterExemptions {
 
 class StandaloneFilters(
   mat: Materializer,
-  env: Environment
+  env: Environment,
+  cryptoConfig: CryptoConfig
 ) extends HttpFilters {
 
-  val previewAuthFilter = new GoogleAuthFilters.AuthFilterWithExemptions(
+  val previewAuthFilter = new AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
-    FilterExemptions.exemptions)(mat, env)
+    FilterExemptions.exemptions)(mat, env, cryptoConfig)
 
   val filters = previewAuthFilter :: new NoCacheFilter()(mat) :: Filters.common(mat)
 }

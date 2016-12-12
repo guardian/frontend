@@ -1,5 +1,9 @@
 @import common.commercial.hosted.HostedGalleryPage
-@(page: HostedGalleryPage)(implicit request: RequestHeader)
+@import model.ImageMedia
+@import model.ImageAsset
+@import com.gu.contentapi.client.model.v1.Asset
+@import com.gu.contentapi.client.model.v1.AssetType
+@(page: HostedGalleryPage)(implicit request: RequestHeader, env: play.api.Environment)
 @import views.html.hosted._
 @import conf.Configuration
 @import views.support.FBPixel
@@ -13,7 +17,6 @@
         @fragments.metaData(page, amp = true)
         <title>@views.support.Title(page)</title>
         @fragments.amp.stylesheets.main(page, page.images.head.url, page.cta.image, page.campaign.fontColour.hexCode)
-        <script custom-element="amp-font" src="https://cdn.ampproject.org/v0/amp-font-0.1.js" async></script>
         <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
         <script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async ></script>
         <script custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async></script>
@@ -40,7 +43,7 @@
             <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
         </amp-analytics>
 
-        <div class="main-body">
+        <div class="main-body hosted-gallery-page__main-body">
 
             @guardianHostedHeader(if(page.campaign.fontColour.isDark) "hosted-gallery-page hosted-page--bright" else "hosted-gallery-page", page, isAMP = true)
             <div class="hosted-page hosted-gallery-page--container hosted-gallery-page @if(page.campaign.fontColour.isDark) {hosted-page--bright}">
@@ -49,47 +52,11 @@
                 layout="responsive"
                 type="slides">
                     @for(i <- page.images.indices) {
-                        <amp-img src="@page.images(i).url"
-                        layout="responsive"
-                        width="@page.images(i).width.getOrElse(5)"
-                        height="@page.images(i).height.getOrElse(3)">
-                            @if(i == 0) {
-                                <div class="hosted-gallery__meta">
-                                    <div class="hosted-gallery__meta-text">
-                                        <h1 class="hosted-gallery__heading">@{page.title}</h1>
-                                        <h3 class="hosted-gallery__sub-heading">@{page.standfirst}</h3>
-                                    </div>
-                                </div>
-                            }
-                            <div class="hosted-gallery__caption">
-                                <input type="checkbox" value="" id="info-button-@i" class="info-button-checkbox">
-                                <label for="info-button-@i" class="hosted-gallery__info-button">
-                                    <span class="icon-i">i</span>
-                                    @fragments.inlineSvg("cross", "icon", List("inline-cross inline-icon "))
-                                </label>
-                                <div class="hosted-gallery__image-title">
-                                @page.images(i).title
-                                </div>
-                                <div class="hosted-gallery__caption-text">
-                                    @Html(page.images(i).caption)
-                                    @if(page.images(i).caption.nonEmpty && page.images(i).credit.nonEmpty) {<br/>}
-                                    @page.images(i).credit
-                                </div>
-                            </div>
-                        </amp-img>
+                        @guardianAmpHostedGalleryImage(
+                            ImageMedia.make(Seq(ImageAsset.make(Asset(AssetType.Image, Some("image/jpeg"), Some(page.images(i).url)), 0))),
+                            page.images(i), i, page)
                     }
                 </amp-carousel>
-
-                <amp-font
-                layout="nodisplay"
-                font-family="Guardian Egyptian Web"
-                timeout="3000"
-                on-error-remove-class="guardian-egyptian-loading"
-                on-error-add-class="guardian-egyptian-missing"
-                on-load-remove-class="guardian-egyptian-loading"
-                on-load-add-class="guardian-egyptian-loaded">
-                </amp-font>
-
             </div>
         </div>
     </body>

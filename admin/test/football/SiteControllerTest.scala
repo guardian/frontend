@@ -18,7 +18,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
 
 
   "test index page loads" in {
-    val Some(result) = route(FakeRequest(GET, "/admin/football"))
+    val Some(result) = route(app, FakeRequest(GET, "/admin/football"))
     status(result) should equal(OK)
   }
 }

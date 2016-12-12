@@ -18,25 +18,24 @@ define([
     contains,
     forEach
 ) {
-    var atomId;
+    var eventsFired = [];
 
     function isDesktop() {
         return contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint());
     }
 
-    function sendPercentageCompleteEvents(youtubePlayer, playerTotalTime) {
+    function sendPercentageCompleteEvents(atomId, youtubePlayer, playerTotalTime) {
         var quartile = playerTotalTime / 4;
         var playbackEvents = {
-            'play': 0,
             '25': quartile,
             '50': quartile * 2,
-            '75': quartile * 3,
-            'end': playerTotalTime
+            '75': quartile * 3
         };
 
-        forEach(playbackEvents, function(value, key) {
-            if (youtubePlayer.getCurrentTime() > value) {
+        forEach(playbackEvents, function (value, key) {
+            if (!contains(eventsFired, key) && youtubePlayer.getCurrentTime() > value) {
                 tracking.track(key, atomId);
+                eventsFired.push(key);
                 mediator.emit(key);
             }
         });
@@ -52,7 +51,6 @@ define([
         youtubePlayer.init(el, {
             onPlayerStateChange: function (event) {
                 var player = event.target;
-                var ophanId = 'hosted-youtube-video';
 
                 //show end slate when movie finishes
                 if (event.data === window.YT.PlayerState.ENDED) {
@@ -72,13 +70,11 @@ define([
                     $currentTime.text(minutes + (seconds < 10 ? ':0' : ':') + seconds);
                 }
 
-                //calculate completion and send event to ophan
                 if (event.data === window.YT.PlayerState.PLAYING) {
                     tracking.track('play', atomId);
                     var playerTotalTime = player.getDuration();
-
-                    playTimer = setInterval(function() {
-                        sendPercentageCompleteEvents(player, playerTotalTime, ophanId);
+                    playTimer = setInterval(function () {
+                        sendPercentageCompleteEvents(atomId, player, playerTotalTime);
                     }, 1000);
                 } else {
                     clearTimeout(playTimer);

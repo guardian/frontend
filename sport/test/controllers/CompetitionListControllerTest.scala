@@ -12,6 +12,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with FootballTestData
   with WithTestFootballClient
   with WithMaterializer
+  with WithTestEnvironment
   with BeforeAndAfterAll
   with WithTestWsClient {
 

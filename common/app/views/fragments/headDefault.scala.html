@@ -15,7 +15,7 @@
             @fragments.commercial.badge(item, page)
 
             @if(item.tags.isInteractive && !item.trail.shouldHidePublicationDate) {
-                @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified)
+                @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate)
             }
 
         </div>

@@ -246,6 +246,17 @@
         border: 0;
     }
 
+    .badge--alt {
+        margin-top: 0;
+        margin-bottom: $gs-baseline;
+        border-top: 1px dotted $neutral-1;
+
+        @include mq(desktop) {
+            position: absolute;
+            width: gs-span(3);
+        }
+    }
+
 }
 
 // TODO:

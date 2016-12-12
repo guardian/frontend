@@ -10,6 +10,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatest.BeforeAndAfterAll
 import org.scalatestplus.play._
 import play.api._
+import play.api.libs.crypto.CryptoConfig
 import play.api.libs.ws.WSClient
 import play.api.libs.ws.ahc.AhcWSClient
 import play.api.test._
@@ -116,6 +117,7 @@ object TestRequest {
 
 trait WithTestEnvironment {
   val testEnvironment: Environment = Environment.simple()
+  implicit val env = testEnvironment
 }
 
 trait WithMaterializer {
@@ -149,4 +151,8 @@ trait WithTestContentApiClient {
 
   lazy val recorderHttpClient = new recorderHttpClient(new CapiHttpClient(wsClient))
   lazy val testContentApiClient = new ContentApiClient(recorderHttpClient)
+}
+
+trait WithTestCryptoConfig {
+  val testCryptoConfig = new CryptoConfig(secret = "this is the test secret")
 }

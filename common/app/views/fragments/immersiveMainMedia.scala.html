@@ -105,7 +105,7 @@
                 @if(isTheMinuteArticle) {
 
                     @if(page.item.trail.shouldHidePublicationDate) {
-                        @fragments.meta.dateline(page.item.trail.webPublicationDate, page.item.fields.lastModified, page.item.content.hasBeenModified, page.item.tags.isLiveBlog, page.item.fields.isLive, isTheMinuteArticle)
+                        @fragments.meta.dateline(page.item.trail.webPublicationDate, page.item.fields.lastModified, page.item.content.hasBeenModified, page.item.fields.firstPublicationDate, page.item.tags.isLiveBlog, page.item.fields.isLive, isTheMinuteArticle)
                     }
 
                     @if(page.item.fields.standfirst.isDefined) {

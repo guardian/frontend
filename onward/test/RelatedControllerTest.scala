@@ -5,6 +5,7 @@ import feed.MostReadAgent
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import play.api.Environment
 import services.OphanApi
 
 @DoNotDiscover class RelatedControllerTest
@@ -14,7 +15,8 @@ import services.OphanApi
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestContentApiClient {
+  with WithTestContentApiClient
+  with WithTestEnvironment {
 
   val article = "uk/2012/aug/07/woman-torture-burglary-waterboard-surrey"
   val badArticle = "i/am/not/here"
@@ -27,7 +29,7 @@ import services.OphanApi
       .withHeaders("host" -> "http://localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val Some(result) = route(fakeRequest)
+    val Some(result) = route(app, fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
     contentAsString(result) should startWith("{\"html\"")

@@ -1,19 +1,21 @@
 package controllers
 
 import actions.AuthenticatedActions
-import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
+import services.{IdRequestParser, IdentityRequest, IdentityUrlBuilder, ReturnUrlVerifier}
 import conf.IdentityConfiguration
 import idapiclient.IdApiClient
 import common.ExecutionContexts
 import utils.SafeLogging
 import play.api.mvc._
+
 import scala.concurrent.Future
 import model.{EmailSubscriptions, IdentityPage}
 import play.api.data._
 import client.Error
 import com.gu.identity.model.{EmailList, Subscriber}
+import play.api.Environment
 import play.filters.csrf._
-import play.api.i18n.{MessagesApi, I18nSupport}
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json._
 
 class EmailController(returnUrlVerifier: ReturnUrlVerifier,
@@ -22,7 +24,9 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
                       idRequestParser: IdRequestParser,
                       idUrlBuilder: IdentityUrlBuilder,
                       authenticatedActions: AuthenticatedActions,
-                      val messagesApi: MessagesApi)
+                      val messagesApi: MessagesApi,
+                      csrfCheck: CSRFCheck,
+                      csrfAddToken: CSRFAddToken)(implicit env: Environment)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
   import EmailPrefsData._
   import authenticatedActions.authAction
@@ -30,7 +34,7 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
   val page = IdentityPage("/email-prefs", "Email preferences")
   protected def formActionUrl(idUrlBuilder: IdentityUrlBuilder, idRequest: IdentityRequest): String = idUrlBuilder.buildUrl("/email-prefs", idRequest)
 
-  def preferences = CSRFAddToken {
+  def preferences = csrfAddToken {
     authAction.async { implicit request =>
       val idRequest = idRequestParser(request)
       val userId = request.user.getId()
@@ -63,7 +67,7 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
     }
   }
 
-  def savePreferences = CSRFCheck {
+  def savePreferences = csrfCheck {
     authAction.async { implicit request =>
 
       val idRequest = idRequestParser(request)

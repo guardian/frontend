@@ -14,17 +14,11 @@ define([
         /* adSlotSelector: string. A CSS selector to query ad slots in the DOM */
         adSlotSelector: '.js-ad-slot',
 
-        /* prebidEnabled: boolean. Set to true if header bidding is enabled, and the user is not participating in the sonobi test */
-        prebidEnabled: config.page.edition == 'US' && !config.switches.sonobiHeaderBidding,
-
         /* sonobiEnabled: boolean. Set to true if sonobi real-time-bidding is enabled*/
         sonobiEnabled: config.switches.sonobiHeaderBidding,
 
         /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
         lazyLoadEnabled: false,
-
-        /* prebidService: PrebidService?. Interface used to run header bidding */
-        prebidService: null,
 
         /* creativeIDs: array<string>. List of loaded creative IDs */
         creativeIDs: [],

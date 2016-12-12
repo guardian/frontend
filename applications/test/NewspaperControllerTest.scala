@@ -3,7 +3,7 @@ package services
 import controllers.NewspaperController
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
-import test.{ConfiguredTestSuite, TestRequest, WithMaterializer, WithTestContentApiClient, WithTestWsClient}
+import test.{ConfiguredTestSuite, TestRequest, WithMaterializer, WithTestContentApiClient, WithTestEnvironment, WithTestWsClient}
 
 @DoNotDiscover class NewspaperControllerTest
   extends FlatSpec
@@ -12,6 +12,7 @@ import test.{ConfiguredTestSuite, TestRequest, WithMaterializer, WithTestContent
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
+  with WithTestEnvironment
   with WithTestContentApiClient {
 
   lazy val newspaperController = new NewspaperController(testContentApiClient)

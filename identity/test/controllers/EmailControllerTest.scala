@@ -5,7 +5,7 @@ import com.gu.identity.cookie.GuUCookieData
 import org.mockito.Matchers
 import org.scalatest.{DoNotDiscover, ShouldMatchers, WordSpec}
 import play.api.libs.crypto.CSRFTokenSigner
-import play.filters.csrf.{CSRFAddToken, CSRFConfig}
+import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 import services._
 import services.{ReturnUrlVerifier, IdRequestParser, IdentityUrlBuilder}
 import idapiclient.{ScGuU, IdApiClient}
@@ -24,9 +24,14 @@ import client.{Auth, Error}
 import idapiclient.TrackingData
 import actions.AuthenticatedActions
 
-@DoNotDiscover class EmailControllerTest extends WordSpec with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
+@DoNotDiscover class EmailControllerTest extends WordSpec
+  with ShouldMatchers
+  with MockitoSugar
+  with WithTestEnvironment
+  with ConfiguredTestSuite {
 
   lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
+  lazy val csrfCheck = new CSRFCheck(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
   lazy val csrfAddToken = new CSRFAddToken(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]
@@ -54,7 +59,7 @@ import actions.AuthenticatedActions
   when(idRequest.trackingData) thenReturn trackingData
 
   when(idUrlBuilder.buildUrl(any[String], any[IdentityRequest], any[(String, String)])) thenReturn "/email-prefs"
-  lazy val emailController = new EmailController(returnUrlVerifier, conf, api, idRequestParser, idUrlBuilder, authenticatedActions, I18NTestComponents.messagesApi)
+  lazy val emailController = new EmailController(returnUrlVerifier, conf, api, idRequestParser, idUrlBuilder, authenticatedActions, I18NTestComponents.messagesApi, csrfCheck, csrfAddToken)
 
   "The preferences method" when {
     val testRequest = TestRequest()

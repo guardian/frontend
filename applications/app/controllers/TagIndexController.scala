@@ -1,12 +1,13 @@
 package controllers
 
-import common.{Logging, ExecutionContexts}
+import common.{ExecutionContexts, Logging}
 import model.Cached.RevalidatableResult
 import model._
+import play.api.Environment
 import play.api.mvc.{Action, Controller}
 import services._
 
-class TagIndexController extends Controller with ExecutionContexts with Logging {
+class TagIndexController (implicit env: Environment) extends Controller with ExecutionContexts with Logging {
   private val TagIndexCacheTime = 600
 
   private def forTagType(keywordType: String, title: String, page: String, metadata: MetaData) = Action { implicit request =>
@@ -56,4 +57,3 @@ class TagIndexController extends Controller with ExecutionContexts with Logging 
   def contributor(page: String) = forTagType("contributors", "contributors", page, ContributorsIndexPageMetaData.make(page))
 }
 
-object TagIndexController extends TagIndexController

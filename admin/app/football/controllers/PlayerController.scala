@@ -18,6 +18,8 @@ import play.api.libs.ws.WSClient
 
 class PlayerController(val wsClient: WSClient, val environment: Environment) extends Controller with ExecutionContexts with PaFootballClient with Requests with Logging {
 
+  implicit val env: Environment = environment
+
   def playerIndex = Action.async { implicit request =>
     fetchCompetitionsAndTeams.map {
       case (competitions, teams) => Cached(600)(RevalidatableResult.Ok(views.html.football.player.playerIndex(competitions, teams)))
@@ -26,9 +28,9 @@ class PlayerController(val wsClient: WSClient, val environment: Environment) ext
 
   def redirectToCard = Action { request =>
     val submission = request.body.asFormUrlEncoded.get
-    val playerCardType = submission.get("playerCardType").get.head
-    val playerId = submission.get("player").get.head
-    val teamId = submission.get("team").get.head
+    val playerCardType = submission("playerCardType").head
+    val playerId = submission("player").head
+    val teamId = submission("team").head
     val result = (submission.get("competition"), submission.get("startDate")) match {
       case (Some(Seq(compId)), _) if !compId.isEmpty =>
         NoCache(SeeOther(s"/admin/football/player/card/competition/$playerCardType/$playerId/$teamId/$compId"))

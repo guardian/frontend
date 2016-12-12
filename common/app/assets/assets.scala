@@ -80,6 +80,7 @@ object css {
   def inlineStoryPackage = inline("story-package")
   def atomic = inline("atomic")
   def inlineExplore = inline("article-explore")
+  def amp = inline("head.amp")
 
   def projectCss(projectOverride: Option[String]) = project(projectOverride.getOrElse(Configuration.environment.projectName))
   def headOldIE(projectOverride: Option[String]) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))

@@ -4,7 +4,8 @@ import contentapi.SectionsLookUp
 import controllers.IndexController
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
-import test.{ConfiguredTestSuite, TestRequest, WithMaterializer, WithTestContentApiClient, WithTestWsClient}
+import test.{ConfiguredTestSuite, TestRequest, WithMaterializer, WithTestContentApiClient, WithTestEnvironment, WithTestWsClient}
+
 
 @DoNotDiscover class CombinerControllerTest
   extends FlatSpec
@@ -13,6 +14,7 @@ import test.{ConfiguredTestSuite, TestRequest, WithMaterializer, WithTestContent
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
+  with WithTestEnvironment
   with WithTestContentApiClient {
 
   lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)

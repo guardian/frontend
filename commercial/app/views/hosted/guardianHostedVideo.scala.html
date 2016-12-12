@@ -3,7 +3,7 @@
 @import conf.Configuration.environment
 @import conf.Configuration.site.host
 @import views.html.hosted._
-@(page: HostedVideoPage)(implicit request: RequestHeader)
+@(page: HostedVideoPage)(implicit request: RequestHeader, env: play.api.Environment)
 
 @main(page, Some("commercial")) { } {
     <!--[if (gt IE 9)|(IEMobile)]><!-->
@@ -89,7 +89,7 @@
                         <div class="hosted__meta">
                             <h1 class="hosted__heading">@{page.video.title}</h1>
                         </div>
-                        <div class="hostedbadge hostedbadge--shouldscale">
+                        <div class="hostedbadge">
                             <a href="@page.cta.url" data-link-name="hosted-logo-top-left" target="_blank">
                                 <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
                             </a>
@@ -147,13 +147,14 @@
             </div>
 
             @page.nextPage.map { nextPage =>
-                @hostedOnwardJourney(List(makeshiftPage(nextPage, page.campaign)), 1, 1)
+                <div class="hosted__next-page-wrapper">
+                    @hostedOnwardJourney(List(makeshiftPage(nextPage, page.campaign)), 1, 1)
+                </div>
             }.getOrElse {
-                <div class="js-onward-placeholder hosted__next-page-placeholder"></div>
+                <div class="js-onward-placeholder hosted__next-page-wrapper"></div>
             }
         </section>
         @guardianHostedCta(page, page.cta, isAMP = false)
-        @guardianHostedOnwardOverlay(page)
     </div>
 
 }

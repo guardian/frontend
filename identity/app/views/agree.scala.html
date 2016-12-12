@@ -1,4 +1,4 @@
-@(page: model.Page, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, groupCode: String)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+@(page: model.Page, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, groupCode: String)(implicit request: RequestHeader, messages: play.api.i18n.Messages, env: play.api.Environment)
 
 @import views.html.fragments.thirdPartyLandingPage
 @import views.html.fragments.thirdPartyConditions

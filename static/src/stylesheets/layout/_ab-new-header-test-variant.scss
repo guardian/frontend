@@ -717,6 +717,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 
 .tertiary-container {
     overflow: hidden;
+
     // Scrolly variant
     &.tertiary__variant-three {
         position: relative;
@@ -724,8 +725,13 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
         height: $gs-baseline*2.5;
         overflow: hidden;
 
-        @include mq($mobile-medium) {
-            height: $gs-baseline * 3;
+        @include mq($from: mobile, $until: mobileLandscape) {
+            height: $gs-baseline*2.5;
+            height: 9.8vw;
+        }
+
+        @include mq($from: mobileLandscape) {
+            height: $gs-baseline*3.3;
         }
 
         // Crazy radial hidey fade
@@ -755,11 +761,17 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
             }
         }
     }
+
+    // Single line limited variant, stacked variant
+    &.tertiary__variant-four,
+    &.tertiary__variant-five {
+        border-bottom: $gs-baseline/2 solid #747a81;
+    }
 }
 
 .tertiary-navigation {
     margin: 0;
-    background-color: $neutral-2;
+    background-color: #747a81;
     padding-left: $gs-gutter/2;
     padding-right: $gs-gutter/2;
     list-style: none;
@@ -769,26 +781,22 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     // Scrolly variant
     .tertiary__variant-three & {
         overflow-x: scroll;
-        padding-top: 0;
         padding-bottom: $gs-baseline*3;
     }
 
     // Stacked variant
     .tertiary__variant-four & {
-        padding-top: $gs-baseline/3;
-        padding-bottom: $gs-baseline/3;
+        padding-top: $gs-baseline/2;
+        max-height: $gs-baseline*3.4;
         flex-wrap: wrap;
 
-        @include mq($until: $mobile-medium) {
-            max-height: 40px;
-        }
-
-        @include mq($from: $mobile-medium) {
+        @include mq($from: mobile, $until: mobileLandscape) {
             max-height: $gs-baseline*4;
+            max-height: 14.8vw;
         }
 
         @include mq($from: mobileLandscape) {
-            max-height: $gs-baseline*4.5;
+            max-height: $gs-baseline*5.5;
         }
     }
 
@@ -799,19 +807,19 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 
     // Single line limited variant
     .tertiary__variant-five & {
-        padding-top: 0;
-        padding-bottom: 0;
-        height: $gs-baseline * 2.5;
+        height: $gs-baseline * 2;
         flex-wrap: wrap;
         padding-right: $gutter-small + $veggie-burger-small;
         overflow: hidden;
 
-        @include mq($mobile-medium) {
-            height: $gs-baseline * 3;
+        @include mq($from: mobile, $until: mobileLandscape) {
+            height: $gs-baseline * 2.2;
+            height:  8vw;
             padding-right: $gutter-medium + $veggie-burger-small;
         }
 
         @include mq(mobileLandscape) {
+            height: $gs-baseline * 2.8;
             padding-right: $gutter-large + $veggie-burger-medium;
         }
     }
@@ -823,32 +831,43 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
     color: $neutral-4;
     display: block;
 
-    @include mq($from: mobile, $until: $mobile-medium) {
-        font-size: 14px;
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        color: #ffffff;
     }
 
-    @include mq($mobile-medium) {
+    .tertiary-navigation__item:first-of-type & {
+        color: $news-support-1;
+    }
+
+    @include mq($from: mobile, $until: mobileLandscape) {
         font-size: 16px;
+        font-size: 5.1vw;
     }
 
     @include mq(mobileLandscape) {
-        font-size: 18px;
+        font-size: 22px;
     }
 
     &:after {
         pointer-events: none;
         content: '/';
-        color: #8a8a8a;
+        color: rgba(255, 255, 255, .3);
     }
 
     // Scrolly variant, Single line limited variant
     .tertiary__variant-three &,
     .tertiary__variant-five & {
-        line-height: $gs-baseline * 2.5;
+        line-height: 2.2em;
         padding: 0 .4em;
 
-        @include mq($mobile-medium) {
-            line-height: $gs-baseline * 3;
+        @include mq($from: mobile, $until: mobileLandscape) {
+            line-height: 1.9em;
+        }
+
+        @include mq($from: mobileLandscape) {
+            line-height: 1.8em;
         }
 
         &:after {
@@ -862,7 +881,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
         line-height: 1.5em;
 
         &:after {
-            float: right;
+            margin-left: -.1em;
             padding: 0 $gs-gutter/10;
         }
     }
@@ -882,15 +901,19 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter/2;
 
 // Scrolly variant
 .tertiary__variant-three {
-    .tertiary-navigation__item:last-of-type .tertiary-navigation__link {
-        margin-right: $gutter-small + $veggie-burger-small;
+    .tertiary-navigation__item {
+        flex: 0 0 auto;
 
-        @include mq($mobile-medium) {
-            margin-right: $gutter-medium + $veggie-burger-medium - $gs-gutter/2;
-        }
+        &:last-of-type .tertiary-navigation__link {
+            margin-right: $gutter-small + $veggie-burger-small;
 
-        @include mq(mobileLandscape) {
-            margin-right: $gutter-large + $veggie-burger-medium - $gs-gutter/2;
+            @include mq($mobile-medium) {
+                margin-right: $gutter-medium + $veggie-burger-medium - $gs-gutter/2;
+            }
+
+            @include mq(mobileLandscape) {
+                margin-right: $gutter-large + $veggie-burger-medium - $gs-gutter/2;
+            }
         }
     }
 }
@@ -949,7 +972,7 @@ $caption-button-size: 32px;
             width: $caption-button-size;
             height: $caption-button-size;
             z-index: 1;
-            background-color: transparent;
+            background-color: rgba($neutral-1, .2);
             border-radius: 50%;
         }
         .reveal-caption--img {
@@ -963,7 +986,6 @@ $caption-button-size: 32px;
             bottom: 0;
             left: 0;
             margin: auto;
-            filter: drop-shadow(0 0 $gs-baseline/2 rgba(0, 0, 0, .4));
         }
 
         .inline-camera .reveal-caption-icon__svg {
@@ -1014,7 +1036,8 @@ $caption-button-size: 32px;
             flex-wrap: wrap;
             border-bottom: 0;
 
-            .meta__extras {
+            .meta__extras,
+            .content__dateline {
                 flex: 1 0 auto;
                 width: 100%;
             }
@@ -1040,7 +1063,7 @@ $caption-button-size: 32px;
             left: 50%;
             bottom: 0;
             margin-left: -$gs-baseline/2;
-            border-bottom: $gs-baseline/2 solid $neutral-2;
+            border-bottom: $gs-baseline/2 solid #747a81;
             border-left: $gs-baseline/2 solid transparent;
             border-right: $gs-baseline/2 solid transparent;
         }

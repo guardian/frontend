@@ -15,6 +15,7 @@ import play.api.test.Helpers._
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
+  with WithTestEnvironment
   with WithTestContentApiClient {
 
   val articleUrl = "money/pensions"

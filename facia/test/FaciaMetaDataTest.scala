@@ -9,7 +9,13 @@ import play.api.test.Helpers._
 import services.ConfigAgent
 import test._
 
-@DoNotDiscover class FaciaMetaDataTest extends FlatSpec with Matchers with ConfiguredTestSuite with BeforeAndAfterAll with WithMaterializer with WithTestWsClient {
+@DoNotDiscover class FaciaMetaDataTest extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithMaterializer
+  with WithTestEnvironment
+  with WithTestWsClient {
 
   override def beforeAll() {
     ConfigAgent.refreshWith(

@@ -11,9 +11,11 @@ import conf.Configuration
 import model.NoCache
 import conf.switches.{Switch, Switches}
 import model.deploys.{HttpClient, TeamCityBuild, TeamcityService}
+import play.api.Environment
+
 import scala.concurrent.Future
 
-class RadiatorController(wsClient: WSClient) extends Controller with Logging with Requests{
+class RadiatorController(wsClient: WSClient)(implicit env: Environment) extends Controller with Logging with Requests{
 
   // if you are reading this you are probably being rate limited...
   // you can read about github rate limiting here http://developer.github.com/v3/#rate-limiting
@@ -58,8 +60,7 @@ class RadiatorController(wsClient: WSClient) extends Controller with Logging wit
       val errorGraphs = Seq(router50x)
       val fastlyGraphs = fastlyErrors ++ fastlyHitMiss
       NoCache(Ok(views.html.radiator(
-        ciBuilds, errorGraphs, latencyGraphs, fastlyGraphs, cost, switchesExpiringSoon,
-        Configuration.environment.stage, apiKey
+        ciBuilds, errorGraphs, latencyGraphs, fastlyGraphs, cost, switchesExpiringSoon, apiKey
       )))
     }
   }

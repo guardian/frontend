@@ -9,7 +9,7 @@ import conf.switches.Switch
 import model.Cached.RevalidatableResult
 import model.{Cached, NoCache}
 import org.apache.commons.lang.exception.ExceptionUtils
-import play.api.Logger
+import play.api.{Environment, Logger}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
 
@@ -19,13 +19,13 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     error.message == "The requested resource has expired for commercial reason."
   }
 
-  def convertApiExceptions[T](implicit request: RequestHeader,
+  def convertApiExceptions[T](implicit request: RequestHeader, env: Environment,
                               log: Logger): PartialFunction[Throwable, Either[T, Result]] = {
 
     convertApiExceptionsWithoutEither.andThen(Right(_))
   }
 
-  def convertApiExceptionsWithoutEither[T](implicit request: RequestHeader,
+  def convertApiExceptionsWithoutEither[T](implicit request: RequestHeader, env: Environment,
                               log: Logger): PartialFunction[Throwable, Result] = {
     case e: CircuitBreakerOpenException =>
       log.error(s"Got a circuit breaker open error while calling content api")

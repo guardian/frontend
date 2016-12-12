@@ -7,21 +7,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-hosted-onward-journey",
-    "Show more pages from the campaign in Hosted Article/Video pages, using a carousel or popup",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 18),
+    "ab-membership-engagement-international-experiment",
+    "Test varying the number of visits before showing the membership engagement banner",
+    owners = Seq(Owner.withGithub("rupert.bates")),
+    safeState = On,
+    sellByDate = new LocalDate(2016, 12, 22), // Thursday 1st December
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-membership-engagement-international-experiment",
-    "Test varying the number of visits before showing the membership engagement banner",
-    owners = Seq(Owner.withGithub("rupert.bates")),
-    safeState = On,
-    sellByDate = new LocalDate(2016, 12, 1), // Thursday 1st December
+    "ab-recommended-for-you-recommendations",
+    "Test personalised container on fronts",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 10),
     exposeClientSide = true
   )
 
@@ -31,7 +31,7 @@ trait ABTestSwitches {
     "Test just contributions vs contributions or membership vs just membership in the US",
     owners = Seq(Owner.withGithub("philwills")),
     safeState = Off,
-    sellByDate =  new LocalDate(2016, 11, 28),
+    sellByDate =  new LocalDate(2016, 12, 22),
     exposeClientSide = true
   )
 
@@ -41,7 +41,7 @@ trait ABTestSwitches {
     "Test alternate short messages on membership engagement banner",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 8), // Thursday 8th December
+    sellByDate = new LocalDate(2016, 12, 22), // Thursday 8th December
     exposeClientSide = true
   )
 

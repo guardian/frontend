@@ -15,6 +15,7 @@ import scala.collection.JavaConversions._
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
+  with WithTestEnvironment
   with WithTestContentApiClient {
 
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
