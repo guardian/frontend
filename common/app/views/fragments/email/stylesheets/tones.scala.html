@@ -1,4 +1,6 @@
-@()
+@(page: model.Page)
+
+@import model.EmailAddons.EmailContentType
 
 <style>
     .tone-news .facia-card {
@@ -92,15 +94,22 @@
     }
 
 
+    .tone-external {
+        padding-bottom: 0 !important;
+    }
     .tone-external .facia-card {
-        border-top: 1px solid #4bc6df;
+        border-top: 1px solid @page.toneColour;
         background-color: #f6f6f6;
     }
     .tone-external .headline {
         color: #333333;
+        font-family: "Helvetica", "Arial", sans-serif !important;
+        font-weight: normal;
+        font-size: 14px;
     }
     .tone-external .fc-item__kicker {
-        color: #005689;
+        color: #333333;
+        font-weight: bold;
     }
     .tone-external .kicker-separator {
         color: #d6d6d6;
