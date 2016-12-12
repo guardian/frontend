@@ -1,6 +1,6 @@
 const webshot = require('webshot');
 const pify = require('pify');
-const merge = require('lodash').merge;
+const merge = require('lodash.merge');
 
 /**
  * TODO
