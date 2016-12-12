@@ -14,7 +14,7 @@ class BreakingNewsTest extends WordSpec with Matchers {
     val id = "/category/2016/01/30/slug"
     val title = "This is a breaking news title"
     val message = "This is a breaking news message"
-    val thumbnailUrl = "http://i.guimcode.co.uk.global.prod.fastly.net/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
+    val thumbnailUrl = "http://i.guimcode.co.uk/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
     val link = "http://gu.com/p/4fgcd"
     val publicationDate = DateTime.now
     val topics = Set(NewsAlertTypes.Uk, NewsAlertTypes.Sport)

@@ -10,5 +10,5 @@ GET        /_healthcheck                            controllers.HealthCheck.heal
 GET        /404/www.theguardian.com$path<.*>        controllers.ArchiveController.lookup(path)
 
 # 404
-GET        /404/$path<.*>                           controllers.ArchiveController.lookup(path)
+GET        /404$path</.*>                           controllers.ArchiveController.lookup(path)
 

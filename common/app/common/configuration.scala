@@ -68,7 +68,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 12
+    val s3ConfigVersion = 13
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -150,7 +150,6 @@ class GuardianConfiguration extends Logging {
 
     lazy val stage = InstallationVars.stage
     lazy val projectName = Play.application.configuration.getString("guardian.projectName").getOrElse("frontend")
-    lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isProd = stage.equalsIgnoreCase("prod")
     lazy val isCode = stage.equalsIgnoreCase("code")
@@ -301,12 +300,6 @@ class GuardianConfiguration extends Logging {
     lazy val digitalPackUrl = configuration.getStringProperty("id.digitalpack.url").getOrElse("https://subscribe.theguardian.com")
     lazy val membersDataApiUrl = configuration.getStringProperty("id.members-data-api.url").getOrElse("https://members-data-api.theguardian.com")
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
-  }
-
-  object static {
-    lazy val path =
-      if (environment.secure) configuration.getMandatoryStringProperty("static.securePath")
-      else configuration.getMandatoryStringProperty("static.path")
   }
 
   object images {
@@ -527,11 +520,7 @@ class GuardianConfiguration extends Logging {
       } catch {
         case ex: AmazonClientException =>
           log.error("amazon client cross account exception", ex)
-
-          // We really, really want to ensure that PROD is configured before saying a box is OK
-          if (Play.isProd) throw ex
-          // this means that on dev machines you only need to configure keys if you are actually going to use them
-          None
+          throw ex
       }
     }
   }
@@ -578,11 +567,7 @@ class GuardianConfiguration extends Logging {
       } catch {
         case ex: AmazonClientException =>
           log.error(ex.getMessage, ex)
-
-          // We really, really want to ensure that PROD is configured before saying a box is OK
-          if (Play.isProd) throw ex
-          // this means that on dev machines you only need to configure keys if you are actually going to use them
-          None
+          throw ex
       }
     }
   }

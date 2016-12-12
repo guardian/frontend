@@ -11,7 +11,7 @@ define([
         var viewport, iframe1, respond1, onResize;
 
         var fixturesConfig = {
-            id: 'page',
+            id: 'viewport-page',
             fixtures: [
                 '<div id="ad-slot-1" class="js-ad-slot"><div id="iframe1" style="height: 200px"></div></div>'
             ]

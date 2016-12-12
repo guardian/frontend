@@ -851,41 +851,6 @@ $hosted-video-height: 551px;
     font-size: 12px;
 }
 
-.hosted__popup.popup {
-    top: 110%;
-    left: 299%;
-    width: 350px;
-    padding: $gs-gutter / 2 $gs-gutter / 2 $gs-gutter $gs-gutter / 2;
-    background: #ffffff;
-    color: $neutral-1;
-    text-align: left;
-    border-radius: 0;
-
-    &:before {
-        left: 8%;
-        border-bottom-color: #ffffff;
-    }
-
-    @include mq($until: tablet) {
-        width: 250px;
-        left: 125%;
-
-        &:before {
-            left: 29%;
-        }
-    }
-}
-
-.hosted__popup--bottom {
-    @include mq($until: tablet) {
-        left: 65%;
-    }
-}
-
-.hosted__popup-text {
-    font-weight: 200;
-}
-
 .hosted__next-page--header {
     margin-bottom: 10px;
     position: relative;

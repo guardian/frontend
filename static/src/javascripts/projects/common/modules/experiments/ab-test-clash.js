@@ -12,8 +12,34 @@ define([
         variants: ['mixed', 'just-contribute', 'just-supporter']
     };
 
+    var ContributionsEpicObserverAnniversary = {
+        name: 'ContributionsEpicObserverAnniversary',
+        variants: ['mixed']
+    };
+
+    var ContributionsEpicBrexitSupreme = {
+        name: 'ContributionsEpicBrexitSupreme',
+        variants: ['mixed']
+    };
+
+    var ContributionsEpicUsPreEndOfYear = {
+        name: 'ContributionsEpicUsPreEndOfYear',
+        variants: ['control', 'bolder', 'endOfYear']
+    };
+
+    var ContributionsEpicAlwaysAskStrategy = {
+        name: 'ContributionsEpicAlwaysAskStrategy',
+        variants: ['control', 'alwaysAsk']
+    };
+
     function userIsInAClashingAbTest() {
-        var clashingTests = [ContributionsEpicUsaCtaThreeWay];
+        var clashingTests = [
+            ContributionsEpicUsaCtaThreeWay,
+            ContributionsEpicObserverAnniversary,
+            ContributionsEpicBrexitSupreme,
+            ContributionsEpicUsPreEndOfYear,
+            ContributionsEpicAlwaysAskStrategy
+        ];
         return _testABClash(ab.isInVariant, clashingTests);
     }
 

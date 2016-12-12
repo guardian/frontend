@@ -39,7 +39,7 @@
                 @fragments.guBand()
             }
 
-            @if(!(mvt.ABNewNavVariantThree.isParticipating || mvt.ABNewNavVariantFour.isParticipating || mvt.ABNewNavVariantFive.isParticipating)) {
+            @if(!mvt.ABNewNavVariantFour.isParticipating) {
                 @fragments.headTonal(article, model, isPaidContent, amp = amp)
 
                 @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
@@ -70,7 +70,7 @@
                             @fragments.mainMedia(article, amp)
                         }
 
-                        @if(mvt.ABNewNavVariantThree.isParticipating || mvt.ABNewNavVariantFour.isParticipating || mvt.ABNewNavVariantFive.isParticipating) {
+                        @if(mvt.ABNewNavVariantFour.isParticipating) {
                             <div class="mobile-only">
                                 @fragments.headTonal(article, model, isPaidContent, amp = amp)
                             </div>

@@ -12,6 +12,7 @@ import model.pressed.CollectionConfig
 import model.{FrontProperties, SeoDataJson}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.json.Json
+import conf.switches.Switches
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
@@ -134,8 +135,8 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   def isFrontHidden(id: String): Boolean =
     configAgent.get().exists(_.fronts.get(id).flatMap(_.isHidden).exists(identity))
 
-  def shouldServeFront(id: String) = getPathIds.contains(id) &&
-    (Configuration.environment.isPreview || !isFrontHidden(id))
+  def shouldServeFront(id: String, isEmailRequest: Boolean = false) = getPathIds.contains(id) &&
+    (Configuration.environment.isPreview || (Switches.DisplayHiddenFrontsAsEmails.isSwitchedOn && isEmailRequest) || !isFrontHidden(id))
 
   def shouldServeEditionalisedFront(edition: Edition, id: String) = {
     shouldServeFront(s"${edition.id.toLowerCase}/$id")
