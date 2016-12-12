@@ -9,21 +9,21 @@ const perfectionist = require('perfectionist');
 const readFile = pify(fs.readFile);
 const writeFile = pify(fs.writeFile);
 
-const {target, src} = require('../../config').paths;
+const { target, src } = require('../../config').paths;
 
 const mimeTypes = {
-	woff: 'application/x-font-woff',
-	woff2: 'application/x-font-woff',
-	ttf: 'font/opentype'
+    woff: 'application/x-font-woff',
+    woff2: 'application/x-font-woff',
+    ttf: 'font/opentype',
 };
 
 const typeFaces = require('./index.config');
 
-const toDataURI = (src, data) => `url(data:${mimeTypes[path.extname(src).substr(1)]};base64,${data.toString()})`;
+const toDataURI = (srcPath, data) => `url(data:${mimeTypes[path.extname(srcPath).substr(1)]};base64,${data.toString()})`;
 
 const generateCSS = (fontFamily, font) =>
     readFile(path.resolve(src, 'fonts', `${font.src}`), 'base64')
-        .then(data => postcss([perfectionist({format: 'compressed'})]).process(`
+        .then(data => postcss([perfectionist({ format: 'compressed' })]).process(`
                 @font-face {
                     font-family: ${fontFamily};
                     src: ${toDataURI(font.src, data)};
@@ -33,10 +33,8 @@ const generateCSS = (fontFamily, font) =>
                         'font-stretch',
                         'font-variant',
                         'font-feature-settings',
-                        'unicode-range'
-                    ].map(prop => {
-                        return font[prop] ? `${prop}: ${font[prop]};` : '';
-                    }).join('')}
+                        'unicode-range',
+                    ].map(prop => (font[prop] ? `${prop}: ${font[prop]};` : '')).join('')}
                 }
             `)
         )
@@ -47,11 +45,11 @@ module.exports = {
     task: [
         require('./clean'),
         {
-           description: 'Create webfont JSON',
-           task: () => {
+            description: 'Create webfont JSON',
+            task: () => {
                 mkdirp.sync(`${target}/fonts`);
 
-                return Promise.all(typeFaces.map(typeFace => {
+                return Promise.all(typeFaces.map((typeFace) => {
                     const generateCSSwithFontFamily = generateCSS.bind(null, typeFace['font-family']);
                     const dest = path.resolve(target, 'fonts', `${typeFace.dest}`);
 
@@ -59,9 +57,9 @@ module.exports = {
                     // an anachronism. should be looked at when fonts are revisited...
                     return Promise.all(typeFace.fonts.map(generateCSSwithFontFamily))
                        .then(fontsCSS => fontsCSS.join(''))
-                       .then(CSS => writeFile(dest, `guFont(${JSON.stringify({css: CSS})});`));
+                       .then(CSS => writeFile(dest, `guFont(${JSON.stringify({ css: CSS })});`));
                 }));
-           }
-       }
-    ]
+            },
+        },
+    ],
 };

@@ -3,6 +3,6 @@ module.exports = {
     task: [
         require('../inline-svgs'),
         require('./clean'),
-        require('./copy')
-    ]
+        require('./copy'),
+    ],
 };
