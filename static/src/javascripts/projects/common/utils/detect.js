@@ -262,7 +262,7 @@ define([
      *     detect.isBreakpoint({min: 'tablet'}) // Will return true for tablet, desktop, leftCol, wide
      *     detect.isBreakpoint({max: 'tablet'}) // Will return true for mobile, mobileLandscape, tablet and phablet
      *
-     *     
+     *
      */
     function isBreakpoint(criteria) {
         criteria.min = criteria.min || breakpoints[0].name;
@@ -349,9 +349,11 @@ define([
     //
     // ** don't forget to remove them from the return object too **
     var adblockInUseSync = memoize(function () {
-        return window.getComputedStyle(createSacrificialAd()).display === 'none';
+        var sacraficialAdStyle = window.getComputedStyle(createSacrificialAd());
+        return sacraficialAdStyle.display === 'none' || sacraficialAdStyle.getPropertyValue('-moz-binding').indexOf('about:')!== -1;
     });
     // end sync adblock detection
+
 
     var adblockInUse = new Promise(function (resolve) {
         if (window.guardian.adBlockers.hasOwnProperty('active')) {
