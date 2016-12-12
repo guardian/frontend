@@ -19,8 +19,4 @@ class SignupPageController(wsClient: WSClient)(implicit env: Environment) extend
       Cached(defaultCacheDuration)(RevalidatableResult.Ok(views.html.signup.newsletters(StaticPages.simpleNewslettersPage(request.path))))
    }
 
-  def renderWeekendReadingPage() = Action { implicit request =>
-      Cached(defaultCacheDuration)(RevalidatableResult.Ok(views.html.signup.weekendReading(StaticPages.simpleEmailSignupPage(request.path, "Sign up for Guardian weekend reading"))))
-   }
-
 }
