@@ -27,7 +27,7 @@ try {
                 var adBlockers = window.guardian.adBlockers;
                 var adStyles = window.getComputedStyle(ad);
 
-                adBlockers.active = adStyles.getPropertyValue('display') === 'none';
+                adBlockers.active = adStyles.getPropertyValue('display') === 'none'|| adStyles.getPropertyValue('-moz-binding').indexOf('about:')!== -1;
 
                 // Run each listener
                 runEachListener(adBlockers.onDetect);
