@@ -14,6 +14,10 @@ module.exports = {
         task: `eslint static/test/javascripts/**/*.js ${config}`,
         onError: error,
     }, {
+        description: 'Lint tools',
+        task: `eslint tools/**/*.js ${config}`,
+        onError: error,
+    }, {
         description: 'Lint app JS',
         task: `eslint static/src/**/*.js ${config}`,
         onError: error,
