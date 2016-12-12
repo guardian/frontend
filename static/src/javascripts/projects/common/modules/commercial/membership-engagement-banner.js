@@ -66,9 +66,9 @@ define([
         };
 
         function doInternationalTest(content) {
-            var variant = getVariant('MembershipEngagementInternationalExperiment');
+            var variant = getVariant('MembershipEngagementInternationalExperimentTest12');
             if (variant && variant !== notInTest) {
-                var campaignCode = 'gdnwb_copts_mem_banner_ROWbanner__' + variant;
+                var campaignCode = 'gdnwb_copts_mem_banner_int_banner__' + variant;
                 content.campaignCode = campaignCode;
                 content.linkHref = formatEndpointUrl('INT', campaignCode);
             }
@@ -158,13 +158,15 @@ define([
         }
 
         function userHasMadeEnoughVisits(edition) {
+            const numberOfVisits = storage.local.get('gu.alreadyVisited') || 0;
             if (edition === 'INT') {
-                var internationalTestVariant = getVariant('MembershipEngagementInternationalExperiment');
-                if (internationalTestVariant == '1st_article')
-                    return true;
+                var internationalTestVariant = getVariant('MembershipEngagementInternationalExperimentTest12');
+                if (internationalTestVariant !== 'control' && internationalTestVariant !== notInTest)
+                    //variants are in the form '1st_article', '3rd_article' so we can derive the number of visits from the name
+                    return numberOfVisits >= internationalTestVariant.substring(0, 1);
             }
 
-            return (storage.local.get('gu.alreadyVisited') || 0) >= 10;
+            return numberOfVisits >= 10;
         }
 
         function formatEndpointUrl(edition, campaignCode) {

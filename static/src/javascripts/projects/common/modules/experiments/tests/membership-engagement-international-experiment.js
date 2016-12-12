@@ -18,9 +18,9 @@ define([
     mediator
 ) {
     return function () {
-        this.id = 'MembershipEngagementInternationalExperiment';
-        this.start = '2016-11-10';
-        this.expiry = '2016-12-1';
+        this.id = 'MembershipEngagementInternationalExperimentTest12';
+        this.start = '2016-12-13'; //Tues 13th Jan
+        this.expiry = '2017-1-6'; //Fri 6th Jan
         this.author = 'Rupert Bates';
         this.description = 'Test varying the number of visits before showing the membership engagement banner';
         this.audience = 1;    // 100% (of International audience)
@@ -47,12 +47,27 @@ define([
 
         this.variants = [
             {
-                id: '10th_article',
+                id: 'control',
                 test: function () {},
                 success: success.bind(this)
             },
             {
                 id: '1st_article',
+                test: function () {},
+                success: success.bind(this)
+            },
+            {
+                id: '3rd_article',
+                test: function () {},
+                success: success.bind(this)
+            },
+            {
+                id: '5th_article',
+                test: function () {},
+                success: success.bind(this)
+            },
+            {
+                id: '7th_article',
                 test: function () {},
                 success: success.bind(this)
             }

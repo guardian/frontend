@@ -26,7 +26,7 @@ define([
              noop,
              EditorialEmailVariants,
              RecommendedForYou,
-             MembershipEngagementInternationalExperiment,
+             MembershipEngagementInternationalExperimentTest12,
              ContributionsEpicBrexitSupreme,
              ContributionsEpicUsPreEndOfYear,
              ContributionsEpicAlwaysAskStrategy,
@@ -37,7 +37,7 @@ define([
     var TESTS = [
         new EditorialEmailVariants(),
         new RecommendedForYou(),
-        new MembershipEngagementInternationalExperiment(),
+        new MembershipEngagementInternationalExperimentTest12(),
         new ContributionsEpicBrexitSupreme(),
         new ContributionsEpicUsPreEndOfYear(),
         new ContributionsEpicAlwaysAskStrategy(),
