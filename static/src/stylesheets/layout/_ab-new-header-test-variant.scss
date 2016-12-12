@@ -14,6 +14,11 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     width: 100%;
 }
 
+.new-header {
+    @include mobile-only;
+    background-color: $guardian-brand;
+}
+
 .new-header__inner {
     display: flex;
     justify-content: space-between;
@@ -794,7 +799,7 @@ $caption-button-size: 32px;
 
     // When the image is at the top of the article, the headline and byline are moved into a div with margins. This counteracts that
     // TODO: If this change is kept after the test the template will have to be rewriten and these overrides won't be needed
-    .content__head {
+    .content__head:not(.tonal__head--tone-dead, .tonal__head--tone-live) {
         @include mq($until: mobileLandscape) {
             margin-right: -$gs-gutter /2;
             margin-left: -$gs-gutter /2;

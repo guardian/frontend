@@ -102,12 +102,6 @@ install_node() {
   fi
 }
 
-install_grunt() {
-  if ! installed grunt; then
-    npm -g install grunt-cli
-  fi
-}
-
 install_gcc() {
   if ! installed g++; then
     if linux; then
@@ -148,7 +142,6 @@ main() {
   install_jdk
   install_node
   install_gcc
-  install_grunt
   install_libpng
   compile
   report

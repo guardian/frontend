@@ -2,12 +2,14 @@ define([
     'common/utils/assign',
     'common/utils/fastdom-promise',
     'common/utils/report-error',
-    'common/utils/url'
+    'common/utils/url',
+    'Promise'
 ], function (
     assign,
     fastdom,
     reportError,
-    urlUtil
+    urlUtil,
+    Promise
 ) {
     var RECOMMENDATION_CLASS = 'js-recommend-comment';
     var TOOLTIP_CLASS = 'js-rec-tooltip';

@@ -5,7 +5,6 @@ define([
     'text!fixtures/commercial/ad-slots/inline1.html',
     'text!fixtures/commercial/ad-slots/inline2.html',
     'text!fixtures/commercial/ad-slots/inline3.html',
-    'text!fixtures/commercial/ad-slots/merchandising-high.html',
     'text!fixtures/commercial/ad-slots/right.html',
     'text!fixtures/commercial/ad-slots/right-small.html'
 ], function (
@@ -15,7 +14,6 @@ define([
     inline1Html,
     inline2Html,
     inline3Html,
-    merchandisingHighHtml,
     rightHtml,
     rightSmallHtml
 ) {
@@ -70,11 +68,6 @@ define([
                 name: 'inline3',
                 type: 'inline',
                 html: inline3Html
-            },
-            {
-                name: 'merchandising-high',
-                type: 'commercial-component',
-                html: merchandisingHighHtml
             }
         ].forEach(function (expectation) {
             it('should create "' + expectation.name + '" ad slot', function () {

@@ -440,6 +440,8 @@
     }
 }
 
+.badge +.content__dateline { clear: left; }
+
 .content__meta-container .byline-img {
     @include circular;
     position: relative;
@@ -721,6 +723,15 @@
     }
     .from-content-api {
         @include f-textSans;
+    }
+    .element.element-pullquote{
+      .pullquote-paragraph {
+        font-family: $f-sans-serif-headline;
+        color: $paid-article-brand;
+      }
+    }
+    a.in-body-link--immersive {
+      color: $paid-article-brand;
     }
 }
 

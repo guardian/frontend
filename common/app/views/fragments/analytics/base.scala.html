@@ -2,6 +2,7 @@
 @import conf.Configuration
 @import conf.Static
 @import views.support.FBPixel
+@import conf.switches.Switches.StressTestTailor
 
 
 @******************************************************************************
@@ -39,6 +40,9 @@
         <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/971225648/?value=0&amp;guid=ON&amp;script=0"/>
     </div>
 </noscript>
+
+@if(StressTestTailor.isSwitchedOn && Configuration.environment.isProd){<img src="https://tailor.guardianapis.com/test" alt="" style="display : none ;" rel="nofollow"/>}
+@if(StressTestTailor.isSwitchedOn && Configuration.environment.isCode){<img src="http://code.tailor.guardianapis.com/test" alt="" style="display : none ;" rel="nofollow"/>}
 
 <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>
 <img src="https://www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1" height="1" width="1" style="display:none" rel="nofollow" alt="" />
