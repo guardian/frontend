@@ -9,7 +9,7 @@ define([
         var resize;
 
         var fixturesConfig = {
-            id: 'page',
+            id: 'resize-page',
             fixtures: [
                 '<div class="js-ad-slot"><div id="iframe11" class="iframe" data-unit="%"></div></div>',
                 '<div class="js-ad-slot"><div id="iframe10" class="iframe" data-unit="px"></div></div>',

@@ -1,25 +1,29 @@
 define([
-    'bonzo',
     'qwery',
+    'Promise',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/mediator',
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/create-slot',
+    'common/modules/commercial/dfp/add-slot',
     'common/modules/user-prefs',
     'common/modules/commercial/commercial-features'
 ], function (
-    bonzo,
     qwery,
+    Promise,
     config,
     detect,
+    mediator,
     fastdom,
     createSlot,
+    addSlot,
     userPrefs,
     commercialFeatures
 ) {
-    var containerSelector = '.fc-container';
+    var containerSelector = '.fc-container:not(.fc-container--commercial)';
     var sliceSelector = '.js-fc-slice-mpu-candidate';
-    var containerGap = 1;
+    var isNetworkFront;
 
     return {
         init: init
@@ -30,95 +34,140 @@ define([
             return Promise.resolve(false);
         }
 
-        var adSlots;
-        var prefs               = userPrefs.get('container-states') || {};
-        var isMobile            = detect.getBreakpoint() === 'mobile';
-        var isNetworkFront      = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
-        // The server-rendered top slot is above nav. For mobile, we remove that server-rendered top slot,
-        // and substitute it with a slot that accepts both ordinary MPUs and the 'fabric' ads (88x71s) that take the
-        // top slot in responsive takeovers. Beware, this substitute slot is still called 'top-above-nav'.
-        var replaceTopSlot      = (config.page.isFront && detect.isBreakpoint({max : 'phablet'}));
-        // We must keep a small bit of state in the filtering logic
-        var lastIndex           = -1;
-
-        adSlots = qwery(containerSelector)
-            // get all ad slices
-            .map(function (container) {
-                return {
-                    container: container,
-                    adSlice: container.querySelector(sliceSelector)
-                };
-            })
-            // filter out any container candidates where:
-            // - the container is closed (collapsed) through user preferences, or
-            // - the container is first on a network front, or
-            // - the container does not contain an adslice candidate, or
-            // - the minimum number of containers (check the containerGap) from the last viable advert container has not been satisfied.
-            .filter(function (item, index) {
-
-                var isThrasher = bonzo(item.container).hasClass('fc-container--thrasher');
-                if (replaceTopSlot && index === 0 && !isThrasher) {
-                    // it's mobile, so we needn't check for an adSlice
-                    lastIndex = index;
-                    return true;
-                }
-
-                var containerId  = item.container.getAttribute('data-id');
-                var isContainerClosed = prefs[containerId] === 'closed';
-                var isFrontFirst = isNetworkFront && index === 0;
-                var isFarEnough = lastIndex === -1 || index - lastIndex > containerGap;
-                if (!item.adSlice || isFrontFirst || isContainerClosed || !isFarEnough) {
-                    return false;
-                }
-
-                lastIndex = index;
-
-                return true;
-            })
-            // create ad slots for the selected slices
-            .map(function (item, index) {
-                var adName = replaceTopSlot ?
-                    'inline' + index :
-                    'inline' + (index + 1);
-                var classNames = ['container-inline'];
-                var adSlot;
-
-                if (config.page.isAdvertisementFeature) {
-                    classNames.push('adfeature');
-                }
-
-                if (isMobile) {
-                    classNames.push('mobile');
-                }
-
-                adSlot = replaceTopSlot && index === 0 ?
-                    createSlot('top-above-nav', classNames) :
-                    createSlot(adName, classNames);
-
-                return {
-                    anchor: isMobile ? item.container : item.adSlice,
-                    adSlot: adSlot
-                };
-            });
-
-        return fastdom.write(function () {
-            adSlots.forEach(isMobile ? insertOnMobile : insertOnTabletPlus);
-
-            function insertOnMobile(item) {
-                var sectionContainer = bonzo(bonzo.create('<section>'));
-                sectionContainer.append(item.adSlot);
-
-                // add a mobile advert after the container
-                bonzo(sectionContainer).insertAfter(item.anchor);
-            }
-
-            function insertOnTabletPlus(item) {
-                // add a tablet+ ad to the slice
-                bonzo(item.anchor).removeClass('fc-slice__item--no-mpu');
-                item.anchor.appendChild(item.adSlot);
-            }
+        init.whenRendered = new Promise(function (resolve) {
+            mediator.once('page:commercial:slice-adverts', resolve);
         });
 
+        var prefs = userPrefs.get('container-states') || {};
+        var isMobile = detect.isBreakpoint({ max : 'phablet' });
+
+        isNetworkFront = ['uk', 'us', 'au'].indexOf(config.page.pageId) !== -1;
+
+        // Get all containers
+        var containers = qwery(containerSelector)
+        // Filter out closed ones
+        .filter(function (container) {
+            return prefs[container.getAttribute('data-id')] !== 'closed';
+        });
+
+        if (containers.length === 0) {
+            return Promise.resolve(false);
+        } else if (isMobile) {
+            insertOnMobile(containers, getSlotNameOnMobile)
+            .then(addSlots)
+            .then(done);
+        } else {
+            insertOnDesktop(containers, getSlotNameOnDesktop)
+            .then(addSlots)
+            .then(done);
+        }
+
+        return Promise.resolve(true);
     }
 
+    // On mobile, a slot is inserted after each container
+    function insertOnMobile(containers, getSlotName) {
+        var hasThrasher = containers[0].classList.contains('fc-container--thrasher');
+        var includeNext = false;
+        var slots;
+
+        // Remove first container if it is a thrasher
+        containers = containers
+        .slice(isNetworkFront && hasThrasher ? 1 : 0)
+        // Filter every other container
+        .filter(function (container) {
+            if (container.nextElementSibling && container.nextElementSibling.classList.contains('fc-container--commercial')) {
+                return false;
+            }
+
+            includeNext = !includeNext;
+            return includeNext;
+        })
+        // Keep as much as 10 of them
+        .slice(0, 10);
+
+        slots = containers
+        .map(function (container, index) {
+            var adName = getSlotName(index);
+            var classNames = ['container-inline', 'mobile'];
+            var slot, section;
+            if (config.page.isAdvertisementFeature) {
+                classNames.push('adfeature');
+            }
+
+            slot = createSlot(adName, classNames);
+
+            // Wrap each ad slot in a SECTION element
+            section = document.createElement('section');
+            section.appendChild(slot);
+
+            return section;
+        });
+
+        return fastdom.write(function () {
+            slots.forEach(function (slot, index) {
+                containers[index].parentNode.insertBefore(slot, containers[index].nextSibling);
+            });
+            return slots.map(function (_) { return _.firstChild; });
+        });
+    }
+
+    // On destkop, a slot is inserted when there is a slice available
+    function insertOnDesktop(containers, getSlotName) {
+        var slots;
+
+        // Remove first container on network fronts
+        containers = containers.slice(isNetworkFront ? 1 : 0);
+
+        slots = containers
+        // get all ad slices
+        .reduce(function (result, container) {
+            var slice = container.querySelector(sliceSelector);
+            if (slice) {
+                result.push(slice);
+            }
+            return result;
+        }, [])
+        // Keep a maximum of 10 containers
+        .slice(0, 10)
+        // create ad slots for the selected slices
+        .map(function (slice, index) {
+            var adName = getSlotName(index);
+            var classNames = ['container-inline'];
+            var slot;
+
+            if (config.page.isAdvertisementFeature) {
+                classNames.push('adfeature');
+            }
+
+            slot = createSlot(adName, classNames);
+
+            return { slice: slice, slot: slot };
+        });
+
+        return fastdom.write(function () {
+            slots.forEach(function(item) {
+                // add a tablet+ ad to the slice
+                item.slice.classList.remove('fc-slice__item--no-mpu');
+                item.slice.appendChild(item.slot);
+            });
+            return slots.map(function (_) { return _.slot; });
+        });
+    }
+
+    function getSlotNameOnMobile(index) {
+        return index === 0 ? 'top-above-nav' : 'inline' + index;
+    }
+
+    function getSlotNameOnDesktop(index) {
+        return 'inline' + (index + 1);
+    }
+
+    function addSlots(slots) {
+        slots.forEach(addSlot);
+    }
+
+    function done() {
+        mediator.emit('page:commercial:slice-adverts');
+    }
 });

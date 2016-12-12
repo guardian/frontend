@@ -464,6 +464,10 @@
 }
 
 .ad-slot--offset-right {
+    @include mq(desktop) {
+        margin-right: -20em;
+    }
+
     @include mq(wide) {
         margin-right: -25em;
     }

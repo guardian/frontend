@@ -9,15 +9,15 @@ Here is a template for raising an issue, copy and paste it into the text field a
 
 ## Environment
 
-Device: 
-Browser: 
-OS: 
-URL: 
+Device:
+Browser:
+OS:
+URL:
 ```
 
 We welcome code submissions from other teams. Here's the rules of engagement.
 
-## General 
+## General
 
 - The philosophy here is about communication, taking responsibility for your changes, and fast, incremental delivery.
 - Speak to the team before you decide to do anything major. We can probably help design the change to maximise it's chances of being accepted.
@@ -35,7 +35,7 @@ This is applicable to [GMG employees](http://www.gmgplc.co.uk/).
 - Fork the code and make your changes.
 - Test your branch locally by running unit and integration tests:
     - ./sbt012 project &lt;project> test
-    - grunt test:integration:&lt;project>
+    - make test
 - Open a pull request.
     - Explain why you are making this change in the pull request
     - Include information about how you plan to measure success (e.g. links to analytics reports)
@@ -65,7 +65,7 @@ When you merge your branch to master you need to check the builds go through and
 
 If there are problems on CODE then revert your changes from master, fix and try again. Don't leave broken things lying around for others to trip themselves up on.
 
-You are nearly done, simply deploy to PROD (via *gu* tools) and again check that your software is doing what you expected. 
+You are nearly done, simply deploy to PROD (via *gu* tools) and again check that your software is doing what you expected.
 
 If it is a bit late in the day or it is nearly lunch and you do not want to deploy to PROD immediately then do not merge to master.
 

@@ -118,6 +118,11 @@
     @include mq(desktop) {
         font-size: 4rem;
     }
+
+    &.content__headline--advertisement {
+        font-family: $f-sans-serif-headline;
+        font-weight: 200;
+    }
 }
 
 .immersive-main-media__headline-container--dark {
@@ -165,6 +170,10 @@
         &:hover {
             border-bottom-color: rgba($neutral-6, 1);
         }
+    }
+
+    &.content__standfirst--advertisement {
+        font-family: $f-sans-serif-text;
     }
 }
 

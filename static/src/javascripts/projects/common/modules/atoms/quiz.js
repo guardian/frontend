@@ -22,7 +22,7 @@ define([
                 if ($quizzes.length > 0) {
                     bean.on(document, 'click', toArray($quizzes), function (e) {
                         var quiz = e.currentTarget,
-                            total =  $(':checked + .atom-quiz__answer__item', quiz).length;
+                            total =  $(':checked + .atom-quiz__answer__item--is-correct', quiz).length;
 
                         if (quiz.checkValidity()) { // the form (quiz) is complete
                             var $bucket__message = null;

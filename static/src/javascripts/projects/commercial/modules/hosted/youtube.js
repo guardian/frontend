@@ -1,8 +1,8 @@
 
 define([
     'commercial/modules/hosted/next-video-autoplay',
-    'common/modules/video/youtube-player',
-    'common/modules/video/youtube-tracking',
+    'common/modules/atoms/youtube-player',
+    'common/modules/atoms/youtube-tracking',
     'common/utils/$',
     'common/utils/detect',
     'common/utils/mediator',
