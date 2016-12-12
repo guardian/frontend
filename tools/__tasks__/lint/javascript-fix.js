@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 const execa = require('execa');
 
 const config = [

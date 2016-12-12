@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 const chalk = require('chalk');
 
 const config = '--rulesdir dev/eslint-rules --quiet --color';
