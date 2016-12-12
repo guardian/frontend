@@ -2,6 +2,7 @@ package controllers
 
 import common.{ExecutionContexts, Logging}
 import implicits.{Dates, ItemResponses}
+import model.ApplicationContext
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.Environment
@@ -14,11 +15,13 @@ class PublicationController(
   bookAgent: NewspaperBookTagAgent,
   bookSectionAgent: NewspaperBookSectionTagAgent,
   articleController: ArticleController
-  )(implicit env: Environment) extends Controller
+  )(implicit context: ApplicationContext) extends Controller
   with ExecutionContexts
   with ItemResponses
   with Dates
   with Logging {
+
+  import context._
 
   private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 

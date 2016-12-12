@@ -5,15 +5,14 @@ import play.api.mvc._
 import football.services.PaFootballClient
 import common.{ExecutionContexts, Logging}
 import java.net.URLDecoder
+
 import scala.language.postfixOps
-import model.{Cached, NoCache}
+import model.{ApplicationContext, Cached, NoCache}
 import play.api.libs.ws.WSClient
-import play.api.Environment
 
+class PaBrowserController(val wsClient: WSClient)(implicit val context: ApplicationContext) extends Controller with ExecutionContexts with PaFootballClient with Logging {
 
-class PaBrowserController(val wsClient: WSClient, val environment: Environment) extends Controller with ExecutionContexts with PaFootballClient with Logging {
-
-  implicit val env: Environment = environment
+  import context._
 
   def browserSubstitution() = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.getOrElse { throw new Exception("Could not read POST submission") }

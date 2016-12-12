@@ -23,7 +23,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   val frontJsonFapi: FrontJsonFapi
 
-  implicit def env: Environment
+  val context: ApplicationContext
+  import context._
 
   private def getEditionFromString(edition: String) = {
     val editionToFilterBy = edition match {
@@ -248,5 +249,5 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 }
 
-class FaciaControllerImpl(val frontJsonFapi: FrontJsonFapiLive)(implicit val env: Environment) extends FaciaController
+class FaciaControllerImpl(val frontJsonFapi: FrontJsonFapiLive)(implicit val context: ApplicationContext) extends FaciaController
 

@@ -76,7 +76,7 @@ import scala.language.postfixOps
   }
 
   "the internal surroundingItems function should work OK" in {
-    val tablesController = new TablesController(wsClient, testEnvironment)
+    val tablesController = new TablesController(wsClient)
     tablesController.surroundingItems[Int](1, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(3, 4, 5))
     tablesController.surroundingItems[Int](2, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(2, 3, 4, 5, 6))
     tablesController.surroundingItems[Int](3, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(1, 2, 3, 4, 5, 6))

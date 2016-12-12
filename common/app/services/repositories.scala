@@ -8,14 +8,14 @@ import implicits.Collections
 import model._
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import play.api.Environment
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 
 import scala.concurrent.Future
 
 trait Index extends ConciergeRepository with Collections {
 
-  implicit def env: Environment
+  val context: ApplicationContext
+  import context._
 
   val contentApiClient: ContentApiClient
   val sectionsLookUp: SectionsLookUp

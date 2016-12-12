@@ -13,12 +13,11 @@ import play.api.data.validation._
 import play.api.mvc.{Action, RequestHeader, Result}
 import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 import conf.switches.Switches.LongCacheCommentsSwitch
-import play.api.Environment
-
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionApiLike)(implicit env: Environment) extends DiscussionController with ExecutionContexts {
+class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionApiLike)(implicit context: ApplicationContext) extends DiscussionController with ExecutionContexts {
+  import context._
 
   val userForm = Form(
     Forms.mapping(

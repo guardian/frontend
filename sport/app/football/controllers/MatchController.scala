@@ -46,7 +46,8 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
   )
 }
 
-class MatchController(competitionsService: CompetitionsService)(implicit env: Environment) extends Controller with Football with Requests with Logging with ExecutionContexts {
+class MatchController(competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends Controller with Football with Requests with Logging with ExecutionContexts {
+  import context._
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 

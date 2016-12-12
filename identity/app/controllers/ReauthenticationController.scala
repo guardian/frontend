@@ -5,8 +5,7 @@ import common.ExecutionContexts
 import form.Mappings
 import idapiclient.{EmailPassword, IdApiClient, ScGuU}
 import implicits.Forms
-import model.{IdentityPage, NoCache}
-import play.api.Environment
+import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.data._
 import play.api.data.validation.Constraints
 import play.api.i18n.{Messages, MessagesApi}
@@ -24,8 +23,9 @@ class ReauthenticationController(returnUrlVerifier: ReturnUrlVerifier,
                                  authenticatedActions: AuthenticatedActions,
                                  signInService : PlaySigninService,
                                  val messagesApi: MessagesApi)
-                                (implicit env: Environment)
+                                (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with Forms {
+  import context._
 
   val page = IdentityPage("/reauthenticate", "Re-authenticate")
 

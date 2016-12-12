@@ -15,7 +15,6 @@ import play.api.mvc.{Action, Controller, Result}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import play.api.Environment
 
 object emailLandingPage extends StandalonePage {
   private val id = "email-landing-page"
@@ -113,7 +112,8 @@ class EmailFormService(wsClient: WSClient) {
   }
 }
 
-class EmailSignupController(wsClient: WSClient)(implicit env: Environment) extends Controller with ExecutionContexts with Logging {
+class EmailSignupController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with ExecutionContexts with Logging {
+  import context._
   val emailFormService = new EmailFormService(wsClient)
   val emailForm: Form[EmailForm] = Form(
     mapping(

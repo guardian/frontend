@@ -2,11 +2,11 @@ package controllers
 
 import common._
 import model.Cached.RevalidatableResult
-import model.{Cached, MetaData, SectionSummary}
-import play.api.Environment
+import model.{ApplicationContext, Cached, MetaData, SectionSummary}
 import play.api.mvc.{Action, Controller}
 
-class TechFeedbackController (implicit env: Environment) extends Controller with Logging {
+class TechFeedbackController (implicit context: ApplicationContext) extends Controller with Logging {
+  import context._
 
   def techFeedback(path: String) = Action { implicit request =>
     val page = model.SimplePage(MetaData.make(

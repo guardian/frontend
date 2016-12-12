@@ -28,8 +28,9 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
                             idRequestParser: IdRequestParser,
                             val messagesApi: MessagesApi,
                             implicit val profileFormsMapping: ProfileFormsMapping)
-                           (implicit env: Environment)
+                           (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
+  import context._
 
   import authenticatedActions._
 

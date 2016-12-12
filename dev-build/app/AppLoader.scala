@@ -18,7 +18,7 @@ import dfp.DfpDataCacheLifecycle
 import feed._
 import football.controllers._
 import http.{CorsHttpErrorHandler, DevBuildParametersHttpRequestHandler, DevFilters}
-import model.{AdminLifecycle, ApplicationIdentity}
+import model.{AdminLifecycle, ApplicationContext, ApplicationIdentity}
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api._
@@ -48,6 +48,7 @@ trait Controllers
   with FrontendComponents
   with CricketControllers {
   self: BuiltInComponents =>
+  implicit def appContext: ApplicationContext
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
   lazy val apiSandbox = wire[ApiSandbox]
   lazy val assets = wire[Assets]

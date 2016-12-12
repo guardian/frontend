@@ -50,7 +50,8 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
   }
 }
 
-class CrosswordPageController(val contentApiClient: ContentApiClient)(implicit env: Environment) extends CrosswordController {
+class CrosswordPageController(val contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends CrosswordController {
+  import context._
 
   def noResults()(implicit request: RequestHeader) = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
 
@@ -93,7 +94,8 @@ class CrosswordPageController(val contentApiClient: ContentApiClient)(implicit e
   }
 }
 
-class CrosswordSearchController(val contentApiClient: ContentApiClient)(implicit env: Environment) extends CrosswordController {
+class CrosswordSearchController(val contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends CrosswordController {
+  import context._
   val searchForm = Form(
     mapping(
       "crossword_type" -> nonEmptyText,

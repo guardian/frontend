@@ -3,11 +3,9 @@ package controllers.admin
 import common.dfp.{GuCreativeTemplate, GuLineItem}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
-import conf.Configuration.environment
 import dfp.{CreativeTemplateAgent, DfpApi, DfpDataExtractor}
 import model._
 import ophan.SurgingContentAgent
-import play.api.Environment
 import play.api.libs.json.JsString
 import play.api.mvc.{Action, Controller}
 import tools._
@@ -22,7 +20,8 @@ case class CommercialPage() extends StandalonePage {
       "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng")))
 }
 
-class CommercialController(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
+class CommercialController(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+  import context._
 
   def renderCommercialMenu() = Action { implicit request =>
     NoCache(Ok(views.html.commercial.commercialMenu()))

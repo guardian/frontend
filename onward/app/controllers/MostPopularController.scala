@@ -5,7 +5,6 @@ import contentapi.ContentApiClient
 import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
 import model.Cached.RevalidatableResult
 import model._
-import play.api.Environment
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller, RequestHeader}
 import views.support.FaciaToMicroFormat2Helpers._
@@ -16,7 +15,8 @@ class MostPopularController(contentApiClient: ContentApiClient,
                             geoMostPopularAgent: GeoMostPopularAgent,
                             dayMostPopularAgent: DayMostPopularAgent,
                             mostPopularAgent: MostPopularAgent)
-                           (implicit env: Environment) extends Controller with Logging with ExecutionContexts {
+                           (implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+  import context._
   val page = SimplePage(MetaData.make(
     "most-read",
     Some(SectionSummary.fromId("most-read")),

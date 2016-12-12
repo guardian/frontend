@@ -1,12 +1,13 @@
 package controllers.admin.commercial
 
 import common.dfp.LineItemReport
-import play.api.Environment
+import model.ApplicationContext
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import tools.Store
 
-class SlotController(implicit env: Environment) extends Controller {
+class SlotController(implicit context: ApplicationContext) extends Controller {
+  import context._
 
   def viewSlot(slotName: String) = Action { implicit request =>
     val maybeResult = for {

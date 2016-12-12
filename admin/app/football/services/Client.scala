@@ -12,6 +12,7 @@ import common.{ExecutionContexts, Logging}
 import pa.{Http, PaClient, PaClientErrorsException, Response, Season, Team}
 import conf.AdminConfiguration
 import football.model.PA
+import model.ApplicationContext
 
 
 trait Client extends PaClient with Http with ExecutionContexts {
@@ -85,10 +86,9 @@ trait PaFootballClient {
 
   implicit val executionContext: ExecutionContext
   val wsClient: WSClient
-  val environment: Environment
-  val mode: Mode.Mode = environment.mode
+  val context: ApplicationContext
 
-  lazy val client: Client = if (mode == Mode.Test) TestClient(wsClient, environment) else RealClient(wsClient)
+  lazy val client: Client = if (context.environment.mode == Mode.Test) TestClient(wsClient, context.environment) else RealClient(wsClient)
 
   def fetchCompetitionsAndTeams: Future[(List[Season], List[Team])] = for {
     competitions <- client.competitions.map(PA.filterCompetitions)

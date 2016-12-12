@@ -2,23 +2,22 @@ package controllers.admin
 
 import model.Cached.RevalidatableResult
 import play.api.mvc._
-import play.api.Environment
 import football.services.PaFootballClient
 import pa.{PlayerAppearances, PlayerProfile, StatsSummary}
 import implicits.Requests
 import common.{ExecutionContexts, JsonComponent, Logging}
 import org.joda.time.LocalDate
 import football.model.PA
+
 import scala.concurrent.Future
-import model.{Cached, Cors, NoCache}
+import model.{ApplicationContext, Cached, Cors, NoCache}
 import play.api.libs.json.{JsArray, JsObject, JsString}
 import org.joda.time.format.DateTimeFormat
 import play.twirl.api.HtmlFormat
 import play.api.libs.ws.WSClient
 
-class PlayerController(val wsClient: WSClient, val environment: Environment) extends Controller with ExecutionContexts with PaFootballClient with Requests with Logging {
-
-  implicit val env: Environment = environment
+class PlayerController(val wsClient: WSClient, val context: ApplicationContext) extends Controller with ExecutionContexts with PaFootballClient with Requests with Logging {
+  import context._
 
   def playerIndex = Action.async { implicit request =>
     fetchCompetitionsAndTeams.map {

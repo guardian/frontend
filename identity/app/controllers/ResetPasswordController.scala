@@ -1,18 +1,18 @@
 package controllers
 
 import common.ExecutionContexts
-import model.{NoCache, IdentityPage}
-import play.api.data.{Forms, Form}
+import model.{ApplicationContext, IdentityPage, NoCache}
+import play.api.data.{Form, Forms}
 import play.api.mvc._
 import idapiclient.IdApiClient
-import services.{AuthenticationService, IdentityUrlBuilder, IdRequestParser}
-import play.api.i18n.{MessagesApi, Messages}
+import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder}
+import play.api.i18n.{Messages, MessagesApi}
 import play.api.data.validation._
 import play.api.data.Forms._
 import play.api.data.format.Formats._
 import form.Mappings
-import play.api.Environment
 import utils.SafeLogging
+
 import scala.concurrent.Future
 
 class ResetPasswordController(api : IdApiClient,
@@ -20,8 +20,9 @@ class ResetPasswordController(api : IdApiClient,
                               idUrlBuilder: IdentityUrlBuilder,
                               authenticationService: AuthenticationService,
                               val messagesApi: MessagesApi)
-                             (implicit env: Environment)
+                             (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
+  import context._
 
   val page = IdentityPage("/reset-password", "Reset Password")
 

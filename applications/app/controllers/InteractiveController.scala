@@ -11,8 +11,6 @@ import play.api.mvc._
 import views.support.RenderOtherStatus
 import conf.Configuration.interactive.cdnPath
 import conf.Configuration.environment.isPreview
-import play.api.Environment
-
 import scala.concurrent.duration._
 import scala.concurrent.Future
 
@@ -20,7 +18,8 @@ case class InteractivePage (interactive: Interactive, related: RelatedContent) e
   override lazy val item = interactive
 }
 
-class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClient)(implicit env: Environment) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+  import context._
 
   def renderInteractiveJson(path: String): Action[AnyContent] = renderInteractive(path)
   def renderInteractive(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }

@@ -11,7 +11,7 @@ import controllers._
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.CorsHttpErrorHandler
 import jobs.{SiteMapJob, SiteMapLifecycle}
-import model.ApplicationIdentity
+import model.{ApplicationContext, ApplicationIdentity}
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
@@ -34,7 +34,6 @@ trait ApplicationsServices {
   lazy val sectionsLookUp = wire[SectionsLookUp]
   lazy val ophanApi = wire[OphanApi]
 }
-
 
 trait AppComponents extends FrontendComponents with ApplicationsControllers with ApplicationsServices {
 

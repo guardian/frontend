@@ -7,8 +7,7 @@ import utils.ThirdPartyConditions
 import ThirdPartyConditions._
 import form.Mappings
 import idapiclient.IdApiClient
-import model.{IdentityPage, NoCache}
-import play.api.Environment
+import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.i18n.MessagesApi
 import play.api.mvc._
 import play.filters.csrf.CSRFAddToken
@@ -24,8 +23,9 @@ class ThirdPartyConditionsController(returnUrlVerifier: ReturnUrlVerifier,
                                      idUrlBuilder: IdentityUrlBuilder,
                                      authenticatedActions: AuthenticatedActions,
                                      val messagesApi: MessagesApi)
-                                    (implicit env: Environment)
+                                    (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with Mappings {
+  import context._
 
   import authenticatedActions.{agreeAction, authAction}
 

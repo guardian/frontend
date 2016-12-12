@@ -29,8 +29,9 @@ class SaveContentController(api: IdApiClient,
                             savedArticleService: PlaySavedArticlesService,
                             idUrlBuilder: IdentityUrlBuilder,
                             pageDataBuilder: SaveForLaterDataBuilder)
-                           (implicit env: Environment)
+                           (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging {
+  import context._
 
   import SavedArticleData._
 

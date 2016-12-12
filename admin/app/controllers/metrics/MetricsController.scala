@@ -5,13 +5,12 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.Controller
 import play.api.mvc.Action
 import tools._
-import model.NoCache
+import model.{ApplicationContext, NoCache}
 import conf.Configuration
-import play.api.Environment
-
 import scala.concurrent.Future
 
-class MetricsController(wsClient: WSClient)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
+class MetricsController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+  import context._
   // We only do PROD metrics
 
   val stage = Configuration.environment.stage.toUpperCase

@@ -2,15 +2,15 @@ package controllers.admin
 
 import com.gu.googleauth.UserIdentity
 import common._
-import conf.switches.{SwitchState, Switches}
+import conf.switches.Switches
 import conf.Configuration
 import play.api.mvc._
 import services.SwitchNotification
 import tools.Store
-import model.NoCache
-import play.api.Environment
+import model.{ApplicationContext, NoCache}
 
-class SwitchboardPlistaController(akkaAsync: AkkaAsync)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
+class SwitchboardPlistaController(akkaAsync: AkkaAsync)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+  import context._
 
   def renderSwitchboard() = Action { implicit request =>
     log.info("loaded plista Switchboard")
