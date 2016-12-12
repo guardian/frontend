@@ -19,42 +19,33 @@
         <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
         <script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async ></script>
         <script custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async></script>
+        <script custom-element="amp-lightbox" src="https://cdn.ampproject.org/v0/amp-lightbox-0.1.js" async></script>
         <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+        <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js" async ></script>
         <script src="https://cdn.ampproject.org/v0.js" async></script>
     </head>
     <body>
-        @*
-        Baseline pageview confidence pixel.
-        This, along with the corresponding pixels for GA/Ophan,
-        are used to generate the confidence graphs on the frontend dashboard.
-        *@
-        <amp-pixel src="@{Configuration.debug.beaconUrl}/count/pv.gif"></amp-pixel>
 
         <amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
         <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
-
-            @fragments.amp.hostedGoogleAnalytics(page)
-
+        @fragments.amp.hostedGoogleAnalytics(page)
         <amp-analytics id="comscore" type="comscore">
             <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
         </amp-analytics>
 
         <div class="main-body">
-
             @guardianHostedHeader(if(page.campaign.fontColour.isDark) "hosted-article-page hosted-page--bright" else "hosted-article-page", page, isAMP = true)
             <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.isDark) {hosted-page--bright}">
 
                 <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
                     <div class="media-primary media-content media-primary--showcase">
-                        <div class="gs-container">
-                            <h2 class="title content__main-column">@{page.title}</h2>
-                        </div>
-                        <span class="caption hosted-tone">@{page.mainPictureCaption}</span>
+                        <h2 class="title content__hosted-body">@{page.title}</h2>
                     </div>
+                    <div class="caption hosted-tone content__hosted-body">@{page.mainPictureCaption}</div>
                     <div class="content__main">
                         <div class="gs-container">
                             <div class="content__main-column content__main-column--article js-content-main-column">
-                                <div class="content__meta-container js-content-meta js-football-meta u-cf content__meta-container--showcase">
+                                <div class="content__meta-container">
                                     <div class="meta__extras" data-component="share">
                                         @guardianHostedShareButtons(page)
                                     </div>
@@ -71,35 +62,18 @@
                                     }
 
                                 </div>
-                                <div class="hide-on-desktop">
-                                @if(page.nextPages.nonEmpty) {
-                                    @hostedOnwardJourney(page.nextPages.map { nextPage =>
-                                        makeshiftPage(nextPage, page.campaign)
-                                    }, 2, 4)
-                                } else {
-                                    <div class="js-onward-placeholder"></div>
-                                }
-                                </div>
-                                <div class="hosted__standfirst">
-                                    <div class="hosted__terms">​Hosted content is used to describe content that is paid for and supplied by the advertiser.
+                                <div class="hosted__standfirst content__hosted-body">
+                                    <div class="hosted__terms">​​Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our
+                                        <button on="tap:hosted-about-lightbox" class="hosted__terms-link hosted-tone">commercial content explainer</button>.
                                     </div>
                                 </div>
                             </div>
-                            <div class="content__secondary-column">
-                            @if(page.nextPages.nonEmpty) {
-                                @hostedOnwardJourney(page.nextPages.map { nextPage =>
-                                    makeshiftPage(nextPage, page.campaign)
-                                }, 2, 4)
-                            } else {
-                                <div class="js-onward-placeholder"></div>
-                            }
-                            </div>
+                            @hostedOnwardAmp(s"${page.url}/article/onward.json")
                         </div>
                     </div>
                 </article>
-
                 @guardianHostedCta(page, page.cta, isAMP = true)
-
+            </div>
         </div>
     </body>
 </html>

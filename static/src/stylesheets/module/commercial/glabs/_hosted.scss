@@ -442,13 +442,16 @@ $hosted-video-height: 551px;
 
 .hosted__meta {
     position: absolute;
-    left: 88px;
-    right: 88px;
+    left: 98px;
+    right: 98px;
     bottom: 44px;
     color: #ffffff;
 
     @include mq($until: tablet) {
         display: none;
+    }
+    @include mq($until: leftCol) {
+        left: $gs-gutter;
     }
 }
 
@@ -466,8 +469,8 @@ $hosted-video-height: 551px;
     }
 
     .hosted__heading {
-        font-size: 24px;
-        line-height: 22px;
+        font-size: 28px;
+        line-height: 28px;
     }
 }
 
@@ -525,16 +528,12 @@ $hosted-video-height: 551px;
 
 // Headings
 .hosted__heading {
-    @include f-textSans;
+    @include f-headlineSans;
+    letter-spacing: -0.5px;
 
     margin: 0;
-    font-size: 22px;
-    line-height: 24px;
-
-    @include mq(tablet) {
-        font-size: 26px;
-        line-height: 26px;
-    }
+    font-size: 28px;
+    line-height: 28px;
 
     @include mq(desktop) {
         font-size: 36px;
@@ -850,41 +849,6 @@ $hosted-video-height: 551px;
     @include f-textSans;
 
     font-size: 12px;
-}
-
-.hosted__popup.popup {
-    top: 110%;
-    left: 299%;
-    width: 350px;
-    padding: $gs-gutter / 2 $gs-gutter / 2 $gs-gutter $gs-gutter / 2;
-    background: #ffffff;
-    color: $neutral-1;
-    text-align: left;
-    border-radius: 0;
-
-    &:before {
-        left: 8%;
-        border-bottom-color: #ffffff;
-    }
-
-    @include mq($until: tablet) {
-        width: 250px;
-        left: 125%;
-
-        &:before {
-            left: 29%;
-        }
-    }
-}
-
-.hosted__popup--bottom {
-    @include mq($until: tablet) {
-        left: 65%;
-    }
-}
-
-.hosted__popup-text {
-    font-weight: 200;
 }
 
 .hosted__next-page--header {

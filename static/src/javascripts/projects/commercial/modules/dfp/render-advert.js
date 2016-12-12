@@ -5,6 +5,7 @@ define([
     'common/utils/raven',
     'common/utils/fastdom-promise',
     'common/utils/closest',
+    'common/utils/mediator',
     'common/modules/commercial/ad-sizes',
     'commercial/modules/sticky-mpu',
     'commercial/modules/dfp/apply-creative-template',
@@ -17,6 +18,7 @@ define([
     raven,
     fastdom,
     closest,
+    mediator,
     adSizes,
     stickyMpu,
     applyCreativeTemplate,
@@ -66,6 +68,13 @@ define([
         } else {
             return addFluid(['ad-slot--facebook', 'ad-slot--revealer'])(_, advert);
         }
+    };
+
+    /**
+     * Resolve the stickyMpu.whenRendered promise
+     */
+    sizeCallbacks[adSizes.halfPage] = function () {
+        mediator.emit('page:commercial:sticky-mpu');
     };
 
     /**

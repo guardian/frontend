@@ -484,7 +484,40 @@ trait FeatureSwitches {
     "Adds a placeholder attribute to interactives on amp so that they are allowed to display in the top part of the page",
     owners = Seq(Owner.withGithub("michaelwmcnamara")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 15),
+    sellByDate = new LocalDate(2017, 1, 20),
+    exposeClientSide = true
+  )
+
+  // Owner: Joseph Smith
+  val DisplayHiddenFrontsAsEmails = Switch(
+    SwitchGroup.Feature,
+    "display-hidden-fronts-as-emails",
+    "Allows hidden fronts to be rendered as email-friendly HTML by passing ?format=email",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 20),
+    exposeClientSide = true
+  )
+
+  // Owner: Joseph Smith
+  val RenderEmailConnectedStyle = Switch(
+    SwitchGroup.Feature,
+    "render-email-connected-style",
+    "Allows alternate email styling when passing ?format=email-connected, for testing two email design variants",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2016, 12, 20),
+    exposeClientSide = true
+  )
+
+  //Owner Michael McNamara
+  val StressTestTailor = Switch(
+    SwitchGroup.Feature,
+    "stress-test-tailor-healthcheck",
+    "Sends a healthcheck metric for every page",
+    owners = Seq(Owner.withGithub("michaelwmcnamara")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 20),
     exposeClientSide = true
   )
 }

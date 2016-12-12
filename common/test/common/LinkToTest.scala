@@ -1,9 +1,7 @@
 package common
 
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
-import play.api.Play
+import org.scalatest.{FlatSpec, Matchers}
 import common.editions.{Au, Us, International, Uk}
-import play.api.mvc.RequestHeader
 import test._
 import play.api.test.FakeRequest
 

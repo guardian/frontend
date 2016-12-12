@@ -447,11 +447,7 @@ object Article {
       ("article:author", tags.contributors.map(_.metadata.webUrl).mkString(","))
     )
 
-    val twitterProperties: Map[String, String] = if (content.tags.isLiveBlog) {
-      Map("twitter:card" -> "summary_large_image", "twitter:card" -> "summary")
-    } else {
-      Map("twitter:card" -> "summary_large_image")
-    }
+    val twitterProperties: Map[String, String] = Map("twitter:card" -> "summary_large_image")
 
     content.metadata.copy(
       contentType = contentType,

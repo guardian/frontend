@@ -3,13 +3,15 @@ define([
     'common/utils/detect',
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'Promise'
 ], function (
     qwery,
     detect,
     fastdom,
     createSlot,
-    commercialFeatures
+    commercialFeatures,
+    Promise
 ) {
 
     return {
@@ -25,6 +27,7 @@ define([
         var containerSelector = '.js-gallery-slot';
         var adContainers;
         var isMobile = detect.getBreakpoint() === 'mobile';
+        var getSlotName = isMobile ? getSlotNameForMobile : getSlotNameForDesktop;
         var classNames = ['gallery-inline', 'dark'];
 
         if (isMobile) {
@@ -34,17 +37,7 @@ define([
         adContainers = qwery(containerSelector)
 
         .map(function (item, index) {
-            var adSlot;
-
-            if (isMobile && index == 0) {
-                adSlot = createSlot('top-above-nav', classNames);
-            }
-            else if (isMobile && index == 1) {
-                adSlot = createSlot('inline' + (index), classNames);
-            }
-            else if (!isMobile) {
-                adSlot = createSlot('inline' + (index + 1), classNames);
-            }
+            var adSlot = createSlot(getSlotName(index), classNames);
 
             return {
                 anchor: item,
@@ -64,7 +57,15 @@ define([
                 item.anchor.appendChild(item.adSlot);
             }
 
-    });
+        });
 
+    }
+
+    function getSlotNameForMobile(index) {
+        return index === 0 ? 'top-above-nav' : 'inline' + index;
+    }
+
+    function getSlotNameForDesktop(index) {
+        return 'inline' + (index + 1);
     }
 });

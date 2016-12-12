@@ -80,7 +80,7 @@ const uniq = require('lodash.uniq');
 
 const tasksIdentifier = '__tasks__';
 
-const {dev: IS_DEV, verbose: IS_VERBOSE, debug: IS_DEBUG, stdout: IS_STDOUT, _: TASKS} = yargs
+const {dev: IS_DEV, teamcity: IS_TEAMCITY, debug: IS_DEBUG, verbose: IS_VERBOSE, stdout: IS_STDOUT, _: TASKS} = yargs
     .option('dev', {
         demand: false,
         describe: 'Prefer the dev version of the task, if it exits.',
@@ -117,7 +117,7 @@ const {dev: IS_DEV, verbose: IS_VERBOSE, debug: IS_DEBUG, stdout: IS_STDOUT, _: 
     .version().alias('v', 'version')
     .argv;
 
-const logEverything = IS_VERBOSE || IS_DEBUG;
+const VERBOSE = IS_VERBOSE || IS_TEAMCITY || IS_DEBUG;
 
 const taskSrc = path.resolve(__dirname, tasksIdentifier);
 
@@ -125,24 +125,30 @@ const taskSrc = path.resolve(__dirname, tasksIdentifier);
 const cache = [];
 
 // run commands with output to stdout if verbose is true
-const exec = (task, stdouts) => {
+const exec = (task, onError, ctx) => {
     const [cmd, ...args] = task.trim().split(' ');
-    if (logEverything) {
+
+    if (VERBOSE) {
         return execa(cmd, args, {
             stdio: [process.stdin, process.stdout, process.stderr]
         });
     }
 
-    return execa.stdout(cmd, args).then(result => {
-        if (result) stdouts.push(result);
-    });
+    return execa(cmd, args)
+        .then(result => {
+            if (result.stdout) ctx.stdouts.push(result.stdout);
+        })
+        .catch(e => {
+            if (typeof onError === 'function') onError(ctx);
+            return Promise.reject(e);
+        });
 };
 
 // turn a list of our tasks into objects listr can use
-function listrify(steps, {concurrent = false, verbose = false} = {}) {
+function listrify(steps, {concurrent = false} = {}) {
     const listrTasks = steps
         .map(step => {
-            const { description: title, task, concurrent } = step;
+            const { description: title, task, concurrent, onError } = step;
 
             // if another task has included this one, don't run it again
             const skip = cache.indexOf(step) !== -1 ? () => 'Skipping: already run by another task' : false;
@@ -152,23 +158,31 @@ function listrify(steps, {concurrent = false, verbose = false} = {}) {
             if (Array.isArray(task)) {
                 return { title, task: () => listrify(task.map(_task => {
                     if (_task.task) return _task;
-                    if (typeof _task === 'string') return { title, task: ctx => exec(_task, ctx.stdouts), skip};
+                    if (typeof _task === 'string') return { title, task: ctx => exec(_task, onError, ctx), skip};
                     return { title, task: _task, skip};
-                }), {concurrent}), skip};
+                }), {concurrent: VERBOSE ? false : concurrent}), skip };
             }
 
             // treat tasks that are strings as terminal commands
-            if (typeof task === 'string') return { title, task: ctx => exec(task, ctx.stdouts), skip};
+            if (typeof task === 'string') return { title, task: ctx => exec(task, onError, ctx), skip };
 
             // assume the task is a function
             // if it's not, listr will blow up anyway, which is fine
-            return { title, task, skip };
+            return { title, task: ctx => new Promise((resolve, reject) => {
+                try {
+                    resolve(task(ctx));
+                } catch (e) {
+                    if (typeof onError === 'function') onError(ctx);
+                    if (VERBOSE) console.log(e);
+                    reject(e);
+                }
+            }), skip };
         });
 
     return new Listr(listrTasks, {
         concurrent,
         collapse: true,
-        renderer: verbose ? 'verbose' : 'default'
+        renderer: IS_TEAMCITY ? require('./run-task-tc-formater') : IS_VERBOSE ? require('./run-task-verbose-formater') : 'default'
     });
 }
 
@@ -196,22 +210,20 @@ const getTasksFromModule = taskName => {
 
 const taskModules = TASKS.map(getTasksFromModule);
 
-listrify(taskModules, {verbose: IS_VERBOSE}).run({
+listrify(taskModules).run({
     messages: [],
     stdouts: []
 }).catch(e => {
     if (e) {
-        if (!e.stderr && !e.stdout) console.log(e);
-        // if we're logging everything already, this stuff would already be in the terminal
-        // if we're not, we should show it at this point
-        else if (!logEverything) {
+        if (!VERBOSE) {
+            if (!e.stderr && !e.stdout) console.log(e);
             if (e.stderr) console.error(`\n${e.stderr.trim()}`);
             if (e.stdout) console.log(`\n${e.stdout.trim()}`);
         }
     }
     return Object.assign(e.context, {error: true});
 }).then(ctx => {
-    if (IS_STDOUT) ctx.stdouts.forEach(stdout => console.log(stdout.toString()));
+    if (IS_STDOUT) ctx.stdouts.forEach(stdout => console.log(stdout.toString().trim()));
 
     if (ctx.messages.length) {
         console.log('');

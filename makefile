@@ -32,9 +32,9 @@ reinstall: uninstall install
 check-node: # PRIVATE
 	@./tools/check-node-version.js
 
-# Make sure yarn is installed, and it's at least v0.16.
+# Make sure yarn is installed, at the right version.
 check-yarn: # PRIVATE
-	@if [ -z "$$(which yarn)" ] || [ $$(echo $$(yarn --version | cut -d . -f 1,2) '< 0.17' | bc) = 1 ]; then npm i -g yarn@~0.17; fi
+	@./tools/check-yarn.js
 
 # *********************** DEVELOPMENT ***********************
 
@@ -75,9 +75,6 @@ compile-svgs: install # PRIVATE
 compile-fonts: install # PRIVATE
 	@./tools/run-task compile/fonts
 
-atomise-css: install # PRIVATE
-	@node tools/atomise-css
-
 # * Not ready for primetime use yet... *
 pasteup: install # PRIVATE
 	@cd static/src/stylesheets/pasteup && npm --silent i && node publish.js
@@ -88,7 +85,7 @@ pasteup: install # PRIVATE
 
 # Run the JS test suite.
 test: install
-	@./tools/run-task test/javascript
+	@./tools/run-task test/javascript --verbose
 
 # Check the JS test suite coverage.
 coverage: install
@@ -96,15 +93,15 @@ coverage: install
 
 # Lint all assets.
 validate: install
-	@./tools/run-task lint
+	@./tools/run-task lint --verbose
 
 # Lint all SCSS.
 validate-sass: install # PRIVATE
-	@./tools/run-task lint/sass
+	@./tools/run-task lint/sass --verbose
 
 # Lint all JS.
 validate-javascript: install # PRIVATE
-	@./tools/run-task lint/javascript
+	@./tools/run-task lint/javascript --verbose
 
 # Lint all assets.
 fix: install
@@ -112,3 +109,7 @@ fix: install
 
 validate-amp: install # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
+
+# Take screenshots for a visual check.
+screenshots: install
+	@./tools/run-task screenshot

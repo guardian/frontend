@@ -46,7 +46,7 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'People will visit more often';
 
-        var endpoint = 'http://engine.mobile-aws.guardianapis.com/recommendations';
+        var endpoint = 'https://engine.mobile-aws.guardianapis.com/recommendations';
         var cachedRecommendationsKey = 'gu.cachedRecommendations';
         var numberOfRecommendations = 4;
 

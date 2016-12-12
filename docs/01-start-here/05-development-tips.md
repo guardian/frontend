@@ -19,14 +19,6 @@ You can run the Jasmine unit test suite with
 make test
 ```
 
-If you need to debug the tests in a browser, run the command
-
-```
-grunt test --no-single-run
-```
-
-and point your browser at [http://localhost:9876](http://localhost:9876).
-
 ## Server-side development
 
 ### Debugging Play application

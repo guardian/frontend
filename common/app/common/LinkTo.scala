@@ -1,6 +1,6 @@
 package common
 
-import common.editions.{Au, Us, International}
+import common.editions.{Au, International, Us}
 import conf.Configuration
 import layout.ContentCard
 import model.Trail
@@ -127,13 +127,19 @@ object SubscribeLink {
 
 trait AmpLinkTo extends LinkTo {
   override lazy val host = Configuration.amp.baseUrl
+
+  def pvBeaconUrl(implicit request: RequestHeader): String = {
+    val beaconHost = Configuration.debug.beaconUrl
+    val isLocalBeacon = beaconHost.isEmpty
+    val path = "count/pv.gif"
+    if (isLocalBeacon) s"//${request.host}/$path" else s"$beaconHost/$path"
+  }
 }
 
 object AmpLinkTo extends AmpLinkTo {
 
   override def processUrl(url: String, edition: Edition) = {
-    val ampUrl = if (host.isEmpty) url + "?amp=1" else url
+    val ampUrl = if (host.isEmpty) s"$url?amp=1" else url
     super.processUrl(ampUrl, edition)
   }
 }
-

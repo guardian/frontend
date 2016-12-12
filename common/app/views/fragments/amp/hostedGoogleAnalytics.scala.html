@@ -1,5 +1,5 @@
 @(hostedPage: common.commercial.hosted.HostedPage)(implicit request: RequestHeader)
-
+@import common.AmpLinkTo
 @import views.support.GoogleAnalyticsAccount
 
 @* TODO: Abstract this out so its shared with the main GA tracking *@
@@ -31,4 +31,4 @@
             </script>
 </amp-analytics>
 @* GA pageview confidence pixel *@
-<amp-pixel src="@{Configuration.debug.beaconUrl}/count/pvg.gif"></amp-pixel>
+<amp-pixel src="@AmpLinkTo.pvBeaconUrl"></amp-pixel>

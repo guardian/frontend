@@ -5,13 +5,14 @@ define([
     'common/utils/mediator',
     'common/utils/robust',
     'common/utils/user-timing',
+    'common/modules/experiments/ab',
     'commercial/modules/article-aside-adverts',
     'commercial/modules/article-body-adverts',
+    'commercial/modules/article-body-adverts-wide',
     'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/prepare-googletag',
     'commercial/modules/dfp/prepare-sonobi-tag',
     'commercial/modules/dfp/fill-advert-slots',
-    'commercial/modules/front-commercial-components',
     'commercial/modules/gallery-adverts',
     'commercial/modules/hosted/about',
     'commercial/modules/hosted/video',
@@ -24,7 +25,8 @@ define([
     'commercial/modules/third-party-tags',
     'commercial/modules/paidfor-band',
     'commercial/modules/paid-containers',
-    'commercial/modules/dfp/performance-logging'
+    'commercial/modules/dfp/performance-logging',
+    'common/modules/analytics/google'
 ], function (
     Promise,
     config,
@@ -32,13 +34,14 @@ define([
     mediator,
     robust,
     userTiming,
+    ab,
     articleAsideAdverts,
     articleBodyAdverts,
+    articleBodyAdvertsWide,
     closeDisabledSlots,
     prepareGoogletag,
     prepareSonobiTag,
     fillAdvertSlots,
-    frontCommercialComponents,
     galleryAdverts,
     hostedAbout,
     hostedVideo,
@@ -51,18 +54,18 @@ define([
     thirdPartyTags,
     paidforBand,
     paidContainers,
-    performanceLogging
+    performanceLogging,
+    ga
 ) {
     var primaryModules = [
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init],
         ['cm-prepare-googletag', prepareGoogletag.init, prepareGoogletag.customTiming],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
-        ['cm-articleBodyAdverts', articleBodyAdverts.init],
+        ['cm-articleBodyAdverts', isItRainingAds() ? articleBodyAdvertsWide.init : articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-galleryAdverts', galleryAdverts.init],
         ['cm-liveblogAdverts', liveblogAdverts.init],
-        ['cm-frontCommercialComponents', frontCommercialComponents.init],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
 
@@ -73,6 +76,9 @@ define([
         ['cm-ready', function () {
             mediator.emit('page:commercial:ready');
             userTiming.mark('commercial end');
+            robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
+                ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
+            });
             return Promise.resolve();
         }]
     ];
@@ -125,6 +131,11 @@ define([
            });
     }
 
+    function isItRainingAds() {
+        var testName = 'ItsRainingInlineAds';
+        return !config.page.isImmersive && ab.testCanBeRun(testName) && ['geo', 'nogeo'].indexOf(ab.getTestVariantId(testName)) > -1;
+    }
+
     return {
         init: function () {
             if (!config.switches.commercial) {
@@ -132,6 +143,9 @@ define([
             }
 
             userTiming.mark('commercial start');
+            robust.catchErrorsAndLog('ga-user-timing-commercial-start', function () {
+                ga.trackPerformance('Javascript Load', 'commercialStart', 'Commercial start parse time');
+            });
 
             // Stub the command queue
             window.googletag = { cmd: [] };
