@@ -9,12 +9,13 @@ define([
 ) {
     var inlineDefinition = {
         sizeMappings: {
-            mobile: compile(adSizes.empty, adSizes.mpu, adSizes.fluid)
+            mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.fluid)
         }
     };
 
     var rightMappings = {
         mobile: compile(
+            adSizes.outOfPage,
             adSizes.empty,
             adSizes.mpu,
             adSizes.halfPage,
@@ -34,37 +35,23 @@ define([
         'right-small': {
             name: 'right',
             sizeMappings: {
-                mobile: compile(adSizes.empty, adSizes.mpu, adSizes.fluid)
+                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.fluid)
             }
         },
         im: {
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: compile(adSizes.empty, adSizes.inlineMerchandising, adSizes.fluid)
+                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.inlineMerchandising, adSizes.fluid)
             }
         },
         inline: inlineDefinition,
         mostpop: inlineDefinition,
-        'merchandising-high': {
-            label: false,
-            refresh: false,
-            sizeMappings: {
-                mobile: compile(adSizes.empty, adSizes.merchandisingHigh, adSizes.fluid)
-            }
-        },
-        'merchandising-high-ad-feature': {
-            name: 'merchandising-high',
-            label: false,
-            refresh: false,
-            sizeMappings: {
-                mobile: compile(adSizes.empty, adSizes.merchandisingHighAdFeature, adSizes.fluid)
-            }
-        },
         comments: inlineDefinition,
         'top-above-nav': {
             sizeMappings: {
                 mobile: compile(
+                    adSizes.outOfPage,
                     adSizes.empty,
                     adSizes.mpu,
                     adSizes.fluid250,
@@ -104,10 +91,6 @@ define([
 
         definition = adSlotDefinitions[slotName] || adSlotDefinitions.inline;
         name = definition.name || name;
-
-        if (config.page.hasPageSkin && slotName === 'merchandising-high') {
-            definition.sizeMappings.wide = adSizes.empty;
-        }
 
         assign(attributes, definition.sizeMappings);
 

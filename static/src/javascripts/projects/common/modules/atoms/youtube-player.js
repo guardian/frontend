@@ -17,7 +17,9 @@ define([
 
     function loadYoutubeJs() {
         fastdom.write(function () {
-            loadScript({ id: scriptId, src: scriptSrc });
+            if (!document.getElementById(scriptId)) {
+                loadScript({ id: scriptId, src: scriptSrc });
+            }
         }, this);
     }
 

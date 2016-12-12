@@ -1,5 +1,6 @@
 define([
     'Promise',
+    'common/utils/add-event-listener',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/closest',
@@ -8,6 +9,7 @@ define([
     'commercial/modules/messenger'
 ], function (
     Promise,
+    addEventListener,
     config,
     detect,
     closest,
@@ -17,7 +19,7 @@ define([
 ) {
     var topSlotId = 'dfp-ad--top-above-nav';
     var updateQueued = false;
-    var win, header, headerHeight, topSlot, topSlotHeight, stickyBanner, scrollY;
+    var win, header, headerHeight, topSlot, topSlotHeight, topSlotStyles, stickyBanner, scrollY;
 
     return {
         init: init,
@@ -35,10 +37,13 @@ define([
 
             // First, let's assign some default values so that everything
             // is in good order before we start animating changes in height
-            return initState()
+            var promise = initState()
             // Second, start listening for height and scroll changes
             .then(setupListeners);
+            promise.then(onFirstRender);
+            return promise;
         } else {
+            topSlot = null;
             return Promise.resolve();
         }
     }
@@ -56,54 +61,42 @@ define([
         });
     }
 
-    // The height of the top slot changes on 2 occasions:
-    // 1. when the ad is rendered: the ad slot may be manipulated in many ways
-    //    and its geomatry may change
-    // 2. when the ad is dynamically resized: the creative may send a message
-    //    at any point to signal a change of height. Rubicon ads use a legacy
-    //    version of the message system for handling this
-    //
+    // Register a message listener for when the creative wants to resize
+    // its container
     // We also listen for scroll events if we need to, to snap the slot in
     // place when it reaches the end of the header.
     function setupListeners() {
-        messenger.register('set-ad-height', onRubiconResize);
         messenger.register('resize', onResize);
         if (!config.page.hasSuperStickyBanner) {
-            win.addEventListener('scroll', onScroll);
-        }
-        return trackAdRender(topSlotId).then(onTopAdRendered);
-    }
-
-    function onTopAdRendered(isRendered) {
-        if (isRendered) {
-            return fastdom.read(function () {
-                return topSlot.offsetHeight;
-            })
-            .then(resizeStickyBanner);
+            addEventListener(win, 'scroll', onScroll, { passive: true });
         }
     }
 
-    function onRubiconResize(specs, _, iframe) {
-        update(parseInt(specs.height), closest(iframe, '.js-ad-slot'))
-        .then(function (ret) {
-            if( ret > -1 ) {
-                messenger.unregister('set-ad-height', onRubiconResize);
+    function onFirstRender() {
+        trackAdRender(topSlotId)
+        .then(function (isRendered) {
+            if (isRendered) {
+                fastdom.read(function () {
+                    return topSlot.offsetHeight;
+                })
+                .then(resizeStickyBanner);
             }
         });
     }
 
     function onResize(specs, _, iframe) {
-        update(specs.height, closest(iframe, '.js-ad-slot'));
+        if (topSlot.contains(iframe)) {
+            update(specs.height);
+            messenger.unregister('resize', onResize);
+        }
     }
 
-    function update(newHeight, adSlot) {
-        return adSlot.id === topSlotId ?
-            fastdom.read(function () {
-                var adStyles = win.getComputedStyle(adSlot);
-                return newHeight + parseInt(adStyles.paddingTop) + parseInt(adStyles.paddingBottom);
-            })
-            .then(resizeStickyBanner) :
-            Promise.resolve(-1);
+    function update(newHeight) {
+        return fastdom.read(function () {
+            topSlotStyles || (topSlotStyles = win.getComputedStyle(topSlot));
+            return newHeight + parseInt(topSlotStyles.paddingTop) + parseInt(topSlotStyles.paddingBottom);
+        })
+        .then(resizeStickyBanner);
     }
 
     function onScroll() {

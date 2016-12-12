@@ -1,0 +1,9 @@
+.interactive-atom-fence {
+    width: 100%;
+    border: 0;
+
+    .immersive-main-media__media & {
+        // Don't allow the iframe to change its height, must be 100% in immersive main media slot
+        height: 100% !important;
+    }
+}

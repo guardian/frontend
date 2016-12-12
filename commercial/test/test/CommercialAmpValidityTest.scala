@@ -24,6 +24,9 @@ import play.api.test._
   val hostedArticleId = "advertiser-content/audi-history-of-audi/audi-and-innovation"
   testAmpPageValidity(hostedArticleId)
 
+  val hostedArticleWithVideoId = "advertiser-content/chester-zoo-act-for-wildlife/ensuring-a-future-for-south-asian-wildlife"
+  testAmpPageValidity(hostedArticleWithVideoId)
+
   val hostedVideoId = "advertiser-content/chester-zoo-act-for-wildlife/making-wildlife-friendly-habitats"
   testAmpPageValidity(hostedVideoId)
 

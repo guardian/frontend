@@ -17,9 +17,6 @@ RUN \
     apt-get install -y --no-install-recommends build-essential nodejs && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install grunt
-RUN npm i -g grunt-cli
-
 # Create config files
 RUN mkdir -p /etc/gu/ && echo 'STAGE=DEV' > /etc/gu/install_vars
 
@@ -33,7 +30,7 @@ EXPOSE 9000
 ADD . /source
 RUN cd /source && \
     make install compile && \
-    cd /source && \ 
+    cd /source && \
     ./sbt compile && \
     rm -rf /source
 

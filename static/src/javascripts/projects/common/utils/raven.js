@@ -7,7 +7,14 @@ define([
     config,
     detect
 ) {
-    raven.config(
+    var guardian = window.guardian;
+
+    var app = guardian.app = guardian.app || {};
+
+    // attach raven to global object
+    app.raven = raven;
+
+    app.raven.config(
         'https://' + config.page.sentryPublicApiKey + '@' + config.page.sentryHost,
         {
             whitelistUrls: [
@@ -18,8 +25,7 @@ define([
             tags: {
                 edition: config.page.edition,
                 contentType: config.page.contentType,
-                revisionNumber: config.page.revisionNumber,
-                loaderType: 'Curl'
+                revisionNumber: config.page.revisionNumber
             },
             dataCallback: function (data) {
                 if (data.culprit) {
@@ -47,7 +53,7 @@ define([
     );
 
     // Report uncaught exceptions
-    raven.install();
+    app.raven.install();
 
-    return raven;
+    return app.raven;
 });

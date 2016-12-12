@@ -69,7 +69,7 @@ object Dependencies {
   val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "7.2.4"
   val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.3.0"
-  val targetingClient = "com.gu" %% "targeting-client-play24" % "0.8.0"
+  val targetingClient = "com.gu" %% "targeting-client-play24" % "0.10.0"
   val scanamo = "com.gu" %% "scanamo" % "0.8.0"
 
   // Web jars

@@ -27,7 +27,6 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 config.page = {
                     contentType : 'Article',
                     isMinuteArticle : false,
-                    isSSL : false,
                     section : 'politics',
                     shouldHideAdverts : false,
                     isFront : false,
@@ -127,7 +126,7 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
         });
 
         describe('Article aside adverts', function () {
-            it('Runs by default in artcles', function () {
+            it('Runs by default in articles', function () {
                 config.page.contentType = 'Article';
                 features = new CommercialFeatures;
                 expect(features.articleAsideAdverts).toBe(true);
@@ -155,7 +154,8 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
         });
 
         describe('Slice adverts', function () {
-            it('Runs by default', function () {
+            it('Runs by default on fronts', function () {
+                config.page.isFront = true;
                 features = new CommercialFeatures;
                 expect(features.sliceAdverts).toBe(true);
             });

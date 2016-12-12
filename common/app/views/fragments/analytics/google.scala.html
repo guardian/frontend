@@ -30,8 +30,8 @@
     }
 
     function getAnalyticsTitle() {
-        var analyticsTitle = (guardian.config.page.webTitle || '').toLowerCase();
-        return (analyticsTitle === 'network front') ? getAnalyticsEdition() + ' ' + analyticsTitle : analyticsTitle;
+        var analyticsTitle = (guardian.config.page.webTitle || '');
+        return (analyticsTitle === 'Network Front') ? getAnalyticsEdition() + ' network front' : analyticsTitle;
     }
 
     var identityId = null;
@@ -53,7 +53,8 @@
     ***************************************************************************************@
     @for(tracker <- Seq(GoogleAnalyticsAccount.editorialProd, GoogleAnalyticsAccount.editorialTest)) {
         ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName', {
-            'sampleRate': @{ if (env.mode == Dev) 100 else tracker.samplePercentage }
+            'sampleRate': @{ if (env.mode == Dev) 100 else tracker.samplePercentage },
+            'siteSpeedSampleRate': @{ if (env.mode == Dev) 100 else tracker.siteSpeedSamplePercentage }
         });
     }
 

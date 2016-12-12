@@ -77,12 +77,12 @@
                 display: inline-block;
                 float: left;
                 color: #000000;
-                padding: 12px 16px 4px;
+                padding: 12px 16px 10px;
                 font-size: 480%;
-                line-height: 4.25rem;
-                width: 4.8125rem;
-                height: 4.8125rem;
-                margin-right: .5rem;
+                line-height: 68px;
+                width: 77px;
+                height: 77px;
+                margin-right: 8px;
                 margin-top: 4px;
                 text-align: center;
             }
@@ -194,6 +194,9 @@
     }
 
     .from-content-api {
+        & > ul li {
+            margin-bottom: 0;
+        }
         ul > li:before {
             border-radius: 0;
             width: 8px;
@@ -203,9 +206,46 @@
         h2 {
             @include f-headlineSans;
         }
-    }
-    .from-content-api > ul li {
-        margin-bottom: 0;
+        blockquote {
+            margin: 0 0 10px 0;
+
+            p {
+                @include f-bodyCopy;
+                font-style: normal;
+                font-size: 30px;
+                line-height: 34px;
+                margin: 0 0 0 $gs-gutter;
+                background-color: #ffffff;
+                padding: 30px 0 0 $gs-gutter * .5;
+                color: $neutral-1;
+                position: relative;
+
+                .inline-hosted-quote {
+                    position: absolute;
+                    top: 0;
+                    left: 10px;
+                    display: block;
+                    width: 25px;
+                    height: 20px;
+                }
+            }
+
+            &.quoted {
+                p {
+                    @include f-textSans;
+                    font-size: 18px;
+                    line-height: 24px;
+                }
+            }
+
+            @include mq(leftCol) {
+                margin-left: -156px;
+            }
+
+            @include mq(wide) {
+                margin-left: -140px;
+            }
+        }
     }
 
     .gu-image {

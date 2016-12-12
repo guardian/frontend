@@ -14,7 +14,7 @@ define([
         function respond2() { callsToRespond2 += 1; }
 
         var fixturesConfig = {
-            id: 'page',
+            id: 'scroll-page',
             fixtures: [
                 '<div id="ad-slot-1" class="js-ad-slot"><div id="iframe1" style="height: 200px"></div></div>',
                 '<p style="height: 1000px">&nbsp;</p>',

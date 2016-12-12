@@ -107,12 +107,12 @@
 @caption(picture: model.ImageMedia, imageOption: Option[ImageAsset], isMain: Boolean) = {
     @imageOption.map { img =>
         @if(img.showCaption) {
-            @if(isMain && (mvt.ABNewNavVariantThree.isParticipating || mvt.ABNewNavVariantFour.isParticipating || mvt.ABNewNavVariantFive.isParticipating)) {
+            @if(isMain && mvt.ABNewNavVariantFour.isParticipating) {
 
                 <input type="checkbox" id="show-caption" class="mobile-only u-h">
 
                 <label class="mobile-only reveal-caption reveal-caption--img" for="show-caption">
-                    @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon", "rounded-icon"))
+                    @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon"))
                 </label>
 
                 <figcaption class="caption caption--main caption--img" itemprop="description">
