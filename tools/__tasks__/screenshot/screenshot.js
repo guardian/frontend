@@ -1,6 +1,7 @@
 const webshot = require('webshot');
 const pify = require('pify');
 const merge = require('lodash.merge');
+const joinPath = require('path').join;
 
 /**
  * TODO
@@ -31,7 +32,7 @@ module.exports = {
                     description: `on ${breakpointName}`,
                     task: () => pify(webshot)(
                         host + path,
-                        `${screenshotsDir}/${encodeURIComponent(path)}/${breakpointName}.png`,
+                        joinPath(screenshotsDir, encodeURIComponent(path), `${breakpointName}.png`),
                         merge({}, screenshotDefaults, { windowSize: { width: breakpoints[breakpointName] } })
                     )
                 })
