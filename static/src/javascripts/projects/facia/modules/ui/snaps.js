@@ -14,7 +14,8 @@ define([
     'facia/modules/ui/football-snaps',
     'lodash/functions/once',
     'lodash/collections/find',
-    'lodash/functions/debounce'
+    'lodash/functions/debounce',
+    'Promise'
 ], function (
     bean,
     bonzo,
@@ -31,7 +32,8 @@ define([
     FootballSnaps,
     once,
     find,
-    debounce
+    debounce,
+    Promise
 ) {
     var clientProcessedTypes = ['document', 'fragment', 'json.html'],
         snapIframes = [],

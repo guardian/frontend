@@ -8,7 +8,8 @@ define([
     'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/dfp/add-slot',
     'common/modules/user-prefs',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'Promise'
 ], function (
     qwery,
     Promise,
@@ -19,7 +20,8 @@ define([
     createSlot,
     addSlot,
     userPrefs,
-    commercialFeatures
+    commercialFeatures,
+    Promise
 ) {
     var containerSelector = '.fc-container:not(.fc-container--commercial)';
     var sliceSelector = '.js-fc-slice-mpu-candidate';
