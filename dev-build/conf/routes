@@ -7,8 +7,6 @@ GET            /commercial/test-page                                            
 
 GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewslettersPage()
 
-GET            /signup/weekendreading                                                                                            controllers.SignupPageController.renderWeekendReadingPage()
-
 GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
 
