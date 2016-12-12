@@ -11,6 +11,7 @@ case class EmailSubscription(
   subscribedTo: Boolean = false,
   subheading: Option[String] = None,
   tone: Option[String] = None,
+  imageFilename: Option[String] = None,
   signupPage: Option[String] = None,
   exampleUrl: Option[String] = None
 )
@@ -23,7 +24,7 @@ object EmailSubscriptions {
 
   def newsRoundUpEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
-      name = "The Guardian Today",
+      name = "Guardian Today",
       theme = "news",
       teaser = "The stories you need to read, delivered to your inbox each morning",
       description = "Our editors' picks for the day's top news and commentary delivered to your inbox each morning.",
@@ -34,7 +35,7 @@ object EmailSubscriptions {
       signupPage = Some("/info/2015/dec/08/daily-email-uk")
     ),
     EmailSubscription(
-      name = "The Guardian Today",
+      name = "Guardian Today",
       theme = "news",
       teaser = "Our editors break down the big news for you in the daily briefing",
       description = "Our editors' picks for the day's top news and commentary delivered to your inbox each morning.",
@@ -46,7 +47,7 @@ object EmailSubscriptions {
       exampleUrl = Some("/us-news/series/guardian-us-briefing/latest/email")
     ),
     EmailSubscription(
-      name = "The Guardian Today",
+      name = "Guardian Today",
       theme = "news",
       teaser = "All the day's top news, commentary and features in one handy lunchtime email",
       description = "Our editors' picks for the day's top news and commentary delivered to your inbox each weekday.",
@@ -71,7 +72,7 @@ object EmailSubscriptions {
 
   def newsEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
-      name = "MediaGuardian briefing",
+      name = "MediaGuardian Briefing",
       theme = "news",
       teaser = "An indispensable summary of what the papers are saying about media on your desktop before 9am",
       description = "An indispensable summary of the media industry headlines in your inbox before 9am. We dig out the most important stories from every and any newspaper, broadcaster and website.",
@@ -83,18 +84,19 @@ object EmailSubscriptions {
       exampleUrl = Some("/media/series/mediaguardian-briefing/latest/email")
     ),
     EmailSubscription(
-      name = "Brexit briefing",
+      name = "Brexit Briefing",
       theme = "news",
       teaser = "Get a weekly update on Britain's progress down the long road to leaving the EU",
       description = "Get a weekly rundown of the debates and developments as Britain starts out on the long road to leaving the European Union.",
       frequency = "Tuesday mornings",
       listId = "3698",
       subscribedTo = subscribedListIds.exists{ x => x == "3698" },
+      tone = Some("brexit"),
       signupPage = Some("/politics/2016/may/31/eu-referendum-morning-briefing-sign-up"),
       exampleUrl = Some("/politics/series/eu-referendum-morning-briefing/latest/email")
     ),
     EmailSubscription(
-      name = "Green light",
+      name = "Green Light",
       theme = "news",
       teaser = "The most important stories for the planet, plus data, multimedia highlights and green living guides",
       description = "In each weekly edition our editors highlight the most important environment stories of the week including data, opinion pieces and background guides. We'll also flag up our best video, picture galleries, podcasts, blogs and green living guides.",
@@ -105,7 +107,7 @@ object EmailSubscriptions {
       exampleUrl = Some("/environment/series/green-light/latest/email")
     ),
     EmailSubscription(
-      name = "Lab notes",
+      name = "Lab Notes",
       theme = "news",
       teaser = "Important breakthroughs, insider knowledge, and some distractingly good fun and games",
       description = "Get a weekly round-up of the biggest stories in science, insider knowledge from our network of bloggers, and some distractingly good fun and games.",
@@ -116,7 +118,7 @@ object EmailSubscriptions {
       exampleUrl = Some("/science/series/lab-notes/latest/email")
     ),
     EmailSubscription(
-      name = "Poverty matters",
+      name = "Poverty Matters",
       theme = "news",
       teaser = "From the shocking to the uplifting - get the world's biggest stories that you're missing",
       description = "Our editors track what's happening in development with a special focus on the millennium development goals. Sign up to get all the most important debate and discussion from around the world delivered to your inbox every fortnight.",
@@ -127,7 +129,7 @@ object EmailSubscriptions {
       exampleUrl = Some("/global-development/series/poverty-matters/latest/email")
     ),
     EmailSubscription(
-      name = "Australian politics",
+      name = "Australian Politics",
       theme = "news",
       teaser = "A daily dose of the latest news and comment on Australian politics from the Guardian",
       description = "All the latest news and comment on Australian politics from the Guardian, delivered to you every weekday.",
@@ -176,7 +178,7 @@ object EmailSubscriptions {
       exampleUrl = Some("/sport/series/thespin/latest/email")
     ),
     EmailSubscription(
-      name = "Guardian Australia sports",
+      name = "Guardian Australia Sports",
       theme = "sport",
       teaser = "The latest sports news, features and comment from Guardian Australia",
       description = "The latest sports news, features and comment from Guardian Australia, delivered to your inbox each morning.",
@@ -192,7 +194,7 @@ object EmailSubscriptions {
     EmailSubscription(
       name = "Guardian Documentaries",
       theme = "feature",
-      teaser = "Find out about our new documentary films and get background on our film-makers and the subjects that they cover",
+      teaser = "Find out about our new films and get background on our film-makers and the subjects that they cover",
       description = "Be the first to find out about our new documentary films, created by top international filmmakers and following unseen global stories. Discover our latest documentaries, get background on our film-makers and the subjects that they cover, and find out about live documentary screenings.",
       frequency = "Every four weeks",
       listId = "3745",
@@ -228,7 +230,7 @@ object EmailSubscriptions {
 
   def cultureEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
-      name = "Sleeve notes",
+      name = "Sleeve Notes",
       theme = "culture",
       teaser = "Everything you need to know from the Guardian's music site, squeezed into one handy email",
       description = "Everything you need to know from the Guardian's music site, squeezed into one handy email.",
@@ -238,12 +240,13 @@ object EmailSubscriptions {
       signupPage = Some("/music/2016/aug/18/sign-up-to-sleeve-notes")
     ),
     EmailSubscription(
-      name = "Close up",
+      name = "Close Up",
       theme = "culture",
       teaser = "Rely on Close up to bring you Guardian film news, reviews and much, much more",
       description = "Rely on Close up to bring you Guardian film news, reviews and much, much more.",
       frequency = "Every Friday",
       listId = "40",
+      tone = Some("media"),
       subscribedTo = subscribedListIds.exists{ x => x == "40" }
     ),
     EmailSubscription(
@@ -324,7 +327,7 @@ object EmailSubscriptions {
       signupPage = Some("/fashion/2016/aug/18/sign-up-for-the-guardians-fashion-email")
     ),
     EmailSubscription(
-      name = "Crossword editor's update",
+      name = "Crossword Editor's Update",
       theme = "lifestyle",
       teaser = "Get a monthly missive from the Guardian's crossword editor on what's been occupying solvers and setters",
       description = "Register to receive our monthly crossword email by the Guardian's crossword editor with the latest issues and tips about theguardian.com/crosswords.",

@@ -5,6 +5,8 @@
 GET            /surveys/*file                                                                                                    dev.DevAssetsController.surveys(file)
 GET            /commercial/test-page                                                                                             commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 
+GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewslettersPage()
+
 GET            /signup/weekendreading                                                                                            controllers.SignupPageController.renderWeekendReadingPage()
 
 GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)

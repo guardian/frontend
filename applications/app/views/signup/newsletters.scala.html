@@ -1,0 +1,140 @@
+@import model.Page
+@import model.{EmailSubscription, EmailSubscriptions}
+@import views.support.RenderClasses
+@import views.support.`package`.Seq2zipWithRowInfo
+
+@import common.LinkTo
+
+@(signupPage: Page)(implicit request: RequestHeader, env: play.api.Environment)
+
+
+@newsletterSignup(route: String, listId: String, emailName: String) = {
+    <iframe src="/email/form/@route/@listId"
+        data-form-title="Sign up for @emailName"
+        data-form-description=""
+        data-form-campaign-code="newsletters-page"
+        scrolling="no"
+        seamless frameborder="0"
+        class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe"
+        data-form-success-desc="">
+    </iframe>
+}
+
+@emailListCategoryList(theme: String, emailListings: List[EmailSubscription]) = {
+    <div class="newsletters-category__heading">
+        @theme
+    </div>
+    <div class="newsletter-card__wrapper">
+        @emailListings.zipWithRowInfo.map { case (emailListing, row) =>
+            <div class="newsletter-card
+            @if(emailListing.tone.isDefined) {  newsletter-card--tone-@emailListing.tone
+            } else { newsletter-card--tone-news }"
+                data-component="newsletter-card @emailListing.name">
+
+                <div class="newsletter-card__imagewrapper">
+                    @if(emailListing.imageFilename.isDefined) {
+                        @defining(emailListing.imageFilename.get) { imageFilename =>
+                            <img class="newsletter-image"
+                                src="@{ Static("images/email" + imageFilename) }"
+                                alt="cover image for @emailListing.name"
+                            />
+                        }
+                    } else {
+                        <div class="newsletter-image">
+                            @fragments.inlineSvg("email_placeholder", "illustration")
+                        </div>
+                    }
+                </div>
+
+                <div class="newsletter-card__content js-newsletter-content">
+
+                    <div class="newsletter-card__name">@emailListing.name
+                        @if(emailListing.subheading.isDefined){ @emailListing.subheading }
+                    </div>
+
+                    <div class="">
+                        @emailListing.teaser
+
+                        <div class="newsletter-card__frequency">
+                            @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
+                            @emailListing.frequency
+                        </div>
+                    </div>
+                </div>
+
+                <div class="newsletter-card__meta js-newsletter-meta">
+
+                  <div class="signup-confirmation is-hidden js-signup-confirmation">
+                    @fragments.inlineSvg("tick", "icon")
+                    <div class="signup-confirmation__message">
+                        <h3 class="signup-confirmation--success">You've subscribed!</h3>
+                    </div>
+                  </div>
+
+                    <form action="@LinkTo("/email")" method="post" target="magicframe" class="newsletter-card__signup">
+                        <input class="newsletter-card__text-input js-newsletter-card__text-input"
+                          type="email"
+                          name="email"
+                          placeholder="Email address" required />
+                        <input class="js-email-sub__listid-input" type="hidden" name="listId" value="@emailListing.listId" />
+                        <button class="newsletter-card__lozenge js-newsletter-signup-button newsletter-card__lozenge--submit"
+                          data-link-name="Subscribe to @emailListing.name"
+                          type="submit"
+                          value="@emailListing.listId">
+                          <span>Sign up</span>
+                        </button>
+                    </form>
+
+                    <div class="newsletter-card__example js-newsletter-preview is-hidden">
+                        @if(emailListing.exampleUrl.isDefined){
+                          <a href="@emailListing.exampleUrl" target="preview-email-@emailListing.listId">
+                              <button class="newsletter-card__lozenge newsletter-card__lozenge--preview"
+                                  data-link-name="Preview @emailListing.name"
+                                  type="button">
+                                  <span class="newsletter-card__preview">Preview  @fragments.inlineSvg("arrow-right", "icon")</span>
+                              </button>
+                          </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@main(signupPage, projectName = Some("signup")) { } {
+  <div class="l-side-margins">
+    <div class="content">
+        <div class="gs-container">
+            <div class="newsletters-heading">newsletters</div>
+
+            <div class="newsletters-category" name="news round ups">
+                @emailListCategoryList("news round ups", EmailSubscriptions.newsRoundUpEmails())
+            </div>
+
+            <div class="newsletters-category" name="news">
+                @emailListCategoryList("news", EmailSubscriptions.newsEmails())
+            </div>
+            <div class="newsletters-category" name="features">
+                @emailListCategoryList("features", EmailSubscriptions.featureEmails())
+            </div>
+            <div class="newsletters-category" name="sport">
+                @emailListCategoryList("sport", EmailSubscriptions.sportEmails())
+            </div>
+            <div class="newsletters-category" name="culture">
+                @emailListCategoryList("culture", EmailSubscriptions.cultureEmails())
+            </div>
+            <div class="newsletters-category" name="lifestyle">
+                @emailListCategoryList("lifestyle", EmailSubscriptions.lifestyleEmails())
+            </div>
+            <div class="newsletters-category" name="comment">
+                @emailListCategoryList("comment", EmailSubscriptions.commentEmails())
+            </div>
+
+        </div>
+    </div>
+  </div>
+
+  <iframe width="0" height="0" border="0" name="magicframe" id="magicframe"></iframe>
+
+}
