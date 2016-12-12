@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+echo "##teamcity[progressStart 'AB test info']"
+set -x
+
+./tools/ab-test-info/ab-test-info.js
+
+set +x
+echo "##teamcity[progressFinish 'AB test info']"
+set -x
