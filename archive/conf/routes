@@ -5,5 +5,10 @@
 
 GET        /_healthcheck                            controllers.HealthCheck.healthCheck()
 
+# Adding this here to support transition while removing www.theguardian.com from the router redirect
+# We want to temporarily support both /404/www.theguardian.com/path AND /404/path in the same way
+GET        /404/www.theguardian.com$path<.*>        controllers.ArchiveController.lookup(path)
+
 # 404
 GET        /404$path</.*>                           controllers.ArchiveController.lookup(path)
+
