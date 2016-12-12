@@ -34,7 +34,7 @@ define([
     return function () {
         this.id = 'ContributionsEpicUsPreEndOfYear';
         this.start = '2016-12-06';
-        this.expiry = '2016-12-12';
+        this.expiry = '2016-12-19';
         this.author = 'Guy Dawson';
         this.description = 'Test which Epic variant to use in the US end of year campaign';
         this.showForSensitive = false;
