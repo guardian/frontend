@@ -1,5 +1,6 @@
 const webshot = require('webshot');
 const pify = require('pify');
+const merge = require('lodash').merge;
 
 /**
  * TODO
@@ -10,42 +11,33 @@ const pify = require('pify');
  */
 
 const {paths, breakpoints, host, screenshotsDir, environment} = require('./config');
+const screenshotDefaults = {
+    shotSize: {
+        width: 'window',
+        height: 'all'
+    },
+    timeout: 120000, // We're going to wait two minutes before bailing on the screenshot
+    takeShotOnCallback: environment === 'dev'
+};
 
-function takeScreenshots() {
-    const taskArray =
-        paths.map((path) => {
-            return Object.keys(breakpoints).map((breakpointName) => {
-
-                const options = {
-                    shotSize: {
-                        width: 'window',
-                        height: 'all'
-                    },
-                    timeout: 120000, // We're going to wait two minutes before bailing on the screenshot
-                    windowSize: {
-                        width: breakpoints[breakpointName]
-                    },
-                    takeShotOnCallback: environment === 'dev' ? true : false
-                };
-
-                return {
-                    description: `Screenshotting ${path} on ${breakpointName}`,
-                    task: () => pify(webshot)(host + path, `${screenshotsDir}/${encodeURIComponent(path)}/${breakpointName}.png`, options).then((err) => {
-                       if (err) {
-                           throw new Error(err);
-                       }
-                    })
-                };
-            });
-        });
-
-    // Returned flattened promise array
-    return [].concat(...taskArray);
-}
-
-
+// For each path, run a concurrent task that takes a screenshot of each path at each breakpoint
 module.exports = {
     description: 'Right, lets take those screenies',
-    task: takeScreenshots(),
+    task: paths.map(path =>
+        ({
+            description: `Screenshotting ${path}`,
+            task: Object.keys(breakpoints).map(breakpointName =>
+                ({
+                    description: `on ${breakpointName}`,
+                    task: () => pify(webshot)(
+                        host + path,
+                        `${screenshotsDir}/${encodeURIComponent(path)}/${breakpointName}.png`,
+                        merge({}, screenshotDefaults, { windowSize: { width: breakpoints[breakpointName] } })
+                    )
+                })
+            ),
+            concurrent: true
+        })
+    ),
     concurrent: true
 };
