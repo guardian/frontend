@@ -24,7 +24,7 @@ define([
 
     var ContributionsEpicUsPreEndOfYear = {
         name: 'ContributionsEpicUsPreEndOfYear',
-        variants: ['control', 'bolder', 'endOfYear']
+        variants: ['control', 'endOfYear']
     };
 
     var ContributionsEpicAlwaysAskStrategy = {
