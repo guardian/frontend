@@ -231,9 +231,9 @@ button.vjs-big-play-button__duration {
         @include fs-headline(1);
         content: attr(data-data-video-name);
         z-index: 10;
-        font-size: 32px;
+        font-size: 28px;
         font-weight: 800;
-        line-height: 32px;
+        line-height: 26px;
         color: #ffffff;
     }
     .vjs-big-play-button {
@@ -246,7 +246,7 @@ button.vjs-big-play-button__duration {
         background-color: $neutral-1;
         width: 100%;
         height: 100%;
-        opacity: .3;
+        opacity: .2;
     }
 }
 
