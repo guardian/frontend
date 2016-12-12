@@ -43,7 +43,7 @@ import test.{ConfiguredTestSuite, WithTestEnvironment}
     }
   }
 
-  "GET /news-alert/alerts" ignore {
+  "GET /news-alert/alerts" when {
     val getAlertsRequest = FakeRequest(method = "GET", path = "/news-alert/alerts")
     "no content is available" should {
       "204" in {
