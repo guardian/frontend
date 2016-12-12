@@ -306,7 +306,6 @@ GET            /commercial/paid                                                 
 GET            /commercial/multi.json                                                                                            commercial.controllers.Multi.renderMulti
 GET            /commercial/api/multi.json                                                                                        commercial.controllers.Multi.getMulti
 GET            /$path<commercial-containers>                                                                                                controllers.FaciaController.renderFront(path)
-GET            /commercial/advertiser-content/:campaignName/:pageName                                                            commercial.controllers.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName/:cType/onward.json                                                    commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize

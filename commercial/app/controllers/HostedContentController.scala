@@ -52,9 +52,6 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit env: 
     .showTags("all")
     .showAtoms("all")
 
-  def renderLegacyHostedPage(campaignName: String, pageName: String) = Action.async { implicit request =>
-    renderPage(Future.successful(hardcoded.LegacyHostedPages.fromCampaignAndPageName(campaignName, pageName)))
-  }
 
   def renderHostedPage(campaignName: String, pageName: String) = Action.async { implicit request =>
 
@@ -67,12 +64,8 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit env: 
       response
     }
 
-    val contentFromCapi = capiResponse map {
+    val page = capiResponse map {
       _.content flatMap HostedPage.fromContent
-    }
-
-    val page = contentFromCapi fallbackTo {
-      Future.successful(hardcoded.HostedPages.fromCampaignAndPageName(campaignName, pageName))
     }
 
     renderPage(page)

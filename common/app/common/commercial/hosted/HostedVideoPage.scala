@@ -3,20 +3,16 @@ package common.commercial.hosted
 import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentatom.thrift.AtomData
 import common.Logging
-import common.commercial.hosted.hardcoded.{HostedContentType, HostedPages, NextHostedPage}
 import model.MetaData
 
 case class HostedVideoPage(
   override val id: String,
   override val campaign: HostedCampaign,
-  override val pageName: String,
   override val standfirst: String,
   video: HostedVideo,
   override val cta: HostedCallToAction,
   override val socialShareText: Option[String],
   override val shortSocialShareText: Option[String],
-  nextPage: Option[NextHostedPage] = None,
-  nextVideo: Option[NextHostedPage] = None,
   override val metadata: MetaData
 ) extends HostedPage {
   override val title = video.title
@@ -45,7 +41,6 @@ object HostedVideoPage extends Logging {
       HostedVideoPage(
         id = content.id,
         campaign,
-        pageName = "only used in hardcoded content",
         standfirst,
         video = HostedVideo(
           mediaId = videoAtom.id,
@@ -58,7 +53,6 @@ object HostedVideoPage extends Logging {
         cta = HostedCallToAction.fromAtom(ctaAtom),
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
-        nextVideo = HostedPages.nextPages(campaignName = campaignId, pageName = content.webUrl.split(campaignId + "/")(1), contentType = Some(HostedContentType.Video)).headOption,
         metadata = HostedMetadata.fromContent(content).copy(openGraphImages = video.posterUrl.toList)
       )
     }

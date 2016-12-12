@@ -1,5 +1,4 @@
 @import common.commercial.hosted.HostedVideoPage
-@import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import conf.Configuration.environment
 @import conf.Configuration.site.host
 @import views.html.hosted._
@@ -95,34 +94,9 @@
                             </a>
                         </div>
                     </div>
-                    @for(nextPage <- page.nextVideo) {
-                    <div class="hosted-next-autoplay js-hosted-next-autoplay" data-link-name="Next video autoplay">
-                        <div class="hosted-next-autoplay__cancel">
-                            <button class="site-message__close-btn js-autoplay-cancel" data-link-name="Cancel autoplay of the next video">
-                                <span>Hide</span>
-                            </button>
-                        </div>
-                        <div class="hosted-next-autoplay__next-in-series">
-                            <div class="hosted-next-autoplay__subheader">@{page.cta.label}</div>
-                            <a href="@{page.cta.url}" rel="nofollow" class="hosted-next-autoplay__tile hosted-tone-btn" data-link-name="@{page.campaign.name}" target="_blank">
-                                @{if(page.cta.btnText.isDefined) page.cta.btnText else s"Visit ${page.campaign.owner} now"}@fragments.inlineSvg("arrow-right", "icon", List(""))
-                            </a>
-                        </div>
-                        <div class="hosted-next-autoplay__video">
-                            <div class="hosted-next-autoplay__header">
-                                <div class="hosted-next-autoplay__continue hosted-tone">Continue watching</div>
-                                <h2 class="hosted-next-autoplay__subheader">@{nextPage.title}</h2>
-                            </div>
-                            <a href="@{nextPage.url}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.title}">
-                                <img class="hosted-next-autoplay__poster-img" src="@{nextPage.imageUrl}">
-                                <div class="hosted-next-autoplay__poster-timer hosted-tone-btn js-autoplay-timer" data-next-page="@{nextPage.url}">10s</div>
-                            </a>
-                            <a href="@{nextPage.url}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{nextPage.title}" target="_blank">
-                                Watch now
-                            </a>
-                        </div>
+                    <div class="js-autoplay-placeholder">
+                         @* todo: insert guardianHostedVideoAutoplay from js *@
                     </div>
-                    }
                 </div>
             </div>
         </section>
@@ -146,13 +120,7 @@
                 </div>
             </div>
 
-            @page.nextPage.map { nextPage =>
-                <div class="hosted__next-page-wrapper">
-                    @hostedOnwardJourney(List(makeshiftPage(nextPage, page.campaign)), 1, 1)
-                </div>
-            }.getOrElse {
-                <div class="js-onward-placeholder hosted__next-page-wrapper"></div>
-            }
+            <div class="js-onward-placeholder hosted__next-page-wrapper"></div>
         </section>
         @guardianHostedCta(page, page.cta, isAMP = false)
     </div>

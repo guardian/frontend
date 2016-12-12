@@ -691,6 +691,10 @@ $progressColor: #ffffff;
     }
 }
 
+.hosted-gallery__next-page-wrapper {
+    display: flex;
+}
+
 @include mq($until: tablet) {
     .hosted-gallery__meta,
     .hosted-gallery__oj,

@@ -1,7 +1,6 @@
 @import common.commercial.hosted.HostedArticlePage
 @(page: HostedArticlePage)(implicit request: RequestHeader, env: play.api.Environment)
 @import model.hosted.HostedAmp.ampify
-@import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import views.html.hosted._
 @import common.{AnalyticsHost, CanonicalLink, LinkTo}
 @import conf.Configuration
@@ -54,12 +53,7 @@
                                 <div class="content__article-body from-content-api js-article__body">
                                     <p class="intro">@Html(page.standfirst)</p>
 
-                                    @page.pageName match {
-                                        case "overview" => { @singaporeF1Overview() }
-                                        case "offtrack" => { @singaporeF1Offtrack() }
-                                        case "packages" => { @singaporeF1Packages() }
-                                        case _ => { @Html(ampify(page.body)) }
-                                    }
+                                    @Html(ampify(page.body))
 
                                 </div>
                                 <div class="hosted__standfirst content__hosted-body">
