@@ -4,13 +4,13 @@ const environment = 'dev'; // Hardcode this for the moment until we're running a
 const domain = {
     prod: 'theguardian.com',
     code: 'm.code.dev-theguardian.com',
-    dev: 'localhost'
+    dev: 'localhost',
 }[environment];
 
 const port = {
     prod: '80',
     code: '80',
-    dev: '9000'
+    dev: '9000',
 }[environment];
 
 const host = `http://${domain}:${port}/`;
@@ -19,20 +19,20 @@ const host = `http://${domain}:${port}/`;
 const paths = [
     'uk',
     'us',
-    'au'
+    'au',
 ];
 
 module.exports = {
-    environment: environment,
-    domain: domain,
-    port: port,
-    host: host,
-    paths: paths,
+    environment,
+    domain,
+    port,
+    host,
+    paths,
     breakpoints: {
         wide: 1300,
         desktop: 980,
         tablet: 740,
-        mobile: 320
+        mobile: 320,
     },
-    screenshotsDir: 'screenshots'
+    screenshotsDir: 'screenshots',
 };

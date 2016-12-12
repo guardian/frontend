@@ -7,10 +7,10 @@ const config = [
     'dev/eslint-rules',
     '--quiet',
     '--color',
-    '--fix'
+    '--fix',
 ];
 
-const handleSuccess = ctx => {
+const handleSuccess = (ctx) => {
     ctx.messages.push('Don\'t forget to commit any fixes...');
 };
 
@@ -19,17 +19,18 @@ module.exports = {
     task: [{
         description: 'Fix tests',
         task: ctx => execa('eslint', [
-                'static/test/javascripts/**/*.js',
-                '--ignore-path',
-                'static/test/javascripts/.eslintignore'
-            ].concat(config)).then(handleSuccess.bind(null, ctx))
-    },{
+            'static/test/javascripts/**/*.js',
+        ].concat(config)).then(handleSuccess.bind(null, ctx)),
+    }, {
         description: 'Fix app',
         task: ctx => execa('eslint', [
-                'static/src/**/*.js',
-                '--ignore-path',
-                'static/src/.eslintignore'
-            ].concat(config)).then(handleSuccess.bind(null, ctx))
+            'static/src/**/*.js',
+        ].concat(config)).then(handleSuccess.bind(null, ctx)),
+    }, {
+        description: 'Fix tools',
+        task: ctx => execa('eslint', [
+            'tools/**/*.js',
+        ].concat(config)).then(handleSuccess.bind(null, ctx)),
     }],
-    concurrent: true
+    concurrent: true,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 ({
     baseUrl: '../../../../static/src/javascripts',
     paths: {
@@ -33,22 +34,22 @@
         text: 'components/requirejs-text/text',
         inlineSvg: 'projects/common/utils/inlineSvg',
 
-        'react': 'empty:',
-        'ophan/ng': 'empty:'
+        react: 'empty:',
+        'ophan/ng': 'empty:',
     },
     shim: {
         'videojs-ima': {
-            deps: ['videojs-ads-lib']
+            deps: ['videojs-ads-lib'],
         },
         'videojs-ads-lib': {
-            deps: ['bootstraps/enhanced/media/videojs-global']
+            deps: ['bootstraps/enhanced/media/videojs-global'],
         },
         omniture: {
-            exports: 's'
-        }
+            exports: 's',
+        },
     },
     optimize: 'uglify2',
     generateSourceMaps: true,
     preserveLicenseComments: false,
-    fileExclusionRegExp: /^bower_components/i
+    fileExclusionRegExp: /^bower_components/i,
 });
