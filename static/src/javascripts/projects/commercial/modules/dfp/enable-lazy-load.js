@@ -1,8 +1,8 @@
 define([
-    'common/utils/add-event-listener',
+    'common/utils/mediator',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/lazy-load'
-], function (addEventListener, dfpEnv, lazyLoad) {
+], function (mediator, dfpEnv, lazyLoad) {
     /* observer: IntersectionObserver?. The observer used to detect when ad slots enter the viewport */
     var observer = null;
 
@@ -17,7 +17,7 @@ define([
                     observer.observe(advert.node);
                 });
             } else {
-                addEventListener(window, 'scroll', lazyLoad, { passive: true });
+                mediator.on('window:throttledScroll', lazyLoad);
                 lazyLoad();
             }
         } else if (dfpEnv.lazyLoadObserve && advert) {
