@@ -60,7 +60,7 @@ define([
         beforeEach(function (done) {
 
             injector.mock('common/modules/commercial/user-features', {isPayingMember : function(){
-                return settings[counter].userFeatures
+                return settings[counter].userFeatures;
             }
             });
 
