@@ -161,7 +161,7 @@ define([
             const numberOfVisits = storage.local.get('gu.alreadyVisited') || 0;
             if (edition === 'INT') {
                 var internationalTestVariant = getVariant('MembershipEngagementInternationalExperimentTest12');
-                if (internationalTestVariant !== 'control' && internationalTestVariant !== notInTest)
+                if (internationalTestVariant && internationalTestVariant !== 'control' && internationalTestVariant !== notInTest)
                     //variants are in the form '1st_article', '3rd_article' so we can derive the number of visits from the name
                     return numberOfVisits >= internationalTestVariant.substring(0, 1);
             }
