@@ -14,6 +14,7 @@ import play.api.http.HttpErrorHandler
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
+import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFComponents}
 import router.Routes
 
 
@@ -41,11 +42,20 @@ trait AppLifecycleComponents {
   )
 }
 
-trait AppComponents extends FrontendComponents with Controllers with AppLifecycleComponents with IdentityConfigurationComponents {
+trait AppComponents
+  extends FrontendComponents
+  with Controllers
+  with AppLifecycleComponents
+  with IdentityConfigurationComponents
+  with CSRFComponents {
 
   lazy val router: Router = wire[Routes]
 
   lazy val appIdentity = ApplicationIdentity("frontend-identity")
   override lazy val httpFilters: Seq[EssentialFilter] = wire[IdentityFilters].filters
   override lazy val httpErrorHandler: HttpErrorHandler = wire[IdentityHttpErrorHandler]
+
+  // this is a workaround while waiting for https://github.com/playframework/playframework/pull/6325/files to be merged and release as a play-2.5.x version
+  lazy val csrfCheck: CSRFCheck = new CSRFCheck(csrfConfig, csrfTokenSigner)
+  lazy val csrfAddToken: CSRFAddToken = new CSRFAddToken(csrfConfig, csrfTokenSigner)
 }

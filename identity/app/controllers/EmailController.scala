@@ -24,8 +24,9 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
                       idRequestParser: IdRequestParser,
                       idUrlBuilder: IdentityUrlBuilder,
                       authenticatedActions: AuthenticatedActions,
-                      val messagesApi: MessagesApi)
-                     (implicit env: Environment)
+                      val messagesApi: MessagesApi,
+                      csrfCheck: CSRFCheck,
+                      csrfAddToken: CSRFAddToken)(implicit env: Environment)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
   import EmailPrefsData._
   import authenticatedActions.authAction
@@ -33,7 +34,7 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
   val page = IdentityPage("/email-prefs", "Email preferences")
   protected def formActionUrl(idUrlBuilder: IdentityUrlBuilder, idRequest: IdentityRequest): String = idUrlBuilder.buildUrl("/email-prefs", idRequest)
 
-  def preferences = CSRFAddToken {
+  def preferences = csrfAddToken {
     authAction.async { implicit request =>
       val idRequest = idRequestParser(request)
       val userId = request.user.getId()
@@ -66,7 +67,7 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
     }
   }
 
-  def savePreferences = CSRFCheck {
+  def savePreferences = csrfCheck {
     authAction.async { implicit request =>
 
       val idRequest = idRequestParser(request)

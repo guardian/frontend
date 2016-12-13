@@ -1,7 +1,7 @@
 package controllers
 
 import common.ExecutionContexts
-import model.{IdentityPage, NoCache}
+import model.{NoCache, IdentityPage}
 import play.api.mvc._
 import play.api.data.{Form, Forms}
 import play.api.data.Forms._
@@ -12,17 +12,20 @@ import idapiclient.IdApiClient
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import actions.AuthenticatedActions
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
-
+import play.api.libs.crypto.CryptoConfig
+import play.api.Environment
 import scala.concurrent.Future
 import idapiclient.requests.PasswordUpdate
-import play.api.Environment
 
 class ChangePasswordController( api: IdApiClient,
                                 authenticatedActions: AuthenticatedActions,
                                 authenticationService: AuthenticationService,
                                 idRequestParser: IdRequestParser,
                                 idUrlBuilder: IdentityUrlBuilder,
-                                val messagesApi: MessagesApi)(implicit env: Environment)
+                                val messagesApi: MessagesApi,
+                                csrfCheck: CSRFCheck,
+                                csrfAddToken: CSRFAddToken,
+                                val cryptoConfig: CryptoConfig)(implicit env: Environment)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms with I18nSupport{
 
   import authenticatedActions.authAction
@@ -51,7 +54,7 @@ class ChangePasswordController( api: IdApiClient,
       )
   )
 
-  def displayForm() = CSRFAddToken {
+  def displayForm() = csrfAddToken.apply {
     authAction.async {
       implicit request =>
 
@@ -72,7 +75,7 @@ class ChangePasswordController( api: IdApiClient,
     NoCache(Ok(views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)))
   }
 
-  def submitForm() = CSRFCheck{
+  def submitForm() = csrfCheck {
     authAction.async {
       implicit request =>
         val idRequest = idRequestParser(request)

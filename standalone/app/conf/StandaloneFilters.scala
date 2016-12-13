@@ -1,16 +1,19 @@
 package conf
 
+import akka.stream.Materializer
 import com.gu.googleauth.FilterExemption
 import common.ExecutionContexts
-import googleAuth.GoogleAuthFilters
+import googleAuth.GoogleAuthFilters.AuthFilterWithExemptions
 import play.api.Environment
 import play.api.http.HttpFilters
+import play.api.libs.crypto.CryptoConfig
 import play.api.mvc.{Filter, RequestHeader, Result}
+
 import scala.concurrent.Future
 
 // OBVIOUSLY this is only for the preview server
 // NOT to be used elsewhere...
-class NoCacheFilter extends Filter with ExecutionContexts {
+class NoCacheFilter(implicit val mat: Materializer) extends Filter with ExecutionContexts {
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] =
     nextFilter(request).map(_.withHeaders("Cache-Control" -> "no-cache"))
 }
@@ -30,12 +33,14 @@ object FilterExemptions {
 }
 
 class StandaloneFilters(
-    environment: Environment
+  mat: Materializer,
+  env: Environment,
+  cryptoConfig: CryptoConfig
 ) extends HttpFilters {
 
-  val previewAuthFilter = new GoogleAuthFilters.AuthFilterWithExemptions(
+  val previewAuthFilter = new AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
-    FilterExemptions.exemptions)(environment)
+    FilterExemptions.exemptions)(mat, env, cryptoConfig)
 
-  val filters = previewAuthFilter :: new NoCacheFilter() :: Filters.common
+  val filters = previewAuthFilter :: new NoCacheFilter()(mat) :: Filters.common(mat)
 }

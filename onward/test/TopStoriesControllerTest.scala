@@ -11,6 +11,7 @@ import play.api.Environment
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
+  with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient {
 

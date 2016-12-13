@@ -79,7 +79,7 @@ private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
   protected def fetchResult(baseUrl: String, healthCheck: SingleHealthCheck): Future[HealthCheckResult] = {
     wsClient.url(s"$baseUrl${healthCheck.path}")
       .withHeaders("User-Agent" -> "GU-HealthChecker", "X-Gu-Management-Healthcheck" -> "true")
-      .withRequestTimeout(4.seconds.toMillis).get()
+      .withRequestTimeout(4.seconds).get()
       .map {
         response: WSResponse =>
           val result = response.status match {

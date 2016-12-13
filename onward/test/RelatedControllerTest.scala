@@ -13,6 +13,7 @@ import services.OphanApi
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
+  with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient
   with WithTestEnvironment {

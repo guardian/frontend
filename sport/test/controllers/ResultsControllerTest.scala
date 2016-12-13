@@ -1,25 +1,30 @@
 package controllers
 
+import akka.stream.Materializer
 import football.controllers.ResultsController
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.JsValue
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import test.{FootballTestData, WithTestEnvironment, WithTestFootballClient, WithTestWsClient}
+import test._
 
 import scala.concurrent.Future
 
 @DoNotDiscover class ResultsControllerTest
   extends WordSpec
+    with ConfiguredTestSuite
     with Matchers
     with FootballTestData
     with WithTestFootballClient
+    with WithMaterializer
     with BeforeAndAfterAll
     with WithTestEnvironment
     with WithTestWsClient {
 
   val resultsController = new ResultsController(testCompetitionsService)
+
+  implicit lazy val mat: Materializer = app.materializer
 
   "GET all results" should {
     val request = FakeRequest(method = "GET", path = "/football/results.json")

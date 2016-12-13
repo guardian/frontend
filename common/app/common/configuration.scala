@@ -13,7 +13,6 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import play.api.Play
-
 import scala.collection.JavaConversions._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
@@ -193,7 +192,7 @@ class GuardianConfiguration extends Logging {
     val previewHost: String = configuration.getStringProperty("content.api.preview.host").getOrElse(contentApiHost)
 
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
-    lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
+    lazy val timeout: FiniteDuration = Duration.create(configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000), MILLISECONDS)
 
     lazy val circuitBreakerErrorThreshold =
       configuration.getIntegerProperty("content.api.circuit_breaker.max_failures").getOrElse(5)

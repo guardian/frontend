@@ -1,6 +1,7 @@
 package test
 
 import java.io.File
+import akka.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
 import common.{ExecutionContexts, Lazy}
@@ -9,8 +10,9 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatest.BeforeAndAfterAll
 import org.scalatestplus.play._
 import play.api._
+import play.api.libs.crypto.CryptoConfig
 import play.api.libs.ws.WSClient
-import play.api.libs.ws.ning.{NingWSClient, NingWSClientConfig}
+import play.api.libs.ws.ahc.AhcWSClient
 import play.api.test._
 import recorder.ContentApiHttpRecorder
 import scala.util.{Failure, Success, Try}
@@ -118,10 +120,15 @@ trait WithTestEnvironment {
   implicit val env = testEnvironment
 }
 
-trait WithTestWsClient {
-  self: WithTestWsClient with BeforeAndAfterAll =>
+trait WithMaterializer {
+  def app: Application
+  implicit lazy val materializer: Materializer = app.materializer
+}
 
-  private val lazyWsClient = Lazy(NingWSClient(NingWSClientConfig(maxRequestRetry = 0)))
+trait WithTestWsClient {
+  self: WithTestWsClient with BeforeAndAfterAll with WithMaterializer =>
+
+  private val lazyWsClient = Lazy(AhcWSClient())
   lazy val wsClient: WSClient = lazyWsClient
 
   override def afterAll() = if(lazyWsClient.isDefined) lazyWsClient.close
@@ -144,4 +151,8 @@ trait WithTestContentApiClient {
 
   lazy val recorderHttpClient = new recorderHttpClient(new CapiHttpClient(wsClient))
   lazy val testContentApiClient = new ContentApiClient(recorderHttpClient)
+}
+
+trait WithTestCryptoConfig {
+  val testCryptoConfig = new CryptoConfig(secret = "this is the test secret")
 }

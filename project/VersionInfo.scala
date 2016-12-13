@@ -27,20 +27,20 @@ object VersionInfo extends Plugin {
 
   override val settings = Seq(
     buildNumber := System.getenv().getOrDefault("BUILD_NUMBER", "DEV"),
-    branch <<= baseDirectory( baseDir => {
+    branch := baseDirectory( baseDir => {
       getRepo(baseDir).map( gitRepo => {
         val branchName = gitRepo.build.getBranch
         gitRepo.build.close()
         branchName
       }).getOrElse("DEV")
-    }),
-    vcsNumber <<= baseDirectory( baseDir => {
+    }).value,
+    vcsNumber := baseDirectory( baseDir => {
       getRepo(baseDir).map( gitRepo => {
         val commitHash = gitRepo.build.resolve("HEAD").getName
         gitRepo.build.close()
         commitHash
       }).getOrElse("DEV")
-    }),
+    }).value,
     resourceGenerators in Compile <+= (resourceManaged in Compile, branch, buildNumber, vcsNumber, streams) map buildFile
   )
 
