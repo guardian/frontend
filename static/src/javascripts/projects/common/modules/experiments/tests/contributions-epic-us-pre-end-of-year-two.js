@@ -32,8 +32,8 @@ define([
              ElementInview) {
 
     return function () {
-        this.id = 'ContributionsEpicUsPreEndOfYear';
-        this.start = '2016-12-06';
+        this.id = 'ContributionsEpicUsPreEndOfYearTwo';
+        this.start = '2016-12-12';
         this.expiry = '2016-12-19';
         this.author = 'Guy Dawson';
         this.description = 'Test which Epic variant to use in the US end of year campaign';
@@ -72,11 +72,6 @@ define([
                 title: 'Since you’re here…',
                 p1: '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
                 p2: 'If everyone who reads our reporting, who likes it, helps to pay for it our future would be much more secure.'
-            },
-            bolder: {
-                title: 'Take a moment…',
-                p1: '…to support independent journalism. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. We need your support. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-                p2: 'If you read and like our reporting, help us make our future more secure.'
             },
             endOfYear: {
                 title: 'As 2016 comes to a close…',
@@ -142,30 +137,6 @@ define([
                     var component = $.create(template(contributionsEpicEqualButtons, {
                         linkUrl1: ctaType.url1 + '_control',
                         linkUrl2: ctaType.url2 + '_control',
-                        title: message.title,
-                        p1: message.p1,
-                        p2: message.p2,
-                        p3: ctaType.p3,
-                        cta1: ctaType.cta1,
-                        cta2: ctaType.cta2,
-                        hidden: ctaType.hidden
-                    }));
-                    componentWriter(component);
-                },
-
-                impression: registerInsertionListener,
-
-                success: registerViewListener
-            },
-            {
-                id: 'bolder',
-
-                test: function () {
-                    var ctaType = cta.equal;
-                    var message = messages.bolder;
-                    var component = $.create(template(contributionsEpicEqualButtons, {
-                        linkUrl1: ctaType.url1 + '_bolder',
-                        linkUrl2: ctaType.url2 + '_bolder',
                         title: message.title,
                         p1: message.p1,
                         p2: message.p2,

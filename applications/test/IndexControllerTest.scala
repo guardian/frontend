@@ -12,7 +12,7 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
   with BeforeAndAfterAll
   with ConfiguredTestSuite
   with WithTestWsClient
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestContentApiClient {
 
   val section = "books"

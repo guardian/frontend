@@ -9,7 +9,8 @@ define([
 ) {
     var inlineDefinition = {
         sizeMappings: {
-            mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.fluid)
+            mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.fluid),
+            desktop: compile(adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.video, adSizes.fluid)
         }
     };
 

@@ -9,14 +9,13 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
-import play.api.Environment
 import play.api.mvc.{Action, Controller, RequestHeader}
 import services.{ConfigAgent, IndexPage, IndexPageItem}
 import views.support.PreviousAndNext
 
 import scala.concurrent.Future
 
-class AllIndexController(contentApiClient: ContentApiClient, sectionsLookUp: SectionsLookUp)(implicit env: Environment) extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
+class AllIndexController(contentApiClient: ContentApiClient, sectionsLookUp: SectionsLookUp)(implicit context: ApplicationContext) extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
 
   private val indexController = new IndexController(contentApiClient, sectionsLookUp)
 

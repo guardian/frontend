@@ -3,7 +3,7 @@
 @import model.liveblog.{LiveBlogDate,BodyBlock}
 @import views.BodyCleaner
 
-@(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
+@(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.LinkTo
 

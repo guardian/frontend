@@ -1,4 +1,4 @@
-@()(implicit request: RequestHeader, env: play.api.Environment)
+@()(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @main(model.CommercialExpiryPage(id = request.path)) { } {
     <div class="l-side-margins">

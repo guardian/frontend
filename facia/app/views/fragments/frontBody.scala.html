@@ -1,7 +1,7 @@
 @import common.Edition
 @import common.commercial.{ContainerModel, PaidContent, Sponsored}
 @import views.support.RenderClasses
-@(faciaPage: model.PressedPage)(implicit request: RequestHeader)
+@(faciaPage: model.PressedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @defining((faciaPage.branding(Edition(request)).exists(_.sponsorshipType == Sponsored),
            faciaPage.branding(Edition(request)).exists(_.sponsorshipType == PaidContent))) { case (isSponsored, isAdFeature) =>

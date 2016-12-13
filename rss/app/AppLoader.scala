@@ -7,7 +7,7 @@ import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import contentapi._
 import controllers.{HealthCheck, RssController}
 import dev.DevParametersHttpRequestHandler
-import model.ApplicationIdentity
+import model.{ApplicationContext, ApplicationIdentity}
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.http.HttpRequestHandler

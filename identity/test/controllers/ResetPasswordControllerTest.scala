@@ -6,7 +6,7 @@ import org.scalatest.mock.MockitoSugar
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import idapiclient.{IdApiClient, TrackingData}
-import test.{Fake, I18NTestComponents, TestRequest, WithTestEnvironment}
+import test.{Fake, I18NTestComponents, TestRequest, WithTestContext}
 import play.api.test._
 import play.api.test.Helpers._
 import client.Error
@@ -18,7 +18,7 @@ import services.{AuthenticationService, IdRequestParser, IdentityRequest, Identi
 
 class ResetPasswordControllerTest extends path.FreeSpec
   with ShouldMatchers
-  with WithTestEnvironment
+  with WithTestContext
   with MockitoSugar {
 
   val api = mock[IdApiClient]

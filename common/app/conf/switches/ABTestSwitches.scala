@@ -77,7 +77,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-us-pre-end-of-year",
+    "ab-contributions-epic-us-pre-end-of-year-two",
     "Test which Epic variant to use in the US end of year campaign",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,

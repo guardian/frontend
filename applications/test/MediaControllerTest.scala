@@ -11,7 +11,7 @@ import scala.util.matching.Regex
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll with WithTestWsClient
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestContentApiClient {
 
   val videoUrl = "uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"

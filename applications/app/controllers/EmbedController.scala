@@ -5,12 +5,10 @@ import common._
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import play.api.mvc._
-
 import scala.concurrent.Future
 import contentapi.ContentApiClient
-import play.api.Environment
 
-class EmbedController(contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
+class EmbedController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action.async { implicit request =>
     lookup(path) map {

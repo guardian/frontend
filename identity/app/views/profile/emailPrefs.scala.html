@@ -6,7 +6,7 @@
 
 @import common.LinkTo
 
-@(page: model.Page, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: EmailSubscriptions)(implicit request: RequestHeader, messages: play.api.i18n.Messages, env: play.api.Environment)
+@(page: model.Page, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: EmailSubscriptions)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @emailListCategoryList(theme: String, subscriptions: List[EmailSubscription], isActive: Boolean) = {
     @fragments.dropdown(theme, isActive = isActive) {

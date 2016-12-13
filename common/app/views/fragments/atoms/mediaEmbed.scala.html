@@ -3,7 +3,7 @@
 @import conf.Configuration
 @import templates.inlineJS.blocking.js.curlConfig
 
-@(page: MediaAtomEmbedPage, displayCaption: Boolean)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: MediaAtomEmbedPage, displayCaption: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 <!DOCTYPE html>
 <html lang="en-GB" class="gu-video-embed-html">

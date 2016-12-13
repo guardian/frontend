@@ -6,13 +6,11 @@ import common._
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import play.api.mvc._
-
 import scala.concurrent.Future
 import contentapi.ContentApiClient
 import model.content.MediaAtom
-import play.api.Environment
 
-class MediaAtomEmbedController(contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
+class MediaAtomEmbedController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
   def render(id: String) = Action.async { implicit request =>
     lookup(s"atom/media/$id") map {
