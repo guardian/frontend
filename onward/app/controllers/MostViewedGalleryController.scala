@@ -51,7 +51,7 @@ class MostViewedGalleryController(mostViewedGalleryAgent: MostViewedGalleryAgent
         CollectionEssentials(galleries.map(_.faciaContent), Nil, Some("more galleries"), None, None, None)
       ).withTimeStamps,
       FrontProperties.empty
-    )(request)
+    )
 
     val htmlResponse = () => views.html.mostViewedGalleries(page, html)
     val jsonResponse = () => html
