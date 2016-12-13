@@ -154,10 +154,12 @@ define([
         buttonElement.dataset.formattedDuration = buttonDuration;
         var videoPosterElement = el.parentElement.querySelector('.vjs-big-play-button__duration');
         var mainVideoElement = videoPosterElement.parentElement;
-        console.log(mainVideoElement);
         mainVideoElement.querySelector('.vjs.gu-media--video');
-        mainVideoElement.classList.remove('gu-media--video');
-        mainVideoElement.classList.add('video-headline--main-height');
+
+        if (window.matchMedia("(max-width: 375px)").matches) {
+          mainVideoElement.classList.remove('gu-media--video');
+        }
+
         var div = document.createElement('div');
         var vidGradient = document.createElement('div');
         var videoHeadline = videoInfo.title.replace(' – video','').replace(' - video','');

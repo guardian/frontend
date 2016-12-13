@@ -226,6 +226,9 @@ button.vjs-big-play-button__duration {
     left: 5%;
     top: 3.25rem;
     width: 360px;
+    @include mq(desktop) {
+      width: 450px;
+    }
     text-align: left;
     &:before {
         @include fs-headline(1);
@@ -238,13 +241,6 @@ button.vjs-big-play-button__duration {
     }
     .vjs-big-play-button {
         left: 0;
-    }
-    &--main-height {
-      height: 180px !important;
-      cursor: pointer;
-      @include mq(mobileLandscape){
-        height: auto !important;
-      }
     }
     &--gradient {
         position: absolute;
