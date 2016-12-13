@@ -25,28 +25,27 @@ class MockHttpClient extends HttpClient {
 
   }
 
-  def name(url: String, headers: Map[String, String]): (String, String) = {
-
-    def headersFormat(headers: Map[String, String]): String = {
-      headers.toList.sortBy(_._1).map{ case (key, value) => key + value }.mkString
-    }
-
-    val uri = URI.create(url)
-    val key = uri.getPath + uri.getQuery + headersFormat(headers)
-
-    (DigestUtils.sha256Hex(key), key)
-
-  }
-
   override def GET(url: String, headers: Iterable[(String, String)]): Future[Response] = {
 
     val contentFromFile = (file: File) => Files.readAllBytes(
       java.nio.file.Paths.get(file.getPath)
     )
 
-    val response = getFile(baseDir, "93ae7c215a04fa59f720faaffb9d91f61f50c1cbe416905964b782c5eef0a27f") match {
+    def headersFormat(headers: Iterable[(String, String)]): String = {
+      headers.toList.sortBy(_._1).map{ case (key, value) => key + value }.mkString
+    }
+
+    val url2hash =  (url: String, headers: Iterable[(String, String)]) => {
+      val uri = URI.create(url)
+      val key = uri.getPath + uri.getQuery + headersFormat(headers)
+      DigestUtils.sha256Hex(key)
+    }
+
+    val hash = url2hash(url, headers)
+
+    val response = getFile(baseDir, hash) match {
       case Some(file) => Response(contentFromFile(file), 200, "OK")
-      case None => throw new Exception("No data found")
+      case None => throw new Exception("No hashed file found for: " + url)
     }
 
     Future(response)
