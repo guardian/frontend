@@ -36,7 +36,7 @@ define([
             return adblockInUse &&  notMobile() && (
                 !visitedMoreThanOnce() ||
                 !isAdblockSwitchOn() ||
-                (isAdblockSwitchOn() && visitedMoreThanOnce() && isPayingMember()))
+                (isAdblockSwitchOn() && visitedMoreThanOnce() && isPayingMember()));
         });
     }
 
@@ -45,7 +45,7 @@ define([
                 adblockInUse().then(function(adblockInUse){
                     return adblockInUse && !isPayingMember() && visitedMoreThanOnce()  && notMobile();
                 })
-            : Promise.resolve(false)
+            : Promise.resolve(false);
     }
 
     return {

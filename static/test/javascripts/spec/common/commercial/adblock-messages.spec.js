@@ -43,8 +43,7 @@ define([
             mockhasAd : true,
             mockBreakpoint : 'desktop',
             userFeatures : true
-            }
-            ,
+            },
             {
             adBlocker : true,
             alreadyVisited : 10,
