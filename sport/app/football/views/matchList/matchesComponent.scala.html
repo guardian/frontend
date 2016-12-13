@@ -1,7 +1,7 @@
 @import football.model.MatchesList
 @import views.support.`package`.Seq2zipWithRowInfo
 
-@(matchesList: MatchesList, customLink: Option[(String, String)] = None)(implicit request: RequestHeader)
+@(matchesList: MatchesList, customLink: Option[(String, String)] = None)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 <div data-component="football-matches-embed" class="c-football-matches">
 

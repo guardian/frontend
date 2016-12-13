@@ -41,7 +41,7 @@ class RelatedController(val contentApiClient: ContentApiClient, val mostReadAgen
       val html = views.html.fragments.containers.facia_cards.container(
         onwardContainer(containerTitle, relatedTrails.map(_.faciaContent)),
         FrontProperties.empty
-      )(request)
+      )
       JsonComponent(html)
     } else {
       RevalidatableResult.Ok(views.html.relatedContent(page, relatedTrails.map(_.faciaContent)))
