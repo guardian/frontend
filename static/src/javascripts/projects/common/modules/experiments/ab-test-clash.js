@@ -6,7 +6,6 @@ define([
     ab
 ) {
 
-
     var ContributionsEpicUsaCtaThreeWay = {
         name: 'ContributionsEpicUsaCtaThreeWay',
         variants: ['mixed', 'just-contribute', 'just-supporter']
@@ -22,11 +21,6 @@ define([
         variants: ['mixed']
     };
 
-    var ContributionsEpicUsPreEndOfYearTwo = {
-        name: 'ContributionsEpicUsPreEndOfYearTwo',
-        variants: ['control', 'endOfYear']
-    };
-
     var ContributionsEpicAlwaysAskStrategy = {
         name: 'ContributionsEpicAlwaysAskStrategy',
         variants: ['control', 'alwaysAsk']
@@ -37,14 +31,25 @@ define([
         variants: ['control', 'showMeTheMoon', 'australiaNewsroom', 'endOfYearAustralia']
     };
 
+    var ContributionsEpicUsEoyControl = {
+        name: 'ContributionsEpicUsEoyControl',
+        variants: ['control']
+    };
+
+    var ContributionsEpicUsEoyEndOfYear = {
+        name: 'ContributionsEpicUsEoyEndOfYear',
+        variants: ['endOfYear']
+    };
+
     function userIsInAClashingAbTest() {
         var clashingTests = [
             ContributionsEpicUsaCtaThreeWay,
             ContributionsEpicObserverAnniversary,
             ContributionsEpicBrexitSupreme,
-            ContributionsEpicUsPreEndOfYearTwo,
+            ContributionsEpicOnTheMoon,
             ContributionsEpicAlwaysAskStrategy,
-            ContributionsEpicOnTheMoon
+            ContributionsEpicUsEoyControl,
+            ContributionsEpicUsEoyEndOfYear
         ];
         return _testABClash(ab.isInVariant, clashingTests);
     }
