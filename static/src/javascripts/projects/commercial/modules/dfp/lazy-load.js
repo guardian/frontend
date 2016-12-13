@@ -21,7 +21,14 @@ define([
     /* loadQueued: boolean. Set to true when a lazyload task is scheduled */
     var loadQueued = false;
 
-    var lazyLoad = throttle(function () {
+    /* observer: IntersectionObserver?. The observer used to detect when ad slots enter the viewport */
+    var observer = null;
+
+    var lazyLoad = dfpEnv.lazyLoadObserve ? onIntersect : throttle(onScroll, nbOfFrames * durationOfFrame);
+
+    return lazyLoad;
+
+    function onScroll() {
         var viewportHeight = detect.getViewport().height;
 
         if( loadQueued ) {
@@ -52,18 +59,25 @@ define([
                 disableLazyLoad();
             }
 
-            lazyLoad.forEach(function(advertId) {
-                var advert = getAdvertById(advertId);
-                performanceLogging.updateAdvertMetric(advert, 'lazyWaitComplete', userTiming.getCurrentTime());
-                loadAdvert(advert);
-            });
+            lazyLoad.forEach(displayAd);
         });
-    }, nbOfFrames * durationOfFrame);
+    }
 
     function disableLazyLoad() {
         dfpEnv.lazyLoadEnabled = false;
         window.removeEventListener('scroll', lazyLoad);
     }
 
-    return lazyLoad;
+    function onIntersect(entries, observer) {
+        entries.forEach(function (entry) {
+            observer.unobserve(entry.target);
+            displayAd(entry.target.id);
+        });
+    }
+
+    function displayAd(advertId) {
+        var advert = getAdvertById(advertId);
+        performanceLogging.updateAdvertMetric(advert, 'lazyWaitComplete', userTiming.getCurrentTime());
+        loadAdvert(advert);
+    }
 });
