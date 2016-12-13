@@ -30,7 +30,7 @@ define([
             ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(function (status) {
                 el.classList.toggle('youtube__video-' + status.toLocaleLowerCase(), event.data === window.YT.PlayerState[status]);
             });
-            el.classList.add('youtube__video-started');
+            addVideoStartedClass(el);
         });
 
 
@@ -41,13 +41,21 @@ define([
     }
 
     function _onPlayerReady(event, handlers, el) {
-
         fastdom.write(function () {
             el.classList.add('youtube__video-ready');
         });
+
         if (handlers && typeof handlers.onPlayerReady === 'function') {
             handlers.onPlayerReady(event);
         }
+    }
+
+    function hasPlayerStarted(event) {
+        return event.target.getCurrentTime() > 0;
+    }
+
+    function addVideoStartedClass(el) {
+        el.classList.add('youtube__video-started');
     }
 
     function init(el, handlers, videoId) {
@@ -59,6 +67,10 @@ define([
             }
 
             function onPlayerReady(event) {
+                if (hasPlayerStarted(event)) {
+                    addVideoStartedClass(el);
+                }
+
                 _onPlayerReady(event, handlers, el);
             }
 
