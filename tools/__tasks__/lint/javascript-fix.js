@@ -25,7 +25,7 @@ module.exports = {
             'static/src/**/*.js',
         ].concat(config)).then(handleSuccess.bind(null, ctx)),
     }, {
-        description: 'Lint everything else',
+        description: 'Fix everything else',
         task: ctx => execa('eslint', [
             '*.js',
             'tools/**/*.js',
