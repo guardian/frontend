@@ -3,13 +3,24 @@ define([
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/lazy-load'
 ], function (addEventListener, dfpEnv, lazyLoad) {
+    var observer;
+
     return enableLazyLoad;
 
-    function enableLazyLoad() {
+    function enableLazyLoad(advert) {
         if (!dfpEnv.lazyLoadEnabled) {
             dfpEnv.lazyLoadEnabled = true;
-            addEventListener(window, 'scroll', lazyLoad, { passive: true });
-            lazyLoad();
+            if (dfpEnv.lazyLoadObserve) {
+                observer = new IntersectionObserver(lazyLoad, { rootMargin: '200px 0%' });
+                dfpEnv.adverts.forEach(function (advert) {
+                    observer.observe(advert.node);
+                });
+            } else {
+                addEventListener(window, 'scroll', lazyLoad, { passive: true });
+                lazyLoad();
+            }
+        } else if (dfpEnv.lazyLoadObserve && advert) {
+            observer.observe(advert.node);
         }
     }
 });
