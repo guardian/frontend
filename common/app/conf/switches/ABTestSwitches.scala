@@ -87,6 +87,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-contributions-epic-on-the-moon",
+    "Test with Epic variant containing a message from First Dog on the Moon",
+    owners = Seq(Owner.withGithub("alexduf")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 12),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-epic-always-ask-strategy",
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
