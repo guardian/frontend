@@ -1,13 +1,14 @@
 {
     "env": {
-        "production": {
-            "presets": [
-                "latest"
-            ]
-        },
+        "production": {},
         "development": {
             "plugins": [
                 "transform-async-to-generator"
+            ]
+        },
+        "admin": {
+            "presets": [
+                "latest"
             ]
         }
     }

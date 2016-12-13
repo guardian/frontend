@@ -41,7 +41,8 @@ check-yarn: # PRIVATE
 # Watch and automatically compile/reload all JS/SCSS.
 # Uses port 3000 insead of 9000.
 watch: compile-dev
-	@npm run sass-watch & \
+	@npm run babel-watch & \
+		npm run sass-watch & \
 		npm run css-watch & \
 		npm run browser-sync
 

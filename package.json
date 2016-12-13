@@ -18,8 +18,9 @@
     "any-observable": "^0.2.0",
     "autoprefixer": "^6.5.3",
     "aws-sdk": "~2.0.0-rc4",
-    "babel-core": "^6.10.4",
-    "babel-loader": "^6.2.4",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.20.0",
+    "babel-loader": "^6.2.9",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
     "babel-preset-latest": "^6.16.0",
     "browser-sync": "^2.8.2",
@@ -90,9 +91,10 @@
   },
   "scripts": {
     "postinstall": "./tools/run-task githooks --verbose",
+    "babel-watch": "BABEL_ENV=production babel ./static/src/javascripts --watch -d ./static/transpiled/javascripts --ignore bower_components/,components/,vendor/ >/dev/null 2>&1",
     "sass-watch": "node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true",
     "css-watch": "gulp --cwd ./dev watch:css",
     "browser-sync": "browser-sync start --config ./dev/bs-config.js",
-    "compile-deploy-radiator": "BABEL_ENV=production webpack --config=static/src/deploys-radiator/webpack.config.js --progress --colors && cp static/src/deploys-radiator/app/main.css static/target/deploys-radiator"
+    "compile-deploy-radiator": "BABEL_ENV=admin webpack --config=static/src/deploys-radiator/webpack.config.js --progress --colors && cp static/src/deploys-radiator/app/main.css static/target/deploys-radiator"
   }
 }

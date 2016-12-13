@@ -58,6 +58,7 @@ module.exports = {
     scrollProportionally: true,
     scrollThrottle: 0,
     reloadDelay: 0,
+    reloadDebounce: 100,
     plugins: [],
     injectChanges: true,
     startPath: null,
