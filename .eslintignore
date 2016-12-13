@@ -2,8 +2,10 @@
 jspm_packages
 bower_components
 node_modules
+!.eslintrc.js
 
 # main app
+static/src/stylesheets
 static/src/javascripts/components
 static/src/javascripts/vendor
 static/src/javascripts/polyfills

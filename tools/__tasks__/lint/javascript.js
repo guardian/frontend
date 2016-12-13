@@ -10,16 +10,16 @@ const error = (ctx) => {
 module.exports = {
     description: 'Lint JS',
     task: [{
-        description: 'Lint tests',
+        description: 'Lint static/tests',
         task: `eslint static/test/javascripts/**/*.js ${config}`,
         onError: error,
     }, {
-        description: 'Lint tools',
-        task: `eslint tools/**/*.js ${config}`,
+        description: 'Lint static/src',
+        task: `eslint static/src/**/*.js ${config}`,
         onError: error,
     }, {
-        description: 'Lint app JS',
-        task: `eslint static/src/**/*.js ${config}`,
+        description: 'Lint everything else',
+        task: `eslint *.js tools/**/*.js dev/**/*.js ${config}`,
         onError: error,
     }],
     concurrent: true,
