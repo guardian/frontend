@@ -5,7 +5,7 @@ define([
 ], function (
     Injector,
     storage,
-    config,
+    config
 ) {
     var injector = new Injector();
 
