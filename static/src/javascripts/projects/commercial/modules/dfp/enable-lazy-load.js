@@ -3,7 +3,8 @@ define([
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/lazy-load'
 ], function (addEventListener, dfpEnv, lazyLoad) {
-    var observer;
+    /* observer: IntersectionObserver?. The observer used to detect when ad slots enter the viewport */
+    var observer = null;
 
     return enableLazyLoad;
 

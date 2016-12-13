@@ -21,9 +21,6 @@ define([
     /* loadQueued: boolean. Set to true when a lazyload task is scheduled */
     var loadQueued = false;
 
-    /* observer: IntersectionObserver?. The observer used to detect when ad slots enter the viewport */
-    var observer = null;
-
     var lazyLoad = dfpEnv.lazyLoadObserve ? onIntersect : throttle(onScroll, nbOfFrames * durationOfFrame);
 
     return lazyLoad;
