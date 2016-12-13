@@ -1,0 +1,122 @@
+$c-primary-footer-background-side-bar: mix($guardian-brand, #ffffff, 90%);
+
+.l-footer__primary {
+    position: relative;
+    overflow: hidden;
+    background: $c-primary-footer-background-side-bar;
+}
+
+.l-footer {
+    padding: 0;
+    margin-top: $gs-baseline * 2;
+    background: $multimedia-support-4;
+    clear: both;
+}
+
+.l-footer__secondary {
+    font-size: 12px;
+    line-height: 1;
+    padding-right: $gs-gutter / 2;
+    padding-left: $gs-gutter / 2;
+
+    a {
+        color: $neutral-4;
+        font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+        text-transform: lowercase;
+    }
+}
+
+.brand-bar {
+    background-color: $guardian-brand;
+    line-height: 0;
+    box-sizing: border-box;
+    padding-left: $gs-gutter / 2;
+    padding-right: $gs-gutter / 2;
+}
+
+.brand-bar__item--action, .brand-bar__item--action:focus {
+    margin: 0;
+    cursor: pointer;
+    color: #ffffff;
+    display: inline-block;
+    vertical-align: middle;
+    text-decoration: none;
+    line-height: 2.25rem;
+}
+
+.brand-bar__item {
+    height: $gs-row-height;
+    padding-top: $gs-baseline / 3;
+    padding-bottom: $gs-baseline / 3;
+    font-size: 14px;
+}
+
+.control__info {
+    display: inline-block;
+    height: $gs-row-height;
+    line-height: 2.25rem;
+    margin-left: $gs-gutter / 2;
+    max-width: gs-span(2);
+    vertical-align: top;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float: left;
+    text-align: left;
+}
+
+.colophon {
+    font-size: 14px;
+    list-style: none;
+    margin: 0;
+    padding: ($gs-baseline * 2) 0 ($gs-baseline / 2);
+    column-count: 2;
+    column-gap: 0;
+
+    a {
+        display: inline-block;
+        padding-bottom: $gs-baseline;
+    }
+}
+
+.really-serious-copyright {
+    color: $neutral-4;
+    font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    margin-bottom: 0.25rem;
+}
+
+.l-footer__misc {
+    padding-top: 0.375rem;
+    padding-bottom: 1.125rem;
+    border-top: 1px solid #666;
+}
+
+.breadcrumb {
+    text-transform: lowercase;
+}
+
+.signposting {
+    background: $neutral-5;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.signposting__item {
+    white-space: nowrap;
+    display: inline-block;
+    height: $gs-row-height;
+    line-height: $gs-row-height;
+}
+
+.signposting__action {
+    padding: 0 $gs-gutter / 2;
+    vertical-align: middle;
+}
+
+.signposting__separator {
+    color: $neutral-2;
+    vertical-align: -3px;
+    font-size: 24px;
+    margin: 0 -6px;
+}
