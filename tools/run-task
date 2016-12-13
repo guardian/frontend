@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* eslint-disable no-console, import/no-dynamic-require, global-require */
+/* eslint-disable import/no-dynamic-require, global-require */
 
 /*
 This is lightweight task runner that uses listr to provide a UI,

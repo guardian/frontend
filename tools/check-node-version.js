@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-/* eslint-disable no-console */
-
 // given this could be any version of node that runs this, it uses no bells or whistles...
 
 const fs = require('fs');

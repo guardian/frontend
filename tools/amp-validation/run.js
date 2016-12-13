@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 const amphtmlValidator = require('amphtml-validator');
 const partition = require('lodash/partition');
 

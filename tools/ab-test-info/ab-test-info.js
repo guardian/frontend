@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-/* eslint-disable no-console */
-
 // ab-test-info is a node app that parses javascript ab-tests and
 // extracts test object data to a JSON output file.
 
