@@ -9,7 +9,9 @@
     "hyperscript-helpers": "^3.0.0",
     "immutable": "^3.8.1",
     "monapt": "^0.5.4",
-    "virtual-dom": "^2.1.1"
+    "tcp-ping": "^0.1.1",
+    "virtual-dom": "^2.1.1",
+    "webshot": "^0.18.0"
   },
   "devDependencies": {
     "amphtml-validator": "^1.0.10",
@@ -56,6 +58,7 @@
     "lodash": "^3.10.1",
     "lodash.capitalize": "^4.2.1",
     "lodash.flatten": "^4.4.0",
+    "lodash.merge": "^4.6.0",
     "lodash.takewhile": "^4.6.0",
     "lodash.uniq": "^4.5.0",
     "megalog": "^0.1.0",

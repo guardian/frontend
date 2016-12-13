@@ -10,9 +10,9 @@ class NewsAlertNotificationTest extends FlatSpec with Matchers {
   private val uid = UUID.randomUUID()
   private val title = "This is a breaking news title"
   private val message = "This is a breaking news message"
-  private val thumbnailUrl = "http://i.guimcode.co.uk.global.prod.fastly.net/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
+  private val thumbnailUrl = "http://i.guimcode.co.uk/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
   private val link = "http://gu.com/p/4fgcd"
-  private val imageUrl = "http://i.guimcode.co.uk.global.prod.fastly.net/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
+  private val imageUrl = "http://i.guimcode.co.uk/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
   private val publicationDate = "2016-01-18T12:21:01.000Z"
   private val urlId = "/category/2016/01/30/slug"
   private val topics = Set("breaking/sport", "breaking/uk")

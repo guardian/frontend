@@ -5,17 +5,17 @@ export const createDeployRecord = Record({
     uuid: undefined,
     projectName: undefined,
     status: undefined,
-    time: undefined
+    time: undefined,
 }, 'Deploy');
 
 export const createBuildRecord = Record({
     number: undefined,
     projectName: undefined,
     revision: undefined,
-    commits: undefined
+    commits: undefined,
 }, 'Build');
 
 export const createDeployGroupRecord = Record({
     status: undefined,
-    build: undefined
+    build: undefined,
 }, 'DeployGroup');
