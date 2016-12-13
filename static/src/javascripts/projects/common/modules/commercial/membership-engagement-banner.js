@@ -13,7 +13,8 @@ define([
         'common/utils/fastdom-promise',
         'common/modules/experiments/ab',
         'common/utils/$',
-        'common/views/svgs'
+        'common/views/svgs',
+        'components/lodash-amd/utilities/parseInt'
     ], function (bean,
                  qwery,
                  config,
@@ -28,7 +29,7 @@ define([
                  fastdom,
                  ab,
                  $,
-                 svgs) {
+                 svgs, parseInt) {
 
         var endpoints = {
             UK: 'https://membership.theguardian.com/uk/supporter',
@@ -163,7 +164,7 @@ define([
                 var internationalTestVariant = getVariant('MembershipEngagementInternationalExperimentTest12');
                 if (internationalTestVariant && internationalTestVariant !== 'control' && internationalTestVariant !== notInTest)
                     //variants are in the form '1st_article', '3rd_article' so we can derive the number of visits from the name
-                    return numberOfVisits >= internationalTestVariant.substring(0, 1);
+                    return numberOfVisits >= parseInt(internationalTestVariant.substring(0, 1));
             }
 
             return numberOfVisits >= 10;
