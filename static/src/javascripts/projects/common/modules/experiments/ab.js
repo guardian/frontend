@@ -63,7 +63,7 @@ define([
 
     function isParticipating(test) {
         var participations = getParticipations();
-        return participations[test.id];
+        return test.id in participations;
     }
 
     function addParticipation(test, variantId) {

@@ -13,8 +13,9 @@ define([
     'common/utils/cookies',
     'common/utils/ajax',
     'common/modules/commercial/commercial-features',
-    'common/utils/element-inview'
-
+    'common/utils/element-inview',
+    'common/modules/experiments/ab',
+    'lodash/arrays/intersection'
 ], function (bean,
              qwery,
              $,
@@ -29,12 +30,14 @@ define([
              cookies,
              ajax,
              commercialFeatures,
-             ElementInview) {
+             ElementInview,
+             ab,
+             intersection) {
 
     return function () {
         this.id = 'ContributionsEpicUsEoyEndOfYear';
         this.start = '2016-12-13';
-        this.expiry = '2017-01-01';
+        this.expiry = '2016-12-31';
         this.author = 'Guy Dawson';
         this.description = 'Run the end of year variant for 12.5% of the US audience';
         this.showForSensitive = false;
@@ -46,8 +49,31 @@ define([
         this.idealOutcome = 'A conversion rate of 0.1%';
         this.canRun = function () {
             var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
-            var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle; // may render badly on other types
-            return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate;
+
+            // may render badly on other types
+            var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle;
+
+            // prevent multiple epics from being shown
+            var userInAlwaysAskStrategy = ab.isParticipating({id: 'ContributionsEpicAlwaysAskStrategy'});
+
+            var isCharityAskPage = function() {
+                var charityKeywordIds = [
+                    // TODO
+                ];
+                var pageKeywordIdsString = config.page.keywordIds;
+                if (typeof (pageKeywordIdsString) !== 'undefined') {
+                    var pageKeywordIds = pageKeywordIdsString.split(',');
+                    return intersection(charityKeywordIds, pageKeywordIds).length > 0;
+                } else {
+                    return false;
+                }
+            };
+
+            return userHasNeverContributed &&
+                commercialFeatures.canReasonablyAskForMoney &&
+                worksWellWithPageTemplate &&
+                !userInAlwaysAskStrategy &&
+                !isCharityAskPage();
         };
 
         var makeEvent = (function(name) {

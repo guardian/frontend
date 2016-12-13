@@ -13,7 +13,8 @@ define([
     'common/utils/cookies',
     'common/utils/ajax',
     'common/modules/commercial/commercial-features',
-    'common/utils/element-inview'
+    'common/utils/element-inview',
+    'lodash/arrays/intersection'
 
 ], function (bean,
              qwery,
@@ -29,7 +30,8 @@ define([
              cookies,
              ajax,
              commercialFeatures,
-             ElementInview) {
+             ElementInview,
+             intersection) {
 
     // We want to ensure the test always runs as this enables an easy data lake query to see whether a reader is in the
     // test segment: check whether the ab_tests field contains a test with name ContributionsEpicAlwaysAskStrategy.
@@ -108,13 +110,29 @@ define([
         };
 
         var canBeDisplayed = function() {
+
+            var isCharityAskPage = function() {
+                var charityKeywordIds = [
+                    // TODO
+                ];
+                var pageKeywordIdsString = config.page.keywordIds;
+                if (typeof (pageKeywordIdsString) !== 'undefined') {
+                    var pageKeywordIds = pageKeywordIdsString.split(',');
+                    return intersection(charityKeywordIds, pageKeywordIds).length > 0;
+                } else {
+                    return false;
+                }
+            };
+
             var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
             var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle; // may render badly on other types
             var isSensitive = config.page.isSensitive === true;
+
             return userHasNeverContributed &&
                 commercialFeatures.canReasonablyAskForMoney &&
                 worksWellWithPageTemplate &&
-                !isSensitive;
+                !isSensitive &&
+                !isCharityAskPage();
         };
 
         this.variants = [
