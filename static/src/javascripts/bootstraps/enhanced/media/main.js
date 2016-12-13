@@ -153,6 +153,11 @@ define([
         var buttonDuration = el.getAttribute('data-formatted-duration');
         buttonElement.dataset.formattedDuration = buttonDuration;
         var videoPosterElement = el.parentElement.querySelector('.vjs-big-play-button__duration');
+        var mainVideoElement = videoPosterElement.parentElement;
+        console.log(mainVideoElement);
+        mainVideoElement.querySelector('.vjs.gu-media--video');
+        mainVideoElement.classList.remove('gu-media--video');
+        mainVideoElement.classList.add('video-headline--main-height');
         var div = document.createElement('div');
         var vidGradient = document.createElement('div');
         var videoHeadline = videoInfo.title.replace(' – video','').replace(' - video','');
@@ -192,6 +197,7 @@ define([
                 }
             }
         }));
+
         events.addContentEvents(player, mediaId, mediaType);
         events.addPrerollEvents(player, mediaId, mediaType);
         events.bindGoogleAnalyticsEvents(player, gaEventLabel);
@@ -224,9 +230,7 @@ define([
                         });
                     } else {
                         blockVideoAds = videoInfo.shouldHideAdverts;
-                        if(ab.isInVariant('VideoHeadline', 'video-headline')) {
-                          initVideoHeadline(el, videoInfo);
-                        }
+
                         withPreroll = shouldPreroll && !blockVideoAds;
 
                         // Location of this is important.
@@ -319,7 +323,9 @@ define([
                         });
 
                         playerSetupComplete.then(function () {
-
+                          if(ab.isInVariant('VideoHeadline', 'video-headline')) {
+                            initVideoHeadline(player.el(), videoInfo);
+                          }
                             if (autoplay) {
                                 player.play();
                             }

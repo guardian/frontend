@@ -239,6 +239,13 @@ button.vjs-big-play-button__duration {
     .vjs-big-play-button {
         left: 0;
     }
+    &--main-height {
+      height: 180px !important;
+      cursor: pointer;
+      @include mq(mobileLandscape){
+        height: auto !important;
+      }
+    }
     &--gradient {
         position: absolute;
         left: 0;
@@ -246,7 +253,7 @@ button.vjs-big-play-button__duration {
         background-color: $neutral-1;
         width: 100%;
         height: 100%;
-        opacity: .2;
+        opacity: .4;
     }
 }
 
