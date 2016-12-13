@@ -18,7 +18,6 @@ case class MediaPage(media: ContentType, related: RelatedContent) extends Conten
 }
 
 class MediaController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
-  import context._
 
   def renderJson(path: String) = render(path)
   def render(path: String) = Action.async { implicit request => renderItem(path) }

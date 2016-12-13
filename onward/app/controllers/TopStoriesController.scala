@@ -12,7 +12,6 @@ import play.twirl.api.Html
 import scala.concurrent.Future
 
 class TopStoriesController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with Paging with ExecutionContexts {
-  import context._
 
   def renderTopStoriesHtml = renderTopStories()
   def renderTopStories() = Action.async { implicit request =>

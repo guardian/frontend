@@ -23,8 +23,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   val frontJsonFapi: FrontJsonFapi
 
-  val context: ApplicationContext
-  import context._
+  implicit val context: ApplicationContext
 
   private def getEditionFromString(edition: String) = {
     val editionToFilterBy = edition match {

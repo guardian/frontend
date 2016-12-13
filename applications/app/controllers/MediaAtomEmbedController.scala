@@ -11,7 +11,6 @@ import contentapi.ContentApiClient
 import model.content.MediaAtom
 
 class MediaAtomEmbedController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   def render(id: String) = Action.async { implicit request =>
     lookup(s"atom/media/$id") map {

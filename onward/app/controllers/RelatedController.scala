@@ -14,7 +14,6 @@ import views.support.FaciaToMicroFormat2Helpers.isCuratedContent
 import scala.concurrent.duration._
 
 class RelatedController(val contentApiClient: ContentApiClient, val mostReadAgent: MostReadAgent)(implicit context: ApplicationContext) extends Controller with Related with Containers with Logging with ExecutionContexts {
-  import context._
 
   private val page = SimplePage(MetaData.make(
     "related-content",

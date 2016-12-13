@@ -7,7 +7,6 @@ import model.ApplicationContext
 import play.api.mvc.{Action, Controller}
 
 class CompetitionListController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends Controller with CompetitionListFilters with Logging with ExecutionContexts {
-  import context._
 
   val page = new FootballPage("football/competitions", "football", "Leagues & competitions")
 

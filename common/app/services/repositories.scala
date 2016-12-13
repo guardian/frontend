@@ -14,8 +14,7 @@ import scala.concurrent.Future
 
 trait Index extends ConciergeRepository with Collections {
 
-  val context: ApplicationContext
-  import context._
+  implicit val context: ApplicationContext
 
   val contentApiClient: ContentApiClient
   val sectionsLookUp: SectionsLookUp

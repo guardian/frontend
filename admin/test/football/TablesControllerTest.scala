@@ -8,7 +8,7 @@ import play.api.mvc.AnyContentAsFormUrlEncoded
 import play.api.test._
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
-import test.{ConfiguredTestSuite, WithTestEnvironment, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithTestContext, WithTestWsClient}
 
 import scala.annotation.tailrec
 import scala.language.postfixOps
@@ -20,7 +20,7 @@ import scala.language.postfixOps
     with ConfiguredTestSuite
     with BeforeAndAfterAll
     with WithTestWsClient
-    with WithTestEnvironment {
+    with WithTestContext {
 
   "test tables index page loads with leagues" in {
     val Some(result) = route(app, FakeRequest(GET, "/admin/football/tables"))

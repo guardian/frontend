@@ -16,8 +16,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
                             dayMostPopularAgent: DayMostPopularAgent,
                             mostPopularAgent: MostPopularAgent)
                            (implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
-  val page = SimplePage(MetaData.make(
+    val page = SimplePage(MetaData.make(
     "most-read",
     Some(SectionSummary.fromId("most-read")),
     "Most read"

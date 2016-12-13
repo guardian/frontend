@@ -8,7 +8,6 @@ import model.{ApplicationContext, Cached}
 import football.model.CompetitionStage
 
 class WallchartController(competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   def renderWallchartEmbed(competitionTag: String) = renderWallchart(competitionTag, true)
   def renderWallchart(competitionTag: String, embed: Boolean = false) = Action { implicit request =>

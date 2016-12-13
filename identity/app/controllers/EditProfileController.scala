@@ -30,7 +30,6 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
                             implicit val profileFormsMapping: ProfileFormsMapping)
                            (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
-  import context._
 
   import authenticatedActions._
 

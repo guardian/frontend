@@ -113,8 +113,7 @@ class EmailFormService(wsClient: WSClient) {
 }
 
 class EmailSignupController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with ExecutionContexts with Logging {
-  import context._
-  val emailFormService = new EmailFormService(wsClient)
+    val emailFormService = new EmailFormService(wsClient)
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),

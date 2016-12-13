@@ -48,7 +48,6 @@ trait Controllers
   with FrontendComponents
   with CricketControllers {
   self: BuiltInComponents =>
-  implicit def appContext: ApplicationContext
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
   lazy val apiSandbox = wire[ApiSandbox]
   lazy val assets = wire[Assets]

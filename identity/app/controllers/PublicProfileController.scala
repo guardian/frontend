@@ -21,7 +21,6 @@ class PublicProfileController(idUrlBuilder: IdentityUrlBuilder,
   with ExecutionContexts
   with SafeLogging{
 
-  import context._
 
   def page(url: String, username: String) = IdentityPage(url,  s"$username's public profile")
 

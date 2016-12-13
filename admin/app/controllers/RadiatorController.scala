@@ -15,7 +15,6 @@ import model.deploys.{HttpClient, TeamCityBuild, TeamcityService}
 import scala.concurrent.Future
 
 class RadiatorController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with Requests{
-  import context._
 
   // if you are reading this you are probably being rate limited...
   // you can read about github rate limiting here http://developer.github.com/v3/#rate-limiting

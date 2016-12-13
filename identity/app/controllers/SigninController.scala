@@ -23,7 +23,6 @@ class SigninController(returnUrlVerifier: ReturnUrlVerifier,
                        val messagesApi: MessagesApi)
                       (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with Forms {
-  import context._
 
   val page = IdentityPage("/signin", "Sign in")
 

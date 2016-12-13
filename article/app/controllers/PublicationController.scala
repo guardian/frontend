@@ -21,7 +21,6 @@ class PublicationController(
   with Dates
   with Logging {
 
-  import context._
 
   private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 

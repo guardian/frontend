@@ -17,7 +17,6 @@ import scala.util.control.NonFatal
 
 class HostedContentController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with Logging with implicits.Requests {
-  import context._
 
   private def cacheDuration: Int = 60
 

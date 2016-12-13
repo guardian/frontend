@@ -6,8 +6,7 @@ import play.api.mvc.{Action, Controller}
 import tools._
 
 class AnalyticsConfidenceController(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
-  def renderConfidence() = Action.async { implicit request =>
+    def renderConfidence() = Action.async { implicit request =>
     for {
       omniture <- CloudWatch.omnitureConfidence
       ophan <- CloudWatch.ophanConfidence

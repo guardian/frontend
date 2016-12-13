@@ -22,7 +22,6 @@ class ResetPasswordController(api : IdApiClient,
                               val messagesApi: MessagesApi)
                              (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
-  import context._
 
   val page = IdentityPage("/reset-password", "Reset Password")
 

@@ -14,8 +14,6 @@ import scala.concurrent.Future
 
 class TablesController(val wsClient: WSClient)(implicit val context: ApplicationContext) extends Controller with ExecutionContexts with PaFootballClient with Logging {
 
-  import context._
-
   def tablesIndex = Action.async { implicit request =>
     for {
       allCompetitions <- client.competitions

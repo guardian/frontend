@@ -10,7 +10,6 @@ import play.api.Environment
 
 
 class MatchDayController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends MatchListController with CompetitionLiveFilters {
-  import context._
 
   def liveMatchesJson() = liveMatches()
   def liveMatches(): Action[AnyContent] =

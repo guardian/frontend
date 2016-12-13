@@ -17,7 +17,6 @@ import scala.concurrent.Future
 import scala.util.control.NonFatal
 
 class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionApiLike)(implicit context: ApplicationContext) extends DiscussionController with ExecutionContexts {
-  import context._
 
   val userForm = Form(
     Forms.mapping(

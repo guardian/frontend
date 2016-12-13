@@ -17,7 +17,6 @@ object AuthActions extends Actions {
 }
 
 class AdminIndexController (implicit context: ApplicationContext) extends Controller {
-  import context._
 
   def index() = Action { Redirect("/admin") }
 

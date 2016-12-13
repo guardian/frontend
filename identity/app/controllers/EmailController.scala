@@ -26,8 +26,7 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
                       val messagesApi: MessagesApi)
                      (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
-  import context._
-  import EmailPrefsData._
+    import EmailPrefsData._
   import authenticatedActions.authAction
 
   val page = IdentityPage("/email-prefs", "Email preferences")

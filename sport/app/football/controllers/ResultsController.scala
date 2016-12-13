@@ -11,7 +11,6 @@ import model.Competition
 import play.api.Environment
 
 class ResultsController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends MatchListController with CompetitionResultFilters {
-  import context._
 
   private def competitionOrTeam(tag: String): Option[Either[Competition, FootballTeam]] = {
     lookupCompetition(tag).map(Left(_))

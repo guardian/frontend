@@ -33,7 +33,6 @@ case class TestPage(specifiedKeywords : List[String] = Nil) extends model.Standa
 }
 
 class CreativeTestPage (implicit context: ApplicationContext) extends Controller {
-  import context._
   def allComponents(keyword : List[String]) = Action{ implicit request =>
     if(Configuration.environment.stage.toLowerCase == "dev" || Configuration.environment.stage.toLowerCase == "code") {
       Ok(views.html.debugger.allcreatives(TestPage(keyword)))

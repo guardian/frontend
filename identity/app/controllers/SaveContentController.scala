@@ -31,7 +31,6 @@ class SaveContentController(api: IdApiClient,
                             pageDataBuilder: SaveForLaterDataBuilder)
                            (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging {
-  import context._
 
   import SavedArticleData._
 

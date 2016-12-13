@@ -116,10 +116,8 @@ object TestRequest {
   }
 }
 
-trait WithTestEnvironment {
-  val testEnvironment: Environment = Environment.simple()
-  implicit val env = testEnvironment
-  implicit val context = new ApplicationContext(testEnvironment)
+trait WithTestContext {
+  implicit val testContext = new ApplicationContext(Environment.simple())
 }
 
 trait WithTestWsClient {

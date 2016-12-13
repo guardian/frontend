@@ -11,7 +11,6 @@ import play.api.mvc.{Action, Controller}
 import services.ConfigAgent
 
 class WhatIsDeduped(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
    def index() = Action { implicit request =>
      val paths: List[String] = ConfigAgent.getPathIds.sorted

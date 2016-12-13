@@ -17,7 +17,6 @@ case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam)
 }
 
 class CricketMatchController(cricketStatsJob: CricketStatsJob)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   def renderMatchIdJson(date: String, teamId: String) = renderMatchId(date, teamId)
 

@@ -10,7 +10,6 @@ import tools.Store
 import model.{ApplicationContext, NoCache}
 
 class SwitchboardPlistaController(akkaAsync: AkkaAsync)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   def renderSwitchboard() = Action { implicit request =>
     log.info("loaded plista Switchboard")

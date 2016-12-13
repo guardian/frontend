@@ -1,4 +1,4 @@
-@(body: String)(implicit request: RequestHeader, env: play.api.Environment)
+@(body: String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Dashboard", isAuthed = true, hasCharts = true) {
 

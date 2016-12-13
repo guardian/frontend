@@ -8,7 +8,7 @@
 @import views.support.Commercial.isPaidContent
 @import views.support.ImmersiveMainCleaner
 
-@(page: ContentPage)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: ContentPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @defining((
     page.item.tags.isTheMinuteArticle,

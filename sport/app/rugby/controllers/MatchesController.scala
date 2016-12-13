@@ -16,7 +16,6 @@ case class MatchPage(liveScore: Match) extends StandalonePage {
 }
 
 class MatchesController(rugbyStatsJob: RugbyStatsJob)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   def scoreJson(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = score(year, month, day, homeTeamId, awayTeamId)
 

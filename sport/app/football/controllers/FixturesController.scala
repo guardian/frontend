@@ -11,7 +11,6 @@ import play.api.mvc.{Action, AnyContent}
 
 
 class FixturesController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends MatchListController with CompetitionFixtureFilters {
-  import context._
 
   private def fixtures(date: LocalDate) = FixturesList(date, competitionsService.competitions)
   private val page = new FootballPage("football/fixtures", "football", "All fixtures")

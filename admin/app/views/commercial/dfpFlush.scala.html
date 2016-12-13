@@ -1,4 +1,4 @@
-@()(implicit flash: Flash, request: RequestHeader, env: play.api.Environment)
+@()(implicit flash: Flash, request: RequestHeader, context: model.ApplicationContext)
 
 @link(cssClass: String) = {
     <a class="@cssClass" href="@controllers.admin.commercial.routes.DfpDataController.flushCache()" role="button">

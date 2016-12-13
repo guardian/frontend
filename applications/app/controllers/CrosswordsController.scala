@@ -40,7 +40,7 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
     }
   }
 
-  def renderCrosswordPage(crosswordType: String, id: Int)(implicit request: RequestHeader, env: Environment): Future[Result] = {
+  def renderCrosswordPage(crosswordType: String, id: Int)(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(RevalidatableResult.Ok(views.html.crossword(
         CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
@@ -51,7 +51,6 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
 }
 
 class CrosswordPageController(val contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends CrosswordController {
-  import context._
 
   def noResults()(implicit request: RequestHeader) = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
 
@@ -95,8 +94,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient)(implicit c
 }
 
 class CrosswordSearchController(val contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends CrosswordController {
-  import context._
-  val searchForm = Form(
+    val searchForm = Form(
     mapping(
       "crossword_type" -> nonEmptyText,
       "month" -> number,

@@ -41,7 +41,6 @@ case class QuizAnswersPage(
 }
 
 class QuizController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with ExecutionContexts with Logging {
-  import context._
 
   def submit(quizId: String, path: String) = Action.async { implicit request =>
     form.playForm.bindFromRequest.fold(

@@ -17,7 +17,6 @@ case class TablesPage(
 }
 
 class LeagueTableController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
-  import context._
 
     val tableOrder = Seq(
         "Premier League",

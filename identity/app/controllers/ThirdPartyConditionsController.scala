@@ -25,7 +25,6 @@ class ThirdPartyConditionsController(returnUrlVerifier: ReturnUrlVerifier,
                                      val messagesApi: MessagesApi)
                                     (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with Mappings {
-  import context._
 
   import authenticatedActions.{agreeAction, authAction}
 

@@ -16,8 +16,7 @@ import org.joda.time.format.DateTimeFormat
 import play.twirl.api.HtmlFormat
 import play.api.libs.ws.WSClient
 
-class PlayerController(val wsClient: WSClient, val context: ApplicationContext) extends Controller with ExecutionContexts with PaFootballClient with Requests with Logging {
-  import context._
+class PlayerController(val wsClient: WSClient)(implicit val context: ApplicationContext) extends Controller with ExecutionContexts with PaFootballClient with Requests with Logging {
 
   def playerIndex = Action.async { implicit request =>
     fetchCompetitionsAndTeams.map {

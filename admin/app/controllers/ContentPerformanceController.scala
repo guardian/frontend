@@ -8,7 +8,6 @@ import org.joda.time.format.DateTimeFormat
 import play.api.mvc._
 
 class ContentPerformanceController(videoEncodingsJob: VideoEncodingsJob)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   val missingVideoEncodingDateTimeFormat = DateTimeFormat.forPattern("hh:mm::ss")
 

@@ -15,8 +15,7 @@ import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
 class ImageDecacheController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
-  import ImageDecacheController._
+    import ImageDecacheController._
 
   val imageServices = new ImageServices(wsClient)
 

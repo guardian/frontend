@@ -9,7 +9,6 @@ import play.api.mvc.{Action, Controller}
 import services.NewspaperQuery
 
 class NewspaperController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   private val newspaperQuery = new NewspaperQuery(contentApiClient)
 

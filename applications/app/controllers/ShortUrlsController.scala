@@ -8,7 +8,6 @@ import model.{ApplicationContext, Cached}
 import play.api.mvc.{Action, Controller, RequestHeader}
 
 class ShortUrlsController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   def redirectShortUrl(shortUrl: String) = Action.async { implicit request =>
     redirectUrl(shortUrl, request.queryString)

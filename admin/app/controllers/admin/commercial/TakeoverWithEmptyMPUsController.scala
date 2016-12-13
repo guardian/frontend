@@ -6,7 +6,6 @@ import play.api.i18n.Messages
 import play.api.mvc.{Action, Controller}
 
 class TakeoverWithEmptyMPUsController(implicit val messages: Messages, context: ApplicationContext) extends Controller {
-  import context._
 
   def viewList() = Action { implicit request =>
     Ok(views.html.commercial.takeoverWithEmptyMPUs(TakeoverWithEmptyMPUs.fetchSorted()))

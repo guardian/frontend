@@ -37,8 +37,7 @@ case class CssReportResponse(
 )
 
 class CssReportController (implicit context: ApplicationContext) extends Controller with ExecutionContexts {
-  import context._
-  def entry = Action { implicit request =>
+    def entry = Action { implicit request =>
     Ok(views.html.cssReport())
   }
 

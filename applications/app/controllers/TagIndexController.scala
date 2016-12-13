@@ -7,8 +7,7 @@ import play.api.mvc.{Action, Controller}
 import services._
 
 class TagIndexController (implicit context: ApplicationContext) extends Controller with ExecutionContexts with Logging {
-  import context._
-  private val TagIndexCacheTime = 600
+    private val TagIndexCacheTime = 600
 
   private def forTagType(keywordType: String, title: String, page: String, metadata: MetaData) = Action { implicit request =>
     TagIndexesS3.getIndex(keywordType, page) match {

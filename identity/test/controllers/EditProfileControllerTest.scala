@@ -23,7 +23,7 @@ import scala.concurrent.Future
   with ShouldMatchers
   with MockitoSugar
   with OptionValues
-  with WithTestEnvironment
+  with WithTestContext
   with ConfiguredServer {
 
   trait EditProfileFixture {

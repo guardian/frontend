@@ -11,7 +11,6 @@ import tools.Store
 import model.{ApplicationContext, NoCache}
 
 class SwitchboardController(akkaAsync: AkkaAsync)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 

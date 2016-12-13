@@ -14,8 +14,7 @@ import scala.concurrent.Future.successful
 trait IndexControllerCommon extends Controller with Index with RendersItemResponse with Logging with Paging with ExecutionContexts {
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
 
-  val context: ApplicationContext
-  import context._
+  implicit val context: ApplicationContext
 
   // Needed as aliases for reverse routing
   def renderCombinerRss(leftSide: String, rightSide: String) = renderCombiner(leftSide, rightSide)

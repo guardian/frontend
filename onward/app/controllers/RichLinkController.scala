@@ -10,7 +10,6 @@ import com.gu.contentapi.client.model.v1.ItemResponse
 import play.twirl.api.HtmlFormat
 
 class RichLinkController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Paging with Logging with ExecutionContexts with Requests   {
-  import context._
 
   def renderHtml(path: String) = render(path)
 
@@ -37,7 +36,7 @@ class RichLinkController(contentApiClient: ContentApiClient)(implicit context: A
   private def renderContent(content: ContentType)(implicit request: RequestHeader) = {
     def contentResponse: HtmlFormat.Appendable = views.html.fragments.richLinkBody(content)(request)
 
-    if (!request.isJson) NoCache(Ok(views.html.richLink(content)(request, context.environment)))
+    if (!request.isJson) NoCache(Ok(views.html.richLink(content)(request, context)))
     else Cached(900) {
       JsonComponent(contentResponse)
     }

@@ -9,7 +9,6 @@ import scala.concurrent.Future
 import contentapi.ContentApiClient
 
 class EmbedController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   def render(path: String) = Action.async { implicit request =>
     lookup(path) map {

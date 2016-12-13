@@ -24,8 +24,7 @@ class ChangePasswordController( api: IdApiClient,
                                 val messagesApi: MessagesApi)(implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms with I18nSupport{
 
-  import context._
-  import authenticatedActions.authAction
+    import authenticatedActions.authAction
 
   val page = IdentityPage("/password/change", "Change Password")
 

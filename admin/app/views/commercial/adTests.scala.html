@@ -1,7 +1,7 @@
 @import common.dfp.GuLineItem
 @import tools.DfpLink
 
-@(timestamp: String, groupedLineItems: Seq[(String, Seq[GuLineItem])])(implicit request: RequestHeader, env: play.api.Environment)
+@(timestamp: String, groupedLineItems: Seq[(String, Seq[GuLineItem])])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Ad Tests", isAuthed = true) {
 

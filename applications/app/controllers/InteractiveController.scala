@@ -19,7 +19,6 @@ case class InteractivePage (interactive: Interactive, related: RelatedContent) e
 }
 
 class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
-  import context._
 
   def renderInteractiveJson(path: String): Action[AnyContent] = renderInteractive(path)
   def renderInteractive(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }

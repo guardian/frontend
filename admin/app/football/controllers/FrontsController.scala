@@ -19,11 +19,10 @@ import pa.Season
 import pa.Fixture
 import pa.LiveMatch
 
-class FrontsController(val wsClient: WSClient, val context: ApplicationContext) extends Controller with ExecutionContexts with PaFootballClient with Logging {
+class FrontsController(val wsClient: WSClient)(implicit val context: ApplicationContext) extends Controller with ExecutionContexts with PaFootballClient with Logging {
+
   val SNAP_TYPE = "json.html"
   val SNAP_CSS = "football"
-
-  import context._
 
   def index = Action.async { implicit request =>
     fetchCompetitionsAndTeams.map {

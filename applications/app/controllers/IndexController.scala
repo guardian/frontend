@@ -8,8 +8,7 @@ import play.api.mvc.{RequestHeader, Result}
 import services.IndexPage
 
 class IndexController(val contentApiClient: ContentApiClient, val sectionsLookUp: SectionsLookUp)(implicit val context: ApplicationContext) extends IndexControllerCommon {
-  import context._
-  protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Result = {
+    protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Result = {
     Cached(model.page) {
       if (request.isRss) {
         val body = TrailsToRss(model.page.metadata, model.trails.map(_.trail))

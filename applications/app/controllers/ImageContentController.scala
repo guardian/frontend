@@ -16,7 +16,6 @@ case class ImageContentPage(image: ImageContent, related: RelatedContent) extend
 }
 
 class ImageContentController(val contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with RendersItemResponse with ImageQuery with Logging with ExecutionContexts {
-  import context._
 
   def renderJson(path: String) = render(path)
 

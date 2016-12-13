@@ -1,5 +1,5 @@
 @import common.commercial.hosted.HostedArticlePage
-@(page: HostedArticlePage)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: HostedArticlePage)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import model.hosted.HostedAmp.ampify
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import views.html.hosted._

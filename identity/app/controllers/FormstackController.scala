@@ -18,7 +18,6 @@ class FormstackController(returnUrlVerifier: ReturnUrlVerifier,
                           formStackApi: FormstackApi)
                          (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging {
-  import context._
 
   import authenticatedActions.authAction
 

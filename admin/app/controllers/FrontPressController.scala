@@ -6,7 +6,6 @@ import model.ApplicationContext
 import play.api.mvc.{Action, Controller}
 
 class FrontPressController(akkaAsync: AkkaAsync)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   def press() = Action { implicit request =>
     Ok(views.html.press())

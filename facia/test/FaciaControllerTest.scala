@@ -18,7 +18,7 @@ import controllers.FaciaControllerImpl
   with BeforeAndAfterAll
   with FakeRequests
   with BeforeAndAfterEach
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestWsClient {
 
   val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient))

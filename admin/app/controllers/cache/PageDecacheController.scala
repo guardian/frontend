@@ -19,7 +19,6 @@ import scala.concurrent.Future.successful
 case class PrePurgeTestResult(url: String, passed: Boolean)
 
 class PageDecacheController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   def renderPageDecache(url: Option[String] = None) = Action.async { implicit request =>
     url match {

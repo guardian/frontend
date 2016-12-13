@@ -19,7 +19,6 @@ object TestFailed{
 }
 
 class TroubleshooterController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   val previewContentApi = new PreviewContentApi(new CapiHttpClient(wsClient))
 

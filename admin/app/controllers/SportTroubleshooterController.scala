@@ -5,7 +5,6 @@ import common.Logging
 import model.{ApplicationContext, NoCache}
 
 class SportTroubleshooterController (implicit context: ApplicationContext) extends Controller with Logging {
-  import context._
 
   def renderFootballTroubleshooter() = Action { implicit request =>
     NoCache(Ok(views.html.footballTroubleshooter()))

@@ -31,7 +31,6 @@ case class MinutePage(article: Article, related: RelatedContent) extends PageWit
 
 class ArticleController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
-  import context._
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)

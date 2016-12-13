@@ -21,7 +21,6 @@ case class CommercialPage() extends StandalonePage {
 }
 
 class CommercialController(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   def renderCommercialMenu() = Action { implicit request =>
     NoCache(Ok(views.html.commercial.commercialMenu()))

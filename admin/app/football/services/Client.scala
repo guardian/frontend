@@ -85,8 +85,8 @@ trait PaFootballClient {
   self: PaFootballClient with Logging =>
 
   implicit val executionContext: ExecutionContext
+  implicit val context: ApplicationContext
   val wsClient: WSClient
-  val context: ApplicationContext
 
   lazy val client: Client = if (context.environment.mode == Mode.Test) TestClient(wsClient, context.environment) else RealClient(wsClient)
 

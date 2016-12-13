@@ -10,7 +10,6 @@ import services.CollectionConfigWithId
 import slices.{Fixed, FixedContainers}
 
 class MostViewedGalleryController(mostViewedGalleryAgent: MostViewedGalleryAgent)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
 
   private val page = SimplePage(MetaData.make(
     "more galleries",

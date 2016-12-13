@@ -14,7 +14,6 @@ case class PageRedirect(from: String, to: String) {
   lazy val trim = this.copy(from = from.trim, to = to.trim)
 }
 class RedirectController(redirects: RedirectService)(implicit context: ApplicationContext) extends Controller with Logging {
-  import context._
 
   val redirectForm = Form(mapping("from" -> text, "to" -> text)(PageRedirect.apply)(PageRedirect.unapply))
 

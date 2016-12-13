@@ -9,7 +9,6 @@ import staticpages.StaticPages
 import scala.concurrent.duration._
 
 class SignupPageController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with ExecutionContexts {
-  import context._
 
   val defaultCacheDuration: Duration = 15.minutes
 

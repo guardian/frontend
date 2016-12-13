@@ -16,8 +16,7 @@ class EmailVerificationController(api: IdApiClient,
                                   returnUrlVerifier: ReturnUrlVerifier)
                                  (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging {
-  import context._
-  import ValidationState._
+    import ValidationState._
   import authenticatedActions.authActionWithUser
 
   val page = IdentityPage("/verify-email", "Verify Email")

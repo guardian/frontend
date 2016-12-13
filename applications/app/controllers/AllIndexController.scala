@@ -16,7 +16,6 @@ import views.support.PreviousAndNext
 import scala.concurrent.Future
 
 class AllIndexController(contentApiClient: ContentApiClient, sectionsLookUp: SectionsLookUp)(implicit context: ApplicationContext) extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
-  import context._
 
   private val indexController = new IndexController(contentApiClient, sectionsLookUp)
 

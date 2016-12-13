@@ -7,7 +7,6 @@ import play.api.mvc.{Action, Controller}
 import tools.Store
 
 class SlotController(implicit context: ApplicationContext) extends Controller {
-  import context._
 
   def viewSlot(slotName: String) = Action { implicit request =>
     val maybeResult = for {

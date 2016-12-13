@@ -10,8 +10,7 @@ import conf.Configuration
 import scala.concurrent.Future
 
 class MetricsController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
-  import context._
-  // We only do PROD metrics
+    // We only do PROD metrics
 
   val stage = Configuration.environment.stage.toUpperCase
 
