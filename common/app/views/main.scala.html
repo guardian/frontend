@@ -4,6 +4,7 @@
 @import conf.switches.Switches.{BreakingNewsSwitch}
 @import model.Page.getContent
 @import views.support.{Commercial, RenderClasses}
+@import play.api.Mode.Dev
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition) = {
     @if(!page.metadata.shouldHideHeaderAndTopAds) {
@@ -114,6 +115,13 @@
 
         @fragments.analytics.base(page)
     </body>
+        @if(env.mode == Dev) {
+            <script>
+                setTimeout(function() {
+                    window.callPhantom('takeShot');
+                }, 10000); // Wait arbitrary 10 seconds before taking the screenshot to let things settled down
+            </script>
+        }
     </html>
 }
 }

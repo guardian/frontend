@@ -2,9 +2,10 @@
 const figures = require('figures');
 const chalk = require('chalk');
 
-const render = tasks => {
-	for (const task of tasks) {
-        task.subscribe(event => {
+const render = (tasks) => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const task of tasks) {
+        task.subscribe((event) => {
             if (event.type === 'SUBTASKS') {
                 render(task.subtasks);
                 return;
@@ -26,26 +27,30 @@ const render = tasks => {
                 }
             }
             if (event.type === 'DATA') {
-               console.log(event.data);
-           }
+                console.log(event.data);
+            }
         });
-	}
+    }
 };
 
 class TeamCityRenderer {
-	constructor (tasks) {
-		this._tasks = tasks;
-	}
+    constructor(tasks) {
+        // eslint-disable-next-line no-underscore-dangle
+        this._tasks = tasks;
+    }
 
-	get nonTTY () {
-		return true;
-	}
+    // eslint-disable-next-line class-methods-use-this
+    get nonTTY() {
+        return true;
+    }
 
-	render () {
-		render(this._tasks);
-	}
+    render() {
+        // eslint-disable-next-line no-underscore-dangle
+        render(this._tasks);
+    }
 
-	end () {}
+    // eslint-disable-next-line class-methods-use-this
+    end() {}
 }
 
 module.exports = TeamCityRenderer;

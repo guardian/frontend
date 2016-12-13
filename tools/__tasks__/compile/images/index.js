@@ -3,6 +3,6 @@ module.exports = {
     task: [
         require('./clean'),
         require('./copy'),
-        require('./icons')
-    ]
+        require('./icons'),
+    ],
 };

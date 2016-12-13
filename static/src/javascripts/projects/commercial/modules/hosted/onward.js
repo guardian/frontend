@@ -2,8 +2,9 @@ define([
     'common/utils/config',
     'common/utils/fetch-json',
     'common/utils/fastdom-promise',
-    'commercial/modules/hosted/onward-journey-carousel'
-], function (config, fetchJson, fastdom, HostedCarousel) {
+    'commercial/modules/hosted/onward-journey-carousel',
+    'Promise'
+], function (config, fetchJson, fastdom, HostedCarousel, Promise) {
 
     return {
         init: loadOnwardComponent

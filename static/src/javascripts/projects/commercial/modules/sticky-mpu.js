@@ -4,14 +4,16 @@ define([
     'common/utils/mediator',
     'common/utils/fastdom-promise',
     'common/modules/ui/sticky',
-    'commercial/modules/messenger'
+    'commercial/modules/messenger',
+    'Promise'
 ], function (
     config,
     closest,
     mediator,
     fastdom,
     Sticky,
-    messenger
+    messenger,
+    Promise
 ) {
     var stickyElement = null;
     var rightSlot;

@@ -81,7 +81,7 @@ trait ABTestSwitches {
     "Test which Epic variant to use in the US end of year campaign",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 12),
+    sellByDate = new LocalDate(2016, 12, 19),
     exposeClientSide = true
   )
 

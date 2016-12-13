@@ -4,51 +4,51 @@ import { Map } from 'immutable';
 import { Option } from 'monapt';
 import { hasDeployStarted, getStartedDeploysFor, getMostRecentDeploys } from './model-helpers';
 
-const headOption = (array) => Option(array[0]);
+const headOption = array => Option(array[0]);
 // https://github.com/Matt-Esch/virtual-dom/issues/276
 const ih = (tagName, options, children) => (h(tagName, options, children.toJS()));
 // Used in hyperscript because children cannot be booleans
 // https://github.com/Matt-Esch/virtual-dom/issues/326
-const exp = (condition) => condition ? true : undefined;
+const exp = condition => condition ? true : undefined;
 const teamCityHost = 'https://teamcity.gu-web.net';
-const createBuildLink = (build) => (`${teamCityHost}/viewLog.html?buildNumber=${build}&buildTypeId=dotcom_master&tab=buildResultsDiv`);
+const createBuildLink = build => (`${teamCityHost}/viewLog.html?buildNumber=${build}&buildTypeId=dotcom_master&tab=buildResultsDiv`);
 const riffRaffHost = 'https://riffraff.gutools.co.uk';
-const createRiffRaffDeployLink = (uuid) => (`${riffRaffHost}/deployment/view/${uuid}`);
+const createRiffRaffDeployLink = uuid => (`${riffRaffHost}/deployment/view/${uuid}`);
 const renderGroupDeployListNode = (deploys) => {
     const previousDeploysMap = Map(deploys.map(deploy => [deploy, getStartedDeploysFor(deploy.projectName, deploys)
         .filterNot(d => d.uuid === deploy.uuid)
-        .last()
+        .last(),
     ]));
     const currentDeploys = getMostRecentDeploys(deploys);
     const notRunningDeploys = deploys.filter(deploy => !hasDeployStarted(deploy)).toList();
     const renderGroupDeployNodes = (groupDeploys, deployGroup) => {
         const shouldShowProjectNames = !groupDeploys.equals(currentDeploys);
         return h('li', {
-            className: `deploy deploy--${deployGroup.status.split(' ').join('-').toLowerCase()}`
+            className: `deploy deploy--${deployGroup.status.split(' ').join('-').toLowerCase()}`,
         }, [
             h('h2', [
                 h('a', {
-                    href: createBuildLink(deployGroup.build)
-                }, `${deployGroup.build}`)
+                    href: createBuildLink(deployGroup.build),
+                }, `${deployGroup.build}`),
             ]),
             // Only show project names if we have multiple deployed groups
             exp(shouldShowProjectNames) && ih('ul', {}, groupDeploys
                 .sortBy(build => build.projectName)
-                .map(deploy => {
+                .map((deploy) => {
                     const previousBuild = previousDeploysMap.get(deploy);
                     return h('li', [
                         h('a', {
                             href: createRiffRaffDeployLink(deploy.uuid),
-                            title: previousBuild ? `Previous build: ${previousBuild.build}` : ''
-                        }, deploy.projectName)
+                            title: previousBuild ? `Previous build: ${previousBuild.build}` : '',
+                        }, deploy.projectName),
                     ]);
                 })
-                .toList())
+                .toList()),
         ]);
     };
-    const createDeployGroup = (deploys) => (deploys.groupBy(deploy => (createDeployGroupRecord({
+    const createDeployGroup = deploys => (deploys.groupBy(deploy => (createDeployGroupRecord({
         status: deploy.status,
-        build: deploy.build
+        build: deploy.build,
     }))));
     const currentDeployGroupNodes = createDeployGroup(currentDeploys)
         .map(renderGroupDeployNodes)
@@ -56,7 +56,7 @@ const renderGroupDeployListNode = (deploys) => {
     const notRunningDeploysGroup = createDeployGroup(notRunningDeploys);
     return h('div', {}, [
         ih('ul', {
-            className: 'deploys'
+            className: 'deploys',
         }, currentDeployGroupNodes),
         exp(notRunningDeploys.size > 0) && [
             h('h2', 'Queue'),
@@ -64,61 +64,61 @@ const renderGroupDeployListNode = (deploys) => {
                 .map((groupDeploys, deployGroup) => (h('li', [
                     h('strong', [
                         h('a', {
-                            href: createBuildLink(deployGroup.build)
-                        }, deployGroup.build.toString())
+                            href: createBuildLink(deployGroup.build),
+                        }, deployGroup.build.toString()),
                     ]),
                     ih('ul', {}, (groupDeploys
                         .sortBy(build => build.projectName)
-                        .map(deploy => {
+                        .map((deploy) => {
                             const previousBuild = previousDeploysMap.get(deploy);
                             return h('li', [
                                 h('a', {
                                     href: createRiffRaffDeployLink(deploy.uuid),
-                                    title: previousBuild ? `Previous build: ${previousBuild.build}` : ''
-                                }, deploy.projectName)
+                                    title: previousBuild ? `Previous build: ${previousBuild.build}` : '',
+                                }, deploy.projectName),
                             ]);
                         })
-                        .toList()))
+                        .toList())),
                 ])))
-                .toList())
-        ]
+                .toList()),
+        ],
     ]);
 };
 const renderPage = ([codeDeploys, prodDeploys], [latestCodeDeploy, oldestProdDeploy], commits) => {
     const isInSync = oldestProdDeploy.build === latestCodeDeploy.build;
     return h('.row#root', {}, [
         h('h1', [
-            `Status: ${isInSync ? 'in sync.' : 'out of sync – ship it!'}`
+            `Status: ${isInSync ? 'in sync.' : 'out of sync – ship it!'}`,
         ]),
         h('hr', {}, []),
         exp(commits.size > 0) && h('.col', [
             h('h1', [
                 'Difference (',
                 h('span', {
-                    title: 'Oldest PROD deploy'
+                    title: 'Oldest PROD deploy',
                 }, `${oldestProdDeploy.build}`),
                 '...',
                 h('span', {
-                    title: 'Latest CODE deploy'
+                    title: 'Latest CODE deploy',
                 }, `${latestCodeDeploy.build}`),
-                ')'
+                ')',
             ]),
             ih('ul', {}, (commits
                 .groupBy(commit => commit.authorLogin)
                 .map(commits => headOption(commits.toArray()).map(commit => commit.authorName).getOrElse(() => ''))
                 .map(commitAuthorName => (h('li', [
-                    h('h2', commitAuthorName)
+                    h('h2', commitAuthorName),
                 ])))
-                .toList()))
+                .toList())),
         ]),
         h('.col', [
             h('h1', 'CODE'),
-            renderGroupDeployListNode(codeDeploys)
+            renderGroupDeployListNode(codeDeploys),
         ]),
         h('.col', [
             h('h1', 'PROD'),
-            renderGroupDeployListNode(prodDeploys)
-        ])
+            renderGroupDeployListNode(prodDeploys),
+        ]),
     ]);
 };
 export default renderPage;
