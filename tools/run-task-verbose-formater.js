@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const figures = require('figures');
 const chalk = require('chalk');
 
