@@ -68,7 +68,12 @@
 
     </style>
     <!--<![endif]-->
-    @guardianHostedHeader(if(page.campaign.fontColour.isDark) "hosted-article-page hosted-page--bright" else "hosted-article-page", page)
+    <div class="hosted__header hosted__header--logo"><div class="hosted__headerwrap"><div class="hostedbadge">
+        <a href="@page.cta.url" data-link-name="hosted-logo-top-left" target="_blank">
+            <img class="hostedbadge__logo" src="@page.campaign.logo.url" alt="logo @page.campaign.owner"/>
+        </a>
+    </div></div></div>
+    @guardianHostedHeader("hosted-article-page hosted__header--sticky" + (if(page.campaign.fontColour.isDark) " hosted-page--bright" else ""), page)
     <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.isDark) {hosted-page--bright}">
 
         <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
