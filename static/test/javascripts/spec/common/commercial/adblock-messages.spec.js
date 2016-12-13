@@ -55,7 +55,7 @@ define([
             }
         ];
 
-        var adblockMessage, detect, mockUserHasAdblock, mockBreakpoint;
+        var adblockMessage, detect, mockBreakpoint;
 
         beforeEach(function (done) {
 
@@ -67,7 +67,6 @@ define([
             config.switches.adblock = settings[counter].switch;
             window.guardian.adBlockers.active = settings[counter].adBlocker;
             storage.local.set('gu.alreadyVisited', settings[counter].alreadyVisited);
-            mockUserHasAdblock = settings[counter].mockhasAd;
             mockBreakpoint = settings[counter].mockBreakpoint;
 
 
