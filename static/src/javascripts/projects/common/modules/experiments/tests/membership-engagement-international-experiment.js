@@ -19,7 +19,7 @@ define([
 ) {
     return function () {
         this.id = 'MembershipEngagementInternationalExperimentTest12';
-        this.start = '2016-12-13'; //Tues 13th Jan
+        this.start = '2016-12-13'; //Tues 13th Dec
         this.expiry = '2017-1-6'; //Fri 6th Jan
         this.author = 'Rupert Bates';
         this.description = 'Test varying the number of visits before showing the membership engagement banner';
