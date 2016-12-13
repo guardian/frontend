@@ -92,14 +92,15 @@ define([
     }
 
     function init() {
+        adblockMsg.showAdblockMsg().then(function(boolean){
         // Show messages only if adblock is used by non paying member
-        if (adblockMsg.showAdblockMsg()) {
+        if (boolean) {
             showAdblockMessage();
             showAdblockBanner();
         }
+        });
         mediator.emit('banner-message:complete');
     }
-
     return {
         init: init
     };

@@ -9,8 +9,8 @@ define([
     storage,
     userFeatures
 ) {
-    function adblockInUseSync() {
-        return detect.adblockInUseSync();
+    function adblockInUse() {
+        return detect.adblockInUse;
     }
 
     function notMobile() {
@@ -32,18 +32,20 @@ define([
     }
 
     function noAdblockMsg() {
-        return adblockInUseSync() && notMobile() && (
+        return adblockInUse().then(function(adblockInUse){
+            return adblockInUse &&  notMobile() && (
                 !visitedMoreThanOnce() ||
                 !isAdblockSwitchOn() ||
-                (isAdblockSwitchOn() && visitedMoreThanOnce() && isPayingMember()));
+                (isAdblockSwitchOn() && visitedMoreThanOnce() && isPayingMember()))
+        });
     }
 
     function showAdblockMsg() {
-        return isAdblockSwitchOn() &&
-                adblockInUseSync() &&
-                !isPayingMember() &&
-                visitedMoreThanOnce() &&
-                notMobile();
+        return isAdblockSwitchOn() ?
+                adblockInUse().then(function(adblockInUse){
+                    return adblockInUse && !isPayingMember() && visitedMoreThanOnce()  && notMobile();
+                })
+            : Promise.resolve(false)
     }
 
     return {
