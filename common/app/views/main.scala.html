@@ -1,5 +1,4 @@
-@(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader, env: play.api.Environment)
-
+@(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.{Edition, Navigation, commercial}
 @import conf.switches.Switches.{BreakingNewsSwitch}
 @import model.Page.getContent
@@ -115,7 +114,7 @@
 
         @fragments.analytics.base(page)
     </body>
-        @if(env.mode == Dev) {
+        @if(context.environment.mode == Dev) {
             <script>
                 setTimeout(function() {
                     window.callPhantom('takeShot');

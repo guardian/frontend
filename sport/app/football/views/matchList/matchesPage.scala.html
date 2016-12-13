@@ -1,4 +1,4 @@
-@(page: model.Page, matchesList: football.model.MatchesList, filters: Map[String, Seq[CompetitionFilter]])(implicit request: RequestHeader, env: play.api.Environment)
+@(page: model.Page, matchesList: football.model.MatchesList, filters: Map[String, Seq[CompetitionFilter]])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.switches.Switches
 @import football.model._

@@ -1,5 +1,5 @@
 @import conf.switches.Switch
-@(switch: Switch, lastModified: Long)(implicit flash: Flash, request: RequestHeader, env: play.api.Environment)
+@(switch: Switch, lastModified: Long)(implicit flash: Flash, request: RequestHeader, context: model.ApplicationContext)
 
 @import controllers.admin.routes.UncachedAssets
 

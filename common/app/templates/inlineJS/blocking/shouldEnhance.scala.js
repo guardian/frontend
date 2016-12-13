@@ -1,4 +1,4 @@
-@(item: model.MetaData)(implicit request: RequestHeader, env: play.api.Environment)
+@(item: model.MetaData)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import play.api.Mode.Dev
 
@@ -59,7 +59,7 @@
     window.shouldEnhance = mustNotEnhance() ? false : mustEnhance() ? true : couldEnhance() && weWantToEnhance();
 
     // just so we can tell…
-    @if(env.mode == Dev) {
+    @if(context.environment.mode == Dev) {
         window.console && window.console.info(`THIS IS ${window.shouldEnhance ? 'ENHANCED' : 'STANDARD ONLY'}`);
     }
 })(window);

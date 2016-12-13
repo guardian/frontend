@@ -6,13 +6,12 @@ import contentapi.ContentApiClient
 import model.Cached.RevalidatableResult
 import model._
 import model.pressed.PressedContent
-import play.api.Environment
 import play.api.mvc.{Action, Controller, RequestHeader}
 import play.twirl.api.Html
 
 import scala.concurrent.Future
 
-class TopStoriesController(contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with Logging with Paging with ExecutionContexts {
+class TopStoriesController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with Paging with ExecutionContexts {
 
   def renderTopStoriesHtml = renderTopStories()
   def renderTopStories() = Action.async { implicit request =>
@@ -48,7 +47,7 @@ class TopStoriesController(contentApiClient: ContentApiClient)(implicit env: Env
       }
   }
 
-  private def renderTopStoriesPage(trails: Seq[PressedContent])(implicit request: RequestHeader, env: Environment) = {
+  private def renderTopStoriesPage(trails: Seq[PressedContent])(implicit request: RequestHeader) = {
     val page = SimplePage( MetaData.make(
       "top-stories",
       Some(SectionSummary.fromId("top-stories")),

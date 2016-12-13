@@ -1,4 +1,4 @@
-@(error: Option[String] = None)(implicit request: RequestHeader, env: play.api.Environment)
+@(error: Option[String] = None)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Login") {
         @if(error.isDefined) {

@@ -1,4 +1,4 @@
-@()(implicit env: play.api.Environment)
+@()(implicit context: model.ApplicationContext)
 @import conf.Static
 @import conf.switches.Switches._
 @import play.api.Mode.Dev
@@ -41,7 +41,7 @@ var isRequestForAsset = (function () {
     var assetPathRegex = new RegExp('^@Configuration.assets.path');
     return function (request) {
         var url = new URL(request.url);
-        @if(env.mode == Dev) {
+        @if(context.environment.mode == Dev) {
             return assetPathRegex.test(url.pathname);
         } else {
             return assetPathRegex.test(url.href);
