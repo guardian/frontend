@@ -2,7 +2,7 @@
 
 @{
     media match {
-            case youtube if media.assets.head.platform == "Youtube" => if(amp) views.html.fragments.atoms.ampYoutube(media) else views.html.fragments.atoms.youtube(media, displayCaption)
+            case youtube if media.assets.headOption.map(_.platform == "Youtube") => if(amp) views.html.fragments.atoms.ampYoutube(media) else views.html.fragments.atoms.youtube(media, displayCaption)
             case _ => views.html.fragments.atoms.genericMedia(media)
         }
 
