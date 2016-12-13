@@ -15,19 +15,21 @@ const handleSuccess = (ctx) => {
 module.exports = {
     description: 'Fix JS linting errors',
     task: [{
-        description: 'Fix tests',
+        description: 'Fix static/tests',
         task: ctx => execa('eslint', [
             'static/test/javascripts/**/*.js',
         ].concat(config)).then(handleSuccess.bind(null, ctx)),
     }, {
-        description: 'Fix app',
+        description: 'Fix static/src',
         task: ctx => execa('eslint', [
             'static/src/**/*.js',
         ].concat(config)).then(handleSuccess.bind(null, ctx)),
     }, {
-        description: 'Fix tools',
+        description: 'Lint everything else',
         task: ctx => execa('eslint', [
+            '*.js',
             'tools/**/*.js',
+            'dev/**/*.js',
         ].concat(config)).then(handleSuccess.bind(null, ctx)),
     }],
     concurrent: true,
