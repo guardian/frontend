@@ -113,8 +113,11 @@ define([
      make the call instantly when we detect adBlock in use.
      */
     function loadInstantly() {
-        return !document.getElementById('dfp-ad--merchandising-high') ||
-            detect.adblockInUseSync();
+        detect.adblockInUse.then(function(adblockInUse){
+            console.log(adblockInUse)
+            return !document.getElementById('dfp-ad--merchandising-high') ||
+                adblockInUse;
+        })
     }
 
 
