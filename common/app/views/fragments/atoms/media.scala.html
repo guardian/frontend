@@ -2,7 +2,7 @@
 
 @{
     media match {
-            case posterOnly if media.posterUrl.isDefined && media.assets.isEmpty => if(amp) views.html.fragments.atoms.ampMediaPosterOnly(media)
+            case posterOnly if media.posterUrl.isDefined && media.assets.isEmpty => if(amp) views.html.fragments.atoms.ampMediaPosterOnly(media) else views.html.fragments.atoms.mediaPosterOnly(media)
             case youtube if media.assets.headOption.map(_.platform == "Youtube") => if(amp) views.html.fragments.atoms.ampYoutube(media) else views.html.fragments.atoms.youtube(media, displayCaption)
             case _ => views.html.fragments.atoms.genericMedia(media)
         }

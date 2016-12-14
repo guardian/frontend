@@ -30,7 +30,9 @@
 
 
     @if(displayCaption) {
-        <figcaption class="caption caption--main" itemprop="description">@media.title</figcaption>
+        <figcaption class="caption caption--main" itemprop="description">
+        @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon", "rounded-icon"))
+        @media.title</figcaption>
     }
 }
 
