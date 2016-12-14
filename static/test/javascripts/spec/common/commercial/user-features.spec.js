@@ -7,7 +7,8 @@ define(['helpers/injector'], function (Injector) {
 
         PERSISTENCE_KEYS = {
             USER_FEATURES_EXPIRY_COOKIE : 'gu_user_features_expiry',
-            PAYING_MEMBER_COOKIE : 'gu_paying_member'
+            PAYING_MEMBER_COOKIE : 'gu_paying_member',
+            AD_FREE_USER_COOKIE : 'GU_AFU'
         };
 
         beforeEach(function (done) {
@@ -67,6 +68,16 @@ define(['helpers/injector'], function (Injector) {
                     userFeatures.refresh();
                     expect(userFeatures._requestNewData).toHaveBeenCalled();
                 });
+
+                it('Performs an update if the ad-free state is missing', function() {
+                    // Set everything except the ad-free cookie
+                    setAllFeaturesData({isExpired: true});
+                    cookies.remove(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
+
+                    userFeatures.refresh();
+                    expect(userFeatures._requestNewData).toHaveBeenCalled();
+                })
+
             });
 
             describe('If user signed out', function () {
@@ -190,12 +201,14 @@ define(['helpers/injector'], function (Injector) {
             expiryDate = opts.isExpired ? new Date(currentTime - msInOneDay) : new Date(currentTime + msInOneDay);
 
             cookies.add(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, true);
+            cookies.add(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE, false);
             cookies.add(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime());
         }
 
         function deleteAllFeaturesData() {
             cookies.remove(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
             cookies.remove(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
+            cookies.remove(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
         }
     });
 });
