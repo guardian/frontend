@@ -1,8 +1,7 @@
 package app
 
-import akka.actor.ActorSystem
 import common._
-import model.ApplicationIdentity
+import model.{ApplicationContext, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.http.HttpFilters
@@ -60,6 +59,7 @@ trait FrontendComponents
 
   // here are the attributes you must provide for your app to start
   def appIdentity: ApplicationIdentity
+  implicit def appContext = new ApplicationContext(environment)
   def lifecycleComponents: List[LifecycleComponent]
   def router: Router
 }

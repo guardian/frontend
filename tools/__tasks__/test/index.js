@@ -1,7 +1,7 @@
 module.exports = {
     description: 'Test assets',
     task: [
-        require('./javascript')
+        require('./javascript'),
     ],
-    concurrent: true
+    concurrent: true,
 };

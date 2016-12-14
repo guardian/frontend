@@ -77,12 +77,12 @@
                 display: inline-block;
                 float: left;
                 color: #000000;
-                padding: 12px 16px 4px;
+                padding: 12px 16px 10px;
                 font-size: 480%;
-                line-height: 4.25rem;
-                width: 4.8125rem;
-                height: 4.8125rem;
-                margin-right: .5rem;
+                line-height: 68px;
+                width: 77px;
+                height: 77px;
+                margin-right: 8px;
                 margin-top: 4px;
                 text-align: center;
             }
@@ -341,5 +341,17 @@ $dotSize: 8px;
     transition: background-color 750ms ease;
     &:not(.highlighted) {
         background: transparent;
+    }
+}
+
+.hosted__header.hosted__header--sticky {
+    top: 0;
+    position: fixed;
+    z-index: $zindex-sticky;
+}
+
+.hosted__header--sticky .hostedbadge__logo {
+    @include mq($until: leftCol) {
+        height: 0;
     }
 }

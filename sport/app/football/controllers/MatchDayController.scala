@@ -9,7 +9,7 @@ import common.{Edition, JsonComponent}
 import play.api.Environment
 
 
-class MatchDayController(val competitionsService: CompetitionsService)(implicit env: Environment) extends MatchListController with CompetitionLiveFilters {
+class MatchDayController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends MatchListController with CompetitionLiveFilters {
 
   def liveMatchesJson() = liveMatches()
   def liveMatches(): Action[AnyContent] =

@@ -1,9 +1,9 @@
-@(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader, env: play.api.Environment)
-
+@(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.{Edition, Navigation, commercial}
 @import conf.switches.Switches.{BreakingNewsSwitch}
 @import model.Page.getContent
 @import views.support.{Commercial, RenderClasses}
+@import play.api.Mode.Dev
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition) = {
     @if(!page.metadata.shouldHideHeaderAndTopAds) {
@@ -114,6 +114,13 @@
 
         @fragments.analytics.base(page)
     </body>
+        @if(context.environment.mode == Dev) {
+            <script>
+                setTimeout(function() {
+                    window.callPhantom('takeShot');
+                }, 10000); // Wait arbitrary 10 seconds before taking the screenshot to let things settled down
+            </script>
+        }
     </html>
 }
 }

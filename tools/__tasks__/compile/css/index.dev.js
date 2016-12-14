@@ -5,6 +5,5 @@ module.exports = {
         require('./mkdir'),
         require('../images'),
         require('./sass'),
-        require('./atomise')
-    ]
+    ],
 };

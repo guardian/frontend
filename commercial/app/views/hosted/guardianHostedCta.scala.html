@@ -5,7 +5,7 @@
     <section class="host hosted__container--full">
         <div class="hosted__banner" @if(!isAMP) {style="background-image: url(@{cta.image});"}>
             <a href="@{cta.url}" rel="nofollow" class="hosted__cta-link" data-link-name="@{cta.trackingCode}" target="_blank">
-                <div class="hostedbadge hostedbadge--pushdown hosted-tone-bg">
+                <div class="hostedbadge hostedbadge--pushdown hosted-tone-bg content__hosted-body">
                     @if(isAMP) {
                         <amp-img layout="responsive" width="@{page.campaign.logo.dimensions.map(_.width)}" height="@{page.campaign.logo.dimensions.map(_.height)}" class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}"></amp-img>
                     } else {
@@ -13,12 +13,12 @@
                     }
                 </div>
                 @if(cta.btnText.isEmpty) {
-                    <div class="hosted__cta-wrapper">
+                    <div class="hosted__cta-wrapper content__hosted-body">
                         <span class="hosted__cta-text hosted-tone">@{cta.label}</span>
                         @fragments.inlineSvg("external-link", "icon", List("i-right","advert__more","button","button--large","button--primary","hosted__cta", "hosted-tone-btn"))
                     </div>
                 } else {
-                    <div class="hosted__cta-wrapper hosted__cta-btn-wrapper">
+                    <div class="hosted__cta-wrapper hosted__cta-btn-wrapper content__hosted-body">
                         <span class="hosted__cta-label">@{cta.label}</span>
                         <span class="hosted__cta-btn-text hosted-tone-btn">@{cta.btnText} @fragments.inlineSvg("external-link", "icon")</span>
                     </div>

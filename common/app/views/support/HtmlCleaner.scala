@@ -13,8 +13,6 @@ import model.content.{Atom, Atoms}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
-import views.html.fragments.atoms.atom
-import play.api.Environment
 
 import scala.collection.JavaConversions._
 
@@ -602,7 +600,7 @@ object MembershipEventCleaner extends HtmlCleaner {
     }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false)(implicit val request: RequestHeader, env: Environment) extends HtmlCleaner {
+case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
@@ -633,4 +631,34 @@ object setSvgClasses {
     svgHtml.addClass(modifiedClasses)
     svgHtml.toString
   }
+}
+
+case class CommercialComponentHigh(isAdvertisementFeature: Boolean, isNetworkFront: Boolean, hasPageSkin: Boolean) extends HtmlCleaner {
+
+  override def clean(document: Document): Document = {
+
+    val containers: List[(Element, Int)] = document.getElementsByClass("fc-container").toList.zipWithIndex
+
+    val minContainers = if (isAdvertisementFeature) 1 else 2
+
+    if (containers.length >= minContainers) {
+
+      val containerIndex = if (containers.length >= 4) {
+        if (isNetworkFront) 3 else 2
+      } else 0
+
+      val adSlotHtml = views.html.fragments.commercial.commercialComponentHigh(isAdvertisementFeature, hasPageSkin)
+
+      val adSlot: Element = Jsoup.parseBodyFragment(adSlotHtml.toString).body().child(0)
+
+      containers.lift(containerIndex).map { case ((container, index)) => {
+          container.after(adSlot)
+          adSlot.wrap(s"""<div class="fc-container fc-container--commercial"></div>""")
+        }
+      }
+
+    }
+    document
+  }
+
 }

@@ -15,13 +15,13 @@ import play.api.Environment
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import test.{ConfiguredTestSuite, WithTestEnvironment}
+import test.{ConfiguredTestSuite, WithTestContext}
 
 @DoNotDiscover class NewsAlertControllerTest
   extends WordSpec
     with Matchers
     with ConfiguredTestSuite
-    with WithTestEnvironment {
+    with WithTestContext {
 
   val testApiKey = "test-api-key"
 
@@ -36,7 +36,7 @@ import test.{ConfiguredTestSuite, WithTestEnvironment}
 
   def controllerWithActorReponse(mockResponse: Any) = {
     val updaterActor = actorSystem.actorOf(MockUpdaterActor.props(mockResponse))
-    val fakeApi = new BreakingNewsApi(new S3BreakingNews(testEnvironment)) // Doesn't matter, it is not used just passed to the NewsAlertController constructor
+    val fakeApi = new BreakingNewsApi(new S3BreakingNews(testContext.environment)) // Doesn't matter, it is not used just passed to the NewsAlertController constructor
     new NewsAlertController(fakeApi)(actorSystem) {
       override lazy val breakingNewsUpdater = updaterActor
       override lazy val apiKey = testApiKey
@@ -109,9 +109,9 @@ import test.{ConfiguredTestSuite, WithTestEnvironment}
           |"urlId":"category/2016/feb/01/slug",
           |"title":"This is a breaking news title",
           |"message":"This is a breaking news message",
-          |"thumbnailUrl":"http://i.guimcode.co.uk.global.prod.fastly.net/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg",
+          |"thumbnailUrl":"http://i.guimcode.co.uk/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg",
           |"link":"http://gu.com/p/4fgcd",
-          |"imageUrl":"http://i.guimcode.co.uk.global.prod.fastly.net/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg",
+          |"imageUrl":"http://i.guimcode.co.uk/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg",
           |"publicationDate":"2016-01-18T12:21:01.000Z",
           |"topics":["breaking/us"]}""".stripMargin)
       val request = postAlertRequest.withJsonBody(jsonBody)
@@ -129,7 +129,7 @@ import test.{ConfiguredTestSuite, WithTestEnvironment}
             URI.create("category/2016/feb/01/slug"),
             "Title",
             "message",
-            Some(URI.create("http://i.guimcode.co.uk.global.prod.fastly.net/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg")),
+            Some(URI.create("http://i.guimcode.co.uk/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg")),
             URI.create("http://gu.com/p/4fgcd"),
             None,
             DateTime.now(),

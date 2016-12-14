@@ -1,5 +1,5 @@
 @import common.dfp.TakeoverWithEmptyMPUs
-@(takeovers: Seq[TakeoverWithEmptyMPUs])(implicit request: RequestHeader, env: play.api.Environment)
+@(takeovers: Seq[TakeoverWithEmptyMPUs])(implicit request: RequestHeader, context: model.ApplicationContext)
 @import TakeoverWithEmptyMPUs.timeViewFormatter
 
 @admin_main("Takeovers with Empty MPUs", isAuthed = true) {

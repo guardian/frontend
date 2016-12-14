@@ -11,7 +11,7 @@ define([
         var getStyles, styleSheets;
 
         var fixturesConfig = {
-            id: 'page',
+            id: 'get-style-sheet-page',
             fixtures: [
                 '<style class="webfont"></style>',
                 '<style class="webfont" data-cache-name="GuardianSansWeb"></style>',

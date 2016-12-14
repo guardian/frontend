@@ -1,4 +1,4 @@
-@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
+@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.LinkTo
 @import views.BodyCleaner
@@ -18,9 +18,10 @@
                 <meta itemprop="name" content="The Guardian">
                 <link itemprop="sameAs" href="http://www.theguardian.com">
             </div>
-
+            @if(isPaidContent) {
+                @fragments.guBand()
+            }
             @fragments.headerImmersive(article)
-
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">

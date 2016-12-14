@@ -4,7 +4,7 @@
         forms: controllers.ProfileForms,
         idRequest: services.IdentityRequest,
         idUrlBuilder: services.IdentityUrlBuilder
-)(implicit request: RequestHeader, messages: play.api.i18n.Messages, env: play.api.Environment)
+)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @import views.html.fragments.form.{inputField, textareaField}
 @import views.html.fragments.registrationFooter

@@ -12,14 +12,14 @@ const childProcess = require('child_process');
 // e.g. if it's the first run.
 // So if semver has not been installed already, quickly install it locally.
 // It's specified as a depenency, so this will almost never be a problem.
-new Promise(resolve => {
+new Promise((resolve) => {
     try {
         require.resolve('semver');
         resolve();
     } catch (e) {
         childProcess.spawn('npm', ['i', 'semver'], {
-            stdio: 'inherit'
-        }).on('close', code => {
+            stdio: 'inherit',
+        }).on('close', (code) => {
             if (code !== 0) process.exit(code);
             resolve();
         });
@@ -27,10 +27,11 @@ new Promise(resolve => {
 }).then(() => {
     // we know we have semver installed
     childProcess.exec('yarn --version', (e, actualVersion) => {
+        // eslint-disable-next-line global-require
         const semver = require('semver');
         if (!semver.satisfies(actualVersion, requiredVersion)) {
             childProcess.spawn('npm', ['i', '-g', `yarn@${requiredVersion}`], {
-                stdio: 'inherit'
+                stdio: 'inherit',
             }).on('close', code => process.exit(code));
         }
     });

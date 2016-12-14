@@ -1,7 +1,8 @@
-@(page: model.Page, mainPicture: String, ctaImage: Option[String], brandColour: String)(implicit request: RequestHeader)
+@(page: model.Page, mainPicture: String, ctaImage: Option[String], brandColour: String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.Edition
 @import common.commercial.PaidContent
+@import play.api.Mode.Dev
 
 <style amp-custom>
     body {
@@ -54,7 +55,7 @@
         display: none;
     }
 
-    .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main,  .fc-container__inner, .content__comments-container, .fc-container__outbrain, .submeta, .witness-cta-wrapper {
+    .content__head .gs-container, .content__article-body, .content__hosted-body, .content__meta-container, .media-primary .caption--main,  .fc-container__inner, .content__comments-container, .fc-container__outbrain, .submeta, .witness-cta-wrapper {
         margin: 0 0.625rem;
     }
 
@@ -95,7 +96,7 @@
     }
 
     @@media (min-width: 30rem) {
-        .content__head .gs-container, .content__article-body, .content__meta-container, .media-primary .caption--main, .fc-container__inner, .fc-container__outbrain, .submeta, .witness-cta-wrapper {
+        .content__head .gs-container, .content__article-body, .content__hosted-body, .content__meta-container, .media-primary .caption--main, .fc-container__inner, .fc-container__outbrain, .submeta, .witness-cta-wrapper {
             margin: 0 20px;
         }
         .content__headline {
@@ -265,7 +266,6 @@
         @fragments.amp.stylesheets.richLinks()
         @fragments.amp.stylesheets.ads()
         @fragments.amp.stylesheets.tables()
-        @fragments.amp.stylesheets.footer()
         @fragments.amp.stylesheets.onward()
         @fragments.amp.stylesheets.buttons()
         @if(page.metadata.contentType == "LiveBlog") {
@@ -279,4 +279,16 @@
     @* proper inlined AMP styles *@
     @Html(common.Assets.css.amp)
 
+    @if(page.metadata.isHosted) {
+        @Html(common.Assets.css.hostedAmp)
+    }
 </style>
+
+
+@*
+ * Please note that the tests will NOT pass validation with this line.
+ * It won't affect prod but please comment out this line when running tests in DEV
+ *@
+@if(context.environment.mode == Dev) {
+    <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp.css")" />
+}

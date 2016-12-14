@@ -1,4 +1,4 @@
-@(projectName: Option[String], isCrossword: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
+@(projectName: Option[String], isCrossword: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.switches.Switches._
 @import play.api.Mode.Dev
@@ -51,7 +51,7 @@
   - Include IE Mobile [|(IEMobile)]
 *@
 <!--[if (gt IE 9)|(IEMobile)]><!-->
-@if(env.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
+@if(context.environment.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
     <link rel="stylesheet" id="head-css" data-reload="head@projectName.map("." + _).getOrElse(".content")" type="text/css" href="@Static("stylesheets/head" + projectName.map("." + _).getOrElse(".content") + ".css")" />
 } else {
     <style class="js-loggable">
@@ -60,14 +60,6 @@
 }
 @fragments.stylesheetLink(common.Assets.css.projectCss(projectName), isCrossword)
 <!--<![endif]-->
-
-@if(Configuration.assets.useHashedBundles) {
-    <style id="atomised-css">
-        @Html(common.Assets.css.atomic)
-    </style>
-} else {
-    <link rel="stylesheet" id="atomised-css" type="text/css" href="@Static("stylesheets/atomic.css")" />
-}
 
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />
 

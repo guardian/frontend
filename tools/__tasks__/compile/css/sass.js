@@ -9,13 +9,14 @@ const autoprefixer = require('autoprefixer');
 const pxtorem = require('postcss-pxtorem');
 const pify = require('pify');
 
-const {src, target} = require('../../config').paths;
+const { src, target } = require('../../config').paths;
+
 const sassDir = path.resolve(src, 'stylesheets');
 
 const sassDefaults = {
     outputStyle: 'compressed',
     sourceMap: true,
-    precision: 5
+    precision: 5,
 };
 
 const browserslist = [
@@ -31,14 +32,14 @@ const browserslist = [
 
     '> 2% in US',
     '> 2% in AU',
-    '> 2% in GB'
+    '> 2% in GB',
 ];
 
 const remifications = {
     replace: true,
     root_value: 16,
     unit_precision: 5,
-    prop_white_list: []
+    prop_white_list: [],
 };
 
 
@@ -46,15 +47,15 @@ const sassRenderP = pify(sass.render);
 const writeFileP = pify(fs.writeFile);
 const getFiles = query => glob.sync(path.resolve(sassDir, query));
 
-const compile = (query, {browsers, remify = true}) => Promise.all(
-    getFiles(query).map(filePath => {
+const compile = (query, { browsers, remify = true }) => Promise.all(
+    getFiles(query).map((filePath) => {
         const dest = path.resolve(target, 'stylesheets', path.relative(sassDir, filePath).replace('scss', 'css'));
         const sassOptions = Object.assign({
             file: filePath,
-            outFile: dest
+            outFile: dest,
         }, sassDefaults);
 
-        const postcssPlugins = [autoprefixer({browsers})];
+        const postcssPlugins = [autoprefixer({ browsers })];
         if (remify) {
             postcssPlugins.push(pxtorem(remifications));
         }
@@ -72,23 +73,23 @@ module.exports = {
         description: 'Old IE',
         task: () => compile('old-ie.*.scss', {
             browsers: 'Explorer 8',
-            remify: false
-        })
+            remify: false,
+        }),
     }, {
         description: 'IE9',
         task: () => compile('ie9.*.scss', {
-            browsers: 'Explorer 9'
-        })
+            browsers: 'Explorer 9',
+        }),
     }, {
         description: 'Modern',
         task: () => compile('!(_|ie9|old-ie)*.scss', {
-            browsers: browserslist
-        })
+            browsers: browserslist,
+        }),
     }, {
         description: 'Inline',
         task: () => compile('inline/*.scss', {
-            browsers: browserslist
-        })
+            browsers: browserslist,
+        }),
     }],
-    concurrent: true
+    concurrent: true,
 };

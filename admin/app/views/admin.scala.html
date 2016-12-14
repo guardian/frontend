@@ -1,4 +1,4 @@
-@()(implicit request: RequestHeader, env: play.api.Environment)
+@()(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.switches.Switches.R2PagePressServiceSwitch
 @import conf.Configuration
@@ -18,7 +18,6 @@
                                 <li><a href="@controllers.admin.routes.ContentPerformanceController.renderVideoEncodingsDashboard()">Video</a></li>
                             </ul>
                         </li>
-                        <li><a href="@controllers.admin.routes.AnalyticsController.renderQuality()">Quality dashboard</a></li>
                     </ul>
                 </div>
             </div>

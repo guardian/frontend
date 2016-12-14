@@ -56,7 +56,7 @@ If you just ship new facia without pressing things will break until the presser 
 * Choose a quiet time of day, and this will take an hour
 * Can you `ssh` onto the facia-press instances for `CODE` and `PROD`? [No?](https://github.com/guardian/platform/blob/master/doc/manual/chapters/1.04.ssh-keys.md)
 * Turn off continuous integration of `Preview` and `CODE facia` (via riff-raff)
-* Block deploys: `./goo deploy block`
+* Block deploys: Add a restriction to [Riff-Raff](https://riffraff.gutools.co.uk/deployment/restrictions)
 * Let team know what you're doing
 * Email core central prod to let them know preview fronts may error 
 * Merge to Master
@@ -93,7 +93,7 @@ If you just ship new facia without pressing things will break until the presser 
 * Set the `facia-press` AWS auto scaling group desired value back to what it was
 * Turn on auto deploys again
 * Change your local machine back to DEV facia bucket!
-* Unblock deploys
+* Unblock deploys (remove the restriction in [Riff-Raff](https://riffraff.gutools.co.uk/deployment/restrictions))
 * Let Central Prod know things are hunky-dory
 * Celebrate! 🎉 
 

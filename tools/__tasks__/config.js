@@ -7,6 +7,6 @@ module.exports = {
         src: path.join(__dirname, '../', '../', 'static', 'src'),
         public: path.join(__dirname, '../', '../', 'static', 'public'),
         root: path.join(__dirname, '../', '../'),
-        conf: path.join(__dirname, '../', '../', 'common', 'conf', 'assets')
-    }
+        conf: path.join(__dirname, '../', '../', 'common', 'conf', 'assets'),
+    },
 };

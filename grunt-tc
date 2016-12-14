@@ -1,7 +1,0 @@
-#!/bin/bash
-
-set -o xtrace
-set -o nounset
-set -o errexit
-
-grunt --stack --no-color "$@"

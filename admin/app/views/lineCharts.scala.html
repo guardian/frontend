@@ -1,4 +1,4 @@
-@(charts: Seq[tools.Chart], title: Option[String] = None)(implicit request: RequestHeader, env: play.api.Environment)
+@(charts: Seq[tools.Chart], title: Option[String] = None)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Dashboard", isAuthed = true, hasCharts = true) {
 

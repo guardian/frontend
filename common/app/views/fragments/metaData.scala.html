@@ -1,11 +1,9 @@
-@(page: model.Page, amp: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: model.Page, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.{AnalyticsHost, _}
 @import conf.{Configuration, _}
 @import model.meta.LinkedData
 @import model.Page
-@import play.api.Play
-@import play.api.Play.current
 @import views.support.{SeoThumbnail, StripHtmlTags}
 @import conf.switches.Switches.{AmpSwitch, UseLinkPreconnect, ComscoreSwitch, CommercialSwitch, SmartAppBanner}
 @import play.api.Mode.Dev
@@ -59,7 +57,7 @@
 
 @* Additional meta data that does not impact rendering speed (and can live at the end of the <head>) *@
 
-@if(env.mode == Dev){
+@if(context.environment.mode == Dev){
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32-dev.ico")" />
 } else {
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32.ico")" />
@@ -158,7 +156,7 @@
     see: http://people.apache.org/~pmuellr/weinre/docs/latest/
 
 *@
-@if(env.mode == Dev) {
+@if(context.environment.mode == Dev) {
     @Configuration.javascript.pageData.get("guardian.page.iphoneDebugger").map{ scriptUrl => <script src="@scriptUrl"></script> }
 }
 

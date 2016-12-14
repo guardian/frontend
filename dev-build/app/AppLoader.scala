@@ -18,7 +18,7 @@ import dfp.DfpDataCacheLifecycle
 import feed._
 import football.controllers._
 import http.{CorsHttpErrorHandler, DevBuildParametersHttpRequestHandler, DevFilters}
-import model.{AdminLifecycle, ApplicationIdentity}
+import model.{AdminLifecycle, ApplicationContext, ApplicationIdentity}
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api._

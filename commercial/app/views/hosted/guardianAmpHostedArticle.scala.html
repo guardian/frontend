@@ -1,5 +1,5 @@
 @import common.commercial.hosted.HostedArticlePage
-@(page: HostedArticlePage)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: HostedArticlePage)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import model.hosted.HostedAmp.ampify
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import views.html.hosted._
@@ -19,6 +19,7 @@
         <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
         <script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async ></script>
         <script custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async></script>
+        <script custom-element="amp-lightbox" src="https://cdn.ampproject.org/v0/amp-lightbox-0.1.js" async></script>
         <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
         <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js" async ></script>
         <script src="https://cdn.ampproject.org/v0.js" async></script>
@@ -33,20 +34,23 @@
         </amp-analytics>
 
         <div class="main-body">
-            @guardianHostedHeader(if(page.campaign.fontColour.isDark) "hosted-article-page hosted-page--bright" else "hosted-article-page", page, isAMP = true)
+            <div class="hosted__header"><div class="hosted__headerwrap"><div class="hostedbadge content__hosted-body">
+                <a href="@page.cta.url" data-link-name="hosted-logo-top-left" target="_blank">
+                    <amp-img layout="responsive" width="@{page.campaign.logo.dimensions.map(_.width)}" height="@{page.campaign.logo.dimensions.map(_.height)}" class="hostedbadge__logo" src="@page.campaign.logo.url" alt="logo @page.campaign.owner"></amp-img>
+                </a>
+            </div></div></div>
+            @guardianHostedHeader("hosted-article-page hosted__header--sticky" + (if(page.campaign.fontColour.isDark) " hosted-page--bright" else ""), page, isAMP = true)
             <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.isDark) {hosted-page--bright}">
 
                 <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
                     <div class="media-primary media-content media-primary--showcase">
-                        <div class="gs-container">
-                            <h2 class="title content__main-column">@{page.title}</h2>
-                        </div>
-                        <span class="caption hosted-tone">@{page.mainPictureCaption}</span>
+                        <h2 class="title content__hosted-body">@{page.title}</h2>
                     </div>
+                    <div class="caption hosted-tone content__hosted-body">@{page.mainPictureCaption}</div>
                     <div class="content__main">
                         <div class="gs-container">
                             <div class="content__main-column content__main-column--article js-content-main-column">
-                                <div class="content__meta-container js-content-meta js-football-meta u-cf content__meta-container--showcase">
+                                <div class="content__meta-container">
                                     <div class="meta__extras" data-component="share">
                                         @guardianHostedShareButtons(page)
                                     </div>
@@ -63,21 +67,18 @@
                                     }
 
                                 </div>
-                                <div class="hide-on-desktop">
-                                    @hostedOnwardAmp(s"${page.url}/article/onward.json")
-                                </div>
-                                <div class="hosted__standfirst">
-                                    <div class="hosted__terms">​Hosted content is used to describe content that is paid for and supplied by the advertiser.
+                                <div class="hosted__standfirst content__hosted-body">
+                                    <div class="hosted__terms">​​Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our
+                                        <button on="tap:hosted-about-lightbox" class="hosted__terms-link hosted-tone">commercial content explainer</button>.
                                     </div>
                                 </div>
                             </div>
-                            <div class="content__secondary-column">
-                                @hostedOnwardAmp(s"${page.url}/article/onward.json")
-                            </div>
+                            @hostedOnwardAmp(s"${page.url}/article/onward.json")
                         </div>
                     </div>
                 </article>
                 @guardianHostedCta(page, page.cta, isAMP = true)
+            </div>
         </div>
     </body>
 </html>

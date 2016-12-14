@@ -5,20 +5,23 @@
 @import model.ContentPage
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
+@import views.support.Commercial.isPaidContent
+@import views.support.ImmersiveMainCleaner
 
-@(page: ContentPage)(implicit request: RequestHeader)
+@(page: ContentPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @defining((
     page.item.tags.isTheMinuteArticle,
     page.item.elements.hasMainEmbed,
     page.item.fields.main.nonEmpty,
-    page.item.tags.series.headOption
-)) { case (isTheMinuteArticle, hasEmbed, hasMainMedia, optSeries) =>
-
+    page.item.tags.series.headOption,
+    page.item.tags.isAdvertisementFeature
+)) { case (isTheMinuteArticle, hasEmbed, hasMainMedia, optSeries, isAdFeature) =>
     <div class="@RenderClasses(Map(
             "content--minute-article" -> isTheMinuteArticle,
             "content--immersive-article-without-main-media" -> !hasMainMedia,
-            "immersive-main-media" -> hasMainMedia
+            "immersive-main-media" -> hasMainMedia,
+            "immersive-main-media__advertisment" -> isAdFeature
         ),
         "content", "content--immersive", "content--immersive-article", "tonal", s"tonal--${toneClass(page.item)}")
     ">
@@ -42,7 +45,6 @@
             }
 
         </div>
-
         <div class="immersive-main-media__media">
             @if(page.item.elements.hasMainPicture) {
                 @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
@@ -60,7 +62,14 @@
                         <div class="immersive-main-media__loading-animation is-updating"></div>
                         <span class="u-h">Loading header</span>
                     </div>
-                    @Html(page.item.fields.main)
+                    @page.item match {
+                        case article: model.Article => {
+                            @ImmersiveMainCleaner(article, article.fields.main, amp=false)
+                        }
+                        case content => {
+                            @Html(content.fields.main)
+                        }
+                    }
                 }
             }
         </div>
@@ -83,7 +92,8 @@
 
                 <h1 class="@RenderClasses(Map(
                         "content__headline--minute" -> isTheMinuteArticle,
-                        "content__headline--immersive--with-main-media" -> hasMainMedia
+                        "content__headline--immersive--with-main-media" -> hasMainMedia,
+                        "content__headline--advertisement" -> isAdFeature
                     ), "content__headline", "content__headline--immersive", "content__headline--immersive-article")
                 ">
                     @if(isTheMinuteArticle) {

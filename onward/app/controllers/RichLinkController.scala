@@ -3,15 +3,13 @@ package controllers
 import play.api.mvc.{Action, Controller, RequestHeader}
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import implicits.Requests
-import model.{Cached, Content, ContentType, NoCache}
-
+import model.{ApplicationContext, Cached, Content, ContentType, NoCache}
 import scala.concurrent.Future
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.v1.ItemResponse
-import play.api.Environment
 import play.twirl.api.HtmlFormat
 
-class RichLinkController(contentApiClient: ContentApiClient)(implicit env: Environment) extends Controller with Paging with Logging with ExecutionContexts with Requests   {
+class RichLinkController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Paging with Logging with ExecutionContexts with Requests   {
 
   def renderHtml(path: String) = render(path)
 
@@ -38,7 +36,7 @@ class RichLinkController(contentApiClient: ContentApiClient)(implicit env: Envir
   private def renderContent(content: ContentType)(implicit request: RequestHeader) = {
     def contentResponse: HtmlFormat.Appendable = views.html.fragments.richLinkBody(content)(request)
 
-    if (!request.isJson) NoCache(Ok(views.html.richLink(content)(request, env)))
+    if (!request.isJson) NoCache(Ok(views.html.richLink(content)(request, context)))
     else Cached(900) {
       JsonComponent(contentResponse)
     }

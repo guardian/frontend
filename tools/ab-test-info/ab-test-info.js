@@ -4,25 +4,24 @@
 // extracts test object data to a JSON output file.
 
 // Modules
-var esprima = require("esprima"),
-    glob = require("glob"),
-    fs = require("fs");
-    mkdirp = require("mkdirp");
-    path = require("path");
+const esprima = require('esprima');
+const glob = require('glob');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const path = require('path');
 
-var srcPath = 'static/src/javascripts/projects/common/modules/experiments/tests',
-    outputFile = 'static/abtests.json',
-    abtest = {};
+const srcPath = 'static/src/javascripts/projects/common/modules/experiments/tests';
+const outputFile = 'static/abtests.json';
+let abtest = {};
 
 // This traverse() is based on the esprima example 'detectnestedternary'.
 function traverse(object, visitor) {
-
     visitor.call(null, object);
 
-    Object.keys(object).forEach(function(key) {
-        var child = object[key];
+    Object.keys(object).forEach((key) => {
+        const child = object[key];
         if (typeof child === 'object' && child !== null) {
-            traverse(child, visitor)
+            traverse(child, visitor);
         }
     });
 }
@@ -30,15 +29,14 @@ function traverse(object, visitor) {
 // Look for AssignmentExpressions where the left is a this,
 // and the right property is one of the predefined abTest properties.
 function examineExpressions(node) {
-
     if (node.type === 'AssignmentExpression' &&
         node.left.type === 'MemberExpression' &&
         node.left.object.type === 'ThisExpression') {
+        const property = node.left.property.name;
+        const value = node.right.value;
 
-        var property = node.left.property.name,
-            value = node.right.value;
-
-        switch( property ) {
+        /* eslint-disable default-case */
+        switch (property) {
             case 'id':
             case 'start':
             case 'expiry':
@@ -55,56 +53,54 @@ function examineExpressions(node) {
         }
 
         if (property === 'variants') {
-            var variants = [];
-            node.right.elements.forEach(function(element){
-                element.properties.some(function(property) {
-                    if (property.key.name === 'id') {
-                        variants.push(property.value.value);
-                    } else {
-                        return false;
+            const variants = [];
+            node.right.elements.forEach((element) => {
+                element.properties.some((elementProperty) => {
+                    if (elementProperty.key.name === 'id') {
+                        return variants.push(elementProperty.value.value);
                     }
-                })
-            })
-            abtest['variants'] = variants;
+                    return false;
+                });
+            });
+            abtest.variants = variants;
         }
     }
 }
 
 if (!srcPath || !outputFile) {
-    console.error("Invalid paths specified for js static analysis.");
-    return;
+    console.error('Invalid paths specified for js static analysis.');
+    process.exit();
 } else {
-    console.log("Searching for ab-test objects...");
+    console.log('Searching for ab-test objects...');
 }
 
-var sourceFiles = glob.sync(srcPath + "/*.js");
-var testObjects = [];
+const sourceFiles = glob.sync(`${srcPath}/*.js`);
+const testObjects = [];
 
-sourceFiles.forEach(function(file) {
-
+sourceFiles.forEach((file) => {
     try {
-        var tree = esprima.parse(fs.readFileSync(file));
+        const tree = esprima.parse(fs.readFileSync(file));
         abtest = {};
         traverse(tree, examineExpressions);
         testObjects.push(abtest);
     } catch (error) {
-        console.error( "Error parsing file: " + file);
-        console.error( "Exception: " + error);
+        console.error(`Error parsing file: ${file}`);
+        console.error(`Exception: ${error}`);
     }
 });
 
-var outputDir = path.dirname(outputFile);
+const outputDir = path.dirname(outputFile);
 
-mkdirp(outputDir, function (error) {
+mkdirp(outputDir, (error) => {
     if (error) {
-        console.error( "Error creating directories: " + outputDir);
-        console.error( "Error: " + error);
+        console.error(`Error creating directories: ${outputDir}`);
+        console.error(`Error: ${error}`);
     }
 });
 
-fs.writeFile(outputFile, JSON.stringify(testObjects), function (error) {
+fs.writeFile(outputFile, JSON.stringify(testObjects), (error) => {
     if (error) {
-        console.error( "Error writing output file: " + outputFile);
-        console.error( "Error: " + error);
+        console.error(`Error writing output file: ${outputFile}`);
+        console.error(`Error: ${error}`);
     }
 });

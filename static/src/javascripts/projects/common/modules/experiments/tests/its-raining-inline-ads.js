@@ -6,7 +6,7 @@ define([
     return function () {
         this.id = 'ItsRainingInlineAds';
         this.start = '2016-12-06';
-        this.expiry = '2016-12-13';
+        this.expiry = '2016-12-19';
         this.author = 'Regis Kuckaertz';
         this.description = 'Compare the performance of two inline ad insertion strategies';
         this.audience = .4;
