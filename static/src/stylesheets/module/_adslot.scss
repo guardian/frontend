@@ -380,21 +380,6 @@
     }
 }
 
-// Allow responsive ads to 'slide'
-@if ($old-ie == false) {
-    .ad--responsive {
-        @include mq(tablet) {
-            height: 108px;
-            transform: translateZ(0);
-            transition: height 1s cubic-bezier(0, 0, 0, .985);
-
-            &.ad--responsive--open {
-                height: 250px;
-            }
-        }
-    }
-}
-
 /**
  * Fluid ad slots don't have widths
  */
