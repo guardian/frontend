@@ -18,16 +18,6 @@
 .ad-slot--dark {
     background-color: lighten($media-background, 2.5%);
 }
-.ad-slot--mobile {
-    @include mq(tablet) {
-        display: none;
-    }
-}
-.ad-slot--not-mobile {
-    @include mq($until: tablet) {
-        display: none;
-    }
- }
 
 .ad-slot--right {
     &.is-sticky {
@@ -240,11 +230,6 @@
     }
 }
 .ad-slot--container-inline:not(.ad-slot--fluid) {
-    /* I don't know wtf that is but it has no place in JS, so I moved it here */
-    &.ad-slot--not-mobile {
-        display: flex;
-    }
-
     .ad-slot__content {
         margin: 0 auto;
     }
