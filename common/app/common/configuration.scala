@@ -154,8 +154,6 @@ class GuardianConfiguration extends Logging {
     lazy val isProd = stage.equalsIgnoreCase("prod")
     lazy val isCode = stage.equalsIgnoreCase("code")
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
-
-    lazy val isPreview = projectName == "preview"
   }
 
   object switches {
