@@ -14,7 +14,7 @@ import org.scalatest.time.{Millis, Span}
   with ScalaFutures
   with BeforeAndAfterAll
   with WithTestWsClient
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestContentApiClient {
 
   "CrosswordData" - {

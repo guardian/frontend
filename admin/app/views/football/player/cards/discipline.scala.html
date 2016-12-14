@@ -1,4 +1,4 @@
-@(playerId: String, player: pa.PlayerProfile, playerStats: pa.StatsSummary, playerAppearances: pa.PlayerAppearances)(implicit env: play.api.Environment)
+@(playerId: String, player: pa.PlayerProfile, playerStats: pa.StatsSummary, playerAppearances: pa.PlayerAppearances)(implicit context: model.ApplicationContext)
 
 @views.html.football.main("Player card") {
 <hgroup class="page-header">

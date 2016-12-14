@@ -1,4 +1,4 @@
-@(index: services.IndexPage)(implicit request: RequestHeader, env: play.api.Environment)
+@(index: services.IndexPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @main(index.page, projectName = Option("facia")){
     @fragments.indexHead(index)

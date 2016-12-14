@@ -12,6 +12,7 @@ define(function () {
         outOfPage:              AdSize(1, 1),
 
         // guardian proprietary ad sizes
+        video:                  AdSize(620, 1),
         merchandisingHighAdFeature: AdSize(88, 89),
         merchandisingHigh:      AdSize(88, 87),
         merchandising:          AdSize(88, 88),

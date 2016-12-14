@@ -28,11 +28,12 @@
         <![endif]-->
 
         @fragments.email.stylesheets.ink()
-        @fragments.email.stylesheets.fonts()
+
         @fragments.email.stylesheets.main()
         @fragments.email.stylesheets.footer()
 
         @if(page.metadata.isFront) {
+            @fragments.email.stylesheets.frontFonts()
             @fragments.email.stylesheets.front(page)
             @fragments.email.stylesheets.tones()
 
@@ -40,6 +41,8 @@
             @if(request.isEmailConnectedStyle) {
                 @fragments.email.stylesheets.connectedStyleOverride()
             }
+        } else {
+            @fragments.email.stylesheets.articleFonts()
         }
     </head>
 

@@ -1,4 +1,4 @@
-@(loadbalancers: Seq[tools.LoadBalancer])(implicit request: RequestHeader, env: play.api.Environment)
+@(loadbalancers: Seq[tools.LoadBalancer])(implicit request: RequestHeader, context: model.ApplicationContext)
 @import tools.LoadBalancer
 
 @admin_main("Troubleshooting", isAuthed = true) {

@@ -7,13 +7,13 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json._
 import play.api.test.Helpers._
 import services.ConfigAgent
-import test.{ConfiguredTestSuite, TestFrontJsonFapi, TestRequest, WithTestEnvironment, WithTestWsClient}
+import test.{ConfiguredTestSuite, TestFrontJsonFapi, TestRequest, WithTestContext, WithTestWsClient}
 
 @DoNotDiscover class FaciaMetaDataTest extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestWsClient {
 
   override def beforeAll() {

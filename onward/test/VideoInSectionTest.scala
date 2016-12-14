@@ -10,7 +10,8 @@ import play.api.test.Helpers._
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithTestWsClient
-  with WithTestContentApiClient {
+  with WithTestContentApiClient
+  with WithTestContext {
 
   lazy val mediaInSectionController = new MediaInSectionController(testContentApiClient)
 

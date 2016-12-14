@@ -7,15 +7,16 @@
 
 @import views.support.EmailHelpers._
 @import views.support.TrailCssClasses.toneClass
-@import views.html.fragments.items.elements.facia_cards.kicker
 @import model.pressed.Feature
 @import implicits.Requests.RichRequestHeader
+@import implicits.ItemKickerImplicits._
+
 
 @headline(pressedContent: PressedContent) = {
     <h3 class="headline">
         @defining(FaciaCardHeader.fromTrail(pressedContent, None)) { header =>
-            @kicker(header, Seq())
-            @if(header.kicker.isDefined) {
+            @header.kicker.map { kicker =>
+                <span class="fc-item__kicker">@Html(kicker.kickerHtml)</span>
                 <span class="kicker-separator">/</span>
             }
 

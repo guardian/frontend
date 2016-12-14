@@ -1,4 +1,4 @@
-@(metaData: model.Page)(body: Html)(implicit request: RequestHeader, env: play.api.Environment)
+@(metaData: model.Page)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.switches.Switches._
 @import common.InlineJs
@@ -7,7 +7,7 @@
 
 <!doctype html>
 <head>
-    @if(env.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
+    @if(context.environment.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
         <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.email.css")" />
     } else {
         <style class="js-loggable">

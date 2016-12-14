@@ -11,7 +11,7 @@ trait ABTestSwitches {
     "Display more inline ads on the wide breakpoint",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 14),
+    sellByDate = new LocalDate(2016, 12, 20),
     exposeClientSide = true
   )
 
@@ -77,11 +77,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-us-pre-end-of-year",
+    "ab-contributions-epic-us-pre-end-of-year-two",
     "Test which Epic variant to use in the US end of year campaign",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 12),
+    sellByDate = new LocalDate(2016, 12, 19),
     exposeClientSide = true
   )
 

@@ -22,9 +22,9 @@ define([
         variants: ['mixed']
     };
 
-    var ContributionsEpicUsPreEndOfYear = {
-        name: 'ContributionsEpicUsPreEndOfYear',
-        variants: ['control', 'bolder', 'endOfYear']
+    var ContributionsEpicUsPreEndOfYearTwo = {
+        name: 'ContributionsEpicUsPreEndOfYearTwo',
+        variants: ['control', 'endOfYear']
     };
 
     var ContributionsEpicAlwaysAskStrategy = {
@@ -37,7 +37,7 @@ define([
             ContributionsEpicUsaCtaThreeWay,
             ContributionsEpicObserverAnniversary,
             ContributionsEpicBrexitSupreme,
-            ContributionsEpicUsPreEndOfYear,
+            ContributionsEpicUsPreEndOfYearTwo,
             ContributionsEpicAlwaysAskStrategy
         ];
         return _testABClash(ab.isInVariant, clashingTests);

@@ -8,6 +8,7 @@ import com.gu.contentatom.thrift.atom.media.{MediaAtom => AtomApiMediaAtom}
 import org.joda.time.Duration
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
+import views.support.{ImgSrc, Item700}
 
 final case class Atoms(
   quizzes: Seq[Quiz],
@@ -115,7 +116,7 @@ object MediaAtom extends common.Logging {
       title = mediaAtom.title,
       duration = mediaAtom.duration,
       source = mediaAtom.source,
-      posterUrl = mediaAtom.posterUrl)
+      posterUrl = mediaAtom.posterUrl.map(ImgSrc(_, Item700)))
 
   def mediaAssetMake(mediaAsset: AtomApiMediaAsset): MediaAsset =
   {

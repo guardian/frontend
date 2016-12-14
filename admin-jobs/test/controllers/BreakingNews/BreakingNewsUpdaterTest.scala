@@ -64,7 +64,7 @@ import scala.concurrent.duration._
       URI.create("category/2016/feb/01/slug"),
       "Title",
       "message",
-      Some(URI.create("http://i.guimcode.co.uk.global.prod.fastly.net/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg")),
+      Some(URI.create("http://i.guimcode.co.uk/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg")),
       URI.create("http://gu.com/p/4fgcd"),
       None,
       DateTime.now(),

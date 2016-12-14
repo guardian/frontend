@@ -25,7 +25,7 @@ import actions.AuthenticatedActions
 @DoNotDiscover class EmailControllerTest extends WordSpec
   with ShouldMatchers
   with MockitoSugar
-  with WithTestEnvironment
+  with WithTestContext
   with ConfiguredTestSuite {
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]

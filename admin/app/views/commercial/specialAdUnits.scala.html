@@ -1,4 +1,4 @@
-@(specialAdUnits: Seq[(String, String)])(implicit request: RequestHeader, env: play.api.Environment)
+@(specialAdUnits: Seq[(String, String)])(implicit request: RequestHeader, context: model.ApplicationContext)
 @import tools.DfpLink
 
 @admin_main("Commercial", isAuthed = true, hasCharts = true) {

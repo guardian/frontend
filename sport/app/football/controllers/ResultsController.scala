@@ -10,7 +10,7 @@ import pa.FootballTeam
 import model.Competition
 import play.api.Environment
 
-class ResultsController(val competitionsService: CompetitionsService)(implicit env: Environment) extends MatchListController with CompetitionResultFilters {
+class ResultsController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends MatchListController with CompetitionResultFilters {
 
   private def competitionOrTeam(tag: String): Option[Either[Competition, FootballTeam]] = {
     lookupCompetition(tag).map(Left(_))

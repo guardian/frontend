@@ -1,4 +1,4 @@
-@(title: String)(content: Html)(implicit env: play.api.Environment)
+@(title: String)(content: Html)(implicit context: model.ApplicationContext)
 
 @import controllers.admin.routes.UncachedAssets
 @import controllers.admin.routes.UncachedWebAssets
@@ -16,7 +16,7 @@
         <link rel="stylesheet" href='@UncachedWebAssets.at("lib/jquery-ui/jquery-ui.min.css")' />
 
             <!--[if (gt IE 9)|(IEMobile)]><!-->
-        @if(env.mode == Dev) {
+        @if(context.environment.mode == Dev) {
             <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.content.css")" />
         } else {
             <style>
