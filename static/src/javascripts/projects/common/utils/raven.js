@@ -49,7 +49,7 @@ define([
                 return adBlockerOn.then(function(adBlockerOn){
                    return config.switches.enableSentryReporting &&
                     Math.random() < 0.1 && !isIgnored && !adBlockerOn && !isDev; // don't actually notify sentry in dev mode
-                })
+                });
 
             }
         }
