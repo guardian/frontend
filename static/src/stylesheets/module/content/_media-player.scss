@@ -227,7 +227,7 @@ button.vjs-big-play-button__duration {
     top: 3.25rem;
     width: 360px;
     @include mq(desktop) {
-      width: 450px;
+        width: 450px;
     }
     text-align: left;
     &:before {
