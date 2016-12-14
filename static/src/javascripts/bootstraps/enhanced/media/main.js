@@ -156,7 +156,7 @@ define([
         var mainVideoElement = videoPosterElement.parentElement;
         mainVideoElement.querySelector('.vjs.gu-media--video');
 
-        if (window.matchMedia("(max-width: 375px)").matches) {
+        if (window.matchMedia('(max-width: 375px)').matches) {
           mainVideoElement.classList.remove('gu-media--video');
         }
 
