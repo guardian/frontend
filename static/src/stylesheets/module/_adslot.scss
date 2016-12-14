@@ -355,10 +355,8 @@
 
 .fc-container--sponsored .fc-container:first-child,
 .fc-container--advertisement-feature .fc-container:first-child,
-.fc-container--foundation-supported .fc-container:first-child,
 .fc-container--sponsored,
-.fc-container--advertisement-feature,
-.fc-container--foundation-supported {
+.fc-container--advertisement-feature {
     .fc-container__header + .fc-container__body {
         @include mq(tablet) {
             margin-top: 78px;
