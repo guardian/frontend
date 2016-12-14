@@ -8,7 +8,7 @@
     }
 }
 
-.fc-container--advertisement-feature {
+.fc-container--paid-content {
     .linkslist__action:visited,
     .fc-item__link:visited,
     .fc-item__standfirst,
@@ -41,7 +41,7 @@
     }
 }
 
-.fc-container--advertisement-feature {
+.fc-container--paid-content {
     background-color: $neutral-8;
 
     .fc-container__inner {
@@ -73,7 +73,7 @@
 }
 
 
-.paid-content--advertisement-feature {
+.paid-content {
     background-color: $paid-article;
 
     .fc-item--list-compact--media {
