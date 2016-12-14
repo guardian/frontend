@@ -149,7 +149,7 @@ class GuardianConfiguration extends Logging {
     import InstallVars._
 
     lazy val stage = InstallationVars.stage
-    lazy val projectName = Play.application.configuration.getString("guardian.projectName").getOrElse("frontend")
+    lazy val app = InstallationVars.app
 
     lazy val isProd = stage.equalsIgnoreCase("prod")
     lazy val isCode = stage.equalsIgnoreCase("code")
