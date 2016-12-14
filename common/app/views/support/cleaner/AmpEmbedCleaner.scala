@@ -1,5 +1,7 @@
 package views.support.cleaner
 
+import java.net.URLDecoder
+
 import model.{Article, VideoAsset}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpSrcCleaner, HtmlCleaner}
@@ -87,13 +89,9 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
     // There are 2 url patterns that have been encountered in soundcloud embeds.
     def getTrackIdFromUrl(soundcloudUrl: String): Option[String] = {
-      val pattern = ".*api.soundcloud.com%2Ftracks%2F(\\d+).*".r
-      val alternatePattern = ".*api.soundcloud.com/tracks/(\\d+).*".r
-      soundcloudUrl match {
+      val pattern = ".*api.soundcloud.com/tracks/(\\d+).*".r
+      URLDecoder.decode(soundcloudUrl,"UTF-8") match {
         case pattern(trackId) => {
-          Some(trackId)
-        }
-        case alternatePattern(trackId) => {
           Some(trackId)
         }
         case _ => None
