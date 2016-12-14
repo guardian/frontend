@@ -37,7 +37,7 @@ define([
             shouldSendCallback: function (data) {
                 var isDev = config.page.isDev;
                 var isIgnored = typeof(data.tags.ignored) !== 'undefined' && data.tags.ignored;
-                var adBlockerOn = detect.adblockInUseSync();
+                var adBlockerOn = detect.adblockInUse;
 
                 if (isDev && !isIgnored) {
                     // Some environments don't support or don't always expose the console object
@@ -46,8 +46,11 @@ define([
                     }
                 }
 
-                return config.switches.enableSentryReporting &&
+                return adBlockerOn.then(function(adBlockerOn){
+                   return config.switches.enableSentryReporting &&
                     Math.random() < 0.1 && !isIgnored && !adBlockerOn && !isDev; // don't actually notify sentry in dev mode
+                })
+
             }
         }
     );
