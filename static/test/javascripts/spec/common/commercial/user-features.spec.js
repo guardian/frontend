@@ -76,7 +76,7 @@ define(['helpers/injector'], function (Injector) {
 
                     userFeatures.refresh();
                     expect(userFeatures._requestNewData).toHaveBeenCalled();
-                })
+                });
 
             });
 
