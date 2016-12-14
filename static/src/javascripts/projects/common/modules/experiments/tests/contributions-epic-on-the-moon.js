@@ -102,16 +102,25 @@ define([
         };
 
         var componentWriter = function (component) {
-            fastdom.write(function () {
-                var submetaElement = $('.submeta');
-                if (submetaElement.length > 0) {
-                    component.insertBefore(submetaElement);
-                    $('.contributions__epic').each(function (element) {
-                        // top offset of 18 ensures view only counts when half of element is on screen
-                        var elementInview = ElementInview(element, window, {top: 18});
-                        elementInview.on('firstview', function () {
-                            mediator.emit(epicViewedEvent);
-                        });
+            ajax({
+                url: config.page.ajaxUrl + '/geolocation',
+                method: 'GET',
+                contentType: 'application/json',
+                crossOrigin: true
+            }).then(function (resp) {
+                if(resp.country === 'AU') {
+                    fastdom.write(function () {
+                        var submetaElement = $('.submeta');
+                        if (submetaElement.length > 0) {
+                            component.insertBefore(submetaElement);
+                            $('.contributions__epic').each(function (element) {
+                                // top offset of 18 ensures view only counts when half of element is on screen
+                                var elementInview = ElementInview(element, window, {top: 18});
+                                elementInview.on('firstview', function () {
+                                    mediator.emit(epicViewedEvent, component);
+                                });
+                            });
+                        }
                     });
                 }
             });
