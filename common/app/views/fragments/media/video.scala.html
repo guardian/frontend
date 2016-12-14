@@ -42,6 +42,7 @@
                 data-show-end-slate="@(player.showEndSlate && showEndSlate)"
                 @if(showPoster) { poster="@player.poster" }
                 data-duration="@player.video.videos.duration.toString()"
+                data-formatted-duration="@player.video.videos.formattedDuration.toString()"
                 data-media-id="@player.video.properties.id"
                 data-end-slate="@player.endSlatePath"
                 data-block-video-ads="@player.blockVideoAds"
