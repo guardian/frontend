@@ -45,7 +45,7 @@ define([
         this.author = 'Alex Dufournet';
         this.description = 'Test with Epic variant containing a message from First Dog on the Moon';
         this.showForSensitive = true;
-        this.audience = 1;
+        this.audience = 0.1;
         this.audienceOffset = 0;
         this.successMeasure = 'We are able to measure the positive and negative effects of this strategy.';
         this.audienceCriteria = 'All';
@@ -53,21 +53,13 @@ define([
         this.idealOutcome = 'There are no negative effects and this is the optimum strategy!';
         this.canRun = function () {
 
-            var includedKeywordIds = ['politics/eu-referendum'];
-
-            var includedSeriesIds = [];
-
-            var excludedKeywordIds = [];
-
-            var excludedSeriesIds = ['theobserver/series/the-observer-at-225'];
+            var excludedKeywordIds = ['society/guardian-and-observer-charity-appeal-2016'];
 
             var tagsMatch = function () {
                 var pageKeywords = config.page.keywordIds;
                 if (typeof(pageKeywords) !== 'undefined') {
                     var keywordList = pageKeywords.split(',');
-                    return intersection(excludedKeywordIds, keywordList).length == 0 &&
-                        excludedSeriesIds.indexOf(config.page.seriesId) === -1 &&
-                        (intersection(includedKeywordIds, keywordList).length > 0 || includedSeriesIds.indexOf(config.page.seriesId) !== -1);
+                    return intersection(excludedKeywordIds, keywordList).length == 0;
                 } else {
                     return false;
                 }
@@ -85,10 +77,11 @@ define([
             return urlPrefix + 'INTCMP=' + intcmp;
         }
 
-        var contributeUrlSuffix = 'co_au_epic_first_dog_on_the_moon';
-        var membershipUrlSuffix = 'gdnwb_copts_mem_epic_first_dog_on_the_moon';
+        var contributeUrlSuffix = 'co_au_epic_end_of_year_2016';
+        var membershipUrlSuffix = 'gdnwb_copts_mem_epic_end_of_year_2016';
 
         var epicViewedEvent = makeEvent('view');
+        var epicInsertedEvent = makeEvent('insert');
 
         var membershipUrl = 'https://membership.theguardian.com/supporter?';
         var contributeUrl = 'https://contribute.theguardian.com/?';
@@ -120,15 +113,20 @@ define([
                                     mediator.emit(epicViewedEvent, component);
                                 });
                             });
+                            mediator.emit(epicInsertedEvent, component);
                         }
                     });
                 }
             });
         };
 
-        var registerViewListener = function (complete) {
+        function registerInsertionListener(track) {
+            mediator.on(epicInsertedEvent, track);
+        }
+
+        function registerViewListener(complete) {
             mediator.on(epicViewedEvent, complete);
-        };
+        }
 
         var canBeDisplayed = function() {
             var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
@@ -160,17 +158,17 @@ define([
                         componentWriter(component);
                     }
                 },
-
+                impression: registerInsertionListener,
                 success: registerViewListener
             },
             {
-                id: 'showMeTheMoon',
+                id: 'firstDog',
 
                 test: function () {
                     if (canBeDisplayed()) {
                         var component = $.create(template(contributionsEpicImage, {
-                            linkUrl1: cta.url1,
-                            linkUrl2: cta.url2,
+                            linkUrl1: cta.url1 + '_firstDog',
+                            linkUrl2: cta.url2 + '_firstDog',
                             cta1: cta.cta1,
                             cta2: cta.cta2,
                             defaultImgSrc: config.images.contributions['ab-first-dog-mb'],
@@ -184,7 +182,7 @@ define([
                         componentWriter(component);
                     }
                 },
-
+                impression: registerInsertionListener,
                 success: registerViewListener
             },
             {
@@ -206,7 +204,7 @@ define([
                         componentWriter(component);
                     }
                 },
-
+                impression: registerInsertionListener,
                 success: registerViewListener
             },
             {
@@ -228,7 +226,7 @@ define([
                         componentWriter(component);
                     }
                 },
-
+                impression: registerInsertionListener,
                 success: registerViewListener
             }
         ];
