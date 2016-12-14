@@ -148,6 +148,9 @@ define([
 
     function initVideoHeadline(el, videoInfo) {
         var buttonElement = el.parentElement.querySelector('button.vjs-big-play-button');
+        var hideControlBar = el.parentElement.querySelector('.vjs-control-bar');
+        // hideControlBar.classList.remove('vjs-control-bar');
+        hideControlBar.classList.add('vjs-control-bar--hidden');
         buttonElement.classList.remove('vjs-big-play-button');
         buttonElement.classList.add('vjs-big-play-button__duration');
         var buttonDuration = el.getAttribute('data-formatted-duration');
