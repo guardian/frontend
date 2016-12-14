@@ -114,7 +114,6 @@ define([
      */
     function loadInstantly() {
         detect.adblockInUse.then(function(adblockInUse){
-            console.log(adblockInUse)
             return !document.getElementById('dfp-ad--merchandising-high') ||
                 adblockInUse;
         })
