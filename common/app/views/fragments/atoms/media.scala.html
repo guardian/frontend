@@ -1,7 +1,6 @@
 @(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @{
-    println(media)
     media match {
             case posterOnly if media.posterUrl.isDefined && media.assets.isEmpty => if(amp) views.html.fragments.atoms.ampMediaPosterOnly(media)
             case youtube if media.assets.headOption.map(_.platform == "Youtube") => if(amp) views.html.fragments.atoms.ampYoutube(media) else views.html.fragments.atoms.youtube(media, displayCaption)
