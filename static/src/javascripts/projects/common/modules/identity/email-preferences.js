@@ -152,6 +152,13 @@ define([
             } else {
                 buttonString += 'addEmailSubscriptions[]=' + encodeURIComponent(value) + '&';
             }
+            // hacks to deal with the various AB tests running on email listIDs
+            // delete me after 2017-02-01!
+            if (value === 'unsubscribe-2211') {
+                buttonString += 'removeEmailSubscriptions[]=' + encodeURIComponent('3806') + '&';
+                buttonString += 'removeEmailSubscriptions[]=' + encodeURIComponent('3807') + '&';
+            }
+            // end of hacks
         }
         return 'csrfToken=' + encodeURIComponent(csrfToken) + '&' +
         buttonString + 'htmlPreference=' + encodeURIComponent(htmlPreference);
