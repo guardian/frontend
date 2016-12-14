@@ -119,8 +119,7 @@
     }
 
     .content__article-body blockquote {
-        font-family: Georgia, serif;
-        margin: 0;
+        margin: 2 * $gs-baseline 0;
         position: relative;
         padding: 30px 0 0 $gs-gutter * .5;
         font-style: normal;
