@@ -1741,7 +1741,6 @@ function send(data) {
 
     // Check if the request should be filtered or not
     if (isFunction(globalOptions.shouldSendCallback)) {
-        console.log("test")
         globalOptions.shouldSendCallback(data).then(function (shouldSendCallback) {
             if (shouldSendCallback) {
                 // Send along an event_id if not explicitly passed.
