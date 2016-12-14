@@ -129,7 +129,7 @@ object Get {
 // gets the asset url from the classpath
 object LoadFromClasspath {
   def apply(assetPath: String): Try[String] = {
-    (Option(Play.classloader(Play.current).getResource(assetPath)) match {
+    (Option(this.getClass.getClassLoader.getResource(assetPath)) match {
       case Some(s) => Success(s)
       case None => Failure(AssetNotFoundException(assetPath))
     }).flatMap { url =>
