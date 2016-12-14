@@ -54,5 +54,5 @@ module.exports = (() => [
             Live blogs
          */
     '/us-news/live/2016/aug/12/donald-trump-republicans-hillary-clinton-us-election-live', // Live blog
-    '/sport/live/2016/aug/20/rio-2016-olympics-day-15-mo-farah-relays-tom-daley-nicola-adams-football-live' // Sport live blog
+    '/sport/live/2016/aug/20/rio-2016-olympics-day-15-mo-farah-relays-tom-daley-nicola-adams-football-live', // Sport live blog
 ])();

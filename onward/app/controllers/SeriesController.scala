@@ -26,7 +26,7 @@ case class Series(id: String, tag: Tag, trails: RelatedContent) {
  }
 }
 
-class SeriesController(contentApiClient: ContentApiClient) extends Controller with Logging with Paging with ExecutionContexts with Requests {
+class SeriesController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with Paging with ExecutionContexts with Requests {
   def renderSeriesStories(seriesId: String) = Action.async { implicit request =>
     lookup(Edition(request), seriesId) map { series =>
       series.map(renderSeriesTrails).getOrElse(NotFound)
@@ -105,7 +105,7 @@ class SeriesController(contentApiClient: ContentApiClient) extends Controller wi
       ).withTimeStamps
        .copy(customHeader = header),
       properties
-    )(request)
+    )
 
     renderFormat(response, response, 900)
   }

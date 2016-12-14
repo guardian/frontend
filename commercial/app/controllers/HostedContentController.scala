@@ -6,8 +6,7 @@ import common.commercial.hosted._
 import common.{Edition, ExecutionContexts, JsonComponent, JsonNotFound, Logging}
 import contentapi.ContentApiClient
 import model.Cached.RevalidatableResult
-import model.{Cached, NoCache}
-import play.api.Environment
+import model.{ApplicationContext, Cached, NoCache}
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
 import play.twirl.api.Html
@@ -16,7 +15,7 @@ import views.html.hosted._
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-class HostedContentController(contentApiClient: ContentApiClient)(implicit env: Environment)
+class HostedContentController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with Logging with implicits.Requests {
 
   private def cacheDuration: Int = 60

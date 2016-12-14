@@ -3,13 +3,13 @@ package controllers
 import com.gu.contentapi.client.model.v1.ItemResponse
 import contentapi.{ContentApiClient, SectionsLookUp}
 import controllers.front.FrontJsonFapiDraft
-import play.api.Environment
+import model.ApplicationContext
 import play.api.mvc.{RequestHeader, Result}
 import services.ConfigAgent
 
 import scala.concurrent.Future
 
-class FaciaDraftController(val frontJsonFapi: FrontJsonFapiDraft, contentApiClient: ContentApiClient, sectionsLookUp: SectionsLookUp)(implicit val env: Environment) extends FaciaController with RendersItemResponse {
+class FaciaDraftController(val frontJsonFapi: FrontJsonFapiDraft, contentApiClient: ContentApiClient, sectionsLookUp: SectionsLookUp)(implicit val context: ApplicationContext) extends FaciaController with RendersItemResponse {
 
   private val indexController = new IndexController(contentApiClient, sectionsLookUp)
 

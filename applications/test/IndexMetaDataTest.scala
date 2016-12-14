@@ -14,7 +14,7 @@ import play.api.test.Helpers._
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithTestWsClient
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestContentApiClient {
 
   val articleUrl = "money/pensions"

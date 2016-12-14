@@ -1,4 +1,4 @@
-@(form: play.api.data.Form[controllers.admin.PageRedirect], urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty)(implicit request: RequestHeader, env: play.api.Environment)
+@(form: play.api.data.Form[controllers.admin.PageRedirect], urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Redirector", isAuthed = true) {
     <ul>

@@ -4,12 +4,12 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import play.api.mvc.{Action, Controller, RequestHeader, Result => PlayResult}
 import play.api.libs.ws.WSClient
 import play.twirl.api.Html
-import play.api.Environment
 import common.{ExecutionContexts, Logging}
 import football.services.PaFootballClient
 import football.model.PA
-import model.{Cached, NoCache}
+import model.{ApplicationContext, Cached, NoCache}
 import conf.Configuration
+
 import scala.concurrent.Future
 import pa._
 import concurrent.FutureOpt
@@ -19,11 +19,10 @@ import pa.Season
 import pa.Fixture
 import pa.LiveMatch
 
-class FrontsController(val wsClient: WSClient, val environment: Environment) extends Controller with ExecutionContexts with PaFootballClient with Logging {
+class FrontsController(val wsClient: WSClient)(implicit val context: ApplicationContext) extends Controller with ExecutionContexts with PaFootballClient with Logging {
+
   val SNAP_TYPE = "json.html"
   val SNAP_CSS = "football"
-
-  implicit val env: Environment = environment
 
   def index = Action.async { implicit request =>
     fetchCompetitionsAndTeams.map {

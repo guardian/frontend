@@ -1,7 +1,7 @@
 @(content: model.ContentType,
   related: model.RelatedContent,
   cssClass: String = "",
-  isPaidContent: Boolean)(implicit request: RequestHeader)
+  isPaidContent: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.Edition
 @import views.support.ContentFooterContainersLayout
 

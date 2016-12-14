@@ -1,4 +1,4 @@
-@(page: model.Page, mainPicture: String, ctaImage: Option[String], brandColour: String)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: model.Page, mainPicture: String, ctaImage: Option[String], brandColour: String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.Edition
 @import common.commercial.PaidContent
@@ -289,6 +289,6 @@
  * Please note that the tests will NOT pass validation with this line.
  * It won't affect prod but please comment out this line when running tests in DEV
  *@
-@if(env.mode == Dev) {
+@if(context.environment.mode == Dev) {
     <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp.css")" />
 }

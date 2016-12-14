@@ -14,7 +14,7 @@ import scala.collection.JavaConversions._
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithTestWsClient
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestContentApiClient
   with PrivateMethodTester {
 

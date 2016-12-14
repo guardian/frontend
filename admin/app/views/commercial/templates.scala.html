@@ -1,4 +1,4 @@
-@(templates: Seq[common.dfp.GuCreativeTemplate])(implicit request: RequestHeader, env: play.api.Environment)
+@(templates: Seq[common.dfp.GuCreativeTemplate])(implicit request: RequestHeader, context: model.ApplicationContext)
 @import model.{MetaData, SectionSummary, SimplePage}
 @import tools.DfpLink
 
