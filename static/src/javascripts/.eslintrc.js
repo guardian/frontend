@@ -1,5 +1,4 @@
 module.exports = {
-    baseConfig: false,
     env: {
         amd: true,
         jasmine: true,
