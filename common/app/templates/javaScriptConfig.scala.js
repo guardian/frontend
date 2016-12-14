@@ -36,7 +36,7 @@
             "trackers": {
                 "editorialTest": "@{GoogleAnalyticsAccount.editorialTest.trackerName}",
                 "editorialProd": "@{GoogleAnalyticsAccount.editorialProd.trackerName}",
-                "editorial": "@{GoogleAnalyticsAccount.editorialTracker.trackerName}"
+                "editorial": "@{GoogleAnalyticsAccount.editorialTracker(context).trackerName}"
             }
         }
     }
