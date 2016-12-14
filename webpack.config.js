@@ -3,6 +3,10 @@
 const webpack = require('webpack');
 const path = require('path');
 
+// we shoudln't use this 'transpiled' directory once we kill require,
+// it's just so we can build with transpiled code in r.js.
+// eventually we'd obviously use the babel-loader here,
+// just keeps it the same code for now.
 const { target, transpiled } = require('./tools/__tasks__/config').paths;
 
 module.exports = {
