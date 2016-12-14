@@ -3,7 +3,7 @@ import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CachedHealthCheckLifeCycle, CommonGzipFilter}
+import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import controllers.{Assets, DiagnosticsControllers, HealthCheck}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
@@ -39,5 +39,5 @@ trait AppLifecycleComponents {
 trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers {
   lazy val router: Router = wire[Routes]
   lazy val appIdentity = ApplicationIdentity("frontend-diagnostics")
-  override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonGzipFilter].filters
+  override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
 }
