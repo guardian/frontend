@@ -13,8 +13,7 @@ define([
         'common/utils/fastdom-promise',
         'common/modules/experiments/ab',
         'common/utils/$',
-        'common/views/svgs',
-        'components/lodash-amd/utilities/parseInt'
+        'common/views/svgs'
     ], function (bean,
                  qwery,
                  config,
@@ -29,8 +28,7 @@ define([
                  fastdom,
                  ab,
                  $,
-                 svgs, parseInt) {
-
+                 svgs) {
         var endpoints = {
             UK: 'https://membership.theguardian.com/uk/supporter',
             US: 'https://contribute.theguardian.com',
