@@ -3,10 +3,12 @@
 const webpack = require('webpack');
 const path = require('path');
 
+const { target, transpiled } = require('./tools/__tasks__/config').paths;
+
 module.exports = {
-    entry: './static/src/javascripts/boot-webpack.js',
+    entry: path.join(transpiled, 'javascripts', 'boot-webpack.js'),
     resolve: {
-        modulesDirectories: ['static/src/javascripts'],
+        modulesDirectories: [path.join(transpiled, 'javascripts')],
         alias: {
             admin: 'projects/admin',
             common: 'projects/common',
@@ -45,7 +47,7 @@ module.exports = {
         xhr2: {},
     },
     output: {
-        path: path.join(__dirname, 'static', 'target', 'javascripts'),
+        path: path.join(target, 'javascripts'),
         filename: 'boot-webpack.js',
     },
     plugins: [
