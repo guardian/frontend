@@ -5,7 +5,7 @@
     fastlyCharts: Seq[tools.AwsLineChart],
     cost: tools.MaximumMetric,
     switches: Seq[conf.switches.Switch],
-    apiKey: String)(implicit request: RequestHeader, env: play.api.Environment)
+    apiKey: String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import org.joda.time.{DateTime, Days}
 

@@ -5,9 +5,8 @@ import idapiclient.IdApiClient
 import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
 import common.ExecutionContexts
 import utils.SafeLogging
-import model.IdentityPage
+import model.{ApplicationContext, IdentityPage}
 import actions.AuthenticatedActions
-import play.api.Environment
 
 class EmailVerificationController(api: IdApiClient,
                                   authenticatedActions: AuthenticatedActions,
@@ -15,9 +14,9 @@ class EmailVerificationController(api: IdApiClient,
                                   idRequestParser: IdRequestParser,
                                   idUrlBuilder: IdentityUrlBuilder,
                                   returnUrlVerifier: ReturnUrlVerifier)
-                                 (implicit env: Environment)
+                                 (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging {
-  import ValidationState._
+    import ValidationState._
   import authenticatedActions.authActionWithUser
 
   val page = IdentityPage("/verify-email", "Verify Email")

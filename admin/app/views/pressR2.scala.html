@@ -1,4 +1,4 @@
-@(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty)(implicit request: RequestHeader, env: play.api.Environment)
+@(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import conf.switches.Switches.R2PagePressServiceSwitch
 
 @admin_main("R2 page presser (archiver)", isAuthed = true) {

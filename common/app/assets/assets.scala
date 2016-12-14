@@ -2,6 +2,7 @@ package common.Assets
 
 import common.{Logging, RelativePathEscaper}
 import conf.Configuration
+import model.ApplicationContext
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.{Mode, Play}
@@ -52,20 +53,20 @@ object css {
 
   private val memoizedCss: ConcurrentMap[String, Try[String]] = TrieMap()
 
-  def head(projectOverride: Option[String]) = inline(cssHead(projectOverride.getOrElse(Configuration.environment.projectName)))
-  def inlineStoryPackage = inline("story-package")
-  def inlineExplore = inline("article-explore")
-  def amp = inline("head.amp")
-  def hostedAmp = inline("head.hosted-amp")
+  def head(projectOverride: Option[String])(implicit context: ApplicationContext) = inline(cssHead(projectOverride.getOrElse(Configuration.environment.projectName)))
+  def inlineStoryPackage(implicit context: ApplicationContext) = inline("story-package")
+  def inlineExplore(implicit context: ApplicationContext) = inline("article-explore")
+  def amp(implicit context: ApplicationContext) = inline("head.amp")
+  def hostedAmp(implicit context: ApplicationContext) = inline("head.hosted-amp")
 
   def projectCss(projectOverride: Option[String]) = project(projectOverride.getOrElse(Configuration.environment.projectName))
   def headOldIE(projectOverride: Option[String]) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
   def headIE9(projectOverride: Option[String]) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
 
 
-  private def inline(module: String): String = {
+  private def inline(module: String)(implicit context: ApplicationContext): String = {
     val resourceName = s"assets/inline-stylesheets/$module.css"
-    Get(if (Play.current.mode == Mode.Dev) {
+    Get(if (context.environment.mode == Mode.Dev) {
       LoadFromClasspath(resourceName)
     } else {
       memoizedCss.getOrElseUpdate(resourceName, LoadFromClasspath(resourceName))
@@ -128,7 +129,7 @@ object Get {
 // gets the asset url from the classpath
 object LoadFromClasspath {
   def apply(assetPath: String): Try[String] = {
-    (Option(Play.classloader(Play.current).getResource(assetPath)) match {
+    (Option(this.getClass.getClassLoader.getResource(assetPath)) match {
       case Some(s) => Success(s)
       case None => Failure(AssetNotFoundException(assetPath))
     }).flatMap { url =>

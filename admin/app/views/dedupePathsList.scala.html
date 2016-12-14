@@ -1,4 +1,4 @@
-@(paths: List[String])(implicit request: RequestHeader, env: play.api.Environment)
+@(paths: List[String])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("What is Deduped?", isAuthed = true) {
 

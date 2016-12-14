@@ -1,5 +1,5 @@
 @import views.MainMediaWidths
-@(article: model.Article, amp: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
+@(article: model.Article, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import model.EndSlateComponents
 @import model.{VideoPlayer}

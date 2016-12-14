@@ -1,5 +1,5 @@
 @import conf.switches.Switch
-@(lastModified: Long)(implicit flash: Flash, request: RequestHeader, env: play.api.Environment)
+@(lastModified: Long)(implicit flash: Flash, request: RequestHeader, context: model.ApplicationContext)
 @import controllers.admin.routes.UncachedAssets
 @defining(conf.switches.Switches.grouped){ switchGroups =>
     @admin_main("Switchboard", isAuthed = true) {

@@ -38,3 +38,19 @@ In order for content to be discoverable (via search) and served in Google's cach
         1. Validate your local changes on a hardcoded set of endpoints - `make validate-amp`
         2. Validate `amp.theguardian.com` on the same endpoints - `node ./tools/amp-validation/index.js`
         3. Validate `amp.theguardian.com` on today's top 50 most-read articles (according to Ophan) - `node ./tools/amp-validation/top-traffic.js`
+
+Please note to enable browsersync when styling amp pages we have added this code:
+
+```
+@*
+ * Please note that the tests will NOT pass validation with this line.
+ * It won't affect prod but please comment out this line when running tests in DEV
+ *@
+@if(env.mode == Dev) {
+    <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp.css")" />
+}
+
+```
+
+When validating locally please comment out the <link> as this will always fail validation.
+This change was made to improve the experience of developing and styling amp pages. If there is a better way please suggest it!

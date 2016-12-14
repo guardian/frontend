@@ -97,9 +97,9 @@ object JsMinifier {
 object InlineJs {
   private val memoizedMap: TrieMap[String, String] = TrieMap()
 
-  def withFileNameHint(codeToCompile: String, fileName: String)(implicit env: Environment): Html = {
+  def withFileNameHint(codeToCompile: String, fileName: String)(implicit context: model.ApplicationContext): Html = {
     if (codeToCompile.trim.nonEmpty) {
-      if (env.mode == Dev) {
+      if (context.environment.mode == Dev) {
         Html(optimizeJs(codeToCompile, fileName))
       } else {
         val md5 = new String(MessageDigest.getInstance("MD5").digest(codeToCompile.getBytes))
@@ -118,6 +118,6 @@ object InlineJs {
     }
   }
 
-  def apply(codeToCompile: String, fileName: String = "input.js")(implicit env: Environment): Html = withFileNameHint(codeToCompile, fileName)
-  def apply(codeToCompile: Javascript, fileName: String)(implicit env: Environment): Html = this(codeToCompile.body, fileName)
+  def apply(codeToCompile: String, fileName: String = "input.js")(implicit context: model.ApplicationContext): Html = withFileNameHint(codeToCompile, fileName)
+  def apply(codeToCompile: Javascript, fileName: String)(implicit context: model.ApplicationContext): Html = this(codeToCompile.body, fileName)
 }

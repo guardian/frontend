@@ -1,4 +1,4 @@
-@(page: model.Page, popular: Seq[model.MostPopular])(implicit request: RequestHeader, env: play.api.Environment)
+@(page: model.Page, popular: Seq[model.MostPopular])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import views.support.`package`._
 

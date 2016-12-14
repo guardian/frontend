@@ -1,8 +1,7 @@
 package commercial.controllers
 
 import conf.Configuration
-import model.{GuardianContentTypes, MetaData, SectionSummary}
-import play.api.Environment
+import model.{ApplicationContext, GuardianContentTypes, MetaData, SectionSummary}
 import play.api.libs.json.{JsString, JsValue}
 import play.api.mvc._
 
@@ -33,7 +32,7 @@ case class TestPage(specifiedKeywords : List[String] = Nil) extends model.Standa
   val navSection: String = "Commercial"
 }
 
-class CreativeTestPage (implicit env: Environment) extends Controller {
+class CreativeTestPage (implicit context: ApplicationContext) extends Controller {
   def allComponents(keyword : List[String]) = Action{ implicit request =>
     if(Configuration.environment.stage.toLowerCase == "dev" || Configuration.environment.stage.toLowerCase == "code") {
       Ok(views.html.debugger.allcreatives(TestPage(keyword)))

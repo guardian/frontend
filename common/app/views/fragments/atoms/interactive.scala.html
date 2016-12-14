@@ -2,7 +2,7 @@
 @import model.content.InteractiveAtom
 @import templates.inlineJS.nonBlocking.js.{interactiveFonts, interactiveResize}
 
-@(interactive: InteractiveAtom, shouldFence: Boolean)(implicit env: play.api.Environment)
+@(interactive: InteractiveAtom, shouldFence: Boolean)(implicit context: model.ApplicationContext)
 
 @iframeBody = {
     <!DOCTYPE html>

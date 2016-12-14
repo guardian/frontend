@@ -1,4 +1,4 @@
-@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
+@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.LinkTo
 @import views.BodyCleaner

@@ -1,4 +1,4 @@
-@(page: model.Page)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import views.support.Commercial.listSponsorLogosOnPage
 @import views.support.GoogleAnalyticsAccount
 @import play.api.Mode.Dev
@@ -53,8 +53,8 @@
     ***************************************************************************************@
     @for(tracker <- Seq(GoogleAnalyticsAccount.editorialProd, GoogleAnalyticsAccount.editorialTest)) {
         ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName', {
-            'sampleRate': @{ if (env.mode == Dev) 100 else tracker.samplePercentage },
-            'siteSpeedSampleRate': @{ if (env.mode == Dev) 100 else tracker.siteSpeedSamplePercentage }
+            'sampleRate': @{ if (context.environment.mode == Dev) 100 else tracker.samplePercentage },
+            'siteSpeedSampleRate': @{ if (context.environment.mode == Dev) 100 else tracker.siteSpeedSamplePercentage }
         });
     }
 
