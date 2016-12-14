@@ -60,3 +60,8 @@ GET        /email/form/$emailType<article|footer>/:listId                       
 GET        /email/:result                                                       controllers.EmailSignupController.subscriptionResult(result: String)
 POST       /email                                                               controllers.EmailSignupController.submit()
 OPTIONS    /email                                                               controllers.EmailSignupController.options()
+
+# Account deletion
+GET         /delete                                 controllers.AccountDeletionController.renderAccountDeletionForm
+POST        /delete                                 controllers.AccountDeletionController.processAccountDeletionForm
+GET         /delete/confirm                         controllers.AccountDeletionController.renderAccountDeletionConfirmForm

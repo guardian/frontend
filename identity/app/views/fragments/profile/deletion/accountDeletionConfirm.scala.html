@@ -1,0 +1,15 @@
+@(
+    page: model.Page,
+    idRequest: services.IdentityRequest,
+    idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
+
+@main(page, projectName = Option("identity")){
+}{
+<div class="identity-wrapper monocolumn-wrapper">
+    <h1 class="identity-title">Your account has been successfully deleted.</h1>
+
+    <div class="identity-section">
+        Click <a href="https://www.theguardian.com/">here</a> to go back to the main Guardian homepage.
+    </div>
+</div>
+}

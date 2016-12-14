@@ -1,0 +1,58 @@
+@(
+    page: model.Page,
+    idRequest: services.IdentityRequest,
+    idUrlBuilder: services.IdentityUrlBuilder,
+    accountDeletionForm: Form[(String)], errors: List[client.Error])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+
+@import form.IdFormHelpers._
+@import views.html.fragments.form.inputField
+@import views.html.fragments.registrationFooter
+@import client.Error
+@import form.Input
+
+@main(page, projectName = Option("identity")){
+}{
+<div class="identity-wrapper monocolumn-wrapper">
+    <h1 class="identity-title">Are you sure you want to delete your account?</h1>
+
+    <div class="identity-section">
+        Please note, if you have any of the following, deleting your account will have no effect on them:
+        <ul>
+            <li><a href="https://www.theguardian.com/subscriber-direct/subscription-frequently-asked-questions">Paper subscription</a></li>
+            <li><a href="https://www.theguardian.com/info/2013/aug/12/1">Guardian in-app purchases made through Google, Apple or Amazon app stores</a></li>
+            <li><a href="https://witness.theguardian.com/faq">Guardian Witness contributions</a></li>
+        </ul>
+
+        <p class="identity-section__text">If you require further clarification please email our <a href="mailto:userhelp@@theguardian.com" data-link-name="Email Userhelp">Userhelp</a> who will be happy to help.</p>
+    </div>
+
+    <form class="form" novalidate action="@idUrlBuilder.buildUrl("/delete", idRequest)" role="main" method="post">
+        @views.html.helper.CSRF.formField
+        <fieldset class="fieldset">
+
+            <div class="fieldset__heading">
+                <h2 class="form__heading">Confirm account deletion</h2>
+                <div class="form__note">Please re-enter password to confirm the deletion of the account.</div>
+            </div>
+
+            <div class="fieldset__fields">
+                <ul class="u-unstyled">
+
+                    @inputField(Password(accountDeletionForm("password"), '_label -> "Password", 'autofocus -> true, 'class -> "js-register-password js-password-strength",
+                        (Symbol("data-test-id"), "account-deletion-password"), 'required -> true))
+
+                    <li>
+                        <button type="submit" class="submit-input delete-input-warn" data-link-name="Delete Account" data-test-id="delete-account">Delete your account</button>
+                    </li>
+                </ul>
+            </div>
+        </fieldset>
+    </form>
+
+    @if(accountDeletionForm.globalError.isDefined) {
+        <div class="form__error">@accountDeletionForm.globalErrors.map(_.message).mkString(", ")</div>
+    }
+
+    @registrationFooter(idRequest, idUrlBuilder)
+</div>
+}

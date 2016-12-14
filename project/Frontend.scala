@@ -144,7 +144,7 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
+  val identity = application("identity").dependsOn(commonWithTests, discussion).aggregate(common).settings(
     RoutesKeys.routesGenerator := InjectedRoutesGenerator,
     libraryDependencies ++= Seq(
       filters,

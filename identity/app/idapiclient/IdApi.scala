@@ -1,21 +1,23 @@
 package idapiclient
 
-import com.gu.identity.model.{EmailList, Subscriber, LiftJsonConfig, User, SavedArticles}
-import client.{Anonymous, Auth, Response, Parameters}
+import com.gu.identity.model._
+import client.{Error, Anonymous, Auth, Parameters, Response}
 import client.connection.{Http, HttpResponse}
-import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future, ExecutionContext}
+import scala.concurrent.{ExecutionContext, Future}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
-import idapiclient.responses.{CookiesResponse, AccessTokenResponse}
+import idapiclient.responses.{CookiesResponse, MemSub}
 import client.connection.util.{ApiHelpers, ExecutionContexts}
-import net.liftweb.json.JsonAST.{JValue, JNothing}
+import conf.IdentityConfiguration
+import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Serialization.write
+import net.liftweb.json._
 import utils.SafeLogging
 import idapiclient.requests.{PasswordUpdate, TokenPassword}
 
-
-abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser, val clientAuth: Auth)
+abstract class IdApi(conf: IdentityConfiguration, http: Http, jsonBodyParser: JsonBodyParser, val clientAuth: Auth)
   extends IdApiUtils with SafeLogging with ApiHelpers {
+
+  val apiRootUrl = conf.id.apiRoot
 
   import jsonBodyParser.{extractUnit, extract}
 
@@ -59,6 +61,13 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
 
     val response = http.POST(apiUrl(apiPath), Some(updatedSavedArticles), params, headers)
     response map extractSavedArticles }
+
+  def hasNoSavedArticles(auth: Auth) = // besides the default one
+    savedArticles(auth).map { _ match {
+      case Left(error) => true
+      case Right(prefs) => prefs.articles.isEmpty || (prefs.articles.length == 1 && prefs.articles.head.shortUrl == "/p/4ab7x")
+    }
+  }
 
   // USERS
 
@@ -161,6 +170,22 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     delete(urlJoin("useremails", userId, "subscriptions"), Some(auth), Some(trackingParameters), Some(write(emailList))) map extractUnit
   }
 
+  def deleteAllSubscriptions(userId: String, auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] =
+    userEmails(userId, trackingParameters).flatMap { _ match {
+        case Right(subscriber) =>
+          val listIds = subscriber.subscriptions.map(_.listId)
+          val unsubscribeResponse = listIds.map { id => deleteSubscription(userId, EmailList(id), auth, trackingParameters) }
+          Future.sequence(unsubscribeResponse).map { responses =>
+            if (responses.exists(_.isLeft))
+              Left(List(Error("Could not unsubscribe from all emailing lists", "")))
+            else
+              Right(())
+          }
+
+        case Left(_) => Future(Left(List(Error("Could not unsubscribe from all emailing lists", ""))))
+      }
+    }
+
   def updateUserEmails(userId: String, subscriber: Subscriber, auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] =
     post(urlJoin("useremails", userId), Some(auth), Some(trackingParameters), Some(write(subscriber))) map extractUnit
 
@@ -173,10 +198,24 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
   def deleteTelephone(auth: Auth): Future[Response[Unit]] =
     delete("user/me/telephoneNumber", Some(auth)) map extractUnit
 
+  def deleteAccount(auth: Auth, emailPassword: EmailPassword): Future[Response[Unit]] =
+    delete("user/me", Some(auth), body = Some(write(emailPassword))) map extractUnit
+
   // THIRD PARTY SIGN-IN
   def addUserToGroup(groupCode: String, auth: Auth): Future[Response[Unit]] = {
     post(urlJoin("user", "me", "group", groupCode), Some(auth)) map extractUnit
   }
+
+  // Membership & Subscription
+  def userIsNotMember(auth: Auth): Future[Boolean] =
+    http.GET(s"${conf.id.membersDataApiUrl}/user-attributes/me/mma-membership", None, buildHeaders(Some(auth))).map { response =>
+      response.fold(err => false, okResult => parse(okResult.body).extractOpt[MemSub].fold(true)(_ => false))
+    }
+
+  def userIsNotSubscriber(auth: Auth): Future[Boolean] =
+    http.GET(s"${conf.id.membersDataApiUrl}/user-attributes/me/mma-digitalpack", None, buildHeaders(Some(auth))).map { response =>
+        response.fold(err => false, okResult => parse(okResult.body).extractOpt[MemSub].fold(true)(_ => false))
+    }
 
   def post(apiPath: String,
            auth: Option[Auth] = None,
@@ -191,8 +230,8 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     http.DELETE(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth))
 }
 
-class SynchronousIdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser, clientAuth: Auth)
-  extends IdApi(apiRootUrl, http, jsonBodyParser, clientAuth) {
+class SynchronousIdApi(conf: IdentityConfiguration, http: Http, jsonBodyParser: JsonBodyParser, clientAuth: Auth)
+  extends IdApi(conf, http, jsonBodyParser, clientAuth) {
   implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
 }
 
