@@ -155,11 +155,11 @@ define([
         var buttonDuration = bonzo(el).attr('data-formatted-duration');
         buttonElement.setAttribute('data-formatted-duration', buttonDuration);
         var videoPosterElement = el.parentElement.querySelector('.vjs-big-play-button__duration');
-	      var mainVideoElement = videoPosterElement.parentElement;
+        var mainVideoElement = videoPosterElement.parentElement;
         mainVideoElement.querySelector('.vjs.gu-media--video');
 
         if (window.matchMedia('(max-width: 375px)').matches) {
-          mainVideoElement.classList.remove('gu-media--video');
+            mainVideoElement.classList.remove('gu-media--video');
         }
 
         var div = document.createElement('div');
