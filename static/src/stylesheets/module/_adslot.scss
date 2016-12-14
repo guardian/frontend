@@ -336,11 +336,8 @@
 .fc-container--sponsored,
 .fc-container--advertisement-feature {
     .fc-container__header + .fc-container__body {
-        @include mq(tablet) {
+        @include mq(tablet, leftCol) {
             margin-top: 78px;
-        }
-        @include mq(leftCol) {
-            margin-top: 0;
         }
     }
 }
