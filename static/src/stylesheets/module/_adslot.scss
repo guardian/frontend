@@ -116,13 +116,6 @@
         display: none;
     }
 
-    /* Oh horrible code, I'm looking at you. One day, you'll disappear.
-       One day, I'll [redacted].
-     */
-    &.ad-slot--h250 {
-        height: 250px;
-    }
-
     &.ad-slot--fabric {
         > .ad-slot__label {
             box-sizing: content-box;
