@@ -124,7 +124,6 @@ object GuardianConfiguration extends Logging {
 
 class GuardianConfiguration extends Logging {
   import GuardianConfiguration._
-  import play.api.Play.current
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
   case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
