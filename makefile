@@ -101,7 +101,7 @@ validate-sass: install # PRIVATE
 
 # Lint all JS.
 validate-javascript: install # PRIVATE
-	@./tools/run-task lint/javascript --verbose
+	@./tools/run-task lint/javascript
 
 # Lint all assets.
 fix: install

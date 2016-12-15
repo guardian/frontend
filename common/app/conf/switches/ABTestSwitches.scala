@@ -27,7 +27,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-engagement-international-experiment",
+    "ab-membership-engagement-international-experiment-test12",
     "Test varying the number of visits before showing the membership engagement banner",
     owners = Seq(Owner.withGithub("rupert.bates")),
     safeState = Off,
@@ -94,4 +94,15 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 1, 6),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-video-headline",
+    "Show visitors new video play button",
+    owners = Seq(Owner.withGithub("mr-mr")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 20),
+    exposeClientSide = true
+  )
+
 }

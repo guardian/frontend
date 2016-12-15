@@ -1,7 +1,7 @@
 import { h } from 'virtual-dom';
-import { createDeployGroupRecord } from './model';
 import { Map } from 'immutable';
 import { Option } from 'monapt';
+import { createDeployGroupRecord } from './model';
 import { hasDeployStarted, getStartedDeploysFor, getMostRecentDeploys } from './model-helpers';
 
 const headOption = array => Option(array[0]);
@@ -9,7 +9,7 @@ const headOption = array => Option(array[0]);
 const ih = (tagName, options, children) => (h(tagName, options, children.toJS()));
 // Used in hyperscript because children cannot be booleans
 // https://github.com/Matt-Esch/virtual-dom/issues/326
-const exp = condition => condition ? true : undefined;
+const exp = condition => (condition ? true : undefined);
 const teamCityHost = 'https://teamcity.gu-web.net';
 const createBuildLink = build => (`${teamCityHost}/viewLog.html?buildNumber=${build}&buildTypeId=dotcom_master&tab=buildResultsDiv`);
 const riffRaffHost = 'https://riffraff.gutools.co.uk';
@@ -46,7 +46,7 @@ const renderGroupDeployListNode = (deploys) => {
                 .toList()),
         ]);
     };
-    const createDeployGroup = deploys => (deploys.groupBy(deploy => (createDeployGroupRecord({
+    const createDeployGroup = deploysForGroup => (deploysForGroup.groupBy(deploy => (createDeployGroupRecord({
         status: deploy.status,
         build: deploy.build,
     }))));
@@ -105,7 +105,7 @@ const renderPage = ([codeDeploys, prodDeploys], [latestCodeDeploy, oldestProdDep
             ]),
             ih('ul', {}, (commits
                 .groupBy(commit => commit.authorLogin)
-                .map(commits => headOption(commits.toArray()).map(commit => commit.authorName).getOrElse(() => ''))
+                .map(groupedCommits => headOption(groupedCommits.toArray()).map(commit => commit.authorName).getOrElse(() => ''))
                 .map(commitAuthorName => (h('li', [
                     h('h2', commitAuthorName),
                 ])))

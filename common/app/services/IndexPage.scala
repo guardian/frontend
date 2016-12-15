@@ -59,7 +59,7 @@ object IndexPage {
     case _ => None
   }
 
-  def makeFront(indexPage: IndexPage, edition: Edition): Front = {
+  def makeFront(indexPage: IndexPage, edition: Edition)(implicit context: ApplicationContext): Front = {
     val isCartoonPage = indexPage.isTagWithId("type/cartoon")
     val isReviewPage = indexPage.isTagWithId("tone/reviews")
 

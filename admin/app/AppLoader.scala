@@ -67,7 +67,7 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("frontend-admin")
+  lazy val appIdentity = ApplicationIdentity("admin")
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[AdminHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonGzipFilter].filters ++ wire[AdminFilters].filters

@@ -1,4 +1,4 @@
-@(item: model.Page)(implicit request: RequestHeader)
+@(item: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.{Edition, StringEncodings}
 @import conf.Static
 @import play.api.libs.json.Json
@@ -36,7 +36,7 @@
             "trackers": {
                 "editorialTest": "@{GoogleAnalyticsAccount.editorialTest.trackerName}",
                 "editorialProd": "@{GoogleAnalyticsAccount.editorialProd.trackerName}",
-                "editorial": "@{GoogleAnalyticsAccount.editorialTracker.trackerName}"
+                "editorial": "@{GoogleAnalyticsAccount.editorialTracker(context).trackerName}"
             }
         }
     }

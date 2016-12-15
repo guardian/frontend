@@ -9,7 +9,7 @@ import common._
 import conf.Configuration
 import fronts.FrontsApi
 import model.pressed.CollectionConfig
-import model.{FrontProperties, SeoDataJson}
+import model.{ApplicationContext, FrontProperties, SeoDataJson}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.json.Json
 import conf.switches.Switches
@@ -135,10 +135,10 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   def isFrontHidden(id: String): Boolean =
     configAgent.get().exists(_.fronts.get(id).flatMap(_.isHidden).exists(identity))
 
-  def shouldServeFront(id: String, isEmailRequest: Boolean = false) = getPathIds.contains(id) &&
-    (Configuration.environment.isPreview || (Switches.DisplayHiddenFrontsAsEmails.isSwitchedOn && isEmailRequest) || !isFrontHidden(id))
+  def shouldServeFront(id: String, isEmailRequest: Boolean = false)(implicit context: ApplicationContext) = getPathIds.contains(id) &&
+    (context.isPreview || (Switches.DisplayHiddenFrontsAsEmails.isSwitchedOn && isEmailRequest) || !isFrontHidden(id))
 
-  def shouldServeEditionalisedFront(edition: Edition, id: String) = {
+  def shouldServeEditionalisedFront(edition: Edition, id: String)(implicit context: ApplicationContext) = {
     shouldServeFront(s"${edition.id.toLowerCase}/$id")
   }
 
