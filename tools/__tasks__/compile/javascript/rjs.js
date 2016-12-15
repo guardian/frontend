@@ -186,6 +186,7 @@ const bundles = [{
         'boot',
         'bootstraps/standard/main',
         'bootstraps/commercial',
+        'bootstraps/enhanced/main',
         'text',
         'inlineSvg',
     ],
