@@ -169,7 +169,6 @@ const bundles = [{
     exclude: [
         'boot-rjs',
         'bootstraps/commercial',
-        'bootstraps/enhanced/main',
         'text',
         'inlineSvg',
     ],
