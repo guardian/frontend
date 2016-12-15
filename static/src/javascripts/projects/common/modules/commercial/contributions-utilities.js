@@ -83,7 +83,6 @@ define([
         this.campaignId = options.campaignId;
         this.description = options.description;
         this.showForSensitive = options.showForSensitive || false;
-        this.showOnCharity = options.showOnCharity || false;
         this.audience = options.audience;
         this.audienceOffset = options.audienceOffset;
         this.successMeasure = options.successMeasure;
