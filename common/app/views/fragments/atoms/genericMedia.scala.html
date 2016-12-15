@@ -1,14 +1,21 @@
 @import views.support.RenderClasses
 
-@(media: model.content.MediaAtom)(implicit request: RequestHeader)
+@(media: model.content.MediaAtom, displayCaption: Boolean)(implicit request: RequestHeader)
 
-<div class="@RenderClasses(Map(
-    "u-responsive-ratio" -> true,
-    "u-responsive-ratio--hd" -> true
-))">
+    <div class="@RenderClasses(Map(
+        "u-responsive-ratio" -> true,
+        "u-responsive-ratio--hd" -> true
+    ))">
 
-@Html(media.defaultHtml)
+        @Html(media.defaultHtml)
 
-</div>
+    </div>
+
+@if(displayCaption) {
+    <figcaption class="caption caption--main" itemprop="description">
+        @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon", "rounded-icon"))
+        @media.title
+    </figcaption>
+}
 
 
