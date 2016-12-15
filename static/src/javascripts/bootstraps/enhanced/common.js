@@ -192,7 +192,7 @@ define([
                 if (config.page.contentType !== 'Network Front') {
                     history.logSummary(config.page);
                 }
-                
+
                 history.logHistory(config.page);
             },
 
@@ -217,7 +217,7 @@ define([
             },
 
             windowEventListeners: function () {
-                ['resize', 'scroll', 'orientationchange'].forEach(function (event) {
+                ['orientationchange'].forEach(function (event) {
                     bean.on(window, event, mediator.emit.bind(mediator, 'window:' + event));
                 });
             },
