@@ -5,7 +5,7 @@
 
 @import common.LinkTo
 
-@(signupPage: Page)(implicit request: RequestHeader, env: play.api.Environment)
+@(signupPage: Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 
 @newsletterSignup(route: String, listId: String, emailName: String) = {

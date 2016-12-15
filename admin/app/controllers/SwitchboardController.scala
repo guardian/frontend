@@ -5,14 +5,12 @@ import common._
 import conf.switches.Switches
 import conf.Configuration
 import play.api.mvc._
-
 import scala.concurrent.Future
 import services.SwitchNotification
 import tools.Store
-import model.NoCache
-import play.api.Environment
+import model.{ApplicationContext, NoCache}
 
-class SwitchboardController(akkaAsync: AkkaAsync)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
+class SwitchboardController(akkaAsync: AkkaAsync)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 

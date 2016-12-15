@@ -174,7 +174,7 @@ class CachedHealthCheckLifeCycle(
   jobs: JobScheduler,
   akkaAsync: AkkaAsync) extends LifecycleComponent {
 
-  private val healthCheckRequestFrequencyInSec = Configuration.healthcheck.updateIntervalInSecs
+  private lazy val healthCheckRequestFrequencyInSec = Configuration.healthcheck.updateIntervalInSecs
 
   override def start() = {
     jobs.deschedule("HealthCheckFetch")

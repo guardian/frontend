@@ -13,6 +13,7 @@ import play.api.Environment
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
+  with WithTestContext
   with WithTestContentApiClient {
 
   lazy val topStoriesController = new TopStoriesController(testContentApiClient)

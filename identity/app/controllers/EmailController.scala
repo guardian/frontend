@@ -9,11 +9,10 @@ import utils.SafeLogging
 import play.api.mvc._
 
 import scala.concurrent.Future
-import model.{EmailSubscriptions, IdentityPage}
+import model.{ApplicationContext, EmailSubscriptions, IdentityPage}
 import play.api.data._
 import client.Error
 import com.gu.identity.model.{EmailList, Subscriber}
-import play.api.Environment
 import play.filters.csrf._
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json._
@@ -26,9 +25,9 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
                       authenticatedActions: AuthenticatedActions,
                       val messagesApi: MessagesApi,
                       csrfCheck: CSRFCheck,
-                      csrfAddToken: CSRFAddToken)(implicit env: Environment)
+                      csrfAddToken: CSRFAddToken)(implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
-  import EmailPrefsData._
+    import EmailPrefsData._
   import authenticatedActions.authAction
 
   val page = IdentityPage("/email-prefs", "Email preferences")

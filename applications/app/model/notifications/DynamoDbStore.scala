@@ -14,7 +14,7 @@ import scala.util.{Success, Failure}
 
 
 object DynamoDbStore extends Logging with ExecutionContexts {
-  val tableName = Configuration.Notifications.notificationSubscriptionTable
+  lazy val tableName = Configuration.Notifications.notificationSubscriptionTable
 
   private val client = services.DynamoDB.asyncClient
 

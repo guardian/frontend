@@ -19,7 +19,7 @@ import scala.concurrent.Future
     with WithTestFootballClient
     with WithMaterializer
     with BeforeAndAfterAll
-    with WithTestEnvironment
+    with WithTestContext
     with WithTestWsClient {
 
   val resultsController = new ResultsController(testCompetitionsService)

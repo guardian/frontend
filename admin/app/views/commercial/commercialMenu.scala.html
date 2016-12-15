@@ -1,4 +1,4 @@
-@()(implicit request: RequestHeader, env: play.api.Environment)
+@()(implicit request: RequestHeader, context: model.ApplicationContext)
 @import conf.Configuration.commercial.testDomain
 
 @admin_main("Commercial Tools", isAuthed = true) {

@@ -12,7 +12,7 @@ import conf.Configuration.interactive.cdnPath
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestContentApiClient
   with PrivateMethodTester {
 

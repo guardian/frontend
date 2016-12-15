@@ -3,7 +3,7 @@ package controllers
 import org.scalatest.path
 import org.scalatest.{Matchers => ShouldMatchers}
 import org.scalatest.mock.MockitoSugar
-import test.{Fake, I18NTestComponents, TestRequest, WithTestEnvironment , WithTestCryptoConfig}
+import test.{Fake, I18NTestComponents, TestRequest, WithTestContext , WithTestCryptoConfig}
 import idapiclient.{EmailPassword, IdApiClient, TrackingData}
 import services._
 import play.api.test.Helpers._
@@ -23,7 +23,7 @@ class RegistrationControllerTest
   extends path.FreeSpec
   with ShouldMatchers
   with MockitoSugar
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestCryptoConfig {
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]

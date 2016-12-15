@@ -1,5 +1,5 @@
 @import layout.DedupedFrontResult
-@(dedupedFrontResult: DedupedFrontResult)(implicit request: RequestHeader, env: play.api.Environment)
+@(dedupedFrontResult: DedupedFrontResult)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import layout.DedupedContainerResult
 @import layout.DedupedItem

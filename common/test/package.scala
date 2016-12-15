@@ -6,15 +6,18 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
 import common.{ExecutionContexts, Lazy}
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
+import model.{ApplicationContext, ApplicationIdentity}
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatest.BeforeAndAfterAll
 import org.scalatestplus.play._
 import play.api._
-import play.api.libs.crypto.CryptoConfig
+import play.api.libs.crypto.{CSRFTokenSigner, CryptoConfig}
 import play.api.libs.ws.WSClient
 import play.api.libs.ws.ahc.AhcWSClient
 import play.api.test._
+import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 import recorder.ContentApiHttpRecorder
+
 import scala.util.{Failure, Success, Try}
 
 //TODO: to delete once ContentApiClient global object is not used anymore
@@ -115,9 +118,8 @@ object TestRequest {
   }
 }
 
-trait WithTestEnvironment {
-  val testEnvironment: Environment = Environment.simple()
-  implicit val env = testEnvironment
+trait WithTestContext {
+  implicit val testContext = ApplicationContext(Environment.simple(), ApplicationIdentity("tests"))
 }
 
 trait WithMaterializer {
@@ -155,4 +157,11 @@ trait WithTestContentApiClient {
 
 trait WithTestCryptoConfig {
   val testCryptoConfig = new CryptoConfig(secret = "this is the test secret")
+}
+
+trait WithTestCSRF {
+  def app: Application
+  lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
+  lazy val csrfAddToken = new CSRFAddToken(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
+  lazy val csrfCheck = new CSRFCheck(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
 }

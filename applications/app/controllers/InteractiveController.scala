@@ -10,9 +10,6 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import conf.Configuration.interactive.cdnPath
-import conf.Configuration.environment.isPreview
-import play.api.Environment
-
 import scala.concurrent.duration._
 import scala.concurrent.Future
 
@@ -20,7 +17,7 @@ case class InteractivePage (interactive: Interactive, related: RelatedContent) e
   override lazy val item = interactive
 }
 
-class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClient)(implicit env: Environment) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
 
   def renderInteractiveJson(path: String): Action[AnyContent] = renderInteractive(path)
   def renderInteractive(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
@@ -42,7 +39,7 @@ class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClie
   }
 
   private def getWebWorkerPath(path: String, file: String, timestamp: Option[String]): String = {
-    val stage = if (isPreview) "preview" else "live"
+    val stage = if (context.isPreview) "preview" else "live"
     val deployPath = timestamp.map(ts => s"$path/$ts").getOrElse(path)
 
     s"$cdnPath/service-workers/$stage/$deployPath/$file"

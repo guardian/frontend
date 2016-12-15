@@ -3,12 +3,11 @@ package controllers
 import common.{ExecutionContexts, Logging}
 import model.Cached.RevalidatableResult
 import model._
-import play.api.Environment
 import play.api.mvc.{Action, Controller}
 import services._
 
-class TagIndexController (implicit env: Environment) extends Controller with ExecutionContexts with Logging {
-  private val TagIndexCacheTime = 600
+class TagIndexController (implicit context: ApplicationContext) extends Controller with ExecutionContexts with Logging {
+    private val TagIndexCacheTime = 600
 
   private def forTagType(keywordType: String, title: String, page: String, metadata: MetaData) = Action { implicit request =>
     TagIndexesS3.getIndex(keywordType, page) match {

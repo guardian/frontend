@@ -1,6 +1,6 @@
 @import model.Article
 
-@(model: LiveBlogPage)(implicit request: RequestHeader, env: play.api.Environment)
+@(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.Edition
 @import views.support.{AmpAd, AmpAdDataSlot}

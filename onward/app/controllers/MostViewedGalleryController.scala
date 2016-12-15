@@ -5,12 +5,11 @@ import feed.MostViewedGalleryAgent
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
 import model.pressed.CollectionConfig
-import play.api.Environment
 import play.api.mvc.{Action, Controller, RequestHeader}
 import services.CollectionConfigWithId
 import slices.{Fixed, FixedContainers}
 
-class MostViewedGalleryController(mostViewedGalleryAgent: MostViewedGalleryAgent)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
+class MostViewedGalleryController(mostViewedGalleryAgent: MostViewedGalleryAgent)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
   private val page = SimplePage(MetaData.make(
     "more galleries",
@@ -52,7 +51,7 @@ class MostViewedGalleryController(mostViewedGalleryAgent: MostViewedGalleryAgent
         CollectionEssentials(galleries.map(_.faciaContent), Nil, Some("more galleries"), None, None, None)
       ).withTimeStamps,
       FrontProperties.empty
-    )(request)
+    )
 
     val htmlResponse = () => views.html.mostViewedGalleries(page, html)
     val jsonResponse = () => html

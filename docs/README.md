@@ -62,9 +62,6 @@
 - [Web Font Rendering Test (2013)](99-archives/web-font-rendering-tests.md)
 - [Website benchmark (July 2012)](99-archives/website-benchmark-2013.md)
 
-##[Styleguide](styleguide/)
-- [](styleguide/*.md)
-
 
 ---
 # META: How to create a new documentation file

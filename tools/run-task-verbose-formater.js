@@ -1,14 +1,14 @@
-/* eslint-disable no-console */
 const figures = require('figures');
 const chalk = require('chalk');
 
 const log = (title, parents, message = '') => {
-    console.log(chalk.dim(`${parents.concat(['']).join(` ${figures.arrowRight} `)}${title}`) + ` ${message}`);
+    console.log(`${chalk.dim(`${parents.concat(['']).join(` ${figures.arrowRight} `)}${title}`)} ${message}`);
 };
 
 const render = (tasks, parents = []) => {
-	for (const task of tasks) {
-        task.subscribe(event => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const task of tasks) {
+        task.subscribe((event) => {
             if (event.type === 'SUBTASKS') {
                 render(task.subtasks, parents.concat([task.title]));
                 return;
@@ -28,26 +28,32 @@ const render = (tasks, parents = []) => {
                 }
             }
             if (event.type === 'DATA') {
-               console.log(event.data);
-           }
+                console.log(event.data);
+            }
         });
-	}
+    }
 };
 
 class VerboseRenderer {
-	constructor (tasks) {
-		this._tasks = tasks;
-	}
+    constructor(tasks) {
+        // eslint-disable-next-line no-underscore-dangle
+        this._tasks = tasks;
+    }
 
-	get nonTTY () {
-		return true;
-	}
+    // eslint-disable-next-line class-methods-use-this
+    get nonTTY() {
+        return true;
+    }
 
-	render () {
-		render(this._tasks);
-	}
+    render() {
+        // eslint-disable-next-line no-underscore-dangle
+        render(this._tasks);
+    }
 
-	end () {}
+    // eslint-disable-next-line class-methods-use-this
+    end() {
+        // do nothing
+    }
 }
 
 module.exports = VerboseRenderer;

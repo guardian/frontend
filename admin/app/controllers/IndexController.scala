@@ -3,9 +3,8 @@ package controllers.admin
 import com.gu.googleauth.{Actions, GoogleAuthConfig, UserIdentity}
 import play.api.mvc.Security.AuthenticatedBuilder
 import play.api.mvc.{Action, Call, Controller}
-import model.NoCache
+import model.{ApplicationContext, NoCache}
 import play.api.libs.ws.WSClient
-import play.api.Environment
 
 class AuthActions(val wsClient: WSClient) extends Actions {
 
@@ -20,7 +19,7 @@ class AuthActions(val wsClient: WSClient) extends Actions {
   )
 }
 
-class AdminIndexController (implicit env: Environment) extends Controller {
+class AdminIndexController (implicit context: ApplicationContext) extends Controller {
 
   def index() = Action { Redirect("/admin") }
 

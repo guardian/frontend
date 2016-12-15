@@ -1,7 +1,7 @@
 package controllers
 
 import common.ExecutionContexts
-import model.{IdentityPage, NoCache}
+import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.data.{Form, Forms}
 import play.api.mvc._
 import idapiclient.IdApiClient
@@ -11,7 +11,6 @@ import play.api.data.validation._
 import play.api.data.Forms._
 import play.api.data.format.Formats._
 import form.Mappings
-import play.api.Environment
 import play.api.libs.crypto.CryptoConfig
 import utils.SafeLogging
 
@@ -22,7 +21,7 @@ class ResetPasswordController(  api : IdApiClient,
                                 idUrlBuilder: IdentityUrlBuilder,
                                 authenticationService: AuthenticationService,
                                 val messagesApi: MessagesApi,
-                                val cryptoConfig: CryptoConfig)(implicit env: Environment)
+                                val cryptoConfig: CryptoConfig)(implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
   val page = IdentityPage("/reset-password", "Reset Password")

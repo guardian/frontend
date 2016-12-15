@@ -1,7 +1,7 @@
 @import common.LinkTo
 @import cricket.controllers.CricketMatchPage
 
-@(page: CricketMatchPage)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: CricketMatchPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @main(page, "football"){ } {
     <div class="l-side-margins">

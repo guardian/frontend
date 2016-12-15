@@ -12,12 +12,9 @@ import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithMaterializer
-  with WithTestEnvironment
+  with WithTestContext
+  with WithTestCSRF
   with WithTestWsClient {
-
-  lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
-  lazy val csrfCheck = new CSRFCheck(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
-  lazy val csrfAddToken = new CSRFAddToken(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
 
   "Discussion" should "return 200" in {
     val commentsController = new CommentsController(new DiscussionApiStub(wsClient), csrfCheck, csrfAddToken)

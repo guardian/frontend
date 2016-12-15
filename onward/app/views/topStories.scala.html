@@ -1,6 +1,6 @@
 @import model.Page
 
-@(page: Page, trails: Seq[model.pressed.PressedContent])(implicit request: RequestHeader, env: play.api.Environment)
+@(page: Page, trails: Seq[model.pressed.PressedContent])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @main(page){
 }{

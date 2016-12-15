@@ -1,7 +1,7 @@
 @import common.dfp.InlineMerchandisingTargetedTagsReport
 @import tools.{CapiLink, SiteLink}
 
-@(report: InlineMerchandisingTargetedTagsReport)(implicit request: RequestHeader, env: play.api.Environment)
+@(report: InlineMerchandisingTargetedTagsReport)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Commercial IM Slot", isAuthed = true, hasCharts = false) {
 
