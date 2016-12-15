@@ -2,12 +2,13 @@ define([
     'fastdom',
     'common/utils/config',
     'common/utils/detect',
+    'common/utils/mediator',
     'common/utils/user-timing',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/load-advert',
     'commercial/modules/dfp/performance-logging',
     'commercial/modules/dfp/get-advert-by-id'
-], function (fastdom, config, detect, userTiming, dfpEnv, loadAdvert, performanceLogging, getAdvertById) {
+], function (fastdom, config, detect, mediator, userTiming, dfpEnv, loadAdvert, performanceLogging, getAdvertById) {
     /* depthOfScreen: double. Top and bottom margin of the visual viewport to check for the presence of an advert */
     var depthOfScreen = 1.5;
 
@@ -44,7 +45,7 @@ define([
 
     function stopListening() {
         dfpEnv.lazyLoadEnabled = false;
-        window.removeEventListener('scroll', lazyLoad);
+        mediator.off('window:throttledScroll', lazyLoad);
     }
 
     function onIntersect(entries, observer) {
