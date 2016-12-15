@@ -66,7 +66,8 @@ define([
             };
             var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
             var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle; // may render badly on other types
-            return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && tagsMatch();
+            var isSensitive = config.page.isSensitive === true;
+            return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && tagsMatch() && !isSensitive;
         };
 
         var makeEvent = (function(name) {
@@ -128,35 +129,23 @@ define([
             mediator.on(epicViewedEvent, complete);
         }
 
-        var canBeDisplayed = function() {
-            var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
-            var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle; // may render badly on other types
-            var isSensitive = config.page.isSensitive === true;
-            return userHasNeverContributed &&
-                commercialFeatures.canReasonablyAskForMoney &&
-                worksWellWithPageTemplate &&
-                !isSensitive;
-        };
-
         this.variants = [
             {
                 id: 'control',
 
                 test: function () {
-                    if (canBeDisplayed()) {
-                        var component = $.create(template(contributionsEpicEqualButtons, {
-                            linkUrl1: cta.url1 + '_control',
-                            linkUrl2: cta.url2 + '_control',
-                            title: 'Since you\'re here…',
-                            p1: '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-                            p2: 'If everyone who reads our reporting, who likes it, helps to pay for it our future would be much more secure.',
-                            p3: '',
-                            cta1: cta.cta1,
-                            cta2: cta.cta2,
-                            hidden: cta.hidden
-                        }));
-                        componentWriter(component);
-                    }
+                    var component = $.create(template(contributionsEpicEqualButtons, {
+                        linkUrl1: cta.url1 + '_control',
+                        linkUrl2: cta.url2 + '_control',
+                        title: 'Since you\'re here…',
+                        p1: '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+                        p2: 'If everyone who reads our reporting, who likes it, helps to pay for it our future would be much more secure.',
+                        p3: '',
+                        cta1: cta.cta1,
+                        cta2: cta.cta2,
+                        hidden: cta.hidden
+                    }));
+                    componentWriter(component);
                 },
                 impression: registerInsertionListener,
                 success: registerViewListener
@@ -165,22 +154,20 @@ define([
                 id: 'firstDog',
 
                 test: function () {
-                    if (canBeDisplayed()) {
-                        var component = $.create(template(contributionsEpicImage, {
-                            linkUrl1: cta.url1 + '_firstDog',
-                            linkUrl2: cta.url2 + '_firstDog',
-                            cta1: cta.cta1,
-                            cta2: cta.cta2,
-                            defaultImgSrc: config.images.contributions['ab-first-dog-mb'],
-                            alt: 'First Dog on the Moon supports the guardian',
-                            sources: [
-                                {src: config.images.contributions['ab-first-dog-dt'], media:'(min-width:580px)'},
-                                {src: config.images.contributions['ab-first-dog-mb'], media:'(max-width:580px)'}
-                            ],
-                            hidden: cta.hidden
-                        }));
-                        componentWriter(component);
-                    }
+                    var component = $.create(template(contributionsEpicImage, {
+                        linkUrl1: cta.url1 + '_firstDog',
+                        linkUrl2: cta.url2 + '_firstDog',
+                        cta1: cta.cta1,
+                        cta2: cta.cta2,
+                        defaultImgSrc: config.images.contributions['ab-first-dog-mb'],
+                        alt: 'First Dog on the Moon supports the guardian',
+                        sources: [
+                            {src: config.images.contributions['ab-first-dog-dt'], media:'(min-width:580px)'},
+                            {src: config.images.contributions['ab-first-dog-mb'], media:'(max-width:580px)'}
+                        ],
+                        hidden: cta.hidden
+                    }));
+                    componentWriter(component);
                 },
                 impression: registerInsertionListener,
                 success: registerViewListener
@@ -189,20 +176,18 @@ define([
                 id: 'australiaNewsroom',
 
                 test: function () {
-                    if (canBeDisplayed()) {
-                        var component = $.create(template(contributionsEpicEqualButtons, {
-                            linkUrl1: cta.url1 + '_australiaNewsroom',
-                            linkUrl2: cta.url2 + '_australiaNewsroom',
-                            title: 'Since you’re here…',
-                            p1: '…we have a favour to ask. Guardian Australia launched three years ago and although many people read it, few pay for it. We fund our content through advertising, but revenues across the media are falling fast. So we need your help. Our independent, investigative reporting takes a lot of time, money and hard work to produce.',
-                            p2: 'Any money raised from readers goes directly to fund Guardian Australia\'s journalism, so if everyone who reads it – who believes in it – helps to support it, our future would be more secure.',
-                            p3: '',
-                            cta1: cta.cta1,
-                            cta2: cta.cta2,
-                            hidden: cta.hidden
-                        }));
-                        componentWriter(component);
-                    }
+                    var component = $.create(template(contributionsEpicEqualButtons, {
+                        linkUrl1: cta.url1 + '_australiaNewsroom',
+                        linkUrl2: cta.url2 + '_australiaNewsroom',
+                        title: 'Since you’re here…',
+                        p1: '…we have a favour to ask. Guardian Australia launched three years ago and although many people read it, few pay for it. We fund our content through advertising, but revenues across the media are falling fast. So we need your help. Our independent, investigative reporting takes a lot of time, money and hard work to produce.',
+                        p2: 'Any money raised from readers goes directly to fund Guardian Australia\'s journalism, so if everyone who reads it – who believes in it – helps to support it, our future would be more secure.',
+                        p3: '',
+                        cta1: cta.cta1,
+                        cta2: cta.cta2,
+                        hidden: cta.hidden
+                    }));
+                    componentWriter(component);
                 },
                 impression: registerInsertionListener,
                 success: registerViewListener
@@ -211,20 +196,18 @@ define([
                 id: 'endOfYearAustralia',
 
                 test: function () {
-                    if (canBeDisplayed()) {
-                        var component = $.create(template(contributionsEpicEqualButtons, {
-                            linkUrl1: cta.url1 + '_endOfYearAustralia',
-                            linkUrl2: cta.url2 + '_endOfYearAustralia',
-                            title: 'In 2017…',
-                            p1: '…the pursuit of truth will matter more than ever. At a time when lies can be read as widely as facts, Guardian Australia holds an important place in the media landscape. But we need your help. Independent investigative journalism dedicated to holding the powerful to account​ and ensuring diverse, local voices are heard​ takes time and money. Next year we will shine a light on critical issues such as politics, climate, detention, minority voices and inequality.',
-                            p2: 'If everyone who reads Guardian Australia – who believes in it – helps to support it, our ability to tell these stories will be more secure.',
-                            p3: '',
-                            cta1: cta.cta1,
-                            cta2: cta.cta2,
-                            hidden: cta.hidden
-                        }));
-                        componentWriter(component);
-                    }
+                    var component = $.create(template(contributionsEpicEqualButtons, {
+                        linkUrl1: cta.url1 + '_endOfYearAustralia',
+                        linkUrl2: cta.url2 + '_endOfYearAustralia',
+                        title: 'In 2017…',
+                        p1: '…the pursuit of truth will matter more than ever. At a time when lies can be read as widely as facts, Guardian Australia holds an important place in the media landscape. But we need your help. Independent investigative journalism dedicated to holding the powerful to account​ and ensuring diverse, local voices are heard​ takes time and money. Next year we will shine a light on critical issues such as politics, climate, detention, minority voices and inequality.',
+                        p2: 'If everyone who reads Guardian Australia – who believes in it – helps to support it, our ability to tell these stories will be more secure.',
+                        p3: '',
+                        cta1: cta.cta1,
+                        cta2: cta.cta2,
+                        hidden: cta.hidden
+                    }));
+                    componentWriter(component);
                 },
                 impression: registerInsertionListener,
                 success: registerViewListener
