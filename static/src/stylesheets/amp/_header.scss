@@ -15,6 +15,47 @@ $veggie-burger-medium: 52px;
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: flex-start;
+    z-index: 1;
+}
+
+.header__supporter-cta {
+    // Some very specific values in here, as it's all got to line up with the x-height of the logo
+    position: absolute;
+    left: $gs-gutter;
+    padding-top: 10px;
+    font-size: 13px;
+    line-height: .95;
+    color: $guardian-brand-dark;
+
+    & > span {
+        display: block;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: -$gs-baseline/2;
+        left: -$gs-gutter/2;
+        right: -23px;
+        border-top: $gs-baseline*4 solid $news-main-2;
+    	border-left: $gs-gutter/4 solid transparent;
+    	border-right: $gs-gutter solid transparent;
+        transform: rotate(-3deg);
+        z-index: -1;
+    }
+
+    @include mq($until: mobile) {
+        display: none;
+    }
+
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        padding-top: 14px;
+        font-size: 14px;
+
+        &:before {
+            border-top-width: ($gs-baseline*4) + ($gs-baseline/2);
+        }
+    }
 }
 
 .header__logo-wrapper {
