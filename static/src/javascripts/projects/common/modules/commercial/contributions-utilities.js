@@ -58,7 +58,7 @@ define([
 
         return viewLog.filter(function (view) {
             return view.date > (now - maxDays);
-        }).length < maxViews.count;
+        }).length <= maxViews.count;
     }
 
     function daysSince(date) {
