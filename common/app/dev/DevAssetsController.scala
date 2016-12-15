@@ -14,9 +14,11 @@ import play.api.libs.iteratee.Enumerator
 class DevAssetsController(val environment: Environment) extends Controller with ExecutionContexts {
 
   // This allows:
+  //  - transpiled source to be loaded from transpiled folder.
   //  - unbuilt javascript to be loaded from src or public folders.
   //  - built css can be loaded from target folder.
   private val findDevAsset: PartialFunction[String, String] = {
+    case path if new File(s"static/transpiled/$path").exists() => s"static/transpiled/$path"
     case path if new File(s"static/src/$path").exists() => s"static/src/$path"
     case path if new File(s"static/public/$path").exists() => s"static/public/$path"
     case path if new File(s"static/target/$path").exists() => s"static/target/$path"

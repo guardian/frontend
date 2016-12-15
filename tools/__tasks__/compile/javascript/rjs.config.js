@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 ({
-    baseUrl: '../../../../static/src/javascripts',
+    baseUrl: '../../../../static/transpiled/javascripts',
     paths: {
         admin: 'projects/admin',
         common: 'projects/common',

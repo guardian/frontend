@@ -3,10 +3,16 @@
 const webpack = require('webpack');
 const path = require('path');
 
+// we shoudln't use this 'transpiled' directory once we kill require,
+// it's just so we can build with transpiled code in r.js.
+// eventually we'd obviously use the babel-loader here,
+// just keeps it the same code for now.
+const { target, transpiled } = require('./tools/__tasks__/config').paths;
+
 module.exports = {
-    entry: './static/src/javascripts/boot-webpack.js',
+    entry: path.join(transpiled, 'javascripts', 'boot-webpack.js'),
     resolve: {
-        modulesDirectories: ['static/src/javascripts'],
+        modulesDirectories: [path.join(transpiled, 'javascripts')],
         alias: {
             admin: 'projects/admin',
             common: 'projects/common',
@@ -45,7 +51,7 @@ module.exports = {
         xhr2: {},
     },
     output: {
-        path: path.join(__dirname, 'static', 'target', 'javascripts'),
+        path: path.join(target, 'javascripts'),
         filename: 'boot-webpack.js',
     },
     plugins: [
