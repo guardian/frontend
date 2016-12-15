@@ -214,6 +214,15 @@ const bundles = [{
         generateSourceMaps: true,
         preserveLicenseComments: false,
     }, {
+        name: 'bootstraps/youtube-embed',
+        out: `${target}/javascripts/bootstraps/youtube-embed.js`,
+        exclude: [
+            'text',
+            'inlineSvg',
+        ],
+        generateSourceMaps: true,
+        preserveLicenseComments: false,
+    }, {
         name: 'bootstraps/enhanced/accessibility',
         out: `${target}/javascripts/bootstraps/enhanced/accessibility.js`,
         exclude: [
