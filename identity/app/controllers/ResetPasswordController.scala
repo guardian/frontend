@@ -16,12 +16,13 @@ import utils.SafeLogging
 
 import scala.concurrent.Future
 
-class ResetPasswordController(  api : IdApiClient,
-                                idRequestParser: IdRequestParser,
-                                idUrlBuilder: IdentityUrlBuilder,
-                                authenticationService: AuthenticationService,
-                                val messagesApi: MessagesApi,
-                                val cryptoConfig: CryptoConfig)(implicit context: ApplicationContext)
+class ResetPasswordController(api : IdApiClient,
+                              idRequestParser: IdRequestParser,
+                              idUrlBuilder: IdentityUrlBuilder,
+                              authenticationService: AuthenticationService,
+                              val messagesApi: MessagesApi,
+                              val cryptoConfig: CryptoConfig)
+                             (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
   val page = IdentityPage("/reset-password", "Reset Password")
