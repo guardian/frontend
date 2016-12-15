@@ -172,7 +172,7 @@ trait CommercialSwitches {
     "Make the Chester Zoo gallery page available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 25, 1),
+    sellByDate = new LocalDate(2017, 1, 25),
     exposeClientSide = false
   )
 
