@@ -1,6 +1,6 @@
 @import controllers.InteractivePage
 
-@(model: InteractivePage)(implicit request: RequestHeader, env: play.api.Environment)
+@(model: InteractivePage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @main(model){ }{
     @fragments.interactiveBody(model)

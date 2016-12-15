@@ -4,14 +4,14 @@ import com.gu.googleauth.{GoogleAuthConfig, UserIdentity}
 import googleAuth.OAuthLoginController
 import play.api.mvc.{Action, AnyContent, Request}
 import conf.Configuration
-import conf.Configuration.environment.projectName
+import model.ApplicationContext
 import play.api.libs.crypto.CryptoConfig
 import play.api.libs.ws.WSClient
 
-class OAuthLoginStandaloneController(val wsClient: WSClient, val cryptoConfig: CryptoConfig) extends OAuthLoginController {
+class OAuthLoginStandaloneController(val wsClient: WSClient, val cryptoConfig: CryptoConfig)(implicit context: ApplicationContext) extends OAuthLoginController {
 
   override def login = Action { request =>
-    Ok(views.html.standalone_auth(projectName, "Dev", UserIdentity.fromRequest(request)))
+    Ok(views.html.standalone_auth(context.applicationIdentity.name, "Dev", UserIdentity.fromRequest(request)))
   }
   override def googleAuthConfig(request: Request[AnyContent]): Option[GoogleAuthConfig] = Configuration.standalone.oauthCredentials.map { cred =>
     GoogleAuthConfig(

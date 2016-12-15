@@ -13,8 +13,8 @@ import test._
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
+  with WithTestContext
   with WithMaterializer
-  with WithTestEnvironment
   with WithTestWsClient {
 
   override def beforeAll() {

@@ -15,14 +15,14 @@ import org.scalatest.{ShouldMatchers, path}
 import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
 import services.{IdentityRequest, _}
-import test.{Fake, TestRequest, WithTestEnvironment}
+import test.{Fake, TestRequest, WithTestContext}
 
 import scala.concurrent.Future
 
 
 class FormstackControllerTest extends path.FreeSpec
   with ShouldMatchers
-  with WithTestEnvironment
+  with WithTestContext
   with MockitoSugar {
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val requestParser = mock[IdRequestParser]

@@ -28,7 +28,7 @@ class SigninControllerTest
   extends path.FreeSpec
   with ShouldMatchers
   with MockitoSugar
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestCryptoConfig {
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]

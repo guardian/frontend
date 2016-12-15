@@ -7,15 +7,16 @@
 
 @import views.support.EmailHelpers._
 @import views.support.TrailCssClasses.toneClass
-@import views.html.fragments.items.elements.facia_cards.kicker
-@import model.pressed.Feature
+@import model.pressed.{Feature, ExternalLink}
 @import implicits.Requests.RichRequestHeader
+@import implicits.ItemKickerImplicits._
+
 
 @headline(pressedContent: PressedContent) = {
     <h3 class="headline">
         @defining(FaciaCardHeader.fromTrail(pressedContent, None)) { header =>
-            @kicker(header, Seq())
-            @if(header.kicker.isDefined) {
+            @header.kicker.map { kicker =>
+                <span class="fc-item__kicker">@Html(kicker.kickerHtml)</span>
                 <span class="kicker-separator">/</span>
             }
 
@@ -37,9 +38,9 @@
 }
 
 @faciaCardLarge(pressedContent: PressedContent) = {
-    @paddedRow {
+    @paddedRow(Seq(toneClass(pressedContent))) {
         @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
-            <a @Html(href) class="facia-card facia-card--large @toneClass(pressedContent)">
+            <a @Html(href) class="facia-card facia-card--large">
                 @imgFromPressedContent(pressedContent)
                 @headline(pressedContent)
                 @pressedContent.card.trailText.map { trailText =>
@@ -51,13 +52,24 @@
 }
 
 @faciaCardSmall(pressedContent: PressedContent) = {
-    @paddedRow {
+    @paddedRow(Seq(toneClass(pressedContent))) {
         @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
-            <a @Html(href) class="facia-card @toneClass(pressedContent)">
+            <a @Html(href) class="facia-card">
                 @headline(pressedContent)
             </a>
         }
     }
+}
+
+@firstCard(pressedContent: PressedContent) = {
+    @pressedContent.card.cardStyle match {
+        case ExternalLink => { @faciaCardSmall(pressedContent) }
+        case _ => { @faciaCardLarge(pressedContent) }
+    }
+}
+
+@card(pressedContent: PressedContent) = {
+    @faciaCardSmall(pressedContent)
 }
 
 @fullRow {
@@ -79,9 +91,9 @@
 
     @collection.curatedPlusBackfillDeduplicated.zipWithIndex.map { case (pressedContent, cardIndex) =>
         @if(cardIndex == 0) {
-            @faciaCardLarge(pressedContent)
+            @firstCard(pressedContent)
         } else {
-            @faciaCardSmall(pressedContent)
+            @card(pressedContent)
         }
     }
 }

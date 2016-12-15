@@ -29,7 +29,6 @@ define([
                  ab,
                  $,
                  svgs) {
-
         var endpoints = {
             UK: 'https://membership.theguardian.com/uk/supporter',
             US: 'https://contribute.theguardian.com',
@@ -60,15 +59,15 @@ define([
             },
             INT: {
                 campaign: 'mem_int_banner',
-                messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $69/€49 per year.',
+                messageText: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for $7 / €5 a month.',
                 buttonCaption: 'Become a Supporter'
             }
         };
 
         function doInternationalTest(content) {
-            var variant = getVariant('MembershipEngagementInternationalExperiment');
+            var variant = getVariant('MembershipEngagementInternationalExperimentTest12');
             if (variant && variant !== notInTest) {
-                var campaignCode = 'gdnwb_copts_mem_banner_ROWbanner__' + variant;
+                var campaignCode = 'gdnwb_copts_mem_banner_int_banner__' + variant;
                 content.campaignCode = campaignCode;
                 content.linkHref = formatEndpointUrl('INT', campaignCode);
             }
@@ -158,13 +157,15 @@ define([
         }
 
         function userHasMadeEnoughVisits(edition) {
+            const numberOfVisits = storage.local.get('gu.alreadyVisited') || 0;
             if (edition === 'INT') {
-                var internationalTestVariant = getVariant('MembershipEngagementInternationalExperiment');
-                if (internationalTestVariant == '1st_article')
-                    return true;
+                var internationalTestVariant = getVariant('MembershipEngagementInternationalExperimentTest12');
+                if (internationalTestVariant && internationalTestVariant !== 'control' && internationalTestVariant !== notInTest)
+                    //variants are in the form '1st_article', '3rd_article' so we can derive the number of visits from the name
+                    return numberOfVisits >= parseInt(internationalTestVariant.substring(0, 1));
             }
 
-            return (storage.local.get('gu.alreadyVisited') || 0) >= 10;
+            return numberOfVisits >= 10;
         }
 
         function formatEndpointUrl(edition, campaignCode) {

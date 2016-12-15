@@ -13,7 +13,7 @@ import scala.util.matching.Regex
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestContentApiClient {
 
   val videoUrl = "uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"

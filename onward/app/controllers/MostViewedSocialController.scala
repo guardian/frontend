@@ -5,7 +5,7 @@ import common.{Edition, ExecutionContexts, JsonNotFound}
 import contentapi.ContentApiClient
 import feed.MostPopularSocialAutoRefresh
 import layout.{CollectionEssentials, FaciaContainer}
-import model.{Cached, FrontProperties}
+import model.{ApplicationContext, Cached, FrontProperties}
 import model.pressed.CollectionConfig
 import play.api.mvc.{Action, Controller}
 import services.{CollectionConfigWithId, FaciaContentConvert}
@@ -13,7 +13,7 @@ import slices.Fixed
 
 import scala.concurrent.Future.{successful => unit}
 
-class MostViewedSocialController(contentApiClient: ContentApiClient, mostPopularSocialAutoRefresh: MostPopularSocialAutoRefresh) extends Controller with ExecutionContexts {
+class MostViewedSocialController(contentApiClient: ContentApiClient, mostPopularSocialAutoRefresh: MostPopularSocialAutoRefresh)(implicit context: ApplicationContext) extends Controller with ExecutionContexts {
   def renderMostViewed(socialContext: String) = Action.async { implicit request =>
     val mostPopularSocial = mostPopularSocialAutoRefresh.get
 
@@ -58,7 +58,7 @@ class MostViewedSocialController(contentApiClient: ContentApiClient, mostPopular
               componentId
             ).withTimeStamps,
             properties
-          )(request)
+          )
 
           renderFormat(facebookResponse, facebookResponse, 900)
         }

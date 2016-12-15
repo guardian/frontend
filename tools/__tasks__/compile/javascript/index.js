@@ -9,6 +9,6 @@ module.exports = {
         require('./webpack'),
         require('./bundle-app--rjs'),
         require('./bundle-app--webpack'),
-        require('./bundle-shims')
-    ]
+        require('./bundle-shims'),
+    ],
 };

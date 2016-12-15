@@ -16,7 +16,7 @@ import services.OphanApi
   with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient
-  with WithTestEnvironment {
+  with WithTestContext {
 
   val article = "uk/2012/aug/07/woman-torture-burglary-waterboard-surrey"
   val badArticle = "i/am/not/here"

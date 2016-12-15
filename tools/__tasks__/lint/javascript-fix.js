@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 const execa = require('execa');
 
 const config = [
@@ -7,29 +5,32 @@ const config = [
     'dev/eslint-rules',
     '--quiet',
     '--color',
-    '--fix'
+    '--fix',
 ];
 
-const handleSuccess = ctx => {
+const handleSuccess = (ctx) => {
     ctx.messages.push('Don\'t forget to commit any fixes...');
 };
 
 module.exports = {
     description: 'Fix JS linting errors',
     task: [{
-        description: 'Fix tests',
+        description: 'Fix static/tests',
         task: ctx => execa('eslint', [
-                'static/test/javascripts/**/*.js',
-                '--ignore-path',
-                'static/test/javascripts/.eslintignore'
-            ].concat(config)).then(handleSuccess.bind(null, ctx))
-    },{
-        description: 'Fix app',
+            'static/test/javascripts/**/*.js',
+        ].concat(config)).then(handleSuccess.bind(null, ctx)),
+    }, {
+        description: 'Fix static/src',
         task: ctx => execa('eslint', [
-                'static/src/**/*.js',
-                '--ignore-path',
-                'static/src/.eslintignore'
-            ].concat(config)).then(handleSuccess.bind(null, ctx))
+            'static/src/**/*.js',
+        ].concat(config)).then(handleSuccess.bind(null, ctx)),
+    }, {
+        description: 'Fix everything else',
+        task: ctx => execa('eslint', [
+            '*.js',
+            'tools/**/*.js',
+            'dev/**/*.js',
+        ].concat(config)).then(handleSuccess.bind(null, ctx)),
     }],
-    concurrent: true
+    concurrent: true,
 };

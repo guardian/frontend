@@ -1,8 +1,7 @@
 package app
 
-import akka.actor.ActorSystem
 import common._
-import model.ApplicationIdentity
+import model.{ApplicationContext, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.http.HttpFilters
@@ -18,21 +17,12 @@ trait FrontendApplicationLoader extends ApplicationLoader {
 
   def buildComponents(context: Context): FrontendComponents
 
-  // this is a workaround the lifecycle issue: "There is no started Application"
-  // When starting lifecycles, it's possible the code hit a point where we use Play.current, directly or via WS and akka.system.
-  // If that happen before the application is actually started by Play (see ProdServerStart.scala), we will get an error at runtime
-  // This workaround should be removed when we migrated to Play2.5 or when we got rid of all the deprecated calls to Play.current
-  def fakeOnStart(components: FrontendComponents): Unit = Play.maybeApplication match {
-    case Some(_) => components.startLifecycleComponents()
-    case None => components.akkaAsync.after1s(fakeOnStart(components))
-  }
-
   override def load(context: Context): Application = {
     LoggerConfigurator(context.environment.classLoader).foreach {
       _.configure(context.environment)
     }
     val components = buildComponents(context)
-    fakeOnStart(components)
+    components.startLifecycleComponents()
     components.application
   }
 }
@@ -56,12 +46,9 @@ trait FrontendComponents
   lazy val guardianConf = new GuardianConfiguration
   lazy val mode = environment.mode
 
-  // this is a workaround to make wsapi and the actorsystem available to the injector.
-  // I'm forced to do that as we still use Ws.url and Akka.system(app) *everywhere*, and both directly get the reference from the injector
-  override lazy val injector: Injector = new SimpleInjector(NewInstanceInjector) + router + cookieSigner + csrfTokenSigner + httpConfiguration + tempFileCreator + global + crypto + wsApi + actorSystem + csrfConfig
-
   // here are the attributes you must provide for your app to start
   def appIdentity: ApplicationIdentity
+  implicit def appContext = ApplicationContext(environment, appIdentity)
   def lifecycleComponents: List[LifecycleComponent]
   def router: Router
 }

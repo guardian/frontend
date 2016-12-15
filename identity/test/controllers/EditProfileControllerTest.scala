@@ -25,12 +25,9 @@ import scala.concurrent.Future
   with ShouldMatchers
   with MockitoSugar
   with OptionValues
-  with WithTestEnvironment
+  with WithTestContext
+  with WithTestCSRF
   with ConfiguredServer {
-
-  lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
-  lazy val csrfAddToken = new CSRFAddToken(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
-  lazy val csrfCheck = new CSRFCheck(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
 
   trait EditProfileFixture {
 

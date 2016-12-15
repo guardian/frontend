@@ -1,4 +1,4 @@
-@(confidenceGraph: tools.AwsLineChart)(implicit request: RequestHeader, env: play.api.Environment)
+@(confidenceGraph: tools.AwsLineChart)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Commercial Radiator", isAuthed = true, hasCharts = true) {
     <h3>Commercial Radiator</h3>

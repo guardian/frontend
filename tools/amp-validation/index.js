@@ -3,5 +3,5 @@ const run = require('./run');
 
 run({
     checkIfAmp: false,
-    logErrors: true
+    logErrors: true,
 })(endpoints);

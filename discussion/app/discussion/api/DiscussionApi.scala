@@ -210,7 +210,7 @@ class DiscussionApi(val wsClient: WSClient) extends DiscussionApiLike {
     else
       Configuration.discussion.apiRoot.replaceFirst("https://", "http://") // CODE SSL cert is defective and expensive to fix
 
-  override protected val clientHeaderValue: String = Configuration.discussion.apiClientHeader
+  override protected lazy val clientHeaderValue: String = Configuration.discussion.apiClientHeader
 }
 
 
