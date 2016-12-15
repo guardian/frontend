@@ -111,7 +111,7 @@ trait ABTestSwitches {
     "Run the end of year variant for 12.5% of the US audience",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 31),
+    sellByDate = new LocalDate(2017, 1, 3),
     exposeClientSide = true
   )
 
