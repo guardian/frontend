@@ -49,10 +49,26 @@ define([
     }
 
     function onIntersect(entries, observer) {
+        var advertIds = [];
+
         entries.forEach(function (entry) {
             observer.unobserve(entry.target);
             displayAd(entry.target.id);
+            advertIds.push(entry.target.id);
         });
+
+        dfpEnv.advertsToLoad = dfpEnv.advertsToLoad.filter(function (advert) {
+            return advertIds.indexOf(advert.id) < 0;
+        });
+
+        if (dfpEnv.advertsToLoad.length === 0) {
+            stopObserving(observer);
+        }
+    }
+
+    function stopObserving(observer) {
+        dfpEnv.lazyLoadEnabled = false;
+        observer.disconnect();
     }
 
     function displayAd(advertId) {
