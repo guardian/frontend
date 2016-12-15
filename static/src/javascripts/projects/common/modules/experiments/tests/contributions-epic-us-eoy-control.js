@@ -13,13 +13,6 @@ define([
     template,
     contributionsEpicEqualButtons
 ) {
-    // I had to copy this and the function below over from ab.js to avoid a circular dependency.
-    var participationsKey = 'gu.ab.participations';
-
-    function getParticipations() {
-        return store.local.get(participationsKey) || {};
-    }
-
     return contributionsUtilities.makeABTest({
         id: 'ContributionsEpicUsEoyControl',
         campaignId: 'epic_us_eoy_control',
