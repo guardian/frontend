@@ -1,10 +1,12 @@
 package test
 
 import java.io.File
+
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
 import common.{ExecutionContexts, Lazy}
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
+import model.{ApplicationContext, ApplicationIdentity}
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatest.BeforeAndAfterAll
 import org.scalatestplus.play._
@@ -13,6 +15,7 @@ import play.api.libs.ws.WSClient
 import play.api.libs.ws.ning.{NingWSClient, NingWSClientConfig}
 import play.api.test._
 import recorder.ContentApiHttpRecorder
+
 import scala.util.{Failure, Success, Try}
 
 //TODO: to delete once ContentApiClient global object is not used anymore
@@ -113,9 +116,8 @@ object TestRequest {
   }
 }
 
-trait WithTestEnvironment {
-  val testEnvironment: Environment = Environment.simple()
-  implicit val env = testEnvironment
+trait WithTestContext {
+  implicit val testContext = ApplicationContext(Environment.simple(), ApplicationIdentity("tests"))
 }
 
 trait WithTestWsClient {

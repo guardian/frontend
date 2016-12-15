@@ -1,7 +1,9 @@
 define([
-    'common/utils/fetch'
+    'common/utils/fetch',
+    'Promise'
 ], function (
-    fetch
+    fetch,
+    Promise
 ) {
     describe('Fetch util', function () {
         beforeEach(function () {

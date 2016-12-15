@@ -1,4 +1,4 @@
-@(metaData: model.PreferencesMetaData)(implicit request: RequestHeader, env: play.api.Environment)
+@(metaData: model.PreferencesMetaData)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.switches.Switches._
 @import views.html.fragments.containers.facia_cards.containerScaffold

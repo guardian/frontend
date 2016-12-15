@@ -45,7 +45,7 @@ trait AppComponents extends FrontendComponents with Controllers with AppLifecycl
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("frontend-identity")
+  lazy val appIdentity = ApplicationIdentity("identity")
   override lazy val httpFilters: Seq[EssentialFilter] = wire[IdentityFilters].filters
   override lazy val httpErrorHandler: HttpErrorHandler = wire[IdentityHttpErrorHandler]
 }

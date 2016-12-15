@@ -12,6 +12,7 @@ import play.api.Environment
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithTestWsClient
+  with WithTestContext
   with WithTestContentApiClient {
 
   lazy val topStoriesController = new TopStoriesController(testContentApiClient)

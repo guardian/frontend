@@ -1,7 +1,7 @@
 package layout
 
 import common.Pagination
-import model.{Page, Section, Tag}
+import model.{ApplicationContext, Page, Section, Tag}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import services.ConfigAgent
@@ -29,7 +29,7 @@ case class FaciaHeaderImage(
 }
 
 object FaciaContainerHeader {
-  def fromSection(sectionPage: Section, dateHeadline: DateHeadline): FaciaContainerHeader = MetaDataHeader(
+  def fromSection(sectionPage: Section, dateHeadline: DateHeadline)(implicit context: ApplicationContext): FaciaContainerHeader = MetaDataHeader(
     sectionPage.metadata.webTitle,
     None,
     sectionPage.metadata.description,
@@ -37,7 +37,7 @@ object FaciaContainerHeader {
     frontHref(sectionPage.metadata.id, sectionPage.metadata.pagination)
   )
 
-  def fromPage(page: Page, dateHeadline: DateHeadline): FaciaContainerHeader = {
+  def fromPage(page: Page, dateHeadline: DateHeadline)(implicit context: ApplicationContext): FaciaContainerHeader = {
     MetaDataHeader(
       page.metadata.webTitle,
       None,
@@ -47,7 +47,7 @@ object FaciaContainerHeader {
     )
   }
 
-  def fromTagPage(tagPage: Tag, dateHeadline: DateHeadline): FaciaContainerHeader = {
+  def fromTagPage(tagPage: Tag, dateHeadline: DateHeadline)(implicit context: ApplicationContext): FaciaContainerHeader = {
     if (tagPage.isFootballTeam) {
       MetaDataHeader(
         tagPage.metadata.webTitle,
@@ -76,7 +76,7 @@ object FaciaContainerHeader {
   }
 
   /** Want to show a link to the front if it exists, or to the first page of the tag page if we're not on that page */
-  private def frontHref(id: String, pagination: Option[Pagination]) =
+  private def frontHref(id: String, pagination: Option[Pagination])(implicit context: ApplicationContext) =
     if (ConfigAgent.shouldServeFront(id) || pagination.exists(_.currentPage > 1)) {
       Some(s"/$id")
     } else {

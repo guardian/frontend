@@ -1,4 +1,4 @@
-@(maybeTestResult: Option[controllers.cache.PrePurgeTestResult] = None, message: String = "")(implicit request: RequestHeader, env: play.api.Environment)
+@(maybeTestResult: Option[controllers.cache.PrePurgeTestResult] = None, message: String = "")(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Purge Cache", isAuthed = true) {
 

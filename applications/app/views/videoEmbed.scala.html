@@ -3,7 +3,7 @@
 @import templates.inlineJS.blocking.js.curlConfig
 @import views.support.{SeoOptimisedContentImage, StripHtmlTags, Video640}
 
-@(page: EmbedPage)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: EmbedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 <!DOCTYPE html>
 <html lang="en-GB" class="gu-video-embed-html ">

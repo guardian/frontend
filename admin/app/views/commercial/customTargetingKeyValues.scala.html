@@ -1,4 +1,4 @@
-@(keyValues: Seq[_root_.dfp.GuCustomTargetingKey])(implicit request: RequestHeader, env: play.api.Environment)
+@(keyValues: Seq[_root_.dfp.GuCustomTargetingKey])(implicit request: RequestHeader, context: model.ApplicationContext)
 @import tools.DfpLink
 
 @admin_main("Key Value Targeting", isAuthed = true, hasCharts = false) {

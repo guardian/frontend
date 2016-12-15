@@ -8,8 +8,8 @@ import conf.Configuration
 
 
 object DynamoDB {
-  private lazy val credentials = Configuration.aws.mandatoryCredentials
-  private lazy val region = Region.getRegion(Regions.fromName(Configuration.aws.region))
+  private val credentials = Configuration.aws.mandatoryCredentials
+  private val region = Region.getRegion(Regions.fromName(Configuration.aws.region))
 
   lazy val asyncClient = createClient(classOf[AmazonDynamoDBAsyncClient])
   lazy val syncClient = createClient(classOf[AmazonDynamoDBClient])

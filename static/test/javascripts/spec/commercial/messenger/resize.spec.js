@@ -1,9 +1,11 @@
 define([
     'helpers/fixtures',
-    'helpers/injector'
+    'helpers/injector',
+    'Promise'
 ], function (
     fixtures,
-    Injector
+    Injector,
+    Promise
 ) {
     describe('Cross-frame messenger: resize', function () {
         var resize;

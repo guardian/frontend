@@ -48,7 +48,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("frontend-article")
+  lazy val appIdentity = ApplicationIdentity("article")
 
   override lazy val appMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpLatencyTimingMetric,

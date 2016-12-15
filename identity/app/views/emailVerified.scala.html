@@ -1,4 +1,4 @@
-@(state: controllers.ValidationState, page: model.Page, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, userIsLoggedIn: Boolean, returnUrl : String)(implicit request: RequestHeader, env: play.api.Environment)
+@(state: controllers.ValidationState, page: model.Page, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, userIsLoggedIn: Boolean, returnUrl : String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import controllers.ValidationState._
 @import views.html.fragments.registrationFooter

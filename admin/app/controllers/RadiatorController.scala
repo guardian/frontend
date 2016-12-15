@@ -8,14 +8,13 @@ import play.api.libs.ws.{WSAuthScheme, WSClient}
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json.Json
 import conf.Configuration
-import model.NoCache
+import model.{ApplicationContext, NoCache}
 import conf.switches.{Switch, Switches}
 import model.deploys.{HttpClient, TeamCityBuild, TeamcityService}
-import play.api.Environment
 
 import scala.concurrent.Future
 
-class RadiatorController(wsClient: WSClient)(implicit env: Environment) extends Controller with Logging with Requests{
+class RadiatorController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with Requests{
 
   // if you are reading this you are probably being rate limited...
   // you can read about github rate limiting here http://developer.github.com/v3/#rate-limiting

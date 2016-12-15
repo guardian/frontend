@@ -4,18 +4,15 @@ import common.{ExecutionContexts, Logging}
 import football.model.PA
 import football.services.PaFootballClient
 import model.Cached.RevalidatableResult
-import model.{Cached, Cors, NoCache}
+import model.{ApplicationContext, Cached, Cors, NoCache}
 import org.joda.time.LocalDate
 import pa._
 import play.api.mvc._
 import play.api.libs.ws.WSClient
-import play.api.Environment
 
 import scala.concurrent.Future
 
-class TablesController(val wsClient: WSClient, val environment: Environment) extends Controller with ExecutionContexts with PaFootballClient with Logging {
-
-  implicit val env: Environment = environment
+class TablesController(val wsClient: WSClient)(implicit val context: ApplicationContext) extends Controller with ExecutionContexts with PaFootballClient with Logging {
 
   def tablesIndex = Action.async { implicit request =>
     for {

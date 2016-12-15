@@ -36,7 +36,6 @@ module.exports = (() => [
     '/football/2016/jun/20/ngolo-kante-france-euro-2016-caen-jose-saez', // guardian audio
     '/science/2016/may/25/neanderthals-built-mysterious-cave-structures-175000-years-ago', // dailymotion
     '/sustainable-business/live/2016/sep/16/coffee-climate-change-smallholders-central-america-ethiopia-technology-funding', // commercial badge with dimensions
-    '/somerset-county-council-partner-zone/2016/sep/21/somerset-offers-opportunities-develop-social-work-career', // page with GLabs badge
     '/world/2016/sep/19/democratic-republic-congo-demonstrations-banned-police-killed-joseph-kabila-etienne-tshisekedi', // google maps
     '/news/2016/may/09/how-mossack-fonseca-missed-warning-signs-of-70-million-boiler-room-scam-panama-papers', // scribd
     '/sport/2015/nov/18/jonah-lomu-interview-2015-world-cup-audio', // soundcloud
@@ -56,16 +55,4 @@ module.exports = (() => [
          */
     '/us-news/live/2016/aug/12/donald-trump-republicans-hillary-clinton-us-election-live', // Live blog
     '/sport/live/2016/aug/20/rio-2016-olympics-day-15-mo-farah-relays-tom-daley-nicola-adams-football-live', // Sport live blog
-
-        /*
-            Paid for by pages
-         */
-    '/somerset-county-council-partner-zone/2016/sep/21/somerset-offers-opportunities-develop-social-work-career',
-
-        /*
-            Hosted pages
-         */
-    '/advertiser-content/audi-history-of-audi/audi-and-innovation', // hosted article page
-    '/advertiser-content/colonial-first-state-the-next-chapter/steve-liebmann-former-australian-television-anchor-on-the-ext-chapter', // hosted video non-youtube page
-    '/advertiser-content/explore-canada-food-busker-in-canada/duelling-bagels', // hosted video youtube page
 ])();

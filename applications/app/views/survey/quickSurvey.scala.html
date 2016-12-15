@@ -1,6 +1,6 @@
 @import model.Page
 
-@(surveyPage: Page)(implicit request: RequestHeader, env: play.api.Environment)
+@(surveyPage: Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @surveyMain(surveyPage) {
     <div class="illustration-container">

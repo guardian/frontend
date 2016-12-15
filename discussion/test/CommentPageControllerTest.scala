@@ -10,7 +10,7 @@ import play.filters.csrf.CSRFConfig
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestWsClient {
 
   "Discussion" should "return 200" in {
