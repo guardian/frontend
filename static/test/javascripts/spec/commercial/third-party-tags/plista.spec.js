@@ -35,6 +35,9 @@ define([
             injector.mock('common/modules/commercial/dfp/track-ad-render', function(id) {
                 return Promise.resolve(ads[id]);
             });
+
+            window.guardian.adBlockers.active = true;
+
             injector.require([
                 'common/utils/config',
                 'common/modules/identity/api',
@@ -63,10 +66,6 @@ define([
                     return false;
                 };
 
-                detect.adblockInUseSync = function () {
-                    return false;
-                };
-
                 fixtures.render(fixturesConfig);
                 done();
             });
@@ -82,15 +81,13 @@ define([
                 expect(sut).toBeDefined();
             });
 
-            it('should load plista component immediately when adblock in use', function () {
-
-                detect.adblockInUseSync = function () {
-                    return true;
-                };
-
+            it('should load plista component immediately when adblock in use', function (done) {
+                window.guardian.adBlockers.active = true;
                 spyOn(sut, 'load');
-                sut.init();
-                expect(sut.load).toHaveBeenCalled();
+                sut.init().then(function() {
+                    expect(sut.load).toHaveBeenCalled();
+                    done();
+                });
             });
 
             it('should load plista component when render completes', function (done) {
@@ -112,27 +109,35 @@ define([
                 fixtures.clean(fixturesMerch.id);
             });
 
-            it('should not load when sensitive content', function () {
+            it('should not load when sensitive content', function (done) {
                 commercialFeatures.outbrain = false;
-                spyOn(sut, 'load');
-                sut.init();
-                expect(sut.load).not.toHaveBeenCalled();
-            });
+                console.log(sut.init)
 
-            it('should not load when is preview', function () {
+                spyOn(sut, 'load');
+                sut.init().then(function () {
+                    expect(sut.load).not.toHaveBeenCalled();
+                    done();
+                });
+            });
+            //
+            it('should not load when is preview', function (done) {
                 config.page.isPreview = true;
                 spyOn(sut, 'load');
-                sut.init();
-                expect(sut.load).not.toHaveBeenCalled();
+                sut.init().then(function(){
+                    expect(sut.load).not.toHaveBeenCalled();
+                    done();
+                });
             });
 
-            it('should not load when user is logged in', function () {
+            it('should not load when user is logged in', function (done) {
                 identity.isUserLoggedIn = function () {
                     return true;
                 };
 
-                sut.init();
-                expect(sut.load).not.toHaveBeenCalled();
+                sut.init().then(function(){
+                    expect(sut.load).not.toHaveBeenCalled();
+                    done();
+                });
             });
 
             it('should load when user is logged in but there are no comments on the page', function () {
@@ -142,17 +147,9 @@ define([
 
                 config.page.commentable = false;
                 spyOn(sut, 'load');
-                sut.init();
-                expect(sut.load).toHaveBeenCalled();
-            });
-
-            it('should load instantly when ad block is in use', function () {
-                detect.adblockInUseSync = function () {
-                    return true;
-                };
-                spyOn(sut, 'load');
-                sut.init();
-                expect(sut.load).toHaveBeenCalled();
+                sut.init().then(function(){
+                    expect(sut.load).toHaveBeenCalled();
+                });
             });
         });
     });
