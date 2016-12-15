@@ -1,6 +1,8 @@
 define([
+    'Promise',
     'common/utils/fetch-json',
 ], function (
+    Promise,
     fetch
 ) {
     var location;
