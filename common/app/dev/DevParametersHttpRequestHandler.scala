@@ -63,7 +63,10 @@ class DevParametersHttpRequestHandler(
     "0p19G" // Google AMP AB test parameter
   )
 
-  val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams
+  //Workaround Play bug
+  val playBugs = Seq("")
+
+  val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ playBugs
 
   override def routeRequest(request: RequestHeader) = {
 

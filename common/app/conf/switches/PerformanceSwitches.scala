@@ -52,7 +52,7 @@ trait PerformanceSwitches {
     "If this switch is on then closed comment threads will get a longer cache time",
     owners = Seq(Owner.withGithub("dominickendrick")),
     safeState = On,
-    sellByDate = new LocalDate(2016, 12, 14),
+    sellByDate = new LocalDate(2016, 12, 18),
     exposeClientSide = false
   )
 
