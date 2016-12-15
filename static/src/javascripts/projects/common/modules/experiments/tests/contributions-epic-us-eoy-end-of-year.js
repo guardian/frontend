@@ -38,7 +38,7 @@ define([
 
         variants: [
             {
-                id: 'control',
+                id: 'endOfYear',
 
                 template: function (membershipUrl, contributionUrl) {
                     return template(contributionsEpicEqualButtons, {
