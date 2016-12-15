@@ -74,7 +74,7 @@ trait DeploysNotifyController extends Controller with ApiKeyAuthenticationSuppor
 }
 
 class DeploysNotifyControllerImpl(val wsClient: WSClient) extends DeploysNotifyController {
-  override val apiKey = Configuration.DeploysNotify.apiKey.getOrElse(
+  override lazy val apiKey = Configuration.DeploysNotify.apiKey.getOrElse(
     throw new RuntimeException("Deploys-notify API Key not set")
   )
   val httpClient = new HttpClient(wsClient)

@@ -179,8 +179,8 @@ object S3FrontsApi extends S3 {
 
 class SecureS3Request(wsClient: WSClient) extends implicits.Dates with Logging {
   val algorithm: String = "HmacSHA1"
-  val frontendBucket: String = Configuration.aws.bucket
-  val frontendStore: String = Configuration.frontend.store
+  lazy val frontendBucket: String = Configuration.aws.bucket
+  lazy val frontendStore: String = Configuration.frontend.store
 
   def urlGet(id: String): WSRequest = url("GET", id)
 
