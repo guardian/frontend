@@ -18,7 +18,7 @@ define([
     function onScroll() {
         var viewportHeight = detect.getViewport().height;
 
-        var lazyLoad = dfpEnv.advertsToLoad
+        var lazyLoadAds = dfpEnv.advertsToLoad
         .filter(function (advert) {
             var rect = advert.node.getBoundingClientRect();
             var isNotHidden = rect.top + rect.left + rect.right + rect.bottom !== 0;
@@ -32,14 +32,14 @@ define([
         });
 
         dfpEnv.advertsToLoad = dfpEnv.advertsToLoad.filter(function (advert) {
-            return lazyLoad.indexOf(advert.id) < 0;
+            return lazyLoadAds.indexOf(advert.id) < 0;
         });
 
         if (dfpEnv.advertsToLoad.length === 0) {
             stopListening();
         }
 
-        lazyLoad.forEach(displayAd);
+        lazyLoadAds.forEach(displayAd);
     }
 
     function stopListening() {
