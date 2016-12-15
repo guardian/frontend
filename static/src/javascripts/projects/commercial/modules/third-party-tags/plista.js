@@ -91,7 +91,7 @@ define([
                         }
                     });
                 }
-            })
+            });
         }else {
             return Promise.resolve(false);
         }
