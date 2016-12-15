@@ -28,8 +28,6 @@ define([
         audienceOffset: 0.875,
         useTargetingTool: true,
 
-        overrideCanRun: true,
-
         /**
          * In addition to the typical contributions criteria (in contributions-utilities) we need to exclude anyone
          * in the "always ask" strategy test
