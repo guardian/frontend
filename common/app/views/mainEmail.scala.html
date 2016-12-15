@@ -35,7 +35,7 @@
         @if(page.metadata.isFront) {
             @fragments.email.stylesheets.frontFonts()
             @fragments.email.stylesheets.front(page)
-            @fragments.email.stylesheets.tones()
+            @fragments.email.stylesheets.tones(page)
 
             @* This is a temporary override to test two alternative email designs 29/11/2016 *@
             @if(request.isEmailConnectedStyle) {

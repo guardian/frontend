@@ -62,7 +62,7 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("frontend-onward")
+  lazy val appIdentity = ApplicationIdentity("onward")
 
   val applicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,

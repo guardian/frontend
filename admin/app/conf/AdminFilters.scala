@@ -2,6 +2,7 @@ package conf
 
 import com.gu.googleauth.FilterExemption
 import googleAuth.GoogleAuthFilters
+import model.ApplicationContext
 import play.api.Environment
 import play.api.http.HttpFilters
 import play.api.mvc.EssentialFilter
@@ -17,13 +18,11 @@ object FilterExemptions {
   )
 }
 
-class AdminFilters(
-                         environment: Environment
-                       ) extends HttpFilters {
+class AdminFilters(environment: Environment, context: ApplicationContext) extends HttpFilters {
 
   val adminAuthFilter = new GoogleAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
     FilterExemptions.exemptions)(environment)
 
-  val filters: List[EssentialFilter] = adminAuthFilter :: Filters.common
+  val filters: List[EssentialFilter] = adminAuthFilter :: Filters.common(context: ApplicationContext)
 }

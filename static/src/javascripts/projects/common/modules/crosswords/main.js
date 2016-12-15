@@ -117,6 +117,169 @@ define([
             }
         },
 
+        onKeyDown: function (event) {
+            var cell = this.state.cellInFocus;
+
+            if (event.keyCode === keycodes.tab) {
+                event.preventDefault();
+                if (event.shiftKey) {
+                    this.focusPreviousClue();
+                } else {
+                    this.focusNextClue();
+                }
+            } else if (!event.metaKey && !event.ctrlKey && !event.altKey) {
+                if (event.keyCode === keycodes.backspace || event.keyCode === keycodes.delete) {
+                    event.preventDefault();
+                    if (this.cellIsEmpty(cell.x, cell.y)) {
+                        this.focusPrevious();
+                    } else {
+                        this.setCellValue(cell.x, cell.y, '');
+                        this.save();
+                    }
+                } else if (event.keyCode === keycodes.left) {
+                    event.preventDefault();
+                    this.moveFocus(-1, 0);
+                } else if (event.keyCode === keycodes.up) {
+                    event.preventDefault();
+                    this.moveFocus(0, -1);
+                } else if (event.keyCode === keycodes.right) {
+                    event.preventDefault();
+                    this.moveFocus(1, 0);
+                } else if (event.keyCode === keycodes.down) {
+                    event.preventDefault();
+                    this.moveFocus(0, 1);
+                }
+            }
+        },
+
+        // called when cell is selected (by click or programtically focussed)
+        onSelect: function (x, y) {
+            var cellInFocus = this.state.cellInFocus;
+            var clue = helpers.cluesFor(this.clueMap, x, y);
+            var focussedClue = this.clueInFocus();
+            var newDirection;
+
+            var isInsideFocussedClue = function isInsideFocussedClue() {
+                return focussedClue ? helpers.entryHasCell(focussedClue, x, y) : false;
+            };
+
+            if (cellInFocus && cellInFocus.x === x && cellInFocus.y === y) {
+                /** User has clicked again on the highlighted cell, meaning we ought to swap direction */
+                newDirection = helpers.otherDirection(this.state.directionOfEntry);
+
+                if (clue[newDirection]) {
+                    this.focusClue(x, y, newDirection);
+                }
+            } else if (isInsideFocussedClue()) {
+                /**
+                 * If we've clicked inside the currently highlighted clue, then we ought to just shift the cursor
+                 * to the new cell, not change direction or anything funny.
+                 */
+
+                this.focusClue(x, y, this.state.directionOfEntry);
+            } else {
+                this.state.cellInFocus = {
+                    x: x,
+                    y: y
+                };
+
+                var isStartOfClue = function isStartOfClue(sourceClue) {
+                    return sourceClue && sourceClue.position.x === x && sourceClue.position.y === y;
+                };
+
+                /**
+                 * If the user clicks on the start of a down clue midway through an across clue, we should
+                 * prefer to highlight the down clue.
+                 */
+                if (!isStartOfClue(clue.across) && isStartOfClue(clue.down)) {
+                    newDirection = 'down';
+                } else if (clue.across) {
+                    /** Across is the default focus otherwise */
+                    newDirection = 'across';
+                } else {
+                    newDirection = 'down';
+                }
+                this.focusClue(x, y, newDirection);
+            }
+        },
+
+        onCheat: function () {
+            forEach(this.allHighlightedClues(), this.cheat, this);
+            this.save();
+        },
+
+        onCheck: function () {
+            // 'Check this' checks single and grouped clues
+            forEach(this.allHighlightedClues(), this.check, this);
+            this.save();
+        },
+
+        onSolution: function () {
+            forEach(this.props.data.entries, this.cheat, this);
+            this.save();
+        },
+
+        onCheckAll: function () {
+            forEach(this.props.data.entries, this.check, this);
+            this.save();
+        },
+
+        onClearAll: function () {
+            this.setState({
+                grid: helpers.mapGrid(this.state.grid, function (cell) {
+                    cell.value = '';
+                    return cell;
+                })
+            });
+
+            this.save();
+        },
+
+        onClearSingle: function () {
+            // Merge arrays of cells from all highlighted clues
+            //const cellsInFocus = _.flatten(_.map(this.allHighlightedClues(), helpers.cellsForEntry, this));
+            var cellsInFocus = helpers.getClearableCellsForClue(this.state.grid, this.clueMap, this.props.data.entries, this.clueInFocus());
+
+            this.setState({
+                grid: helpers.mapGrid(this.state.grid, function (cell, gridX, gridY) {
+                    if (some(cellsInFocus, function (c) {
+                            return c.x === gridX && c.y === gridY;
+                        })) {
+                        cell.value = '';
+                    }
+                    return cell;
+                })
+            });
+
+            this.save();
+        },
+
+        onToggleAnagramHelper: function () {
+            // only show anagram helper if a clue is active
+            if (!this.state.showAnagramHelper) {
+                return this.clueInFocus() && this.setState({
+                    showAnagramHelper: true
+                });
+            }
+
+            this.setState({
+                showAnagramHelper: false
+            });
+        },
+
+        onClickHiddenInput: function (event) {
+            var focussed = this.state.cellInFocus;
+
+            this.onSelect(focussed.x, focussed.y);
+
+            /* We need to handle touch seperately as touching an input on iPhone does not fire the
+            click event - listen for a touchStart and preventDefault to avoid calling onSelect twice on
+            devices that fire click AND touch events. The click event doesn't fire only when the input is already focused */
+            if (event.type === 'touchstart') {
+                event.preventDefault();
+            }
+        },
+
         setGridHeight: function () {
             if (!this.$gridWrapper) {
                 this.$gridWrapper = $(React.findDOMNode(this.refs.gridWrapper));
@@ -156,8 +319,8 @@ define([
             return this.state.grid[x][y].value;
         },
 
-        cellIsEmpty: function (x, y) {
-            return !this.getCellValue(x, y);
+        setReturnPosition: function (position) {
+            this.returnPosition = position;
         },
 
         insertCharacter: function (character) {
@@ -169,43 +332,8 @@ define([
             }
         },
 
-        onKeyDown: function (event) {
-            var cell = this.state.cellInFocus;
-
-            if (event.keyCode === keycodes.tab) {
-                event.preventDefault();
-                if (event.shiftKey) {
-                    this.focusPreviousClue();
-                } else {
-                    this.focusNextClue();
-                }
-            } else if (!event.metaKey && !event.ctrlKey && !event.altKey) {
-                if (event.keyCode === keycodes.backspace || event.keyCode === keycodes.delete) {
-                    event.preventDefault();
-                    if (this.cellIsEmpty(cell.x, cell.y)) {
-                        this.focusPrevious();
-                    } else {
-                        this.setCellValue(cell.x, cell.y, '');
-                        this.save();
-                    }
-                } else if (event.keyCode === keycodes.left) {
-                    event.preventDefault();
-                    this.moveFocus(-1, 0);
-                } else if (event.keyCode === keycodes.up) {
-                    event.preventDefault();
-                    this.moveFocus(0, -1);
-                } else if (event.keyCode === keycodes.right) {
-                    event.preventDefault();
-                    this.moveFocus(1, 0);
-                } else if (event.keyCode === keycodes.down) {
-                    event.preventDefault();
-                    this.moveFocus(0, 1);
-                }
-            }
-        },
-
-        setReturnPosition: function (position) {
-            this.returnPosition = position;
+        cellIsEmpty: function (x, y) {
+            return !this.getCellValue(x, y);
         },
 
         goToReturnPosition: function () {
@@ -324,57 +452,6 @@ define([
 
             if (document.activeElement !== hiddenInputNode) {
                 hiddenInputNode.focus();
-            }
-        },
-
-        // called when cell is selected (by click or programtically focussed)
-        onSelect: function (x, y) {
-            var cellInFocus = this.state.cellInFocus;
-            var clue = helpers.cluesFor(this.clueMap, x, y);
-            var focussedClue = this.clueInFocus();
-            var newDirection;
-
-            var isInsideFocussedClue = function isInsideFocussedClue() {
-                return focussedClue ? helpers.entryHasCell(focussedClue, x, y) : false;
-            };
-
-            if (cellInFocus && cellInFocus.x === x && cellInFocus.y === y) {
-                /** User has clicked again on the highlighted cell, meaning we ought to swap direction */
-                newDirection = helpers.otherDirection(this.state.directionOfEntry);
-
-                if (clue[newDirection]) {
-                    this.focusClue(x, y, newDirection);
-                }
-            } else if (isInsideFocussedClue()) {
-                /**
-                 * If we've clicked inside the currently highlighted clue, then we ought to just shift the cursor
-                 * to the new cell, not change direction or anything funny.
-                 */
-
-                this.focusClue(x, y, this.state.directionOfEntry);
-            } else {
-                this.state.cellInFocus = {
-                    x: x,
-                    y: y
-                };
-
-                var isStartOfClue = function isStartOfClue(sourceClue) {
-                    return sourceClue && sourceClue.position.x === x && sourceClue.position.y === y;
-                };
-
-                /**
-                 * If the user clicks on the start of a down clue midway through an across clue, we should
-                 * prefer to highlight the down clue.
-                 */
-                if (!isStartOfClue(clue.across) && isStartOfClue(clue.down)) {
-                    newDirection = 'down';
-                } else if (clue.across) {
-                    /** Across is the default focus otherwise */
-                    newDirection = 'across';
-                } else {
-                    newDirection = 'down';
-                }
-                this.focusClue(x, y, newDirection);
             }
         },
 
@@ -507,70 +584,6 @@ define([
             }
         },
 
-        onCheat: function () {
-            forEach(this.allHighlightedClues(), this.cheat, this);
-            this.save();
-        },
-
-        onCheck: function () {
-            // 'Check this' checks single and grouped clues
-            forEach(this.allHighlightedClues(), this.check, this);
-            this.save();
-        },
-
-        onSolution: function () {
-            forEach(this.props.data.entries, this.cheat, this);
-            this.save();
-        },
-
-        onCheckAll: function () {
-            forEach(this.props.data.entries, this.check, this);
-            this.save();
-        },
-
-        onClearAll: function () {
-            this.setState({
-                grid: helpers.mapGrid(this.state.grid, function (cell) {
-                    cell.value = '';
-                    return cell;
-                })
-            });
-
-            this.save();
-        },
-
-        onClearSingle: function () {
-            // Merge arrays of cells from all highlighted clues
-            //const cellsInFocus = _.flatten(_.map(this.allHighlightedClues(), helpers.cellsForEntry, this));
-            var cellsInFocus = helpers.getClearableCellsForClue(this.state.grid, this.clueMap, this.props.data.entries, this.clueInFocus());
-
-            this.setState({
-                grid: helpers.mapGrid(this.state.grid, function (cell, gridX, gridY) {
-                    if (some(cellsInFocus, function (c) {
-                            return c.x === gridX && c.y === gridY;
-                        })) {
-                        cell.value = '';
-                    }
-                    return cell;
-                })
-            });
-
-            this.save();
-        },
-
-        onToggleAnagramHelper: function () {
-            // only show anagram helper if a clue is active
-            if (!this.state.showAnagramHelper) {
-                return this.clueInFocus() && this.setState({
-                    showAnagramHelper: true
-                });
-            }
-
-            this.setState({
-                showAnagramHelper: false
-            });
-        },
-
         hiddenInputValue: function () {
             var cell = this.state.cellInFocus;
 
@@ -581,19 +594,6 @@ define([
             }
 
             return currentValue ? currentValue : '';
-        },
-
-        onClickHiddenInput: function (event) {
-            var focussed = this.state.cellInFocus;
-
-            this.onSelect(focussed.x, focussed.y);
-
-            /* We need to handle touch seperately as touching an input on iPhone does not fire the
-            click event - listen for a touchStart and preventDefault to avoid calling onSelect twice on
-            devices that fire click AND touch events. The click event doesn't fire only when the input is already focused */
-            if (event.type === 'touchstart') {
-                event.preventDefault();
-            }
         },
 
         hasSolutions: function () {

@@ -38,6 +38,6 @@ trait AppLifecycleComponents {
 
 trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers {
   lazy val router: Router = wire[Routes]
-  lazy val appIdentity = ApplicationIdentity("frontend-diagnostics")
+  lazy val appIdentity = ApplicationIdentity("diagnostics")
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonGzipFilter].filters
 }

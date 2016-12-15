@@ -44,7 +44,7 @@ trait AppComponents extends FrontendComponents with AdminJobsControllers with Ad
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("frontend-admin-jobs")
+  lazy val appIdentity = ApplicationIdentity("admin-jobs")
 
   override lazy val appMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,

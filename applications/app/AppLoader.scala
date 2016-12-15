@@ -60,7 +60,7 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("frontend-applications")
+  lazy val appIdentity = ApplicationIdentity("applications")
 
   override lazy val appMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,

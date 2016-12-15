@@ -13,9 +13,11 @@ define([
     'common/modules/experiments/tests/contributions-epic-brexit-supreme',
     'common/modules/experiments/tests/contributions-epic-us-pre-end-of-year-two',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
+    'common/modules/experiments/tests/contributions-epic-on-the-moon',
     'common/modules/experiments/tests/uk-membership-engagement-message-test-10',
     'common/modules/experiments/tests/au-membership-engagement-message-test-8',
-    'common/modules/experiments/tests/its-raining-inline-ads'
+    'common/modules/experiments/tests/its-raining-inline-ads',
+    'common/modules/experiments/tests/video-headline'
 ], function (reportError,
              config,
              cookies,
@@ -26,24 +28,28 @@ define([
              noop,
              EditorialEmailVariants,
              RecommendedForYou,
-             MembershipEngagementInternationalExperiment,
+             MembershipEngagementInternationalExperimentTest12,
              ContributionsEpicBrexitSupreme,
              ContributionsEpicUsPreEndOfYearTwo,
              ContributionsEpicAlwaysAskStrategy,
+             ContributionsEpicOnTheMoon,
              UkMembershipEngagementMessageTest10,
              AuMembershipEngagementMessageTest8,
-             ItsRainingInlineAds
+             ItsRainingInlineAds,
+             VideoHeadline
     ) {
     var TESTS = [
         new EditorialEmailVariants(),
         new RecommendedForYou(),
-        new MembershipEngagementInternationalExperiment(),
+        new MembershipEngagementInternationalExperimentTest12(),
         new ContributionsEpicBrexitSupreme(),
         new ContributionsEpicUsPreEndOfYearTwo(),
         new ContributionsEpicAlwaysAskStrategy(),
+        new ContributionsEpicOnTheMoon(),
         new UkMembershipEngagementMessageTest10(),
         new AuMembershipEngagementMessageTest8(),
-        new ItsRainingInlineAds()
+        new ItsRainingInlineAds(),
+        new VideoHeadline()
     ];
 
     var participationsKey = 'gu.ab.participations';

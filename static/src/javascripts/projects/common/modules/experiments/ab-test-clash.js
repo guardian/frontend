@@ -32,13 +32,19 @@ define([
         variants: ['control', 'alwaysAsk']
     };
 
+    var ContributionsEpicOnTheMoon = {
+        name: 'ContributionsEpicOnTheMoon',
+        variants: ['control', 'showMeTheMoon', 'australiaNewsroom', 'endOfYearAustralia']
+    };
+
     function userIsInAClashingAbTest() {
         var clashingTests = [
             ContributionsEpicUsaCtaThreeWay,
             ContributionsEpicObserverAnniversary,
             ContributionsEpicBrexitSupreme,
             ContributionsEpicUsPreEndOfYearTwo,
-            ContributionsEpicAlwaysAskStrategy
+            ContributionsEpicAlwaysAskStrategy,
+            ContributionsEpicOnTheMoon
         ];
         return _testABClash(ab.isInVariant, clashingTests);
     }
