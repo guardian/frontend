@@ -6,7 +6,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
 import common.{ExecutionContexts, Lazy}
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
-import model.ApplicationContext
+import model.{ApplicationContext, ApplicationIdentity}
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatest.BeforeAndAfterAll
 import org.scalatestplus.play._
@@ -117,7 +117,7 @@ object TestRequest {
 }
 
 trait WithTestContext {
-  implicit val testContext = new ApplicationContext(Environment.simple())
+  implicit val testContext = ApplicationContext(Environment.simple(), ApplicationIdentity("tests"))
 }
 
 trait WithTestWsClient {

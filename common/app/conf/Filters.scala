@@ -5,6 +5,7 @@ import common.ExecutionContexts
 import filters.RequestLoggingFilter
 import play.api.http.HttpFilters
 import implicits.Responses._
+import model.ApplicationContext
 import play.api.mvc.{EssentialFilter, Filter, RequestHeader, Result}
 import play.filters.gzip.GzipFilter
 
@@ -34,9 +35,9 @@ class JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicits
 }
 
 // this lets the CDN log the exact part of the backend this response came from
-class BackendHeaderFilter extends Filter with ExecutionContexts {
+class BackendHeaderFilter(context: ApplicationContext) extends Filter with ExecutionContexts {
 
-  private lazy val backendHeader = "X-Gu-Backend-App" -> conf.Configuration.environment.projectName
+  private lazy val backendHeader = "X-Gu-Backend-App" -> context.applicationIdentity.name
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
     nextFilter(request).map(_.withHeaders(backendHeader))
@@ -75,19 +76,19 @@ class AmpFilter extends Filter with ExecutionContexts with implicits.Requests {
 object Filters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
-  def common: List[EssentialFilter] = List(
+  def common(context: ApplicationContext): List[EssentialFilter] = List(
     new RequestLoggingFilter,
     new PanicSheddingFilter,
     new JsonVaryHeadersFilter,
     new Gzipper,
-    new BackendHeaderFilter,
+    new BackendHeaderFilter(context),
     new SurrogateKeyFilter,
     new AmpFilter
   )
 }
 
-class CommonFilters extends HttpFilters {
-  val filters = Filters.common
+class CommonFilters(context: ApplicationContext) extends HttpFilters {
+  val filters = Filters.common(context)
 }
 
 class CommonGzipFilter extends HttpFilters {

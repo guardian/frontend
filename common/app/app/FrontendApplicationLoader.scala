@@ -59,7 +59,7 @@ trait FrontendComponents
 
   // here are the attributes you must provide for your app to start
   def appIdentity: ApplicationIdentity
-  implicit def appContext = new ApplicationContext(environment)
+  implicit def appContext = ApplicationContext(environment, appIdentity)
   def lifecycleComponents: List[LifecycleComponent]
   def router: Router
 }

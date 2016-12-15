@@ -67,7 +67,7 @@ trait AppComponents extends FrontendComponents with CommercialControllers with C
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("frontend-commercial")
+  lazy val appIdentity = ApplicationIdentity("commercial")
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
