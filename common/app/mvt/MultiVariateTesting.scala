@@ -57,7 +57,7 @@ object WebpackTest extends TestDefinition(
   sellByDate = new LocalDate(2017, 1, 9)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-webpack").contains("webpack")
+    request.headers.get("X-GU-ab-webpack-bundle").contains("webpack")
   }
 }
 
@@ -68,7 +68,7 @@ object WebpackControl extends TestDefinition(
   sellByDate = new LocalDate(2017, 1, 9)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-webpack").contains("control")
+    request.headers.get("X-GU-ab-webpack-bundle").contains("control")
   }
 }
 
