@@ -15,7 +15,8 @@ define([
     'common/utils/ajax',
     'common/modules/commercial/commercial-features',
     'common/utils/element-inview',
-    'lodash/arrays/intersection'
+    'lodash/arrays/intersection',
+    'common/utils/storage',
 ], function (bean,
              qwery,
              $,
@@ -32,7 +33,9 @@ define([
              ajax,
              commercialFeatures,
              ElementInview,
-             intersection) {
+             intersection,
+             store
+) {
 
     // We want to ensure the test always runs as this enables an easy data lake query to see whether a reader is in the
     // test segment: check whether the ab_tests field contains a test with name ContributionsEpicAlwaysAskStrategy.
@@ -53,6 +56,10 @@ define([
         this.idealOutcome = 'There are no negative effects and this is the optimum strategy!';
         this.canRun = function () {
 
+            var participations = store.local.get('gu.ab.participations') || {};
+            var isInAlwaysAsk = 'ContributionsEpicAlwaysAskStrategy' in participations
+                && participations['ContributionsEpicAlwaysAskStrategy'].variant !== 'notintest';
+
             var excludedKeywordIds = ['society/guardian-and-observer-charity-appeal-2016'];
 
             var tagsMatch = function () {
@@ -67,7 +74,12 @@ define([
             var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
             var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle; // may render badly on other types
             var isSensitive = config.page.isSensitive === true;
-            return userHasNeverContributed && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate && tagsMatch() && !isSensitive;
+            return userHasNeverContributed
+                && commercialFeatures.canReasonablyAskForMoney
+                && worksWellWithPageTemplate
+                && tagsMatch()
+                && !isSensitive
+                && !isInAlwaysAsk;
         };
 
         var makeEvent = (function(name) {
