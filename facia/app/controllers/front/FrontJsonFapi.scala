@@ -10,7 +10,7 @@ import services.SecureS3Request
 import scala.concurrent.Future
 
 trait FrontJsonFapi extends Logging with ExecutionContexts {
-  val stage: String = Configuration.facia.stage.toUpperCase
+  lazy val stage: String = Configuration.facia.stage.toUpperCase
   val bucketLocation: String
 
   val wsClient: WSClient

@@ -3,6 +3,7 @@ package conf
 import com.gu.googleauth.FilterExemption
 import common.ExecutionContexts
 import googleAuth.GoogleAuthFilters
+import model.ApplicationContext
 import play.api.Environment
 import play.api.http.HttpFilters
 import play.api.mvc.{Filter, RequestHeader, Result}
@@ -30,12 +31,13 @@ object FilterExemptions {
 }
 
 class StandaloneFilters(
-    environment: Environment
+    environment: Environment,
+    context: ApplicationContext
 ) extends HttpFilters {
 
   val previewAuthFilter = new GoogleAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
     FilterExemptions.exemptions)(environment)
 
-  val filters = previewAuthFilter :: new NoCacheFilter() :: Filters.common
+  val filters = previewAuthFilter :: new NoCacheFilter() :: Filters.common(context)
 }

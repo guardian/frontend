@@ -71,7 +71,7 @@ trait AppComponents extends FrontendComponents
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("frontend-sport")
+  lazy val appIdentity = ApplicationIdentity("sport")
 
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
