@@ -40,7 +40,6 @@ define([
 
     /**
      * Log that the user has seen an Epic test so we can limit how many times they see it.
-     * We only store events that fall within the range specified in `maxViews.days`.
      *
      * @param testId
      */
