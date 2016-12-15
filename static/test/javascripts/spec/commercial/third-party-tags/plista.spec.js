@@ -25,7 +25,6 @@ define([
         },
         config,
         identity,
-        detect,
         sut,
         commercialFeatures,
         injector = new Injector();
@@ -41,15 +40,13 @@ define([
             injector.require([
                 'common/utils/config',
                 'common/modules/identity/api',
-                'common/utils/detect',
                 'commercial/modules/third-party-tags/plista',
                 'common/modules/commercial/commercial-features'
             ], function () {
                 config = arguments[0];
                 identity = arguments[1];
-                detect = arguments[2];
-                sut = arguments[3];
-                commercialFeatures = arguments[4];
+                sut = arguments[2];
+                commercialFeatures = arguments[3];
 
                 commercialFeatures.thirdPartyTags = true;
                 commercialFeatures.outbrain = true;
@@ -111,8 +108,6 @@ define([
 
             it('should not load when sensitive content', function (done) {
                 commercialFeatures.outbrain = false;
-                console.log(sut.init)
-
                 spyOn(sut, 'load');
                 sut.init().then(function () {
                     expect(sut.load).not.toHaveBeenCalled();
