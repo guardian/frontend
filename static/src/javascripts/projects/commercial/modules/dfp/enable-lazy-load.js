@@ -13,7 +13,7 @@ define([
             dfpEnv.lazyLoadEnabled = true;
             if (dfpEnv.lazyLoadObserve) {
                 observer = new IntersectionObserver(lazyLoad, { rootMargin: '200px 0%' });
-                dfpEnv.adverts.forEach(function (advert) {
+                dfpEnv.advertsToLoad.forEach(function (advert) {
                     observer.observe(advert.node);
                 });
             } else {
