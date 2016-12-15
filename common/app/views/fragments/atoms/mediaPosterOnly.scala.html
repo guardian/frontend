@@ -1,0 +1,19 @@
+@(media: model.content.MediaAtom)
+<figure
+itemprop="associatedMedia image"
+itemscope
+itemtype="http://schema.org/ImageObject"
+data-component="image" xmlns="http://www.w3.org/1999/html"
+class="element element-image">
+    <div class="u-responsive-ratio">
+        <picture>
+            <img itemprop="contentUrl"
+            alt="@media.title"
+            src="@media.posterUrl.get">
+        </picture>
+    </div>
+    <figcaption class="caption caption--img" itemprop="description">
+    @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon", "rounded-icon")) @media.title
+    </figcaption>
+</figure>
+
