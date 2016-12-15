@@ -6,12 +6,14 @@ define([
     'bean',
     'reqwest',
     'fastdom',
-    'common/utils/$'
+    'common/utils/$',
+    'common/utils/config'
 ], function (
     bean,
     reqwest,
     fastdom,
-    $
+    $,
+    config
 ) {
     function reqwestEmailSubscriptionUpdate(buttonEl) {
         bean.on(buttonEl, 'click', function () {
@@ -154,9 +156,9 @@ define([
             }
             // hacks to deal with the various AB tests running on email listIDs
             // delete me after 2017-02-01!
-            if (value === 'unsubscribe-2211') {
-                buttonString += 'removeEmailSubscriptions[]=' + encodeURIComponent('3806') + '&';
-                buttonString += 'removeEmailSubscriptions[]=' + encodeURIComponent('3807') + '&';
+            if (config.switches.abEditorialEmailVariants && value === 'unsubscribe-2211') {
+                buttonString += 'removeEmailSubscriptions[]=3806&';
+                buttonString += 'removeEmailSubscriptions[]=3807&';
             }
             // end of hacks
         }
