@@ -51,7 +51,7 @@ object CommercialClientLoggingVariant extends TestDefinition(
 }
 
 object WebpackTest extends TestDefinition(
-  name = "ab-webpack",
+  name = "ab-webpack-bundle",
   description = "for users in this test, website will serve standard JavaScript that has been bundled by Webpack",
   owners = Seq(Owner.withGithub("siadcock")),
   sellByDate = new LocalDate(2017, 1, 9)
@@ -62,7 +62,7 @@ object WebpackTest extends TestDefinition(
 }
 
 object WebpackControl extends TestDefinition(
-  name = "ab-webpack-control",
+  name = "ab-webpack-bundle-control",
   description = "control for Webpack test",
   owners = Seq(Owner.withGithub("siadcock")),
   sellByDate = new LocalDate(2017, 1, 9)
