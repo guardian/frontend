@@ -8,12 +8,10 @@
 define([
     'common/utils/mediator',
     'lodash/functions/memoize',
-    'lodash/functions/debounce',
     'Promise'
 ], function (
     mediator,
     memoize,
-    debounce,
     Promise
 ) {
 
@@ -79,7 +77,7 @@ define([
             initMediaQueryListeners(win);
         } else {
             updateBreakpoints.call(win);
-            win.addEventListener('resize', debounce(updateBreakpoints, 200));
+            mediator.on('window:resize', updateBreakpoints);
         }
     }
 

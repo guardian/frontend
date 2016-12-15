@@ -10,7 +10,6 @@ define([
     'text!common/views/ui/selection-sharing.html',
     'common/views/svgs',
     'lodash/functions/debounce',
-    'lodash/functions/throttle',
     'lodash/collections/some'
 ], function (
     bean,
@@ -24,7 +23,6 @@ define([
     sharingTemplate,
     svgs,
     debounce,
-    throttle,
     some
 ) {
 
@@ -131,7 +129,7 @@ define([
             bean.on(document.body, 'keypress keydown keyup', debounce(updateSelection, 50));
             bean.on(document.body, 'mouseup', debounce(updateSelection, 200));
             bean.on(document.body, 'mousedown', debounce(onMouseDown, 50));
-            mediator.on('window:resize', throttle(updateSelection, 50));
+            mediator.on('window:resize', updateSelection);
         }
     };
 

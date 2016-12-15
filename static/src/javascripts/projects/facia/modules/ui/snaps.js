@@ -14,7 +14,6 @@ define([
     'facia/modules/ui/football-snaps',
     'lodash/functions/once',
     'lodash/collections/find',
-    'lodash/functions/debounce',
     'Promise'
 ], function (
     bean,
@@ -32,7 +31,6 @@ define([
     FootballSnaps,
     once,
     find,
-    debounce,
     Promise
 ) {
     var clientProcessedTypes = ['document', 'fragment', 'json.html'],
@@ -171,9 +169,9 @@ define([
             }
 
             if (!detect.isIOS) {
-                mediator.on('window:resize', debounce(function () {
+                mediator.on('window:resize', function () {
                     addCss(el, true);
-                }, 200));
+                });
             }
         });
     }
@@ -181,9 +179,9 @@ define([
     function initInlinedSnap(el) {
         addCss(el);
         if (!detect.isIOS) {
-            mediator.on('window:resize', debounce(function () {
+            mediator.on('window:resize', function () {
                 addCss(el, true);
-            }, 200));
+            });
         }
     }
 

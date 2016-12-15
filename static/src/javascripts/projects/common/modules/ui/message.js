@@ -6,7 +6,6 @@ define([
     'common/utils/mediator',
     'common/utils/detect',
     'common/modules/analytics/register',
-    'lodash/functions/debounce',
     'lodash/arrays/uniq'
 ], function (
     $,
@@ -16,7 +15,6 @@ define([
     mediator,
     detect,
     register,
-    debounce,
     uniq
 ) {
 
@@ -72,7 +70,7 @@ define([
 
         // Check and show the width based message
         this.updateMessageOnWidth();
-        mediator.on('window:resize', debounce(this.updateMessageOnWidth, 200).bind(this));
+        mediator.on('window:resize', this.updateMessageOnWidth.bind(this));
 
         if (this.siteMessageComponentName) {
             siteMessage.attr('data-component', this.siteMessageComponentName);

@@ -2,13 +2,11 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/$',
     'common/utils/mediator',
-    'lodash/functions/debounce',
     'common/utils/detect'
 ], function (
     fastdomPromise,
     $,
     mediator,
-    debounce,
     detect
 ) {
     // Helper for full height elements as 100vh on mobile Chrome and Safari
@@ -49,7 +47,7 @@ define([
     };
 
     var init = function () {
-        mediator.on('window:resize', debounce(onViewportChange, 200));
+        mediator.on('window:resize', onViewportChange);
         mediator.on('window:orientationchange', onViewportChange);
         onViewportChange();
     };
