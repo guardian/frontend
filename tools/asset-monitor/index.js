@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 const fs = require('fs');
 const path = require('path');
 
@@ -11,18 +9,18 @@ const chalk = require('chalk');
 
 const cloudwatch = require('./cloudwatch');
 
-const {target} = require('../__tasks__/config').paths;
+const { target } = require('../__tasks__/config').paths;
 
 const credentials = '/etc/gu/frontend.properties';
 
 const files = [].concat(
     glob.sync(`${target}/javascripts/**/*.js`, {
         ignore: '**/{components,vendor}/**',
-        nodir: true
+        nodir: true,
     }),
     glob.sync(`${target}/stylesheets/**/*`, {
         ignore: '**/*head.identity.css',
-        nodir: true
+        nodir: true,
     })
 );
 
@@ -33,21 +31,21 @@ const size = (filePath, fileData) => {
         uncompressed: Number((unZipped / 1024).toFixed(1)),
         uncompressedPretty: pretty(unZipped),
         compressed: Number((zipped / 1024).toFixed(1)),
-        compressedPretty: pretty(zipped)
+        compressedPretty: pretty(zipped),
     };
 };
 
 const css = (filePath, fileData) => {
     if (!filePath.match(/.css$/)) return {};
     const {
-        rules: {total: rules},
-        selectors: {total: totalSelectors}
-    } = cssstats(fileData, {mediaQueries: false});
+        rules: { total: rules },
+        selectors: { total: totalSelectors },
+    } = cssstats(fileData, { mediaQueries: false });
 
-    return {rules, totalSelectors, averageSelectors: +(totalSelectors / rules).toFixed(1)};
+    return { rules, totalSelectors, averageSelectors: +(totalSelectors / rules).toFixed(1) };
 };
 
-const analyse = filePath => {
+const analyse = (filePath) => {
     console.log(`Analysing ${filePath}`);
     try {
         const fileData = fs.readFileSync(filePath, 'utf8');
@@ -61,13 +59,14 @@ const analyse = filePath => {
 
         return cloudwatch.configure(credentials)
             .then(() => cloudwatch.log(path.basename(filePath), data))
-            .then(msg => {
+            .then((msg) => {
                 console.log(chalk.green(`Successfully logged file data to CloudWatch ${msg.id}`));
                 return true;
             })
             .catch(console.log);
     } catch (e) {
         console.log(e);
+        return null;
     }
 };
 

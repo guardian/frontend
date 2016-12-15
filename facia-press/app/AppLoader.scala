@@ -43,7 +43,7 @@ trait AppComponents extends FrontendComponents {
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("frontend-facia-press")
+  lazy val appIdentity = ApplicationIdentity("facia-press")
 
   override lazy val appMetrics = ApplicationMetrics(
     FaciaPressMetrics.FrontPressCronSuccess,

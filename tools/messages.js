@@ -2,27 +2,23 @@ const fs = require('fs');
 
 const takeWhile = require('lodash.takewhile');
 
-function notify(message, options, type) {
-    options = options || {};
-    type = type || 'log';
-
+function notify(message, userOptions = {}, type = 'log') {
     // Set the default text colour for info to black as white was hard to see
-    if (type === 'info') {
-       options = Object.assign({
-           colour: 'black',
-           codeColour: 'white'
-       }, options);
-    }
+    const options = type === 'info' ? Object.assign({
+        colour: 'black',
+        codeColour: 'white',
+    }, userOptions) : userOptions;
 
     try {
+        // eslint-disable-next-line global-require
         require('megalog')[type](message, options);
     } catch (e) {
-        console.log((options.heading ? '\n' + options.heading + ':\n\n' : '') + message + '\n\n(hint: you probably want to run `make install`)\n');
+        console.log(`${(options.heading ? `\n${options.heading}:\n\n` : '') + message}\n\n(hint: you probably want to run \`make install\`)\n`);
     }
 }
 
 switch (process.argv[2]) {
-    case 'describeMakefile':
+    case 'describeMakefile': {
         const messageLines = [];
         const gutterWidth = 27;
 
@@ -32,9 +28,9 @@ switch (process.argv[2]) {
         // for all the lines in the makefile, construct the message
         fs.readFileSync('makefile', 'utf8').split('\n').forEach((line, lineNumber, makefile) => {
             // if this line is a target...
-            if (line.match(/^[^\.\s#]/) && (listAll || !line.match(/# PRIVATE$/))) {
+            if (line.match(/^[^.\s#]/) && (listAll || !line.match(/# PRIVATE$/))) {
                 // see if there are any comments immediately before it
-                const comments = takeWhile(makefile.slice(0, lineNumber).reverse(), line => line.match(/^#/))
+                const comments = takeWhile(makefile.slice(0, lineNumber).reverse(), testLine => testLine.match(/^#/))
                     // format the comments for output to CLI
                     .map(comment => comment.replace(/#\s+/, ''))
                     // put them back into correct order
@@ -67,25 +63,31 @@ switch (process.argv[2]) {
         }
 
         notify(messageLines.join('\n').trim(), {
-            heading: `${(listAll ? 'All' : 'Common')} Frontend make tasks`
+            heading: `${(listAll ? 'All' : 'Common')} Frontend make tasks`,
         }, 'info');
         break;
+    }
 
-    case 'should-yarn':
+    case 'should-yarn': {
         notify('Run `make install` and include any changes to `/yarn.lock` in your commit.', {
-            heading: 'Dependencies have changed'
+            heading: 'Dependencies have changed',
         }, 'error');
         break;
+    }
 
-    case 'pasteup':
+    case 'pasteup': {
         notify('You will need to release a new version of pasteup to NPM once you’ve merged this branch to master.\n\nTo begin a new release, run `make pasteup`.', {
-            heading: 'Pasteup files have changed'
+            heading: 'Pasteup files have changed',
         }, 'info');
         break;
-
-    case 'install-steps':
-      notify('Please run the following to complete your installation:', {
-        heading: 'Additional steps'
-      }, 'info');
-      break;
+    }
+    case 'install-steps': {
+        notify('Please run the following to complete your installation:', {
+            heading: 'Additional steps',
+        }, 'info');
+        break;
+    }
+    default: {
+        // do nothing
+    }
 }

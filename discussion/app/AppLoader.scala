@@ -42,7 +42,7 @@ trait AppComponents extends FrontendComponents with DiscussionControllers with D
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("frontend-discussion")
+  lazy val appIdentity = ApplicationIdentity("discussion")
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters

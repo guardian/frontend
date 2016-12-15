@@ -19,9 +19,9 @@ import services.RedirectService.ArchiveRedirect
 import scala.concurrent.Future
 
 class R2PagePressJob(wsClient: WSClient, redirects: RedirectService) extends ExecutionContexts with Logging {
-  private val waitTimeSeconds = Configuration.r2Press.pressQueueWaitTimeInSeconds
-  private val maxMessages = Configuration.r2Press.pressQueueMaxMessages
-  private val credentials = Configuration.aws.mandatoryCredentials
+  private lazy val waitTimeSeconds = Configuration.r2Press.pressQueueWaitTimeInSeconds
+  private lazy val maxMessages = Configuration.r2Press.pressQueueMaxMessages
+  private lazy val credentials = Configuration.aws.mandatoryCredentials
 
   def run() = {
     if (R2PagePressServiceSwitch.isSwitchedOn) {
@@ -48,7 +48,7 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService) extends Exe
     }
   }
 
-  private val queue: JsonMessageQueue[SNSNotification] = (Configuration.r2Press.sqsQueueUrl map { queueUrl =>
+  private lazy val queue: JsonMessageQueue[SNSNotification] = (Configuration.r2Press.sqsQueueUrl map { queueUrl =>
     JsonMessageQueue[SNSNotification](
       new AmazonSQSAsyncClient(credentials).withRegion(Region.getRegion(Regions.EU_WEST_1)),
       queueUrl
@@ -57,7 +57,7 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService) extends Exe
     throw new RuntimeException("Required property 'r2Press.sqsQueueUrl' not set")
   }
 
-  private val takedownQueue: TextMessageQueue[SNSNotification] = (Configuration.r2Press.sqsTakedownQueueUrl map { queueUrl =>
+  private lazy val takedownQueue: TextMessageQueue[SNSNotification] = (Configuration.r2Press.sqsTakedownQueueUrl map { queueUrl =>
     TextMessageQueue[SNSNotification](
       new AmazonSQSAsyncClient(credentials).withRegion(Region.getRegion(Regions.EU_WEST_1)),
       queueUrl

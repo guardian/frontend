@@ -24,8 +24,7 @@
 	position: relative;
 
 	.youtube-media-atom__iframe,
-	.youtube-media-atom__overlay,
-	.youtube-media-atom__placeholder {
+	.youtube-media-atom__overlay {
         height: 100%;
         width: 100%;
         position: absolute;
@@ -38,42 +37,27 @@
         &:not(.youtube__video-ready),
         &.youtube__video-ended {
             ~ .youtube-media-atom__overlay {
-                .youtube-media-atom__play-button,
-                .youtube-media-atom__bottom-bar {
-                     @include hide;
-                }
+                 @include hide;
             }
         }
 
         &.youtube__video-ready:not(.youtube__video-started) {
             ~ .youtube-media-atom__overlay {
-                cursor: pointer;
-
-                .youtube-media-atom__play-button,
-                .youtube-media-atom__bottom-bar {
-                    @include fade-in;    
-                }
+                @include fade-in;    
             }
         }
 
         &.youtube__video-started:not(.youtube__video-ended) {
             ~ .youtube-media-atom__overlay {
-                .youtube-media-atom__placeholder,
-                .youtube-media-atom__play-button,
-                .youtube-media-atom__bottom-bar {
-                    @include fade-out;
-                    transition-delay: 500ms;
-                    transition-duration: 500ms;     
-                }
+                @include fade-out;
+                transition-delay: 500ms;
+                transition-duration: 500ms;     
             }
         }
 
         &.youtube__video-ended.youtube__video-started {
             ~ .youtube-media-atom__overlay {
-                .youtube-media-atom__play-button,
-                .youtube-media-atom__bottom-bar {
-                    @include fade-in;
-                }
+                @include fade-in;
             }
         }
 	}
@@ -82,13 +66,13 @@
         pointer-events: none;
     }
 
-	.youtube-media-atom__placeholder {
-		background-size: cover;
+    .youtube-media-atom__overlay{
+        background-size: cover;
         background-position: 50% 50%;
         background-repeat: no-repeat;
         z-index: 1;
         text-align: center;
-	}
+    }
 
     .youtube-media-atom__play-button.vjs-control-text {
         overflow: hidden !important;

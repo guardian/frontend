@@ -5,15 +5,13 @@ import common.ExecutionContexts
 import com.gu.identity.model.User
 import utils.{SafeLogging, ThirdPartyConditions}
 import idapiclient.{EmailPassword, IdApiClient}
-import model.{IdentityPage, NoCache}
+import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.i18n.MessagesApi
 import play.api.mvc._
 import play.api.data._
-
 import scala.concurrent.Future
 import services._
 import form.Mappings
-import play.api.Environment
 import play.api.libs.crypto.CryptoConfig
 
 class RegistrationController(returnUrlVerifier : ReturnUrlVerifier,
@@ -23,7 +21,7 @@ class RegistrationController(returnUrlVerifier : ReturnUrlVerifier,
                              idUrlBuilder : IdentityUrlBuilder,
                              signinService : PlaySigninService,
                              val messagesApi: MessagesApi,
-                             val cryptoConfig: CryptoConfig)(implicit env: Environment)
+                             val cryptoConfig: CryptoConfig)(implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
   val page = IdentityPage("/register", "Register")

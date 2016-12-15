@@ -1,4 +1,4 @@
-@(metrics: Seq[tools.AssetMetric])(implicit request: RequestHeader, env: play.api.Environment)
+@(metrics: Seq[tools.AssetMetric])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @change(metric: tools.AssetMetric) = {
     @defining(metric.change) { change =>

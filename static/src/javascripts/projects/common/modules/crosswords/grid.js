@@ -21,12 +21,12 @@ define([
 ) {
     var Grid = React.createClass({
 
-        handleSelect: function (x, y) {
-            this.props.onSelect(x, y);
-        },
-
         getSeparators: function (x, y) {
             return this.props.separators[helpers.clueMapKey(x, y)];
+        },
+
+        handleSelect: function (x, y) {
+            this.props.onSelect(x, y);
         },
 
         // Position at end of previous cell

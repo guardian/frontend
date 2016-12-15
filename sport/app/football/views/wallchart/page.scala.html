@@ -1,7 +1,7 @@
 @import _root_.football.model.CompetitionStageLike
 @import model.{Competition, Page}
 
-@(page: Page, competition: Competition, competitionStages: List[CompetitionStageLike])(implicit request: RequestHeader, env: play.api.Environment)
+@(page: Page, competition: Competition, competitionStages: List[CompetitionStageLike])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @main(page, "football"){
 }{

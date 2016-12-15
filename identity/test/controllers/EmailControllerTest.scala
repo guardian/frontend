@@ -27,12 +27,9 @@ import actions.AuthenticatedActions
 @DoNotDiscover class EmailControllerTest extends WordSpec
   with ShouldMatchers
   with MockitoSugar
-  with WithTestEnvironment
+  with WithTestContext
+  with WithTestCSRF
   with ConfiguredTestSuite {
-
-  lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
-  lazy val csrfCheck = new CSRFCheck(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
-  lazy val csrfAddToken = new CSRFAddToken(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val conf = mock[IdentityConfiguration]

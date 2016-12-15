@@ -3,7 +3,7 @@
     sentryChart: tools.FormattedChart,
     shareChart: tools.FormattedChart,
     title: String,
-    reportTimestamp: Option[String])(implicit request: RequestHeader, env: play.api.Environment)
+    reportTimestamp: Option[String])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Gallery Dashboard", isAuthed = true, hasCharts = true) {
 

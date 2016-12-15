@@ -29,7 +29,7 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
                             val messagesApi: MessagesApi,
                             csrfCheck: CSRFCheck,
                             implicit val profileFormsMapping: ProfileFormsMapping)
-                           (implicit env: Environment)
+                           (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
 
   import authenticatedActions._

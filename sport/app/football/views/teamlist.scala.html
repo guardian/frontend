@@ -1,4 +1,4 @@
-@(pageModel: TablesPage, comps: Seq[model.Competition])(implicit request: RequestHeader, env: play.api.Environment)
+@(pageModel: TablesPage, comps: Seq[model.Competition])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @main(pageModel.page, "football"){
 }{

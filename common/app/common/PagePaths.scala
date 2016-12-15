@@ -1,10 +1,11 @@
 package common
 
+import model.ApplicationContext
 import play.api.mvc.RequestHeader
 import services.ConfigAgent
 
 object PagePaths {
-  def fromId(id: String)(implicit request: RequestHeader) = {
+  def fromId(id: String)(implicit request: RequestHeader, context: ApplicationContext) = {
     if (ConfigAgent.shouldServeFront(id) || ConfigAgent.shouldServeEditionalisedFront(Edition(request), id)) {
       AllPagePaths(s"/$id")
     } else {

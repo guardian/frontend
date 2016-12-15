@@ -16,8 +16,7 @@
             </iframe>
 
             @media.posterUrl.map { image =>
-                <div class="youtube-media-atom__overlay vjs-big-play-button">
-                    <div class="youtube-media-atom__placeholder" style="background-image: url(@image)"></div>
+                <div class="youtube-media-atom__overlay vjs-big-play-button" style="background-image: url(@image)">
                     <div class="youtube-media-atom__play-button vjs-control-text">Play Video</div>
                     <div class="youtube-media-atom__bottom-bar">
                         <div class="youtube-media-atom__bottom-bar__icon">
@@ -31,7 +30,9 @@
 
 
     @if(displayCaption) {
-        <figcaption class="caption caption--main" itemprop="description">@media.title</figcaption>
+        <figcaption class="caption caption--main" itemprop="description">
+        @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon", "rounded-icon"))
+        @media.title</figcaption>
     }
 }
 

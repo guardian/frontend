@@ -11,7 +11,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestContentApiClient {
 
   val crosswordUrl = "crosswords/cryptic/26697"

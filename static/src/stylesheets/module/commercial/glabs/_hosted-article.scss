@@ -343,3 +343,15 @@ $dotSize: 8px;
         background: transparent;
     }
 }
+
+.hosted__header.hosted__header--sticky {
+    top: 0;
+    position: fixed;
+    z-index: $zindex-sticky;
+}
+
+.hosted__header--sticky .hostedbadge__logo {
+    @include mq($until: leftCol) {
+        height: 0;
+    }
+}

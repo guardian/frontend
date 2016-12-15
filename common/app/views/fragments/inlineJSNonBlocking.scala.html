@@ -5,7 +5,7 @@
 @import model.Page
 @import templates.inlineJS.nonBlocking.js._
 
-@(page: Page)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @**
  * Use this fragment to add JavaScript that can improve the perceived rendering speed

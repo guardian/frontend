@@ -1,4 +1,4 @@
-@(paper: controllers.TodayNewspaper)(implicit request: RequestHeader, env: play.api.Environment)
+@(paper: controllers.TodayNewspaper)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @main(paper.page) { } {
 

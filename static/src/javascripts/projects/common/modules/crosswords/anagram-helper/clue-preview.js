@@ -8,28 +8,6 @@ define([
     map
 ) {
     var CluePreview = React.createClass({
-
-        letterHasBoundary: function (separators, letterIndex) {
-            return some(separators, function (separator) {
-                return separator === letterIndex;
-            });
-        },
-
-        //Checks a object in the form{",":[4,7]}
-        checkIfLetterHasSeparator: function (locations, letterIndex) {
-            var spaces = locations[','];
-            if (spaces && this.letterHasBoundary(spaces, letterIndex)) {
-                return 'crossword__anagram-helper__cell crossword__anagram-helper__cell--with-space';
-            }
-
-            var dashes = locations['-'];
-            if (dashes && this.letterHasBoundary(dashes, letterIndex)) {
-                return 'crossword__anagram-helper__cell crossword__anagram-helper__cell--with-hyphen';
-            }
-
-            return 'crossword__anagram-helper__cell';
-        },
-
         /**
          * Get the entries for the preview cells: first filter the user's input to
          * remove anything anything that's already been entered into the grid.
@@ -50,6 +28,27 @@ define([
 
                 return this.props.hasShuffled ? entry.value && entry || unsolved.shift() : entry;
             }.bind(this));
+        },
+
+        //Checks a object in the form{",":[4,7]}
+        checkIfLetterHasSeparator: function (locations, letterIndex) {
+            var spaces = locations[','];
+            if (spaces && this.letterHasBoundary(spaces, letterIndex)) {
+                return 'crossword__anagram-helper__cell crossword__anagram-helper__cell--with-space';
+            }
+
+            var dashes = locations['-'];
+            if (dashes && this.letterHasBoundary(dashes, letterIndex)) {
+                return 'crossword__anagram-helper__cell crossword__anagram-helper__cell--with-hyphen';
+            }
+
+            return 'crossword__anagram-helper__cell';
+        },
+
+        letterHasBoundary: function (separators, letterIndex) {
+            return some(separators, function (separator) {
+                return separator === letterIndex;
+            });
         },
 
         render: function () {

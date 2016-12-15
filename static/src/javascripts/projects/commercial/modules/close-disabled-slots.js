@@ -4,14 +4,18 @@ define([
     'Promise',
     'common/utils/$css',
     'common/utils/fastdom-promise',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'common/utils/config',
+    'common/modules/commercial/user-features'
 ], function (
     bonzo,
     qwery,
     Promise,
     $css,
     fastdom,
-    commercialFeatures
+    commercialFeatures,
+    config,
+    userFeatures
 ) {
     var adSlotSelector = '.js-ad-slot';
 
@@ -44,7 +48,7 @@ define([
     }
 
     function shouldDisableAdSlot($adSlot) {
-        return isVisuallyHidden() || isDisabledCommercialFeature();
+        return isAdfreeUser() || isVisuallyHidden() || isDisabledCommercialFeature();
 
         function isVisuallyHidden() {
             return $css($adSlot, 'display') === 'none';
@@ -52,6 +56,10 @@ define([
 
         function isDisabledCommercialFeature() {
             return !commercialFeatures.topBannerAd && $adSlot.data('name') === 'top-above-nav';
+        }
+
+        function isAdfreeUser() {
+            return config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser();
         }
     }
 

@@ -15,7 +15,7 @@ import org.scalatest.time.{Millis, Span}
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestContentApiClient {
 
   "CrosswordData" - {

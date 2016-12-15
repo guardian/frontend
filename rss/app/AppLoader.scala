@@ -7,7 +7,7 @@ import conf.{CachedHealthCheckLifeCycle, CommonFilters}
 import contentapi._
 import controllers.{HealthCheck, RssController}
 import dev.DevParametersHttpRequestHandler
-import model.ApplicationIdentity
+import model.{ApplicationContext, ApplicationIdentity}
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.http.HttpRequestHandler
@@ -46,7 +46,7 @@ trait AppComponents extends FrontendComponents {
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("frontend-rss")
+  lazy val appIdentity = ApplicationIdentity("rss")
 
   override lazy val appMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,

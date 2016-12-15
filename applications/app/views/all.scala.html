@@ -3,7 +3,7 @@
 @import services.IndexPage
 @import views.support.PreviousAndNext
 
-@(index: IndexPage, nav: PreviousAndNext)(implicit request: RequestHeader, env: play.api.Environment)
+@(index: IndexPage, nav: PreviousAndNext)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @main(index.page, projectName = Option("facia")){  }{
 <div class="l-side-margins">

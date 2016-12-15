@@ -1,4 +1,4 @@
-@(competitions: List[pa.Season], teams: List[pa.Team])(implicit env: play.api.Environment)
+@(competitions: List[pa.Season], teams: List[pa.Team])(implicit context: model.ApplicationContext)
 
 @views.html.football.main("Fronts components") {
     <hgroup class="page-header">

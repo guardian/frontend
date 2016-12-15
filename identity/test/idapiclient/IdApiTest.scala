@@ -592,7 +592,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   "synchronous version" - {
     val syncApi = new SynchronousIdApi(apiRoot, http, jsonParser, clientAuth)
 
-    "should use current thread context" in {
+    "should use current thread testContext" in {
       syncApi.executionContext should equal(ExecutionContexts.currentThreadContext)
     }
   }

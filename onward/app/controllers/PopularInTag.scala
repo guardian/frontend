@@ -8,7 +8,7 @@ import model._
 import play.api.mvc.{Action, Controller, RequestHeader}
 import services._
 
-class PopularInTag(val contentApiClient: ContentApiClient, val mostReadAgent: MostReadAgent) extends Controller with Related with Containers with Logging with ExecutionContexts {
+class PopularInTag(val contentApiClient: ContentApiClient, val mostReadAgent: MostReadAgent)(implicit context: ApplicationContext) extends Controller with Related with Containers with Logging with ExecutionContexts {
   def render(tag: String) = Action.async { implicit request =>
     val edition = Edition(request)
     val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
@@ -22,7 +22,7 @@ class PopularInTag(val contentApiClient: ContentApiClient, val mostReadAgent: Mo
     val html = views.html.fragments.containers.facia_cards.container(
       onwardContainer("related content", trails.faciaItems take 8),
       FrontProperties.empty
-    )(request)
+    )
 
     JsonComponent(html)
   }

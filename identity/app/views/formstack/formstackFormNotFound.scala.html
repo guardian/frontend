@@ -1,4 +1,4 @@
-@(page: model.Page, projectName: Option[String] = Some(conf.Configuration.environment.projectName))(implicit request: RequestHeader, env: play.api.Environment)
+@(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import conf.switches.Switches._
 
 <!DOCTYPE html>
@@ -8,7 +8,7 @@
     <title>@Html(page.metadata.webTitle)</title>
 
     @* get the stylesheets downloading ASAP *@
-    @fragments.stylesheets(projectName)
+    @fragments.stylesheets(Some(context.applicationIdentity.name))
 
     @* start trying to use the stylesheets *@
     @if(AsyncCss.isSwitchedOn) {

@@ -11,7 +11,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestEnvironment
+  with WithTestContext
   with WithTestContentApiClient{
 
   val galleryUrl = "news/gallery/2012/may/02/picture-desk-live-kabul-burma"

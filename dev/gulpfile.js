@@ -1,1 +1,2 @@
-var tasks = require('require-dir')('./gulp-tasks');
+/* eslint-disable import/no-extraneous-dependencies */
+require('require-dir')('./gulp-tasks');

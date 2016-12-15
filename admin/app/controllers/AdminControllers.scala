@@ -6,6 +6,7 @@ import controllers.admin._
 import controllers.admin.commercial.{DfpDataController, SlotController, TakeoverWithEmptyMPUsController}
 import controllers.cache.{ImageDecacheController, PageDecacheController}
 import jobs.VideoEncodingsJob
+import model.ApplicationContext
 import play.api.Environment
 import play.api.libs.ws.WSClient
 import play.api.i18n.Messages
@@ -17,7 +18,7 @@ trait AdminControllers {
   def wsClient: WSClient
   def videoEncodingsJob: VideoEncodingsJob
   def ophanApi: OphanApi
-  implicit def environment: Environment
+  implicit def appContext: ApplicationContext
   def redirects: RedirectService
   def cryptoConfig: CryptoConfig
   implicit val messages: Messages

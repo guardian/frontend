@@ -44,26 +44,12 @@ define([
             }
         },
 
-        reset: function () {
-            if (this.state.clueInput) {
+        onClueInput: function (text) {
+            if (!/\s|\d/g.test(text)) {
                 this.setState({
-                    clueInput: '',
-                    showInput: true
+                    clueInput: text
                 });
             }
-        },
-
-        shuffle: function () {
-            if (this.canShuffle()) {
-                this.setState({
-                    showInput: false
-                });
-            }
-        },
-
-        canShuffle: function () {
-            return this.state.clueInput &&
-                this.state.clueInput.length > 0;
         },
 
         /**
@@ -101,12 +87,26 @@ define([
             }).letters);
         },
 
-        onClueInput: function (text) {
-            if (!/\s|\d/g.test(text)) {
+        shuffle: function () {
+            if (this.canShuffle()) {
                 this.setState({
-                    clueInput: text
+                    showInput: false
                 });
             }
+        },
+
+        reset: function () {
+            if (this.state.clueInput) {
+                this.setState({
+                    clueInput: '',
+                    showInput: true
+                });
+            }
+        },
+
+        canShuffle: function () {
+            return this.state.clueInput &&
+                this.state.clueInput.length > 0;
         },
 
         render: function () {

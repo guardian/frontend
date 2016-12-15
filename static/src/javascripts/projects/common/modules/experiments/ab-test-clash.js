@@ -22,9 +22,9 @@ define([
         variants: ['mixed']
     };
 
-    var ContributionsEpicUsPreEndOfYear = {
-        name: 'ContributionsEpicUsPreEndOfYear',
-        variants: ['control', 'bolder', 'endOfYear']
+    var ContributionsEpicUsPreEndOfYearTwo = {
+        name: 'ContributionsEpicUsPreEndOfYearTwo',
+        variants: ['control', 'endOfYear']
     };
 
     var ContributionsEpicAlwaysAskStrategy = {
@@ -32,13 +32,19 @@ define([
         variants: ['control', 'alwaysAsk']
     };
 
+    var ContributionsEpicOnTheMoon = {
+        name: 'ContributionsEpicOnTheMoon',
+        variants: ['control', 'showMeTheMoon', 'australiaNewsroom', 'endOfYearAustralia']
+    };
+
     function userIsInAClashingAbTest() {
         var clashingTests = [
             ContributionsEpicUsaCtaThreeWay,
             ContributionsEpicObserverAnniversary,
             ContributionsEpicBrexitSupreme,
-            ContributionsEpicUsPreEndOfYear,
-            ContributionsEpicAlwaysAskStrategy
+            ContributionsEpicUsPreEndOfYearTwo,
+            ContributionsEpicAlwaysAskStrategy,
+            ContributionsEpicOnTheMoon
         ];
         return _testABClash(ab.isInVariant, clashingTests);
     }
