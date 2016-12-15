@@ -9,7 +9,7 @@ import conf.Configuration
 import scala.collection.JavaConversions._
 
 abstract class HtmlCleaner extends Logging with ExecutionContexts {
-  val fallbackCacheBustId = Configuration.r2Press.fallbackCachebustId
+  lazy val fallbackCacheBustId = Configuration.r2Press.fallbackCachebustId
   lazy val staticRegEx = """//static.guim.co.uk/static/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
   lazy val nonDigitRegEx = """\D+""".r
 
