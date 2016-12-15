@@ -172,7 +172,7 @@ trait CommercialSwitches {
     "Make the Chester Zoo gallery page available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 21),
+    sellByDate = new LocalDate(2017, 25, 1),
     exposeClientSide = false
   )
 
@@ -182,7 +182,7 @@ trait CommercialSwitches {
     "Make the Chester Zoo article pages available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 21),
+    sellByDate = new LocalDate(2017, 1, 25),
     exposeClientSide = false
   )
 
@@ -192,7 +192,7 @@ trait CommercialSwitches {
     "Make the Chester Zoo article (with video) pages available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 21),
+    sellByDate = new LocalDate(2017, 1, 25),
     exposeClientSide = false
   )
 
@@ -202,7 +202,7 @@ trait CommercialSwitches {
     "Make the Chester Zoo video pages available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 21),
+    sellByDate = new LocalDate(2017, 1, 25),
     exposeClientSide = false
   )
 
