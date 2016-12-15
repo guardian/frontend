@@ -53,11 +53,11 @@ define([
     }
 
     function canShow() {
-        var window = maxViews.days * 1000 * 60 * 60 * 24;
+        var maxDays = maxViews.days * 1000 * 60 * 60 * 24;
         var now = new Date().getTime();
 
         return viewLog.filter(function (view) {
-            return view.date > (now - window);
+            return view.date > (now - maxDays);
         }).length < maxViews.count;
     }
 
@@ -68,7 +68,7 @@ define([
             var ms = Date.parse(date);
 
             if (isNaN(ms)) return Infinity;
-            else return (new Date() - ms) / oneDay;
+            return (new Date() - ms) / oneDay;
         } catch(e) {
             return Infinity;
         }
