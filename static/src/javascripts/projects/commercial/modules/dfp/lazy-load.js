@@ -36,13 +36,13 @@ define([
         });
 
         if (dfpEnv.advertsToLoad.length === 0) {
-            disableLazyLoad();
+            stopListening();
         }
 
         lazyLoad.forEach(displayAd);
     }
 
-    function disableLazyLoad() {
+    function stopListening() {
         dfpEnv.lazyLoadEnabled = false;
         window.removeEventListener('scroll', lazyLoad);
     }
