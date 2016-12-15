@@ -155,15 +155,15 @@ define([
             });
         };
 
-        this.registerListener('impression', 'impressionOnInsert', this.insertEvent, options);
-        this.registerListener('success', 'successOnView', this.viewEvent, options);
+        this.registerListener('impression', 'impressionOnInsert', test.insertEvent, options);
+        this.registerListener('success', 'successOnView', test.viewEvent, options);
     }
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {
         if (options[type]) this[type] = options[type];
         else if (options[defaultFlag]) {
             this[type] = (function (track) {
-                return mediator.on(this[event], track);
+                return mediator.on(event, track);
             }).bind(this);
         }
     };
