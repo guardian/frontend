@@ -152,8 +152,8 @@ define([
         }
 
         if (config.page.section === 'newsletter-signup-page') {
-            require(['bootstraps/enhanced/signup'], function (signup) {
-                bootstrapContext('signup', signup);
+            require(['bootstraps/enhanced/newsletters'], function (newsletters) {
+                bootstrapContext('newsletters', newsletters);
             });
         }
 
