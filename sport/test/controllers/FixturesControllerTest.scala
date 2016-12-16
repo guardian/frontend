@@ -7,20 +7,18 @@ import org.scalatest._
 
 @DoNotDiscover class FixturesControllerTest
   extends FreeSpec
-  with ConfiguredTestSuite
-  with ShouldMatchers
-  with FootballTestData
-  with WithTestFootballClient
-  with WithMaterializer
-  with BeforeAndAfterAll
-  with WithTestContext
-  with WithTestWsClient {
+    with ShouldMatchers
+    with FootballTestData
+    with WithTestFootballClient
+    with BeforeAndAfterAll
+    with WithTestContext
+    with WithTestWsClient {
 
   val fixturesUrl = "/football/fixtures"
   val fixtureForUrl = "/football/fixtures/2012/oct/20"
   val tag = "premierleague"
 
-  lazy val fixturesController = new FixturesController(testCompetitionsService)
+  val fixturesController = new FixturesController(testCompetitionsService)
 
   "can load the all fixtures page" in {
     val result = fixturesController.allFixtures()(TestRequest())
@@ -34,7 +32,7 @@ import org.scalatest._
     val result = fixturesController.allFixtures()(fakeRequest)
 
     status(result) should be(200)
-    contentType(result) shouldBe Some("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("""{"""")
   }
 
@@ -50,7 +48,7 @@ import org.scalatest._
     val result = fixturesController.allFixturesFor("2012", "oct", "20")(fakeRequest)
 
     status(result) should be(200)
-    contentType(result) shouldBe Some("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("""{"""")
   }
 
@@ -66,7 +64,7 @@ import org.scalatest._
     val result = fixturesController.tagFixtures(tag)(fakeRequest)
 
     status(result) should be(200)
-    contentType(result) shouldBe Some("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("""{"""")
   }
 
@@ -82,7 +80,7 @@ import org.scalatest._
     val result = fixturesController.tagFixturesFor("2012", "oct", "20", tag)(fakeRequest)
 
     status(result) should be(200)
-    contentType(result) shouldBe Some("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("""{"""")
   }
 }

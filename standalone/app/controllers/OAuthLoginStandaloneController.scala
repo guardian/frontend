@@ -5,11 +5,8 @@ import googleAuth.OAuthLoginController
 import play.api.mvc.{Action, AnyContent, Request}
 import conf.Configuration
 import model.ApplicationContext
-import play.api.libs.crypto.CryptoConfig
-import play.api.libs.ws.WSClient
 
-class OAuthLoginStandaloneController(val wsClient: WSClient, val cryptoConfig: CryptoConfig)(implicit context: ApplicationContext) extends OAuthLoginController {
-
+class OAuthLoginStandaloneController(implicit context: ApplicationContext) extends OAuthLoginController {
   override def login = Action { request =>
     Ok(views.html.standalone_auth(context.applicationIdentity.name, "Dev", UserIdentity.fromRequest(request)))
   }
@@ -19,7 +16,7 @@ class OAuthLoginStandaloneController(val wsClient: WSClient, val cryptoConfig: C
       cred.oauthSecret,       // The client secret from the dev console
       cred.oauthCallback,     // The redirect URL Google send users back to (must be the same as
       // that configured in the developer console)
-      "guardian.co.uk", // Google App domain to restrict login
+      Some("guardian.co.uk"), // Google App domain to restrict login
       None
     )
   }

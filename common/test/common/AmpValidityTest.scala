@@ -11,14 +11,7 @@ import scala.concurrent.Future
 import scala.sys.process._
 
 
-trait AmpValidityTest
-  extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with ScalaFutures {
+trait AmpValidityTest extends FlatSpec with Matchers with ConfiguredTestSuite with BeforeAndAfterAll with WithTestWsClient with ScalaFutures {
 
   val validatorUri = "https://cdn.ampproject.org/v0/validator.js"
 

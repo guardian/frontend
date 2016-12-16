@@ -5,7 +5,7 @@ import pa.{Round, Stage}
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
 import org.joda.time.DateTime
 import implicits.Collections
-import test._
+import test.{WithTestFootballClient, WithTestWsClient, FootballTestData}
 
 @DoNotDiscover class CompetitionStageTest
   extends FreeSpec
@@ -16,11 +16,9 @@ import test._
     with FootballTestData
     with WithTestFootballClient
     with BeforeAndAfterAll
-    with ConfiguredTestSuite
-    with WithMaterializer
     with WithTestWsClient {
 
-  lazy val competitionStage = new CompetitionStage(testCompetitionsService.competitions)
+  val competitionStage = new CompetitionStage(testCompetitionsService.competitions)
 
   "stagesFromCompetition" - {
     "will generate a League" in {
@@ -94,9 +92,9 @@ import test._
           leagueTable = groupTables(Stage("1")) ++ groupTables(Stage("2")),
           matches = currentGroupMatches ++ futureGroupMatches(Stage("2"))
         )
-        lazy val stages = competitionStage.stagesFromCompetition(comp)
-        lazy val leagueTableEntries0 = stages(0).asInstanceOf[Groups].groupTables.flatMap(_._2).toSet
-        lazy val leagueTableEntries1 = stages(1).asInstanceOf[Groups].groupTables.flatMap(_._2).toSet
+        val stages = competitionStage.stagesFromCompetition(comp)
+        val leagueTableEntries0 = stages(0).asInstanceOf[Groups].groupTables.flatMap(_._2).toSet
+        val leagueTableEntries1 = stages(1).asInstanceOf[Groups].groupTables.flatMap(_._2).toSet
 
         "adds correct leagueTableEntries to each group stage if there are multiple stages" in {
           leagueTableEntries0 should equal (comp.leagueTable.filter(_.stageNumber == "1").toSet)
@@ -126,9 +124,9 @@ import test._
           leagueTable = leagueTable(Stage("1"), Round("1", Some("League"))) ++ leagueTable(Stage("2"), Round("1", Some("League"))),
           matches = (pastLeagueMatches ++ futureLeagueMatches(Stage("2"))).sortBy(_.date)
         )
-        lazy val stages = competitionStage.stagesFromCompetition(comp)
-        lazy val leagueTable0 = stages(0).asInstanceOf[League].leagueTable.toSet
-        lazy val leagueTable1 = stages(1).asInstanceOf[League].leagueTable.toSet
+        val stages = competitionStage.stagesFromCompetition(comp)
+        val leagueTable0 = stages(0).asInstanceOf[League].leagueTable.toSet
+        val leagueTable1 = stages(1).asInstanceOf[League].leagueTable.toSet
 
         "adds correct leagueTableEntries to each stage if there are multiple stages" in {
           leagueTable0 should equal (comp.leagueTable.filter(_.stageNumber == "1").toSet)
@@ -153,9 +151,9 @@ import test._
           leagueTable = Nil,
           matches = pastKnockoutMatches(Stage("1")) ++ futureKnockoutMatches(Stage("2"))
         )
-        lazy val stages = competitionStage.stagesFromCompetition(comp)
-        lazy val rounds0 = stages(0).asInstanceOf[Knockout].rounds.toSet
-        lazy val rounds1 = stages(1).asInstanceOf[Knockout].rounds.toSet
+        val stages = competitionStage.stagesFromCompetition(comp)
+        val rounds0 = stages(0).asInstanceOf[Knockout].rounds.toSet
+        val rounds1 = stages(1).asInstanceOf[Knockout].rounds.toSet
 
         "adds correct rounds to each stage if there are multiple stages" in {
           rounds0 should equal (comp.matches.filter(_.stage == Stage("1")).map(_.round).distinct.toSet)

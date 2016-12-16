@@ -1,23 +1,25 @@
 package test
 
 import controllers.InteractiveController
+import play.api.libs.ws.WSClient
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers, PrivateMethodTester}
 import conf.Configuration.interactive.cdnPath
+
+import scala.collection.JavaConversions._
 
 @DoNotDiscover class InteractiveControllerTest
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
-  with WithMaterializer
   with WithTestWsClient
   with WithTestContext
   with WithTestContentApiClient
   with PrivateMethodTester {
 
   val url = "lifeandstyle/ng-interactive/2016/mar/12/stephen-collins-cats-cartoon"
-  lazy val interactiveController = new InteractiveController(testContentApiClient, wsClient)
+  val interactiveController = new InteractiveController(testContentApiClient, wsClient)
   val getWebWorkerPath = PrivateMethod[String]('getWebWorkerPath)
 
   "Interactive Controller" should "200 when content type is 'interactive'" in {

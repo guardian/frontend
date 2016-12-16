@@ -15,7 +15,7 @@ case class GoogleAuth(currentHost: Option[String]) {
         cred.oauthClientId,      // The client ID from the dev console
         cred.oauthSecret,        // The client secret from the dev console
         callback,                // The redirect URL Google send users back to (must be the same as that configured in the developer console)
-        "guardian.co.uk"         // Google App domain to restrict login
+        Some("guardian.co.uk")   // Google App domain to restrict login
       )
     }
   }

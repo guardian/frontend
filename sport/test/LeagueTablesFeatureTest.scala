@@ -13,7 +13,6 @@ import org.scalatest._
   with FootballTestData
   with WithTestFootballClient
   with BeforeAndAfterAll
-  with WithMaterializer
   with WithTestContext
   with WithTestWsClient {
 

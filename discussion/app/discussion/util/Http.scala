@@ -7,7 +7,6 @@ import common.{ExecutionContexts, Logging, StopWatch}
 import discussion.api.{NotFoundException, OtherException}
 
 import scala.concurrent.Future
-import scala.concurrent.duration._
 
 trait Http extends Logging with ExecutionContexts {
 
@@ -31,7 +30,7 @@ trait Http extends Logging with ExecutionContexts {
   }
 
   protected def GET(url: String, headers: (String, String)*): Future[WSResponse] = {
-    wsClient.url(url).withHeaders(headers: _*).withRequestTimeout(2.seconds).get()
+    wsClient.url(url).withHeaders(headers: _*).withRequestTimeout(2000).get()
   }
 
 }

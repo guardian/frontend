@@ -4,20 +4,20 @@ import conf.Configuration
 import discussion.api.DiscussionApiLike
 import discussion.model.Comment
 import org.scalatest._
-import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithTestWsClient}
 
 import scala.concurrent.{Await, Future}
 import scala.language.postfixOps
 import scala.concurrent.duration._
 import play.api.libs.ws.{WS, WSClient}
 
-@DoNotDiscover class DiscussionApiPluginIntegrationTest extends FlatSpecLike with Matchers with BeforeAndAfterAll with ConfiguredTestSuite with WithMaterializer with WithTestWsClient {
+@DoNotDiscover class DiscussionApiPluginIntegrationTest extends FlatSpecLike with Matchers with BeforeAndAfterAll with ConfiguredTestSuite with WithTestWsClient {
 
   class TestPlugin(val wsClient: WSClient) extends DiscussionApiLike {
 
     override def GET(url: String, headers: (String, String)*) = {
       headersReceived = Map(headers:_*)
-      wsClient.url(testUrl).withRequestTimeout(1.millisecond).get()
+      wsClient.url(testUrl).withRequestTimeout(1).get()
     }
 
     var headersReceived: Map[String,String] = Map.empty
@@ -27,7 +27,7 @@ import play.api.libs.ws.{WS, WSClient}
     override protected val clientHeaderValue: String = Configuration.discussion.apiClientHeader
   }
 
-  lazy val testPlugin = new TestPlugin(wsClient)
+  val testPlugin = new TestPlugin(wsClient)
 
   "DiscussionApiPlugin getJsonOrError " should "send GU-Client headers in GET request" in {
 

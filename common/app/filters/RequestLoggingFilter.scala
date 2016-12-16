@@ -1,13 +1,12 @@
 package filters
 
-import akka.stream.Materializer
 import common.{ExecutionContexts, Logging, RequestLogger, StopWatch}
 import play.api.mvc.{Filter, RequestHeader, Result}
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-class RequestLoggingFilter(implicit val mat: Materializer) extends Filter with Logging with ExecutionContexts {
+class RequestLoggingFilter extends Filter with Logging with ExecutionContexts {
 
   override def apply(next: (RequestHeader) => Future[Result])(rh: RequestHeader): Future[Result] = {
 

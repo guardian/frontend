@@ -8,7 +8,6 @@ import play.api.libs.ws.WSClient
 import tools.LoadBalancer
 
 import scala.concurrent.Future
-import scala.concurrent.duration._
 
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)
 
@@ -123,7 +122,7 @@ class TroubleshooterController(wsClient: WSClient)(implicit context: Application
   }
 
   private def httpGet(testName: String, url: String) =  {
-    wsClient.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(5.seconds).get().map {
+    wsClient.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(5000).get().map {
       response =>
         if (response.status == 200) {
           TestPassed(testName)

@@ -3,14 +3,13 @@ package commercial.controllers
 import commercial.model.merchandise.travel.TravelOffersAgent
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
-import test._
+import test.{ConfiguredTestSuite, TestRequest, WithTestContentApiClient, WithTestWsClient}
 
 @DoNotDiscover class TravelOffersControllerTest
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
-  with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient {
 
