@@ -339,23 +339,6 @@ define([
         return window.guardian.isEnhanced;
     }
 
-    var createSacrificialAd = memoize(function () {
-        var sacrificialAd = '<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>';
-        document.body.insertAdjacentHTML('beforeend', sacrificialAd);
-        return document.body.lastChild;
-    });
-    // sync adblock detection is deprecated.
-    // it will be removed once sticky nav and omniture top up call are both removed
-    // this is soon - it's not worth refactoring them when they're off soon
-    //
-    // ** don't forget to remove them from the return object too **
-    var adblockInUseSync = memoize(function () {
-        var sacraficialAdStyle = window.getComputedStyle(createSacrificialAd());
-        return sacraficialAdStyle.display === 'none' || sacraficialAdStyle.getPropertyValue('-moz-binding').indexOf('about:')!== -1;
-    });
-    // end sync adblock detection
-
-
     var adblockInUse = new Promise(function (resolve) {
         if (window.guardian.adBlockers.hasOwnProperty('active')) {
             // adblock detection has completed
