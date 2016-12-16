@@ -74,6 +74,9 @@ trait AppComponents
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
 
+  //A fake geolocation controller to test it locally
+  lazy val geolocationController = wire[FakeGeolocationController]
+
   override def router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("dev-build")
 

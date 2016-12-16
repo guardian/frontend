@@ -1,10 +1,12 @@
 define([
     'common/utils/$',
-    'common/modules/discussion/upvote'
+    'common/modules/discussion/upvote',
+    'Promise'
 ],
 function (
     $,
-    upvote
+    upvote,
+    Promise
 ) {
     describe('Recommendations of comments', function () {
         var discussionApi = {

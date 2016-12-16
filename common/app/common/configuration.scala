@@ -124,7 +124,6 @@ object GuardianConfiguration extends Logging {
 
 class GuardianConfiguration extends Logging {
   import GuardianConfiguration._
-  import play.api.Play.current
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
   case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
@@ -149,13 +148,11 @@ class GuardianConfiguration extends Logging {
     import InstallVars._
 
     lazy val stage = InstallationVars.stage
-    lazy val projectName = Play.application.configuration.getString("guardian.projectName").getOrElse("frontend")
+    lazy val app = InstallationVars.app
 
     lazy val isProd = stage.equalsIgnoreCase("prod")
     lazy val isCode = stage.equalsIgnoreCase("code")
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
-
-    lazy val isPreview = projectName == "preview"
   }
 
   object switches {

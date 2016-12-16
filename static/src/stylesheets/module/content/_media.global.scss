@@ -25,7 +25,7 @@
         margin-bottom: 0;
     }
 
-    &:not(.paid-content--advertisement-feature) {
+    &:not(.paid-content) {
         .social-icon {
             overflow: visible; // opacity cuts borders off on chrome otherwise
             box-sizing: border-box;
@@ -90,7 +90,7 @@
     }
 
     // increase height if we have sponsorship logos
-    &.paid-content--advertisement-feature .content__main-column--audio {
+    &.paid-content .content__main-column--audio {
         min-height: $gs-row-height * 9;
     }
 }

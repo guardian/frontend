@@ -76,7 +76,7 @@ define([
     function createAdSlotElement(name, attrs, classes) {
         var adSlot = document.createElement('div');
         adSlot.id = 'dfp-ad--' + name;
-        adSlot.className = 'js-ad-slot ad-slot ad-slot--dfp ' + classes.join(' ');
+        adSlot.className = 'js-ad-slot ad-slot ' + classes.join(' ');
         adSlot.setAttribute('data-link-name', 'ad slot ' + name);
         adSlot.setAttribute('data-test-id', 'ad-slot-' + name);
         adSlot.setAttribute('data-name', name);

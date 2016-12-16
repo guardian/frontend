@@ -10,7 +10,6 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import conf.Configuration.interactive.cdnPath
-import conf.Configuration.environment.isPreview
 import scala.concurrent.duration._
 import scala.concurrent.Future
 
@@ -40,7 +39,7 @@ class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClie
   }
 
   private def getWebWorkerPath(path: String, file: String, timestamp: Option[String]): String = {
-    val stage = if (isPreview) "preview" else "live"
+    val stage = if (context.isPreview) "preview" else "live"
     val deployPath = timestamp.map(ts => s"$path/$ts").getOrElse(path)
 
     s"$cdnPath/service-workers/$stage/$deployPath/$file"

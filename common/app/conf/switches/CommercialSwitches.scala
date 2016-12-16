@@ -16,6 +16,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val AdFreeTrialSwitch = Switch(
+    SwitchGroup.Commercial,
+    "ad-free-membership-trial",
+    "Master switch for trialling ad-free membership perk",
+    owners = Seq(Owner.withGithub("JustinPinner")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val AudienceScienceGatewaySwitch = Switch(
     SwitchGroup.Commercial,
     "audience-science-gateway",
@@ -172,7 +182,7 @@ trait CommercialSwitches {
     "Make the Chester Zoo gallery page available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 21),
+    sellByDate = new LocalDate(2017, 1, 25),
     exposeClientSide = false
   )
 
@@ -182,7 +192,7 @@ trait CommercialSwitches {
     "Make the Chester Zoo article pages available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 21),
+    sellByDate = new LocalDate(2017, 1, 25),
     exposeClientSide = false
   )
 
@@ -192,7 +202,7 @@ trait CommercialSwitches {
     "Make the Chester Zoo article (with video) pages available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 21),
+    sellByDate = new LocalDate(2017, 1, 25),
     exposeClientSide = false
   )
 
@@ -202,7 +212,7 @@ trait CommercialSwitches {
     "Make the Chester Zoo video pages available",
     owners = Owner.group(CommercialLabs),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 21),
+    sellByDate = new LocalDate(2017, 1, 25),
     exposeClientSide = false
   )
 
