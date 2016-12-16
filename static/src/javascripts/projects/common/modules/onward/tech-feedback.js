@@ -25,6 +25,7 @@ define([
     keys,
     cookies
 ) {
+    var adblockBeingUsed = false;
 
     function objToString(obj) {
         return reduce(obj, function (str, value, key) {
@@ -57,21 +58,21 @@ define([
         return function (link) {
             return function () {
                 var oldHref = link.attr('href');
-                var props = {
-                    browser: window.navigator.userAgent,
-                    page: window.location,
-                    width: window.innerWidth,
-                    adBlock: detect.adblockInUseSync(),
-                    devicePixelRatio: window.devicePixelRatio,
-                    ophanId: config.ophan.pageViewId,
-                    gu_u: cookies.get('GU_U'),
-                    payingMember: cookies.get('gu_paying_member'),
-                    abTests : summariseAbTests(ab.getParticipations())
-                };
-                var body = '\r\n\r\n\r\n\r\n------------------------------\r\nAdditional technical data about your request - please do not edit:\r\n\r\n'
-                    + objToString(assign(props, storedValues))
-                    + '\r\n\r\n';
-                link.attr('href', oldHref + '?body=' + encodeURIComponent(body));
+                    var props = {
+                        browser: window.navigator.userAgent,
+                        page: window.location,
+                        width: window.innerWidth,
+                        adBlock: adblockBeingUsed,
+                        devicePixelRatio: window.devicePixelRatio,
+                        ophanId: config.ophan.pageViewId,
+                        gu_u: cookies.get('GU_U'),
+                        payingMember: cookies.get('gu_paying_member'),
+                        abTests : summariseAbTests(ab.getParticipations())
+                    };
+                    var body = '\r\n\r\n\r\n\r\n------------------------------\r\nAdditional technical data about your request - please do not edit:\r\n\r\n'
+                        + objToString(assign(props, storedValues))
+                        + '\r\n\r\n';
+                    link.attr('href', oldHref + '?body=' + encodeURIComponent(body));
             };
         };
     }
@@ -116,6 +117,10 @@ define([
      * override those at the time the email is sent.
      */
     return function () {
+        detect.adblockInUse.then(function(adblockInUse){
+            adblockBeingUsed = adblockInUse;
+        });
+
         var storedValues = getValuesFromHash(window.location.hash);
         registerHandler('.js-tech-feedback-report', addEmailValuesToHash(storedValues));
         registerHandler('.js-tech-feedback-mailto', addEmailHeaders(storedValues));
