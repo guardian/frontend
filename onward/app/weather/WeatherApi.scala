@@ -12,6 +12,7 @@ import weather.models.accuweather.{ForecastResponse, LocationResponse, WeatherRe
 import dispatch._, Defaults._
 import java.util.concurrent.{TimeoutException, TimeUnit}
 import scala.concurrent.duration.Duration
+import scala.concurrent.duration._
 import play.api.Environment
 import play.api.Mode
 
@@ -20,9 +21,9 @@ class WeatherApi(wsClient: WSClient, environment: Environment) extends Execution
     throw new RuntimeException("Weather API Key not set")
   )
 
-  val requestTimeout = 300
+  val requestTimeout = 300.milliseconds
   val requestRetryMax = 3
-  val requestRetryDelay = Duration(100, TimeUnit.MILLISECONDS)
+  val requestRetryDelay = 100.milliseconds
   val requestRetryBackoffBase = 2
 
   private def autocompleteUrl(query: String): String =

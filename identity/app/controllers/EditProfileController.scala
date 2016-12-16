@@ -27,6 +27,8 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
                             identityApiClient: IdApiClient,
                             idRequestParser: IdRequestParser,
                             val messagesApi: MessagesApi,
+                            csrfCheck: CSRFCheck,
+                            csrfAddToken: CSRFAddToken,
                             implicit val profileFormsMapping: ProfileFormsMapping)
                            (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
@@ -45,7 +47,7 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
   def displayDigitalPackForm = displayForm(digitalPackPage)
   def displayPrivacyForm = displayForm(privacyPage)
 
-  protected def displayForm(page: IdentityPage) = CSRFAddToken {
+  protected def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
       profileFormsView(page = page, forms = ProfileForms(request.user, PublicEditProfilePage))
     }
@@ -63,7 +65,7 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
     else
       PrivacyEditProfilePage
 
-  def submitForm(page: IdentityPage) = CSRFCheck {
+  def submitForm(page: IdentityPage) = csrfCheck {
     authActionWithUser.async {
       implicit request =>
         val activePage = identifyActiveSubmittedForm(page)

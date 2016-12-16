@@ -1,5 +1,7 @@
 package http
 
+import javax.inject.Inject
+import akka.stream.Materializer
 import common.ExecutionContexts
 import conf.Filters
 import implicits.Requests
@@ -50,6 +52,6 @@ class DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts with
   }
 }
 
-class DevFilters(context: ApplicationContext) extends HttpFilters {
-  override def filters: Seq[EssentialFilter] = new DevJsonExtensionFilter :: new DevCacheWarningFilter :: Filters.common(context)
+class DevFilters(implicit val mat: Materializer, context: ApplicationContext) extends HttpFilters {
+  override def filters: Seq[EssentialFilter] = new DevJsonExtensionFilter :: new DevCacheWarningFilter :: Filters.common
 }
