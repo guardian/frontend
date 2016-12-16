@@ -77,21 +77,41 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-us-pre-end-of-year-two",
-    "Test which Epic variant to use in the US end of year campaign",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 19),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-always-ask-strategy",
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 1, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-on-the-moon",
+    "Test with Epic variant containing a message from First Dog on the Moon",
+    owners = Seq(Owner.withGithub("alexduf")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 12),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-us-eoy-control",
+    "Run the control variant for 87.5% of the US audience",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 3),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-us-eoy-end-of-year",
+    "Run the end of year variant for 12.5% of the US audience",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 3),
     exposeClientSide = true
   )
 

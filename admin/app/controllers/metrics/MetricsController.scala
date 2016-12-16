@@ -12,7 +12,7 @@ import scala.concurrent.Future
 class MetricsController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
     // We only do PROD metrics
 
-  val stage = Configuration.environment.stage.toUpperCase
+  lazy val stage = Configuration.environment.stage.toUpperCase
 
   def renderLoadBalancers() = Action.async { implicit request =>
     for {

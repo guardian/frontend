@@ -26,7 +26,8 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html'
+    'text!common/views/ui/loading.html',
+    'common/modules/commercial/user-features'
 ], function (
     bean,
     bonzo,
@@ -53,7 +54,8 @@ define([
     moreInSeriesContainer,
     videojsOptions,
     videojs,
-    loadingTmpl
+    loadingTmpl,
+    userFeatures
 ) {
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -233,7 +235,7 @@ define([
                             player.controlBar.dispose();
                         });
                     } else {
-                        blockVideoAds = videoInfo.shouldHideAdverts;
+                        blockVideoAds = videoInfo.shouldHideAdverts || (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser());
 
                         withPreroll = shouldPreroll && !blockVideoAds;
 

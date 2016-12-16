@@ -13,7 +13,8 @@ define([
 ) {
     var PERSISTENCE_KEYS = {
         USER_FEATURES_EXPIRY_COOKIE : 'gu_user_features_expiry',
-        PAYING_MEMBER_COOKIE : 'gu_paying_member'
+        PAYING_MEMBER_COOKIE : 'gu_paying_member',
+        AD_FREE_USER_COOKIE : 'GU_AFU'
     };
 
     function UserFeatures() {
@@ -38,7 +39,8 @@ define([
 
             function featuresDataIsMissing() {
                 return !cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)
-                    || !cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+                    || !cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)
+                    || !cookies.get(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
             }
 
             function featuresDataIsOld() {
@@ -54,7 +56,8 @@ define([
 
             function userHasData() {
                 return cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)
-                    || cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+                    || cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)
+                    || cookies.get(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
             }
         }
     };
@@ -73,12 +76,14 @@ define([
         expiryDate.setDate(expiryDate.getDate() + 1);
         cookies.add(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
         cookies.add(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
+        cookies.add(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE, JsonResponse.adFree);
     }
 
     function deleteOldData() {
         // We expect adfree cookies to be cleaned up by the logout process, but what if the user's login simply times out?
         cookies.remove(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
         cookies.remove(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+        cookies.remove(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
     }
 
     /**
@@ -90,6 +95,13 @@ define([
         // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
         return identity.isUserLoggedIn()
             && (cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE) !== 'false');
+    };
+
+    UserFeatures.prototype.isAdFreeUser = function () {
+        if (cookies.get(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE) === null) {
+            this.refresh();
+        }
+        return cookies.get(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE) === 'true';
     };
 
     return new UserFeatures();

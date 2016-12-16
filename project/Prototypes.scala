@@ -21,7 +21,7 @@ trait Prototypes {
     javacOptions := Seq("-g","-encoding", "utf8"),
     scalacOptions := Seq("-unchecked", "-deprecation", "-target:jvm-1.8",
       "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings","-Xfatal-warnings"),
-    doc in Compile <<= target.map(_ / "none"),
+    doc in Compile := target.map(_ / "none").value,
     incOptions := incOptions.value.withNameHashing(true),
     scalaVersion := "2.11.8",
     initialize := {
@@ -69,12 +69,7 @@ trait Prototypes {
   )
 
   val frontendClientSideSettings = Seq(
-
-    TwirlKeys.templateImports ++= Seq(
-      "conf._",
-      "play.api.Play",
-      "play.api.Play.current"
-    )
+    TwirlKeys.templateImports ++= Seq("conf._")
   )
 
   val frontendTestSettings = Seq(
@@ -84,7 +79,7 @@ trait Prototypes {
     concurrentRestrictions in Global := List(Tags.limit(Tags.Test, 4)),
 
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
-    unmanagedClasspath in Test <+= baseDirectory map { bd => Attributed.blank(bd / "test") },
+    unmanagedClasspath in Test += (baseDirectory map { bd => Attributed.blank(bd / "test") }).value,
 
     libraryDependencies ++= Seq(
       scalaTest,
