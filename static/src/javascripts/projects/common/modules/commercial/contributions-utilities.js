@@ -89,9 +89,6 @@ define([
         this.audienceCriteria = options.audienceCriteria;
         this.dataLinkNames = options.dataLinkNames || '';
 
-        this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, contributionsCampaignPrefix);
-        this.membershipURL = options.membershipURL || this.makeURL(membershipURL, membershipCampaignPrefix);
-
         this.insertEvent = this.makeEvent('insert');
         this.viewEvent = this.makeEvent('view');
 
@@ -122,14 +119,15 @@ define([
         return this.id + ':' + event;
     };
 
-    ContributionsABTest.prototype.makeURL = function (base, campaignCodePrefix) {
-        return base + '?INTCMP=' + campaignCodePrefix + '_' + this.campaignId;
-    };
-
     function ContributionsABTestVariant(options, test) {
+        this.campaignId = test.campaignId;
         this.id = options.id;
+
+        this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, contributionsCampaignPrefix);
+        this.membershipURL = options.membershipURL || this.makeURL(membershipURL, membershipCampaignPrefix);
+
         this.test = function () {
-            var component = $.create(options.template(test.contributeURL, test.membershipURL));
+            var component = $.create(options.template(this.contributeURL, this.membershipURL));
 
             return options.test(function () {
                 return fastdom.write(function () {
@@ -156,6 +154,10 @@ define([
         this.registerListener('impression', 'impressionOnInsert', test.insertEvent, options);
         this.registerListener('success', 'successOnView', test.viewEvent, options);
     }
+
+    ContributionsABTestVariant.prototype.makeURL = function (base, campaignCodePrefix) {
+        return base + '?INTCMP=' + campaignCodePrefix + '_' + this.campaignId + '_' + this.id;
+    };
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {
         if (options[type]) this[type] = options[type];
