@@ -60,7 +60,7 @@ import scala.concurrent.Future
     when(idRequest.trackingData) thenReturn trackingData
     when(idRequest.returnUrl) thenReturn None
 
-    lazy val controller = new EditProfileController(idUrlBuilder, authenticatedActions, api, idRequestParser, messagesApi, csrfCheck, profileFormsMapping)
+    lazy val controller = new EditProfileController(idUrlBuilder, authenticatedActions, api, idRequestParser, messagesApi, csrfCheck, csrfAddToken, profileFormsMapping)
   }
 
   "EditProfileController" when {

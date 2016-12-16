@@ -23,7 +23,9 @@ class ThirdPartyConditionsController(returnUrlVerifier: ReturnUrlVerifier,
                                      idUrlBuilder: IdentityUrlBuilder,
                                      authenticatedActions: AuthenticatedActions,
                                      val messagesApi: MessagesApi,
-                                     csrfAddToken: CSRFAddToken)(implicit context: ApplicationContext)
+                                     csrfAddToken: CSRFAddToken,
+                                     csrfCheck: CSRFCheck)
+                                    (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with Mappings {
 
   import authenticatedActions.{agreeAction, authAction}
@@ -60,7 +62,7 @@ class ThirdPartyConditionsController(returnUrlVerifier: ReturnUrlVerifier,
     }
   }
 
-  def agree(groupCode: String, returnUrl: Option[String]) = csrfAddToken {
+  def agree(groupCode: String, returnUrl: Option[String]) = csrfCheck {
     authAction.async { implicit request =>
       api.addUserToGroup(groupCode, request.user.auth).map(_ =>
         SeeOther(returnUrlVerifier.getVerifiedReturnUrl(returnUrl).getOrElse(returnUrlVerifier.defaultReturnUrl))
