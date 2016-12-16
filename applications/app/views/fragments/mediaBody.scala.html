@@ -81,15 +81,11 @@
                                             <meta itemprop="requiresSubscription" content="false" />
                                             <meta itemprop="image" content="@Html(video.content.signedArticleImage)" />
                                             @video.elements.thumbnail.map { img =>
-                                                <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img.images)" />
+                                                <eta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img.images)" />
                                                 <meta itemprop="thumbnailUrl" content="@SeoOptimisedContentImage.bestFor(img.images)" />
                                             }
                                             @video.mediaAtom.map { mediaAtom =>
-                                                @* TODO: Use poster URL for this once we have better image data in model *@
-                                                <meta itemprop="thumbnail" content="@Html(video.content.signedArticleImage)" />
-                                                <meta itemprop="thumbnailUrl" content="@Html(video.content.signedArticleImage)" />
-
-                                              @fragments.atoms.media(mediaAtom, displayCaption = displayCaption)
+                                                @fragments.atoms.media(mediaAtom, displayCaption = displayCaption)
                                             }
 
                                             @video.elements.mainVideo.map { videoElement =>
