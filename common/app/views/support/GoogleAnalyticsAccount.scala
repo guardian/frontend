@@ -1,6 +1,7 @@
 package views.support
 
 import conf.Configuration.environment
+import model.{ApplicationContext, ApplicationIdentity}
 
 object GoogleAnalyticsAccount {
 
@@ -20,8 +21,8 @@ object GoogleAnalyticsAccount {
   */
   val editorialTest = Tracker("UA-33592456-1", "guardianTestPropertyTracker", 5)
 
-  private val useProdTracker = environment.isProd && !environment.isPreview
+  private def useProdTracker(context: ApplicationContext) = environment.isProd && !context.isPreview
 
-  val editorialTracker: Tracker = if (useProdTracker) editorialProd else editorialTest
+  def editorialTracker(context: ApplicationContext): Tracker = if (useProdTracker(context)) editorialProd else editorialTest
 
 }

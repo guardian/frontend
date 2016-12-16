@@ -1,4 +1,4 @@
-@(currentTeamId: String, players: List[pa.Player], teams: List[pa.Team])(implicit env: play.api.Environment)
+@(currentTeamId: String, players: List[pa.Player], teams: List[pa.Team])(implicit context: model.ApplicationContext)
 
 @views.html.football.main(s"Squad images") {
 

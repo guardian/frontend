@@ -1,9 +1,11 @@
-@(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean)(implicit request: RequestHeader, env: play.api.Environment)
+@(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @{
     media match {
-            case youtube if media.assets.head.platform == "Youtube" => if(amp) views.html.fragments.atoms.ampYoutube(media) else views.html.fragments.atoms.youtube(media, displayCaption)
-            case _ => views.html.fragments.atoms.genericMedia(media)
+            case posterOnly if media.posterUrl.isDefined && media.assets.isEmpty => if(amp) views.html.fragments.atoms.ampMediaPosterOnly(media) else views.html.fragments.atoms.mediaPosterOnly(media)
+            case youtube if media.assets.headOption.filter(_.platform == "Youtube") => if(amp) views.html.fragments.atoms.ampYoutube(media) else views.html.fragments.atoms.youtube(media, displayCaption)
+            case genericAsset if media.assets.nonEmpty => views.html.fragments.atoms.genericMedia(media, displayCaption)
+            case _ =>
         }
 
 }

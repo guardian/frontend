@@ -1,6 +1,6 @@
 @import controllers.cache.ImageDecacheController
 
-@(messageType: ImageDecacheController.MessageType = ImageDecacheController.DefaultMessage, image: String = "", originImage: Option[String] = None)(implicit request: RequestHeader, env: play.api.Environment)
+@(messageType: ImageDecacheController.MessageType = ImageDecacheController.DefaultMessage, image: String = "", originImage: Option[String] = None)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Clear image", isAuthed = true) {
 

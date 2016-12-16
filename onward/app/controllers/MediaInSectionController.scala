@@ -14,7 +14,7 @@ import slices.{Fixed, FixedContainers}
 
 import scala.concurrent.Future
 
-class MediaInSectionController(contentApiClient: ContentApiClient) extends Controller with Logging with Paging with ExecutionContexts with Requests {
+class MediaInSectionController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with Paging with ExecutionContexts with Requests {
   // These exist to work around the absence of default values in Play routing.
   def renderSectionMediaWithSeries(mediaType: String, sectionId: String, seriesId: String) =
     renderMedia(mediaType, sectionId, Some(seriesId))
@@ -87,7 +87,7 @@ class MediaInSectionController(contentApiClient: ContentApiClient) extends Contr
         componentId
       ).withTimeStamps,
       FrontProperties.empty
-    )(request)
+    )
     renderFormat(response, response, 900)
   }
 }

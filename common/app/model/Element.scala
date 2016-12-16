@@ -108,6 +108,7 @@ final case class VideoMedia(videoAssets: List[VideoAsset]) {
   val source: Option[String] = videoAssets.headOption.flatMap(_.source)
   val embeddable: Boolean = videoAssets.headOption.exists(_.embeddable)
   val caption: Option[String] = largestVideo.flatMap(_.caption)
+  val title: Option[String] = largestVideo.flatMap(_.title)
 }
 
 object AudioMedia {

@@ -5,7 +5,7 @@ import implicits.Forms
 import play.api.mvc._
 import play.api.data._
 import play.api.data.validation.Constraints
-import model.{IdentityPage, NoCache}
+import model.{ApplicationContext, IdentityPage, NoCache}
 import common.ExecutionContexts
 import services.{IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
 import idapiclient.IdApiClient
@@ -13,18 +13,17 @@ import play.api.i18n.{Messages, MessagesApi}
 import idapiclient.EmailPassword
 import utils.SafeLogging
 import form.Mappings
-import play.api.Environment
+import play.api.libs.crypto.CryptoConfig
 
 import scala.concurrent.Future
-
 
 class SigninController(returnUrlVerifier: ReturnUrlVerifier,
                        api: IdApiClient,
                        idRequestParser: IdRequestParser,
                        idUrlBuilder: IdentityUrlBuilder,
                        signInService : PlaySigninService,
-                       val messagesApi: MessagesApi)
-                      (implicit env: Environment)
+                       val messagesApi: MessagesApi,
+                       val cryptoConfig: CryptoConfig)(implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with Forms {
 
   val page = IdentityPage("/signin", "Sign in")

@@ -161,7 +161,8 @@ define([
             if (tem !== null) { return 'Opera ' + tem[1]; }
         }
         M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
-        if ((tem = ua.match(/version\/(\d+)/i)) !== null) { M.splice(1, 1, tem[1]); }
+        tem = ua.match(/version\/(\d+)/i);
+        if (tem !== null) { M.splice(1, 1, tem[1]); }
         return {
             browser: M[0],
             version: M[1]
@@ -313,11 +314,11 @@ define([
         // Standards:
         if (hidden in document) {
             document.addEventListener('visibilitychange', onchange);
-        } else if ((hidden = 'mozHidden') in document) {
+        } else if (('mozHidden') in document) {
             document.addEventListener('mozvisibilitychange', onchange);
-        } else if ((hidden = 'webkitHidden') in document) {
+        } else if (('webkitHidden') in document) {
             document.addEventListener('webkitvisibilitychange', onchange);
-        } else if ((hidden = 'msHidden') in document) {
+        } else if (('msHidden') in document) {
             document.addEventListener('msvisibilitychange', onchange);
         } else if ('onfocusin' in document) { // IE 9 and lower:
             document.onfocusin = document.onfocusout = onchange;

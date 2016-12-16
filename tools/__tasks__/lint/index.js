@@ -2,7 +2,7 @@ module.exports = {
     description: 'Lint assets',
     task: [
         require('./javascript'),
-        require('./sass')
+        require('./sass'),
     ],
-    concurrent: true
+    concurrent: true,
 };

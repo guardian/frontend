@@ -1,5 +1,5 @@
 @import model.ArticleSchemas
-@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, env: play.api.Environment)
+@(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.LinkTo
 @import views.BodyCleaner
@@ -23,9 +23,9 @@
         <article id="article" data-test-id="article-root"
 
         class="@RenderClasses(Map(
-            "content--advertisement-feature" -> isPaidContent,
+            "content--paid-content" -> isPaidContent,
             "has-feature-showcase-element" -> (article.tags.isFeature && article.elements.hasShowcaseMainElement),
-            "paid-content--advertisement-feature" -> isPaidContent
+            "paid-content" -> isPaidContent
         ),  "content", "content--article", "tonal", s"tonal--${toneClass(article)}", s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}")"
 
         itemscope itemtype="@schemaType(model)" role="main">

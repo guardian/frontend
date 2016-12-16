@@ -1,4 +1,4 @@
-@(page: ImageContentPage)(implicit request: RequestHeader)
+@(page: ImageContentPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import layout.ContentWidths.ImageContentMedia
 @import views.support.Commercial._
 @import views.support.RenderClasses
@@ -8,7 +8,7 @@
 <div class="l-side-margins l-side-margins--media">
     <article
         class="@RenderClasses(Map(
-            "content--advertisement-feature paid-content--advertisement-feature" -> isPaidContent(page),
+            "content--paid-content paid-content" -> isPaidContent(page),
             "content--sponsored" -> isSponsoredContent(page),
             "content--foundation-supported" -> isFoundationFundedContent(page)
         ), "content content--media content--image tonal tonal--tone-media")"

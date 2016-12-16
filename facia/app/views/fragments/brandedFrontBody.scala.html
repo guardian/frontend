@@ -1,4 +1,4 @@
-@(faciaPage: model.PressedPage)(implicit request: RequestHeader)
+@(faciaPage: model.PressedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.Edition
 @import common.commercial.{ContainerModel, PaidContent, Sponsored}
 @import views.support.RenderClasses
@@ -11,7 +11,7 @@
             <div class="l-side-margins">
                 <div class="@RenderClasses(Map(
                     "fc-container--sponsored" -> (branding.sponsorshipType == Sponsored),
-                    "fc-container--advertisement-feature paid-content--advertisement-feature" -> (branding.sponsorshipType == PaidContent)
+                    "fc-container--paid-content paid-content" -> (branding.sponsorshipType == PaidContent)
                 ), "facia-page")"
                 data-link-name="Front | @request.path"
                 role="main">

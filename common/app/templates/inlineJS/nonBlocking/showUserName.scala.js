@@ -1,4 +1,4 @@
-@()(implicit env: play.api.Environment)
+@()(implicit context: model.ApplicationContext)
 
 @import play.api.Mode.Dev
 
@@ -37,6 +37,6 @@ try {
         }
     })('classList' in document.documentElement, document, window);
 } catch (e) {
-    @if(env.mode == Dev) {throw (e)}
+    @if(context.environment.mode == Dev) {throw (e)}
 }
 

@@ -1,4 +1,4 @@
-@(index: services.IndexPage)(implicit request: RequestHeader)
+@(index: services.IndexPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.commercial.PaidContent
 @import common.{Edition, PagePaths}
 @import model.FrontProperties
@@ -20,7 +20,7 @@
     case Some(branding) => {
         <div class="l-side-margins">
             <div
-            class="@RenderClasses(Map("fc-container--advertisement-feature paid-content--advertisement-feature" -> (branding.sponsorshipType == PaidContent)), "u-cf index-page")"
+            class="@RenderClasses(Map("fc-container--paid-content paid-content" -> (branding.sponsorshipType == PaidContent)), "u-cf index-page")"
             data-link-name="Front | @request.path"
             role="main">
 

@@ -31,7 +31,7 @@ define([
         queueAdvert(advert);
         if (dfpEnv.shouldLazyLoad()) {
             performanceLogging.updateAdvertMetric(advert, 'loadingMethod', 'add-slot-lazy');
-            enableLazyLoad();
+            enableLazyLoad(advert);
         } else {
             performanceLogging.updateAdvertMetric(advert, 'loadingMethod', 'add-slot-instant');
             performanceLogging.updateAdvertMetric(advert, 'lazyWaitComplete', 0);

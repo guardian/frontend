@@ -1,4 +1,4 @@
-@(model: LiveBlogPage)(implicit request: RequestHeader, env: play.api.Environment)
+@(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @mainAMP(model, model.related, model.article.content){
     @views.html.liveblog.liveBlogBody(model, amp = true)

@@ -25,7 +25,7 @@ object JsonComponent extends Results with implicits.Requests {
     resultFor(request, json)
   }
 
-  def apply(page: Page, html: Html)(implicit request: RequestHeader): RevalidatableResult = {
+  def apply(page: Page, html: Html)(implicit request: RequestHeader, context: ApplicationContext): RevalidatableResult = {
     val json = jsonFor(page, "html" -> html)
     resultFor(request, json)
   }
@@ -35,12 +35,12 @@ object JsonComponent extends Results with implicits.Requests {
     resultFor(request, json)
   }
 
-  def apply(page: Page, items: (String, Any)*)(implicit request: RequestHeader): RevalidatableResult = {
+  def apply(page: Page, items: (String, Any)*)(implicit request: RequestHeader, context: ApplicationContext): RevalidatableResult = {
     val json = jsonFor(page, items: _*)
     resultFor(request, json)
   }
 
-  private def jsonFor(page: Page, items: (String, Any)*)(implicit request: RequestHeader): String = {
+  private def jsonFor(page: Page, items: (String, Any)*)(implicit request: RequestHeader, context: ApplicationContext): String = {
     jsonFor(("config" -> Json.parse(templates.js.javaScriptConfig(page).body)) +: items: _*)
   }
 

@@ -32,17 +32,17 @@ const run = () => {
         'onward',
         'preview',
         'rss',
-        'sport'
+        'sport',
     ]);
     const unifiedWhitelist = List([
-        'all'
+        'all',
     ]);
-    const filterWhiteListed = (whitelist) => (deploys) => deploys
+    const filterWhiteListed = whitelist => deploys => deploys
         .filter(deploy => whitelist.contains(deploy.projectName))
         .toList();
     const filterServer = filterWhiteListed(serverWhitelist);
     const filterUnified = filterWhiteListed(unifiedWhitelist);
-    const timeOfMostRecent = (deploys) => getMostRecentDeploys(deploys).last().time.getTime();
+    const timeOfMostRecent = deploys => getMostRecentDeploys(deploys).last().time.getTime();
     const mostRecentOf = (serverDeploys, unifiedDeploys) => {
         if (serverDeploys.isEmpty()) return unifiedDeploys;
         if (unifiedDeploys.isEmpty()) return serverDeploys;
@@ -52,7 +52,7 @@ const run = () => {
     };
     const deploysPromise = Promise.all([
         getDeploys('CODE'),
-        getDeploys('PROD')
+        getDeploys('PROD'),
     ]);
     const filteredDeploysPromise = deploysPromise.then(([codeDeploys, prodDeploys]) => {
         const currentCodeDeploys = mostRecentOf(filterServer(codeDeploys), filterUnified(codeDeploys));
@@ -72,7 +72,7 @@ const run = () => {
     });
     const buildsPromise = latestDeploysPromise.then(([latestCodeDeploy, oldestProdDeploy]) => (Promise.all([
         getBuild(latestCodeDeploy.build),
-        getBuild(oldestProdDeploy.build)
+        getBuild(oldestProdDeploy.build),
     ])));
     const differencePromise = buildsPromise.then(([codeBuild, prodBuild]) => (getDifference(prodBuild.revision, codeBuild.revision).then(gitHubCommits => gitHubCommits.reverse().toList())));
     return Promise.all([filteredDeploysPromise, latestDeploysPromise, differencePromise])
@@ -81,12 +81,10 @@ const run = () => {
 };
 const intervalSeconds = 10;
 const wait = () => new Promise(resolve => setTimeout(resolve, intervalSeconds * 1000));
-const update = () => {
-    return run()
-        .then(wait, (error) => {
-            console.error('Handled promise rejection.', error.stack); // eslint-disable-line no-console
-            return wait();
-        })
-        .then(update);
-};
+const update = () => run()
+    .then(wait, (error) => {
+        console.error('Handled promise rejection.', error.stack); // eslint-disable-line no-console
+        return wait();
+    })
+    .then(update);
 update();

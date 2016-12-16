@@ -1,9 +1,9 @@
 @import common.commercial.hosted.HostedVideoPage
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
-@import conf.Configuration.environment
+@import conf.Configuration.{environment => ConfigEnvironment}
 @import conf.Configuration.site.host
 @import views.html.hosted._
-@(page: HostedVideoPage)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: HostedVideoPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @main(page, Some("commercial")) { } {
     <!--[if (gt IE 9)|(IEMobile)]><!-->
@@ -60,7 +60,7 @@
                         data-media-id="@{page.video.mediaId}"
                         data-duration="@{page.video.duration}"
                         class="js-hosted-youtube-video hosted__youtube-video"
-                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(environment.isProd && !environment.isPreview) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
+                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(ConfigEnvironment.isProd && !context.isPreview) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
                         frameborder="0"
                         allowfullscreen=""></iframe>
                         @guardianHostedControlButtons(page)

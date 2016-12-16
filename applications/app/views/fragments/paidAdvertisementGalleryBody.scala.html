@@ -5,12 +5,12 @@
 @import views.support.`package`.Seq2zipWithRowInfo
 @import views.support.{ImgSrc, RenderClasses}
 
-@(page: GalleryPage)(implicit request: RequestHeader)
+@(page: GalleryPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 <div class="l-side-margins l-side-margins--media">
 
     <article id="article" class="@RenderClasses(
-            "content--advertisement-feature", "paid-content--advertisement-feature",
+            "content--paid-content", "paid-content",
             "content", "content--media", "content--gallery", "tonal", s"tonal--${toneClass(page.gallery)}"
         )"
         itemscope itemtype="@page.gallery.metadata.schemaType" role="main">

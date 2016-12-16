@@ -2,11 +2,13 @@ package controllers.admin
 
 import com.gu.googleauth.GoogleAuthConfig
 import googleAuth.OAuthLoginController
-import play.api.Environment
+import model.ApplicationContext
+import play.api.libs.crypto.CryptoConfig
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, Request}
 
-class OAuthLoginAdminController(val wsClient: WSClient)(implicit env: Environment) extends OAuthLoginController {
+class OAuthLoginAdminController(val wsClient: WSClient, val cryptoConfig: CryptoConfig)(implicit context: ApplicationContext) extends OAuthLoginController {
+
   override def login = Action { implicit request =>
     val error = request.flash.get("error")
     Ok(views.html.auth.login(error))
