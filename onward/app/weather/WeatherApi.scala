@@ -9,14 +9,14 @@ import play.api.libs.ws.WSClient
 import weather.geo.LatitudeLongitude
 import weather.models.CityId
 import weather.models.accuweather.{ForecastResponse, LocationResponse, WeatherResponse}
-import dispatch._, Defaults._
-import java.util.concurrent.{TimeoutException, TimeUnit}
-import scala.concurrent.duration.Duration
+import dispatch._
+import Defaults._
+import java.util.concurrent.TimeoutException
+import model.ApplicationContext
 import scala.concurrent.duration._
-import play.api.Environment
 import play.api.Mode
 
-class WeatherApi(wsClient: WSClient, environment: Environment) extends ExecutionContexts with ResourcesHelper with Logging {
+class WeatherApi(wsClient: WSClient, context: ApplicationContext) extends ExecutionContexts with ResourcesHelper with Logging {
   lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(
     throw new RuntimeException("Weather API Key not set")
   )
@@ -40,7 +40,7 @@ class WeatherApi(wsClient: WSClient, environment: Environment) extends Execution
   }
 
   private def getJson(url: String): Future[JsValue] = {
-    if (environment.mode == Mode.Test) {
+    if (context.environment.mode == Mode.Test) {
       Future(Json.parse(slurpOrDie(new URI(url).getPath.stripPrefix("/"))))
     } else {
       getJsonWithRetry(url)

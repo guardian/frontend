@@ -5,7 +5,6 @@ import conf.FootballClient
 import contentapi.ContentApiClient
 import feed.CompetitionsService
 import model.ApplicationContext
-import play.api.Environment
 
 trait FootballControllers {
   def competitionsService: CompetitionsService

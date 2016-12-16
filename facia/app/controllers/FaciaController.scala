@@ -7,7 +7,6 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
-import play.api.Environment
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html

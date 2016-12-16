@@ -4,7 +4,6 @@ import common.Edition
 import layout.ContentWidths
 import layout.ContentWidths.{Inline, LiveBlogMedia, MainMedia, Showcase}
 import model.{ApplicationContext, Article}
-import play.api.Environment
 import play.api.mvc.RequestHeader
 import views.support._
 import views.support.cleaner._

@@ -8,7 +8,6 @@ import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, 
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.{DateTime, LocalDate}
-import play.api.Environment
 import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc.{Action, Controller, RequestHeader, Result, _}

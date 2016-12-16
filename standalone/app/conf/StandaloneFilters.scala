@@ -5,7 +5,6 @@ import com.gu.googleauth.FilterExemption
 import common.ExecutionContexts
 import googleAuth.GoogleAuthFilters.AuthFilterWithExemptions
 import model.ApplicationContext
-import play.api.Environment
 import play.api.http.HttpFilters
 import play.api.libs.crypto.CryptoConfig
 import play.api.mvc.{Filter, RequestHeader, Result}
