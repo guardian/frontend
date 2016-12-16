@@ -11,7 +11,7 @@ import play.api.Environment
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{AnyContent, Controller, Request}
-import play.filters.csrf.{CSRFAddToken, CSRFCheck}
+import play.filters.csrf.CSRFCheck
 import services._
 import utils.SafeLogging
 
@@ -27,6 +27,7 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
                             identityApiClient: IdApiClient,
                             idRequestParser: IdRequestParser,
                             val messagesApi: MessagesApi,
+                            csrfCheck: CSRFCheck,
                             implicit val profileFormsMapping: ProfileFormsMapping)
                            (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
@@ -45,7 +46,7 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
   def displayDigitalPackForm = displayForm(digitalPackPage)
   def displayPrivacyForm = displayForm(privacyPage)
 
-  protected def displayForm(page: IdentityPage) = CSRFAddToken {
+  protected def displayForm(page: IdentityPage) = csrfCheck {
     recentlyAuthenticated.async { implicit request =>
       profileFormsView(page = page, forms = ProfileForms(request.user, PublicEditProfilePage))
     }
@@ -63,7 +64,7 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
     else
       PrivacyEditProfilePage
 
-  def submitForm(page: IdentityPage) = CSRFCheck {
+  def submitForm(page: IdentityPage) = csrfCheck {
     authActionWithUser.async {
       implicit request =>
         val activePage = identifyActiveSubmittedForm(page)
