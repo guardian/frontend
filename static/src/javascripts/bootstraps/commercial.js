@@ -73,26 +73,24 @@ define([
 
     var secondaryModules = [
         ['cm-fill-advert-slots', fillAdvertSlots.init],
-        ['cm-stickyTopBanner', stickyTopBanner.init],
-        ['cm-paidforBand', paidforBand.init],
-        ['cm-paidContainers', paidContainers.init],
-        ['cm-ready', function () {
-            mediator.emit('page:commercial:ready');
-            userTiming.mark('commercial end');
-            robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
-                ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
-            });
-            return Promise.resolve();
-        }]
+        ['cm-paidContainers', paidContainers.init]
     ];
 
+    if (config.page.isAdvertisementFeature) {
+        secondaryModules.append(['cm-paidforBand', paidforBand.init]);
+    }
+
     if (config.page.isHosted) {
-        secondaryModules.unshift(
+        secondaryModules.append(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init],
             ['cm-hostedGallery', hostedGallery.init],
             ['cm-hostedOnward', hostedOnward.init],
             ['cm-hostedOJCarousel', hostedOJCarousel.init]);
+    }
+
+    if (!config.page.disableStickyTopBanner) {
+        secondaryModules.unshift(['cm-stickyTopBanner', stickyTopBanner.init]);
     }
 
     function loadModules(modules, baseline) {
@@ -149,8 +147,16 @@ define([
             // Stub the command queue
             window.googletag = { cmd: [] };
 
-            loadModules(primaryModules, performanceLogging.primaryBaseline).then(function(){
-                loadModules(secondaryModules, performanceLogging.secondaryBaseline);
+            loadModules(primaryModules, performanceLogging.primaryBaseline)
+            .then(function () {
+                return loadModules(secondaryModules, performanceLogging.secondaryBaseline);
+            })
+            .then(function () {
+                mediator.emit('page:commercial:ready');
+                userTiming.mark('commercial end');
+                robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
+                    ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
+                });
             });
         }
     };
