@@ -2,12 +2,14 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/storage',
-    'common/modules/commercial/user-features'
+    'common/modules/commercial/user-features',
+    'Promise'
 ], function (
     config,
     detect,
     storage,
-    userFeatures
+    userFeatures,
+    Promise
 ) {
     function adblockInUse() {
         return detect.adblockInUse;
@@ -45,7 +47,7 @@ define([
                 adblockInUse().then(function(adblockInUse){
                     return adblockInUse && !isPayingMember() && visitedMoreThanOnce()  && notMobile();
                 })
-            : Promise.resolve(false);
+            : new Promise.resolve(false)
     }
 
     return {
