@@ -6,16 +6,14 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class MatchControllerTest
   extends FlatSpec
-  with ConfiguredTestSuite
   with Matchers
   with BeforeAndAfterAll
-  with WithMaterializer
   with WithTestWsClient
   with WithTestFootballClient
   with WithTestContext
   with FootballTestData {
 
-  lazy val matchController = new MatchController(testCompetitionsService)
+  val matchController = new MatchController(testCompetitionsService)
 
   "MatchController" should "redirect to results when match is not found" in {
     val result = matchController.renderMatchId("12345")(TestRequest())

@@ -6,7 +6,6 @@ import java.util.UUID
 
 import akka.actor.Status.{Failure => ActorFailure}
 import akka.actor.{Actor, ActorSystem, Props}
-import akka.stream.Materializer
 import common.ExecutionContexts
 import controllers.BreakingNews.{BreakingNewsApi, S3BreakingNews}
 import models.{NewsAlertNotification, NewsAlertTypes}
@@ -23,8 +22,6 @@ import test.{ConfiguredTestSuite, WithTestContext}
     with Matchers
     with ConfiguredTestSuite
     with WithTestContext {
-
-  implicit lazy val mat: Materializer = app.materializer
 
   val testApiKey = "test-api-key"
 
@@ -69,7 +66,10 @@ import test.{ConfiguredTestSuite, WithTestContext}
         val response = call(controller.alerts, getAlertsRequest)
 
         status(response) should be(OK)
-        contentType(response) shouldBe Some("application/json")
+        header("Content-Type", response) match {
+          case Some(h) => h should startWith("application/json")
+          case _ => assert(false)
+        }
         contentAsJson(response) should equal(validJson)
       }
     }

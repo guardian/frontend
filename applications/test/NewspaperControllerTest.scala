@@ -3,19 +3,18 @@ package services
 import controllers.NewspaperController
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
-import test.{ConfiguredTestSuite, TestRequest, WithMaterializer, WithTestContentApiClient, WithTestContext, WithTestWsClient}
+import test.{ConfiguredTestSuite, TestRequest, WithTestContentApiClient, WithTestContext, WithTestWsClient}
 
 @DoNotDiscover class NewspaperControllerTest
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
-  with WithMaterializer
   with WithTestWsClient
   with WithTestContext
   with WithTestContentApiClient {
 
-  lazy val newspaperController = new NewspaperController(testContentApiClient)
+  val newspaperController = new NewspaperController(testContentApiClient)
 
   "Newspaper Controller" should "redirect to /theguardian for date in the future" in {
     val result = newspaperController.newspaperForDate("theguardian", "01", "jan", "3000")(TestRequest())

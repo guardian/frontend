@@ -12,7 +12,6 @@ import org.scalatest.concurrent.{Futures, ScalaFutures}
   with Futures
   with ScalaFutures
   with BeforeAndAfterAll
-  with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient {
 

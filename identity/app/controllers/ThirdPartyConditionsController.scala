@@ -10,7 +10,7 @@ import idapiclient.IdApiClient
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.i18n.MessagesApi
 import play.api.mvc._
-import play.filters.csrf.{CSRFAddToken, CSRFCheck}
+import play.filters.csrf.CSRFAddToken
 import services._
 import utils.SafeLogging
 
@@ -22,15 +22,15 @@ class ThirdPartyConditionsController(returnUrlVerifier: ReturnUrlVerifier,
                                      api: IdApiClient,
                                      idUrlBuilder: IdentityUrlBuilder,
                                      authenticatedActions: AuthenticatedActions,
-                                     val messagesApi: MessagesApi,
-                                     csrfAddToken: CSRFAddToken)(implicit context: ApplicationContext)
+                                     val messagesApi: MessagesApi)
+                                    (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with Mappings {
 
   import authenticatedActions.{agreeAction, authAction}
 
   val page = IdentityPage("/agree", "Terms and Conditions")
 
-  def renderAgree(groupCode: String) = csrfAddToken {
+  def renderAgree(groupCode: String) = CSRFAddToken {
     agreeAction(redirectToSignInWithThirdPartyConditions).async { implicit request =>
       val userId = request.user.getId()
       val idRequest = idRequestParser(request)
@@ -60,7 +60,7 @@ class ThirdPartyConditionsController(returnUrlVerifier: ReturnUrlVerifier,
     }
   }
 
-  def agree(groupCode: String, returnUrl: Option[String]) = csrfAddToken {
+  def agree(groupCode: String, returnUrl: Option[String]) = CSRFAddToken {
     authAction.async { implicit request =>
       api.addUserToGroup(groupCode, request.user.auth).map(_ =>
         SeeOther(returnUrlVerifier.getVerifiedReturnUrl(returnUrl).getOrElse(returnUrlVerifier.defaultReturnUrl))

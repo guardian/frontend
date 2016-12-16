@@ -8,7 +8,6 @@ import play.api.libs.ws.WSClient
 import play.api.libs.json.{JsValue, Json}
 
 import scala.concurrent.Future
-import scala.concurrent.duration._
 
 case class FastlyStatistic(service: String, region: String, timestamp: Long, name: String, value: String) {
   lazy val key: (String, String, String) = (service, name, region)
@@ -41,7 +40,7 @@ class FastlyStatisticService(wsClient: WSClient) extends ExecutionContexts with 
       regions map { region =>
         val request = wsClient.url(s"https://api.fastly.com/stats/service/${fastly.serviceId}?by=minute&from=45+minutes+ago&to=15+minutes+ago&region=$region")
           .withHeaders("Fastly-Key" -> fastly.key)
-          .withRequestTimeout(20.seconds)
+          .withRequestTimeout(20000)
 
         val response: Future[Option[String]] = request.get().map { resp => Some(resp.body) }.recover {
           case e: Throwable =>

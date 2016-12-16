@@ -4,8 +4,6 @@ import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.cookie.GuUCookieData
 import org.mockito.Matchers
 import org.scalatest.{DoNotDiscover, ShouldMatchers, WordSpec}
-import play.api.libs.crypto.CSRFTokenSigner
-import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 import services._
 import services.{ReturnUrlVerifier, IdRequestParser, IdentityUrlBuilder}
 import idapiclient.{ScGuU, IdApiClient}
@@ -28,7 +26,6 @@ import actions.AuthenticatedActions
   with ShouldMatchers
   with MockitoSugar
   with WithTestContext
-  with WithTestCSRF
   with ConfiguredTestSuite {
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]
@@ -56,7 +53,7 @@ import actions.AuthenticatedActions
   when(idRequest.trackingData) thenReturn trackingData
 
   when(idUrlBuilder.buildUrl(any[String], any[IdentityRequest], any[(String, String)])) thenReturn "/email-prefs"
-  lazy val emailController = new EmailController(returnUrlVerifier, conf, api, idRequestParser, idUrlBuilder, authenticatedActions, I18NTestComponents.messagesApi, csrfCheck, csrfAddToken)
+  lazy val emailController = new EmailController(returnUrlVerifier, conf, api, idRequestParser, idUrlBuilder, authenticatedActions, I18NTestComponents.messagesApi)
 
   "The preferences method" when {
     val testRequest = TestRequest()
@@ -87,7 +84,7 @@ import actions.AuthenticatedActions
   "The save preferences method" when {
     "the form submission is valid" when {
       val emailFormat = "Text"
-      def fakeRequest = FakeCSRFRequest(csrfAddToken,POST, "/email-prefs")
+      def fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
         .withFormUrlEncodedBody("htmlPreference" -> emailFormat, "csrfToken" -> "abc")
       def authRequest = new AuthRequest(authenticatedUser, fakeRequest)
 

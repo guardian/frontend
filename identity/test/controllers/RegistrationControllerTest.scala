@@ -3,7 +3,7 @@ package controllers
 import org.scalatest.path
 import org.scalatest.{Matchers => ShouldMatchers}
 import org.scalatest.mock.MockitoSugar
-import test.{Fake, I18NTestComponents, TestRequest, WithTestContext , WithTestCryptoConfig}
+import test.{Fake, I18NTestComponents, TestRequest, WithTestContext}
 import idapiclient.{EmailPassword, IdApiClient, TrackingData}
 import services._
 import play.api.test.Helpers._
@@ -19,12 +19,10 @@ import org.joda.time.DateTime
 import play.api.mvc.Cookies
 import conf.IdentityConfiguration
 
-class RegistrationControllerTest
-  extends path.FreeSpec
+class RegistrationControllerTest extends path.FreeSpec
   with ShouldMatchers
-  with MockitoSugar
   with WithTestContext
-  with WithTestCryptoConfig {
+  with MockitoSugar  {
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val api = mock[IdApiClient]
@@ -46,15 +44,7 @@ class RegistrationControllerTest
   when(requestParser.apply(Matchers.anyObject(), Matchers.anyString())).thenReturn(identityRequest)
   when(trackingData.ipAddress).thenReturn(Some("123.456.789.12"))
 
-  lazy val registrationController = new RegistrationController(
-    returnUrlVerifier,
-    userCreationService,
-    api,
-    requestParser,
-    urlBuilder,
-    signinService,
-    I18NTestComponents.messagesApi,
-    testCryptoConfig)
+  lazy val registrationController = new RegistrationController(returnUrlVerifier, userCreationService, api, requestParser, urlBuilder, signinService, I18NTestComponents.messagesApi)
 
   "the renderRegistrationForm" - {
     "should render the registration form" in Fake {

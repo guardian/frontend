@@ -63,8 +63,7 @@ class DevParametersHttpRequestHandler(
     "0p19G" // Google AMP AB test parameter
   )
 
-  val playBugs = Seq("") // (Play 2.5 bug?) request.queryString is returning an empty string when empty
-  val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ playBugs
+  val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams
 
   override def routeRequest(request: RequestHeader) = {
 

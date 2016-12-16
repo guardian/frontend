@@ -12,7 +12,7 @@ import idapiclient.IdApiClient
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import actions.AuthenticatedActions
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
-import play.api.libs.crypto.CryptoConfig
+
 import scala.concurrent.Future
 import idapiclient.requests.PasswordUpdate
 
@@ -21,10 +21,7 @@ class ChangePasswordController( api: IdApiClient,
                                 authenticationService: AuthenticationService,
                                 idRequestParser: IdRequestParser,
                                 idUrlBuilder: IdentityUrlBuilder,
-                                val messagesApi: MessagesApi,
-                                csrfCheck: CSRFCheck,
-                                csrfAddToken: CSRFAddToken,
-                                val cryptoConfig: CryptoConfig)(implicit context: ApplicationContext)
+                                val messagesApi: MessagesApi)(implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms with I18nSupport{
 
     import authenticatedActions.authAction
@@ -53,7 +50,7 @@ class ChangePasswordController( api: IdApiClient,
       )
   )
 
-  def displayForm() = csrfAddToken.apply {
+  def displayForm() = CSRFAddToken {
     authAction.async {
       implicit request =>
 
@@ -74,7 +71,7 @@ class ChangePasswordController( api: IdApiClient,
     NoCache(Ok(views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)))
   }
 
-  def submitForm() = csrfCheck {
+  def submitForm() = CSRFCheck{
     authAction.async {
       implicit request =>
         val idRequest = idRequestParser(request)

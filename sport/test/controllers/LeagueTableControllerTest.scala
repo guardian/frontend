@@ -7,16 +7,14 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class LeagueTableControllerTest
   extends FlatSpec
-  with ConfiguredTestSuite
-  with Matchers
-  with FootballTestData
-  with WithTestFootballClient
-  with WithMaterializer
-  with BeforeAndAfterAll
-  with WithTestContext
-  with WithTestWsClient {
+    with Matchers
+    with FootballTestData
+    with WithTestFootballClient
+    with BeforeAndAfterAll
+    with WithTestContext
+    with WithTestWsClient {
 
-  lazy val leagueTableController = new LeagueTableController(testCompetitionsService)
+  val leagueTableController = new LeagueTableController(testCompetitionsService)
 
   "League Table Controller" should "200 when content type is table" in {
     val result = leagueTableController.renderLeagueTable()(TestRequest())
@@ -30,7 +28,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val result = leagueTableController.renderLeagueTableJson()(fakeRequest)
     status(result) should be(200)
-    contentType(result) shouldBe Some("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
   }
 
@@ -46,7 +44,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val result = leagueTableController.renderTeamlist()(fakeRequest)
     status(result) should be(200)
-    contentType(result) shouldBe Some("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
   }
 
@@ -64,7 +62,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val result = leagueTableController.renderCompetition(competitionId)(fakeRequest)
     status(result) should be(200)
-    contentType(result) shouldBe Some("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"html\"")
   }
 

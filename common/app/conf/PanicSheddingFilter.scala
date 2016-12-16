@@ -2,7 +2,6 @@ package conf
 
 import java.lang.management.ManagementFactory
 
-import akka.stream.Materializer
 import akka.agent.Agent
 import common.{ExecutionContexts, RequestMetrics, Logging}
 import org.joda.time.DateTime
@@ -12,7 +11,7 @@ import play.api.mvc.{Result, RequestHeader, Filter}
 import scala.concurrent.Future
 
 // this turns requests away with 5xx errors if we are too busy
-class PanicSheddingFilter(implicit val mat: Materializer) extends Filter with Logging {
+class PanicSheddingFilter extends Filter with Logging {
 
   import scala.concurrent.ExecutionContext.Implicits.global
   import scala.concurrent.duration._

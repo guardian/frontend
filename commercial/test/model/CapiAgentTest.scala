@@ -1,18 +1,17 @@
 package commercial.model.capi
 
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
-import test._
+import test.{WithTestContentApiClient, WithTestWsClient}
 
 class CapiAgentTest
   extends FlatSpec
   with Matchers
-  with SingleServerSuite
   with BeforeAndAfterAll
-  with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient {
 
   lazy val capiAgent = new CapiAgent(testContentApiClient)
+
 
   "idsFromShortUrls" should "give ID of a valid short URL" in {
     capiAgent.idsFromShortUrls(Seq("p/43b2q")) shouldBe Seq("p/43b2q")
