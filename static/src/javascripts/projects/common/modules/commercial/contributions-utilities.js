@@ -123,7 +123,7 @@ define([
     };
 
     ContributionsABTest.prototype.makeURL = function (base, campaignCodePrefix) {
-        return base + '?' + campaignCodePrefix + '_' + this.campaignId;
+        return base + '?INTCMP=' + campaignCodePrefix + '_' + this.campaignId;
     };
 
     function ContributionsABTestVariant(options, test) {
