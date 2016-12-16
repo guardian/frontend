@@ -176,7 +176,9 @@ define([
 
         inAlwaysAskTest: function () {
             var participations = storage.local.get('gu.ab.participations') || {};
-            return ('ContributionsEpicAlwaysAskStrategy' in participations);
+            var test = participations['ContributionsEpicAlwaysAskStrategy'];
+
+            return test && test.variant !== 'notintest';
         }
     };
 });
