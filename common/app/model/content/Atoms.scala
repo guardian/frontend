@@ -31,7 +31,6 @@ final case class MediaAtom(
   title: String,
   duration: Option[Long],
   source: Option[String],
-  posterUrl: Option[String],
   posterImage: Option[ImageMedia]
 ) extends Atom {
 
@@ -119,7 +118,6 @@ object MediaAtom extends common.Logging {
       title = mediaAtom.title,
       duration = mediaAtom.duration,
       source = mediaAtom.source,
-      posterUrl = mediaAtom.posterUrl.map(ImgSrc(_, Item700)),
       posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title))
     )
 
