@@ -73,6 +73,7 @@ define([
 
     var secondaryModules = [
         ['cm-fill-advert-slots', fillAdvertSlots.init],
+        ['cm-stickyTopBanner', stickyTopBanner.init],
         ['cm-paidforBand', paidforBand.init],
         ['cm-paidContainers', paidContainers.init],
         ['cm-ready', function () {
@@ -92,15 +93,6 @@ define([
             ['cm-hostedGallery', hostedGallery.init],
             ['cm-hostedOnward', hostedOnward.init],
             ['cm-hostedOJCarousel', hostedOJCarousel.init]);
-    }
-
-    if ((config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile') ||
-         config.page.disableStickyTopBanner
-    ) {
-        config.page.hasStickyAdBanner = false;
-    } else {
-        config.page.hasStickyAdBanner = true;
-        secondaryModules.unshift(['cm-stickyTopBanner', stickyTopBanner.init]);
     }
 
     function loadModules(modules, baseline) {
