@@ -163,6 +163,17 @@ const bundles = [{
         'inlineSvg',
     ],
 }, {
+    name: 'bootstraps/enhanced/newsletters',
+    out: `${target}/javascripts/bootstraps/enhanced/newsletters.js`,
+    exclude: [
+        'boot',
+        'bootstraps/standard/main',
+        'bootstraps/commercial',
+        'bootstraps/enhanced/main',
+        'text',
+        'inlineSvg',
+    ],
+}, {
     name: 'bootstraps/enhanced/membership',
     out: `${target}/javascripts/bootstraps/enhanced/membership.js`,
     exclude: [
