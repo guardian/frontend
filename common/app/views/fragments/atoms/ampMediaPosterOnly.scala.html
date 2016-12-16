@@ -1,8 +1,0 @@
-@(media: model.content.MediaAtom)(implicit request: RequestHeader)
-    @for(p <- media.posterImage) {
-        @fragments.amp.ampImage(p, media.title)
-    }
-<figcaption class="caption caption--img" itemprop="description">
-@fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon", "rounded-icon"))
-@media.title
-</figcaption>

@@ -120,15 +120,12 @@ object MediaAtom extends common.Logging {
       duration = mediaAtom.duration,
       source = mediaAtom.source,
       posterUrl = mediaAtom.posterUrl.map(ImgSrc(_, Item700)),
-      posterImage = mediaAtom.posterImage.map(imageMediaMake(_))
+      posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title))
     )
 
-  def mediaAssetPosterImageMake(capiAssets: Seq[AtomApiImageAsset]): Seq[ImageAsset] = {
-    capiAssets.map(mediaImageAssetMake(_))
-  }
 
-  def imageMediaMake(capiImage: AtomApiImage): ImageMedia = {
-    ImageMedia(capiImage.assets.map(mediaImageAssetMake(_)))
+  def imageMediaMake(capiImage: AtomApiImage, caption: String): ImageMedia = {
+    ImageMedia(capiImage.assets.map(mediaImageAssetMake(_, caption)))
   }
 
   def mediaAssetMake(mediaAsset: AtomApiMediaAsset): MediaAsset =
@@ -140,16 +137,17 @@ object MediaAtom extends common.Logging {
       mimeType = mediaAsset.mimeType)
   }
 
-  def mediaImageAssetMake(mediaImage: AtomApiImageAsset): ImageAsset = {
+  def mediaImageAssetMake(mediaImage: AtomApiImageAsset, caption: String): ImageAsset = {
     ImageAsset(
       index = 0,
       mediaType = "image",
       mimeType = mediaImage.mimeType,
       url = Some(mediaImage.file),
-      fields =    Map(
+      fields = Map(
         "height" -> mediaImage.dimensions.map(_.height).map(_.toString),
         "width" -> mediaImage.dimensions.map(_.width).map(_.toString),
-        "size" -> mediaImage.size.map(_.toString)
+        "caption" -> Some(caption),
+        "altText" -> Some(caption)
       ).collect{ case(k, Some(v)) => (k,v) }
     )
   }
