@@ -13,7 +13,6 @@ import scala.collection.JavaConversions._
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
-  with WithMaterializer
   with WithTestWsClient
   with WithTestContext
   with WithTestContentApiClient {

@@ -3,14 +3,13 @@ package controllers
 import com.softwaremill.macwire._
 import discussion.api.DiscussionApi
 import model.ApplicationContext
+import play.api.Environment
 import play.api.libs.ws.WSClient
-import play.filters.csrf.{CSRFAddToken, CSRFCheck}
+import play.filters.csrf.CSRFComponents
 
-trait DiscussionControllers {
+trait DiscussionControllers extends CSRFComponents {
   def wsClient: WSClient
   def discussionApi: DiscussionApi
-  def csrfCheck: CSRFCheck
-  def csrfAddToken: CSRFAddToken
   implicit def appContext: ApplicationContext
   lazy val commentCountController = wire[CommentCountController]
   lazy val commentsController = wire[CommentsController]

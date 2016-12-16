@@ -8,7 +8,6 @@ import model.TeamMap
 import pa.{Http, PaClient, PaClientErrorsException}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.ws.WSClient
-import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
 class FootballLifecycle(
@@ -77,7 +76,7 @@ class FootballClient(wsClient: WSClient) extends PaClient with Http with Logging
 
   override def GET(urlString: String): Future[pa.Response] = {
 
-    val promiseOfResponse = wsClient.url(urlString).withRequestTimeout(2.second).get()
+    val promiseOfResponse = wsClient.url(urlString).withRequestTimeout(2000).get()
 
     promiseOfResponse.map { r =>
 

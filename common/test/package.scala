@@ -1,7 +1,7 @@
 package test
 
 import java.io.File
-import akka.stream.Materializer
+
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
 import common.{ExecutionContexts, Lazy}
@@ -11,11 +11,9 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatest.BeforeAndAfterAll
 import org.scalatestplus.play._
 import play.api._
-import play.api.libs.crypto.{CSRFTokenSigner, CryptoConfig}
 import play.api.libs.ws.WSClient
-import play.api.libs.ws.ahc.AhcWSClient
+import play.api.libs.ws.ning.{NingWSClient, NingWSClientConfig}
 import play.api.test._
-import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 import recorder.ContentApiHttpRecorder
 
 import scala.util.{Failure, Success, Try}
@@ -122,15 +120,10 @@ trait WithTestContext {
   implicit val testContext = ApplicationContext(Environment.simple(), ApplicationIdentity("tests"))
 }
 
-trait WithMaterializer {
-  def app: Application
-  implicit lazy val materializer: Materializer = app.materializer
-}
-
 trait WithTestWsClient {
-  self: WithTestWsClient with BeforeAndAfterAll with WithMaterializer =>
+  self: WithTestWsClient with BeforeAndAfterAll =>
 
-  private val lazyWsClient = Lazy(AhcWSClient())
+  private val lazyWsClient = Lazy(NingWSClient(NingWSClientConfig(maxRequestRetry = 0)))
   lazy val wsClient: WSClient = lazyWsClient
 
   override def afterAll() = if(lazyWsClient.isDefined) lazyWsClient.close
@@ -153,15 +146,4 @@ trait WithTestContentApiClient {
 
   lazy val recorderHttpClient = new recorderHttpClient(new CapiHttpClient(wsClient))
   lazy val testContentApiClient = new ContentApiClient(recorderHttpClient)
-}
-
-trait WithTestCryptoConfig {
-  val testCryptoConfig = new CryptoConfig(secret = "this is the test secret")
-}
-
-trait WithTestCSRF {
-  def app: Application
-  lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
-  lazy val csrfAddToken = new CSRFAddToken(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
-  lazy val csrfCheck = new CSRFCheck(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
 }

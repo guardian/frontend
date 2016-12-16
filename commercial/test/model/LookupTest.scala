@@ -1,7 +1,7 @@
 package commercial.model.capi
 
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
-import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithTestContentApiClient, WithTestWsClient}
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
@@ -11,7 +11,6 @@ import scala.concurrent.duration._
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
-  with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient {
 

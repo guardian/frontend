@@ -7,14 +7,12 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class CompetitionListControllerTest
   extends FlatSpec
-  with ConfiguredTestSuite
-  with Matchers
-  with FootballTestData
-  with WithTestFootballClient
-  with WithMaterializer
-  with WithTestContext
-  with BeforeAndAfterAll
-  with WithTestWsClient {
+    with Matchers
+    with FootballTestData
+    with WithTestFootballClient
+    with BeforeAndAfterAll
+    with WithTestContext
+    with WithTestWsClient {
 
   val url = "/football/competitionsService"
   lazy val competitionListController = new CompetitionListController(testCompetitionsService)
@@ -31,7 +29,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val result = competitionListController.renderCompetitionListJson()(fakeRequest)
     status(result) should be(200)
-    contentType(result) shouldBe Some("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
   }
 

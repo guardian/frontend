@@ -10,15 +10,13 @@ import scala.util.matching.Regex
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
+  with BeforeAndAfterAll with WithTestWsClient
   with WithTestContext
   with WithTestContentApiClient {
 
   val videoUrl = "uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
   val videoUrlWithDodgyOctpusUrl = "football/video/2015/feb/10/manchester-united-louis-van-gaal-long-ball-video"
-  lazy val mediaController = new MediaController(testContentApiClient)
+  val mediaController = new MediaController(testContentApiClient)
 
   "Media Controller" should "200 when content type is video" in {
     val result = mediaController.render(videoUrl)(TestRequest(videoUrl))
@@ -32,7 +30,7 @@ import scala.util.matching.Regex
 
     val result = mediaController.render(videoUrl)(fakeRequest)
     status(result) should be(200)
-    contentType(result) shouldBe Some("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
   }
 

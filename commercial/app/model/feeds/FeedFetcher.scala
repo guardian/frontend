@@ -37,7 +37,7 @@ trait FeedFetcher {
 
     val futureResponse = wsClient.url(feedMetaData.url)
       .withQueryString(feedMetaData.parameters.toSeq: _*)
-      .withRequestTimeout(feedMetaData.timeout)
+      .withRequestTimeout(feedMetaData.timeout.toMillis.toInt)
       .get()
 
     futureResponse map { response =>

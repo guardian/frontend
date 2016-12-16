@@ -137,7 +137,7 @@ final case class CircuitBreakingContentApiClient(
   private val circuitBreaker = new CircuitBreaker(
     scheduler = circuitBreakerActorSystem.scheduler,
     maxFailures = contentApi.circuitBreakerErrorThreshold,
-    callTimeout = contentApi.timeout,
+    callTimeout = Duration(contentApi.timeout, MILLISECONDS),
     resetTimeout = Duration(contentApi.circuitBreakerResetTimeout, MILLISECONDS)
   )
 
