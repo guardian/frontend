@@ -395,7 +395,6 @@ define([
         hasWebSocket: hasWebSocket,
         breakpoints: breakpoints,
         isEnhanced: isEnhanced,
-        adblockInUseSync: adblockInUseSync,
         adblockInUse: adblockInUse,
         getReferrer: getReferrer
     };
