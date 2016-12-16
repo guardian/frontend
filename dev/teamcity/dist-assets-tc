@@ -18,7 +18,6 @@ echo "##teamcity[progressFinish 'asset validation and tests']"
 echo "##teamcity[progressStart 'asset dist']"
 set -x
 ./tools/run-task compile --teamcity
-./tools/ab-test-info/ab-test-info.js
 
 set +x
 echo "##teamcity[progressFinish 'asset dist']"

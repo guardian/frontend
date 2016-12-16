@@ -2,9 +2,8 @@
 @(page: HostedArticlePage)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import model.hosted.HostedAmp.ampify
 @import views.html.hosted._
-@import common.{AnalyticsHost, CanonicalLink, LinkTo}
-@import conf.Configuration
 @import views.support.FBPixel
+@import model.hosted.HostedArticleQuotes.prepareQuotes
 
 <!doctype html>
 <html AMP>
@@ -15,6 +14,7 @@
         @fragments.metaData(page, amp = true)
         <title>@views.support.Title(page)</title>
         @fragments.amp.stylesheets.main(page, page.mainPicture, page.cta.image, page.campaign.fontColour.hexCode)
+        <script custom-element="amp-font" src="https://cdn.ampproject.org/v0/amp-font-0.1.js" async></script>
         <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
         <script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async ></script>
         <script custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async></script>
@@ -41,7 +41,7 @@
             @guardianHostedHeader("hosted-article-page hosted__header--sticky" + (if(page.campaign.fontColour.isDark) " hosted-page--bright" else ""), page, isAMP = true)
             <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.isDark) {hosted-page--bright}">
 
-                <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
+                <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--paid-content" role="main">
                     <div class="media-primary media-content media-primary--showcase">
                         <h2 class="title content__hosted-body">@{page.title}</h2>
                     </div>
@@ -58,7 +58,7 @@
                                 <div class="content__article-body from-content-api js-article__body">
                                     <p class="intro">@Html(page.standfirst)</p>
 
-                                    @Html(ampify(page.body))
+                                    @Html(prepareQuotes(ampify(page.body)))
 
                                 </div>
                                 <div class="hosted__standfirst content__hosted-body">
@@ -74,5 +74,16 @@
                 @guardianHostedCta(page, page.cta, isAMP = true)
             </div>
         </div>
+
+        <amp-font
+            layout="nodisplay"
+            font-family="Guardian Text Sans Web"
+            timeout="3000"
+            on-error-remove-class="guardian-text-sans-loading"
+            on-error-add-class="guardian-text-sans-missing"
+            on-load-remove-class="guardian-text-sans-loading"
+            on-load-add-class="guardian-text-sans-loaded">
+        </amp-font>
+
     </body>
 </html>

@@ -61,7 +61,7 @@ class CapiHttpClient(wsClient: WSClient)
     }
 
     response map { wsResponse =>
-      Response(wsResponse.bodyAsBytes, wsResponse.status, wsResponse.statusText)
+      Response(wsResponse.bodyAsBytes.toArray, wsResponse.status, wsResponse.statusText)
     }
   }
 }
@@ -71,7 +71,7 @@ private object RequestDebugInfo {
 
   private lazy val host: String = Try(InetAddress.getLocalHost.getCanonicalHostName).getOrElse("unable-to-determine-host")
   private lazy val stage: String = Configuration.environment.stage
-  private lazy val project: String = Configuration.environment.projectName
+  private lazy val project: String = Configuration.environment.app
 
   lazy val debugParams = Seq(
     s"ngw-host=${encode(host, "UTF-8")}",

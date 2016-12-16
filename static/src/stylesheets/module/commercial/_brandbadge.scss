@@ -282,9 +282,9 @@
     }
 }
 
-.content--media--video:not(.paid-content--advertisement-feature),
-.content--media--audio:not(.paid-content--advertisement-feature),
-.content--gallery:not(.paid-content--advertisement-feature) {
+.content--media--video:not(.paid-content),
+.content--media--audio:not(.paid-content),
+.content--gallery:not(.paid-content) {
     .badge {
         color: $neutral-3;
     }

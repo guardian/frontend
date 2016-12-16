@@ -96,7 +96,7 @@
         }
     }
 
-    @defining(GoogleAnalyticsAccount.editorialTracker.trackerName) { trackerName =>
+    @defining(GoogleAnalyticsAccount.editorialTracker(context).trackerName) { trackerName =>
 
         ga('@{trackerName}.send', 'pageview', {
             hitCallback: function() {

@@ -16,6 +16,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val AdFreeTrialSwitch = Switch(
+    SwitchGroup.Commercial,
+    "ad-free-membership-trial",
+    "Master switch for trialling ad-free membership perk",
+    owners = Seq(Owner.withGithub("JustinPinner")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val AudienceScienceGatewaySwitch = Switch(
     SwitchGroup.Commercial,
     "audience-science-gateway",

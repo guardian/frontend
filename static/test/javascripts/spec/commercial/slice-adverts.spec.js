@@ -260,22 +260,6 @@ define([
                 .then(done)
                 .catch(done.fail);
             });
-
-
-        });
-
-        //TODO: get data if we need to reintroduce this again
-        xit('should add one slot for tablet, one slot for mobile after container', function (done) {
-            sliceAdverts.init();
-            sliceAdverts.init.whenRendered
-            .then(function () {
-                expect($('.fc-container-first .ad-slot', $fixtureContainer).hasClass('ad-slot--not-mobile'))
-                    .toBe(true);
-                expect($('.fc-container-first + .ad-slot', $fixtureContainer).hasClass('ad-slot--mobile'))
-                    .toBe(true);
-            })
-            .then(done)
-            .catch(done.fail);
         });
     });
 });

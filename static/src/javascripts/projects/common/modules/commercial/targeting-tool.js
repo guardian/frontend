@@ -30,7 +30,7 @@ define([
      * @return {Boolean}
      */
     function isAbTestTargeted(test) {
-        return campaignsFor(test.id).length > 0;
+        return campaignsFor(test.campaignId).length > 0;
     }
 
     return {

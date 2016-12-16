@@ -6,7 +6,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import test.{ConfiguredTestSuite, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
 import org.scalatest.concurrent.ScalaFutures
 
 import scala.concurrent.Future
@@ -15,12 +15,13 @@ import scala.util.Random
 
 @DoNotDiscover class CachedHealthCheckTest
   extends WordSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with ScalaFutures
-  with ExecutionContexts
-  with BeforeAndAfterAll
-  with WithTestWsClient {
+    with Matchers
+    with ConfiguredTestSuite
+    with ScalaFutures
+    with ExecutionContexts
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient {
 
   //Helper method to construct mock Results
   def mockResult(statusCode: Int, date: DateTime = DateTime.now, expiration: HealthCheckExpiration = HealthCheckExpires.Duration(10.seconds)): HealthCheckResult = {

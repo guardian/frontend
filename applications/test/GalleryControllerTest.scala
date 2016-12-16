@@ -9,13 +9,14 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
+  with WithMaterializer
   with WithTestWsClient
   with WithTestContext
   with WithTestContentApiClient{
 
   val galleryUrl = "news/gallery/2012/may/02/picture-desk-live-kabul-burma"
 
-  val galleryController = new GalleryController(testContentApiClient)
+  lazy val galleryController = new GalleryController(testContentApiClient)
 
   "Gallery Controller" should "200 when content type is gallery" in {
     val result = galleryController.render(galleryUrl)(TestRequest(s"/$galleryUrl"))
@@ -28,7 +29,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val result = galleryController.render(galleryUrl)(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json; charset=utf-8")
+    contentType(result) shouldBe Some("application/json")
     contentAsString(result) should startWith("{\"config\"")
   }
 
@@ -50,7 +51,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val result = galleryController.lightboxJson(galleryUrl)(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json; charset=utf-8")
+    contentType(result) shouldBe Some("application/json")
     contentAsString(result) should startWith("{\"id\"")
   }
 }

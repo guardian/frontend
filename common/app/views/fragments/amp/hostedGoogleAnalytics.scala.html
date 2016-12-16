@@ -1,4 +1,4 @@
-@(hostedPage: common.commercial.hosted.HostedPage)(implicit request: RequestHeader)
+@(hostedPage: common.commercial.hosted.HostedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.AmpLinkTo
 @import views.support.GoogleAnalyticsAccount
 
@@ -10,7 +10,7 @@
                 "pageviewWithCustomDims": "${pageview}&cd3=${platform}&cd4=${sectionId}&cd5=${contentType}&cd6=${commissioningDesks}&cd7=${contentId}&cd8=${contributorIds}&cd9=${keywordIds}&cd10=${toneIds}&cd11=${seriesId}&cd26=${isHostedFlag}&cd29=${fullRequestUrl}"
               },
               "vars": {
-                "account": "@{GoogleAnalyticsAccount.editorialTracker.trackingId}"
+                "account": "@{GoogleAnalyticsAccount.editorialTracker(context).trackingId}"
               },
               "triggers": {
                 "trackPageview": {

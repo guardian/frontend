@@ -13,6 +13,7 @@ import scala.collection.JavaConversions._
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
+  with WithMaterializer
   with WithTestWsClient
   with WithTestContext
   with WithTestContentApiClient {
@@ -101,7 +102,7 @@ import scala.collection.JavaConversions._
   it should "know which backend served the request" in {
     val result = route(app, TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")).head
     status(result) should be (200)
-    header("X-Gu-Backend-App", result).head should be ("test-project")
+    header("X-Gu-Backend-App", result).head should be ("article")
   }
 
   it should "infer a Surrogate-Key based on the path" in {

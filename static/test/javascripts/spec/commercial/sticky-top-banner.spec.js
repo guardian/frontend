@@ -1,9 +1,11 @@
 define([
     'helpers/fixtures',
-    'helpers/injector'
+    'helpers/injector',
+    'Promise'
 ], function (
     fixtures,
-    Injector
+    Injector,
+    Promise
 ) {
     describe('Sticky ad banner', function () {
         var sticky, detect, header, stickyBanner, messenger, register;

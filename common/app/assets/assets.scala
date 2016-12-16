@@ -53,15 +53,15 @@ object css {
 
   private val memoizedCss: ConcurrentMap[String, Try[String]] = TrieMap()
 
-  def head(projectOverride: Option[String])(implicit context: ApplicationContext) = inline(cssHead(projectOverride.getOrElse(Configuration.environment.projectName)))
+  def head(projectOverride: Option[String])(implicit context: ApplicationContext) = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
   def inlineStoryPackage(implicit context: ApplicationContext) = inline("story-package")
   def inlineExplore(implicit context: ApplicationContext) = inline("article-explore")
   def amp(implicit context: ApplicationContext) = inline("head.amp")
   def hostedAmp(implicit context: ApplicationContext) = inline("head.hosted-amp")
 
-  def projectCss(projectOverride: Option[String]) = project(projectOverride.getOrElse(Configuration.environment.projectName))
-  def headOldIE(projectOverride: Option[String]) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
-  def headIE9(projectOverride: Option[String]) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
+  def projectCss(projectOverride: Option[String])(implicit context: ApplicationContext) = project(projectOverride.getOrElse(context.applicationIdentity.name))
+  def headOldIE(projectOverride: Option[String])(implicit context: ApplicationContext) = cssOldIE(projectOverride.getOrElse(context.applicationIdentity.name))
+  def headIE9(projectOverride: Option[String])(implicit context: ApplicationContext) = cssIE9(projectOverride.getOrElse(context.applicationIdentity.name))
 
 
   private def inline(module: String)(implicit context: ApplicationContext): String = {
@@ -129,7 +129,7 @@ object Get {
 // gets the asset url from the classpath
 object LoadFromClasspath {
   def apply(assetPath: String): Try[String] = {
-    (Option(Play.classloader(Play.current).getResource(assetPath)) match {
+    (Option(this.getClass.getClassLoader.getResource(assetPath)) match {
       case Some(s) => Success(s)
       case None => Failure(AssetNotFoundException(assetPath))
     }).flatMap { url =>

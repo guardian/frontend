@@ -1,7 +1,9 @@
-@()
+@(page: model.Page)
+
+@import model.EmailAddons.EmailContentType
 
 <style>
-    .tone-news {
+    .tone-news .facia-card {
         border-top: 1px solid #4bc6df;
         background-color: #f6f6f6;
     }
@@ -19,7 +21,7 @@
     }
 
 
-    .tone-feature {
+    .tone-feature .facia-card {
         border-top: 1px solid pink;
         background-color: #951c55;
     }
@@ -38,7 +40,7 @@
     }
 
 
-    .tone-media {
+    .tone-media .facia-card {
         border-top: 1px solid #ffbb00;
         background-color: #333;
     }
@@ -56,7 +58,7 @@
     }
 
 
-    .tone-review {
+    .tone-review .facia-card {
         border-top: 1px solid pink;
         background-color: #7d7569;
     }
@@ -74,7 +76,7 @@
     }
 
 
-    .tone-editorial {
+    .tone-editorial .facia-card {
         border-top: 1px solid #aad8f1;
         background-color: #005689;
     }
@@ -93,14 +95,21 @@
 
 
     .tone-external {
-        border-top: 1px solid #4bc6df;
+        padding-bottom: 0 !important;
+    }
+    .tone-external .facia-card {
+        border-top: 1px solid @page.toneColour;
         background-color: #f6f6f6;
     }
     .tone-external .headline {
         color: #333333;
+        font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif !important;
+        font-weight: normal;
+        font-size: 16px;
     }
     .tone-external .fc-item__kicker {
-        color: #005689;
+        color: #333333;
+        font-weight: bold;
     }
     .tone-external .kicker-separator {
         color: #d6d6d6;
@@ -110,7 +119,7 @@
     }
 
 
-    .tone-live {
+    .tone-live .facia-card {
         border-top: 1px solid #fdadba;
         background-color: #b51800;
     }
@@ -128,7 +137,7 @@
     }
 
 
-    .tone-analysis {
+    .tone-analysis .facia-card {
         border-top: 1px solid #4bc6df;
         background-color: #f6f6f6;
     }
@@ -146,7 +155,7 @@
     }
 
 
-    .tone-special-report {
+    .tone-special-report .facia-card {
         border-top: 1px solid #fce800;
         background-color: #63717a;
     }
@@ -164,7 +173,7 @@
     }
 
 
-    .tone-comment {
+    .tone-comment .facia-card {
         border-top: 1px solid #e6711b;
         background-color: #e3e3de;
     }
@@ -182,7 +191,7 @@
     }
 
 
-    .tone-dead {
+    .tone-dead .facia-card {
         border-top: 1px solid pink;
         background-color: #f6f6f6;
     }

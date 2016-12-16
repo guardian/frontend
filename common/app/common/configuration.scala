@@ -13,7 +13,6 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import play.api.Play
-
 import scala.collection.JavaConversions._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
@@ -124,7 +123,6 @@ object GuardianConfiguration extends Logging {
 
 class GuardianConfiguration extends Logging {
   import GuardianConfiguration._
-  import play.api.Play.current
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
   case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
@@ -149,13 +147,11 @@ class GuardianConfiguration extends Logging {
     import InstallVars._
 
     lazy val stage = InstallationVars.stage
-    lazy val projectName = Play.application.configuration.getString("guardian.projectName").getOrElse("frontend")
+    lazy val app = InstallationVars.app
 
     lazy val isProd = stage.equalsIgnoreCase("prod")
     lazy val isCode = stage.equalsIgnoreCase("code")
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
-
-    lazy val isPreview = projectName == "preview"
   }
 
   object switches {
@@ -193,7 +189,7 @@ class GuardianConfiguration extends Logging {
     val previewHost: String = configuration.getStringProperty("content.api.preview.host").getOrElse(contentApiHost)
 
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
-    lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
+    lazy val timeout: FiniteDuration = Duration.create(configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000), MILLISECONDS)
 
     lazy val circuitBreakerErrorThreshold =
       configuration.getIntegerProperty("content.api.circuit_breaker.max_failures").getOrElse(5)
@@ -556,7 +552,7 @@ class GuardianConfiguration extends Logging {
     val credentials: Option[AWSCredentialsProvider] = {
       val provider = new AWSCredentialsProviderChain(
         new ProfileCredentialsProvider("frontend"),
-        new InstanceProfileCredentialsProvider
+        InstanceProfileCredentialsProvider.getInstance()
       )
 
       // this is a bit of a convoluted way to check whether we actually have credentials.

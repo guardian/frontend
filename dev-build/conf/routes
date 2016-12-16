@@ -11,6 +11,7 @@ GET            /survey/:formName/show                                           
 GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
 
 # For dev machines
+GET            /geolocation                                                                                                      controllers.FakeGeolocationController.geolocation
 GET            /assets/admin/lib/*file                                                                                           controllers.admin.UncachedWebAssets.at(file)
 GET            /assets/admin/*file                                                                                               controllers.admin.UncachedAssets.at(file, relativePath="lib/admin/")
 GET            /assets/internal/*file                                                                                            controllers.Assets.at(path="/public", file)
