@@ -1,4 +1,4 @@
-@(page: model.Page, formstackForm: _root_.formstack.FormstackForm, projectName: Option[String] = Some(conf.Configuration.environment.projectName))(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page, formstackForm: _root_.formstack.FormstackForm)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 <!DOCTYPE html>
 <html class="js-off is-not-modern id--signed-out" lang="en-GB">
@@ -7,7 +7,7 @@
     <title>@Html(page.metadata.webTitle)</title>
 
     @* get the stylesheets downloading ASAP *@
-    @fragments.stylesheets(projectName)
+    @fragments.stylesheets(Some(context.applicationIdentity.name))
 
     @* inline JS - blocking *@
     @fragments.inlineJSBlocking(page)

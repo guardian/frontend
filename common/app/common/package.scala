@@ -71,7 +71,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
         RevalidatableResult.Ok(htmlResponse())
     }
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page, switches: Seq[Switch])(implicit request: RequestHeader) =
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page, switches: Seq[Switch])(implicit request: RequestHeader, context: ApplicationContext) =
     Cached(page) {
       if (request.isJson)
         JsonComponent(page, jsonResponse())
@@ -81,7 +81,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
         RevalidatableResult.Ok(htmlResponse())
     }
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, cacheTime: Integer)(implicit request: RequestHeader) =
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, cacheTime: Integer)(implicit request: RequestHeader, context: ApplicationContext) =
     Cached(cacheTime) {
       if (request.isJson)
         JsonComponent(jsonResponse())
@@ -91,8 +91,8 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
         RevalidatableResult.Ok(htmlResponse())
     }
 
-  def renderFormat(html: () => Html, cacheTime: Integer)(implicit request: RequestHeader): Result = {
-    renderFormat(html, html, cacheTime)(request)
+  def renderFormat(html: () => Html, cacheTime: Integer)(implicit request: RequestHeader, context: ApplicationContext): Result = {
+    renderFormat(html, html, cacheTime)
   }
 }
 

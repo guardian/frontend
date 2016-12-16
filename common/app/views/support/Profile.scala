@@ -104,7 +104,7 @@ object Video700 extends VideoProfile(width = Some(700), height = Some(394)) // 1
 abstract class ShareImage(shouldIncludeOverlay: Boolean) extends Profile(width = Some(1200)) {
   override val heightParam = "h=630"
   override val fitParam = "fit=crop"
-  val cropParam = "crop=faces,entropy"  
+  val cropParam = "crop=faces%2Centropy"
   val blendModeParam = "bm=normal"
   val blendOffsetParam = "ba=bottom%2Cleft"
   val blendImageParam: String

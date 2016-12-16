@@ -1,4 +1,4 @@
-@(item: model.Page)(implicit request: RequestHeader)
+@(item: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.{Edition, StringEncodings}
 @import conf.Static
 @import play.api.libs.json.Json
@@ -17,6 +17,10 @@
                 "ab-icon": "@Static("images/commercial/ab-icon.png")",
                 "abp-icon": "@Static("images/commercial/abp-icon.png")",
                 "abp-whitelist-instruction-chrome": "@Static("images/commercial/ad-block-instructions-chrome.png")"
+            },
+            "contributions": {
+                "ab-first-dog-dt": "@Static("images/membership/first-dog-dt.png")",
+                "ab-first-dog-mb": "@Static("images/membership/first-dog-mb.png")"
             }
         },
         "stylesheets": {
@@ -36,7 +40,7 @@
             "trackers": {
                 "editorialTest": "@{GoogleAnalyticsAccount.editorialTest.trackerName}",
                 "editorialProd": "@{GoogleAnalyticsAccount.editorialProd.trackerName}",
-                "editorial": "@{GoogleAnalyticsAccount.editorialTracker.trackerName}"
+                "editorial": "@{GoogleAnalyticsAccount.editorialTracker(context).trackerName}"
             }
         }
     }

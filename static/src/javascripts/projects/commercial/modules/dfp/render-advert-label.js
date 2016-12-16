@@ -20,7 +20,6 @@ define([
             adSlotNode.classList.contains('ad-slot--fluid') ||
             adSlotNode.classList.contains('ad-slot--frame') ||
             adSlotNode.classList.contains('gu-style') ||
-            adSlotNode.classList.contains('ad-slot--facebook') ||
             adSlotNode.getAttribute('data-label') === 'false' ||
             adSlotNode.getElementsByClassName('ad-slot__label').length
         );

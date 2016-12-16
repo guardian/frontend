@@ -1,6 +1,7 @@
 module.exports = {
-    "rules": {
+    rules: {
         // most tools log something
-        "no-console": "off"
-    }
-}
+        'no-console': 'off',
+        'import/no-extraneous-dependencies': 'off',
+    },
+};

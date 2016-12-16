@@ -20,5 +20,5 @@ trait WitnessActivityController extends WitnessApi with Controller with Executio
 }
 
 class WitnessActivityControllerImpl(val wsClient: WSClient) extends WitnessActivityController {
-  protected val witnessApiRoot: String = Configuration.witness.witnessApiRoot
+  protected lazy val witnessApiRoot: String = Configuration.witness.witnessApiRoot
 }

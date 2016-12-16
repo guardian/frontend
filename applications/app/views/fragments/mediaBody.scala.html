@@ -13,7 +13,7 @@
             <article id="article" class="@RenderClasses(
                 Map(
                     "content--has-body" -> media.fields.body.nonEmpty,
-                    "content--advertisement-feature paid-content--advertisement-feature" -> isPaidContent
+                    "content--paid-content paid-content" -> isPaidContent
                 ),
                 "content", "content--media", s"content--media--$mediaType", "tonal", s"tonal--${toneClass(media)}"
             )"
