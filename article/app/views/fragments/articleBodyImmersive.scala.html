@@ -10,7 +10,7 @@
     <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
             class="content content--article content--immersive content--immersive-article tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
-            @if(isPaidContent){content--advertisement-feature}
+            @if(isPaidContent){content--paid-content}
             @if(article.tags.isFeature && article.elements.hasShowcaseMainElement){has-feature-showcase-element}"
             itemscope itemtype="@article.metadata.schemaType" role="main">
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
