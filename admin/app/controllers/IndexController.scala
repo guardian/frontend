@@ -4,12 +4,15 @@ import com.gu.googleauth.{Actions, GoogleAuthConfig, UserIdentity}
 import play.api.mvc.Security.AuthenticatedBuilder
 import play.api.mvc.{Action, Call, Controller}
 import model.{ApplicationContext, NoCache}
+import play.api.libs.ws.WSClient
 
-object AuthActions extends Actions {
+class AuthActions(val wsClient: WSClient) extends Actions {
 
   override def authConfig: GoogleAuthConfig = conf.GoogleAuth.getConfigOrDie
 
   val loginTarget: Call = routes.OAuthLoginAdminController.login()
+  val defaultRedirectTarget: Call = routes.OAuthLoginAdminController.login()
+  val failureRedirectTarget: Call = routes.OAuthLoginAdminController.login()
 
   object AuthActionTest extends AuthenticatedBuilder(r =>
     UserIdentity.fromRequest(r), r => sendForAuth(r)

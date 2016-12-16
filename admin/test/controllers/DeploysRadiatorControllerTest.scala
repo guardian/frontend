@@ -8,15 +8,17 @@ import play.api.libs.json.JsArray
 import play.api.libs.ws.WSClient
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import test.{ConfiguredTestSuite, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
+import scala.concurrent.duration._
 
 @DoNotDiscover class DeploysRadiatorControllerTest
   extends WordSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with ExecutionContexts
-  with BeforeAndAfterAll
-  with WithTestWsClient {
+    with Matchers
+    with ConfiguredTestSuite
+    with ExecutionContexts
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient {
 
   val existingBuild = "3123"
 
@@ -25,7 +27,7 @@ import test.{ConfiguredTestSuite, WithTestWsClient}
       import implicits.Strings.string2encodings
       val urlWithParams = url + "?" + queryString.updated("key", "").toList.sortBy(_._1).map(kv=> kv._1 + "=" + kv._2).mkString("&").encodeURIComponent
       DeploysTestHttpRecorder.load(urlWithParams, headers) {
-        wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10000).get()
+        wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10.seconds).get()
       }
     }
   }
@@ -36,7 +38,7 @@ import test.{ConfiguredTestSuite, WithTestWsClient}
     override val riffRaff = new RiffRaffService(httpClient)
   }
 
-  val controller = new DeploysRadiatorControllerStub()
+  lazy val controller = new DeploysRadiatorControllerStub()
 
   "GET /deploys-radiator/api/deploys" should {
     val getDeploysRequest = FakeRequest(method = "GET", path = "/deploys-radiator/api/deploys")
