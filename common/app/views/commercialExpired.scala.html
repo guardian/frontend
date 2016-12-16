@@ -1,4 +1,12 @@
-@()(implicit request: RequestHeader, context: model.ApplicationContext)
+@(wasAHostedPage: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@policy() = {
+    @if(wasAHostedPage) {
+        <p>It is Guardian News and Media policy to take down advertiser content at the end of these deals.</p>
+    } else {
+        <p>It is Guardian News and Media policy to take down paid-for content at the end of these deals.</p>
+    }
+}
 
 @main(model.CommercialExpiryPage(id = request.path)) { } {
     <div class="l-side-margins">
@@ -17,7 +25,7 @@
                         <div class="from-content-api" itemprop="articleBody">
                             <div class="from-content-api">
                                 <p>This is because it was advertisement feature content that was published as part of a commercial deal and funded by an advertiser.<p>
-                                <p>It is Guardian News and Media policy to take down paid-for content at the end of these deals.</p>
+                                @policy()
                                 <p>Click <a href="/paid-for-content">here</a> for more on our commercial content guidelines.</p>
                                 <p>If you want to contact someone about the page, you can email:<br /><a href="mailto:paid-content@@theguardian.com">paid-content@@theguardian.com</a></p>
                                 <p>To continue reading, please visit the Guardian’s <a href="/">home page</a>.</p>
