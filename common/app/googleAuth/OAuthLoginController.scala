@@ -13,7 +13,7 @@ import scala.concurrent.Future
 
 trait OAuthLoginController extends Controller with ExecutionContexts with implicits.Requests {
 
-  def wsClient: WSClient
+  implicit def wsClient: WSClient
   def login: Action[AnyContent]
   def googleAuthConfig(request: Request[AnyContent]): Option[GoogleAuthConfig]
   def cryptoConfig: CryptoConfig
@@ -31,7 +31,6 @@ trait OAuthLoginController extends Controller with ExecutionContexts with implic
   def loginAction = Action.async { implicit request =>
     googleAuthConfig(request).flatMap(overrideRedirectUrl).map { config =>
       val antiForgeryToken = GoogleAuth.generateAntiForgeryToken()
-      implicit val ws = wsClient
       GoogleAuth.redirectToGoogle(config, antiForgeryToken).map {
         _.withSession {
           request.session + (ANTI_FORGERY_KEY -> antiForgeryToken)
@@ -63,7 +62,6 @@ trait OAuthLoginController extends Controller with ExecutionContexts with implic
             .flashing("error" -> "Anti forgery token missing in session")
           )
         case Some(token) =>
-          implicit val ws = wsClient
           GoogleAuth.validatedUserIdentity(config, token).map { userIdentity: UserIdentity =>
             // We store the URL a user was trying to get to in the LOGIN_ORIGIN_KEY in AuthAction
             // Redirect a user back there now if it exists
