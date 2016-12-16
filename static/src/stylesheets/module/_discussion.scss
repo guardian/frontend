@@ -1530,3 +1530,29 @@ $comment-recommend-button-size: 19px;
     background-color: colour(neutral-3);
     border-color: colour(neutral-3);
 }
+
+.d-comment-box__onboarding-username-input {
+    box-sizing: border-box;
+    display: block;
+    background-color: transparent;
+    border: 1px solid $neutral-4;
+    color: $neutral-1;
+    padding: 7px 15px;
+    border-radius: 18px;
+    margin: 0.2rem 0;
+    width: 70%;
+    margin-bottom: $gs-baseline;
+
+    &:focus {
+        border-color: $neutral-2;
+        outline: none;
+    }
+}
+
+.d-comment-box__onboarding-username-error-border {
+    border-color: $error;
+}
+
+.d-comment-box__onboarding-username-error-message {
+    color: $error;
+}
