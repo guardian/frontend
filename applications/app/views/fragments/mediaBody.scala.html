@@ -80,10 +80,14 @@
                                             }
                                             <meta itemprop="requiresSubscription" content="false" />
                                             <meta itemprop="image" content="@Html(video.content.signedArticleImage)" />
-                                            @video.elements.thumbnail.map { img =>
-                                                <eta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img.images)" />
-                                                <meta itemprop="thumbnailUrl" content="@SeoOptimisedContentImage.bestFor(img.images)" />
+
+                                            @defining(video.elements.thumbnail.map( i => Some(i.images)).orElse(video.mediaAtom.map(_.posterImage)).flatten){ bestThumbnail =>
+                                                @bestThumbnail.map { thumbnail =>
+                                             <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(thumbnail)" />
+                                             <meta itemprop="thumbnailUrl" content="@SeoOptimisedContentImage.bestFor(thumbnail)" />
+                                                }
                                             }
+
                                             @video.mediaAtom.map { mediaAtom =>
                                                 @fragments.atoms.media(mediaAtom, displayCaption = displayCaption)
                                             }
