@@ -2,7 +2,7 @@ package views.support.cleaner
 
 import java.net.URLDecoder
 
-import model.{Article, VideoAsset}
+import model.{Elements, Article, VideoAsset}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpSrcCleaner, HtmlCleaner}
 import conf.switches.Switches.AmpInteractivePlaceHolderAttribute
@@ -79,6 +79,9 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }
   }
 
+  // There are two element types that have been found to contain Soundcloud embeds.
+  // These are: element-audio and element-embed
+  // The Cleaning steps for these embeds have been moved out of this embed and
   object AmpSoundcloud {
     def createElement(document: Document, trackId: String): Element = {
       val soundcloud = document.createElement("amp-soundcloud")
@@ -87,7 +90,6 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       soundcloud.attr("height", "300") // height is necessary if data-visual == true
     }
 
-    // There are 2 url patterns that have been encountered in soundcloud embeds.
     def getTrackIdFromUrl(soundcloudUrl: String): Option[String] = {
       val pattern = ".*api.soundcloud.com/tracks/(\\d+).*".r
       URLDecoder.decode(soundcloudUrl,"UTF-8") match {
@@ -96,31 +98,15 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       }
     }
 
-    // Two types of soundcloud embed have been encountered. element-audio and element-embed.
-    // This object now has two "clean" functions to cater for the two types. Both must be run.
-    def cleanAudioElement(document: Document) = {
-      for {
-        audioElement <- document.getElementsByClass("element-audio")
-        iframeElement <- audioElement.getElementsByTag("iframe")
-        trackId <- getTrackIdFromUrl(iframeElement.attr("src"))
-      } yield {
-        val soundcloudElement = createElement(document, trackId)
-        audioElement.appendChild(soundcloudElement)
-        iframeElement.remove()
+    def getSoundCloudElement(document: Document, iframeElement: Element): Option[Element] = {
+      val trackId = AmpSoundcloud.getTrackIdFromUrl(iframeElement.attr("src"))
+      if (trackId.nonEmpty) {
+        Option(AmpSoundcloud.createElement(document, trackId.get))
+    } else {
+        None
       }
     }
 
-    def cleanEmbedElement(document: Document) = {
-      for {
-        audioElement <- document.getElementsByClass("element-embed")
-        iframeElement <- audioElement.getElementsByTag("iframe")
-        trackId <- getTrackIdFromUrl(iframeElement.attr("src"))
-      } yield {
-        val soundcloudElement = createElement(document, trackId)
-        audioElement.appendChild(soundcloudElement)
-        iframeElement.remove()
-      }
-    }
   }
 
   // This creates an amp-iframe for audio embeds that are not Soundcloud embeds - for example Audioboom embeds
@@ -146,6 +132,11 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
         audioElement <- document.getElementsByClass("element-audio")
         iframeElement <- audioElement.getElementsByTag("iframe")
       } yield {
+        val soundcloudElement = AmpSoundcloud.getSoundCloudElement(document, iframeElement)
+        if (soundcloudElement.nonEmpty) {
+          iframeElement.replaceWith(soundcloudElement.get)
+        }
+        else {
           val validIframe = iframeElement.hasAttr("src") && iframeElement.hasAttr("frameBorder") && iframeElement.hasAttr("width") && iframeElement.hasAttr("height")
           if (validIframe) {
             val src = iframeElement.attr("src")
@@ -154,18 +145,28 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
             val frameBorder = iframeElement.attr("frameborder")
             iframeElement.replaceWith(createAmpIframeElement(document, src, width, height, frameBorder))
           } else {
-              iframeElement.remove()
-            }
+            iframeElement.remove()
           }
+        }
+      }
     }
-   }
+  }
 
 
 
   def cleanAmpEmbed(document: Document) = {
     document.getElementsByClass("element-embed")
       .filter(_.getElementsByTag("iframe").nonEmpty)
-      .foreach(_.getElementsByTag("iframe").foreach(_.remove()))
+      .foreach(_.getElementsByTag("iframe").foreach {
+        //check for soundcloud embeds and remove any others
+        iframeElement: Element =>
+          val soundcloudElement = AmpSoundcloud.getSoundCloudElement(document, iframeElement)
+          if (soundcloudElement.nonEmpty) {
+            iframeElement.replaceWith(soundcloudElement.get)
+          } else
+            iframeElement.remove()
+      }
+      )
   }
 
   def cleanAmpInstagram(document: Document) = {
@@ -266,9 +267,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
     cleanAmpVideos(document)
     AmpExternalVideo.clean(document)
-    AmpSoundcloud.cleanAudioElement(document)
     AmpAudioElements.clean(document)
-    AmpSoundcloud.cleanEmbedElement(document)
     cleanAmpMaps(document)
     cleanAmpInstagram(document)
     cleanAmpInteractives(document)
