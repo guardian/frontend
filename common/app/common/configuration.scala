@@ -552,7 +552,7 @@ class GuardianConfiguration extends Logging {
     val credentials: Option[AWSCredentialsProvider] = {
       val provider = new AWSCredentialsProviderChain(
         new ProfileCredentialsProvider("frontend"),
-        new InstanceProfileCredentialsProvider
+        InstanceProfileCredentialsProvider.getInstance()
       )
 
       // this is a bit of a convoluted way to check whether we actually have credentials.
