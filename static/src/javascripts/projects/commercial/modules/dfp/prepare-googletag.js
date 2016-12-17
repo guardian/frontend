@@ -59,8 +59,6 @@ define([
 
             performanceLogging.addTag(dfpEnv.sonobiEnabled ? 'sonobi' : 'waterfall');
 
-            window.googletag.cmd.push = raven.wrap({deep: true}, window.googletag.cmd.push);
-
             window.googletag.cmd.push(
                 setListeners,
                 setPageTargeting,
