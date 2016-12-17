@@ -21,6 +21,8 @@ define([
     }
 
     function fillAdvertSlots(moduleName) {
+        performanceLogging.moduleStart(moduleName);
+
         window.googletag.cmd.push(
             createAdverts,
             queueAdverts,
