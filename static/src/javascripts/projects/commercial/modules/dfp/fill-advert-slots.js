@@ -9,28 +9,31 @@ define([
     'commercial/modules/dfp/queue-advert',
     'commercial/modules/dfp/display-lazy-ads',
     'commercial/modules/dfp/display-ads',
-    'commercial/modules/dfp/refresh-on-resize'
-], function (Promise, qwery, sha1, identity, commercialFeatures, dfpEnv, Advert, queueAdvert, displayLazyAds, displayAds, refreshOnResize) {
+    'commercial/modules/dfp/refresh-on-resize',
+    'commercial/modules/dfp/performance-logging'
+], function (Promise, qwery, sha1, identity, commercialFeatures, dfpEnv, Advert, queueAdvert, displayLazyAds, displayAds, refreshOnResize, performanceLogging) {
 
-    function init() {
+    function init(moduleName) {
         if (commercialFeatures.dfpAdvertising) {
-            return fillAdvertSlots();
+            fillAdvertSlots(moduleName);
         }
         return Promise.resolve();
     }
 
-    function fillAdvertSlots() {
+    function fillAdvertSlots(moduleName) {
+        window.googletag.cmd.push(
+            createAdverts,
+            queueAdverts,
+            setPublisherProvidedId,
+            dfpEnv.shouldLazyLoad() ? displayLazyAds : displayAds,
+            // anything we want to happen after displaying ads
+            refreshOnResize,
+            moduleEnd
+        );
 
-        return new Promise(function(resolve) {
-            window.googletag.cmd.push(
-                createAdverts,
-                queueAdverts,
-                setPublisherProvidedId,
-                dfpEnv.shouldLazyLoad() ? displayLazyAds : displayAds,
-                // anything we want to happen after displaying ads
-                refreshOnResize,
-                resolve);
-        });
+        function moduleEnd() {
+            performanceLogging.moduleEnd(moduleName);
+        }
     }
 
     function createAdverts() {
@@ -56,6 +59,7 @@ define([
     }
 
     return {
-        init: init
+        init: init,
+        customTiming: true
     };
 });
