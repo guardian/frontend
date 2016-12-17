@@ -50,9 +50,6 @@ define([
             // Use Custom Timing to time the googletag code without the sonobi pre-loading.
             performanceLogging.moduleStart(moduleName);
 
-            // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
-            var promise = Promise.resolve(require(['js!googletag.js']));
-
             performanceLogging.addTag(dfpEnv.sonobiEnabled ? 'sonobi' : 'waterfall');
 
             window.googletag.cmd.push(
@@ -61,7 +58,8 @@ define([
                 moduleEnd
             );
 
-            return promise;
+            // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
+            return Promise.resolve(require(['js!googletag.js']));
         }
 
         if (commercialFeatures.dfpAdvertising) {
