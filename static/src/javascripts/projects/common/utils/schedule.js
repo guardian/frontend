@@ -9,7 +9,7 @@ define(function () {
     function enqueue(tasks, options) {
         options = options || {};
 
-        var taskRunner = options.taskRunner : iife;
+        var taskRunner = options.taskRunner || iife;
         var args = options.args || [];
 
         schedule(run.bind(tasks, taskRunner, args), options.timeout | 0);
@@ -24,12 +24,12 @@ define(function () {
     }
 
     function run(taskRunner, args, deadline) {
-        while((deadline.didTimeout || deadline.timeRemaining() > 0) && tasks.length) {
+        while((deadline.didTimeout || deadline.timeRemaining() > 0) && this.length) {
             var task = this.shift();
             taskRunner(task, args);
         }
 
-        if (tasks.length) {
+        if (this.length) {
             schedule(run.bind(this, taskRunner, args));
         }
     }
