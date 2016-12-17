@@ -54,26 +54,24 @@ define([
             // Use Custom Timing to time the googletag code without the sonobi pre-loading.
             performanceLogging.moduleStart(moduleName);
 
-            return new Promise(function(resolve) {
+            var promise = Promise.resolve(require(['js!googletag.js']));
 
-                if (dfpEnv.sonobiEnabled) {
-                    // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
-                    require(['js!googletag.js']);
-                    performanceLogging.addTag('sonobi');
-                } else {
-                    require(['js!googletag.js']);
-                    performanceLogging.addTag('waterfall');
-                }
+            if (dfpEnv.sonobiEnabled) {
+                // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
+                performanceLogging.addTag('sonobi');
+            } else {
+                performanceLogging.addTag('waterfall');
+            }
 
-                window.googletag.cmd.push = raven.wrap({deep: true}, window.googletag.cmd.push);
+            window.googletag.cmd.push = raven.wrap({deep: true}, window.googletag.cmd.push);
 
-                window.googletag.cmd.push(
-                    setListeners,
-                    setPageTargeting,
-                    moduleEnd,
-                    resolve
-                );
-            });
+            window.googletag.cmd.push(
+                setListeners,
+                setPageTargeting,
+                moduleEnd
+            );
+
+            return promise;
         }
 
         if (commercialFeatures.dfpAdvertising) {
