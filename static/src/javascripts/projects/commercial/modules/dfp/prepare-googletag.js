@@ -42,10 +42,6 @@ define([
 
     function init(moduleName) {
 
-        function removeAdSlots() {
-            bonzo(qwery(dfpEnv.adSlotSelector)).remove();
-        }
-
         function moduleEnd() {
             performanceLogging.moduleEnd(moduleName);
         }
@@ -69,15 +65,14 @@ define([
         }
 
         if (commercialFeatures.dfpAdvertising) {
-            return prepareSonobiTag.init().then(setupAdvertising).catch(function(){
-                // A promise error here, from a failed module load,
-                // could be a network problem or an intercepted request.
-                // Abandon the init sequence.
-                return fastdom.write(removeAdSlots);
-            });
+            return prepareSonobiTag.init().then(setupAdvertising)
+            // A promise error here, from a failed module load,
+            // could be a network problem or an intercepted request.
+            // Abandon the init sequence.
+            .catch(removeAdSlots);
         }
 
-        return fastdom.write(removeAdSlots);
+        return removeAdSlots();
     }
 
     function setListeners() {
@@ -93,6 +88,12 @@ define([
         var targeting = buildPageTargeting();
         Object.keys(targeting).forEach(function (key) {
             pubads.setTargeting(key, targeting[key]);
+        });
+    }
+
+    function removeAdSlots() {
+        return fastdom.write(function () {
+            bonzo(qwery(dfpEnv.adSlotSelector)).remove();
         });
     }
 
