@@ -38,8 +38,11 @@ define([
         count: 6
     };
 
+    var maxLogEntries = 50;
+
     /**
      * Log that the user has seen an Epic test so we can limit how many times they see it.
+     * The number of entries is limited to the number in maxLogEntries.
      *
      * @param testId
      */
@@ -49,16 +52,16 @@ define([
             testId: testId
         });
 
-        storage.local.set(viewKey, viewLog);
+        storage.local.set(viewKey, viewLog.slice(-maxLogEntries));
     }
 
-    function canShow() {
-        var maxDays = maxViews.days * 1000 * 60 * 60 * 24;
+    function viewsInPreviousDays(days) {
+        var ms = days * 1000 * 60 * 60 * 24;
         var now = new Date().getTime();
 
         return viewLog.filter(function (view) {
-            return view.date > (now - maxDays);
-        }).length <= maxViews.count;
+            return view.date > (now - ms);
+        }).length;
     }
 
     function daysSince(date) {
@@ -93,21 +96,26 @@ define([
         this.viewEvent = this.makeEvent('view');
 
         /**
-         * Provides a default `canRun` function with typical rules for Contributions messages. If your test provides
-         * its own `canRun` option, it will be included in the check.
+         * Provides a default `canRun` function with typical rules (see function below) for Contributions messages.
+         * If your test provides its own `canRun` option, it will be included in the check.
          *
          * You can alternatively use the `overrideCanRun` option, which, if true, will only use the `canRun`
-         * option provided and ignore the rules here.
+         * option provided and ignore the rules here (except for the targeting tool tags check, whcih will still be
+         * honoured if `useTargetingTool` is provided alongside `overrideCanRun`.
          *
          * @type {Function}
          */
-        this.canRun = options.overrideCanRun ? options.canRun : (function () {
+        this.canRun = (function () {
             var testCanRun = (typeof options.canRun === 'function') ? options.canRun() : true;
-            var okToAsk = daysSince(lastContributionDate) >= 90 && canShow();
+            var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 90;
+            var acceptableViewCount = viewsInPreviousDays(maxViews.days) <= maxViews.count;
             var tagsMatch = options.useTargetingTool ? targetingTool.isAbTestTargeted(this) : true;
             var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle;
 
-            return okToAsk && tagsMatch && testCanRun && commercialFeatures.canReasonablyAskForMoney && worksWellWithPageTemplate;
+            if (options.overrideCanRun) return tagsMatch && options.canRun();
+
+            return enoughTimeSinceLastContribution && acceptableViewCount && tagsMatch &&
+                testCanRun && worksWellWithPageTemplate && commercialFeatures.canReasonablyAskForMoney;
         }).bind(this);
 
         this.variants = options.variants.map(function (variant) {
