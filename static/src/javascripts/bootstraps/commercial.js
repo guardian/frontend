@@ -88,7 +88,7 @@ define([
     if (config.page.isHosted) {
         secondaryModules.unshift(
             ['cm-hostedAbout', hostedAbout.init],
-            ['cm-hostedVideo', hostedVideo.init],
+            ['cm-hostedVideo', hostedVideo.init, hostedVideo.customTiming],
             ['cm-hostedGallery', hostedGallery.init],
             ['cm-hostedOnward', hostedOnward.init],
             ['cm-hostedOJCarousel', hostedOJCarousel.init]);
