@@ -31,8 +31,6 @@ object Metric extends Logging {
     ("headlines-variant-clicked", CountMetric(s"headlines-variant-clicked", s"headlines-variant-clicked")),
     ("headlines-control-clicked", CountMetric(s"headlines-control-clicked", s"headlines-control-clicked")),
 
-    ("tech-feedback", CountMetric("tech-feedback", "tech-feedback")),
-
     //counts http proxy errors when submitting comments
     ("comment-http-proxy-error", CountMetric("comment-http-proxy-error", "comment-http-proxy-error")),
     ("comment-error", CountMetric("comment-error", "comment-error")),
