@@ -40,8 +40,6 @@ object CloudWatchStats extends Logging with ExecutionContexts {
 
   def rawPageViews: Future[GetMetricStatisticsResult] = sanityData("kpis-page-views")
 
-  def analyticsPageViews: Future[GetMetricStatisticsResult] = sanityData("kpis-analytics-page-views")
-
   def googleAnalyticsPageViews: Future[GetMetricStatisticsResult] = sanityData("kpis-analytics-page-views-google")
 
   def pageViewsHavingAnAd: Future[GetMetricStatisticsResult] = sanityData("first-ad-rendered")
