@@ -156,7 +156,9 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     a {
+        // this is a fallback for browsers that don't support inherit
         color: $neutral-1;
+        color: inherit;
     }
 
     .u-faux-block-link & a,
