@@ -133,7 +133,6 @@ object MediaAtom extends common.Logging {
 
   def mediaImageAssetMake(mediaImage: AtomApiImageAsset, caption: String): ImageAsset = {
     ImageAsset(
-      index = 0,
       mediaType = "image",
       mimeType = mediaImage.mimeType,
       url = Some(mediaImage.file),
@@ -164,7 +163,6 @@ object Quiz extends common.Logging {
           plainAsset <- image.assets
         } yield {
          ImageAsset(
-          index = 0,
           fields = typeData ++ plainAsset.fields.mapValues(value => value.toString),
           mediaType = plainAsset.assetType,
           mimeType = plainAsset.mimeType,
