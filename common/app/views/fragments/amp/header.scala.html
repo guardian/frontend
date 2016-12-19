@@ -1,10 +1,11 @@
 @()(implicit request: RequestHeader)
 
+@import conf.Configuration
 @import common.{LinkTo, NewNavigation}
 
 <header class="header" role="banner">
     <div class="header__inner gs-container">
-        <a class="header__supporter-cta" href="https://membership.theguardian.com/supporter?INTCMP=AMP_HEADER_GU_SUPPORTER">
+        <a class="header__supporter-cta" href="@Configuration.id.membershipUrl/supporter?INTCMP=AMP_HEADER_GU_SUPPORTER">
             Become a <span>Supporter</span>
         </a>
 
