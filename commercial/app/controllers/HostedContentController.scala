@@ -1,5 +1,6 @@
 package commercial.controllers
 
+import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.ItemQuery
 import commercial.model.hosted.HostedTrails
 import common.commercial.hosted._
@@ -10,6 +11,7 @@ import model.{ApplicationContext, Cached, NoCache}
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
 import play.twirl.api.Html
+import views.html.commercialExpired
 import views.html.hosted._
 
 import scala.concurrent.Future
@@ -40,6 +42,9 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit conte
           else guardianHostedArticle(page)
         }
       case _ => NoCache(NotFound)
+    } recover {
+      case e: GuardianContentApiError if e.httpStatus == 410 =>
+        cached(commercialExpired(wasAHostedPage = true))
     }
   }
 
@@ -66,12 +71,11 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit conte
       response
     }
 
-    val contentFromCapi = capiResponse map {
+    val page = capiResponse.map {
       _.content flatMap HostedPage.fromContent
-    }
-
-    val page = contentFromCapi fallbackTo {
-      Future.successful(hardcoded.HostedPages.fromCampaignAndPageName(campaignName, pageName))
+    }.recover {
+      case e: GuardianContentApiError if e.httpStatus == 404 =>
+        hardcoded.HostedPages.fromCampaignAndPageName(campaignName, pageName)
     }
 
     renderPage(page)
