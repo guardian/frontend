@@ -7,7 +7,7 @@ define([
     'common/utils/element-inview',
     'common/utils/fastdom-promise',
     'common/utils/mediator',
-    'common/utils/storage',
+    'common/utils/storage'
 ], function (commercialFeatures,
              targetingTool,
              $,
@@ -20,9 +20,6 @@ define([
 
     var membershipURL = 'https://membership.theguardian.com/supporter';
     var contributionsURL = 'https://contribute.theguardian.com';
-
-    var membershipCampaignPrefix = 'gdnwb_copts_mem';
-    var contributionsCampaignPrefix = 'co_global';
 
     var viewKey = 'gu.contributions.views';
     var viewLog = storage.local.get(viewKey) || [];
@@ -91,6 +88,8 @@ define([
         this.successMeasure = options.successMeasure;
         this.audienceCriteria = options.audienceCriteria;
         this.dataLinkNames = options.dataLinkNames || '';
+        this.membershipCampaignPrefix = options.membershipCampaignPrefix || 'gdnwb_copts_mem';
+        this.contributionsCampaignPrefix = options.contributionsCampaignPrefix || 'co_global';
 
         this.insertEvent = this.makeEvent('insert');
         this.viewEvent = this.makeEvent('view');
@@ -131,8 +130,8 @@ define([
         this.campaignId = test.campaignId;
         this.id = options.id;
 
-        this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, contributionsCampaignPrefix);
-        this.membershipURL = options.membershipURL || this.makeURL(membershipURL, membershipCampaignPrefix);
+        this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, test.contributionsCampaignPrefix);
+        this.membershipURL = options.membershipURL || this.makeURL(membershipURL, test.membershipCampaignPrefix);
 
         this.test = function () {
             var component = $.create(options.template(this.contributeURL, this.membershipURL));
