@@ -12,7 +12,7 @@ define([
     'commercial/modules/dfp/get-advert-by-id'
 ], function (once, config, mediator, reportError, userTiming, beacon, dfpEnv, Advert, renderAdvert, emptyAdvert, getAdvertById) {
     var recordFirstAdRendered = once(function () {
-        beacon.beaconCounts('ad-render');
+        beacon.fire('/count/ad-render.gif');
     });
 
     return onSlotRender;
