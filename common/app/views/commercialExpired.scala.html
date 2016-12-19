@@ -2,8 +2,10 @@
 
 @policy() = {
     @if(wasAHostedPage) {
+        <p>This is because it was content that was published as part of a commercial deal and funded by an advertiser.<p>
         <p>It is Guardian News and Media policy to take down advertiser content at the end of these deals.</p>
     } else {
+        <p>This is because it was advertisement feature content that was published as part of a commercial deal and funded by an advertiser.<p>
         <p>It is Guardian News and Media policy to take down paid-for content at the end of these deals.</p>
     }
 }
@@ -24,7 +26,6 @@
                     <div class="js-article__container u-cf">
                         <div class="from-content-api" itemprop="articleBody">
                             <div class="from-content-api">
-                                <p>This is because it was advertisement feature content that was published as part of a commercial deal and funded by an advertiser.<p>
                                 @policy()
                                 <p>Click <a href="/paid-for-content">here</a> for more on our commercial content guidelines.</p>
                                 <p>If you want to contact someone about the page, you can email:<br /><a href="mailto:paid-content@@theguardian.com">paid-content@@theguardian.com</a></p>
