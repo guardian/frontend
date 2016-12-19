@@ -1,7 +1,6 @@
 define([
     'Promise',
     'bean',
-    'lodash/functions/debounce',
     'bonzo',
     'fastdom',
     'common/utils/$',
@@ -20,7 +19,6 @@ define([
     'commercial/modules/dfp/performance-logging'
 ], function (Promise,
              bean,
-             debounce,
              bonzo,
              fastdom,
              $,
