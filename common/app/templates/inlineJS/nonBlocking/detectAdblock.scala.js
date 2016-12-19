@@ -27,6 +27,7 @@ try {
                 var adBlockers = window.guardian.adBlockers;
                 var adStyles = window.getComputedStyle(ad);
 
+                // Due to an update to AdblockPlus we now need an extra check for adblock being used on Firefox as the sacrificial ad check does not work.
                 adBlockers.active = adStyles.getPropertyValue('display') === 'none'|| adStyles.getPropertyValue('-moz-binding').indexOf('about:')!== -1;
 
                 // Run each listener
