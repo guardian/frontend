@@ -1,16 +1,10 @@
 define([
     'common/utils/config',
-    'common/utils/ajax',
-    'lodash/collections/map',
-    'lodash/objects/isArray'
+    'common/utils/ajax'
 ], function (
     config,
-    ajax,
-    map,
-    isArray
+    ajax
 ) {
-    var canBeacon = !!navigator.sendBeacon;
-
     return {
         fire: function (path) {
             var img = new Image();
@@ -18,23 +12,17 @@ define([
 
             return img;
         },
-        postJson: function (path, jsonString, forceAjax) {
+        postJson: function (path, jsonString) {
             var url = (config.page.beaconUrl || '').replace(/^\/\//, window.location.protocol + '//') + path;
 
-            if (canBeacon && !forceAjax) {
-                window.addEventListener('unload', function () {
-                    navigator.sendBeacon(url, jsonString);
-                }, false);
-            } else {
-                ajax({
-                    url: url,
-                    type: 'json',
-                    method: 'post',
-                    contentType: 'application/json',
-                    data: jsonString,
-                    crossOrigin: true
-                });
-            }
+            ajax({
+                url: url,
+                type: 'json',
+                method: 'post',
+                contentType: 'application/json',
+                data: jsonString,
+                crossOrigin: true
+            });
         }
     };
 });

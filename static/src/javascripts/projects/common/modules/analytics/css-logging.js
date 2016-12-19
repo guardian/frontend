@@ -144,7 +144,7 @@ define([
                     }, {}).value(),
                 contentType: config.page.contentType || 'unknown',
                 breakpoint: detect.getBreakpoint() || 'unknown'
-            }), all);
+            }));
         });
     }
 
