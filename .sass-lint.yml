@@ -27,7 +27,14 @@ rules:
   no-color-keywords: 1
   no-css-comments: 0
   no-debug: 1
-  no-duplicate-properties: 1
+  no-duplicate-properties:
+    - 1
+    - exclude:
+        - font-size
+        - max-height
+        - src
+        - background
+        - display
   no-empty-rulesets: 0
   no-invalid-hex: 1
   no-mergeable-selectors: 0
