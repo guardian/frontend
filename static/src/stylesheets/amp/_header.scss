@@ -3,7 +3,6 @@ $gutter-small: 29px;
 $gutter-medium: 37px;
 $gutter-large: 55px;
 $veggie-burger-small: 42px;
-$veggie-burger-small: 42px;
 $veggie-burger-medium: 52px;
 
 .header {
@@ -34,12 +33,12 @@ $veggie-burger-medium: 52px;
     &:before {
         content: '';
         position: absolute;
-        top: -$gs-baseline/2;
-        left: -$gs-gutter/2;
+        top: -$gs-baseline / 2;
+        left: -$gs-gutter / 2;
         right: -23px;
-        border-top: $gs-baseline*4 solid $news-main-2;
-    	border-left: $gs-gutter/4 solid transparent;
-    	border-right: $gs-gutter solid transparent;
+        border-top: $gs-baseline * 4 solid $news-main-2;
+        border-left: $gs-gutter / 4 solid transparent;
+        border-right: $gs-gutter solid transparent;
         transform: rotate(-3deg);
         z-index: -1;
     }
@@ -53,7 +52,7 @@ $veggie-burger-medium: 52px;
         font-size: 14px;
 
         &:before {
-            border-top-width: ($gs-baseline*4) + ($gs-baseline/2);
+            border-top-width: ($gs-baseline * 4) + ($gs-baseline / 2);
         }
     }
 }
