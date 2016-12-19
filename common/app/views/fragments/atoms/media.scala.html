@@ -2,7 +2,11 @@
 
 @{
     media match {
-            case posterOnly if media.posterUrl.isDefined && media.assets.isEmpty => if(amp) views.html.fragments.atoms.ampMediaPosterOnly(media) else views.html.fragments.atoms.mediaPosterOnly(media)
+            case posterOnly if media.posterImage.isDefined && media.assets.isEmpty => views.html.fragments.imageFigure(media.posterImage.get,
+                amp = amp,
+                doCaption = displayCaption,
+                // image_figureClasses needs to be defined to avoid extra indent on AMP (see imageFigure fragment)
+                image_figureClasses = Some(media.posterImage.get.largestImage.get, ""))
             case youtube if media.assets.headOption.filter(_.platform == "Youtube") => if(amp) views.html.fragments.atoms.ampYoutube(media) else views.html.fragments.atoms.youtube(media, displayCaption, embedPage)
             case genericAsset if media.assets.nonEmpty => views.html.fragments.atoms.genericMedia(media, displayCaption)
             case _ =>

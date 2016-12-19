@@ -1,6 +1,6 @@
 @import conf.Configuration.site.host
 @import conf.Configuration.Media
-@import views.support.RenderClasses
+@import views.support.{RenderClasses, Video700}
 
 @(media: model.content.MediaAtom, displayCaption: Boolean, embedPage: Boolean)(implicit request: RequestHeader)
 
@@ -16,8 +16,8 @@
             allowfullscreen="">
             </iframe>
 
-            @media.posterUrl.map { image =>
-                <div class="youtube-media-atom__overlay vjs-big-play-button" style="background-image: url(@image)">
+            @media.posterImage.map { image =>
+                <div class="youtube-media-atom__overlay vjs-big-play-button" style="background-image: url(@Video700.bestFor(image))">
                     <div class="youtube-media-atom__play-button vjs-control-text">Play Video</div>
                     <div class="youtube-media-atom__bottom-bar">
                         <div class="youtube-media-atom__bottom-bar__icon">
