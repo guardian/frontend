@@ -10,7 +10,6 @@ define([
     'common/utils/defer-to-analytics',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/analytics/beacon',
     'common/modules/commercial/video-ad-url',
     'common/modules/commercial/commercial-features',
     'common/modules/component',
@@ -40,7 +39,6 @@ define([
     deferToAnalytics,
     detect,
     mediator,
-    beacon,
     videoAdUrl,
     commercialFeatures,
     Component,
@@ -258,10 +256,6 @@ define([
 
                                 initLoadingSpinner(player);
                                 upgradeVideoPlayerAccessibility(player);
-
-                                player.one('playing', function() {
-                                    beacon.counts('video-tech-html5');
-                                });
 
                                 // unglitching the volume on first load
                                 vol = player.volume();
