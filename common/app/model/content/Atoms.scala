@@ -1,16 +1,12 @@
 package model.content
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, atom => atomapi}
+import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
+import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
 import model.{ImageAsset, ImageMedia}
-import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset}
-import com.gu.contentatom.thrift.{ImageAsset => AtomApiImageAsset}
-import com.gu.contentatom.thrift.atom.media.{MediaAtom => AtomApiMediaAtom}
-import com.gu.contentatom.thrift.{Image => AtomApiImage}
 import org.joda.time.Duration
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
-import views.support.{ImgSrc, Item700}
 
 final case class Atoms(
   quizzes: Seq[Quiz],
