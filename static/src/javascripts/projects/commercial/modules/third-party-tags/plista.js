@@ -80,10 +80,9 @@ define([
 
     function init() {
         if (shouldServe()) {
-            return loadInstantly().then(function(boolean){
-                if (boolean) {
+            return loadInstantly().then(function(adBlockInUse){
+                if (adBlockInUse) {
                     module.load();
-                    return Promise.resolve(true);
                 } else {
                     return trackAdRender('dfp-ad--merchandising-high').then(function (isLoaded){
                         if (!isLoaded) {

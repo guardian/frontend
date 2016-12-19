@@ -1740,18 +1740,16 @@ function send(data) {
     }
 
     // Check if the request should be filtered or not
-    if (isFunction(globalOptions.shouldSendCallback)) {
-        globalOptions.shouldSendCallback(data).then(function (shouldSendCallback) {
-            if (shouldSendCallback) {
-                // Send along an event_id if not explicitly passed.
-                // This event_id can be used to reference the error within Sentry itself.
-                // Set lastEventId after we know the error should actually be sent
-                lastEventId = data.event_id || (data.event_id = uuid4());
-
-                makeRequest(data);
-            }
-        });
+    if (isFunction(globalOptions.shouldSendCallback) && !globalOptions.shouldSendCallback(data)) {
+        return;
     }
+
+    // Send along an event_id if not explicitly passed.
+    // This event_id can be used to reference the error within Sentry itself.
+    // Set lastEventId after we know the error should actually be sent
+    lastEventId = data.event_id || (data.event_id = uuid4());
+
+    makeRequest(data);
 }
 
 

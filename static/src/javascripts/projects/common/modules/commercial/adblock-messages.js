@@ -34,20 +34,16 @@ define([
     }
 
     function noAdblockMsg() {
-        return adblockInUse().then(function(adblockInUse){
-            return adblockInUse &&  notMobile() && (
-                !visitedMoreThanOnce() ||
-                !isAdblockSwitchOn() ||
-                (isAdblockSwitchOn() && visitedMoreThanOnce() && isPayingMember()));
-        });
+
+        return notMobile() && (!visitedMoreThanOnce() || !isAdblockSwitchOn() || (visitedMoreThanOnce() && isPayingMember())) ?
+            adblockInUse() :
+            Promise.resolve(false);
     }
 
     function showAdblockMsg() {
-        return isAdblockSwitchOn() ?
-                adblockInUse().then(function(adblockInUse){
-                    return adblockInUse && !isPayingMember() && visitedMoreThanOnce()  && notMobile();
-                })
-            : new Promise.resolve(false)
+        return isAdblockSwitchOn() && !isPayingMember() && visitedMoreThanOnce()  && notMobile() ?
+            adblockInUse() :
+            Promise.resolve(false);
     }
 
     return {

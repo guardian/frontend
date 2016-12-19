@@ -92,9 +92,9 @@ define([
     }
 
     function init() {
-        adblockMsg.showAdblockMsg().then(function(boolean){
+        adblockMsg.showAdblockMsg().then(function(adBlockInUse){
         // Show messages only if adblock is used by non paying member
-        if (boolean) {
+        if (adBlockInUse) {
             showAdblockMessage();
             showAdblockBanner();
         }
