@@ -9,7 +9,6 @@ import play.api.libs.json.{Format, JsObject, Json}
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import JsonComponent.withRefreshStatus
-import play.api.Environment
 
 import scala.concurrent.Future
 

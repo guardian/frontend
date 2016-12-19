@@ -4,10 +4,8 @@ import java.security.MessageDigest
 
 import com.google.javascript.jscomp._
 import conf.switches.Switches
-import play.api.Application
 import play.twirl.api.Html
 import play.twirl.api.JavaScriptFormat.{Appendable => Javascript}
-import play.api.Environment
 import play.api.Mode.Dev
 
 import scala.collection.concurrent.TrieMap

@@ -5,7 +5,6 @@ import model.{ApplicationContext, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.http.HttpFilters
-import play.api.inject.{NewInstanceInjector, SimpleInjector, Injector}
 import play.api.libs.ws.ahc.AhcWSComponents
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
@@ -40,7 +39,7 @@ trait FrontendComponents
 
   implicit lazy val as = actorSystem
 
-  lazy val jobScheduler = new JobScheduler(environment)
+  lazy val jobScheduler = new JobScheduler(appContext)
   lazy val akkaAsync = new AkkaAsync(environment, actorSystem)
   lazy val appMetrics = ApplicationMetrics()
   lazy val guardianConf = new GuardianConfiguration

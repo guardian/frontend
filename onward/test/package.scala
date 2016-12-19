@@ -1,9 +1,9 @@
 package test
 
+import model.ApplicationContext
 import org.scalatest.Suites
-import play.api.Environment
 
-class OnwardTestSuite (implicit env: Environment) extends Suites (
+class OnwardTestSuite (implicit context: ApplicationContext) extends Suites (
   new controllers.ChangeEditionControllerTest,
   new model.TopStoriesFeatureTest,
   new MostPopularControllerTest,
