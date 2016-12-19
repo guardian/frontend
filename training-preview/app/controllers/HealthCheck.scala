@@ -6,7 +6,6 @@ import dispatch.{FunctionHandler, Http}
 import scala.concurrent.Future
 import contentapi.{HttpClient, Response}
 import conf.Configuration.contentApi.previewAuth
-import play.api.Environment
 import play.api.libs.ws.WSClient
 
 class TrainingHttp extends HttpClient with ExecutionContexts {

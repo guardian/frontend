@@ -7,7 +7,7 @@ import common.Logging
 import model.ApplicationContext
 import play.api.data._
 import play.api.data.Forms._
-import services.RedirectService.PermanentRedirect
+import services.RedirectService.{PermanentRedirect => GuardianRedirect}
 import services.RedirectService
 
 case class PageRedirect(from: String, to: String) {
@@ -29,7 +29,7 @@ class RedirectController(redirects: RedirectService)(implicit context: Applicati
         val success = redirects.remove(from)
         if(success) "Redirect successfully removed" else failMessage
       case PageRedirect(from, to) if from.nonEmpty  =>
-        val success = redirects.set(PermanentRedirect(from, to))
+        val success = redirects.set(GuardianRedirect(from, to))
         if(success) "Redirect successfully set" else failMessage
       case _ => failMessage
     }
@@ -75,7 +75,7 @@ class RedirectController(redirects: RedirectService)(implicit context: Applicati
           val from = fromAndTo(0).trim
           val to = fromAndTo(1).trim
           try {
-            redirects.set(PermanentRedirect(from, to))
+            redirects.set(GuardianRedirect(from, to))
             s"$from -> $to"
           } catch {
             case e: Exception => s"Error processing $line: ${e.getMessage}"

@@ -72,7 +72,7 @@ define([
     ];
 
     var secondaryModules = [
-        ['cm-fill-advert-slots', fillAdvertSlots.init],
+        ['cm-fill-advert-slots', fillAdvertSlots.init, fillAdvertSlots.customTiming],
         ['cm-paidforBand', paidforBand.init],
         ['cm-paidContainers', paidContainers.init],
         ['cm-ready', function () {

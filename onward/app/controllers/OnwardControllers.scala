@@ -6,7 +6,6 @@ import business.StocksData
 import contentapi.ContentApiClient
 import feed._
 import model.ApplicationContext
-import play.api.Environment
 import play.api.libs.ws.WSClient
 import weather.WeatherApi
 

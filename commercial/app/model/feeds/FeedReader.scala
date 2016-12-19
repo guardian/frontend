@@ -1,9 +1,10 @@
 package commercial.model.feeds
 
-import com.ning.http.client.{Response => AHCResponse}
+import java.nio.charset.Charset
 import commercial.CommercialMetrics
 import common.Logging
 import conf.switches.Switch
+import org.asynchttpclient.netty.NettyResponse
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse, WSSignatureCalculator}
 
@@ -34,7 +35,7 @@ class FeedReader(wsClient: WSClient) extends Logging {
       val requestHolder: WSRequest = {
         val unsignedRequestHolder: WSRequest = wsClient.url(request.url)
           .withQueryString(request.parameters.toSeq: _*)
-          .withRequestTimeout(request.timeout.toMillis.toInt)
+          .withRequestTimeout(request.timeout)
         signature.foldLeft(unsignedRequestHolder) { (soFar, calc) =>
           soFar.sign(calc)
         }
@@ -45,8 +46,8 @@ class FeedReader(wsClient: WSClient) extends Logging {
         response.status match {
           case status if validResponseStatuses.contains(status) =>
             recordLoad(System.currentTimeMillis - start)
-            val body: String = request.responseEncoding map {
-              response.underlying[AHCResponse].getResponseBody
+            val body: String = request.responseEncoding map { encoding =>
+              response.underlying[NettyResponse].getResponseBody(Charset.forName(encoding))
             } getOrElse response.body
 
             Try(parse(body)) match {

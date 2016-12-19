@@ -1,10 +1,10 @@
 package dev
 
-import play.api.http.{HttpFilters, HttpConfiguration, HttpErrorHandler, DefaultHttpRequestHandler}
+import play.api.http.{DefaultHttpRequestHandler, HttpConfiguration, HttpErrorHandler, HttpFilters}
 import play.api.routing.Router
 import play.api.mvc.RequestHeader
 import common.CanonicalLink
-import play.api.Environment
+import model.ApplicationContext
 import play.api.Mode.Prod
 
 class DevParametersHttpRequestHandler(
@@ -12,7 +12,7 @@ class DevParametersHttpRequestHandler(
     errorHandler: HttpErrorHandler,
     configuration: HttpConfiguration,
     filters: HttpFilters,
-    environment: Environment
+    context: ApplicationContext
   ) extends DefaultHttpRequestHandler(router, errorHandler, configuration, filters) with implicits.Requests {
 
 
@@ -63,13 +63,14 @@ class DevParametersHttpRequestHandler(
     "0p19G" // Google AMP AB test parameter
   )
 
-  val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams
+  val playBugs = Seq("") // (Play 2.5 bug?) request.queryString is returning an empty string when empty
+  val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ playBugs
 
   override def routeRequest(request: RequestHeader) = {
 
     // json requests have no SEO implication but will affect caching
     if (
-      environment.mode != Prod &&
+      context.environment.mode != Prod &&
       !request.isJson &&
       !request.uri.startsWith("/oauth2callback") &&
       !request.uri.startsWith("/px.gif")  && // diagnostics box
