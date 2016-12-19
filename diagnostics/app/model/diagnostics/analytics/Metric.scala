@@ -26,9 +26,6 @@ object Metric extends Logging {
     ("50x", CountMetric("kpis-user-50x", "beacon on the 50x page that tells us that real users are getting 500 errors")),
     ("404", CountMetric("kpis-user-404", "beacon on the 404 page that tells us that real users are getting 404 not found")),
 
-    // video
-    ("video-tech-html5", CountMetric("video-tech-html5", "video-tech-html5")),
-
     ("headlines-variant-seen", CountMetric(s"headlines-variant-seen", s"headlines-variant-seen")),
     ("headlines-control-seen", CountMetric(s"headlines-control-seen", s"headlines-control-seen")),
     ("headlines-variant-clicked", CountMetric(s"headlines-variant-clicked", s"headlines-variant-clicked")),
