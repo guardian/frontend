@@ -10,11 +10,8 @@ define([
     'common/utils/detect',
     'common/utils/fsm',
     'common/utils/mediator',
-    'lodash/collections/map',
     'lodash/functions/throttle',
-    'lodash/collections/forEach',
     'common/modules/analytics/interaction-tracking',
-    'common/utils/chain',
     'common/utils/load-css-promise',
     'commercial/modules/dfp/performance-logging'
 ], function (Promise,
@@ -28,11 +25,8 @@ define([
              detect,
              FiniteStateMachine,
              mediator,
-             map,
              throttle,
-             forEach,
              interactionTracking,
-             chain,
              loadCssPromise,
              performanceLogging) {
 
@@ -172,19 +166,18 @@ define([
 
     HostedGallery.prototype.loadSurroundingImages = function (index, count) {
         var $img, that = this;
-        chain([0, 1, 2]).and(
-            map,
-            function (i) {
-                return index + i === 0 ? count - 1 : (index - 1 + i) % count;
-            }
-        ).and(forEach, function (i) {
+        [0, 1, 2]
+        .map(function (i) {
+            return index + i === 0 ? count - 1 : (index - 1 + i) % count;
+        })
+        .forEach(function (i) {
             $img = $('img', this.$images[i]);
             if (!$img[0].complete) {
                 bean.one($img[0], 'load', setSize.bind(this, $img, i));
             } else {
                 setSize($img, i);
             }
-        }.bind(this));
+        }, this);
 
         function setSize($image, index) {
             if (!that.imageRatios[index]) {
