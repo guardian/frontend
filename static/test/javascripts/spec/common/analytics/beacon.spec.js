@@ -34,20 +34,4 @@ define([
         expect(bonzo(img).attr('src')).toBe('//beacon.gu-web.net/pv.gif');
     });
 
-    it('should create correct img element when counting', function () {
-        var img = beacon.counts('blocked-ads');
-
-        if (!navigator.sendBeacon) {
-            expect(bonzo(img).attr('src')).toBe('//beacon.gu-web.net/counts.gif?c=blocked-ads');
-        }
-    });
-
-    it('should create correct img element when counting more than one', function () {
-        var img = beacon.counts(['blocked-ads', 'localStorage-supported']);
-
-        if (!navigator.sendBeacon) {
-            expect(bonzo(img).attr('src'))
-                .toBe('//beacon.gu-web.net/counts.gif?c=blocked-ads&c=localStorage-supported');
-        }
-    });
 });
