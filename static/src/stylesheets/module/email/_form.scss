@@ -46,7 +46,7 @@
     .email-sub__label {
         color: $form-label-colour;
         line-height: 3;
-        left: 1.250em;
+        left: 1.25em;
         position: absolute;
         pointer-events: none; // Ensure the text input cursor is shown
     }
@@ -80,7 +80,7 @@
     color: $neutral-1;
     height: 3em;
     outline: none;
-    padding: .667em 1.250em;
+    padding: .667em 1.25em;
 }
 
 .email-sub__submit-input {
@@ -211,9 +211,9 @@
     }
 
     .email-sub__small {
+        @include fs-textSans(1, $size-only: true);
         clear: left;
         color: $form-primary-colour;
-        @include fs-textSans(1, $size-only: true);
     }
 }
 
