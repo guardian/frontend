@@ -1,4 +1,5 @@
 define([
+    'Promise',
     'bean',
     'lodash/functions/debounce',
     'bonzo',
@@ -17,7 +18,8 @@ define([
     'common/utils/chain',
     'common/utils/load-css-promise',
     'commercial/modules/dfp/performance-logging'
-], function (bean,
+], function (Promise,
+             bean,
              debounce,
              bonzo,
              fastdom,
