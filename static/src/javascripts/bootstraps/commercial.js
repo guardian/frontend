@@ -147,7 +147,7 @@ define([
             // Stub the command queue
             window.googletag = { cmd: [] };
 
-            loadModules(primaryModules, performanceLogging.primaryBaseline)
+            return loadModules(primaryModules, performanceLogging.primaryBaseline)
             .then(function () {
                 return loadModules(secondaryModules, performanceLogging.secondaryBaseline);
             })
