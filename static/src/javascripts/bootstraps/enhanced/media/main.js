@@ -148,32 +148,6 @@ define([
         }
     }
 
-    function initVideoHeadline(el, videoInfo) {
-        var buttonElement = el.parentElement.querySelector('button.vjs-big-play-button');
-        var hideControlBar = el.parentElement.querySelector('.vjs-control-bar');
-        hideControlBar.classList.add('vjs-control-bar--hidden');
-        buttonElement.classList.remove('vjs-big-play-button');
-        buttonElement.classList.add('vjs-big-play-button__duration');
-        var buttonDuration = bonzo(el).attr('data-formatted-duration');
-        buttonElement.setAttribute('data-formatted-duration', buttonDuration);
-        var videoPosterElement = el.parentElement.querySelector('.vjs-big-play-button__duration');
-        var mainVideoElement = videoPosterElement.parentElement;
-        mainVideoElement.querySelector('.vjs.gu-media--video');
-
-        if (window.matchMedia('(max-width: 375px)').matches) {
-            mainVideoElement.classList.remove('gu-media--video');
-        }
-
-        var div = document.createElement('div');
-        var vidGradient = document.createElement('div');
-        var videoHeadline = videoInfo.title.replace(' – video','').replace(' - video','');
-        div.classList.add('video-headline');
-        vidGradient.classList.add('video-headline--gradient');
-        div.setAttribute('data-data-video-name', videoHeadline);
-        videoPosterElement.appendChild(div);
-        el.parentElement.querySelector('.vjs-poster').appendChild(vidGradient);
-    }
-
     function enhanceVideo(el, autoplay, shouldPreroll) {
         var mediaType = el.tagName.toLowerCase(),
             $el = bonzo(el).addClass('vjs'),
@@ -329,9 +303,6 @@ define([
                         });
 
                         playerSetupComplete.then(function () {
-                          if(ab.isInVariant('VideoHeadline', 'video-headline')) {
-                            initVideoHeadline(player.el(), videoInfo);
-                          }
                             if (autoplay) {
                                 player.play();
                             }

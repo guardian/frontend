@@ -66,7 +66,6 @@ final case class Content(
   hasStoryPackage: Boolean,
   rawOpenGraphImage: String,
   showFooterContainers: Boolean = false,
-  title: Option[String] = None
 ) {
 
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
@@ -342,7 +341,6 @@ object Content {
     val apifields = apiContent.fields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
     val cardStyle: fapiutils.CardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
-    val title = Some(apiContent.webTitle)
 
 
     Content(
@@ -386,8 +384,7 @@ object Content {
           .orElse(elements.mainPicture.flatMap(_.images.largestImageUrl))
           .orElse(trail.trailPicture.flatMap(_.largestImageUrl))
           .getOrElse(Configuration.images.fallbackLogo)
-      },
-      title = title
+      }
     )
   }
 }
