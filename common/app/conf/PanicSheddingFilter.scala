@@ -7,14 +7,12 @@ import common.{ExecutionContexts, Logging, RequestMetrics}
 import org.joda.time.DateTime
 import play.api.mvc.Results._
 import play.api.mvc.{Filter, RequestHeader, Result}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 // this turns requests away with 5xx errors if we are too busy
-class PanicSheddingFilter(implicit val mat: Materializer) extends Filter with Logging {
+class PanicSheddingFilter(implicit val mat: Materializer) extends Filter with Logging with ExecutionContexts {
 
   import scala.concurrent.duration._
-
-  implicit val ec: ExecutionContext = ExecutionContexts.executionContext
 
   val NORMAL_LATENCY_LIMIT = 1.second.toMillis
   val CRITICAL_LATENCY_LIMIT = 3.seconds.toMillis

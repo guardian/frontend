@@ -4,8 +4,7 @@ import common.ExecutionContexts
 import conf.Configuration
 import model.deploys.ApiResults.{ApiError, ApiErrors, ApiResponse}
 import play.api.libs.json.{JsError, JsSuccess, Json}
-
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 case class RiffRaffDeploy(uuid: String,
                           projectName: String,
@@ -16,9 +15,7 @@ case class RiffRaffDeploy(uuid: String,
                           time: String)
 object RiffRaffDeploy { implicit val format = Json.format[RiffRaffDeploy] }
 
-class RiffRaffService(httpClient: HttpLike) {
-
-  implicit val ec: ExecutionContext = ExecutionContexts.executionContext
+class RiffRaffService(httpClient: HttpLike) extends ExecutionContexts {
 
   def getRiffRaffDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String]): Future[ApiResponse[List[RiffRaffDeploy]]] = {
     val url = s"${Configuration.riffraff.url}/api/history"

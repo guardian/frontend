@@ -4,8 +4,7 @@ import common.ExecutionContexts
 import conf.Configuration
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
-
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.language.postfixOps
 
 case class Commit(sha: String, username: String, message: String)
@@ -57,9 +56,7 @@ object TeamCityBuilds {
 }
 
 
-class TeamcityService(httpClient: HttpLike) {
-
-  implicit val ec: ExecutionContext = ExecutionContexts.executionContext
+class TeamcityService(httpClient: HttpLike) extends ExecutionContexts {
 
   private lazy val buildFields = List("id", "number", "buildType(name,projectName)", "status",
     "revisions(revision(version))", "changes(change(username,comment,version))",

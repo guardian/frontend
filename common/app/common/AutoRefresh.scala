@@ -3,13 +3,11 @@ package common
 import scala.concurrent.duration.FiniteDuration
 import akka.agent.Agent
 import akka.actor.{ActorSystem, Cancellable}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
 /** Simple class for repeatedly updating a value on a schedule */
-abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration)  extends Logging {
-
-  implicit val ec: ExecutionContext = ExecutionContexts.executionContext
+abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration)  extends Logging with ExecutionContexts {
 
   private lazy val agent = Agent[Option[A]](None)
 

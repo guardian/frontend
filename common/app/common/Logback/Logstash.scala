@@ -7,7 +7,6 @@ import common.{ExecutionContexts, ManifestData}
 import conf.switches.Switches
 import conf.Configuration
 import play.api.{Configuration => PlayConfiguration, Logger => PlayLogger}
-import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
 case class LogStashConf(enabled: Boolean,
@@ -22,9 +21,7 @@ class LogstashLifecycle(playConfig: PlayConfiguration) extends LifecycleComponen
   }
 }
 
-object Logstash {
-
-  implicit val ec: ExecutionContext = ExecutionContexts.executionContext
+object Logstash extends ExecutionContexts {
 
   def customFields(playConfig: PlayConfiguration) = Map(
     "stack" -> "frontend",

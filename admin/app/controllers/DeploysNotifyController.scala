@@ -11,12 +11,10 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.{Controller, Request}
 import play.api.mvc.BodyParsers.parse.{json => BodyJson}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.concurrent.Future.sequence
 
-trait DeploysNotifyController extends Controller with ApiKeyAuthenticationSupport with Logging with Requests {
-
-  implicit val ec: ExecutionContext = ExecutionContexts.executionContext
+trait DeploysNotifyController extends Controller with ApiKeyAuthenticationSupport with Logging with Requests with ExecutionContexts {
 
   val apiKey: String
   val wsClient: WSClient
