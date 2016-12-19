@@ -65,7 +65,7 @@ final case class Content(
   showByline: Boolean,
   hasStoryPackage: Boolean,
   rawOpenGraphImage: String,
-  showFooterContainers: Boolean = false,
+  showFooterContainers: Boolean = false
 ) {
 
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
