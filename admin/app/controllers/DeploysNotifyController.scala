@@ -1,20 +1,22 @@
 package controllers.admin
 
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import implicits.Requests
-import model.deploys.{NotifyRequestBody, NotifyTypes, ApiKeyAuthenticationSupport, ApiResults}
-import ApiResults.{ApiErrors, ApiError, ApiResponse}
+import model.deploys.{ApiKeyAuthenticationSupport, ApiResults, NotifyRequestBody, NotifyTypes}
+import ApiResults.{ApiError, ApiErrors, ApiResponse}
 import model.deploys._
 import play.api.libs.json.{JsError, JsSuccess}
 import play.api.libs.ws.WSClient
-import play.api.mvc.{Request, Controller}
+import play.api.mvc.{Controller, Request}
 import play.api.mvc.BodyParsers.parse.{json => BodyJson}
-import scala.concurrent.Future
+
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.Future.sequence
-import scala.concurrent.ExecutionContext.Implicits.global
 
 trait DeploysNotifyController extends Controller with ApiKeyAuthenticationSupport with Logging with Requests {
+
+  implicit val ec: ExecutionContext = ExecutionContexts.executionContext
 
   val apiKey: String
   val wsClient: WSClient

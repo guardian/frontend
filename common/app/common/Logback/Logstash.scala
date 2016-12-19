@@ -3,12 +3,12 @@ package common.Logback
 import app.LifecycleComponent
 import com.amazonaws.auth.AWSCredentialsProvider
 import com.amazonaws.util.EC2MetadataUtils
-import common.ManifestData
+import common.{ExecutionContexts, ManifestData}
 import conf.switches.Switches
 import conf.Configuration
-import play.api.{Logger => PlayLogger, Configuration => PlayConfiguration, Play}
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Success, Failure}
+import play.api.{Configuration => PlayConfiguration, Logger => PlayLogger}
+import scala.concurrent.ExecutionContext
+import scala.util.{Failure, Success}
 
 case class LogStashConf(enabled: Boolean,
                         stream: String,
@@ -23,6 +23,8 @@ class LogstashLifecycle(playConfig: PlayConfiguration) extends LifecycleComponen
 }
 
 object Logstash {
+
+  implicit val ec: ExecutionContext = ExecutionContexts.executionContext
 
   def customFields(playConfig: PlayConfiguration) = Map(
     "stack" -> "frontend",

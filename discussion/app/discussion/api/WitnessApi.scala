@@ -2,11 +2,9 @@ package discussion.api
 
 import play.api.libs.json.JsValue
 import scala.concurrent._
-import ExecutionContext.Implicits.global
 import play.api.libs.ws.WSResponse
 import discussion.model.WitnessActivity
 import discussion.util.Http
-
 
 trait WitnessApi extends Http {
   protected val witnessApiRoot: String

@@ -7,10 +7,7 @@ import common.ContentApiMetrics.{ContentApi404Metric, ContentApiErrorMetric}
 import common.{ContentApiMetrics, ExecutionContexts, Logging}
 import conf.Configuration
 import conf.Configuration.contentApi.previewAuth
-import metrics.{CountMetric, TimingMetric}
 import play.api.libs.ws.{WSAuthScheme, WSClient}
-
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
