@@ -61,7 +61,7 @@ define([
         performanceLogging.moduleStart(moduleName);
 
         require(['bootstraps/enhanced/media/main'], function() {
-            require(['bootstraps/enhanced/media/video-player'], function (_, videojs) {
+            require(['bootstraps/enhanced/media/video-player'], function (videojs) {
                 var $videoEl = $('.vjs-hosted__video');
                 var $inlineVideoEl = $('video');
                 var $youtubeIframe = $('.js-hosted-youtube-video');
