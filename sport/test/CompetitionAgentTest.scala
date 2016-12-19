@@ -10,10 +10,12 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
 
 @DoNotDiscover class CompetitionAgentTest
   extends FlatSpec
+  with ConfiguredTestSuite
   with Matchers
   with implicits.Football
   with Eventually
   with BeforeAndAfterAll
+  with WithMaterializer
   with WithTestWsClient
   with WithTestFootballClient
   with FootballTestData
@@ -26,7 +28,10 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
     DateTimeUtils.setCurrentMillisFixed(fixedDate)
   }
 
-  override def afterAll() = DateTimeUtils.setCurrentMillisSystem()
+  override def afterAll() = {
+    DateTimeUtils.setCurrentMillisSystem()
+    super.afterAll()
+  }
 
   override implicit val patienceConfig = PatienceConfig(timeout = scaled(Span(3000, Millis)), interval = scaled(Span(100, Millis)))
 

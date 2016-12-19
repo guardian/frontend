@@ -5,7 +5,6 @@ import common.{Edition, _}
 import contentapi.ContentApiClient
 import controllers.ImageContentPage
 import model.{ApiContent2Is, ApplicationContext, Content, ImageContent, StoryPackages}
-import play.api.Environment
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 
 import scala.concurrent.Future

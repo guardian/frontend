@@ -18,6 +18,7 @@ class ImageDecacheController(wsClient: WSClient)(implicit context: ApplicationCo
     import ImageDecacheController._
 
   val imageServices = new ImageServices(wsClient)
+  val authActions = new AuthActions(wsClient)
 
   private val iGuim = """i.guim.co.uk/img/(static|media|uploads)(/.*)""".r
   private val Origin = """(static|media).guim.co.uk/.*""".r
@@ -26,7 +27,7 @@ class ImageDecacheController(wsClient: WSClient)(implicit context: ApplicationCo
     NoCache(Ok(views.html.cache.imageDecache()))
   }
 
-  def decache() = AuthActions.AuthActionTest.async { implicit request =>
+  def decache() = authActions.AuthActionTest.async { implicit request =>
     getSubmittedImage(request).map(new URI(_)).map{ image =>
 
       val originUrl: String = s"${image.getHost}${image.getPath}" match {

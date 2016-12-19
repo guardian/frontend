@@ -8,7 +8,6 @@ import commercial.model.merchandise.jobs.JobsAgent
 import commercial.model.merchandise.travel.TravelOffersAgent
 import contentapi.ContentApiClient
 import model.ApplicationContext
-import play.api.Environment
 
 trait CommercialControllers {
   def contentApiClient: ContentApiClient
