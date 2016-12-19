@@ -53,12 +53,12 @@
             @Html(curlConfig().body)
 
             @if(Configuration.assets.useHashedBundles) {
-                window.curl.paths['bootstraps/enhanced/youtube'] = '@Static("javascripts/bootstraps/enhanced/youtube.js")';
+                window.curl.paths['bootstraps/youtube-embed'] = '@Static("javascripts/bootstraps/youtube-embed.js")';
             } else {
-                window.curl.paths['bootstraps/enhanced/youtube'] = '@{Configuration.assets.path}javascripts/bootstraps/enhanced/youtube.js';
+                window.curl.paths['bootstraps/youtube-embed'] = '@{Configuration.assets.path}javascripts/bootstraps/youtube-embed.js';
             }
             @Html(common.Assets.js.curl)
-            require(['bootstraps/enhanced/youtube'], function(bootstrap) {
+            require(['bootstraps/youtube-embed'], function(bootstrap) {
                 bootstrap.init();
             });
         </script>
