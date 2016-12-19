@@ -34,7 +34,6 @@ define([
     }
 
     function noAdblockMsg() {
-
         return notMobile() && (!visitedMoreThanOnce() || !isAdblockSwitchOn() || (visitedMoreThanOnce() && isPayingMember())) ?
             adblockInUse() :
             Promise.resolve(false);
