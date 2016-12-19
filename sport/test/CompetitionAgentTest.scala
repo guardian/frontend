@@ -28,7 +28,10 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
     DateTimeUtils.setCurrentMillisFixed(fixedDate)
   }
 
-  override def afterAll() = DateTimeUtils.setCurrentMillisSystem()
+  override def afterAll() = {
+    DateTimeUtils.setCurrentMillisSystem()
+    super.afterAll()
+  }
 
   override implicit val patienceConfig = PatienceConfig(timeout = scaled(Span(3000, Millis)), interval = scaled(Span(100, Millis)))
 
