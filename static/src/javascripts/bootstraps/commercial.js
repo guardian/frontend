@@ -89,7 +89,7 @@ define([
         secondaryModules.unshift(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init, hostedVideo.customTiming],
-            ['cm-hostedGallery', hostedGallery.init],
+            ['cm-hostedGallery', hostedGallery.init, hostedGallery.customTiming],
             ['cm-hostedOnward', hostedOnward.init],
             ['cm-hostedOJCarousel', hostedOJCarousel.init]);
     }

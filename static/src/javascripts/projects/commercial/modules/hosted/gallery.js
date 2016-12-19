@@ -15,7 +15,8 @@ define([
     'lodash/collections/forEach',
     'common/modules/analytics/interaction-tracking',
     'common/utils/chain',
-    'common/utils/load-css-promise'
+    'common/utils/load-css-promise',
+    'commercial/modules/dfp/performance-logging'
 ], function (bean,
              debounce,
              bonzo,
@@ -32,7 +33,8 @@ define([
              forEach,
              interactionTracking,
              chain,
-             loadCssPromise) {
+             loadCssPromise,
+             performanceLogging) {
 
 
     function HostedGallery() {
@@ -446,8 +448,11 @@ define([
         }
     };
 
-    function init() {
-        return loadCssPromise.then(function () {
+    function init(moduleName) {
+        performanceLogging.moduleStart(moduleName);
+
+        loadCssPromise
+        .then(function () {
             var gallery,
                 match,
                 galleryHash = window.location.hash,
@@ -463,7 +468,12 @@ define([
                     gallery.loadAtIndex(parseInt(res[1], 10));
                 }
             }
+        })
+        .then(function () {
+            performanceLogging.moduleEnd(moduleName);
         });
+
+        return Promise.resolve();
     }
 
     return {
