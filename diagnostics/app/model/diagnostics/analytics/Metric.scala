@@ -31,13 +31,6 @@ object Metric extends Logging {
     // video
     ("video-tech-html5", CountMetric("video-tech-html5", "video-tech-html5")),
 
-    ("sm-page-view", CountMetric("sm-page-view", "sm-page-view")),
-    ("sm-interaction-on-same-page", CountMetric("sm-interaction-on-same-page", "sm-interaction-on-same-page")),
-    ("sm-another-guardian-page", CountMetric("sm-another-guardian-page", "sm-another-guardian-page")),
-    ("sm-clicked-related-content", CountMetric("sm-clicked-related-content", "sm-clicked-related-content")),
-    ("sm-clicked-series-component", CountMetric("sm-clicked-series-component", "sm-clicked-series-component")),
-    ("sm-clicked-most-popular-component", CountMetric("sm-clicked-most-popular-component", "sm-clicked-most-popular-component")),
-
     ("headlines-variant-seen", CountMetric(s"headlines-variant-seen", s"headlines-variant-seen")),
     ("headlines-control-seen", CountMetric(s"headlines-control-seen", s"headlines-control-seen")),
     ("headlines-variant-clicked", CountMetric(s"headlines-variant-clicked", s"headlines-variant-clicked")),
