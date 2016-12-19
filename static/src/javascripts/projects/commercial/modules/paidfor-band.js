@@ -1,9 +1,8 @@
 define([
-    'fastdom',
     'Promise',
     'common/utils/config',
     'common/modules/ui/sticky'
-], function (fastdom, Promise, config, Sticky) {
+], function (Promise, config, Sticky) {
     function init() {
         if (config.page.hasSuperStickyBanner) {
             return Promise.resolve(false);
