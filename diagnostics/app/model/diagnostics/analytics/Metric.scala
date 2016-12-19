@@ -13,7 +13,6 @@ object Metric extends Logging {
     ("pv", CountMetric("kpis-page-views", "raw page views - simple <img> in body, no javascript involved")),
     ("pvg", CountMetric("kpis-analytics-page-views-google", "page view fires after Google Analytics")),
 
-    ("ads-blocked", CountMetric("ads-blocked", "ads-blocked")),
     ("ad-render", CountMetric("first-ad-rendered", "first-ad-rendered")),
     ("ad-wrapper", CountMetric("dfp-served-ad", "dfp-served-ad")),
 
