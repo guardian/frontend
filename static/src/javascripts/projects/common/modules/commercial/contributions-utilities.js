@@ -38,8 +38,11 @@ define([
         count: 6
     };
 
+    var maxLogEntries = 50;
+
     /**
      * Log that the user has seen an Epic test so we can limit how many times they see it.
+     * The number of entries is limited to the number in maxLogEntries.
      *
      * @param testId
      */
@@ -49,7 +52,7 @@ define([
             testId: testId
         });
 
-        storage.local.set(viewKey, viewLog);
+        storage.local.set(viewKey, viewLog.slice(-maxLogEntries));
     }
 
     function viewsInPreviousDays(days) {
