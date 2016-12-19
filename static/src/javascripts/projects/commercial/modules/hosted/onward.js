@@ -15,12 +15,12 @@ define([
         var placeholders = document.getElementsByClassName('js-onward-placeholder');
 
         if (placeholders.length) {
-            return fetchJson(config.page.ajaxUrl + '/'
+            fetchJson(config.page.ajaxUrl + '/'
                 + config.page.pageId + '/'
                 + config.page.contentType.toLowerCase() + '/'
                 + 'onward.json', {mode: 'cors'})
                 .then(function (json) {
-                    return fastdom.write(function () {
+                    fastdom.write(function () {
                         var i;
                         for (i = 0; i < placeholders.length; i++) {
                             placeholders[i].innerHTML = json.html;
