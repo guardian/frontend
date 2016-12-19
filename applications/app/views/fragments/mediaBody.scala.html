@@ -81,7 +81,7 @@
                                             <meta itemprop="requiresSubscription" content="false" />
                                             <meta itemprop="image" content="@Html(video.content.signedArticleImage)" />
 
-                                            @defining(video.elements.thumbnail.map( i => Some(i.images)).orElse(video.mediaAtom.map(_.posterImage)).flatten){ bestThumbnail =>
+                                            @defining(video.elements.thumbnail.map(_.images) orElse video.mediaAtom.flatMap(_.posterImage)) {bestThumbnail =>
                                                 @bestThumbnail.map { thumbnail =>
                                              <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(thumbnail)" />
                                              <meta itemprop="thumbnailUrl" content="@SeoOptimisedContentImage.bestFor(thumbnail)" />
