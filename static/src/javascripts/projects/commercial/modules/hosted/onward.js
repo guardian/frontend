@@ -12,7 +12,7 @@ define([
 
     function loadOnwardComponent() {
 
-        var placeholders = document.querySelectorAll('.js-onward-placeholder');
+        var placeholders = document.getElementsByClassName('js-onward-placeholder');
 
         if (placeholders.length) {
             return fetchJson(config.page.ajaxUrl + '/'
