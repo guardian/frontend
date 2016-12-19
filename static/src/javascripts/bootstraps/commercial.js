@@ -90,7 +90,7 @@ define([
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init, hostedVideo.customTiming],
             ['cm-hostedGallery', hostedGallery.init, hostedGallery.customTiming],
-            ['cm-hostedOnward', hostedOnward.init],
+            ['cm-hostedOnward', hostedOnward.init, hostedOnward.customTiming],
             ['cm-hostedOJCarousel', hostedOJCarousel.init]);
     }
 
