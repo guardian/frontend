@@ -53,12 +53,16 @@ object EmailHelpers {
     s"""<img src="${Static(s"images/email/icons/$name.png")}" class="icon icon-$name">"""
   }
 
-  def img(src: String, alt: Option[String] = None) = Html {
-    s"""<img width="580" class="full-width" src="$src" ${alt.map(alt => s"""alt="$alt"""").getOrElse("")}>"""
+  private def img(src: String, width: Int, alt: Option[String] = None) = Html {
+    s"""<img width="$width" class="full-width" src="$src" ${alt.map(alt => s"""alt="$alt"""").getOrElse("")}>"""
   }
 
+  def imgForArticle(src: String, alt: Option[String] = None) = img(src, EmailImage.knownWidth, alt)
+
+  def imgForFront(src: String, alt: Option[String] = None) = img(src, FrontEmailImage.knownWidth, alt)
+
   def imgFromPressedContent(pressedContent: PressedContent) = imageUrlFromPressedContent(pressedContent).map { url =>
-    img(src = url, alt = Some(pressedContent.header.headline))
+    imgForFront(src = url, alt = Some(pressedContent.header.headline))
   }
 
   object Images {

@@ -38,24 +38,30 @@
 }
 
 @faciaCardLarge(pressedContent: PressedContent) = {
-    @paddedRow(Seq(toneClass(pressedContent))) {
-        @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
-            <a @Html(href) class="facia-card facia-card--large">
-                @imgFromPressedContent(pressedContent)
-                @headline(pressedContent)
-                @pressedContent.card.trailText.map { trailText =>
-                    <h4 class="trail-text">@trailText</h4>
-                }
+    @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
+        @paddedRow(Seq(toneClass(pressedContent))) {
+            <a @Html(href) class="facia-link">
+                <div class="facia-card facia-card--large">
+                    @imgFromPressedContent(pressedContent)
+                    @fullRow(Seq("facia-card__text")) {
+                        @headline(pressedContent)
+                        @pressedContent.card.trailText.map { trailText =>
+                            <h4 class="trail-text">@trailText</h4>
+                        }
+                    }
+                </div>
             </a>
         }
     }
 }
 
 @faciaCardSmall(pressedContent: PressedContent) = {
-    @paddedRow(Seq(toneClass(pressedContent))) {
-        @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
-            <a @Html(href) class="facia-card">
-                @headline(pressedContent)
+    @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
+        @paddedRow(Seq(toneClass(pressedContent))) {
+            <a @Html(href) class="facia-link">
+                @fullRow(Seq("facia-card", "facia-card__text")) {
+                    @headline(pressedContent)
+                }
             </a>
         }
     }
@@ -73,7 +79,7 @@
 }
 
 @fullRow {
-    @img(src = page.banner, alt = page.email.map(_.name))
+    @imgForFront(src = page.banner, alt = page.email.map(_.name))
 }
 
 @page.frontProperties.onPageDescription.map { description =>
