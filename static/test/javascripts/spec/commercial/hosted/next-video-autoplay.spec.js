@@ -1,10 +1,14 @@
 define([
     'common/utils/$',
     'helpers/fixtures',
+    'Promise',
+    'fastdom',
     'helpers/injector'
 ], function (
     $,
     fixtures,
+    Promise,
+    fastdom,
     Injector
 ) {
     var nextVideoAutoplay,
@@ -28,13 +32,17 @@ define([
             $fixturesContainer;
 
         beforeEach(function (done) {
+            injector.mock('common/modules/analytics/google', function noop() {});
+            injector.mock('commercial/modules/hosted/next-video',  {
+                load: Promise.resolve
+            });
             injector.require([
                 'commercial/modules/hosted/next-video-autoplay'
             ], function () {
                 nextVideoAutoplay = arguments[0];
 
                 $fixturesContainer = fixtures.render(fixturesConfig);
-                done();
+                nextVideoAutoplay.init().then(done);
             });
         });
 
@@ -47,7 +55,7 @@ define([
             done();
         });
 
-        xit('should trigger autoplay when there is a next video', function (done) {
+        it('should trigger autoplay when there is a next video', function (done) {
             expect(nextVideoAutoplay.canAutoplay()).toBeTruthy();
             done();
         });
@@ -60,21 +68,27 @@ define([
                 ]
             };
             $fixturesContainer = fixtures.render(fixturesConfig);
-            expect(nextVideoAutoplay.canAutoplay()).toBeFalsy();
-            done();
+            nextVideoAutoplay.init().then(function(){
+                expect(nextVideoAutoplay.canAutoplay()).toBeFalsy();
+                done();
+            });
         });
 
-        xit('should show end slate information', function (done) {
+        it('should show end slate information', function (done) {
             nextVideoAutoplay.triggerEndSlate();
-            expect($('.js-hosted-next-autoplay', $fixturesContainer).hasClass('js-autoplay-start')).toBeTruthy();
-            done();
+            fastdom.defer(1, function () {
+                expect($('.js-hosted-next-autoplay', $fixturesContainer).hasClass('js-autoplay-start')).toBeTruthy();
+                done();
+            });
         });
 
-        xit('should hide end slate information when cancel button is clicked', function (done) {
+        it('should hide end slate information when cancel button is clicked', function (done) {
             nextVideoAutoplay.addCancelListener();
             document.querySelector('.js-autoplay-cancel').click();
-            expect($('.js-hosted-next-autoplay', $fixturesContainer).hasClass('hosted-slide-out')).toBeTruthy();
-            done();
+            fastdom.defer(1, function () {
+                expect($('.js-hosted-next-autoplay', $fixturesContainer).hasClass('hosted-slide-out')).toBeTruthy();
+                done();
+            });
         });
     });
 });
