@@ -76,6 +76,8 @@ define([
         ['cm-paidContainers', paidContainers.init]
     ];
 
+    var customTimingModules = [];
+
     if (config.page.isAdvertisementFeature) {
         secondaryModules.push(['cm-paidforBand', paidforBand.init]);
     }
@@ -99,20 +101,29 @@ define([
 
         var modulePromises = [];
 
-        modules.forEach(function (pair) {
+        modules.forEach(function (module) {
 
-            var moduleName = pair[0];
-            var moduleInit = pair[1];
-            var hasCustomTiming = pair[2];
+            var moduleName = module[0];
+            var moduleInit = module[1];
+            var hasCustomTiming = module[2];
 
             robust.catchErrorsAndLog(moduleName, function () {
-                var modulePromise = moduleInit(moduleName).then(function(){
-                    if (!hasCustomTiming) {
+                if (hasCustomTiming) {
+                    // Modules that use custom timing perform their own measurement timings.
+                    // These modules all have async init procedures which don't block, and return a promise purely for
+                    // perf logging, to time when their async work is done. The command buffer guarantees execution order,
+                    // so we don't use the returned promise to order the bootstrap's module invocations.
+                    var workComplete = moduleInit(moduleName);
+                    customTimingModules.push(workComplete);
+                } else {
+                    // Standard modules return a promise that must resolve before dependent bootstrap modules can begin
+                    // to execute. Timing is done here in the bootstrap, using the appropriate baseline.
+                    var modulePromise = moduleInit(moduleName).then(function () {
                         performanceLogging.moduleCheckpoint(moduleName, baseline);
-                    }
-                });
+                    });
 
-                modulePromises.push(modulePromise);
+                    modulePromises.push(modulePromise);
+                }
             });
         });
 
