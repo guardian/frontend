@@ -9,8 +9,10 @@ import play.api.test.Helpers._
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
+  with WithMaterializer
   with WithTestWsClient
-  with WithTestContentApiClient {
+  with WithTestContentApiClient
+  with WithTestContext {
 
   var series = "news/series/pass-notes"
   lazy val seriesController = new SeriesController(testContentApiClient)

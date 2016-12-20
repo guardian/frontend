@@ -206,44 +206,44 @@
         h2 {
             @include f-headlineSans;
         }
-        blockquote {
-            margin: 0 0 10px 0;
 
-            p {
-                @include f-bodyCopy;
-                font-style: normal;
-                font-size: 30px;
-                line-height: 34px;
-                margin: 0 0 0 $gs-gutter;
-                background-color: #ffffff;
-                padding: 30px 0 0 $gs-gutter * .5;
-                color: $neutral-1;
-                position: relative;
+        $iconHeight: 30px;
 
-                .inline-hosted-quote {
-                    position: absolute;
-                    top: 0;
-                    left: 10px;
-                    display: block;
-                    width: 25px;
-                    height: 20px;
-                }
-            }
-
-            &.quoted {
-                p {
-                    @include f-textSans;
-                    font-size: 18px;
-                    line-height: 24px;
-                }
-            }
-
-            @include mq(leftCol) {
-                margin-left: -156px;
-            }
+        .element-pullquote {
+            width: auto;
+            float: none;
+            clear: none;
+            padding: 0;
+            margin: 2 * $gs-baseline 0;
 
             @include mq(wide) {
-                margin-left: -140px;
+                margin-left: -132px;
+            }
+
+            p {
+                @include f-headlineSans;
+                font-weight: 100;
+                font-style: normal;
+                font-size: 30px;
+                line-height: 31px;
+                padding: $gs-baseline + $iconHeight 0 0 $gs-gutter * .5;
+                color: $neutral-1;
+                position: relative;
+                @include mq(leftCol) {
+                    font-size: 38px;
+                    line-height: 40px;
+                }
+            }
+
+            .inline-hosted-quote {
+                position: absolute;
+                top: 0;
+                left: 10px;
+            }
+
+            .inline-hosted-quote__svg {
+                height: $iconHeight;
+                width: 34px;
             }
         }
     }
@@ -341,5 +341,17 @@ $dotSize: 8px;
     transition: background-color 750ms ease;
     &:not(.highlighted) {
         background: transparent;
+    }
+}
+
+.hosted__header.hosted__header--sticky {
+    top: 0;
+    position: fixed;
+    z-index: $zindex-sticky;
+}
+
+.hosted__header--sticky .hostedbadge__logo {
+    @include mq($until: leftCol) {
+        height: 0;
     }
 }

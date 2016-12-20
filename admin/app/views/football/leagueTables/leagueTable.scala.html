@@ -1,4 +1,4 @@
-@(league: pa.Season, tableEntries: List[pa.LeagueTableEntry], selectedTeams: List[String] = Nil)(implicit env: play.api.Environment)
+@(league: pa.Season, tableEntries: List[pa.LeagueTableEntry], selectedTeams: List[String] = Nil)(implicit context: model.ApplicationContext)
 
 @views.html.football.main(s"${league.name} table") {
     <hgroup class="page-header">

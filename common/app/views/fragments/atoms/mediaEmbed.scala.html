@@ -3,7 +3,7 @@
 @import conf.Configuration
 @import templates.inlineJS.blocking.js.curlConfig
 
-@(page: MediaAtomEmbedPage, displayCaption: Boolean)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: MediaAtomEmbedPage, displayCaption: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 <!DOCTYPE html>
 <html lang="en-GB" class="gu-video-embed-html">
@@ -17,7 +17,7 @@
         <base target="_parent"/>
     </head>
     <body>
-        @views.html.fragments.atoms.media(page.atom, displayCaption = displayCaption)
+        @views.html.fragments.atoms.media(page.atom, displayCaption = displayCaption, embedPage = true)
  <script>
         var guardian = {
             isEmbed: true,
@@ -53,12 +53,12 @@
             @Html(curlConfig().body)
 
             @if(Configuration.assets.useHashedBundles) {
-                window.curl.paths['bootstraps/enhanced/youtube'] = '@Static("javascripts/bootstraps/enhanced/youtube.js")';
+                window.curl.paths['bootstraps/youtube-embed'] = '@Static("javascripts/bootstraps/youtube-embed.js")';
             } else {
-                window.curl.paths['bootstraps/enhanced/youtube'] = '@{Configuration.assets.path}javascripts/bootstraps/enhanced/youtube.js';
+                window.curl.paths['bootstraps/youtube-embed'] = '@{Configuration.assets.path}javascripts/bootstraps/youtube-embed.js';
             }
             @Html(common.Assets.js.curl)
-            require(['bootstraps/enhanced/youtube'], function(bootstrap) {
+            require(['bootstraps/youtube-embed'], function(bootstrap) {
                 bootstrap.init();
             });
         </script>

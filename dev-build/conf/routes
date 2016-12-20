@@ -5,12 +5,13 @@
 GET            /surveys/*file                                                                                                    dev.DevAssetsController.surveys(file)
 GET            /commercial/test-page                                                                                             commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 
-GET            /signup/weekendreading                                                                                            controllers.SignupPageController.renderWeekendReadingPage()
+GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewslettersPage()
 
 GET            /survey/:formName/show                                                                                            controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET            /survey/thankyou                                                                                                  controllers.SurveyPageController.thankYou()
 
 # For dev machines
+GET            /geolocation                                                                                                      controllers.FakeGeolocationController.geolocation
 GET            /assets/admin/lib/*file                                                                                           controllers.admin.UncachedWebAssets.at(file)
 GET            /assets/admin/*file                                                                                               controllers.admin.UncachedAssets.at(file, relativePath="lib/admin/")
 GET            /assets/internal/*file                                                                                            controllers.Assets.at(path="/public", file)
@@ -18,7 +19,6 @@ GET            /assets/*path                                                    
 
 # Diagnostics
 GET            /count/$prefix<.+>.gif                                                                                            controllers.DiagnosticsController.analytics(prefix)
-GET            /counts.gif                                                                                                       controllers.DiagnosticsController.analyticsCounts()
 POST           /css                                                                                                              controllers.DiagnosticsController.css
 OPTIONS        /css                                                                                                              controllers.DiagnosticsController.cssOptions
 POST           /csp-report                                                                                                       controllers.DiagnosticsController.csp
@@ -26,8 +26,6 @@ OPTIONS        /csp-report                                                      
 POST           /commercial-report                                                                                                controllers.DiagnosticsController.commercialReport
 OPTIONS        /commercial-report                                                                                                controllers.DiagnosticsController.commercialOptions
 GET            /commercial-reports/:dateTime                                                                                     controllers.DiagnosticsController.commercialReports(dateTime)
-POST           /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeacon
-OPTIONS        /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeaconOptions
 
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
@@ -66,8 +64,6 @@ GET            /weatherapi/forecast/:id.json                                    
 GET            /analytics/abtests                                                                                                controllers.admin.AnalyticsController.abtests()
 GET            /analytics/confidence                                                                                             controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET            /analytics/content/video                                                                                          controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
-GET            /analytics/quality                                                                                                controllers.admin.AnalyticsController.renderQuality()
-GET            /analytics/quality                                                                                                controllers.admin.AnalyticsController.renderQuality()
 
 # Commercial admin
 
@@ -311,6 +307,7 @@ GET            /$path<commercial-containers>                                    
 GET            /commercial/advertiser-content/:campaignName/:pageName                                                            commercial.controllers.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName/:cType/onward.json                                                    commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
+GET            /advertiser-content/:campaignName/:pageName/autoplay.json                                                         commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize
 
 # Commercial Admin

@@ -1,7 +1,6 @@
 package controllers
 
 import java.net.URI
-
 import actions.AuthenticatedActions
 import com.gu.identity.model.SavedArticles
 import model._
@@ -11,13 +10,11 @@ import common.ExecutionContexts
 import idapiclient.IdApiClient
 import implicits.Articles._
 import org.jsoup.nodes.Document
-import play.api.Environment
 import play.api.data.{Form, Forms}
 import play.api.mvc._
 import services._
 import utils.SafeLogging
 import views.support.{HtmlCleaner, withJsoup}
-
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
@@ -29,7 +26,7 @@ class SaveContentController(api: IdApiClient,
                             savedArticleService: PlaySavedArticlesService,
                             idUrlBuilder: IdentityUrlBuilder,
                             pageDataBuilder: SaveForLaterDataBuilder)
-                           (implicit env: Environment)
+                           (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging {
 
   import SavedArticleData._

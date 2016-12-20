@@ -18,16 +18,6 @@
 .ad-slot--dark {
     background-color: lighten($media-background, 2.5%);
 }
-.ad-slot--mobile {
-    @include mq(tablet) {
-        display: none;
-    }
-}
-.ad-slot--not-mobile {
-    @include mq($until: tablet) {
-        display: none;
-    }
- }
 
 .ad-slot--right {
     &.is-sticky {
@@ -124,13 +114,6 @@
 
     @include mq($until: tablet) {
         display: none;
-    }
-
-    /* Oh horrible code, I'm looking at you. One day, you'll disappear.
-       One day, I'll [redacted].
-     */
-    &.ad-slot--h250 {
-        height: 250px;
     }
 
     &.ad-slot--fabric {
@@ -240,11 +223,6 @@
     }
 }
 .ad-slot--container-inline:not(.ad-slot--fluid) {
-    /* I don't know wtf that is but it has no place in JS, so I moved it here */
-    &.ad-slot--not-mobile {
-        display: flex;
-    }
-
     .ad-slot__content {
         margin: 0 auto;
     }
@@ -354,17 +332,12 @@
 }
 
 .fc-container--sponsored .fc-container:first-child,
-.fc-container--advertisement-feature .fc-container:first-child,
-.fc-container--foundation-supported .fc-container:first-child,
+.fc-container--paid-content .fc-container:first-child,
 .fc-container--sponsored,
-.fc-container--advertisement-feature,
-.fc-container--foundation-supported {
+.fc-container--paid-content {
     .fc-container__header + .fc-container__body {
-        @include mq(tablet) {
+        @include mq(tablet, leftCol) {
             margin-top: 78px;
-        }
-        @include mq(leftCol) {
-            margin-top: 0;
         }
     }
 }
@@ -379,21 +352,6 @@
 @include mq(mobile, $until: wide) {
     .has-page-skin {
         background-image: none !important;
-    }
-}
-
-// Allow responsive ads to 'slide'
-@if ($old-ie == false) {
-    .ad--responsive {
-        @include mq(tablet) {
-            height: 108px;
-            transform: translateZ(0);
-            transition: height 1s cubic-bezier(0, 0, 0, .985);
-
-            &.ad--responsive--open {
-                height: 250px;
-            }
-        }
     }
 }
 
@@ -464,6 +422,10 @@
 }
 
 .ad-slot--offset-right {
+    @include mq(desktop) {
+        margin-right: -20em;
+    }
+
     @include mq(wide) {
         margin-right: -25em;
     }

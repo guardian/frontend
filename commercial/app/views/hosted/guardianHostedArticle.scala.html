@@ -1,5 +1,5 @@
 @import common.commercial.hosted.HostedArticlePage
-@(page: HostedArticlePage)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: HostedArticlePage)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import views.html.hosted._
 @import model.hosted.HostedArticleQuotes.prepareQuotes
@@ -59,19 +59,24 @@
     }
 
     blockquote {
-        background-color: @{page.campaign.fontColour.hexCode};
+        border-left: 20px solid @{page.campaign.fontColour.hexCode}
     }
 
-    blockquote .inline-hosted-quote svg {
+    blockquote .inline-hosted-quote__svg {
         fill: @{page.campaign.fontColour.hexCode};
     }
 
     </style>
     <!--<![endif]-->
-    @guardianHostedHeader(if(page.campaign.fontColour.isDark) "hosted-article-page hosted-page--bright" else "hosted-article-page", page)
+    <div class="hosted__header"><div class="hosted__headerwrap"><div class="hostedbadge">
+        <a href="@page.cta.url" data-link-name="hosted-logo-top-left" target="_blank">
+            <img class="hostedbadge__logo" src="@page.campaign.logo.url" alt="logo @page.campaign.owner"/>
+        </a>
+    </div></div></div>
+    @guardianHostedHeader("hosted-article-page hosted__header--sticky" + (if(page.campaign.fontColour.isDark) " hosted-page--bright" else ""), page)
     <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.isDark) {hosted-page--bright}">
 
-        <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--advertisement-feature" role="main">
+        <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--paid-content" role="main">
             <div class="media-primary media-content media-primary--showcase" style="background-image: url(@{page.mainPicture});">
                 <div class="gs-container">
                     <h2 class="title content__main-column">@{page.title}</h2>

@@ -10,7 +10,6 @@ define([
     'common/utils/defer-to-analytics',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/analytics/beacon',
     'common/modules/commercial/video-ad-url',
     'common/modules/commercial/commercial-features',
     'common/modules/component',
@@ -26,7 +25,8 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html'
+    'text!common/views/ui/loading.html',
+    'common/modules/commercial/user-features'
 ], function (
     bean,
     bonzo,
@@ -39,7 +39,6 @@ define([
     deferToAnalytics,
     detect,
     mediator,
-    beacon,
     videoAdUrl,
     commercialFeatures,
     Component,
@@ -53,7 +52,8 @@ define([
     moreInSeriesContainer,
     videojsOptions,
     videojs,
-    loadingTmpl
+    loadingTmpl,
+    userFeatures
 ) {
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -175,6 +175,7 @@ define([
                 }
             }
         }));
+
         events.addContentEvents(player, mediaId, mediaType);
         events.addPrerollEvents(player, mediaId, mediaType);
         events.bindGoogleAnalyticsEvents(player, gaEventLabel);
@@ -206,7 +207,8 @@ define([
                             player.controlBar.dispose();
                         });
                     } else {
-                        blockVideoAds = videoInfo.shouldHideAdverts;
+                        blockVideoAds = videoInfo.shouldHideAdverts || (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser());
+
                         withPreroll = shouldPreroll && !blockVideoAds;
 
                         // Location of this is important.
@@ -228,10 +230,6 @@ define([
 
                                 initLoadingSpinner(player);
                                 upgradeVideoPlayerAccessibility(player);
-
-                                player.one('playing', function() {
-                                    beacon.counts('video-tech-html5');
-                                });
 
                                 // unglitching the volume on first load
                                 vol = player.volume();
@@ -299,7 +297,6 @@ define([
                         });
 
                         playerSetupComplete.then(function () {
-
                             if (autoplay) {
                                 player.play();
                             }

@@ -1,4 +1,4 @@
-@(page: model.Page, related: model.RelatedContent, content: model.Content)(body: Html)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: model.Page, related: model.RelatedContent, content: model.Content)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.{CanonicalLink, LinkTo}
 @import conf.Configuration
@@ -116,6 +116,16 @@
                 on-error-add-class="guardian-egyptian-missing"
                 on-load-remove-class="guardian-egyptian-loading"
                 on-load-add-class="guardian-egyptian-loaded">
+            </amp-font>
+
+            <amp-font
+                layout="nodisplay"
+                font-family="Guardian Text Sans Web"
+                timeout="3000"
+                on-error-remove-class="guardian-text-sans-loading"
+                on-error-add-class="guardian-text-sans-missing"
+                on-load-remove-class="guardian-text-sans-loading"
+                on-load-add-class="guardian-text-sans-loaded">
             </amp-font>
 
             @fragments.amp.footerAMP(page)

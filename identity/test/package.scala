@@ -2,6 +2,9 @@ package test
 
 import java.io.File
 
+import controllers.{EditProfileControllerTest, EmailControllerTest, SignoutControllerTest}
+import filters.StrictTransportSecurityHeaderFilterTest
+import org.scalatest.Suites
 import play.api.i18n.I18nComponents
 import play.api._
 import play.api.test.Helpers._
@@ -10,7 +13,7 @@ import play.api.test.Helpers._
 /**
  * Executes a block of code in a FakeApplication.
  */
-trait FakeApp extends TestSettings {
+trait FakeApp {
   def app: Application = {
     val environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
     val context = ApplicationLoader.createContext(
@@ -30,4 +33,13 @@ object Fake extends FakeApp
 object I18NTestComponents extends I18nComponents {
   override val environment: Environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
   override val configuration: Configuration = Configuration.load(environment)
+}
+
+class IdentityTestSuite extends Suites(
+  new EditProfileControllerTest,
+  new EmailControllerTest,
+  new SignoutControllerTest,
+  new StrictTransportSecurityHeaderFilterTest
+) with SingleServerSuite {
+  override lazy val port: Int = 19010
 }

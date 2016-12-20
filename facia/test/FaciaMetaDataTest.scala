@@ -7,13 +7,14 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json._
 import play.api.test.Helpers._
 import services.ConfigAgent
-import test.{ConfiguredTestSuite, TestFrontJsonFapi, TestRequest, WithTestEnvironment, WithTestWsClient}
+import test._
 
 @DoNotDiscover class FaciaMetaDataTest extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
-  with WithTestEnvironment
+  with WithTestContext
+  with WithMaterializer
   with WithTestWsClient {
 
   override def beforeAll() {
@@ -24,7 +25,7 @@ import test.{ConfiguredTestSuite, TestFrontJsonFapi, TestRequest, WithTestEnviro
     )
   }
 
-  val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient))
+  lazy val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient))
   val articleUrl = "music"
 
   it should "Include organisation metadata" in {

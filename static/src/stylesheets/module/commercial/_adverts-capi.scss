@@ -236,7 +236,7 @@
 
 .advert--paidfor {
     @include f-textSans;
-    background: $paid-article-subheader;
+    background: $paid-article-card-bg;
     border-top-color: $paid-article-brand;
 
     &:hover,

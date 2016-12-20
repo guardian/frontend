@@ -10,12 +10,13 @@ define([
     'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
-    'common/modules/experiments/tests/contributions-epic-brexit-supreme',
-    'common/modules/experiments/tests/contributions-epic-us-pre-end-of-year',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
+    'common/modules/experiments/tests/contributions-epic-on-the-moon',
     'common/modules/experiments/tests/uk-membership-engagement-message-test-10',
     'common/modules/experiments/tests/au-membership-engagement-message-test-8',
-    'common/modules/experiments/tests/its-raining-inline-ads'
+    'common/modules/experiments/tests/its-raining-inline-ads',
+    'common/modules/experiments/tests/contributions-epic-us-eoy-control',
+    'common/modules/experiments/tests/contributions-epic-us-eoy-end-of-year'
 ], function (reportError,
              config,
              cookies,
@@ -26,24 +27,26 @@ define([
              noop,
              EditorialEmailVariants,
              RecommendedForYou,
-             MembershipEngagementInternationalExperiment,
-             ContributionsEpicBrexitSupreme,
-             ContributionsEpicUsPreEndOfYear,
+             MembershipEngagementInternationalExperimentTest12,
              ContributionsEpicAlwaysAskStrategy,
+             ContributionsEpicOnTheMoon,
              UkMembershipEngagementMessageTest10,
              AuMembershipEngagementMessageTest8,
-             ItsRainingInlineAds
+             ItsRainingInlineAds,
+             ContributionsEpicUsEoyControl,
+             ContributionsEpicUsEoyEndOfYear
     ) {
     var TESTS = [
         new EditorialEmailVariants(),
         new RecommendedForYou(),
-        new MembershipEngagementInternationalExperiment(),
-        new ContributionsEpicBrexitSupreme(),
-        new ContributionsEpicUsPreEndOfYear(),
+        new MembershipEngagementInternationalExperimentTest12(),
         new ContributionsEpicAlwaysAskStrategy(),
+        new ContributionsEpicOnTheMoon(),
         new UkMembershipEngagementMessageTest10(),
         new AuMembershipEngagementMessageTest8(),
-        new ItsRainingInlineAds()
+        new ItsRainingInlineAds(),
+        new ContributionsEpicUsEoyControl(),
+        new ContributionsEpicUsEoyEndOfYear()
     ];
 
     var participationsKey = 'gu.ab.participations';
@@ -54,7 +57,7 @@ define([
 
     function isParticipating(test) {
         var participations = getParticipations();
-        return participations[test.id];
+        return test.id in participations;
     }
 
     function addParticipation(test, variantId) {

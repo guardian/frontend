@@ -3,12 +3,12 @@ package controllers.admin
 import contentapi.{CapiHttpClient, PreviewContentApi}
 import play.api.mvc.{Action, Controller}
 import common.{ExecutionContexts, Logging}
-import model.NoCache
-import play.api.Environment
+import model.{ApplicationContext, NoCache}
 import play.api.libs.ws.WSClient
 import tools.LoadBalancer
 
 import scala.concurrent.Future
+import scala.concurrent.duration._
 
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)
 
@@ -19,7 +19,7 @@ object TestFailed{
   def apply(name: String, messages: String*) = EndpointStatus(name, false, messages:_*)
 }
 
-class TroubleshooterController(wsClient: WSClient)(implicit env: Environment) extends Controller with Logging with ExecutionContexts {
+class TroubleshooterController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
   val previewContentApi = new PreviewContentApi(new CapiHttpClient(wsClient))
 
@@ -123,7 +123,7 @@ class TroubleshooterController(wsClient: WSClient)(implicit env: Environment) ex
   }
 
   private def httpGet(testName: String, url: String) =  {
-    wsClient.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(5000).get().map {
+    wsClient.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(5.seconds).get().map {
       response =>
         if (response.status == 200) {
           TestPassed(testName)

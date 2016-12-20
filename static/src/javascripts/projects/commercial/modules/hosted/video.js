@@ -6,6 +6,7 @@ define([
     'Promise',
     'commercial/modules/hosted/youtube',
     'commercial/modules/hosted/next-video-autoplay',
+    'commercial/modules/dfp/performance-logging',
     'common/utils/$',
     'common/utils/defer-to-analytics',
     'common/utils/detect',
@@ -19,6 +20,7 @@ define([
     Promise,
     hostedYoutube,
     nextVideoAutoplay,
+    performanceLogging,
     $,
     deferToAnalytics,
     detect,
@@ -55,64 +57,66 @@ define([
         $('.vjs-fullscreen-control', player.el()).attr('aria-label', 'video fullscreen');
     }
 
-    function init() {
-        return new Promise(function (resolve) {
-            require(['bootstraps/enhanced/media/main'], function () {
-                require(['bootstraps/enhanced/media/video-player'], function (videojs) {
-                    var $videoEl = $('.vjs-hosted__video');
-                    var $inlineVideoEl = $('video');
-                    var $youtubeIframe = $('.js-hosted-youtube-video');
+    function init(moduleName) {
+        performanceLogging.moduleStart(moduleName);
 
-                    if ($youtubeIframe.length === 0 && $videoEl.length === 0) {
-                        if ($inlineVideoEl.length === 0) {
-                            // halt execution
-                            return resolve();
-                        } else {
-                            $videoEl = $inlineVideoEl;
-                        }
+        require(['bootstraps/enhanced/media/main'], function() {
+            require(['bootstraps/enhanced/media/video-player'], function (videojs) {
+                var $videoEl = $('.vjs-hosted__video');
+                var $inlineVideoEl = $('video');
+                var $youtubeIframe = $('.js-hosted-youtube-video');
+
+                if ($youtubeIframe.length === 0 && $videoEl.length === 0) {
+                    if ($inlineVideoEl.length === 0) {
+                        // halt execution
+                        return;
+                    } else {
+                        $videoEl = $inlineVideoEl;
                     }
+                }
 
-                    $videoEl.each(function(el){
-                        var mediaId = $videoEl.attr('data-media-id');
-                        player = videojs(el, videojsOptions());
-                        player.guMediaType = 'video';
-                        videojs.plugin('fullscreener', fullscreener);
+                $videoEl.each(function(el){
+                    var mediaId = $videoEl.attr('data-media-id');
+                    player = videojs(el, videojsOptions());
+                    player.guMediaType = 'video';
+                    videojs.plugin('fullscreener', fullscreener);
 
-                        events.addContentEvents(player, mediaId, player.guMediaType);
-                        events.bindGoogleAnalyticsEvents(player, window.location.pathname);
+                    events.addContentEvents(player, mediaId, player.guMediaType);
+                    events.bindGoogleAnalyticsEvents(player, window.location.pathname);
 
-                        player.ready(function () {
-                            var vol;
-                            var player = this;
-                            initLoadingSpinner(player);
-                            upgradeVideoPlayerAccessibility(player);
+                    player.ready(function () {
+                        var vol;
+                        var player = this;
+                        initLoadingSpinner(player);
+                        upgradeVideoPlayerAccessibility(player);
 
-                            // unglitching the volume on first load
-                            vol = player.volume();
-                            if (vol) {
-                                player.volume(0);
-                                player.volume(vol);
-                            }
+                        // unglitching the volume on first load
+                        vol = player.volume();
+                        if (vol) {
+                            player.volume(0);
+                            player.volume(vol);
+                        }
 
-                            player.fullscreener();
+                        player.fullscreener();
 
-                            deferToAnalytics(function () {
-                                events.initOphanTracking(player, mediaId);
-                                events.bindGlobalEvents(player);
-                                events.bindContentEvents(player);
-                            });
-
-                            player.on('error', function () {
-                                var err = player.error();
-                                if (err && 'message' in err && 'code' in err) {
-                                    reportError(new Error(err.message), {
-                                        feature: 'hosted-player',
-                                        vjsCode: err.code
-                                    }, false);
-                                }
-                            });
+                        deferToAnalytics(function () {
+                            events.initOphanTracking(player, mediaId);
+                            events.bindGlobalEvents(player);
+                            events.bindContentEvents(player);
                         });
 
+                        player.on('error', function () {
+                            var err = player.error();
+                            if (err && 'message' in err && 'code' in err) {
+                                reportError(new Error(err.message), {
+                                    feature: 'hosted-player',
+                                    vjsCode: err.code
+                                }, false);
+                            }
+                        });
+                    });
+
+                    nextVideoAutoplay.init().then(function(){
                         if (nextVideoAutoplay.canAutoplay()) {
                             //on desktop show the next video link 10 second before the end of the currently watching video
                             if (isDesktop()) {
@@ -123,18 +127,21 @@ define([
                             }
                         }
                     });
-
-                    $youtubeIframe.each(function(el){
-                        hostedYoutube.init(el);
-                    });
-
-                    resolve();
                 });
+
+                $youtubeIframe.each(function(el){
+                    hostedYoutube.init(el);
+                });
+
+                performanceLogging.moduleEnd(moduleName);
             });
         });
+
+        return Promise.resolve();
     }
 
     return {
-        init: init
+        init: init,
+        customTiming: true
     };
 });

@@ -6,11 +6,10 @@ import football.model._
 import model._
 import org.joda.time.LocalDate
 import pa.FootballTeam
-import play.api.Environment
 import play.api.mvc.{Action, AnyContent}
 
 
-class FixturesController(val competitionsService: CompetitionsService)(implicit env: Environment) extends MatchListController with CompetitionFixtureFilters {
+class FixturesController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends MatchListController with CompetitionFixtureFilters {
 
   private def fixtures(date: LocalDate) = FixturesList(date, competitionsService.competitions)
   private val page = new FootballPage("football/fixtures", "football", "All fixtures")

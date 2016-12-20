@@ -21,7 +21,7 @@ object ABNewNavVariantFour extends TestDefinition(
   name = "ab-new-nav-variant-four",
   description = "users in this test will see the new header fourth variant",
   owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2016, 12, 21) // Wednesday
+  sellByDate = new LocalDate(2017, 1, 5)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header").contains("variantfour")
@@ -32,7 +32,7 @@ object ABNewNavControl extends TestDefinition(
   name = "ab-new-nav-control",
   description = "control for the new header test",
   owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2016, 12, 21) // Wednesday
+  sellByDate = new LocalDate(2017, 1, 5)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header").contains("control")
@@ -51,24 +51,24 @@ object CommercialClientLoggingVariant extends TestDefinition(
 }
 
 object WebpackTest extends TestDefinition(
-  name = "ab-webpack",
+  name = "ab-webpack-bundle",
   description = "for users in this test, website will serve standard JavaScript that has been bundled by Webpack",
   owners = Seq(Owner.withGithub("siadcock")),
   sellByDate = new LocalDate(2017, 1, 9)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-webpack").contains("webpack")
+    request.headers.get("X-GU-ab-webpack-bundle").contains("webpack")
   }
 }
 
 object WebpackControl extends TestDefinition(
-  name = "ab-webpack-control",
+  name = "ab-webpack-bundle-control",
   description = "control for Webpack test",
   owners = Seq(Owner.withGithub("siadcock")),
   sellByDate = new LocalDate(2017, 1, 9)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-webpack").contains("control")
+    request.headers.get("X-GU-ab-webpack-bundle").contains("control")
   }
 }
 

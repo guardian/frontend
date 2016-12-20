@@ -1,7 +1,7 @@
 @import common.Edition
 @import common.commercial.{ContainerModel, PaidContent, Sponsored}
 @import views.support.RenderClasses
-@(faciaPage: model.PressedPage)(implicit request: RequestHeader)
+@(faciaPage: model.PressedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @defining((faciaPage.branding(Edition(request)).exists(_.sponsorshipType == Sponsored),
            faciaPage.branding(Edition(request)).exists(_.sponsorshipType == PaidContent))) { case (isSponsored, isAdFeature) =>
@@ -9,7 +9,7 @@
         <div class="l-side-margins">
             <div class="@RenderClasses(Map(
                 "fc-container--sponsored" -> isSponsored,
-                "fc-container--advertisement-feature paid-content--advertisement-feature" -> isAdFeature
+                "fc-container--paid-content paid-content" -> isAdFeature
             ), "facia-page")"
             data-link-name="Front | @request.path"
             role="main">

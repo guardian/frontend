@@ -37,142 +37,6 @@ define([
             };
         },
 
-        focusCell: function (x, y) {
-            this.state.focus = {
-                x: x,
-                y: y
-            };
-
-            this.updateCellStatesAndRender();
-        },
-
-        highlightDuplicatesInRange: function (cells) {
-            var cellsByValue = map(range(9), function () {
-                return [];
-            });
-
-            forEach(cells, function (cell) {
-                if (cell.value) {
-                    cellsByValue[cell.value - 1].push(cell);
-                }
-            });
-
-            forEach(cellsByValue, function (cells) {
-                if (cells.length > 1) {
-                    forEach(cells, function (cell) {
-                        cell.isError = true;
-                    });
-                }
-            });
-        },
-
-        highlightErrors: function () {
-            var self = this, rows, columns, squares;
-
-            this.mapCells(function (cell) {
-                return assign({}, cell, {
-                    isError: false
-                });
-            });
-
-            rows = map(range(9), function (y) {
-                return map(range(9), function (x) {
-                    return self.getCell(x, y);
-                });
-            });
-
-            columns = map(range(9), function (x) {
-                return map(range(9), function (y) {
-                    return self.getCell(x, y);
-                });
-            });
-
-            squares = flatMap(range(3), function (x) {
-                return map(range(3), function (y) {
-                    return flatMap(range(3), function (dx) {
-                        return map(range(3), function (dy) {
-                            return self.getCell(x * 3 + dx, y * 3 + dy);
-                        });
-                    });
-                });
-            });
-
-            forEach(rows.concat(columns, squares), bind(this.highlightDuplicatesInRange, this));
-        },
-
-        updateCellStatesAndRender: function () {
-            var focus = this.state.focus,
-                isHighlighted = focus ? utils.highlights(focus.x, focus.y) : constant(false),
-                focussedCell = this.getFocussedCell(),
-                valueInFocus = focussedCell ? focussedCell.value : null;
-
-            this.mapCells(function (cell) {
-                return assign({}, cell, {
-                    isHighlighted: isHighlighted(cell.x, cell.y),
-                    isSameValue: cell.value && cell.value === valueInFocus,
-                    isFocussed: focus && cell.x === focus.x && cell.y === focus.y
-                });
-            });
-
-            this.highlightErrors();
-            this.forceUpdate();
-        },
-
-        addJotting: function (n) {
-            var focussed = this.getFocussedCell();
-
-            if (focussed.isEditable) {
-                focussed.value = null;
-
-                if (contains(focussed.jottings, n)) {
-                    focussed.jottings = without(focussed.jottings, n);
-                } else {
-                    focussed.jottings.push(n);
-                }
-
-                this.updateCellStatesAndRender();
-            }
-        },
-
-        setFocussedValue: function (n) {
-            var focussed = this.getFocussedCell();
-
-            if (focussed && focussed.isEditable) {
-                focussed.value = n;
-                focussed.jottings = [];
-
-                this.updateCellStatesAndRender();
-            }
-        },
-
-        unsetFocussedValue: function () {
-            var focussed = this.getFocussedCell();
-
-            if (focussed.isEditable && focussed.value !== null) {
-                focussed.value = null;
-                this.updateCellStatesAndRender();
-            }
-        },
-
-        getCell: function (x, y) {
-            return this.state.cells[y * 9 + x];
-        },
-
-        getFocussedCell: function () {
-            var focus = this.state.focus;
-
-            if (focus) {
-                return this.getCell(focus.x, focus.y);
-            } else {
-                return null;
-            }
-        },
-
-        mapCells: function (f) {
-            this.state.cells = map(this.state.cells, f);
-            this.forceUpdate();
-        },
-
         onBlur: function () {
             this.state.focus = null;
             this.updateCellStatesAndRender();
@@ -214,6 +78,142 @@ define([
                     }
                 }
             }
+        },
+
+        getFocussedCell: function () {
+            var focus = this.state.focus;
+
+            if (focus) {
+                return this.getCell(focus.x, focus.y);
+            } else {
+                return null;
+            }
+        },
+
+        getCell: function (x, y) {
+            return this.state.cells[y * 9 + x];
+        },
+
+        setFocussedValue: function (n) {
+            var focussed = this.getFocussedCell();
+
+            if (focussed && focussed.isEditable) {
+                focussed.value = n;
+                focussed.jottings = [];
+
+                this.updateCellStatesAndRender();
+            }
+        },
+
+        unsetFocussedValue: function () {
+            var focussed = this.getFocussedCell();
+
+            if (focussed.isEditable && focussed.value !== null) {
+                focussed.value = null;
+                this.updateCellStatesAndRender();
+            }
+        },
+
+        addJotting: function (n) {
+            var focussed = this.getFocussedCell();
+
+            if (focussed.isEditable) {
+                focussed.value = null;
+
+                if (contains(focussed.jottings, n)) {
+                    focussed.jottings = without(focussed.jottings, n);
+                } else {
+                    focussed.jottings.push(n);
+                }
+
+                this.updateCellStatesAndRender();
+            }
+        },
+
+        updateCellStatesAndRender: function () {
+            var focus = this.state.focus,
+                isHighlighted = focus ? utils.highlights(focus.x, focus.y) : constant(false),
+                focussedCell = this.getFocussedCell(),
+                valueInFocus = focussedCell ? focussedCell.value : null;
+
+            this.mapCells(function (cell) {
+                return assign({}, cell, {
+                    isHighlighted: isHighlighted(cell.x, cell.y),
+                    isSameValue: cell.value && cell.value === valueInFocus,
+                    isFocussed: focus && cell.x === focus.x && cell.y === focus.y
+                });
+            });
+
+            this.highlightErrors();
+            this.forceUpdate();
+        },
+
+        highlightErrors: function () {
+            var self = this, rows, columns, squares;
+
+            this.mapCells(function (cell) {
+                return assign({}, cell, {
+                    isError: false
+                });
+            });
+
+            rows = map(range(9), function (y) {
+                return map(range(9), function (x) {
+                    return self.getCell(x, y);
+                });
+            });
+
+            columns = map(range(9), function (x) {
+                return map(range(9), function (y) {
+                    return self.getCell(x, y);
+                });
+            });
+
+            squares = flatMap(range(3), function (x) {
+                return map(range(3), function (y) {
+                    return flatMap(range(3), function (dx) {
+                        return map(range(3), function (dy) {
+                            return self.getCell(x * 3 + dx, y * 3 + dy);
+                        });
+                    });
+                });
+            });
+
+            forEach(rows.concat(columns, squares), bind(this.highlightDuplicatesInRange, this));
+        },
+
+        highlightDuplicatesInRange: function (cells) {
+            var cellsByValue = map(range(9), function () {
+                return [];
+            });
+
+            forEach(cells, function (cell) {
+                if (cell.value) {
+                    cellsByValue[cell.value - 1].push(cell);
+                }
+            });
+
+            forEach(cellsByValue, function (cells) {
+                if (cells.length > 1) {
+                    forEach(cells, function (cell) {
+                        cell.isError = true;
+                    });
+                }
+            });
+        },
+
+        focusCell: function (x, y) {
+            this.state.focus = {
+                x: x,
+                y: y
+            };
+
+            this.updateCellStatesAndRender();
+        },
+
+        mapCells: function (f) {
+            this.state.cells = map(this.state.cells, f);
+            this.forceUpdate();
         },
 
         render: function () {

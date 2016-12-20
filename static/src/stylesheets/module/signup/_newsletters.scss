@@ -1,0 +1,454 @@
+.newsletters-heading {
+    @include fs-header(5);
+    font-size: 40px;
+    color: $neutral-1;
+    padding-top: $gs-baseline;
+
+    @include mq($from: tablet) {
+        font-size: 60px;
+        padding-top: $gs-baseline * 2;
+  }
+}
+
+.newsletter-card__signup {
+    display: inline;
+}
+
+.newsletter-card__example {
+    display: inline;
+}
+
+.newsletter-card__wrapper {
+    position: relative;
+
+    @include mq(leftCol) {
+        margin-left: gs-span(3) + $gs-gutter;
+    }
+}
+
+.newsletter-card {
+    display: inline-block;
+    float: left;
+    margin-bottom: $gs-baseline;
+    border-top: 2px solid $news-accent;
+    width: 100%;
+
+    @include mq(tablet) {
+        width: gs-span(4);
+        margin-right: $gs-gutter;
+    }
+
+    @include mq(desktop) {
+        width: 30%;
+    }
+
+    @include mq(leftCol) {
+        margin-top: $gs-baseline;
+    }
+
+    @include mq(wide) {
+        width: gs-span(3);
+    }
+}
+
+.newsletter-card__header {
+
+}
+
+.newsletter-card__imagewrapper {
+    background-color: $guardian-brand;
+    height: 0;
+    padding-bottom: 60%;
+
+    svg {
+        display: block;
+        margin: auto;
+        padding-top: 15%;
+        height: 80%;
+        width: 80px;
+
+        @include mq(desktop) {
+            width: 60px;
+        }
+    }
+
+
+}
+
+.newsletter-image {
+    position: relative;
+    width: 100%;
+
+}
+
+.newsletter-card__name {
+    @include fs-header(5);
+    font-weight: 900;
+    line-height: 24px;
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline / 2;
+}
+
+.newsletter-card__content {
+    @include fs-textSans(3);
+    line-height: 18px;
+    background-color: $comment-support-2;
+    height: 9em;
+    padding: 0 $gs-gutter / 2 0 $gs-gutter / 2;
+
+
+    @include mq(tablet) {
+        height: 12em;
+    }
+
+    @include mq(desktop) {
+        height: 12em;
+    }
+}
+
+.newsletter-card__meta {
+    background-color: $comment-support-2;
+    border-bottom: 1px solid $neutral-3;
+    padding: $gs-gutter / 2;
+    padding-bottom: $gs-baseline;
+    height: gs-height(1);
+
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+
+    .newsletter-card__text-input {
+        @include fs-textSans(2);
+        -webkit-border-radius: 1000px 0 0 1000px;
+        border-radius: 1000px 0 0 1000px;
+        border: 1px solid $neutral-3;
+        border-right: 0;
+        float: left;
+        padding-left: $gs-baseline;
+        width: 60%;
+        height: 3em;
+    }
+
+    .newsletter-card__lozenge {
+        @include fs-textSans(2);
+        color: #ffffff;
+        border: 1px solid $news-main-1;
+        background-color: $news-main-1;
+        -webkit-border-radius: 1000px;
+        border-radius: 1000px;
+        border-width: 1px;
+        height: 3em;
+        width: 48%;
+        margin: 0;
+        padding: 0;
+
+        &:hover,
+        &:focus {
+            border-color: darken($news-main-1, 10%);
+            background-color: darken($news-main-1, 10%);
+        }
+    }
+
+    .newsletter-card__lozenge--submit {
+        -webkit-border-radius: 0 1000px 1000px 0;
+        border-radius: 0 1000px 1000px 0;
+        border-left: 0;
+        margin-right: 0;
+        width: 40%;
+    }
+
+    .newsletter-card__lozenge--preview {
+        color: $news-main-1;
+        background-color: transparent;
+        float: right;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: darken($comment-support-2, 10%);
+        }
+    }
+
+    .inline-arrow-right {
+        fill: $news-main-1;
+        position: absolute;
+        height: $gs-baseline;
+        line-height: $gs-baseline;
+    }
+}
+
+.newsletter-card__preview {
+    // when you must align a SVG with the text... magic numbers
+    line-height: 2rem;
+    width: 6rem;
+    height: 2.2rem;
+    margin-left: -1rem;
+}
+
+.newsletter-card__frequency {
+    @include fs-textSans(1);
+    color: $neutral-2;
+    padding: $gs-baseline 0 0;
+
+    .inline-icon {
+        fill: $neutral-3;
+    }
+}
+
+.signup-confirmation {
+    position: relative;
+    padding: 0 $gs-gutter / 4;
+
+    .signup-confirmation__message {
+        position: relative;
+        display: inline-block;
+        vertical-align: text-bottom;
+    }
+
+    .signup-confirmation--success {
+        @include fs-textSans(3);
+        color: $neutral-1;
+        display: inline;
+    }
+
+    .inline-icon {
+        background-color: $neutral-3;
+        -webkit-border-radius: 1000px;
+        border-radius: 1000px;
+        fill: $neutral-1;
+        height: $gs-baseline * 3;
+        left: 0;
+        width: $gs-baseline * 3;
+        display: inline-block;
+
+        svg {
+            height: 50%;
+            width: 50%;
+            margin-left: 25%;
+            margin-top: 25%;
+        }
+    }
+}
+
+
+.newsletter-card__iframe {
+    width: 100%;
+}
+
+.newsletters-category {
+    border-top: 2px solid $news-accent;
+    display: inline-block;
+    clear: both;
+    width: 100%;
+    margin-top: $gs-baseline * 2;
+}
+
+.newsletters-category__heading {
+    @include fs-header(5);
+    color: $neutral-1;
+    position: relative;
+    margin: 0;
+    margin-top: $gs-baseline / 2;
+    margin-bottom: $gs-baseline;
+
+    @include mq(desktop) {
+        width: gs-span(4);
+  }
+
+    @include mq(leftCol) {
+        position: absolute;
+  }
+}
+
+// TONE SPECIFIC MODS - FEATURE
+.newsletter-card--tone-feature {
+    border-top-color: $features-support-3;
+
+    .newsletter-card__imagewrapper {
+        background-color: $features-support-1;
+    }
+
+    .newsletter-image {
+        circle {
+            fill: $features-support-3;
+        }
+        path {
+            fill:  $features-support-1;
+        }
+    }
+
+    .newsletter-card__signup {
+        .newsletter-card__lozenge {
+            border-color: $features-support-1;
+            background-color: $features-support-1;
+
+            &:hover,
+            &:focus {
+                border-color: darken($features-support-1, 10%);
+                background-color: darken($features-support-1, 10%);
+            }
+        }
+    }
+
+    .newsletter-card__lozenge--preview {
+        border-color: $features-support-1;
+        color: $features-support-1;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: $features-support-1;
+        }
+
+        .inline-arrow-right {
+            fill: $features-support-1;
+        }
+    }
+}
+
+// TONE SPECIFIC MODS - COMMENT
+.newsletter-card--tone-comment {
+    border-top-color: $comment-support-4;
+
+    .newsletter-card__imagewrapper {
+        background-color: $comment-support-4;
+    }
+
+    .newsletter-image {
+        circle {
+            fill: $comment-support-2;
+        }
+
+        path {
+            fill: $comment-support-4;
+        }
+    }
+
+    .newsletter-card__signup {
+        .newsletter-card__lozenge {
+            border-color: $comment-support-4;
+            background-color: $comment-support-4;
+
+            &:hover,
+            &:focus {
+                border-color: darken($comment-support-4, 10%);
+                background-color: darken($comment-support-4, 10%);
+            }
+        }
+    }
+
+    .newsletter-card__lozenge--preview {
+        border-color: $comment-support-4;
+        color: $comment-support-4;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: $comment-support-4;
+        }
+
+        .inline-arrow-right {
+            fill: $comment-support-4;
+        }
+    }
+}
+
+// TONE SPECIFIC MODS - MEDIA
+.newsletter-card--tone-media {
+    border-top-color: $multimedia-main-2;
+
+    .newsletter-card__imagewrapper {
+        background-color: $multimedia-main-1;
+    }
+
+    .newsletter-image {
+        circle {
+            fill: $multimedia-main-2;
+        }
+
+        path {
+            fill: $multimedia-main-1;
+        }
+    }
+
+    .newsletter-card__signup {
+        .newsletter-card__lozenge {
+            border-color: $multimedia-main-1;
+            background-color: $multimedia-main-1;
+
+            &:hover,
+            &:focus {
+                border-color: darken($multimedia-main-1, 10%);
+                background-color: darken($multimedia-main-1, 10%);
+            }
+        }
+    }
+
+    .newsletter-card__lozenge--preview {
+        border-color: $multimedia-main-1;
+        color: $multimedia-main-1;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: $multimedia-main-1;
+        }
+
+        .inline-arrow-right {
+            fill: $multimedia-main-1;
+        }
+    }
+}
+
+//  TONE SPECIFIC MODS - BREXIT
+.newsletter-card--tone-brexit {
+    $brexit-main-1: #00c0f2;
+    $brexit-main-2: #ff0ff0;
+
+    border-top-color: $brexit-main-2;
+
+    .newsletter-card__imagewrapper {
+        background-color: $brexit-main-1;
+    }
+
+    .newsletter-image {
+        circle {
+            fill: $brexit-main-2;
+        }
+
+        path {
+            fill: $brexit-main-1;
+        }
+    }
+
+    .newsletter-card__signup {
+        .newsletter-card__lozenge {
+            border-color: $brexit-main-1;
+            background-color: $brexit-main-1;
+
+            &:hover,
+            &:focus {
+                border-color: darken($brexit-main-1, 10%);
+                background-color: darken($brexit-main-1, 10%);
+            }
+        }
+    }
+
+    .newsletter-card__lozenge--preview {
+        border-color: $brexit-main-1;
+        color: $brexit-main-1;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-color: $brexit-main-1;
+        }
+
+        .inline-arrow-right {
+            fill: $brexit-main-1;
+        }
+    }
+}

@@ -13,7 +13,8 @@ import org.scalatest._
   with FootballTestData
   with WithTestFootballClient
   with BeforeAndAfterAll
-  with WithTestEnvironment
+  with WithMaterializer
+  with WithTestContext
   with WithTestWsClient {
 
   feature("League Tables") {

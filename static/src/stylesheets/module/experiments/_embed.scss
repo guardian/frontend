@@ -15,8 +15,8 @@
 
 
 .contributions__title {
-     @include fs-header(2);
-     margin: 0;
+    @include fs-header(2);
+    margin: 0;
  }
 
 .contributions__title--epic {
@@ -213,5 +213,10 @@
 .contributions__story--icon {
     margin-right: $gs-gutter / -4;
     line-height: 0;
+}
+
+.contributions__main_image {
+    width: 100%;
+    vertical-align: middle;
 }
 

@@ -528,11 +528,23 @@ object Audio {
     val javascriptConfig: Map[String, JsValue] = Map(
       "isPodcast" -> JsBoolean(content.tags.isPodcast))
 
+    val opengraphProperties = Map(
+      // Not using the og:video properties here because we want end-users to visit the guardian website
+      // when they click the thumbnail in the FB feed rather than playing the video "in-place"
+      "og:type" -> "article",
+      "article:published_time" -> content.trail.webPublicationDate.toString,
+      "article:modified_time" -> content.fields.lastModified.toString,
+      "article:section" -> content.trail.sectionName,
+      "article:tag" -> content.tags.keywords.map(_.name).mkString(",")
+    )
+
     val metadata = content.metadata.copy(
       contentType = contentType,
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some("https://schema.org/AudioObject"),
-      javascriptConfigOverrides = javascriptConfig
+      javascriptConfigOverrides = javascriptConfig,
+      opengraphPropertiesOverrides = opengraphProperties,
+      twitterPropertiesOverrides = Map("twitter:card" -> "summary_large_image")
     )
 
     val contentOverrides = content.copy(

@@ -10,7 +10,7 @@ import play.api.mvc.{Action, Controller, RequestHeader}
 
 import scala.concurrent.Future
 
-class VideoEndSlateController(contentApiClient: ContentApiClient) extends Controller with Logging with Paging with ExecutionContexts with Requests {
+class VideoEndSlateController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with Paging with ExecutionContexts with Requests {
 
   def renderSection(sectionId: String) = Action.async { implicit request =>
     val response = lookupSection(Edition(request), sectionId) map { seriesItems =>

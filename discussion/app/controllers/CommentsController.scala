@@ -11,14 +11,13 @@ import play.api.data.Forms._
 import play.api.data._
 import play.api.data.validation._
 import play.api.mvc.{Action, RequestHeader, Result}
-import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
+import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import conf.switches.Switches.LongCacheCommentsSwitch
-import play.api.Environment
-
 import scala.concurrent.Future
+import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
-class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionApiLike)(implicit env: Environment) extends DiscussionController with ExecutionContexts {
+class CommentsController(val discussionApi: DiscussionApiLike, csrfCheck: CSRFCheck, csrfAddToken: CSRFAddToken)(implicit context: ApplicationContext) extends DiscussionController with ExecutionContexts {
 
   val userForm = Form(
     Forms.mapping(
@@ -69,7 +68,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
     Some(SectionSummary.fromId("Discussion")),
     "Report Abuse"
   ))
-  def reportAbuseForm(commentId: Int) = CSRFAddToken({
+  def reportAbuseForm(commentId: Int) = csrfAddToken {
     Action {
       implicit request =>
 
@@ -77,7 +76,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
           Ok(views.html.discussionComments.reportComment(commentId, reportAbusePage, userForm))
         }
     }
-  }, csrfConfig)
+  }
 
   val reportAbuseThankYouPage = SimplePage(MetaData.make(
     "/reportAbuseThankYou",
@@ -105,7 +104,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
 
   }
 
-  def reportAbuseSubmission(commentId: Int) = CSRFCheck({
+  def reportAbuseSubmission(commentId: Int) = csrfCheck {
     Action.async { implicit request =>
     val scGuU = request.cookies.get("SC_GU_U")
       userForm.bindFromRequest.fold(
@@ -121,7 +120,7 @@ class CommentsController(csrfConfig: CSRFConfig, val discussionApi: DiscussionAp
         }
       )
     }
-  }, config = csrfConfig)
+  }
 
   private def getComments(key: DiscussionKey, optParams: Option[DiscussionParams] = None)(implicit request: RequestHeader): Future[Result] = {
     val params = optParams.getOrElse(DiscussionParams(request))

@@ -20,6 +20,9 @@ define([
         /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
         lazyLoadEnabled: false,
 
+        /* lazyLoadObserve: boolean. Use IntersectionObserver in supporting browsers */
+        lazyLoadObserve: 'IntersectionObserver' in window,
+
         /* creativeIDs: array<string>. List of loaded creative IDs */
         creativeIDs: [],
 

@@ -151,6 +151,12 @@ define([
             });
         }
 
+        if (config.page.section === 'newsletter-signup-page') {
+            require(['bootstraps/enhanced/newsletters'], function (newsletters) {
+                bootstrapContext('newsletters', newsletters);
+            });
+        }
+
         // use a #force-sw hash fragment to force service worker registration for local dev
         if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash === '#force-sw') {
             var navigator = window.navigator;

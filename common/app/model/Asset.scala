@@ -42,7 +42,7 @@ object ImageAsset {
 }
 
 case class ImageAsset(
-  index: Int,
+  index: Int = 0,
   fields: Map[String, String],
   mediaType: String,
   mimeType: Option[String],

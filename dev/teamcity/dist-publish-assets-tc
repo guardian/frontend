@@ -17,7 +17,6 @@ mkdir -p "$static_folder/packages/frontend-static"
 
 cp "static/deploy.json"      "$static_folder"
 cp -r static/hash/*          "$static_folder/packages/frontend-static"
-cp static/abtests.json       "$static_folder/packages/frontend-abtests"
 
 echo "Uploading artifact and build manifest to S3"
 

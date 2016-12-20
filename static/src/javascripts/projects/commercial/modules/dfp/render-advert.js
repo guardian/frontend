@@ -66,7 +66,7 @@ define([
         if ($node.hasClass('ad-slot--right')) {
             stickyMpu($node);
         } else {
-            return addFluid(['ad-slot--facebook', 'ad-slot--revealer'])(_, advert);
+            return addFluid(['ad-slot--revealer'])(_, advert);
         }
     };
 
@@ -75,6 +75,12 @@ define([
      */
     sizeCallbacks[adSizes.halfPage] = function () {
         mediator.emit('page:commercial:sticky-mpu');
+    };
+
+    sizeCallbacks[adSizes.video] = function (_, advert) {
+        fastdom.write(function () {
+            advert.node.classList.add('u-h');
+        });
     };
 
     /**

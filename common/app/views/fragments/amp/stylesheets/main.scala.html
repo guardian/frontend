@@ -1,7 +1,8 @@
-@(page: model.Page, mainPicture: String, ctaImage: Option[String], brandColour: String)(implicit request: RequestHeader)
+@(page: model.Page, mainPicture: String, ctaImage: Option[String], brandColour: String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.Edition
 @import common.commercial.PaidContent
+@import play.api.Mode.Dev
 
 <style amp-custom>
     body {
@@ -115,7 +116,6 @@
         display: inline-block;
         vertical-align: top;
         font-size: 0.75rem;
-        font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
     }
 
     .meta__twitter, .meta__email {
@@ -172,7 +172,6 @@
     .caption, .content__dateline, .ad-slot--paid-for-badge__header {
         font-size: 0.75rem;
         line-height: 1rem;
-        font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
     }
 
     .content__meta-container {
@@ -265,7 +264,6 @@
         @fragments.amp.stylesheets.richLinks()
         @fragments.amp.stylesheets.ads()
         @fragments.amp.stylesheets.tables()
-        @fragments.amp.stylesheets.footer()
         @fragments.amp.stylesheets.onward()
         @fragments.amp.stylesheets.buttons()
         @if(page.metadata.contentType == "LiveBlog") {
@@ -283,3 +281,12 @@
         @Html(common.Assets.css.hostedAmp)
     }
 </style>
+
+
+@*
+ * Please note that the tests will NOT pass validation with this line.
+ * It won't affect prod but please comment out this line when running tests in DEV
+ *@
+@if(context.environment.mode == Dev) {
+    <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp.css")" />
+}

@@ -4,7 +4,7 @@ import common.ExecutionContexts
 import org.joda.time.DateTime
 import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.{JsValue, Json}
-import test.{ConfiguredTestSuite, WithTestEnvironment}
+import test.{ConfiguredTestSuite, WithTestContext}
 
 import scala.io.Codec
 
@@ -13,9 +13,9 @@ import scala.io.Codec
     with Matchers
     with ExecutionContexts
     with ConfiguredTestSuite
-    with WithTestEnvironment {
+    with WithTestContext {
 
-  class MockS3DoNothing extends S3BreakingNews(testEnvironment) {
+  class MockS3DoNothing extends S3BreakingNews(testContext.environment) {
     override def get(key: String)(implicit codec: Codec): Option[String] = None
     override def getWithLastModified(key: String): Option[(String, DateTime)] = None
     override def getLastModified(key: String): Option[DateTime] = None

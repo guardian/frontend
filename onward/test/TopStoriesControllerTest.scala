@@ -1,17 +1,19 @@
 package test
 
 import controllers.TopStoriesController
+import model.ApplicationContext
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
-import play.api.Environment
 
-@DoNotDiscover class TopStoriesControllerTest (implicit env: Environment)
+@DoNotDiscover class TopStoriesControllerTest (implicit context: ApplicationContext)
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
+  with WithMaterializer
   with WithTestWsClient
+  with WithTestContext
   with WithTestContentApiClient {
 
   lazy val topStoriesController = new TopStoriesController(testContentApiClient)

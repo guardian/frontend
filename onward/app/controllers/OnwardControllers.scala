@@ -5,13 +5,13 @@ import weather.controllers.{LocationsController, WeatherController}
 import business.StocksData
 import contentapi.ContentApiClient
 import feed._
-import play.api.Environment
+import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import weather.WeatherApi
 
 trait OnwardControllers {
 
-  implicit def environment: Environment
+  implicit def appContext: ApplicationContext
   def wsClient: WSClient
   def contentApiClient: ContentApiClient
   def stocksData: StocksData

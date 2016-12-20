@@ -10,7 +10,7 @@ import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{HealthCheck, OnwardControllers}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed._
-import model.ApplicationIdentity
+import model.{ApplicationContext, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
@@ -28,6 +28,7 @@ class AppLoader extends FrontendApplicationLoader {
 trait OnwardServices {
   def wsClient: WSClient
   def environment: Environment
+  implicit def appContext: ApplicationContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]
@@ -62,7 +63,7 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("frontend-onward")
+  lazy val appIdentity = ApplicationIdentity("onward")
 
   val applicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,

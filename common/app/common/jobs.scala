@@ -1,14 +1,11 @@
 package common
 
 import java.util.TimeZone
-
+import model.ApplicationContext
 import org.quartz.impl.StdSchedulerFactory
 import org.quartz._
 import play.api.Mode.Test
-
 import scala.collection.mutable
-import play.api.Environment
-
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
@@ -41,10 +38,10 @@ class FunctionJob extends Job with Logging {
   }
 }
 
-class JobScheduler(env: Environment) extends Logging {
+class JobScheduler(context: ApplicationContext) extends Logging {
   import JobsState._
 
-  val scheduler = StdSchedulerFactory.getDefaultScheduler()
+  val scheduler = StdSchedulerFactory.getDefaultScheduler
 
   scheduler.start()
 
@@ -62,7 +59,7 @@ class JobScheduler(env: Environment) extends Logging {
     // running cron scheduled jobs in tests is useless
     // it just results in unexpected data files when you
     // want to check in
-    if (env.mode != Test) {
+    if (context.environment.mode != Test) {
       log.info(s"Scheduling $name")
       jobs.put(name, () => block)
 
@@ -74,7 +71,7 @@ class JobScheduler(env: Environment) extends Logging {
   }
 
   def scheduleEveryNMinutes(name: String, intervalInMinutes: Int)(block: => Future[Unit]): Unit = {
-    if (env.mode != Test) {
+    if (context.environment.mode != Test) {
       val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInMinutes(intervalInMinutes)
       log.info(s"Scheduling $name to run every $intervalInMinutes minutes")
       jobs.put(name, () => block)
@@ -87,7 +84,7 @@ class JobScheduler(env: Environment) extends Logging {
   }
 
   def scheduleEvery(name: String, interval: Duration)(block: => Future[Unit]): Unit = {
-    if (env.mode != Test) {
+    if (context.environment.mode != Test) {
       val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInSeconds(interval.toSeconds.toInt)
       log.info(s"Scheduling $name to run every ${interval.toSeconds} seconds")
       jobs.put(name, () => block)

@@ -2,19 +2,23 @@ define([
     'common/utils/config',
     'common/utils/fetch-json',
     'common/utils/fastdom-promise',
-    'commercial/modules/hosted/onward-journey-carousel'
-], function (config, fetchJson, fastdom, HostedCarousel) {
+    'commercial/modules/hosted/onward-journey-carousel',
+    'commercial/modules/dfp/performance-logging',
+    'Promise'
+], function (config, fetchJson, fastdom, HostedCarousel, performanceLogging, Promise) {
 
     return {
-        init: loadOnwardComponent
+        init: loadOnwardComponent,
+        customTiming: true
     };
 
-    function loadOnwardComponent() {
+    function loadOnwardComponent(moduleName) {
+        performanceLogging.moduleStart(moduleName);
 
-        var placeholders = document.querySelectorAll('.js-onward-placeholder');
+        var placeholders = document.getElementsByClassName('js-onward-placeholder');
 
         if (placeholders.length) {
-            return fetchJson(config.page.ajaxUrl + '/'
+            fetchJson(config.page.ajaxUrl + '/'
                 + config.page.pageId + '/'
                 + config.page.contentType.toLowerCase() + '/'
                 + 'onward.json', {mode: 'cors'})
@@ -26,6 +30,9 @@ define([
                         }
                         new HostedCarousel.init();
                     });
+                })
+                .then(function () {
+                    performanceLogging.moduleEnd(moduleName);
                 });
         }
         return Promise.resolve();

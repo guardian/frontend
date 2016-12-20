@@ -5,7 +5,7 @@
 @(invalidPageskins: Seq[PageSkinSponsorship],
   invalidTopAbove: Seq[GuLineItem],
   invalidHighMerchandising: Seq[HighMerchandisingLineItem],
-  unknownInvalidLineItems: Seq[GuLineItem])(implicit request: RequestHeader, env: play.api.Environment)
+  unknownInvalidLineItems: Seq[GuLineItem])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Line Item Problems", isAuthed = true, hasCharts = false) {
 

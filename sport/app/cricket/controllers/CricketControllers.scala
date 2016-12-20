@@ -2,10 +2,10 @@ package cricket.controllers
 
 import com.softwaremill.macwire._
 import jobs.CricketStatsJob
-import play.api.Environment
+import model.ApplicationContext
 
 trait CricketControllers {
   def cricketStatsJob: CricketStatsJob
-  implicit def environment: Environment
+  implicit def appContext: ApplicationContext
   lazy val cricketMatchController = wire[CricketMatchController]
 }

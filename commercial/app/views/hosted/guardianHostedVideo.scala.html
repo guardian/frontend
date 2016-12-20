@@ -1,9 +1,9 @@
 @import common.commercial.hosted.HostedVideoPage
 @import common.commercial.hosted.hardcoded.Support.makeshiftPage
-@import conf.Configuration.environment
+@import conf.Configuration.{environment => ConfigEnvironment}
 @import conf.Configuration.site.host
 @import views.html.hosted._
-@(page: HostedVideoPage)(implicit request: RequestHeader, env: play.api.Environment)
+@(page: HostedVideoPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @main(page, Some("commercial")) { } {
     <!--[if (gt IE 9)|(IEMobile)]><!-->
@@ -21,6 +21,7 @@
         border: 1px solid @{page.campaign.fontColour.hexCode};
     }
 
+    .hosted-page--bright .hosted-next-autoplay .hosted-tone-btn,
     .hosted__banner .hosted-tone-btn,
     .hosted-tone-btn:focus,
     .hosted-tone-btn:hover {
@@ -60,7 +61,7 @@
                         data-media-id="@{page.video.mediaId}"
                         data-duration="@{page.video.duration}"
                         class="js-hosted-youtube-video hosted__youtube-video"
-                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(environment.isProd && !environment.isPreview) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
+                        src="https://www.youtube.com/embed/@youtubeId?modestbranding=1&showinfo=0&rel=0&enablejsapi=1@{if(ConfigEnvironment.isProd && !context.isPreview) "&origin=https://www.theguardian.com" else if(host != "") s"&origin=$host" else ""}"
                         frameborder="0"
                         allowfullscreen=""></iframe>
                         @guardianHostedControlButtons(page)
@@ -96,32 +97,10 @@
                         </div>
                     </div>
                     @for(nextPage <- page.nextVideo) {
-                    <div class="hosted-next-autoplay js-hosted-next-autoplay" data-link-name="Next video autoplay">
-                        <div class="hosted-next-autoplay__cancel">
-                            <button class="site-message__close-btn js-autoplay-cancel" data-link-name="Cancel autoplay of the next video">
-                                <span>Hide</span>
-                            </button>
-                        </div>
-                        <div class="hosted-next-autoplay__next-in-series">
-                            <div class="hosted-next-autoplay__subheader">@{page.cta.label}</div>
-                            <a href="@{page.cta.url}" rel="nofollow" class="hosted-next-autoplay__tile hosted-tone-btn" data-link-name="@{page.campaign.name}" target="_blank">
-                                @{if(page.cta.btnText.isDefined) page.cta.btnText else s"Visit ${page.campaign.owner} now"}@fragments.inlineSvg("arrow-right", "icon", List(""))
-                            </a>
-                        </div>
-                        <div class="hosted-next-autoplay__video">
-                            <div class="hosted-next-autoplay__header">
-                                <div class="hosted-next-autoplay__continue hosted-tone">Continue watching</div>
-                                <h2 class="hosted-next-autoplay__subheader">@{nextPage.title}</h2>
-                            </div>
-                            <a href="@{nextPage.url}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{nextPage.title}">
-                                <img class="hosted-next-autoplay__poster-img" src="@{nextPage.imageUrl}">
-                                <div class="hosted-next-autoplay__poster-timer hosted-tone-btn js-autoplay-timer" data-next-page="@{nextPage.url}">10s</div>
-                            </a>
-                            <a href="@{nextPage.url}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{nextPage.title}" target="_blank">
-                                Watch now
-                            </a>
-                        </div>
-                    </div>
+                        @hostedVideoAutoplay(nextPage.title, nextPage.imageUrl, nextPage.url, page.cta, page.campaign)
+                    }
+                    @if(page.nextVideo.isEmpty){
+                        <div class="js-autoplay-placeholder"></div>
                     }
                 </div>
             </div>

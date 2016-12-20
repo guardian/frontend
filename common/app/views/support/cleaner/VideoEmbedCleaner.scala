@@ -79,6 +79,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
           }}
 
           element.attr("data-block-video-ads", videoElement.videos.blockVideoAds.toString)
+
           if (!canonicalUrl.isEmpty && videoElement.videos.embeddable) {
             element.attr("data-embeddable", "true")
             element.attr("data-embed-path", new URL(canonicalUrl).getPath.stripPrefix("/"))

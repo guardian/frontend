@@ -41,7 +41,7 @@ class FixturesAndResults(competitions: Competitions) extends Football {
   lazy val competitionAndGroupFinder = new CompetitionAndGroupFinder(competitions)
   lazy val teamNameBuilder = new TeamNameBuilder(competitions)
 
-  def makeContainer(tagId: String)(implicit request: RequestHeader) = {
+  def makeContainer(tagId: String)(implicit request: RequestHeader, context: ApplicationContext) = {
 
     (for {
       teamId <- TeamMap.findTeamIdByUrlName(tagId)

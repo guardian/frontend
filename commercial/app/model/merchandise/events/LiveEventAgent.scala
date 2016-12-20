@@ -40,7 +40,7 @@ class LiveEventAgent(wsClient: WSClient) extends ExecutionContexts with Logging 
 
       def requestLiveEventsMembershipInfo: Future[WSResponse] =
         wsClient.url(Configuration.commercial.liveEventsMembershipUrl)
-          .withRequestTimeout(feedMetaData.timeout.toMillis.toInt)
+          .withRequestTimeout(feedMetaData.timeout)
           .get()
 
       def parseLiveEventsMembershipInfo(feed: JsValue): Seq[LiveEventMembershipInfo] =
