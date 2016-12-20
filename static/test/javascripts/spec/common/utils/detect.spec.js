@@ -8,6 +8,7 @@ define([
     detect
 ) {
     describe('Breakpoint', function () {
+
         beforeEach(function () {
             this.originalGetViewport = detect.getViewport;
             this.viewportWidth = 0;

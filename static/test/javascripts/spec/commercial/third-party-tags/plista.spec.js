@@ -114,7 +114,7 @@ define([
                     done();
                 });
             });
-            //
+
             it('should not load when is preview', function (done) {
                 config.page.isPreview = true;
                 spyOn(sut, 'load');

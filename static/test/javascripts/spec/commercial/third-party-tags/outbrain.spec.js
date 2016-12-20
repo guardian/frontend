@@ -71,7 +71,6 @@ define([
                 identity.isUserLoggedIn = function () {
                     return false;
                 };
-                // detect.adblockInUseSync = function () { return false; };
                 detect.adblockInUse = Promise.resolve(false);
 
                 commercialFeatures.outbrain = true;
