@@ -168,6 +168,11 @@ define([
                 robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
                     ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
                 });
+                if (config.page.isHosted) {
+                    // Wait for all custom timing async work to finish before manually reporting the perf data.
+                    // There are no MPUs on hosted pages, so no slot render events, and therefore no reporting would be done.
+                    Promise.all(customTimingModules).then(performanceLogging.reportTrackingData);
+                }
             });
         }
     };
