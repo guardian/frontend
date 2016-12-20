@@ -1,4 +1,4 @@
-package filters
+package http
 
 import akka.stream.Materializer
 import common.ExecutionContexts

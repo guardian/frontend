@@ -4,12 +4,12 @@ import com.softwaremill.macwire._
 import common.dfp.DfpAgentLifecycle
 import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, EmailSubsciptionMetrics}
 import common.Logback.LogstashLifecycle
-import conf.{CachedHealthCheckLifeCycle, CommonFilters}
+import conf.CachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUp, SectionsLookUpLifecycle}
 import controllers._
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
-import http.CorsHttpErrorHandler
+import http.{CommonFilters, CorsHttpErrorHandler}
 import jobs.{SiteMapJob, SiteMapLifecycle}
 import model.{ApplicationContext, ApplicationIdentity}
 import ophan.SurgingContentAgentLifecycle

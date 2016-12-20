@@ -3,18 +3,18 @@ import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CachedHealthCheckLifeCycle, CommonFilters}
+import conf.CachedHealthCheckLifeCycle
 import contentapi._
 import controllers.{HealthCheck, RssController}
 import dev.DevParametersHttpRequestHandler
-import model.{ApplicationContext, ApplicationIdentity}
+import http.CommonFilters
+import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
+import play.api.BuiltInComponentsFromContext
 import play.api.http.HttpRequestHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import play.api._
-import play.api.libs.ws.WSClient
 import services.{ConfigAgentLifecycle, OphanApi}
 import router.Routes
 

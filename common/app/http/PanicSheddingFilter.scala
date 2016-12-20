@@ -1,8 +1,8 @@
-package conf
+package http
 
 import java.lang.management.ManagementFactory
-import akka.stream.Materializer
 import akka.agent.Agent
+import akka.stream.Materializer
 import common.{ExecutionContexts, Logging, RequestMetrics}
 import org.joda.time.DateTime
 import play.api.mvc.Results._
