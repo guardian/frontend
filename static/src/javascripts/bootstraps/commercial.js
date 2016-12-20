@@ -77,11 +77,11 @@ define([
     ];
 
     if (config.page.isAdvertisementFeature) {
-        secondaryModules.append(['cm-paidforBand', paidforBand.init]);
+        secondaryModules.push(['cm-paidforBand', paidforBand.init]);
     }
 
     if (config.page.isHosted) {
-        secondaryModules.append(
+        secondaryModules.push(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init, hostedVideo.customTiming],
             ['cm-hostedGallery', hostedGallery.init, hostedGallery.customTiming],
