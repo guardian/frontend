@@ -34,7 +34,7 @@ define([
     }
 
     function noAdblockMsg() {
-        if(notMobile) {
+        if(notMobile()) {
             if(!visitedMoreThanOnce() || !isAdblockSwitchOn()) {
                 return adblockInUse();
             }
