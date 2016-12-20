@@ -34,9 +34,16 @@ define([
     }
 
     function noAdblockMsg() {
-        return notMobile() && (!visitedMoreThanOnce() || !isAdblockSwitchOn() || (visitedMoreThanOnce() && isPayingMember())) ?
-            adblockInUse() :
-            Promise.resolve(false);
+        if(notMobile) {
+            if(!visitedMoreThanOnce() || !isAdblockSwitchOn()) {
+                return adblockInUse();
+            }
+
+            if (visitedMoreThanOnce() && isPayingMember()) {
+                return adblockInUse();
+            }
+        }
+        Promise.resolve(false);
     }
 
     function showAdblockMsg() {
