@@ -20,13 +20,11 @@ define([
     once
 ) {
 
-    var promise = shouldRemoveGeoMostPop() ?
-        Promise.resolve() :
-        new Promise(function (resolve, reject) {
-            mediator.on('modules:onward:geo-most-popular:ready', resolve);
-            mediator.on('modules:onward:geo-most-popular:cancel', resolve);
-            mediator.on('modules:onward:geo-most-popular:error', reject);
-        });
+    var promise = new Promise(function (resolve, reject) {
+        mediator.on('modules:onward:geo-most-popular:ready', resolve);
+        mediator.on('modules:onward:geo-most-popular:cancel', resolve);
+        mediator.on('modules:onward:geo-most-popular:error', reject);
+    });
 
     function GeoMostPopular() {
         mediator.emit('register:begin', 'geo-most-popular');
@@ -44,12 +42,6 @@ define([
     GeoMostPopular.prototype.error = function (error) {
         mediator.emit('modules:onward:geo-most-popular:error', error);
     };
-
-
-    function shouldRemoveGeoMostPop() {
-        var testName = 'ItsRainingInlineAds';
-        return !config.page.isImmersive && ab.testCanBeRun(testName) && ['nogeo', 'none'].indexOf(ab.getTestVariantId(testName)) > -1;
-    }
 
     return {
 
