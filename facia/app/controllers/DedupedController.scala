@@ -1,7 +1,7 @@
 package controllers
 
 import common.{Edition, ExecutionContexts, Logging}
-import controllers.front.{FrontJsonFapi, FrontJsonFapiLive}
+import controllers.front.FrontJsonFapiLive
 import layout.Front
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
@@ -11,8 +11,7 @@ class DedupedController(frontJsonFapi: FrontJsonFapiLive) extends Controller wit
   def getDedupedForPath(path: String) = Action.async { request =>
     frontJsonFapi.get(path).map {
       case Some(pressedFront) =>
-        val ((_, _, dedupedFrontResult), _) =
-          Front.fromPressedPageWithDeduped(pressedFront, Edition(request))
+        val dedupedFrontResult = Front.fromPressedPageWithDeduped(pressedFront, Edition(request)).deduped
         Ok(Json.toJson(dedupedFrontResult))
       case None => NotFound
     }

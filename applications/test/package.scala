@@ -3,7 +3,7 @@ package test
 import java.util.{List => JList}
 
 import org.scalatest.Suites
-import services.NewspaperControllerTest
+import services.{IndexPageTest, NewspaperControllerTest}
 
 import collection.JavaConversions._
 
@@ -37,7 +37,8 @@ class ApplicationsTestSuite extends Suites (
   new TagTemplateTest,
   new ShareLinksTest,
   new CrosswordDataTest,
-  new NewspaperControllerTest
+  new NewspaperControllerTest,
+  new IndexPageTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19003
 }
