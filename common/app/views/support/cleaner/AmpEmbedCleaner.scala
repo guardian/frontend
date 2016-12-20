@@ -81,7 +81,6 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   }
 
 
-
   // There are two element types that have been found to contain Soundcloud embeds.
   // These are: element-audio and element-embed
   // The Cleaning steps for these embeds have been moved out of this embed and
@@ -114,8 +113,9 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   }
 
 
-
-  // This creates an amp-iframe for audio embeds that are not Soundcloud embeds - for example Audioboom embeds
+  //creates embeds for any elements of type "element-audio"
+  //soundcloud embeds are created as amp-soundcloud
+  //other embeds are created as amp-iframe
   object AmpAudioElements {
 
     def createAmpIframeElement(document: Document, src: String, width: String, height: String, frameborder: String): Element = {
@@ -159,7 +159,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   }
 
 
-
+  //removes embeds of type element-embed - with the exception of Soundcloud embeds which are created in an amp-soundcloud element
   def cleanAmpEmbed(document: Document) = {
     document.getElementsByClass("element-embed")
       .filter(_.getElementsByTag("iframe").nonEmpty)
