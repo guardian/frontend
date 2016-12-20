@@ -12,6 +12,7 @@ import scala.collection.JavaConversions._
 
 case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
+
   def cleanAmpVideos(document: Document): Unit = {
     document.getElementsByTag("video").foreach(video => {
       val posterSrc = video.attr("poster")
@@ -79,6 +80,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }
   }
 
+
+
   // There are two element types that have been found to contain Soundcloud embeds.
   // These are: element-audio and element-embed
   // The Cleaning steps for these embeds have been moved out of this embed and
@@ -93,7 +96,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     def getTrackIdFromUrl(soundcloudUrl: String): Option[String] = {
       val pattern = ".*api.soundcloud.com/tracks/(\\d+).*".r
       URLDecoder.decode(soundcloudUrl,"UTF-8") match {
-        case pattern(trackId) => Some(trackId)
+        case pattern(trackId) => {
+          Some(trackId)}
         case _ => None
       }
     }
@@ -108,6 +112,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }
 
   }
+
+
 
   // This creates an amp-iframe for audio embeds that are not Soundcloud embeds - for example Audioboom embeds
   object AmpAudioElements {
