@@ -2,6 +2,7 @@ package commercial.controllers
 
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.ItemQuery
+import com.gu.contentapi.client.model.v1.ContentType.Video
 import commercial.model.hosted.HostedTrails
 import common.commercial.hosted._
 import common.{Edition, ExecutionContexts, JsonComponent, JsonNotFound, Logging}
@@ -150,6 +151,34 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit conte
             case _ =>
               Cached(0)(JsonNotFound())
           }
+        } getOrElse {
+          Cached(0)(JsonNotFound())
+        }
+      }
+  }
+
+  def renderAutoplayComponent(campaignName: String, pageName: String) = Action.async {
+    implicit request =>
+
+      val capiResponse = {
+        val sectionId = s"advertiser-content/$campaignName"
+        val query = baseQuery(sectionId)
+          .pageSize(100)
+          .orderBy("oldest")
+        val response = contentApiClient.getResponse(query)
+        response.onFailure {
+          case NonFatal(e) => log.warn(s"Capi lookup of item '$sectionId' failed: ${e.getMessage}", e)
+        }
+        response
+      }
+
+      capiResponse map { response =>
+        response.results map { results =>
+          val videoPages = results
+            .filter(_.`type` == Video)
+          val itemId = s"advertiser-content/$campaignName/$pageName"
+          val trails = HostedTrails.fromContent(itemId, 1, videoPages)
+          Cached(cacheDuration)(JsonComponent(hostedVideoAutoplayWrapper(trails)))
         } getOrElse {
           Cached(0)(JsonNotFound())
         }

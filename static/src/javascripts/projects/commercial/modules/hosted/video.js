@@ -113,15 +113,17 @@ define([
                             });
                         });
 
-                        if (nextVideoAutoplay.canAutoplay()) {
-                            //on desktop show the next video link 10 second before the end of the currently watching video
-                            if (isDesktop()) {
-                                nextVideoAutoplay.addCancelListener();
-                                player && player.one('timeupdate', nextVideoAutoplay.triggerAutoplay.bind(this, player.currentTime.bind(player), parseInt($videoEl.data('duration'), 10)));
-                            } else {
-                                player && player.one('ended', nextVideoAutoplay.triggerEndSlate);
+                        nextVideoAutoplay.init().then(function(){
+                            if (nextVideoAutoplay.canAutoplay()) {
+                                //on desktop show the next video link 10 second before the end of the currently watching video
+                                if (isDesktop()) {
+                                    nextVideoAutoplay.addCancelListener();
+                                    player && player.one('timeupdate', nextVideoAutoplay.triggerAutoplay.bind(this, player.currentTime.bind(player), parseInt($videoEl.data('duration'), 10)));
+                                } else {
+                                    player && player.one('ended', nextVideoAutoplay.triggerEndSlate);
+                                }
                             }
-                        }
+                        });
                     });
 
                     $youtubeIframe.each(function(el){

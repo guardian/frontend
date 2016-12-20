@@ -54,6 +54,7 @@ GET         /commercial/anx/anxresize.js                                    comm
 GET         /commercial/advertiser-content/:campaignName/:pageName          commercial.controllers.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET         /advertiser-content/:campaignName/:pageName                     commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET         /advertiser-content/:campaignName/:pageName/:cType/onward.json  commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
+GET         /advertiser-content/:campaignName/:pageName/autoplay.json       commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 
 # Iframe buster and 3rd-party ads
 GET         /rockabox/rockabox_buster.html                                  controllers.Assets.at(path="/public", file="rockabox_buster.html")
