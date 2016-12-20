@@ -174,12 +174,14 @@ define([
             identityPolicy()
         ) {
             // if there is no merch component, load the outbrain widget right away
-            if (loadInstantly()) {
-                return checkDependencies().then(function (widgetType) {
-                    widgetType ? module.load(widgetType) : module.load();
-                    return Promise.resolve(true);
-                });
-            }
+            loadInstantly().then(function(shouldLoadInstantly) {
+                if (shouldLoadInstantly) {
+                    return checkDependencies().then(function (widgetType) {
+                        widgetType ? module.load(widgetType) : module.load();
+                        return Promise.resolve(true);
+                    });
+                }
+            });
 
             return trackAdRender('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
                 // if the high-priority merch component has loaded, we wait until
