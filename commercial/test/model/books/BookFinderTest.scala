@@ -16,7 +16,8 @@ import scala.concurrent.Future
   with ScalaFutures
   with ConfiguredTestSuite
   with BeforeAndAfterAll
-  with WithMaterializer with WithTestWsClient {
+  with WithMaterializer
+  with WithTestWsClient {
 
   private implicit val defaultPatience =
     PatienceConfig(timeout = Span(2, Seconds), interval = Span(5, Millis))

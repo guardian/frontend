@@ -9,7 +9,6 @@ import play.api.libs.json.{Format, JsObject, Json}
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import JsonComponent.withRefreshStatus
-import play.api.Environment
 
 import scala.concurrent.Future
 
@@ -24,8 +23,8 @@ class MediaController(contentApiClient: ContentApiClient)(implicit context: Appl
 
   def renderInfoJson(path: String) = Action.async { implicit request =>
     lookup(path) map {
-      case Left(model)  => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts, model.media.content.title.getOrElse(""))
-      case Right(other) => MediaInfo(expired = other.header.status == GONE, shouldHideAdverts = true, "This video is no longer available")
+      case Left(model)  => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
+      case Right(other) => MediaInfo(expired = other.header.status == GONE, shouldHideAdverts = true)
     } map { mediaInfo =>
       Cached(60)(JsonComponent(withRefreshStatus(Json.toJson(mediaInfo).as[JsObject])))
     }
@@ -65,7 +64,7 @@ class MediaController(contentApiClient: ContentApiClient)(implicit context: Appl
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 }
 
-case class MediaInfo(expired: Boolean, shouldHideAdverts: Boolean, title: String)
+case class MediaInfo(expired: Boolean, shouldHideAdverts: Boolean)
 object MediaInfo {
   implicit val jsonFormats: Format[MediaInfo] = Json.format[MediaInfo]
 }

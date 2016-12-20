@@ -8,7 +8,6 @@ import model._
 import football.model._
 import pa.FootballTeam
 import model.Competition
-import play.api.Environment
 
 class ResultsController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends MatchListController with CompetitionResultFilters {
 

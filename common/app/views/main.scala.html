@@ -116,9 +116,11 @@
     </body>
         @if(context.environment.mode == Dev) {
             <script>
-                setTimeout(function() {
-                    window.callPhantom('takeShot');
-                }, 10000); // Wait arbitrary 10 seconds before taking the screenshot to let things settled down
+                if (window.callPhantom) {
+                    setTimeout(function() {
+                        window.callPhantom('takeShot');
+                    }, 10000); // Wait arbitrary 10 seconds before taking the screenshot to let things settled down
+                }
             </script>
         }
     </html>

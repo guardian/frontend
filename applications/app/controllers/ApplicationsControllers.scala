@@ -4,7 +4,6 @@ import com.softwaremill.macwire._
 import contentapi.{ContentApiClient, SectionsLookUp}
 import jobs.SiteMapJob
 import model.ApplicationContext
-import play.api.Environment
 import play.api.libs.ws.WSClient
 
 trait ApplicationsControllers {

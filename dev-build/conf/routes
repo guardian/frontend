@@ -19,7 +19,6 @@ GET            /assets/*path                                                    
 
 # Diagnostics
 GET            /count/$prefix<.+>.gif                                                                                            controllers.DiagnosticsController.analytics(prefix)
-GET            /counts.gif                                                                                                       controllers.DiagnosticsController.analyticsCounts()
 POST           /css                                                                                                              controllers.DiagnosticsController.css
 OPTIONS        /css                                                                                                              controllers.DiagnosticsController.cssOptions
 POST           /csp-report                                                                                                       controllers.DiagnosticsController.csp
@@ -27,8 +26,6 @@ OPTIONS        /csp-report                                                      
 POST           /commercial-report                                                                                                controllers.DiagnosticsController.commercialReport
 OPTIONS        /commercial-report                                                                                                controllers.DiagnosticsController.commercialOptions
 GET            /commercial-reports/:dateTime                                                                                     controllers.DiagnosticsController.commercialReports(dateTime)
-POST           /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeacon
-OPTIONS        /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeaconOptions
 
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
@@ -309,6 +306,7 @@ GET            /commercial/api/multi.json                                       
 GET            /$path<commercial-containers>                                                                                                controllers.FaciaController.renderFront(path)
 GET            /advertiser-content/:campaignName/:pageName                                                                       commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName/:cType/onward.json                                                    commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
+GET            /advertiser-content/:campaignName/:pageName/autoplay.json                                                         commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize
 
 # Commercial Admin

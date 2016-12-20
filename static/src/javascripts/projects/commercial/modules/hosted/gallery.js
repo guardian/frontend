@@ -1,6 +1,6 @@
 define([
+    'Promise',
     'bean',
-    'lodash/functions/debounce',
     'bonzo',
     'fastdom',
     'common/utils/$',
@@ -10,14 +10,12 @@ define([
     'common/utils/detect',
     'common/utils/fsm',
     'common/utils/mediator',
-    'lodash/collections/map',
     'lodash/functions/throttle',
-    'lodash/collections/forEach',
     'common/modules/analytics/interaction-tracking',
-    'common/utils/chain',
-    'common/utils/load-css-promise'
-], function (bean,
-             debounce,
+    'common/utils/load-css-promise',
+    'commercial/modules/dfp/performance-logging'
+], function (Promise,
+             bean,
              bonzo,
              fastdom,
              $,
@@ -27,12 +25,10 @@ define([
              detect,
              FiniteStateMachine,
              mediator,
-             map,
              throttle,
-             forEach,
              interactionTracking,
-             chain,
-             loadCssPromise) {
+             loadCssPromise,
+             performanceLogging) {
 
 
     function HostedGallery() {
@@ -170,19 +166,18 @@ define([
 
     HostedGallery.prototype.loadSurroundingImages = function (index, count) {
         var $img, that = this;
-        chain([0, 1, 2]).and(
-            map,
-            function (i) {
-                return index + i === 0 ? count - 1 : (index - 1 + i) % count;
-            }
-        ).and(forEach, function (i) {
+        [0, 1, 2]
+        .map(function (i) {
+            return index + i === 0 ? count - 1 : (index - 1 + i) % count;
+        })
+        .forEach(function (i) {
             $img = $('img', this.$images[i]);
             if (!$img[0].complete) {
                 bean.one($img[0], 'load', setSize.bind(this, $img, i));
             } else {
                 setSize($img, i);
             }
-        }.bind(this));
+        }, this);
 
         function setSize($image, index) {
             if (!that.imageRatios[index]) {
@@ -446,8 +441,11 @@ define([
         }
     };
 
-    function init() {
-        return loadCssPromise.then(function () {
+    function init(moduleName) {
+        performanceLogging.moduleStart(moduleName);
+
+        loadCssPromise
+        .then(function () {
             var gallery,
                 match,
                 galleryHash = window.location.hash,
@@ -463,7 +461,12 @@ define([
                     gallery.loadAtIndex(parseInt(res[1], 10));
                 }
             }
+        })
+        .then(function () {
+            performanceLogging.moduleEnd(moduleName);
         });
+
+        return Promise.resolve();
     }
 
     return {

@@ -6,7 +6,6 @@ import football.model._
 import model._
 import org.joda.time.LocalDate
 import pa.FootballTeam
-import play.api.Environment
 import play.api.mvc.{Action, AnyContent}
 
 

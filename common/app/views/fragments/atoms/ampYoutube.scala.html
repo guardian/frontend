@@ -1,12 +1,13 @@
 @(media: model.content.MediaAtom)(implicit request: RequestHeader)
 @import conf.Configuration
+@import views.support.Video700
 
 <amp-iframe
 sandbox="allow-scripts allow-same-origin allow-popups"
 layout="responsive"
 width="16" height="9" src="@Configuration.Media.externalEmbedHost/embed/atom/media/@media.id">
-@if(media.posterUrl.isDefined) {
-    <amp-img layout="fill" src="@media.posterUrl.get" placeholder></amp-img>
+@media.posterImage.map { posterImage =>
+    <amp-img layout="fill" src="@Video700.bestFor(posterImage)" placeholder></amp-img>
 }
 </amp-iframe>
 

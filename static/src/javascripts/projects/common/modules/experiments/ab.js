@@ -10,13 +10,11 @@ define([
     'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-international-experiment',
-    'common/modules/experiments/tests/contributions-epic-brexit-supreme',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/contributions-epic-on-the-moon',
     'common/modules/experiments/tests/uk-membership-engagement-message-test-10',
     'common/modules/experiments/tests/au-membership-engagement-message-test-8',
     'common/modules/experiments/tests/its-raining-inline-ads',
-    'common/modules/experiments/tests/video-headline',
     'common/modules/experiments/tests/contributions-epic-us-eoy-control',
     'common/modules/experiments/tests/contributions-epic-us-eoy-end-of-year'
 ], function (reportError,
@@ -30,13 +28,11 @@ define([
              EditorialEmailVariants,
              RecommendedForYou,
              MembershipEngagementInternationalExperimentTest12,
-             ContributionsEpicBrexitSupreme,
              ContributionsEpicAlwaysAskStrategy,
              ContributionsEpicOnTheMoon,
              UkMembershipEngagementMessageTest10,
              AuMembershipEngagementMessageTest8,
              ItsRainingInlineAds,
-             VideoHeadline,
              ContributionsEpicUsEoyControl,
              ContributionsEpicUsEoyEndOfYear
     ) {
@@ -44,13 +40,11 @@ define([
         new EditorialEmailVariants(),
         new RecommendedForYou(),
         new MembershipEngagementInternationalExperimentTest12(),
-        new ContributionsEpicBrexitSupreme(),
         new ContributionsEpicAlwaysAskStrategy(),
         new ContributionsEpicOnTheMoon(),
         new UkMembershipEngagementMessageTest10(),
         new AuMembershipEngagementMessageTest8(),
         new ItsRainingInlineAds(),
-        new VideoHeadline(),
         new ContributionsEpicUsEoyControl(),
         new ContributionsEpicUsEoyEndOfYear()
     ];

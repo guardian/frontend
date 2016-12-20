@@ -29,7 +29,7 @@
 }
 
 .hosted-gallery__meta {
-    color: white;
+    color: #ffffff;
     padding: 0 $gs-gutter;
     position: absolute;
     z-index: 1;
@@ -129,7 +129,7 @@
         cursor: pointer;
         text-decoration: none;
         &:not(.social__action)::after {
-            content: "";
+            content: '';
             height: 1px;
             width: 100%;
             background-color: #ffffff;

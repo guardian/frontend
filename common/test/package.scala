@@ -20,24 +20,6 @@ import recorder.ContentApiHttpRecorder
 
 import scala.util.{Failure, Success, Try}
 
-//TODO: to delete once ContentApiClient global object is not used anymore
-trait TestSettings {
-  val recorder = new ContentApiHttpRecorder {
-    override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
-  }
-
-  private def toRecorderHttp(httpClient: HttpClient) = new HttpClient {
-
-    val originalHttp = httpClient
-
-    override def GET(url: String, headers: Iterable[(String, String)]) = {
-      recorder.load(url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap) {
-        originalHttp.GET(url, headers)
-      }
-    }
-  }
-}
-
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
   this: ConfiguredTestSuite with org.scalatest.Suite =>
 
@@ -84,7 +66,7 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with E
 
 }
 
-trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrowserPerSuite with HtmlUnitFactory {
+trait SingleServerSuite extends OneServerPerSuite with OneBrowserPerSuite with HtmlUnitFactory {
   this: SingleServerSuite with org.scalatest.Suite =>
 
   BrowserVersion.setDefault(BrowserVersion.CHROME)

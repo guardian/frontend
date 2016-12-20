@@ -5,7 +5,6 @@ import feed.MostReadAgent
 import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
-import play.api.Environment
 import services.OphanApi
 
 @DoNotDiscover class RelatedControllerTest

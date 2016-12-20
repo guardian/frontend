@@ -1,0 +1,9 @@
+@import common.commercial.hosted._
+@(trails: Seq[HostedPage])(implicit request: RequestHeader)
+
+@if(trails.isEmpty) {
+    <div></div>
+}
+@for(page <- trails.headOption) {
+    @hostedVideoAutoplay(page.title, page.imageUrl, page.url, page.cta, page.campaign)
+}

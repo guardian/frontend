@@ -47,16 +47,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-brexit-supreme",
-    "Gather contributions and supporters around Brexit supreme court case",
-    owners = Seq(Owner.withGithub("philwills")),
-    safeState = Off,
-    sellByDate =  new LocalDate(2016, 12, 16),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-uk-memb-engagement-msg-copy-test-10",
     "Test alternate short messages on membership engagement banner",
     owners = Seq(Owner.withGithub("justinpinner")),
@@ -114,15 +104,4 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 1, 3),
     exposeClientSide = true
   )
-
-  Switch(
-    ABTests,
-    "ab-video-headline",
-    "Show visitors new video play button",
-    owners = Seq(Owner.withGithub("mr-mr")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 20),
-    exposeClientSide = true
-  )
-
 }

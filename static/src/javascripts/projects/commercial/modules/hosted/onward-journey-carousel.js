@@ -65,10 +65,8 @@ define([
     };
 
     function init() {
-        return new Promise(function(resolve) {
-            new HostedCarousel().bindButtons();
-            resolve();
-        });
+        new HostedCarousel().bindButtons();
+        return Promise.resolve();
     }
 
     return {

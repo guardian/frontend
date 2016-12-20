@@ -12,26 +12,9 @@ import org.joda.time.format.ISODateTimeFormat
 class DiagnosticsController extends Controller with Logging {
   val r = scala.util.Random
 
-  def acceptBeaconOptions = postOptions
-
-  def acceptBeacon = Action { implicit request =>
-    countsFromQueryString(request)
-    TinyResponse.ok
-  }
-
   def analytics(prefix: String) = Action { implicit request =>
     Analytics.report(prefix)
     TinyResponse.gif
-  }
-
-  // e.g.  .../counts?c=pv&c=vv&c=ve
-  def analyticsCounts() = Action { implicit request =>
-    countsFromQueryString(request)
-    TinyResponse.gif
-  }
-
-  private def countsFromQueryString(request: Request[AnyContent]): Unit = {
-    request.queryString.getOrElse("c", Nil).foreach(Analytics.report)
   }
 
   private lazy val jsonParser = parse.tolerantJson(1024 *1024)

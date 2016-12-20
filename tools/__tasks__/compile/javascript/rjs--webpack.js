@@ -148,6 +148,16 @@ const bundles = [{
         'inlineSvg',
     ],
 }, {
+    name: 'bootstraps/enhanced/newsletters',
+    out: `${target}/javascripts/bootstraps/enhanced/newsletters-rjs.js`,
+    exclude: [
+        'boot-rjs',
+        'bootstraps/commercial',
+        'bootstraps/enhanced/main',
+        'text',
+        'inlineSvg',
+    ],
+}, {
     name: 'bootstraps/enhanced/membership',
     out: `${target}/javascripts/bootstraps/enhanced/membership-rjs.js`,
     exclude: [
@@ -188,6 +198,16 @@ const bundles = [{
 }, {
     name: 'bootstraps/video-embed',
     out: `${target}/javascripts/bootstraps/video-embed-rjs.js`,
+    exclude: [
+        'boot-rjs',
+        'text',
+        'inlineSvg',
+    ],
+    generateSourceMaps: true,
+    preserveLicenseComments: false,
+}, {
+    name: 'bootstraps/youtube-embed',
+    out: `${target}/javascripts/bootstraps/youtube-embed-rjs.js`,
     exclude: [
         'boot-rjs',
         'text',

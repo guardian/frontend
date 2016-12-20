@@ -53,7 +53,7 @@ class ChangePasswordController( api: IdApiClient,
       )
   )
 
-  def displayForm() = csrfAddToken.apply {
+  def displayForm() = csrfAddToken {
     authAction.async {
       implicit request =>
 

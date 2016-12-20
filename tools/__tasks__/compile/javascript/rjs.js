@@ -163,6 +163,17 @@ const bundles = [{
         'inlineSvg',
     ],
 }, {
+    name: 'bootstraps/enhanced/newsletters',
+    out: `${target}/javascripts/bootstraps/enhanced/newsletters.js`,
+    exclude: [
+        'boot',
+        'bootstraps/standard/main',
+        'bootstraps/commercial',
+        'bootstraps/enhanced/main',
+        'text',
+        'inlineSvg',
+    ],
+}, {
     name: 'bootstraps/enhanced/membership',
     out: `${target}/javascripts/bootstraps/enhanced/membership.js`,
     exclude: [
@@ -207,6 +218,15 @@ const bundles = [{
     }, {
         name: 'bootstraps/video-embed',
         out: `${target}/javascripts/bootstraps/video-embed.js`,
+        exclude: [
+            'text',
+            'inlineSvg',
+        ],
+        generateSourceMaps: true,
+        preserveLicenseComments: false,
+    }, {
+        name: 'bootstraps/youtube-embed',
+        out: `${target}/javascripts/bootstraps/youtube-embed.js`,
         exclude: [
             'text',
             'inlineSvg',

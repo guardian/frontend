@@ -6,7 +6,6 @@ import form.FormComponents
 import formstack.FormStackComponents
 import idapiclient.IdApiComponents
 import model.ApplicationContext
-import play.api.Environment
 import play.api.libs.crypto.CryptoConfig
 import play.api.libs.ws.WSClient
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}

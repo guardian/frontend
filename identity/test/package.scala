@@ -13,7 +13,7 @@ import play.api.test.Helpers._
 /**
  * Executes a block of code in a FakeApplication.
  */
-trait FakeApp extends TestSettings {
+trait FakeApp {
   def app: Application = {
     val environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
     val context = ApplicationLoader.createContext(
