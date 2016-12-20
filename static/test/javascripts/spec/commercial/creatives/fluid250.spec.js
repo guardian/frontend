@@ -18,6 +18,10 @@ define([
 
     describe('Fluid 250', function () {
 
+        afterEach(function () {
+            fixtures.clean(fixturesConfig.id);
+        });
+
         var fluid250,
             $fixturesContainer;
 

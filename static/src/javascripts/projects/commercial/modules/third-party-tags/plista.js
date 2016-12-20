@@ -28,8 +28,9 @@ define([
     };
 
     function loadInstantly() {
-        return !document.getElementById('dfp-ad--merchandising-high') ||
-            detect.adblockInUseSync();
+        return detect.adblockInUse.then(function(adblockInUse){
+            return !document.getElementById('dfp-ad--merchandising-high') || adblockInUse;
+        });
     }
 
     function identityPolicy() {
@@ -79,16 +80,19 @@ define([
 
     function init() {
         if (shouldServe()) {
-            if (loadInstantly()) {
-                module.load();
-                return Promise.resolve(true);
-            } else {
-                return trackAdRender('dfp-ad--merchandising-high').then(function (isLoaded){
-                    if (!isLoaded) {
-                        module.load();
-                    }
-                });
-            }
+            return loadInstantly().then(function(adBlockInUse){
+                if (adBlockInUse) {
+                    module.load();
+                } else {
+                    return trackAdRender('dfp-ad--merchandising-high').then(function (isLoaded){
+                        if (!isLoaded) {
+                            module.load();
+                        }
+                    });
+                }
+            });
+        }else {
+            return Promise.resolve(false);
         }
     }
 
