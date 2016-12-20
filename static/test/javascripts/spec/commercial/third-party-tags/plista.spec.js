@@ -135,7 +135,7 @@ define([
                 });
             });
 
-            it('should load when user is logged in but there are no comments on the page', function () {
+            it('should load when user is logged in but there are no comments on the page', function (done) {
                 identity.isUserLoggedIn = function () {
                     return true;
                 };
@@ -144,6 +144,7 @@ define([
                 spyOn(sut, 'load');
                 sut.init().then(function(){
                     expect(sut.load).toHaveBeenCalled();
+                    done();
                 });
             });
         });
