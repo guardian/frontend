@@ -73,20 +73,15 @@ define([
 
     var secondaryModules = [
         ['cm-fill-advert-slots', fillAdvertSlots.init, fillAdvertSlots.customTiming],
-        ['cm-paidforBand', paidforBand.init],
-        ['cm-paidContainers', paidContainers.init],
-        ['cm-ready', function () {
-            mediator.emit('page:commercial:ready');
-            userTiming.mark('commercial end');
-            robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
-                ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
-            });
-            return Promise.resolve();
-        }]
+        ['cm-paidContainers', paidContainers.init]
     ];
 
+    if (config.page.isAdvertisementFeature) {
+        secondaryModules.append(['cm-paidforBand', paidforBand.init]);
+    }
+
     if (config.page.isHosted) {
-        secondaryModules.unshift(
+        secondaryModules.append(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init, hostedVideo.customTiming],
             ['cm-hostedGallery', hostedGallery.init, hostedGallery.customTiming],
@@ -94,12 +89,7 @@ define([
             ['cm-hostedOJCarousel', hostedOJCarousel.init]);
     }
 
-    if ((config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile') ||
-         config.page.disableStickyTopBanner
-    ) {
-        config.page.hasStickyAdBanner = false;
-    } else {
-        config.page.hasStickyAdBanner = true;
+    if (!config.page.disableStickyTopBanner) {
         secondaryModules.unshift(['cm-stickyTopBanner', stickyTopBanner.init]);
     }
 
@@ -157,8 +147,16 @@ define([
             // Stub the command queue
             window.googletag = { cmd: [] };
 
-            loadModules(primaryModules, performanceLogging.primaryBaseline).then(function(){
-                loadModules(secondaryModules, performanceLogging.secondaryBaseline);
+            return loadModules(primaryModules, performanceLogging.primaryBaseline)
+            .then(function () {
+                return loadModules(secondaryModules, performanceLogging.secondaryBaseline);
+            })
+            .then(function () {
+                mediator.emit('page:commercial:ready');
+                userTiming.mark('commercial end');
+                robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
+                    ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
+                });
             });
         }
     };
