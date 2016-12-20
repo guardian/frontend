@@ -98,8 +98,9 @@ define([
             showAdblockMessage();
             showAdblockBanner();
         }
-        });
         mediator.emit('banner-message:complete');
+        });
+
     }
     return {
         init: init
