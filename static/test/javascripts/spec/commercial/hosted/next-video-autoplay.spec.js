@@ -60,20 +60,6 @@ define([
             done();
         });
 
-        xit('should not trigger autoplay when there is no next video', function (done) {
-            fixturesConfig = {
-                id: 'next-video-autoplay',
-                fixtures: [
-                    '<div class="js-autoplay-timer" data-next-page="">10s</div>'
-                ]
-            };
-            $fixturesContainer = fixtures.render(fixturesConfig);
-            nextVideoAutoplay.init().then(function(){
-                expect(nextVideoAutoplay.canAutoplay()).toBeFalsy();
-                done();
-            });
-        });
-
         it('should show end slate information', function (done) {
             nextVideoAutoplay.triggerEndSlate();
             fastdom.defer(1, function () {
@@ -87,6 +73,20 @@ define([
             document.querySelector('.js-autoplay-cancel').click();
             fastdom.defer(1, function () {
                 expect($('.js-hosted-next-autoplay', $fixturesContainer).hasClass('hosted-slide-out')).toBeTruthy();
+                done();
+            });
+        });
+
+        it('should not trigger autoplay when there is no next video', function (done) {
+            fixturesConfig = {
+                id: 'next-video-autoplay',
+                fixtures: [
+                    '<div class="js-autoplay-timer" data-next-page="">10s</div>'
+                ]
+            };
+            $fixturesContainer = fixtures.render(fixturesConfig);
+            nextVideoAutoplay.init().then(function(){
+                expect(nextVideoAutoplay.canAutoplay()).toBeFalsy();
                 done();
             });
         });
