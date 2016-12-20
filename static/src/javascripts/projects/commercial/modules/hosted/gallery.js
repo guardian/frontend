@@ -444,7 +444,7 @@ define([
     function init(moduleName) {
         performanceLogging.moduleStart(moduleName);
 
-        loadCssPromise
+        return loadCssPromise
         .then(function () {
             var gallery,
                 match,
@@ -465,8 +465,6 @@ define([
         .then(function () {
             performanceLogging.moduleEnd(moduleName);
         });
-
-        return Promise.resolve();
     }
 
     return {

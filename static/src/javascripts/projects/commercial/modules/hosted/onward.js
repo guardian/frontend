@@ -17,8 +17,10 @@ define([
 
         var placeholders = document.getElementsByClassName('js-onward-placeholder');
 
+        var fetchPromise;
+
         if (placeholders.length) {
-            fetchJson(config.page.ajaxUrl + '/'
+            fetchPromise = fetchJson(config.page.ajaxUrl + '/'
                 + config.page.pageId + '/'
                 + config.page.contentType.toLowerCase() + '/'
                 + 'onward.json', {mode: 'cors'})
@@ -31,10 +33,12 @@ define([
                         new HostedCarousel.init();
                     });
                 })
-                .then(function () {
-                    performanceLogging.moduleEnd(moduleName);
-                });
+        } else {
+            fetchPromise = Promise.resolve();
         }
-        return Promise.resolve();
+
+        return fetchPromise.then(function () {
+            performanceLogging.moduleEnd(moduleName);
+        });
     }
 });
