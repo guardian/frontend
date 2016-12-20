@@ -1,3 +1,7 @@
+@(page: model.Page)
+
+@import model.EmailAddons.EmailContentType
+
 <style>
     body, .body {
         background: #f6f6f6;
@@ -117,7 +121,7 @@
 
 
     .tone-external .facia-card {
-        border-top: 1px solid #fdadba;
+        border-top: 1px solid @page.toneColour;
     }
     .tone-external .facia-card__text {
         background-color: #ffffff;
