@@ -171,8 +171,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
             iframeElement.replaceWith(soundcloudElement.get)
           } else
             iframeElement.remove()
-      }
-      )
+      })
   }
 
   def cleanAmpInstagram(document: Document) = {
