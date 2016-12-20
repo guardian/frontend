@@ -38,7 +38,7 @@ define([
             mockUserHasAdblock = true;
             mockBreakpoint = 'desktop';
 
-            expect(adblockMessage.noAdblockMsg()).toBe(true);
+            expect(adblockMessage.showAdblockMsg()).toBe(false);
         });
 
         it('should not show adblock messages when the adblock switch is off', function () {
@@ -47,7 +47,7 @@ define([
             mockUserHasAdblock = true;
             mockBreakpoint = 'desktop';
 
-            expect(adblockMessage.noAdblockMsg()).toBe(true);
+            expect(adblockMessage.showAdblockMsg()).toBe(false);
         });
 
         it('should not show adblock messages for non adblock users', function () {
@@ -68,7 +68,7 @@ define([
                 return true;
             };
 
-            expect(adblockMessage.noAdblockMsg()).toBe(true);
+            expect(adblockMessage.showAdblockMsg()).toBe(false);
         });
 
         it('should show adblock messages for non paying members', function () {
@@ -81,6 +81,30 @@ define([
             };
 
             expect(adblockMessage.showAdblockMsg()).toBe(true);
+        });
+
+        it('should show adblock messages for mobile', function () {
+            storage.local.set('gu.alreadyVisited', 10);
+            config.switches.adblock = true;
+            mockUserHasAdblock = true;
+            mockBreakpoint = 'mobile';
+            userFeatures.isPayingMember = function () {
+                return false;
+            };
+
+            expect(adblockMessage.showAdblockMsg()).toBe(true);
+        });
+
+        it('should not show adblock banner for mobile', function () {
+            storage.local.set('gu.alreadyVisited', 10);
+            config.switches.adblock = true;
+            mockUserHasAdblock = true;
+            mockBreakpoint = 'mobile';
+            userFeatures.isPayingMember = function () {
+                return false;
+            };
+
+            expect(adblockMessage.showAdblockBanner()).toBe(false);
         });
     });
 });

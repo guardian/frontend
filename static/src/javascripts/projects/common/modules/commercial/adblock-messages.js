@@ -31,23 +31,19 @@ define([
         return config.switches.adblock;
     }
 
-    function noAdblockMsg() {
-        return adblockInUseSync() && notMobile() && (
-                !visitedMoreThanOnce() ||
-                !isAdblockSwitchOn() ||
-                (isAdblockSwitchOn() && visitedMoreThanOnce() && isPayingMember()));
-    }
-
     function showAdblockMsg() {
         return isAdblockSwitchOn() &&
-                adblockInUseSync() &&
-                !isPayingMember() &&
-                visitedMoreThanOnce() &&
-                notMobile();
+            adblockInUseSync() &&
+            !isPayingMember() &&
+            visitedMoreThanOnce();
+    }
+
+    function showAdblockBanner() {
+        return showAdblockMsg() && notMobile();
     }
 
     return {
-        noAdblockMsg: noAdblockMsg,
-        showAdblockMsg: showAdblockMsg
+        showAdblockMsg: showAdblockMsg,
+        showAdblockBanner: showAdblockBanner
     };
 });
