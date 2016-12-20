@@ -1,9 +1,11 @@
 define([
     'Promise',
     'common/utils/fetch-json',
+    'common/utils/config'
 ], function (
     Promise,
-    fetch
+    fetch,
+    config
 ) {
     var location;
 
@@ -12,7 +14,7 @@ define([
             return new Promise(function(resolve, reject) {
                 if (location) return resolve(location);
                 else {
-                    fetch('https://api.nextgen.guardianapps.co.uk/geolocation', {
+                    fetch(config.page.ajaxUrl + '/geolocation', {
                         method: 'GET',
                         contentType: 'application/json',
                         crossOrigin: true

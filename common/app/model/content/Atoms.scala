@@ -1,14 +1,12 @@
 package model.content
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, atom => atomapi}
+import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
+import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
 import model.{ImageAsset, ImageMedia}
-import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset}
-import com.gu.contentatom.thrift.atom.media.{MediaAtom => AtomApiMediaAtom}
 import org.joda.time.Duration
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
-import views.support.{ImgSrc, Item700}
 
 final case class Atoms(
   quizzes: Seq[Quiz],
@@ -29,7 +27,7 @@ final case class MediaAtom(
   title: String,
   duration: Option[Long],
   source: Option[String],
-  posterUrl: Option[String]
+  posterImage: Option[ImageMedia]
 ) extends Atom {
 
   def isoDuration: Option[String] = {
@@ -116,7 +114,13 @@ object MediaAtom extends common.Logging {
       title = mediaAtom.title,
       duration = mediaAtom.duration,
       source = mediaAtom.source,
-      posterUrl = mediaAtom.posterUrl.map(ImgSrc(_, Item700)))
+      posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title))
+    )
+
+
+  def imageMediaMake(capiImage: AtomApiImage, caption: String): ImageMedia = {
+    ImageMedia(capiImage.assets.map(mediaImageAssetMake(_, caption)))
+  }
 
   def mediaAssetMake(mediaAsset: AtomApiMediaAsset): MediaAsset =
   {
@@ -125,6 +129,20 @@ object MediaAtom extends common.Logging {
       version = mediaAsset.version,
       platform = mediaAsset.platform.toString,
       mimeType = mediaAsset.mimeType)
+  }
+
+  def mediaImageAssetMake(mediaImage: AtomApiImageAsset, caption: String): ImageAsset = {
+    ImageAsset(
+      mediaType = "image",
+      mimeType = mediaImage.mimeType,
+      url = Some(mediaImage.file),
+      fields = Map(
+        "height" -> mediaImage.dimensions.map(_.height).map(_.toString),
+        "width" -> mediaImage.dimensions.map(_.width).map(_.toString),
+        "caption" -> Some(caption),
+        "altText" -> Some(caption)
+      ).collect{ case(k, Some(v)) => (k,v) }
+    )
   }
 
 }
@@ -145,7 +163,6 @@ object Quiz extends common.Logging {
           plainAsset <- image.assets
         } yield {
          ImageAsset(
-          index = 0,
           fields = typeData ++ plainAsset.fields.mapValues(value => value.toString),
           mediaType = plainAsset.assetType,
           mimeType = plainAsset.mimeType,

@@ -119,8 +119,8 @@
     }
 
     .adverts__title {
-        color: #ffffff;
         @include fs-header(2);
+        color: #ffffff;
     }
 
     .adverts__logo {

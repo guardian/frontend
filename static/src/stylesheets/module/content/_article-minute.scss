@@ -601,18 +601,18 @@ $minute-headline-colour: #ffffff;
 
 // Number to the left of modules
 .block--minute-article--shorty {
-     @include mq($from: desktop) {
+    @include mq($from: desktop) {
         position: relative;
         overflow: visible;
 
-         .block--minute-article--counter {
-           position: absolute;
-           width: gs-span(1) + $gs-gutter;
-           top: 4px;
-           left: -(gs-span(1) + $gs-gutter);
-           border-top: $gs-baseline/3 solid $minute-highlight-colour;
-       }
-   }
+        .block--minute-article--counter {
+            position: absolute;
+            width: gs-span(1) + $gs-gutter;
+            top: 4px;
+            left: -(gs-span(1) + $gs-gutter);
+            border-top: $gs-baseline/3 solid $minute-highlight-colour;
+        }
+    }
 }
 
 // Background Image Layout

@@ -111,7 +111,7 @@ define([
             require(['ophan/ng'], function (ophan) {
                 performanceLog.viewId = ophan.viewId;
 
-                beacon.postJson('/commercial-report', JSON.stringify(performanceLog), true);
+                beacon.postJson('/commercial-report', JSON.stringify(performanceLog));
             });
         }
     }
