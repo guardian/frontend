@@ -3,7 +3,6 @@ package controllers
 import common._
 import play.api.mvc._
 import model.diagnostics.analytics.Analytics
-import model.diagnostics.css.Css
 import model.diagnostics.csp.CSP
 import model.diagnostics.commercial.UserReport
 import model.TinyResponse
@@ -18,15 +17,6 @@ class DiagnosticsController extends Controller with Logging {
   }
 
   private lazy val jsonParser = parse.tolerantJson(1024 *1024)
-
-  def css = Action(jsonParser) { implicit request =>
-    if (conf.switches.Switches.CssLogging.isSwitchedOn) {
-      Css.report(request.body)
-    }
-    TinyResponse.noContent()
-  }
-
-  def cssOptions = postOptions
 
   def csp = Action(jsonParser) { implicit request =>
     if (conf.switches.Switches.CspReporting.isSwitchedOn && r.nextInt(100) == 1) {
@@ -59,5 +49,3 @@ class DiagnosticsController extends Controller with Logging {
     TinyResponse.noContent(Some("POST, OPTIONS"))
   }
 }
-
-object DiagnosticsController extends DiagnosticsController

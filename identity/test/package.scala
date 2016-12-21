@@ -2,7 +2,7 @@ package test
 
 import java.io.File
 
-import controllers.{EditProfileControllerTest, EmailControllerTest, SignoutControllerTest}
+import controllers.{EditProfileControllerTest, EmailControllerTest}
 import filters.StrictTransportSecurityHeaderFilterTest
 import org.scalatest.Suites
 import play.api.i18n.I18nComponents
@@ -38,7 +38,6 @@ object I18NTestComponents extends I18nComponents {
 class IdentityTestSuite extends Suites(
   new EditProfileControllerTest,
   new EmailControllerTest,
-  new SignoutControllerTest,
   new StrictTransportSecurityHeaderFilterTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19010
