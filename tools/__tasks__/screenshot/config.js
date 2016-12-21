@@ -5,14 +5,14 @@ const domain = {
     prod: 'theguardian.com',
     code: 'm.code.dev-theguardian.com',
     dev: 'localhost',
-    ci: 'localhost'
+    ci: 'localhost',
 }[environment];
 
 const port = {
     prod: '80',
     code: '80',
     dev: '9000',
-    ci: '9000'
+    ci: '9000',
 }[environment];
 
 const host = `http://${domain}:${port}/`;
@@ -22,21 +22,21 @@ const paths = {
     prod: [
         'uk',
         'us',
-        'au'
+        'au',
     ],
     code: [
         'uk',
         'us',
-        'au'
+        'au',
     ],
     dev: [
         'uk',
         'us',
-        'au'
+        'au',
     ],
     ci: [
-        'books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism'
-    ]
+        'books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism',
+    ],
 }[environment];
 
 module.exports = {
