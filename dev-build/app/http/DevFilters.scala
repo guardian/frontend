@@ -1,14 +1,12 @@
 package http
 
-import javax.inject.Inject
 import akka.stream.Materializer
 import common.ExecutionContexts
-import conf.Filters
+import Filters
 import implicits.Requests
 import model.ApplicationContext
 import play.api.http.HttpFilters
 import play.api.mvc.{EssentialAction, EssentialFilter, RequestHeader}
-
 
 // obviously this is only for devbuild and should never end up in one of our
 // prod projects

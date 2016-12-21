@@ -1,13 +1,13 @@
-package googleAuth
+package http
 
 import akka.stream.Materializer
-import play.api.mvc.RequestHeader
-import play.api.Mode
 import com.gu.googleauth.{FilterExemption, UserIdentity}
+import googleAuth.AuthCookie
 import model.ApplicationContext
+import play.api.Mode
 import play.api.libs.crypto.CryptoConfig
-import play.api.mvc.{Filter, Result}
 import play.api.mvc.Results.Redirect
+import play.api.mvc.{Filter, RequestHeader, Result}
 
 import scala.concurrent.Future
 

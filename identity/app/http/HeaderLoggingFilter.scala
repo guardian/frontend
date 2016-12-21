@@ -1,9 +1,10 @@
-package filters
+package http
 
 import akka.stream.Materializer
+import common.ExecutionContexts
 import play.api.mvc._
 import utils.SafeLogging
-import common.ExecutionContexts
+
 import scala.concurrent.Future
 
 class HeaderLoggingFilter(implicit val mat: Materializer) extends Filter with SafeLogging with ExecutionContexts {

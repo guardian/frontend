@@ -9,6 +9,7 @@ import controllers.{Assets, HealthCheck, IdentityControllers}
 import dev.DevAssetsController
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
+import http.IdentityFilters
 import play.api._
 import play.api.http.HttpErrorHandler
 import play.api.libs.ws.WSClient

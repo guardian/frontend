@@ -1,8 +1,8 @@
-package conf
+package http
 
 import akka.stream.Materializer
+import GoogleAuthFilters.AuthFilterWithExemptions
 import com.gu.googleauth.FilterExemption
-import googleAuth.GoogleAuthFilters.AuthFilterWithExemptions
 import model.ApplicationContext
 import play.api.http.HttpFilters
 import play.api.libs.crypto.CryptoConfig
