@@ -8,7 +8,7 @@ import targeting.TargetingLifecycle
 import common.dfp.DfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.{CachedHealthCheckLifeCycle, CommonFilters}
-import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, MockHttpClient}
 import controllers.{ArticleControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import model.ApplicationIdentity
@@ -20,6 +20,7 @@ import play.api.routing.Router
 import play.api._
 import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi}
 import router.Routes
+import conf.Configuration
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -27,7 +28,9 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait AppComponents extends FrontendComponents with ArticleControllers {
 
-  lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
+  lazy val _isDevInfra = Configuration.environment.stage.equalsIgnoreCase("DEVINFRA")
+  lazy val capiHttpClient: HttpClient = if (_isDevInfra) wire[MockHttpClient] else wire[CapiHttpClient]
+
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]
 
