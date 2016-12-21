@@ -9,12 +9,9 @@ import play.twirl.api.Html
 import views.support._
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 import cards.{MediaList, Standard}
-import com.gu.contentapi.client.model.v1
-import com.gu.contentapi.client.model.v1.{ContentType, ItemResponse, Tag, TagType}
 import com.gu.contentapi.client.model.{v1 => contentapi}
+import com.gu.contentapi.client.model.v1.{ContentType, TagType}
 import com.gu.facia.api.{utils => fapiutils}
-import com.gu.facia.api.utils
-import com.gu.facia.client.models.TrailMetaData
 
 import scala.Function.const
 

@@ -6,7 +6,7 @@ import contentapi.ContentApiClient
 import implicits.Requests
 import layout.ContentCard
 import model.{ApplicationContext, Cached, NoCache}
-import play.api.mvc.{Action, Controller, RequestHeader, Result}
+import play.api.mvc.{Action, Controller, RequestHeader}
 import play.twirl.api.HtmlFormat
 
 import scala.concurrent.Future
