@@ -29,6 +29,12 @@ define([
                     '</button>'
                 ]
             },
+            fixturesConfigNoVideo = {
+                id: 'next-video-not-autoplay',
+                fixtures: [
+                    '<div class="js-autoplay-timer" data-next-page="">10s</div>'
+                ]
+            },
             $fixturesContainer;
 
         beforeEach(function (done) {
@@ -48,6 +54,7 @@ define([
 
         afterEach(function () {
             fixtures.clean(fixturesConfig.id);
+            fixtures.clean(fixturesConfigNoVideo.id);
         });
 
         it('should exist', function (done) {
@@ -78,13 +85,8 @@ define([
         });
 
         it('should not trigger autoplay when there is no next video', function (done) {
-            fixturesConfig = {
-                id: 'next-video-autoplay',
-                fixtures: [
-                    '<div class="js-autoplay-timer" data-next-page="">10s</div>'
-                ]
-            };
-            $fixturesContainer = fixtures.render(fixturesConfig);
+            fixtures.clean(fixturesConfig.id);
+            $fixturesContainer = fixtures.render(fixturesConfigNoVideo);
             nextVideoAutoplay.init().then(function(){
                 expect(nextVideoAutoplay.canAutoplay()).toBeFalsy();
                 done();
