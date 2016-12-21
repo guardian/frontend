@@ -51,7 +51,7 @@ GET        /video/end-slate/section/*sectionId.json   controllers.VideoEndSlateC
 
 GET        /embed/card/*path.json                     controllers.RichLinkController.render(path)
 GET        /embed/card/*path                          controllers.RichLinkController.renderHtml(path)
-GET        /embed/contentcard/*path.json              controllers.ContentCardController.render(path, group: Option[Int], card: Option[Int])
+GET        /embed/contentcard/*path.json              controllers.ContentCardController.render(path)
 GET        /embed/contentcard/*path                   controllers.ContentCardController.renderHtml(path)
 
 

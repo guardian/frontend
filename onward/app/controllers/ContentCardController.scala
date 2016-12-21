@@ -13,14 +13,11 @@ import scala.concurrent.Future
 
 class ContentCardController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Paging with Logging with ExecutionContexts with Requests   {
 
-  val DefaultGroup = 0
-  val DefaultCard = 1
+  def renderHtml(path: String) = render(path)
 
-  def renderHtml(path: String) = render(path, Some(DefaultGroup), Some(DefaultCard))
-
-  def render(path: String, group: Option[Int], card: Option[Int]) = Action.async { implicit request =>
+  def render(path: String) = Action.async { implicit request =>
     lookup(path) map { content =>
-      content.map(renderContent(group.getOrElse(DefaultGroup), card.getOrElse(DefaultCard))).getOrElse(NotFound)
+      content.map(renderContent).getOrElse(NotFound)
     }
   }
 
@@ -44,8 +41,9 @@ class ContentCardController(contentApiClient: ContentApiClient)(implicit context
   }
 
 
-  private def renderContent(group: Int, card: Int)(implicit request: RequestHeader): ContentCard => Result = (content: ContentCard) => {
-    def contentResponse: HtmlFormat.Appendable = views.html.fragments.items.facia_cards.contentCard(content, group, card, "all", false, false)(request)
+  private def renderContent(content: ContentCard)(implicit request: RequestHeader) = {
+
+    def contentResponse: HtmlFormat.Appendable = views.html.fragments.items.facia_cards.contentCard(content, 0, 1, "all", false, false)(request)
 
     if (!request.isJson) NoCache(Ok(contentResponse))
     else Cached(900) {

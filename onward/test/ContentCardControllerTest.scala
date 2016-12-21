@@ -1,5 +1,5 @@
 package test
-import controllers.{ContentCardController, RichLinkController}
+import controllers.ContentCardController
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
 import play.api.test._
@@ -18,9 +18,11 @@ import play.api.test._
   lazy val contentCardController = new ContentCardController(testContentApiClient)
 
   "Content Card Controller" should "200 when the content is found" in {
-      val result = contentCardController.renderHtml(article, None, None)(TestRequest())
+      val result = contentCardController.renderHtml(article)(TestRequest())
       status(result) should be(200)
       contentType(result) should be ("text/html")
+      val stringResult = contentAsString(result).trim
+      stringResult.startsWith("<div class")
   }
 
   it should "return JSON when .json format is supplied" in {
@@ -28,7 +30,7 @@ import play.api.test._
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = contentCardController.render(article, None, None)(fakeRequest)
+    val result = contentCardController.render(article)(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
 
@@ -37,18 +39,4 @@ import play.api.test._
 
   }
 
-  it should "accept group and card index parameters for json endpoint" in {
-    val fakeRequest = FakeRequest(GET, s"/embed/card/$article.json")
-      .withHeaders("host" -> "localhost:9000")
-      .withHeaders("Origin" -> "http://www.theorigin.com")
-
-    val result = contentCardController.render(article, Some(0), Some(0))(fakeRequest)
-    status(result) should be(200)
-    contentType(result).get should be("application/json")
-
-    val resultAsString = contentAsString(result)
-    resultAsString should startWith("{\"html\"")
-    resultAsString should contain("<h1>")
-
-  }
 }
