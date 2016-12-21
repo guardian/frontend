@@ -17,11 +17,11 @@ define([
     userFeatures,
     mediator
 ) {
-    var EditionTest = function (edition, start, expiry, campaignPrefix) {
+    var EditionTest = function (edition, id, start, expiry, campaignPrefix) {
 
         this.edition = edition;
         this.campaignPrefix = campaignPrefix;
-        this.id = 'MembershipEngagementBanner'+edition[0].toUpperCase() + edition.substr(1).toLowerCase();
+        this.id = id;
         this.start = start;
         this.expiry = expiry;
         this.author = 'Roberto Tyley';
@@ -81,17 +81,13 @@ define([
     };
 
     return [
-        new EditionTest('UK', '2016-11-23', '2016-12-8', 'gdnwb_copts_mem_banner_ukbanner__')
-            .addMembershipVariant('post_truth_world', {messageText: 'In a post-truth world, facts matter more than ever. Support the Guardian for £5 a month'})
-            .addMembershipVariant('now_is_the_time', {messageText: 'If you’ve been thinking about supporting us, now is the time to do it. Support the Guardian for £5 a month'})
-            .addMembershipVariant('everyone_chipped_in', {messageText: 'Not got around to supporting us yet? If everyone chipped in, our future would be more secure. Support the Guardian for £5 a month'})
-            .addMembershipVariant('free_and_open', {messageText: 'By giving £5 a month you can help to keep the Guardian’s journalism free and open for all'})
-        ,new EditionTest('AU', '2016-11-24', '2017-1-5', 'gdnwb_copts_mem_banner_aubanner__')
+        new EditionTest('AU', 'AuMembEngagementMsgCopyTest8', '2016-11-24', '2017-1-5', 'gdnwb_copts_mem_banner_aubanner__')
+            .addMembershipVariant('control', {})
             .addMembershipVariant('fearless_10', {messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia member for just $10 a month'})
             .addMembershipVariant('stories_that_matter', {messageText: 'We need your help to tell the stories that matter. Support Guardian Australia now'})
             .addMembershipVariant('power_to_account', {messageText: 'We need your help to hold power to account. Become a Guardian Australia supporter'})
             .addMembershipVariant('independent_journalism', {messageText: 'Support quality, independent journalism in Australia by becoming a supporter'})
-        ,new EditionTest('INT', '2016-12-13', '2017-1-6', 'gdnwb_copts_mem_banner_int_banner__')
+        ,new EditionTest('INT', 'MembershipEngagementInternationalExperimentTest12', '2016-12-13', '2017-1-6', 'gdnwb_copts_mem_banner_int_banner__')
             .addMembershipVariant('control', {})
             .addMembershipVariant('1st_article', {minArticles: 1})
             .addMembershipVariant('3rd_article', {minArticles: 3})
