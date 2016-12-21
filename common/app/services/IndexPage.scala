@@ -84,13 +84,13 @@ object IndexPage {
         val (container, newMpuState) = mpuContainer map { mpuContainer =>
           (mpuContainer, mpuState.copy(injected = true))
         } getOrElse {
-          val containerDefinition = if (isSlow) {
+          val definition = if (isSlow) {
             ContainerDefinition.slowForNumberOfItems(grouping.items.length)
           } else {
             ContainerDefinition.fastForNumberOfItems(grouping.items.length)
           }
 
-          (containerDefinition, mpuState)
+          (definition, mpuState)
         }
 
         val containerConfig = ContainerDisplayConfig(
