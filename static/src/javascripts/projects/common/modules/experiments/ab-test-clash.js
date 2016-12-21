@@ -7,7 +7,7 @@ define([
 ) {
     var ContributionsEpicAlwaysAskStrategy = {
         name: 'ContributionsEpicAlwaysAskStrategy',
-        variants: ['control', 'alwaysAsk']
+        variants: ['alwaysAsk']
     };
 
     var ContributionsEpicOnTheMoon = {

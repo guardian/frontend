@@ -79,7 +79,7 @@
 }
 
 @fullRow {
-    @imgForFront(src = page.banner, alt = page.email.map(_.name))
+    @imgForFront(page.banner, page.email.map(_.name))
 }
 
 @page.frontProperties.onPageDescription.map { description =>
