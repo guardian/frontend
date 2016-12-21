@@ -113,8 +113,7 @@ define([
                     // These modules all have async init procedures which don't block, and return a promise purely for
                     // perf logging, to time when their async work is done. The command buffer guarantees execution order,
                     // so we don't use the returned promise to order the bootstrap's module invocations.
-                    var workComplete = moduleInit(moduleName);
-                    customTimingModules.push(workComplete);
+                    customTimingModules.push(moduleInit(moduleName));
                 } else {
                     // Standard modules return a promise that must resolve before dependent bootstrap modules can begin
                     // to execute. Timing is done here in the bootstrap, using the appropriate baseline.
