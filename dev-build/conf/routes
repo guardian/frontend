@@ -19,8 +19,6 @@ GET            /assets/*path                                                    
 
 # Diagnostics
 GET            /count/$prefix<.+>.gif                                                                                            controllers.DiagnosticsController.analytics(prefix)
-POST           /css                                                                                                              controllers.DiagnosticsController.css
-OPTIONS        /css                                                                                                              controllers.DiagnosticsController.cssOptions
 POST           /csp-report                                                                                                       controllers.DiagnosticsController.csp
 OPTIONS        /csp-report                                                                                                       controllers.DiagnosticsController.cspOptions
 POST           /commercial-report                                                                                                controllers.DiagnosticsController.commercialReport
@@ -235,11 +233,6 @@ GET            /press/r2                                                        
 POST           /press/r2                                                                                                         controllers.admin.R2PressController.press()
 GET            /press/r2/batchupload                                                                                             controllers.admin.R2PressController.pressForm()
 POST           /press/r2/batchupload                                                                                             controllers.admin.R2PressController.batchUpload()
-
-# css reports
-GET            /css-reports                                                                                                      controllers.admin.CssReportController.entry
-GET            /css-reports.json                                                                                                 controllers.admin.CssReportController.index
-GET            /css-reports/:date.json                                                                                           controllers.admin.CssReportController.report(date: org.joda.time.LocalDate)
 
 
 # Football admin
