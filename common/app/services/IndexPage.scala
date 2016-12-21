@@ -67,7 +67,7 @@ object IndexPage {
                             mpuState: MpuState,
                             accumulation: Vector[((ContainerDisplayConfig, CollectionEssentials), Container)] = Vector.empty
                            ): Seq[((ContainerDisplayConfig, CollectionEssentials), Container)] = {
-      groupings match {
+      groupings.toList match {
         case Nil => accumulation
         case grouping :: remainingGroupings =>
         val collection = CollectionEssentials.fromFaciaContent(

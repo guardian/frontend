@@ -370,7 +370,7 @@ object Front extends implicits.Collections {
                         seenTrails: Set[TrailUrl] = Set.empty,
                         index: Int = 0,
                         accumulation: Vector[FaciaContainer] = Vector.empty): Seq[FaciaContainer] = {
-      allConfigs match {
+      allConfigs.toList match {
         case Nil => accumulation
         case ((config, collection), container) :: remainingConfigs =>
           val (newSeen, newItems, _) = deduplicate(seenTrails, container, collection.items)
