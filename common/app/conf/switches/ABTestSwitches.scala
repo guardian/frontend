@@ -1,9 +1,20 @@
 package conf.switches
 
+import common.Edition
 import conf.switches.SwitchGroup.ABTests
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
+
+  for (edition <- Edition.all) Switch(
+    SwitchGroup.ABTests,
+    "ab-membership-engagement-banner-"+edition.id.toLowerCase,
+    "Test effectiveness of different engagement banners for driving Membership and Contributions.",
+    owners = Seq(Owner.withGithub("rtyley")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 9, 8),
+    exposeClientSide = true
+  )
 
   Switch(
     ABTests,
@@ -17,31 +28,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-engagement-international-experiment-test12",
-    "Test varying the number of visits before showing the membership engagement banner",
-    owners = Seq(Owner.withGithub("rupert.bates")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 16),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-recommended-for-you-recommendations",
     "Test personalised container on fronts",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 1, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-uk-memb-engagement-msg-copy-test-10",
-    "Test alternate short messages on membership engagement banner",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 22), // Thursday 22nd December
     exposeClientSide = true
   )
 
