@@ -92,7 +92,10 @@ define([
             .addMembershipVariant('power_to_account', {messageText: 'We need your help to hold power to account. Become a Guardian Australia supporter'})
             .addMembershipVariant('independent_journalism', {messageText: 'Support quality, independent journalism in Australia by becoming a supporter'})
         ,new EditionTest('INT', '2016-12-13', '2017-1-6', 'gdnwb_copts_mem_banner_int_banner__')
-            .addMembershipVariant('10th_article', {minArticles: 10})
+            .addMembershipVariant('control', {})
             .addMembershipVariant('1st_article', {minArticles: 1})
+            .addMembershipVariant('3rd_article', {minArticles: 3})
+            .addMembershipVariant('5th_article', {minArticles: 5})
+            .addMembershipVariant('7th_article', {minArticles: 7})
     ];
 });
