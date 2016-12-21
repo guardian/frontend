@@ -68,7 +68,6 @@ define([
 
             if ($youtubeIframe.length === 0 && $videoEl.length === 0) {
                 // halt execution
-                performanceLogging.moduleEnd(moduleName);
                 resolve();
                 return;
             }
@@ -134,13 +133,16 @@ define([
                         hostedYoutube.init(el);
                     });
 
-                    performanceLogging.moduleEnd(moduleName);
                     resolve();
                 });
             });
         });
 
-        return enhanceVideo;
+        function moduleEnd(){
+            performanceLogging.moduleEnd(moduleName);
+        }
+
+        return enhanceVideo.then(moduleEnd, moduleEnd);
     }
 
     return {
