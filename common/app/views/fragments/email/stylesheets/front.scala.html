@@ -7,26 +7,6 @@
         background: #ffffff;
     }
 
-    h1, h2, h3, h5, h6, p, blockquote {
-        font-family: "Guardian Egyptian Web Headline", Georgia, serif;
-    }
-
-    h2 {
-        font-family: "Guardian Egyptian Web Header", "Guardian Egyptian Web Headline", Georgia, serif;
-        font-size: 26px;
-        margin-bottom: 12px;
-        margin-top: 26px;
-    }
-
-    h4 {
-        font-family: Georgia, serif;
-    }
-
-    p {
-        font-size: 14px;
-        line-height: 18px;
-    }
-
     .full-width {
         width: 100%;
     }
@@ -42,12 +22,18 @@
     }
 
     .introduction {
-        font-family: "Helvetica", "Arial", sans-serif;
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        line-height: 18px;
         background: #f6f6f6;
         padding: 6px 10px 36px 10px;
     }
 
     .container-title {
+        font-family: "Guardian Egyptian Web Header", "Guardian Egyptian Web Headline", Georgia, serif;
+        font-size: 26px;
+        margin-bottom: 12px;
+        margin-top: 26px;
         color: #333333;
         padding-top: 4px;
     }
@@ -55,27 +41,28 @@
         border-top: 3px solid @page.toneColour;
     }
 
-    .facia-card {
-        display: block;
+    .facia-link {
         text-decoration: none;
-        padding-bottom: 26px;
+    }
+    .facia-card__text {
+        padding: 0 10px 26px 10px !important;
+    }
+
+    .headline, .trail-text {
+        margin-top: 6px;
     }
 
     .headline {
+        font-family: "Guardian Egyptian Web Headline", Georgia, serif;
         font-size: 16px;
         line-height: 20px;
-        margin: 0;
         color: inherit;
     }
 
     .trail-text {
-      font-size: 14px;
-      line-height: 18px;
-    }
-
-    .facia-card .headline,
-    .facia-card .trail-text {
-        padding: 6px 10px 0px 10px;
+        font-family: Georgia, serif;
+        font-size: 14px;
+        line-height: 18px;
     }
 
     .facia-card--large .headline {

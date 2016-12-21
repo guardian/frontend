@@ -54,5 +54,4 @@ trait AdminControllers {
   lazy val playerController = wire[PlayerController]
   lazy val tablesController = wire[TablesController]
   lazy val frontsController = wire[FrontsController]
-  lazy val cssReportController = wire[CssReportController]
 }

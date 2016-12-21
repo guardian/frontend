@@ -25,6 +25,7 @@ define([
     keys,
     cookies
 ) {
+    var adblockBeingUsed = false;
 
     function objToString(obj) {
         return reduce(obj, function (str, value, key) {
@@ -61,7 +62,7 @@ define([
                     browser: window.navigator.userAgent,
                     page: window.location,
                     width: window.innerWidth,
-                    adBlock: detect.adblockInUseSync(),
+                    adBlock: adblockBeingUsed,
                     devicePixelRatio: window.devicePixelRatio,
                     ophanId: config.ophan.pageViewId,
                     gu_u: cookies.get('GU_U'),
@@ -116,6 +117,10 @@ define([
      * override those at the time the email is sent.
      */
     return function () {
+        detect.adblockInUse.then(function(adblockInUse){
+            adblockBeingUsed = adblockInUse;
+        });
+
         var storedValues = getValuesFromHash(window.location.hash);
         registerHandler('.js-tech-feedback-report', addEmailValuesToHash(storedValues));
         registerHandler('.js-tech-feedback-mailto', addEmailHeaders(storedValues));

@@ -495,7 +495,7 @@ trait FeatureSwitches {
     "Allows hidden fronts to be rendered as email-friendly HTML by passing ?format=email",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 20),
+    sellByDate = new LocalDate(2017, 1, 10),
     exposeClientSide = true
   )
 
@@ -506,7 +506,7 @@ trait FeatureSwitches {
     "Allows alternate email styling when passing ?format=email-connected, for testing two email design variants",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 20),
+    sellByDate = new LocalDate(2017, 1, 10),
     exposeClientSide = true
   )
 
