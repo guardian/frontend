@@ -59,17 +59,15 @@ class FaciaDisplayElementTest extends FlatSpec with Matchers {
   )
 
   private def video(id: String, relation: String, caption: String, width: Int): ApiElement = {
-    val videoAsset = Asset(AssetType.Video, Some("video/webm"), Some("http://video.com/uri"), Some(AssetFields(caption=Some(caption), width=Some(width))))
+    val videoAsset = Asset(AssetType.Video, Some("video/webm"), Some("http://video.com/uri"), Some(AssetFields(caption = Some(caption), width = Some(width))))
     ApiElement(id, relation, ElementType.Video, Some(0), List(videoAsset))
   }
 
-  private def image(id: String, relation: String, index: Int, assets: List[Asset]): ApiElement = {
+  private def image(id: String, relation: String, index: Int, assets: List[Asset]): ApiElement =
     ApiElement(id, relation, ElementType.Image, Some(0), assets)
-  }
 
-  private def imageAsset(caption: String, width: Int): Asset = {
+  private def imageAsset(caption: String, width: Int): Asset =
     Asset(AssetType.Image, Some("image/jpeg"), Some("http://www.foo.com/bar"),
       Some(AssetFields(caption = Some(caption), width = Some(width))))
-  }
 
 }

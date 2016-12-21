@@ -312,20 +312,46 @@ object ContentCard {
   def makeFromApiContent(apiContent: contentapi.Content): Option[ContentCard] = {
 
     apiContent.fields.map { fields =>
-      val discussionSettings = for {
-        commentable <- fields.commentable
-        isClosedForComments <- fields.commentCloseDate.map(closeDate => new DateTime(closeDate.dateTime).isBeforeNow)
-      } yield DiscussionSettings(commentable, isClosedForComments, None)
+
+      val discussionSettings = fields.commentable map { commentable =>
+        DiscussionSettings(
+          isCommentable = commentable,
+          isClosedForComments = new DateTime(fields.commentCloseDate).isBeforeNow,
+          discussionId = None
+        )
+      }
+      val defaultDiscussionSettings = DiscussionSettings(
+        isCommentable = false,
+        isClosedForComments = true,
+        None
+      )
 
       val isVideo = apiContent.`type` == ContentType.Video
-      val faciaCardHeader = FaciaCardHeader(false, false, isVideo, false, false, None, apiContent.webTitle, EditionalisedLink(apiContent.webUrl))
-      val unsetDisplaySettings = DisplaySettings(false, false, false, false, false)
+      val faciaCardHeader = FaciaCardHeader(
+        quoted = false,
+        isExternal = false,
+        isVideo = isVideo,
+        isGallery = false,
+        isAudio = false,
+        kicker = None,
+        headline = apiContent.webTitle,
+        url = EditionalisedLink(apiContent.webUrl)
+      )
+
+      val unsetDisplaySettings = DisplaySettings(
+        isBoosted = false,
+        showBoostedHeadline = false,
+        showQuotedHeadline = false,
+        imageHide = false,
+        showLivePlayable = false
+      )
+
       val cardTypesForRecommendations = ItemClasses(mobile = MediaList, tablet = Standard, None)
 
       def byline: Option[Byline] = {
-        val contributorApiTags = apiContent.tags.filter(tag => tag.`type` == TagType.Contributor)
+        val contributorApiTags = apiContent.tags.filter(_.`type` == TagType.Contributor)
         val contributorTags = contributorApiTags.map(tag => model.Tag(TagProperties.make(tag), None, None, None))
-        fields.byline.map(byline => Byline(byline, contributorTags))
+        fields.byline.map(Byline(_, contributorTags))
       }
 
       ContentCard(
@@ -338,7 +364,7 @@ object ContentCard {
         cardTypes = cardTypesForRecommendations,
         sublinks = Seq(),
         starRating = fields.starRating,
-        discussionSettings = discussionSettings.getOrElse(DiscussionSettings(false, false, None)),
+        discussionSettings = discussionSettings.getOrElse(defaultDiscussionSettings),
         snapStuff = None,
         webPublicationDate = apiContent.webPublicationDate.map(date => new DateTime(date.dateTime)),
         trailText = fields.trailText,

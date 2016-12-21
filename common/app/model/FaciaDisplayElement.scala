@@ -37,7 +37,7 @@ object FaciaDisplayElement {
     maybeEndSlateComponents flatMap { endSlateComponents =>
       elements.mainVideo match {
         case Some(videoElement) => Option(InlineVideo(videoElement, apiContent.webTitle, endSlateComponents.toUriPath, Option(InlineImage(videoElement.images))))
-        case None => elements.mainPicture map {picture => InlineImage(picture.images)}
+        case None => elements.mainPicture.map(picture => InlineImage(picture.images))
       }
     }
   }
