@@ -63,21 +63,18 @@ define([
         // Return a promise that resolves after the async work is done.
         var enhanceVideo = new Promise(function(resolve){
 
+            var $videoEl = $('.vjs-hosted__video, video');
+            var $youtubeIframe = $('.js-hosted-youtube-video');
+
+            if ($youtubeIframe.length === 0 && $videoEl.length === 0) {
+                // halt execution
+                performanceLogging.moduleEnd(moduleName);
+                resolve();
+                return;
+            }
+
             require(['bootstraps/enhanced/media/main'], function() {
                 require(['bootstraps/enhanced/media/video-player'], function (videojs) {
-                    var $videoEl = $('.vjs-hosted__video');
-                    var $inlineVideoEl = $('video');
-                    var $youtubeIframe = $('.js-hosted-youtube-video');
-
-                    if ($youtubeIframe.length === 0 && $videoEl.length === 0) {
-                        if ($inlineVideoEl.length === 0) {
-                            // halt execution
-                            performanceLogging.moduleEnd(moduleName);
-                            resolve();
-                        } else {
-                            $videoEl = $inlineVideoEl;
-                        }
-                    }
 
                     $videoEl.each(function(el){
                         var mediaId = $videoEl.attr('data-media-id');
