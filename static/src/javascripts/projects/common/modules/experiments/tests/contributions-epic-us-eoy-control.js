@@ -15,7 +15,7 @@ define([
 ) {
     return contributionsUtilities.makeABTest({
         id: 'ContributionsEpicUsEoyControl',
-        campaignId: 'epic_us_eoy_control',
+        campaignId: 'epic_us_eoy',
 
         start: '2016-12-13',
         expiry: '2017-01-03',
