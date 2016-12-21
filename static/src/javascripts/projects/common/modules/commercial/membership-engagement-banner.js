@@ -52,7 +52,7 @@ define([
         var offeringParams = {
             membership: {
                 buttonCaption: 'Become a Supporter',
-                linkUrl: 'https://membership.theguardian.com/'
+                linkUrl: 'https://membership.theguardian.com/supporter'
             },
             contributions: {
                 buttonCaption: 'Make a Contribution',
