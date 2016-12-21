@@ -17,14 +17,22 @@
         <meta itemprop="coverageStartTime" content="@Format(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")">
     }
 
-    @if(hasBeenModified && firstPublicationDate.getOrElse("") != webPublicationDate && !isMinute) {
-        @defining(firstPublicationDate.getOrElse(webPublicationDate)) { firstPublicationDate =>
-            <time datetime='@Format(firstPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")'
-            data-timestamp="@firstPublicationDate.getMillis" class="content__dateline-lm js-lm u-h">
-                First published on @Format(firstPublicationDate, "EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(firstPublicationDate)</span>
-            </time>
-        }
+    @secondaryDateLine(date: DateTime, label: String, optItemProp: Option[String] = None) = {
+        <time datetime='@Format(date, "yyyy-MM-dd'T'HH:mm:ssZ")'
+        data-timestamp="@date.getMillis" class="content__dateline-lm js-lm u-h"
+        @optItemProp.map { itemProp => itemprop="@itemProp" }
+        >
+            @label @Format(date, "EEEE d MMMM y") <span class="content__dateline-time">@AuFriendlyFormat(date)</span>
+        </time>
     }
+
+
+    @{if(!isMinute && hasBeenModified) {
+        firstPublicationDate.getOrElse("") != webPublicationDate match {
+            case true => secondaryDateLine(firstPublicationDate.getOrElse(webPublicationDate), "First published on")
+            case _ => secondaryDateLine(lastModified, "Last modified on", Option("dateModified"))
+        }
+    }}
 
     @if(isLiveBlog && !isLive) {
         <meta itemprop="coverageEndTime" content="@Format(lastModified, "yyyy-MM-dd'T'HH:mm:ssZ")">
