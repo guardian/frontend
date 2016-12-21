@@ -14,7 +14,6 @@ define([
     'common/modules/experiments/tests/contributions-epic-on-the-moon',
     'common/modules/experiments/tests/uk-membership-engagement-message-test-10',
     'common/modules/experiments/tests/au-membership-engagement-message-test-8',
-    'common/modules/experiments/tests/its-raining-inline-ads',
     'common/modules/experiments/tests/contributions-epic-us-eoy-control',
     'common/modules/experiments/tests/contributions-epic-us-eoy-end-of-year'
 ], function (reportError,
@@ -32,7 +31,6 @@ define([
              ContributionsEpicOnTheMoon,
              UkMembershipEngagementMessageTest10,
              AuMembershipEngagementMessageTest8,
-             ItsRainingInlineAds,
              ContributionsEpicUsEoyControl,
              ContributionsEpicUsEoyEndOfYear
     ) {
@@ -44,7 +42,6 @@ define([
         new ContributionsEpicOnTheMoon(),
         new UkMembershipEngagementMessageTest10(),
         new AuMembershipEngagementMessageTest8(),
-        new ItsRainingInlineAds(),
         new ContributionsEpicUsEoyControl(),
         new ContributionsEpicUsEoyEndOfYear()
     ];

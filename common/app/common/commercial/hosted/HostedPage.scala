@@ -2,12 +2,13 @@ package common.commercial.hosted
 
 import java.net.URLEncoder
 
-import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery, Video}
+import com.gu.contentapi.client.model.v1.{Content, SponsorshipLogoDimensions}
 import common.Logging
-import common.commercial.Logo
+import common.commercial.Dimensions
 import conf.Configuration.site
 import model.StandalonePage
+import play.api.libs.json.Json
 
 trait HostedPage extends StandalonePage {
   def id: String
@@ -53,7 +54,7 @@ case class HostedCampaign(
   id: String,
   name: String,
   owner: String,
-  logo: Logo,
+  logo: HostedLogo,
   fontColour: Colour
 )
 
@@ -66,13 +67,27 @@ object HostedCampaign {
       sponsorships <- hostedTag.activeSponsorships
       sponsorship <- sponsorships.headOption
     } yield {
+      val id = section.id.stripPrefix("advertiser-content/")
       HostedCampaign(
-        id = section.id.stripPrefix("advertiser-content/"),
+        id,
         name = section.webTitle,
         owner = sponsorship.sponsorName,
-        logo = Logo.make(sponsorship.sponsorLogo, sponsorship.sponsorLogoDimensions),
+        logo = HostedLogo.make(sponsorship.sponsorLogo, sponsorship.sponsorLogoDimensions, id),
         fontColour = Colour(hostedTag.paidContentCampaignColour getOrElse "")
       )
     }
   }
+}
+
+case class HostedLogo(url: String, dimensions: Option[Dimensions], trackingCode: String)
+
+object HostedLogo {
+
+  implicit val jsonFormat = Json.format[HostedLogo]
+
+  def make(url: String, dimensions: Option[SponsorshipLogoDimensions], campaignId: String) = HostedLogo(
+    url,
+    dimensions map (d => Dimensions(d.width, d.height)),
+    trackingCode = s"$campaignId logo"
+  )
 }

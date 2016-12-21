@@ -1,13 +1,12 @@
 @(content: model.Content)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import views.support.GoogleAnalyticsAccount
-
 @* TODO: Abstract this out so its shared with the main GA tracking *@
 <amp-analytics type="googleanalytics" id="google-analytics">
     <script type="application/json">
             {
               "requests": {
-                "pageviewWithCustomDims": "${pageview}&cd3=${platform}&cd4=${sectionId}&cd5=${contentType}&cd6=${commissioningDesks}&cd7=${contentId}&cd8=${contributorIds}&cd9=${keywordIds}&cd10=${toneIds}&cd11=${seriesId}&cd26=${isHostedFlag}&cd29=${fullRequestUrl}"
+                "pageviewWithCustomDims": "${pageview}&cd3=${platform}&cd4=${sectionId}&cd5=${contentType}&cd6=${commissioningDesks}&cd7=${contentId}&cd8=${contributorIds}&cd9=${keywordIds}&cd10=${toneIds}&cd11=${seriesId}&cd26=${isHostedFlag}&cd29=${fullRequestUrl}&cd27=${userAgent}"
               },
               "vars": {
                 "account": "@{GoogleAnalyticsAccount.editorialTracker(context).trackingId}"
@@ -28,7 +27,8 @@
                     "toneIds": "@{content.tags.tones.map(_.id).mkString(",")}",
                     "seriesId": "@{content.tags.series.map(_.id).headOption.getOrElse("")}",
                     "isHostedFlag": "@{content.metadata.isHosted.toString}",
-                    "fullRequestUrl": "@{request.domain}@{request.uri}"
+                    "fullRequestUrl": "@{request.domain}@{request.uri}",
+                    "userAgent": "@{request.headers.get("user-agent").getOrElse("")}"
                   }
                 }
               }

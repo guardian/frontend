@@ -113,8 +113,10 @@ define([
      make the call instantly when we detect adBlock in use.
      */
     function loadInstantly() {
-        return !document.getElementById('dfp-ad--merchandising-high') ||
-            detect.adblockInUseSync();
+        return detect.adblockInUse.then(function(adblockInUse){
+            return !document.getElementById('dfp-ad--merchandising-high') ||
+                adblockInUse;
+        });
     }
 
 
@@ -172,33 +174,35 @@ define([
             identityPolicy()
         ) {
             // if there is no merch component, load the outbrain widget right away
-            if (loadInstantly()) {
-                return checkDependencies().then(function (widgetType) {
-                    widgetType ? module.load(widgetType) : module.load();
-                    return Promise.resolve(true);
-                });
-            }
-
-            return trackAdRender('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
-                // if the high-priority merch component has loaded, we wait until
-                // the low-priority one has loaded to decide if an outbrain widget is loaded
-                // if it hasn't loaded, the outbrain widget is loaded at its default
-                // location right away
-                return Promise.all([
-                    isHiResLoaded,
-                    isHiResLoaded ? trackAdRender('dfp-ad--merchandising') : true
-                ]);
-            }).then(function (args) {
-                var isHiResLoaded = args[0];
-                var isLoResLoaded = args[1];
-
-                if (isHiResLoaded) {
-                    if (!isLoResLoaded) {
-                        module.load('merchandising');
-                    }
-                } else {
-                    checkDependencies().then(function (widgetType) {
+            return loadInstantly().then(function(shouldLoadInstantly) {
+                if (shouldLoadInstantly) {
+                    return checkDependencies().then(function (widgetType) {
                         widgetType ? module.load(widgetType) : module.load();
+                        return Promise.resolve(true);
+                    });
+                } else {
+                    return trackAdRender('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
+                        // if the high-priority merch component has loaded, we wait until
+                        // the low-priority one has loaded to decide if an outbrain widget is loaded
+                        // if it hasn't loaded, the outbrain widget is loaded at its default
+                        // location right away
+                        return Promise.all([
+                            isHiResLoaded,
+                            isHiResLoaded ? trackAdRender('dfp-ad--merchandising') : true
+                        ]);
+                    }).then(function (args) {
+                        var isHiResLoaded = args[0];
+                        var isLoResLoaded = args[1];
+
+                        if (isHiResLoaded) {
+                            if (!isLoResLoaded) {
+                                module.load('merchandising');
+                            }
+                        } else {
+                            checkDependencies().then(function (widgetType) {
+                                widgetType ? module.load(widgetType) : module.load();
+                            });
+                        }
                     });
                 }
             });
