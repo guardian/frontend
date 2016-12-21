@@ -62,7 +62,7 @@ define([
 
         it('should show end slate information', function (done) {
             nextVideoAutoplay.triggerEndSlate();
-            fastdom.defer(1, function () {
+            fastdom.read(function () {
                 expect($('.js-hosted-next-autoplay', $fixturesContainer).hasClass('js-autoplay-start')).toBeTruthy();
                 done();
             });
@@ -71,7 +71,7 @@ define([
         it('should hide end slate information when cancel button is clicked', function (done) {
             nextVideoAutoplay.addCancelListener();
             document.querySelector('.js-autoplay-cancel').click();
-            fastdom.defer(1, function () {
+            fastdom.read(function () {
                 expect($('.js-hosted-next-autoplay', $fixturesContainer).hasClass('hosted-slide-out')).toBeTruthy();
                 done();
             });
