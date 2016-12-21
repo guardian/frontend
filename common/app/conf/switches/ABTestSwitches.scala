@@ -7,16 +7,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-its-raining-inline-ads",
-    "Display more inline ads on the wide breakpoint",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 20),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-editorial-email-variants",
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("katebee")),
