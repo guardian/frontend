@@ -1,18 +1,20 @@
 define([
     'bean',
     'fastdom',
+    'commercial/modules/hosted/next-video',
     'common/utils/$',
     'common/modules/analytics/google'
 ], function (
     bean,
     fastdom,
+    NextVideo,
     $,
     googleAnalytics
 ) {
     var nextVideoInterval;
-    var $hostedNext = $('.js-hosted-next-autoplay');
-    var $timer = $('.js-autoplay-timer');
-    var nextVideoPage = $timer.length && $timer.data('next-page');
+    var $hostedNext;
+    var $timer;
+    var nextVideoPage;
 
     function cancelAutoplay() {
         fastdom.write(function () {
@@ -29,7 +31,7 @@ define([
 
     function triggerAutoplay(getCurrentTimeFn, duration) {
         nextVideoInterval = setInterval(function () {
-            var timeLeft = duration - Math.floor(getCurrentTimeFn());
+            var timeLeft = duration - Math.ceil(getCurrentTimeFn());
             var countdownLength = 10; //seconds before the end when to show the timer
 
             if (timeLeft <= countdownLength) {
@@ -64,7 +66,16 @@ define([
         return $hostedNext.length && nextVideoPage;
     }
 
+    function init() {
+        return NextVideo.load().then(function() {
+            $hostedNext = $('.js-hosted-next-autoplay');
+            $timer = $('.js-autoplay-timer');
+            nextVideoPage = $timer.length && $timer.data('next-page');
+        });
+    }
+
     return {
+        init: init,
         canAutoplay: canAutoplay,
         triggerEndSlate: triggerEndSlate,
         triggerAutoplay: triggerAutoplay,

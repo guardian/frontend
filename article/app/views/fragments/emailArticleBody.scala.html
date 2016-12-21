@@ -8,7 +8,7 @@
 @defining(page.article) { article =>
     @fullRow {
         <a href="@article.metadata.webUrl" @page.email.map { email => title="View @email.name online"}>
-            @img(src = page.banner, alt = page.email.map(_.name))
+            @imgForArticle(page.banner, page.email.map(_.name))
         </a>
     }
 
@@ -85,10 +85,10 @@
                             @fullRow {
                                 @if(article.isLiveBlog && block.url.isDefined) {
                                     <a href="@block.url.getOrElse("#")">
-                                        @img(src = imageUrl, alt = data.get("alt"))
+                                        @imgForArticle(imageUrl, data.get("alt"))
                                     </a>
                                 } else {
-                                    @img(src = imageUrl, alt = data.get("alt"))
+                                    @imgForArticle(imageUrl, data.get("alt"))
                                 }
                             }
 
@@ -114,10 +114,10 @@
                         @EmailVideoImage.bestFor(media).map { imageUrl =>
                             @fullRow {
                                 @data.get("url").fold {
-                                    @img(src = imageUrl, alt = data.get("alt"))
+                                    @imgForArticle(imageUrl, data.get("alt"))
                                 }{ linkUrl =>
                                     <a href="@linkUrl">
-                                        @img(src = imageUrl, alt = data.get("alt"))
+                                        @imgForArticle(imageUrl, data.get("alt"))
                                     </a>
                                 }
                             }

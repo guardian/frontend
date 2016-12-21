@@ -188,16 +188,6 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
-  val DisableStickyAdBannerOnMobileSwitch = Switch(
-    SwitchGroup.Performance,
-    "disable-sticky-ad-banner-on-mobile",
-    "If this switch is on, the sticky ad banner will be disabled on mobile.",
-    owners = Seq(Owner.withName("health team")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val SaveForLaterSwitch = Switch(
     SwitchGroup.Performance,
     "save-for-later",

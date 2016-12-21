@@ -1,4 +1,3 @@
-
 define([
     'commercial/modules/hosted/next-video-autoplay',
     'common/modules/atoms/youtube-player',
@@ -81,10 +80,12 @@ define([
                 }
             },
             onPlayerReady: function (event) {
-                if (nextVideoAutoplay.canAutoplay() && isDesktop()) {
-                    nextVideoAutoplay.addCancelListener();
-                    nextVideoAutoplay.triggerAutoplay(event.target.getCurrentTime.bind(event.target), duration);
-                }
+                nextVideoAutoplay.init().then(function(){
+                    if (nextVideoAutoplay.canAutoplay() && isDesktop()) {
+                        nextVideoAutoplay.addCancelListener();
+                        nextVideoAutoplay.triggerAutoplay(event.target.getCurrentTime.bind(event.target), duration);
+                    }
+                });
             }
         }, el.id);
     }

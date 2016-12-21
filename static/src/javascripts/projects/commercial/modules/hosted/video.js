@@ -60,82 +60,89 @@ define([
     function init(moduleName) {
         performanceLogging.moduleStart(moduleName);
 
-        require(['bootstraps/enhanced/media/main'], function() {
-            require(['bootstraps/enhanced/media/video-player'], function (_, videojs) {
-                var $videoEl = $('.vjs-hosted__video');
-                var $inlineVideoEl = $('video');
-                var $youtubeIframe = $('.js-hosted-youtube-video');
+        // Return a promise that resolves after the async work is done.
+        var enhanceVideo = new Promise(function(resolve){
 
-                if ($youtubeIframe.length === 0 && $videoEl.length === 0) {
-                    if ($inlineVideoEl.length === 0) {
-                        // halt execution
-                        return;
-                    } else {
-                        $videoEl = $inlineVideoEl;
-                    }
-                }
+            var $videoEl = $('.vjs-hosted__video, video');
+            var $youtubeIframe = $('.js-hosted-youtube-video');
 
-                $videoEl.each(function(el){
-                    var mediaId = $videoEl.attr('data-media-id');
-                    player = videojs(el, videojsOptions());
-                    player.guMediaType = 'video';
-                    videojs.plugin('fullscreener', fullscreener);
+            if ($youtubeIframe.length === 0 && $videoEl.length === 0) {
+                // halt execution
+                resolve();
+                return;
+            }
 
-                    events.addContentEvents(player, mediaId, player.guMediaType);
-                    events.bindGoogleAnalyticsEvents(player, window.location.pathname);
+            require(['bootstraps/enhanced/media/main'], function() {
+                require(['bootstraps/enhanced/media/video-player'], function (videojs) {
 
-                    player.ready(function () {
-                        var vol;
-                        var player = this;
-                        initLoadingSpinner(player);
-                        upgradeVideoPlayerAccessibility(player);
+                    $videoEl.each(function(el){
+                        var mediaId = $videoEl.attr('data-media-id');
+                        player = videojs(el, videojsOptions());
+                        player.guMediaType = 'video';
+                        videojs.plugin('fullscreener', fullscreener);
 
-                        // unglitching the volume on first load
-                        vol = player.volume();
-                        if (vol) {
-                            player.volume(0);
-                            player.volume(vol);
-                        }
+                        events.addContentEvents(player, mediaId, player.guMediaType);
+                        events.bindGoogleAnalyticsEvents(player, window.location.pathname);
 
-                        player.fullscreener();
+                        player.ready(function () {
+                            var vol;
+                            var player = this;
+                            initLoadingSpinner(player);
+                            upgradeVideoPlayerAccessibility(player);
 
-                        deferToAnalytics(function () {
-                            events.initOphanTracking(player, mediaId);
-                            events.bindGlobalEvents(player);
-                            events.bindContentEvents(player);
+                            // unglitching the volume on first load
+                            vol = player.volume();
+                            if (vol) {
+                                player.volume(0);
+                                player.volume(vol);
+                            }
+
+                            player.fullscreener();
+
+                            deferToAnalytics(function () {
+                                events.initOphanTracking(player, mediaId);
+                                events.bindGlobalEvents(player);
+                                events.bindContentEvents(player);
+                            });
+
+                            player.on('error', function () {
+                                var err = player.error();
+                                if (err && 'message' in err && 'code' in err) {
+                                    reportError(new Error(err.message), {
+                                        feature: 'hosted-player',
+                                        vjsCode: err.code
+                                    }, false);
+                                }
+                            });
                         });
 
-                        player.on('error', function () {
-                            var err = player.error();
-                            if (err && 'message' in err && 'code' in err) {
-                                reportError(new Error(err.message), {
-                                    feature: 'hosted-player',
-                                    vjsCode: err.code
-                                }, false);
+                        nextVideoAutoplay.init().then(function(){
+                            if (nextVideoAutoplay.canAutoplay()) {
+                                //on desktop show the next video link 10 second before the end of the currently watching video
+                                if (isDesktop()) {
+                                    nextVideoAutoplay.addCancelListener();
+                                    player && player.one('timeupdate', nextVideoAutoplay.triggerAutoplay.bind(this, player.currentTime.bind(player), parseInt($videoEl.data('duration'), 10)));
+                                } else {
+                                    player && player.one('ended', nextVideoAutoplay.triggerEndSlate);
+                                }
                             }
                         });
                     });
 
-                    if (nextVideoAutoplay.canAutoplay()) {
-                        //on desktop show the next video link 10 second before the end of the currently watching video
-                        if (isDesktop()) {
-                            nextVideoAutoplay.addCancelListener();
-                            player && player.one('timeupdate', nextVideoAutoplay.triggerAutoplay.bind(this, player.currentTime.bind(player), parseInt($videoEl.data('duration'), 10)));
-                        } else {
-                            player && player.one('ended', nextVideoAutoplay.triggerEndSlate);
-                        }
-                    }
-                });
+                    $youtubeIframe.each(function(el){
+                        hostedYoutube.init(el);
+                    });
 
-                $youtubeIframe.each(function(el){
-                    hostedYoutube.init(el);
+                    resolve();
                 });
-
-                performanceLogging.moduleEnd(moduleName);
             });
         });
 
-        return Promise.resolve();
+        function moduleEnd(){
+            performanceLogging.moduleEnd(moduleName);
+        }
+
+        return enhanceVideo.then(moduleEnd, moduleEnd);
     }
 
     return {
