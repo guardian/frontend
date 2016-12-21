@@ -65,7 +65,7 @@ object IndexPage {
     @tailrec
     def containerDefinition(groupings: Seq[IndexPageGrouping],
                             mpuState: MpuState,
-                            accumulation: Seq[((ContainerDisplayConfig, CollectionEssentials), Container)] = Seq.empty
+                            accumulation: Vector[((ContainerDisplayConfig, CollectionEssentials), Container)] = Vector.empty
                            ): Seq[((ContainerDisplayConfig, CollectionEssentials), Container)] = {
       groupings match {
         case Nil => accumulation

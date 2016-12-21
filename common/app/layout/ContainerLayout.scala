@@ -87,8 +87,8 @@ object ContainerLayout extends implicits.Collections {
     @tailrec
     def slicesWithCards(slices: List[(Slice, Int)],
                         blobs: Seq[HtmlAndClasses],
-                        accumulation: List[SliceWithCards] = List.empty
-                       ) : List[SliceWithCards] = {
+                        accumulation: Vector[SliceWithCards] = Vector.empty
+                       ) : Seq[SliceWithCards] = {
       slices match {
         case Nil => accumulation
         case (slice, numToConsume) :: remainingSlices =>

@@ -369,7 +369,7 @@ object Front extends implicits.Collections {
                         context: ContainerLayoutContext,
                         seenTrails: Set[TrailUrl] = Set.empty,
                         index: Int = 0,
-                        accumulation: List[FaciaContainer] = List.empty): List[FaciaContainer] = {
+                        accumulation: Vector[FaciaContainer] = Vector.empty): Seq[FaciaContainer] = {
       allConfigs match {
         case Nil => accumulation
         case ((config, collection), container) :: remainingConfigs =>
@@ -400,7 +400,7 @@ object Front extends implicits.Collections {
     })
   }
 
-  case class ContainersWithDeduped(containers: List[FaciaContainer], deduped: DedupedFrontResult)
+  case class ContainersWithDeduped(containers: Vector[FaciaContainer], deduped: DedupedFrontResult)
 
   def fromPressedPageWithDeduped(pressedPage: PressedPage,
                                  edition: Edition,
@@ -413,7 +413,7 @@ object Front extends implicits.Collections {
                         context: ContainerLayoutContext,
                         seenTrails: Set[TrailUrl] = Set.empty,
                         index: Int = 0,
-                        accumulation: ContainersWithDeduped =  ContainersWithDeduped(List.empty[FaciaContainer], emptyDedupedResultWithPath)
+                        accumulation: ContainersWithDeduped =  ContainersWithDeduped(Vector.empty[FaciaContainer], emptyDedupedResultWithPath)
                        ): ContainersWithDeduped = {
 
       collections match {

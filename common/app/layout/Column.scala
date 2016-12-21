@@ -65,8 +65,8 @@ object SliceWithCards {
     @tailrec
     def columnsWithCards(columns: List[Column],
                          items: Seq[HtmlAndClasses],
-                         accumulation: List[ColumnAndCards] = List.empty
-                        ): List[ColumnAndCards] = {
+                         accumulation: Vector[ColumnAndCards] = Vector.empty
+                        ): Seq[ColumnAndCards] = {
 
       columns match {
         case Nil => accumulation
