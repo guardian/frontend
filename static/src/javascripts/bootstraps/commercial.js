@@ -126,11 +126,11 @@ define([
             });
         });
 
-       return Promise.all(modulePromises)
-           .then(function(moduleLoadResult){
-               performanceLogging.addEndTimeBaseline(baseline);
-               return moduleLoadResult;
-           });
+        return Promise.all(modulePromises)
+        .then(function(moduleLoadResult){
+            performanceLogging.addEndTimeBaseline(baseline);
+            return moduleLoadResult;
+        });
     }
 
     function isItRainingAds() {
