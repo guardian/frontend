@@ -1,9 +1,8 @@
 package layout
 
 import slices._
-import scalaz.std.list._
-import scalaz.syntax.traverse._
 import model.pressed.PressedContent
+import scala.annotation.tailrec
 
 case class IndexedTrail(faciaContent: PressedContent, index: Int)
 
@@ -83,16 +82,27 @@ object ContainerLayout extends implicits.Collections {
     }
 
   def forHtmlBlobs(sliceDefinitions: Seq[Slice], blobs: Seq[HtmlAndClasses]) = {
-    val slicesWithCards = (sliceDefinitions zip sliceDefinitions.map(_.layout.columns.map(_.numItems).sum))
-      .toList
-      .mapAccumL(blobs) {
-      case (blobsRemaining, (slice, numToConsume)) =>
-        val (blobsConsumed, blobsUnconsumed) = blobsRemaining.splitAt(numToConsume)
-        (blobsUnconsumed, SliceWithCards.fromBlobs(slice.layout, blobsConsumed))
-    }._2
+    val slicesWithItemsCount = (sliceDefinitions zip sliceDefinitions.map(_.layout.columns.map(_.numItems).sum)).toList
+
+    @tailrec
+    def slicesWithCards(slices: List[(Slice, Int)],
+                        blobs: Seq[HtmlAndClasses],
+                        accumulation: List[SliceWithCards] = List.empty
+                       ) : List[SliceWithCards] = {
+      slices match {
+        case Nil => accumulation
+        case (slice, numToConsume) :: remainingSlices =>
+          val (blobsConsumed, blobsUnconsumed) = blobs.splitAt(numToConsume)
+          slicesWithCards(
+            remainingSlices,
+            blobsUnconsumed,
+            accumulation :+ SliceWithCards.fromBlobs(slice.layout, blobsConsumed)
+          )
+      }
+    }
 
     ContainerLayout(
-      slicesWithCards,
+      slicesWithCards(slicesWithItemsCount, blobs),
       Nil
     )
   }
