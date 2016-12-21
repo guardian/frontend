@@ -1,9 +1,23 @@
 package conf.switches
 
+import common.editions._
 import conf.switches.SwitchGroup.ABTests
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
+
+  for ((edition, testId) <- Map(
+    International -> "ab-membership-engagement-international-experiment-test12",
+    Au -> "ab-au-memb-engagement-msg-copy-test8"
+  )) Switch(
+    SwitchGroup.ABTests,
+    testId,
+    s"Test effectiveness of engagement banners in the $edition edition for driving Membership & Contributions.",
+    owners = Seq(Owner.withGithub("rtyley")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 9, 8), // we'll be doing AB tests on this for a long time, don't want to break the build
+    exposeClientSide = true
+  )
 
   Switch(
     ABTests,
@@ -17,41 +31,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-engagement-international-experiment-test12",
-    "Test varying the number of visits before showing the membership engagement banner",
-    owners = Seq(Owner.withGithub("rupert.bates")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 16),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-recommended-for-you-recommendations",
     "Test personalised container on fronts",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 1, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-uk-memb-engagement-msg-copy-test-10",
-    "Test alternate short messages on membership engagement banner",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2016, 12, 22), // Thursday 22nd December
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-au-memb-engagement-msg-copy-test-8",
-    "Test alternate short messages on AU membership engagement banner",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = On, // the test is live - don't switch off accidentally
-    sellByDate = new LocalDate(2017, 1, 5), // Thursday 5th January
     exposeClientSide = true
   )
 
