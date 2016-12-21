@@ -93,12 +93,12 @@ define([
 
     function init() {
         adblockMsg.showAdblockMsg().then(function(adBlockInUse){
-        // Show messages only if adblock is used by non paying member
-        if (adBlockInUse) {
-            showAdblockMessage();
-            showAdblockBanner();
-        }
-        mediator.emit('banner-message:complete');
+            // Show messages only if adblock is used by non paying member
+            if (adBlockInUse) {
+                showAdblockMessage();
+                showAdblockBanner();
+            }
+            mediator.emit('banner-message:complete');
         });
 
     }
