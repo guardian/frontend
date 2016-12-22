@@ -23,10 +23,4 @@ import play.api.test.Helpers._
       val result = richLinkController.render(article)(TestRequest())
       status(result) should be(200)
   }
-
-  it should "return 404 when content is not found" in {
-    val result = richLinkController.render(badPath)(TestRequest())
-    status(result) should be(404)
-  }
-
 }
