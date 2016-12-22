@@ -7,7 +7,7 @@ import model.{ApplicationContext, Cached, NoCache}
 import play.api.mvc._
 import play.twirl.api.HtmlFormat
 
-abstract class RenderTemplateController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Paging with Logging with ExecutionContexts with Requests {
+abstract class OnwardContentCardController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Paging with Logging with ExecutionContexts with Requests {
 
   def render(path: String): Action[AnyContent]
 

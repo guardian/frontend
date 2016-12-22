@@ -1,6 +1,5 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.ItemResponse
 import common.{ExecutionContexts, Logging}
 import contentapi.ContentApiClient
 import implicits.Requests
@@ -9,20 +8,19 @@ import play.api.mvc.{Action, RequestHeader}
 
 import scala.concurrent.Future
 
-class RichLinkController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends RenderTemplateController(contentApiClient) with Paging with Logging with ExecutionContexts with Requests   {
+class RichLinkController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends OnwardContentCardController(contentApiClient) with Paging with Logging with ExecutionContexts with Requests   {
 
   def render(path: String) = Action.async { implicit request =>
-    lookup(path) map { response: ItemResponse =>
-      response.content.map(Content(_)) match {
+    lookup(path) map {
         case Some(content) => renderContent(richLinkHtml(content), richLinkBodyHtml(content))
         case None => NotFound
-      }
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[ItemResponse] = {
+  private def lookup(path: String)(implicit request: RequestHeader): Future[Option[ContentType]] = {
     val fields = "headline,standfirst,shortUrl,webUrl,byline,starRating,trailText,liveBloggingNow"
-    lookup(path, fields)(request)
+    val response = lookup(path, fields)(request)
+    response map { _.content.map(Content(_)) }
   }
 
   private def richLinkHtml(content: ContentType)(implicit request: RequestHeader, context: ApplicationContext) =
