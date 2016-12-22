@@ -30,13 +30,12 @@ define([
     recommendedForYouTemplate,
     profileIcon,
     rightArrowIcon,
-    guardianLogo,
     fetch
 ) {
     return function () {
         this.id = 'RecommendedForYouRecommendations';
         this.start = '2016-08-02';
-        this.expiry = '2016-12-23';
+        this.expiry = '2017-01-21';
         this.author = 'Joseph Smith';
         this.description = 'Add a personalised container to fronts';
         this.audience = 0;
@@ -46,7 +45,7 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'People will visit more often';
 
-        var endpoint = 'https://engine.mobile-aws.guardianapis.com/recommendations';
+        var endpoint = 'https://engine.mobile-aws.guardianapis.com/recommendations?format=content_ids';
         var cachedRecommendationsKey = 'gu.cachedRecommendations';
         var numberOfRecommendations = 4;
 
@@ -76,10 +75,31 @@ define([
             if (recommendations && new Date(recommendations.expiry) > new Date()) {
                 insertSection(recommendations.items);
             } else {
-                var promisedRecommendations = getRemoteRecommendations();
+                var promisedRecommendations = getRemoteRecommendations().then(getCardsHtml);
                 promisedRecommendations.then(cacheRecommendations);
                 promisedRecommendations.then(insertSection);
             }
+        }
+
+        function getCardsHtml(items) {
+            return Promise.all(items.forEach(getCardHtml));
+        }
+
+        function getCardHtml(item) {
+            var endpoint = '/embed/contentcard/' + item.item.id + '.json';
+            var request = fetch(endpoint, {
+                type: 'json',
+                method: 'get'
+            });
+
+            return request.then(function (response) {
+                return response.json().then(function (body) {
+                    return {
+                        html: body.html,
+                        id: item.item.id
+                    }
+                });
+            });
         }
 
         function getRemoteRecommendations() {
@@ -97,7 +117,7 @@ define([
             });
 
             return request.then(function (response) {
-                return response.json().then(function (body) { return body.content.slice(0, numberOfRecommendations).map(itemFromRecommendationItem); });
+                return response.json().then(function (body) { return body.content.slice(0, numberOfRecommendations); });
             });
         }
 
@@ -112,28 +132,6 @@ define([
             );
         }
 
-        function imageUrlFromItem(item) {
-            function imageFromTemplate(img) {
-                return img.replace('#{width}', 220).replace('#{height}', 146).replace('#{quality}', 0.8);
-            }
-            if (item.headerImage) {
-                return imageFromTemplate(item.headerImage.urlTemplate);
-            } else if (item.headerVideo) {
-                return imageFromTemplate(item.headerVideo.stillImage.urlTemplate);
-            } else {
-                return null;
-            }
-        }
-
-        function itemFromRecommendationItem(item) {
-            return {
-                'id': item.item.id,
-                'imageUrl': imageUrlFromItem(item.item),
-                'title': item.item.title,
-                'standFirst': item.item.standFirst
-            };
-        }
-
         function setupComponentAttentionTracking(trackingCode) {
             require(['ophan/ng'], function (ophan) {
                 ophan.trackComponentAttention(trackingCode, $recommendedForYouSection[0]);
@@ -141,9 +139,9 @@ define([
         }
 
         function insertSection(items) {
+
             $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
                 profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
-                guardianLogo: svg(guardianLogo),
                 items: items
             }));
 
