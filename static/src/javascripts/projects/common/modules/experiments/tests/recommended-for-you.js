@@ -1,6 +1,7 @@
 define([
     'bean',
     'fastdom',
+    'Promise',
     'qwery',
     'common/utils/$',
     'common/utils/storage',
@@ -18,6 +19,7 @@ define([
 ], function (
     bean,
     fastdom,
+    Promise,
     qwery,
     $,
     storage,
