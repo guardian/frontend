@@ -81,6 +81,14 @@ define([
     };
 
     return [
+        new EditionTest('UK', 'MembershipEngagementBannerUkTest13', '2016-12-22', '2017-1-5', 'gdnwb_copts_mem_banner_uk_banner__')
+            .addMembershipVariant('control', {})
+            .addMembershipVariant('3_rotating', {messageText: [
+                'We all want to make the world a fairer place. We believe journalism can help – but producing it is expensive. That’s why we need Supporters.',
+                'Become a Supporter and appreciate every article, knowing you’ve helped bring it to the page. Be part of the Guardian.',
+                'Not got round to supporting us yet? If everyone chipped in, our future would be more secure.'
+            ]})
+            .addMembershipVariant('coffee_95p', {messageText: 'For less than the price of a coffee a week, you could help secure the Guardian\'s future. Support our journalism for 95p a week.'}),
         new EditionTest('AU', 'AuMembEngagementMsgCopyTest8', '2016-11-24', '2017-1-5', 'gdnwb_copts_mem_banner_aubanner__')
             .addMembershipVariant('control', {})
             .addMembershipVariant('fearless_10', {messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia member for just $10 a month'})
