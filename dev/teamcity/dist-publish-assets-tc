@@ -32,20 +32,6 @@ if [[ -z $RIFF_RAFF_BUILD_BUCKET ]]; then
 fi
 set -u
 
-BUILD_START_DATE=$(date +"%Y-%m-%dT%H:%M:%S.000Z")
-BUILD_VCS_NUMBER=$(git rev-parse --quiet HEAD)
-ref=$(git symbolic-ref --quiet HEAD)
-BUILD_VCS_BRANCH=${ref#refs/heads/}
-
-sed -e "s|<%build_number%>|$BUILD_NUMBER|" \
-    -e "s|<%start_time%>|$BUILD_START_DATE|" \
-    -e "s|<%revision%>|$BUILD_VCS_NUMBER|" \
-    -e "s|<%branch%>|$BUILD_VCS_BRANCH|" \
-    static/build-template.json | tee $static_folder/build.json
-
-aws s3 cp --acl bucket-owner-full-control --region=eu-west-1 --recursive $static_folder s3://$RIFF_RAFF_ARTIFACT_BUCKET/dotcom:static/$BUILD_NUMBER
-aws s3api put-object --acl bucket-owner-full-control --region=eu-west-1 --bucket $RIFF_RAFF_BUILD_BUCKET --key dotcom:static/$BUILD_NUMBER/build.json  --body $static_folder/build.json
-
 # upload static files for the build - it is critical that this is done before the main sbt-riffraff-artifact plugin runs
 aws s3 cp --acl bucket-owner-full-control --region=eu-west-1 --recursive $static_folder/packages/frontend-static s3://$RIFF_RAFF_ARTIFACT_BUCKET/dotcom:all/$BUILD_NUMBER/frontend-static
 
