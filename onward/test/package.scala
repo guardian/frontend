@@ -1,9 +1,8 @@
 package test
 
-import model.ApplicationContext
 import org.scalatest.Suites
 
-class OnwardTestSuite (implicit context: ApplicationContext) extends Suites (
+class OnwardTestSuite extends Suites (
   new controllers.ChangeEditionControllerTest,
   new model.TopStoriesFeatureTest,
   new MostPopularControllerTest,
