@@ -13,7 +13,7 @@ define([
              contributionsEpicEqualButtons) {
     return contributionsUtilities.makeABTest({
         id: 'ContributionsEpicUsEoyEndOfYear',
-        campaignId: 'epic_us_eoy_end_of_year',
+        campaignId: 'epic_us_eoy',
 
         start: '2016-12-13',
         expiry: '2016-12-31',
