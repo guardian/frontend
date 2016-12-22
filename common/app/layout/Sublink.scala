@@ -309,17 +309,19 @@ case class ContentCard(
 }
 object ContentCard {
 
-  def makeFromApiContent(apiContent: contentapi.Content): Option[ContentCard] = {
+  def fromApiContent(apiContent: contentapi.Content): Option[ContentCard] = {
 
     apiContent.fields.map { fields =>
 
-      val discussionSettings = fields.commentable map { commentable =>
-        DiscussionSettings(
-          isCommentable = commentable,
-          isClosedForComments = new DateTime(fields.commentCloseDate).isBeforeNow,
-          discussionId = None
-        )
-      }
+      val discussionSettings = for {
+        commentable <- fields.commentable
+        closeDate <- fields.commentCloseDate
+      } yield DiscussionSettings(
+        isCommentable = commentable,
+        isClosedForComments = new DateTime(closeDate.dateTime).isBeforeNow,
+        discussionId = None
+      )
+
       val defaultDiscussionSettings = DiscussionSettings(
         isCommentable = false,
         isClosedForComments = true,

@@ -2,7 +2,6 @@ package test
 import controllers.RecommendedContentCardController
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
-import play.api.test._
 
 @DoNotDiscover class RecommendedContentCardControllerTest
   extends FlatSpec
@@ -15,6 +14,8 @@ import play.api.test._
   with WithTestContentApiClient {
 
   val article = "/world/2014/nov/18/hereford-hospital-patient-tested-for-ebola"
+  val badPath = "/goes/absolutely-nowhere"
+
   lazy val contentCardController = new RecommendedContentCardController(testContentApiClient)
 
   "Content Card Controller" should "200 when the content is found" in {
@@ -25,18 +26,9 @@ import play.api.test._
       stringResult.startsWith("<div class")
   }
 
-  it should "return JSON when .json format is supplied" in {
-    val fakeRequest = FakeRequest(GET, s"/embed/contentcard/$article.json")
-      .withHeaders("host" -> "localhost:9000")
-      .withHeaders("Origin" -> "http://www.theorigin.com")
-
-    val result = contentCardController.render(article)(fakeRequest)
-    status(result) should be(200)
-    contentType(result).get should be("application/json")
-
-    val resultAsString = contentAsString(result)
-    resultAsString should startWith("{\"html\"")
-
+  it should "return 404 when content is not found" in {
+    val result = contentCardController.render(badPath)(TestRequest())
+    status(result) should be(404)
   }
 
 }

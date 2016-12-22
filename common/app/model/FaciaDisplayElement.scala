@@ -34,9 +34,18 @@ object FaciaDisplayElement {
 
     val elements = Elements.make(apiContent)
 
+
     maybeEndSlateComponents flatMap { endSlateComponents =>
+
+      def inlineVideo(videoElement: VideoElement) = InlineVideo(
+        videoElement = videoElement,
+        title = apiContent.webTitle,
+        endSlatePath = endSlateComponents.toUriPath,
+        Option(InlineImage(videoElement.images))
+      )
+
       elements.mainVideo match {
-        case Some(videoElement) => Option(InlineVideo(videoElement, apiContent.webTitle, endSlateComponents.toUriPath, Option(InlineImage(videoElement.images))))
+        case Some(videoElement) => Option(inlineVideo(videoElement))
         case None => elements.mainPicture.map(picture => InlineImage(picture.images))
       }
     }

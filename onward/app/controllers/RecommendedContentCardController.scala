@@ -1,60 +1,48 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.ItemResponse
-import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
-import implicits.Requests
 import layout.ContentCard
-import model.{ApplicationContext, Cached, NoCache}
-import play.api.mvc.{Action, Controller, RequestHeader}
+import model.ApplicationContext
+import play.api.mvc.{Action, RequestHeader}
 
 import scala.concurrent.Future
 
-class RecommendedContentCardController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Paging with Logging with ExecutionContexts with Requests   {
-
-  def renderHtml(path: String) = render(path)
+class RecommendedContentCardController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends RenderTemplateController(contentApiClient) {
 
   def render(path: String) = Action.async { implicit request =>
-    lookup(path) map { content =>
-      content.map(renderContent).getOrElse(NotFound)
-    }
-  }
-
-
-  private def lookup(path: String)(implicit request: RequestHeader): Future[Option[ContentCard]] = {
-    val edition = Edition(request)
-    log.info(s"Fetching article: $path for edition: ${edition.id}:")
-
-    val response: Future[ItemResponse] = contentApiClient.getResponse(
-      contentApiClient.item(path, edition)
-        .showFields("headline,standfirst,shortUrl,webUrl,byline,trailText,liveBloggingNow,commentCloseDate,commentable")
-        .showTags("all")
-        .showElements("all")
-    )
-
-    response.map { response =>
-      response.content flatMap { content =>
-        ContentCard.makeFromApiContent(content)
+    makeContentCardHtml(lookup(path)) map { maybeHtml =>
+      maybeHtml match {
+        case Some(html) => renderContent(html, html)
+        case None => NotFound
       }
     }
   }
 
+  private def lookup(path: String)(implicit request: RequestHeader) = {
+    val fields = "headline,standfirst,shortUrl,webUrl,byline,trailText,liveBloggingNow,commentCloseDate,commentable"
+    lookup(path, fields)(request)
+  }
 
-  private def renderContent(content: ContentCard)(implicit request: RequestHeader) = {
 
-    def contentResponse = views.html.fragments.items.facia_cards.contentCard(
-      item = content,
-      containerIndex = 0,
-      index = 1,
-      visibilityDataAttribute = "all",
-      isFirstContainer = false,
-      isList = false)(request)
-
-    if (!request.isJson) NoCache(Ok(contentResponse))
-    else Cached(900) {
-      JsonComponent(contentResponse)
+  private def makeContentCardHtml(response: Future[ItemResponse])(implicit request: RequestHeader) = response.map { response =>
+    response.content flatMap { content =>
+      ContentCard.fromApiContent(content) map { contentCard =>
+        contentResponse(contentCard)
+      }
     }
   }
+
+  private def contentResponse(content: ContentCard)(implicit request: RequestHeader) = {
+    views.html.fragments.items.facia_cards.contentCard(
+    item = content,
+    containerIndex = 0,
+    index = 1,
+    visibilityDataAttribute = "all",
+    isFirstContainer = false,
+    isList = false)(request)
+  }
+
 
 
 }
