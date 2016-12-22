@@ -3,6 +3,7 @@ package common.commercial.hosted
 import com.gu.contentapi.client.model.v1.ElementType.Image
 import com.gu.contentapi.client.model.v1.{Asset, Content, Element}
 import common.Logging
+import common.commercial.hosted.HostedUtils.getAndLog
 import common.commercial.hosted.hardcoded.{HostedPages, NextHostedPage}
 import model.MetaData
 
@@ -48,12 +49,14 @@ case class HostedGalleryImage(
 object HostedGalleryPage extends Logging {
 
   def fromContent(content: Content): Option[HostedGalleryPage] = {
+    log.info(s"Building hosted gallery ${content.id} ...")
+
     val page = for {
       campaignId <- content.sectionId map (_.stripPrefix("advertiser-content/"))
       campaign <- HostedCampaign.fromContent(content)
-      atoms <- content.atoms
-      ctaAtoms <- atoms.cta
-      ctaAtom <- ctaAtoms.headOption
+      atoms <- getAndLog(content, content.atoms, "the atoms are missing")
+      ctaAtoms <- getAndLog(content, atoms.cta, "the CTA atoms are missing")
+      ctaAtom <- getAndLog(content, ctaAtoms.headOption, "the CTA atom is missing")
     } yield {
 
       val mainImageAsset: Option[Asset] = {
