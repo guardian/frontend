@@ -7,6 +7,7 @@ import org.joda.time.LocalDate
 trait ABTestSwitches {
 
   for ((edition, testId) <- Map(
+    Uk -> "ab-membership-engagement-banner-uk-test13",
     International -> "ab-membership-engagement-international-experiment-test12",
     Au -> "ab-au-memb-engagement-msg-copy-test8"
   )) Switch(
