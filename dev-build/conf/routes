@@ -347,6 +347,8 @@ GET            /container/count/:count/offset/:offset/section/:section/edition/:
 
 GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                                                football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
 
+GET            /editionalised-nav.json                                                                                           controllers.NavigationController.renderAmpNav()
+
 # Onward journeys
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
