@@ -4,6 +4,7 @@ import java.io.File
 import common.ExecutionContexts
 import conf.{FootballClient, SportConfiguration}
 import football.collections.RichListTest
+import football.containers.FixturesAndResultsTest
 import football.model._
 import org.scalatest.Suites
 import pa.{Http, Response => PaResponse}
@@ -31,7 +32,8 @@ class SportTestSuite extends Suites (
   new LiveMatchesFeatureTest,
   new MatchFeatureTest,
   new ResultsFeatureTest,
-  new rugby.model.MatchParserTest
+  new rugby.model.MatchParserTest,
+  new FixturesAndResultsTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19013
 }

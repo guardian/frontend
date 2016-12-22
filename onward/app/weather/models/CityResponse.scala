@@ -5,9 +5,6 @@ import common.editions.{Au, Us, Uk}
 import weather.models.accuweather.LocationResponse
 import play.api.libs.json.Json
 
-import scalaz.std.AllInstances._
-import scalaz.syntax.foldable._
-
 object CityResponse {
   implicit val jsonWrites = Json.writes[CityResponse]
 
@@ -15,7 +12,10 @@ object CityResponse {
     def cityAndCountry(location: LocationResponse) =
       (location.LocalizedName, location.Country.LocalizedName)
 
-    val citiesWithSameNameByCountry = locations.map({ location => Map(cityAndCountry(location) -> 1) }).suml
+    val citiesWithSameNameByCountry = locations.foldLeft(Map.empty[(String, String), Int]) { (accumulation , location) =>
+      val key = cityAndCountry(location)
+      accumulation + (key -> (accumulation.getOrElse(key, 0) + 1))
+    }
 
     locations.map { location =>
       val needsDisambiguating = citiesWithSameNameByCountry.get(cityAndCountry(location)).exists(_ > 1)

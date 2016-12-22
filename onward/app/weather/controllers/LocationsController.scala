@@ -11,7 +11,6 @@ import weather.WeatherApi
 import scala.language.postfixOps
 import scala.concurrent.duration._
 import scala.concurrent.Future
-import scalaz.std.option.optionInstance.tuple3
 
 class LocationsController(weatherApi: WeatherApi) extends Controller with ExecutionContexts with Logging {
 
@@ -38,12 +37,8 @@ class LocationsController(weatherApi: WeatherApi) extends Controller with Execut
 
     log.info(s"What is my city request with headers $maybeCity $maybeRegion $maybeCountry")
 
-    tuple3(
-      maybeCity,
-      maybeRegion,
-      maybeCountry
-    ) match {
-      case Some((city, region, country)) =>
+    (maybeCity, maybeRegion, maybeCountry) match {
+      case (Some(city), Some(region), Some(country)) =>
         log.info(s"Received what is my city? request. Geo info: City=$city Region=$region Country=$country")
 
         CitiesLookUp.getLatitudeLongitude(CityRef(city, region, country)) match {
@@ -70,7 +65,7 @@ class LocationsController(weatherApi: WeatherApi) extends Controller with Execut
             }
         }
 
-      case None => Future.successful(Cached(1 hour)(JsonComponent(cityFromRequestEdition)))
+      case (_, _, _) => Future.successful(Cached(1 hour)(JsonComponent(cityFromRequestEdition)))
     }
   }
 }

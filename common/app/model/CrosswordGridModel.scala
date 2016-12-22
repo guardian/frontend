@@ -2,12 +2,7 @@ package crosswords
 
 import com.gu.contentapi.client.model.v1.{CrosswordEntry, CrosswordDimensions, Crossword, CrosswordPosition => ApiCrosswordPosition}
 import model.{Entry, CrosswordPosition}
-
-import scalaz.State
-import scalaz.syntax.traverse._
-import scalaz.std.list._
 import Function.const
-
 
 trait CrosswordGridDataOrdering {
   implicit val positionOrdering = Ordering.by[CrosswordPosition, (Int, Int)](position => (position.y, position.x))
@@ -20,32 +15,32 @@ trait CrosswordGridColumnNotation {
 case class Cell(number: Option[Int])
 
 object Grid {
-  type GridState[A] = State[Grid, A]
-
-  def empty(columns: Int, rows: Int) = Grid(rows, columns, Map.empty)
-
-  def setNumber(position: CrosswordPosition, number: Int): State[Grid, Unit] = State[Grid, Unit] { grid =>
-    (grid.copy(cells = grid.cells + (position -> Cell(Some(number)))), Unit)
-  }
-
-  def setEditable(apiPosition: ApiCrosswordPosition) = State.modify[Grid] { grid =>
-    val position = CrosswordPosition(apiPosition.x, apiPosition.y)
-    grid.cells.get(position).map(const(grid)) getOrElse {
-      grid.copy(cells = grid.cells + (position -> Cell(None)))
-    }
-  }
-
-  def fromCrossword(crossword: Crossword) = {
+  def fromCrossword(crossword: Crossword): Grid = {
     val CrosswordDimensions(columns, rows) = crossword.dimensions
-
-    crossword.entries.toList.traverseS { crosswordEntry: CrosswordEntry => {
-      val entry = Entry.fromCrosswordEntry(crosswordEntry)
-      val settings = setNumber(entry.position, entry.number) +: crosswordEntry.allPositions.map(setEditable).toList
-      settings.sequence[GridState, Unit]
+    crossword.entries.foldLeft(Grid(rows, columns, Map.empty)) { (grid: Grid, crosswordEntry: CrosswordEntry) =>
+      grid.withCrosswordEntry(crosswordEntry)
     }
-    }.run(Grid.empty(columns, rows))._1
   }
 }
 
-case class Grid(columns: Int, rows: Int, cells: Map[CrosswordPosition, Cell])
+case class Grid(columns: Int, rows: Int, cells: Map[CrosswordPosition, Cell]) {
+
+  def withCrosswordEntry(crosswordEntry: CrosswordEntry): Grid = {
+    val entry = Entry.fromCrosswordEntry(crosswordEntry)
+    crosswordEntry.allPositions.foldLeft(this.withEntry(entry)) { (grid, crosswordPosition) =>
+      grid.withEditablePosition(crosswordPosition)
+    }
+  }
+
+  private def withEntry(entry: Entry): Grid = {
+    this.copy(cells = this.cells + (entry.position -> Cell(Some(entry.number))))
+  }
+
+  private def withEditablePosition(apiPosition: ApiCrosswordPosition): Grid = {
+    val position = CrosswordPosition(apiPosition.x, apiPosition.y)
+    this.cells.get(position).map(const(this)) getOrElse {
+      this.copy(cells = this.cells + (position -> Cell(None)))
+    }
+  }
+}
 
