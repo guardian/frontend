@@ -11,36 +11,33 @@ import scala.concurrent.Future
 class RecommendedContentCardController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends RenderTemplateController(contentApiClient) {
 
   def render(path: String) = Action.async { implicit request =>
-    makeContentCardHtml(lookup(path)) map { maybeHtml =>
-      maybeHtml match {
-        case Some(html) => renderContent(html, html)
-        case None => NotFound
-      }
+    makeContentCardHtml(lookup(path)) map {
+      case Some(html) => renderContent(html, html)
+      case None => NotFound
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader) = {
+  private def lookup(path: String)(implicit request: RequestHeader): Future[ItemResponse] = {
     val fields = "headline,standfirst,shortUrl,webUrl,byline,trailText,liveBloggingNow,commentCloseDate,commentable"
     lookup(path, fields)(request)
   }
 
 
   private def makeContentCardHtml(response: Future[ItemResponse])(implicit request: RequestHeader) = response.map { response =>
-    response.content flatMap { content =>
-      ContentCard.fromApiContent(content) map { contentCard =>
-        contentResponse(contentCard)
-      }
-    }
+    for {
+      content <- response.content
+      contentCard <- ContentCard.fromApiContent(content)
+    } yield contentResponse(contentCard)
   }
 
   private def contentResponse(content: ContentCard)(implicit request: RequestHeader) = {
     views.html.fragments.items.facia_cards.contentCard(
-    item = content,
-    containerIndex = 0,
-    index = 1,
-    visibilityDataAttribute = "all",
-    isFirstContainer = false,
-    isList = false)(request)
+      item = content,
+      containerIndex = 0,
+      index = 1,
+      visibilityDataAttribute = "all",
+      isFirstContainer = false,
+      isList = false)(request)
   }
 
 

@@ -7,6 +7,8 @@ import implicits.Requests
 import model.{ApplicationContext, Content, ContentType}
 import play.api.mvc.{Action, RequestHeader}
 
+import scala.concurrent.Future
+
 class RichLinkController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends RenderTemplateController(contentApiClient) with Paging with Logging with ExecutionContexts with Requests   {
 
   def render(path: String) = Action.async { implicit request =>
@@ -18,7 +20,7 @@ class RichLinkController(contentApiClient: ContentApiClient)(implicit context: A
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader) = {
+  private def lookup(path: String)(implicit request: RequestHeader): Future[ItemResponse] = {
     val fields = "headline,standfirst,shortUrl,webUrl,byline,starRating,trailText,liveBloggingNow"
     lookup(path, fields)(request)
   }
