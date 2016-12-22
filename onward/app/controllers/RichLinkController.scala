@@ -11,13 +11,13 @@ import scala.concurrent.Future
 class RichLinkController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends OnwardContentCardController(contentApiClient) with Paging with Logging with ExecutionContexts with Requests   {
 
   def render(path: String) = Action.async { implicit request =>
-    lookup(path) map {
+    contentType(path) map {
         case Some(content) => renderContent(richLinkHtml(content), richLinkBodyHtml(content))
         case None => NotFound
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[Option[ContentType]] = {
+  private def contentType(path: String)(implicit request: RequestHeader): Future[Option[ContentType]] = {
     val fields = "headline,standfirst,shortUrl,webUrl,byline,starRating,trailText,liveBloggingNow"
     val response = lookup(path, fields)(request)
     response map { _.content.map(Content(_)) }
