@@ -52,6 +52,9 @@ define([
                 storage = arguments[3];
                 config = arguments[2];
                 done();
+            }, function () {
+                // woohoo
+                done();
             });
         });
 

@@ -4,12 +4,11 @@ import scala.concurrent.duration.FiniteDuration
 import akka.agent.Agent
 import akka.actor.{ActorSystem, Cancellable}
 import scala.concurrent.Future
-import play.libs.Akka
 import scala.util.{Failure, Success}
-import scala.concurrent.ExecutionContext.Implicits.global
 
 /** Simple class for repeatedly updating a value on a schedule */
-abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration)  extends Logging {
+abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration)  extends Logging with ExecutionContexts {
+
   private lazy val agent = Agent[Option[A]](None)
 
   @volatile private var subscription: Option[Cancellable] = None

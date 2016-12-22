@@ -1,16 +1,14 @@
 package indexes
 
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import common.Maps._
 import com.gu.contentapi.client.model.v1.Tag
 import model.{TagDefinition, TagIndexPage}
 import common.StringEncodings.asAscii
-
 import play.api.libs.iteratee.{Enumeratee, Iteratee}
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.Try
 
-object TagPages extends Logging {
+object TagPages extends Logging with ExecutionContexts {
   /** To be curated by Peter Martin */
   val ValidSections = Map(
     ("artanddesign", "Art and design"),

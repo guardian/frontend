@@ -39,7 +39,6 @@ object Frontend extends Build with Prototypes {
       romeModules,
       scalaCheck,
       scalajTime,
-      scalaz,
       ws,
       faciaFapiScalaClient,
       dispatchTest,

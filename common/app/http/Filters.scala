@@ -1,15 +1,13 @@
-package conf
+package http
 
 import javax.inject.Inject
 
 import akka.stream.Materializer
-import akka.agent.Agent
 import cache.SurrogateKey
 import common.ExecutionContexts
-import filters.RequestLoggingFilter
-import play.api.http.HttpFilters
 import implicits.Responses._
 import model.ApplicationContext
+import play.api.http.HttpFilters
 import play.api.mvc.{EssentialFilter, Filter, RequestHeader, Result}
 import play.filters.gzip.GzipFilter
 
@@ -63,19 +61,7 @@ class SurrogateKeyFilter(implicit val mat: Materializer) extends Filter with Exe
   }
 }
 
-class AmpFilter(implicit val mat: Materializer) extends Filter with ExecutionContexts with implicits.Requests {
-  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    if (request.isAmp) {
-      val domain = request.headers.get("Origin").getOrElse("https://" + request.domain)
-      val exposeAmpHeader = "Access-Control-Expose-Headers" -> "AMP-Access-Control-Allow-Source-Origin"
-      val ampHeader = "AMP-Access-Control-Allow-Source-Origin" -> Configuration.amp.baseUrl
 
-      nextFilter(request).map(_.withHeaders(exposeAmpHeader, ampHeader))
-    } else {
-      nextFilter(request)
-    }
-  }
-}
 
 object Filters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders

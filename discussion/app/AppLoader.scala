@@ -1,19 +1,19 @@
 import dev.DevAssetsController
-import http.CorsHttpErrorHandler
+import http.{CommonFilters, CorsHttpErrorHandler}
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CachedHealthCheckLifeCycle, CommonFilters}
+import conf.CachedHealthCheckLifeCycle
 import controllers.{DiscussionControllers, HealthCheck}
 import discussion.api.DiscussionApi
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
+import play.api.BuiltInComponentsFromContext
 import play.api.http.HttpErrorHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import play.api._
 import play.api.libs.ws.WSClient
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import router.Routes

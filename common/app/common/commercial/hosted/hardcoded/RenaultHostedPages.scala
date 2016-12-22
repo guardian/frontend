@@ -1,6 +1,6 @@
 package common.commercial.hosted.hardcoded
 
-import common.commercial.{Dimensions, Logo}
+import common.commercial.Dimensions
 import common.commercial.hosted._
 import conf.Static
 
@@ -14,9 +14,10 @@ object RenaultHostedPages {
     id = "renault-car-of-the-future",
     name = "Discover your Renault Zoe",
     owner = "Renault",
-    logo = Logo(
+    logo = HostedLogo(
       Static("images/commercial/logo_renault.jpg"),
-      Some(Dimensions(width = 132, height = 132))
+      Some(Dimensions(width = 132, height = 132)),
+      trackingCode = ""
     ),
     fontColour = Colour("#ffc421")
   )

@@ -1,20 +1,17 @@
-package conf
+package http
 
 import java.lang.management.ManagementFactory
-
-import akka.stream.Materializer
 import akka.agent.Agent
-import common.{ExecutionContexts, RequestMetrics, Logging}
+import akka.stream.Materializer
+import common.{ExecutionContexts, Logging, RequestMetrics}
 import org.joda.time.DateTime
 import play.api.mvc.Results._
-import play.api.mvc.{Result, RequestHeader, Filter}
-
+import play.api.mvc.{Filter, RequestHeader, Result}
 import scala.concurrent.Future
 
 // this turns requests away with 5xx errors if we are too busy
-class PanicSheddingFilter(implicit val mat: Materializer) extends Filter with Logging {
+class PanicSheddingFilter(implicit val mat: Materializer) extends Filter with Logging with ExecutionContexts {
 
-  import scala.concurrent.ExecutionContext.Implicits.global
   import scala.concurrent.duration._
 
   val NORMAL_LATENCY_LIMIT = 1.second.toMillis

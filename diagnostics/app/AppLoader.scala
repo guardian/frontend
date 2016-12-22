@@ -3,13 +3,14 @@ import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CachedHealthCheckLifeCycle, CommonGzipFilter}
+import conf.CachedHealthCheckLifeCycle
 import controllers.{Assets, DiagnosticsControllers, HealthCheck}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import play.api._
+import http.CommonGzipFilter
+import play.api.{BuiltInComponents, BuiltInComponentsFromContext}
 import play.api.libs.ws.WSClient
 import router.Routes
 

@@ -47,49 +47,6 @@ class ResetPasswordControllerTest
   val user = mock[User]
   when(user.primaryEmailAddress).thenReturn("someone@test.com")
 
-  "the renderPasswordRequest method" - {
-    "should render the password reset request form" in Fake {
-      val result = resetPasswordController.renderPasswordResetRequestForm()(TestRequest())
-      status(result) should equal(OK)
-    }
-  }
-
-  "the processPasswordRequestForm" - {
-    var emailAddress: String = "test@example.com"
-    val fakeRequest = FakeRequest(POST, "/reset").withFormUrlEncodedBody("email-address" -> emailAddress)
-
-    "with an api response validating the user" - {
-      when(api.sendPasswordResetEmail(any[String], any[TrackingData])).thenReturn(Future.successful(Right(())))
-
-      "should ask the api to send a reset email to the the the specified user" in Fake {
-        resetPasswordController.processPasswordResetRequestForm(fakeRequest)
-        verify(api).sendPasswordResetEmail(Matchers.eq(emailAddress), any[TrackingData])
-      }
-
-      "should give the client's IP to the Identity API" in Fake {
-        when(trackingData.ipAddress).thenReturn(Some("123.456.789.10"))
-        resetPasswordController.processPasswordResetRequestForm(fakeRequest)
-
-        object TrackingDataIpMatcher extends ArgumentMatcher {
-          def matches(argument: scala.Any): Boolean = argument match {
-            case TrackingData(_, _, _, Some("123.456.789.10"), _, _) => true
-            case _ => false
-          }
-        }
-        verify(api).sendPasswordResetEmail(Matchers.any[String], Matchers.argThat(TrackingDataIpMatcher))
-      }
-    }
-
-    "with an api is unable to locate the user" - {
-      when(api.sendPasswordResetEmail(any[String], any[TrackingData])).thenReturn(Future.successful(Left(userNotFound)))
-
-        "should redirect to the form" in Fake {
-          val result = resetPasswordController.processPasswordResetRequestForm(fakeRequest)
-          status(result) should equal (SEE_OTHER)
-        }
-    }
-  }
-
   "the handle render method" - {
     val fakeRequest = FakeRequest(GET, "/c/1234")
     "when the token provided is valid" - {

@@ -1,14 +1,13 @@
 package model
 
+import common.ExecutionContexts
 import conf.switches.Switches._
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.http.Writeable
 import play.api.mvc._
-import scala.math.{min, max}
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.math.{max, min}
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.Duration
 
 case class CacheTime(cacheSeconds: Int)
@@ -145,6 +144,8 @@ object NoCache {
 }
 
 case class NoCache[A](action: Action[A]) extends Action[A] {
+
+  implicit val ec: ExecutionContext = ExecutionContexts.executionContext
 
   override def apply(request: Request[A]): Future[Result] = {
 

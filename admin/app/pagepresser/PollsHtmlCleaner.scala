@@ -4,7 +4,6 @@ import org.jsoup.nodes.Document
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import scala.collection.JavaConversions._
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Await
 import scala.concurrent.duration._
 

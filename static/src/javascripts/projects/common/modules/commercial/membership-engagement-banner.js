@@ -12,7 +12,10 @@ define([
         'Promise',
         'common/utils/fastdom-promise',
         'common/modules/experiments/ab',
+        'common/modules/experiments/tests/membership-engagement-banner-tests',
         'common/utils/$',
+        'lodash/objects/defaults',
+        'lodash/collections/find',
         'common/views/svgs'
     ], function (bean,
                  qwery,
@@ -27,159 +30,154 @@ define([
                  Promise,
                  fastdom,
                  ab,
+                 MembershipEngagementBannerTests,
                  $,
+                 defaults,
+                 find,
                  svgs) {
-        var endpoints = {
-            UK: 'https://membership.theguardian.com/uk/supporter',
-            US: 'https://contribute.theguardian.com',
-            AU: 'https://membership.theguardian.com/au/supporter',
-            INT: 'https://membership.theguardian.com/supporter'
-        };
 
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
         var messageCode = 'engagement-banner-2016-11-10';
-        var notInTest = 'notintest';
 
-        var messages = {
-            UK: {
-                campaign: 'mem_uk_banner',
-                messageText: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for £5 a month.',
-                buttonCaption: 'Become a Supporter'
-            },
-            US: {
-                campaign: 'mem_us_banner',
-                messageText: 'If you use it, if you like it, then why not pay for it? It’s only fair.',
-                buttonCaption: 'Make a Contribution'
-            },
-            AU: {
-                campaign: 'mem_au_banner',
-                messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia Member for just $100 a year.',
-                buttonCaption: 'Become a Supporter'
-            },
-            INT: {
-                campaign: 'mem_int_banner',
-                messageText: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for $7 / €5 a month.',
-                buttonCaption: 'Become a Supporter'
+        var baseParams = {
+            minArticles: 10,
+            colourStrategy: function() {
+                var colours = ['yellow', 'purple', 'bright-blue', 'dark-blue'];
+                // Rotate through different colours on successive page views
+                return 'membership-prominent ' + colours[storage.local.get('gu.alreadyVisited') % colours.length];
             }
         };
 
-        function doInternationalTest(content) {
-            var variant = getVariant('MembershipEngagementInternationalExperimentTest12');
-            if (variant && variant !== notInTest) {
-                var campaignCode = 'gdnwb_copts_mem_banner_int_banner__' + variant;
-                content.campaignCode = campaignCode;
-                content.linkHref = formatEndpointUrl('INT', campaignCode);
+        var offeringParams = {
+            membership: {
+                buttonCaption: 'Become a Supporter',
+                linkUrl: 'https://membership.theguardian.com/supporter'
+            },
+            contributions: {
+                buttonCaption: 'Make a Contribution',
+                linkUrl: 'https://contribute.theguardian.com/'
             }
-        }
+        };
 
-        function doUkCopyTest(content) {
-            var variant = getVariant('UkMembEngagementMsgCopyTest10');
-            if (variant && variant !== notInTest) {
-                var variantMessages = {
-                        post_truth_world: 'In a post-truth world, facts matter more than ever. Support the Guardian for £5 a month',
-                        now_is_the_time: 'If you’ve been thinking about supporting us, now is the time to do it. Support the Guardian for £5 a month',
-                        everyone_chipped_in: 'Not got around to supporting us yet? If everyone chipped in, our future would be more secure. Support the Guardian for £5 a month',
-                        free_and_open: 'By giving £5 a month you can help to keep the Guardian’s journalism free and open for all'
-                };
-                var campaignCode = 'gdnwb_copts_mem_banner_ukbanner__' + variant;
-                content.campaignCode = campaignCode;
-                content.linkHref = formatEndpointUrl('UK', campaignCode);
-                if (variant !== 'control') {
-                    content.messageText = variantMessages[variant];
+        var editionParams = {
+            UK: {
+                membership: {
+                    messageText: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for £5 a month.',
+                    campaignCode: "mem_uk_banner"
+                }
+            },
+            US: {
+                contributions: {
+                    messageText: 'If you use it, if you like it, then why not pay for it? It’s only fair.',
+                    campaignCode: "cont_us_banner"
+                }
+            },
+            AU: {
+                membership: {
+                    messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia Member for just $100 a year.',
+                    campaignCode: "mem_au_banner"
+                }
+            },
+            INT: {
+                membership: {
+                    messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $69/€49 per year.',
+                    campaignCode: "mem_int_banner"
                 }
             }
-        }
+        };
 
-        function doAuCopyTest(content) {
-            var variant = getVariant('AuMembEngagementMsgCopyTest8');
-            if (variant && variant !== notInTest) {
-                var variantMessages = {
-                    fearless_10: 'We need you to help support our fearless independent journalism. Become a Guardian Australia member for just $10 a month',
-                    stories_that_matter: 'We need your help to tell the stories that matter. Support Guardian Australia now',
-                    power_to_account: 'We need your help to hold power to account. Become a Guardian Australia supporter',
-                    independent_journalism: 'Support quality, independent journalism in Australia by becoming a member'
-                };
-                var campaignCode = 'gdnwb_copts_mem_banner_aubanner__' + variant;
-                content.campaignCode = campaignCode;
-                content.linkHref = formatEndpointUrl('AU', campaignCode);
-                if (variant !== 'control') {
-                    content.messageText = variantMessages[variant];
-                }
+
+        /*
+         * Params for the banner are overlaid in this order, earliest taking precedence:
+         *
+         *  * Variant (if the user is in an A/B testing variant)
+         *  * Edition
+         *  * Offering ('membership' or 'contributions')
+         *  * Default
+         *
+         * The 'offering' in use comes from either:
+         *
+         *  * Variant (if the user is in an A/B testing variant)
+         *  * Edition (only one offering can be the default for a given Edition)
+         *
+         * Returns either 'null' if no banner is available for this edition,
+         * otherwise a populated params object that looks like this:
+         *
+         *  {
+         *    minArticles: 5, // how many articles should the user see before they get the engagement banner?
+         *    messageText: "..."
+         *    colourStrategy: // a function to determine what css class to use for the banner's colour
+         *    buttonCaption: "Become a Supporter"
+         *  }
+         *
+         */
+        function deriveBannerParams() {
+            var paramsByOfferingForUserEdition = editionParams[config.page.edition];
+
+            var engagementBannerTest = find(MembershipEngagementBannerTests, function(test) {
+                return ab.testCanBeRun(test)
+            });
+
+            var userVariant = engagementBannerTest ? find(engagementBannerTest.variants, function(variant) {
+                return variant.id == ab.getTestVariantId(engagementBannerTest.id);
+            }) : undefined;
+
+            // offering = 'membership' or 'contributions'
+            var offering = Object.keys(userVariant?userVariant.params:paramsByOfferingForUserEdition)[0];
+
+            var bannerParamsSources =
+                [baseParams, offeringParams[offering], paramsByOfferingForUserEdition[offering]];
+
+            if (userVariant) {
+                bannerParamsSources.push(userVariant.params[offering]);
             }
+
+            bannerParamsSources.push({}); // Will be mutated by 'defaults': https://lodash.com/docs/4.17.2#defaults
+
+            var mergedParams = defaults.apply(this, bannerParamsSources.reverse());
+            return mergedParams;
         }
 
-        function show(edition, message) {
-            var content = {
-                linkHref: formatEndpointUrl(edition, message.campaign),
-                messageText: message.messageText,
-                campaignCode: message.campaign,
-                buttonCaption: message.buttonCaption,
-                colourClass: thisInstanceColour(),
+
+        function showBanner(params) {
+            var colourClass = params.colourStrategy();
+
+            var renderedBanner = template(messageTemplate, {
+                linkHref: params.linkUrl + '?INTCMP=' + params.campaignCode,
+                messageText: params.messageText,
+                buttonCaption: params.buttonCaption,
+                colourClass: colourClass,
                 arrowWhiteRight: svgs('arrowWhiteRight')
-            };
+            });
 
-            doInternationalTest(content);
-            doUkCopyTest(content);
-            doAuCopyTest(content);
-
-            var renderedBanner = template(messageTemplate, content);
             var messageShown = new Message(
-                messageCode,
-                {
+                messageCode, {
                     pinOnHide: false,
                     siteMessageLinkName: 'membership message',
                     siteMessageCloseBtn: 'hide',
-                    siteMessageComponentName: content.campaignCode,
+                    siteMessageComponentName: params.campaignCode,
                     trackDisplay: true,
-                    cssModifierClass: 'membership-prominent ' + content.colourClass
+                    cssModifierClass: colourClass
                 }).show(renderedBanner);
             if (messageShown) {
                 mediator.emit('membership-message:display');
             }
             mediator.emit('banner-message:complete');
-            return messageShown;
         }
 
         function init() {
-            var edition = config.page.edition;
-            var message = messages[edition];
-            if (message) {
-                if (userHasMadeEnoughVisits(edition)) {
-                    return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
-                        if (canShow) {
-                            show(edition, message);
-                        }
-                    });
-                }
+            var bannerParams = deriveBannerParams();
+
+            if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
+                return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
+                    if (canShow) {
+                        showBanner(bannerParams);
+                    }
+                });
             }
+
             return Promise.resolve();
-        }
-
-        function userHasMadeEnoughVisits(edition) {
-            const numberOfVisits = storage.local.get('gu.alreadyVisited') || 0;
-            if (edition === 'INT') {
-                var internationalTestVariant = getVariant('MembershipEngagementInternationalExperimentTest12');
-                if (internationalTestVariant && internationalTestVariant !== 'control' && internationalTestVariant !== notInTest)
-                    //variants are in the form '1st_article', '3rd_article' so we can derive the number of visits from the name
-                    return numberOfVisits >= parseInt(internationalTestVariant.substring(0, 1));
-            }
-
-            return numberOfVisits >= 10;
-        }
-
-        function formatEndpointUrl(edition, campaignCode) {
-            return endpoints[edition] + '?INTCMP=' + campaignCode;
-        }
-
-        function thisInstanceColour() {
-            var colours = ['yellow', 'purple', 'bright-blue', 'dark-blue'];
-            // Rotate through different colours on successive page views
-            return colours[storage.local.get('gu.alreadyVisited') % colours.length];
-        }
-
-        function getVariant(variantName) {
-            return ab.testCanBeRun(variantName) ? ab.getTestVariantId(variantName) : undefined;
         }
 
         return {

@@ -13,7 +13,6 @@ import conf.switches.Switches.CircuitBreakerSwitch
 import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.{Duration, MILLISECONDS}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
@@ -44,7 +43,7 @@ object QueryDefaults extends implicits.Collections {
 
   val leadContentMaxAge = 1.day
 
-  object EditorsPicsOrLeadContentAndLatest {
+  object EditorsPicsOrLeadContentAndLatest extends ExecutionContexts {
     def apply(result: Future[ItemResponse]): Future[Seq[Trail]] =
       result.map { r =>
         val leadContentCutOff = DateTime.now.toLocalDate - leadContentMaxAge
@@ -129,7 +128,7 @@ final case class CircuitBreakingContentApiClient(
   override val httpClient: HttpClient,
   override val targetUrl: String,
   apiKey: String
-) extends MonitoredContentApiClientLogic {
+) extends MonitoredContentApiClientLogic with ExecutionContexts {
 
   private val circuitBreakerActorSystem = ActorSystem("content-api-client-circuit-breaker")
 
