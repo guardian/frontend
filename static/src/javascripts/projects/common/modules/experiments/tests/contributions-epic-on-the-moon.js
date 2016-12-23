@@ -14,12 +14,6 @@ define([
     config
 ) {
 
-    function testAustralia(render) {
-        geolocation.get().then(function(geo) {
-            if (geo === 'AU') render();
-        });
-    }
-
     return contributionsUtilities.makeABTest({
         id: 'ContributionsEpicOnTheMoon',
         campaignId: 'epic_end_of_year_2016',
@@ -31,6 +25,7 @@ define([
         successMeasure: 'Conversion rate (contributions / impressions)',
         idealOutcome: 'There are no negative effects and this is the optimum strategy!',
 
+        locations: ['AU'],
         audienceCriteria: 'AUS readers',
         audience: 1,
         audienceOffset: 0,
@@ -65,9 +60,6 @@ define([
                 },
 
                 insertBeforeSelector: '.submeta',
-
-                test: testAustralia,
-
                 impressionOnInsert: true,
                 successOnView: true
             },
@@ -90,9 +82,6 @@ define([
                 },
 
                 insertBeforeSelector: '.submeta',
-
-                test: testAustralia,
-
                 impressionOnInsert: true,
                 successOnView: true
             },
@@ -112,9 +101,6 @@ define([
                 },
 
                 insertBeforeSelector: '.submeta',
-
-                test: testAustralia,
-
                 impressionOnInsert: true,
                 successOnView: true
             }

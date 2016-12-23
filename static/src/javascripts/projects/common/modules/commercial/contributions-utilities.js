@@ -7,7 +7,8 @@ define([
     'common/utils/element-inview',
     'common/utils/fastdom-promise',
     'common/utils/mediator',
-    'common/utils/storage'
+    'common/utils/storage',
+    'common/utils/geolocation'
 ], function (commercialFeatures,
              targetingTool,
              $,
@@ -16,7 +17,8 @@ define([
              ElementInView,
              fastdom,
              mediator,
-             storage) {
+             storage,
+             geolocation) {
 
     var membershipURL = 'https://membership.theguardian.com/supporter';
     var contributionsURL = 'https://contribute.theguardian.com';
@@ -90,7 +92,6 @@ define([
         this.dataLinkNames = options.dataLinkNames || '';
         this.membershipCampaignPrefix = options.membershipCampaignPrefix || 'gdnwb_copts_mem';
         this.contributionsCampaignPrefix = options.contributionsCampaignPrefix || 'co_global';
-
         this.insertEvent = this.makeEvent('insert');
         this.viewEvent = this.makeEvent('view');
 
@@ -110,11 +111,15 @@ define([
             var acceptableViewCount = viewsInPreviousDays(maxViews.days) <= maxViews.count;
             var tagsMatch = options.useTargetingTool ? targetingTool.isAbTestTargeted(this) : true;
             var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle;
+            var storedGeolocation = geolocation.getSync();
+            var inCompatibleLocation = options.locations ? options.locations.some(function (geo) {
+                return geo === storedGeolocation;
+            }) : true;
 
             if (options.overrideCanRun) return tagsMatch && options.canRun();
 
             return enoughTimeSinceLastContribution && acceptableViewCount && tagsMatch &&
-                testCanRun && worksWellWithPageTemplate && commercialFeatures.canReasonablyAskForMoney;
+                testCanRun && worksWellWithPageTemplate && commercialFeatures.canReasonablyAskForMoney && inCompatibleLocation;
         }).bind(this);
 
         this.variants = options.variants.map(function (variant) {
@@ -136,7 +141,7 @@ define([
         this.test = function () {
             var component = $.create(options.template(this.contributeURL, this.membershipURL));
 
-            return options.test(function () {
+            function render() {
                 return fastdom.write(function () {
                     var sibling = $(options.insertBeforeSelector);
 
@@ -155,7 +160,9 @@ define([
                         });
                     }
                 });
-            });
+            }
+
+            return (typeof options.test === 'function') ? options.test(render) : render();
         };
 
         this.registerListener('impression', 'impressionOnInsert', test.insertEvent, options);

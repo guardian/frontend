@@ -23,6 +23,7 @@ define([
         successMeasure: 'Conversion rate (contributions / impressions)',
         idealOutcome: 'A conversion rate of 0.1%',
 
+        locations: ['US'],
         audienceCriteria: 'US members',
         audience: 0.125,
         audienceOffset: 0.875,
@@ -54,12 +55,6 @@ define([
                 },
 
                 insertBeforeSelector: '.submeta',
-
-                test: function (render) {
-                    geolocation.get().then(function (geo) {
-                        if (geo === 'US') render();
-                    });
-                },
 
                 impressionOnInsert: true,
                 successOnView: true
