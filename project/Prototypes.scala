@@ -133,7 +133,7 @@ trait Prototypes {
     .settings(frontendTestSettings)
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(macwire, commonsIo))
-    .settings(Seq(packageName in Universal := applicationName))
+    .settings(packageName in Universal := applicationName)
     .settingSets(settingSetsOrder)
   }
 
