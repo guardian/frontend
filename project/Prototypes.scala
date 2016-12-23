@@ -131,6 +131,7 @@ trait Prototypes {
     .settings(frontendTestSettings)
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(macwire, commonsIo))
+    .settings(artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) => s"${artifact.name}.${artifact.extension}"})
     .settingSets(settingSetsOrder)
   }
 
