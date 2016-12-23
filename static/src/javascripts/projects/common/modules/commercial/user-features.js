@@ -1,13 +1,13 @@
 define([
     'common/utils/cookies',
     'common/utils/config',
-    'common/utils/fetch-json',
+    'common/utils/fetch',
     'common/utils/storage',
     'common/modules/identity/api'
 ], function (
     cookies,
     config,
-    fetchJson,
+    fetch,
     storage,
     identity
 ) {
@@ -63,11 +63,31 @@ define([
     };
 
     function requestNewData() {
-        fetchJson(config.page.userAttributesApiUrl + '/me/features', {
+        // Cannot use `fetchJson` here as we consider 404 to be a valid response
+        var userAttributeUrl = config.page.userAttributesApiUrl + '/me/features';
+        fetch(userAttributeUrl, {
             mode: 'cors',
             credentials: 'include'
         })
-        .then(persistResponse)
+        .then(function(resp) {
+            if (resp.ok || resp.status == 404) {
+                persistResponse(resp.json());
+            } else {
+                if (!resp.status) {
+                    // IE9 uses XDomainRequest which doesn't set the response status thus failing
+                    // even when the response was actually valid
+                    resp.text().then(function (responseText) {
+                        try {
+                            persistResponse(JSON.parse(responseText));
+                        } catch (ex) {
+                            throw new Error('Fetch error while requesting ' + userAttributeUrl + ': Invalid JSON response');
+                        }
+                    });
+                } else {
+                    throw new Error('Fetch error while requesting ' + userAttributeUrl + ': ' + resp.statusText);
+                }
+            }
+        })
         .catch(function () {});
     }
 
