@@ -46,7 +46,7 @@ define([
       });
     }
 
-    function updateFormForLoggedIn(emailAddress, el) {
+    function updatePageForLoggedIn(emailAddress, el) {
         fastdom.write(function () {
             hideInputAndShowPreview(el);
             $('.' + classes.textInput, el).val(emailAddress);
@@ -90,10 +90,13 @@ define([
     }
 
     function subscribeToEmail(buttonEl) {
-        var form = buttonEl.form;
-        if (validate(form)) {
-            submitForm(form, buttonEl);
-        }
+      bean.on(buttonEl, 'click', function (event) {
+          event.preventDefault();
+          var form = buttonEl.form;
+          if (validate(form)) {
+              submitForm(form, buttonEl);
+          }
+      });
     }
 
     function showSecondStageSignup(buttonEl) {
@@ -110,7 +113,7 @@ define([
         // email address is not stored in the cookie, gotta go to the Api
         Id.getUserFromApi(function (userFromId) {
           if (userFromId && userFromId.primaryEmailAddress) {
-            updateFormForLoggedIn(userFromId.primaryEmailAddress);
+            updatePageForLoggedIn(userFromId.primaryEmailAddress);
             $.forEachElement('.' + classes.signupButton, subscribeToEmail);
           }
         });
