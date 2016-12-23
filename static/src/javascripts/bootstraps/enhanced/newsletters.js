@@ -38,11 +38,7 @@ define([
           $('.' + classes.textInput, form).removeClass('is-hidden').focus();
           $('.' + classes.signupButton, form).addClass(classes.styleSignup);
           $('.' + classes.previewButton, meta).addClass('is-hidden');
-          buttonEl.setAttribute('type', 'submit');
-          bean.on(buttonEl, 'click', function (event) {
-              event.preventDefault();
-              subscribeToEmail(buttonEl);
-          });
+          subscribeToEmail(buttonEl);
       });
     }
 
@@ -90,8 +86,7 @@ define([
     }
 
     function subscribeToEmail(buttonEl) {
-      bean.on(buttonEl, 'click', function (event) {
-          event.preventDefault();
+      bean.on(buttonEl, 'click', function () {
           var form = buttonEl.form;
           if (validate(form)) {
               submitForm(form, buttonEl);
