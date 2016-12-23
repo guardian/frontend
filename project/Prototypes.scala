@@ -10,6 +10,8 @@ import play.twirl.sbt.Import._
 import Dependencies._
 import play.sbt.routes.RoutesKeys._
 import play.sbt.PlayScala
+import com.typesafe.sbt.SbtNativePackager.Universal
+import com.typesafe.sbt.packager.Keys.packageName
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -131,7 +133,7 @@ trait Prototypes {
     .settings(frontendTestSettings)
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(macwire, commonsIo))
-    .settings(artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) => s"${artifact.name}.${artifact.extension}"})
+    .settings(packageName in Universal := applicationName)
     .settingSets(settingSetsOrder)
   }
 
