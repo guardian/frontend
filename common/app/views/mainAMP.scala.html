@@ -21,8 +21,9 @@
         <script custom-element="amp-instagram" src="https://cdn.ampproject.org/v0/amp-instagram-0.1.js" async></script>
         <script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async ></script>
         <script custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" async></script>
+        <script custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js" async></script>
+        <script custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js" async></script>
         @if(content.tags.isLiveBlog) {
-            <script custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js" async></script>
             <script custom-element="amp-live-list" src="https://cdn.ampproject.org/v0/amp-live-list-0.1.js" async></script>
         }
         <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js" async ></script>
@@ -49,9 +50,10 @@
           <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
         </amp-analytics>
 
-        <div class="main-body">
+        @fragments.amp.header()
+        @fragments.amp.headerMenu()
 
-            @fragments.amp.header()
+        <div class="main-body">
 
             @body
 
