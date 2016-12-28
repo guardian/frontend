@@ -58,6 +58,7 @@ object css {
   def inlineExplore(implicit context: ApplicationContext) = inline("article-explore")
   def amp(implicit context: ApplicationContext) = inline("head.amp")
   def hostedAmp(implicit context: ApplicationContext) = inline("head.hosted-amp")
+  def liveblogAmp(implicit context: ApplicationContext) = inline("head.amp-liveblog")
 
   def projectCss(projectOverride: Option[String])(implicit context: ApplicationContext) = project(projectOverride.getOrElse(context.applicationIdentity.name))
   def headOldIE(projectOverride: Option[String])(implicit context: ApplicationContext) = cssOldIE(projectOverride.getOrElse(context.applicationIdentity.name))

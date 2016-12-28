@@ -1,5 +1,6 @@
 @charset 'UTF-8';
 
+
 @import '_vars';
 @import '_mixins';
 
@@ -10,6 +11,4 @@
 @import 'amp/_header';
 @import 'amp/_footer';
 
-@import 'amp/_hosted';
-@import 'amp/_hosted-gallery';
-@import 'amp/_hosted-article';
+@import 'amp/_liveblog';

@@ -271,19 +271,21 @@
         @fragments.amp.stylesheets.tables()
         @fragments.amp.stylesheets.onward()
         @fragments.amp.stylesheets.buttons()
-        @if(page.metadata.contentType == "LiveBlog") {
-            @fragments.amp.stylesheets.liveBlog()
-        }
         @if(page.branding(Edition(request)).exists(_.sponsorshipType == PaidContent)) {
             @fragments.amp.stylesheets.glabs()
         }
     }
 
     @* proper inlined AMP styles *@
-    @Html(common.Assets.css.amp)
 
     @if(page.metadata.isHosted) {
         @Html(common.Assets.css.hostedAmp)
+    } else {
+        @if(page.metadata.contentType == "LiveBlog") {
+            @Html(common.Assets.css.liveblogAmp)
+        } else {
+            @Html(common.Assets.css.amp)
+        }
     }
 </style>
 
