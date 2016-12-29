@@ -1,15 +1,18 @@
 package controllers
 
-import common.{Edition, JsonComponent, LinkTo, NavItem, SectionLink, NewNavigation}
+import common.{Edition, JsonComponent, LinkTo, NavItem, NavLink, NewNavigation, SectionLink}
 import model.Cached
 import model.Cached.RevalidatableResult
-import play.api.libs.json.{Json, JsArray, JsObject, JsNull, Writes}
+import play.api.libs.json.{Json, Writes}
 import play.api.mvc.{Action, Controller}
 
 class NavigationController extends Controller {
 
   private case class SectionLinkAndEdition(link: SectionLink, edition: Edition)
   private case class NavItemAndEdition(link: NavItem, edition: Edition)
+
+  private case class topLevelNavItems(editionalisedSection: NewNavigation.EditionalisedNavigationSection)
+  private case class navSectionLink(navLink: NavLink)
 
   def nav() = Action { implicit request =>
     Cached(500) {
@@ -34,37 +37,33 @@ class NavigationController extends Controller {
     }
   }
 
-//  This is to editionlise the menu on AMP
+  //  This is to editionalise the menu on AMP
   def renderAmpNav = Action { implicit request =>
     val edition = Edition(request)
 
     Cached(900) {
+
+      implicit val sectionLinkAndTitleWrites = new Writes[navSectionLink] {
+        def writes(item: navSectionLink) = Json.obj(
+          "title" -> item.navLink.title,
+          "url" -> LinkTo(item.navLink.url)
+        )
+      }
+
+      implicit val topLevelSectionWrites = new Writes[topLevelNavItems] {
+        def writes(item: topLevelNavItems) = Json.obj(
+          "title" -> item.editionalisedSection.name,
+          "subSections" -> item.editionalisedSection.getEditionalisedNavLinks(edition).map(subsection => navSectionLink(subsection))
+        )
+      }
+
       JsonComponent(
-        "items" -> JsArray(Seq(
+        "items" -> Json.arr(
           Json.obj(
-            "topLevelSections" -> NewNavigation.topLevelSections.map( section =>
-              Json.obj(
-                "title" -> section.name,
-                "subSections" -> section.getEditionalisedNavLinks(edition).map( subsection =>
-                   JsObject(
-                    Json.obj(
-                      "title" -> subsection.title,
-                      "url" -> LinkTo(subsection.url)
-                    )
-                    .fields
-                    .filterNot { case (_, v) => v == JsNull }
-                  )
-                )
-              )
-            ),
-            "secondarySections" -> NewNavigation.NavFooterLinks.getEditionalisedNavLinks(edition).map( section =>
-              Json.obj(
-                "title" -> section.title,
-                "url" -> LinkTo(section.url)
-              )
-            )
+            "topLevelSections" -> NewNavigation.topLevelSections.map( section => topLevelNavItems(section) ),
+            "secondarySections" -> NewNavigation.NavFooterLinks.getEditionalisedNavLinks(edition).map(section => navSectionLink(section))
           )
-        ))
+        )
       )
     }
   }
