@@ -6,7 +6,7 @@
     @include mq(tablet) {
         margin: 10px 0;
     }
-    
+
     background-color: $neutral-3;
 
     line-height: 14px;
@@ -26,6 +26,12 @@
     &:nth-child(4) {
         width: 41%;
     }
+}
+
+.rfy__image {
+  object-fit:none;
+  object-position:center;
+  width:100%;
 }
 
 .rfy-profile-icon {
