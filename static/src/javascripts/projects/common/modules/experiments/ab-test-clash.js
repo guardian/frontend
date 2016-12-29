@@ -15,22 +15,16 @@ define([
         variants: ['control', 'showMeTheMoon', 'australiaNewsroom', 'endOfYearAustralia']
     };
 
-    var ContributionsEpicUsEoyControl = {
-        name: 'ContributionsEpicUsEoyControl',
+    var ContributionsEpicUsEoyAllControl = {
+        name: 'ContributionsEpicUsEoyAllControl',
         variants: ['control']
-    };
-
-    var ContributionsEpicUsEoyEndOfYear = {
-        name: 'ContributionsEpicUsEoyEndOfYear',
-        variants: ['endOfYear']
     };
 
     function userIsInAClashingAbTest() {
         var clashingTests = [
             ContributionsEpicOnTheMoon,
             ContributionsEpicAlwaysAskStrategy,
-            ContributionsEpicUsEoyControl,
-            ContributionsEpicUsEoyEndOfYear
+            ContributionsEpicUsEoyAllControl
         ];
         return _testABClash(ab.isInVariant, clashingTests);
     }

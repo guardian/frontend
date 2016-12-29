@@ -62,18 +62,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-us-eoy-control",
-    "Run the control variant for 87.5% of the US audience",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-us-eoy-end-of-year",
-    "Run the end of year variant for 12.5% of the US audience",
+    "ab-contributions-epic-us-eoy-all-control",
+    "Run the control variant for 100% of the US audience",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 1, 3),
