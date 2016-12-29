@@ -12,8 +12,7 @@ define([
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/contributions-epic-on-the-moon',
-    'common/modules/experiments/tests/contributions-epic-us-eoy-control',
-    'common/modules/experiments/tests/contributions-epic-us-eoy-end-of-year'
+    'common/modules/experiments/tests/contributions-epic-us-eoy-all-control'
 ], function (reportError,
              config,
              cookies,
@@ -27,16 +26,14 @@ define([
              MembershipEngagementBannerTests,
              ContributionsEpicAlwaysAskStrategy,
              ContributionsEpicOnTheMoon,
-             ContributionsEpicUsEoyControl,
-             ContributionsEpicUsEoyEndOfYear
+             ContributionsEpicUsEoyAllControl
     ) {
     var TESTS = [
         new EditorialEmailVariants(),
         new RecommendedForYou(),
         new ContributionsEpicAlwaysAskStrategy(),
         new ContributionsEpicOnTheMoon(),
-        new ContributionsEpicUsEoyControl(),
-        new ContributionsEpicUsEoyEndOfYear()
+        new ContributionsEpicUsEoyAllControl()
     ].concat(MembershipEngagementBannerTests);
 
     var participationsKey = 'gu.ab.participations';
