@@ -1,14 +1,3 @@
-@charset 'UTF-8';
-
-
-@import '_vars';
-@import '_mixins';
-
-@import 'amp/_inlineSvgs';
-@import 'amp/_social';
-
-@include grid-system;
-@import 'amp/_header';
-@import 'amp/_footer';
+@import 'head.amp-common';
 
 @import 'amp/_liveblog';
