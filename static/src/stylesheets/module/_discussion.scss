@@ -1549,6 +1549,11 @@ $comment-recommend-button-size: 19px;
     }
 }
 
+.d-comment-box__onboarding-username-label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
 .d-comment-box__onboarding-username-error-border {
     border-color: $error;
 }
