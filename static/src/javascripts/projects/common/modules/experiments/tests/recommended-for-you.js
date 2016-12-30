@@ -32,12 +32,13 @@ define([
     recommendedForYouTemplate,
     profileIcon,
     rightArrowIcon,
+    guardianLogo,
     fetch
 ) {
     return function () {
         this.id = 'RecommendedForYouRecommendations';
         this.start = '2016-08-02';
-        this.expiry = '2017-01-21';
+        this.expiry = '2017-01-18';
         this.author = 'Joseph Smith';
         this.description = 'Add a personalised container to fronts';
         this.audience = 0;
@@ -77,18 +78,18 @@ define([
             if (recommendations && new Date(recommendations.expiry) > new Date()) {
                 insertSection(recommendations.items);
             } else {
-                var promisedRecommendations = getRemoteRecommendations().then(getCardsHtml);
+                var promisedRecommendations = getRemoteRecommendationsIds().then(getCardsHtml);
                 promisedRecommendations.then(cacheRecommendations);
                 promisedRecommendations.then(insertSection);
             }
         }
 
         function getCardsHtml(items) {
-            return Promise.all(items.forEach(getCardHtml));
+            return Promise.all(items.map(getCardHtml));
         }
 
-        function getCardHtml(item) {
-            var endpoint = '/embed/contentcard/' + item.item.id + '.json';
+        function getCardHtml(id) {
+            var endpoint = '/embed/contentcard/' + id + '.json';
             var request = fetch(endpoint, {
                 type: 'json',
                 method: 'get'
@@ -98,13 +99,13 @@ define([
                 return response.json().then(function (body) {
                     return {
                         html: body.html,
-                        id: item.item.id
+                        id: id
                     }
                 });
             });
         }
 
-        function getRemoteRecommendations() {
+        function getRemoteRecommendationsIds() {
             var reqBody = {
                 'pageSize': numberOfRecommendations,
                 'articles': history.test.getHistory().map(function (item) { return item[0]; })
@@ -119,7 +120,11 @@ define([
             });
 
             return request.then(function (response) {
-                return response.json().then(function (body) { return body.content.slice(0, numberOfRecommendations); });
+                return response.json().then(function (body) {
+                    return body.content.slice(0, numberOfRecommendations).map(function (recommendation){
+                        return recommendation.item.id;
+                    });
+                });
             });
         }
 
@@ -141,9 +146,9 @@ define([
         }
 
         function insertSection(items) {
-
             $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
                 profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
+                guardianLogo: svg(guardianLogo),
                 items: items
             }));
 
