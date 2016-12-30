@@ -9,11 +9,6 @@ LinkedIn: chrismulholland
 Twitter: @crifmulholland
 From: Glasgow, Scotland
 
-Development Manager: Grant Klopper
-Twitter: @grantklopper
-From: Durban, South Africa
-Location: London, UK
-
 Development Manager: Dominic Kendrick
 Twitter: @dominickendrick
 From: London, UK
@@ -285,3 +280,6 @@ Guardian CTO: Shannon Maher
 
 Director of Digital Strategy: Wolfgang Blau
 Twitter: @wblau
+
+Director of engineering: Grant Klopper
+Twitter: @grantklopper
