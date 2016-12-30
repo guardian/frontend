@@ -115,11 +115,18 @@ define([
             var inCompatibleLocation = options.locations ? options.locations.some(function (geo) {
                 return geo === storedGeolocation;
             }) : true;
+            var isImmersive = config.page.isImmersive === true;
 
             if (options.overrideCanRun) return tagsMatch && options.canRun();
 
-            return enoughTimeSinceLastContribution && acceptableViewCount && tagsMatch &&
-                testCanRun && worksWellWithPageTemplate && commercialFeatures.canReasonablyAskForMoney && inCompatibleLocation;
+            return enoughTimeSinceLastContribution &&
+                acceptableViewCount &&
+                tagsMatch &&
+                testCanRun &&
+                worksWellWithPageTemplate &&
+                commercialFeatures.canReasonablyAskForMoney &&
+                inCompatibleLocation &&
+                !isImmersive;
         }).bind(this);
 
         this.variants = options.variants.map(function (variant) {
