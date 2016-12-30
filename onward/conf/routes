@@ -77,3 +77,4 @@ GET        /info/tech-feedback/*path                  controllers.TechFeedbackCo
 GET        /most-read-mf2.json                        controllers.MostPopularController.renderPopularMicroformat2()
 GET        /related-mf2/*path.json                    controllers.RelatedController.renderMf2(path)
 GET        /series-mf2/*path.json                     controllers.SeriesController.renderMf2SeriesStories(path)
+GET        /editionalised-nav.json                    controllers.NavigationController.renderAmpNav()

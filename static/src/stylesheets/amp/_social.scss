@@ -15,6 +15,16 @@
     display: none;
 }
 
+.meta__extras {
+    padding: $gs-baseline/2 0;
+    clear: both;
+}
+
+.submeta hr, .meta__extras {
+    border: 0;
+    border-top: 1px dotted $neutral-4;
+}
+
 .social__item {
     float: left;
     padding: 0 3px $gs-baseline/2 0;
@@ -31,50 +41,80 @@
     width: 88%;
 }
 
-.meta__extras {
-    padding: $gs-baseline/2 0;
-    clear: both;
+.social-icon--facebook {
+    background-color: $social-facebook;
 }
 
-.submeta hr, .meta__extras {
-    border: 0;
-    border-top: 1px dotted $neutral-4;
+.social-icon--messenger {
+    background-color: $social-messenger;
 }
 
-.social-icon {
-    &--facebook {
-        background-color: $social-facebook;
-    }
+.social-icon--twitter {
+    background-color: $social-twitter;
+}
 
-    &--messenger {
-        background-color: $social-messenger;
-    }
+.social-icon--email {
+    background-color: $neutral-2;
+}
 
-    &--twitter {
-        background-color: $social-twitter;
-    }
+.social-icon--pinterest {
+    background-color: $social-pinterest;
+}
 
-    &--email {
-        background-color: $neutral-2;
-    }
+.social-icon--linkedin {
+    background-color: $social-linkedin;
+}
 
-    &--pinterest {
-        background-color: $social-pinterest;
-    }
+.social-icon--gplus {
+    background-color: $social-gplus;
+}
 
-    &--linkedin {
-        background-color: $social-linkedin;
-    }
-
-    &--gplus {
-        background-color: $social-gplus;
-    }
-
-    &--whatsapp {
-        background-color: $social-whatsapp;
-    }
+.social-icon--whatsapp {
+    background-color: $social-whatsapp;
 }
 
 .social--hidden {
     display: none;
+}
+
+.block-share__item {
+    display: block;
+    float: left;
+    cursor: pointer;
+    border: 1px solid $neutral-3;
+    margin-right: $gs-gutter / 4;
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+
+    .inline-share-facebook {
+        fill: $social-facebook;
+    }
+
+    .inline-share-twitter {
+        fill: $social-twitter;
+    }
+
+    .inline-share-gplus {
+        fill: $social-gplus;
+    }
+
+    .inline-share-facebook__svg,
+    .inline-share-twitter__svg,
+    .inline-share-gplus__svg {
+        width: 23px;
+        height: 23px;
+    }
+}
+
+.block-share__item--facebook {
+    border-color: $social-facebook;
+}
+
+.block-share__item--twitter {
+    border-color: $social-twitter;
+}
+
+.block-share__item--gplus {
+    border-color: $social-gplus;
 }
