@@ -43,9 +43,7 @@ define([
         var baseParams = {
             minArticles: 10,
             colourStrategy: function() {
-                var colours = ['yellow', 'purple', 'bright-blue', 'dark-blue'];
-                // Rotate through different colours on successive page views
-                return 'membership-prominent ' + colours[storage.local.get('gu.alreadyVisited') % colours.length];
+                return 'membership-prominent ' + selectSequentiallyFrom(['yellow', 'purple', 'bright-blue', 'dark-blue']);
             }
         };
 
@@ -143,9 +141,11 @@ define([
         function showBanner(params) {
             var colourClass = params.colourStrategy();
 
+            var messageText = Array.isArray(params.messageText)?selectSequentiallyFrom(params.messageText):params.messageText;
+
             var renderedBanner = template(messageTemplate, {
                 linkHref: params.linkUrl + '?INTCMP=' + params.campaignCode,
-                messageText: params.messageText,
+                messageText: messageText,
                 buttonCaption: params.buttonCaption,
                 colourClass: colourClass,
                 arrowWhiteRight: svgs('arrowWhiteRight')
@@ -178,6 +178,10 @@ define([
             }
 
             return Promise.resolve();
+        }
+
+        function selectSequentiallyFrom(array) {
+            return array[storage.local.get('gu.alreadyVisited') % array.length];
         }
 
         return {

@@ -118,6 +118,9 @@ GET            /video/end-slate/series/*seriesId.json                           
 GET            /video/end-slate/section/*sectionId.json                                                                          controllers.VideoEndSlateController.renderSection(sectionId)
 GET            /embed/card/*path.json                                                                                            controllers.RichLinkController.render(path)
 GET            /embed/card/*path                                                                                                 controllers.RichLinkController.renderHtml(path)
+GET            /embed/contentcard/*path.json                                                                                     controllers.RecommendedContentCardController.render(path)
+GET            /embed/contentcard/*path                                                                                          controllers.RecommendedContentCardController.renderHtml(path)
+
 # User tech feedback
 GET            /info/tech-feedback                                                                                               controllers.TechFeedbackController.techFeedback(path = "")
 GET            /info/tech-feedback/*path                                                                                         controllers.TechFeedbackController.techFeedback(path)
@@ -343,6 +346,8 @@ GET            /container/count/:count/offset/:offset/edition/:edition/mf2.json 
 GET            /container/count/:count/offset/:offset/section/:section/edition/:edition/mf2.json                                 controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition)
 
 GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                                                football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
+
+GET            /editionalised-nav.json                                                                                           controllers.NavigationController.renderAmpNav()
 
 # Onward journeys
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)

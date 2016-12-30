@@ -2,7 +2,6 @@ package http
 
 import akka.stream.Materializer
 import common.ExecutionContexts
-import Filters
 import implicits.Requests
 import model.ApplicationContext
 import play.api.http.HttpFilters

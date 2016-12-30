@@ -11,7 +11,8 @@ define([
     'common/modules/experiments/ab',
     './common',
     './sport',
-    'common/modules/analytics/google'
+    'common/modules/analytics/google',
+    'common/utils/geolocation'
 ], function (
     fastdom,
     bean,
@@ -25,7 +26,8 @@ define([
     ab,
     common,
     sport,
-    ga
+    ga,
+    geolocation
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -57,6 +59,9 @@ define([
 
             ab.trackEvent();
         });
+
+        // geolocation
+        robust.catchErrorsAndLog('geolocation', geolocation.init);
 
         // Front
         if (config.page.isFront) {
