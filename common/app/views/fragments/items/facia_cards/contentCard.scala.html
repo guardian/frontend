@@ -89,7 +89,11 @@ data-test-id="facia-card"
             }
 
             case Some(media@InlineYouTubeMediaAtom(_)) => {
-                @youtube(media = media.youTubeAtom, displayCaption = false, embedPage = false)
+                <div class="fc-item__media-wrapper">
+                    <div class="fc-item__video-container">
+                    @youtube(media = media.youTubeAtom, displayCaption = false, embedPage = false)
+                    </div>
+                </div>
             }
 
             case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
