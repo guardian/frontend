@@ -14,7 +14,6 @@ define([
     'text!common/views/experiments/recommended-for-you.html',
     'inlineSvg!svgs/icon/profile-36',
     'inlineSvg!svgs/icon/arrow-right',
-    'inlineSvg!svgs/icon/marque-36',
     'common/utils/fetch'
 ], function (
     bean,
@@ -32,7 +31,6 @@ define([
     recommendedForYouTemplate,
     profileIcon,
     rightArrowIcon,
-    guardianLogo,
     fetch
 ) {
     return function () {
@@ -148,7 +146,6 @@ define([
         function insertSection(items) {
             $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
                 profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
-                guardianLogo: svg(guardianLogo),
                 items: items
             }));
 
