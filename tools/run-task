@@ -128,12 +128,6 @@ const cache = [];
 const exec = (task, onError, ctx) => {
     const [cmd, ...args] = task.trim().split(' ');
 
-    // if (VERBOSE) {
-    //     return execa(cmd, args, {
-    //         stdio: [process.stdin, process.stdout, process.stderr],
-    //     });
-    // }
-
     return execa(cmd, args)
         .then((result) => {
             if (result.stdout) ctx.stdouts.push(result.stdout);
