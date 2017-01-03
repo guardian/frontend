@@ -128,11 +128,11 @@ const cache = [];
 const exec = (task, onError, ctx) => {
     const [cmd, ...args] = task.trim().split(' ');
 
-    if (VERBOSE) {
-        return execa(cmd, args, {
-            stdio: [process.stdin, process.stdout, process.stderr],
-        });
-    }
+    // if (VERBOSE) {
+    //     return execa(cmd, args, {
+    //         stdio: [process.stdin, process.stdout, process.stderr],
+    //     });
+    // }
 
     return execa(cmd, args)
         .then((result) => {
@@ -222,13 +222,9 @@ listrify(taskModules).run({
     messages: [],
     stdouts: [],
 }).catch((e) => {
-    if (e) {
-        if (!VERBOSE) {
-            if (!e.stderr && !e.stdout) console.log(e);
-            if (e.stderr) console.error(`\n${e.stderr.trim()}`);
-            if (e.stdout) console.log(`\n${e.stdout.trim()}`);
-        }
-    }
+    if (!e.stderr && !e.stdout) console.log(e);
+    if (e.stderr) console.error(`\n${e.stderr.trim()}`);
+    if (e.stdout) console.log(`\n${e.stdout.trim()}`);
     return Object.assign(e.context, { error: true });
 }).then((ctx) => {
     if (IS_STDOUT) ctx.stdouts.forEach(stdout => console.log(stdout.toString().trim()));
