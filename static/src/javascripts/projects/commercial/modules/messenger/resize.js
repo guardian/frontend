@@ -17,11 +17,11 @@ define([
 
         var styles = {};
 
-        if ('width' in specs) {
+        if (specs.width) {
             styles.width = normalise(specs.width);
         }
 
-        if ('height' in specs) {
+        if (specs.height) {
             styles.height = normalise(specs.height);
         }
 

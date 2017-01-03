@@ -176,7 +176,7 @@ define([
             id: 'aaaa0000-bb11-cc22-dd33-eeeeee444444',
             type: 'resize',
             iframeId: payload.value.id,
-            value: { height: +payload.value.height }
+            value: { height: +payload.value.height, width: +payload.value.width }
         };
     }
 
