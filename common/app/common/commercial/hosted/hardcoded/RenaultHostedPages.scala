@@ -17,6 +17,7 @@ object RenaultHostedPages {
     logo = HostedLogo(
       Static("images/commercial/logo_renault.jpg"),
       Some(Dimensions(width = 132, height = 132)),
+      link = "",
       trackingCode = ""
     ),
     fontColour = Colour("#ffc421")

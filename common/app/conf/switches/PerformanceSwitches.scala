@@ -40,7 +40,7 @@ trait PerformanceSwitches {
     SwitchGroup.Performance,
     "long-cache-switch",
     "If this switch is on then content will get a longer cache time",
-    owners = Seq(Owner.withGithub("gklopper")),
+    owners = Owner.group(SwitchGroup.Performance),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
