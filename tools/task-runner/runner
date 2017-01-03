@@ -63,7 +63,7 @@ const { dev: IS_DEV, teamcity: IS_TEAMCITY, debug: IS_DEBUG, verbose: IS_VERBOSE
 const VERBOSE = IS_VERBOSE || IS_TEAMCITY || IS_DEBUG;
 
 // look here for tasks that come in from yargs
-const taskSrc = path.resolve(__dirname, tasksIdentifier);
+const taskSrc = path.resolve(__dirname, '..', tasksIdentifier);
 
 // we will store tasks that we run in here, to prevent running them more than once
 // e.g. if two tasks rely on the same thing
