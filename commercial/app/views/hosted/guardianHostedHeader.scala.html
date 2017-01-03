@@ -5,7 +5,7 @@
     <div class="hosted__headerwrap js-hosted-headerwrap">
         <div class="hostedbadge hosted-tone-bg content__hosted-body">
             <p class="hostedbadge__info">Advertiser content</p>
-            <a href="@page.cta.url" data-link-name="@page.campaign.logo.trackingCode" target="_blank">
+            <a href="@page.campaign.logo.link" data-link-name="@page.campaign.logo.trackingCode" target="_blank">
             @if(isAMP) {
                 <amp-img layout="responsive" width="@{page.campaign.logo.dimensions.map(_.width)}" height="@{page.campaign.logo.dimensions.map(_.height)}" class="hostedbadge__logo" src="@page.campaign.logo.src" alt="logo @page.campaign.owner"></amp-img>
             } else {
