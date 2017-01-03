@@ -9,7 +9,6 @@
         @fragments.amp.stylesheets.hosted(mainPicture, ctaImage, brandColour)
     } else {
         @fragments.amp.stylesheets.tables()
-        @fragments.amp.stylesheets.onward()
         @fragments.amp.stylesheets.buttons()
         @if(page.branding(Edition(request)).exists(_.sponsorshipType == PaidContent)) {
             @fragments.amp.stylesheets.glabs()
