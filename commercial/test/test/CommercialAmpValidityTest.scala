@@ -25,7 +25,7 @@ import play.api.test._
   val hostedArticleWithVideoId = "advertiser-content/chester-zoo-act-for-wildlife/ensuring-a-future-for-south-asian-wildlife"
   val hostedVideoId = "advertiser-content/chester-zoo-act-for-wildlife/making-wildlife-friendly-habitats"
   val hostedYoutubeId = "advertiser-content/explore-canada-food-busker-in-canada/duelling-bagels"
-  val hostedGalleryId = "advertiser-content/visit-britain/coast"
+  val hostedGalleryId = "advertiser-content/kids--top-51-books/the-best-kids-books-of-all-time-revealed"
 
   Seq(
     hostedArticleId,
