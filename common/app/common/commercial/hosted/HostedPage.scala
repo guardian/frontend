@@ -6,6 +6,8 @@ import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery, Video}
 import com.gu.contentapi.client.model.v1.{Content, SponsorshipLogoDimensions}
 import common.Logging
 import common.commercial.Dimensions
+import common.commercial.hosted.HostedUtils.getAndLog
+import common.commercial.hosted.HostedVideoPage.log
 import conf.Configuration.site
 import model.StandalonePage
 import play.api.libs.json.Json
@@ -64,11 +66,12 @@ case class HostedCampaign(
 object HostedCampaign {
 
   def fromContent(item: Content): Option[HostedCampaign] = {
-    for {
-      section <- item.section
-      hostedTag <- item.tags find (_.paidContentType.contains("HostedContent"))
-      sponsorships <- hostedTag.activeSponsorships
-      sponsorship <- sponsorships.headOption
+    log.info(s"Building hosted campaign for ${item.id} ...")
+    val campaign = for {
+      section <- getAndLog(item, item.section, "has no section")
+      hostedTag <- getAndLog(item, item.tags find (_.paidContentType.contains("HostedContent")), "has no hosted tag")
+      sponsorships <- getAndLog(item, hostedTag.activeSponsorships, "has no sponsorships")
+      sponsorship <- getAndLog(item, sponsorships.headOption, "has no sponsorship")
     } yield {
       val id = section.id.stripPrefix("advertiser-content/")
       HostedCampaign(
@@ -79,6 +82,8 @@ object HostedCampaign {
         fontColour = Colour(hostedTag.paidContentCampaignColour getOrElse "")
       )
     }
+    if (campaign.isEmpty) log.error(s"Failed to build HostedCampaign from $item")
+    campaign
   }
 }
 
