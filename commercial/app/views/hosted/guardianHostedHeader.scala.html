@@ -7,9 +7,9 @@
             <p class="hostedbadge__info">Advertiser content</p>
             <a href="@page.cta.url" data-link-name="@page.campaign.logo.trackingCode" target="_blank">
             @if(isAMP) {
-                <amp-img layout="responsive" width="@{page.campaign.logo.dimensions.map(_.width)}" height="@{page.campaign.logo.dimensions.map(_.height)}" class="hostedbadge__logo" src="@page.campaign.logo.url" alt="logo @page.campaign.owner"></amp-img>
+                <amp-img layout="responsive" width="@{page.campaign.logo.dimensions.map(_.width)}" height="@{page.campaign.logo.dimensions.map(_.height)}" class="hostedbadge__logo" src="@page.campaign.logo.src" alt="logo @page.campaign.owner"></amp-img>
             } else {
-                <img class="hostedbadge__logo" src="@page.campaign.logo.url" alt="logo @page.campaign.owner"/>
+                <img class="hostedbadge__logo" src="@page.campaign.logo.src" alt="logo @page.campaign.owner"/>
             }
             </a>
         </div>

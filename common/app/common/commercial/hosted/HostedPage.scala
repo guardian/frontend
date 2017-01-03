@@ -78,7 +78,12 @@ object HostedCampaign {
         id,
         name = section.webTitle,
         owner = sponsorship.sponsorName,
-        logo = HostedLogo.make(sponsorship.sponsorLogo, sponsorship.sponsorLogoDimensions, id),
+        logo = HostedLogo.make(
+          src = sponsorship.sponsorLogo,
+          dimensions = sponsorship.sponsorLogoDimensions,
+          link = sponsorship.sponsorLink,
+          campaignId = id
+        ),
         fontColour = Colour(hostedTag.paidContentCampaignColour getOrElse "")
       )
     }
@@ -87,15 +92,21 @@ object HostedCampaign {
   }
 }
 
-case class HostedLogo(url: String, dimensions: Option[Dimensions], trackingCode: String)
+case class HostedLogo(src: String, dimensions: Option[Dimensions], link: String, trackingCode: String)
 
 object HostedLogo {
 
   implicit val jsonFormat = Json.format[HostedLogo]
 
-  def make(url: String, dimensions: Option[SponsorshipLogoDimensions], campaignId: String) = HostedLogo(
-    url,
+  def make(
+    src: String,
+    dimensions: Option[SponsorshipLogoDimensions],
+    link: String,
+    campaignId: String
+  ) = HostedLogo(
+    src,
     dimensions map (d => Dimensions(d.width, d.height)),
+    link,
     trackingCode = s"$campaignId logo"
   )
 }
