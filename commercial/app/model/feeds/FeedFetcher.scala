@@ -21,17 +21,9 @@ trait FeedFetcher {
   def fetch()(implicit executionContext: ExecutionContext): Future[FetchResponse]
   def fetch(feedMetaData: FeedMetaData)(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
 
-    def body(response: WSResponse): String = {
-      if (feedMetaData.responseEncoding == ResponseEncoding.default) {
-        response.body
-      } else {
-        response.underlying[Response].getResponseBody(feedMetaData.responseEncoding)
-      }
-    }
+    def body(response: WSResponse): String = response.bodyAsBytes.decodeString(feedMetaData.responseEncoding)
 
-    def contentType(response: WSResponse): String = {
-      response.underlying[Response].getContentType
-    }
+    def contentType(response: WSResponse): String = response.header("Content-Type") getOrElse "application/octet-stream"
 
     val start = currentTimeMillis()
 
