@@ -21,7 +21,7 @@
 define([
     'Promise',
     'domReady',
-    'common/utils/raven'
+    'common/utls/raven'
 ], function (
     Promise,
     domReady,
