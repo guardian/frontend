@@ -120,7 +120,7 @@ define([
             return request.then(function (response) {
                 return response.json().then(function (body) {
                     return body.content.slice(0, numberOfRecommendations).map(function (recommendation){
-                        return recommendation.item.id;
+                        return recommendation.id;
                     });
                 });
             });
