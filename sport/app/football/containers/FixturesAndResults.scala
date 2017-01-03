@@ -14,8 +14,6 @@ import org.joda.time.LocalDate
 import football.views.html.matchList.matchesComponent
 import football.views.html.tablesList.tablesComponent
 
-import scalaz.syntax.std.boolean._
-
 class CompetitionAndGroupFinder(competitions: Competitions) {
   def windowed(group: Group, teamId: String) = {
     group.entries.around(1, 10)(_.team.id == teamId) match {
@@ -62,16 +60,20 @@ class FixturesAndResults(competitions: Competitions) extends Football {
       val maybeCompetitionAndGroup = competitionAndGroupFinder.bestForTeam(teamId).filter(_ => leagueTableExists)
 
       val now = LocalDate.now(Edition.defaultEdition.timezone)
-      val fixturesComponent = fixtureExists option matchesComponent(
-        TeamFixturesList(now, competitions.competitions, teamId, 2),
-        Some(s"Show more $teamName fixtures", s"/football/$tagId/fixtures")
-      )
-      val resultsComponent = resultExists option matchesComponent(
-        TeamResultsList(now, competitions.competitions, teamId),
-        Some(s"Show more $teamName results", s"/football/$tagId/results")
-      )
+      val fixturesComponent = if(fixtureExists)  {
+        Some(matchesComponent(
+          TeamFixturesList(now, competitions.competitions, teamId, 2),
+          Some(s"Show more $teamName fixtures", s"/football/$tagId/fixtures")
+        ))
+      } else None
+      val resultsComponent = if(resultExists) {
+         Some(matchesComponent(
+          TeamResultsList(now, competitions.competitions, teamId),
+          Some(s"Show more $teamName results", s"/football/$tagId/results")
+        ))
+      } else None
 
-      Seq(maybeCompetitionAndGroup, fixturesComponent, resultsComponent).flatten.nonEmpty option {
+      if(Seq(maybeCompetitionAndGroup, fixturesComponent, resultsComponent).flatten.nonEmpty) {
         val blobs = Seq(
           Some(HtmlAndClasses(
             1,
@@ -94,7 +96,7 @@ class FixturesAndResults(competitions: Competitions) extends Football {
 
         val layout = ContainerLayout.forHtmlBlobs(container.slices, blobs)
 
-        FaciaContainer(
+        val faciaContainer = FaciaContainer(
           index = 1,
           dataId = "fixtures-and-results",
           displayName = Some("Fixtures and results"),
@@ -116,7 +118,9 @@ class FixturesAndResults(competitions: Competitions) extends Football {
           showBranding = false,
           isThrasher = false
         )
-      }
+        Some(faciaContainer)
+      } else None
+
     }).flatten
   }
 }

@@ -28,7 +28,7 @@ object Dependencies {
   val commonsLang = "commons-lang" % "commons-lang" % "2.4"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.18"
-  val contentApiClient = "com.gu" %% "content-api-client" % "10.5"
+  val contentApiClient = "com.gu" %% "content-api-client" % "10.17"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.20.0"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
@@ -57,7 +57,6 @@ object Dependencies {
   val scalajTime = "org.scalaj" % "scalaj-time_2.10.2" % "0.7"
   val scalaTest = "org.scalatest" %% "scalatest" % "2.2.6" % Test
   val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
-  val scalaz = "org.scalaz" %% "scalaz-core" % "7.0.6"
   val scalaUri = "com.netaporter" % "scala-uri_2.11" % "0.4.11"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % seleniumVersion
   val shadeMemcached = "com.bionicspirit" %% "shade" % "1.6.0"
@@ -70,7 +69,7 @@ object Dependencies {
   val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.3.0"
   val targetingClient = "com.gu" %% "targeting-client" % "0.11.0"
-  val scanamo = "com.gu" %% "scanamo" % "0.8.0"
+  val scanamo = "com.gu" %% "scanamo" % "0.8.3"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"

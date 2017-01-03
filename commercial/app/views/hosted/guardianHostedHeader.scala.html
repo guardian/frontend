@@ -5,11 +5,11 @@
     <div class="hosted__headerwrap js-hosted-headerwrap">
         <div class="hostedbadge hosted-tone-bg content__hosted-body">
             <p class="hostedbadge__info">Advertiser content</p>
-            <a href="@page.cta.url" data-link-name="hosted-logo-top-left" target="_blank">
+            <a href="@page.campaign.logo.link" data-link-name="@page.campaign.logo.trackingCode" target="_blank">
             @if(isAMP) {
-                <amp-img layout="responsive" width="@{page.campaign.logo.dimensions.map(_.width)}" height="@{page.campaign.logo.dimensions.map(_.height)}" class="hostedbadge__logo" src="@page.campaign.logo.url" alt="logo @page.campaign.owner"></amp-img>
+                <amp-img layout="responsive" width="@{page.campaign.logo.dimensions.map(_.width)}" height="@{page.campaign.logo.dimensions.map(_.height)}" class="hostedbadge__logo" src="@page.campaign.logo.src" alt="logo @page.campaign.owner"></amp-img>
             } else {
-                <img class="hostedbadge__logo" src="@page.campaign.logo.url" alt="logo @page.campaign.owner"/>
+                <img class="hostedbadge__logo" src="@page.campaign.logo.src" alt="logo @page.campaign.owner"/>
             }
             </a>
         </div>
@@ -53,7 +53,7 @@
             </div>
         }
         <div class="hosted-header__spacer"></div>
-        <a href="http://www.theguardian.com" data-link-name="guardian-logo-top-right" class="hosted__glogo">
+        <a href="http://www.theguardian.com" data-link-name="@page.campaign.logo.trackingCode" class="hosted__glogo">
             <p class="hosted__glogotext">Hosted by</p>
             @fragments.inlineSvg("guardian-logo-320", "logo", List("hosted__guardian-logo"))
         </a>

@@ -40,7 +40,7 @@ trait PerformanceSwitches {
     SwitchGroup.Performance,
     "long-cache-switch",
     "If this switch is on then content will get a longer cache time",
-    owners = Seq(Owner.withGithub("gklopper")),
+    owners = Owner.group(SwitchGroup.Performance),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -186,16 +186,6 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false
-  )
-
-  val DisableStickyAdBannerOnMobileSwitch = Switch(
-    SwitchGroup.Performance,
-    "disable-sticky-ad-banner-on-mobile",
-    "If this switch is on, the sticky ad banner will be disabled on mobile.",
-    owners = Seq(Owner.withName("health team")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
   )
 
   val SaveForLaterSwitch = Switch(

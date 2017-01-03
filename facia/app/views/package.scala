@@ -2,7 +2,6 @@ package views
 
 import common.Edition
 import model.{ApplicationContext, PressedPage}
-import play.api.Environment
 import play.api.mvc.RequestHeader
 import views.support.{BulletCleaner, CommercialComponentHigh}
 import views.support.`package`.withJsoup

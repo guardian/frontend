@@ -8,6 +8,7 @@ define([
     detect
 ) {
     describe('Breakpoint', function () {
+
         beforeEach(function () {
             this.originalGetViewport = detect.getViewport;
             this.viewportWidth = 0;
@@ -66,12 +67,6 @@ define([
             expect(detect.isBreakpoint({ min: 'mobile', max: 'tablet' })).toBe(false);
             expect(detect.isBreakpoint({ min: 'mobile', max: 'desktop' })).toBe(true);
             expect(detect.isBreakpoint({ min: 'tablet', max: 'wide' })).toBe(true);
-        });
-
-        it('should append a surrogate ad to the body', function () {
-            var html = '<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>';
-            detect.adblockInUseSync();
-            expect(document.body.lastChild.outerHTML).toEqual(html);
         });
     });
 });

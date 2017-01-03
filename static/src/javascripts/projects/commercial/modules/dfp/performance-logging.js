@@ -106,12 +106,14 @@ define([
         return index > -1 ? performanceLog.baselines[index].startTime : 0;
     }
 
+    // This posts the performance log to the beacon endpoint. It is expected that this be called
+    // multiple times in a page view, so that partial data is captured, and then topped up as adverts load in.
     function reportTrackingData() {
         if (config.tests.commercialClientLogging) {
             require(['ophan/ng'], function (ophan) {
                 performanceLog.viewId = ophan.viewId;
 
-                beacon.postJson('/commercial-report', JSON.stringify(performanceLog), true);
+                beacon.postJson('/commercial-report', JSON.stringify(performanceLog));
             });
         }
     }
@@ -130,6 +132,7 @@ define([
         addEndTimeBaseline : addEndTimeBaseline,
         primaryBaseline : primaryBaseline,
         secondaryBaseline: secondaryBaseline,
-        addTag: addTag
+        addTag: addTag,
+        reportTrackingData: raven.wrap(reportTrackingData)
     };
 });

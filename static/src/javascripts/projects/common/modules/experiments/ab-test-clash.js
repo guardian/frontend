@@ -5,25 +5,9 @@ define([
     some,
     ab
 ) {
-
-    var ContributionsEpicUsaCtaThreeWay = {
-        name: 'ContributionsEpicUsaCtaThreeWay',
-        variants: ['mixed', 'just-contribute', 'just-supporter']
-    };
-
-    var ContributionsEpicObserverAnniversary = {
-        name: 'ContributionsEpicObserverAnniversary',
-        variants: ['mixed']
-    };
-
-    var ContributionsEpicBrexitSupreme = {
-        name: 'ContributionsEpicBrexitSupreme',
-        variants: ['mixed']
-    };
-
     var ContributionsEpicAlwaysAskStrategy = {
         name: 'ContributionsEpicAlwaysAskStrategy',
-        variants: ['control', 'alwaysAsk']
+        variants: ['alwaysAsk']
     };
 
     var ContributionsEpicOnTheMoon = {
@@ -31,25 +15,10 @@ define([
         variants: ['control', 'showMeTheMoon', 'australiaNewsroom', 'endOfYearAustralia']
     };
 
-    var ContributionsEpicUsEoyControl = {
-        name: 'ContributionsEpicUsEoyControl',
-        variants: ['control']
-    };
-
-    var ContributionsEpicUsEoyEndOfYear = {
-        name: 'ContributionsEpicUsEoyEndOfYear',
-        variants: ['endOfYear']
-    };
-
     function userIsInAClashingAbTest() {
         var clashingTests = [
-            ContributionsEpicUsaCtaThreeWay,
-            ContributionsEpicObserverAnniversary,
-            ContributionsEpicBrexitSupreme,
             ContributionsEpicOnTheMoon,
-            ContributionsEpicAlwaysAskStrategy,
-            ContributionsEpicUsEoyControl,
-            ContributionsEpicUsEoyEndOfYear
+            ContributionsEpicAlwaysAskStrategy
         ];
         return _testABClash(ab.isInVariant, clashingTests);
     }

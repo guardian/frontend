@@ -19,16 +19,11 @@ GET            /assets/*path                                                    
 
 # Diagnostics
 GET            /count/$prefix<.+>.gif                                                                                            controllers.DiagnosticsController.analytics(prefix)
-GET            /counts.gif                                                                                                       controllers.DiagnosticsController.analyticsCounts()
-POST           /css                                                                                                              controllers.DiagnosticsController.css
-OPTIONS        /css                                                                                                              controllers.DiagnosticsController.cssOptions
 POST           /csp-report                                                                                                       controllers.DiagnosticsController.csp
 OPTIONS        /csp-report                                                                                                       controllers.DiagnosticsController.cspOptions
 POST           /commercial-report                                                                                                controllers.DiagnosticsController.commercialReport
 OPTIONS        /commercial-report                                                                                                controllers.DiagnosticsController.commercialOptions
 GET            /commercial-reports/:dateTime                                                                                     controllers.DiagnosticsController.commercialReports(dateTime)
-POST           /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeacon
-OPTIONS        /accept-beacon                                                                                                    controllers.DiagnosticsController.acceptBeaconOptions
 
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
@@ -42,7 +37,6 @@ GET            /crosswords/search                                               
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
 # Email paths
-GET            /email                                                                                                            controllers.EmailSignupController.renderPage()
 GET            /email/form/$emailType<article|footer|plain|plaindark|plaintone>/:listId                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET            /email/:result                                                                                                    controllers.EmailSignupController.subscriptionResult(result: String)
 POST           /email                                                                                                            controllers.EmailSignupController.submit()
@@ -123,6 +117,9 @@ GET            /video/end-slate/series/*seriesId.json                           
 GET            /video/end-slate/section/*sectionId.json                                                                          controllers.VideoEndSlateController.renderSection(sectionId)
 GET            /embed/card/*path.json                                                                                            controllers.RichLinkController.render(path)
 GET            /embed/card/*path                                                                                                 controllers.RichLinkController.renderHtml(path)
+GET            /embed/contentcard/*path.json                                                                                     controllers.RecommendedContentCardController.render(path)
+GET            /embed/contentcard/*path                                                                                          controllers.RecommendedContentCardController.renderHtml(path)
+
 # User tech feedback
 GET            /info/tech-feedback                                                                                               controllers.TechFeedbackController.techFeedback(path = "")
 GET            /info/tech-feedback/*path                                                                                         controllers.TechFeedbackController.techFeedback(path)
@@ -239,11 +236,6 @@ POST           /press/r2                                                        
 GET            /press/r2/batchupload                                                                                             controllers.admin.R2PressController.pressForm()
 POST           /press/r2/batchupload                                                                                             controllers.admin.R2PressController.batchUpload()
 
-# css reports
-GET            /css-reports                                                                                                      controllers.admin.CssReportController.entry
-GET            /css-reports.json                                                                                                 controllers.admin.CssReportController.index
-GET            /css-reports/:date.json                                                                                           controllers.admin.CssReportController.report(date: org.joda.time.LocalDate)
-
 
 # Football admin
 
@@ -310,6 +302,7 @@ GET            /$path<commercial-containers>                                    
 GET            /commercial/advertiser-content/:campaignName/:pageName                                                            commercial.controllers.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName/:cType/onward.json                                                    commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
+GET            /advertiser-content/:campaignName/:pageName/autoplay.json                                                         commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize
 
 # Commercial Admin
@@ -352,6 +345,8 @@ GET            /container/count/:count/offset/:offset/edition/:edition/mf2.json 
 GET            /container/count/:count/offset/:offset/section/:section/edition/:edition/mf2.json                                 controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition)
 
 GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                                                football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
+
+GET            /editionalised-nav.json                                                                                           controllers.NavigationController.renderAmpNav()
 
 # Onward journeys
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)

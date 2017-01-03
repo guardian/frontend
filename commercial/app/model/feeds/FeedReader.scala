@@ -1,6 +1,5 @@
 package commercial.model.feeds
 
-import com.ning.http.client.{Response => AHCResponse}
 import commercial.CommercialMetrics
 import common.Logging
 import conf.switches.Switch
@@ -45,9 +44,7 @@ class FeedReader(wsClient: WSClient) extends Logging {
         response.status match {
           case status if validResponseStatuses.contains(status) =>
             recordLoad(System.currentTimeMillis - start)
-            val body: String = request.responseEncoding map {
-              response.underlying[AHCResponse].getResponseBody
-            } getOrElse response.body
+            val body: String = response.bodyAsBytes.decodeString(request.responseEncoding)
 
             Try(parse(body)) match {
               case Success(parsedBody) => parsedBody
@@ -118,13 +115,12 @@ class FeedReader(wsClient: WSClient) extends Logging {
   }
 }
 
-
 case class FeedRequest(feedName: String,
                        switch: conf.switches.Switch,
                        url: String,
                        parameters: Map[String, String] = Map.empty,
                        timeout: Duration = 2.seconds,
-                       responseEncoding: Option[String] = None)
+                       responseEncoding: String)
 
 
 case class FeedSwitchOffException(feedName: String) extends Exception {

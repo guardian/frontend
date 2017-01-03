@@ -68,7 +68,7 @@ class CommentsController(val discussionApi: DiscussionApiLike, csrfCheck: CSRFCh
     Some(SectionSummary.fromId("Discussion")),
     "Report Abuse"
   ))
-  def reportAbuseForm(commentId: Int) = csrfAddToken.apply {
+  def reportAbuseForm(commentId: Int) = csrfAddToken {
     Action {
       implicit request =>
 
@@ -104,7 +104,7 @@ class CommentsController(val discussionApi: DiscussionApiLike, csrfCheck: CSRFCh
 
   }
 
-  def reportAbuseSubmission(commentId: Int) = csrfAddToken.apply {
+  def reportAbuseSubmission(commentId: Int) = csrfCheck {
     Action.async { implicit request =>
     val scGuU = request.cookies.get("SC_GU_U")
       userForm.bindFromRequest.fold(

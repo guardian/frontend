@@ -6,7 +6,6 @@ import business.StocksData
 import contentapi.ContentApiClient
 import feed._
 import model.ApplicationContext
-import play.api.Environment
 import play.api.libs.ws.WSClient
 import weather.WeatherApi
 
@@ -42,6 +41,7 @@ trait OnwardControllers {
   lazy val mostViewedGalleryController = wire[MostViewedGalleryController]
   lazy val videoEndSlateController = wire[VideoEndSlateController]
   lazy val richLinkController = wire[RichLinkController]
+  lazy val recommendedContentCardController = wire[RecommendedContentCardController]
   lazy val cardController = wire[CardController]
   lazy val taggedContentController = wire[TaggedContentController]
   lazy val seriesController = wire[SeriesController]

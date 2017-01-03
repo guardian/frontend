@@ -2,7 +2,6 @@ package views.support
 
 import common.Edition
 import model.{ApplicationContext, Article}
-import play.api.Environment
 import play.api.mvc.RequestHeader
 
 object ImmersiveMainCleaner {

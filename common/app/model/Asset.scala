@@ -42,7 +42,7 @@ object ImageAsset {
 }
 
 case class ImageAsset(
-  index: Int,
+  index: Int = 0,
   fields: Map[String, String],
   mediaType: String,
   mimeType: Option[String],
@@ -113,7 +113,6 @@ case class VideoAsset(
   val source: Option[String] = fields.get("source")
   val embeddable: Boolean = fields.get("embeddable").exists(_.toBoolean)
   val caption: Option[String] = fields.get("caption")
-  val title: Option[String] = fields.get("data-video-name")
 }
 
 object AudioAsset {

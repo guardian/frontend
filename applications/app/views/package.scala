@@ -2,7 +2,6 @@ package views
 
 import common.Edition
 import model.{ApplicationContext, Interactive}
-import play.api.Environment
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import services.IndexPage

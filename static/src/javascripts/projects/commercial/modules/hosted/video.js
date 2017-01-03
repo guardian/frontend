@@ -6,6 +6,7 @@ define([
     'Promise',
     'commercial/modules/hosted/youtube',
     'commercial/modules/hosted/next-video-autoplay',
+    'commercial/modules/dfp/performance-logging',
     'common/utils/$',
     'common/utils/defer-to-analytics',
     'common/utils/detect',
@@ -19,6 +20,7 @@ define([
     Promise,
     hostedYoutube,
     nextVideoAutoplay,
+    performanceLogging,
     $,
     deferToAnalytics,
     detect,
@@ -55,22 +57,23 @@ define([
         $('.vjs-fullscreen-control', player.el()).attr('aria-label', 'video fullscreen');
     }
 
-    function init() {
-        return new Promise(function (resolve) {
-            require(['bootstraps/enhanced/media/main'], function () {
-                require(['bootstraps/enhanced/media/video-player'], function (videojs) {
-                    var $videoEl = $('.vjs-hosted__video');
-                    var $inlineVideoEl = $('video');
-                    var $youtubeIframe = $('.js-hosted-youtube-video');
+    function init(moduleName) {
+        performanceLogging.moduleStart(moduleName);
 
-                    if ($youtubeIframe.length === 0 && $videoEl.length === 0) {
-                        if ($inlineVideoEl.length === 0) {
-                            // halt execution
-                            return resolve();
-                        } else {
-                            $videoEl = $inlineVideoEl;
-                        }
-                    }
+        // Return a promise that resolves after the async work is done.
+        var enhanceVideo = new Promise(function(resolve){
+
+            var $videoEl = $('.vjs-hosted__video, video');
+            var $youtubeIframe = $('.js-hosted-youtube-video');
+
+            if ($youtubeIframe.length === 0 && $videoEl.length === 0) {
+                // halt execution
+                resolve();
+                return;
+            }
+
+            require(['bootstraps/enhanced/media/main'], function() {
+                require(['bootstraps/enhanced/media/video-player'], function (videojs) {
 
                     $videoEl.each(function(el){
                         var mediaId = $videoEl.attr('data-media-id');
@@ -113,15 +116,17 @@ define([
                             });
                         });
 
-                        if (nextVideoAutoplay.canAutoplay()) {
-                            //on desktop show the next video link 10 second before the end of the currently watching video
-                            if (isDesktop()) {
-                                nextVideoAutoplay.addCancelListener();
-                                player && player.one('timeupdate', nextVideoAutoplay.triggerAutoplay.bind(this, player.currentTime.bind(player), parseInt($videoEl.data('duration'), 10)));
-                            } else {
-                                player && player.one('ended', nextVideoAutoplay.triggerEndSlate);
+                        nextVideoAutoplay.init().then(function(){
+                            if (nextVideoAutoplay.canAutoplay()) {
+                                //on desktop show the next video link 10 second before the end of the currently watching video
+                                if (isDesktop()) {
+                                    nextVideoAutoplay.addCancelListener();
+                                    player && player.one('timeupdate', nextVideoAutoplay.triggerAutoplay.bind(this, player.currentTime.bind(player), parseInt($videoEl.data('duration'), 10)));
+                                } else {
+                                    player && player.one('ended', nextVideoAutoplay.triggerEndSlate);
+                                }
                             }
-                        }
+                        });
                     });
 
                     $youtubeIframe.each(function(el){
@@ -132,9 +137,16 @@ define([
                 });
             });
         });
+
+        function moduleEnd(){
+            performanceLogging.moduleEnd(moduleName);
+        }
+
+        return enhanceVideo.then(moduleEnd, moduleEnd);
     }
 
     return {
-        init: init
+        init: init,
+        customTiming: true
     };
 });

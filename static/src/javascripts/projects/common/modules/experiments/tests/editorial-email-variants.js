@@ -16,7 +16,7 @@ define([
     return function () {
         this.id = 'EditorialEmailVariants';
         this.start = '2016-12-01';
-        this.expiry = '2017-01-01';
+        this.expiry = '2017-01-18';
         this.author = 'Kate Whalen';
         this.description = 'Using the wonderful frontend AB testing framework to AB test emails, since the AB function in ExactTarget re-randomises all recipients on each send, and we need users to receive their variant for several weeks. This test will ensure users are added to the corresponding email list (listId) in ExactTarget';
         this.audience = 1;
@@ -27,7 +27,7 @@ define([
         this.idealOutcome = 'Similar quantity of users in each list in ExactTarget';
 
         this.canRun = function () {
-            return (config.page.webTitle.toLowerCase() === 'sign up for the flyer');
+          return (config.page.contentId === 'info/ng-interactive/2016/dec/07/sign-up-for-the-flyer');
         };
 
         function updateExampleUrl(exampleUrl) {

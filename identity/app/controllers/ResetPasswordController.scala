@@ -61,12 +61,6 @@ class ResetPasswordController(api : IdApiClient,
     data = form.data + ("password" -> "", "password-confirm" -> "")
   )
 
-  def renderPasswordResetRequestForm = Action { implicit request =>
-    val idRequest = idRequestParser(request)
-    val form = requestPasswordResetForm.bindFromFlash.getOrElse(requestPasswordResetForm)
-    Ok(views.html.password.requestPasswordReset(page, idRequest, idUrlBuilder, form, Nil))
-  }
-
   def requestNewToken = Action { implicit request =>
     val idRequest = idRequestParser(request)
     Ok(views.html.password.resetPasswordRequestNewToken(page, idRequest, idUrlBuilder, requestPasswordResetForm))
@@ -76,37 +70,6 @@ class ResetPasswordController(api : IdApiClient,
     val idRequest = idRequestParser(request)
     Ok(views.html.password.emailSent(page, idRequest, idUrlBuilder))
   }
-
-  def processPasswordResetRequestForm = Action.async { implicit request =>
-    val idRequest = idRequestParser(request)
-    val boundForm = requestPasswordResetFormWithConstraints.bindFromRequest
-
-    def onError(formWithErrors: Form[(String)]): Future[Result] = {
-      logger.info("bad password reset request form submission")
-      Future.successful {
-        redirectToPasswordResetRequest(formWithErrors)
-      }
-    }
-
-    def onSuccess(email: (String)): Future[Result] = {
-        api.sendPasswordResetEmail(email, idRequest.trackingData) map {
-          case Left(errors) =>
-            logger.info(s"Request new password returned errors ${errors.toString()}")
-            val formWithError = errors.foldLeft(boundForm) { (form, error) =>
-              form.withError(error.context.getOrElse(""), error.description)
-            }
-            redirectToPasswordResetRequest(formWithError)
-          case Right(apiOk) => NoCache(SeeOther(routes.ResetPasswordController.renderEmailSentConfirmation().url))
-        }
-    }
-
-    boundForm.fold[Future[Result]](onError, onSuccess)
-  }
-
-  private def redirectToPasswordResetRequest(formWithErrors: Form[String]) = NoCache(
-    SeeOther(routes.ResetPasswordController.renderPasswordResetRequestForm().url)
-      .flashing(formWithErrors.toFlash)
-  )
 
   def renderResetPassword(token: String) = Action{ implicit request =>
     val idRequest = idRequestParser(request)
@@ -139,7 +102,7 @@ class ResetPasswordController(api : IdApiClient,
                 form.withError(error.context.getOrElse(""), error.description)
               }
               NoCache(
-                SeeOther(routes.ResetPasswordController.renderPasswordResetRequestForm().url)
+                SeeOther("/reset")
                   .flashing(formWithError.toFlash)
               )
             }

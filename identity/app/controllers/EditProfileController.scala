@@ -7,11 +7,10 @@ import common.ExecutionContexts
 import form._
 import idapiclient.IdApiClient
 import model._
-import play.api.Environment
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{AnyContent, Controller, Request}
-import play.filters.csrf.CSRFCheck
+import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services._
 import utils.SafeLogging
 
@@ -28,6 +27,7 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
                             idRequestParser: IdRequestParser,
                             val messagesApi: MessagesApi,
                             csrfCheck: CSRFCheck,
+                            csrfAddToken: CSRFAddToken,
                             implicit val profileFormsMapping: ProfileFormsMapping)
                            (implicit context: ApplicationContext)
   extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
@@ -46,7 +46,7 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
   def displayDigitalPackForm = displayForm(digitalPackPage)
   def displayPrivacyForm = displayForm(privacyPage)
 
-  protected def displayForm(page: IdentityPage) = csrfCheck {
+  protected def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
       profileFormsView(page = page, forms = ProfileForms(request.user, PublicEditProfilePage))
     }

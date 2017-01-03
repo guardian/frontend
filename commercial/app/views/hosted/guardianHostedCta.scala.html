@@ -7,9 +7,9 @@
             <a href="@{cta.url}" rel="nofollow" class="hosted__cta-link" data-link-name="@{cta.trackingCode}" target="_blank">
                 <div class="hostedbadge hostedbadge--pushdown hosted-tone-bg content__hosted-body">
                     @if(isAMP) {
-                        <amp-img layout="responsive" width="@{page.campaign.logo.dimensions.map(_.width)}" height="@{page.campaign.logo.dimensions.map(_.height)}" class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}"></amp-img>
+                        <amp-img layout="responsive" width="@{page.campaign.logo.dimensions.map(_.width)}" height="@{page.campaign.logo.dimensions.map(_.height)}" class="hostedbadge__logo" src="@{page.campaign.logo.src}" alt="logo @{page.campaign.owner}"></amp-img>
                     } else {
-                        <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
+                        <img class="hostedbadge__logo" src="@{page.campaign.logo.src}" alt="logo @{page.campaign.owner}">
                     }
                 </div>
                 @if(cta.btnText.isEmpty) {

@@ -20,7 +20,7 @@ class AtomCleanerTest extends FlatSpec
       title = "Bird",
       duration = None,
       source = None,
-      posterUrl = None)
+      posterImage = None)
     ),
     interactives = Nil
   )

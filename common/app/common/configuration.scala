@@ -67,7 +67,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 13
+    val s3ConfigVersion = 14
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -552,7 +552,7 @@ class GuardianConfiguration extends Logging {
     val credentials: Option[AWSCredentialsProvider] = {
       val provider = new AWSCredentialsProviderChain(
         new ProfileCredentialsProvider("frontend"),
-        new InstanceProfileCredentialsProvider
+        InstanceProfileCredentialsProvider.getInstance()
       )
 
       // this is a bit of a convoluted way to check whether we actually have credentials.
