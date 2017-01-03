@@ -27,6 +27,7 @@ define([
     domReady,
     raven
 ) {
+    p
     // curl’s promise API is broken, so we must cast it to a real Promise
     // https://github.com/cujojs/curl/issues/293
     var promiseRequire = function (moduleIds) {
