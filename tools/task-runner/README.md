@@ -2,13 +2,15 @@
 
 This is lightweight task runner that effectively wraps [listr](https://github.com/SamVerschueren/listr) to provide a UI on tasks, which are defined in `tools/__tasks__/`.
 
+It's intended to exist ‘behind the scenes’, and should you should probably be running the tasks it runs from [`make`](https://github.com/guardian/frontend/blob/master/makefile) or something similar.
+
 ## Running tasks
 
 It takes one or more tasks to run as arguments, which should be relative paths within the `__tasks__` directory, so that:
 
 ```
 ./tools/task-runner/runner fakemodule/fakemodule
-``` 
+```
 
 will run the task defined in `tools/__tasks__/fakemodule/fakemodule.js`.
 
@@ -34,7 +36,7 @@ For a full list, run `./tools/task-runner/runner -h`.
 
 Task definitions are standard node modules that export a task object. As a minumum, they must export:
 
-1. `description` 
+1. `description`
 2. `task`
 
 
@@ -82,7 +84,7 @@ module.exports = {
         {
             description: 'another subtask',
             task: () => {
-                // do something...            
+                // do something...
             }
         }
     ]
