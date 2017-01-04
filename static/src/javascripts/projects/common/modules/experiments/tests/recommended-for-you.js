@@ -8,12 +8,13 @@ define([
     'common/utils/config',
     'common/utils/template',
     'common/views/svg',
-    'common/utils/mediator',
     'common/modules/onward/history',
     'common/utils/ajax',
     'text!common/views/experiments/recommended-for-you.html',
+    'text!common/views/experiments/recommended-for-you-opt-in.html',
     'inlineSvg!svgs/icon/profile-36',
     'inlineSvg!svgs/icon/arrow-right',
+    'inlineSvg!svgs/icon/marque-36',
     'common/utils/fetch'
 ], function (
     bean,
@@ -25,12 +26,13 @@ define([
     config,
     template,
     svg,
-    mediator,
     history,
     ajax,
     recommendedForYouTemplate,
+    recommendedForYouOptInTemplate,
     profileIcon,
     rightArrowIcon,
+    guardianLogo,
     fetch
 ) {
     return function () {
@@ -48,10 +50,11 @@ define([
 
         var endpoint = 'https://engine.mobile-aws.guardianapis.com/recommendations?format=content_ids';
         var cachedRecommendationsKey = 'gu.cachedRecommendations';
+        var cachedRecommendationsEnabledKey = 'gu.recommendationsEnabled';
         var numberOfRecommendations = 4;
 
         var $opinionSection;
-        var $recommendedForYouSection;
+        var $recommendedForYouSection = null;
 
         this.canRun = function () {
             $opinionSection = $('#opinion');
@@ -62,7 +65,11 @@ define([
             {
                 id: 'user-history',
                 test: function () {
-                    populateRecommendationsContainer();
+                    if (!hasGivenFeedback()) {
+                        insertOnBoardingSection();
+                    } else if (shouldShowRecommendations()) {
+                        populateRecommendationsContainer();
+                    }
                 }
             },
             {
@@ -120,7 +127,7 @@ define([
             return request.then(function (response) {
                 return response.json().then(function (body) {
                     return body.content.slice(0, numberOfRecommendations).map(function (recommendation){
-                        return recommendation.item.id;
+                        return recommendation.id;
                     });
                 });
             });
@@ -144,15 +151,64 @@ define([
         }
 
         function insertSection(items) {
+            var $oldSection = $recommendedForYouSection;
+
             $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
                 profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
                 items: items
             }));
 
+            if ($oldSection != null) {
+                return fastdom.write(function() {
+                    $oldSection.replaceWith($recommendedForYouSection);
+                    setupComponentAttentionTracking('recommended-for-you_user-history');
+                });
+            } else {
+                return fastdom.write(function() {
+                    $recommendedForYouSection.insertBefore($opinionSection);
+                    setupComponentAttentionTracking('recommended-for-you_user-history');
+                });
+            }
+        }
+
+        function hasGivenFeedback() {
+            return storage.local.get(cachedRecommendationsEnabledKey) != null;
+        }
+
+        function shouldShowRecommendations() {
+            return !!storage.local.get(cachedRecommendationsEnabledKey);
+        }
+
+        function registerFeedback(showRecommendations) {
+            storage.local.set(cachedRecommendationsEnabledKey, showRecommendations);
+        }
+
+        function insertOnBoardingSection() {
+            $recommendedForYouSection = $.create(template(recommendedForYouOptInTemplate, {
+                profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
+                rightArrowIcon: svg(rightArrowIcon, ['i-right']),
+                guardianLogo: svg(guardianLogo)
+            }));
+
             return fastdom.write(function() {
                 $recommendedForYouSection.insertBefore($opinionSection);
+                $('.js-feedback-button-yes', $recommendedForYouSection[0]).each(function(el) {
+                    bean.on(el, 'click', function () {
+                        registerFeedback(true);
+                        $('.js-feedback', $recommendedForYouSection[0]).html(
+                            '<p>Your recommendations will be ready soon.</p>'
+                        );
+                        populateRecommendationsContainer();
+                    });
+                });
+
+                $('.js-feedback-button-no', $recommendedForYouSection[0]).each(function(el) {
+                    bean.on(el, 'click', function () {
+                        registerFeedback(false);
+                        $recommendedForYouSection.remove();
+                    });
+                });
                 setupComponentAttentionTracking('recommended-for-you_user-history');
-                mediator.emit('recommended-for-you:insert');
             });
         }
     };
