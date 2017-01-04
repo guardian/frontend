@@ -444,6 +444,17 @@ case class ExploreVideos(isExplore: Boolean) extends HtmlCleaner{
   }
 }
 
+case class PhotoEssayImages(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isPhotoEssay) {
+      document.getElementsByTag("figure").filter(_.hasClass("element-image"))foreach{ images =>
+        images.addClass("element-image--photo-esssay")
+      }
+    }
+    document
+  }
+}
+
 case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isImmersive) {
