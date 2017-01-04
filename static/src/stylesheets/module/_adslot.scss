@@ -75,11 +75,6 @@
 .ad-slot--top-banner-ad {
     text-align: center;
 
-    @include mq(wide) {
-        width: gs-span(16) - ($left-column-wide + $gs-gutter);
-        padding-left: $left-column-wide + $gs-gutter;
-    }
-
     .ad-slot__label {
         /* this is the minimum width of possible ads sizes */
         width: 728px;
@@ -114,6 +109,11 @@
 
     @include mq($until: tablet) {
         display: none;
+    }
+
+    @include mq(wide) {
+        padding-left: $left-column-wide + $gs-gutter * 2;
+        margin-left: calc(50% - #{(gs-span($gs-max-columns) + $gs-gutter * 2) / 2});
     }
 
     &.ad-slot--fabric {
@@ -361,6 +361,7 @@
 .ad-slot--fluid {
     min-height: 250px;
     padding: 0;
+    margin: 0;
 
     &:not(.ad-slot--im) {
         width: auto;
@@ -402,6 +403,12 @@
     padding-left: 0;
     padding-right: 0;
     padding-bottom: 0;
+
+    &.ad-slot--top-banner-ad-desktop {
+        @include mq(wide) {
+            margin-left: 0;
+        }
+    }
 }
 
 .ad-slot--fabric-v1,
