@@ -1,0 +1,29 @@
+package helpers
+
+import java.io.File
+import java.net.URLEncoder
+
+import play.api.libs.ws.{WSClient, WSResponse}
+import recorder.DefaultHttpRecorder
+import services.FacebookGraphApiClient
+
+import scala.concurrent.Future
+
+
+class FacebookGraphApiTestClient(wsClient: WSClient) extends FacebookGraphApiClient(wsClient) {
+
+  val recorder = new DefaultHttpRecorder {
+    override lazy val baseDir = new File(System.getProperty("user.dir"), "data/facebook-graph-api")
+  }
+
+  override def GET[T](endpoint: Option[String], params: (String, String)*)(asResult: WSResponse => T) = {
+    val augmentedParams = super.augmentParams(params)
+    val queryString = augmentedParams.map(pair => pair._1 + "=" + URLEncoder.encode(pair._2, "UTF-8")).mkString("&")
+
+    val fetch: Future[WSResponse] = recorder.load(s"${super.makeUrl(endpoint)}?$queryString", Map.empty) {
+      super.GET[WSResponse](endpoint, params: _*)(x => x)
+    }
+
+    fetch.map(asResult)
+  }
+}
