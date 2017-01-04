@@ -1,4 +1,5 @@
 define([
+    'Promise',
     'lodash/functions/once',
     'common/utils/config',
     'common/utils/mediator',
@@ -10,7 +11,7 @@ define([
     'commercial/modules/dfp/render-advert',
     'commercial/modules/dfp/empty-advert',
     'commercial/modules/dfp/get-advert-by-id'
-], function (once, config, mediator, reportError, userTiming, beacon, dfpEnv, Advert, renderAdvert, emptyAdvert, getAdvertById) {
+], function (Promise, once, config, mediator, reportError, userTiming, beacon, dfpEnv, Advert, renderAdvert, emptyAdvert, getAdvertById) {
     var recordFirstAdRendered = once(function () {
         beacon.fire('/count/ad-render.gif');
     });
