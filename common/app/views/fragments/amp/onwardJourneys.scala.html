@@ -1,0 +1,37 @@
+@(page: model.Page, related: model.RelatedContent, content: model.Content)(implicit context: model.ApplicationContext)
+
+@if(content.metadata.sectionId != "childrens-books-site") {
+    @if(related.hasStoryPackage) {
+        @fragments.amp.storyPackageAmp(related)
+    }
+    @if(content.tags.series.nonEmpty) {
+        @content.tags.series.map { tag =>
+            @fragments.amp.onwardTemplateAmp("series-mf2/" + tag.id + ".json")
+        }
+    }
+    @if(content.showInRelated
+        && !related.hasStoryPackage
+        && content.tags.series.isEmpty) {
+        @fragments.amp.onwardTemplateAmp("related-mf2/" + page.metadata.id + ".json")
+    }
+
+    @if(!content.shouldHideAdverts) {
+        @fragments.amp.outbrain(page)
+    }
+
+    @defining({
+        val whitelistedSections = List("commentisfree", "sport", "football", "fashion", "lifeandstyle",
+            "education", "culture", "business", "technology", "politics", "environment", "travel",
+            "film", "media", "money", "society", "science", "music", "books", "stage", "cities",
+            "tv-and-radio", "artanddesign", "global-development")
+        whitelistedSections.contains(page.metadata.sectionId)
+    }) { isWhitelistedSection =>
+        @if(isWhitelistedSection) {
+            @fragments.amp.onwardTemplateAmp(s"container/count/1/offset/0/section/${page.metadata.sectionId}/mf2.json")
+        } else {
+            @fragments.amp.onwardTemplateAmp(s"container/count/1/offset/0/mf2.json")
+        }
+        @fragments.amp.onwardTemplateAmp("most-read-mf2.json")
+        @fragments.amp.onwardTemplateAmp(s"container/count/3/offset/${if(isWhitelistedSection) 0 else 1}/mf2.json")
+    }
+}
