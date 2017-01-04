@@ -1,10 +1,8 @@
 package commercial.model.feeds
 
-import java.nio.charset.Charset
 import commercial.CommercialMetrics
 import common.Logging
 import conf.switches.Switch
-import org.asynchttpclient.netty.NettyResponse
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse, WSSignatureCalculator}
 
@@ -46,9 +44,7 @@ class FeedReader(wsClient: WSClient) extends Logging {
         response.status match {
           case status if validResponseStatuses.contains(status) =>
             recordLoad(System.currentTimeMillis - start)
-            val body: String = request.responseEncoding map { encoding =>
-              response.underlying[NettyResponse].getResponseBody(Charset.forName(encoding))
-            } getOrElse response.body
+            val body: String = response.bodyAsBytes.decodeString(request.responseEncoding)
 
             Try(parse(body)) match {
               case Success(parsedBody) => parsedBody
@@ -119,13 +115,12 @@ class FeedReader(wsClient: WSClient) extends Logging {
   }
 }
 
-
 case class FeedRequest(feedName: String,
                        switch: conf.switches.Switch,
                        url: String,
                        parameters: Map[String, String] = Map.empty,
                        timeout: Duration = 2.seconds,
-                       responseEncoding: Option[String] = None)
+                       responseEncoding: String)
 
 
 case class FeedSwitchOffException(feedName: String) extends Exception {

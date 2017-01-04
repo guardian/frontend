@@ -19,6 +19,7 @@ object LeffeHostedPages {
     logo = HostedLogo(
       Static("images/commercial/leffe.jpg"),
       Some(Dimensions(width = 132, height = 132)),
+      link = "",
       trackingCode = ""
     ),
     fontColour = Colour("#dec190")
