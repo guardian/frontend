@@ -21,11 +21,11 @@ object BrandHunter {
     publicationDate: Option[DateTime]
   ): Option[Branding] = {
 
-    val brandingBySection = metadata.section.flatMap { section =>
+    lazy val brandingBySection = metadata.section.flatMap { section =>
       findBranding(section.activeBrandings, edition, publicationDate)
     }
 
-    val brandingByTags = tags.tags.flatMap { tag =>
+    lazy val brandingByTags = tags.tags.flatMap { tag =>
       findBranding(tag.properties.activeBrandings, edition, publicationDate)
     }.headOption
 
@@ -33,7 +33,8 @@ object BrandHunter {
   }
 
   def findContentBranding(content: ContentType, edition: Edition): Option[Branding] = {
-    findBranding(content.metadata, content.tags, edition, Some(content.trail.webPublicationDate))
+    if (content.commercial.isInappropriateForSponsorship) None
+    else findBranding(content.metadata, content.tags, edition, Some(content.trail.webPublicationDate))
   }
 
   /*
