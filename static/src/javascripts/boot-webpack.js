@@ -1,3 +1,3 @@
-define(['bootstraps/standard/main'], function(boot) {
-    boot();
-});
+import boot from 'bootstraps/standard/main';
+
+boot();
