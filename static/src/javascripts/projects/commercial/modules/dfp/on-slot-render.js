@@ -70,6 +70,7 @@ define([
             .then(function () {
                 userTiming.mark('All ads are rendered');
                 mediator.emit('modules:commercial:dfp:alladsrendered');
+                window.dispatchEvent(new CustomEvent('alladsrendered'));
             });
         }
     }
