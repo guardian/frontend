@@ -28,9 +28,6 @@ define([
             timings: {
                 createTime: null,
                 startLoading: null,
-                dfpFetching: null,
-                dfpReceived: null,
-                dfpRendered: null,
                 stopLoading: null,
                 startRendering: null,
                 stopRendering: null,
