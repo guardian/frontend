@@ -114,6 +114,10 @@
     @include mq(wide) {
         padding-left: $left-column-wide + $gs-gutter * 2;
         margin-left: calc(50% - #{(gs-span($gs-max-columns) + $gs-gutter * 2) / 2});
+
+        .has-page-skin & {
+            margin-left: 0;
+        }
     }
 
     &.ad-slot--fabric {
