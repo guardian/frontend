@@ -456,6 +456,7 @@ Comments.prototype.reportCommentFailure = function() {
 };
 
 Comments.prototype.addUser = function(user) {
+    var self = this;
     this.user = user;
 
     // Determine user staff status
@@ -475,6 +476,12 @@ Comments.prototype.addUser = function(user) {
             this.on('click', this.getClass('commentPick'), this.handlePickClick);
         }
     }
+
+    mediator.on('user:username:updated', function(newUsername) {
+        if (self.user) {
+            self.user.displayName = newUsername;
+        }
+    });
 };
 
 Comments.prototype.relativeDates = function() {

@@ -259,7 +259,8 @@ CommentBox.prototype.postComment = function() {
             .then(self.postCommentSuccess.bind(self, comment), self.fail.bind(self));
     };
 
-    var updateUsernameSuccess = function () {
+    var updateUsernameSuccess = function (resp) {
+        mediator.emit('user:username:updated', resp.user.publicFields.username);
         self.options.newUsername = false;
         self.getElem('onboarding-username').classList.add('is-hidden');
         postCommentToDAPI();
@@ -551,27 +552,16 @@ CommentBox.prototype.formatComment = function(formatStyle) {
     }
 };
 
-/**
- * The username is used in three places:
- *   1. header menu - read from GU_U cookie
- *   2. discussion header - read from DAPI
- *   3. comment - read from DAPI
- *
- * When the user updates the username the changes are visible only when the page is refreshed. This method
- * temporarily updates HTML client-side so that user has instant feedback before the page is refreshed.
-*/
+
+// When the user updates the username the changes are visible only when the page is refreshed. This method
+// temporarily updates HTML client-side so that user has instant feedback before the page is refreshed.
 CommentBox.prototype.refreshUsernameHtml = function() {
     IdentityApi.reset();
     var displayName = this.getUserData().displayName;
-    var userId = this.getUserData().id;
-
-    var menuHeaderUsername = document.querySelector(".js-profile-info");
-    var discussionHeaderUsername = document.querySelector("._author_tywwu_16");
-    var firstCommentUsername = document.querySelector('[data-comment-author-id=' + '"' + userId + '"]');
-
+    var menuHeaderUsername = $('.js-profile-info')[0];
+    var discussionHeaderUsername = $('._author_tywwu_16')[0];
     menuHeaderUsername && (menuHeaderUsername.innerHTML = displayName);
     discussionHeaderUsername && (discussionHeaderUsername.innerHTML = displayName);
-    firstCommentUsername && (firstCommentUsername.querySelector('[itemprop="givenName"]').textContent = displayName);
 };
 
 return CommentBox;
