@@ -10,5 +10,4 @@ cat /dev/null | java -Xmx6144M \
   -XX:+UseConcMarkSweepGC \
   -DAPP_SECRET="fake_secret" \
   -Duser.timezone=Australia/Sydney \
-  -Dlogback.configurationFile=`dirname $0`/common/test/resources/logback-common.xml \
   -jar `dirname $0`/../sbt-launch.jar "$@"
