@@ -1,4 +1,9 @@
-@import 'head.amp-common';
+@charset 'UTF-8';
+
+
+@import '_vars';
+@import '_mixins';
+@include grid-system;
 
 @import 'amp/_hosted';
 @import 'amp/_hosted-gallery';
