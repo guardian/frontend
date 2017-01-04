@@ -1,72 +1,7 @@
 #!/usr/bin/env node
 /* eslint-disable import/no-dynamic-require, global-require */
 
-/*
-This is lightweight task runner that uses listr to provide a UI,
-Tasks are defined in ./__tasks__/
-
-It takes one or more tasks to run as arguments, which should be paths within ./__tasks__ e.g.
-
-./run-task fakemodule/fakemodule
-    - runs the task defined in ./__tasks__/fakemodule/fakemodule.js
-
-You can pass a `--dev` flag to prefer a dev version, if it exists (suffix the filename with `.dev`) e.g.
-
-./run-task fakemodule/fakemodule --dev
-    - runs ./__tasks__/fakemodule/fakemodule.dev.js if it exists
-    - reverts to ./__tasks__/fakemodule/fakemodule.js if above fails
-
-Task definitions are standard node modules that in the format:
-module.exports = {
-    description: "a description",
-    task: // a task to run
-}
-
-Tasks can be:
-1. a string - treated a standard terminal command
-{
-    description: "run a terminal command",
-    task: "terminal command"
-}
-commands are run with execa, which checks for locally installed binaries (./node_modules)
-before global ones, the same as with npm scripts
-
-2. a javascript function - executed when the task runs
-{
-    description: "run a JS function",
-    task: () => {...}
-}
-
-3. a `require` statement for another task
-{
-    description: "run another task",
-    task: require('./another-task')
-}
-
-4. be an array of any of the above, or a new task object
-{
-    description: "my task",
-    task: [
-        require('./another-task'),
-        "command to run",
-        () => {...},
-        {
-            description: 'my subtask',
-            task: require('./sub-task/task')
-        }
-    ]
-}
-if the task is array of other tasks, you can specify that its tasks should run concurrently:
-{
-    description: "my concurrent task",
-    task: [
-        "command to run",
-        "other command to run",
-    ],
-    concurrent: true
-}
-*/
-
+// force any plugins that use `chalk` to output in full colour
 process.env.FORCE_COLOR = true;
 
 const path = require('path');
@@ -78,8 +13,10 @@ const chalk = require('chalk');
 const figures = require('figures');
 const uniq = require('lodash.uniq');
 
-const tasksIdentifier = '__tasks__';
+// name of the tasks directory
+const tasksDirectory = '__tasks__';
 
+// use yargs to get a useful CLI
 const { dev: IS_DEV, teamcity: IS_TEAMCITY, debug: IS_DEBUG, verbose: IS_VERBOSE, stdout: IS_STDOUT, _: TASKS } = yargs
     .option('dev', {
         demand: false,
@@ -87,9 +24,9 @@ const { dev: IS_DEV, teamcity: IS_TEAMCITY, debug: IS_DEBUG, verbose: IS_VERBOSE
         type: 'boolean',
         nargs: 0,
     })
-    .option('verbose', {
+    .option('teamcity', {
         demand: false,
-        describe: 'Log everything there is to log with a simple format for the output.',
+        describe: 'Output the tasks formatted for teamcity.',
         type: 'boolean',
         nargs: 0,
     })
@@ -99,17 +36,22 @@ const { dev: IS_DEV, teamcity: IS_TEAMCITY, debug: IS_DEBUG, verbose: IS_VERBOSE
         type: 'boolean',
         nargs: 0,
     })
-    .option('stdout', {
+    .option('verbose', {
         demand: false,
-        describe: 'Log all stdout once the tasks are finished.',
+        describe: 'Log everything there is to log with a simple format for the output.',
         type: 'boolean',
         nargs: 0,
     })
-    .usage('Usage: $0 <task>[:target] [<task>[:target]] [--dev]')
-    .command('task', `Run a task defined in '${tasksIdentifier}'.`)
+    .option('stdout', {
+        demand: false,
+        describe: 'Log all stdout once the tasks are finished (errors are logged by default).',
+        type: 'boolean',
+        nargs: 0,
+    })
+    .usage('Usage: $0 <task> [<task>] [--dev]')
+    .command('task', `Run a task defined in '${tasksDirectory}'.`)
     .example('$0 copy', 'Run all the copy tasks.')
     .example('$0 javascript/copy', 'Run the javascript copy task.')
-    .example('$0 javascript/copy:quick', 'Run the `quick` target of the javascript copy task.')
     .example('$0 javascript/copy --dev', 'Run the javascript copy task, and prefer the development version, if it exists.')
     .example('$0 javascript/copy css/copy --dev', 'Run the javascript and css copy tasks, and prefer the development versions, if they exist.')
     .demand(1)
@@ -117,29 +59,29 @@ const { dev: IS_DEV, teamcity: IS_TEAMCITY, debug: IS_DEBUG, verbose: IS_VERBOSE
     .version().alias('v', 'version') // eslint-disable-line newline-per-chained-call
     .argv;
 
+// if this is true, we log as much as we can
 const VERBOSE = IS_VERBOSE || IS_TEAMCITY || IS_DEBUG;
 
-const taskSrc = path.resolve(__dirname, tasksIdentifier);
+// look here for tasks that come in from yargs
+const taskSrc = path.resolve(__dirname, '..', tasksDirectory);
 
-// don't duplicate tasks
+// we will store tasks that we run in here, to prevent running them more than once
+// e.g. if two tasks rely on the same thing
 const cache = [];
 
-// run commands with output to stdout if verbose is true
+// use exaca to run simple terminal commands
 const exec = (task, onError, ctx) => {
     const [cmd, ...args] = task.trim().split(' ');
 
-    if (VERBOSE) {
-        return execa(cmd, args, {
-            stdio: [process.stdin, process.stdout, process.stderr],
-        });
-    }
-
     return execa(cmd, args)
         .then((result) => {
+            // store any stdout incase we need it later
             if (result.stdout) ctx.stdouts.push(result.stdout);
         })
         .catch((e) => {
+            // if the task supplies an `onError` function, run it
             if (typeof onError === 'function') onError(ctx);
+            // continue with a fake rejected promise
             return Promise.reject(e);
         });
 };
@@ -194,6 +136,7 @@ function listrify(steps, { concurrent = false } = {}) {
     return new Listr(listrTasks, { concurrent, collapse: true, renderer });
 }
 
+// resolve the tasks from yargs to actual files
 const getTasksFromModule = (taskName) => {
     try {
         const modulePath = path.resolve(taskSrc, taskName);
@@ -216,19 +159,19 @@ const getTasksFromModule = (taskName) => {
     }
 };
 
+// get a list of the tasks we're going to run
 const taskModules = TASKS.map(getTasksFromModule);
 
+// run them!
 listrify(taskModules).run({
+    // we're adding these to the [listr context](https://github.com/SamVerschueren/listr#context)
     messages: [],
     stdouts: [],
 }).catch((e) => {
-    if (e) {
-        if (!VERBOSE) {
-            if (!e.stderr && !e.stdout) console.log(e);
-            if (e.stderr) console.error(`\n${e.stderr.trim()}`);
-            if (e.stdout) console.log(`\n${e.stdout.trim()}`);
-        }
-    }
+    // something went wrong, so log whatever we have
+    if (!e.stderr && !e.stdout) console.log(e);
+    if (e.stderr) console.error(`\n${e.stderr.trim()}`);
+    if (e.stdout) console.log(`\n${e.stdout.trim()}`);
     return Object.assign(e.context, { error: true });
 }).then((ctx) => {
     if (IS_STDOUT) ctx.stdouts.forEach(stdout => console.log(stdout.toString().trim()));
@@ -240,6 +183,7 @@ listrify(taskModules).run({
 
     if (ctx.error) {
         console.log('');
+        // if something's gone wrong, fail hard
         process.exit(1);
     }
 });
