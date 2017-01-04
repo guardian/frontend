@@ -31,8 +31,6 @@ define([
     var bodyAds;
     var inlineAd;
     var replaceTopSlot;
-    var inlineMerchRules;
-    var longArticleRules;
 
     function boot() {
         bodyAds = 0;
@@ -63,21 +61,17 @@ define([
     }
 
     function getInlineMerchRules() {
-        if (!inlineMerchRules) {
-            inlineMerchRules = getRules();
-            inlineMerchRules.minAbove = 300;
-            inlineMerchRules.selectors[' > h2'].minAbove = 100;
-            inlineMerchRules.selectors[' > :not(p):not(h2):not(.ad-slot)'].minAbove = 200;
-        }
+        var inlineMerchRules = getRules();
+        inlineMerchRules.minAbove = 300;
+        inlineMerchRules.selectors[' > h2'].minAbove = 100;
+        inlineMerchRules.selectors[' > :not(p):not(h2):not(.ad-slot)'].minAbove = 200;
         return inlineMerchRules;
     }
 
     function getLongArticleRules() {
-        if (!longArticleRules) {
-            longArticleRules = getRules();
-            longArticleRules.selectors[' .ad-slot'].minAbove =
-            longArticleRules.selectors[' .ad-slot'].minBelow = detect.getViewport().height;
-        }
+        var longArticleRules = getRules();
+        longArticleRules.selectors[' .ad-slot'].minAbove =
+        longArticleRules.selectors[' .ad-slot'].minBelow = detect.getViewport().height;
         return longArticleRules;
     }
 
