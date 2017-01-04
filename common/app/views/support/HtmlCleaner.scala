@@ -455,6 +455,17 @@ case class PhotoEssayImages(isPhotoEssay: Boolean) extends HtmlCleaner {
   }
 }
 
+case class PhotoEssayQuotes(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isPhotoEssay) {
+      document.getElementsByClass("element-pullquote").foreach{ quotes =>
+        quotes.addClass("element-pullquote--photoEssay")
+      }
+    }
+    document
+  }
+}
+
 case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isImmersive) {

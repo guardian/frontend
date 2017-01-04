@@ -1,0 +1,67 @@
+.content--article {
+    .element-image--photo-esssay {
+        padding-bottom: 0;
+        margin-bottom: 0.5rem;
+
+        &:not(.element--showcase):not(.element--supporting):not(.element--immersive){
+            @include mq($from: wide) {
+                margin-left: -4rem;
+                margin-right: -4rem;
+            }
+        }
+
+        &.fig--no-caption.fig--has-shares {
+            padding-bottom: 0px !important;
+        }
+
+        .block-share {
+            display: none !important;
+        }
+        .caption {
+            max-width: 100%;
+            color: $news-main-1;
+        }
+        .article__fullscreen {
+            background-color: transparent;
+            border:1px solid rgba($neutral-6,0.5);
+        }
+
+        &:hover .article__fullscreen {
+            background-color: white;
+            border: none;
+        }
+
+        .section-title {
+            &:before {
+                background-color: $news-main-2;
+                display: block;
+                content: '';
+                width: gs-span(2);
+                height: 0.5rem;
+                margin-bottom: calc(#{$gs-gutter} / 3);
+            }
+        }
+
+        &.element--supporting {
+          .caption {
+              max-width: 100%;
+          }
+        }
+
+        &.element--showcase {
+            @include mq($from: wide) {
+                margin-right: -4rem;
+            }
+        }
+    }
+    .element-pullquote--photoEssay {
+        .pullquote-paragraph {
+            color: $news-main-1;
+        }
+
+        //important because it is important elsewhere
+        .pullquote-cite {
+            color: $neutral-2 !important;
+        }
+    }
+}

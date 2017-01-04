@@ -51,27 +51,21 @@
           <div class="immersive-main-media__image-overlay"></div>
         }
         @if(!page.item.elements.hasMainVideo){
-        <div class="explore-series-trail-wrapper">
-          <div class="explore-series-headline">
-              <div class="gs-container">
-                  <div class="content__main-column">
-                      <h1 class="explore-series-headline__content">
-                          @Html(page.item.trail.headline)
-                      </h1>
-                  </div>
-              </div>
-          </div>
-            <div class="explore-series-standfirst">
+          <div class="@if(hasMainMedia){immersive-main-media__headline-container immersive-main-media__headline-container--dark}">
               <div class="gs-container">
                 <div class="content__main-column">
-                  <div class="explore-series-byline-image hide-on-mobile">
-                    @fragments.meta.bylineImage(page.item.tags)
-                  </div>
-                  @fragments.standfirst(page.item)
+                    @fragments.meta.metaInline(page.item, page = page)
+                    <h1 class="@if(hasMainMedia){content__headline--immersive--with-main-media} content__headline content__headline--immersive content__headline--immersive-article">
+                        @Html(page.item.trail.headline)
+                    </h1>
+                    @if(page.item.fields.standfirst.isDefined) {
+                        <div class="hide-on-mobile">
+                            @fragments.standfirst(page.item)
+                        </div>
+                    }
                 </div>
               </div>
-            </div>
-        </div>
+          </div>
         }
     </div>
 }
