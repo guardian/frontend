@@ -58,15 +58,13 @@ define([
             return Promise.resolve(false);
         }
 
-        var rules = getRules();
-
         boot();
 
         if (config.page.hasInlineMerchandise) {
             addInlineMerchAd(getInlineMerchRules());
         }
 
-        return addArticleAds(2, rules).then(function (countAdded) {
+        return addArticleAds(2, getRules()).then(function (countAdded) {
             if (config.page.hasInlineMerchandise && countAdded === 0) {
                 waitForMerch().then(addSlots);
             } else if (countAdded === 2) {
