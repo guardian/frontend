@@ -302,7 +302,7 @@ define([
                 // Ensure our form is the right height, both in iframe and outside
                 (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
 
-                mediator.on('window:resize',
+                mediator.on('window:throttledresize',
                     debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
                 );
             });

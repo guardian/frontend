@@ -129,7 +129,7 @@ define([
             bean.on(document.body, 'keypress keydown keyup', debounce(updateSelection, 50));
             bean.on(document.body, 'mouseup', debounce(updateSelection, 200));
             bean.on(document.body, 'mousedown', debounce(onMouseDown, 50));
-            mediator.on('window:resize', updateSelection);
+            mediator.on('window:throttledresize', updateSelection);
         }
     };
 

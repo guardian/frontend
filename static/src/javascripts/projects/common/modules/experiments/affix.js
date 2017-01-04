@@ -17,7 +17,7 @@ define([
 
         bean.on(window, 'click', this.checkPosition);
         mediator.addListener('window:throttledScroll', this.checkPosition);
-        mediator.addListener('window:resize', function () {
+        mediator.addListener('window:throttledresize', function () {
             fastdom.write(this.calculateContainerPositioning);
         });
 

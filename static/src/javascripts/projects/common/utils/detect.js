@@ -77,7 +77,7 @@ define([
             initMediaQueryListeners(win);
         } else {
             updateBreakpoints.call(win);
-            mediator.on('window:resize', updateBreakpoints);
+            mediator.on('window:throttledresize', updateBreakpoints);
         }
     }
 
