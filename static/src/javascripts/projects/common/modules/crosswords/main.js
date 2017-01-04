@@ -74,7 +74,7 @@ define([
             var $game = $(React.findDOMNode(this.refs.game));
             var isIOS = detect.isIOS();
 
-            mediator.on('window:throttledresize', this.setGridHeight);
+            mediator.on('window:throttledResize', this.setGridHeight);
             mediator.on('window:orientationchange', debounce(this.setGridHeight, 200));
             this.setGridHeight();
 

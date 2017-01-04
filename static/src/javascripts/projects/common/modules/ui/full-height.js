@@ -47,7 +47,7 @@ define([
     };
 
     var init = function () {
-        mediator.on('window:throttledresize', onViewportChange);
+        mediator.on('window:throttledResize', onViewportChange);
         mediator.on('window:orientationchange', onViewportChange);
         onViewportChange();
     };

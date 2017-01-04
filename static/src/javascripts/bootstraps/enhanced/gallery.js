@@ -36,7 +36,7 @@ define([
 
             setHeight();
             mediator.addListeners({
-                'window:throttledresize': setHeight,
+                'window:throttledResize': setHeight,
                 'window:orientationchange': debounce(setHeight, 200),
                 'ui:images:vh': setHeight
             });

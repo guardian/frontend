@@ -70,7 +70,7 @@ define([
 
         // Check and show the width based message
         this.updateMessageOnWidth();
-        mediator.on('window:throttledresize', this.updateMessageOnWidth.bind(this));
+        mediator.on('window:throttledResize', this.updateMessageOnWidth.bind(this));
 
         if (this.siteMessageComponentName) {
             siteMessage.attr('data-component', this.siteMessageComponentName);

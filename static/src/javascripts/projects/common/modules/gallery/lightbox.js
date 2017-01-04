@@ -336,7 +336,7 @@ define([
 
                 // event bindings
                 bean.on(this.$swipeContainer[0], 'click', '.js-gallery-content', this.toggleInfo);
-                mediator.on('window:throttledresize', this.resize);
+                mediator.on('window:throttledResize', this.resize);
 
                 // meta
                 this.$indexEl.text(this.index);
@@ -345,7 +345,7 @@ define([
             },
             leave: function () {
                 bean.off(this.$swipeContainer[0], 'click', this.toggleInfo);
-                mediator.off('window:throttledresize', this.resize);
+                mediator.off('window:throttledResize', this.resize);
             },
             events: {
                 'next': function () {
@@ -404,10 +404,10 @@ define([
             enter: function () {
                 this.translateContent(this.$slides.length, 0, 0);
                 this.index = this.images.length + 1;
-                mediator.on('window:throttledresize', this.resize);
+                mediator.on('window:throttledResize', this.resize);
             },
             leave: function () {
-                mediator.off('window:throttledresize', this.resize);
+                mediator.off('window:throttledResize', this.resize);
             },
             events: {
                 'next': function () {

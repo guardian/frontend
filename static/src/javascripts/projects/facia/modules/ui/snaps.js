@@ -169,7 +169,7 @@ define([
             }
 
             if (!detect.isIOS) {
-                mediator.on('window:throttledresize', function () {
+                mediator.on('window:throttledResize', function () {
                     addCss(el, true);
                 });
             }
@@ -179,7 +179,7 @@ define([
     function initInlinedSnap(el) {
         addCss(el);
         if (!detect.isIOS) {
-            mediator.on('window:throttledresize', function () {
+            mediator.on('window:throttledResize', function () {
                 addCss(el, true);
             });
         }

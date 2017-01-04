@@ -188,10 +188,10 @@ define([
             { passive: true }
         );
 
-        // Adds a global window:throttledresize event to mediator, which debounces events
+        // Adds a global window:throttledResize event to mediator, which debounces events
         // until the user has stopped resizing the window for a reasonable amount of time.
         function onResize(evt) {
-            mediator.emitEvent('window:throttledresize', [evt]);
+            mediator.emitEvent('window:throttledResize', [evt]);
         }
         addEventListener(window, 'resize', debounce(onResize, 200), { passive: true });
 

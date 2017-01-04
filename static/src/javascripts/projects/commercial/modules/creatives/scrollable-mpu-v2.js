@@ -77,7 +77,7 @@ define([
 
             mediator.on('window:throttledScroll', this.updateBgPosition);
             // to be safe, also update on window resize
-            mediator.on('window:throttledresize', this.updateBgPosition);
+            mediator.on('window:throttledResize', this.updateBgPosition);
         }
 
         return Promise.resolve(true);
