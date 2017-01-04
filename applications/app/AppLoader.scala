@@ -19,7 +19,7 @@ import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import services.{ConfigAgentLifecycle, IndexListingsLifecycle, OphanApi}
+import services._
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -33,6 +33,8 @@ trait ApplicationsServices {
   lazy val siteMapJob = wire[SiteMapJob]
   lazy val sectionsLookUp = wire[SectionsLookUp]
   lazy val ophanApi = wire[OphanApi]
+  lazy val facebookGraphApiClient = wire[FacebookGraphApiClient]
+  lazy val facebookGraphApi = wire[FacebookGraphApi]
 }
 
 trait AppComponents extends FrontendComponents with ApplicationsControllers with ApplicationsServices {
