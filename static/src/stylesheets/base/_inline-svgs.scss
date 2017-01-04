@@ -15,10 +15,6 @@
     width: 45%;
 }
 
-.inline-icon__fallback {
-    display: none !important;
-}
-
 .inline-tone-fill {
     fill: $news-default;
 
@@ -56,12 +52,6 @@
     }
 }
 
-.no-svg {
-    .inline-icon {
-        display: none !important;
-    }
-
-    .inline-icon__fallback {
-        display: block !important;
-    }
+.inline-icon__fallback {
+    display: none;
 }
