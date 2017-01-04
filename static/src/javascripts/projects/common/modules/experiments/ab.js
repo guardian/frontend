@@ -212,13 +212,15 @@ define([
     // Finds variant in specific tests and runs it
     function run(test) {
         if (isParticipating(test) && testCanBeRun(test)) {
-            var participations = getParticipations(),
-                variantId = participations[test.id].variant;
-            var variant = getVariant(test, variantId);
-            if (variant) {
-                variant.test();
-            } else if (variantId === 'notintest' && test.notInTest) {
-                test.notInTest();
+            var participations = getParticipations();
+            if (participations && participations[test.id] && participations[test.id].variant) {
+                var variantId = participations[test.id].variant,
+                    variant = getVariant(test, variantId);
+                if (variant) {
+                    variant.test();
+                } else if (variantId && variantId === 'notintest' && test.notInTest) {
+                    test.notInTest();
+                }
             }
         }
     }
