@@ -22,7 +22,6 @@ object JavaScriptPage {
     }
 
     val config = (Configuration.javascript.config ++ pageData).mapValues(JsString.apply)
-    val isInappropriateForSponsorship = content.exists(_.commercial.isInappropriateForSponsorship)
     val sponsorshipType = {
       val maybeSponsorshipType = page.branding(edition).map(_.sponsorshipType.name)
       maybeSponsorshipType.map("sponsorshipType" -> JsString(_))
@@ -43,8 +42,7 @@ object JavaScriptPage {
         case c: ContentPage if c.item.content.shouldHideAdverts => true
         case c: CommercialExpiryPage => true
         case _ => false
-      }),
-      "isInappropriateForSponsorship" -> JsBoolean(isInappropriateForSponsorship)
+      })
     ) ++ sponsorshipType
 
     val javascriptConfig = page match {
