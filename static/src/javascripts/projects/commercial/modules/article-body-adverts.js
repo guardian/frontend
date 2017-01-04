@@ -30,6 +30,60 @@ define([
     var inlineAd;
     var replaceTopSlot;
 
+    // If a merchandizing component has been rendered but is empty,
+    // we allow a second pass for regular inline ads. This is because of
+    // the decoupling between the spacefinder algorithm and the targeting
+    // in DFP: we can only know if a slot can be removed after we have
+    // received a response from DFP
+    var waitForMerch = memoize(function () {
+        return trackAdRender('dfp-ad--im').then(function (isLoaded) {
+            return isLoaded ? 0 : addArticleAds(2, getRules());
+        }).then(function (countAdded) {
+            return countAdded === 2 ?
+                addArticleAds(8, getLongArticleRules()).then(function (countAdded) {
+                    return 2 + countAdded;
+                }) :
+                countAdded;
+        });
+    });
+
+    var insertLongAds = memoize(function () {
+        return addArticleAds(8, getLongArticleRules()).then(function (countAdded) {
+            return 2 + countAdded;
+        });
+    });
+
+    function init() {
+        if (!commercialFeatures.articleBodyAdverts) {
+            return Promise.resolve(false);
+        }
+
+        var rules = getRules();
+
+        boot();
+
+        if (config.page.hasInlineMerchandise) {
+            addInlineMerchAd(getInlineMerchRules());
+        }
+
+        return addArticleAds(2, rules).then(function (countAdded) {
+            if (config.page.hasInlineMerchandise && countAdded === 0) {
+                waitForMerch().then(addSlots);
+            } else if (countAdded === 2) {
+                insertLongAds().then(addSlots);
+            }
+        });
+    }
+
+    return {
+        init: init,
+
+        '@@tests': {
+            waitForMerch: waitForMerch,
+            insertLongAds: insertLongAds
+        }
+    };
+
     function boot() {
         bodyAds = 0;
         inlineAd = 0;
@@ -127,58 +181,4 @@ define([
             qwery('.ad-slot--inline').forEach(addSlot);
         }
     }
-
-    // If a merchandizing component has been rendered but is empty,
-    // we allow a second pass for regular inline ads. This is because of
-    // the decoupling between the spacefinder algorithm and the targeting
-    // in DFP: we can only know if a slot can be removed after we have
-    // received a response from DFP
-    var waitForMerch = memoize(function () {
-        return trackAdRender('dfp-ad--im').then(function (isLoaded) {
-            return isLoaded ? 0 : addArticleAds(2, getRules());
-        }).then(function (countAdded) {
-            return countAdded === 2 ?
-                addArticleAds(8, getLongArticleRules()).then(function (countAdded) {
-                    return 2 + countAdded;
-                }) :
-                countAdded;
-        });
-    });
-
-    var insertLongAds = memoize(function () {
-        return addArticleAds(8, getLongArticleRules()).then(function (countAdded) {
-            return 2 + countAdded;
-        });
-    });
-
-    function init() {
-        if (!commercialFeatures.articleBodyAdverts) {
-            return Promise.resolve(false);
-        }
-
-        var rules = getRules();
-
-        boot();
-
-        if (config.page.hasInlineMerchandise) {
-            addInlineMerchAd(getInlineMerchRules());
-        }
-
-        return addArticleAds(2, rules).then(function (countAdded) {
-            if (config.page.hasInlineMerchandise && countAdded === 0) {
-                waitForMerch().then(addSlots);
-            } else if (countAdded === 2) {
-                insertLongAds().then(addSlots);
-            }
-        });
-    }
-
-    return {
-        init: init,
-
-        '@@tests': {
-            waitForMerch: waitForMerch,
-            insertLongAds: insertLongAds
-        }
-    };
 });
