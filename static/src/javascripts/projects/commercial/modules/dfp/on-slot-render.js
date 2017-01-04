@@ -15,6 +15,8 @@ define([
         beacon.fire('/count/ad-render.gif');
     });
 
+    var allAdsAreRendered;
+
     return onSlotRender;
 
     function onSlotRender(event) {
@@ -63,9 +65,12 @@ define([
     }
 
     function allAdsRendered() {
-        if (dfpEnv.adverts.every(function (_) { return _.isRendered || _.isEmpty || _.isHidden; })) {
-            userTiming.mark('All ads are rendered');
-            mediator.emit('modules:commercial:dfp:alladsrendered');
+        if (!allAdsAreRendered) {
+            allAdsAreRendered = Promise.all(dfpEnv.adverts.map(function (_) { return _.whenRendered; }))
+            .then(function () {
+                userTiming.mark('All ads are rendered');
+                mediator.emit('modules:commercial:dfp:alladsrendered');
+            });
         }
     }
 });
