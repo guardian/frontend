@@ -156,10 +156,6 @@
         margin: $gs-baseline/2 0;
         overflow: hidden;
         background-color: $neutral-7;
-
-        // fixes for webkit not properly scaling/clipping the child element (still broken on some android browsers...)
-        -webkit-transform: translateZ(0);
-        -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
     }
 
     .byline-img__img {
