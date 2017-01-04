@@ -160,6 +160,10 @@ define([
             storage.local.set('gu.alreadyVisited', alreadyVisited + 1);
         }
 
+        // Add global pooled event listeners
+        // CAUTION: those are *passive*, which means calls to event.preventDefault
+        // will be ignored
+
         // Adds a global window:throttledScroll event to mediator, which throttles
         // scroll events until there's a spare animationFrame.
         // Callbacks of all listeners to window:throttledScroll are run in a
@@ -186,8 +190,6 @@ define([
 
         // Adds a global window:throttledresize event to mediator, which debounces events
         // until the user has stopped resizing the window for a reasonable amount of time.
-        // CAUTION: the event listener is *passive*, which means calls to event.preventDefault
-        // will be ignored
         function onResize(evt) {
             mediator.emitEvent('window:throttledresize', [evt]);
         }
