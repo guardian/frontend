@@ -3,7 +3,6 @@ define([
     'qwery',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/steady-page',
     'common/modules/article/space-filler',
     'common/modules/commercial/ad-sizes',
     'common/modules/commercial/dfp/add-slot',
@@ -16,7 +15,6 @@ define([
     qwery,
     config,
     detect,
-    steadyPage,
     spaceFiller,
     adSizes,
     addSlot,
@@ -81,8 +79,7 @@ define([
         }, {
             waitForImages: true,
             waitForLinks: true,
-            waitForInteractives: true,
-            domWriter: detect.isBreakpoint({max: 'tablet'}) ? writerOverride : false
+            waitForInteractives: true
         });
     }
 
@@ -91,8 +88,7 @@ define([
         return spaceFiller.fillSpace(rules, insertInlineAds, {
             waitForImages: true,
             waitForLinks: true,
-            waitForInteractives: true,
-            domWriter: detect.isBreakpoint({max: 'tablet'}) ? writerOverride : false
+            waitForInteractives: true
         });
 
         function insertInlineAds(paras) {
@@ -121,37 +117,15 @@ define([
     function insertAdAtPara(para, name, type) {
         var ad = createSlot(name, type);
 
-        function insertion (ad, para) {
+        return fastdom.write(function () {
             para.parentNode.insertBefore(ad, para);
-        }
-
-        // If on mobile we will
-        // insert ad using steady page
-        // to avoid jumping the user
-        if (detect.isBreakpoint({max: 'tablet'})) {
-            return steadyPage.insert(ad, function(){
-                insertion(ad, para);
-            });
-        } else {
-            // If we're not on mobile we insert and resolve the promise immediately
-            return new Promise(function(resolve){
-                insertion(ad, para);
-                resolve();
-            });
-        }
+        });
     }
 
     function addSlots(countAdded) {
         if (countAdded > 0) {
             qwery('.ad-slot--inline').forEach(addSlot);
         }
-    }
-
-    // If we're on mobile, we want to use steady-page right before dom insertion
-    // when we have the adslot so we provide a non-fastdom writer as
-    // fastdom is handled in steady-page
-    function writerOverride (writerCallback) {
-        return writerCallback();
     }
 
     // If a merchandizing component has been rendered but is empty,
