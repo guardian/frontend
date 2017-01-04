@@ -16,9 +16,10 @@ module.exports = function (config) {
             { pattern: 'static/test/javascripts/fixtures/**/*', included: false },
             { pattern: 'static/test/javascripts/helpers/**/*.js', included: false },
             { pattern: 'static/src/inline-svgs/**/*.svg', included: false },
-            { pattern: 'static/src/javascripts/{projects,components,vendor,bootstraps}/**/*.js', included: false },
+            { pattern: 'static/src/javascripts/**/*.js', included: false },
             { pattern: 'static/src/javascripts/**/views/**/*.html', included: false },
-            { pattern: 'static/public/javascripts/**/*.js', included: false }
+            { pattern: 'static/public/javascripts/**/*.js', included: false },
+            { pattern: 'static/vendor/javascripts/**/*.js', included: false },
         ],
 
         exclude: [],

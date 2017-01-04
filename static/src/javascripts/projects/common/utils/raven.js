@@ -11,6 +11,10 @@ define([
 
     var app = guardian.app = guardian.app || {};
 
+    if (app.raven) {
+        return app.raven;
+    }
+
     var adblockBeingUsed = false;
     detect.adblockInUse.then(function(adblockInUse){
         adblockBeingUsed = adblockInUse;
