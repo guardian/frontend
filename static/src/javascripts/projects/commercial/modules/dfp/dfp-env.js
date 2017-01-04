@@ -1,6 +1,7 @@
 define([
+    'common/utils/url',
     'common/utils/config'
-], function (config) {
+], function (url, config) {
     var dfpEnv = {
         /* renderStartTime: integer. Point in time when DFP kicks in */
         renderStartTime: -1,
@@ -41,7 +42,8 @@ define([
         /* shouldLazyLoad: () -> boolean. Determines whether ads should be lazy loaded */
         shouldLazyLoad: function () {
             // We do not want lazy loading on pageskins because it messes up the roadblock
-            return !config.page.hasPageSkin;
+            // Also, if the special dll parameter is passed with a value of 1, we don't lazy load
+            return !config.page.hasPageSkin && url.getUrlVars()['dll'] !== '1';
         }
     };
     return dfpEnv;
