@@ -15,7 +15,7 @@ define([
     'inlineSvg!svgs/icon/profile-36',
     'inlineSvg!svgs/icon/arrow-right',
     'inlineSvg!svgs/icon/marque-36',
-    'common/utils/fetch'
+    'common/utils/fetch-json'
 ], function (
     bean,
     fastdom,
@@ -33,7 +33,7 @@ define([
     profileIcon,
     rightArrowIcon,
     guardianLogo,
-    fetch
+    fetchJson
 ) {
     return function () {
         this.id = 'RecommendedForYouRecommendations';
@@ -95,18 +95,16 @@ define([
 
         function getCardHtml(id) {
             var endpoint = '/embed/contentcard/' + id + '.json';
-            var request = fetch(endpoint, {
+            var request = fetchJson(endpoint, {
                 type: 'json',
                 method: 'get'
             });
 
-            return request.then(function (response) {
-                return response.json().then(function (body) {
-                    return {
-                        html: body.html,
-                        id: id
-                    }
-                });
+            return request.then(function (body) {
+                return {
+                    html: body.html,
+                    id: id
+                }
             });
         }
 
@@ -116,7 +114,7 @@ define([
                 'articles': history.test.getHistory().map(function (item) { return item[0]; })
             };
 
-            var request = fetch(endpoint, {
+            var request = fetchJson(endpoint, {
                 type: 'json',
                 method: 'post',
                 crossOrigin: true,
@@ -124,11 +122,9 @@ define([
                 headers: { 'Content-Type': 'application/json' }
             });
 
-            return request.then(function (response) {
-                return response.json().then(function (body) {
-                    return body.content.slice(0, numberOfRecommendations).map(function (recommendation){
-                        return recommendation.id;
-                    });
+            return request.then(function (body) {
+                return body.content.slice(0, numberOfRecommendations).map(function (recommendation){
+                    return recommendation.id;
                 });
             });
         }
