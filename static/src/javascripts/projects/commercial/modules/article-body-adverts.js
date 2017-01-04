@@ -61,7 +61,7 @@ define([
         boot();
 
         if (config.page.hasInlineMerchandise) {
-            addInlineMerchAd(getInlineMerchRules());
+            addInlineMerchAd();
         }
 
         return addArticleAds(2, getRules()).then(function (countAdded) {
@@ -125,8 +125,8 @@ define([
         return longArticleRules;
     }
 
-    function addInlineMerchAd(rules) {
-        spaceFiller.fillSpace(rules, function (paras) {
+    function addInlineMerchAd() {
+        spaceFiller.fillSpace(getInlineMerchRules(), function (paras) {
             return insertAdAtPara(paras[0], 'im', 'im');
         }, {
             waitForImages: true,
