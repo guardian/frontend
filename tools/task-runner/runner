@@ -14,7 +14,7 @@ const figures = require('figures');
 const uniq = require('lodash.uniq');
 
 // name of the tasks directory
-const tasksIdentifier = '__tasks__';
+const tasksDirectory = '__tasks__';
 
 // use yargs to get a useful CLI
 const { dev: IS_DEV, teamcity: IS_TEAMCITY, debug: IS_DEBUG, verbose: IS_VERBOSE, stdout: IS_STDOUT, _: TASKS } = yargs
@@ -49,7 +49,7 @@ const { dev: IS_DEV, teamcity: IS_TEAMCITY, debug: IS_DEBUG, verbose: IS_VERBOSE
         nargs: 0,
     })
     .usage('Usage: $0 <task> [<task>] [--dev]')
-    .command('task', `Run a task defined in '${tasksIdentifier}'.`)
+    .command('task', `Run a task defined in '${tasksDirectory}'.`)
     .example('$0 copy', 'Run all the copy tasks.')
     .example('$0 javascript/copy', 'Run the javascript copy task.')
     .example('$0 javascript/copy --dev', 'Run the javascript copy task, and prefer the development version, if it exists.')
@@ -63,7 +63,7 @@ const { dev: IS_DEV, teamcity: IS_TEAMCITY, debug: IS_DEBUG, verbose: IS_VERBOSE
 const VERBOSE = IS_VERBOSE || IS_TEAMCITY || IS_DEBUG;
 
 // look here for tasks that come in from yargs
-const taskSrc = path.resolve(__dirname, '..', tasksIdentifier);
+const taskSrc = path.resolve(__dirname, '..', tasksDirectory);
 
 // we will store tasks that we run in here, to prevent running them more than once
 // e.g. if two tasks rely on the same thing
