@@ -6,6 +6,7 @@ node_modules
 
 # main app
 static/src/stylesheets
+static/transpiled
 static/vendor/javascripts
 static/src/javascripts-legacy/projects/common/utils/atob.js
 static/src/javascripts-legacy/projects/common/utils/picturefill.js

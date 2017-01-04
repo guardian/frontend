@@ -3,6 +3,10 @@
         "production": {
             "presets": [
                 "latest"
+            ],
+            "plugins": [
+                "add-module-exports",
+                "transform-es2015-modules-amd"
             ]
         },
         "development": {
