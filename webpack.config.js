@@ -6,7 +6,10 @@ const path = require('path');
 module.exports = {
     entry: './static/src/javascripts/boot-webpack.js',
     resolve: {
-        modulesDirectories: ['static/src/javascripts'],
+        modulesDirectories: [
+            'static/src/javascripts',
+            'static/vendor/javascripts',
+        ],
         alias: {
             admin: 'projects/admin',
             common: 'projects/common',
@@ -26,9 +29,9 @@ module.exports = {
             raven: 'components/raven-js/raven',
             classnames: 'components/classnames/index',
             reqwest: 'components/reqwest/reqwest',
-            stripe: 'vendor/stripe/stripe.min',
+            stripe: 'stripe/stripe.min',
             svgs: 'inline-svgs',
-            'ophan/ng': 'vendor/ophan/ophan.ng',
+            'ophan/ng': 'ophan/ophan.ng',
             videojs: 'components/video.js/video',
             'videojs-embed': 'components/videojs-embed/videojs.embed',
             'videojs-ima': 'components/videojs-ima/videojs.ima',

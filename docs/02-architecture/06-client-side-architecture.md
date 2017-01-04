@@ -299,10 +299,6 @@ Finally, to tell curl - the module loader - where to fetch a bundle from, when h
 
 Run `make compile` and add `assets.useHashedBundles=true` to your devOverrides in frontend.conf to test the bundle as it would run on PROD.
 
-### Components
-
-[Here be 3rd-party JS](https://github.com/guardian/frontend/tree/master/static/src/javascripts/components) such as bean, bonzo and fastdom.
-
 ### Projects
 
 There are five projects in the Javascript architecture:
@@ -316,6 +312,10 @@ There are five projects in the Javascript architecture:
 - [Facia](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/facia) - Contains JS modules and views for the weather, snaps and fronts containers
 - [Membership](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/membership) - Contains the formatters, payment and stripe javascripts
 
+### Components
+
+[Here be 3rd-party JS](https://github.com/guardian/frontend/tree/master/static/vendor/javascripts/components) such as bean, bonzo and fastdom.
+
 ### Vendor
 
-Contains [vendor JS](https://github.com/guardian/frontend/tree/master/static/src/javascripts/vendor) from the likes of forsee, formstack and stripe.
+Contains [vendor JS](https://github.com/guardian/frontend/tree/master/static/vendor/javascripts) from the likes of forsee, formstack and stripe.
