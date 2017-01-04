@@ -59,5 +59,4 @@ export APP_SECRET="this_is_not_a_real_secret_just_for_tests"
 java $FRONTEND_JVM_ARGS  \
   $DEBUG_PARAMS \
   -Duser.timezone=Australia/Sydney \
-  -Dlogback.configurationFile=`dirname $0`/common/test/resources/logback-common.xml \
   -jar `dirname $0`/dev/sbt-launch.jar "$@"
