@@ -13,7 +13,6 @@ define([
     'common/utils/template',
     'common/utils/robust',
     'common/modules/analytics/google',
-    'lodash/functions/debounce',
     'lodash/collections/contains',
     'common/views/svgs',
     'text!common/views/email/submissionResponse.html',
@@ -36,7 +35,6 @@ define([
     template,
     robust,
     googleAnalytics,
-    debounce,
     contains,
     svgs,
     successHtml,
@@ -303,7 +301,7 @@ define([
                 (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
 
                 mediator.on('window:throttledResize',
-                    debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
+                    (isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset
                 );
             });
         };
