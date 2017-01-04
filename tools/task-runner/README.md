@@ -2,7 +2,7 @@
 
 This is lightweight task runner that effectively wraps [listr](https://github.com/SamVerschueren/listr) to provide a UI on tasks, which are defined in `tools/__tasks__/`.
 
-It's intended to exist ‘behind the scenes’, and should you should probably be running the tasks it runs from [`make`](https://github.com/guardian/frontend/blob/master/makefile) or something similar.
+It's intended to exist ‘behind the scenes’, and you should probably be running the tasks it runs from [`make`](https://github.com/guardian/frontend/blob/master/makefile) or something similar.
 
 ## Running tasks
 
@@ -91,7 +91,7 @@ module.exports = {
 }
 ```
 
-If the task is array of other tasks, you can also specify that its tasks should run concurrently:
+If the task is an array of other tasks, you can also specify that its tasks should run concurrently:
 
 ```js
 module.exports = {
