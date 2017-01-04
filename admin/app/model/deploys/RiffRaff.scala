@@ -6,18 +6,22 @@ import model.deploys.ApiResults.{ApiError, ApiErrors, ApiResponse}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import scala.concurrent.Future
 
+case class RiffRaffDeployTags(vcsRevision: String)
+object RiffRaffDeployTags { implicit val format = Json.format[RiffRaffDeployTags] }
+
 case class RiffRaffDeploy(uuid: String,
                           projectName: String,
                           build: String,
                           stage: String,
                           deployer: String,
                           status: String,
-                          time: String)
+                          time: String,
+                          tags: RiffRaffDeployTags)
 object RiffRaffDeploy { implicit val format = Json.format[RiffRaffDeploy] }
 
 class RiffRaffService(httpClient: HttpLike) extends ExecutionContexts {
 
-  def getRiffRaffDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String]): Future[ApiResponse[List[RiffRaffDeploy]]] = {
+  def getRiffRaffDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String], status: Option[String] = None): Future[ApiResponse[List[RiffRaffDeploy]]] = {
     val url = s"${Configuration.riffraff.url}/api/history"
 
     httpClient.GET(url,
@@ -25,7 +29,8 @@ class RiffRaffService(httpClient: HttpLike) extends ExecutionContexts {
         "key" -> Configuration.riffraff.apiKey,
         "pageSize" -> pageSize.getOrElse(""),
         "projectName" -> projectName.getOrElse(""),
-        "stage" -> stage.getOrElse("")
+        "stage" -> stage.getOrElse(""),
+        "status" -> status.getOrElse("")
       )
     ).map { response =>
       response.status match {
