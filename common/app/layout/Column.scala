@@ -1,12 +1,10 @@
 package layout
 
-import cards.{Standard, MediaList, ListItem, CardType}
+import cards.{CardType, ListItem, MediaList, Standard}
 import model.pressed.CollectionConfig
 import play.twirl.api.Html
 import slices.{MobileShowMore, RestrictTo}
-import scalaz.syntax.traverse._
-import scalaz.std.option._
-import scalaz.std.list._
+import scala.annotation.tailrec
 
 object ItemClasses {
   val showMore = ItemClasses(mobile = ListItem, tablet = ListItem)
@@ -63,20 +61,35 @@ case class HtmlAndClasses(index: Int, html: Html, classes: Seq[String])
 
 object SliceWithCards {
   def fromBlobs(layout: SliceLayout, blobs: Seq[HtmlAndClasses]): SliceWithCards = {
-    val columns = layout.columns.toList.mapAccumL(blobs) { case (itemsRemaining, column) =>
-      val (itemsForColumn, itemsNotConsumed) = itemsRemaining splitAt column.numItems
 
-      (itemsNotConsumed, ColumnAndCards(column, itemsForColumn.zipWithIndex map {
-        case (HtmlAndClasses(index, html, classes), positionInColumn) =>
-          FaciaCardAndIndex(
-            index,
-            HtmlBlob(html, classes, Column.cardStyle(column, positionInColumn).getOrElse(ItemClasses.showMore)),
-            None
-          )
-      }))
-    }._2
+    @tailrec
+    def columnsWithCards(columns: List[Column],
+                         items: Seq[HtmlAndClasses],
+                         accumulation: Vector[ColumnAndCards] = Vector.empty
+                        ): Seq[ColumnAndCards] = {
 
-    SliceWithCards(layout.cssClassName, columns)
+      columns match {
+        case Nil => accumulation
+        case column :: remainingColumns =>
+          val (itemsForColumn, itemsNotConsumed) = items splitAt column.numItems
+
+          val columnAndCards = ColumnAndCards(column, itemsForColumn.zipWithIndex map {
+            case (HtmlAndClasses(index, html, classes), positionInColumn) =>
+              FaciaCardAndIndex(
+                index,
+                HtmlBlob(html, classes, Column.cardStyle(column, positionInColumn).getOrElse(ItemClasses.showMore)),
+                None
+              )
+          })
+          columnsWithCards(remainingColumns, itemsNotConsumed, accumulation :+ columnAndCards)
+      }
+
+    }
+
+    SliceWithCards(
+      layout.cssClassName,
+      columnsWithCards(layout.columns.toList, blobs)
+    )
   }
 
   /** The slice with cards assigned to columns, and the remaining cards that were not consumed, and the new

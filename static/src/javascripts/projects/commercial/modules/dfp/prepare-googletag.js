@@ -42,10 +42,6 @@ define([
 
     function init(moduleName) {
 
-        function removeAdSlots() {
-            bonzo(qwery(dfpEnv.adSlotSelector)).remove();
-        }
-
         function moduleEnd() {
             performanceLogging.moduleEnd(moduleName);
         }
@@ -54,38 +50,34 @@ define([
             // Use Custom Timing to time the googletag code without the sonobi pre-loading.
             performanceLogging.moduleStart(moduleName);
 
-            return new Promise(function(resolve) {
+            performanceLogging.addTag(dfpEnv.sonobiEnabled ? 'sonobi' : 'waterfall');
 
-                if (dfpEnv.sonobiEnabled) {
-                    // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
-                    require(['js!googletag.js']);
-                    performanceLogging.addTag('sonobi');
-                } else {
-                    require(['js!googletag.js']);
-                    performanceLogging.addTag('waterfall');
-                }
+            window.googletag.cmd.push(
+                setListeners,
+                setPageTargeting,
+                moduleEnd
+            );
 
-                window.googletag.cmd.push = raven.wrap({deep: true}, window.googletag.cmd.push);
+            // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
+            require(['js!googletag.js']);
 
+            // Return a promise that resolves after the async work is done.
+            return new Promise(function(resolve){
                 window.googletag.cmd.push(
-                    setListeners,
-                    setPageTargeting,
-                    moduleEnd,
                     resolve
                 );
             });
         }
 
         if (commercialFeatures.dfpAdvertising) {
-            return prepareSonobiTag.init().then(setupAdvertising).catch(function(){
-                // A promise error here, from a failed module load,
-                // could be a network problem or an intercepted request.
-                // Abandon the init sequence.
-                return fastdom.write(removeAdSlots);
-            });
+            return prepareSonobiTag.init().then(setupAdvertising)
+            // A promise error here, from a failed module load,
+            // could be a network problem or an intercepted request.
+            // Abandon the init sequence.
+            .catch(removeAdSlots);
         }
 
-        return fastdom.write(removeAdSlots);
+        return removeAdSlots();
     }
 
     function setListeners() {
@@ -101,6 +93,12 @@ define([
         var targeting = buildPageTargeting();
         Object.keys(targeting).forEach(function (key) {
             pubads.setTargeting(key, targeting[key]);
+        });
+    }
+
+    function removeAdSlots() {
+        return fastdom.write(function () {
+            bonzo(qwery(dfpEnv.adSlotSelector)).remove();
         });
     }
 

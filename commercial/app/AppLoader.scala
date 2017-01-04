@@ -12,14 +12,14 @@ import commercial.model.merchandise.travel.TravelOffersAgent
 import common.CloudWatchMetricsLifecycle
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CachedHealthCheckLifeCycle, CommonFilters}
+import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.Assets
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
-import http.CorsHttpErrorHandler
+import http.{CommonFilters, CorsHttpErrorHandler}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
-import play.api._
+import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter

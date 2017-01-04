@@ -707,7 +707,7 @@
 
 }
 
-.content--advertisement-feature {
+.content--paid-content {
     &.content--article,
     &.content--interactive {
         background-color: $neutral-8;
@@ -724,18 +724,18 @@
     .from-content-api {
         @include f-textSans;
     }
-    .element.element-pullquote{
-      .pullquote-paragraph {
-        font-family: $f-sans-serif-headline;
-        color: $paid-article-brand;
-      }
+    .element.element-pullquote {
+        .pullquote-paragraph {
+            font-family: $f-sans-serif-headline;
+            color: $paid-article-brand;
+        }
     }
     a.in-body-link--immersive {
-      color: $paid-article-brand;
+        color: $paid-article-brand;
     }
 }
 
-.paid-content--advertisement-feature {
+.paid-content {
     color: $neutral-1;
 
     &.content--article,
@@ -773,7 +773,7 @@
     .tone-media--item {
         color: $neutral-1;
 
-        .rich-link__container:before{
+        .rich-link__container:before {
             background-color: $news-support-3
         }
 

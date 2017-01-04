@@ -21,7 +21,7 @@ $c-primary-footer-background-side-bar: mix($guardian-brand, #ffffff, 90%);
 
     a {
         color: $neutral-4;
-        font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+        font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
         text-transform: lowercase;
     }
 }
@@ -81,14 +81,14 @@ $c-primary-footer-background-side-bar: mix($guardian-brand, #ffffff, 90%);
 
 .really-serious-copyright {
     color: $neutral-4;
-    font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
-    margin-bottom: 0.25rem;
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    margin-bottom: .25rem;
 }
 
 .l-footer__misc {
-    padding-top: 0.375rem;
+    padding-top: .375rem;
     padding-bottom: 1.125rem;
-    border-top: 1px solid #666;
+    border-top: 1px solid $neutral-2;
 }
 
 .breadcrumb {

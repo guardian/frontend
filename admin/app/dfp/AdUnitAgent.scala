@@ -17,7 +17,7 @@ object AdUnitAgent extends DataAgent[String, GuAdUnit] {
       val dfpAdUnits = session.adUnits(statementBuilder)
 
       val networkRootId = session.getRootAdUnitId
-      val guardianRootName = Configuration.commercial.dfpAdUnitGuRoot
+      lazy val guardianRootName = Configuration.commercial.dfpAdUnitGuRoot
 
       val runOfNetwork = dfpAdUnits.find(_.getId == networkRootId).map( networkAdUnit => {
         val id = networkAdUnit.getId

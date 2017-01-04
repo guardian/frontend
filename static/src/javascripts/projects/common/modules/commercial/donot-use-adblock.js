@@ -92,14 +92,16 @@ define([
     }
 
     function init() {
-        // Show messages only if adblock is used by non paying member
-        if (adblockMsg.showAdblockMsg()) {
-            showAdblockMessage();
-            showAdblockBanner();
-        }
-        mediator.emit('banner-message:complete');
-    }
+        adblockMsg.showAdblockMsg().then(function(adBlockInUse){
+            // Show messages only if adblock is used by non paying member
+            if (adBlockInUse) {
+                showAdblockMessage();
+                showAdblockBanner();
+            }
+            mediator.emit('banner-message:complete');
+        });
 
+    }
     return {
         init: init
     };

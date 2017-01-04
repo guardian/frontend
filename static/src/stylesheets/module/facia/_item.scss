@@ -156,6 +156,7 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     a {
+        // this is a fallback for browsers that don't support inherit
         color: $neutral-1;
         color: inherit;
     }
@@ -443,8 +444,8 @@ $fc-item-gutter: $gs-gutter / 4;
 
 // dream snaps
 .fc-item__kicker--dreamsnap {
-    display: block;
     @include fs-header(2);
+    display: block;
     line-height: get-line-height(bodyHeading, 1);
     background-color: mix(#000000, #ffffff, 10%);
     margin: 0 (0 - $gs-gutter * .25);
@@ -514,10 +515,10 @@ $block-height: 71px;
 }
 
 .fc-item__liveblog-block__text {
+    @include fs-headline(1);
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
-    @include fs-headline(1);
     line-height: 1rem;
     color: mix(#ffffff, $live-default, 92%);
     max-height: $block-height;
@@ -528,11 +529,11 @@ $block-height: 71px;
 }
 
 .fc-item__liveblog-block__text:after {
+    @include fs-headline(1);
     content: '...';
     position: absolute;
     bottom: 0;
     right: 0;
-    @include fs-headline(1);
     font-size: 30px;
     line-height: $gs-baseline;
     color: mix(#ffffff, $live-default, 92%);
@@ -543,17 +544,17 @@ $block-height: 71px;
 }
 
 .fc-item__liveblog-block__time {
+    @include ellipsis();
     font-weight: bold;
     color: #ffffff;
-    @include ellipsis();
 }
 
 .fc-item__meta {
+    @include fs-textSans(1);
     position: absolute;
     bottom: 0;
     left: $gs-gutter * .25;
     right: $gs-gutter * .25;
-    @include fs-textSans(1);
     color: $neutral-2;
 
     .inline-icon {

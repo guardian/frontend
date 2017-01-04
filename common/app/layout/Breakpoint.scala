@@ -1,7 +1,5 @@
 package layout
 
-import scalaz.syntax.std.option._
-
 sealed trait Breakpoint {
   val minWidth: Option[Int]
 }
@@ -14,25 +12,25 @@ case object Mobile extends Breakpoint {
 }
 
 case object MobileLandscape extends Breakpoint {
-  val minWidth = 480.some
+  val minWidth = Some(480)
 }
 
 case object Phablet extends Breakpoint {
-  val minWidth = 660.some
+  val minWidth = Some(660)
 }
 
 case object Tablet extends Breakpoint {
-  val minWidth = 740.some
+  val minWidth = Some(740)
 }
 
 case object Desktop extends Breakpoint {
-  val minWidth = 980.some
+  val minWidth = Some(980)
 }
 
 case object LeftCol extends Breakpoint {
-  val minWidth = 1140.some
+  val minWidth = Some(1140)
 }
 
 case object Wide extends Breakpoint {
-  val minWidth = 1300.some
+  val minWidth = Some(1300)
 }

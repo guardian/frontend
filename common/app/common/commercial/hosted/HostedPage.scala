@@ -2,12 +2,15 @@ package common.commercial.hosted
 
 import java.net.URLEncoder
 
-import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery, Video}
+import com.gu.contentapi.client.model.v1.{Content, SponsorshipLogoDimensions}
 import common.Logging
-import common.commercial.Logo
+import common.commercial.Dimensions
+import common.commercial.hosted.HostedUtils.getAndLog
+import common.commercial.hosted.HostedVideoPage.log
 import conf.Configuration.site
 import model.StandalonePage
+import play.api.libs.json.Json
 
 trait HostedPage extends StandalonePage {
   def id: String
@@ -56,26 +59,54 @@ case class HostedCampaign(
   id: String,
   name: String,
   owner: String,
-  logo: Logo,
+  logo: HostedLogo,
   fontColour: Colour
 )
 
 object HostedCampaign {
 
   def fromContent(item: Content): Option[HostedCampaign] = {
-    for {
-      section <- item.section
-      hostedTag <- item.tags find (_.paidContentType.contains("HostedContent"))
-      sponsorships <- hostedTag.activeSponsorships
-      sponsorship <- sponsorships.headOption
+    log.info(s"Building hosted campaign for ${item.id} ...")
+    val campaign = for {
+      section <- getAndLog(item, item.section, "has no section")
+      hostedTag <- getAndLog(item, item.tags find (_.paidContentType.contains("HostedContent")), "has no hosted tag")
+      sponsorships <- getAndLog(item, hostedTag.activeSponsorships, "has no sponsorships")
+      sponsorship <- getAndLog(item, sponsorships.headOption, "has no sponsorship")
     } yield {
+      val id = section.id.stripPrefix("advertiser-content/")
       HostedCampaign(
-        id = section.id.stripPrefix("advertiser-content/"),
+        id,
         name = section.webTitle,
         owner = sponsorship.sponsorName,
-        logo = Logo.make(sponsorship.sponsorLogo, sponsorship.sponsorLogoDimensions),
+        logo = HostedLogo.make(
+          src = sponsorship.sponsorLogo,
+          dimensions = sponsorship.sponsorLogoDimensions,
+          link = sponsorship.sponsorLink,
+          campaignId = id
+        ),
         fontColour = Colour(hostedTag.paidContentCampaignColour getOrElse "")
       )
     }
+    if (campaign.isEmpty) log.error(s"Failed to build HostedCampaign from $item")
+    campaign
   }
+}
+
+case class HostedLogo(src: String, dimensions: Option[Dimensions], link: String, trackingCode: String)
+
+object HostedLogo {
+
+  implicit val jsonFormat = Json.format[HostedLogo]
+
+  def make(
+    src: String,
+    dimensions: Option[SponsorshipLogoDimensions],
+    link: String,
+    campaignId: String
+  ) = HostedLogo(
+    src,
+    dimensions map (d => Dimensions(d.width, d.height)),
+    link,
+    trackingCode = s"$campaignId logo"
+  )
 }

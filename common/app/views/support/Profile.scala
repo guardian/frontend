@@ -104,7 +104,7 @@ object Video700 extends VideoProfile(width = Some(700), height = Some(394)) // 1
 abstract class ShareImage(shouldIncludeOverlay: Boolean) extends Profile(width = Some(1200)) {
   override val heightParam = "h=630"
   override val fitParam = "fit=crop"
-  val cropParam = "crop=faces,entropy"  
+  val cropParam = "crop=faces%2Centropy"
   val blendModeParam = "bm=normal"
   val blendOffsetParam = "ba=bottom%2Cleft"
   val blendImageParam: String
@@ -129,6 +129,7 @@ object FacebookOpenGraphImage extends ShareImage(FacebookShareImageLogoOverlay.i
 
 object EmailImage extends Profile(width = Some(580), autoFormat = false) {
   override val qualityparam = "q=40"
+  val knownWidth = width.get
 }
 
 object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) {
@@ -146,6 +147,7 @@ object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) {
 
 object FrontEmailImage extends Profile(width = Some(500), autoFormat = false) {
   override val qualityparam = "q=40"
+  val knownWidth = width.get
 }
 
 // The imager/images.js base image.

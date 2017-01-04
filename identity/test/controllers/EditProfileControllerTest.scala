@@ -12,8 +12,10 @@ import org.mockito.{Matchers, ArgumentCaptor}
 import org.scalatest.{DoNotDiscover, WordSpec, ShouldMatchers, OptionValues}
 import org.scalatest.mock.MockitoSugar
 import org.scalatestplus.play.ConfiguredServer
+import play.api.libs.crypto.CSRFTokenSigner
 import play.api.mvc._
 import play.api.test.Helpers._
+import play.filters.csrf.{CSRFCheck, CSRFConfig, CSRFAddToken}
 import services._
 import test._
 import scala.concurrent.Future
@@ -24,6 +26,7 @@ import scala.concurrent.Future
   with MockitoSugar
   with OptionValues
   with WithTestContext
+  with WithTestCSRF
   with ConfiguredServer {
 
   trait EditProfileFixture {
@@ -57,7 +60,7 @@ import scala.concurrent.Future
     when(idRequest.trackingData) thenReturn trackingData
     when(idRequest.returnUrl) thenReturn None
 
-    lazy val controller = new EditProfileController(idUrlBuilder, authenticatedActions, api, idRequestParser, messagesApi, profileFormsMapping)
+    lazy val controller = new EditProfileController(idUrlBuilder, authenticatedActions, api, idRequestParser, messagesApi, csrfCheck, csrfAddToken, profileFormsMapping)
   }
 
   "EditProfileController" when {
@@ -68,7 +71,7 @@ import scala.concurrent.Future
 
       "save the user through the ID API" in new EditProfileFixture {
 
-        val fakeRequest = FakeCSRFRequest()
+        val fakeRequest = FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(
             "location" -> location,
             "aboutMe" -> aboutMe,
@@ -106,7 +109,7 @@ import scala.concurrent.Future
       val allowThirdPartyProfiling = false
 
       "then the user should be saved on the ID API" in new EditProfileFixture {
-        val fakeRequest = FakeCSRFRequest()
+        val fakeRequest = FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(
             "receiveGnmMarketing" -> receiveGnmMarketing.toString,
             "receive3rdPartyMarketing" -> receive3rdPartyMarketing.toString,
@@ -165,7 +168,7 @@ import scala.concurrent.Future
 
         import FakeRequestAccountData._
 
-        FakeCSRFRequest()
+        FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(
             ("primaryEmailAddress", primaryEmailAddress),
             ("title", testTitle),
@@ -188,7 +191,7 @@ import scala.concurrent.Future
 
         import FakeRequestAccountData._
 
-        FakeCSRFRequest()
+        FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(
             ("primaryEmailAddress", primaryEmailAddress),
             ("title", testTitle),
@@ -209,7 +212,7 @@ import scala.concurrent.Future
 
         import FakeRequestAccountData._
 
-        FakeCSRFRequest()
+        FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(
             ("primaryEmailAddress", primaryEmailAddress),
             ("title", testTitle),
@@ -231,7 +234,7 @@ import scala.concurrent.Future
 
         import FakeRequestAccountData._
 
-        FakeCSRFRequest()
+        FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(
             ("primaryEmailAddress", primaryEmailAddress),
             ("title", testTitle),

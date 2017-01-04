@@ -1,8 +1,12 @@
-@()
+@(page: model.Page)
+
+@import model.EmailAddons.EmailContentType
 
 <style>
-    .tone-news {
+    .tone-news .facia-card {
         border-top: 1px solid #4bc6df;
+    }
+    .tone-news .facia-card__text {
         background-color: #f6f6f6;
     }
     .tone-news .headline {
@@ -19,11 +23,12 @@
     }
 
 
-    .tone-feature {
+    .tone-feature .facia-card {
         border-top: 1px solid pink;
+    }
+    .tone-feature .facia-card__text {
         background-color: #951c55;
     }
-
     .tone-feature .headline {
         color: #fff;
     }
@@ -38,8 +43,10 @@
     }
 
 
-    .tone-media {
+    .tone-media .facia-card {
         border-top: 1px solid #ffbb00;
+    }
+    .tone-media .facia-card__text {
         background-color: #333;
     }
     .tone-media .headline {
@@ -56,8 +63,10 @@
     }
 
 
-    .tone-review {
+    .tone-review .facia-card {
         border-top: 1px solid pink;
+    }
+    .tone-review .facia-card__text {
         background-color: #7d7569;
     }
     .tone-review .headline {
@@ -74,8 +83,10 @@
     }
 
 
-    .tone-editorial {
+    .tone-editorial .facia-card {
         border-top: 1px solid #aad8f1;
+    }
+    .tone-editorial .facia-card__text {
         background-color: #005689;
     }
     .tone-editorial .headline {
@@ -93,14 +104,23 @@
 
 
     .tone-external {
-        border-top: 1px solid #4bc6df;
+        padding-bottom: 0 !important;
+    }
+    .tone-external .facia-card {
+        border-top: 1px solid @page.toneColour;
+    }
+    .tone-external .facia-card__text {
         background-color: #f6f6f6;
     }
     .tone-external .headline {
         color: #333333;
+        font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif !important;
+        font-weight: normal;
+        font-size: 16px;
     }
     .tone-external .fc-item__kicker {
-        color: #005689;
+        color: #333333;
+        font-weight: bold;
     }
     .tone-external .kicker-separator {
         color: #d6d6d6;
@@ -110,8 +130,10 @@
     }
 
 
-    .tone-live {
+    .tone-live .facia-card {
         border-top: 1px solid #fdadba;
+    }
+    .tone-live .facia-card__text {
         background-color: #b51800;
     }
     .tone-live .headline {
@@ -128,8 +150,10 @@
     }
 
 
-    .tone-analysis {
+    .tone-analysis .facia-card {
         border-top: 1px solid #4bc6df;
+    }
+    .tone-analysis .facia-card__text {
         background-color: #f6f6f6;
     }
     .tone-analysis .headline {
@@ -146,8 +170,10 @@
     }
 
 
-    .tone-special-report {
+    .tone-special-report .facia-card {
         border-top: 1px solid #fce800;
+    }
+    .tone-special-report .facia-card__text {
         background-color: #63717a;
     }
     .tone-special-report .headline {
@@ -164,8 +190,10 @@
     }
 
 
-    .tone-comment {
+    .tone-comment .facia-card {
         border-top: 1px solid #e6711b;
+    }
+    .tone-comment .facia-card__text {
         background-color: #e3e3de;
     }
     .tone-comment .headline {
@@ -182,8 +210,10 @@
     }
 
 
-    .tone-dead {
+    .tone-dead .facia-card {
         border-top: 1px solid pink;
+    }
+    .tone-dead .facia-card__text {
         background-color: #f6f6f6;
     }
     .tone-dead .headline {

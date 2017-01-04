@@ -1,11 +1,12 @@
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
-import conf.{CachedHealthCheckLifeCycle, StandaloneFilters}
+import conf.CachedHealthCheckLifeCycle
 import contentapi.{ContentApiClient, HttpClient}
 import controllers.{HealthCheck, StandaloneControllerComponents, TrainingHttp}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
-import play.api._
+import http.StandaloneFilters
+import play.api.BuiltInComponentsFromContext
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router

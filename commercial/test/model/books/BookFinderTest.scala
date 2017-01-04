@@ -5,7 +5,7 @@ import org.scalatest.concurrent._
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json.{JsNull, JsValue, Json}
-import test.{ConfiguredTestSuite, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
 
 import scala.collection.mutable
 import scala.concurrent.Future
@@ -16,6 +16,7 @@ import scala.concurrent.Future
   with ScalaFutures
   with ConfiguredTestSuite
   with BeforeAndAfterAll
+  with WithMaterializer
   with WithTestWsClient {
 
   private implicit val defaultPatience =

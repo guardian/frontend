@@ -11,7 +11,7 @@ import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
 class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorker: ToolPressQueueWorker) extends JsonQueueWorker[SNSNotification] {
-  val queueUrl: Option[String] = Configuration.faciatool.frontPressCronQueue
+  lazy val queueUrl: Option[String] = Configuration.faciatool.frontPressCronQueue
   override val deleteOnFailure: Boolean = true
 
   override val queue: JsonMessageQueue[SNSNotification] = (Configuration.faciatool.frontPressCronQueue map { queueUrl =>

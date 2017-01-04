@@ -7,7 +7,7 @@
 
 @import views.support.EmailHelpers._
 @import views.support.TrailCssClasses.toneClass
-@import model.pressed.Feature
+@import model.pressed.{Feature, ExternalLink}
 @import implicits.Requests.RichRequestHeader
 @import implicits.ItemKickerImplicits._
 
@@ -38,31 +38,48 @@
 }
 
 @faciaCardLarge(pressedContent: PressedContent) = {
-    @paddedRow {
-        @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
-            <a @Html(href) class="facia-card facia-card--large @toneClass(pressedContent)">
-                @imgFromPressedContent(pressedContent)
-                @headline(pressedContent)
-                @pressedContent.card.trailText.map { trailText =>
-                    <h4 class="trail-text">@trailText</h4>
-                }
+    @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
+        @paddedRow(Seq(toneClass(pressedContent))) {
+            <a @Html(href) class="facia-link">
+                <div class="facia-card facia-card--large">
+                    @imgFromPressedContent(pressedContent)
+                    @fullRow(Seq("facia-card__text")) {
+                        @headline(pressedContent)
+                        @pressedContent.card.trailText.map { trailText =>
+                            <h4 class="trail-text">@trailText</h4>
+                        }
+                    }
+                </div>
             </a>
         }
     }
 }
 
 @faciaCardSmall(pressedContent: PressedContent) = {
-    @paddedRow {
-        @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
-            <a @Html(href) class="facia-card @toneClass(pressedContent)">
-                @headline(pressedContent)
+    @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
+        @paddedRow(Seq(toneClass(pressedContent))) {
+            <a @Html(href) class="facia-link">
+                @fullRow(Seq("facia-card", "facia-card__text")) {
+                    @headline(pressedContent)
+                }
             </a>
         }
     }
 }
 
+@firstCard(pressedContent: PressedContent) = {
+    @pressedContent.card.cardStyle match {
+        case ExternalLink => { @faciaCardSmall(pressedContent) }
+        case _ => { @faciaCardLarge(pressedContent) }
+    }
+}
+
+@card(pressedContent: PressedContent) = {
+    @faciaCardSmall(pressedContent)
+}
+
 @fullRow {
-    @img(src = page.banner, alt = page.email.map(_.name))
+    @imgForFront(page.banner, page.email.map(_.name))
 }
 
 @page.frontProperties.onPageDescription.map { description =>
@@ -80,9 +97,9 @@
 
     @collection.curatedPlusBackfillDeduplicated.zipWithIndex.map { case (pressedContent, cardIndex) =>
         @if(cardIndex == 0) {
-            @faciaCardLarge(pressedContent)
+            @firstCard(pressedContent)
         } else {
-            @faciaCardSmall(pressedContent)
+            @card(pressedContent)
         }
     }
 }

@@ -65,8 +65,7 @@ final case class Content(
   showByline: Boolean,
   hasStoryPackage: Boolean,
   rawOpenGraphImage: String,
-  showFooterContainers: Boolean = false,
-  title: Option[String] = None
+  showFooterContainers: Boolean = false
 ) {
 
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
@@ -308,7 +307,8 @@ final case class Content(
 
   val twitterProperties = Map(
     "twitter:app:url:googleplay" -> metadata.webUrl.replaceFirst("^[a-zA-Z]*://", "guardian://"), //replace current scheme with guardian mobile app scheme
-    "twitter:image" -> twitterCardImage
+    "twitter:image" -> twitterCardImage,
+    "twitter:card" -> "summary_large_image"
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
   val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
@@ -342,7 +342,6 @@ object Content {
     val apifields = apiContent.fields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
     val cardStyle: fapiutils.CardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
-    val title = Some(apiContent.webTitle)
 
 
     Content(
@@ -386,8 +385,7 @@ object Content {
           .orElse(elements.mainPicture.flatMap(_.images.largestImageUrl))
           .orElse(trail.trailPicture.flatMap(_.largestImageUrl))
           .getOrElse(Configuration.images.fallbackLogo)
-      },
-      title = title
+      }
     )
   }
 }
@@ -450,8 +448,6 @@ object Article {
       ("article:author", tags.contributors.map(_.metadata.webUrl).mkString(","))
     )
 
-    val twitterProperties: Map[String, String] = Map("twitter:card" -> "summary_large_image")
-
     content.metadata.copy(
       contentType = contentType,
       adUnitSuffix = section + "/" + contentType.toLowerCase,
@@ -459,7 +455,6 @@ object Article {
       iosType = Some("Article"),
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
-      twitterPropertiesOverrides = twitterProperties,
       shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
       contentWithSlimHeader = content.isImmersive && content.tags.isArticle
     )
@@ -531,11 +526,22 @@ object Audio {
     val javascriptConfig: Map[String, JsValue] = Map(
       "isPodcast" -> JsBoolean(content.tags.isPodcast))
 
+    val opengraphProperties = Map(
+      // Not using the og:video properties here because we want end-users to visit the guardian website
+      // when they click the thumbnail in the FB feed rather than playing the video "in-place"
+      "og:type" -> "article",
+      "article:published_time" -> content.trail.webPublicationDate.toString,
+      "article:modified_time" -> content.fields.lastModified.toString,
+      "article:section" -> content.trail.sectionName,
+      "article:tag" -> content.tags.keywords.map(_.name).mkString(",")
+    )
+
     val metadata = content.metadata.copy(
       contentType = contentType,
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some("https://schema.org/AudioObject"),
-      javascriptConfigOverrides = javascriptConfig
+      javascriptConfigOverrides = javascriptConfig,
+      opengraphPropertiesOverrides = opengraphProperties
     )
 
     val contentOverrides = content.copy(
@@ -589,8 +595,7 @@ object Video {
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some("http://schema.org/VideoObject"),
       javascriptConfigOverrides = javascriptConfig,
-      opengraphPropertiesOverrides = opengraphProperties,
-      twitterPropertiesOverrides = Map("twitter:card" -> "summary_large_image")
+      opengraphPropertiesOverrides = opengraphProperties
     )
 
     val contentOverrides = content.copy(
@@ -655,24 +660,13 @@ object Gallery {
       "article:author" -> tags.contributors.map(_.metadata.webUrl).mkString(",")
     )
 
-    val twitterProperties: Map[String, String] = Map(
-      "twitter:card" -> "gallery",
-      "twitter:title" -> fields.linkText
-    ) ++ lightbox.largestCrops.sortBy(_.index).take(5).zipWithIndex.flatMap { case (image, index) =>
-      image.path.map(i =>
-        if (i.startsWith("//")) {
-          s"twitter:image$index:src" -> s"https:$i"
-        } else {
-          s"twitter:image$index:src" -> i
-        })
-    }
     val metadata = content.metadata.copy(
       contentType = contentType,
       adUnitSuffix = section + "/" + contentType.toLowerCase,
       schemaType = Some("https://schema.org/ImageGallery"),
       openGraphImages = lightbox.openGraphImages,
       javascriptConfigOverrides = javascriptConfig,
-      twitterPropertiesOverrides = twitterProperties,
+      twitterPropertiesOverrides = Map("twitter:title" -> fields.linkText),
       opengraphPropertiesOverrides = openGraph,
       contentWithSlimHeader = true
     )
@@ -827,14 +821,11 @@ object Interactive {
     val tags = content.tags
     val section = content.metadata.sectionId
     val id = content.metadata.id
-    val twitterProperties: Map[String, String] = Map(
-      "twitter:title" -> fields.linkText,
-      "twitter:card" -> "summary_large_image"
-    )
+
     val metadata = content.metadata.copy(
       contentType = contentType,
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      twitterPropertiesOverrides = twitterProperties,
+      twitterPropertiesOverrides = Map( "twitter:title" -> fields.linkText ),
       contentWithSlimHeader = true
     )
     val contentOverrides = content.copy(
@@ -866,8 +857,7 @@ object ImageContent {
     val metadata = content.metadata.copy(
       contentType = contentType,
       adUnitSuffix = section + "/" + contentType.toLowerCase,
-      javascriptConfigOverrides = javascriptConfig,
-      twitterPropertiesOverrides = Map("twitter:card" -> "photo")
+      javascriptConfigOverrides = javascriptConfig
     )
 
     val contentOverrides = content.copy(

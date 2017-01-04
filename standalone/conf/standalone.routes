@@ -27,6 +27,7 @@ GET        /commercial/books/book.json                                          
 GET        /commercial/books/books.json                                                        commercial.controllers.BookOffersController.renderBooks
 GET        /advertiser-content/:campaignName/:pageName                                         commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET        /advertiser-content/:campaignName/:pageName/:cType/onward.json                      commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
+GET        /advertiser-content/:campaignName/:pageName/autoplay.json                           commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 
 
 # Onward
@@ -172,7 +173,6 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json       
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                   controllers.InteractiveController.renderInteractiveJson(path)
 
 # Email paths
-GET        /email                                                                              controllers.EmailSignupController.renderPage()
 GET        /email/form/$emailType<article|footer|plain|plaindark|plaintone>/:listId                      controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/:result                                                                      controllers.EmailSignupController.subscriptionResult(result: String)
 POST       /email                                                                              controllers.EmailSignupController.submit()

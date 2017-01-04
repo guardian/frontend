@@ -2,14 +2,13 @@ package football.controllers
 
 import common._
 import conf._
-import feed.{Competitions, CompetitionsService}
+import feed.CompetitionsService
 import implicits.{Football, Requests}
 import model.Cached.WithoutRevalidationResult
 import model.TeamMap.findTeamIdByUrlName
 import model._
 import org.joda.time.format.DateTimeFormat
 import pa.{FootballMatch, LineUp, LineUpTeam}
-import play.api.Environment
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
 

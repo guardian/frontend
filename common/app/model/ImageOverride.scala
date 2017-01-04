@@ -21,7 +21,6 @@ object ImageOverride {
 
     val imageAsset = assetFields.map( fields => {
       ImageAsset(
-        index = 0,
         fields = fields,
         mediaType = AssetType.Image.name,
         mimeType = Some("image/jpg"),

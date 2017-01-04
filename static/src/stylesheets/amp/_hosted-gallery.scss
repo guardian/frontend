@@ -29,7 +29,7 @@
 }
 
 .hosted-gallery__meta {
-    color: white;
+    color: #ffffff;
     padding: 0 $gs-gutter;
     position: absolute;
     z-index: 1;
@@ -60,12 +60,14 @@
     margin-bottom: $gs-baseline / 2;
     font-size: 26px;
     line-height: 28px;
+    font-weight: 500;
 }
 
 .hosted-gallery__sub-heading {
     margin: 0;
     font-size: 16px;
     line-height: 18px;
+    font-weight: normal;
 }
 
 .hosted-gallery__caption {
@@ -127,7 +129,7 @@
         cursor: pointer;
         text-decoration: none;
         &:not(.social__action)::after {
-            content: "";
+            content: '';
             height: 1px;
             width: 100%;
             background-color: #ffffff;

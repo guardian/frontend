@@ -8,7 +8,6 @@ define([
     'common/modules/experiments/ab',
     'commercial/modules/article-aside-adverts',
     'commercial/modules/article-body-adverts',
-    'commercial/modules/article-body-adverts-wide',
     'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/prepare-googletag',
     'commercial/modules/dfp/prepare-sonobi-tag',
@@ -26,7 +25,8 @@ define([
     'commercial/modules/paidfor-band',
     'commercial/modules/paid-containers',
     'commercial/modules/dfp/performance-logging',
-    'common/modules/analytics/google'
+    'common/modules/analytics/google',
+    'common/modules/commercial/user-features'
 ], function (
     Promise,
     config,
@@ -37,7 +37,6 @@ define([
     ab,
     articleAsideAdverts,
     articleBodyAdverts,
-    articleBodyAdvertsWide,
     closeDisabledSlots,
     prepareGoogletag,
     prepareSonobiTag,
@@ -55,14 +54,15 @@ define([
     paidforBand,
     paidContainers,
     performanceLogging,
-    ga
+    ga,
+    userFeatures
 ) {
     var primaryModules = [
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init],
         ['cm-prepare-googletag', prepareGoogletag.init, prepareGoogletag.customTiming],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
-        ['cm-articleBodyAdverts', isItRainingAds() ? articleBodyAdvertsWide.init : articleBodyAdverts.init],
+        ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
         ['cm-galleryAdverts', galleryAdverts.init],
         ['cm-liveblogAdverts', liveblogAdverts.init],
@@ -70,34 +70,26 @@ define([
     ];
 
     var secondaryModules = [
-        ['cm-fill-advert-slots', fillAdvertSlots.init],
-        ['cm-paidforBand', paidforBand.init],
-        ['cm-paidContainers', paidContainers.init],
-        ['cm-ready', function () {
-            mediator.emit('page:commercial:ready');
-            userTiming.mark('commercial end');
-            robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
-                ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
-            });
-            return Promise.resolve();
-        }]
+        ['cm-fill-advert-slots', fillAdvertSlots.init, fillAdvertSlots.customTiming],
+        ['cm-paidContainers', paidContainers.init]
     ];
 
+    var customTimingModules = [];
+
+    if (config.page.isAdvertisementFeature) {
+        secondaryModules.push(['cm-paidforBand', paidforBand.init]);
+    }
+
     if (config.page.isHosted) {
-        secondaryModules.unshift(
+        secondaryModules.push(
             ['cm-hostedAbout', hostedAbout.init],
-            ['cm-hostedVideo', hostedVideo.init],
-            ['cm-hostedGallery', hostedGallery.init],
-            ['cm-hostedOnward', hostedOnward.init],
+            ['cm-hostedVideo', hostedVideo.init, hostedVideo.customTiming],
+            ['cm-hostedGallery', hostedGallery.init, hostedGallery.customTiming],
+            ['cm-hostedOnward', hostedOnward.init, hostedOnward.customTiming],
             ['cm-hostedOJCarousel', hostedOJCarousel.init]);
     }
 
-    if ((config.switches.disableStickyAdBannerOnMobile && detect.getBreakpoint() === 'mobile') ||
-         config.page.disableStickyTopBanner
-    ) {
-        config.page.hasStickyAdBanner = false;
-    } else {
-        config.page.hasStickyAdBanner = true;
+    if (!config.page.disableStickyTopBanner) {
         secondaryModules.unshift(['cm-stickyTopBanner', stickyTopBanner.init]);
     }
 
@@ -107,38 +99,46 @@ define([
 
         var modulePromises = [];
 
-        modules.forEach(function (pair) {
+        modules.forEach(function (module) {
 
-            var moduleName = pair[0];
-            var moduleInit = pair[1];
-            var hasCustomTiming = pair[2];
+            var moduleName = module[0];
+            var moduleInit = module[1];
+            var hasCustomTiming = module[2];
 
             robust.catchErrorsAndLog(moduleName, function () {
-                var modulePromise = moduleInit(moduleName).then(function(){
-                    if (!hasCustomTiming) {
+                if (hasCustomTiming) {
+                    // Modules that use custom timing perform their own measurement timings.
+                    // These modules all have async init procedures which don't block, and return a promise purely for
+                    // perf logging, to time when their async work is done. The command buffer guarantees execution order,
+                    // so we don't use the returned promise to order the bootstrap's module invocations.
+                    customTimingModules.push(moduleInit(moduleName));
+                } else {
+                    // Standard modules return a promise that must resolve before dependent bootstrap modules can begin
+                    // to execute. Timing is done here in the bootstrap, using the appropriate baseline.
+                    var modulePromise = moduleInit(moduleName).then(function () {
                         performanceLogging.moduleCheckpoint(moduleName, baseline);
-                    }
-                });
+                    });
 
-                modulePromises.push(modulePromise);
+                    modulePromises.push(modulePromise);
+                }
             });
         });
 
-       return Promise.all(modulePromises)
-           .then(function(moduleLoadResult){
-               performanceLogging.addEndTimeBaseline(baseline);
-               return moduleLoadResult;
-           });
-    }
-
-    function isItRainingAds() {
-        var testName = 'ItsRainingInlineAds';
-        return !config.page.isImmersive && ab.testCanBeRun(testName) && ['geo', 'nogeo'].indexOf(ab.getTestVariantId(testName)) > -1;
+        return Promise.all(modulePromises)
+        .then(function(moduleLoadResult){
+            performanceLogging.addEndTimeBaseline(baseline);
+            return moduleLoadResult;
+        });
     }
 
     return {
         init: function () {
             if (!config.switches.commercial) {
+                return;
+            }
+
+            if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
+                closeDisabledSlots.init();
                 return;
             }
 
@@ -150,8 +150,21 @@ define([
             // Stub the command queue
             window.googletag = { cmd: [] };
 
-            loadModules(primaryModules, performanceLogging.primaryBaseline).then(function(){
-                loadModules(secondaryModules, performanceLogging.secondaryBaseline);
+            return loadModules(primaryModules, performanceLogging.primaryBaseline)
+            .then(function () {
+                return loadModules(secondaryModules, performanceLogging.secondaryBaseline);
+            })
+            .then(function () {
+                mediator.emit('page:commercial:ready');
+                userTiming.mark('commercial end');
+                robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
+                    ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
+                });
+                if (config.page.isHosted) {
+                    // Wait for all custom timing async work to finish before manually reporting the perf data.
+                    // There are no MPUs on hosted pages, so no slot render events, and therefore no reporting would be done.
+                    Promise.all(customTimingModules).then(performanceLogging.reportTrackingData);
+                }
             });
         }
     };

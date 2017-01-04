@@ -1,20 +1,20 @@
 package controllers.admin
 
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import implicits.Requests
-import model.deploys.{NotifyRequestBody, NotifyTypes, ApiKeyAuthenticationSupport, ApiResults}
-import ApiResults.{ApiErrors, ApiError, ApiResponse}
+import model.deploys.{ApiKeyAuthenticationSupport, ApiResults, NotifyRequestBody, NotifyTypes}
+import ApiResults.{ApiError, ApiErrors, ApiResponse}
 import model.deploys._
 import play.api.libs.json.{JsError, JsSuccess}
 import play.api.libs.ws.WSClient
-import play.api.mvc.{Request, Controller}
+import play.api.mvc.{Controller, Request}
 import play.api.mvc.BodyParsers.parse.{json => BodyJson}
+
 import scala.concurrent.Future
 import scala.concurrent.Future.sequence
-import scala.concurrent.ExecutionContext.Implicits.global
 
-trait DeploysNotifyController extends Controller with ApiKeyAuthenticationSupport with Logging with Requests {
+trait DeploysNotifyController extends Controller with ApiKeyAuthenticationSupport with Logging with Requests with ExecutionContexts {
 
   val apiKey: String
   val wsClient: WSClient
@@ -74,7 +74,7 @@ trait DeploysNotifyController extends Controller with ApiKeyAuthenticationSuppor
 }
 
 class DeploysNotifyControllerImpl(val wsClient: WSClient) extends DeploysNotifyController {
-  override val apiKey = Configuration.DeploysNotify.apiKey.getOrElse(
+  override lazy val apiKey = Configuration.DeploysNotify.apiKey.getOrElse(
     throw new RuntimeException("Deploys-notify API Key not set")
   )
   val httpClient = new HttpClient(wsClient)

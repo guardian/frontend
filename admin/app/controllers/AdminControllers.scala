@@ -7,9 +7,9 @@ import controllers.admin.commercial.{DfpDataController, SlotController, Takeover
 import controllers.cache.{ImageDecacheController, PageDecacheController}
 import jobs.VideoEncodingsJob
 import model.ApplicationContext
-import play.api.Environment
 import play.api.libs.ws.WSClient
 import play.api.i18n.Messages
+import play.api.libs.crypto.CryptoConfig
 import services.{OphanApi, RedirectService}
 
 trait AdminControllers {
@@ -19,6 +19,7 @@ trait AdminControllers {
   def ophanApi: OphanApi
   implicit def appContext: ApplicationContext
   def redirects: RedirectService
+  def cryptoConfig: CryptoConfig
   implicit val messages: Messages
   lazy val oAuthLoginController = wire[OAuthLoginAdminController]
   lazy val uncachedWebAssets = wire[UncachedWebAssets]
@@ -53,5 +54,4 @@ trait AdminControllers {
   lazy val playerController = wire[PlayerController]
   lazy val tablesController = wire[TablesController]
   lazy val frontsController = wire[FrontsController]
-  lazy val cssReportController = wire[CssReportController]
 }

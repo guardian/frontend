@@ -1,12 +1,12 @@
 package com.gu
 
-import com.gu.Dependencies._
 import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
-import com.typesafe.sbt.web.Import._
-import play.routes.compiler.InjectedRoutesGenerator
 import play.sbt.Play.autoImport._
 import play.sbt.routes.RoutesKeys
 import play.twirl.sbt.Import._
+import com.typesafe.sbt.web.SbtWeb.autoImport._
+import com.typesafe.sbt.SbtNativePackager._
+import Dependencies._
 import sbt.Keys._
 import sbt._
 
@@ -40,7 +40,6 @@ object Frontend extends Build with Prototypes {
       romeModules,
       scalaCheck,
       scalajTime,
-      scalaz,
       ws,
       faciaFapiScalaClient,
       dispatchTest,
@@ -70,24 +69,19 @@ object Frontend extends Build with Prototypes {
   val sanityTest = application("sanity-tests")
 
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common).settings(
-    RoutesKeys.routesGenerator := InjectedRoutesGenerator,
     libraryDependencies += scalaCheck
   )
 
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
-    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
 
   val applications = application("applications")
     .dependsOn(commonWithTests)
     .aggregate(common)
-    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
 
   val archive = application("archive").dependsOn(commonWithTests).aggregate(common).settings(
-    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
-    RoutesKeys.routesGenerator := InjectedRoutesGenerator,
     libraryDependencies ++= Seq(
       paClient,
       akkaContrib
@@ -103,18 +97,16 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       scalaUri
     ),
-    TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._"),
-    RoutesKeys.routesGenerator := InjectedRoutesGenerator
+    TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._")
   )
 
   val router = application("router")
-    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
 
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
-      uaDetectorResources
-    ),
-    RoutesKeys.routesGenerator := InjectedRoutesGenerator
+      uaDetectorResources,
+      redisClient
+    )
   )
 
   val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
@@ -132,20 +124,17 @@ object Frontend extends Build with Prototypes {
       awsSes,
       scalaUri
     ),
-    RoutesKeys.routesGenerator := InjectedRoutesGenerator,
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate"
   )
 
   val faciaPress = application("facia-press").dependsOn(commonWithTests).settings(
-    RoutesKeys.routesGenerator := InjectedRoutesGenerator,
     libraryDependencies ++= Seq(
       awsKinesis
     )
   )
 
   val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
-    RoutesKeys.routesGenerator := InjectedRoutesGenerator,
     libraryDependencies ++= Seq(
       filters,
       identityModel,
@@ -163,21 +152,14 @@ object Frontend extends Build with Prototypes {
 
   val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
       .settings(
-        libraryDependencies ++= List(shadeMemcached),
-        RoutesKeys.routesGenerator := InjectedRoutesGenerator
+        libraryDependencies ++= List(shadeMemcached)
       )
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
-    .settings(
-      RoutesKeys.routesGenerator := InjectedRoutesGenerator
-    )
 
   val adminJobs = application("admin-jobs")
     .dependsOn(commonWithTests)
     .aggregate(common)
-    .settings(
-      RoutesKeys.routesGenerator := InjectedRoutesGenerator
-    )
 
   val dev = application("dev-build")
     .dependsOn(
@@ -196,7 +178,6 @@ object Frontend extends Build with Prototypes {
       adminJobs
     ).settings(
       RoutesKeys.routesImport += "bindables._",
-      RoutesKeys.routesGenerator := InjectedRoutesGenerator,
       javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
     )
 
@@ -210,18 +191,14 @@ object Frontend extends Build with Prototypes {
     commercial,
     onward,
     adminJobs
-  ).settings(
-    RoutesKeys.routesGenerator := InjectedRoutesGenerator
   )
 
   val preview = application("preview").dependsOn(commonWithTests, standalone).settings(
-    RoutesKeys.routesImport += "scala.language.reflectiveCalls",
-    RoutesKeys.routesGenerator := InjectedRoutesGenerator
+    RoutesKeys.routesImport += "scala.language.reflectiveCalls"
   )
 
   val trainingPreview = application("training-preview").dependsOn(commonWithTests, standalone).settings(
-    RoutesKeys.routesImport += "scala.language.reflectiveCalls",
-    RoutesKeys.routesGenerator := InjectedRoutesGenerator
+    RoutesKeys.routesImport += "scala.language.reflectiveCalls"
   )
 
   val integrationTests = Project("integrated-tests", file("integrated-tests"))
@@ -231,7 +208,6 @@ object Frontend extends Build with Prototypes {
   val rss = application("rss")
     .dependsOn(commonWithTests)
     .aggregate(common)
-    .settings(RoutesKeys.routesGenerator := InjectedRoutesGenerator)
 
   val main = root().aggregate(
     common,
@@ -258,22 +234,22 @@ object Frontend extends Build with Prototypes {
     riffRaffUploadManifestBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity")),
     riffRaffManifestProjectName := s"dotcom:all",
     riffRaffArtifactResources := Seq(
-      (riffRaffPackageType in admin).value -> s"${(name in admin).value}/${(riffRaffPackageType in admin).value.getName}",
-      (riffRaffPackageType in adminJobs).value -> s"${(name in adminJobs).value}/${(riffRaffPackageType in adminJobs).value.getName}",
-      (riffRaffPackageType in applications).value -> s"${(name in applications).value}/${(riffRaffPackageType in applications).value.getName}",
-      (riffRaffPackageType in archive).value -> s"${(name in archive).value}/${(riffRaffPackageType in archive).value.getName}",
-      (riffRaffPackageType in article).value -> s"${(name in article).value}/${(riffRaffPackageType in article).value.getName}",
-      (riffRaffPackageType in commercial).value -> s"${(name in commercial).value}/${(riffRaffPackageType in commercial).value.getName}",
-      (riffRaffPackageType in diagnostics).value -> s"${(name in diagnostics).value}/${(riffRaffPackageType in diagnostics).value.getName}",
-      (riffRaffPackageType in discussion).value -> s"${(name in discussion).value}/${(riffRaffPackageType in discussion).value.getName}",
-      (riffRaffPackageType in identity).value -> s"${(name in identity).value}/${(riffRaffPackageType in identity).value.getName}",
-      (riffRaffPackageType in facia).value -> s"${(name in facia).value}/${(riffRaffPackageType in facia).value.getName}",
-      (riffRaffPackageType in faciaPress).value -> s"${(name in faciaPress).value}/${(riffRaffPackageType in faciaPress).value.getName}",
-      (riffRaffPackageType in onward).value -> s"${(name in onward).value}/${(riffRaffPackageType in onward).value.getName}",
-      (riffRaffPackageType in preview).value -> s"${(name in preview).value}/${(riffRaffPackageType in preview).value.getName}",
-      (riffRaffPackageType in rss).value -> s"${(name in rss).value}/${(riffRaffPackageType in rss).value.getName}",
-      (riffRaffPackageType in sport).value -> s"${(name in sport).value}/${(riffRaffPackageType in sport).value.getName}",
-      (riffRaffPackageType in trainingPreview).value -> s"${(name in trainingPreview).value}/${(riffRaffPackageType in trainingPreview).value.getName}",
+      (packageBin in Universal in admin).value -> s"${(name in admin).value}/${(packageBin in Universal in admin).value.getName}",
+      (packageBin in Universal in adminJobs).value -> s"${(name in adminJobs).value}/${(packageBin in Universal in adminJobs).value.getName}",
+      (packageBin in Universal in applications).value -> s"${(name in applications).value}/${(packageBin in Universal in applications).value.getName}",
+      (packageBin in Universal in archive).value -> s"${(name in archive).value}/${(packageBin in Universal in archive).value.getName}",
+      (packageBin in Universal in article).value -> s"${(name in article).value}/${(packageBin in Universal in article).value.getName}",
+      (packageBin in Universal in commercial).value -> s"${(name in commercial).value}/${(packageBin in Universal in commercial).value.getName}",
+      (packageBin in Universal in diagnostics).value -> s"${(name in diagnostics).value}/${(packageBin in Universal in diagnostics).value.getName}",
+      (packageBin in Universal in discussion).value -> s"${(name in discussion).value}/${(packageBin in Universal in discussion).value.getName}",
+      (packageBin in Universal in identity).value -> s"${(name in identity).value}/${(packageBin in Universal in identity).value.getName}",
+      (packageBin in Universal in facia).value -> s"${(name in facia).value}/${(packageBin in Universal in facia).value.getName}",
+      (packageBin in Universal in faciaPress).value -> s"${(name in faciaPress).value}/${(packageBin in Universal in faciaPress).value.getName}",
+      (packageBin in Universal in onward).value -> s"${(name in onward).value}/${(packageBin in Universal in onward).value.getName}",
+      (packageBin in Universal in preview).value -> s"${(name in preview).value}/${(packageBin in Universal in preview).value.getName}",
+      (packageBin in Universal in rss).value -> s"${(name in rss).value}/${(packageBin in Universal in rss).value.getName}",
+      (packageBin in Universal in sport).value -> s"${(name in sport).value}/${(packageBin in Universal in sport).value.getName}",
+      (packageBin in Universal in trainingPreview).value -> s"${(name in trainingPreview).value}/${(packageBin in Universal in trainingPreview).value.getName}",
       baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml"
     )
   )

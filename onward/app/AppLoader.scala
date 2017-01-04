@@ -1,21 +1,21 @@
-import http.CorsHttpErrorHandler
+import http.{CommonFilters, CorsHttpErrorHandler}
 import app.{FrontendApplicationLoader, FrontendComponents}
 import business.{StocksData, StocksDataLifecycle}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CachedHealthCheckLifeCycle, CommonFilters}
+import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{HealthCheck, OnwardControllers}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed._
-import model.ApplicationIdentity
+import model.{ApplicationContext, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
+import play.api.{BuiltInComponentsFromContext, Environment}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import play.api._
 import play.api.libs.ws.WSClient
 import router.Routes
 import services.OphanApi
@@ -28,6 +28,7 @@ class AppLoader extends FrontendApplicationLoader {
 trait OnwardServices {
   def wsClient: WSClient
   def environment: Environment
+  implicit def appContext: ApplicationContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]

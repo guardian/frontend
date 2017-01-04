@@ -19,8 +19,6 @@ define([
     'common/modules/analytics/interaction-tracking',
     'common/modules/analytics/register',
     'common/modules/analytics/scrollDepth',
-    'common/modules/analytics/css-logging',
-    'common/modules/analytics/simple-metrics',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/donot-use-adblock',
     'common/modules/commercial/user-features',
@@ -73,8 +71,6 @@ define([
     interactionTracking,
     register,
     ScrollDepth,
-    logCss,
-    simpleMetrics,
     userAdTargeting,
     donotUseAdblock,
     userFeatures,
@@ -288,16 +284,9 @@ define([
                 }
             },
 
-            runCssLogging: function () {
-                if (config.switches.cssLogging) {
-                    logCss();
-                }
-            },
-
             initPublicApi: function () {
                 // BE CAREFUL what you expose here...
                 window.guardian.api = {
-                    logCss: logCss
                 };
             },
 
@@ -377,9 +366,7 @@ define([
                 ['c-cookies', modules.cleanupCookies],
                 ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],
-                ['c-css-logging', modules.runCssLogging],
                 ['c-public-api', modules.initPublicApi],
-                ['c-simple-metrics', simpleMetrics],
                 ['c-tech-feedback', techFeedback],
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs],

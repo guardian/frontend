@@ -9,14 +9,8 @@ define([
     'lodash/utilities/noop',
     'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
-    'common/modules/experiments/tests/membership-engagement-international-experiment',
-    'common/modules/experiments/tests/contributions-epic-brexit-supreme',
-    'common/modules/experiments/tests/contributions-epic-us-pre-end-of-year-two',
-    'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
-    'common/modules/experiments/tests/uk-membership-engagement-message-test-10',
-    'common/modules/experiments/tests/au-membership-engagement-message-test-8',
-    'common/modules/experiments/tests/its-raining-inline-ads',
-    'common/modules/experiments/tests/video-headline'
+    'common/modules/experiments/tests/membership-engagement-banner-tests',
+    'common/modules/experiments/tests/contributions-epic-always-ask-strategy'
 ], function (reportError,
              config,
              cookies,
@@ -27,27 +21,14 @@ define([
              noop,
              EditorialEmailVariants,
              RecommendedForYou,
-             MembershipEngagementInternationalExperimentTest12,
-             ContributionsEpicBrexitSupreme,
-             ContributionsEpicUsPreEndOfYearTwo,
-             ContributionsEpicAlwaysAskStrategy,
-             UkMembershipEngagementMessageTest10,
-             AuMembershipEngagementMessageTest8,
-             ItsRainingInlineAds,
-             VideoHeadline
+             MembershipEngagementBannerTests,
+             ContributionsEpicAlwaysAskStrategy
     ) {
     var TESTS = [
         new EditorialEmailVariants(),
         new RecommendedForYou(),
-        new MembershipEngagementInternationalExperimentTest12(),
-        new ContributionsEpicBrexitSupreme(),
-        new ContributionsEpicUsPreEndOfYearTwo(),
-        new ContributionsEpicAlwaysAskStrategy(),
-        new UkMembershipEngagementMessageTest10(),
-        new AuMembershipEngagementMessageTest8(),
-        new ItsRainingInlineAds(),
-        new VideoHeadline()
-    ];
+        new ContributionsEpicAlwaysAskStrategy
+    ].concat(MembershipEngagementBannerTests);
 
     var participationsKey = 'gu.ab.participations';
 
@@ -57,7 +38,7 @@ define([
 
     function isParticipating(test) {
         var participations = getParticipations();
-        return participations[test.id];
+        return test.id in participations;
     }
 
     function addParticipation(test, variantId) {

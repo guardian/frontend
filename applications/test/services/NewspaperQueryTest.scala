@@ -2,7 +2,7 @@ package services
 
 import org.joda.time.{DateTime, DateTimeZone}
 import org.scalatest._
-import test.{ConfiguredTestSuite, WithTestContentApiClient, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, WithTestWsClient}
 
 @DoNotDiscover class NewspaperQueryTest
   extends FreeSpec
@@ -10,6 +10,7 @@ import test.{ConfiguredTestSuite, WithTestContentApiClient, WithTestWsClient}
   with ConfiguredTestSuite
   with implicits.Dates
   with BeforeAndAfterAll
+  with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient {
 

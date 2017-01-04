@@ -4,7 +4,7 @@ import org.scalatest.{AppendedClues, FlatSpec, Matchers}
 
 class LatencyMonitorTest extends FlatSpec with Matchers with AppendedClues {
 
-  import LatencyMonitor._
+  import http.LatencyMonitor._
 
   "LatencyMonitor" should "have no latency after no request" in {
     initialLatency.latency should be(0)
@@ -40,7 +40,7 @@ class LatencyMonitorTest extends FlatSpec with Matchers with AppendedClues {
 
 class StartCompleteRatioMonitorTest extends FlatSpec with Matchers with AppendedClues {
 
-  import SurgeFactorMonitor._
+  import http.SurgeFactorMonitor._
 
   "LatencyMonitor" should "have 0 ratio after no request" in {
     initialRatio should be(StartCompleteRatio(0))
@@ -64,7 +64,7 @@ class StartCompleteRatioMonitorTest extends FlatSpec with Matchers with Appended
 
 class InFlightLatencyMonitorTest extends FlatSpec with Matchers with AppendedClues {
 
-  import RequestsInProgressMonitor._
+  import http.RequestsInProgressMonitor._
 
   "LatencyMonitor" should "have 2 latency after a single request" in {
     val added = requestStarted(initialRequestsInProgress)

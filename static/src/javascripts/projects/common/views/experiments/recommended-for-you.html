@@ -26,7 +26,7 @@
                     <li class="fc-slice__item l-row__item l-row__item--span-1 u-faux-block-link">
                         <div class="fc-item fc-item--has-image fc-item--has-sublinks-1 js-fc-item tone-news--item fc-item--list-media-mobile fc-item--standard-tablet fc-item--rfy js-snappable">
                             <div class="fc-item__container">
-                                <div class="fc-item__media-wrapper"><% if (item.imageUrl) { %><img src="<%= item.imageUrl %>" /><% } else { %><%= guardianLogo %><% } %></div>
+                                <div class="fc-item__media-wrapper"><% if (item.imageUrl) { %><img class="rfy__image" src="<%= item.imageUrl %>" /><% } else { %><%= guardianLogo %><% } %></div>
                                 <div class="fc-item__content">
                                     <div class="fc-item__header">
                                         <h2 class="fc-item__title"><a href="/<%= item.id %>" class="fc-item__link" data-link-name="article">

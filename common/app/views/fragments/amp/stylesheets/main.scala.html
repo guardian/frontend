@@ -35,6 +35,11 @@
         margin: 0px 0px 12px;
     }
 
+    /* overriding browser defaults*/
+    ul, ol {
+        padding: 0;
+    }
+
     cite {
         font-style: normal;
     }
@@ -116,7 +121,6 @@
         display: inline-block;
         vertical-align: top;
         font-size: 0.75rem;
-        font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
     }
 
     .meta__twitter, .meta__email {
@@ -173,7 +177,6 @@
     .caption, .content__dateline, .ad-slot--paid-for-badge__header {
         font-size: 0.75rem;
         line-height: 1rem;
-        font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
     }
 
     .content__meta-container {
@@ -268,19 +271,21 @@
         @fragments.amp.stylesheets.tables()
         @fragments.amp.stylesheets.onward()
         @fragments.amp.stylesheets.buttons()
-        @if(page.metadata.contentType == "LiveBlog") {
-            @fragments.amp.stylesheets.liveBlog()
-        }
         @if(page.branding(Edition(request)).exists(_.sponsorshipType == PaidContent)) {
             @fragments.amp.stylesheets.glabs()
         }
     }
 
     @* proper inlined AMP styles *@
-    @Html(common.Assets.css.amp)
 
     @if(page.metadata.isHosted) {
         @Html(common.Assets.css.hostedAmp)
+    } else {
+        @if(page.metadata.contentType == "LiveBlog") {
+            @Html(common.Assets.css.liveblogAmp)
+        } else {
+            @Html(common.Assets.css.amp)
+        }
     }
 </style>
 

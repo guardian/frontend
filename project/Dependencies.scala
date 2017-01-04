@@ -28,12 +28,12 @@ object Dependencies {
   val commonsLang = "commons-lang" % "commons-lang" % "2.4"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.18"
-  val contentApiClient = "com.gu" %% "content-api-client" % "10.5"
+  val contentApiClient = "com.gu" %% "content-api-client" % "10.17"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.20.0"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client" % faciaVersion
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play25" % faciaVersion
   val configMagic = "com.gu" %% "configuration-magic-core" %  "1.2.2"
   val configMagicPlay = "com.gu" %% "configuration-magic-play2-4" % "1.2.2"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
@@ -48,7 +48,7 @@ object Dependencies {
   val mockito = "org.mockito" % "mockito-all" % "1.9.5" % Test
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"
   val paClient = "com.gu" %% "pa-client" % "6.0.2"
-  val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.3.7"
+  val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.6.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.1"
   val redisClient = "net.debasishg" %% "redisclient" % "3.1"
   val rome = "rome" % "rome" % "1.0"
@@ -56,8 +56,7 @@ object Dependencies {
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.11.5" % "test"
   val scalajTime = "org.scalaj" % "scalaj-time_2.10.2" % "0.7"
   val scalaTest = "org.scalatest" %% "scalatest" % "2.2.6" % Test
-  val scalaTestPlus = "org.scalatestplus" %% "play" % "1.4.0" % Test
-  val scalaz = "org.scalaz" %% "scalaz-core" % "7.0.6"
+  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
   val scalaUri = "com.netaporter" % "scala-uri_2.11" % "0.4.11"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % seleniumVersion
   val shadeMemcached = "com.bionicspirit" %% "shade" % "1.6.0"
@@ -69,8 +68,8 @@ object Dependencies {
   val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "7.2.4"
   val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.3.0"
-  val targetingClient = "com.gu" %% "targeting-client-play24" % "0.11.0"
-  val scanamo = "com.gu" %% "scanamo" % "0.8.0"
+  val targetingClient = "com.gu" %% "targeting-client" % "0.11.0"
+  val scanamo = "com.gu" %% "scanamo" % "0.8.3"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"

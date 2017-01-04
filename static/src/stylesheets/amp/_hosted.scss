@@ -38,6 +38,7 @@ $badge-width: $gs-column-width + $gs-gutter;
     margin: 0;
     font-size: 22px;
     line-height: 24px;
+    font-weight: 500;
 }
 
 .hosted__banner {
@@ -87,7 +88,7 @@ $badge-width: $gs-column-width + $gs-gutter;
 .hosted__cta-text,
 .hosted__cta-label {
     font-size: 25px;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .hosted__cta-label {
@@ -103,7 +104,7 @@ $badge-width: $gs-column-width + $gs-gutter;
     display: inline-block;
     padding: 6px 45px 6px 14px;
     color: #000000;
-    font-weight: bold;
+    font-weight: 500;
     background-color: #ffffff;
     .inline-icon {
         fill: #000000;
@@ -197,7 +198,7 @@ $badge-width: $gs-column-width + $gs-gutter;
 .hosted__tooltip-label {
     font-size: 16px;
     color: #ffffff;
-    border: none;
+    border: 0;
     padding: 0;
     cursor: pointer;
     background: transparent;
@@ -228,7 +229,7 @@ $badge-width: $gs-column-width + $gs-gutter;
 
     .survey-text__header {
         font-size: 24px;
-        font-weight: bold;
+        font-weight: 500;
         margin: 0;
         padding: $gs-baseline/2 $gs-gutter/2;
         height: 38px;
@@ -299,7 +300,7 @@ $badge-width: $gs-column-width + $gs-gutter;
 }
 
 .hosted__next-page--more-from {
-    font-weight: bolder;
+    font-weight: 500;
     margin: 0;
 }
 
@@ -307,6 +308,7 @@ $badge-width: $gs-column-width + $gs-gutter;
     font-size: 20px;
     line-height: 20px;
     margin: 0;
+    font-weight: 500;
 }
 
 .hosted__next-page--tile {

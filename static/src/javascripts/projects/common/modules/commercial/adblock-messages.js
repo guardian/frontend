@@ -2,15 +2,17 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'common/utils/storage',
-    'common/modules/commercial/user-features'
+    'common/modules/commercial/user-features',
+    'Promise'
 ], function (
     config,
     detect,
     storage,
-    userFeatures
+    userFeatures,
+    Promise
 ) {
-    function adblockInUseSync() {
-        return detect.adblockInUseSync();
+    function adblockInUse() {
+        return detect.adblockInUse;
     }
 
     function notMobile() {
@@ -32,18 +34,22 @@ define([
     }
 
     function noAdblockMsg() {
-        return adblockInUseSync() && notMobile() && (
-                !visitedMoreThanOnce() ||
-                !isAdblockSwitchOn() ||
-                (isAdblockSwitchOn() && visitedMoreThanOnce() && isPayingMember()));
+        if(notMobile()) {
+            if(!visitedMoreThanOnce() || !isAdblockSwitchOn()) {
+                return adblockInUse();
+            }
+
+            if (visitedMoreThanOnce() && isPayingMember()) {
+                return adblockInUse();
+            }
+        }
+        Promise.resolve(false);
     }
 
     function showAdblockMsg() {
-        return isAdblockSwitchOn() &&
-                adblockInUseSync() &&
-                !isPayingMember() &&
-                visitedMoreThanOnce() &&
-                notMobile();
+        return isAdblockSwitchOn() && !isPayingMember() && visitedMoreThanOnce()  && notMobile() ?
+            adblockInUse() :
+            Promise.resolve(false);
     }
 
     return {
