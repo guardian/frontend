@@ -1537,11 +1537,11 @@ $comment-recommend-button-size: 19px;
     background-color: transparent;
     border: 1px solid $neutral-4;
     color: $neutral-1;
-    padding: 7px 15px;
+    padding: $gs-baseline/2 $gs-gutter;
     border-radius: 18px;
-    margin: 0.2rem 0;
+    margin: $gs-baseline 0;
+    margin-top: $gs-baseline/2;
     width: 70%;
-    margin-bottom: $gs-baseline;
 
     &:focus {
         border-color: $neutral-2;
@@ -1550,7 +1550,7 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment-box__onboarding-username-label {
-    font-size: 14px;
+    @include fs-textSans(3);
     font-weight: bold;
 }
 
