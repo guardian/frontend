@@ -102,11 +102,7 @@
                                 case _ => { @Html(prepareQuotes(page.body)) }
                             }
                             <div class="hosted__standfirst">
-                                <div class="hosted__terms">​Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our
-                                    <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
-                                        <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn js-hosted-about hosted-tone" data-link-name="terms-and-conditions-text-link">commercial content explainer.</button>
-                                    </div>
-                                </div>
+                                @hostedExplainer()
                             </div>
                         </div>
                         <div class="hosted__onward-journey">
