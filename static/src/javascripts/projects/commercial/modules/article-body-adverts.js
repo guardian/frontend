@@ -63,16 +63,13 @@ define([
         boot();
 
         if (config.page.hasInlineMerchandise) {
-            addInlineMerchAd();
+            var im = addInlineMerchAd();
+            im.then(waitForMerch).then(addInlineAds);
+            return im;
         }
 
-        return addArticleAds(2, getRules()).then(function (countAdded) {
-            if (config.page.hasInlineMerchandise && countAdded === 0) {
-                waitForMerch().then(addSlots);
-            } else if (countAdded === 2) {
-                insertLongAds().then(addSlots);
-            }
-        });
+        addInlineAds();
+        return Promise.resolve(true);
     }
 
     return {
@@ -128,12 +125,26 @@ define([
     }
 
     function addInlineMerchAd() {
-        spaceFiller.fillSpace(getInlineMerchRules(), function (paras) {
-            return insertAdAtPara(paras[0], 'im', 'im');
+        return spaceFiller.fillSpace(getInlineMerchRules(), function (paras) {
+            return insertAdAtPara(paras[0], 'im', 'im').then(function () { return 1; });
         }, {
             waitForImages: true,
             waitForLinks: true,
             waitForInteractives: true
+        });
+    }
+
+    function addInlineAds() {
+        return addArticleAds(2, getRules())
+        .then(function (countAdded) {
+            if (countAdded === 2) {
+                return addArticleAds(8, getLongArticleRules())
+                .then(function (countAdded) {
+                    return 2 + countAdded;
+                });
+            } else {
+                return countAdded;
+            }
         });
     }
 
