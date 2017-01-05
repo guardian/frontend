@@ -84,26 +84,6 @@ define([
         }
     }
 
-    function adjustMostPopHeight(el) {
-        var adSlotHeight;
-        var $adSlot = $(el);
-        var $mostPopTabs = $('.js-most-popular-footer .tabs__pane');
-        var mostPopTabsHeight;
-
-        if ($adSlot.hasClass('ad-slot--mostpop')) {
-            fastdom.read(function () {
-                adSlotHeight = $adSlot.dim().height;
-                mostPopTabsHeight = $mostPopTabs.dim().height;
-
-                if (adSlotHeight > mostPopTabsHeight) {
-                    fastdom.write(function () {
-                        $mostPopTabs.css('height', adSlotHeight);
-                    });
-                }
-            });
-        }
-    }
-
     function setFluid(el) {
         if (el.classList.contains('ad-slot--container-inline')) {
             el.classList.add('ad-slot--fluid');
@@ -197,7 +177,6 @@ define([
         capiSingle: createToggle,
         paidforCard: function (el) {
             setFluid(el);
-            adjustMostPopHeight(el);
             createToggle(el);
         }
     };
