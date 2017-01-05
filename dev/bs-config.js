@@ -25,8 +25,7 @@ module.exports = {
     },
     watchOptions: {},
     files: [
-        'static/src/javascripts/*.js',
-        'static/src/javascripts/**/*.js',
+        'static/transpiled/javascripts/**/*.js',
         'static/target/stylesheets/*.css',
         'static/target/stylesheets/**/*.css',
     ],
@@ -58,6 +57,7 @@ module.exports = {
     scrollProportionally: true,
     scrollThrottle: 0,
     reloadDelay: 0,
+    reloadDebounce: 100,
     plugins: [],
     injectChanges: true,
     startPath: null,
