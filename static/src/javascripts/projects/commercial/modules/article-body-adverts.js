@@ -9,8 +9,7 @@ define([
     'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/dfp/track-ad-render',
     'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/commercial-features',
-    'lodash/functions/memoize'
+    'common/modules/commercial/commercial-features'
 ], function (
     Promise,
     qwery,
@@ -22,8 +21,7 @@ define([
     addSlot,
     trackAdRender,
     createSlot,
-    commercialFeatures,
-    memoize
+    commercialFeatures
 ) {
 
     /* bodyAds is a counter that keeps track of the number of inline MPUs
@@ -31,15 +29,6 @@ define([
     var bodyAds;
     var inlineAd;
     var replaceTopSlot;
-
-    // If a merchandizing component has been rendered but is empty,
-    // we allow a second pass for regular inline ads. This is because of
-    // the decoupling between the spacefinder algorithm and the targeting
-    // in DFP: we can only know if a slot can be removed after we have
-    // received a response from DFP
-    var waitForMerch = memoize(function (countAdded) {
-        return countAdded === 1 ? trackAdRender('dfp-ad--im') : Promise.resolve();
-    });
 
     function init() {
         if (!commercialFeatures.articleBodyAdverts) {
@@ -50,6 +39,11 @@ define([
 
         if (config.page.hasInlineMerchandise) {
             var im = addInlineMerchAd();
+            // Whether an inline merch has been inserted or not,
+            // we still want to try to insert inline MPUs. But
+            // we must wait for DFP to return, since if the merch
+            // component is empty, it might completely change the
+            // positions where we insert those MPUs.
             im.then(waitForMerch).then(addInlineAds);
             return im;
         }
@@ -131,6 +125,10 @@ define([
                 return countAdded;
             }
         });
+    }
+
+    function waitForMerch(countAdded) {
+        return countAdded === 1 ? trackAdRender('dfp-ad--im') : Promise.resolve();
     }
 
     // Add new ads while there is still space
