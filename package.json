@@ -100,6 +100,6 @@
     "babel-watch": "BABEL_ENV=production babel ./static/src/javascripts --watch -d ./static/transpiled/javascripts --ignore .eslintrc.js >/dev/null 2>&1",
     "gulp-watch": "gulp --cwd ./dev watch",
     "browser-sync": "browser-sync start --config ./dev/bs-config.js",
-    "compile-deploy-radiator": "BABEL_ENV=admin webpack --config=static/src/deploys-radiator/webpack.config.js --progress --colors && cp static/src/deploys-radiator/app/main.css static/target/deploys-radiator"
+    "compile-deploy-radiator": "BABEL_ENV=internal webpack --config=static/src/deploys-radiator/webpack.config.js --progress --colors && cp static/src/deploys-radiator/app/main.css static/target/deploys-radiator"
   }
 }
