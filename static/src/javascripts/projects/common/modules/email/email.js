@@ -13,7 +13,6 @@ define([
     'common/utils/template',
     'common/utils/robust',
     'common/modules/analytics/google',
-    'lodash/functions/debounce',
     'lodash/collections/contains',
     'common/views/svgs',
     'text!common/views/email/submissionResponse.html',
@@ -36,7 +35,6 @@ define([
     template,
     robust,
     googleAnalytics,
-    debounce,
     contains,
     svgs,
     successHtml,
@@ -302,8 +300,8 @@ define([
                 // Ensure our form is the right height, both in iframe and outside
                 (isIframed) ? ui.setIframeHeight(rootEl, freezeHeight).call() : freezeHeight.call();
 
-                mediator.on('window:resize',
-                    debounce((isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset, 500)
+                mediator.on('window:throttledResize',
+                    (isIframed) ? ui.setIframeHeight(rootEl, freezeHeightReset) : freezeHeightReset
                 );
             });
         };

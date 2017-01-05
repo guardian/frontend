@@ -20,13 +20,15 @@ define([
     'common/utils/storage',
     'common/utils/ajax',
     'common/utils/mediator',
+    'common/utils/add-event-listener',
     'common/modules/identity/api',
     'common/utils/url',
     'common/utils/cookies',
     'common/utils/robust',
     'common/utils/user-timing',
     'common/modules/navigation/newHeaderNavigation',
-    'common/modules/analytics/google'
+    'common/modules/analytics/google',
+    'lodash/functions/debounce'
 ], function (
     qwery,
     fastdom,
@@ -36,13 +38,15 @@ define([
     storage,
     ajax,
     mediator,
+    addEventListener,
     identity,
     url,
     cookies,
     robust,
     userTiming,
     newHeaderNavigation,
-    ga
+    ga,
+    debounce
 ) {
     return function () {
         var guardian = window.guardian;
@@ -156,6 +160,10 @@ define([
             storage.local.set('gu.alreadyVisited', alreadyVisited + 1);
         }
 
+        // Add global pooled event listeners
+        // CAUTION: those are *passive*, which means calls to event.preventDefault
+        // will be ignored
+
         // Adds a global window:throttledScroll event to mediator, which throttles
         // scroll events until there's a spare animationFrame.
         // Callbacks of all listeners to window:throttledScroll are run in a
@@ -172,12 +180,20 @@ define([
                 });
             }
         }
-        window.addEventListener('scroll', userPrefs.get('use-idle-callback') && 'requestIdleCallback' in window ?
+        addEventListener(window, 'scroll', userPrefs.get('use-idle-callback') && 'requestIdleCallback' in window ?
             function () {
                 window.requestIdleCallback(onScroll);
             } :
-            onScroll
+            onScroll,
+            { passive: true }
         );
+
+        // Adds a global window:throttledResize event to mediator, which debounces events
+        // until the user has stopped resizing the window for a reasonable amount of time.
+        function onResize(evt) {
+            mediator.emitEvent('window:throttledResize', [evt]);
+        }
+        addEventListener(window, 'resize', debounce(onResize, 200), { passive: true });
 
         require(['ophan/ng'], function(ophan) {
             ophan.setEventEmitter(mediator);
