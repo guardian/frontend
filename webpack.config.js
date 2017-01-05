@@ -61,7 +61,7 @@ module.exports = {
         loaders: [
             {
                 test: /\.js$/,
-                exclude: /(node_modules|bower_components|javascripts-legacy|components|vendor)/,
+                exclude: /(node_modules|vendor|javascripts-legacy)/,
                 loader: 'babel-loader',
             },
         ],
