@@ -26,7 +26,7 @@
 
     <h2>Invalid Page Skin Sponsorships</h2>
 
-    @if(invalidPageskins.isEmpty) {<p>None</p>} else {
+    @if(invalidPageskins.isEmpty) {<em>None</em>} else {
         <table class="table table-striped table-bordered table-condensed">
             <thead>
                 <tr>
@@ -47,7 +47,7 @@
 
     <h2>Invalid High-Merchandising Line Items</h2>
 
-    @if(invalidHighMerchandising.isEmpty) {<p>None</p>} else {
+    @if(invalidHighMerchandising.isEmpty) {<em>None</em>} else {
         <table class="table table-striped table-bordered table-condensed">
             <thead>
                 <tr>
@@ -68,7 +68,7 @@
 
     <h2>Invalid Top-Above-Nav Line Items</h2>
 
-    @if(invalidTopAbove.isEmpty) {<p>None</p>} else {
+    @if(invalidTopAbove.isEmpty) {<em>None</em>} else {
         <table class="table table-striped table-bordered table-condensed">
             <thead>
                 <tr>
@@ -94,7 +94,7 @@
     They are likely to be line items targeting other platforms, but it is possible for unidentified anomalies to appear here too.
     </p>
 
-    @if(unknownInvalidLineItems.isEmpty) {<p>None</p>} else {
+    @if(unknownInvalidLineItems.isEmpty) {<em>None</em>} else {
         <table class="table table-striped table-bordered table-condensed">
             <thead>
                 <tr>
@@ -119,7 +119,7 @@
     These line items are used by the Sonobi SSP to pass winning bids through DFP. They can be ignored.
     </p>
 
-    @if(sonobiItems.isEmpty) {<p>None</p>} else {
+    @if(sonobiItems.isEmpty) {<em>None</em>} else {
         <table class="table table-striped table-bordered table-condensed">
             <thead>
                 <tr>
