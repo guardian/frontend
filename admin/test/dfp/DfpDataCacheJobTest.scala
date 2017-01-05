@@ -18,6 +18,7 @@ class DfpDataCacheJobTest
   private def lineItem(id: Long, name: String, completed: Boolean = false): GuLineItem = {
     GuLineItem(
       id,
+      0L,
       name,
       startTime = DateTime.now.withTimeAtStartOfDay,
       endTime = None,
