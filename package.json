@@ -97,7 +97,7 @@
   "scripts": {
     "postinstall": "./tools/task-runner/runner githooks --verbose",
     "sass-watch": "node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true",
-    "babel-watch": "BABEL_ENV=development babel ./static/src/javascripts --watch -d ./static/transpiled/javascripts --ignore .eslintrc.js >/dev/null 2>&1",
+    "babel-watch": "BABEL_ENV=development babel ./static/src/javascripts --watch -d ./static/transpiled/javascripts >/dev/null 2>&1",
     "gulp-watch": "gulp --cwd ./dev watch",
     "browser-sync": "browser-sync start --config ./dev/bs-config.js",
   }

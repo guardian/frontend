@@ -2,30 +2,38 @@
     "env": {
         "production": {
             "presets": [
-                "latest"
+                "latest",
             ],
             "plugins": [
                 "add-module-exports",
-                "transform-es2015-modules-amd"
-            ]
+                "transform-es2015-modules-amd",
+            ],
         },
         "development": {
             "presets": [
-                "latest"
+                "latest",
             ],
             "plugins": [
                 "add-module-exports",
-                "transform-es2015-modules-amd"
-            ]
+                "transform-es2015-modules-amd",
+            ],
         },
         "internal": {
             "presets": [
                 ["env", {
                     "targets": {
-                        "browsers": ["last 2 Chrome versions", "last 1 Safari version", "last 2 Firefox versions", "last 2 Edge versions"]
+                        "browsers": [
+                            "last 2 Chrome versions",
+                            "last 1 Safari version",
+                            "last 2 Firefox versions",
+                            "last 2 Edge versions",
+                        ],
                     }
-                }]
-            ]
-        }
-    }
+                }],
+            ],
+        },
+    },
+    "ignore": [
+        "eslintrc.js",
+    ],
 }
