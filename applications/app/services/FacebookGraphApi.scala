@@ -21,12 +21,12 @@ class FacebookGraphApiClient(wsClient: WSClient) extends implicits.WSRequests wi
   def GET[T](endpoint: Option[String], queryString: (String, String)*)(asResult: WSResponse => T) =
     wsClient
       .url(apiRootUrl + endpoint.getOrElse(""))
-      .withQueryString(augmentParams(queryString): _*)
+      .withQueryString(addAccessToken(queryString): _*)
       .getOKResponse()
       .map(asResult)
 
   protected def makeUrl(endpoint: Option[String]) = apiRootUrl + endpoint.getOrElse("")
-  protected def augmentParams(queryString: Seq[(String, String)]) =
+  protected def addAccessToken(queryString: Seq[(String, String)]) =
     ("access_token", Configuration.facebook.graphApi.accessToken) +: queryString
 }
 
