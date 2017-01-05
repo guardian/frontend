@@ -3,7 +3,7 @@ package controllers.admin
 import common.dfp.{GuCreativeTemplate, GuLineItem}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
-import dfp.{CreativeTemplateAgent, DfpApi, DfpDataExtractor}
+import dfp.{OrderAgent, CreativeTemplateAgent, DfpApi, DfpDataExtractor, AdvertiserAgent}
 import model._
 import ophan.SurgingContentAgent
 import play.api.libs.json.JsString
@@ -114,21 +114,34 @@ class CommercialController(implicit context: ApplicationContext) extends Control
   def renderInvalidItems() = Action { implicit request =>
     // If the invalid line items are run through the normal extractor, we can see if any of these
     // line items appear to be targeting Frontend.
-    val invalidLineItems = Store.getDfpLineItemsReport().invalidLineItems
+    val invalidLineItems: Seq[GuLineItem] = Store.getDfpLineItemsReport().invalidLineItems
     val invalidItemsExtractor = DfpDataExtractor(invalidLineItems, Nil)
+
+    val advertisers = AdvertiserAgent.get
+    val orders = OrderAgent.get
+    val sonobiAdvertiserId = advertisers.find(_.name.toLowerCase =="sonobi").map(_.id).getOrElse(0L)
+    val sonobiOrderIds = orders.filter(_.advertiserId == sonobiAdvertiserId).map(_.id)
 
     // Sort line items into groups where possible, and bucket everything else.
     val pageskins = invalidItemsExtractor.pageSkinSponsorships
     val topAboveNav = invalidItemsExtractor.topAboveNavSlotTakeovers
     val highMerch = invalidItemsExtractor.targetedHighMerchandisingLineItems.items
+
+    val groupedItems = invalidLineItems.groupBy {
+      case item if sonobiOrderIds.contains(item.orderId) => "sonobi"
+      case _ => "unknown"
+    }
+
+    val sonobiItems = groupedItems.get("sonobi").getOrElse(Seq.empty)
     val invalidItemsMap = GuLineItem.asMap(invalidLineItems)
 
-    val unidentifiedLineItems = invalidItemsMap.keySet -- pageskins.map(_.lineItemId) -- topAboveNav.map(_.id) -- highMerch.map(_.id)
+    val unidentifiedLineItems = invalidItemsMap.keySet -- pageskins.map(_.lineItemId) -- topAboveNav.map(_.id) -- highMerch.map(_.id) -- sonobiItems.map(_.id)
 
     Ok(views.html.commercial.invalidLineItems(
       pageskins,
       topAboveNav,
       highMerch,
+      sonobiItems,
       unidentifiedLineItems.toSeq.map(invalidItemsMap)))
   }
 }
