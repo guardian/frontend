@@ -176,7 +176,8 @@ define([
         });
     }
 
-    function addSlots() {
+    function addSlots(totalCount) {
         qwery('.ad-slot--inline').forEach(addSlot);
+        return totalCount;
     }
 });

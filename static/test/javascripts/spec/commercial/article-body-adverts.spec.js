@@ -137,11 +137,14 @@ define([
 
                 detect.getBreakpoint = function () {return 'tablet';};
                 ads['dfp-ad--im'] = false;
-                articleBodyAdverts.init()
-                    .then(articleBodyAdverts['@@tests'].waitForMerch)
-                    .then(function (countAdded) {
-                        expect(countAdded).toEqual(10);
-                    }).then(done);
+                articleBodyAdverts['@@tests'].addInlineMerchAd()
+                .then(articleBodyAdverts['@@tests'].waitForMerch)
+                .then(articleBodyAdverts['@@tests'].addInlineAds)
+                .then(function (countAdded) {
+                    expect(countAdded).toEqual(10);
+                })
+                .then(done)
+                .catch(done.fail);
             });
         });
 
