@@ -2,7 +2,7 @@
     "checkpoints": {
         "PROD": {
             "url": "https://frontend.gutools.co.uk/deploys?projectName=dotcom:all&stage=PROD&pageSize=50",
-            "overdue": "20M"
+            "overdue": "30M"
         }
     }
 }
