@@ -68,24 +68,43 @@ define([
         incrementShareCount(val);
     }
 
+    var fetch = config.switches.serverShareCounts ? fetchFromServer : fetchDirect;
+
+    function fetchFromServer() {
+        ajax({
+            url: config.page.ajaxUrl + '/sharecount/' + config.page.pageId + '.json',
+            type: 'json',
+            method: 'get',
+            crossOrigin: true
+        }).then(function (resp) {
+            var count = resp.share_count || 0;
+            counts.facebook = count;
+            addToShareCount(count);
+            updateTooltip();
+        });
+    }
+
+    function fetchDirect() {
+        ajax({
+            url: 'https://graph.facebook.com/http://www.theguardian.com/' + config.page.pageId,
+            type: 'json',
+            method: 'get',
+            crossOrigin: true
+        }).then(function (resp) {
+            var count = resp.share && resp.share.share_count || 0;
+            counts.facebook = count;
+            addToShareCount(count);
+            updateTooltip();
+        });
+    }
+
     return function () {
         // asking for social counts in preview "leaks" upcoming URLs to social sites.
         // when they then crawl them they get 404s which affects later sharing.
         // don't call counts in preview
         if ($shareCountEls.length && !config.page.isPreview) {
-            var url = 'http://www.theguardian.com/' + config.page.pageId;
             try {
-                ajax({
-                    url: 'https://graph.facebook.com/' + url, //TODO: use recent Graph API endpoint format (versioned) https://developers.facebook.com/docs/graph-api/reference/v2.7/url
-                    type: 'json',
-                    method: 'get',
-                    crossOrigin: true
-                }).then(function (resp) {
-                    var count = resp.share && resp.share.share_count || 0;
-                    counts.facebook = count;
-                    addToShareCount(count);
-                    updateTooltip();
-                });
+                fetch()
             } catch (e) {
                 reportError(new Error('Error retrieving share counts (' + e.message + ')'), {
                     feature: 'share-count'

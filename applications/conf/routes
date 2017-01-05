@@ -111,3 +111,6 @@ GET        /$leftSide<[^+]+>+*rightSide                                         
 
 # Google site verification
 GET        /google$account<[\w\d-]*>.html                                       controllers.SiteVerificationController.googleSiteVerify(account)
+
+# Share counts
+GET        /sharecount/*path.json                                               controllers.ShareCountController.fetch(path)
