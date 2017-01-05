@@ -321,6 +321,17 @@ object GuCreativeTemplate extends implicits.Collections {
   implicit val guCreativeTemplateFormats: Format[GuCreativeTemplate] = Json.format[GuCreativeTemplate]
 }
 
+case class GuAdvertiser(
+  id: Long,
+  name: String
+)
+
+case class GuOrder(
+  id: Long,
+  name: String,
+  advertiserId: Long
+)
+
 case class LineItemReport(
   timestamp: String,
   lineItems: Seq[GuLineItem],

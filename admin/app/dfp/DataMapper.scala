@@ -168,4 +168,19 @@ object DataMapper {
       previewUrl = Some(dfpCreative.getPreviewUrl)
     )
   }
+
+  def toGuOrder(dfpOrder: Order): GuOrder = {
+    GuOrder(
+      id = dfpOrder.getId,
+      name = dfpOrder.getName,
+      advertiserId = dfpOrder.getAdvertiserId
+    )
+  }
+  def toGuAdvertiser(dfpCompany: Company): GuAdvertiser = {
+
+    GuAdvertiser(
+      id = dfpCompany.getId,
+      name = dfpCompany.getName
+    )
+  }
 }
