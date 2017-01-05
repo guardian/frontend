@@ -18,9 +18,13 @@
     "any-observable": "^0.2.0",
     "autoprefixer": "^6.5.3",
     "aws-sdk": "~2.0.0-rc4",
-    "babel-core": "^6.10.4",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.21.0",
     "babel-loader": "^6.2.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
+    "babel-plugin-transform-es2015-modules-amd": "^6.18.0",
+    "babel-preset-env": "^1.1.4",
     "babel-preset-latest": "^6.16.0",
     "browser-sync": "^2.8.2",
     "btoa": "1.1.2",
@@ -74,7 +78,6 @@
     "postcss-pxtorem": "^3.3.1",
     "postcss-reporter": "^1.4.1",
     "prettysize": "^0.0.3",
-    "require-dir": "^0.3.0",
     "requirejs": "^2.3.2",
     "rimraf": "^2.5.4",
     "sass-lint": "^1.9.1",
@@ -94,8 +97,9 @@
   "scripts": {
     "postinstall": "./tools/task-runner/runner githooks --verbose",
     "sass-watch": "node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true",
-    "css-watch": "gulp --cwd ./dev watch:css",
+    "babel-watch": "BABEL_ENV=production babel ./static/src/javascripts --watch -d ./static/transpiled/javascripts --ignore .eslintrc.js >/dev/null 2>&1",
+    "gulp-watch": "gulp --cwd ./dev watch",
     "browser-sync": "browser-sync start --config ./dev/bs-config.js",
-    "compile-deploy-radiator": "BABEL_ENV=production webpack --config=static/src/deploys-radiator/webpack.config.js --progress --colors && cp static/src/deploys-radiator/app/main.css static/target/deploys-radiator"
+    "compile-deploy-radiator": "BABEL_ENV=internal webpack --config=static/src/deploys-radiator/webpack.config.js --progress --colors && cp static/src/deploys-radiator/app/main.css static/target/deploys-radiator"
   }
 }

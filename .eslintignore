@@ -6,9 +6,10 @@ node_modules
 
 # main app
 static/src/stylesheets
+static/transpiled
 static/vendor/javascripts
-static/src/javascripts/projects/common/utils/atob.js
-static/src/javascripts/projects/common/utils/picturefill.js
+static/src/javascripts-legacy/projects/common/utils/atob.js
+static/src/javascripts-legacy/projects/common/utils/picturefill.js
 
 # deploys radiator
 static/src/deploys-radiator/target
