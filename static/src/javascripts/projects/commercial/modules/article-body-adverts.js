@@ -29,6 +29,7 @@ define([
     var bodyAds;
     var inlineAd;
     var replaceTopSlot;
+    var getSlotName;
 
     function init() {
         if (!commercialFeatures.articleBodyAdverts) {
@@ -65,6 +66,17 @@ define([
         bodyAds = 0;
         inlineAd = 0;
         replaceTopSlot = detect.isBreakpoint({max : 'phablet'});
+        getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;
+    }
+
+    function getSlotNameForMobile() {
+        bodyAds += 1;
+        return bodyAds === 1 ? 'top-above-nav' : 'inline' + (bodyAds - 1);
+    }
+
+    function getSlotNameForDesktop() {
+        bodyAds += 1;
+        return 'inline' + bodyAds;
     }
 
     function getRules() {
@@ -141,24 +153,15 @@ define([
         });
 
         function insertInlineAds(paras) {
-            var countAdded = 0;
-            var insertionArr = [];
-            while(countAdded < count && paras.length) {
-                var para = paras.shift();
-                var adDefinition;
-                if (replaceTopSlot && bodyAds === 0) {
-                    adDefinition = 'top-above-nav';
-                } else {
-                    inlineAd += 1;
-                    adDefinition = 'inline' + inlineAd;
-                }
-                insertionArr.push(insertAdAtPara(para, adDefinition, 'inline'));
-                bodyAds += 1;
-                countAdded += 1;
-            }
+            var slots = paras
+            .slice(0, Math.min(paras.length, count))
+            .map(function (para) {
+                return insertAdAtPara(para, getSlotName(), 'inline');
+            });
 
-            return Promise.all(insertionArr).then(function(){
-                return countAdded;
+            return Promise.all(slots)
+            .then(function () {
+                return slots.length;
             });
         }
     }
