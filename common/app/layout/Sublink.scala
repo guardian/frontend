@@ -372,7 +372,7 @@ object ContentCard {
         trailText = fields.trailText,
         mediaType = None,
         displaySettings = unsetDisplaySettings,
-        isLive = apiContent.isLiveBlog,
+        isLive = apiContent.fields.flatMap(_.liveBloggingNow).exists(identity),
         timeStampDisplay = None,
         shortUrl = fields.shortUrl,
         useShortByline = false,
