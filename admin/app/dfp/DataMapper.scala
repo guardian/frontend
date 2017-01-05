@@ -102,6 +102,7 @@ object DataMapper {
 
   def toGuLineItem(session: SessionWrapper)(dfpLineItem: LineItem) = GuLineItem(
     id = dfpLineItem.getId,
+    orderId = dfpLineItem.getOrderId,
     name = dfpLineItem.getName,
     startTime = toJodaTime(dfpLineItem.getStartDateTime),
     endTime = {
