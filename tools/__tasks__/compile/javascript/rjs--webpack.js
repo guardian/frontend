@@ -5,7 +5,6 @@ const { target } = require('../../config').paths;
 const bundles = [{
     name: 'boot-rjs',
     out: `${target}/javascripts/boot-rjs.js`,
-    insertRequire: ['boot-rjs'],
     exclude: [
         'text',
         'inlineSvg',
