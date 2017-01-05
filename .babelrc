@@ -10,8 +10,12 @@
             ]
         },
         "development": {
+            "presets": [
+                "latest"
+            ],
             "plugins": [
-                "transform-async-to-generator"
+                "add-module-exports",
+                "transform-es2015-modules-amd"
             ]
         },
         "internal": {
