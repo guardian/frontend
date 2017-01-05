@@ -55,18 +55,22 @@ define([
           });
         }
 
+        function runTheTest(emailListID, exampleUrl) {
+          if (config.page.contentId === FLYERURL) {
+            enhanceWebView(emailListID);
+          } else {
+            updateNewslettersPage(emailListID);
+          }
+          updateExampleUrl(exampleUrl);
+        }
+
         this.variants = [
             {
                 id: 'The-Flyer-Cards',
                 test: function () {
                     var emailListID = 3806;
                     var exampleUrl = 'https://www.theguardian.com/email/the-flyer?format=email';
-                    if (config.page.contentId === FLYERURL) {
-                      enhanceWebView(emailListID);
-                    } else {
-                      updateNewslettersPage(emailListID);
-                    }
-                    updateExampleUrl(exampleUrl);
+                    runTheTest(emailListID, exampleUrl);
                 }
             },
             {
@@ -74,12 +78,7 @@ define([
                 test: function () {
                     var emailListID = 3807;
                     var exampleUrl = 'https://www.theguardian.com/email/the-flyer?format=email-connected';
-                    if (config.page.contentId === FLYERURL) {
-                      enhanceWebView(emailListID);
-                    } else {
-                      updateNewslettersPage(emailListID);
-                    }
-                    updateExampleUrl(exampleUrl);
+                    runTheTest(emailListID, exampleUrl);
                 }
             }
         ];
