@@ -37,22 +37,8 @@ define([
     // the decoupling between the spacefinder algorithm and the targeting
     // in DFP: we can only know if a slot can be removed after we have
     // received a response from DFP
-    var waitForMerch = memoize(function () {
-        return trackAdRender('dfp-ad--im').then(function (isLoaded) {
-            return isLoaded ? 0 : addArticleAds(2, getRules());
-        }).then(function (countAdded) {
-            return countAdded === 2 ?
-                addArticleAds(8, getLongArticleRules()).then(function (countAdded) {
-                    return 2 + countAdded;
-                }) :
-                countAdded;
-        });
-    });
-
-    var insertLongAds = memoize(function () {
-        return addArticleAds(8, getLongArticleRules()).then(function (countAdded) {
-            return 2 + countAdded;
-        });
+    var waitForMerch = memoize(function (countAdded) {
+        return countAdded === 1 ? trackAdRender('dfp-ad--im') : Promise.resolve();
     });
 
     function init() {
@@ -76,8 +62,7 @@ define([
         init: init,
 
         '@@tests': {
-            waitForMerch: waitForMerch,
-            insertLongAds: insertLongAds
+            waitForMerch: waitForMerch
         }
     };
 
