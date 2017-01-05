@@ -15,10 +15,10 @@ class FacebookGraphApiTestClient(wsClient: WSClient) extends FacebookGraphApiCli
   }
 
   override def GET[T](endpoint: Option[String], params: (String, String)*)(asResult: WSResponse => T) = {
-    val augmentedParams = super.addAccessToken(params)
-    val queryString = augmentedParams.map(pair => pair._1 + "=" + URLEncoder.encode(pair._2, "UTF-8")).mkString("&")
+    val augmentedParams = addAccessToken(params)
+    val queryString = augmentedParams.map({ case (key, value) => key + "=" + URLEncoder.encode(value, "UTF-8")}).mkString("&")
 
-    recorder.load(s"${super.makeUrl(endpoint)}?$queryString", Map.empty) {
+    recorder.load(s"${makeUrl(endpoint)}?$queryString", Map.empty) {
       super.GET[WSResponse](endpoint, params: _*)(r => r)
     } map asResult
   }
