@@ -188,21 +188,17 @@ define([
 
             return fastdom.write(function() {
                 $recommendedForYouSection.insertBefore($opinionSection);
-                $('.js-feedback-button-yes', $recommendedForYouSection[0]).each(function(el) {
-                    bean.on(el, 'click', function () {
-                        registerFeedback(true);
-                        $('.js-feedback', $recommendedForYouSection[0]).html(
-                            '<p>Your recommendations will be ready soon.</p>'
-                        );
-                        populateRecommendationsContainer();
-                    });
+                bean.on($('.js-feedback-button-yes', $recommendedForYouSection)[0], 'click', function () {
+                    registerFeedback(true);
+                    $('.js-feedback', $recommendedForYouSection[0]).html(
+                        '<p>Your recommendations will be ready soon.</p>'
+                    );
+                    populateRecommendationsContainer();
                 });
 
-                $('.js-feedback-button-no', $recommendedForYouSection[0]).each(function(el) {
-                    bean.on(el, 'click', function () {
-                        registerFeedback(false);
-                        $recommendedForYouSection.remove();
-                    });
+                bean.on($('.js-feedback-button-no', $recommendedForYouSection)[0], 'click', function () {
+                    registerFeedback(false);
+                    $recommendedForYouSection.remove();
                 });
                 setupComponentAttentionTracking('recommended-for-you_user-history');
             });
