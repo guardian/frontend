@@ -1,8 +1,4 @@
 .hosted-article-page {
-    .content-article-body {
-        margin: 0;
-    }
-
     .media-primary.media-primary--showcase {
         position: relative;
         height: 378px;
@@ -26,6 +22,7 @@
     }
 
     .title {
+        padding-left: $gs-gutter;
         margin-bottom: $gs-baseline;
         position: absolute;
         z-index: 3;
@@ -37,13 +34,8 @@
     }
 
     .caption {
-        padding-bottom: 0;
+        @include content-gutter();
         text-align: right;
-    }
-
-    figure {
-        margin-left: 0;
-        margin-right: 0;
     }
 
     figcaption {
@@ -51,18 +43,6 @@
         line-height: 16px;
         color: $neutral-2;
         margin-top: $gs-baseline/4;
-    }
-
-    .content__meta-container {
-        margin-top: $gs-baseline
-    }
-
-    .meta__extras {
-        border-top: 0;
-    }
-
-    .social__item--pinterest {
-        display: inline-block;
     }
 
     .content__article-body p {
@@ -88,17 +68,7 @@
         }
     }
 
-    h1 {
-        line-height: 28px;
-    }
-
-    .hosted__standfirst {
-        margin-bottom: $gs-baseline
-    }
-
     .hosted__terms {
-        width: 100%;
-        margin-top: 0;
         padding: $gs-baseline 0;
         border-top: 2px solid #eeeeee;
     }
@@ -108,14 +78,6 @@
         width: 8px;
         height: 8px;
         margin: 1px 8px;
-    }
-
-    .from-content-api > ul li {
-        margin-bottom: 0;
-    }
-
-    .gu-image {
-        height: auto;
     }
 
     .content__article-body blockquote {
@@ -139,6 +101,10 @@
         width: 34px;
         height: 30px;
     }
+}
+
+.hosted__standfirst {
+    margin-bottom: $gs-baseline
 }
 
 .hosted__header.hosted__header--sticky {
