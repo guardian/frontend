@@ -6,7 +6,6 @@ const bundles = [{
     name: 'boot',
     out: `${target}/javascripts/boot.js`,
     include: 'bootstraps/standard/main',
-    insertRequire: ['boot'],
     exclude: [
         'text',
         'inlineSvg',
