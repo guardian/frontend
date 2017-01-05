@@ -35,7 +35,9 @@ define([
             return Promise.resolve(false);
         }
 
-        boot();
+        bodyAds = 0;
+        replaceTopSlot = detect.isBreakpoint({max : 'phablet'});
+        getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;
 
         if (config.page.hasInlineMerchandise) {
             var im = addInlineMerchAd();
@@ -61,12 +63,6 @@ define([
             addInlineAds: addInlineAds
         }
     };
-
-    function boot() {
-        bodyAds = 0;
-        replaceTopSlot = detect.isBreakpoint({max : 'phablet'});
-        getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;
-    }
 
     function getSlotNameForMobile() {
         bodyAds += 1;
