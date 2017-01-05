@@ -73,14 +73,14 @@
     padding-top: 0;
     margin-top: -$gs-baseline*2;
     padding-bottom: $gs-baseline*2;
+}
 
-    .byline-img {
-        float: right;
-        height: 9.375rem;
-        z-index: 2;
-        margin-left: -5rem;
-        margin-right: -2.5rem;
-    }
+.byline-img {
+    float: right;
+    height: 9.375rem;
+    z-index: 2;
+    margin-left: -5rem;
+    margin-right: -2.5rem;
 }
 
 .content__standfirst {

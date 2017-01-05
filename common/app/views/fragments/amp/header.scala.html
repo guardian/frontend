@@ -1,4 +1,4 @@
-@()(implicit request: RequestHeader)
+@()(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.Configuration
 @import common.{LinkTo, NewNavigation}
@@ -32,3 +32,5 @@
         </nav>
     </div>
 </header>
+
+@fragments.amp.headerMenu()

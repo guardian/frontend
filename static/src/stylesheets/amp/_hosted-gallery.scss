@@ -30,7 +30,6 @@
 
 .hosted-gallery__meta {
     color: #ffffff;
-    padding: 0 $gs-gutter;
     position: absolute;
     z-index: 1;
     left: 0;
@@ -38,7 +37,6 @@
     bottom: 0;
     @media (orientation: portrait) {
         top: 50%;
-        padding-top: 60%;
         transform: translate(0, -50%);
     }
 }
