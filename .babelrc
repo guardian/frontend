@@ -14,7 +14,7 @@
                 "transform-async-to-generator"
             ]
         },
-        "admin": {
+        "internal": {
             "presets": [
                 ["env", {
                     "targets": {
