@@ -39,21 +39,21 @@ define([
                 'common/modules/article/space-filler',
                 'common/utils/config',
                 'common/utils/detect'
-            ], function () {
-                articleBodyAdverts = arguments[0];
+            ], function ($1, $2, $3, $4, $5) {
+                articleBodyAdverts = $1;
 
-                commercialFeatures = arguments[1];
+                commercialFeatures = $2;
                 commercialFeatures.articleBodyAdverts = true;
 
-                spaceFiller = arguments[2];
+                spaceFiller = $3;
                 spaceFillerStub = sinon.stub(spaceFiller, 'fillSpace');
                 spaceFillerStub.returns(Promise.resolve(true));
 
-                config = arguments[3];
+                config = $4;
                 config.page = {};
                 config.switches = {};
 
-                detect = arguments[4];
+                detect = $5;
 
                 done();
             });
@@ -137,11 +137,14 @@ define([
 
                 detect.getBreakpoint = function () {return 'tablet';};
                 ads['dfp-ad--im'] = false;
-                articleBodyAdverts.init()
-                    .then(articleBodyAdverts['@@tests'].waitForMerch)
-                    .then(function (countAdded) {
-                        expect(countAdded).toEqual(10);
-                    }).then(done);
+                articleBodyAdverts['@@tests'].addInlineMerchAd()
+                .then(articleBodyAdverts['@@tests'].waitForMerch)
+                .then(articleBodyAdverts['@@tests'].addInlineAds)
+                .then(function (countAdded) {
+                    expect(countAdded).toEqual(10);
+                })
+                .then(done)
+                .catch(done.fail);
             });
         });
 
@@ -154,12 +157,12 @@ define([
                 it('inserts up to ten adverts', function (done) {
                     spaceFillerStub.onCall(0).returns(Promise.resolve(2));
                     spaceFillerStub.onCall(1).returns(Promise.resolve(8));
-                    articleBodyAdverts.init()
-                        .then(articleBodyAdverts['@@tests'].insertLongAds)
-                        .then(function (countAdded) {
-                            expect(countAdded).toEqual(10);
-                        })
-                        .then(done);
+                    articleBodyAdverts['@@tests'].addInlineAds()
+                    .then(function (countAdded) {
+                        expect(countAdded).toEqual(10);
+                    })
+                    .then(done)
+                    .catch(done.fail);
                 });
 
                 it('inserts the third+ adverts with greater vertical spacing', function (done) {

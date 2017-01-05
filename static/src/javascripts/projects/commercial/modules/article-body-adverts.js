@@ -3,41 +3,75 @@ define([
     'qwery',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/steady-page',
+    'common/utils/fastdom-promise',
     'common/modules/article/space-filler',
     'common/modules/commercial/ad-sizes',
     'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/dfp/track-ad-render',
     'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/commercial-features',
-    'lodash/functions/memoize'
+    'common/modules/commercial/commercial-features'
 ], function (
     Promise,
     qwery,
     config,
     detect,
-    steadyPage,
+    fastdom,
     spaceFiller,
     adSizes,
     addSlot,
     trackAdRender,
     createSlot,
-    commercialFeatures,
-    memoize
+    commercialFeatures
 ) {
 
     /* bodyAds is a counter that keeps track of the number of inline MPUs
      * inserted dynamically. */
     var bodyAds;
-    var inlineAd;
     var replaceTopSlot;
-    var inlineMerchRules;
-    var longArticleRules;
+    var getSlotName;
 
-    function boot() {
+    function init() {
+        if (!commercialFeatures.articleBodyAdverts) {
+            return Promise.resolve(false);
+        }
+
         bodyAds = 0;
-        inlineAd = 0;
         replaceTopSlot = detect.isBreakpoint({max : 'phablet'});
+        getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;
+
+        if (config.page.hasInlineMerchandise) {
+            var im = addInlineMerchAd();
+            // Whether an inline merch has been inserted or not,
+            // we still want to try to insert inline MPUs. But
+            // we must wait for DFP to return, since if the merch
+            // component is empty, it might completely change the
+            // positions where we insert those MPUs.
+            im.then(waitForMerch).then(addInlineAds);
+            return im;
+        }
+
+        addInlineAds();
+        return Promise.resolve(true);
+    }
+
+    return {
+        init: init,
+
+        '@@tests': {
+            waitForMerch: waitForMerch,
+            addInlineMerchAd: addInlineMerchAd,
+            addInlineAds: addInlineAds
+        }
+    };
+
+    function getSlotNameForMobile() {
+        bodyAds += 1;
+        return bodyAds === 1 ? 'top-above-nav' : 'inline' + (bodyAds - 1);
+    }
+
+    function getSlotNameForDesktop() {
+        bodyAds += 1;
+        return 'inline' + bodyAds;
     }
 
     function getRules() {
@@ -63,33 +97,47 @@ define([
     }
 
     function getInlineMerchRules() {
-        if (!inlineMerchRules) {
-            inlineMerchRules = getRules();
-            inlineMerchRules.minAbove = 300;
-            inlineMerchRules.selectors[' > h2'].minAbove = 100;
-            inlineMerchRules.selectors[' > :not(p):not(h2):not(.ad-slot)'].minAbove = 200;
-        }
+        var inlineMerchRules = getRules();
+        inlineMerchRules.minAbove = 300;
+        inlineMerchRules.selectors[' > h2'].minAbove = 100;
+        inlineMerchRules.selectors[' > :not(p):not(h2):not(.ad-slot)'].minAbove = 200;
         return inlineMerchRules;
     }
 
     function getLongArticleRules() {
-        if (!longArticleRules) {
-            longArticleRules = getRules();
-            longArticleRules.selectors[' .ad-slot'].minAbove =
-            longArticleRules.selectors[' .ad-slot'].minBelow = detect.getViewport().height;
-        }
+        var longArticleRules = getRules();
+        longArticleRules.selectors[' .ad-slot'].minAbove =
+        longArticleRules.selectors[' .ad-slot'].minBelow = detect.getViewport().height;
         return longArticleRules;
     }
 
-    function addInlineMerchAd(rules) {
-        spaceFiller.fillSpace(rules, function (paras) {
-            return insertAdAtPara(paras[0], 'im', 'im');
+    function addInlineMerchAd() {
+        return spaceFiller.fillSpace(getInlineMerchRules(), function (paras) {
+            return insertAdAtPara(paras[0], 'im', 'im').then(function () { return 1; });
         }, {
             waitForImages: true,
             waitForLinks: true,
-            waitForInteractives: true,
-            domWriter: detect.isBreakpoint({max: 'tablet'}) ? writerOverride : false
+            waitForInteractives: true
         });
+    }
+
+    function addInlineAds() {
+        return addArticleAds(2, getRules())
+        .then(function (countAdded) {
+            if (countAdded === 2) {
+                return addArticleAds(8, getLongArticleRules())
+                .then(function (countAdded) {
+                    return 2 + countAdded;
+                });
+            } else {
+                return countAdded;
+            }
+        })
+        .then(addSlots);
+    }
+
+    function waitForMerch(countAdded) {
+        return countAdded === 1 ? trackAdRender('dfp-ad--im') : Promise.resolve();
     }
 
     // Add new ads while there is still space
@@ -97,29 +145,19 @@ define([
         return spaceFiller.fillSpace(rules, insertInlineAds, {
             waitForImages: true,
             waitForLinks: true,
-            waitForInteractives: true,
-            domWriter: detect.isBreakpoint({max: 'tablet'}) ? writerOverride : false
+            waitForInteractives: true
         });
 
         function insertInlineAds(paras) {
-            var countAdded = 0;
-            var insertionArr = [];
-            while(countAdded < count && paras.length) {
-                var para = paras.shift();
-                var adDefinition;
-                if (replaceTopSlot && bodyAds === 0) {
-                    adDefinition = 'top-above-nav';
-                } else {
-                    inlineAd += 1;
-                    adDefinition = 'inline' + inlineAd;
-                }
-                insertionArr.push(insertAdAtPara(para, adDefinition, 'inline'));
-                bodyAds += 1;
-                countAdded += 1;
-            }
+            var slots = paras
+            .slice(0, Math.min(paras.length, count))
+            .map(function (para) {
+                return insertAdAtPara(para, getSlotName(), 'inline');
+            });
 
-            return Promise.all(insertionArr).then(function(){
-                return countAdded;
+            return Promise.all(slots)
+            .then(function () {
+                return slots.length;
             });
         }
     }
@@ -127,90 +165,13 @@ define([
     function insertAdAtPara(para, name, type) {
         var ad = createSlot(name, type);
 
-        function insertion (ad, para) {
+        return fastdom.write(function () {
             para.parentNode.insertBefore(ad, para);
-        }
-
-        // If on mobile we will
-        // insert ad using steady page
-        // to avoid jumping the user
-        if (detect.isBreakpoint({max: 'tablet'})) {
-            return steadyPage.insert(ad, function(){
-                insertion(ad, para);
-            });
-        } else {
-            // If we're not on mobile we insert and resolve the promise immediately
-            return new Promise(function(resolve){
-                insertion(ad, para);
-                resolve();
-            });
-        }
-    }
-
-    function addSlots(countAdded) {
-        if (countAdded > 0) {
-            qwery('.ad-slot--inline').forEach(addSlot);
-        }
-    }
-
-    // If we're on mobile, we want to use steady-page right before dom insertion
-    // when we have the adslot so we provide a non-fastdom writer as
-    // fastdom is handled in steady-page
-    function writerOverride (writerCallback) {
-        return writerCallback();
-    }
-
-    // If a merchandizing component has been rendered but is empty,
-    // we allow a second pass for regular inline ads. This is because of
-    // the decoupling between the spacefinder algorithm and the targeting
-    // in DFP: we can only know if a slot can be removed after we have
-    // received a response from DFP
-    var waitForMerch = memoize(function () {
-        return trackAdRender('dfp-ad--im').then(function (isLoaded) {
-            return isLoaded ? 0 : addArticleAds(2, getRules());
-        }).then(function (countAdded) {
-            return countAdded === 2 ?
-                addArticleAds(8, getLongArticleRules()).then(function (countAdded) {
-                    return 2 + countAdded;
-                }) :
-                countAdded;
-        });
-    });
-
-    var insertLongAds = memoize(function () {
-        return addArticleAds(8, getLongArticleRules()).then(function (countAdded) {
-            return 2 + countAdded;
-        });
-    });
-
-    function init() {
-        if (!commercialFeatures.articleBodyAdverts) {
-            return Promise.resolve(false);
-        }
-
-        var rules = getRules();
-
-        boot();
-
-        if (config.page.hasInlineMerchandise) {
-            addInlineMerchAd(getInlineMerchRules());
-        }
-
-        return addArticleAds(2, rules).then(function (countAdded) {
-            if (config.page.hasInlineMerchandise && countAdded === 0) {
-                waitForMerch().then(addSlots);
-            } else if (countAdded === 2) {
-                insertLongAds().then(addSlots);
-            }
         });
     }
 
-    return {
-        init: init,
-
-        '@@tests': {
-            waitForMerch: waitForMerch,
-            insertLongAds: insertLongAds
-        }
-    };
+    function addSlots(totalCount) {
+        qwery('.ad-slot--inline').forEach(addSlot);
+        return totalCount;
+    }
 });
