@@ -56,7 +56,8 @@ define([
         init: init,
 
         '@@tests': {
-            waitForMerch: waitForMerch
+            waitForMerch: waitForMerch,
+            addInlineAds: addInlineAds
         }
     };
 
