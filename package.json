@@ -78,7 +78,6 @@
     "postcss-pxtorem": "^3.3.1",
     "postcss-reporter": "^1.4.1",
     "prettysize": "^0.0.3",
-    "require-dir": "^0.3.0",
     "requirejs": "^2.3.2",
     "rimraf": "^2.5.4",
     "sass-lint": "^1.9.1",
@@ -98,7 +97,8 @@
   "scripts": {
     "postinstall": "./tools/task-runner/runner githooks --verbose",
     "sass-watch": "node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true",
-    "css-watch": "gulp --cwd ./dev watch:css",
+    "babel-watch": "BABEL_ENV=production babel ./static/src/javascripts --watch -d ./static/transpiled/javascripts --ignore .eslintrc.js >/dev/null 2>&1",
+    "gulp-watch": "gulp --cwd ./dev watch",
     "browser-sync": "browser-sync start --config ./dev/bs-config.js",
     "compile-deploy-radiator": "BABEL_ENV=admin webpack --config=static/src/deploys-radiator/webpack.config.js --progress --colors && cp static/src/deploys-radiator/app/main.css static/target/deploys-radiator"
   }
