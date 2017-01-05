@@ -157,12 +157,12 @@ define([
                 it('inserts up to ten adverts', function (done) {
                     spaceFillerStub.onCall(0).returns(Promise.resolve(2));
                     spaceFillerStub.onCall(1).returns(Promise.resolve(8));
-                    articleBodyAdverts.init()
-                        .then(articleBodyAdverts['@@tests'].insertLongAds)
-                        .then(function (countAdded) {
-                            expect(countAdded).toEqual(10);
-                        })
-                        .then(done);
+                    articleBodyAdverts['@@tests'].addInlineAds()
+                    .then(function (countAdded) {
+                        expect(countAdded).toEqual(10);
+                    })
+                    .then(done)
+                    .catch(done.fail);
                 });
 
                 it('inserts the third+ adverts with greater vertical spacing', function (done) {
