@@ -138,7 +138,8 @@ define([
             } else {
                 return countAdded;
             }
-        });
+        })
+        .then(addSlots);
     }
 
     function waitForMerch(countAdded) {
@@ -175,9 +176,7 @@ define([
         });
     }
 
-    function addSlots(countAdded) {
-        if (countAdded > 0) {
-            qwery('.ad-slot--inline').forEach(addSlot);
-        }
+    function addSlots() {
+        qwery('.ad-slot--inline').forEach(addSlot);
     }
 });
