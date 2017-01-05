@@ -357,7 +357,7 @@ object EmailSubscriptions {
       description = "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every afternoon.",
       frequency = "Weekday afternoons",
       listId = "2313",
-      subscribedTo = subscribedListIds.exists{ x => x == "2313" },
+      subscribedTo = subscribedListIds.exists{ x => x == "2313" || x == "3811" },
       subheading = Some("UK"),
       tone = Some("comment"),
       signupPage = Some("/commentisfree/2014/jan/29/comment-is-free-daily-roundup")
