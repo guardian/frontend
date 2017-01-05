@@ -16,8 +16,12 @@ trait DeploysRadiatorController extends Controller with Logging with Requests {
   val riffRaff: RiffRaffService
   val teamcity: TeamcityService
 
-  def getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String]) = Action.async {
-    riffRaff.getRiffRaffDeploys(pageSize, projectName, stage).map(ApiResults(_))
+  def getCompletedDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String]) = Action.async {
+    riffRaff.getRiffRaffDeploys(pageSize, projectName, stage, Some("Completed")).map(ApiResults(_))
+  }
+
+  def getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String], status: Option[String] = None) = Action.async {
+    riffRaff.getRiffRaffDeploys(pageSize, projectName, stage, status).map(ApiResults(_))
   }
 
   def getBuild(number: String) = Action.async {

@@ -1,0 +1,255 @@
+.content {
+    padding-top: 0;
+    padding-bottom: $gs-baseline*3;
+
+    &:after { // clearfix
+        content: '';
+        display: block;
+        clear: both;
+    }
+}
+
+.gs-container {
+    @include content-gutter();
+    box-sizing: border-box;
+}
+
+.content__labels {
+    box-sizing: border-box;
+    padding: $gs-baseline/2 0;
+    position: relative;
+    z-index: 1; // bring-to-front fix to make it clickable
+    overflow: hidden;
+}
+
+.content__labels--not-immersive {
+    border-bottom: 1px dotted $neutral-5;
+}
+
+.content__section-label {
+    float: left;
+    padding-right: $gs-gutter/3;
+
+    &,
+    .content__series-label {
+        float: left;
+    }
+}
+
+.content__series-label__link {
+    font-size: 1rem;
+    line-height: 1.25rem;
+    color: $neutral-2;
+}
+
+.content__headline {
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: 400;
+    letter-spacing: -.02rem;
+    padding-top: $gs-baseline/6;
+    padding-bottom: $gs-baseline*2;
+
+    a {
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            color: $neutral-1;
+        }
+    }
+
+    em {
+        font-style: normal;
+    }
+
+    strong {
+        font-weight: normal;
+    }
+}
+
+.content__headline--byline {
+    display: block;
+    padding-top: 0;
+    margin-top: -$gs-baseline*2;
+    padding-bottom: $gs-baseline*2;
+
+    .byline-img {
+        float: right;
+        height: 9.375rem;
+        z-index: 2;
+        margin-left: -5rem;
+        margin-right: -2.5rem;
+    }
+}
+
+.content__standfirst {
+    font-size: 1rem;
+    line-height: 1.25rem;
+    margin-bottom: $gs-baseline/2;
+    color: $neutral-2;
+
+    > ul,
+    > ol {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        > li {
+            position: relative;
+        }
+
+        * {
+            margin-bottom: $gs-baseline / 2;
+        }
+    }
+
+    > ol {
+        counter-reset: li;
+
+        >li {
+            text-indent: 18px;
+        }
+
+        > li:before {
+            position: absolute;
+            left: -16px;
+            content: counter(li);
+            counter-increment: li;
+            color: $neutral-3;
+        }
+    }
+}
+
+.content__dateline {
+    font-size: 12px;
+    line-height: 16px;
+    position: relative;
+    color: $neutral-2;
+    box-sizing: border-box;
+    padding-top: $gs-baseline / 6;
+    margin-bottom: $gs-baseline / 2;
+}
+
+.content__dateline-wpd--modified {
+    cursor: pointer;
+
+    &:hover,
+    &:active,
+    &:focus {
+        text-decoration: underline;
+    }
+}
+
+.content__meta-container {
+    min-height: gs-height(1);
+    position: relative;
+    margin-bottom: $gs-baseline;
+    border-top: 1px dotted $neutral-5;
+    border-bottom: 1px dotted $neutral-5;
+
+    .byline-img {
+        @include circular;
+        position: relative;
+        width: gs-span(1);
+        height: 60px; //Intentionally off grid
+        margin: $gs-baseline/2 0;
+        overflow: hidden;
+        background-color: $neutral-7;
+    }
+
+    .byline-img__img {
+        position: absolute;
+        width: auto;
+        //This centres the image within its container
+        height: 110%;
+        bottom: -6px;
+        left: -9999px;
+        right: -9999px;
+        margin: auto;
+    }
+}
+
+.drop-cap {
+    float: left;
+    text-transform: uppercase;
+    box-sizing: border-box;
+    height: 2*get-line-height(bodyCopy, 2);
+    padding-top: 1px;
+    margin-right: 4px;
+
+    .drop-cap__inner {
+        font-size: 52px;
+        line-height: 40px;
+        vertical-align: text-top;
+    }
+}
+
+.meta__social {
+    border-top: 1px dotted $neutral-5;
+}
+
+.meta__twitter,
+.meta__email {
+    margin-right: 5px;
+    display: inline;
+}
+
+.contact {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 12px;
+}
+
+.byline {
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 600;
+    margin-bottom: 0;
+    padding-top: $gs-baseline/3;
+    color: $neutral-2;
+}
+
+.old-article-message {
+    font-size: 12px;
+    line-height: 1;
+    display: inline-block;
+    color: $neutral-2;
+    margin-bottom: $gs-baseline;
+
+    .old-article-message--clock svg {
+        fill: $neutral-2;
+        margin-bottom: -1px;
+    }
+}
+
+.control__icon-wrapper {
+    border: 1px solid rgba(255, 255, 255, .3);
+    float: left;
+    height: 36px;
+    width: 36px;
+    text-align: center;
+}
+
+.media-primary {
+    margin: 0 $gs-gutter * -.5;
+}
+
+// TODO: on amp, shouldn't have this. Or, use amp-lightbox
+.inline-expand-image,
+.meta__bio {
+    display: none;
+}
+
+.ad-slot--paid-for-badge__header {
+    font-size: 12px;
+    line-height: 1;
+    margin: $gs-baseline / 4 0 0;
+    color: $neutral-2;
+}
+
+.badge-slot {
+    float: left;
+    margin-top: 2px;
+    margin-right: 5px;
+}

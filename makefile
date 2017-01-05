@@ -51,29 +51,29 @@ watch: compile-dev
 
 # Compile all assets for production.
 compile: install
-	@./tools/run-task compile
+	@./tools/task-runner/runner compile
 
 # Compile all assets for development.
 compile-dev: install
-	@./tools/run-task compile --dev
+	@./tools/task-runner/runner compile --dev
 
 compile-javascript: install # PRIVATE
-	@./tools/run-task compile/javascript
+	@./tools/task-runner/runner compile/javascript
 
 compile-javascript-dev: install # PRIVATE
-	@./tools/run-task compile/javascript --dev
+	@./tools/task-runner/runner compile/javascript --dev
 
 compile-css: install # PRIVATE
-	@./tools/run-task compile/css
+	@./tools/task-runner/runner compile/css
 
 compile-images: install # PRIVATE
-	@./tools/run-task compile/images
+	@./tools/task-runner/runner compile/images
 
 compile-svgs: install # PRIVATE
-	@./tools/run-task compile/inline-svgs
+	@./tools/task-runner/runner compile/inline-svgs
 
 compile-fonts: install # PRIVATE
-	@./tools/run-task compile/fonts
+	@./tools/task-runner/runner compile/fonts
 
 # * Not ready for primetime use yet... *
 pasteup: install # PRIVATE
@@ -85,31 +85,31 @@ pasteup: install # PRIVATE
 
 # Run the JS test suite.
 test: install
-	@./tools/run-task test/javascript --verbose
+	@./tools/task-runner/runner test/javascript --verbose
 
 # Check the JS test suite coverage.
 coverage: install
-	@./tools/run-task test/javascript/coverage --stdout
+	@./tools/task-runner/runner test/javascript/coverage --stdout
 
 # Lint all assets.
 validate: install
-	@./tools/run-task lint --verbose
+	@./tools/task-runner/runner lint --verbose
 
 # Lint all SCSS.
 validate-sass: install # PRIVATE
-	@./tools/run-task lint/sass --verbose
+	@./tools/task-runner/runner lint/sass --verbose
 
 # Lint all JS.
 validate-javascript: install # PRIVATE
-	@./tools/run-task lint/javascript
+	@./tools/task-runner/runner lint/javascript
 
 # Lint all assets.
 fix: install
-	@./tools/run-task lint/javascript-fix
+	@./tools/task-runner/runner lint/javascript-fix
 
 validate-amp: install # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
 
 # Take screenshots for a visual check.
 screenshots: install
-	@./tools/run-task screenshot
+	@./tools/task-runner/runner screenshot

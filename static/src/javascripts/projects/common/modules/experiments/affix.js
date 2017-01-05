@@ -3,15 +3,13 @@ define([
     'bonzo',
     'common/utils/mediator',
     'fastdom',
-    'lodash/functions/bindAll',
-    'lodash/functions/debounce'
+    'lodash/functions/bindAll'
 ], function (
     bean,
     bonzo,
     mediator,
     fastdom,
-    bindAll,
-    debounce
+    bindAll
 ) {
 
     var Affix = function (options) {
@@ -19,9 +17,9 @@ define([
 
         bean.on(window, 'click', this.checkPosition);
         mediator.addListener('window:throttledScroll', this.checkPosition);
-        mediator.addListener('window:resize', debounce(function () {
+        mediator.addListener('window:throttledResize', function () {
             fastdom.write(this.calculateContainerPositioning);
-        }, 200));
+        });
 
         this.affixed  = null;
         this.$markerTop = bonzo(options.topMarker);

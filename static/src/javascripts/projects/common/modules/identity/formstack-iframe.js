@@ -22,7 +22,7 @@ define([
                 }
             });
 
-            mediator.on('window:resize', self.refreshHeight);
+            mediator.on('window:throttledResize', self.refreshHeight);
 
             // Listen for load of form confirmation or error page,
             // which has no form, so won't instantiate the Formstack module

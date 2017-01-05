@@ -15,6 +15,7 @@ object FilterExemptions {
     FilterExemption("/oauth2callback"),
     FilterExemption("/assets"),
     FilterExemption("/_healthcheck"),
+    FilterExemption("/deploys"), // This endpoint is not authenticated so it can be accessed by Prout to determine which builds have been deployed
     FilterExemption("/deploys-notify") // This endpoint is authenticated via api-key (to be accessible to riffraff hook for instance)
   )
 }

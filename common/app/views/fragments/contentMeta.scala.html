@@ -50,7 +50,7 @@
             @if(item.content.tags.tags.exists(_.id == "tone/news")) {
                 @fragments.contentAgeNotice(ageNotice)
             }
-            @if(!item.content.isExplore) {
+            @if(!item.content.isExplore & !amp) {
                 <div class="meta__numbers">
                     <div class="u-h meta__number js-sharecount">
                     </div>

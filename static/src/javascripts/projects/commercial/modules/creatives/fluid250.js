@@ -79,7 +79,7 @@ define([
                 fastdom.read(this.updateBgPosition, this);
                 mediator.on('window:throttledScroll', this.updateBgPosition.bind(this));
                 // to be safe, also update on window resize
-                mediator.on('window:resize', this.updateBgPosition.bind(this));
+                mediator.on('window:throttledResize', this.updateBgPosition.bind(this));
             }
         }
 

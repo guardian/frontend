@@ -1835,4 +1835,4 @@ if (typeof define === 'function' && define.amd) {
     define('raven', [], function() { return Raven; });
 }
 
-})(this);
+})(window);

@@ -61,7 +61,7 @@ define([
 
         if (this.$galleryEl.length) {
             this.resize = this.trigger.bind(this, 'resize');
-            mediator.on('window:resize', this.resize);
+            mediator.on('window:throttledResize', this.resize);
 
             // FSM CONFIG
             this.fsm = new FiniteStateMachine({
@@ -323,11 +323,11 @@ define([
                 var pageName = config.page.pageName || window.location.pathname.substr(window.location.pathname.lastIndexOf('/') + 1);
                 url.pushUrl({}, document.title, pageName + '#img-' + this.index, true);
                 // event bindings
-                mediator.on('window:resize', this.resize);
+                mediator.on('window:throttledResize', this.resize);
             },
             leave: function () {
                 this.trigger('hide-info');
-                mediator.off('window:resize', this.resize);
+                mediator.off('window:throttledResize', this.resize);
             },
             events: {
                 'next': function (e) {
