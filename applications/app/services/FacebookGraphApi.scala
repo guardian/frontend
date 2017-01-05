@@ -16,7 +16,7 @@ case class URLResponse(id: String, share: ShareObject)
 case class ShareObject(share_count: Int)
 
 class FacebookGraphApiClient(wsClient: WSClient) extends implicits.WSRequests with ExecutionContexts {
-  val apiRootUrl = "https://graph.facebook.com/v2.8/"
+  val apiRootUrl = s"https://graph.facebook.com/v${Configuration.facebook.graphApi.version}/"
 
   def GET[T](endpoint: Option[String], queryString: (String, String)*)(asResult: WSResponse => T) =
     wsClient

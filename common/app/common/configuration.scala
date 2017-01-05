@@ -339,6 +339,7 @@ class GuardianConfiguration extends Logging {
   object facebook {
     lazy val appId = configuration.getMandatoryStringProperty("guardian.page.fbAppId")
     object graphApi {
+      lazy val version = configuration.getStringProperty("facebook.graphApi.version").getOrElse("2.8")
       lazy val accessToken = configuration.getMandatoryStringProperty("facebook.graphApi.accessToken")
     }
   }
