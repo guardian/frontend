@@ -179,27 +179,35 @@ define([
             storage.local.set(cachedRecommendationsEnabledKey, showRecommendations);
         }
 
-        function insertOnBoardingSection() {
-            $recommendedForYouSection = $.create(template(recommendedForYouOptInTemplate, {
+        function createOptInTemplate() {
+            return $.create(template(recommendedForYouOptInTemplate, {
                 profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
                 rightArrowIcon: svg(rightArrowIcon, ['i-right']),
                 guardianLogo: svg(guardianLogo)
             }));
+        }
+
+        function registerOptInButtonHandlers(section) {
+            bean.on($('.js-feedback-button-yes', section)[0], 'click', function () {
+                registerFeedback(true);
+                $('.js-feedback', section).html(
+                    '<p>Your recommendations will be ready soon.</p>'
+                );
+                populateRecommendationsContainer();
+            });
+
+            bean.on($('.js-feedback-button-no', section)[0], 'click', function () {
+                registerFeedback(false);
+                section.remove();
+            });
+        }
+
+        function insertOnBoardingSection() {
+            $recommendedForYouSection = createOptInTemplate();
 
             return fastdom.write(function() {
                 $recommendedForYouSection.insertBefore($opinionSection);
-                bean.on($('.js-feedback-button-yes', $recommendedForYouSection)[0], 'click', function () {
-                    registerFeedback(true);
-                    $('.js-feedback', $recommendedForYouSection[0]).html(
-                        '<p>Your recommendations will be ready soon.</p>'
-                    );
-                    populateRecommendationsContainer();
-                });
-
-                bean.on($('.js-feedback-button-no', $recommendedForYouSection)[0], 'click', function () {
-                    registerFeedback(false);
-                    $recommendedForYouSection.remove();
-                });
+                registerOptInButtonHandlers($recommendedForYouSection);
                 setupComponentAttentionTracking('recommended-for-you_user-history');
             });
         }
