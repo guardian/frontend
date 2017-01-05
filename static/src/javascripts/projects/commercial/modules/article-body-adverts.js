@@ -27,7 +27,6 @@ define([
     /* bodyAds is a counter that keeps track of the number of inline MPUs
      * inserted dynamically. */
     var bodyAds;
-    var inlineAd;
     var replaceTopSlot;
     var getSlotName;
 
@@ -65,7 +64,6 @@ define([
 
     function boot() {
         bodyAds = 0;
-        inlineAd = 0;
         replaceTopSlot = detect.isBreakpoint({max : 'phablet'});
         getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;
     }
