@@ -154,11 +154,13 @@ define([
             } else {
                 buttonString += 'addEmailSubscriptions[]=' + encodeURIComponent(value) + '&';
             }
-            // hacks to deal with the various AB tests running on email listIDs
+            // hacks to deal with the various email variants and AB tests running on email listIDs
             // delete me after 2017-02-01!
             if (config.switches.abEditorialEmailVariants && value === 'unsubscribe-2211') {
                 buttonString += 'removeEmailSubscriptions[]=3806&';
                 buttonString += 'removeEmailSubscriptions[]=3807&';
+            } else if (value === 'unsubscribe-2313') {
+                buttonString += 'removeEmailSubscriptions[]=3811&';
             }
             // end of hacks
         }
