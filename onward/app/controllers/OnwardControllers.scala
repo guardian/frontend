@@ -47,4 +47,5 @@ trait OnwardControllers {
   lazy val seriesController = wire[SeriesController]
   lazy val stocksController = wire[StocksController]
   lazy val techFeedbackController = wire[TechFeedbackController]
+  lazy val geoLocationController = wire[GeoLocationController]
 }

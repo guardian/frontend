@@ -94,6 +94,8 @@ GET            /most-read/*path.json                                            
 GET            /most-read-geo.json                                                                                               controllers.MostPopularController.renderPopularGeo()
 GET            /most-read-day.json                                                                                               controllers.MostPopularController.renderPopularDay(countryCode)
 
+GET            /user-geo-location.json                                                                                           controllers.GeoLocationController.getGeoLocation()
+
 GET            /top-stories.json                                                                                                 controllers.TopStoriesController.renderTopStories()
 GET            /top-stories/trails.json                                                                                          controllers.TopStoriesController.renderTrails()
 GET            /related/*path.json                                                                                               controllers.RelatedController.render(path)
