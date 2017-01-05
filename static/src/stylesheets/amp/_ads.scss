@@ -10,7 +10,7 @@
     width: 300px;
     margin: $gs-baseline / 3 0 $gs-baseline $gs-gutter;
 
-    @include mq(550px) {
+    @include mq($until: 550px) {
         clear: both;
         float: none;
         text-align: center;
