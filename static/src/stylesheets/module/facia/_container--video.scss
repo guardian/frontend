@@ -426,3 +426,16 @@ $video-width-desktop: 700px;
     bottom: 2px;
     color: $neutral-3;
 }
+
+.fc-item__video-container {
+    .youtube-media-atom {
+        z-index: 1;
+    }
+
+    .youtube-media-atom__iframe:not(.youtube__video-ready) {
+        ~ .youtube-media-atom__overlay {
+            visibility: hidden;
+            opacity: 0;       
+        }
+    }
+}
