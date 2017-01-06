@@ -12,7 +12,7 @@ The form **type** can be article, footer, plain, plaintone, or plaindark:
 - [footer](https://www.theguardian.com/email/form/footer/37) >> This is the one used in the footer on every page.
 - [plain](https://www.theguardian.com/email/form/plain/37) >> No header or description. Button will always be guardian-brand blue
 - [plaintone](https://www.theguardian.com/email/form/plaintone/3743) >> No header or description. Submit button splits from input on widescreen. Button defaults to blue but tone overrides can be applied. Used in [email interactives](https://www.theguardian.com/info/ng-interactive/2016/dec/07/sign-up-for-the-flyer).
-- [plaindark](https://www.theguardian.com/email/form/plaindark/3745) Used by [Documentaries](https://www.theguardian.com/world/ng-interactive/2016/oct/14/desert-fire-the-world-cup-rebels-of-kurdistan-video). Depreciated in favour of plaintone (which has a [dark option](http://localhost:9000/email/form/plaintone/3745)) and potentially removable, however, only if all usages can be found.
+- [plaindark](https://www.theguardian.com/email/form/plaindark/3745) Used by [Documentaries](https://www.theguardian.com/world/ng-interactive/2016/oct/14/desert-fire-the-world-cup-rebels-of-kurdistan-video). Deprecated in favour of plaintone (which has a [dark option](http://localhost:9000/email/form/plaintone/3745)) and potentially removable, however, only if all usages can be found.
 
 The **listID** is the primary key of the email in [ExactTarget](https://www.marketingcloud.com/products/email-marketing/). Editorial should know the listID. Any tone applied to the form will be determined by the listID (see later section).
 
@@ -70,7 +70,7 @@ An example implementation of this can be found in  [**newsletters.scala.html**](
 
 ### How to do email address validation
 
-1) Don't use regular expressions to validate e-mail addresses:
+1) Don't use regular expressions to validate email addresses:
 - http://nullprogram.com/blog/2008/12/24/
 - https://davidcel.is/posts/stop-validating-email-addresses-with-regex/
 - http://www.ex-parrot.com/~pdw/Mail-RFC822-Address.html
