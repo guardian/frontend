@@ -197,27 +197,14 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     .u-faux-block-link--hover {
+        .youtube-media-atom,
         .fc-item__image-container {
             background-color: #000000;
-
             opacity: .9;
         }
 
         .u-faux-block-link__cta {
             text-decoration: none;
-        }
-
-        .fc-item__video-container {
-            .youtube-media-atom__overlay::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                bottom: 0;
-                right: 0;
-                background-color: #000000;
-                opacity: .1;
-            }
         }
     }
 
