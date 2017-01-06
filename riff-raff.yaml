@@ -36,7 +36,6 @@ deployments:
     template: frontend
   onward:
     template: frontend
-# this only exists in prod - a dummy zero sized ASG exists in code
   preview:
     template: frontend
   rss:
@@ -49,6 +48,3 @@ deployments:
       bucket: aws-frontend-static
       cacheControl: public, max-age=315360000
       prefixStack: false
-# this only exists in prod - a dummy zero sized ASG exists in code
-  training-preview:
-    template: frontend
