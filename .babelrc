@@ -7,6 +7,7 @@
             "plugins": [
                 "add-module-exports",
                 "transform-es2015-modules-amd",
+                "transform-runtime",
             ],
         },
         "development": {
@@ -16,6 +17,7 @@
             "plugins": [
                 "add-module-exports",
                 "transform-es2015-modules-amd",
+                "transform-runtime",
             ],
         },
         "internal": {
