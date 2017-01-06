@@ -124,7 +124,7 @@ object Cached extends implicits.Dates {
         (etag, result)
       }
     }.getOrElse(
-      (s""""johnRandom${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""", result) // just to see if they come back in
+      (s""""guRandomEtag${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""", result) // just to see if they come back in
     )
 
     validatedResult.withHeaders(
