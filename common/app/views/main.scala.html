@@ -7,18 +7,19 @@
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition) = {
     @if(!page.metadata.shouldHideHeaderAndTopAds) {
-        @if(showAdverts) {
-            @defining(
-                page match {
-                    case c: model.ContentPage => Some(c.item.tags)
-                    case _ => None
+        <div class="bannerandheader">
+            @if(showAdverts) {
+                @defining(
+                    page match {
+                        case c: model.ContentPage => Some(c.item.tags)
+                        case _ => None
+                    }
+                ) { maybeTags =>
+                    @fragments.commercial.topBanner(page.metadata, edition, maybeTags)
                 }
-            ) { maybeTags =>
-                @fragments.commercial.topBanner(page.metadata, edition, maybeTags)
             }
-        }
-        @fragments.header(page)
-
+            @fragments.header(page)
+        </div>
         <div id="maincontent" tabindex="0"></div>
     }
 }
