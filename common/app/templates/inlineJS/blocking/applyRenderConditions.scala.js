@@ -70,6 +70,12 @@
         docClass += ' has-fixed';
     }
 
+    if (testCssSupportForPropertyAndValue('position', 'sticky')) {
+        docClass += ' has-sticky';
+    } else {
+        docClass += ' has-no-sticky';
+    }
+
     if (window.guardian.isEnhanced) {
         docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
     }
@@ -79,7 +85,7 @@
     } else {
         if (window.location.hash === '#kern') {docClass += ' should-kern'}
     }
-    
+
     // MINIMISE DOM THRASHING…
 
     // READs
