@@ -42,6 +42,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-contributions-epic-brexit",
+    "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
+    owners = Seq(Owner.withGithub("alexduf")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-epic-always-ask-strategy",
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),

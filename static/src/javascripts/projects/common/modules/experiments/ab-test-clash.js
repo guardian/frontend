@@ -9,10 +9,15 @@ define([
         name: 'ContributionsEpicAlwaysAskStrategy',
         variants: ['alwaysAsk']
     };
+    var ContributionsEpicBrexit = {
+        name: 'ContributionsEpicBrexit',
+        variants: ['control']
+    };
 
     function userIsInAClashingAbTest() {
         var clashingTests = [
-            ContributionsEpicAlwaysAskStrategy
+            ContributionsEpicAlwaysAskStrategy,
+            ContributionsEpicBrexit
         ];
         return _testABClash(ab.isInVariant, clashingTests);
     }
