@@ -197,10 +197,6 @@ object Frontend extends Build with Prototypes {
     RoutesKeys.routesImport += "scala.language.reflectiveCalls"
   )
 
-  val trainingPreview = application("training-preview").dependsOn(commonWithTests, standalone).settings(
-    RoutesKeys.routesImport += "scala.language.reflectiveCalls"
-  )
-
   val integrationTests = Project("integrated-tests", file("integrated-tests"))
     .settings(frontendCompilationSettings:_*)
     .settings(frontendIntegrationTestsSettings:_*)
@@ -225,7 +221,6 @@ object Frontend extends Build with Prototypes {
     onward,
     archive,
     preview,
-    trainingPreview,
     rss,
     adminJobs
   ).settings(
@@ -249,7 +244,6 @@ object Frontend extends Build with Prototypes {
       (packageBin in Universal in preview).value -> s"${(name in preview).value}/${(packageBin in Universal in preview).value.getName}",
       (packageBin in Universal in rss).value -> s"${(name in rss).value}/${(packageBin in Universal in rss).value.getName}",
       (packageBin in Universal in sport).value -> s"${(name in sport).value}/${(packageBin in Universal in sport).value.getName}",
-      (packageBin in Universal in trainingPreview).value -> s"${(name in trainingPreview).value}/${(packageBin in Universal in trainingPreview).value.getName}",
       baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml"
     )
   )

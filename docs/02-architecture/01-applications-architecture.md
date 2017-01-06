@@ -148,8 +148,3 @@ Preview is a standalone version of the guardian website (ie: an aggregation of a
 It allows us to have a fully functional version of the website without the overhead of maintaining an entire new stack.
 
 [All supported routes](https://github.com/guardian/frontend/blob/master/preview/conf/routes)
-
-# Training-Preview 
-Training-preview is used by when running editorial tool training.
-
-[All supported routes](https://github.com/guardian/frontend/blob/master/training-preview/conf/routes)
