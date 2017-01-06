@@ -6,6 +6,7 @@
  */
 (function (documentElement, window, navigator) {
     var docClass = documentElement.className;
+    var supportsSupports = 'CSS' in window && 'supports' in window.CSS;
 
     function cssToDOM(name) {
         return name.replace(/([a-z])-([a-z])/g, function (str, m1, m2) {
@@ -17,7 +18,7 @@
 
     function testCssSupportForPropertyAndValue(prop, value) {
         var valueIsDefined = value !== undefined;
-        if (valueIsDefined && ('CSS' in window && 'supports' in window.CSS)) {
+        if (valueIsDefined && supportsSupports) {
             return window.CSS.supports(prop, value);
         } else {
             try {
