@@ -49,7 +49,7 @@ class RadiatorController(wsClient: WSClient)(implicit context: ApplicationContex
     }
 
     for {
-      ciBuilds <- mostRecentBuildForProjects("dotcom_master", "dotcom_ampValidation")
+      ciBuilds <- mostRecentBuildForProjects("dotcom_frontend", "dotcom_ampValidation")
       router50x <- CloudWatch.routerBackend50x
       latencyGraphs <- CloudWatch.shortStackLatency
       fastlyErrors <- CloudWatch.fastlyErrors
