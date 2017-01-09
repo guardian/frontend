@@ -4,6 +4,7 @@
         height: 378px;
         background-size: cover;
         background-position: center center;
+        margin: 0;
         &::after {
             content: '';
             display: block;
@@ -22,7 +23,6 @@
     }
 
     .title {
-        padding-left: $gs-gutter;
         margin-bottom: $gs-baseline;
         position: absolute;
         z-index: 3;
@@ -35,6 +35,7 @@
 
     .caption {
         @include content-gutter();
+        margin: $gs-baseline/2 0;
         text-align: right;
     }
 

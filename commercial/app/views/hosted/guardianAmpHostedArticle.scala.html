@@ -33,7 +33,7 @@
         </amp-analytics>
 
         <div class="main-body">
-            <div class="hosted__header"><div class="hosted__headerwrap"><div class="hostedbadge content__hosted-body">
+            <div class="hosted__header"><div class="hosted__headerwrap"><div class="hostedbadge">
                 <a href="@page.campaign.logo.link" data-link-name="@page.campaign.logo.trackingCode" target="_blank">
                     <amp-img layout="responsive" width="@{page.campaign.logo.dimensions.map(_.width)}" height="@{page.campaign.logo.dimensions.map(_.height)}" class="hostedbadge__logo" src="@page.campaign.logo.src" alt="logo @page.campaign.owner"></amp-img>
                 </a>
@@ -66,7 +66,7 @@
                                     }
 
                                 </div>
-                                <div class="hosted__standfirst content__hosted-body">
+                                <div class="hosted__standfirst">
                                     @hostedExplainer(onAmp = true)
                                 </div>
                             </div>
