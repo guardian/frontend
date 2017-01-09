@@ -29,8 +29,10 @@ define([
     // curl’s promise API is broken, so we must cast it to a real Promise
     // https://github.com/cujojs/curl/issues/293
     var promiseRequire = function (moduleIds) {
-        return Promise.resolve(require(moduleIds));
+        return Promise.resolve(window.require(moduleIds));
     };
+
+    console.log('Booting');
 
     var guardian = window.guardian;
     var config = guardian.config;
@@ -38,8 +40,18 @@ define([
     var domReadyPromise = new Promise(function (resolve) { domReady(resolve); });
 
     var bootStandard = function () {
-        return promiseRequire(['bootstraps/standard/main'])
-            .then(function (boot) { boot(); });
+        if (config.tests.abWebpackBundle) {
+            return new Promise(function (resolve) {
+                require(['bootstraps/standard/main'], function (boot) {
+                    boot();
+                    resolve();
+                });
+            });
+        }
+        else {
+            return promiseRequire(['bootstraps/standard/main'])
+               .then(function (boot) { boot(); });
+        }
     };
 
     var bootCommercial = function () {
