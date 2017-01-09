@@ -21,5 +21,11 @@ module.exports = {
         'react/no-string-refs': 'off',
         'react/prefer-stateless-function': 'off',
         'react/no-render-return-value': 'off',
+
+        // disallow modules we used to use but are retiring
+        'no-restricted-imports': ['error', {
+            paths: ['lodash'],
+            patterns: ['!lodash/*'],
+        }],
     },
 };
