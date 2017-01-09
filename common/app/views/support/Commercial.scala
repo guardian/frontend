@@ -96,12 +96,12 @@ object Commercial {
     def cssClasses(metadata: model.MetaData): String = {
       val topBannerDisableSticky = metadata.javascriptConfigOverrides.get("disableStickyTopBanner") match {
         case Some(JsBoolean(true)) => "top-banner-ad-container--not-sticky"
-        case _          => ""
+        case _                     => ""
       }
       val classes = Seq(
         "top-banner-ad-container",
         "js-top-banner"
-    ) ++ topBannerDisableSticky
+      ) ++ topBannerDisableSticky
 
       classes mkString " "
     }
