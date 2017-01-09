@@ -9,10 +9,10 @@ _The Guardian frontend uses Continuous Deployment, any code pushed to the master
 
 1. Merge your pull request to master
 1a. Wait for the tests and build to finish (Teamcity)
-3. Once the build step is completed, it will be automatically deployed to PROD.
-3a. Prout will send a notification when the deployment has completed
-4. Verify that your change works properly.
-8. Check the [Deploy dashboard](https://kibana.gu-web.net/goto/643979153f817c4bb1b64f7d56a395a7) (Private) for any potential issue.
+2. Once the build step is completed, it will be automatically deployed to PROD.
+2a. Prout will send a notification when the deployment has completed
+3. Verify that your change works properly.
+3a. Check the [Deploy dashboard](https://kibana.gu-web.net/goto/643979153f817c4bb1b64f7d56a395a7) (Private) for any potential issue.
 
 
 ## Blocking deployment
