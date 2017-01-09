@@ -40,16 +40,18 @@ class RadiatorController(wsClient: WSClient)(implicit context: ApplicationContex
   def renderRadiator() = Action.async { implicit request =>
     val apiKey = Configuration.riffraff.apiKey
 
-    def mostRecentBuildForProjects(projects: String*): Future[Seq[TeamCityBuild]] = {
+    case class buildProject(name: String, branch: Option[String] = None)
+
+    def mostRecentBuild(projects: buildProject*): Future[Seq[TeamCityBuild]] = {
       Future.sequence(projects.map { project =>
         teamcityService
-          .getBuilds(project, count = 1)
+          .getBuilds(project.name, project.branch, count = 1)
           .map(_.head)
       })
     }
 
     for {
-      ciBuilds <- mostRecentBuildForProjects("dotcom_frontend", "dotcom_ampValidation")
+      ciBuilds <- mostRecentBuild(buildProject("dotcom_frontend", Some("master")), buildProject("dotcom_ampValidation"))
       router50x <- CloudWatch.routerBackend50x
       latencyGraphs <- CloudWatch.shortStackLatency
       fastlyErrors <- CloudWatch.fastlyErrors

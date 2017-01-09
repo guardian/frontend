@@ -60,10 +60,6 @@ object TeamCityBuilds {
 
 class TeamcityService(httpClient: HttpLike) extends ExecutionContexts {
 
-  private lazy val buildFields = List("id", "number", "branchName", "buildType(name,projectName)", "status",
-    "revisions(revision(version))", "changes(change(username,comment,version))",
-    "artifact-dependencies(build(number))").mkString(",")
-
   private def GET[T](path: String, queryString: Map[String, String])(implicit r:Reads[T]): Future[T] = {
     val apiPath = "guestAuth/app/rest"
     val url = s"${Configuration.teamcity.internalHost}/$apiPath/$path"
@@ -81,10 +77,18 @@ class TeamcityService(httpClient: HttpLike) extends ExecutionContexts {
       }
   }
 
-  def getBuilds(project: String, branch: String = "master", count: Int = 10): Future[Seq[TeamCityBuild]] = {
+  def getBuilds(project: String, branch: Option[String] = Some("master"), count: Int = 10): Future[Seq[TeamCityBuild]] = {
+
+    val buildFields = Seq("id", "number", "branchName", "buildType(name,projectName)", "status",
+      "revisions(revision(version))", "changes(change(username,comment,version))",
+      "artifact-dependencies(build(number))")
+
+    val buildTypeValues = Seq(s"(id:$project)", s"count:$count") ++ branch.map(b => s"branch:$b")
+
     GET[TeamCityBuilds](
       path = "builds",
-      queryString = Map("locator" -> s"buildType:(id:$project),branch:$branch,count:$count") + ("fields" -> s"build($buildFields)")
+      queryString = Map("locator" -> s"buildType:${buildTypeValues.mkString(",")}")
+        + ("fields" -> s"build(${buildFields.mkString(",")})")
     ).map(_.builds)
   }
 
