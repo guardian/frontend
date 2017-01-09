@@ -2,7 +2,7 @@ package services
 
 import akka.util.Timeout
 import app.LifecycleComponent
-import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, FrontPriority, TrainingPriority}
+import com.gu.facia.api.models._
 import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{ConfigJson => Config, FrontJson => Front}
 import common._
@@ -12,6 +12,7 @@ import model.pressed.CollectionConfig
 import model.{ApplicationContext, FrontProperties, SeoDataJson}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.json.Json
+import play.api.mvc._
 import conf.switches.Switches
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -86,7 +87,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     configAgent.future()
       .map(_.flatMap(_.collections.get(id)).map(CollectionConfig.make))
 
-    def getAllCollectionIds: List[String] = {
+  def getAllCollectionIds: List[String] = {
     val config = configAgent.get()
     config.map(_.collections.keys.toList).getOrElse(Nil)
   }
@@ -135,8 +136,11 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   def isFrontHidden(id: String): Boolean =
     configAgent.get().exists(_.fronts.get(id).flatMap(_.isHidden).exists(identity))
 
+  def isEmailFront(id: String): Boolean =
+    getFrontPriorityFromConfig(id).contains(EmailPriority)
+
   def shouldServeFront(id: String, isEmailRequest: Boolean = false)(implicit context: ApplicationContext) = getPathIds.contains(id) &&
-    (context.isPreview || (Switches.DisplayHiddenFrontsAsEmails.isSwitchedOn && isEmailRequest) || !isFrontHidden(id))
+    (context.isPreview || !isFrontHidden(id)) && (isEmailRequest || !isEmailFront(id))
 
   def shouldServeEditionalisedFront(edition: Edition, id: String)(implicit context: ApplicationContext) = {
     shouldServeFront(s"${edition.id.toLowerCase}/$id")
