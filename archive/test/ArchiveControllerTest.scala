@@ -214,7 +214,7 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
     // The archive x-accel goes to s3. So it is irrelevant whether the original path looks like the s3 archive path.
     val path = "http://www.theguardian.com/redirect/path-to-content"
     val databaseSaysArchive = ArchiveRedirect("any", path)
-    val result = archiveController.processLookupDestination(path)(TestRequest()).lift(databaseSaysArchive)
+    val result = archiveController.processLookupDestination(path).lift(databaseSaysArchive)
     result.map(_.toString).getOrElse("") should include (s"""X-Accel-Redirect -> /s3-archive/$path""")
   }
 
