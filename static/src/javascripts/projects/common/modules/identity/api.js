@@ -275,5 +275,24 @@ define([
         return request;
     };
 
+    Id.updateUsername = function (username) {
+        var endpoint = '/user/me',
+            data = {'publicFields': {'username': username, 'displayName': username}},
+            request = ajax({
+                url: Id.idApiRoot + endpoint,
+                type: 'json',
+                crossOrigin: true,
+                method: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                withCredentials: true,
+                headers: {
+                    'X-GU-ID-Client-Access-Token':  'Bearer ' + config.page.idApiJsClientToken
+                }
+            });
+
+        return request;
+    };
+
     return Id;
 });
