@@ -21,17 +21,17 @@ object RiffRaffDeploy { implicit val format = Json.format[RiffRaffDeploy] }
 
 class RiffRaffService(httpClient: HttpLike) extends ExecutionContexts {
 
-  def getRiffRaffDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String], status: Option[String] = None): Future[ApiResponse[List[RiffRaffDeploy]]] = {
+  def getRiffRaffDeploys(projectName: Option[String], stage: Option[String], pageSize: Option[Int], status: Option[String] = None): Future[ApiResponse[List[RiffRaffDeploy]]] = {
     val url = s"${Configuration.riffraff.url}/api/history"
 
+    val u = pageSize.map("pageSize" -> _.toString)
+
     httpClient.GET(url,
-      queryString = Map(
-        "key" -> Configuration.riffraff.apiKey,
-        "pageSize" -> pageSize.getOrElse(""),
-        "projectName" -> projectName.getOrElse(""),
-        "stage" -> stage.getOrElse(""),
-        "status" -> status.getOrElse("")
-      )
+      queryString = Map("key" -> Configuration.riffraff.apiKey)
+        ++ pageSize.map("pageSize" -> _.toString)
+        ++ projectName.map("projectName" -> _)
+        ++ stage.map("stage" -> _)
+        ++ status.map("status" -> _)
     ).map { response =>
       response.status match {
         case 200 =>
