@@ -10,7 +10,7 @@ import play.api.mvc.{Filter, RequestHeader, Result}
 
 import scala.concurrent.Future
 
-class StandaloneFilters(cryptoConfig: CryptoConfig)(implicit mat: Materializer, context: ApplicationContext) extends HttpFilters {
+class PreviewFilters(cryptoConfig: CryptoConfig)(implicit mat: Materializer, context: ApplicationContext) extends HttpFilters {
 
   val previewAuthFilter = new AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
