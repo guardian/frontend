@@ -17,14 +17,39 @@
         }).replace(/^-/, '');
     }
 
-    function testCssSuportForProperty(prop) { return shimTestCssSupportForPropertyAndValue(prop, undefined); }
-
-    function nativeTestCssSupportForPropertyAndValue(prop, value) {
-        return window.CSS.supports(prop, value);
+    /* testAndAddClass :: Array[(String, Any -> Boolean, ...args)]
+       Each tuple has a feature detect function that returns a boolean, to which
+       we pass args. The first element of the tuple is the name of the feature.
+       If the test passes, the name of the feature will be added to the class attribute
+       of the HTML element with a prefix 'has-', and 'has-no-' otherwise.
+    */
+    function testAndAddClass(tests) {
+        docClass += ' ' + tests.map(function (test) {
+            var testClass = test[0];
+            var testFn = test[1];
+            var testArgs = Array.prototype.slice.call(test, 2);
+            if (testFn.apply(undefined, testArgs)) {
+                return 'has-' + testClass;
+            } else {
+                return 'has-no-' + testClass;
+            }
+        }).join(' ');
     }
 
-    function shimTestCssSupportForPropertyAndValue(prop, value) {
-        var valueIsDefined = value !== undefined;
+    function testCssSupportForProperty(props) {
+        return props.some(function (prop) {
+            return shimTestCssSupportForPropertyAndValue(prop, undefined);
+        });
+    }
+
+    function nativeTestCssSupportForPropertyAndValue(prop, values) {
+        return values.some(function (value) {
+            return window.CSS.supports(prop, value);
+        });
+    }
+
+    function shimTestCssSupportForPropertyAndValue(prop, values) {
+        var valueIsDefined = values !== undefined;
         try {
             var elm = document.createElement('test');
             prop = cssToDOM(prop);
@@ -32,16 +57,18 @@
 
                 if (valueIsDefined) {
                     var before = elm.style[prop];
-                    try {
-                        elm.style[prop] = value;
-                    } catch (e) {}
-                    if (elm.style[prop] !== before) {
-                        elm = null;
-                        return true;
-                    } else {
-                        elm = null;
-                        return false;
-                    }
+                    var support = values.some(function (value) {
+                        try {
+                            elm.style[prop] = value;
+                        } catch (e) {}
+                        if (elm.style[prop] !== before) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                    elm = null;
+                    return support;
                 }
                 elm = null;
                 return true;
@@ -58,27 +85,12 @@
         docClass += ' no-svg';
     }
 
-    if (testCssSuportForProperty('flex') || testCssSuportForProperty('-ms-flex') || testCssSuportForProperty('-webkit-flex') || testCssSuportForProperty('-moz-box-flex') || testCssSuportForProperty('-webkit-box-flex')) {
-        docClass += ' has-flex';
-    } else {
-        docClass += ' has-no-flex';
-    }
-
-    if (testCssSuportForProperty('flex-wrap') || testCssSuportForProperty('-ms-flex-wrap') || testCssSuportForProperty('-webkit-flex-wrap')) {
-        docClass += ' has-flex-wrap';
-    } else {
-        docClass += ' has-no-flex-wrap';
-    }
-
-    if (testCssSupportForPropertyAndValue('position', 'fixed')) {
-        docClass += ' has-fixed';
-    }
-
-    if (testCssSupportForPropertyAndValue('position', 'sticky') || testCssSupportForPropertyAndValue('position', '-webkit-sticky')) {
-        docClass += ' has-sticky';
-    } else {
-        docClass += ' has-no-sticky';
-    }
+    testAndAddClass([
+        ['flex', testCssSupportForProperty, ['flex', '-ms-flex', '-webkit-flex', '-moz-box-flex', '-webkit-box-flex']],
+        ['flex-wrap', testCssSupportForProperty, ['flex-wrap', '-ms-flex-wrap', '-webkit-flex-wrap']],
+        ['fixed', testCssSupportForPropertyAndValue, 'position', ['fixed']],
+        ['sticky', testCssSupportForPropertyAndValue, 'position', ['sticky', '-webkit-sticky']]
+    ]);
 
     if (window.guardian.isEnhanced) {
         docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
