@@ -31,9 +31,6 @@ define([
     var promiseRequire = function (moduleIds) {
         return Promise.resolve(window.require(moduleIds));
     };
-
-    console.log('Booting');
-
     var guardian = window.guardian;
     var config = guardian.config;
 

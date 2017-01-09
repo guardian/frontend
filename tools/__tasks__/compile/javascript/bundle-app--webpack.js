@@ -11,7 +11,7 @@ module.exports = {
     description: 'Create app.js for Webpack',
     task: () => Promise.all([
         path.resolve(vendor, 'javascripts', 'components', 'curl', 'curl-domReady.js'),
-        path.resolve(target, 'javascripts', 'boot-webpack.js')
+        path.resolve(target, 'javascripts', 'boot-webpack.js'),
     ].map(file => readFileP(file, 'utf8')))
         .then(srcs => srcs.join(';'))
         .then(allSrcs => writeFileP(path.resolve(target, 'javascripts', 'app-webpack.js'), allSrcs)),
