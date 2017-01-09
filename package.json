@@ -101,6 +101,6 @@
     "sass-watch": "node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true",
     "babel-watch": "BABEL_ENV=development babel ./static/src/javascripts --watch -d ./static/transpiled/javascripts >/dev/null 2>&1",
     "gulp-watch": "gulp --cwd ./dev watch",
-    "browser-sync": "browser-sync start --config ./dev/bs-config.js",
+    "browser-sync": "browser-sync start --config ./dev/bs-config.js"
   }
 }
