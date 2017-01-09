@@ -41,11 +41,11 @@ import scala.concurrent.duration._
 
   "GET /deploys" should {
     val getDeploysRequest = FakeRequest(method = "GET", path = "/deploys")
-    "returns 200 with expected amount of results when project and stage exists" in {
-      val pageSize = 10
-      val projectName = "dotcom:facia-press"
+    "returns 200 with expected amount of results" in {
+      val projectName = "dotcom:all"
       val stage = "PROD"
-      val response = call(controller.getDeploys(pageSize = Some(s"$pageSize"), projectName = Some(projectName), stage = Some(stage)), getDeploysRequest)
+      val pageSize = 10
+      val response = call(controller.getDeploys(stage = Some(stage), pageSize = Some(pageSize)), getDeploysRequest)
 
       status(response) should be(OK)
 
@@ -55,17 +55,6 @@ import scala.concurrent.duration._
       (jsonResponse \ "response" \\ "projectName").map(_.as[String]).distinct should equal(List(projectName))
       (jsonResponse \ "response" \\ "projectName").map(_.as[String]).distinct should equal(List(projectName))
       (jsonResponse \ "response" \\ "stage").map(_.as[String]).distinct should equal(List(stage))
-    }
-    "returns 200 with no results when project and stage don't exist" in {
-      val projectName = "does-not-exist"
-      val stage = "does-not-exist-neither"
-      val response = call(controller.getDeploys(pageSize = None, projectName = Some(projectName), stage = Some(stage)), getDeploysRequest)
-
-      status(response) should be(OK)
-
-      val jsonResponse = contentAsJson(response)
-      (jsonResponse \ "response").as[JsArray].value.size should be(0)
-      (jsonResponse \ "status").as[String] should be("ok")
     }
   }
 }

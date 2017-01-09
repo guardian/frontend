@@ -109,7 +109,7 @@ GET         /metrics/afg                                                        
 GET         /radiator                                                                               controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/commit/*hash                                                                  controllers.admin.RadiatorController.commitDetail(hash)
 
-GET         /deploys                                                                                controllers.admin.DeploysController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
+GET         /deploys                                                                                controllers.admin.DeploysController.getDeploys(stage: Option[String], pageSize: Option[Int])
 
 # Redirects
 GET         /redirects                                                                              controllers.admin.RedirectController.redirect()

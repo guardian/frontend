@@ -222,7 +222,7 @@ GET            /deduped                                                         
 GET            /deduped/*path                                                                                                    controllers.admin.WhatIsDeduped.dedupedFor(path)
 GET            /radiator                                                                                                         controllers.admin.RadiatorController.renderRadiator()
 GET            /radiator/commit/*hash                                                                                            controllers.admin.RadiatorController.commitDetail(hash)
-GET            /deploys                                                                                                          controllers.admin.DeploysController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
+GET            /deploys                                                                                                          controllers.admin.DeploysController.getDeploys(stage: Option[String], pageSize: Option[Int])
 GET            /troubleshoot/football                                                                                            controllers.admin.SportTroubleshooterController.renderFootballTroubleshooter()
 GET            /troubleshoot/cricket                                                                                             controllers.admin.SportTroubleshooterController.renderCricketTroubleshooter()
 GET            /troubleshoot/pages                                                                                               controllers.admin.TroubleshooterController.index()
