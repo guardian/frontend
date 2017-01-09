@@ -22,7 +22,7 @@ object CacheTime {
   object RecentlyUpdated extends CacheTime(60)
   object Facia extends CacheTime(300)
   object ArchiveRedirect extends CacheTime(300)
-  object ShareCount extends CacheTime(300)
+  object ShareCount extends CacheTime(600)
   object NotFound extends CacheTime(10) // This will be overwritten by fastly
 
   def LastDayUpdated = CacheTime(extended(60))
