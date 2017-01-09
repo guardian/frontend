@@ -109,6 +109,7 @@ GET         /metrics/afg                                                        
 GET         /radiator                                                                               controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/commit/*hash                                                                  controllers.admin.RadiatorController.commitDetail(hash)
 
+# Used by Prout to know which builds/commits have been deployed in PROD
 GET         /deploys                                                                                controllers.admin.DeploysController.getDeploys(stage: Option[String], pageSize: Option[Int])
 
 # Redirects
