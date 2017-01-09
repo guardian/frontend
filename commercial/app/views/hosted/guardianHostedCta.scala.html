@@ -5,7 +5,7 @@
     <section class="host hosted__container--full">
         <div class="hosted__banner" @if(!isAMP) {style="background-image: url(@{cta.image});"}>
             <a href="@{cta.url}" rel="nofollow" class="hosted__cta-link" data-link-name="@{cta.trackingCode}" target="_blank">
-                <div class="hostedbadge hostedbadge--pushdown hosted-tone-bg content__hosted-body">
+                <div class="hostedbadge hostedbadge--pushdown">
                     @if(isAMP) {
                         <amp-img layout="responsive" width="@{page.campaign.logo.dimensions.map(_.width)}" height="@{page.campaign.logo.dimensions.map(_.height)}" class="hostedbadge__logo" src="@{page.campaign.logo.src}" alt="logo @{page.campaign.owner}"></amp-img>
                     } else {

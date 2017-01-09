@@ -6,6 +6,10 @@
  */
 (function (documentElement, window, navigator) {
     var docClass = documentElement.className;
+    var supportsSupports = 'CSS' in window && 'supports' in window.CSS;
+    var testCssSupportForPropertyAndValue = supportsSupports ?
+        nativeTestCssSupportForPropertyAndValue :
+        shimTestCssSupportForPropertyAndValue;
 
     function cssToDOM(name) {
         return name.replace(/([a-z])-([a-z])/g, function (str, m1, m2) {
@@ -13,37 +17,37 @@
         }).replace(/^-/, '');
     }
 
-    function testCssSuportForProperty(prop) { return testCssSupportForPropertyAndValue(prop, undefined); }
+    function testCssSuportForProperty(prop) { return shimTestCssSupportForPropertyAndValue(prop, undefined); }
 
-    function testCssSupportForPropertyAndValue(prop, value) {
+    function nativeTestCssSupportForPropertyAndValue(prop, value) {
+        return window.CSS.supports(prop, value);
+    }
+
+    function shimTestCssSupportForPropertyAndValue(prop, value) {
         var valueIsDefined = value !== undefined;
-        if (valueIsDefined && ('CSS' in window && 'supports' in window.CSS)) {
-            return window.CSS.supports(prop, value);
-        } else {
-            try {
-                var elm = document.createElement('test');
-                prop = cssToDOM(prop);
-                if (elm.style[prop] !== undefined) {
+        try {
+            var elm = document.createElement('test');
+            prop = cssToDOM(prop);
+            if (elm.style[prop] !== undefined) {
 
-                    if (valueIsDefined) {
-                        var before = elm.style[prop];
-                        try {
-                            elm.style[prop] = value;
-                        } catch (e) {}
-                        if (elm.style[prop] !== before) {
-                            elm = null;
-                            return true;
-                        } else {
-                            elm = null;
-                            return false;
-                        }
+                if (valueIsDefined) {
+                    var before = elm.style[prop];
+                    try {
+                        elm.style[prop] = value;
+                    } catch (e) {}
+                    if (elm.style[prop] !== before) {
+                        elm = null;
+                        return true;
+                    } else {
+                        elm = null;
+                        return false;
                     }
-                    elm = null;
-                    return true;
                 }
-            } catch (e) {
-                return false;
+                elm = null;
+                return true;
             }
+        } catch (e) {
+            return false;
         }
     }
 
@@ -70,6 +74,12 @@
         docClass += ' has-fixed';
     }
 
+    if (testCssSupportForPropertyAndValue('position', 'sticky')) {
+        docClass += ' has-sticky';
+    } else {
+        docClass += ' has-no-sticky';
+    }
+
     if (window.guardian.isEnhanced) {
         docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
     }
@@ -79,7 +89,7 @@
     } else {
         if (window.location.hash === '#kern') {docClass += ' should-kern'}
     }
-    
+
     // MINIMISE DOM THRASHING…
 
     // READs

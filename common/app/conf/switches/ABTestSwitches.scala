@@ -36,7 +36,17 @@ trait ABTestSwitches {
     "Test personalised container on fronts",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 10),
+    sellByDate = new LocalDate(2017, 2, 21),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-brexit",
+    "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
+    owners = Seq(Owner.withGithub("alexduf")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 1),
     exposeClientSide = true
   )
 

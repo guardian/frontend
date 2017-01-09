@@ -222,6 +222,7 @@ $badge-width: $gs-column-width + $gs-gutter;
         border-right: 1px solid $text-colour;
         border-bottom: 1px solid $text-colour;
         background-color: #ffffff;
+        line-height: 1.5;
     }
 
     .survey-text__paragraph {
@@ -275,7 +276,6 @@ $badge-width: $gs-column-width + $gs-gutter;
 
 .hosted__next-page {
     position: relative;
-    margin-bottom: 2 * $gs-baseline;
 }
 
 .hosted__next-page--more-from {
@@ -334,6 +334,10 @@ $badge-width: $gs-column-width + $gs-gutter;
     bottom: 0;
     width: $badge-width;
     z-index: $zindex-ads;
+    margin: 0 $gs-gutter/2;
+    @include mq(mobileLandscape) {
+        margin: 0 $gs-gutter;
+    }
 }
 
 .hostedbadge:focus {
@@ -433,4 +437,8 @@ $badge-width: $gs-column-width + $gs-gutter;
 
 .u-responsive-ratio {
     height: 0;
+}
+
+.content__hosted-body {
+    @include content-gutter();
 }

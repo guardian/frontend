@@ -10,6 +10,7 @@ define([
     'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
+    'common/modules/experiments/tests/contributions-epic-brexit',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy'
 ], function (reportError,
              config,
@@ -22,11 +23,13 @@ define([
              EditorialEmailVariants,
              RecommendedForYou,
              MembershipEngagementBannerTests,
+             ContributionsEpicBrexit,
              ContributionsEpicAlwaysAskStrategy
     ) {
     var TESTS = [
         new EditorialEmailVariants(),
         new RecommendedForYou(),
+        new ContributionsEpicBrexit,
         new ContributionsEpicAlwaysAskStrategy
     ].concat(MembershipEngagementBannerTests);
 

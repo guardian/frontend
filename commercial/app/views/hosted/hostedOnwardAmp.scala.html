@@ -3,10 +3,8 @@
 
 <amp-list src="@AmpLinkTo(path)" height="148" layout="fixed-height">
     <template type="amp-mustache">
-        {{^trails}}
-            <div></div>
-        {{/trails}}
-        <div class="hosted__next-page content__hosted-body">
+        {{#trails.length}}
+        <div class="hosted__next-page">
             <div class="hosted__next-page--header">
                 <div class="hosted__next-page-header--border hosted-tone-bg"></div>
                 <h2 class="hosted__text hosted__next-page--more-from">More from</h2>
@@ -21,5 +19,6 @@
                 </a>
             {{/trails}}
         </div>
+        {{/trails.length}}
     </template>
 </amp-list>

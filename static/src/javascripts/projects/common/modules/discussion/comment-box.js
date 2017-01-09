@@ -96,6 +96,7 @@ CommentBox.prototype.defaultOptions = {
     maxLength: 5000,
     premod: false,
     newCommenter: false,
+    newUsername: true,
     focus: false,
     state: 'top-level',
     replyTo: null,
@@ -156,8 +157,9 @@ CommentBox.prototype.showOnboarding = function(e) {
 
     // Check if new commenter as they may have already commented on this article
     if (this.hasState('onboarding-visible') || !this.options.newCommenter) {
-        this.options.newCommenter = false;
-        this.removeState('onboarding-visible');
+        if (!this.options.newUsername) {
+            this.removeState('onboarding-visible');
+        }
         this.postComment();
     } else {
         this.getElem('onboarding-author').innerHTML = this.getUserData().displayName;
@@ -234,8 +236,9 @@ CommentBox.prototype.submitPostComment = function(e) {
 };
 
 CommentBox.prototype.invalidEmailError = function () {
-   this.error('EMAIL_NOT_VALIDATED');
-   ValidationEmail.init();
+    this.removeState('onboarding-visible');
+    this.error('EMAIL_NOT_VALIDATED');
+    ValidationEmail.init();
 };
 
 CommentBox.prototype.postComment = function() {
@@ -245,6 +248,33 @@ CommentBox.prototype.postComment = function() {
         };
 
     self.clearErrors();
+
+    var postCommentToDAPI = function () {
+        self.removeState('onboarding-visible');
+        self.options.newUsername = false;
+        comment.body = self.urlify(comment.body);
+        self.setFormState(true);
+        DiscussionApi
+            .postComment(self.getDiscussionId(), comment)
+            .then(self.postCommentSuccess.bind(self, comment), self.fail.bind(self));
+    };
+
+    var updateUsernameSuccess = function (resp) {
+        mediator.emit('user:username:updated', resp.user.publicFields.username);
+        self.options.newUsername = false;
+        self.getElem('onboarding-username').classList.add('is-hidden');
+        postCommentToDAPI();
+    };
+
+    var updateUsernameFailure = function (errorResponse) {
+        var usernameField = self.getElem('onboarding-username-input');
+        self.options.newUsername = true;
+        self.setState('onboarding-visible');
+        usernameField.classList.add('d-comment-box__onboarding-username-error-border');
+        var errorMessage = self.getElem('onboarding-username-error-message');
+        errorMessage.innerHTML = JSON.parse(errorResponse.responseText).errors[0].description;
+        errorMessage.classList.remove('is-hidden');
+    };
 
     var validEmailCommentSubmission = function () {
         if (comment.body === '') {
@@ -261,11 +291,11 @@ CommentBox.prototype.postComment = function() {
         }
 
         if (self.errors.length === 0) {
-            comment.body = self.urlify(comment.body);
-            self.setFormState(true);
-            DiscussionApi
-                .postComment(self.getDiscussionId(), comment)
-                .then(self.postCommentSuccess.bind(self, comment), self.fail.bind(self));
+            if (self.options.newCommenter && self.options.newUsername) {
+                IdentityApi.updateUsername(self.getElem('onboarding-username-input').value).then(updateUsernameSuccess, updateUsernameFailure);
+            } else {
+                postCommentToDAPI();
+            }
         }
     };
 
@@ -313,6 +343,11 @@ CommentBox.prototype.error = function(type, message) {
  * @param {Object} resp
  */
 CommentBox.prototype.postCommentSuccess = function(comment, resp) {
+    if (this.options.newCommenter) {
+        this.refreshUsernameHtml();
+        this.options.newCommenter = false;
+    }
+
     comment.id = parseInt(resp.message, 10);
     this.getElem('body').value = '';
     this.resetPreviewComment();
@@ -515,6 +550,18 @@ CommentBox.prototype.formatComment = function(formatStyle) {
             formatSelectionLink();
             break;
     }
+};
+
+
+// When the user updates the username the changes are visible only when the page is refreshed. This method
+// temporarily updates HTML client-side so that user has instant feedback before the page is refreshed.
+CommentBox.prototype.refreshUsernameHtml = function() {
+    IdentityApi.reset();
+    var displayName = this.getUserData().displayName;
+    var menuHeaderUsername = $('.js-profile-info')[0];
+    var discussionHeaderUsername = $('._author_tywwu_16')[0];
+    menuHeaderUsername && (menuHeaderUsername.innerHTML = displayName);
+    discussionHeaderUsername && (discussionHeaderUsername.innerHTML = displayName);
 };
 
 return CommentBox;

@@ -86,11 +86,4 @@ class TeamcityService(httpClient: HttpLike) extends ExecutionContexts {
     ).map(_.builds)
   }
 
-  def getBuild(number: String): Future[TeamCityBuild] = {
-    GET[TeamCityBuild](
-      path = s"builds/number:$number,state:any,canceled(any)",
-      queryString = Map("fields" -> buildFields)
-    )
-  }
-
 }
