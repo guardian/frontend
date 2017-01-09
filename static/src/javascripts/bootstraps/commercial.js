@@ -89,7 +89,8 @@ define([
             ['cm-hostedOJCarousel', hostedOJCarousel.init]);
     }
 
-    if (!config.page.disableStickyTopBanner) {
+    var supportsSticky = document.documentElement.classList.contains('has-sticky');
+    if (!config.page.disableStickyTopBanner && !supportsSticky) {
         secondaryModules.unshift(['cm-stickyTopBanner', stickyTopBanner.init]);
     }
 
