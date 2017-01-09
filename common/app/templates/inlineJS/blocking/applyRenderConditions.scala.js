@@ -74,7 +74,7 @@
         docClass += ' has-fixed';
     }
 
-    if (testCssSupportForPropertyAndValue('position', 'sticky')) {
+    if (testCssSupportForPropertyAndValue('position', 'sticky') || testCssSupportForPropertyAndValue('position', '-webkit-sticky')) {
         docClass += ' has-sticky';
     } else {
         docClass += ' has-no-sticky';
