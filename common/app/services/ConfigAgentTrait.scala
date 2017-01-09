@@ -113,6 +113,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
         _.priority match {
           case Some("commercial") => CommercialPriority
           case Some("training") => TrainingPriority
+          case Some("email") => EmailPriority
           case _ => EditorialPriority
         }
       }
