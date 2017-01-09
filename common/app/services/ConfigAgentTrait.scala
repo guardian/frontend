@@ -4,7 +4,8 @@ import akka.util.Timeout
 import app.LifecycleComponent
 import com.gu.facia.api.models._
 import com.gu.facia.client.ApiClient
-import com.gu.facia.client.models.{ConfigJson => Config, FrontJson => Front}
+import com.gu.facia.api.models.Front
+import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common._
 import conf.Configuration
 import fronts.FrontsApi
@@ -23,7 +24,7 @@ case class CollectionConfigWithId(id: String, config: CollectionConfig)
 
 trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit lazy val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
-  private lazy val configAgent = AkkaAgent[Option[Config]](None)
+  private lazy val configAgent = AkkaAgent[Option[ConfigJson]](None)
 
   def isLoaded() = configAgent.get().isDefined
 
@@ -40,11 +41,11 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     futureConfig.map(Option.apply).map(configAgent.send)
   }
 
-  def refreshWith(config: Config): Unit = {
+  def refreshWith(config: ConfigJson): Unit = {
     configAgent.send(Option(config))
   }
 
-  def refreshAndReturn(): Future[Option[Config]] =
+  def refreshAndReturn(): Future[Option[ConfigJson]] =
     getClient.config
       .flatMap(config => configAgent.alter{_ => Option(config)})
       .fallbackTo{
@@ -109,19 +110,14 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 
   def getFrontPriorityFromConfig(pageId: String): Option[FrontPriority] = {
     configAgent.get() flatMap {
-      _.fronts.get(pageId) map {
-        _.priority match {
-          case Some("commercial") => CommercialPriority
-          case Some("training") => TrainingPriority
-          case Some("email") => EmailPriority
-          case _ => EditorialPriority
-        }
+      _.fronts.get(pageId) map { frontJson =>
+        Front.fromFrontJson(pageId, frontJson).priority
       }
     }
   }
 
   def fetchFrontProperties(id: String): FrontProperties = {
-    val frontOption: Option[Front] = configAgent.get().flatMap(_.fronts.get(id))
+    val frontOption: Option[FrontJson] = configAgent.get().flatMap(_.fronts.get(id))
 
     FrontProperties(
       onPageDescription = frontOption.flatMap(_.onPageDescription),
