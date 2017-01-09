@@ -3,17 +3,9 @@ const path = require('path');
 const { target } = require('../../config').paths;
 
 const bundles = [{
-    name: 'boot-rjs',
-    out: `${target}/javascripts/boot-rjs.js`,
-    exclude: [
-        'text',
-        'inlineSvg',
-    ],
-}, {
     name: 'bootstraps/commercial',
     out: `${target}/javascripts/bootstraps/commercial-rjs.js`,
     exclude: [
-        'boot-rjs',
         'text',
         'inlineSvg',
     ],
@@ -21,7 +13,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/main',
     out: `${target}/javascripts/bootstraps/enhanced/main-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'text',
         'inlineSvg',
@@ -30,7 +21,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/article',
     out: `${target}/javascripts/bootstraps/enhanced/article-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -40,7 +30,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/article-minute',
     out: `${target}/javascripts/bootstraps/enhanced/article-minute-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -50,7 +39,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/crosswords',
     out: `${target}/javascripts/bootstraps/enhanced/crosswords-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -60,7 +48,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/liveblog',
     out: `${target}/javascripts/bootstraps/enhanced/liveblog-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -70,7 +57,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/gallery',
     out: `${target}/javascripts/bootstraps/enhanced/gallery-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -80,7 +66,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/trail',
     out: `${target}/javascripts/bootstraps/enhanced/trail-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -90,7 +75,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/profile',
     out: `${target}/javascripts/bootstraps/enhanced/profile-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -100,7 +84,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/sudoku',
     out: `${target}/javascripts/bootstraps/enhanced/sudoku-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -110,7 +93,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/image-content',
     out: `${target}/javascripts/bootstraps/enhanced/image-content-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -120,7 +102,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/facia',
     out: `${target}/javascripts/bootstraps/enhanced/facia-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -130,7 +111,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/football',
     out: `${target}/javascripts/bootstraps/enhanced/football-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -140,7 +120,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/preferences',
     out: `${target}/javascripts/bootstraps/enhanced/preferences-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -150,7 +129,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/newsletters',
     out: `${target}/javascripts/bootstraps/enhanced/newsletters-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -160,7 +138,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/membership',
     out: `${target}/javascripts/bootstraps/enhanced/membership-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -176,7 +153,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/youtube',
     out: `${target}/javascripts/bootstraps/enhanced/youtube-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -186,7 +162,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/media/main',
     out: `${target}/javascripts/bootstraps/enhanced/media/main-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
@@ -198,7 +173,6 @@ const bundles = [{
     name: 'bootstraps/video-embed',
     out: `${target}/javascripts/bootstraps/video-embed-rjs.js`,
     exclude: [
-        'boot-rjs',
         'text',
         'inlineSvg',
     ],
@@ -208,7 +182,6 @@ const bundles = [{
     name: 'bootstraps/youtube-embed',
     out: `${target}/javascripts/bootstraps/youtube-embed-rjs.js`,
     exclude: [
-        'boot-rjs',
         'text',
         'inlineSvg',
     ],
@@ -218,7 +191,6 @@ const bundles = [{
     name: 'bootstraps/enhanced/accessibility',
     out: `${target}/javascripts/bootstraps/enhanced/accessibility-rjs.js`,
     exclude: [
-        'boot-rjs',
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'bootstraps/enhanced/facia',
