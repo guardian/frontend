@@ -19,6 +19,7 @@ object Commit {
 case class TeamCityBuild(number: String,
                          id: Int,
                          status: String,
+                         branchName: String,
                          projectName: String,
                          parentNumber: Option[String],
                          revision: String,
@@ -35,6 +36,7 @@ object TeamCityBuild {
     (__ \ "number").read[String] and
       (__ \ "id").read[Int] and
       (__ \ "status").read[String] and
+      (__ \ "branchName").read[String] and
       (__ \ "buildType").read(
         (__ \ "projectName").read[String] and
           (__ \ "name").read[String]
@@ -58,7 +60,7 @@ object TeamCityBuilds {
 
 class TeamcityService(httpClient: HttpLike) extends ExecutionContexts {
 
-  private lazy val buildFields = List("id", "number", "buildType(name,projectName)", "status",
+  private lazy val buildFields = List("id", "number", "branchName", "buildType(name,projectName)", "status",
     "revisions(revision(version))", "changes(change(username,comment,version))",
     "artifact-dependencies(build(number))").mkString(",")
 
@@ -79,10 +81,10 @@ class TeamcityService(httpClient: HttpLike) extends ExecutionContexts {
       }
   }
 
-  def getBuilds(project: String, count: Int = 10): Future[Seq[TeamCityBuild]] = {
+  def getBuilds(project: String, branch: String = "master", count: Int = 10): Future[Seq[TeamCityBuild]] = {
     GET[TeamCityBuilds](
       path = "builds",
-      queryString = Map("locator" -> s"buildType:(id:$project),count:$count") + ("fields" -> s"build($buildFields)")
+      queryString = Map("locator" -> s"buildType:(id:$project),branch:$branch,count:$count") + ("fields" -> s"build($buildFields)")
     ).map(_.builds)
   }
 

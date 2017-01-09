@@ -43,7 +43,7 @@ class RadiatorController(wsClient: WSClient)(implicit context: ApplicationContex
     def mostRecentBuildForProjects(projects: String*): Future[Seq[TeamCityBuild]] = {
       Future.sequence(projects.map { project =>
         teamcityService
-          .getBuilds(project, 1)
+          .getBuilds(project, count = 1)
           .map(_.head)
       })
     }
