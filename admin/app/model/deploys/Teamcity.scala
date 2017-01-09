@@ -19,7 +19,7 @@ object Commit {
 case class TeamCityBuild(number: String,
                          id: Int,
                          status: String,
-                         branchName: String,
+                         branchName: Option[String],
                          projectName: String,
                          parentNumber: Option[String],
                          revision: String,
@@ -36,7 +36,7 @@ object TeamCityBuild {
     (__ \ "number").read[String] and
       (__ \ "id").read[Int] and
       (__ \ "status").read[String] and
-      (__ \ "branchName").read[String] and
+      (__ \ "branchName").readNullable[String] and
       (__ \ "buildType").read(
         (__ \ "projectName").read[String] and
           (__ \ "name").read[String]
