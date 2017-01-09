@@ -106,7 +106,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
         }
 
         child.wrap("<div class=\"embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
-      };
+      }
     }
 
     cleanVideo(document)
