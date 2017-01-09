@@ -2,9 +2,8 @@ package services
 
 import akka.util.Timeout
 import app.LifecycleComponent
-import com.gu.facia.api.models._
+import com.gu.facia.api.models.{Front, _}
 import com.gu.facia.client.ApiClient
-import com.gu.facia.api.models.Front
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common._
 import conf.Configuration
@@ -13,11 +12,9 @@ import model.pressed.CollectionConfig
 import model.{ApplicationContext, FrontProperties, SeoDataJson}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.json.Json
-import play.api.mvc._
-import conf.switches.Switches
 
-import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
 case class CollectionConfigWithId(id: String, config: CollectionConfig)
