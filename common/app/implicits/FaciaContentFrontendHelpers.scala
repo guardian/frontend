@@ -24,13 +24,14 @@ object FaciaContentFrontendHelpers {
       imageOverride.orElse(defaultTrailPicture)
     }
 
-    def mainVideoAtom: Option[MediaAtom] =
+    def mainYouTubeMediaAtom: Option[MediaAtom] =
       for {
        main <- faciaContent.properties.maybeContent.map(_.fields.main)
        atoms <-  faciaContent.properties.maybeContent.flatMap(_.atoms)
        document <- Some(Jsoup.parse(main))
-       atomContainer <- Some(document.getElementsByClass("element-atom").first())
+       atomContainer <- Option(document.getElementsByClass("element-atom").first())
        bodyElement <- Some(atomContainer.getElementsByTag("gu-atom"))
+       youTubeIframe <- Option(bodyElement.select("iframe[src^=https://www.youtube.com]").first())
        atomId <- Some(bodyElement.attr("data-atom-id"))
        mainMediaAtom <- atoms.media.find(_.id == atomId)
      } yield mainMediaAtom

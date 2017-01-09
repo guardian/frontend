@@ -22,8 +22,8 @@ object FaciaDisplayElement {
         faciaContent.properties.maybeContentId map CrosswordSvg
       case _ if faciaContent.properties.imageSlideshowReplace && itemClasses.canShowSlideshow =>
         InlineSlideshow.fromFaciaContent(faciaContent)
-      case _ if faciaContent.properties.showMainVideo && faciaContent.mainVideoAtom.isDefined  =>
-        Some(InlineYouTubeMediaAtom(faciaContent.mainVideoAtom.get))
+      case _ if faciaContent.properties.showMainVideo && faciaContent.mainYouTubeMediaAtom.isDefined  =>
+        Some(InlineYouTubeMediaAtom(faciaContent.mainYouTubeMediaAtom.get))
       case _ => InlineImage.fromFaciaContent(faciaContent)
     }
   }
