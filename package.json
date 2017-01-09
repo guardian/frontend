@@ -95,7 +95,6 @@
     "postinstall": "./tools/task-runner/runner githooks --verbose",
     "sass-watch": "node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true",
     "css-watch": "gulp --cwd ./dev watch:css",
-    "browser-sync": "browser-sync start --config ./dev/bs-config.js",
-    "compile-deploy-radiator": "BABEL_ENV=production webpack --config=static/src/deploys-radiator/webpack.config.js --progress --colors && cp static/src/deploys-radiator/app/main.css static/target/deploys-radiator"
+    "browser-sync": "browser-sync start --config ./dev/bs-config.js"
   }
 }

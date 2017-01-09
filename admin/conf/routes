@@ -109,13 +109,7 @@ GET         /metrics/afg                                                        
 GET         /radiator                                                                               controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/commit/*hash                                                                  controllers.admin.RadiatorController.commitDetail(hash)
 
-GET         /deploys                                                                                controllers.admin.DeploysRadiatorController.getCompletedDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
-
-GET         /deploys-radiator/api/deploys                                                           controllers.admin.DeploysRadiatorController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String], status: Option[String])
-GET         /deploys-radiator/api/builds/:number                                                    controllers.admin.DeploysRadiatorController.getBuild(number)
-GET         /deploys-radiator                                                                       controllers.admin.DeploysRadiatorController.renderDeploysRadiator()
-
-POST        /deploys-notify/api/builds/:number/notify                                               controllers.admin.DeploysNotifyController.notifyStep(number)
+GET         /deploys                                                                                controllers.admin.DeploysController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
 
 # Redirects
 GET         /redirects                                                                              controllers.admin.RedirectController.redirect()

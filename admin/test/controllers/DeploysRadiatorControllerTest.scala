@@ -11,7 +11,7 @@ import play.api.test.Helpers._
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
 import scala.concurrent.duration._
 
-@DoNotDiscover class DeploysRadiatorControllerTest
+@DoNotDiscover class DeploysControllerTest
   extends WordSpec
     with Matchers
     with ConfiguredTestSuite
@@ -32,16 +32,15 @@ import scala.concurrent.duration._
     }
   }
 
-  class DeploysRadiatorControllerStub extends DeploysRadiatorController {
+  class DeploysControllerStub extends DeploysController {
     private val httpClient = new TestHttpClient(wsClient)
-    override val teamcity = new TeamcityService(httpClient)
     override val riffRaff = new RiffRaffService(httpClient)
   }
 
-  lazy val controller = new DeploysRadiatorControllerStub()
+  lazy val controller = new DeploysControllerStub()
 
-  "GET /deploys-radiator/api/deploys" should {
-    val getDeploysRequest = FakeRequest(method = "GET", path = "/deploys-radiator/api/deploys")
+  "GET /deploys" should {
+    val getDeploysRequest = FakeRequest(method = "GET", path = "/deploys")
     "returns 200 with expected amount of results when project and stage exists" in {
       val pageSize = 10
       val projectName = "dotcom:facia-press"
@@ -67,36 +66,6 @@ import scala.concurrent.duration._
       val jsonResponse = contentAsJson(response)
       (jsonResponse \ "response").as[JsArray].value.size should be(0)
       (jsonResponse \ "status").as[String] should be("ok")
-    }
-  }
-
-  s"GET /deploys-radiator/api/builds/$existingBuild" should {
-    val getDeploysRequest = FakeRequest(method = "GET", path = s"/deploys-radiator/api/builds/$existingBuild")
-    "returns 200" in {
-      val response = call(controller.getBuild(existingBuild), getDeploysRequest)
-
-      status(response) should be(OK)
-
-      val jsonResponse = contentAsJson(response)
-      (jsonResponse \ "status").as[String] should be("ok")
-      (jsonResponse \ "response" \ "number").as[String] should be(existingBuild)
-      (jsonResponse \ "response" \ "projectName").as[String] should be("dotcom:master")
-      (jsonResponse \ "response" \ "commits").as[JsArray].value.size should be(2)
-    }
-  }
-
-  "GET /deploys-radiator/api/builds/999999999" should {
-    val buildNumber = "999999999"
-    val getDeploysRequest = FakeRequest(method = "GET", path = s"/deploys-radiator/api/builds/$buildNumber")
-    "returns 500" in {
-      val response = call(controller.getBuild(buildNumber), getDeploysRequest)
-
-      status(response) should be(INTERNAL_SERVER_ERROR)
-
-      val jsonResponse = contentAsJson(response)
-      (jsonResponse \ "status").as[String] should be("error")
-      (jsonResponse \ "statusCode").as[Int] should be(INTERNAL_SERVER_ERROR)
-      (jsonResponse \ "errors").as[JsArray].value.size should be >= 1
     }
   }
 }
