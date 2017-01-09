@@ -75,7 +75,7 @@ An example implementation of this can be found in  [**newsletters.scala.html**](
 - https://davidcel.is/posts/stop-validating-email-addresses-with-regex/
 - http://www.ex-parrot.com/~pdw/Mail-RFC822-Address.html
 
-2) If you want to provide some helpful feedback to the user, just check the address has a `.` and at least one `@`
+2) If you want to provide some helpful feedback to the user, just check the address has at least one `@`
 
 ```
 function validate(form) {
