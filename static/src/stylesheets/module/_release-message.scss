@@ -621,18 +621,22 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         }
     }
 
+    .hide-element {
+        display: none;
+    }
+
     #membership__engagement-message-text {
         margin-right: 16px;
     }
 
-    .message-button-rounded__cta.yellow {
+    .message-button-rounded__cta.primary.yellow {
         svg path {
             stroke: #000333;
             fill: #000333;
         }
         background-color: #ff9b0b;
     }
-    .message-button-rounded__cta.purple {
+    .message-button-rounded__cta.primary.purple {
         svg path {
             stroke: #ffffff;
             fill: #ffffff;
@@ -640,7 +644,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         color: #ffffff;
         background-color: #dc2a7d;
     }
-    .message-button-rounded__cta.dark-blue {
+    .message-button-rounded__cta.primary.dark-blue {
         svg path {
             stroke: #000333;
             fill: #000333;
@@ -648,7 +652,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         color: #000333;
         background-color: #4bc6df;
     }
-    .message-button-rounded__cta.bright-blue {
+    .message-button-rounded__cta.primary.bright-blue {
         svg path {
             stroke: #ffffff;
             fill: #ffffff;
@@ -660,6 +664,35 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         display: block;
         float: right;
         height: $gs-column-width/2;
+    }
+
+    .message-button-rounded__cta.secondary {
+        //The secondary span is the only thing that is not overlap by the anchor
+        z-index: $zindex-popover + 1;
+        @include mq($from: mobile) {
+            padding-left: 9px;
+            padding-right: 9px;
+        }
+        border: 1px solid;
+        margin-left: 10px;
+
+    }
+    .message-button-rounded__cta.secondary.yellow {
+        border-color: #333333;
+    }
+
+    .message-button-rounded__cta.secondary.purple {
+        border-color: #ffffff;
+        color: #ffffff;
+    }
+
+    .message-button-rounded__cta.secondary.dark-blue {
+        border-color: #ffffff;
+        color: #ffffff;
+    }
+
+    .message-button-rounded__cta.secondary.bright-blue {
+        border-color: #333333;
     }
 }
 
@@ -687,6 +720,11 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message--membership-prominent.dark-blue {
     background-color: #005689;
+}
+
+
+.site-message--membership-secondary.bright-blue {
+    background: red;
 }
 
 /*
@@ -833,7 +871,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     @include mq(desktop) {
         right: 5%;
         top: 7px;
-        z-index: 1;
+        z-index: $zindex-popover + 1;
     }
 
     .byline-img__img {
@@ -939,3 +977,90 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     width: 100%;
     height: 100%;
 }
+
+.membership__remind-me-form {
+    border-top: 1px dotted #333333;
+    margin-top: 12px;
+    width: 100%;
+}
+
+.membership__engagement-text-field {
+    @include clearfix;
+    @include circular;
+    color: black;
+    @include mq($from: mobile) {
+        font-size: 12px;
+        line-height: 24px;
+        height: 36px;
+        margin-top: 12px;
+    }
+    @include mq($from: tablet) {
+        font-size: 14px;
+        line-height: 28px;
+        height: 36px;
+    }
+    @include mq($from: desktop) {
+        font-size: 14px;
+        line-height: 36px;
+        height: 36px;
+    }
+
+    position: relative;
+    font-weight: bold;
+
+    border: 0;
+    width: 100%;
+}
+
+.message-button-rounded__cta.membership__remind-me-form__cta {
+    color: #fffffb;
+    background-color: #333333;
+    top: 0px;
+    z-index: $zindex-popover + 1;
+    margin-top: 6px;
+
+}
+
+.membership__remind-me-form {
+
+    .membership__remind-me-form__error {
+        @include fs-textSans(2);
+        font-size: 12px;
+        line-height: 16px;
+        position: relative;
+        margin-top: 4px;
+        display: block;
+    }
+
+    .membership__remind-me-form__error.yellow {
+        color: #b51800;
+    }
+
+    .membership__remind-me-form__error.bright-blue {
+        color: #b51800;
+    }
+
+    .membership__remind-me-form__error.purple {
+        color: #ffffff;
+    }
+
+    .membership__remind-me-form__error.dark-blue {
+        color: #ffffff;
+    }
+    .membership__remind-me-form__thanks-message {
+
+    }
+
+    .membership__remind-me-form__error.hide-element,
+    .membership__remind-me-form__thanks-message.hide-element {
+        display: none;
+    }
+
+    .membership__remind-me-form__thanks-message {
+        margin-top: 12px;
+        margin-bottom: 12px;
+        position:relative;
+        display: block;
+    }
+}
+
