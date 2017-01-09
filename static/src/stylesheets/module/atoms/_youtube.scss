@@ -41,12 +41,6 @@
             }
         }
 
-        &.youtube__video-ready:not(.youtube__video-started) {
-            ~ .youtube-media-atom__overlay {
-                @include fade-in;
-            }
-        }
-
         &.youtube__video-started:not(.youtube__video-ended) {
             ~ .youtube-media-atom__overlay {
                 @include fade-out;
