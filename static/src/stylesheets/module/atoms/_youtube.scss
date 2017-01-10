@@ -34,6 +34,14 @@
         top: 1px;
         z-index: 0;
 
+        &:hover {
+            ~ .youtube-media-atom__overlay .youtube-media-atom__play-button {
+                transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+                transform: translate(-50%,-50%) scale(1.12);
+                transform-origin: center;
+            }
+        }
+
         &:not(.youtube__video-ready),
         &.youtube__video-ended {
             ~ .youtube-media-atom__overlay {
