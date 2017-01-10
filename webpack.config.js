@@ -6,8 +6,8 @@ const path = require('path');
 
 module.exports = {
     entry: [
-        './static/src/javascripts/boot.js',
-        './static/src/javascripts/bootstraps/standard/main.js',
+        './static/src/javascripts-legacy/boot.js',
+        './static/src/javascripts-legacy/bootstraps/standard/main.js',
     ],
     resolve: {
         modulesDirectories: [
