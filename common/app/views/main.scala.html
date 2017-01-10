@@ -7,7 +7,7 @@
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition) = {
     @if(!page.metadata.shouldHideHeaderAndTopAds) {
-        <div class="bannerandheader">
+        <div id="bannerandheader">
             @if(showAdverts) {
                 @fragments.commercial.topBanner(page.metadata)
             }
