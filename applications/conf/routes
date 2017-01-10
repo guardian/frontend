@@ -45,6 +45,8 @@ GET        /index/contributors/*contributor                                     
 GET        /embed/video/*path                                                   controllers.EmbedController.render(path)
 GET        /embed/atom/media/:id                                                controllers.MediaAtomEmbedController.render(id)
 
+# Share counts
+GET        /sharecount/*path.json                                               controllers.ShareCountController.fetch(path)
 
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()
@@ -111,6 +113,3 @@ GET        /$leftSide<[^+]+>+*rightSide                                         
 
 # Google site verification
 GET        /google$account<[\w\d-]*>.html                                       controllers.SiteVerificationController.googleSiteVerify(account)
-
-# Share counts
-GET        /sharecount/*path.json                                               controllers.ShareCountController.fetch(path)
