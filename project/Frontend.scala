@@ -181,9 +181,8 @@ object Frontend extends Build with Prototypes {
       javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
     )
 
-  // this app has a very limited set.
-  // it is designed to get all other services (e.g. onwards) from PROD
-  val standalone = application("standalone").dependsOn(
+  val preview = application("preview").dependsOn(
+    commonWithTests,
     article,
     facia,
     applications,
@@ -191,10 +190,7 @@ object Frontend extends Build with Prototypes {
     commercial,
     onward,
     adminJobs
-  )
-
-  val preview = application("preview").dependsOn(commonWithTests, standalone).settings(
-    RoutesKeys.routesImport += "scala.language.reflectiveCalls"
+  ).settings(
   )
 
   val integrationTests = Project("integrated-tests", file("integrated-tests"))

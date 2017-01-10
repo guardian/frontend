@@ -4,6 +4,7 @@ module.exports = {
         require('./clean'),
         require('../inline-svgs'),
         require('./copy'),
+        require('./babel'),
         require('./rjs'),
         require('./rjs--webpack'),
         require('./webpack'),

@@ -16,8 +16,8 @@ module.exports = function (config) {
             { pattern: 'static/test/javascripts/fixtures/**/*', included: false },
             { pattern: 'static/test/javascripts/helpers/**/*.js', included: false },
             { pattern: 'static/src/inline-svgs/**/*.svg', included: false },
-            { pattern: 'static/src/javascripts/**/*.js', included: false },
-            { pattern: 'static/src/javascripts/**/views/**/*.html', included: false },
+            { pattern: 'static/transpiled/javascripts/**/*.js', included: false },
+            { pattern: 'static/transpiled/javascripts/**/views/**/*.html', included: false },
             { pattern: 'static/public/javascripts/**/*.js', included: false },
             { pattern: 'static/vendor/javascripts/**/*.js', included: false },
         ],
@@ -54,8 +54,7 @@ module.exports = function (config) {
             includeAllSources: true
         },
         preprocessors: {
-            'static/src/javascripts/!(*components|vendor)/**/*.js': ['coverage'],
-            'static/src/javascripts/*.js': ['coverage']
+            'static/transpiled/javascripts/**/*.js': ['coverage']
         },
 
         browserDisconnectTimeout: 10000,
