@@ -139,6 +139,12 @@ case object TheFlyer extends FrontEmailMetadata {
   override val toneColour = Some("#ffbdc6")
 }
 
+case object Opinion extends FrontEmailMetadata {
+  val name = "Opinion"
+  override val banner = Some("opinion.png")
+  override val toneColour = Some("#e6711b")
+}
+
 
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
@@ -165,7 +171,8 @@ object EmailAddons {
     KeepItInTheGround)
   private val frontEmails = Seq(
     TheFlyer,
-    CuratedMediaBriefing
+    CuratedMediaBriefing,
+    Opinion
   )
 
   implicit class EmailContentType(p: Page) {
