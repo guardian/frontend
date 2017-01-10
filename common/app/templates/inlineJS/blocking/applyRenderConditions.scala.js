@@ -6,76 +6,58 @@
  */
 (function (documentElement, window, navigator) {
     var docClass = documentElement.className;
-    var supportsSupports = 'CSS' in window && 'supports' in window.CSS;
-    var testCssSupportForPropertyAndValue = supportsSupports ?
-        nativeTestCssSupportForPropertyAndValue :
-        shimTestCssSupportForPropertyAndValue;
+    var testCssSupportForPropertyAndValue = (function(supportsSupports) {
+        return supportsSupports ? window.CSS.supports : shimCSSSupports();
+    }('CSS' in window && 'supports' in window.CSS));
 
-    function cssToDOM(name) {
-        return name.replace(/([a-z])-([a-z])/g, function (str, m1, m2) {
+    function shimCSSSupports() {
+        var cssToDOMRegExp = /([a-z])-([a-z])/g;
+        var testElem = document.createElement('test');
+
+        function cssToDOM(name) {
+            return name.replace(cssToDOMRegExp, cssToDOMReplacer).replace(/^-/, '');
+        }
+
+        function cssToDOMReplacer(str, m1, m2) {
             return m1 + m2.toUpperCase();
-        }).replace(/^-/, '');
+        }
+
+        return function(prop, value) {
+            try {
+                prop = cssToDOM(prop);
+                var originalValue = testElem.style[prop];
+
+                if (originalValue === undefined) {
+                    return false;
+                }
+
+                if (originalValue === value) {
+                    return true;
+                }
+
+                testElem.style[prop] = value;
+                return testElem.style[prop] !== originalValue;
+            } catch (e) {
+                return false;
+            }
+        }
     }
 
-    /* testAndAddClass :: Array[(String, Any -> Boolean, ...args)]
-       Each tuple has a feature detect function that returns a boolean, to which
-       we pass args. The first element of the tuple is the name of the feature.
-       If the test passes, the name of the feature will be added to the class attribute
-       of the HTML element with a prefix 'has-', and 'has-no-' otherwise.
+    /* testAndAddClass :: [(String, [String], [String])]
+       Each tuple is a CSS feature detection where the first element is the name
+       of the feature, the second is an array of property names, the third is an
+       array of property values. If one combination is supported, the feature name
+       is added as a class to the document element with a 'has-' prefix, 'has-no-'
+       otherwise.
     */
     function testAndAddClass(tests) {
         docClass += ' ' + tests.map(function (test) {
-            var testClass = test[0];
-            var testFn = test[1];
-            var testArgs = Array.prototype.slice.call(test, 2);
-            if (testFn.apply(undefined, testArgs)) {
-                return 'has-' + testClass;
-            } else {
-                return 'has-no-' + testClass;
-            }
+            return (test.props.some(function(prop) {
+                return test.values.some(function(value) {
+                    return testCssSupportForPropertyAndValue(prop, value);
+                });
+            }) ? 'has-' : 'has-no-') + test.feature;
         }).join(' ');
-    }
-
-    function testCssSupportForProperty(props) {
-        return props.some(function (prop) {
-            return shimTestCssSupportForPropertyAndValue(prop, undefined);
-        });
-    }
-
-    function nativeTestCssSupportForPropertyAndValue(prop, values) {
-        return values.some(function (value) {
-            return window.CSS.supports(prop, value);
-        });
-    }
-
-    function shimTestCssSupportForPropertyAndValue(prop, values) {
-        var valueIsDefined = values !== undefined;
-        try {
-            var elm = document.createElement('test');
-            prop = cssToDOM(prop);
-            if (elm.style[prop] !== undefined) {
-
-                if (valueIsDefined) {
-                    var before = elm.style[prop];
-                    var support = values.some(function (value) {
-                        try {
-                            elm.style[prop] = value;
-                        } catch (e) {}
-                        if (elm.style[prop] !== before) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    });
-                    elm = null;
-                    return support;
-                }
-                elm = null;
-                return true;
-            }
-        } catch (e) {
-            return false;
-        }
     }
 
     // http://modernizr.com/download/#-svg
@@ -86,10 +68,10 @@
     }
 
     testAndAddClass([
-        ['flex', testCssSupportForProperty, ['flex', '-ms-flex', '-webkit-flex', '-moz-box-flex', '-webkit-box-flex']],
-        ['flex-wrap', testCssSupportForProperty, ['flex-wrap', '-ms-flex-wrap', '-webkit-flex-wrap']],
-        ['fixed', testCssSupportForPropertyAndValue, 'position', ['fixed']],
-        ['sticky', testCssSupportForPropertyAndValue, 'position', ['sticky', '-webkit-sticky']]
+        { feature: 'flex', props: ['flex', '-ms-flex', '-webkit-flex', '-moz-box-flex', '-webkit-box-flex'], values: ['inherit'] },
+        { feature: 'flex-wrap', props: ['flex-wrap', '-ms-flex-wrap', '-webkit-flex-wrap'], values: ['inherit'] },
+        { feature: 'fixed', props: ['position'], values: ['fixed'] },
+        { feature: 'sticky', props: ['position'], values: ['sticky', '-webkit-sticky'] }
     ]);
 
     if (window.guardian.isEnhanced) {
