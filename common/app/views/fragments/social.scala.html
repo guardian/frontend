@@ -1,13 +1,17 @@
-@(sharelinks: model.ShareLinkMeta, position: String = "bottom", iconModifier: List[String] = Nil)
+@(sharelinks: model.ShareLinkMeta, position: String = "bottom", iconModifier: List[String] = Nil, amp: Boolean = false)
 
 <ul class="social social--@position js-social--@position u-unstyled u-cf" data-component="social">
     @sharelinks.visible.map { link => @ShareLink(Nil, link) }
-    @if(!sharelinks.hidden.isEmpty) {
+    @if(!sharelinks.hidden.isEmpty && !amp) {
         @SocialMore
         @sharelinks.hidden.map { link => @ShareLink(List("social--hidden", "js-social__secondary"), link) }
+        @SaveForLater
+        @CloseTray
     }
-    @SaveForLater
-    @CloseTray
+    @if(amp) {
+        @SocialMoreAmp
+        @sharelinks.hidden.map { link => @ShareLink(List("social--hidden", "social__secondary"), link) }
+    }
 </ul>
 
 @ShareLink(extraClasses: List[String], item: model.ShareLink) = {
@@ -30,6 +34,14 @@
             <span class="u-h">View more sharing options</span>
         </button>
     </li>
+}
+
+@SocialMoreAmp = {
+    <input type="checkbox" id="social__item--revealer" class="social__item--revealer" role="button">
+    <label for="social__item--revealer" class="social__item social__item--more">
+        @fragments.inlineSvg("ellipsis-36", "icon", List("rounded-icon", "centered-icon", "social-icon", "social-icon--more"))
+        <span class="u-h">View more sharing options</span>
+    </label>
 }
 
 @SaveForLater = {

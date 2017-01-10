@@ -10,10 +10,6 @@
     }
 }
 
-@socialLinks() = @{
-    if (amp) ShareLinkMeta.noneHidden(item.sharelinks.pageShares) else item.sharelinks.pageShares
-}
-
 @iconModifier() = @{
     if (item.content.isImmersiveGallery) List("social-icon-media") else Nil
 }
@@ -45,7 +41,7 @@
     @if(showExtras) {
         <div class="meta__extras @if(!ageNotice.isEmpty){ meta__extras--notice }">
             <div class="meta__social" data-component="share">
-                @fragments.social(socialLinks, "top", iconModifier = iconModifier)
+                @fragments.social(item.sharelinks.pageShares, "top", iconModifier = iconModifier, amp = amp)
             </div>
             @if(item.content.tags.tags.exists(_.id == "tone/news")) {
                 @fragments.contentAgeNotice(ageNotice)
