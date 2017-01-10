@@ -1,8 +1,10 @@
 define([
+    'common/modules/commercial/commercial-features',
     'common/modules/commercial/contributions-utilities',
     'common/utils/template',
     'text!common/views/contributions-epic-equal-buttons.html'
 ], function (
+    commercialFeatures,
     contributionsUtilities,
     template,
     contributionsEpicEqualButtons
@@ -25,9 +27,8 @@ define([
         audienceOffset: 0,
         useTargetingTool: true,
 
-        overrideCanRun: true,
         canRun: function () {
-            return !contributionsUtilities.inAlwaysAskTest()
+            return !contributionsUtilities.inAlwaysAskTest() && commercialFeatures.canReasonablyAskForMoney;
         },
 
         variants: [
