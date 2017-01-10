@@ -136,13 +136,13 @@ case object KeepItInTheGround extends ArticleEmailMetadata {
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
   override val banner = Some("the-flyer.png")
-  override val toneColour = Some("#e6711b")
+  override val toneColour = Some("#ffbdc6")
 }
 
 case object Opinion extends FrontEmailMetadata {
   val name = "Opinion"
   override val banner = Some("opinion.png")
-  override val toneColour = Some("#ffbdc6")
+  override val toneColour = Some("#e6711b")
 }
 
 
