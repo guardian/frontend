@@ -31,7 +31,7 @@ define([
     };
 
     function init(moduleName, _window) {
-        if (!commercialFeatures.stickyTopBanner) {
+        if (!commercialFeatures.stickyTopBannerAd) {
             return Promise.resolve();
         }
 
