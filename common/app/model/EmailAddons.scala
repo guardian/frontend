@@ -136,6 +136,12 @@ case object KeepItInTheGround extends ArticleEmailMetadata {
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
   override val banner = Some("the-flyer.png")
+  override val toneColour = Some("#e6711b")
+}
+
+case object Opinion extends FrontEmailMetadata {
+  val name = "Opinion"
+  override val banner = Some("opinion.png")
   override val toneColour = Some("#ffbdc6")
 }
 
@@ -165,7 +171,8 @@ object EmailAddons {
     KeepItInTheGround)
   private val frontEmails = Seq(
     TheFlyer,
-    CuratedMediaBriefing
+    CuratedMediaBriefing,
+    Opinion
   )
 
   implicit class EmailContentType(p: Page) {
