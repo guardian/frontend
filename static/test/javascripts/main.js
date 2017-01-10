@@ -8,7 +8,7 @@ for (var file in window.__karma__.files) {
 
 requirejs.config({
     // Karma serves files from '/base'
-    baseUrl: '/base/static/src/javascripts',
+    baseUrl: '/base/static/transpiled/javascripts',
     paths: {
         admin:        'projects/admin',
         common:       'projects/common',
@@ -33,7 +33,7 @@ requirejs.config({
         squire:       '/base/static/test/javascripts/components/squire/src/Squire',
         fixtures:     '/base/static/test/javascripts/fixtures',
         helpers:      '/base/static/test/javascripts/helpers',
-        svgs:         '../inline-svgs',
+        svgs:         '/base/static/src/inline-svgs',
         // plugins
         text:         '/base/static/vendor/javascripts/components/requirejs-text/text',
         inlineSvg:    'projects/common/utils/inlineSvg',
