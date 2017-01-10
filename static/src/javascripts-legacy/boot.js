@@ -39,16 +39,16 @@ define([
     var bootStandard = function () {
         if (config.tests.abWebpackBundle) {
             return new Promise(function (resolve) {
+                // Webpack will swap out this require call for its own AMD require when bundling
                 require(['bootstraps/standard/main'], function (boot) {
                     boot();
                     resolve();
                 });
             });
         }
-        else {
-            return promiseRequire(['bootstraps/standard/main'])
-               .then(function (boot) { boot(); });
-        }
+
+        return promiseRequire(['bootstraps/standard/main'])
+           .then(function (boot) { boot(); });
     };
 
     var bootCommercial = function () {
