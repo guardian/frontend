@@ -21,7 +21,7 @@ trait FeatureSwitches {
     "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 17),
+    sellByDate = new LocalDate(2017, 3, 17),
     exposeClientSide = true
   )
 
@@ -516,7 +516,7 @@ trait FeatureSwitches {
     "Allows alternate email styling when passing ?format=email-connected, for testing two email design variants",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 10),
+    sellByDate = new LocalDate(2017, 1, 24),
     exposeClientSide = true
   )
 

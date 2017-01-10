@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+process.env.BABEL_ENV = 'production';
 
 const webpack = require('webpack');
 const path = require('path');
@@ -8,6 +9,7 @@ module.exports = {
     resolve: {
         modulesDirectories: [
             'static/src/javascripts',
+            'static/src/javascripts-legacy',
             'static/vendor/javascripts',
         ],
         alias: {
@@ -55,4 +57,13 @@ module.exports = {
         new webpack.optimize.UglifyJsPlugin(),
         new webpack.optimize.DedupePlugin(),
     ],
+    module: {
+        loaders: [
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|vendor|javascripts-legacy)/,
+                loader: 'babel-loader',
+            },
+        ],
+    },
 };

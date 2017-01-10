@@ -36,6 +36,7 @@
 - [Overriding default configuration](03-dev-howtos/15-override-default-configuration.md)
 - [Updating the test database](03-dev-howtos/16-updating-test-database.md)
 - [Working with Google AMP](03-dev-howtos/17-working-with-amp.md)
+- [Working with emails](03-dev-howtos/18-working-with-emails.md)
 
 ##[Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)

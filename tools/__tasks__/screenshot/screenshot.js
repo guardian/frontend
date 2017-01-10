@@ -19,7 +19,7 @@ const screenshotDefaults = {
         height: 'all',
     },
     timeout: 120000, // We're going to wait two minutes before bailing on the screenshot
-    takeShotOnCallback: environment === 'dev',
+    takeShotOnCallback: environment === 'ci',
 };
 
 // For each path, run a concurrent task that takes a screenshot of each path at each breakpoint
