@@ -227,6 +227,7 @@ $popup-toggle-arrow-size: 4px;
  * This shall stop the z-index chaos
  */
 
+$zindex-ui: 1000;      // UI elements
 $zindex-ads: 1010;     // Ads
 $zindex-content: 1015; // Modals and overlays inside content
 $zindex-sticky: 1020;  // Sticky header
