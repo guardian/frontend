@@ -1,5 +1,5 @@
 import domready from 'domready';
-// import raven from 'common/utils/raven';
+import raven from 'common/utils/raven';
 import bootStandard from 'bootstraps/standard/main';
 
 domready(() => {
@@ -10,7 +10,7 @@ domready(() => {
     bootStandard();
 
     // 2. once standard is done, next is commercial
-    if (!config.switches.commercial) {
+    if (config.switches.commercial) {
         if (config.page.isDev) {
             guardian.adBlockers.onDetect.push((isInUse) => {
                 const needsMessage = isInUse && window.console && window.console.warn;
@@ -20,14 +20,14 @@ domready(() => {
                 }
             });
         }
-        // ********** WAITING FOR LOADerS **********
-        // require(['bootstraps/stub'], (commercial) => {
-        //     raven.wrap({
-        //         tags: { feature: 'commercial' },
-        //     }, () => {
-        //         commercial.init();
-        //     });
-        // });
+
+        require(['bootstraps/commercial'], (commercial) => {
+            raven.wrap({
+                tags: { feature: 'commercial' },
+            }, () => {
+                commercial.init();
+            });
+        });
     }
 
     // 3. finally, try enhanced
