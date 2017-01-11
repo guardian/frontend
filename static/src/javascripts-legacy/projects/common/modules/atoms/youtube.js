@@ -2,12 +2,14 @@ define([
     'fastdom',
     'common/modules/atoms/youtube-player',
     'common/modules/atoms/youtube-tracking',
-    'common/utils/$'
+    'common/utils/$',
+    'common/utils/config'
 ], function (
     fastdom,
     youtubePlayer,
     tracking,
-    $
+    $,
+    config
 ) {
 
     var players = {};
@@ -41,7 +43,7 @@ define([
     }
 
     function setProgressTracker(atomId)  {
-        players[atomId].progressTracker = setInterval(recordPlayerProgress.bind(null, atomId), 1000); 
+        players[atomId].progressTracker = setInterval(recordPlayerProgress.bind(null, atomId), 1000);
     }
 
     function killProgressTracker(atomId) {
@@ -71,7 +73,33 @@ define([
         }
     }
 
+
+
+    function shouldAutoplay(){
+
+        function isMobile() {
+            const isIOS = () => /(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
+            const isAndroid = () => /Android/i.test(navigator.userAgent);
+
+            return isIOS() || isAndroid();
+        }
+
+        function isInternalReferrer() {
+            if(config.page.isDev) {
+                return document.referrer.startsWith(window.location.origin);
+            }
+            else {
+                return document.referrer.startsWith(config.page.host);
+            }
+        }
+        return config.page.contentType == 'Video' && isInternalReferrer() && !isMobile();
+    }
+
     function onPlayerReady(atomId, overlay, event) {
+        if(shouldAutoplay()) {
+            event.target.playVideo();
+        }
+        
         players[atomId] = {
             player: event.target,
             pendingTrackingCalls: [25, 50, 75]
@@ -94,7 +122,7 @@ define([
             times.push(formatTime(minutes));
         } else {
             times.push(minutes);
-        }    
+        }
         times.push(formatTime(seconds));
 
         return times.join(':');
