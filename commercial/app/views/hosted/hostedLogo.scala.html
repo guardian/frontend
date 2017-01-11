@@ -1,0 +1,14 @@
+@(campaign: common.commercial.hosted.HostedCampaign, onAmp: Boolean = false)
+
+<a href="@campaign.logo.link" data-sponsor="@campaign.owner.toLowerCase" target="_blank">
+@if(onAmp) {
+    <amp-img layout="responsive"
+             width="@campaign.logo.dimensions.map(_.width)"
+             height="@campaign.logo.dimensions.map(_.height)"
+             class="hostedbadge__logo"
+             src="@campaign.logo.src"
+             alt="@campaign.owner"></amp-img>
+} else {
+    <img class="hostedbadge__logo" src="@campaign.logo.src" alt="@campaign.owner"/>
+}
+</a>
