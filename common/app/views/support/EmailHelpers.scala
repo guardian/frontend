@@ -1,6 +1,7 @@
 package views.support
 
 import conf.Static
+import layout.ContentCard
 import model._
 import model.pressed.PressedContent
 import play.twirl.api.Html
@@ -32,9 +33,9 @@ object EmailHelpers {
   def paddedRow(inner: Html): Html = row(columns(12, Seq("panel"))(inner))
   def paddedRow(classes: Seq[String] = Seq.empty)(inner: Html): Html = row(columns(12, classes ++ Seq("panel"))(inner))
 
-  def imageUrlFromPressedContent(pressedContent: PressedContent): Option[String] = {
+  def imageUrlFromCard(contentCard: ContentCard): Option[String] = {
     for {
-      InlineImage(imageMedia) <- InlineImage.fromFaciaContent(pressedContent)
+      InlineImage(imageMedia) <- contentCard.displayElement
       url <- FrontEmailImage.bestFor(imageMedia)
     } yield url
   }
@@ -61,8 +62,8 @@ object EmailHelpers {
 
   def imgForFront = img(FrontEmailImage.knownWidth) _
 
-  def imgFromPressedContent(pressedContent: PressedContent) = imageUrlFromPressedContent(pressedContent).map { url =>
-    imgForFront(url, Some(pressedContent.header.headline))
+  def imgFromCard(card: ContentCard) = imageUrlFromCard(card).map { url =>
+    imgForFront(url, Some(card.header.headline))
   }
 
   object Images {
