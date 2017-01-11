@@ -39,7 +39,7 @@ define([
 
         if (player.endSlate &&
             !player.overlay.querySelector('.end-slate-container')) {
-            player.endSlate.fetch(player.overlay, 'html');
+            player.endSlate.fetch(player.overlay.parentNode, 'html');
         }
     }
 
