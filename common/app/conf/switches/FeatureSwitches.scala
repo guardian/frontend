@@ -499,17 +499,6 @@ trait FeatureSwitches {
   )
 
   // Owner: Joseph Smith
-  val DisplayHiddenFrontsAsEmails = Switch(
-    SwitchGroup.Feature,
-    "display-hidden-fronts-as-emails",
-    "Allows hidden fronts to be rendered as email-friendly HTML by passing ?format=email",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 10),
-    exposeClientSide = true
-  )
-
-  // Owner: Joseph Smith
   val RenderEmailConnectedStyle = Switch(
     SwitchGroup.Feature,
     "render-email-connected-style",
