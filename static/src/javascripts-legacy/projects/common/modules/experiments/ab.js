@@ -435,6 +435,7 @@ define([
         getTestVariantId: getTestVariantId,
         setTestVariant: setTestVariant,
         getVariant: getVariant,
+        TESTS: TESTS,
 
         /**
          * check if a test can be run (i.e. is not expired and switched on)
