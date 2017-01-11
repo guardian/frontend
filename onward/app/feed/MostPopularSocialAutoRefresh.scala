@@ -4,11 +4,9 @@ import akka.actor.ActorSystem
 import app.LifecycleComponent
 import common.AutoRefresh
 import play.api.inject.ApplicationLifecycle
-import play.api.{Application, GlobalSettings}
 import services.{MostReadItem, OphanApi}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
-import scala.concurrent.ExecutionContext.Implicits.global
 
 case class MostReadSocial(twitter: Seq[MostReadItem], facebook: Seq[MostReadItem])
 

@@ -581,7 +581,8 @@ final case class Tags(
   // Specific Series
   private val isLabourLiverpool = tags.exists(t => t.id == "membership/series/labour-liverpool")
   private val isViewFromMiddleTown = tags.exists(t => t.id == "membership/series/election-2016-the-view-from-middletown")
-  lazy val isExploreSeries = isLabourLiverpool || isViewFromMiddleTown
+  private val isNewRetirement = tags.exists(t => t.id == "membership/series/the-new-retirement")
+  lazy val isExploreSeries = isLabourLiverpool || isViewFromMiddleTown || isNewRetirement
 
   lazy val keywordIds = keywords.map { _.id }
 

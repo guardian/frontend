@@ -67,7 +67,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 13
+    val s3ConfigVersion = 18
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -338,6 +338,10 @@ class GuardianConfiguration extends Logging {
 
   object facebook {
     lazy val appId = configuration.getMandatoryStringProperty("guardian.page.fbAppId")
+    object graphApi {
+      lazy val version = configuration.getStringProperty("facebook.graphApi.version").getOrElse("2.8")
+      lazy val accessToken = configuration.getMandatoryStringProperty("facebook.graphApi.accessToken")
+    }
   }
 
   object ios {
@@ -388,7 +392,7 @@ class GuardianConfiguration extends Logging {
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
-    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v5.json"
+    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v6.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
     lazy val dfpMobileAppsAdUnitListKey = s"$dfpRoot/mobile-active-ad-units.csv"
     lazy val dfpFacebookIaAdUnitListKey = s"$dfpRoot/facebookia-active-ad-units.csv"
@@ -604,10 +608,6 @@ class GuardianConfiguration extends Logging {
   object Notifications {
     lazy val latestMessageUrl = configuration.getMandatoryStringProperty("notifications.latest_message.url")
     lazy val notificationSubscriptionTable = configuration.getMandatoryStringProperty("notifications.subscriptions_table")
-  }
-
-  object DeploysNotify {
-    lazy val apiKey = configuration.getStringProperty("deploys-notify.api.key")
   }
 
   object Logstash {

@@ -9,7 +9,8 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
   private def metaDataFromId(pageId: String): MetaData = MetaData.make(
     id = pageId,
     section = Some(SectionSummary.fromId("section")),
-    webTitle = "webTitle")
+    webTitle = "webTitle",
+    javascriptConfigOverrides = Map())
 
   def pageShouldRequestAdSizes(pageId: String)(sizes: Seq[String]): Unit = {
     val metaData = metaDataFromId(pageId)
@@ -42,6 +43,7 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
   // }
 
   they should "be default for any other page" in {
-    topAboveNavSlot.cssClasses should endWith("js-top-banner")
+    val metaData = metaDataFromId("uk")
+    topAboveNavSlot.cssClasses(metaData) should endWith("js-top-banner")
   }
 }

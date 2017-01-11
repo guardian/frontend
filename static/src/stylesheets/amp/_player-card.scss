@@ -1,0 +1,66 @@
+.player-card {
+    padding: $gs-baseline $gs-gutter/2;
+    background: $neutral-8;
+    border-top: 1px solid $sport-mid;
+    color: $neutral-1;
+}
+
+.player-card__player {
+    margin-bottom: $gs-baseline;
+    min-height: gs-height(2);
+    padding-right: $gs-column-width * 2 - $gs-gutter;
+}
+
+.player-card__image-container {
+    float: right;
+}
+
+.player-card__image {
+    @include circular;
+    height: 80px;
+    width: 80px;
+    float: right;
+}
+
+.player-card__name {
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: normal;
+}
+
+.player-card__stats {
+    margin: 0;
+}
+
+.player-card__position,
+.player-card__stat-name,
+.player-card__stat-value {
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+}
+
+.player-card__stat-name,
+.player-card__stat-value {
+    font-size: 13px;
+    line-height: 18px;
+    padding: 4px 0 8px;
+}
+
+.player-card__position {
+    font-size: 14px;
+    line-height: 22px;
+    color: $sport-mid;
+}
+
+.player-card__stat-name {
+    display: block;
+    float: left;
+    font-weight: normal;
+}
+
+.player-card__stat-value {
+    border-top: 1px solid $neutral-3;
+    font-weight: bold;
+    padding-left: 85%;
+    text-align: right;
+    margin: 0;
+}

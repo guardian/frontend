@@ -1521,7 +1521,7 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment-box__onboarding-preview-body p {
-    background-color: #ffffff;
+    background-color: $neutral-7;
     padding: $gs-baseline $gs-gutter;
     margin-bottom: $gs-baseline;
 }
@@ -1529,4 +1529,35 @@ $comment-recommend-button-size: 19px;
 .d-comment-box__onboarding-cancel {
     background-color: colour(neutral-3);
     border-color: colour(neutral-3);
+}
+
+.d-comment-box__onboarding-username-input {
+    box-sizing: border-box;
+    display: block;
+    background-color: transparent;
+    border: 1px solid $neutral-4;
+    color: $neutral-1;
+    padding: $gs-baseline/2 $gs-gutter;
+    border-radius: 18px;
+    margin: $gs-baseline 0;
+    margin-top: $gs-baseline/2;
+    width: 70%;
+
+    &:focus {
+        border-color: $neutral-2;
+        outline: none;
+    }
+}
+
+.d-comment-box__onboarding-username-label {
+    @include fs-textSans(3);
+    font-weight: bold;
+}
+
+.d-comment-box__onboarding-username-error-border {
+    border-color: $error;
+}
+
+.d-comment-box__onboarding-username-error-message {
+    color: $error;
 }

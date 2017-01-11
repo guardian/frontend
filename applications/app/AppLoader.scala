@@ -4,12 +4,12 @@ import com.softwaremill.macwire._
 import common.dfp.DfpAgentLifecycle
 import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, EmailSubsciptionMetrics}
 import common.Logback.LogstashLifecycle
-import conf.{CachedHealthCheckLifeCycle, CommonFilters}
+import conf.CachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUp, SectionsLookUpLifecycle}
 import controllers._
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
-import http.CorsHttpErrorHandler
+import http.{CommonFilters, CorsHttpErrorHandler}
 import jobs.{SiteMapJob, SiteMapLifecycle}
 import model.{ApplicationContext, ApplicationIdentity}
 import ophan.SurgingContentAgentLifecycle
@@ -19,7 +19,7 @@ import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import services.{ConfigAgentLifecycle, IndexListingsLifecycle, OphanApi}
+import services._
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -33,6 +33,8 @@ trait ApplicationsServices {
   lazy val siteMapJob = wire[SiteMapJob]
   lazy val sectionsLookUp = wire[SectionsLookUp]
   lazy val ophanApi = wire[OphanApi]
+  lazy val facebookGraphApiClient = wire[FacebookGraphApiClient]
+  lazy val facebookGraphApi = wire[FacebookGraphApi]
 }
 
 trait AppComponents extends FrontendComponents with ApplicationsControllers with ApplicationsServices {

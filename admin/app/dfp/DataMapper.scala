@@ -102,6 +102,7 @@ object DataMapper {
 
   def toGuLineItem(session: SessionWrapper)(dfpLineItem: LineItem) = GuLineItem(
     id = dfpLineItem.getId,
+    orderId = dfpLineItem.getOrderId,
     name = dfpLineItem.getName,
     startTime = toJodaTime(dfpLineItem.getStartDateTime),
     endTime = {
@@ -166,6 +167,21 @@ object DataMapper {
       templateId = Some(dfpCreative.getCreativeTemplateId),
       snippet = None,
       previewUrl = Some(dfpCreative.getPreviewUrl)
+    )
+  }
+
+  def toGuOrder(dfpOrder: Order): GuOrder = {
+    GuOrder(
+      id = dfpOrder.getId,
+      name = dfpOrder.getName,
+      advertiserId = dfpOrder.getAdvertiserId
+    )
+  }
+  def toGuAdvertiser(dfpCompany: Company): GuAdvertiser = {
+
+    GuAdvertiser(
+      id = dfpCompany.getId,
+      name = dfpCompany.getName
     )
   }
 }

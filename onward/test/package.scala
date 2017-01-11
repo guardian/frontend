@@ -1,9 +1,8 @@
 package test
 
-import model.ApplicationContext
 import org.scalatest.Suites
 
-class OnwardTestSuite (implicit context: ApplicationContext) extends Suites (
+class OnwardTestSuite extends Suites (
   new controllers.ChangeEditionControllerTest,
   new model.TopStoriesFeatureTest,
   new MostPopularControllerTest,
@@ -14,7 +13,8 @@ class OnwardTestSuite (implicit context: ApplicationContext) extends Suites (
   new SeriesControllerTest,
   new TopStoriesControllerTest,
   new VideoInSectionTest,
-  new RichLinkControllerTest
+  new RichLinkControllerTest,
+  new NavigationControllerTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19011
 }

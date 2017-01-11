@@ -1,35 +1,17 @@
 module.exports = {
-    env: {
-        amd: true,
-        jasmine: true,
-        es6: false,
-        commonjs: false
-    },
-    extends: 'eslint:recommended',
-	parserOptions: {
-		ecmaVersion: 5
-	},
     rules: {
-        camelcase: 'off',
-        'no-shadow': 'off',
-        strict: 'off',
-        'no-alert': 'off',
-        'no-all-lodash-import': 'error',
-        'no-undef': 'error',
-        'no-use-before-define': [
-            'error',
-            'nofunc'
-        ],
-        'no-multi-spaces': 'off',
-        'no-underscore-dangle': 'off',
-        'key-spacing': 'off',
-        'import/no-amd': 'off',
+        // require-specific overrides
         'import/no-dynamic-require': 'off',
+        'import/no-extraneous-dependencies': 'off',
+        'import/no-unresolved': 'off',
+        'import/extensions': 'off',
+        'import/no-webpack-loader-syntax': 'off', // used for require plugins still
+        'global-require': 'off',
 
         // these are bad habits in react that we're already abusing.
-        // if we go more [p]react we should look at them,
-        // but we don't reuse modules or develop this stuff much.
-        // disabling for now.
+        // if we go more [p]react we should look at them.
+        // not saying it's ok, but we don't reuse modules or
+        // develop this stuff much. disabling for now.
         'react/prefer-es6-class': 'off',
         'react/no-multi-comp': 'off',
         'react/no-find-dom-node': 'off',
@@ -40,4 +22,4 @@ module.exports = {
         'react/prefer-stateless-function': 'off',
         'react/no-render-return-value': 'off',
     },
-}
+};

@@ -4,6 +4,16 @@ import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 
 trait FeatureSwitches {
+  val ServerSideShareCounts = Switch(
+    SwitchGroup.Feature,
+    "server-share-counts",
+    "If this switch is on, share counts are fetched from a more recent Facebook Graph API version, server-side",
+    owners = Seq(Owner.withGithub("jfsoul")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 2, 8),
+    exposeClientSide = true
+  )
+
   // see https://github.com/guardian/frontend/pull/13446
   val ExploreTemplateSwitch = Switch(
     SwitchGroup.Feature,
@@ -11,7 +21,7 @@ trait FeatureSwitches {
     "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 17),
+    sellByDate = new LocalDate(2017, 3, 17),
     exposeClientSide = true
   )
 
@@ -489,24 +499,13 @@ trait FeatureSwitches {
   )
 
   // Owner: Joseph Smith
-  val DisplayHiddenFrontsAsEmails = Switch(
-    SwitchGroup.Feature,
-    "display-hidden-fronts-as-emails",
-    "Allows hidden fronts to be rendered as email-friendly HTML by passing ?format=email",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 10),
-    exposeClientSide = true
-  )
-
-  // Owner: Joseph Smith
   val RenderEmailConnectedStyle = Switch(
     SwitchGroup.Feature,
     "render-email-connected-style",
     "Allows alternate email styling when passing ?format=email-connected, for testing two email design variants",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 10),
+    sellByDate = new LocalDate(2017, 1, 24),
     exposeClientSide = true
   )
 

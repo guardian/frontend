@@ -17,14 +17,6 @@ body {
     visibility: hidden !important;
 }
 
-
-@if $old-ie == false {
-    html,
-    body {
-        overflow-x: hidden;
-    }
-}
-
 ::selection {
     background: rgba($news-main-2, .4);
 }

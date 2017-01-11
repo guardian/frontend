@@ -222,9 +222,18 @@ Hence why a greater depth of selector specificity is needed.
     }
 
     @include mq(desktop) {
-        position: absolute;
-        top: $gs-baseline;
-        right: -($gs-gutter / 2);
+        width: auto;
+        margin-left: auto;
+
+        .ad-slot {
+            margin: 0;
+        }
+
+        .has-no-flex & {
+            position: absolute;
+            top: $gs-baseline;
+            right: -($gs-gutter / 2);
+        }
     }
 }
 

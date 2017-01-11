@@ -3,6 +3,7 @@ package common.commercial.hosted
 import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentatom.thrift.AtomData
 import common.Logging
+import common.commercial.hosted.HostedUtils.getAndLog
 import model.MetaData
 
 case class HostedVideoPage(
@@ -22,14 +23,16 @@ case class HostedVideoPage(
 object HostedVideoPage extends Logging {
 
   def fromContent(content: Content): Option[HostedVideoPage] = {
+    log.info(s"Building hosted video ${content.id} ...")
+
     val page = for {
       campaignId <- content.sectionId map (_.stripPrefix("advertiser-content/"))
       campaign <- HostedCampaign.fromContent(content)
-      atoms <- content.atoms
-      videoAtoms <- atoms.media
-      videoAtom <- videoAtoms.headOption
-      ctaAtoms <- atoms.cta
-      ctaAtom <- ctaAtoms.headOption
+      atoms <- getAndLog(content, content.atoms, "the atoms are missing")
+      videoAtoms <- getAndLog(content, atoms.media, "the video atoms are missing")
+      videoAtom <- getAndLog(content, videoAtoms.headOption, "the video atom is missing")
+      ctaAtoms <- getAndLog(content, atoms.cta, "the CTA atoms are missing")
+      ctaAtom <- getAndLog(content, ctaAtoms.headOption, "the CTA atom is missing")
     } yield {
 
       val video = videoAtom.data.asInstanceOf[AtomData.Media].media

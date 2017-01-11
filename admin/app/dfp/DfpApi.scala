@@ -3,8 +3,8 @@ package dfp
 import com.google.api.ads.dfp.axis.utils.v201608.StatementBuilder
 import com.google.api.ads.dfp.axis.v201608._
 import common.Logging
-import common.dfp.{GuAdUnit, GuCreative, GuCreativeTemplate, GuLineItem}
-import dfp.DataMapper.{toGuAdUnit, toGuCreativeTemplate, toGuLineItem, toGuTemplateCreative}
+import common.dfp._
+import dfp.DataMapper.{toGuAdUnit, toGuCreativeTemplate, toGuLineItem, toGuTemplateCreative, toGuAdvertiser, toGuOrder}
 import org.joda.time.DateTime
 
 object DfpApi extends Logging {
@@ -27,6 +27,25 @@ object DfpApi extends Logging {
     DfpLineItems(
       validItems = validatedLineItems.getOrElse(true, Nil),
       invalidItems = validatedLineItems.getOrElse(false, Nil))
+  }
+
+  def getAllOrders: Seq[GuOrder] = {
+    val stmtBuilder = new StatementBuilder()
+
+    withDfpSession( session => {
+      session.orders(stmtBuilder).map(toGuOrder)
+    })
+  }
+
+  def getAllAdvertisers: Seq[GuAdvertiser] = {
+    val stmtBuilder = new StatementBuilder()
+                      .where("type = :type")
+                      .withBindVariableValue("type", CompanyType.ADVERTISER.toString)
+                      .orderBy("id ASC")
+
+    withDfpSession( session => {
+      session.companies(stmtBuilder).map(toGuAdvertiser)
+    })
   }
 
   def readCurrentLineItems: DfpLineItems = {

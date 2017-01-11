@@ -1,0 +1,81 @@
+.score-container {
+    margin-bottom: $gs-baseline;
+}
+
+.match-summary {
+    border-top: 1px dotted $neutral-5;
+
+    .match-summary__status {
+        display: none;
+    }
+
+    .team__info {
+        line-height: 28px;
+        position: relative;
+    }
+}
+
+.match-summary__team--away {
+    text-align: right;
+}
+
+.match-info {
+    font-size: 12px;
+    line-height: 16px;
+    padding: $gs-baseline 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+}
+
+.match-info__competition {
+    font-weight: bold;
+}
+
+.match-summary__teams {
+    display: flex;
+    border-top: 1px dotted $neutral-5;
+    padding-top: $gs-baseline;
+}
+
+.match-summary__team {
+    min-height: gs-span(1);
+    flex: 1;
+}
+
+.team__score {
+    font-weight: 400;
+    min-width: 1.2em;
+    position: absolute;
+    top: 0;
+
+    .match-summary__team--home & {
+        right: 0;
+    }
+
+    .match-summary__team--away & {
+        left: 0;
+    }
+}
+
+.team__scorers {
+    font-size: 13px;
+    line-height: 18px;
+    color: $neutral-2;
+
+    dd {
+        margin: 0;
+    }
+}
+
+.team__name {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 400;
+    font-size: 24px;
+
+    @include mq($until: 500px) {
+        width: 100%;
+        font-size: 16px;
+    }
+}

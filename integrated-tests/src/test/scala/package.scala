@@ -9,10 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import org.scalatest._
 import org.scalatestplus.play.BrowserFactory.UninitializedDriver
-
 import scala.collection.JavaConversions._
 import scala.concurrent.Await
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 
 trait SingleWebDriver extends SuiteMixin { this: Suite =>

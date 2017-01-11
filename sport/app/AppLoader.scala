@@ -1,11 +1,11 @@
 import akka.actor.ActorSystem
-import http.CorsHttpErrorHandler
+import http.{CommonFilters, CorsHttpErrorHandler}
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CachedHealthCheckLifeCycle, CommonFilters, FootballClient, FootballLifecycle}
+import conf.{CachedHealthCheckLifeCycle, FootballClient, FootballLifecycle}
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
@@ -17,10 +17,10 @@ import jobs.CricketStatsJob
 import model.ApplicationIdentity
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
+import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import play.api._
 import play.api.libs.ws.WSClient
 import rugby.conf.RugbyLifecycle
 import router.Routes

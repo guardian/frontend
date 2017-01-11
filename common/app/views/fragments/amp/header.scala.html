@@ -1,15 +1,16 @@
-@()(implicit request: RequestHeader)
+@()(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.Configuration
 @import common.{LinkTo, NewNavigation}
 
 <header class="header" role="banner">
     <div class="header__inner gs-container">
-        <a class="header__supporter-cta" href="@Configuration.id.membershipUrl/supporter?INTCMP=AMP_HEADER_GU_SUPPORTER">
+        <a class="header__supporter-cta" data-link-name="amp : nav : supporter-cta"
+        href="@Configuration.id.membershipUrl/supporter?INTCMP=AMP_HEADER_GU_SUPPORTER">
             Become a <span>Supporter</span>
         </a>
 
-        <a href="@LinkTo{/}" class="header__logo-wrapper" tabindex="0">
+        <a href="@LinkTo{/}" class="header__logo-wrapper" tabindex="0" data-link-name="amp : nav : logo">
             <h1 class="u-h">The Guardian</h1>
             @fragments.inlineSvg("guardian-logo-160", "logo", List("header__logo"))
         </a>
@@ -17,15 +18,19 @@
         <nav class="header__nav">
             @NewNavigation.PrimaryLinks.map { link =>
                 <a class="header__nav__link"
-                    href="@LinkTo(link.url)">
+                    href="@LinkTo(link.url)"
+                    data-link-name="amp : nav : @link.title">
                         @link.title
                 </a>
             }
-            <a class="header__nav__menu-button"
-                href="@LinkTo{/}">
-                    @fragments.inlineSvg("home", "icon", List("centered-icon"))
+
+            <button class="header__nav__menu-button" on='tap:sidebar1.toggle'
+                data-link-name="amp : nav : toggle-veggie-burger">
+                    <span class="header__veggie-burger-icon"></span>
                     <span class="u-h">Home</span>
-            </a>
+            </button>
         </nav>
     </div>
 </header>
+
+@fragments.amp.headerMenu()

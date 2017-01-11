@@ -4,22 +4,22 @@ import common._
 import common.Logback.LogstashLifecycle
 import dfp.DfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{AdminFilters, CachedHealthCheckLifeCycle, CommonGzipFilter}
+import conf.CachedHealthCheckLifeCycle
 import controllers.{AdminControllers, HealthCheck}
 import _root_.dfp.DfpDataCacheLifecycle
 import akka.actor.ActorSystem
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
-import http.AdminHttpErrorHandler
+import http.{AdminFilters, AdminHttpErrorHandler, CommonGzipFilter}
 import dev.DevAssetsController
 import football.feed.MatchDayRecorder
 import jobs._
 import model.{AdminLifecycle, ApplicationIdentity}
 import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
+import play.api.BuiltInComponentsFromContext
 import play.api.http.HttpErrorHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import play.api._
 import play.api.i18n.{I18nComponents, Lang, Messages}
 import play.api.libs.ws.WSClient
 import services._

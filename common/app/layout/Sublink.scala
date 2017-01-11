@@ -8,6 +8,10 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.support._
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
+import cards.{MediaList, Standard}
+import com.gu.contentapi.client.model.{v1 => contentapi}
+import com.gu.contentapi.client.model.v1.{ContentType, TagType}
+import com.gu.facia.api.{utils => fapiutils}
 
 import scala.Function.const
 
@@ -303,5 +307,79 @@ case class ContentCard(
     case _ => false
   }
 }
+object ContentCard {
 
+  def fromApiContent(apiContent: contentapi.Content): Option[ContentCard] = {
+
+    apiContent.fields.map { fields =>
+
+      val discussionSettings = for {
+        commentable <- fields.commentable
+        closeDate <- fields.commentCloseDate
+      } yield DiscussionSettings(
+        isCommentable = commentable,
+        isClosedForComments = new DateTime(closeDate.dateTime).isBeforeNow,
+        discussionId = None
+      )
+
+      val defaultDiscussionSettings = DiscussionSettings(
+        isCommentable = false,
+        isClosedForComments = true,
+        None
+      )
+
+      val isVideo = apiContent.`type` == ContentType.Video
+      val faciaCardHeader = FaciaCardHeader(
+        quoted = false,
+        isExternal = false,
+        isVideo = isVideo,
+        isGallery = false,
+        isAudio = false,
+        kicker = None,
+        headline = apiContent.webTitle,
+        url = EditionalisedLink(apiContent.webUrl)
+      )
+
+      val unsetDisplaySettings = DisplaySettings(
+        isBoosted = false,
+        showBoostedHeadline = false,
+        showQuotedHeadline = false,
+        imageHide = false,
+        showLivePlayable = false
+      )
+
+      val cardTypesForRecommendations = ItemClasses(mobile = MediaList, tablet = Standard, None)
+
+      def byline: Option[Byline] = {
+        val contributorApiTags = apiContent.tags.filter(_.`type` == TagType.Contributor)
+        val contributorTags = contributorApiTags.map(tag => model.Tag(TagProperties.make(tag), None, None, None))
+        fields.byline.map(Byline(_, contributorTags))
+      }
+
+      ContentCard(
+        id = Some(apiContent.id),
+        header = faciaCardHeader,
+        byline = byline,
+        displayElement = FaciaDisplayElement.fromContent(apiContent),
+        cutOut = None,
+        cardStyle = CardStyle.make(fapiutils.CardStyle.fromContent(apiContent)),
+        cardTypes = cardTypesForRecommendations,
+        sublinks = Seq(),
+        starRating = fields.starRating,
+        discussionSettings = discussionSettings.getOrElse(defaultDiscussionSettings),
+        snapStuff = None,
+        webPublicationDate = apiContent.webPublicationDate.map(date => new DateTime(date.dateTime)),
+        trailText = fields.trailText,
+        mediaType = None,
+        displaySettings = unsetDisplaySettings,
+        isLive = apiContent.fields.flatMap(_.liveBloggingNow).exists(identity),
+        timeStampDisplay = None,
+        shortUrl = fields.shortUrl,
+        useShortByline = false,
+        group = ""
+      )
+    }
+
+  }
+}
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard

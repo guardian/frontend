@@ -7,6 +7,7 @@ import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.{Page, PressedPage}
 import org.apache.commons.lang.StringEscapeUtils._
 import play.api.mvc.RequestHeader
+import play.api.libs.json.JsBoolean
 
 object Commercial {
 
@@ -14,7 +15,7 @@ object Commercial {
     case c: model.ContentPage if c.item.content.shouldHideAdverts => false
     case p: model.Page if p.metadata.sectionId == "identity" => false
     case s: model.SimplePage if s.metadata.contentType == "Signup" => false
-    case e: model.ContentPage if e.metadata.webTitle == "Sign up for The Flyer" => false
+    case e: model.ContentPage if e.item.content.seriesName.contains("Newsletter sign-ups") => false
     case p: model.CommercialExpiryPage => false
     case _ => true
   }
@@ -92,11 +93,15 @@ object Commercial {
     }
 
     // The sizesOverride parameter is for testing only.
-    val cssClasses: String = {
+    def cssClasses(metadata: model.MetaData): String = {
+      val topBannerDisableSticky = metadata.javascriptConfigOverrides.get("disableStickyTopBanner") match {
+        case Some(JsBoolean(true)) => Some("top-banner-ad-container--not-sticky")
+        case _                     => None
+      }
       val classes = Seq(
         "top-banner-ad-container",
         "js-top-banner"
-      )
+      ) ++ topBannerDisableSticky
 
       classes mkString " "
     }

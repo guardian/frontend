@@ -19,7 +19,9 @@ class DevAssetsController(val environment: Environment) extends Controller with 
   //  - unbuilt javascript to be loaded from src or public folders.
   //  - built css can be loaded from target folder.
   private val findDevAsset: PartialFunction[String, String] = {
+    case path if new File(s"static/transpiled/$path").exists() => s"static/transpiled/$path"
     case path if new File(s"static/src/$path").exists() => s"static/src/$path"
+    case path if new File(s"static/vendor/$path").exists() => s"static/vendor/$path"
     case path if new File(s"static/public/$path").exists() => s"static/public/$path"
     case path if new File(s"static/target/$path").exists() => s"static/target/$path"
     case path if new File(s"node_modules/$path").exists() => s"node_modules/$path"

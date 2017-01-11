@@ -8,7 +8,7 @@ object Dependencies {
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
   val awsVersion = "1.11.7"
-  val faciaVersion = "2.0.6"
+  val faciaVersion = "2.0.8"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
@@ -57,7 +57,6 @@ object Dependencies {
   val scalajTime = "org.scalaj" % "scalaj-time_2.10.2" % "0.7"
   val scalaTest = "org.scalatest" %% "scalatest" % "2.2.6" % Test
   val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
-  val scalaz = "org.scalaz" %% "scalaz-core" % "7.0.6"
   val scalaUri = "com.netaporter" % "scala-uri_2.11" % "0.4.11"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % seleniumVersion
   val shadeMemcached = "com.bionicspirit" %% "shade" % "1.6.0"

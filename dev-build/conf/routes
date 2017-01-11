@@ -37,7 +37,6 @@ GET            /crosswords/search                                               
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
 # Email paths
-GET            /email                                                                                                            controllers.EmailSignupController.renderPage()
 GET            /email/form/$emailType<article|footer|plain|plaindark|plaintone>/:listId                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET            /email/:result                                                                                                    controllers.EmailSignupController.subscriptionResult(result: String)
 POST           /email                                                                                                            controllers.EmailSignupController.submit()
@@ -118,6 +117,9 @@ GET            /video/end-slate/series/*seriesId.json                           
 GET            /video/end-slate/section/*sectionId.json                                                                          controllers.VideoEndSlateController.renderSection(sectionId)
 GET            /embed/card/*path.json                                                                                            controllers.RichLinkController.render(path)
 GET            /embed/card/*path                                                                                                 controllers.RichLinkController.renderHtml(path)
+GET            /embed/contentcard/*path.json                                                                                     controllers.RecommendedContentCardController.render(path)
+GET            /embed/contentcard/*path                                                                                          controllers.RecommendedContentCardController.renderHtml(path)
+
 # User tech feedback
 GET            /info/tech-feedback                                                                                               controllers.TechFeedbackController.techFeedback(path = "")
 GET            /info/tech-feedback/*path                                                                                         controllers.TechFeedbackController.techFeedback(path)
@@ -220,9 +222,7 @@ GET            /deduped                                                         
 GET            /deduped/*path                                                                                                    controllers.admin.WhatIsDeduped.dedupedFor(path)
 GET            /radiator                                                                                                         controllers.admin.RadiatorController.renderRadiator()
 GET            /radiator/commit/*hash                                                                                            controllers.admin.RadiatorController.commitDetail(hash)
-GET            /deploys-radiator/api/deploys                                                                                     controllers.admin.DeploysRadiatorController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
-GET            /deploys-radiator/api/builds/:number                                                                              controllers.admin.DeploysRadiatorController.getBuild(number)
-GET            /deploys-radiator                                                                                                 controllers.admin.DeploysRadiatorController.renderDeploysRadiator()
+GET            /deploys                                                                                                          controllers.admin.DeploysController.getDeploys(stage: Option[String], pageSize: Option[Int])
 GET            /troubleshoot/football                                                                                            controllers.admin.SportTroubleshooterController.renderFootballTroubleshooter()
 GET            /troubleshoot/cricket                                                                                             controllers.admin.SportTroubleshooterController.renderCricketTroubleshooter()
 GET            /troubleshoot/pages                                                                                               controllers.admin.TroubleshooterController.index()
@@ -343,6 +343,8 @@ GET            /container/count/:count/offset/:offset/section/:section/edition/:
 
 GET            /football-mf2/api/match-summary/:year/:month/:day/:home/:away.json                                                football.controllers.MoreOnMatchController.matchSummaryMf2(year, month, day, home, away)
 
+GET            /editionalised-nav.json                                                                                           controllers.NavigationController.renderAmpNav()
+
 # Onward journeys
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
@@ -351,6 +353,7 @@ GET            /sitemaps/news.xml                                               
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
 GET            /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>                                              controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
+GET            /sharecount/*path.json                                                                                            controllers.ShareCountController.fetch(path)
 
 #Notifications Store
 POST           /notification/store                                                                                               controllers.NotificationsController.saveSubscription()

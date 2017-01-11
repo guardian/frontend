@@ -96,6 +96,14 @@ class DfpDataCacheLifecycle(
       val name: String = "DFP-Template-Creatives-Cache"
       val interval: Int = 2
       def run() = DfpTemplateCreativeCacheJob.run()
+    },
+
+    new Job[Unit] {
+      val name = "DFP-Order-Advertiser-Update"
+      val interval: Int = 300
+      def run() = {
+        Future.sequence(Seq(AdvertiserAgent.refresh(), OrderAgent.refresh())).map(_ => ())
+      }
     }
 
   )
@@ -113,6 +121,8 @@ class DfpDataCacheLifecycle(
       CreativeTemplateAgent.refresh()
       DfpTemplateCreativeCacheJob.run()
       CustomTargetingKeyValueJob.run()
+      AdvertiserAgent.refresh()
+      OrderAgent.refresh()
     }
   }
 }

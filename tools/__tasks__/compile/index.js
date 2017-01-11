@@ -5,7 +5,6 @@ module.exports = {
         require('./css'),
         require('./javascript'),
         require('./fonts'),
-        require('./deploys-radiator'),
         require('./hash'),
         require('./conf'),
     ],

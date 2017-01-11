@@ -1,8 +1,9 @@
 package filters
 
 import akka.stream.Materializer
-import org.scalatest.{DoNotDiscover, Matchers, FunSuite}
-import play.api.mvc.{Result, RequestHeader}
+import http.StrictTransportSecurityHeaderFilter
+import org.scalatest.{DoNotDiscover, FunSuite, Matchers}
+import play.api.mvc.{RequestHeader, Result}
 import play.api.test.FakeRequest
 import play.api.mvc.Results._
 import test.ConfiguredTestSuite

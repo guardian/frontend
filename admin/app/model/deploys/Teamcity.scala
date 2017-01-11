@@ -1,12 +1,11 @@
 package model.deploys
 
+import common.ExecutionContexts
 import conf.Configuration
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
-import play.api.libs.ws.WSResponse
 import scala.concurrent.Future
 import scala.language.postfixOps
-import scala.concurrent.ExecutionContext.Implicits.global
 
 case class Commit(sha: String, username: String, message: String)
 object Commit {
@@ -20,6 +19,7 @@ object Commit {
 case class TeamCityBuild(number: String,
                          id: Int,
                          status: String,
+                         branchName: Option[String],
                          projectName: String,
                          parentNumber: Option[String],
                          revision: String,
@@ -36,6 +36,7 @@ object TeamCityBuild {
     (__ \ "number").read[String] and
       (__ \ "id").read[Int] and
       (__ \ "status").read[String] and
+      (__ \ "branchName").readNullable[String] and
       (__ \ "buildType").read(
         (__ \ "projectName").read[String] and
           (__ \ "name").read[String]
@@ -57,11 +58,7 @@ object TeamCityBuilds {
 }
 
 
-class TeamcityService(httpClient: HttpLike) {
-
-  private lazy val buildFields = List("id", "number", "buildType(name,projectName)", "status",
-    "revisions(revision(version))", "changes(change(username,comment,version))",
-    "artifact-dependencies(build(number))").mkString(",")
+class TeamcityService(httpClient: HttpLike) extends ExecutionContexts {
 
   private def GET[T](path: String, queryString: Map[String, String])(implicit r:Reads[T]): Future[T] = {
     val apiPath = "guestAuth/app/rest"
@@ -80,18 +77,19 @@ class TeamcityService(httpClient: HttpLike) {
       }
   }
 
-  def getBuilds(project: String, count: Int = 10): Future[Seq[TeamCityBuild]] = {
+  def getBuilds(project: String, branch: Option[String] = Some("master"), count: Int = 10): Future[Seq[TeamCityBuild]] = {
+
+    val buildFields = Seq("id", "number", "branchName", "buildType(name,projectName)", "status",
+      "revisions(revision(version))", "changes(change(username,comment,version))",
+      "artifact-dependencies(build(number))")
+
+    val buildTypeValues = Seq(s"(id:$project)", s"count:$count") ++ branch.map(b => s"branch:$b")
+
     GET[TeamCityBuilds](
       path = "builds",
-      queryString = Map("locator" -> s"buildType:(id:$project),count:$count") + ("fields" -> s"build($buildFields)")
+      queryString = Map("locator" -> s"buildType:${buildTypeValues.mkString(",")}")
+        + ("fields" -> s"build(${buildFields.mkString(",")})")
     ).map(_.builds)
-  }
-
-  def getBuild(number: String): Future[TeamCityBuild] = {
-    GET[TeamCityBuild](
-      path = s"builds/number:$number,state:any,canceled(any)",
-      queryString = Map("fields" -> buildFields)
-    )
   }
 
 }

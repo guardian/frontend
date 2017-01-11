@@ -14,6 +14,7 @@ import slices.{MostPopular, _}
 import views.support.CutOut
 
 import scala.Function._
+import scala.annotation.tailrec
 
 /** For de-duplicating cutouts */
 object ContainerLayoutContext {
@@ -362,37 +363,33 @@ object Front extends implicits.Collections {
     configs: Seq[((ContainerDisplayConfig, CollectionEssentials), Container)],
     initialContext: ContainerLayoutContext = ContainerLayoutContext.empty
   ) = {
-    import scalaz.std.list._
-    import scalaz.syntax.traverse._
+
+    @tailrec
+    def faciaContainers(allConfigs: Seq[((ContainerDisplayConfig, CollectionEssentials), Container)],
+                        context: ContainerLayoutContext,
+                        seenTrails: Set[TrailUrl] = Set.empty,
+                        index: Int = 0,
+                        accumulation: Vector[FaciaContainer] = Vector.empty): Seq[FaciaContainer] = {
+      allConfigs.toList match {
+        case Nil => accumulation
+        case ((config, collection), container) :: remainingConfigs =>
+          val (newSeen, newItems, _) = deduplicate(seenTrails, container, collection.items)
+          val layoutMaybe = ContainerLayout.fromContainer(container, context, config, newItems)
+          val newContext = layoutMaybe.map(_._2).getOrElse(context)
+          val faciaContainer = FaciaContainer.fromConfig(
+            index,
+            container,
+            config.collectionConfigWithId,
+            collection.copy(items = newItems),
+            layoutMaybe.map(_._1),
+            None
+          )
+          faciaContainers(remainingConfigs, newContext, newSeen, index + 1, accumulation :+ faciaContainer)
+      }
+    }
 
     Front(
-      configs.zipWithIndex.toList.mapAccumL(
-        (Set.empty[TrailUrl], initialContext)
-      ) { case ((seenTrails, context), (((config, collection), container), index)) =>
-
-        //We don't need the used in the case of fromConfigsAndContainers
-        val (newSeen, newItems, _) = deduplicate(seenTrails, container, collection.items)
-
-        ContainerLayout.fromContainer(container, context, config, newItems) map {
-          case (containerLayout, newContext) => ((newSeen, newContext), FaciaContainer.fromConfig(
-            index,
-            container,
-            config.collectionConfigWithId,
-            collection.copy(items = newItems),
-            Some(containerLayout),
-            None
-          ))
-        } getOrElse {
-          ((newSeen, context), FaciaContainer.fromConfig(
-            index,
-            container,
-            config.collectionConfigWithId,
-            collection.copy(items = newItems),
-            None,
-            None
-          ))
-        }
-      }._2.filterNot(_.items.isEmpty)
+      faciaContainers(configs, initialContext).filterNot(_.items.isEmpty)
     )
   }
 
@@ -403,53 +400,66 @@ object Front extends implicits.Collections {
     })
   }
 
+  case class ContainersWithDeduped(containers: Vector[FaciaContainer], deduped: DedupedFrontResult)
+
   def fromPressedPageWithDeduped(pressedPage: PressedPage,
                                  edition: Edition,
-                                 initialContext: ContainerLayoutContext = ContainerLayoutContext.empty): ((Set[Front.TrailUrl], ContainerLayoutContext, DedupedFrontResult), List[FaciaContainer]) = {
-    import scalaz.std.list._
-    import scalaz.syntax.traverse._
+                                 initialContext: ContainerLayoutContext = ContainerLayoutContext.empty): ContainersWithDeduped = {
 
     val emptyDedupedResultWithPath = DedupedFrontResult(pressedPage.id, Nil)
 
-    pressedPage.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.mapAccumL(
-        (Set.empty[TrailUrl], initialContext, emptyDedupedResultWithPath)
-      ) { case ((seenTrails, context, dedupedFrontResult), (pressedCollection, index)) =>
-        val omitMPU = pressedPage.metadata.omitMPUsFromContainers(edition)
-        val container = Container.fromPressedCollection(pressedCollection, omitMPU)
-        val (newSeen, newItems, (usedAndDeduped, usedButNotDeduped)) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
+    @tailrec
+    def faciaContainers(collections: List[PressedCollection],
+                        context: ContainerLayoutContext,
+                        seenTrails: Set[TrailUrl] = Set.empty,
+                        index: Int = 0,
+                        accumulation: ContainersWithDeduped =  ContainersWithDeduped(Vector.empty[FaciaContainer], emptyDedupedResultWithPath)
+                       ): ContainersWithDeduped = {
 
-        val dedupedContainerResult: DedupedContainerResult = DedupedContainerResult(pressedCollection.id, pressedCollection.displayName, usedAndDeduped.toList, usedButNotDeduped.toList)
+      collections match {
+        case Nil => accumulation
+        case pressedCollection :: remainingPressedCollections =>
+          val omitMPU: Boolean = pressedPage.metadata.omitMPUsFromContainers(edition)
+          val container: Container = Container.fromPressedCollection(pressedCollection, omitMPU)
+          val (newSeen, newItems, (usedAndDeduped, usedButNotDeduped)) = deduplicate(seenTrails, container, pressedCollection.curatedPlusBackfillDeduplicated)
 
-        val collectionEssentials = CollectionEssentials.fromPressedCollection(pressedCollection)
-        val containerDisplayConfig = ContainerDisplayConfig.withDefaults(pressedCollection.collectionConfigWithId)
+          val dedupedContainerResult: DedupedContainerResult = DedupedContainerResult(pressedCollection.id, pressedCollection.displayName, usedAndDeduped.toList, usedButNotDeduped.toList)
 
-        ContainerLayout.fromContainer(container, context, containerDisplayConfig, newItems) map {
-          case (containerLayout, newContext) => ((newSeen, newContext, dedupedFrontResult.addResult(dedupedContainerResult)), FaciaContainer.fromConfig(
+          val collectionEssentials = CollectionEssentials.fromPressedCollection(pressedCollection)
+          val containerDisplayConfig = ContainerDisplayConfig.withDefaults(pressedCollection.collectionConfigWithId)
+
+          val containerLayoutMaybe: Option[(ContainerLayout, ContainerLayoutContext)] = ContainerLayout.fromContainer(container, context, containerDisplayConfig, newItems)
+          val newContext: ContainerLayoutContext = containerLayoutMaybe.map(_._2).getOrElse(context)
+          val faciaContainer = FaciaContainer.fromConfig(
             index,
             container,
             pressedCollection.collectionConfigWithId,
             collectionEssentials.copy(items = newItems),
-            Some(containerLayout),
-            None
-          ))
-        } getOrElse {
-          ((newSeen, context, dedupedFrontResult.addResult(dedupedContainerResult)), FaciaContainer.fromConfig(
-            index,
-            container,
-            pressedCollection.collectionConfigWithId,
-            collectionEssentials.copy(items = newItems),
+            containerLayoutMaybe.map(_._1),
             None,
-            None,
-            omitMPU
-          ))
-        }
+            if (containerLayoutMaybe.isDefined) false else omitMPU
+          )
+
+          faciaContainers(
+            remainingPressedCollections,
+            newContext,
+            newSeen,
+            index + 1,
+            ContainersWithDeduped(accumulation.containers :+ faciaContainer, accumulation.deduped.addResult(dedupedContainerResult))
+          )
+      }
     }
+
+    faciaContainers(
+      pressedPage.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty),
+      initialContext
+    )
   }
 
   def fromPressedPage(pressedPage: PressedPage,
                       edition: Edition,
                       initialContext: ContainerLayoutContext = ContainerLayoutContext.empty): Front =
-    Front(fromPressedPageWithDeduped(pressedPage, edition, initialContext)._2)
+    Front(fromPressedPageWithDeduped(pressedPage, edition, initialContext).containers)
 
   def makeLinkedData(url: String, collections: Seq[FaciaContainer])(implicit request: RequestHeader): ItemList = {
     ItemList(

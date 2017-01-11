@@ -1,0 +1,107 @@
+.fc-container__inner {
+    border-top: 1px solid $news-main-2;
+}
+
+.fc-container__inner,
+.fc-container__outbrain {
+    padding-top: $gs-baseline / 4;
+    overflow: hidden;
+    position: relative;
+    margin-top: $gs-baseline * 2;
+}
+
+.fc-container__header__title {
+    position: relative;
+    padding-bottom: $gs-baseline;
+    font-size: 22px;
+    line-height: 28px;
+    color: $guardian-brand-dark;
+}
+
+.fc-container__header__description {
+    line-height: 1.25rem;
+    padding-bottom: 1rem;
+    color: $neutral-2;
+}
+
+.fc-item {
+    background-color: $neutral-5;
+    border-top: 1px solid $news-main-2;
+    // the same width as the images are
+    padding-left: 126px;
+    position: relative;
+    height: $gs-row-height * 2;
+    margin-bottom: $gs-baseline;
+    overflow: hidden;
+}
+
+.fc-item__image-container {
+    position: absolute;
+    left: 0;
+}
+
+.fc-item__content {
+    // visually the best height
+    min-height: gs-span(1);
+    padding: 0 $gs-gutter / 4;
+    position: relative;
+    overflow: hidden;
+}
+
+.fc-item__link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    overflow: hidden;
+    text-indent: 200%;
+    white-space: nowrap;
+    background: transparent;
+}
+
+.fc-item__title {
+    padding: 0;
+    margin: 1px 0 0;
+    font: inherit;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 18px;
+    color: $neutral-1;
+}
+
+.fc-item__meta {
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    position: absolute;
+    bottom: 0;
+    left: $gs-gutter / 4;
+    right: $gs-gutter / 4;
+    color: $neutral-5;
+}
+
+.fc-item__meta .inline-icon {
+    fill: $neutral-3;
+    position: relative;
+    bottom: -1px;
+}
+
+.fc-item__byline {
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.fc-item__quote-icon__svg {
+    width: 19px;
+    height: 12px;
+    fill: $neutral-2;
+}
+
+.fc-item__video-icon__svg,
+.fc-item__camera-icon__svg {
+    width: 17px;
+    height: 12px;
+    margin-right: $gs-gutter/5;
+}
