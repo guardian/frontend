@@ -926,6 +926,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     vertical-align: middle;
     padding-left: $gs-gutter;
     max-width: $gs-column-width*9;
+
     @include mq(desktop) {
         max-width: $gs-column-width*10;
     }
@@ -987,6 +988,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .membership__engagement-text-field {
     @include clearfix;
     @include circular;
+    padding-left: $gs-gutter;
     color: black;
     @include mq($from: mobile) {
         font-size: 12px;
@@ -1003,11 +1005,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         font-size: 14px;
         line-height: 36px;
         height: 36px;
+        width: 269px;
     }
-
     position: relative;
-    font-weight: bold;
-
     border: 0;
     width: 100%;
 }
@@ -1018,6 +1018,11 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     top: 0px;
     z-index: $zindex-popover + 1;
     margin-top: 6px;
+
+    @include mq($from: desktop) {
+        margin-left: 10px;
+        margin-top: 12px;
+    }
 
 }
 
@@ -1061,6 +1066,17 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         margin-bottom: 12px;
         position:relative;
         display: block;
+
+        @include mq($from: desktop) {
+            margin-bottom: 6px;
+        }
+    }
+
+    .membership__remind-me-form__fields {
+        @include mq($from: desktop) {
+            float: left;
+            margin-bottom: 6px;
+        }
     }
 }
 
