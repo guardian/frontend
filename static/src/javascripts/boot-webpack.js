@@ -1,7 +1,10 @@
+import domready from 'domready';
 import boot from 'bootstraps/standard/main';
 
-boot();
+domready(() => {
+    boot();
 
-require(['bootstraps/stub'], (commercial) => {
-    commercial.init();
+    require(['bootstraps/stub'], (commercial) => {
+        commercial.init();
+    });
 });

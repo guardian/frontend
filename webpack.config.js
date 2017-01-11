@@ -12,6 +12,7 @@ module.exports = {
             'static/src/javascripts',
             'static/src/javascripts-legacy',
             'static/vendor/javascripts',
+            'node_modules',
         ],
         alias: {
             admin: 'projects/admin',
