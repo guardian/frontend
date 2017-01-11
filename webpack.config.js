@@ -44,6 +44,9 @@ module.exports = {
             'videojs-persistvolume': 'components/videojs-persistvolume/videojs.persistvolume',
             'videojs-playlist': 'components/videojs-playlist-audio/videojs.playlist',
 
+            // once r.js is gone, these can be unaliased and modules updated
+            react: 'react/addons',
+
             // plugins
             text: 'components/requirejs-text/text',
             inlineSvg: 'projects/common/utils/inlineSvg',
