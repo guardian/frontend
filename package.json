@@ -89,7 +89,9 @@
     "split": "^1.0.0",
     "stream-to-observable": "^0.2.0",
     "strip-ansi": "^3.0.1",
+    "svg-loader": "0.0.2",
     "svgo": "^0.7.1",
+    "text-loader": "0.0.1",
     "uglify-js": "^2.7.4",
     "webpack": "^1.13.3",
     "yargs": "^6.0.0"
