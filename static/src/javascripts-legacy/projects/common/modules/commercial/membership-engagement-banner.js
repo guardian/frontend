@@ -73,14 +73,15 @@ define([
             },
             AU: {
                 membership: {
-                    messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia Member for just $100 a year.',
+                    messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia member for just $10 a month.',
                     campaignCode: "mem_au_banner"
                 }
             },
             INT: {
                 membership: {
                     messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $69/€49 per year.',
-                    campaignCode: "mem_int_banner"
+                    campaignCode: "mem_int_banner",
+                    minArticles: 3
                 }
             }
         };
