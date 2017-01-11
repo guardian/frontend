@@ -7,8 +7,12 @@
 (function (documentElement, window, navigator) {
     var docClass = documentElement.className;
     var testCssSupportForPropertyAndValue = (function(supportsSupports) {
-        return supportsSupports ? window.CSS.supports : shimCSSSupports();
+        return supportsSupports ? nativeCSSSupports : shimCSSSupports();
     }('CSS' in window && 'supports' in window.CSS));
+
+    function nativeCSSSupports(prop, value) {
+        return window.CSS.supports(prop, value);
+    }
 
     function shimCSSSupports() {
         var cssToDOMRegExp = /([a-z])-([a-z])/g;

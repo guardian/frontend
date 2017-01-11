@@ -70,6 +70,7 @@ define([
     ];
 
     var secondaryModules = [
+        ['cm-stickyTopBanner', stickyTopBanner.init],
         ['cm-fill-advert-slots', fillAdvertSlots.init, fillAdvertSlots.customTiming],
         ['cm-paidContainers', paidContainers.init]
     ];
@@ -87,10 +88,6 @@ define([
             ['cm-hostedGallery', hostedGallery.init, hostedGallery.customTiming],
             ['cm-hostedOnward', hostedOnward.init, hostedOnward.customTiming],
             ['cm-hostedOJCarousel', hostedOJCarousel.init]);
-    }
-
-    if (!config.page.disableStickyTopBanner) {
-        secondaryModules.unshift(['cm-stickyTopBanner', stickyTopBanner.init]);
     }
 
     function loadModules(modules, baseline) {

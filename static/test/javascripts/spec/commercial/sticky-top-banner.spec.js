@@ -8,7 +8,7 @@ define([
     Promise
 ) {
     describe('Sticky ad banner', function () {
-        var sticky, detect, header, stickyBanner, messenger, register;
+        var sticky, detect, header, stickyBanner, messenger, register, commercialFeatures;
 
         var fixturesConfig = {
             id: 'sticky-ad-banner-test',
@@ -36,11 +36,15 @@ define([
             injector.require([
                 'common/utils/detect',
                 'commercial/modules/messenger',
-                'commercial/modules/sticky-top-banner'
-            ], function($1, $2, $3) {
+                'commercial/modules/sticky-top-banner',
+                'common/modules/commercial/commercial-features'
+            ], function($1, $2, $3, $4) {
                 detect = $1;
                 messenger = $2;
                 sticky = $3;
+                commercialFeatures = $4;
+
+                commercialFeatures.stickyTopBannerAd = true;
 
                 spyOn(detect, 'isBreakpoint').and.callFake(function () { return true; });
                 register = spyOn(messenger, 'register');
