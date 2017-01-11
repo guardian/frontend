@@ -9,6 +9,7 @@ module.exports = {
     entry: './static/src/javascripts/boot-webpack.js',
     resolve: {
         modulesDirectories: [
+            'static/src',
             'static/src/javascripts',
             'static/src/javascripts-legacy',
             'static/vendor/javascripts',

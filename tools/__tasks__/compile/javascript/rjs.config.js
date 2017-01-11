@@ -32,7 +32,7 @@
 
         // plugins
         text: '../../vendor/javascripts/components/requirejs-text/text',
-        inlineSvg: 'projects/common/utils/inlineSvg',
+        svg: 'projects/common/utils/inlineSvg',
 
         react: 'empty:',
         'ophan/ng': 'empty:',

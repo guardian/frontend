@@ -12,9 +12,9 @@ define([
     'common/utils/ajax',
     'text!common/views/experiments/recommended-for-you.html',
     'text!common/views/experiments/recommended-for-you-opt-in.html',
-    'inlineSvg!svgs/icon/profile-36',
-    'inlineSvg!svgs/icon/arrow-right',
-    'inlineSvg!svgs/icon/marque-36',
+    'svg!svgs/icon/profile-36.svg',
+    'svg!svgs/icon/arrow-right.svg',
+    'svg!svgs/icon/marque-36.svg',
     'common/utils/fetch-json'
 ], function (
     bean,
