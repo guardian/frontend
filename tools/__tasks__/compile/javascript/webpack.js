@@ -1,4 +1,4 @@
 module.exports = {
     description: 'Create Webpack bundles',
-    task: 'webpack',
+    task: 'webpack -p',
 };
