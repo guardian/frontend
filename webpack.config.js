@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
+    devtool: '#source-map',
     entry: './static/src/javascripts/boot-webpack.js',
     resolve: {
         modulesDirectories: [
@@ -51,10 +52,11 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: 'boot-webpack.js',
+        filename: 'boot-webpack.[chunkhash].js',
+        publicPath: 'assets/javascripts/',
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin(),
+        // new webpack.optimize.UglifyJsPlugin(),
         new webpack.optimize.DedupePlugin(),
     ],
     module: {
