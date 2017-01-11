@@ -60,8 +60,10 @@
             ~ .youtube-media-atom__overlay {
                 @include fade-in;
 
-                .end-slate-container {
-                    display: block;
+                @include mq($from: tablet) {
+                    .end-slate-container {
+                        display: block;
+                    }
                 }
             }
         }
