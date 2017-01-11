@@ -56,6 +56,17 @@ define([
 
         });
 
+        describe('Start and Expiry dates', function () {
+
+            it('should use Start and Expiry dates in exact ISO 8601 format for consistent parsing across browsers', function () {
+                ab.TESTS.forEach(function(test) {
+                    expect(test.start).toMatch('\\d{4}-\\d{2}-\\d{2}');
+                    expect(test.expiry).toMatch('\\d{4}-\\d{2}-\\d{2}');
+                });
+            });
+
+        });
+
         describe('User segmentation', function () {
 
             it('should not run if switch is off', function () {
