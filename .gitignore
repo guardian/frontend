@@ -29,7 +29,6 @@ log
 logs
 ivy-sbt
 
-ivy-sbt
 tmp
 old
 target
@@ -43,6 +42,7 @@ RUNNING_PID
 local.sbt
 
 node_modules
+
 screenshots
 
 common/conf/assets
@@ -66,12 +66,12 @@ static/src/stylesheets/icons/*
 
 # Eclipse #
 .project
-.classpath
 .settings/
 .metadata
 .classpath
 .springBeans
 .cache
+
 bower_components
 
 # Scala test framework #
