@@ -2,12 +2,18 @@ define([
     'fastdom',
     'common/modules/atoms/youtube-player',
     'common/modules/atoms/youtube-tracking',
-    'common/utils/$'
+    'common/modules/component',
+    'common/utils/$',
+    'common/utils/config',
+    'common/utils/detect'
 ], function (
     fastdom,
     youtubePlayer,
     tracking,
-    $
+    Component,
+    $,
+    config,
+    detect
 ) {
 
     var players = {};
@@ -25,9 +31,16 @@ define([
     }
 
     function onPlayerPlaying(atomId) {
+        var player = players[atomId];
+
         killProgressTracker(atomId);
         setProgressTracker(atomId);
         tracking.track('play', atomId);
+
+        if (player.endSlate &&
+            !player.overlay.querySelector('.end-slate-container')) {
+            player.endSlate.fetch(player.overlay, 'html');
+        }
     }
 
     function onPlayerPaused(atomId) {
@@ -79,7 +92,14 @@ define([
 
         if (overlay) {
             var formattedDuration = getFormattedDuration(players[atomId].player.getDuration());
+            
             setDuration(formattedDuration, overlay);
+            
+            players[atomId].overlay = overlay;
+
+            if (!!config.page.section && detect.isBreakpoint({ min: 'desktop' })) {
+                players[atomId].endSlate = getEndSlate(overlay);
+            }
         }
     }
 
@@ -108,6 +128,15 @@ define([
         var durationElem = overlay.querySelector('.youtube-media-atom__bottom-bar__duration');
 
         durationElem.innerText = formattedDuration;
+    }
+
+    function getEndSlate(overlay) {
+        var endSlatePath = overlay.parentNode.dataset.endSlate;
+        var endSlate = new Component();
+
+        endSlate.endpoint = endSlatePath;
+
+        return endSlate;
     }
 
     function onPlayerStateChange(atomId, event) {
