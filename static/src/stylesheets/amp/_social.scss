@@ -33,6 +33,9 @@
 
 .social__item--more {
     float: none;
+    display: inline-block;
+    height: 32px;
+    width: 32px;
 }
 
 .social__item--revealer {
@@ -59,7 +62,7 @@
 
 .social-icon--more {
     background-color: #eaeaea;
-    border-radius: 50%;
+        border-radius: 50%;
     display: inline-block;
     line-height: 2rem;
 }
