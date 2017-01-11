@@ -92,7 +92,7 @@ define([
                     return;
                 }
 
-                require([mainJS], function (interactive) {
+                window.require([mainJS], function (interactive) {
                     fastdom.defer(function () {
                         robust.catchErrorsAndLog('interactive-bootstrap', function () {
                             interactive.boot(el, document, config, mediator);
