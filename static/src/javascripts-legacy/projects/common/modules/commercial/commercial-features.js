@@ -50,6 +50,8 @@ define([
 
         var isWidePage = detect.getBreakpoint() === 'wide';
 
+        var supportsSticky = document.documentElement.classList.contains('has-sticky');
+
         // Feature switches
 
         this.dfpAdvertising =
@@ -59,6 +61,11 @@ define([
         this.topBannerAd =
             this.dfpAdvertising &&
             !isMinuteArticle;
+
+        this.stickyTopBannerAd =
+            this.topBannerAd &&
+            !config.page.disableStickyTopBanner &&
+            !supportsSticky;
 
         this.galleryAdverts =
             this.dfpAdvertising &&

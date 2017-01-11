@@ -6,49 +6,62 @@
  */
 (function (documentElement, window, navigator) {
     var docClass = documentElement.className;
-    var supportsSupports = 'CSS' in window && 'supports' in window.CSS;
-    var testCssSupportForPropertyAndValue = supportsSupports ?
-        nativeTestCssSupportForPropertyAndValue :
-        shimTestCssSupportForPropertyAndValue;
+    var testCssSupportForPropertyAndValue = (function(supportsSupports) {
+        return supportsSupports ? nativeCSSSupports : shimCSSSupports();
+    }('CSS' in window && 'supports' in window.CSS));
 
-    function cssToDOM(name) {
-        return name.replace(/([a-z])-([a-z])/g, function (str, m1, m2) {
-            return m1 + m2.toUpperCase();
-        }).replace(/^-/, '');
-    }
-
-    function testCssSuportForProperty(prop) { return shimTestCssSupportForPropertyAndValue(prop, undefined); }
-
-    function nativeTestCssSupportForPropertyAndValue(prop, value) {
+    function nativeCSSSupports(prop, value) {
         return window.CSS.supports(prop, value);
     }
 
-    function shimTestCssSupportForPropertyAndValue(prop, value) {
-        var valueIsDefined = value !== undefined;
-        try {
-            var elm = document.createElement('test');
-            prop = cssToDOM(prop);
-            if (elm.style[prop] !== undefined) {
+    function shimCSSSupports() {
+        var cssToDOMRegExp = /([a-z])-([a-z])/g;
+        var testElem = document.createElement('test');
 
-                if (valueIsDefined) {
-                    var before = elm.style[prop];
-                    try {
-                        elm.style[prop] = value;
-                    } catch (e) {}
-                    if (elm.style[prop] !== before) {
-                        elm = null;
-                        return true;
-                    } else {
-                        elm = null;
-                        return false;
-                    }
-                }
-                elm = null;
-                return true;
-            }
-        } catch (e) {
-            return false;
+        function cssToDOM(name) {
+            return name.replace(cssToDOMRegExp, cssToDOMReplacer).replace(/^-/, '');
         }
+
+        function cssToDOMReplacer(str, m1, m2) {
+            return m1 + m2.toUpperCase();
+        }
+
+        return function(prop, value) {
+            try {
+                prop = cssToDOM(prop);
+                var originalValue = testElem.style[prop];
+
+                if (originalValue === undefined) {
+                    return false;
+                }
+
+                if (originalValue === value) {
+                    return true;
+                }
+
+                testElem.style[prop] = value;
+                return testElem.style[prop] !== originalValue;
+            } catch (e) {
+                return false;
+            }
+        }
+    }
+
+    /* testAndAddClass :: [(String, [String], [String])]
+       Each tuple is a CSS feature detection where the first element is the name
+       of the feature, the second is an array of property names, the third is an
+       array of property values. If one combination is supported, the feature name
+       is added as a class to the document element with a 'has-' prefix, 'has-no-'
+       otherwise.
+    */
+    function testAndAddClass(tests) {
+        docClass += ' ' + tests.map(function (test) {
+            return (test.props.some(function(prop) {
+                return test.values.some(function(value) {
+                    return testCssSupportForPropertyAndValue(prop, value);
+                });
+            }) ? 'has-' : 'has-no-') + test.feature;
+        }).join(' ');
     }
 
     // http://modernizr.com/download/#-svg
@@ -58,27 +71,12 @@
         docClass += ' no-svg';
     }
 
-    if (testCssSuportForProperty('flex') || testCssSuportForProperty('-ms-flex') || testCssSuportForProperty('-webkit-flex') || testCssSuportForProperty('-moz-box-flex') || testCssSuportForProperty('-webkit-box-flex')) {
-        docClass += ' has-flex';
-    } else {
-        docClass += ' has-no-flex';
-    }
-
-    if (testCssSuportForProperty('flex-wrap') || testCssSuportForProperty('-ms-flex-wrap') || testCssSuportForProperty('-webkit-flex-wrap')) {
-        docClass += ' has-flex-wrap';
-    } else {
-        docClass += ' has-no-flex-wrap';
-    }
-
-    if (testCssSupportForPropertyAndValue('position', 'fixed')) {
-        docClass += ' has-fixed';
-    }
-
-    if (testCssSupportForPropertyAndValue('position', 'sticky')) {
-        docClass += ' has-sticky';
-    } else {
-        docClass += ' has-no-sticky';
-    }
+    testAndAddClass([
+        { feature: 'flex', props: ['flex', '-ms-flex', '-webkit-flex', '-moz-box-flex', '-webkit-box-flex'], values: ['inherit'] },
+        { feature: 'flex-wrap', props: ['flex-wrap', '-ms-flex-wrap', '-webkit-flex-wrap'], values: ['inherit'] },
+        { feature: 'fixed', props: ['position'], values: ['fixed'] },
+        { feature: 'sticky', props: ['position'], values: ['sticky', '-webkit-sticky'] }
+    ]);
 
     if (window.guardian.isEnhanced) {
         docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');

@@ -6,6 +6,7 @@ define([
     'common/utils/closest',
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/track-ad-render',
+    'common/modules/commercial/commercial-features',
     'commercial/modules/messenger'
 ], function (
     Promise,
@@ -15,6 +16,7 @@ define([
     closest,
     fastdom,
     trackAdRender,
+    commercialFeatures,
     messenger
 ) {
     var topSlotId = 'dfp-ad--top-above-nav';
@@ -29,6 +31,10 @@ define([
     };
 
     function init(moduleName, _window) {
+        if (!commercialFeatures.stickyTopBannerAd) {
+            return Promise.resolve();
+        }
+
         win = _window || window;
         topSlot = document.getElementById(topSlotId);
         if (topSlot && detect.isBreakpoint({ min: 'desktop' })) {

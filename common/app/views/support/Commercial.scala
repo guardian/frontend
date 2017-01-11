@@ -7,6 +7,7 @@ import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.{Page, PressedPage}
 import org.apache.commons.lang.StringEscapeUtils._
 import play.api.mvc.RequestHeader
+import play.api.libs.json.JsBoolean
 
 object Commercial {
 
@@ -92,11 +93,15 @@ object Commercial {
     }
 
     // The sizesOverride parameter is for testing only.
-    val cssClasses: String = {
+    def cssClasses(metadata: model.MetaData): String = {
+      val topBannerDisableSticky = metadata.javascriptConfigOverrides.get("disableStickyTopBanner") match {
+        case Some(JsBoolean(true)) => Some("top-banner-ad-container--not-sticky")
+        case _                     => None
+      }
       val classes = Seq(
         "top-banner-ad-container",
         "js-top-banner"
-      )
+      ) ++ topBannerDisableSticky
 
       classes mkString " "
     }
