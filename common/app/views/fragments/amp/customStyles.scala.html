@@ -32,5 +32,9 @@
  * It won't affect prod but please comment out this line when running tests in DEV
  *@
 @if(context.environment.mode == Dev) {
-    <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp.css")" />
+    @if(page.metadata.isHosted) {
+        <link rel="stylesheet" id="head-css" data-reload="head.hosted-amp" type="text/css" href="@Static("stylesheets/head.hosted-amp.css")" />
+    } else {
+        <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp.css")" />
+    }
 }
