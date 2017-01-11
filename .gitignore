@@ -1,15 +1,6 @@
 artifacts.zip
 /dist
 
-frontend-article.properties
-frontend-core-navigation.properties
-frontend-front.properties
-frontend-gallery.properties
-frontend-tag.properties
-frontend-section.properties
-frontend-video.properties
-frontend-applications.properties
-
 *.min.css
 *.min.css.map
 *.csv
@@ -48,12 +39,6 @@ screenshots
 common/conf/assets
 
 .eslintcache
-
-dev/gems
-dev/casperjs
-integration-tests/target/*
-
-developer.properties
 
 *-spec-runner.html
 
