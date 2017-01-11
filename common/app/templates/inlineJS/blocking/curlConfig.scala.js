@@ -42,7 +42,7 @@ window.curlConfig = {
 
             // plugins
             text:                               'text', // noop
-            inlineSvg:                          'inlineSvg' // noop
+            svg:                                'inlineSvg' // noop
         } else {
             admin:                          'projects/admin',
             common:                         'projects/common',
@@ -85,8 +85,8 @@ window.curlConfig = {
             'bootstraps/commercial':                    '@{Configuration.assets.path}javascripts/bootstraps/commercial.js',
 
             // plugins
-            text:         'components/requirejs-text/text',
-            inlineSvg:    'projects/common/utils/inlineSvg'
+            text:                           'components/requirejs-text/text',
+            svg:                            'projects/common/utils/inlineSvg'
         }
     }
 };
