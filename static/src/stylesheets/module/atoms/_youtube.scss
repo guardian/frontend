@@ -31,7 +31,6 @@
     }
 
     .youtube-media-atom__iframe {
-        top: 1px;
         z-index: 0;
 
         &:hover {
@@ -60,6 +59,10 @@
         &.youtube__video-ended.youtube__video-started {
             ~ .youtube-media-atom__overlay {
                 @include fade-in;
+
+                .end-slate-container {
+                    display: block;
+                }
             }
         }
 	}

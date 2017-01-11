@@ -27,9 +27,9 @@ final case class MediaAtom(
   title: String,
   duration: Option[Long],
   source: Option[String],
-  posterImage: Option[ImageMedia]
+  posterImage: Option[ImageMedia],
+  endSlatePath: String
 ) extends Atom {
-
   def isoDuration: Option[String] = {
     duration.map(d => new Duration(d * 1000.toLong).toString)
   }
@@ -114,16 +114,15 @@ object MediaAtom extends common.Logging {
       title = mediaAtom.title,
       duration = mediaAtom.duration,
       source = mediaAtom.source,
-      posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title))
+      posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title)),
+      endSlatePath = "/video/end-slate/series/commentisfree/series/comment-is-free-weekly.json?shortUrl=https://gu.com/p/5kb9d"
     )
-
 
   def imageMediaMake(capiImage: AtomApiImage, caption: String): ImageMedia = {
     ImageMedia(capiImage.assets.map(mediaImageAssetMake(_, caption)))
   }
 
-  def mediaAssetMake(mediaAsset: AtomApiMediaAsset): MediaAsset =
-  {
+  def mediaAssetMake(mediaAsset: AtomApiMediaAsset): MediaAsset = {
     MediaAsset(
       id = mediaAsset.id,
       version = mediaAsset.version,

@@ -8,7 +8,7 @@
         "u-responsive-ratio" -> true,
         "u-responsive-ratio--hd" -> true,
         "youtube-media-atom" -> true
-    ))">
+    ))" data-end-slate="@media.endSlatePath">
 
         @defining(if(embedPage) "&origin=" + Media.externalEmbedHost else if(!host.isEmpty) "&origin=" + host else "") { origin =>
             <iframe class="youtube-media-atom__iframe" id="youtube-@media.assets.head.id" width="100%" height="100%"
