@@ -38,7 +38,7 @@ define([
 
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
-        var messageCode = 'engagement-banner-2016-11-10';
+        var messageCode = 'engagement-banner-2017-01-11';
 
         var baseParams = {
             minArticles: 10,
