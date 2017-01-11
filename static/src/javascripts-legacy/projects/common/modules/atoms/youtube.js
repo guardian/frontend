@@ -92,14 +92,14 @@ define([
                 return document.referrer.startsWith(config.page.host);
             }
         }
-        return config.page.contentType == 'Video' && isInternalReferrer() && !isMobile();
+        return config.page.contentType === 'Video' && isInternalReferrer() && !isMobile();
     }
 
     function onPlayerReady(atomId, overlay, event) {
         if(shouldAutoplay()) {
             event.target.playVideo();
         }
-        
+
         players[atomId] = {
             player: event.target,
             pendingTrackingCalls: [25, 50, 75]
