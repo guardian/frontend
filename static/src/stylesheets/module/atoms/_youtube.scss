@@ -59,6 +59,12 @@
         &.youtube__video-ended.youtube__video-started {
             ~ .youtube-media-atom__overlay {
                 @include fade-in;
+
+                @include mq($from: tablet) {
+                    .end-slate-container {
+                        display: block;
+                    }
+                }
             }
 
             @include mq($from: tablet) {
