@@ -33,15 +33,21 @@ import scala.util.Random
   }
 
   // Test helper method
-  def getHealthCheck(mockResults: List[HealthCheckResult], policy: HealthCheckPolicy)(testBlock: Future[Result] => Unit) = {
+  def getHealthCheck(mockResults: List[HealthCheckResult],
+                     policy: HealthCheckPolicy,
+                     precondition: Option[HealthCheckPrecondition] = None)
+                    (testBlock: Future[Result] => Unit): Unit = {
 
     // Create a CachedHealthCheck controller with mock results
     val mockHealthChecks: Seq[SingleHealthCheck] = mockResults.map(result => ExpiringSingleHealthCheck(result.url))
     val mockTestPort: Int = 9100
-    val controller = new CachedHealthCheck(policy, mockHealthChecks:_*)(wsClient) {
-      override val cache = new HealthCheckCache(wsClient) {
-        override def fetchResults(testPort: Int, paths: SingleHealthCheck*): Future[Seq[HealthCheckResult]] = {
-          Future.successful(mockResults)
+    val controller = new CachedHealthCheck(policy, precondition)(mockHealthChecks:_*)(wsClient) {
+      override val cache = new HealthCheckCache(precondition)(wsClient) {
+        var remainingMockResults = mockResults
+        override def fetchResult(baseUrl: String, healthCheck: SingleHealthCheck): Future[HealthCheckResult] = {
+          val result = remainingMockResults.head
+          remainingMockResults = remainingMockResults.tail
+          Future.successful(result)
         }
       }
     }
@@ -132,6 +138,16 @@ import scala.util.Random
           val mockResults = List(mockResult(200), mockResult(404))
           getHealthCheck(mockResults, HealthCheckPolicy.Any) { response =>
             status(response) should be(200)
+          }
+        }
+      }
+    }
+    "all requests should be failing" when {
+      "precondition is NOT fulfilled" should {
+        "503" in {
+          val alwaysFailingPrecondition = HealthCheckPrecondition(() => false, "does not matter")
+          getHealthCheck(List(mockResult(200), mockResult(200)), HealthCheckPolicy.All, Some(alwaysFailingPrecondition)) { response =>
+            status(response) should be(503)
           }
         }
       }

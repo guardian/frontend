@@ -3,7 +3,6 @@ package conf
 import app.LifecycleComponent
 import common._
 import org.joda.time.DateTime
-import play.api.{Environment, Mode, Play}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
 
@@ -74,18 +73,19 @@ private[conf] case class HealthCheckResult(url: String,
 
 private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
 
-  def wsClient: WSClient
+  val wsClient: WSClient
 
-  protected def fetchResult(baseUrl: String, healthCheck: SingleHealthCheck): Future[HealthCheckResult] = {
+  private[conf] def fetchResult(baseUrl: String, healthCheck: SingleHealthCheck): Future[HealthCheckResult] = {
+
     wsClient.url(s"$baseUrl${healthCheck.path}")
       .withHeaders("User-Agent" -> "GU-HealthChecker", "X-Gu-Management-Healthcheck" -> "true")
       .withRequestTimeout(4.seconds).get()
       .map {
         response: WSResponse =>
           val result = response.status match {
-          case 200 => HealthCheckResultTypes.Success(response.status)
-          case _ => HealthCheckResultTypes.Failure(response.status, response.statusText)
-        }
+            case 200 => HealthCheckResultTypes.Success(response.status)
+            case _ => HealthCheckResultTypes.Failure(response.status, response.statusText)
+          }
           HealthCheckResult(healthCheck.path, result, DateTime.now, healthCheck.expires)
       }
       .recover {
@@ -93,16 +93,34 @@ private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
           log.error(s"HealthCheck request to ${healthCheck.path} failed", t)
           HealthCheckResult(healthCheck.path, HealthCheckResultTypes.Exception(t), DateTime.now, healthCheck.expires)
       }
+
   }
 
-  protected def fetchResults(port: Int, healthChecks: SingleHealthCheck*): Future[Seq[HealthCheckResult]] = {
+  protected def fetchResults(port: Int,
+                             preconditionMaybe: Option[HealthCheckPrecondition],
+                             healthChecks: SingleHealthCheck*): Future[Seq[HealthCheckResult]] = {
+
+    val precondition  = preconditionMaybe.getOrElse(HealthCheckPrecondition( () => true, "Precondition is always true")) //No precondition is equivalent to a precondition that's always true
+
     val baseUrl = s"http://localhost:$port"
-    Future.sequence(healthChecks.map(fetchResult(baseUrl, _)))
+
+    Future.sequence(
+      healthChecks.map { healthCheck =>
+        if(precondition.isFulfilled) {
+          fetchResult(baseUrl, healthCheck)
+        } else {
+          val preconditionFailedResult = HealthCheckResultTypes.Exception(new RuntimeException(precondition.errorMessage))
+          Future.successful(HealthCheckResult(healthCheck.path, preconditionFailedResult, DateTime.now, healthCheck.expires))
+        }
+      }
+    )
   }
 
 }
 
-private[conf] class HealthCheckCache(val wsClient: WSClient) extends HealthCheckFetcher {
+private[conf] class HealthCheckCache(preconditionMaybe: Option[HealthCheckPrecondition])
+                                    (val wsClient: WSClient)
+                                    extends HealthCheckFetcher {
 
   protected val cache = AkkaAgent[List[HealthCheckResult]](List[HealthCheckResult]())
   def get(): List[HealthCheckResult] = cache.get()
@@ -110,7 +128,7 @@ private[conf] class HealthCheckCache(val wsClient: WSClient) extends HealthCheck
   def refresh(port: Int, healthChecks: SingleHealthCheck*): Future[List[HealthCheckResult]] = {
     val alreadyFetched = noRefreshNeededResults
     val toFetch: Seq[SingleHealthCheck] = healthChecks.filterNot(h => alreadyFetched.map(_.url).contains(h.path))
-    fetchResults(port, toFetch:_*).flatMap(fetchedResults => cache.alter(fetchedResults.toList ++ alreadyFetched))
+    fetchResults(port, preconditionMaybe, toFetch:_*).flatMap(fetchedResults => cache.alter(fetchedResults.toList ++ alreadyFetched))
   }
 
   private def noRefreshNeededResults(): List[HealthCheckResult] = {
@@ -125,54 +143,52 @@ object HealthCheckPolicy {
   case object Any extends HealthCheckPolicy
 }
 
+case class HealthCheckPrecondition(test: () => Boolean, errorMessage: String) {
+  def isFulfilled: Boolean = test()
+}
+
+
 trait HealthCheckController extends Controller {
   def healthCheck(): Action[AnyContent]
 }
-
-class CachedHealthCheck(policy: HealthCheckPolicy, healthChecks: SingleHealthCheck*)
+class CachedHealthCheck(policy: HealthCheckPolicy, preconditionMaybe: Option[HealthCheckPrecondition])
+                       (healthChecks: SingleHealthCheck*)
                        (implicit wsClient: WSClient)
   extends HealthCheckController with Results with ExecutionContexts with Logging {
 
-  private[conf] val cache: HealthCheckCache = new HealthCheckCache(wsClient)
+  private[conf] val port: Int = 9000
 
-  private def allSuccessful(results: List[HealthCheckResult]): Boolean = {
-    results match {
-      case Nil => false
-      case nonEmpty => nonEmpty.forall(_.recentlySucceed)
-    }
-  }
-  private def anySuccessful(results: List[HealthCheckResult]): Boolean = results.exists(_.recentlySucceed)
+  private[conf] val cache: HealthCheckCache = new HealthCheckCache(preconditionMaybe)(wsClient)
+
   private def successful(results: List[HealthCheckResult]): Boolean = policy match {
-    case HealthCheckPolicy.All => allSuccessful(results)
-    case HealthCheckPolicy.Any => anySuccessful(results)
+      case HealthCheckPolicy.All => results.nonEmpty && results.forall(_.recentlySucceed)
+      case HealthCheckPolicy.Any => results.exists(_.recentlySucceed)
   }
-
-  val port: Int = 9000
 
   def healthCheck(): Action[AnyContent] = Action.async {
     Future.successful {
       val results = cache.get
-      val response = results.map {
-        r: HealthCheckResult => s"GET ${r.url} '${r.formattedResult}' '${r.formattedDate}'"
-      }
+      val response = results
+        .map { r: HealthCheckResult => s"GET ${r.url} '${r.formattedResult}' '${r.formattedDate}'" }
         .mkString("\n")
+
       if(successful(results)) Ok(response) else ServiceUnavailable(response)
     }
   }
 
-  def runChecks: Future[Unit] = cache.refresh(port, healthChecks:_*).map(_ => Nil)
+  def runChecks(): Future[List[HealthCheckResult]] = cache.refresh(port, healthChecks:_*)
 }
 
 case class AllGoodCachedHealthCheck(healthChecks: SingleHealthCheck*)(implicit wsClient: WSClient)
-  extends CachedHealthCheck(HealthCheckPolicy.All, healthChecks:_*)
+  extends CachedHealthCheck(policy = HealthCheckPolicy.All, preconditionMaybe = None)(healthChecks:_*)
 
 case class AnyGoodCachedHealthCheck(healthChecks: SingleHealthCheck*)(implicit wsClient: WSClient)
-  extends CachedHealthCheck(HealthCheckPolicy.Any, healthChecks:_*)
+  extends CachedHealthCheck(policy = HealthCheckPolicy.Any, preconditionMaybe = None)(healthChecks:_*)
 
 class CachedHealthCheckLifeCycle(
   healthCheckController: CachedHealthCheck,
   jobs: JobScheduler,
-  akkaAsync: AkkaAsync) extends LifecycleComponent {
+  akkaAsync: AkkaAsync) extends LifecycleComponent with ExecutionContexts {
 
   private lazy val healthCheckRequestFrequencyInSec = Configuration.healthcheck.updateIntervalInSecs
 
@@ -180,12 +196,12 @@ class CachedHealthCheckLifeCycle(
     jobs.deschedule("HealthCheckFetch")
     if (healthCheckRequestFrequencyInSec > 0) {
       jobs.scheduleEvery("HealthCheckFetch", healthCheckRequestFrequencyInSec.seconds) {
-        healthCheckController.runChecks
+        healthCheckController.runChecks().map(_ => ())
       }
     }
 
     akkaAsync.after1s {
-      healthCheckController.runChecks
+      healthCheckController.runChecks()
     }
   }
 }
