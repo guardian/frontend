@@ -58,10 +58,10 @@ define([
         function runTheTest(emailListID, exampleUrl) {
           if (config.page.contentId === FLYERURL) {
             enhanceWebView(emailListID);
+            updateExampleUrl(exampleUrl);
           } else {
             updateNewslettersPage(emailListID);
           }
-          updateExampleUrl(exampleUrl);
         }
 
         this.variants = [

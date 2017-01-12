@@ -8,6 +8,7 @@ define([
     'lodash/functions/memoize',
     'lodash/utilities/noop',
     'common/modules/experiments/tests/editorial-email-variants',
+    'common/modules/experiments/tests/opinion-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/tests/contributions-epic-brexit',
@@ -21,6 +22,7 @@ define([
              memoize,
              noop,
              EditorialEmailVariants,
+             OpinionEmailVariants,
              RecommendedForYou,
              MembershipEngagementBannerTests,
              ContributionsEpicBrexit,
@@ -28,6 +30,7 @@ define([
     ) {
     var TESTS = [
         new EditorialEmailVariants(),
+        new OpinionEmailVariants(),
         new RecommendedForYou(),
         new ContributionsEpicBrexit,
         new ContributionsEpicAlwaysAskStrategy
