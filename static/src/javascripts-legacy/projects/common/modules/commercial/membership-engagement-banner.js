@@ -173,7 +173,9 @@ define([
             if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
                 return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
                     if (canShow) {
-                        showBanner(bannerParams);
+                        mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
+                            if (!breakingShown) showBanner(bannerParams);
+                        });
                     }
                 });
             }
