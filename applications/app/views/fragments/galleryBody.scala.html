@@ -90,9 +90,9 @@
     </li>
 
     @if(!page.item.content.shouldHideAdverts && rowNum % adInterval == 0) {
-        @defining(rowNum / adInterval) { inlineId =>
-            <li class="gallery__item gallery__item--advert">
-                <div class="gallery__img-container">
+        <li class="gallery__item gallery__item--advert">
+            <div class="gallery__img-container">
+                @defining(rowNum / adInterval) { inlineId =>
                     @fragments.commercial.adSlot(
                         s"inline$inlineId",
                         Seq("gallery-inline", "dark"),
@@ -118,8 +118,8 @@
                         ){ }
                         s"inline${inlineId - 1}"
                     }
-                </div>
-            </li>
-        }
+                }
+            </div>
+        </li>
     }
 }

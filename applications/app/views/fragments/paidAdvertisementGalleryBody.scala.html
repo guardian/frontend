@@ -76,30 +76,32 @@
     @if(!page.gallery.content.shouldHideAdverts && rowNum % adInterval == 0) {
         <li class="gallery2__item gallery2__item--advert">
             <div class="gallery2__img-container">
-                @fragments.commercial.adSlot(
-                    s"inline$inlineId",
-                    Seq("gallery-inline", "dark"),
-                    Map("mobile" -> Seq("1,1", "2,2", "300,250", "fluid")),
-                    id =  Some(s"inline$inlineId--desktop"),
-                    optClassNames = Some(Seq("hide-until-tablet"))
-                ){ }
-                @if( inlineId == 1 ) {
+                @defining(rowNum / adInterval) { inlineId =>
                     @fragments.commercial.adSlot(
-                        "top-above-nav",
-                        Seq("gallery-inline", "dark", "mobile"),
-                        Map("mobile" -> Seq("1,1", "2,2", "88,70", "88,71", "300,250", "fluid")),
-                        id = Some("top-above-nav--mobile"),
-                        optClassNames = Some(Seq("mobile-only"))
-                    ){ }
-                } else {
-                    @fragments.commercial.adSlot(
-                        s"inline${inlineId - 1}",
-                        Seq("gallery-inline", "dark", "mobile"),
+                        s"inline$inlineId",
+                        Seq("gallery-inline", "dark"),
                         Map("mobile" -> Seq("1,1", "2,2", "300,250", "fluid")),
-                        id =  Some(s"inline${inlineId - 1}--mobile"),
-                        optClassNames = Some(Seq("mobile-only"))
+                        id =  Some(s"inline$inlineId--desktop"),
+                        optClassNames = Some(Seq("hide-until-tablet"))
                     ){ }
-                    s"inline${inlineId - 1}"
+                    @if( inlineId == 1 ) {
+                        @fragments.commercial.adSlot(
+                            "top-above-nav",
+                            Seq("gallery-inline", "dark", "mobile"),
+                            Map("mobile" -> Seq("1,1", "2,2", "88,70", "88,71", "300,250", "fluid")),
+                            id = Some("top-above-nav--mobile"),
+                            optClassNames = Some(Seq("mobile-only"))
+                        ){ }
+                    } else {
+                        @fragments.commercial.adSlot(
+                            s"inline${inlineId - 1}",
+                            Seq("gallery-inline", "dark", "mobile"),
+                            Map("mobile" -> Seq("1,1", "2,2", "300,250", "fluid")),
+                            id =  Some(s"inline${inlineId - 1}--mobile"),
+                            optClassNames = Some(Seq("mobile-only"))
+                        ){ }
+                        s"inline${inlineId - 1}"
+                    }
                 }
             </div>
         </li>
