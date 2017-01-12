@@ -1,19 +1,25 @@
 define([
     'Promise',
     'common/utils/config',
+    'common/utils/load-script',
     'common/modules/commercial/commercial-features',
-    'commercial/modules/dfp/dfp-env',
-    'lodash/functions/memoize'
+    'commercial/modules/dfp/dfp-env'
 ], function(
     Promise,
     config,
+    loadScript,
     commercialFeatures,
-    dfpEnv,
-    memoize
+    dfpEnv
 ){
-    var setupSonobi = memoize(function () {
-        return Promise.resolve(require(['js!sonobi.js'])).then(catchPolyfillErrors);
-    });
+
+    var sonobiUrl = '//mtrx.go.sonobi.com/morpheus.theguardian.12911_us_.js';
+
+    function setupSonobi() {
+        // Setting the async property to false will _still_ load the script in
+        // a non-blocking fashion but will ensure it is executed in an ordered
+        // fashion
+        return loadScript({ src: sonobiUrl, async: false }).then(catchPolyfillErrors);
+    }
 
     // Wrap the native implementation of getOwnPropertyNames in a try-catch. If any polyfill attempts
     // to re-implement this function, and doesn't consider the "access permissions" issue that exists in IE11,
