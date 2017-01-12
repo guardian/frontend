@@ -16,7 +16,8 @@ define([
         'common/utils/$',
         'lodash/objects/defaults',
         'lodash/collections/find',
-        'common/views/svgs'
+        'common/views/svgs',
+        'Promise'
     ], function (bean,
                  qwery,
                  config,
@@ -34,7 +35,8 @@ define([
                  $,
                  defaults,
                  find,
-                 svgs) {
+                 svgs,
+                 Promise) {
 
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
@@ -172,11 +174,22 @@ define([
 
             if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
                 return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
+
                     if (canShow) {
-                        mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
-                            if (!breakingShown) showBanner(bannerParams);
+
+                        return new Promise(function (resolve) {
+                            mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
+
+                                if (!breakingShown) {
+                                    showBanner(bannerParams);
+                                }
+                                resolve();
+
+                            });
                         });
-                    }
+
+                    };
+
                 });
             }
 

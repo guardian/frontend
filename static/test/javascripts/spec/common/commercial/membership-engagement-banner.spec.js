@@ -45,12 +45,14 @@ define([
                 'common/modules/commercial/commercial-features',
                 'common/modules/commercial/membership-engagement-banner',
                 'common/utils/config',
-                'common/utils/storage'
+                'common/utils/storage',
+                'common/utils/mediator'
             ], function () {
                 commercialFeatures = arguments[0];
                 membershipMessages = arguments[1];
                 storage = arguments[3];
                 config = arguments[2];
+                mediator = arguments[4];
                 done();
             }, function () {
                 // woohoo
@@ -109,6 +111,7 @@ define([
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = Promise.resolve(true);
                 fixtures.render(conf);
                 storage.local.set('gu.alreadyVisited', 10);
+                mediator.emit('modules:onwards:breaking-news:ready', false);
                 done();
             });
 
