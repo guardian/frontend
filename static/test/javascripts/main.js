@@ -36,7 +36,7 @@ requirejs.config({
         svgs:         '/base/static/src/inline-svgs',
         // plugins
         text:         '/base/static/vendor/javascripts/components/requirejs-text/text',
-        svg:          'projects/common/utils/inlineSvg',
+        inlineSvg:    'projects/common/utils/inlineSvg',
         // raven
         raven:        '/base/static/vendor/javascripts/components/raven-js/raven',
         'common/utils/raven':        '/base/static/test/javascripts/fixtures/raven'

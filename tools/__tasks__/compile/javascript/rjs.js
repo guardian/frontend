@@ -8,7 +8,7 @@ const bundles = [{
     include: 'bootstraps/standard/main',
     exclude: [
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/commercial',
@@ -17,7 +17,7 @@ const bundles = [{
         'boot',
         'bootstraps/standard/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/main',
@@ -27,7 +27,7 @@ const bundles = [{
         'bootstraps/standard/main',
         'bootstraps/commercial',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/article',
@@ -38,7 +38,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/article-minute',
@@ -49,7 +49,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/crosswords',
@@ -60,7 +60,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/liveblog',
@@ -71,7 +71,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/gallery',
@@ -82,7 +82,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/trail',
@@ -93,7 +93,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/profile',
@@ -104,7 +104,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/sudoku',
@@ -115,7 +115,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/image-content',
@@ -126,7 +126,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/facia',
@@ -137,7 +137,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/football',
@@ -148,7 +148,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/preferences',
@@ -159,7 +159,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/newsletters',
@@ -170,7 +170,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/membership',
@@ -181,7 +181,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 }, {
     name: 'bootstraps/enhanced/ophan',
@@ -198,7 +198,7 @@ const bundles = [{
         'bootstraps/commercial',
         'bootstraps/enhanced/main',
         'text',
-        'svg',
+        'inlineSvg',
     ],
 },
     {
@@ -210,7 +210,7 @@ const bundles = [{
             'bootstraps/commercial',
             'bootstraps/enhanced/main',
             'text',
-            'svg',
+            'inlineSvg',
         ],
         generateSourceMaps: true,
         preserveLicenseComments: false,
@@ -219,7 +219,7 @@ const bundles = [{
         out: `${target}/javascripts/bootstraps/video-embed.js`,
         exclude: [
             'text',
-            'svg',
+            'inlineSvg',
         ],
         generateSourceMaps: true,
         preserveLicenseComments: false,
@@ -228,7 +228,7 @@ const bundles = [{
         out: `${target}/javascripts/bootstraps/youtube-embed.js`,
         exclude: [
             'text',
-            'svg',
+            'inlineSvg',
         ],
         generateSourceMaps: true,
         preserveLicenseComments: false,
@@ -242,7 +242,7 @@ const bundles = [{
             'bootstraps/enhanced/main',
             'bootstraps/enhanced/facia',
             'text',
-            'svg',
+            'inlineSvg',
         ],
     }];
 

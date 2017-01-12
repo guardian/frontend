@@ -42,7 +42,7 @@ window.curlConfig = {
 
             // plugins
             text:                               'text', // noop
-            svg:                                'inlineSvg' // noop
+                inlineSvg:                      'inlineSvg' // noop
         } else {
             admin:                          'projects/admin',
             common:                         'projects/common',
@@ -86,7 +86,7 @@ window.curlConfig = {
 
             // plugins
             text:                           'components/requirejs-text/text',
-            svg:                            'projects/common/utils/inlineSvg'
+            inlineSvg:                      'projects/common/utils/inlineSvg'
         }
     }
 };
