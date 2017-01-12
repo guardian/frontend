@@ -24,7 +24,7 @@ import scala.util.Random
     with WithTestWsClient {
 
   //Helper method to construct mock Results
-  def mockResult(statusCode: Int, date: DateTime = DateTime.now, expiration: HealthCheckExpiration = HealthCheckExpires.Duration(10.seconds)): HealthCheckResult = {
+  def mockResult(statusCode: Int, date: DateTime = DateTime.now, expiration: Option[Duration] = Some(10.seconds)): HealthCheckResult = {
     val path = s"/path/${Random.alphanumeric.take(12).mkString}"
     statusCode match {
       case 200 => HealthCheckResult(path, HealthCheckResultTypes.Success(statusCode), date, expiration)
@@ -75,7 +75,7 @@ import scala.util.Random
         "503" in {
           val expiration = 5.seconds
           val resultDate = DateTime.now.minus(expiration.toMillis + 1)
-          val mockResults = List(mockResult(200, resultDate, HealthCheckExpires.Duration(expiration)))
+          val mockResults = List(mockResult(200, resultDate, Some(expiration)))
           getHealthCheck(mockResults, HealthCheckPolicy.All) { response =>
             status(response) should be (503)
           }
@@ -100,7 +100,7 @@ import scala.util.Random
       "results which are never expiring" should {
         "200" in {
           val resultDate = DateTime.now.minus(scala.util.Random.nextLong) // random date in the past
-          val mockResults = List(mockResult(200, resultDate, HealthCheckExpires.Never))
+          val mockResults = List(mockResult(200, resultDate, None))
           getHealthCheck(mockResults, HealthCheckPolicy.All) { response =>
             status(response) should be (200)
           }
@@ -119,7 +119,7 @@ import scala.util.Random
         "503" in {
           val expiration = 5.seconds
           val resultDate = DateTime.now.minus(expiration.toMillis + 1)
-          val mockResults = List(mockResult(200, resultDate, HealthCheckExpires.Duration(expiration)), mockResult(404))
+          val mockResults = List(mockResult(200, resultDate, Some(expiration)), mockResult(404))
           getHealthCheck(mockResults, HealthCheckPolicy.Any) { response =>
             status(response) should be(503)
           }

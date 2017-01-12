@@ -18,7 +18,7 @@ import scala.util.control.NonFatal
 
 sealed trait SingleHealthCheck {
   def path: String
-  def expires: HealthCheckExpiration
+  def expires: Option[Duration]
 }
 /*
  * NeverExpiresSingleHealthCheck should be used when the tested path depends on an upstream service like CAPI, DAPI, etc...
@@ -26,19 +26,13 @@ sealed trait SingleHealthCheck {
  * while limiting the effect of an unresponsive upstream service upon the health of frontend apps
  */
 case class NeverExpiresSingleHealthCheck(override val path: String,
-                                         override val expires: HealthCheckExpiration = HealthCheckExpires.Never) extends SingleHealthCheck
+                                         override val expires: Option[Duration] = None) extends SingleHealthCheck
 /*
  * ExpiringSingleHealthCheck should be used when the tested path DOES NOT depends on an upstream service like CAPI, DAPI, etc...
  * The goal of this type of healthcheck is to verify that the instance and the app are running.
  */
 case class ExpiringSingleHealthCheck(override val path: String,
-                                     override val expires: HealthCheckExpiration = HealthCheckExpires.Duration((Configuration.healthcheck.updateIntervalInSecs * 2).seconds)) extends SingleHealthCheck
-
-sealed trait HealthCheckExpiration
-object HealthCheckExpires {
-  case class Duration(duration: FiniteDuration) extends HealthCheckExpiration
-  case object Never extends HealthCheckExpiration
-}
+                                     override val expires: Option[Duration] = Some((Configuration.healthcheck.updateIntervalInSecs * 2).seconds)) extends SingleHealthCheck
 
 sealed trait HealthCheckInternalRequestResult
 object HealthCheckResultTypes {
@@ -50,11 +44,8 @@ object HealthCheckResultTypes {
 private[conf] case class HealthCheckResult(url: String,
                                            result: HealthCheckInternalRequestResult,
                                            date: DateTime,
-                                           expiration: HealthCheckExpiration) {
-  private val expirationDate: Option[DateTime] = expiration match {
-    case HealthCheckExpires.Duration(e) => Some(date.plus(e.toMillis))
-    case HealthCheckExpires.Never => None
-  }
+                                           expiration: Option[Duration]) {
+  private val expirationDate: Option[DateTime] = expiration.map { e => date.plus(e.toMillis) }
   private def expired: Boolean = expirationDate.fold(false)(DateTime.now.getMillis > _.getMillis)
   def recentlySucceed: Boolean = result match {
     case r: HealthCheckResultTypes.Success => !expired
@@ -65,10 +56,9 @@ private[conf] case class HealthCheckResult(url: String,
     case f: HealthCheckResultTypes.Failure => s"${f.statusCode} ${f.statusText}"
     case e: HealthCheckResultTypes.Exception => s"Error: ${e.exception.getLocalizedMessage}"
   }
-  def formattedDate: String = expiration match {
-    case HealthCheckExpires.Never => "Never expires"
-    case _ => if (expired) s"$date (Expired)" else date.toString
-  }
+  def formattedDate: String = expiration
+    .map(_ => if (expired) s"$date (Expired)" else date.toString)
+    .getOrElse("Never expires")
 }
 
 private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
@@ -133,7 +123,7 @@ private[conf] class HealthCheckCache(preconditionMaybe: Option[HealthCheckPrecon
 
   private def noRefreshNeededResults(): List[HealthCheckResult] = {
     // No refresh needed for non-expiring results if they have already been fetched successfully
-    cache.get.filter(r => r.expiration == HealthCheckExpires.Never && r.result.isInstanceOf[HealthCheckResultTypes.Success])
+    cache.get.filter(r => !r.expiration.isDefined && r.result.isInstanceOf[HealthCheckResultTypes.Success])
   }
 }
 
