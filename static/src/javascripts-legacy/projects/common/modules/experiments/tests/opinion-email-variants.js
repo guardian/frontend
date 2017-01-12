@@ -61,13 +61,13 @@ define([
 
         this.variants = [
             {
-                id: 'Opinion-Connected',
+                id: 'Opinion-UK-Connected',
                 test: function () {
                     runTheTest(3811);
                 }
             },
             {
-                id: 'Opinion-Legacy',
+                id: 'Opinion-UK-Legacy',
                 test: function () {
                     runTheTest(3814);
                 }
