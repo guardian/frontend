@@ -36,7 +36,7 @@ object ListIds {
   val guardianTodayUs = 1493
   val guardianTodayAu = 1506
 
-  val theBestOfOpinion = 2313
+  val theBestOfOpinion = 3811
   val newBestOfOpinion = 3811
   val theFiver = 218
   val mediaBriefing = 217
