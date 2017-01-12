@@ -20,6 +20,9 @@
 }
 
 .ad-slot--right {
+    position: sticky;
+    top: 0;
+
     &.is-sticky {
         width: 300px;
     }
