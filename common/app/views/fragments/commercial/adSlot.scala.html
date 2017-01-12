@@ -4,12 +4,14 @@
     sizeMapping: Map[String, Seq[String]],
     showLabel: Boolean = true,
     refresh: Boolean = true,
-    outOfPage: Boolean = false
+    outOfPage: Boolean = false,
+    id: Option[String] = None,
+    optClassNames: Option[Seq[String]] = None
 )(placeholderContent: Html)
 
 <div
-    id="dfp-ad--@name"
-    class="js-ad-slot ad-slot ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ")"
+    id="dfp-ad--@id.getOrElse(name)"
+    class="js-ad-slot ad-slot ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ") @optClassNames.map{ classNames => @classNames.mkString(" ") }"
     data-link-name="ad slot @name"
     data-test-id="ad-slot-@name"
     data-name="@name"
