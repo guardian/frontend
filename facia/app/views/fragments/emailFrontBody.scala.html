@@ -5,6 +5,7 @@
 
 @import layout.ItemClasses
 @import layout.ContentCard
+@import views.support.RemoveOuterParaHtml
 @(page: model.PressedPage)(implicit request: RequestHeader)
 
 @import views.support.EmailHelpers._
@@ -43,7 +44,7 @@
                 }
             }
         }
-        @card.header.headline
+        @RemoveOuterParaHtml(card.header.headline)
     </h3>
     @if(card.header.quoted) {
         @card.bylineText.map { byline => <h4 class="byline">@byline</h4> }
@@ -58,7 +59,7 @@
                 @fullRow(Seq("facia-card__text")) {
                     @headline(card)
                     @card.trailText.map { trailText =>
-                        <h4 class="trail-text">@trailText</h4>
+                        <h4 class="trail-text">@Html(trailText)</h4>
                     }
                 }
             </div>
