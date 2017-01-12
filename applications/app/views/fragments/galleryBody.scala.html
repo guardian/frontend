@@ -93,31 +93,8 @@
         <li class="gallery__item gallery__item--advert">
             <div class="gallery__img-container">
                 @defining(rowNum / adInterval) { inlineId =>
-                    @fragments.commercial.adSlot(
-                        s"inline$inlineId",
-                        Seq("gallery-inline", "dark"),
-                        Map("mobile" -> Seq("1,1", "2,2", "300,250", "fluid")),
-                        id =  Some(s"inline$inlineId--desktop"),
-                        optClassNames = Some(Seq("hide-until-tablet"))
-                    ){ }
-                    @if( inlineId == 1 ) {
-                        @fragments.commercial.adSlot(
-                            "top-above-nav",
-                            Seq("gallery-inline", "dark", "mobile"),
-                            Map("mobile" -> Seq("1,1", "2,2", "88,70", "88,71", "300,250", "fluid")),
-                            id = Some("top-above-nav--mobile"),
-                            optClassNames = Some(Seq("mobile-only"))
-                        ){ }
-                    } else {
-                        @fragments.commercial.adSlot(
-                            s"inline${inlineId - 1}",
-                            Seq("gallery-inline", "dark", "mobile"),
-                            Map("mobile" -> Seq("1,1", "2,2", "300,250", "fluid")),
-                            id =  Some(s"inline${inlineId - 1}--mobile"),
-                            optClassNames = Some(Seq("mobile-only"))
-                        ){ }
-                        s"inline${inlineId - 1}"
-                    }
+                    @fragments.commercial.gallerySlot(inlineId)
+                    @fragments.commercial.gallerySlot(inlineId - 1, isMobile = true)
                 }
             </div>
         </li>
