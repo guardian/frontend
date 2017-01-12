@@ -18,7 +18,7 @@ define([
         noop = function () {},
         injector = new Injector();
 
-    fdescribe('Hosted Gallery', function () {
+    describe('Hosted Gallery', function () {
 
         var fixturesConfig = {
                 id: 'hosted-gallery',
