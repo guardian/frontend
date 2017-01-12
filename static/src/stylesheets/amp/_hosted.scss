@@ -442,3 +442,14 @@ $badge-width: $gs-column-width + $gs-gutter;
 .content__hosted-body {
     @include content-gutter();
 }
+
+.content__meta-container {
+    position: relative;
+    margin-bottom: $gs-baseline;
+    border-top: 1px dotted $neutral-5;
+    border-bottom: 1px dotted $neutral-5;
+}
+
+.meta__social {
+    border-top: 1px dotted $neutral-5;
+}

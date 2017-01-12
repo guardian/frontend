@@ -25,9 +25,8 @@ define([
         audienceOffset: 0,
         useTargetingTool: true,
 
-        overrideCanRun: true,
         canRun: function () {
-            return !contributionsUtilities.inAlwaysAskTest()
+            return !contributionsUtilities.inAlwaysAskTest();
         },
 
         variants: [
