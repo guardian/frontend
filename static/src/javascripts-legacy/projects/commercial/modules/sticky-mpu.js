@@ -16,6 +16,7 @@ define([
     Promise
 ) {
     var noSticky = document.documentElement.classList.contains('has-no-sticky');
+    var stickyElement;
     var rightSlot;
 
     function stickyMpu($adSlot) {
@@ -40,7 +41,7 @@ define([
             if (noSticky) {
                 //if there is a sticky 'paid by' band move the sticky mpu down so it will be always visible
                 var options = config.page.isAdvertisementFeature ? {top: 43} : {};
-                var stickyElement = new Sticky($adSlot[0], options);
+                stickyElement = new Sticky($adSlot[0], options);
                 stickyElement.init();
                 messenger.register('resize', onResize);
             }
