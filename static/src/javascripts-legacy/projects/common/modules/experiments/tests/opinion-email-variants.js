@@ -29,7 +29,7 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = '90% of users in new format list, 10% in the other list';
 
-        var OPINION_URL = 'info/ng-interactive/2017/jan/12/sign-up-for-opinion'; // TODO: check this url
+        var OPINION_URL = 'info/ng-interactive/2017/jan/12/sign-up-for-the-guardian-opinion-email';
 
         this.canRun = function () {
             return (config.page.contentId === OPINION_URL ||
