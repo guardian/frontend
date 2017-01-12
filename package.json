@@ -10,6 +10,7 @@
     "hyperscript-helpers": "^3.0.0",
     "immutable": "^3.8.1",
     "monapt": "^0.5.4",
+    "scriptjs": "^2.5.8",
     "tcp-ping": "^0.1.1",
     "virtual-dom": "^2.1.1",
     "webshot": "^0.18.0"
