@@ -35,7 +35,7 @@ trait ABTestSwitches {
     "ab-opinion-email-variants",
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2017, 2, 8),
     exposeClientSide = true
   )
