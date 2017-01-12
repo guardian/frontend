@@ -46,7 +46,7 @@
         @card.header.headline
     </h3>
     @if(card.header.quoted) {
-        @card.bylineText.map { byline => <h3 class="byline">@byline</h3> }
+        @card.bylineText.map { byline => <h4 class="byline">@byline</h4> }
     }
 }
 
@@ -105,7 +105,7 @@
     }
 
     @collection.curatedPlusBackfillDeduplicated.zipWithIndex.map { case (pressedContent, cardIndex) =>
-        @defining(FaciaCard.fromTrail(pressedContent, collection.config, ItemClasses.showMore, showSeriesAndBlogKickers = true)) { card =>
+        @defining(FaciaCard.fromTrail(pressedContent, collection.config, ItemClasses.showMore, showSeriesAndBlogKickers = false)) { card =>
             @if(cardIndex == 0) {
                 @firstCard(card)
             } else {
