@@ -23,6 +23,11 @@
     position: sticky;
     top: 0;
 
+    // Sorry but no other choice :=(
+    .has-sticky .paidfor-band ~ .content__main & {
+        top: 46px;
+    }
+
     &.is-sticky {
         width: 300px;
     }
