@@ -434,8 +434,7 @@ $video-width-desktop: 700px;
 
     .youtube-media-atom__iframe:not(.youtube__video-ready) {
         ~ .youtube-media-atom__overlay {
-            visibility: hidden;
-            opacity: 0;       
+            visibility: hidden;      
         }
     }
 }
