@@ -461,9 +461,11 @@ define([
                     gallery.loadAtIndex(parseInt(res[1], 10));
                 }
             }
+            return gallery;
         })
-        .then(function () {
+        .then(function (gallery) {
             performanceLogging.moduleEnd(moduleName);
+            return gallery;
         });
     }
 
