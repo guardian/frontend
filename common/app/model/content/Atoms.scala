@@ -1,9 +1,10 @@
 package model.content
 
+import com.gu.contentapi.client.model.v1.TagType
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
 import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
-import model.{ImageAsset, ImageMedia}
+import model.{ EndSlateComponents, ImageAsset, ImageMedia}
 import org.joda.time.Duration
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
@@ -28,7 +29,7 @@ final case class MediaAtom(
   duration: Option[Long],
   source: Option[String],
   posterImage: Option[ImageMedia],
-  endSlatePath: String
+  endSlatePath: Option[String]
 ) extends Atom {
   def isoDuration: Option[String] = {
     duration.map(d => new Duration(d * 1000.toLong).toString)
@@ -83,7 +84,12 @@ object Atoms extends common.Logging {
       })
 
       val media = extract(atoms.media, atom => {
-        MediaAtom.make(atom)
+        val endSlatePath = EndSlateComponents(
+          sectionId = content.sectionId.getOrElse(""),
+          shortUrl = content.fields.flatMap(_.shortUrl).getOrElse(""),
+          seriesId = content.tags.find(_.`type` == TagType.Series).map(_.id))
+          .toUriPath
+        MediaAtom.make(atom, Some(endSlatePath))
       })
 
       val interactives = extract(atoms.interactives, atom => {
@@ -99,14 +105,14 @@ object Atoms extends common.Logging {
 
 object MediaAtom extends common.Logging {
 
-  def make(atom: AtomApiAtom): MediaAtom = {
+  def make(atom: AtomApiAtom, endSlatePath: Option[String]): MediaAtom = {
     val id = atom.id
     val defaultHtml = atom.defaultHtml
     val mediaAtom = atom.data.asInstanceOf[AtomData.Media].media
-    MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom)
+    MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom, endSlatePath)
   }
 
-  def mediaAtomMake(id: String, defaultHtml: String, mediaAtom: AtomApiMediaAtom): MediaAtom =
+  def mediaAtomMake(id: String, defaultHtml: String, mediaAtom: AtomApiMediaAtom, endSlatePath: Option[String]): MediaAtom =
     MediaAtom(
       id = id,
       defaultHtml = defaultHtml,
@@ -115,7 +121,7 @@ object MediaAtom extends common.Logging {
       duration = mediaAtom.duration,
       source = mediaAtom.source,
       posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title)),
-      endSlatePath = "/video/end-slate/series/commentisfree/series/comment-is-free-weekly.json?shortUrl=https://gu.com/p/5kb9d"
+      endSlatePath = endSlatePath
     )
 
   def imageMediaMake(capiImage: AtomApiImage, caption: String): ImageMedia = {
