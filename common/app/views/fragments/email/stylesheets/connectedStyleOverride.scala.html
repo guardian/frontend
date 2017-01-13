@@ -12,6 +12,10 @@
         background: #f6f6f6;
     }
 
+    @*
+     * !important is needed here and elsewhere because the base styles in the Ink CSS framework for email use
+     * !important and we need to override them. (See the ink stylesheet for notes on why the base styles need !important)
+     *@
     .panel {
         padding: 0 !important;
     }
@@ -251,7 +255,10 @@
     }
 
     /*  Media Queries */
-
+    @*
+     * !important is needed here and elsewhere because the base styles in the Ink CSS framework for email use
+     * !important and we need to override them. (See the ink stylesheet for notes on why the base styles need !important)
+     *@
     @@media only screen and (max-width: 600px) {
         table[class="body"] .container {
             width: 100% !important;

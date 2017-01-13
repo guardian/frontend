@@ -117,6 +117,10 @@
     .tone-external .facia-card__text {
         background-color: #f6f6f6;
     }
+    @*
+     * !important is needed here and elsewhere because the base styles in the Ink CSS framework for email use
+     * !important and we need to override them. (See the ink stylesheet for notes on why the base styles need !important)
+     *@
     .tone-external .headline {
         color: #333333;
         font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif !important;

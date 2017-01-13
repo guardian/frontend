@@ -17,6 +17,10 @@
     }
 
     .panel {
+        @*
+         * !important is needed here and elsewhere because the base styles in the Ink CSS framework for email use
+         * !important and we need to override them. (See the ink stylesheet for notes on why the base styles need !important)
+         *@
         padding: 0 0 10px 0 !important;
         border: none;
     }
