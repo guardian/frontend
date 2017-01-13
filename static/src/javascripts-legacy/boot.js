@@ -29,17 +29,26 @@ define([
     // curl’s promise API is broken, so we must cast it to a real Promise
     // https://github.com/cujojs/curl/issues/293
     var promiseRequire = function (moduleIds) {
-        return Promise.resolve(require(moduleIds));
+        return Promise.resolve(window.require(moduleIds));
     };
-
     var guardian = window.guardian;
     var config = guardian.config;
 
     var domReadyPromise = new Promise(function (resolve) { domReady(resolve); });
 
     var bootStandard = function () {
+        if (config.tests.abWebpackBundle) {
+            return new Promise(function (resolve) {
+                // Webpack will swap out this require call for its own AMD require when bundling
+                require(['bootstraps/standard/main'], function (boot) {
+                    boot();
+                    resolve();
+                });
+            });
+        }
+
         return promiseRequire(['bootstraps/standard/main'])
-            .then(function (boot) { boot(); });
+           .then(function (boot) { boot(); });
     };
 
     var bootCommercial = function () {

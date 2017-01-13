@@ -5,7 +5,10 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-    entry: './static/src/javascripts/boot-webpack.js',
+    entry: [
+        './static/src/javascripts-legacy/boot.js',
+        './static/src/javascripts-legacy/bootstraps/standard/main.js',
+    ],
     resolve: {
         modulesDirectories: [
             'static/src/javascripts',
@@ -52,6 +55,8 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
         filename: 'boot-webpack.js',
+        library: 'boot',
+        libraryTarget: 'amd',
     },
     plugins: [
         new webpack.optimize.UglifyJsPlugin(),
