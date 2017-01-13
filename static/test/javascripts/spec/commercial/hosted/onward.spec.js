@@ -16,7 +16,7 @@ define([
         var mock = sinon.stub().returns(Promise.resolve({html:'<div class="next-page"></div>'}));
 
         var fixturesConfig = {
-                id: 'hosted-next-video',
+                id: 'hosted-onward',
                 fixtures: [
                     '<div class="js-onward-placeholder"></div>'
                 ]
