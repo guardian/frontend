@@ -15,10 +15,12 @@ import scala.concurrent.duration._
 
 class RelatedController(val contentApiClient: ContentApiClient, val mostReadAgent: MostReadAgent)(implicit context: ApplicationContext) extends Controller with Related with Containers with Logging with ExecutionContexts {
 
+  private val RelatedLabel : String = "Related stories"
+
   private val page = SimplePage(MetaData.make(
     "related-content",
     Some(SectionSummary.fromId("related-content")),
-    "Related stories")
+    RelatedLabel)
   )
 
   def renderHtml(path: String) = render(path)
@@ -29,8 +31,8 @@ class RelatedController(val contentApiClient: ContentApiClient, val mostReadAgen
 
     related(edition, path, excludeTags) map {
       case related if related.items.isEmpty => Cached(60)(JsonNotFound())
-      case related if isMf2 => renderRelatedMf2(related.items.sortBy(-_.content.trail.webPublicationDate.getMillis), "related stories")
-      case trails => renderRelated(trails.items.sortBy(-_.content.trail.webPublicationDate.getMillis), containerTitle = "related stories")
+      case related if isMf2 => renderRelatedMf2(related.items.sortBy(-_.content.trail.webPublicationDate.getMillis), RelatedLabel.toLowerCase())
+      case trails => renderRelated(trails.items.sortBy(-_.content.trail.webPublicationDate.getMillis), containerTitle = RelatedLabel.toLowerCase())
     }
   }
 
@@ -54,7 +56,7 @@ class RelatedController(val contentApiClient: ContentApiClient, val mostReadAgen
     JsonComponent(
       "items" -> JsArray(Seq(
         Json.obj(
-          "displayName" -> "related stories",
+          "displayName" -> RelatedLabel.toLowerCase(),
           "showContent" -> relatedTrails.nonEmpty,
           "content" -> relatedTrails.map( collection => isCuratedContent(collection.faciaContent))
         )
