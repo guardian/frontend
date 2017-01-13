@@ -19,7 +19,7 @@ define([
     Promise,
     Message
 ) {
-    var commercialFeatures, membershipMessages,
+    var commercialFeatures, membershipMessages, mediator,
         showMembershipMessages, alreadyVisited, storage, config, participations;
 
     var injector = new Injector();
