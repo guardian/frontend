@@ -18,7 +18,7 @@ class RelatedController(val contentApiClient: ContentApiClient, val mostReadAgen
   private val page = SimplePage(MetaData.make(
     "related-content",
     Some(SectionSummary.fromId("related-content")),
-    "Related content")
+    "Related stories")
   )
 
   def renderHtml(path: String) = render(path)
@@ -29,8 +29,8 @@ class RelatedController(val contentApiClient: ContentApiClient, val mostReadAgen
 
     related(edition, path, excludeTags) map {
       case related if related.items.isEmpty => Cached(60)(JsonNotFound())
-      case related if isMf2 => renderRelatedMf2(related.items.sortBy(-_.content.trail.webPublicationDate.getMillis), "related content")
-      case trails => renderRelated(trails.items.sortBy(-_.content.trail.webPublicationDate.getMillis), containerTitle = "related content")
+      case related if isMf2 => renderRelatedMf2(related.items.sortBy(-_.content.trail.webPublicationDate.getMillis), "related stories")
+      case trails => renderRelated(trails.items.sortBy(-_.content.trail.webPublicationDate.getMillis), containerTitle = "related stories")
     }
   }
 
@@ -54,7 +54,7 @@ class RelatedController(val contentApiClient: ContentApiClient, val mostReadAgen
     JsonComponent(
       "items" -> JsArray(Seq(
         Json.obj(
-          "displayName" -> "related content",
+          "displayName" -> "related stories",
           "showContent" -> relatedTrails.nonEmpty,
           "content" -> relatedTrails.map( collection => isCuratedContent(collection.faciaContent))
         )
