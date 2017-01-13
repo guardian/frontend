@@ -21,13 +21,11 @@ domready(() => {
             });
         }
 
-        require(['bootstraps/commercial'], (commercial) => {
-            raven.wrap({
-                tags: { feature: 'commercial' },
-            }, () => {
-                commercial.init();
-            });
-        });
+        require(['bootstraps/commercial'], raven.wrap({
+            tags: {
+                feature: 'commercial',
+            },
+        }, commercial => commercial.init()));
     }
 
     // 3. finally, try enhanced
