@@ -13,6 +13,7 @@ define([
     'commercial/modules/third-party-tags/audience-science-gateway',
     'commercial/modules/third-party-tags/audience-science-pql',
     'commercial/modules/third-party-tags/imr-worldwide',
+    'commercial/modules/third-party-tags/imr-worldwide-legacy',
     'commercial/modules/third-party-tags/remarketing',
     'commercial/modules/third-party-tags/krux',
     'common/modules/identity/api',
@@ -31,6 +32,7 @@ define([
     audienceScienceGateway,
     audienceSciencePql,
     imrWorldwide,
+    imrWorldwideLegacy,
     remarketing,
     krux,
     identity,
@@ -81,6 +83,7 @@ define([
             audienceSciencePql,
             audienceScienceGateway,
             imrWorldwide,
+            imrWorldwideLegacy,
             remarketing,
             krux
         ].filter(function (_) { return _.shouldRun; });
