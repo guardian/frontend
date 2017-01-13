@@ -42,6 +42,10 @@ module.exports = {
             paths: ['lodash'],
             patterns: ['!lodash/*'],
         }],
+
+        // these are re-defined because this config does not extend the main one
+        // which is annoying but this whole directory is not long for this world anwyay
+        'no-extend-native': 'error',
     },
     root: true,
 }
