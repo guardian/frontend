@@ -1,20 +1,65 @@
+#!/bin/bash
+
+# Setup Nginx for local developement
+#
+# Copies Nginx configuration and SSL certificates to Nginx home (usually /usr/local/etc/nginx)
+# Make sure you have valid AWS credentials and then run with sudo setup.sh <profile name>
+# Remember to add nginx/hosts to your /etc/hosts
+
+S3_BUCKET="s3://identity-local-ssl/"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 nginxHome=`nginx -V 2>&1 | grep "configure arguments:" | sed 's/[^*]*conf-path=\([^ ]*\)\/nginx\.conf.*/\1/g'`
+jdkHome=`/usr/libexec/java_home`
 
-echo "nginxHome=$nginxHome"
+echo "Checking awscli is installed"
+which aws 1>/dev/null 2>&1
+if [[ $? -gt 0 ]]; then
+	echo 'Cannot find AWS CLI utility. Please install it before running this script.'
+	exit 1
+fi
 
-sudo mkdir -p $nginxHome/sites-enabled
-sudo ln -fs $DIR/frontend.conf $nginxHome/sites-enabled/frontend.conf
-sudo ln -fs $DIR/frontend-test.crt $nginxHome/frontend-test.crt
-sudo ln -fs $DIR/frontend-test.key $nginxHome/frontend-test.key
+echo "Checking AWS credentials are valid"
+if [ -z "$1" ]; then
+	PROFILE=""
+else
+	PROFILE="--profile ${1}"
+fi
+
+aws ${PROFILE} s3 ls s3://identity-local-ssl/ 1>/dev/null 2>&1
+if [[ $? -gt 0 ]]; then
+	echo "You do not have access to the Identity AWS account. Re-run with ${0} <profile name> to use a different profile."
+	exit 2
+fi
+
+function install_ssh_certificate() {
+	KEY_NAME="${1}.key"
+	CRT_NAME="${1}.crt"
+	echo "Downloading SSL certsificate $CRT_NAME from $S3_BUCKET"
+	aws ${PROFILE} s3 cp "${S3_BUCKET}${KEY_NAME}" ${DIR} 1>/dev/null
+	echo "Downloading SSL key $KEY_NAME from $S3_BUCKET"
+	aws ${PROFILE} s3 cp "${S3_BUCKET}${CRT_NAME}" ${DIR} 1>/dev/null
+
+	echo "Linking SSL certs/keys to $nginxHome"
+	sudo ln -fs "${DIR}/${CRT_NAME}" "${nginxHome}/${CRT_NAME}"
+	sudo ln -fs "${DIR}/${KEY_NAME}" "${nginxHome}/${KEY_NAME}"
+}
+
+function install_ssh_certificate_in_jdk_ca() {
+    echo "Importing SSL certificate into Java keystore ${jdkHome}/jre/lib/security/cacerts"
+	sudo "${jdkHome}/bin/keytool" -import -alias ${1} -keystore "${jdkHome}/jre/lib/security/cacerts" -file "${1}.crt" -storepass "changeit" -noprompt
+}
+
+function install_nginx_configuration() {
+    echo "Linking Nginx configuration ${1} to $nginxHome/sites-enabled"
+    sudo ln -fs "$DIR/${1}" "$nginxHome/sites-enabled/${1}"
+}
+
+install_ssh_certificate "wildcard-thegulocal-com-exp2019-01-09"
+install_ssh_certificate_in_jdk_ca "wildcard-thegulocal-com-exp2019-01-09"
+install_nginx_configuration "frontend.conf"
+
+echo "Restarting Nginx"
 sudo nginx -s stop
 sudo nginx
 
-FILE=$nginxHome/sites-enabled/frontend.conf
-
-if [ -f $FILE ];
-then
-   echo "File $FILE exists"
-else
-   echo "File $FILE does not exists"
-fi
+echo "Done. (To setup Dotcom Identity Frontend please follow identity-platform README.)"

@@ -1,6 +1,6 @@
 # Frontend Nginx Dev Config
 
-## Setup
+## Install Nginx
 
 __Mac:__ [Install Homebrew:](http://brew.sh/#install)
 
@@ -14,19 +14,14 @@ __Nginx:__
     # Linux
     sudo apt-get install nginx
 
-Add the following to your ```/etc/hosts```:
+## Configure Nginx with SSL
 
-    127.0.0.1   profile.thegulocal.com
-    127.0.0.1   m.thegulocal.com
+1. Make sure you are in `frontend/nginx` directory
+1. Ensure you have the correct [hosts](hosts) included in `/etc/hosts` file on your machine
+1. Run `sudo ./setup.sh frontend`
+1. To setup Dotcom Identity Fronted follow [identity-platform README](https://github.com/guardian/identity-platform)
 
-
-## Now run the frontend setup script for nginx [setup.sh](setup.sh):
-
-    sh setup.sh
-
-## Setup Nginx
-
-You will have to make sure the ```sites-enabled``` folder is included in your ```nginx.conf``` (usually in ```/usr/local/etc/nginx/nginx.conf```):
+Make sure ```sites-enabled``` folder is included in your ```nginx.conf``` (usually in ```/usr/local/etc/nginx/nginx.conf```):
 
     # ...
     http {
@@ -35,7 +30,3 @@ You will have to make sure the ```sites-enabled``` folder is included in your ``
         # THIS IS WHAT YOU MUST ADD
         include sites-enabled/*;
     #...
-
-## Note
-
-Both [frontend-test.crt](frontend-test.crt) and [frontend-test.key](frontend-test.key) are test values that are not used in production or anywhere else across the Guardian so can be public.
