@@ -1,5 +1,5 @@
 @()(implicit request: RequestHeader, context: model.ApplicationContext)
-@import conf.Configuration.commercial.testDomain
+@import conf.Configuration
 
 @admin_main("Commercial Tools", isAuthed = true) {
 
@@ -68,8 +68,8 @@
                 <div class="panel-body">
                     <ul>
                         <li><a href="@controllers.admin.routes.CommercialController.renderCreativeTemplates()">Creative templates</a></li>
-                        <li><a href="@testDomain/commercial/test-page">Merchandising components</a></li>
-                        <li><a href="@testDomain/commercial-containers">Commercial containers</a></li>
+                        <li><a href="@Configuration.commercial.testDomain/commercial/test-page">Merchandising components</a></li>
+                        <li><a href="@Configuration.commercial.testDomain/commercial-containers">Commercial containers</a></li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderFluidAds()">Responsive ads</a></li>
                     </ul>
                 </div>
@@ -113,7 +113,7 @@
                     <ul>
                         <li><a href="https://github.com/guardian/commercial-tools">Commercial tools repo</a></li>
                         <li><a href="https://dfp-playground.appspot.com/">DFP API playground</a></li>
-                        <li><a href="https://kibana.gu-web.net/goto/1955d282a7b6cc452b673cdb9c27f1af">
+                        <li><a href="@Configuration.Elk.kibanaUrl/goto/e70c27fc5f8133be2d2c31f257058997">
                             Failing Commercial Feeds
                         </a></li>
                         <li><a href="https://docs.google.com/a/guardian.co.uk/document/d/1Imf0MN9Gx_tWMgQBk21LyDZsKz6DVLEyJyOPLveJ_Gk">
