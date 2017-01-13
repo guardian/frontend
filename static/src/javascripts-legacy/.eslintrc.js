@@ -1,14 +1,14 @@
 module.exports = {
     env: {
+        browser: true,
         amd: true,
         jasmine: true,
-        es6: false,
-        commonjs: false
+        commonjs: true
     },
     extends: 'eslint:recommended',
-	parserOptions: {
-		ecmaVersion: 5
-	},
+    parserOptions: {
+        ecmaVersion: 5,
+    },
     rules: {
         camelcase: 'off',
         'no-shadow': 'off',
@@ -22,8 +22,6 @@ module.exports = {
         'no-multi-spaces': 'off',
         'no-underscore-dangle': 'off',
         'key-spacing': 'off',
-        'import/no-amd': 'off',
-        'import/no-dynamic-require': 'off',
 
         // these are bad habits in react that we're already abusing.
         // if we go more [p]react we should look at them,
@@ -45,4 +43,5 @@ module.exports = {
             patterns: ['!lodash/*'],
         }],
     },
+    root: true,
 }
