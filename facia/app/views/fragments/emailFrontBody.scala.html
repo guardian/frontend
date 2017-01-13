@@ -1,18 +1,13 @@
-@import layout.{FaciaCard, FaciaCardHeader}
-@import model.pressed.PressedContent
-@import layout.EditionalisedLink
-@import model.EmailAddons.EmailContentType
-
-@import layout.ItemClasses
-@import layout.ContentCard
-@import views.support.RemoveOuterParaHtml
 @(page: model.PressedPage)(implicit request: RequestHeader)
 
-@import views.support.EmailHelpers._
-@import views.support.TrailCssClasses.toneClassFromStyle
-@import model.pressed.{Feature, ExternalLink}
-@import implicits.Requests.RichRequestHeader
 @import implicits.ItemKickerImplicits._
+@import implicits.Requests.RichRequestHeader
+@import layout.{ContentCard, FaciaCard, ItemClasses}
+@import model.EmailAddons.EmailContentType
+@import model.pressed.{ExternalLink, Feature}
+@import views.support.EmailHelpers._
+@import views.support.RemoveOuterParaHtml
+@import views.support.TrailCssClasses.toneClassFromStyle
 
 
 @headline(card: ContentCard) = {
