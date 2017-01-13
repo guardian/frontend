@@ -16,8 +16,7 @@ object VisitBritainHostedPages {
     logo = HostedLogo(
       "https://static.theguardian.com/commercial/hosted/visit-britain/OMGB_LOCK_UP_Hashtag_HOAM_Blue.jpg",
       Some(Dimensions(width = 1378, height = 957)),
-      link = "http://www.homeofamazing.com/?utm_source=guardianpartnership&utm_medium=hostedgalleries&utm_campaign=display",
-      trackingCode = ""
+      link = "http://www.homeofamazing.com/?utm_source=guardianpartnership&utm_medium=hostedgalleries&utm_campaign=display"
     ),
     fontColour = Colour("#E41F13")
   )

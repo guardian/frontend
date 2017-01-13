@@ -72,14 +72,11 @@ define([
     var secondaryModules = [
         ['cm-stickyTopBanner', stickyTopBanner.init],
         ['cm-fill-advert-slots', fillAdvertSlots.init, fillAdvertSlots.customTiming],
-        ['cm-paidContainers', paidContainers.init]
+        ['cm-paidContainers', paidContainers.init],
+        ['cm-paidforBand', paidforBand.init]
     ];
 
     var customTimingModules = [];
-
-    if (config.page.isAdvertisementFeature) {
-        secondaryModules.push(['cm-paidforBand', paidforBand.init]);
-    }
 
     if (config.page.isHosted) {
         secondaryModules.push(

@@ -12,8 +12,7 @@ object Formula1HostedPages {
     logo = HostedLogo(
       "https://static.theguardian.com/commercial/hosted/formula1-singapore/Logos-SGP-SA-1.jpg",
       Some(Dimensions(width = 500, height = 500)),
-      link = "",
-      trackingCode = ""
+      link = ""
     ),
     fontColour = Colour("#063666")
   )
