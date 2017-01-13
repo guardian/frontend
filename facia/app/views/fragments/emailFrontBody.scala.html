@@ -18,25 +18,15 @@
         }
 
         @defining(if(request.isEmailConnectedStyle) "-connected" else "") { suffix =>
-            @if(card.header.isGallery) {
-                @icon("gallery" + suffix)
-            }
-            @if(card.header.isAudio) {
-                @icon("podcast" + suffix)
-            }
-            @if(card.header.isVideo) {
-                @icon("video" + suffix)
-            }
+            @if(card.header.isGallery) { @icon("gallery" + suffix) }
+            @if(card.header.isAudio) { @icon("podcast" + suffix) }
+            @if(card.header.isVideo) { @icon("video" + suffix) }
         }
 
         @if(card.header.quoted) {
             @card.cardStyle match {
-                case Feature => {
-                    @icon("quote-feature")
-                }
-                case _ => {
-                    @icon("quote")
-                }
+                case Feature => { @icon("quote-feature") }
+                case _ => { @icon("quote") }
             }
         }
         @RemoveOuterParaHtml(card.header.headline)
