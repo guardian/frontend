@@ -16,8 +16,7 @@ define([
         'common/utils/$',
         'lodash/objects/defaults',
         'lodash/collections/find',
-        'common/views/svgs',
-        'Promise'
+        'common/views/svgs'
     ], function (bean,
                  qwery,
                  config,
@@ -35,8 +34,7 @@ define([
                  $,
                  defaults,
                  find,
-                 svgs,
-                 Promise) {
+                 svgs) {
 
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
