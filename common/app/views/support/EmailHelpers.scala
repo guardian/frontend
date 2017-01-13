@@ -3,7 +3,6 @@ package views.support
 import conf.Static
 import layout.ContentCard
 import model._
-import model.pressed.PressedContent
 import play.twirl.api.Html
 
 object EmailHelpers {
