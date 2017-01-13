@@ -176,19 +176,12 @@ define([
                 return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
 
                     if (canShow) {
-
-                        return new Promise(function (resolve) {
-                            mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
-
-                                if (!breakingShown) {
-                                    showBanner(bannerParams);
-                                }
-                                resolve();
-
-                            });
+                        mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
+                            if (!breakingShown) {
+                                showBanner(bannerParams);
+                            }
                         });
-
-                    };
+                    }
 
                 });
             }

@@ -62,6 +62,7 @@ define([
 
         function expectMessageToBeShown(done) {
             membershipMessages.init().then(function () {
+                mediator.emit('modules:onwards:breaking-news:ready', false);
                 var message = document.querySelector('.js-site-message');
                 expect(message).not.toBeNull();
                 expect(message.className).toContain('membership-prominent');
@@ -71,6 +72,7 @@ define([
 
         function expectMessageNotToBeShown(done) {
             membershipMessages.init().then(function () {
+                mediator.emit('modules:onwards:breaking-news:ready', false);
                 var message = document.querySelector('.js-site-message');
                 expect(message).toBeNull();
             }).then(done);
@@ -78,6 +80,7 @@ define([
 
         function expectMessageNotToBeVisible(done) {
             membershipMessages.init().then(function () {
+                mediator.emit('modules:onwards:breaking-news:ready', false);
                 var message = document.querySelector('.js-site-message');
                 expect(message.className).toContain('is-hidden');
                 expect(message.className).not.toContain('membership-message');
@@ -111,7 +114,6 @@ define([
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = Promise.resolve(true);
                 fixtures.render(conf);
                 storage.local.set('gu.alreadyVisited', 10);
-                mediator.emit('modules:onwards:breaking-news:ready', false);
                 done();
             });
 
