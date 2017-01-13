@@ -11,7 +11,8 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/tests/contributions-epic-brexit',
-    'common/modules/experiments/tests/contributions-epic-always-ask-strategy'
+    'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
+    'common/modules/experiments/tests/membership-ab-thrasher'
 ], function (reportError,
              config,
              cookies,
@@ -24,13 +25,15 @@ define([
              RecommendedForYou,
              MembershipEngagementBannerTests,
              ContributionsEpicBrexit,
-             ContributionsEpicAlwaysAskStrategy
+             ContributionsEpicAlwaysAskStrategy,
+             MembershipABThrasher
     ) {
     var TESTS = [
         new EditorialEmailVariants(),
         new RecommendedForYou(),
         new ContributionsEpicBrexit,
-        new ContributionsEpicAlwaysAskStrategy
+        new ContributionsEpicAlwaysAskStrategy,
+        new MembershipABThrasher
     ].concat(MembershipEngagementBannerTests);
 
     var participationsKey = 'gu.ab.participations';

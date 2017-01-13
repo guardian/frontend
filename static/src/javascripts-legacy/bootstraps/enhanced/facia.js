@@ -93,6 +93,27 @@ define([
                 }
             },
 
+            hideMembershipABThrasher: function () {
+                var hide = true;
+                if (config.switches['abMembershipBundlesThrasher']) {
+                    var abParticipations = ab.getParticipations();
+                    if (abParticipations && abParticipations['MembershipBundlesThrasher']) {
+                        var variant = abParticipations['MembershipBundlesThrasher'].variant;
+                        if (variant && variant !== 'notintest') {
+                            hide = false;
+                        }
+                    }
+                }
+                if (hide) {
+                    mediator.on('page:front:ready', function() {
+                        var thrasher = document.querySelector('#membership-ab-thrasher');
+                        if (thrasher) {
+                            thrasher.classList.add('hidden');
+                        }
+                    });
+                }
+            },
+
             finished: function () {
                 mediator.emit('page:front:ready');
             }
@@ -102,6 +123,7 @@ define([
         ready = function () {
             forEach(robust.makeBlocks([
                 ['f-accessibility', accessibility.shouldHideFlashingElements],
+                ['f-hide-membership-ab-thrasher', modules.hideMembershipABThrasher],
                 ['f-snaps', modules.showSnaps],
                 ['f-show-more', modules.showContainerShowMore],
                 ['f-container-toggle', modules.showContainerToggle],
