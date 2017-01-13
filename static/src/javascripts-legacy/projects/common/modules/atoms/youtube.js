@@ -79,30 +79,20 @@ define([
 
     function shouldAutoplay(){
 
-        function isMobile() {
+        function isAutoplayBlockingPlatform() {
             return detect.isIOS() || detect.isAndroid();
         }
 
         function isInternalReferrer() {
-            /**
-             * Polyfill for String.startsWith
-             * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith
-             */
-            if (!String.prototype.startsWith) {
-                String.prototype.startsWith = function(searchString, position){
-                    position = position || 0;
-                    return this.substr(position, searchString.length) === searchString;
-                };
-            }
 
             if(config.page.isDev) {
-                return document.referrer.startsWith(window.location.origin);
+                return document.referrer.indexOf(window.location.origin) === 0;
             }
             else {
-                return document.referrer.startsWith(config.page.host);
+                return document.referrer.indexOf(config.page.host) === 0;
             }
         }
-        return config.page.contentType === 'Video' && isInternalReferrer() && !isMobile();
+        return config.page.contentType === 'Video' && isInternalReferrer() && !isAutoplayBlockingPlatform();
     }
 
     function onPlayerReady(atomId, overlay, event) {
