@@ -3,13 +3,15 @@ define([
     'common/modules/atoms/youtube-player',
     'common/modules/atoms/youtube-tracking',
     'common/utils/$',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/detect'
 ], function (
     fastdom,
     youtubePlayer,
     tracking,
     $,
-    config
+    config,
+    detect
 ) {
 
     var players = {};
@@ -78,13 +80,21 @@ define([
     function shouldAutoplay(){
 
         function isMobile() {
-            const isIOS = () => /(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
-            const isAndroid = () => /Android/i.test(navigator.userAgent);
-
-            return isIOS() || isAndroid();
+            return detect.isIOS() || detect.isAndroid();
         }
 
         function isInternalReferrer() {
+            /**
+             * Polyfill for String.startsWith
+             * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith
+             */
+            if (!String.prototype.startsWith) {
+                String.prototype.startsWith = function(searchString, position){
+                    position = position || 0;
+                    return this.substr(position, searchString.length) === searchString;
+                };
+            }
+
             if(config.page.isDev) {
                 return document.referrer.startsWith(window.location.origin);
             }
