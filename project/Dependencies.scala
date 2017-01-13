@@ -9,7 +9,6 @@ object Dependencies {
   val slf4jVersion = "1.7.5"
   val awsVersion = "1.11.7"
   val faciaVersion = "2.0.8"
-
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
   val apacheCommonsMath3 = "org.apache.commons" % "commons-math3" % "3.2"
