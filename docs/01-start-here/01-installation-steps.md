@@ -44,7 +44,7 @@ You need a Mac or Linux PC (Ubuntu).
 
 3. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](docs/01-start-here/04-troubleshooting.md#npm-eacces)*
 
-1. [Setup local Nginx](nginx/README.md) to be able to access via `https://m.thegulocal.com`
+1. [Setup local Nginx](https://github.com/guardian/frontend/blob/master/nginx/README.md) to be able to access via `https://m.thegulocal.com`
 
 4. All being well, you should be able to [run the app](#run-the-app) (make sure you have the latest version of java)
 
@@ -196,7 +196,7 @@ Now check that you are up and running by hitting the following URLs:
 * [http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson](http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson)
 * [http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery](http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery)
 
-If you have [setup local Nginx](nginx/README.md) then try hitting [https://m.thegulocal.com](https://m.thegulocal.com)
+If you have [setup local Nginx](https://github.com/guardian/frontend/blob/master/nginx/README.md) then try hitting [https://m.thegulocal.com](https://m.thegulocal.com)
 
 Congratulations, you have a local instance running!  Now continue on to set up your IDE.
 
