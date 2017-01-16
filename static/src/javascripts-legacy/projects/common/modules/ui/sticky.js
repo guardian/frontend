@@ -17,7 +17,6 @@ define([
      */
     function Sticky(element, options) {
         this.element  = element;
-        this.sticks   = false;
         this.opts     = defaults(options || {}, {
             top: 0,
             containInParent: true,
@@ -61,7 +60,6 @@ define([
 
         if (css) {
             fastdom.write(function () {
-                this.sticks = stick;
                 if (stick) {
                     bonzo(this.element).addClass('is-sticky').css(css);
                 } else {
