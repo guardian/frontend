@@ -83,7 +83,6 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   // There are two element types that have been found to contain Soundcloud embeds.
   // These are: element-audio and element-embed
-  // The Cleaning steps for these embeds have been moved out of this embed and
   object AmpSoundcloud {
     def createElement(document: Document, trackId: String): Element = {
       val soundcloud = document.createElement("amp-soundcloud")
@@ -103,11 +102,12 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
     def getSoundCloudElement(document: Document, iframeElement: Element): Option[Element] = {
       val trackId = AmpSoundcloud.getTrackIdFromUrl(iframeElement.attr("src"))
-      if (trackId.nonEmpty) {
+      trackId.map(id => AmpSoundcloud.createElement(document, id))
+      /*  if (trackId.nonEmpty) {
         Option(AmpSoundcloud.createElement(document, trackId.get))
     } else {
         None
-      }
+      }*/
     }
 
   }
