@@ -37,10 +37,9 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     val doc = <html>
                   <body>
                      {
-                        videoUrls.map
-                        { url: String =>  <figure class="element-video" data-canonical-url={url}>
-                                                  <iframe></iframe>
-                                          </figure>
+                        videoUrls.map { url: String => <figure class="element-video" data-canonical-url={url}>
+                          <iframe></iframe>
+                        </figure>
                         }
                      }
                   </body>
@@ -68,9 +67,9 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     clean(document)
   }
 
-  /////////////////////////////
-  // External video cleaner
-  /////////////////////////////
+  /*
+   * External video cleaner:
+   */
 
   "AmpEmbedCleaner" should "replace an iframe in a http YouTube video-element with an amp-youtube element" in {
     val result = cleanDocumentWithVideos("http://www.youtube.com/watch?v=foo_12-34")
@@ -130,10 +129,10 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
 
-  /////////////////////////////
-  // Interactive cleaner
-  /////////////////////////////
-  //todo - can you turn interactie html into a method?
+  /*
+   * Interactive cleaner:
+   */
+
   "AmpEmbedCleaner" should "create an amp-iframe element if interactive has a valid url and iframe wrapper" in {
     val interactiveValidUrlPlusiFrameWrapper = <html>
                                                   <body>
@@ -181,10 +180,10 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
 
 
-  /////////////////////////////
-  // Element-audio cleaner
-  // Soundcloud embeds are turned into amp-soundcould embeds. Other audio embeds become amp-iframe embeds
-  /////////////////////////////
+  /* Element-audio cleaner:
+   *  Soundcloud embeds are turned into amp-soundcloud embeds.
+   *  Other audio embeds become amp-iframe embeds.
+   */
 
   "AmpEmbedCleaner" should "replace an iframe in an audio-element that has a src url from soundcloud.com, with an amp-soundcloud element" in {
     val result: Document = cleanDocumentWithAudioEmbed("element-audio", None, None, None, Option(soundcloudUrlV2))
@@ -196,7 +195,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-soundcloud").first.attr("data-trackid") should be(soundcloudTrackid.toString)
   }
 
-  "AmpEmbedCleaner" should " not create an amp-soundcloud element from an iframe src fro soundcloud.com that does not have a track id" in {
+  "AmpEmbedCleaner" should " not create an amp-soundcloud element from an iframe src that does not have a track id even if the src uses the soundcloud url" in {
     val result: Document = cleanDocumentWithAudioEmbed("element-audio", None, None, None, Option(soundcloudUrlNoTrackId))
     result.getElementsByTag("amp-soundcloud").size should be (0)
   }
@@ -265,10 +264,10 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
 
-  /////////////////////////////
-  // Element-embed cleaner
-  // Only soundcloud elements should be converted. All other element-embed's should be removed
-  /////////////////////////////
+  /*
+  * Element-embed cleaner:
+  * Only soundcloud elements should be converted. All other element-embed's should be removed
+  */
 
   "AmpEmbedCleaner" should "replace an iframe in an audio-element that has a src url from soundcloud.com with an amp-soundcloud element" in {
     val result: Document = cleanDocumentWithAudioEmbed("element-embed", None, None, None, Option(soundcloudUrlV2))
@@ -308,9 +307,9 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
 
 
-  /////////////////////////////
-  // Maps cleaner
-  /////////////////////////////
+  /*
+  *  Maps cleaner
+  */
 
   "AmpEmbedCleaner" should "replace an iframe in an map element with an amp-iframe element" in {
     val doc = <html>
