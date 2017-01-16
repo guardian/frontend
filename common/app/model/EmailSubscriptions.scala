@@ -1,5 +1,7 @@
 package model
 
+import controllers.ListIds
+
 case class EmailSubscriptions(subscriptions: List[EmailSubscription])
 case class EmailSubscription(
   name: String,
@@ -356,6 +358,12 @@ object EmailSubscriptions {
     )
   )
 
+  private val isOpinionVariant = List(
+    ListIds.newBestOfOpinion,
+    ListIds.controlBestOfOpinion,
+    ListIds.theBestOfOpinion
+  ).map(_.toString).contains[String](_)
+
   def commentEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
       name = "Best of Guardian Opinion",
@@ -363,8 +371,8 @@ object EmailSubscriptions {
       teaser = "Get up to speed on the most interesting and provoking issues and join the debate every afternoon",
       description = "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every afternoon.",
       frequency = "Weekday afternoons",
-      listId = "2313",
-      subscribedTo = subscribedListIds.exists{ x => x == "2313" || x == "3811" },
+      listId = ListIds.newBestOfOpinion.toString,
+      subscribedTo = subscribedListIds.exists(isOpinionVariant),
       subheading = Some("UK"),
       tone = Some("comment"),
       signupPage = Some("/commentisfree/2014/jan/29/comment-is-free-daily-roundup")

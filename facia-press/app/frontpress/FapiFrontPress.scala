@@ -98,7 +98,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
     adjustSearchQuery: AdjustSearchQuery = identity,
     adjustSnapItemQuery: AdjustItemQuery = identity): Response[List[PressedContent]]
 
-  val showFields = "body,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalPageCode"
+  val showFields = "body,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalPageCode,main"
   val searchApiQuery: AdjustSearchQuery = (searchQuery: SearchQuery) =>
     searchQuery
       .showSection(true)
@@ -106,6 +106,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
       .showElements("all")
       .showTags("all")
       .showReferences(QueryDefaults.references)
+      .showAtoms("media")
 
   val itemApiQuery: AdjustItemQuery = (itemQuery: ItemQuery) =>
     itemQuery
@@ -114,6 +115,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
       .showElements("all")
       .showTags("all")
       .showReferences(QueryDefaults.references)
+      .showAtoms("media")
 
   def generateCollectionJsonFromFapiClient(collectionId: String): Response[PressedCollection] =
     for {
@@ -274,6 +276,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
       // It is safe to do so because the trail picture is held in trailPicture in the Trail class.
       val slimElements = Elements.apply(content.elements.mainVideo.toList)
       val slimFields = content.fields.copy(body = HTML.takeFirstNElements(content.fields.body, 2), blocks = None)
+      val slimAtoms = content.atoms
 
       // Clear the config fields, because they are not used by facia. That is, the config of
       // an individual card is not used to render a facia front page.
@@ -282,7 +285,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
         opengraphPropertiesOverrides = Map(),
         twitterPropertiesOverrides = Map())
 
-      val slimContent = content.content.copy(metadata = slimMetadata, elements = slimElements, fields = slimFields)
+      val slimContent = content.content.copy(metadata = slimMetadata, elements = slimElements, fields = slimFields, atoms = slimAtoms)
 
       content match {
         case article: Article => article.copy(content = slimContent)

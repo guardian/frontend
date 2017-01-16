@@ -130,6 +130,11 @@ define([
             this.dfpAdvertising &&
             switches.commercial;
 
+        this.paidforBand =
+            config.page.isAdvertisementFeature &&
+            !config.page.hasSuperStickyBanner &&
+            !supportsSticky;
+
         this.canReasonablyAskForMoney = // eg become a supporter, give a contribution
             !(userFeatures.isPayingMember() || config.page.shouldHideAdverts || config.page.isAdvertisementFeature);
 

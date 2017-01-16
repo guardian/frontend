@@ -100,7 +100,6 @@
     margin-right: $gs-gutter;
     width: gs-span(4);
     padding-left: $gs-gutter;
-    overflow: hidden;
 
     @include mq($until: desktop) {
         display: none;
