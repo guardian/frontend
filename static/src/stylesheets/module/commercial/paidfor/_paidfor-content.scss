@@ -128,7 +128,10 @@
 .paidfor-band {
     background: $paidfor-background;
     width: 100%;
-    z-index: 1200;
+
+    position: sticky;
+    top: 0;
+    z-index: $zindex-sticky;
 
     .paidfor-meta,
     .paidfor-meta__label,

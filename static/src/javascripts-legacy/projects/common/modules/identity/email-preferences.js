@@ -159,8 +159,12 @@ define([
             if (config.switches.abEditorialEmailVariants && value === 'unsubscribe-2211') {
                 buttonString += 'removeEmailSubscriptions[]=3806&';
                 buttonString += 'removeEmailSubscriptions[]=3807&';
-            } else if (value === 'unsubscribe-2313') {
-                buttonString += 'removeEmailSubscriptions[]=3811&';
+            } else if (value === 'unsubscribe-2313') { // legacy opinion listId
+                buttonString += 'removeEmailSubscriptions[]=3811&'; // new opinion listId
+                buttonString += 'removeEmailSubscriptions[]=3814&'; // control group listId
+            } else if (value === 'unsubscribe-3811') { // new opinion listId
+                buttonString += 'removeEmailSubscriptions[]=2313&'; // legacy opinion listId
+                buttonString += 'removeEmailSubscriptions[]=3814&'; // control group listId
             }
             // end of hacks
         }

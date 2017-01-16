@@ -23,7 +23,8 @@ class AtomCleanerTest extends FlatSpec
       posterImage = None,
       endSlatePath = None)
     ),
-    interactives = Nil
+    interactives = Nil,
+    recipes = Nil
   )
 )
   def doc = Jsoup.parse( s"""<figure class="element element-atom">

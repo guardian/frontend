@@ -1,0 +1,75 @@
+@(recipe: model.content.RecipeAtom)(implicit request: RequestHeader)
+@import play.api.libs.json.Json
+
+<script type="application/ld+json">
+     {
+      "@@context": "http://schema.org/",
+      "@@type": "Recipe",
+      "name": "@recipe.data.title",
+      @for(category <- recipe.data.tags.category) {"recipeCategory": "@category",} 
+      @* TODO image and autor "image": "@http://i.guimcode.co.uk/img/media/82fbac20615e571c3783602c570cb12ffee5f000/0_2071_4912_2948/master/4912.jpg?w=300&h=300&q=55&auto=format&usm=12&fit=crop",
+      "author": {
+      "@@type": "Person",
+      "name": "scoopnana"
+     }, *@
+     @recipe.atom.contentChangeDetails.published.map { published => "datePublished": "@published",}
+     
+     @* 
+     TODO - We do not have this description and rating in the model yet  
+     "description": "Mango, strawberries, and sweetened dried cranberries are a vibrant addition to mixed greens tossed with an oil and balsamic vinegar dressing.",
+     "aggregateRating": {
+       "@@type": "AggregateRating",
+       "ratingValue": "5",
+       "reviewCount": "52"
+     },
+     *@
+
+     @recipe.data.time.preparation.map {minutes => "prepTime": "@formatDuration(minutes)",}
+     @recipe.data.time.cooking.map {minutes => "cookTime": "@formatDuration(minutes)",}
+     
+     @* TODO - @recipe.data.time.total.map {minutes => "totalTime": "@formatDuration(minutes)",}  *@
+
+     @recipe.data.serves.map { serves => "recipeYield": "@yieldValue(serves)",}
+
+     @*
+     TODO - We do not have nutrition in the model yet  
+     "nutrition": {
+       "@@type": "NutritionInformation",
+       "servingSize": "1 bowl",
+       "calories": "319 cal",
+       "fatContent": "20.2 g"
+     },
+     *@
+     "recipeIngredient": @Html(Json.stringify(Json.toJson(ingredientValues(recipe.data.ingredientsLists.flatMap(_.ingredients))))),
+     "recipeInstructions": 
+        "@recipe.data.steps.zipWithIndex.map { case(step,index) => \n@index. @step }.mkString"
+    }
+</script>
+
+@formatDuration(mins: Short) = @{s"PT${mins}M"}
+
+@yieldValue(serves: com.gu.contentatom.thrift.atom.recipe.Serves) = @{
+    serves.`type` match {
+        case "serves" => if (serves.from == serves.to) s"${serves.from} servings" else s"from ${serves.from} to ${serves.to} servings"
+        case "makes" => if (serves.from == serves.to) s"${serves.from} ${serves.unit}" else s"from ${serves.from} to ${serves.to} ${serves.unit}"
+        case "quantity" => if(serves.from == serves.to) s"${serves.from} portions" else s"from ${serves.from} to ${serves.to} portions"
+    }
+}
+
+@*
+  TODO - ingredient unit could be improved 1/8 instead of 0.125 for instance depending on the unit 
+*@
+@ingredientValues(ingredients: Seq[com.gu.contentatom.thrift.atom.recipe.Ingredient]) = @{
+    ingredients.map { ingredient => 
+        val q = if (ingredient.quantity.isDefined) {
+            ingredient.quantity.get    
+        } else if (ingredient.quantityRange.isDefined) {
+            s"${ingredient.quantityRange.get.from}-${ingredient.quantityRange.get.to}"
+        } else {
+            ""
+        }
+        s""" ${q} ${ingredient.unit.getOrElse("")} ${ingredient.item}"""
+    }
+}
+
+

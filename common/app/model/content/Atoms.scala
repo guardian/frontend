@@ -12,9 +12,10 @@ import quiz._
 final case class Atoms(
   quizzes: Seq[Quiz],
   media: Seq[MediaAtom],
-  interactives: Seq[InteractiveAtom]
+  interactives: Seq[InteractiveAtom],
+  recipes: Seq[RecipeAtom]
 ) {
-  val all: Seq[Atom] = quizzes ++ media ++ interactives
+  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes
 }
 
 sealed trait Atom {
@@ -64,6 +65,12 @@ final case class InteractiveAtom(
   docData: Option[String]
 ) extends Atom
 
+final case class RecipeAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  data: atomapi.recipe.RecipeAtom
+) extends Atom
+
 
 object Atoms extends common.Logging {
   def extract[T](atoms: Option[Seq[AtomApiAtom]], extractFn: AtomApiAtom => T): Seq[T] = {
@@ -78,10 +85,7 @@ object Atoms extends common.Logging {
 
   def make(content: contentapi.Content): Option[Atoms] = {
     content.atoms.map { atoms =>
-      val quizzes = extract(atoms.quizzes, atom => {
-        val quizAtom = atom.data.asInstanceOf[AtomData.Quiz].quiz
-        Quiz.make(content.id, quizAtom)
-      })
+      val quizzes = extract(atoms.quizzes, atom => { Quiz.make(content.id, atom) })
 
       val media = extract(atoms.media, atom => {
         val endSlatePath = EndSlateComponents(
@@ -92,12 +96,11 @@ object Atoms extends common.Logging {
         MediaAtom.make(atom, Some(endSlatePath))
       })
 
-      val interactives = extract(atoms.interactives, atom => {
-        val interactiveAtom = atom.data.asInstanceOf[AtomData.Interactive].interactive
-        InteractiveAtom.make(atom.id, interactiveAtom)
-      })
+      val interactives = extract(atoms.interactives, atom => { InteractiveAtom.make(atom) })
 
-      Atoms(quizzes = quizzes, media = media, interactives = interactives)
+      val recipes = extract(atoms.recipes, atom => { RecipeAtom.make(atom) })
+
+      Atoms(quizzes = quizzes, media = media, interactives = interactives, recipes = recipes)
     }
   }
 }
@@ -182,7 +185,9 @@ object Quiz extends common.Logging {
 
 
 
-  def make(path: String, quiz: atomapi.quiz.QuizAtom): Quiz = {
+  def make(path: String, atom: AtomApiAtom): Quiz = {
+
+    val quiz = atom.data.asInstanceOf[AtomData.Quiz].quiz
     val questions = quiz.content.questions.map { question =>
       val answers = question.answers.map { answer =>
         Answer(
@@ -237,9 +242,10 @@ object Quiz extends common.Logging {
 }
 
 object InteractiveAtom {
-  def make(id: String, interactive: atomapi.interactive.InteractiveAtom): InteractiveAtom = {
+  def make(atom: AtomApiAtom): InteractiveAtom = {  
+    val interactive = atom.data.asInstanceOf[AtomData.Interactive].interactive
     InteractiveAtom(
-      id = id,
+      id = atom.id,
       `type` = interactive.`type`,
       title = interactive.title,
       css = interactive.css,
@@ -248,4 +254,9 @@ object InteractiveAtom {
       docData = interactive.docData
     )
   }
+}
+
+
+object RecipeAtom {
+  def make(atom: AtomApiAtom): RecipeAtom = RecipeAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Recipe].recipe)
 }

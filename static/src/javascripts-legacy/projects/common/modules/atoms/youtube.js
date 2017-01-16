@@ -54,7 +54,7 @@ define([
     }
 
     function setProgressTracker(atomId)  {
-        players[atomId].progressTracker = setInterval(recordPlayerProgress.bind(null, atomId), 1000); 
+        players[atomId].progressTracker = setInterval(recordPlayerProgress.bind(null, atomId), 1000);
     }
 
     function killProgressTracker(atomId) {
@@ -84,7 +84,31 @@ define([
         }
     }
 
+
+
+    function shouldAutoplay(){
+
+        function isAutoplayBlockingPlatform() {
+            return detect.isIOS() || detect.isAndroid();
+        }
+
+        function isInternalReferrer() {
+
+            if(config.page.isDev) {
+                return document.referrer.indexOf(window.location.origin) === 0;
+            }
+            else {
+                return document.referrer.indexOf(config.page.host) === 0;
+            }
+        }
+        return config.page.contentType === 'Video' && isInternalReferrer() && !isAutoplayBlockingPlatform();
+    }
+
     function onPlayerReady(atomId, overlay, event) {
+        if(shouldAutoplay()) {
+            event.target.playVideo();
+        }
+
         players[atomId] = {
             player: event.target,
             pendingTrackingCalls: [25, 50, 75]
@@ -114,7 +138,7 @@ define([
             times.push(formatTime(minutes));
         } else {
             times.push(minutes);
-        }    
+        }
         times.push(formatTime(seconds));
 
         return times.join(':');

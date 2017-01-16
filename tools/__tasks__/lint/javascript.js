@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 
-const config = '--rulesdir dev/eslint-rules --quiet --color';
+const config = '--quiet --color';
 
 const error = (ctx) => {
     ctx.messages.push(`${chalk.blue('make fix')} can correct simple errors automatically.`);
