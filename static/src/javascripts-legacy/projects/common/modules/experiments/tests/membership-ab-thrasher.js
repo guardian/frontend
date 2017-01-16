@@ -84,7 +84,7 @@ define([
             if (this.thrasher()) {
                 var linkEl = document.querySelector('.membership-ab-thrasher--wrapper .link-button');
                 if (linkEl && linkEl.getAttribute('href')) {
-                    linkEl.setAttribute('href', config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_AB_THRASHER_' + variant.toUpperCase());
+                    linkEl.setAttribute('href', config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_AB_THRASHER_' + config.page.edition + '_' + variant.toUpperCase());
                 }
             }
         };
