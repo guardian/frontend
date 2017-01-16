@@ -94,21 +94,21 @@ define([
             },
 
             hideMembershipABThrasher: function () {
-                var hide = true;
+                var show = false;
                 if (config.switches['abMembershipBundlesThrasher']) {
                     var abParticipations = ab.getParticipations();
                     if (abParticipations && abParticipations['MembershipBundlesThrasher']) {
                         var variant = abParticipations['MembershipBundlesThrasher'].variant;
                         if (variant && variant !== 'notintest') {
-                            hide = false;
+                            show = true;
                         }
                     }
                 }
-                if (hide) {
+                if (show) {
                     mediator.on('page:front:ready', function() {
                         var thrasher = document.querySelector('#membership-ab-thrasher');
                         if (thrasher) {
-                            thrasher.classList.add('hidden');
+                            thrasher.classList.add('visible');
                         }
                     });
                 }
