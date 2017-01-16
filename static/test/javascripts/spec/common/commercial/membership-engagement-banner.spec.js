@@ -87,6 +87,43 @@ define([
             }).then(done);
         }
 
+        describe('If breaking news banner', function () {
+            beforeEach(function (done) {
+                showMembershipMessages = commercialFeatures.async.canDisplayMembershipEngagementBanner;
+                alreadyVisited = storage.local.get('gu.alreadyVisited');
+                commercialFeatures.async.canDisplayMembershipEngagementBanner = Promise.resolve(true);
+                storage.local.set('gu.alreadyVisited', 10);
+                done();
+            });
+
+            afterEach(function () {
+                commercialFeatures.async.canDisplayMembershipEngagementBanner = showMembershipMessages;
+                storage.local.set('gu.alreadyVisited', alreadyVisited);
+            });
+
+            describe('has not shown', function () {
+                it('should show the membership engagement banner', function (done) {
+                    membershipMessages.init().then(function () {
+                        mediator.emit('modules:onwards:breaking-news:ready', false);
+                        var message = document.querySelector('.js-site-message');
+                        expect(message).not.toBeNull();
+                        expect(message.className).toContain('membership-prominent');
+                        expect(message.className).not.toContain('is-hidden');
+                    }).then(done);
+                });
+            });
+
+            describe('has shown', function () {
+                it('should not show the membership engagement banner', function (done) {
+                    membershipMessages.init().then(function () {
+                        mediator.emit('modules:onwards:breaking-news:ready', true);
+                        var message = document.querySelector('.js-site-message');
+                        expect(message).toBeNull();
+                    }).then(done);
+                });
+            });
+        });
+
         describe('If user already member', function () {
             beforeEach(function (done) {
                 showMembershipMessages = commercialFeatures.async.canDisplayMembershipEngagementBanner;
