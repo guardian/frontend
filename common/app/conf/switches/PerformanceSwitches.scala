@@ -60,9 +60,9 @@ trait PerformanceSwitches {
     SwitchGroup.Performance,
     "long-cache-comments-switch",
     "If this switch is on then closed comment threads will get a longer cache time",
-    owners = Seq(Owner.withGithub("nicl")),
+    owners = Seq(Owner.withGithub("jfsoul")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 1, 16),
+    sellByDate = new LocalDate(2017, 2, 1),
     exposeClientSide = false
   )
 
