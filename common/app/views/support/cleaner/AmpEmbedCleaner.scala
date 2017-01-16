@@ -107,9 +107,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   }
 
-  
-  object AmpAudioElements {
 
+  object AmpAudioElements {
     def createAmpIframeElement(document: Document, src: String, width: String, height: String, frameborder: String): Element = {
       val ampIframe = document.createElement("amp-iframe")
       val attrs = Map(
@@ -150,20 +149,6 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }
   }
 
-
-  def cleanAmpEmbed(document: Document) = {
-    document.getElementsByClass("element-embed")
-      .filter(_.getElementsByTag("iframe").nonEmpty)
-      .foreach(_.getElementsByTag("iframe").foreach {
-        //check for soundcloud embeds and remove any others
-        iframeElement: Element =>
-          val soundcloudElement = AmpSoundcloud.getSoundCloudElement(document, iframeElement)
-          if (soundcloudElement.nonEmpty) {
-            iframeElement.replaceWith(soundcloudElement.get)
-          } else
-            iframeElement.remove()
-      })
-  }
 
   def cleanAmpInstagram(document: Document) = {
     document.getElementsByClass("element-instagram").foreach { embed: Element =>
@@ -256,6 +241,21 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       }
     }
   }
+
+  def cleanAmpEmbed(document: Document) = {
+    document.getElementsByClass("element-embed")
+      .filter(_.getElementsByTag("iframe").nonEmpty)
+      .foreach(_.getElementsByTag("iframe").foreach {
+        //check for soundcloud embeds and remove any others
+        iframeElement: Element =>
+          val soundcloudElement = AmpSoundcloud.getSoundCloudElement(document, iframeElement)
+          if (soundcloudElement.nonEmpty) {
+            iframeElement.replaceWith(soundcloudElement.get)
+          } else
+            iframeElement.remove()
+      })
+  }
+
 
   private def getVideoAssets(id:String): Seq[VideoAsset] = article.elements.bodyVideos.filter(_.properties.id == id).flatMap(_.videos.videoAssets)
 
