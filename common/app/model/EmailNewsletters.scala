@@ -2,8 +2,8 @@ package model
 
 import controllers.ListIds
 
-case class EmailSubscriptions(subscriptions: List[EmailSubscription])
-case class EmailSubscription(
+case class EmailNewsletters(subscriptions: List[EmailNewsletter])
+case class EmailNewsletter(
   name: String,
   theme: String,
   teaser: String,
@@ -18,8 +18,8 @@ case class EmailSubscription(
   exampleUrl: Option[String]
 )
 
-object EmailSubscription {
-  def apply(emailSubscription: EmailSubscription) = emailSubscription
+object EmailNewsletter {
+  def apply(emailSubscription: EmailNewsletter) = emailSubscription
 
   def apply(
     name: String,
@@ -34,7 +34,7 @@ object EmailSubscription {
     imageFilename: Option[String] = None,
     signupPage: Option[String] = None,
     exampleUrl: Option[String] = None
-  ): EmailSubscription = EmailSubscription(
+  ): EmailNewsletter = EmailNewsletter(
     name,
     theme,
     teaser,
@@ -50,10 +50,10 @@ object EmailSubscription {
   )
 }
 
-object EmailSubscriptions {
+object EmailNewsletters {
 
   val newsRoundUpEmails = List(
-    EmailSubscription(
+    EmailNewsletter(
       name = "Guardian Today",
       theme = "news",
       teaser = "The stories you need to read, delivered to your inbox each morning",
@@ -63,7 +63,7 @@ object EmailSubscriptions {
       subheading = Some("UK"),
       signupPage = Some("/info/2015/dec/08/daily-email-uk")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Guardian Today",
       theme = "news",
       teaser = "Our editors break down the big news for you in the daily briefing",
@@ -74,7 +74,7 @@ object EmailSubscriptions {
       signupPage = Some("/info/2015/dec/08/daily-email-uk"),
       exampleUrl = Some("/us-news/series/guardian-us-briefing/latest/email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Guardian Today",
       theme = "news",
       teaser = "All the day's top news, commentary and features in one handy lunchtime email",
@@ -84,7 +84,7 @@ object EmailSubscriptions {
       subheading = Some("AUS"),
       signupPage = Some("/info/2015/dec/08/daily-email-au")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Morning Mail",
       theme = "news",
       teaser = "Get ahead with a shot of early morning news - our editors bring you everything you need",
@@ -97,7 +97,7 @@ object EmailSubscriptions {
   )
 
   val newsEmails = List(
-    EmailSubscription(
+    EmailNewsletter(
       name = "MediaGuardian Briefing",
       theme = "news",
       teaser = "An indispensable summary of what the papers are saying about media on your desktop before 9am",
@@ -108,7 +108,7 @@ object EmailSubscriptions {
       signupPage = Some("/info/2016/feb/15/sign-up-to-the-media-briefing"),
       exampleUrl = Some("/media/series/mediaguardian-briefing/latest/email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Brexit Briefing",
       theme = "news",
       teaser = "Get a weekly update on Britain's progress down the long road to leaving the EU",
@@ -119,7 +119,7 @@ object EmailSubscriptions {
       signupPage = Some("/politics/2016/may/31/eu-referendum-morning-briefing-sign-up"),
       exampleUrl = Some("/politics/series/eu-referendum-morning-briefing/latest/email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Green Light",
       theme = "news",
       teaser = "Environment: the most important stories for the planet, plus data, multimedia highlights and green living guides",
@@ -129,7 +129,7 @@ object EmailSubscriptions {
       signupPage = Some("/environment/2015/oct/19/sign-up-to-the-green-light-email"),
       exampleUrl = Some("/environment/series/green-light/latest/email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Lab Notes",
       theme = "news",
       teaser = "Important breakthroughs, insider knowledge, and some distractingly good fun and games",
@@ -139,7 +139,7 @@ object EmailSubscriptions {
       signupPage = Some("/science/2016/jun/07/sign-up-for-lab-notes-the-guardians-weekly-science-update"),
       exampleUrl = Some("/science/series/lab-notes/latest/email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Poverty Matters",
       theme = "news",
       teaser = "From the shocking to the uplifting - get the world's biggest stories that you're missing",
@@ -149,7 +149,7 @@ object EmailSubscriptions {
       signupPage = Some("/global-development/2015/nov/10/sign-up-to-the-poverty-matters-email-newsletter"),
       exampleUrl = Some("/global-development/series/poverty-matters/latest/email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Australian Politics",
       theme = "news",
       teaser = "A daily dose of the latest news and comment on Australian politics from the Guardian",
@@ -161,7 +161,7 @@ object EmailSubscriptions {
   )
 
   val sportEmails = List(
-    EmailSubscription(
+    EmailNewsletter(
       name = "The Fiver",
       theme = "sport",
       teaser = "Rounding up the day's football news and gossip in our own belligerent, sometimes intelligent and (occasionally) funny way",
@@ -172,7 +172,7 @@ object EmailSubscriptions {
       signupPage = Some("/info/2016/jan/05/the-fiver-email-sign-up"),
       exampleUrl = Some("/football/series/thefiver/latest/email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "The Breakdown",
       theme = "sport",
       teaser = "Rugby union's big stories, latest action and gossip from behind the scenes",
@@ -183,7 +183,7 @@ object EmailSubscriptions {
       signupPage = Some("/sport/2016/aug/18/sign-up-to-the-breakdown"),
       exampleUrl = Some("/sport/series/breakdown/latest/email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "The Spin",
       theme = "sport",
       teaser = "News, rumour and humour from the world of cricket. No tired cricket cliches, but it might bowl you over",
@@ -194,7 +194,7 @@ object EmailSubscriptions {
       signupPage = Some("/sport/2016/aug/18/sign-up-to-the-spin"),
       exampleUrl = Some("/sport/series/thespin/latest/email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Guardian Australia Sports",
       theme = "sport",
       teaser = "The latest sports news, features and comment from Guardian Australia",
@@ -207,7 +207,7 @@ object EmailSubscriptions {
   )
 
   val featureEmails = List(
-    EmailSubscription(
+    EmailNewsletter(
       name = "Guardian Documentaries",
       theme = "feature",
       teaser = "Find out about our new films and get background on our film-makers and the subjects that they cover",
@@ -218,7 +218,7 @@ object EmailSubscriptions {
       signupPage = Some("/info/2016/sep/02/sign-up-for-the-guardian-documentaries-update"),
       exampleUrl = Some("/news/2016/sep/23/from-gun-nation-to-desert-fire-welcome-to-guardian-documentaries/email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Weekend Reading",
       theme = "feature",
       teaser = "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture",
@@ -229,7 +229,7 @@ object EmailSubscriptions {
       signupPage = Some("/signup/weekendreading"),
       exampleUrl = Some("/membership/series/weekend-reading/latest/email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "The Long Read",
       theme = "feature",
       teaser = "Get your teeth into the Long Read with a weekly delivery of the latest features and podcasts",
@@ -242,7 +242,7 @@ object EmailSubscriptions {
   )
 
   val cultureEmails = List(
-    EmailSubscription(
+    EmailNewsletter(
       name = "Sleeve Notes",
       theme = "culture",
       teaser = "Everything you need to know from the Guardian's music site, squeezed into one handy email",
@@ -252,7 +252,7 @@ object EmailSubscriptions {
       tone = Some("feature"),
       signupPage = Some("/music/2016/aug/18/sign-up-to-sleeve-notes")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Close Up",
       theme = "culture",
       teaser = "Rely on Close up to bring you Guardian film news, reviews and much, much more",
@@ -261,7 +261,7 @@ object EmailSubscriptions {
       listId = ListIds.closeUp.toString,
       tone = Some("feature")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Film Today",
       theme = "culture",
       teaser = "Our film editors recap the top headlines each weekday in time for your evening commute",
@@ -271,7 +271,7 @@ object EmailSubscriptions {
       tone = Some("feature"),
       signupPage = Some("/info/2016/feb/12/film-today-email-sign-up")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Bookmarks",
       theme = "culture",
       teaser = "The books team provide their pick of the latest news, views and reviews",
@@ -281,7 +281,7 @@ object EmailSubscriptions {
       tone = Some("feature"),
       signupPage = Some("/books/2015/feb/03/sign-up-to-our-bookmarks-email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Art Weekly",
       theme = "culture",
       teaser = "Your one-stop shop for all your arty needs with the best exhibition openings and the week's biggest stories",
@@ -295,7 +295,7 @@ object EmailSubscriptions {
   )
 
   val lifestyleEmails = List(
-    EmailSubscription(
+    EmailNewsletter(
       name = "Zip File",
       theme = "lifestyle",
       teaser = "The week's top technology stories, games news and review, plus podcasts and video reports",
@@ -304,7 +304,7 @@ object EmailSubscriptions {
       listId = ListIds.zipFile.toString,
       signupPage = Some("/info/2016/sep/22/sign-up-to-the-zip-file-email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "The Flyer",
       theme = "lifestyle",
       teaser = "Unconventional destinations and old favourites, top 10s and top tips - let our travel editors inspire you",
@@ -316,7 +316,7 @@ object EmailSubscriptions {
       signupPage = Some("/travel/2016/aug/18/sign-up-to-the-flyer"),
       exampleUrl = Some("/email/the-flyer?format=email-connected")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Money Talks",
       theme = "lifestyle",
       teaser = "Stay on top of your personal finance with insight and behind-the-scenes reports from the Guardian Money editors",
@@ -326,7 +326,7 @@ object EmailSubscriptions {
       signupPage = Some("/money/2015/nov/10/sign-up-to-the-guardians-money-email"),
       exampleUrl = Some("/money/series/money-talks/latest/email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Fashion Statement",
       theme = "lifestyle",
       teaser = "Sorting the wheat from the chaff to deliver the latest news, views and shoes from the style frontline",
@@ -336,7 +336,7 @@ object EmailSubscriptions {
       tone = Some("feature"),
       signupPage = Some("/fashion/2016/aug/18/sign-up-for-the-guardians-fashion-email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Crossword Editor's Update",
       theme = "lifestyle",
       teaser = "Get a monthly missive from the Guardian's crossword editor on what's been occupying solvers and setters",
@@ -347,7 +347,7 @@ object EmailSubscriptions {
       signupPage = Some("/crosswords/2016/aug/18/sign-up-to-the-crossword-editors-update-email"),
       exampleUrl = Some("/crosswords/series/crossword-editor-update/latest/email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "The Observer Food Monthly",
       theme = "lifestyle",
       teaser = "Observer Food Monthly serves up the tastiest culinary news, tips, offers, recipes and competitions",
@@ -360,7 +360,7 @@ object EmailSubscriptions {
   )
 
   val commentEmails = List(
-    EmailSubscription(
+    EmailNewsletter(
       name = "Best of Guardian Opinion",
       theme = "comment",
       teaser = "Get up to speed on the most interesting and provoking issues and join the debate every afternoon",
@@ -372,7 +372,7 @@ object EmailSubscriptions {
       tone = Some("comment"),
       signupPage = Some("/commentisfree/2014/jan/29/comment-is-free-daily-roundup")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Best of Guardian Opinion",
       theme = "comment",
       teaser = "Keep up with today’s pressing issues in the US with the Guardian’s American edition of the opinion email",
@@ -383,7 +383,7 @@ object EmailSubscriptions {
       tone = Some("comment"),
       signupPage = Some("/commentisfree/2015/may/11/sign-up-for-the-best-of-opinion-us-daily-email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "Best of Guardian Opinion",
       theme = "comment",
       teaser = "An evening selection of the best reads from Guardian Opinion in Australia",
@@ -394,7 +394,7 @@ object EmailSubscriptions {
       tone = Some("comment"),
       signupPage = Some("/commentisfree/2014/dec/04/best-of-comment-is-free-australia-subscribe-by-email")
     ),
-    EmailSubscription(
+    EmailNewsletter(
       name = "First Dog on the Moon",
       theme = "comment",
       teaser = "Love First Dog? Sign up and we'll let you know whenever there's a new cartoon to see",

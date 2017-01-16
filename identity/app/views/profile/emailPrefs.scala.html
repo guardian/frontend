@@ -1,14 +1,14 @@
 @import form.IdFormHelpers._
-@import model.{EmailSubscription, EmailSubscriptions}
+@import model.{EmailNewsletter, EmailNewsletters}
 @import views.html.fragments.form.radioField
 @import views.support.RenderClasses
 @import views.support.`package`.Seq2zipWithRowInfo
 
 @import common.LinkTo
 
-@(page: model.Page, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: List[String], availableLists: EmailSubscriptions)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
+@(page: model.Page, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: List[String], availableLists: EmailNewsletters)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@emailListCategoryList(theme: String, subscriptions: List[EmailSubscription], isActive: Boolean) = {
+@emailListCategoryList(theme: String, subscriptions: List[EmailNewsletter], isActive: Boolean) = {
     @fragments.dropdown(theme, isActive = isActive) {
         @subscriptions.zipWithRowInfo.map { case (subscription, row) =>
             <div class="@RenderClasses(Map(

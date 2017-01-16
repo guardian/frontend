@@ -9,7 +9,7 @@ import utils.SafeLogging
 import play.api.mvc._
 
 import scala.concurrent.Future
-import model.{ApplicationContext, EmailSubscriptions, IdentityPage}
+import model.{ApplicationContext, EmailNewsletters$, IdentityPage}
 import play.api.data._
 import client.Error
 import com.gu.identity.model.{EmailList, Subscriber}
@@ -61,7 +61,7 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
           }
         }
       }).map{ form =>
-        Ok(views.html.profile.emailPrefs(page, form, formActionUrl(idUrlBuilder, idRequest), getEmailSubscriptions(form).toList, EmailSubscriptions.all))
+        Ok(views.html.profile.emailPrefs(page, form, formActionUrl(idUrlBuilder, idRequest), getEmailSubscriptions(form).toList, EmailNewsletters.all))
       }
     }
   }
