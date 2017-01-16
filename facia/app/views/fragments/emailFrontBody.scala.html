@@ -106,7 +106,7 @@
     }
 }
 
-@page.collections.zipWithIndex.map { case (collection, collectionIndex) =>
+@page.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.map { case (collection, collectionIndex) =>
     @paddedRow {
         <h2 class="container-title @if(collectionIndex > 0) { container-title--not-first }">
             @collection.displayName
