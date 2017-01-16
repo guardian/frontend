@@ -387,14 +387,12 @@ define([
 
         if (config.switches.enhancedMediaPlayer) {
             if (shouldPreroll) {
-                try {
-                    loadScript(['//imasdk.googleapis.com/js/sdkloader/ima3.js'], function () {
+                loadScript('//imasdk.googleapis.com/js/sdkloader/ima3.js').then(function () {
                     initWithRaven(true);
-                    })
-                } catch (e) {
+                }).catch(function (e) {
                     raven.captureException(e, { tags: { feature: 'media', action: 'ads', ignored: true } });
                     initWithRaven();
-                }
+                })
             } else {
                 initWithRaven();
             }
