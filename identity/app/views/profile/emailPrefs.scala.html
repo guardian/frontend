@@ -6,7 +6,7 @@
 
 @import common.LinkTo
 
-@(page: model.Page, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: EmailSubscriptions)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
+@(page: model.Page, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: List[String], availableLists: EmailSubscriptions)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @emailListCategoryList(theme: String, subscriptions: List[EmailSubscription], isActive: Boolean) = {
     @fragments.dropdown(theme, isActive = isActive) {
@@ -14,9 +14,9 @@
             <div class="@RenderClasses(Map(
                 "u-cf" -> true,
                 "email-subscription" -> true,
-                "email-subscription--subscribed" -> subscription.subscribedTo,
+                "email-subscription--subscribed" -> subscription.subscribedTo(emailSubscriptions),
                 "email-subscription--first" -> row.isFirst))">
-                @if(subscription.subscribedTo){<input type="hidden" name="emailSubscription[]" value="@subscription.listId" />}
+                @if(subscription.subscribedTo(emailSubscriptions)){<input type="hidden" name="emailSubscription[]" value="@subscription.listId" />}
                 <div class="email-subscription__name">
                     <h2 class="email-subscription__heading">@subscription.name</h2>
 
@@ -33,11 +33,11 @@
 
                 <div class="email-subscription__meta u-cf">
                     <button class="email-subscription__button js-subscription-button"
-                            data-link-name="@if(subscription.subscribedTo){Unsubscribe}else{Subscribe} to @subscription.name"
+                            data-link-name="@if(subscription.subscribedTo(emailSubscriptions)){Unsubscribe}else{Subscribe} to @subscription.name"
                             name="addEmailSubscription"
                             type="button"
-                            value="@if(subscription.subscribedTo){unsubscribe-}@subscription.listId">
-                        @if(subscription.subscribedTo){Unsubscribe}else{Subscribe}
+                            value="@if(subscription.subscribedTo(emailSubscriptions)){unsubscribe-}@subscription.listId">
+                        @if(subscription.subscribedTo(emailSubscriptions)){Unsubscribe}else{Subscribe}
                     </button>
                     <div class="email-subscription__frequency">
                         @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
@@ -61,7 +61,7 @@
             }
             <div class="email-subscriptions">
                 @List("news", "feature", "sport", "culture", "lifestyle", "comment").zipWithIndex.map { case(theme, index) =>
-                  @emailListCategoryList(theme, emailSubscriptions.subscriptions.filter(_.theme == theme), index == 0)
+                  @emailListCategoryList(theme, availableLists.subscriptions.filter(_.theme == theme), index == 0)
                 }
             </div>
 

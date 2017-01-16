@@ -61,7 +61,7 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
           }
         }
       }).map{ form =>
-        Ok(views.html.profile.emailPrefs(page, form, formActionUrl(idUrlBuilder, idRequest), getEmailSubscriptions(form)))
+        Ok(views.html.profile.emailPrefs(page, form, formActionUrl(idUrlBuilder, idRequest), getEmailSubscriptions(form).toList, EmailSubscriptions.all))
       }
     }
   }
@@ -116,7 +116,7 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
   }
 
   protected def getEmailSubscriptions(form: Form[EmailPrefsData], add: List[String] = List(), remove: List[String] = List()) =
-    EmailSubscriptions(form.data.filter(_._1.startsWith("currentEmailSubscriptions")).map(_._2).filterNot(remove.toSet) ++ add)
+    form.data.filter(_._1.startsWith("currentEmailSubscriptions")).map(_._2).filterNot(remove.toSet) ++ add
 }
 
 case class EmailPrefsData(
