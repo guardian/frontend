@@ -14,7 +14,7 @@ define([
     loadScript
 ){
     var setupSonobi = memoize(function () {
-        return loadScript(window.guardian.config.libs.sonobi).then(catchPolyfillErrors);
+        return loadScript(config.libs.sonobi).then(catchPolyfillErrors);
     });
 
     // Wrap the native implementation of getOwnPropertyNames in a try-catch. If any polyfill attempts

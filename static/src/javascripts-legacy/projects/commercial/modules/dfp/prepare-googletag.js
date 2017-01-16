@@ -62,7 +62,7 @@ define([
 
             // Return a promise that resolves after the async work is done.
             // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
-            return loadScript(window.guardian.config.libs.googletag)
+            return loadScript(config.libs.googletag)
                 .then(function(){
                     return new Promise(function(resolve){
                         window.googletag.cmd.push(
