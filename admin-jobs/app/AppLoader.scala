@@ -3,19 +3,20 @@ import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
-import conf.{CachedHealthCheckLifeCycle, CommonFilters}
+import conf.CachedHealthCheckLifeCycle
 import controllers.BreakingNews.BreakingNewsApi
 import controllers.BreakingNews.S3BreakingNews
 import controllers.{AdminJobsControllers, HealthCheck}
 import dev.DevParametersHttpRequestHandler
+import http.CommonFilters
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
-import play.api.http.HttpRequestHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import play.api._
 import services.ConfigAgentLifecycle
 import jobs.CommercialClientSideLoggingLifecycle
+import play.api.http.HttpRequestHandler
+import play.api.{BuiltInComponentsFromContext, Environment}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {

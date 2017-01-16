@@ -13,17 +13,25 @@ object Entry {
   implicit val positionWrites = Json.writes[CrosswordPosition]
   implicit val jsonWrites = Json.writes[Entry]
 
-  val NumberPattern = "[^a-z]+".r
-  val DirectionPattern = "[a-z]+".r
-
   def formatHumanNumber(numbers: String): Option[String] = {
-    NumberPattern.findFirstIn(numbers).map { number =>
-      val spaced = number.split(",").mkString(", ")
 
-      DirectionPattern.findFirstIn(numbers) match {
-        case Some(direction) => spaced.concat(s" $direction")
-        case None => spaced
+    //Adding space between number and direction
+    //as well as after comma
+    //ex: "2,24across,16" => "2, 24 across, 16"
+    val clues: Seq[Option[String]] = numbers.split(',').map { singleClue =>
+      // Acceptable clue is a number followed by an optional direction
+      "([0-9]+)([a-z]+)?".r.findFirstMatchIn(singleClue).map { m =>
+        val number: String = m.group(1)
+        val direction: Option[String] = Option(m.group(2))
+        number + direction.map(" " + _).getOrElse("")
       }
+    }
+
+    // If any of the clue is malformed we are returning None
+    if(clues.forall(_.isDefined)) {
+      Some(clues.flatten).map(_.mkString(", "))
+    } else {
+      None
     }
   }
 

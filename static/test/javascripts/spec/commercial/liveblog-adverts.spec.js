@@ -41,6 +41,11 @@ define([
                 .html('.block{ height: 1200px }')
                 .appendTo('head');
             commercialFeatures.liveblogAdverts = true;
+
+            afterEach(function () {
+                fixtures.clean(fixturesConfig.id);
+            });
+
             done();
         });
 

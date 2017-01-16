@@ -1,13 +1,11 @@
 package football.controllers
 
-import feed.{Competitions, CompetitionsService}
+import feed.CompetitionsService
 import play.api.mvc.{Action, AnyContent}
 import org.joda.time.LocalDate
 import model._
 import football.model._
 import common.{Edition, JsonComponent}
-import play.api.Environment
-
 
 class MatchDayController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends MatchListController with CompetitionLiveFilters {
 

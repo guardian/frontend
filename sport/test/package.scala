@@ -1,17 +1,17 @@
 package test
 
 import java.io.File
-
 import common.ExecutionContexts
 import conf.{FootballClient, SportConfiguration}
 import football.collections.RichListTest
+import football.containers.FixturesAndResultsTest
 import football.model._
 import org.scalatest.Suites
 import pa.{Http, Response => PaResponse}
 import play.api.libs.ws.WSClient
 import recorder.{DefaultHttpRecorder, HttpRecorder}
-
 import scala.concurrent.Future
+import scala.concurrent.duration._
 import scala.io.Codec.UTF8
 
 class SportTestSuite extends Suites (
@@ -32,7 +32,8 @@ class SportTestSuite extends Suites (
   new LiveMatchesFeatureTest,
   new MatchFeatureTest,
   new ResultsFeatureTest,
-  new rugby.model.MatchParserTest
+  new rugby.model.MatchParserTest,
+  new FixturesAndResultsTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19013
 }
@@ -45,7 +46,7 @@ trait WithTestFootballClient {
     override def GET(url: String): Future[PaResponse] = {
       FootballHttpRecorder.load(url.replace(SportConfiguration.pa.footballKey, "apikey")) {
         wsClient.url(url)
-          .withRequestTimeout(10000)
+          .withRequestTimeout(10.seconds)
           .get()
           .map { wsResponse =>
             pa.Response(wsResponse.status, wsResponse.body, wsResponse.statusText)
@@ -67,7 +68,7 @@ class TestHttp(wsClient: WSClient) extends Http with ExecutionContexts {
     val sanitisedUrl = url.replace(SportConfiguration.pa.footballKey, "apikey")
     FootballHttpRecorder.load(sanitisedUrl) {
       wsClient.url(url)
-        .withRequestTimeout(10000)
+        .withRequestTimeout(10.seconds)
         .get()
         .map { wsResponse =>
           pa.Response(wsResponse.status, wsResponse.body, wsResponse.statusText)

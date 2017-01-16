@@ -7,18 +7,12 @@
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition) = {
     @if(!page.metadata.shouldHideHeaderAndTopAds) {
-        @if(showAdverts) {
-            @defining(
-                page match {
-                    case c: model.ContentPage => Some(c.item.tags)
-                    case _ => None
-                }
-            ) { maybeTags =>
-                @fragments.commercial.topBanner(page.metadata, edition, maybeTags)
+        <div id="bannerandheader">
+            @if(showAdverts) {
+                @fragments.commercial.topBanner(page.metadata)
             }
-        }
-        @fragments.header(page)
-
+            @fragments.header(page)
+        </div>
         <div id="maincontent" tabindex="0"></div>
     }
 }
@@ -39,7 +33,7 @@
             ("has-localnav", navigation.filter(_.links.nonEmpty).nonEmpty),
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
             ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
-            ("has-new-header", mvt.ABNewNavVariantFour.isParticipating),
+            ("has-new-header", mvt.ABNewNavVariantSix.isParticipating),
             ("is-immersive", getContent(page).exists(_.content.isImmersive)),
             ("is-immersive-interactive", getContent(page).exists(content => content.tags.isInteractive && content.content.isImmersive))))"
         itemscope itemtype="http://schema.org/WebPage">
@@ -116,9 +110,11 @@
     </body>
         @if(context.environment.mode == Dev) {
             <script>
-                setTimeout(function() {
-                    window.callPhantom('takeShot');
-                }, 10000); // Wait arbitrary 10 seconds before taking the screenshot to let things settled down
+                if (window.callPhantom) {
+                    setTimeout(function() {
+                        window.callPhantom('takeShot');
+                    }, 10000); // Wait arbitrary 10 seconds before taking the screenshot to let things settled down
+                }
             </script>
         }
     </html>

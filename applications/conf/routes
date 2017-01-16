@@ -32,7 +32,6 @@ POST           /notification/store                                              
 POST           /notification/delete                                             controllers.NotificationsController.deleteSubscription()
 
 # Email paths
-GET        /email                                                               controllers.EmailSignupController.renderPage()
 GET        /email/form/$emailType<article|footer|plain|plaindark|plaintone>/:listId       controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/:result                                                       controllers.EmailSignupController.subscriptionResult(result: String)
 POST       /email                                                               controllers.EmailSignupController.submit()
@@ -46,6 +45,8 @@ GET        /index/contributors/*contributor                                     
 GET        /embed/video/*path                                                   controllers.EmbedController.render(path)
 GET        /embed/atom/media/:id                                                controllers.MediaAtomEmbedController.render(id)
 
+# Share counts
+GET        /sharecount/*path.json                                               controllers.ShareCountController.fetch(path)
 
 # Preferences
 GET        /preferences                                                         controllers.PreferencesController.indexPrefs()

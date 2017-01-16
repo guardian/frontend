@@ -1,9 +1,9 @@
 @import model.Tags
 @import views.support.Commercial.topAboveNavSlot
 
-@(metaData: model.MetaData, edition: common.Edition, maybeTags: Option[Tags])
+@(metaData: model.MetaData)
 
-<div class="@topAboveNavSlot.cssClasses">
+<div class="@topAboveNavSlot.cssClasses(metaData)">
     @fragments.commercial.standardAd(
         "top-above-nav",
         topAboveNavSlot.slotCssClasses,

@@ -1,89 +1,372 @@
-.main-header {
-    background: $guardian-brand;
-    position: relative;
-    height: 68px;
+$mobile-medium: 375px; // Breakpoint for our most common device sizes
+$gutter-small: 29px;
+$gutter-medium: 37px;
+$gutter-large: 55px;
+$veggie-burger-small: 42px;
+$veggie-burger-medium: 52px;
 
-    @include mq($until: 390px) {
-        height: 63px;
+.header {
+    background-color: $guardian-brand;
+}
+
+.header__inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    z-index: 1;
+    max-width: 600px;
+}
+
+.header__supporter-cta {
+    // Some very specific values in here, as it's all got to line up with the x-height of the logo
+    position: absolute;
+    left: ($gs-gutter / 4) - 1px;
+    padding: 10px 23px 12px 12px;
+    font-size: 13px;
+    line-height: .95;
+    color: $guardian-brand-dark;
+    overflow: hidden;
+
+    & > span {
+        display: block;
     }
 
-    @include mq($until: 360px) {
-        height: 57px;
-    }
-
-    .logo-wrapper {
+    &:before {
+        content: '';
         position: absolute;
-        right: $gs-gutter;
-        padding-top: $gs-baseline/3;
-        width: inherit;
-        text-align: right;
+        top: -$gs-baseline / 2;
+        left: 1px;
+        right: 0;
+        border-top: $gs-baseline * 4 solid $news-main-2;
+        border-left: $gs-gutter / 4 solid transparent;
+        border-right: $gs-gutter solid transparent;
+        transform: rotate(-3deg);
+        z-index: -1;
+    }
 
-        @include mq($until: mobileLandscape) {
-            right: $gs-gutter/2;
+    @include mq($until: mobile) {
+        display: none;
+    }
+
+    @include mq($from: $mobile-medium) {
+        padding-top: 14px;
+        font-size: 14px;
+
+        &:before {
+            border-top-width: ($gs-baseline * 4) + ($gs-baseline / 2);
         }
+    }
 
-        svg {
-            width: 190px;
-            height: $gs-row-height;
+    @include mq($from: mobileLandscape) {
+        left: $gs-gutter/2;
+    }
+}
 
-            @include mq($until: 390px) {
-                width: 170px;
-                height: 32px;
-            }
+.header__logo-wrapper {
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline / 2;
+    margin-left: auto;
+}
 
-            @include mq($until: 360px) {
-                width: 160px;
-                height: 30px;
-            }
+.header__logo__svg {
+    // Removes extra spacing
+    display: block;
+    height: auto;
 
-            @include mq($until: 340px) {
-                width: 140px;
-                height: 27px;
-            }
-        }
+    // Aspect ratio: 16:3
+    @include mq($until: $mobile-medium) {
+        width: 170px;
+        // height: auto doesn't work in Safari
+        height: calc(3 / 16 * 170px);
+    }
+
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        width: 225px;
+        height: calc(3 / 16 * 225px);
+    }
+
+    @include mq(mobileLandscape) {
+        width: 260px;
+        // height: auto doesn't work in Safari
+        height: calc(3 / 16 * 260px);
+        padding-top: $gs-baseline / 2;
+    }
+}
+
+.header__nav {
+    font-size: 16px;
+    line-height: $gs-baseline * 2.5;
+    width: 100%;
+    overflow: hidden;
+
+    @include mq($until: mobile) {
+        // Menu squishes gracefully
+        height: $gs-baseline * 2.5;
+        margin-right: $gutter-small + $veggie-burger-small + $gs-gutter / 3;
+    }
+
+    @include mq($from: mobile, $until: mobileLandscape) {
+        font-size: 5.1vw;
+    }
+
+    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+        line-height: $gs-baseline * 3;
+    }
+
+    @include mq(mobileLandscape) {
+        font-size: 24px;
+        line-height: $gs-baseline * 3.5;
+        margin-left: 0;
+    }
+}
+
+.header__nav__menu-button {
+    // Override button from user agent stylesheet
+    position: absolute;
+    // Unset button from user agent stylesheet
+    border: 0;
+    outline: none;
+    // Override button from user agent stylesheet
+    border-radius: 100%;
+    z-index: 1049;
+    background-color: $news-main-2;
+    cursor: pointer;
+    bottom: -$gs-baseline / 2;
+
+    @include mq($until: $mobile-medium) {
+        //Smaller menu button
+        height: $veggie-burger-small;
+        min-width: $veggie-burger-small;
+        //Align with the 'i' in 'theguardian'
+        right: $gutter-small;
+    }
+
+    @include mq($mobile-medium) {
+        height: $veggie-burger-medium;
+        width: $veggie-burger-medium;
+        //Align with the 'i' in 'theguardian'
+        right: $gutter-medium;
+    }
+
+    @include mq(mobileLandscape) {
+        //Align with the 'i' in 'theguardian'
+        right: $gutter-large;
+    }
+}
+
+.header__veggie-burger-icon {
+    top: 50%;
+    display: block;
+    margin-top: -($gs-baseline / 6) / 2;
+    margin-left: auto;
+    margin-right: auto;
+
+    &,
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        width: $gs-gutter;
+        height: $gs-baseline / 6;
+        background-color: #ffffff;
+        left: 0;
+        right: 0;
+    }
+
+    &:before {
+        top: -$gs-gutter / 4;
+    }
+
+    &:after {
+        bottom: -$gs-gutter / 4;
+    }
+}
+
+.header__nav__link {
+    // Override a from _lists.scss
+    color: #ffffff;
+    position: relative;
+    padding-left: .3em;
+    padding-right: .35em;
+    float: left;
+    cursor: pointer;
+
+    &:focus,
+    &:hover {
+        text-decoration: none;
+    }
+
+    &:first-child {
+        padding-left: 0;
+    }
+
+    &:before {
+        position: absolute;
+        pointer-events: none;
+        content: '/';
+        //optically aligns slashes
+        left: -.19em;
+        color: $news-main-2;
+    }
+
+    &:first-of-type:before {
+        content: none;
+    }
+}
+
+.main-navigation-container {
+    height: 100%;
+    width: 87vw;
+    background-color: $guardian-brand-dark;
+    color: #ffffff;
+    font-family: $f-sans-serif-text;
+    text-transform: lowercase;
+    overflow: auto;
+    font-size: 20px;
+
+    @include mq($mobile-medium) {
+        //Larger font/icon size for larger devices
+        font-size: 22px;
     }
 }
 
 .main-navigation {
+    // Unset ul from _lists.scss
+    margin-left: 0;
+    // Hides the line above the first primary item
+    margin-top: -1px;
+    // Unset ul from user agent stylesheet
+    margin-bottom: 0;
+    text-transform: lowercase;
+    // flexbox is being used for reordering the lists on click. Ordering is added by JS
+    // See PR: https://github.com/guardian/frontend/pull/13905
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+
+    @include mq($until: $mobile-medium) {
+        padding-top: $gs-baseline / 3;
+    }
+
+    @include mq($mobile-medium) {
+        padding-top: $gs-baseline;
+    }
+}
+
+.main-navigation__item {
+    // Override inherited ul from user agent stylesheet
+    list-style: none;
+    color: $news-support-1;
+    width: 100%;
+}
+
+//This variable is only used in open menu styling
+$navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
+
+.main-navigation__item__button {
+    position: relative;
+    padding-top: $gs-baseline / 2;
+    padding-left: $navigation-horizontal-padding;
+    padding-bottom: $gs-baseline + ($gs-baseline / 3);
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: normal;
+    border: 0;
+    background-color: $guardian-brand-dark;
+}
+
+.main-menu__icon--chevron {
+    //optical alignment
+    margin-top: -.05em;
+
+    &:before {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        transform: rotate(-45deg);
+        border: 2px solid $news-support-2;
+        border-top: 0;
+        border-left: 0;
+        //optical alignment
+        margin-left: -.3em;
+    }
+
+    section[expanded] &:before {
+        transform: rotate(45deg);
+        margin-bottom: .14em;
+        margin-left: 0;
+    }
+}
+
+.main-menu__icon {
     position: absolute;
-    top: $gs-baseline/2;
-    left: $gs-gutter;
-    line-height: 1.1;
+    left: $gs-gutter / 2;
+    text-align: center;
+    width: $navigation-horizontal-padding - $gs-gutter/2;
+}
 
-    @include mq($until: mobileLandscape) {
-        left: $gs-gutter/2;
+.main-menu__icon__svg {
+    fill: $news-support-2;
+    margin-top: -.05em;
+    width: 1em;
+    height: 1em;
+}
+
+.main-navigation__secondary {
+    color: #ffffff;
+    background-color: #003b5e;
+    padding-bottom: $gs-baseline / 2;
+
+    .main-menu__icon__svg {
+        margin-top: -.24em;
+        width: .8em;
+        height: .8em;
     }
+}
 
-    .main-navigation_link {
-        display: inline;
-        font-size: 22px;
+.navigation-border {
+    // Creates a seamless line when section has dark background
+    margin-top: -1px;
+    position: relative;
 
-        @include mq($until: 390px) {
-            font-size: 20px;
-        }
-
-        @include mq($until: 360px) {
-            font-size: 18px;
-        }
-
-        a {
-            font-weight: 400;
-            color: $news-support-1;
-            display: inline-block;
-        }
-
-        &::after {
-            content: "/";
-            color: rgba(255,255,255,0.3);
-        }
-
-        &:last-of-type::after {
-            content:none;
-        }
-
-        &:nth-child(2)::after {
-            content: "\A";
-            white-space: pre;
-        }
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: $navigation-horizontal-padding;
+        right: 0;
+        height: 1px;
+        background: #003b5e;
     }
+}
+
+.navigation-group li:last-child {
+    padding-bottom: $gs-baseline;
+}
+
+.navigation-group--grey {
+    background-color: $neutral-1;
+}
+
+.navigation-group__item {
+    // Override inherited ul from user agent stylesheet
+    list-style: none;
+    position: relative;
+    font-size: 1em;
+
+    a {
+        display: block;
+        padding-top: $gs-baseline / 2;
+        padding-left: $navigation-horizontal-padding;
+        padding-right: $gs-gutter;
+        padding-bottom: $gs-baseline;
+        // Override a from user agent stylesheet
+        color: inherit;
+    }
+}
+
+.secondary-navigation {
+    font-size: .9em;
 }

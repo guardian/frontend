@@ -26,7 +26,7 @@ class IdRequestParser(returnUrlVerifier: ReturnUrlVerifier) extends RemoteAddres
       groupCode = groupCode,
       clientIp = ip,
       skipConfirmation =  request.getQueryString("skipConfirmation").map(_ == "true"),
-      skipThirdPartyLandingPage = request.getQueryString("skipThirdPartyLandingPage").map(_ == "true").getOrElse(false),
+      skipThirdPartyLandingPage = request.getQueryString("skipThirdPartyLandingPage").contains("true"),
       shortUrl = request.getQueryString("shortUrl"),
       articleId = request.getQueryString("articleId"),
       page = request.getQueryString("page").map(_.toInt),
@@ -43,11 +43,10 @@ class TorNodeLoggingIdRequestParser(idRequestParser: IdRequestParser) extends Re
   def apply(request: RequestHeader, email: String) : IdentityRequest = {
 
     clientIp(request) match {
-      case Some(ip) => {
+      case Some(ip) =>
         if (Switches.IdentityLogRegistrationsFromTor.isSwitchedOn && TorExitNodeList.getTorExitNodes.contains(ip)) {
           log.info(s"Attempted registration from know tor exit node: $ip email: $email")
         }
-      }
       case _ =>
     }
     idRequestParser.apply(request)

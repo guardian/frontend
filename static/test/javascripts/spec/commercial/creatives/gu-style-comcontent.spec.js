@@ -18,6 +18,10 @@ define([
 
     describe('GU-style Commercial Content', function () {
 
+        afterEach(function () {
+            fixtures.clean(fixturesConfig.id);
+        });
+
         var gustyleComcontent,
             $fixturesContainer;
 

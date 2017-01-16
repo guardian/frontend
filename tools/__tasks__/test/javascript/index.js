@@ -18,6 +18,9 @@ module.exports = {
     description: 'Test JS app',
     task: [
         require('../../compile/inline-svgs'),
+        require('../../compile/javascript/clean'),
+        require('../../compile/javascript/copy'),
+        require('../../compile/javascript/babel'),
         {
             description: 'Run tests',
             task: [
@@ -27,7 +30,7 @@ module.exports = {
             ].map(set => ({
                 description: `Run ${set} tests`,
                 task: () => exec('karma', ['start', `./static/test/javascripts/conf/${set}.js`, '--single-run']),
-            })).concat([require('./eslint')]),
+            })),
             concurrent: true,
         },
     ],

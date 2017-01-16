@@ -4,8 +4,8 @@ import com.softwaremill.macwire._
 import contentapi.{ContentApiClient, SectionsLookUp}
 import jobs.SiteMapJob
 import model.ApplicationContext
-import play.api.Environment
 import play.api.libs.ws.WSClient
+import services.FacebookGraphApi
 
 trait ApplicationsControllers {
 
@@ -13,6 +13,7 @@ trait ApplicationsControllers {
   def siteMapJob: SiteMapJob
   def sectionsLookUp: SectionsLookUp
   def wsClient: WSClient
+  def facebookGraphApi: FacebookGraphApi
   implicit def appContext: ApplicationContext
 
   lazy val siteMapController = wire[SiteMapController]
@@ -37,4 +38,5 @@ trait ApplicationsControllers {
   lazy val shortUrlsController = wire[ShortUrlsController]
   lazy val indexController = wire[IndexController]
   lazy val siteVerificationController = wire[SiteVerificationController]
+  lazy val shareCountController = wire[ShareCountController]
 }

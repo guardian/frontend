@@ -13,7 +13,6 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import play.api.Play
-
 import scala.collection.JavaConversions._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
@@ -68,7 +67,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 13
+    val s3ConfigVersion = 20
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -190,7 +189,7 @@ class GuardianConfiguration extends Logging {
     val previewHost: String = configuration.getStringProperty("content.api.preview.host").getOrElse(contentApiHost)
 
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
-    lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
+    lazy val timeout: FiniteDuration = Duration.create(configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000), MILLISECONDS)
 
     lazy val circuitBreakerErrorThreshold =
       configuration.getIntegerProperty("content.api.circuit_breaker.max_failures").getOrElse(5)
@@ -339,6 +338,10 @@ class GuardianConfiguration extends Logging {
 
   object facebook {
     lazy val appId = configuration.getMandatoryStringProperty("guardian.page.fbAppId")
+    object graphApi {
+      lazy val version = configuration.getStringProperty("facebook.graphApi.version").getOrElse("2.8")
+      lazy val accessToken = configuration.getMandatoryStringProperty("facebook.graphApi.accessToken")
+    }
   }
 
   object ios {
@@ -389,7 +392,7 @@ class GuardianConfiguration extends Logging {
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpHighMerchandisingTagsDataKey = s"$dfpRoot/high-merchandising-tags.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v6.json"
-    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v5.json"
+    lazy val dfpLineItemsKey = s"$dfpRoot/lineitems-v6.json"
     lazy val dfpActiveAdUnitListKey = s"$dfpRoot/active-ad-units.csv"
     lazy val dfpMobileAppsAdUnitListKey = s"$dfpRoot/mobile-active-ad-units.csv"
     lazy val dfpFacebookIaAdUnitListKey = s"$dfpRoot/facebookia-active-ad-units.csv"
@@ -553,7 +556,7 @@ class GuardianConfiguration extends Logging {
     val credentials: Option[AWSCredentialsProvider] = {
       val provider = new AWSCredentialsProviderChain(
         new ProfileCredentialsProvider("frontend"),
-        new InstanceProfileCredentialsProvider
+        InstanceProfileCredentialsProvider.getInstance()
       )
 
       // this is a bit of a convoluted way to check whether we actually have credentials.
@@ -607,10 +610,6 @@ class GuardianConfiguration extends Logging {
     lazy val notificationSubscriptionTable = configuration.getMandatoryStringProperty("notifications.subscriptions_table")
   }
 
-  object DeploysNotify {
-    lazy val apiKey = configuration.getStringProperty("deploys-notify.api.key")
-  }
-
   object Logstash {
     lazy val enabled = configuration.getStringProperty("logstash.enabled").exists(_.toBoolean)
     lazy val stream = configuration.getStringProperty("logstash.stream.name")
@@ -619,7 +618,6 @@ class GuardianConfiguration extends Logging {
 
   object Elk {
     lazy val kibanaUrl = configuration.getStringProperty("elk.kibana.url")
-    lazy val elasticsearchHeadUrl = configuration.getStringProperty("elk.elasticsearchHead.url")
   }
 
   object Survey {

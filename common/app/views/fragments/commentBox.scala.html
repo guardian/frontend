@@ -24,6 +24,15 @@
     <div class="d-comment-box__onboarding">
         <h3>Welcome <span class="d-comment-box__onboarding-author"></span>, you’re about to make your first comment!</h3>
         <p>Before you post, we’d like to thank you for joining the debate - we’re glad you’ve chosen to participate and we value your opinions and experiences.</p>
+
+        <div class="d-comment-box__onboarding-username">
+            <p>Please choose your username under which you would like all your comments to show up:</p>
+            <label class="d-comment-box__onboarding-username-label" for="usernameInput">Username: </label>
+            <span>Must be 6-20 characters, letters and/or numbers only, no spaces.</span>
+            <input type="text" id="usernameInput" class="d-comment-box__onboarding-username-input" placeholder="" value=""/>
+            <p class="d-comment-box__onboarding-username-error-message is-hidden"></p>
+        </div>
+
         <p>Please keep your posts respectful and abide by the <a target="_blank" href="/community-standards">community guidelines</a> - and if you spot a comment you think doesn’t adhere to the guidelines, please use the ‘Report’ link next to it to let us know.</p>
         <p>Please preview your comment below and click ‘post’ when you’re happy with it.</p>
         <div class="d-comment-box__onboarding-preview-body"></div>

@@ -1,3 +1,7 @@
+@(page: model.Page)
+
+@import model.EmailAddons.EmailContentType
+
 <style>
     body, .body {
         background: #f6f6f6;
@@ -8,6 +12,10 @@
         background: #f6f6f6;
     }
 
+    @*
+     * !important is needed here and elsewhere because the base styles in the Ink CSS framework for email use
+     * !important and we need to override them. (See the ink stylesheet for notes on why the base styles need !important)
+     *@
     .panel {
         padding: 0 !important;
     }
@@ -18,12 +26,15 @@
 
     .tone-news .facia-card {
         border-top: 1px solid #4bc6df;
+    }
+    .tone-news .facia-card__text {
         background-color: #ffffff;
     }
     .tone-news .headline {
         color: #333333;
     }
-    .tone-news .fc-item__kicker {
+    .tone-news .fc-item__kicker,
+    .tone-news .byline {
         color: #005689;
     }
     .tone-news .kicker-separator {
@@ -36,13 +47,15 @@
 
     .tone-feature .facia-card {
         border-top: 1px solid pink;
+    }
+    .tone-feature .facia-card__text {
         background-color: #ffffff;
     }
-
     .tone-feature .headline {
         color: #333333;
     }
-    .tone-feature .fc-item__kicker {
+    .tone-feature .fc-item__kicker,
+    .tone-feature .byline {
         color: #951c55;
     }
     .tone-feature .kicker-separator {
@@ -55,12 +68,15 @@
 
     .tone-media .facia-card {
         border-top: 1px solid #ff9b0b;
+    }
+    .tone-media .facia-card__text {
         background-color: #ffffff;
     }
     .tone-media .headline {
         color: #333333;
     }
-    .tone-media .fc-item__kicker {
+    .tone-media .fc-item__kicker,
+    .tone-media .byline {
         color: #ff9b0b;
     }
     .tone-media .kicker-separator {
@@ -73,12 +89,15 @@
 
     .tone-review .facia-card {
         border-top: 1px solid pink;
+    }
+    .tone-review .facia-card__text {
         background-color: #ffffff;
     }
     .tone-review .headline {
         color: #333333;
     }
-    .tone-review .fc-item__kicker {
+    .tone-review .fc-item__kicker,
+    .tone-review .byline {
         color: #ff9b0b;
     }
     .tone-review .kicker-separator {
@@ -91,13 +110,16 @@
 
     .tone-editorial .facia-card {
         border-top: 1px solid #aad8f1;
+    }
+    .tone-editorial .facia-card__text {
         background-color: #ffffff;
     }
     .tone-editorial .headline {
         color: #333333;
     }
-    .tone-editorial .fc-item__kicker {
-        color: #aad8f1;
+    .tone-editorial .fc-item__kicker,
+    .tone-editorial .byline {
+        color: #005689;
     }
     .tone-editorial .kicker-separator {
         color: #d6d6d6;
@@ -108,13 +130,16 @@
 
 
     .tone-external .facia-card {
-        border-top: 1px solid #fdadba;
+        border-top: 1px solid @page.toneColour;
+    }
+    .tone-external .facia-card__text {
         background-color: #ffffff;
     }
     .tone-external .headline {
         color: #333333;
     }
-    .tone-external .fc-item__kicker {
+    .tone-external .fc-item__kicker,
+    .tone-external .byline {
         color: #333333;
     }
     .tone-external .kicker-separator {
@@ -127,12 +152,15 @@
 
     .tone-live .facia-card {
         border-top: 1px solid #fdadba;
+    }
+    .tone-live .facia-card__text {
         background-color: #ffffff;
     }
     .tone-live .headline {
         color: #333333;
     }
-    .tone-live .fc-item__kicker {
+    .tone-live .fc-item__kicker,
+    .tone-live .byline {
         color: #fdadba;
     }
     .tone-live .kicker-separator {
@@ -145,12 +173,15 @@
 
     .tone-analysis .facia-card {
         border-top: 1px solid #4bc6df;
+    }
+    .tone-analysis .facia-card__text {
         background-color: #ffffff;
     }
     .tone-analysis .headline {
         color: #333333;
     }
-    .tone-analysis .fc-item__kicker {
+    .tone-analysis .fc-item__kicker,
+    .tone-analysis .byline {
         color: #767676;
     }
     .tone-analysis .kicker-separator {
@@ -163,12 +194,15 @@
 
     .tone-special-report .facia-card {
         border-top: 1px solid #fce800;
+    }
+    .tone-special-report .facia-card__text {
         background-color: #ffffff;
     }
     .tone-special-report .headline {
         color: #333333;
     }
-    .tone-special-report .fc-item__kicker {
+    .tone-special-report .fc-item__kicker,
+    .tone-special-report .byline {
         color: #fce800;
     }
     .tone-special-report .kicker-separator {
@@ -181,12 +215,15 @@
 
     .tone-comment .facia-card {
         border-top: 1px solid #e6711b;
+    }
+    .tone-comment .facia-card__text {
         background-color: #ffffff;
     }
     .tone-comment .headline {
         color: #333333;
     }
-    .tone-comment .fc-item__kicker {
+    .tone-comment .fc-item__kicker,
+    .tone-comment .byline {
         color: #e6711b;
     }
     .tone-comment .kicker-separator {
@@ -199,12 +236,15 @@
 
     .tone-dead .facia-card {
         border-top: 1px solid pink;
+    }
+    .tone-dead .facia-card__text {
         background-color: #ffffff;
     }
     .tone-dead .headline {
         color: #333333;
     }
-    .tone-dead .fc-item__kicker {
+    .tone-dead .fc-item__kicker,
+    .tone-dead .byline {
         color: #cc2b12;
     }
     .tone-dead .kicker-separator {
@@ -215,7 +255,10 @@
     }
 
     /*  Media Queries */
-
+    @*
+     * !important is needed here and elsewhere because the base styles in the Ink CSS framework for email use
+     * !important and we need to override them. (See the ink stylesheet for notes on why the base styles need !important)
+     *@
     @@media only screen and (max-width: 600px) {
         table[class="body"] .container {
             width: 100% !important;

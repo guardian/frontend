@@ -13,7 +13,7 @@
     <meta name="amp-3p-iframe-src" content="https://www.theguardian.com/amp/remote.html">
         @fragments.metaData(page, amp = true)
     <title>@views.support.Title(page)</title>
-        @fragments.amp.stylesheets.main(page, mainPicture = "", page.cta.image, page.campaign.fontColour.hexCode)
+        @fragments.amp.customStyles(page, mainPicture = "", page.cta.image, page.campaign.fontColour.hexCode)
     <script custom-element="amp-font" src="https://cdn.ampproject.org/v0/amp-font-0.1.js" async></script>
     <script custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js" async></script>
     <script custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js" async></script>
@@ -77,9 +77,7 @@
                 </div>
                 <div class="hosted__standfirst content__hosted-body">
                     <p class="hosted__text">@Html(page.standfirst)</p>
-                    <div class="hosted__terms">​​Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our
-                        <button on="tap:hosted-about-lightbox" class="hosted__terms-link hosted-tone">commercial content explainer</button>.
-                    </div>
+                    @hostedExplainer(onAmp = true)
                 </div>
             </div>
             <header class="host__header hosted__social content__hosted-body">

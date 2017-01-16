@@ -1,12 +1,11 @@
 package http
 
+import akka.stream.Materializer
 import common.ExecutionContexts
-import conf.Filters
 import implicits.Requests
 import model.ApplicationContext
 import play.api.http.HttpFilters
 import play.api.mvc.{EssentialAction, EssentialFilter, RequestHeader}
-
 
 // obviously this is only for devbuild and should never end up in one of our
 // prod projects
@@ -50,6 +49,6 @@ class DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts with
   }
 }
 
-class DevFilters(context: ApplicationContext) extends HttpFilters {
-  override def filters: Seq[EssentialFilter] = new DevJsonExtensionFilter :: new DevCacheWarningFilter :: Filters.common(context)
+class DevFilters(implicit val mat: Materializer, context: ApplicationContext) extends HttpFilters {
+  override def filters: Seq[EssentialFilter] = new DevJsonExtensionFilter :: new DevCacheWarningFilter :: Filters.common
 }

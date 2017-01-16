@@ -1,9 +1,8 @@
 package test
 
 import org.scalatest.Suites
-import play.api.Environment
 
-class OnwardTestSuite (implicit env: Environment) extends Suites (
+class OnwardTestSuite extends Suites (
   new controllers.ChangeEditionControllerTest,
   new model.TopStoriesFeatureTest,
   new MostPopularControllerTest,
@@ -14,7 +13,8 @@ class OnwardTestSuite (implicit env: Environment) extends Suites (
   new SeriesControllerTest,
   new TopStoriesControllerTest,
   new VideoInSectionTest,
-  new RichLinkControllerTest
+  new RichLinkControllerTest,
+  new NavigationControllerTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19011
 }

@@ -8,6 +8,7 @@ define([
     detect
 ) {
     describe('Breakpoint', function () {
+
         beforeEach(function () {
             this.originalGetViewport = detect.getViewport;
             this.viewportWidth = 0;
@@ -21,44 +22,70 @@ define([
             detect.getViewport = this.originalGetViewport;
         });
 
-        it('get the current breakpoint', function () {
-            this.viewportWidth = 100;
-            expect(detect.getBreakpoint()).toBe('mobile');
-            this.viewportWidth = 500;
-            expect(detect.getBreakpoint()).toBe('mobile');
-            this.viewportWidth = 1000;
-            expect(detect.getBreakpoint()).toBe('desktop');
+        var listeners = [];
+        var mqRegex = /min\-width:(\d+)/;
+        var mockWindow = {
+            matchMedia: function (mq) {
+                var matches = mq.match(mqRegex);
+                var from = matches[1];
+                return {
+                    matches: false,
+                    addListener: function (fn) {
+                        listeners.push({
+                            callback: fn,
+                            from: from
+                        });
+                    }
+                };
+            }
+        };
 
-            // tweak point
-            this.viewportWidth = 100;
+        function dispatchResize(viewportWidth) {
+            var mqIndex = 0;
+            while (mqIndex <= listeners.length - 1) {
+                if (mqIndex < listeners.length - 1 && listeners[mqIndex + 1].from > viewportWidth) {
+                    break;
+                }
+                mqIndex += 1;
+            }
+            listeners[mqIndex].callback({ matches: true });
+        }
+
+        it('get the current breakpoint', function () {
+            detect.init(mockWindow);
+            dispatchResize(100);
+            expect(detect.getBreakpoint()).toBe('mobile');
             expect(detect.getBreakpoint(true)).toBe('mobile');
-            this.viewportWidth = 500;
+            dispatchResize(500);
+            expect(detect.getBreakpoint()).toBe('mobile');
             expect(detect.getBreakpoint(true)).toBe('mobileLandscape');
-            this.viewportWidth = 1000;
+            dispatchResize(1000);
+            expect(detect.getBreakpoint()).toBe('desktop');
             expect(detect.getBreakpoint(true)).toBe('desktop');
         });
 
         it('is a given breakpoint', function () {
-            this.viewportWidth = 100;
+            detect.init(mockWindow);
+            dispatchResize(100);
             expect(detect.isBreakpoint({ min: 'mobile' })).toBe(true);
             expect(detect.isBreakpoint({ min: 'tablet' })).toBe(false);
             expect(detect.isBreakpoint({ max: 'mobile' })).toBe(true);
             expect(detect.isBreakpoint({ max: 'desktop' })).toBe(true);
 
-            this.viewportWidth = 500;
+            dispatchResize(500);
             expect(detect.isBreakpoint({ min: 'mobile' })).toBe(true);
             expect(detect.isBreakpoint({ min: 'tablet' })).toBe(false);
             // this is false because of the tweak point
             expect(detect.isBreakpoint({ max: 'mobile' })).toBe(false);
             expect(detect.isBreakpoint({ max: 'desktop' })).toBe(true);
 
-            this.viewportWidth = 800;
+            dispatchResize(800);
             expect(detect.isBreakpoint({ min: 'mobile' })).toBe(true);
             expect(detect.isBreakpoint({ min: 'tablet' })).toBe(true);
             expect(detect.isBreakpoint({ max: 'mobile' })).toBe(false);
             expect(detect.isBreakpoint({ max: 'desktop' })).toBe(true);
 
-            this.viewportWidth = 1000;
+            dispatchResize(1000);
             expect(detect.isBreakpoint({ min: 'mobile' })).toBe(true);
             expect(detect.isBreakpoint({ min: 'desktop' })).toBe(true);
             expect(detect.isBreakpoint({ max: 'tablet' })).toBe(false);
@@ -66,12 +93,6 @@ define([
             expect(detect.isBreakpoint({ min: 'mobile', max: 'tablet' })).toBe(false);
             expect(detect.isBreakpoint({ min: 'mobile', max: 'desktop' })).toBe(true);
             expect(detect.isBreakpoint({ min: 'tablet', max: 'wide' })).toBe(true);
-        });
-
-        it('should append a surrogate ad to the body', function () {
-            var html = '<div class="ad_unit" style="position: absolute; height: 10px; top: 0; left: 0; z-index: -1;">&nbsp;</div>';
-            detect.adblockInUseSync();
-            expect(document.body.lastChild.outerHTML).toEqual(html);
         });
     });
 });

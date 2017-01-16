@@ -7,10 +7,7 @@ import common.ContentApiMetrics.{ContentApi404Metric, ContentApiErrorMetric}
 import common.{ContentApiMetrics, ExecutionContexts, Logging}
 import conf.Configuration
 import conf.Configuration.contentApi.previewAuth
-import metrics.{CountMetric, TimingMetric}
 import play.api.libs.ws.{WSAuthScheme, WSClient}
-
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
@@ -61,7 +58,7 @@ class CapiHttpClient(wsClient: WSClient)
     }
 
     response map { wsResponse =>
-      Response(wsResponse.bodyAsBytes, wsResponse.status, wsResponse.statusText)
+      Response(wsResponse.bodyAsBytes.toArray, wsResponse.status, wsResponse.statusText)
     }
   }
 }

@@ -1,0 +1,20 @@
+@(content: model.Content)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@import conf.Configuration
+@import views.support.FBPixel
+
+@*
+Baseline pageview confidence pixel.
+This, along with the corresponding pixels for GA/Ophan,
+are used to generate the confidence graphs on the frontend dashboard.
+*@
+<amp-pixel src="@{Configuration.debug.beaconUrl}/count/pv.gif"></amp-pixel>
+
+<amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
+<amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
+
+@fragments.amp.googleAnalytics(content)
+
+<amp-analytics id="comscore" type="comscore">
+    <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
+</amp-analytics>

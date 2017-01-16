@@ -80,10 +80,10 @@ If you just ship new facia without pressing things will break until the presser 
 
 #### PROD: get the field into the pressed json
 * Deploy facia-press & turn on the `facia-press-on-demand` switch in PROD gutools
-* `SSH` into the facia presser instance and post to http://localhost:9000/press/draft/all (have patience, it takes a couple of mins) to repress all the draft fronts (`curl -v -X POST -H 'Content-Length: 0' http://localhost:9000/press/draft/all`) 
+* `SSH` into the facia presser instance and post to http://localhost:9000/press/draft/all (have patience, it takes a couple of mins) to repress all the draft fronts (`curl -v -X POST -H 'Content-Length: 0' http://localhost:9000/press/draft/all`)
 * The fronts in prod are pressed automatically every 5 minutes, but if you like, use `frontend.gutools` to `/press` them - if you do just click `All Frequency Fronts For Press`. This will be speedy due to multiple instances.
 * Point your local machine to `facia.stage=PROD` in `frontend.conf` and make sure everything is working before you deploy for real
-* Deploy `training-preview` & `preview` and check they still work
+* Deploy `preview` and check it still works
 * Deploy facia etc and check they still work
 * Deploy everything else and check they still work
 

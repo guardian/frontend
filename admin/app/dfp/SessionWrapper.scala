@@ -25,6 +25,24 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
     }
   }
 
+  def orders(stmtBuilder: StatementBuilder): Seq[Order] = {
+    logAroundRead("orders", stmtBuilder) {
+      read(stmtBuilder) { statement =>
+        val page = services.orderService.getOrdersByStatement(statement)
+        (page.getResults, page.getTotalResultSetSize)
+      }
+    }
+  }
+
+  def companies(stmtBuilder: StatementBuilder): Seq[Company] = {
+    logAroundRead("companies", stmtBuilder) {
+      read(stmtBuilder) { statement =>
+        val page = services.companyService.getCompaniesByStatement(statement)
+        (page.getResults, page.getTotalResultSetSize)
+      }
+    }
+  }
+
   def customFields(stmtBuilder: StatementBuilder): Seq[CustomField] = {
     logAroundRead("custom fields", stmtBuilder) {
       read(stmtBuilder) { statement =>

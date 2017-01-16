@@ -5,6 +5,14 @@
 * Ink v1.0.5 - Copyright 2013 ZURB Inc        *
 **********************************************/
 
+@*
+ * Lots of these base styles need !important because for Gmail we have to inline styles, since Gmail strips
+ * out <style> tags. But some styles (e.g. :hover) can't be inlined, and for clients which leave those styles intact,
+ * !important is the only way to override an inlined style with a non-inlined style.
+ * Gmail is apparently rolling out updates that will make style inlining unnecessary, which will hopefully
+ * allow us to remove !important from this stylesheet and all email-related ones.
+ *@
+
 /* Client-specific Styles and Reset */
 
 #outlook a {

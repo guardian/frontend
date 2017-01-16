@@ -4,9 +4,6 @@ import akka.actor.ActorSystem
 import app.LifecycleComponent
 import common.AutoRefresh
 import model.{TagDefinition, TagIndexListings}
-import play.libs.Akka
-
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.{Future, blocking}
 import scala.language.postfixOps

@@ -183,17 +183,17 @@ $approxGalleryWidth: calc(167vh - #{5/3 * ($headerHeight + $footerHeight)});
     bottom: 100%;
     padding: 6px 4px 0 8px;
     background: rgba(51, 51, 51, .8);
-    color: white;
+    color: #ffffff;
     pointer-events: auto;
     svg {
         transform: scale(.6) rotate(180deg);
         margin-bottom: -6px;
     }
     &:before {
-        content: "Hide";
+        content: 'Hide';
     }
     .minimise-oj &:before {
-        content: "Show";
+        content: 'Show';
     }
     .minimise-oj & svg {
         transform: scale(.6);
@@ -485,13 +485,13 @@ $approxGalleryWidth: calc(167vh - #{5/3 * ($headerHeight + $footerHeight)});
         color: #ffffff;
         position: relative;
         &:after {
-            content: "";
+            content: '';
             height: 1px;
             width: 100%;
             background-color: #ffffff;
             opacity: .5;
             bottom: 1px;
-            left:0;
+            left: 0;
             position: absolute;
         }
     }
@@ -548,12 +548,8 @@ $progressColor: #ffffff;
     width: $progressHeight;
 
     &:before {
-        content: "";
+        content: '';
         position: absolute;
-        background-image: -o-radial-gradient(center center, ellipse cover, $neutral-1 0%, transparent 50%);
-        background-image: -ms-radial-gradient(center center, ellipse cover, $neutral-1 0%, transparent 50%);
-        background-image: -moz-radial-gradient(center center, ellipse cover, $neutral-1 0%, transparent 50%);
-        background-image: -webkit-radial-gradient(center center, ellipse cover, $neutral-1 0%, transparent 50%);
         background-image: radial-gradient(center center, ellipse cover, $neutral-1 0%, transparent 50%);
         pointer-events: none;
         opacity: .5;

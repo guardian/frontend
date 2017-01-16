@@ -2,10 +2,6 @@ package crosswords
 
 import com.gu.contentapi.client.model.v1.{CrosswordPosition => Position, Crossword}
 
-import scalaz.std.list._
-import scalaz.std.set._
-import scalaz.syntax.foldable._
-
 object CrosswordGrid {
   val DefaultTreat = CrosswordGrid(Set(
     (2, 0),
@@ -45,9 +41,6 @@ object CrosswordGrid {
     (5, 6),
     (6, 6)
   ).map((Position.apply _).tupled))
-
-  def fromCrossword(crossword: Crossword): CrosswordGrid =
-    CrosswordGrid(crossword.entries.toList.foldMap[Set[Position]](_.allPositions.toSet))
 }
 
 case class CrosswordGrid(cellsInPlay: Set[Position])

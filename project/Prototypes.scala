@@ -1,16 +1,17 @@
 package com.gu
 
-import com.gu.Dependencies._
+import com.gu.versioninfo.VersionInfo
+import com.typesafe.sbt.packager.universal.UniversalPlugin
+import sbt._
+import sbt.Keys._
 import com.gu.riffraff.artifact.RiffRaffArtifact
 import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
-import com.gu.versioninfo.VersionInfo
-import com.typesafe.sbt.SbtNativePackager._
-import com.typesafe.sbt.packager.Keys._
-import com.typesafe.sbt.packager.universal.UniversalPlugin
-import play.sbt.PlayScala
 import play.twirl.sbt.Import._
-import sbt.Keys._
-import sbt._
+import Dependencies._
+import play.sbt.routes.RoutesKeys._
+import play.sbt.PlayScala
+import com.typesafe.sbt.SbtNativePackager.Universal
+import com.typesafe.sbt.packager.Keys.packageName
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -49,7 +50,6 @@ trait Prototypes {
     ivyXML :=
       <dependencies>
         <exclude org="commons-logging"><!-- Conflicts with jcl-over-slf4j in Play. --></exclude>
-        <exclude org="org.springframework"><!-- Because I don't like it. --></exclude>
         <exclude org="org.specs2"><!-- because someone thinks it is acceptable to have this as a prod dependency --></exclude>
       </dependencies>,
 
@@ -100,12 +100,12 @@ trait Prototypes {
   )
 
   val testAll = taskKey[Unit]("test all aggregate projects")
-  val uploadAll = taskKey[Unit]("upload all riff-raff artifacts from aggregate projects")
+  val upload = taskKey[Unit]("upload riff-raff artifact from root project")
   val testThenUpload = taskKey[Unit]("Conditional task that uploads to riff raff only if tests pass")
 
   def frontendRootSettings= List(
     testAll := (test in Test).all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value,
-    uploadAll := riffRaffUpload.all(ScopeFilter(inAggregates(ThisProject, includeRoot = true))).value,
+    upload := riffRaffUpload.in(LocalRootProject).value,
 
     testThenUpload := Def.taskDyn({
      testAll.result.value match {
@@ -114,31 +114,11 @@ trait Prototypes {
          throw inc
        }
        case Value(_) => {
-         println("Tests passed, uploading artifacts to riff raff.")
-         uploadAll.toTask
+         println("Tests passed, uploading artifact to riff raff.")
+         upload.toTask
        }
      }
     }).value
-  )
-
-  def frontendDistSettings(application: String) = List(
-    packageName in Universal := application,
-    topLevelDirectory in Universal := Some(application),
-    concurrentRestrictions in Universal := List(Tags.limit(Tags.All, 1)),
-    riffRaffPackageType := (packageBin in Universal).value,
-    riffRaffBuildIdentifier := System.getenv().getOrDefault("BUILD_NUMBER", "0").replaceAll("\"",""),
-    riffRaffUploadArtifactBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity")),
-    riffRaffUploadManifestBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity")),
-    riffRaffArtifactPublishPath := application,
-    riffRaffManifestProjectName := s"dotcom:$application",
-    riffRaffPackageName := s"dotcom:$application",
-    riffRaffArtifactResources := Seq(
-      riffRaffPackageType.value -> s"packages/$application/${riffRaffPackageType.value.getName}",
-      baseDirectory.value / "deploy.json" -> "deploy.json"
-    ),
-    artifactName in Universal := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
-      artifact.name + "." + artifact.extension
-    }
   )
 
   def root() = Project("root", base = file(".")).enablePlugins(PlayScala, RiffRaffArtifact)
@@ -146,14 +126,14 @@ trait Prototypes {
     .settings(frontendRootSettings)
 
   def application(applicationName: String) = {
-    Project(applicationName, file(applicationName)).enablePlugins(PlayScala, RiffRaffArtifact, UniversalPlugin)
+    Project(applicationName, file(applicationName)).enablePlugins(PlayScala, UniversalPlugin)
     .settings(frontendDependencyManagementSettings)
     .settings(frontendCompilationSettings)
     .settings(frontendClientSideSettings)
     .settings(frontendTestSettings)
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(macwire, commonsIo))
-    .settings(frontendDistSettings(applicationName))
+    .settings(packageName in Universal := applicationName)
     .settingSets(settingSetsOrder)
   }
 
@@ -165,7 +145,6 @@ trait Prototypes {
     .settings(frontendTestSettings)
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(commonsIo))
-    .settings(riffRaffUpload := {})
     .settingSets(settingSetsOrder)
   }
 

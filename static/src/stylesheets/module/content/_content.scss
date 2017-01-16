@@ -100,7 +100,6 @@
     margin-right: $gs-gutter;
     width: gs-span(4);
     padding-left: $gs-gutter;
-    overflow: hidden;
 
     @include mq($until: desktop) {
         display: none;
@@ -724,14 +723,14 @@
     .from-content-api {
         @include f-textSans;
     }
-    .element.element-pullquote{
-      .pullquote-paragraph {
-        font-family: $f-sans-serif-headline;
-        color: $paid-article-brand;
-      }
+    .element.element-pullquote {
+        .pullquote-paragraph {
+            font-family: $f-sans-serif-headline;
+            color: $paid-article-brand;
+        }
     }
     a.in-body-link--immersive {
-      color: $paid-article-brand;
+        color: $paid-article-brand;
     }
 }
 
@@ -773,7 +772,7 @@
     .tone-media--item {
         color: $neutral-1;
 
-        .rich-link__container:before{
+        .rich-link__container:before {
             background-color: $news-support-3
         }
 

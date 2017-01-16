@@ -5,7 +5,6 @@ import com.gu.contentapi.client.model.v1.ItemResponse
 import common.{Edition, ExecutionContexts}
 import contentapi.ContentApiClient
 import model.NoCache
-import play.api.Environment
 import play.api.mvc.{Action, Controller, RequestHeader, Result}
 
 import scala.concurrent.Future

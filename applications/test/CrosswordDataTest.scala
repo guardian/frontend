@@ -13,13 +13,14 @@ import org.scalatest.time.{Millis, Span}
   with ConfiguredTestSuite
   with ScalaFutures
   with BeforeAndAfterAll
+  with WithMaterializer
   with WithTestWsClient
   with WithTestContext
   with WithTestContentApiClient {
 
   "CrosswordData" - {
 
-    val crosswordPageController = new CrosswordPageController(testContentApiClient)
+    lazy val crosswordPageController = new CrosswordPageController(testContentApiClient)
 
     "fromCrossword should normalize separators for grouped entries" in {
 
@@ -48,6 +49,9 @@ import org.scalatest.time.{Millis, Span}
       Entry.formatHumanNumber("1,28") should be (Some("1, 28"))
       Entry.formatHumanNumber("10,15,20down") should be (Some("10, 15, 20 down"))
       Entry.formatHumanNumber("2,3,4,5across") should be (Some("2, 3, 4, 5 across"))
+      Entry.formatHumanNumber("2,24across,16") should be (Some("2, 24 across, 16"))
+      Entry.formatHumanNumber("3,down,10,12") should be (None) // Missing number in second clue
+      Entry.formatHumanNumber("this,is,not,well,formed,clues") should be (None)
     }
 
     "fromCrossword should populate solutionAvailable field always and dateSolutionAvailable field if it exists" in {

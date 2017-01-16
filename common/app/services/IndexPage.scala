@@ -12,12 +12,9 @@ import model.meta.{ItemList, ListItem}
 import model.pressed._
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.mvc.RequestHeader
-import slices.{ContainerDefinition, Fixed, FixedContainers}
-
+import slices.{Container, ContainerDefinition, Fixed, FixedContainers}
 import scala.Function.const
-import scalaz.std.list._
-import scalaz.syntax.std.boolean._
-import scalaz.syntax.traverse._
+import scala.annotation.tailrec
 
 object IndexPagePagination {
   def pageSize: Int = if (Switches.TagPageSizeSwitch.isSwitchedOn) {
@@ -65,13 +62,14 @@ object IndexPage {
 
     val isSlow = SlowOrFastByTrails.isSlow(indexPage.trails.map(_.trail))
 
-    val grouped = if (isSlow || indexPage.forcesDayView)
-      IndexPageGrouping.byDay(indexPage.trails, edition.timezone)
-    else
-      IndexPageGrouping.fromContent(indexPage.trails, edition.timezone)
-
-    val containerDefinitions = grouped.toList.mapAccumL(MpuState(injected = false)) {
-      case (mpuState, grouping) =>
+    @tailrec
+    def containerDefinition(groupings: Seq[IndexPageGrouping],
+                            mpuState: MpuState,
+                            accumulation: Vector[((ContainerDisplayConfig, CollectionEssentials), Container)] = Vector.empty
+                           ): Seq[((ContainerDisplayConfig, CollectionEssentials), Container)] = {
+      groupings.toList match {
+        case Nil => accumulation
+        case grouping :: remainingGroupings =>
         val collection = CollectionEssentials.fromFaciaContent(
           grouping.items.flatMap { item =>
             indexPage.contents.find(_.item.metadata.id == item.metadata.id).map(_.faciaItem)
@@ -86,13 +84,13 @@ object IndexPage {
         val (container, newMpuState) = mpuContainer map { mpuContainer =>
           (mpuContainer, mpuState.copy(injected = true))
         } getOrElse {
-          val containerDefinition = if (isSlow) {
+          val definition = if (isSlow) {
             ContainerDefinition.slowForNumberOfItems(grouping.items.length)
           } else {
             ContainerDefinition.fastForNumberOfItems(grouping.items.length)
           }
 
-          (containerDefinition, mpuState)
+          (definition, mpuState)
         }
 
         val containerConfig = ContainerDisplayConfig(
@@ -102,11 +100,22 @@ object IndexPage {
           showSeriesAndBlogKickers = true
         )
 
-        (newMpuState, ((containerConfig, collection), Fixed(container)))
-    }._2
+        containerDefinition(
+          remainingGroupings,
+          newMpuState,
+          accumulation :+ ((containerConfig, collection), Fixed(container))
+        )
+      }
+
+    }
+
+    val grouped = if (isSlow || indexPage.forcesDayView)
+      IndexPageGrouping.byDay(indexPage.trails, edition.timezone)
+    else
+      IndexPageGrouping.fromContent(indexPage.trails, edition.timezone)
 
     val front = Front.fromConfigsAndContainers(
-      containerDefinitions,
+      containerDefinition(grouped.toList, MpuState(injected = false)),
       ContainerLayoutContext(
         Set.empty,
         hideCutOuts = indexPage.tags.isContributorPage
@@ -134,14 +143,13 @@ object IndexPage {
         case LoneDateHeadline(dateHeadline) => Some(cardTimestampDisplay(dateHeadline))
         case DescriptionMetaHeader(_) => None
       }
-
       container.copy(
         customHeader = Some(header),
         customClasses = Some(Seq(
           Some("fc-container--tag"),
-          (container.index == 0 &&
-            indexPage.isFootballTeam &&
-            Switches.FixturesAndResultsContainerSwitch.isSwitchedOn) option "js-insert-team-stats-after"
+          if (container.index == 0 &&
+              indexPage.isFootballTeam &&
+              Switches.FixturesAndResultsContainerSwitch.isSwitchedOn)  Some("js-insert-team-stats-after") else None
         ).flatten),
         hideToggle = true,
         showTimestamps = true,

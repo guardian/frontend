@@ -5,12 +5,15 @@
 <style>
     .tone-news .facia-card {
         border-top: 1px solid #4bc6df;
+    }
+    .tone-news .facia-card__text {
         background-color: #f6f6f6;
     }
     .tone-news .headline {
         color: #333333;
     }
-    .tone-news .fc-item__kicker {
+    .tone-news .fc-item__kicker,
+    .tone-news .byline, {
         color: #005689;
     }
     .tone-news .kicker-separator {
@@ -23,13 +26,15 @@
 
     .tone-feature .facia-card {
         border-top: 1px solid pink;
+    }
+    .tone-feature .facia-card__text {
         background-color: #951c55;
     }
-
     .tone-feature .headline {
         color: #fff;
     }
-    .tone-feature .fc-item__kicker {
+    .tone-feature .fc-item__kicker,
+    .tone-feature .byline, {
         color: #fdadba;
     }
     .tone-feature .kicker-separator {
@@ -42,12 +47,15 @@
 
     .tone-media .facia-card {
         border-top: 1px solid #ffbb00;
+    }
+    .tone-media .facia-card__text {
         background-color: #333;
     }
     .tone-media .headline {
         color: #fff;
     }
-    .tone-media .fc-item__kicker {
+    .tone-media .fc-item__kicker,
+    .tone-media .byline, {
         color: #ffbb00;
     }
     .tone-media .kicker-separator {
@@ -60,12 +68,15 @@
 
     .tone-review .facia-card {
         border-top: 1px solid pink;
+    }
+    .tone-review .facia-card__text {
         background-color: #7d7569;
     }
     .tone-review .headline {
         color: #fff;
     }
-    .tone-review .fc-item__kicker {
+    .tone-review .fc-item__kicker,
+    .tone-review .byline, {
         color: #ffce4b;
     }
     .tone-review .kicker-separator {
@@ -78,12 +89,15 @@
 
     .tone-editorial .facia-card {
         border-top: 1px solid #aad8f1;
+    }
+    .tone-editorial .facia-card__text {
         background-color: #005689;
     }
     .tone-editorial .headline {
         color: #fff;
     }
-    .tone-editorial .fc-item__kicker {
+    .tone-editorial .fc-item__kicker,
+    .tone-editorial .byline, {
         color: #aad8f1;
     }
     .tone-editorial .kicker-separator {
@@ -99,15 +113,22 @@
     }
     .tone-external .facia-card {
         border-top: 1px solid @page.toneColour;
+    }
+    .tone-external .facia-card__text {
         background-color: #f6f6f6;
     }
+    @*
+     * !important is needed here and elsewhere because the base styles in the Ink CSS framework for email use
+     * !important and we need to override them. (See the ink stylesheet for notes on why the base styles need !important)
+     *@
     .tone-external .headline {
         color: #333333;
         font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif !important;
         font-weight: normal;
         font-size: 16px;
     }
-    .tone-external .fc-item__kicker {
+    .tone-external .fc-item__kicker,
+    .tone-external .byline, {
         color: #333333;
         font-weight: bold;
     }
@@ -121,12 +142,15 @@
 
     .tone-live .facia-card {
         border-top: 1px solid #fdadba;
+    }
+    .tone-live .facia-card__text {
         background-color: #b51800;
     }
     .tone-live .headline {
         color: #fff;
     }
-    .tone-live .fc-item__kicker {
+    .tone-live .fc-item__kicker,
+    .tone-live .byline, {
         color: #fdadba;
     }
     .tone-live .kicker-separator {
@@ -139,12 +163,15 @@
 
     .tone-analysis .facia-card {
         border-top: 1px solid #4bc6df;
+    }
+    .tone-analysis .facia-card__text {
         background-color: #f6f6f6;
     }
     .tone-analysis .headline {
         color: #005689;
     }
-    .tone-analysis .fc-item__kicker {
+    .tone-analysis .fc-item__kicker,
+    .tone-analysis .byline, {
         color: #767676;
     }
     .tone-analysis .kicker-separator {
@@ -157,12 +184,15 @@
 
     .tone-special-report .facia-card {
         border-top: 1px solid #fce800;
+    }
+    .tone-special-report .facia-card__text {
         background-color: #63717a;
     }
     .tone-special-report .headline {
         color: #fff;
     }
-    .tone-special-report .fc-item__kicker {
+    .tone-special-report .fc-item__kicker,
+    .tone-special-report .byline, {
         color: #fce800;
     }
     .tone-special-report .kicker-separator {
@@ -175,12 +205,15 @@
 
     .tone-comment .facia-card {
         border-top: 1px solid #e6711b;
+    }
+    .tone-comment .facia-card__text {
         background-color: #e3e3de;
     }
     .tone-comment .headline {
         color: #333333;
     }
-    .tone-comment .fc-item__kicker {
+    .tone-comment .fc-item__kicker,
+    .tone-comment .byline, {
         color: #e6711b;
     }
     .tone-comment .kicker-separator {
@@ -193,12 +226,15 @@
 
     .tone-dead .facia-card {
         border-top: 1px solid pink;
+    }
+    .tone-dead .facia-card__text {
         background-color: #f6f6f6;
     }
     .tone-dead .headline {
         color: #333333;
     }
-    .tone-dead .fc-item__kicker {
+    .tone-dead .fc-item__kicker,
+    .tone-dead .byline, {
         color: #cc2b12;
     }
     .tone-dead .kicker-separator {

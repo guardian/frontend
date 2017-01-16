@@ -5,6 +5,16 @@ import org.joda.time.LocalDate
 
 trait PerformanceSwitches {
 
+  val PanicSheddingSwitch = Switch(
+    SwitchGroup.Performance,
+    "panic-shedding",
+    "When this switch is on, the Panic Shedding system is enabled which can filter requests under high latency",
+    owners = Seq(Owner.withGithub("rich-nguyen")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val InlineJSStandardOptimisation = Switch(
     SwitchGroup.Performance,
     "inline-standard-optimisation",
@@ -40,7 +50,7 @@ trait PerformanceSwitches {
     SwitchGroup.Performance,
     "long-cache-switch",
     "If this switch is on then content will get a longer cache time",
-    owners = Seq(Owner.withGithub("gklopper")),
+    owners = Owner.group(SwitchGroup.Performance),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -52,7 +62,7 @@ trait PerformanceSwitches {
     "If this switch is on then closed comment threads will get a longer cache time",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 1, 10),
+    sellByDate = new LocalDate(2017, 1, 16),
     exposeClientSide = false
   )
 
@@ -186,16 +196,6 @@ trait PerformanceSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = false
-  )
-
-  val DisableStickyAdBannerOnMobileSwitch = Switch(
-    SwitchGroup.Performance,
-    "disable-sticky-ad-banner-on-mobile",
-    "If this switch is on, the sticky ad banner will be disabled on mobile.",
-    owners = Seq(Owner.withName("health team")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
   )
 
   val SaveForLaterSwitch = Switch(

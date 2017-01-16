@@ -29,8 +29,7 @@
 }
 
 .hosted-gallery__meta {
-    color: white;
-    padding: 0 $gs-gutter;
+    color: #ffffff;
     position: absolute;
     z-index: 1;
     left: 0;
@@ -38,7 +37,6 @@
     bottom: 0;
     @media (orientation: portrait) {
         top: 50%;
-        padding-top: 60%;
         transform: translate(0, -50%);
     }
 }
@@ -129,7 +127,7 @@
         cursor: pointer;
         text-decoration: none;
         &:not(.social__action)::after {
-            content: "";
+            content: '';
             height: 1px;
             width: 100%;
             background-color: #ffffff;

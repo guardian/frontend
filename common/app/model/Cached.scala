@@ -1,14 +1,13 @@
 package model
 
+import common.ExecutionContexts
 import conf.switches.Switches._
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.http.Writeable
 import play.api.mvc._
-import scala.math.{min, max}
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.math.{max, min}
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.Duration
 
 case class CacheTime(cacheSeconds: Int)
@@ -23,6 +22,7 @@ object CacheTime {
   object RecentlyUpdated extends CacheTime(60)
   object Facia extends CacheTime(300)
   object ArchiveRedirect extends CacheTime(300)
+  object ShareCount extends CacheTime(600)
   object NotFound extends CacheTime(10) // This will be overwritten by fastly
 
   def LastDayUpdated = CacheTime(extended(60))
@@ -124,7 +124,7 @@ object Cached extends implicits.Dates {
         (etag, result)
       }
     }.getOrElse(
-      (s""""johnRandom${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""", result) // just to see if they come back in
+      (s""""guRandomEtag${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""", result) // just to see if they come back in
     )
 
     validatedResult.withHeaders(
@@ -145,6 +145,8 @@ object NoCache {
 }
 
 case class NoCache[A](action: Action[A]) extends Action[A] {
+
+  implicit val ec: ExecutionContext = ExecutionContexts.executionContext
 
   override def apply(request: Request[A]): Future[Result] = {
 

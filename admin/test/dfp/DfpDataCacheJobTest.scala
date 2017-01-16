@@ -4,14 +4,21 @@ import common.dfp.{GuLineItem, GuTargeting}
 import dfp.DfpApi.DfpLineItems
 import org.joda.time.DateTime
 import org.scalatest._
+import test._
 
 class DfpDataCacheJobTest
   extends FlatSpec
-    with Matchers {
+  with Matchers
+  with SingleServerSuite
+  with BeforeAndAfterAll
+  with WithMaterializer
+  with WithTestWsClient
+  with WithTestContentApiClient {
 
   private def lineItem(id: Long, name: String, completed: Boolean = false): GuLineItem = {
     GuLineItem(
       id,
+      0L,
       name,
       startTime = DateTime.now.withTimeAtStartOfDay,
       endTime = None,

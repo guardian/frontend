@@ -213,8 +213,6 @@ object CloudWatch extends Logging with ExecutionContexts {
       .withDimensions(stage)))
   } yield new AwsLineChart(metricName, Seq("Time", "%"), ChartFormat.SingleLineBlue, percentConversion)
 
-  def omnitureConfidence: Future[AwsLineChart] = confidenceGraph("omniture-percent-conversion")
-
   def ophanConfidence: Future[AwsLineChart] = confidenceGraph("ophan-percent-conversion")
 
   def googleConfidence: Future[AwsLineChart] = confidenceGraph("google-percent-conversion")

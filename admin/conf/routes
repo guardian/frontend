@@ -109,11 +109,8 @@ GET         /metrics/afg                                                        
 GET         /radiator                                                                               controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/commit/*hash                                                                  controllers.admin.RadiatorController.commitDetail(hash)
 
-GET         /deploys-radiator/api/deploys                                                           controllers.admin.DeploysRadiatorController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
-GET         /deploys-radiator/api/builds/:number                                                    controllers.admin.DeploysRadiatorController.getBuild(number)
-GET         /deploys-radiator                                                                       controllers.admin.DeploysRadiatorController.renderDeploysRadiator()
-
-POST        /deploys-notify/api/builds/:number/notify                                               controllers.admin.DeploysNotifyController.notifyStep(number)
+# Used by Prout to know which builds/commits have been deployed in PROD
+GET         /deploys                                                                                controllers.admin.DeploysController.getDeploys(stage: Option[String], pageSize: Option[Int])
 
 # Redirects
 GET         /redirects                                                                              controllers.admin.RedirectController.redirect()
@@ -159,9 +156,3 @@ GET         /admin/football/fronts/matches/:competitionId/:team1Id/:team2Id     
 GET         /admin/football/fronts/match/:matchId                                                   controllers.admin.FrontsController.bigMatchSpecial(matchId)
 
 GET         /admin/football/api/squad/:teamId                                                       controllers.admin.PlayerController.squad(teamId: String)
-
-# css reports
-GET         /css-reports                                                                            controllers.admin.CssReportController.entry
-GET         /css-reports.json                                                                       controllers.admin.CssReportController.index
-GET         /css-reports/all.json                                                                   controllers.admin.CssReportController.aggregateReport
-GET         /css-reports/:date.json                                                                 controllers.admin.CssReportController.report(date: LocalDate)
