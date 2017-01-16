@@ -27,7 +27,7 @@ define([
     'bootstraps/enhanced/media/video-player',
     'text!common/views/ui/loading.html',
     'common/modules/commercial/user-features',
-    'scriptjs'
+    'common/utils/load-script'
 ], function (
     bean,
     bonzo,
@@ -55,7 +55,7 @@ define([
     videojs,
     loadingTmpl,
     userFeatures,
-    scriptjs
+    loadScript
 ) {
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -388,7 +388,7 @@ define([
         if (config.switches.enhancedMediaPlayer) {
             if (shouldPreroll) {
                 try {
-                    scriptjs(['//imasdk.googleapis.com/js/sdkloader/ima3.js'], function () {
+                    loadScript(['//imasdk.googleapis.com/js/sdkloader/ima3.js'], function () {
                     initWithRaven(true);
                     })
                 } catch (e) {

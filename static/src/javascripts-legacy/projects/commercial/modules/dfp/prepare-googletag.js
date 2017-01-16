@@ -5,6 +5,7 @@ define([
     'common/utils/raven',
     'common/utils/config',
     'common/utils/fastdom-promise',
+    'common/utils/load-script',
     'common/modules/commercial/commercial-features',
     'commercial/modules/build-page-targeting',
     'commercial/modules/dfp/dfp-env',
@@ -27,6 +28,7 @@ define([
     raven,
     config,
     fastdom,
+    loadScript,
     commercialFeatures,
     buildPageTargeting,
     dfpEnv,
@@ -59,7 +61,7 @@ define([
             );
 
             // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
-            require(['js!googletag.js']);
+            loadScript([window.guardian.config.libs.googletag]);
 
             // Return a promise that resolves after the async work is done.
             return new Promise(function(resolve){

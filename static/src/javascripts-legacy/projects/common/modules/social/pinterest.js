@@ -2,12 +2,12 @@ define([
     'fastdom',
     'bean',
     'common/utils/$',
-    'scriptjs'
+    'common/utils/load-script'
 ], function (
     fastdom,
     bean,
     $,
-    scriptjs
+    loadScript
 ) {
     var buttonsSelector = '.social__item--pinterest',
         buttons;
@@ -21,7 +21,7 @@ define([
             });
         });
 
-        scriptjs(['https://assets.pinterest.com/js/pinmarklet.js?r=' + new Date().getTime()]);
+        loadScript(['https://assets.pinterest.com/js/pinmarklet.js?r=' + new Date().getTime()]);
     }
 
     return function () {
