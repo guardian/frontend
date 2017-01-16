@@ -30,7 +30,7 @@
             @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) {
                 <p class="meta__contact-header">Contact author</p>
             }
-            @fragments.meta.contactAuthor(item.tags)
+            @fragments.meta.contactAuthor(item.tags, amp)
         }
 
         @if(!item.trail.shouldHidePublicationDate) {

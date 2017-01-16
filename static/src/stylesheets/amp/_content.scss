@@ -202,39 +202,6 @@
     float: left;
 }
 
-.meta__twitter,
-.meta__email {
-    margin: 0;
-    display: inline;
-
-    .button {
-        position: relative;
-        display: inline-block;
-        margin-bottom: -$gs-baseline;
-        width: 30px;
-        height: 32px;
-        padding: 0;
-        border: 0;
-        background-color: transparent;
-        margin-right: 0;
-        white-space: nowrap;
-    }
-
-    & > a > div {
-        display: none;
-    }
-
-    svg {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        margin: auto;
-
-    }
-}
-
 .byline {
     font-size: 14px;
     line-height: 18px;
