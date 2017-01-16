@@ -6,7 +6,10 @@
 # Make sure you have valid AWS credentials and then run with sudo setup.sh <profile name>
 # Remember to add nginx/hosts to your /etc/hosts
 
+SSL_CERT_NAME="wildcard-thegulocal-com-exp2019-01-09"
 S3_BUCKET="s3://identity-local-ssl/"
+NGINX_SITE_CONF="frontend.conf"
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 nginxHome=`nginx -V 2>&1 | grep "configure arguments:" | sed 's/[^*]*conf-path=\([^ ]*\)\/nginx\.conf.*/\1/g'`
 jdkHome=`/usr/libexec/java_home`
@@ -68,9 +71,9 @@ function install_nginx_configuration() {
     sudo ln -fs "$DIR/${1}" "$nginxHome/sites-enabled/${1}"
 }
 
-install_ssh_certificate "wildcard-thegulocal-com-exp2019-01-09"
-install_ssh_certificate_in_jdk_ca "wildcard-thegulocal-com-exp2019-01-09"
-install_nginx_configuration "frontend.conf"
+install_ssh_certificate ${SSL_CERT_NAME}
+install_ssh_certificate_in_jdk_ca ${SSL_CERT_NAME}
+install_nginx_configuration ${NGINX_SITE_CONF}
 
 echo "Restarting Nginx"
 sudo nginx -s stop
