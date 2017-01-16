@@ -16,9 +16,8 @@ __Nginx:__
 
 ## Configure Nginx with SSL
 
-1. Make sure you are in `frontend/nginx` directory
 1. Ensure you have the correct [hosts](hosts) included in `/etc/hosts` file on your machine
-1. Run `sudo ./setup.sh frontend`
+1. Run `sudo nginx/setup.sh frontend`
 1. To setup Dotcom Identity Fronted follow [identity-platform README](https://github.com/guardian/identity-platform)
 
 Make sure ```sites-enabled``` folder is included in your ```nginx.conf``` (usually in ```/usr/local/etc/nginx/nginx.conf```):
