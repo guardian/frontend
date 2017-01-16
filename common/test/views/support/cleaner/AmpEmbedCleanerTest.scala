@@ -201,52 +201,52 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
   "AmpEmbedCleaner" should "add an amp-iframe element, not an amp-soundcloud element if an audio element contains an iframe with src url from that is not from soundcloud.com" in {
-    val frameborder = Option("0")
-    val width = Option("460")
-    val height = Option("300")
-    val src = Option(audioBoomUrl)
+    val frameborder = Some("0")
+    val width = Some("460")
+    val height = Some("300")
+    val src = Some(audioBoomUrl)
     val cleanDoc: Document = cleanDocumentWithAudioEmbed("element-audio", frameborder, width, height, src)
     val result = (cleanDoc.getElementsByTag("amp-iframe").size, cleanDoc.getElementsByTag("amp-soundcloud").size)
     result should be ((1,0))
   }
 
   "AmpEmbedCleaner" should "create an amp-iframe element with a data-main-player-id from the iframe src from an audioboom embed" in {
-    val frameborder = Option("0")
-    val width = Option("460")
-    val height = Option("300")
-    val src = Option(audioBoomUrl)
+    val frameborder = Some("0")
+    val width = Some("460")
+    val height = Some("300")
+    val src = Some(audioBoomUrl)
     val result: Document = cleanDocumentWithAudioEmbed("element-audio", frameborder, width, height, src)
     result.getElementsByTag("amp-iframe").first.attr("src") should be(audioBoomUrl)
   }
 
   "AmpEmbedCleaner" should "not add an amp-iframe element if the iframe does not have a src attribute" in {
-    val frameborder = Option("0")
-    val width = Option("460")
-    val height = Option("300")
+    val frameborder = Some("0")
+    val width = Some("460")
+    val height = Some("300")
     val result = cleanDocumentWithAudioEmbed("element-audio", frameborder, width, height, None)
     result.getElementsByTag("amp-iframe").size should be (0)
   }
 
   "AmpEmbedCleaner" should "not add an amp-iframe element if the iframe does not have a height attribute" in {
-    val frameborder = Option("0")
-    val width = Option("460")
-    val src = Option(audioBoomUrl)
+    val frameborder = Some("0")
+    val width = Some("460")
+    val src = Some(audioBoomUrl)
     val result = cleanDocumentWithAudioEmbed("element-audio", frameborder, width, None, src)
     result.getElementsByTag("amp-iframe").size should be (0)
   }
 
   "AmpEmbedCleaner" should "not add an amp-iframe element if the iframe does not have a width attribute" in {
-    val frameborder = Option("0")
-    val height = Option("300")
-    val src = Option(audioBoomUrl)
+    val frameborder = Some("0")
+    val height = Some("300")
+    val src = Some(audioBoomUrl)
     val result = cleanDocumentWithAudioEmbed("element-audio", frameborder, None, height, src)
     result.getElementsByTag("amp-iframe").size should be (0)
   }
 
   "AmpEmbedCleaner" should "not add an amp-iframe element if the iframe does not have a frameborder attribute" in {
-    val width = Option("460")
-    val height = Option("300")
-    val src = Option(audioBoomUrl)
+    val width = Some("460")
+    val height = Some("300")
+    val src = Some(audioBoomUrl)
     val result = cleanDocumentWithAudioEmbed("element-audio", None, width, height, src)
     result.getElementsByTag("amp-iframe").size should be (0)
   }
@@ -270,25 +270,25 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   */
 
   "AmpEmbedCleaner" should "replace an iframe in an audio-element that has a src url from soundcloud.com with an amp-soundcloud element" in {
-    val result: Document = cleanDocumentWithAudioEmbed("element-embed", None, None, None, Option(soundcloudUrlV2))
+    val result: Document = cleanDocumentWithAudioEmbed("element-embed", None, None, None, Some(soundcloudUrlV2))
     result.getElementsByTag("amp-soundcloud").size should be(1)
   }
 
   "AmpEmbedCleaner" should "create an amp-soundcloud element with a trackid from an iframe src tht contains a url from soundcloud.com" in {
-    val result: Document = cleanDocumentWithAudioEmbed("element-embed", None, None, None, Option(soundcloudUrlV1))
+    val result: Document = cleanDocumentWithAudioEmbed("element-embed", None, None, None, Some(soundcloudUrlV1))
     result.getElementsByTag("amp-soundcloud").first.attr("data-trackid") should be(soundcloudTrackid.toString)
   }
 
   "AmpEmbedCleaner" should " not create an amp-soundcloud element from an iframe src that does not have a track id" in {
-    val result: Document = cleanDocumentWithAudioEmbed("element-embed", None, None, None, Option(soundcloudUrlNoTrackId))
+    val result: Document = cleanDocumentWithAudioEmbed("element-embed", None, None, None, Some(soundcloudUrlNoTrackId))
     result.getElementsByTag("amp-soundcloud").size should be (0)
   }
 
   "AmpEmbedCleaner" should "not add an amp-iframe or amp-soundcloud element, if an audio element contains an iframe with src url from that is not from soundcloud.com" in {
-    val frameborder = Option("0")
-    val width = Option("460")
-    val height = Option("300")
-    val src = Option(audioBoomUrl)
+    val frameborder = Some("0")
+    val width = Some("460")
+    val height = Some("300")
+    val src = Some(audioBoomUrl)
     val cleanDoc: Document = cleanDocumentWithAudioEmbed("element-embed", frameborder, width, height, src)
     val result = (cleanDoc.getElementsByTag("amp-iframe").size, cleanDoc.getElementsByTag("amp-soundcloud").size)
     result should be ((0,0))

@@ -103,11 +103,6 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     def getSoundCloudElement(document: Document, iframeElement: Element): Option[Element] = {
       val trackId = AmpSoundcloud.getTrackIdFromUrl(iframeElement.attr("src"))
       trackId.map(id => AmpSoundcloud.createElement(document, id))
-      /*  if (trackId.nonEmpty) {
-        Option(AmpSoundcloud.createElement(document, trackId.get))
-    } else {
-        None
-      }*/
     }
 
   }
@@ -141,8 +136,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
         val soundcloudElement = AmpSoundcloud.getSoundCloudElement(document, iframeElement)
         if (soundcloudElement.nonEmpty) {
           iframeElement.replaceWith(soundcloudElement.get)
-        }
-        else {
+        } else {
           val validIframe = iframeElement.hasAttr("src") && iframeElement.hasAttr("frameBorder") && iframeElement.hasAttr("width") && iframeElement.hasAttr("height")
           if (validIframe) {
             val src = iframeElement.attr("src")
