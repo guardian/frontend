@@ -29,9 +29,9 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     document
   }
 
-  //html format replaces some special characters with XML formatting. This method is to strip out those extra characters
+  //This method is to strip out some XML formatting resulting from the "toString" method used below.
   private def tidyUrlString(urlString: String): String = {
-    urlString.replace("&amp;", "&").replace("&quot;", "\"").replace("&apos;","'").replace("&lt;", "<").replace("&gt;", ">")
+    urlString.replace("&quot;", "\"").replace("&apos;","'").replace("&lt;", "<").replace("&gt;", ">")
 
   }
 
@@ -65,6 +65,8 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
         </figure>
       </body>
     </html>.toString()
+
+    println(doc)
     val document: Document = Jsoup.parse(tidyUrlString(doc))
     clean(document)
   }
@@ -159,7 +161,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                                                 data-alt="Site of plane crash in Colombia">
                                         </figure>
                                   </body>
-                                  </html>.toString()
+                                  </html>.text
     val result = clean(Jsoup.parse(interactiveSansUrl))
     result.getElementsByTag("amp-iframe").size should be(0)
   }
