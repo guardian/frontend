@@ -71,19 +71,27 @@
     }
 }
 
-@faciaCardSmall(card: ContentCard) = {
+@faciaCardSmall(card: ContentCard, withImage: Boolean) = {
     @paddedRow(Seq(toneClassFromStyle(card.cardStyle))) {
-        @fullRow(Seq("facia-card", "facia-card__text", "facia-card__text--last")) {
-            @headline(card)
+        @if(withImage) {
+            @fullRowWithSubColumns() {
+                @subColumn(7, Seq("facia-card__text")) { @headline(card)}
+                @subColumn(5, Seq(), last = true) { @imgFromCard(card) }
+            }
+        } else {
+            @fullRow(Seq("facia-card", "facia-card__text", "facia-card__text--last")) {
+                @headline(card)
+            }
         }
     }
 }
 
-@firstCard(card: ContentCard) = {
+@firstCard(card: ContentCard, isFastLayout: Boolean) = {
     @* if fast layout: small card, with image *@
     @* if medium or slow layout: large card, with image *@
     @card.cardStyle match {
-        case ExternalLink => { @faciaCardSmall(card) }
+        case ExternalLink => { @faciaCardSmall(card, withImage = false) }
+        case _ if isFastLayout => { @faciaCardSmall(card, withImage = true) }
         case _ => { @faciaCardLarge(card, withImage = true) }
     }
 }
@@ -94,7 +102,7 @@
     @if(isSlowLayout) {
         @faciaCardLarge(card, withImage = false)
     } else {
-        @faciaCardSmall(card)
+        @faciaCardSmall(card, withImage = false)
     }
 }
 
@@ -118,7 +126,7 @@
     @collection.curatedPlusBackfillDeduplicated.take(6).zipWithIndex.map { case (pressedContent, cardIndex) =>
         @defining(FaciaCard.fromTrail(pressedContent, collection.config, ItemClasses.showMore, showSeriesAndBlogKickers = false)) { card =>
             @if(cardIndex == 0) {
-                @firstCard(card)
+                @firstCard(card, isFastLayout = collection.collectionType == "fast")
             } else {
                 @otherCard(card, isSlowLayout = collection.collectionType == "slow")
             }
