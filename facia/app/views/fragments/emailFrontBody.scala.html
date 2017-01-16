@@ -113,7 +113,7 @@
         </h2>
     }
 
-    @collection.curatedPlusBackfillDeduplicated.zipWithIndex.map { case (pressedContent, cardIndex) =>
+    @collection.curatedPlusBackfillDeduplicated.take(6).zipWithIndex.map { case (pressedContent, cardIndex) =>
         @defining(FaciaCard.fromTrail(pressedContent, collection.config, ItemClasses.showMore, showSeriesAndBlogKickers = false)) { card =>
             @if(cardIndex == 0) {
                 @firstCard(card)
