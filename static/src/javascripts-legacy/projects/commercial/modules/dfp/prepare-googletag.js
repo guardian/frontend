@@ -5,7 +5,6 @@ define([
     'common/utils/raven',
     'common/utils/config',
     'common/utils/fastdom-promise',
-    'common/utils/load-script',
     'common/modules/commercial/commercial-features',
     'commercial/modules/build-page-targeting',
     'commercial/modules/dfp/dfp-env',
@@ -13,6 +12,7 @@ define([
     'commercial/modules/dfp/on-slot-load',
     'commercial/modules/dfp/prepare-sonobi-tag',
     'commercial/modules/dfp/performance-logging',
+    'common/utils/load-script',
 
     // These are cross-frame protocol messaging routines:
     'commercial/modules/messenger/get-stylesheet',
@@ -28,14 +28,14 @@ define([
     raven,
     config,
     fastdom,
-    loadScript,
     commercialFeatures,
     buildPageTargeting,
     dfpEnv,
     onSlotRender,
     onSlotLoad,
     prepareSonobiTag,
-    performanceLogging
+    performanceLogging,
+    loadScript
 ) {
     return {
         init: init,
@@ -60,15 +60,16 @@ define([
                 moduleEnd
             );
 
-            // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
-            loadScript(window.guardian.config.libs.googletag);
-
             // Return a promise that resolves after the async work is done.
-            return new Promise(function(resolve){
-                window.googletag.cmd.push(
-                    resolve
-                );
-            });
+            // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
+            return loadScript(window.guardian.config.libs.googletag)
+                .then(function(){
+                    return new Promise(function(resolve){
+                        window.googletag.cmd.push(
+                            resolve
+                        );
+                    });
+                });
         }
 
         if (commercialFeatures.dfpAdvertising) {

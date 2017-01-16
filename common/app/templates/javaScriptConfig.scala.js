@@ -3,6 +3,7 @@
 @import conf.Static
 @import play.api.libs.json.Json
 @import views.support.{CamelCase, JavaScriptPage, GoogleAnalyticsAccount}
+@import conf.Configuration.environment
 
 @defining(Edition(request)) { edition =>
     {

@@ -2,7 +2,9 @@
 /*global guardian*/
 define([
     'common/utils/load-script'
-], function (loadScript) {
+], function (
+    loadScript
+) {
     var scriptSrc = '//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5';
 
     function FacebookAuthorizer(appId) {
@@ -93,10 +95,18 @@ define([
     FacebookAuthorizer.prototype._loadFacebookAPI = function () {
         if (window.FB) {
             this.onFBScriptLoaded.resolve(window.FB);
-        } else if (!guardian.config.page.isPreview) { {
-            loadScript(scriptSrc + '&appId=' + this.appId);
+        } else if (!this._requiredAlready) {
+            this._requiredAlready = true;
+            this._loadFacebookScript();
         }
         return this.onFBScriptLoaded;
+    };
+
+    FacebookAuthorizer.prototype._loadFacebookScript = function () {
+        // don't tell Facebook about pages that have not launched yet
+        if (!guardian.config.page.isPreview) {
+            loadScript(scriptSrc + '&appId=' + this.appId);
+        }
     };
 
     FacebookAuthorizer.prototype._handleScriptLoaded = function () {
