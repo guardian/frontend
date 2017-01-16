@@ -26,7 +26,7 @@ define([
 
     Sticky.prototype.init = function init() {
         fastdom.read(function () {
-            this.absolutePos = window.pageYOffset + this.element.getBoundingClientRect().top;
+            this.offsetFromParent = this.element.getBoundingClientRect().top - this.element.parentNode.getBoundingClientRect().top;
         }, this);
         mediator.on('window:throttledScroll', this.updatePosition.bind(this));
         // kick off an initial position update
@@ -40,7 +40,7 @@ define([
         var css, message, stick;
 
         // have we scrolled past the element
-        if (window.pageYOffset < this.absolutePos) {
+        if (0 < parentRect.top + this.offsetFromParent) {
             stick = false;
             css = { top: null };
             message = 'unfixed';
