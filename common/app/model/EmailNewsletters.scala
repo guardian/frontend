@@ -406,7 +406,7 @@ object EmailNewsletters {
     )
   )
 
-  def all: EmailNewsletters = EmailNewsletters(List(
+  val all: EmailNewsletters = EmailNewsletters(List(
     newsRoundUpEmails,
     newsEmails,
     featureEmails,
