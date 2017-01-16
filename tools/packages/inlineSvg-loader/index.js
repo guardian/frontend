@@ -1,31 +1,18 @@
+const path = require('path');
+
 module.exports = function (content) {
     this.cacheable && this.cacheable();
 
-    var match = content.match(/<svg([^>]+)+>([\s\S]+)<\/svg>/i);
-    var attrs = {};
+    const match = content.match(/<svg([^>]+)+>([\s\S]+)<\/svg>/i);
+    const prefix = 'inline-';
+    const imageType = path.dirname(this.resourcePath).split('/').pop();
+    const fileName = path.basename(this.resourcePath).split('.svg')[0];
+    const svg = match ? match[0].replace(/\n/g, ' ').trim() : '';
+    const markup = `<span class=\"${prefix}${fileName} ${(imageType !== '' ? prefix + imageType : '')}\">${svg}</span>`;
 
-    if (match) {
-        attrs = match[1];
-        if (attrs) {
-            attrs = attrs.match(/([\w-:]+)(=)?("[^<>"]*"|'[^<>']*'|[\w-:]+)/g)
-                .reduce(function (obj, attr) {
-                    var split = attr.split('=');
-                    var name = split[0];
-                    var value = true;
-                    if (split && split[1]) {
-                        value = split[1].replace(/['"]/g, '');
-                    }
-                    obj[name] = value;
-                    return obj;
-                }, {});
-        }
+    this.value = markup;
 
-        content = match[2] || '';
-    }
-
-    content = content.replace(/\n/g, ' ').trim();
-    this.value = content;
-
-    return "module.exports = " + JSON.stringify({ attributes: attrs, content: content });
+    return `module.exports = ${JSON.stringify({ markup })}`;
 };
+
 module.exports.seperable = true;
