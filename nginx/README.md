@@ -20,12 +20,3 @@ __Nginx:__
 1. Run `sudo nginx/setup.sh frontend`
 1. To setup Dotcom Identity Fronted follow [identity-platform README](https://github.com/guardian/identity-platform)
 
-Make sure ```sites-enabled``` folder is included in your ```nginx.conf``` (usually in ```/usr/local/etc/nginx/nginx.conf```):
-
-    # ...
-    http {
-        include       mime.types;
-        default_type  application/octet-stream;
-        # THIS IS WHAT YOU MUST ADD
-        include sites-enabled/*;
-    #...

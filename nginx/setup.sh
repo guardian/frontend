@@ -14,7 +14,7 @@ jdkHome=`/usr/libexec/java_home`
 echo "Checking awscli is installed"
 which aws 1>/dev/null 2>&1
 if [[ $? -gt 0 ]]; then
-	echo 'Cannot find AWS CLI utility. Please install it before running this script.'
+	echo 'ERROR: Cannot find AWS CLI utility. Please install it before running this script.'
 	exit 1
 fi
 
@@ -27,8 +27,22 @@ fi
 
 aws ${PROFILE} s3 ls ${S3_BUCKET} 1>/dev/null 2>&1
 if [[ $? -gt 0 ]]; then
-	echo "You do not have access to the Identity AWS account. Re-run with ${0} <profile name> to use a different profile."
+	echo "ERROR: You do not have access to the Identity AWS account. Re-run with ${0} <profile name> to use a different profile."
 	exit 2
+fi
+
+echo "Checking Nginx sites-enabled directory exists"
+ls "${nginxHome}/sites-enabled" 1>/dev/null 2>&1
+if [[ $? -gt 0 ]]; then
+	echo "ERROR: Missing ${nginxHome}/sites-enabled"
+    echo "Create sites-enabled directory and make sure it is included in your nginx.conf (usually in ${nginxHome}/nginx.conf):
+            http {
+                include       mime.types;
+                default_type  application/octet-stream;
+                # THIS IS WHAT YOU MUST ADD
+                include sites-enabled/*;
+            #..."
+	exit 1
 fi
 
 function install_ssh_certificate() {
