@@ -38,7 +38,7 @@ define([
 
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
-        var messageCode = 'engagement-banner-2016-11-10';
+        var messageCode = 'engagement-banner-2017-01-11';
 
         var baseParams = {
             minArticles: 10,
@@ -79,7 +79,7 @@ define([
             },
             INT: {
                 membership: {
-                    messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $69/€49 per year.',
+                    messageText: 'For less than the price of a coffee a week, you could help secure the Guardian\'s future. Support our journalism for $7 / €5 a month.',
                     campaignCode: "mem_int_banner",
                     minArticles: 3
                 }

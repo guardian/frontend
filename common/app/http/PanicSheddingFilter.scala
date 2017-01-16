@@ -8,6 +8,7 @@ import org.joda.time.DateTime
 import play.api.mvc.Results._
 import play.api.mvc.{Filter, RequestHeader, Result}
 import scala.concurrent.Future
+import conf.switches.Switches
 
 // this turns requests away with 5xx errors if we are too busy
 class PanicSheddingFilter(implicit val mat: Materializer) extends Filter with Logging with ExecutionContexts {
@@ -82,10 +83,15 @@ class PanicSheddingFilter(implicit val mat: Materializer) extends Filter with Lo
   }
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    if (available(request)) {
-      monitor(nextFilter(request))
+
+    if(Switches.PanicSheddingSwitch.isSwitchedOn) {
+      if (available(request)) {
+        monitor(nextFilter(request))
+      } else {
+        Future.successful(ServiceUnavailable)
+      }
     } else {
-      Future.successful(ServiceUnavailable)
+      nextFilter(request)
     }
   }
 

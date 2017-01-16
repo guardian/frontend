@@ -15,11 +15,12 @@ define([
     messenger,
     Promise
 ) {
-    var stickyElement = null;
+    var noSticky = document.documentElement.classList.contains('has-no-sticky');
+    var stickyElement;
     var rightSlot;
 
     function stickyMpu($adSlot) {
-        if ($adSlot.data('name') !== 'right' || stickyElement) {
+        if ($adSlot.data('name') !== 'right') {
             return;
         }
 
@@ -37,13 +38,14 @@ define([
                 $adSlot.parent().css('height', newHeight + 'px');
             });
         }).then(function () {
-            //if there is a sticky 'paid by' band move the sticky mpu down so it will be always visible
-            var options = config.page.isAdvertisementFeature ? {top: 43} : {};
-            stickyElement = new Sticky($adSlot[0], options);
-            stickyElement.init();
+            if (noSticky) {
+                //if there is a sticky 'paid by' band move the sticky mpu down so it will be always visible
+                var options = config.page.isAdvertisementFeature ? {top: 43} : {};
+                stickyElement = new Sticky($adSlot[0], options);
+                stickyElement.init();
+                messenger.register('resize', onResize);
+            }
             mediator.emit('page:commercial:sticky-mpu');
-            messenger.register('resize', onResize);
-            return stickyElement;
         });
     }
 

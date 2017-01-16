@@ -6,6 +6,7 @@ import implicits.FaciaContentFrontendHelpers._
 import layout.ItemClasses
 import model.pressed.PressedContent
 import com.gu.contentapi.client.model.{v1 => contentapi}
+import model.content.MediaAtom
 
 object FaciaDisplayElement {
   def fromFaciaContentAndCardType(faciaContent: PressedContent, itemClasses: ItemClasses): Option[FaciaDisplayElement] = {
@@ -21,6 +22,8 @@ object FaciaDisplayElement {
         faciaContent.properties.maybeContentId map CrosswordSvg
       case _ if faciaContent.properties.imageSlideshowReplace && itemClasses.canShowSlideshow =>
         InlineSlideshow.fromFaciaContent(faciaContent)
+      case _ if faciaContent.properties.showMainVideo && faciaContent.mainYouTubeMediaAtom.isDefined  =>
+        Some(InlineYouTubeMediaAtom(faciaContent.mainYouTubeMediaAtom.get))
       case _ => InlineImage.fromFaciaContent(faciaContent)
     }
   }
@@ -60,6 +63,8 @@ case class InlineVideo(
   endSlatePath: String,
   fallBack: Option[InlineImage]
 ) extends FaciaDisplayElement
+
+case class InlineYouTubeMediaAtom(youTubeAtom: MediaAtom) extends FaciaDisplayElement
 
 object InlineImage {
   def fromFaciaContent(faciaContent: PressedContent): Option[InlineImage] =
