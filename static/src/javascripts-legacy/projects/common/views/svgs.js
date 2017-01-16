@@ -166,7 +166,7 @@ define([
     };
 
     return function (name, classes, title) {
-        if (config.tests.abWebpackBundle) {
+        if (config.tests && config.tests.abWebpackBundle) {
             return svg(svgs[name].markup, classes, title);
         }
 
