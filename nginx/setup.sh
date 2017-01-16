@@ -25,7 +25,7 @@ else
 	PROFILE="--profile ${1}"
 fi
 
-aws ${PROFILE} s3 ls s3://identity-local-ssl/ 1>/dev/null 2>&1
+aws ${PROFILE} s3 ls ${S3_BUCKET} 1>/dev/null 2>&1
 if [[ $? -gt 0 ]]; then
 	echo "You do not have access to the Identity AWS account. Re-run with ${0} <profile name> to use a different profile."
 	exit 2
