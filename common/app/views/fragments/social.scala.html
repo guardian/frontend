@@ -2,15 +2,17 @@
 
 <ul class="social social--@position js-social--@position u-unstyled u-cf" data-component="social">
     @sharelinks.visible.map { link => @ShareLink(Nil, link) }
-    @if(!sharelinks.hidden.isEmpty && !amp) {
-        @SocialMore
-        @sharelinks.hidden.map { link => @ShareLink(List("social--hidden", "js-social__secondary"), link) }
-        @SaveForLater
-        @CloseTray
-    }
+
     @if(amp) {
         @SocialMoreAmp
         @sharelinks.hidden.map { link => @ShareLink(List("social--hidden", "social__secondary"), link) }
+    } else {
+        @if(sharelinks.hidden.nonEmpty) {
+            @SocialMore
+            @sharelinks.hidden.map { link => @ShareLink(List("social--hidden", "js-social__secondary"), link) }
+            @SaveForLater
+            @CloseTray
+        }
     }
 </ul>
 

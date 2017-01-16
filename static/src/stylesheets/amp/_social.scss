@@ -61,14 +61,14 @@
 }
 
 .social-icon--more {
-    background-color: #eaeaea;
-        border-radius: 50%;
+    background-color: $neutral-5;
+    border-radius: 50%;
     display: inline-block;
     line-height: 2rem;
 }
 
 .social-icon--more__svg {
-    fill: #767676;
+    fill: $neutral-2;
     width: 60%;
 
     .centered-icon & {
