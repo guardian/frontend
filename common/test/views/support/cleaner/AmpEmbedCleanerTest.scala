@@ -1,5 +1,6 @@
 package views.support.cleaner
 
+import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
@@ -28,9 +29,10 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     document
   }
 
-  //html format replaces some special characters with XMLp
+  //html format replaces some special characters with XML formatting. This method is to strip out those extra characters
   private def tidyUrlString(urlString: String): String = {
     urlString.replace("&amp;", "&").replace("&quot;", "\"").replace("&apos;","'").replace("&lt;", "<").replace("&gt;", ">")
+
   }
 
   private def cleanDocumentWithVideos(videoUrls: String*): Document = {
