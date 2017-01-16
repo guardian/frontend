@@ -107,10 +107,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   }
 
-
-  //creates embeds for any elements of type "element-audio"
-  //soundcloud embeds are created as amp-soundcloud
-  //other embeds are created as amp-iframe
+  
   object AmpAudioElements {
 
     def createAmpIframeElement(document: Document, src: String, width: String, height: String, frameborder: String): Element = {
@@ -137,6 +134,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
         if (soundcloudElement.nonEmpty) {
           iframeElement.replaceWith(soundcloudElement.get)
         } else {
+          // if iframe is not a SoundCloud Element, replace it with amp-iframe
           val validIframe = iframeElement.hasAttr("src") && iframeElement.hasAttr("frameBorder") && iframeElement.hasAttr("width") && iframeElement.hasAttr("height")
           if (validIframe) {
             val src = iframeElement.attr("src")
@@ -153,7 +151,6 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   }
 
 
-  //removes embeds of type element-embed - with the exception of Soundcloud embeds which are created in an amp-soundcloud element
   def cleanAmpEmbed(document: Document) = {
     document.getElementsByClass("element-embed")
       .filter(_.getElementsByTag("iframe").nonEmpty)
