@@ -41,22 +41,17 @@ define([
         var css, message, stick;
 
         // have we scrolled past the element
-        if (this.sticks) {
-            if (window.pageYOffset < this.absolutePos) {
-                stick = false;
-                css = { top: null };
-                message = 'unfixed';
-            }
+        if (window.pageYOffset < this.absolutePos) {
+            stick = false;
+            css = { top: null };
+            message = 'unfixed';
         } else {
-            if (elementRect.top <= this.opts.top) {
-                // make sure the element stays within its parent
-                var fixedTop = this.opts.containInParent && parentRect.bottom < this.opts.top + elementHeight ?
-                    Math.floor(parentRect.bottom - elementHeight - this.opts.top) :
-                    this.opts.top;
-                stick = true;
-                css = { top: fixedTop };
-                message = 'fixed';
-            }
+            stick = true;
+            var top = this.opts.containInParent && parentRect.bottom <= elementRect.height ?
+                Math.floor(parentRect.bottom - elementHeight - this.opts.top) :
+                this.opts.top;
+            css = { top: top };
+            message = 'fixed';
         }
 
         if (this.opts.emitMessage && message && message !== this.lastMessage) {
