@@ -312,7 +312,7 @@ object EmailNewsletters {
       frequency = "Every Wednesday",
       listId = ListIds.theFlyer.toString,
       tone = Some("feature"),
-      otherListIds = List("2211", "3806", "3807"),
+      aliases = List("2211", "3806", "3807"),
       signupPage = Some("/travel/2016/aug/18/sign-up-to-the-flyer"),
       exampleUrl = Some("/email/the-flyer?format=email-connected")
     ),
@@ -367,7 +367,7 @@ object EmailNewsletters {
       description = "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every afternoon.",
       frequency = "Weekday afternoons",
       listId = ListIds.newBestOfOpinion.toString,
-      otherListIds = List(ListIds.newBestOfOpinion.toString, ListIds.controlBestOfOpinion.toString, ListIds.theBestOfOpinion.toString),
+      aliases = List(ListIds.newBestOfOpinion.toString, ListIds.controlBestOfOpinion.toString, ListIds.theBestOfOpinion.toString),
       subheading = Some("UK"),
       tone = Some("comment"),
       signupPage = Some("/commentisfree/2014/jan/29/comment-is-free-daily-roundup")

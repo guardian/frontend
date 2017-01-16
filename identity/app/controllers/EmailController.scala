@@ -9,7 +9,7 @@ import utils.SafeLogging
 import play.api.mvc._
 
 import scala.concurrent.Future
-import model.{ApplicationContext, EmailNewsletters$, IdentityPage}
+import model.{ApplicationContext, EmailNewsletters, IdentityPage}
 import play.api.data._
 import client.Error
 import com.gu.identity.model.{EmailList, Subscriber}
