@@ -81,6 +81,7 @@ object NewNavigation {
   var home = NavLink("home & garden", "/lifeandstyle/home-and-garden")
   var health = NavLink("health & fitness", "/lifeandstyle/health-and-wellbeing")
   var women = NavLink("women", "/lifeandstyle/women")
+  var recipes = NavLink("recipes", "/tone/recipes")
 
 
   var PrimaryLinks = List(
@@ -214,20 +215,20 @@ object NewNavigation {
     val name = "life"
 
     val uk = NavLinkLists(
-      List(lifestyle, fashion, food, loveAndSex, family),
-      List(home, health, women, travel, tech)
+      List(lifestyle, fashion, food, recipes, loveAndSex),
+      List(family, home, health, women, travel, tech)
     )
     val au = NavLinkLists(
-      List(lifestyle, fashion, food, loveAndSex, health),
-      List(family, women, travel, home)
+      List(lifestyle, fashion, food, loveAndSex),
+      List(health, family, women, travel, home)
     )
     val us = NavLinkLists(
-      List(lifestyle, fashion, lifestyle, food, loveAndSex),
-      List(home, health, women, family, travel, tech)
+      List(lifestyle, fashion, lifestyle, food, recipes),
+      List(loveAndSex, home, health, women, family, travel, tech)
     )
     val int = NavLinkLists(
-      List(lifestyle, fashion, lifestyle, food, loveAndSex),
-      List(health, home, women, family, travel, tech)
+      List(lifestyle, fashion, lifestyle, food, recipes),
+      List(loveAndSex, health, home, women, family, travel, tech)
     )
   }
 
