@@ -2,9 +2,10 @@ package common
 
 import conf.Configuration
 
-case class NavLink(title: String, url: String, iconName: String = "", uniqueSection: String = "")
+case class NavLink(title: String, url: String, longTitle: String = "", iconName: String = "", uniqueSection: String = "")
 case class TertiaryLink(frontId: String, title: String, url: String)
 case class SectionsLink(pageId: String, parentSection: NewNavigation.EditionalisedNavigationSection)
+case class NavLinkLists(mostPopular: Seq[NavLink], leastPopular: Seq[NavLink] = List())
 
 object NewNavigation {
 
@@ -23,11 +24,11 @@ object NewNavigation {
   var cities = NavLink("cities", "/cities", uniqueSection = "cities")
   var globalDevelopment = NavLink("development", "/global-development", uniqueSection = "global-development")
   var australiaNews = NavLink("australia news", "/australia-news", uniqueSection = "australia-news")
-  var auPolitics = NavLink("australian politics", "/australia-news/australian-politics")
+  var auPolitics = NavLink("politics", "/australia-news/australian-politics", "australian politics")
   var auImmigration = NavLink("immigration", "/australia-news/australian-immigration-and-asylum")
   var indigenousAustralia = NavLink("indigenous australia", "/australia-news/indigenous-australians")
   var usNews = NavLink("US news", "/us-news", uniqueSection = "us-news")
-  var usPolitics = NavLink("US politics", "/us-news/us-politics")
+  var usPolitics = NavLink("politics", "/us-news/us-politics", "US politics")
 
   /* OPINION */
   val opinion = NavLink("opinion home", "/commentisfree", iconName = "home", uniqueSection = "commentisfree")
@@ -95,16 +96,23 @@ object NewNavigation {
   trait EditionalisedNavigationSection {
     def name: String
 
-    def uk: List[NavLink]
-    def us: List[NavLink]
-    def au: List[NavLink]
-    def int: List[NavLink]
+    def uk: NavLinkLists
+    def us: NavLinkLists
+    def au: NavLinkLists
+    def int: NavLinkLists
 
-    def getEditionalisedNavLinks(edition: Edition) = edition match {
-      case editions.Uk => uk
-      case editions.Au => au
-      case editions.Us => us
-      case editions.International => int
+    def getPopularEditionalisedNavLinks(edition: Edition) = edition match {
+      case editions.Uk => uk.mostPopular
+      case editions.Au => au.mostPopular
+      case editions.Us => us.mostPopular
+      case editions.International => int.mostPopular
+    }
+
+    def getAllEditionalisedNavLinks(edition: Edition) = edition match {
+      case editions.Uk => uk.mostPopular ++ uk.leastPopular
+      case editions.Au => au.mostPopular ++ au.leastPopular
+      case editions.Us => us.mostPopular ++ us.mostPopular
+      case editions.International => int.mostPopular
     }
   }
 
@@ -119,86 +127,114 @@ object NewNavigation {
   case object News extends EditionalisedNavigationSection {
     val name = "news"
 
-    val uk = List(headlines, ukNews, world, politics, environment, business, tech, science, money)
-    val au = List(headlines, australiaNews, world, auPolitics, environment, economy, auImmigration, indigenousAustralia, media, tech)
-    val us = List(headlines, usNews, usPolitics, world, environment, business, tech, science, money)
-    val int = List(headlines, world, ukNews, environment, business, tech, science, cities, globalDevelopment)
+    val uk = NavLinkLists(
+      List(headlines, ukNews, world, politics, science),
+      List(business, tech, environment, money)
+    )
+    val au = NavLinkLists(
+      List(headlines, australiaNews, world, auPolitics, auImmigration),
+      List(indigenousAustralia, economy, tech, environment, media)
+    )
+    val us = NavLinkLists(
+      List(headlines, usNews, world, science, usPolitics),
+      List(business, environment, money, tech)
+    )
+    val int = NavLinkLists(
+      List(headlines, world, ukNews, science, cities),
+      List(globalDevelopment, tech, business, environment)
+    )
   }
 
   case object Opinion extends EditionalisedNavigationSection {
     val name = "opinion"
 
-    val uk = List(
-      opinion,
-      NavLink("Polly Toynbee", "/profile/pollytoynbee"),
-      NavLink("Owen Jones", "/profile/owen-jones"),
-      NavLink("Marina Hyde", "/profile/marinahyde"),
-      NavLink("George Monbiot", "/profile/georgemonbiot"),
-      NavLink("Gary Younge", "/profile/garyyounge"),
-      NavLink("Nick Cohen", "/profile/nickcohen"),
-      columnists,
-      theGuardianView,
-      cartoons
+    val uk = NavLinkLists(
+      List(opinion, NavLink("Polly Toynbee", "/profile/pollytoynbee"), NavLink("Owen Jones", "/profile/owen-jones"), NavLink("Marina Hyde", "/profile/marinahyde")),
+      List(NavLink("George Monbiot", "/profile/georgemonbiot"), NavLink("Gary Younge", "/profile/garyyounge"), NavLink("Nick Cohen", "/profile/nickcohen"), columnists, theGuardianView, cartoons)
     )
 
-    val au = List(
-      opinion,
-      NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
-      NavLink("Katharine Murphy", "/profile/katharine-murphy"),
-      NavLink("Kristina Keneally", "/profile/kristina-keneally"),
-      NavLink("Richard Ackland", "/profile/richard-ackland"),
-      NavLink("Van Badham", "/profile/van-badham"),
-      NavLink("Lenore Taylor", "/profile/lenore-taylor"),
-      NavLink("Jason Wilson", "/profile/wilson-jason"),
-      NavLink("Brigid Delaney", "/profile/brigiddelaney"),
-      columnists
+    val au = NavLinkLists(
+      List(opinion, NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"), NavLink("Katharine Murphy", "/profile/katharine-murphy"), NavLink("Kristina Keneally", "/profile/kristina-keneally")),
+      List(NavLink("Richard Ackland", "/profile/richard-ackland"), NavLink("Van Badham", "/profile/van-badham"), NavLink("Lenore Taylor", "/profile/lenore-taylor"), NavLink("Jason Wilson", "/profile/wilson-jason"), NavLink("Brigid Delaney", "/profile/brigiddelaney"), columnists)
     )
 
-    val us = List(
-      opinion,
-      NavLink("Jill Abramson", "/profile/jill-abramson"),
-      NavLink("Jessica Valenti", "/commentisfree/series/jessica-valenti-column"),
-      NavLink( "Steven W Thrasher", "/profile/steven-w-thrasher"),
-      NavLink("Trevor Timm", "/profile/trevor-timm"),
-      NavLink("Rebecca Carroll", "/commentisfree/series/rebecca-carroll-column"),
-      NavLink("Chelsea E Manning", "/profile/chelsea-e-manning"),
-      columnists
+    val us = NavLinkLists(
+      List(opinion, NavLink("Jill Abramson", "/profile/jill-abramson"), NavLink("Jessica Valenti", "/commentisfree/series/jessica-valenti-column"), NavLink( "Steven W Thrasher", "/profile/steven-w-thrasher")),
+      List(NavLink("Trevor Timm", "/profile/trevor-timm"), NavLink("Rebecca Carroll", "/commentisfree/series/rebecca-carroll-column"), NavLink("Chelsea E Manning", "/profile/chelsea-e-manning"), columnists)
     )
 
-    val int = List(opinion, columnists, theGuardianView, cartoons)
+    val int = NavLinkLists(
+      List(opinion, columnists, theGuardianView, cartoons)
+    )
   }
 
   case object Sport extends EditionalisedNavigationSection {
     val name = "sport"
 
-    val uk = List(sport, football, cricket, rugbyUnion, formulaOne, tennis, golf, cycling, boxing, racing , rugbyLeague, usSports)
-    val au = List(sport, football, australiaSport, AFL, NRL, aLeague, cricket, rugbyUnion, tennis, cycling)
-    val us = List(sport, soccer, NFL, MLS, MLB, NBA, NHL, tennis)
-    val int = List(sport, football, cricket, rugbyUnion, formulaOne, tennis, golf, cycling, boxing, usSports)
+    val uk = NavLinkLists(
+      List(sport, football, rugbyUnion, cricket, tennis),
+      List(cycling, formulaOne, boxing, rugbyLeague, racing, usSports, golf)
+    )
+    val au = NavLinkLists(
+      List(sport, football, rugbyUnion, cricket, AFL),
+      List(tennis, cycling, aLeague, NRL, australiaSport, sport)
+    )
+    val us = NavLinkLists(
+      List(sport, soccer, NFL, tennis, MLB),
+      List(MLS, NBA, NHL)
+    )
+    val int = NavLinkLists(
+      List(sport, football, rugbyUnion, cricket, tennis),
+      List(formulaOne, cycling, golf, boxing, usSports)
+    )
   }
 
   case object Arts extends EditionalisedNavigationSection {
     val name = "arts"
 
-    val uk = List(culture, film, tvAndRadio, music, games, books, artAndDesign, stage, classical)
-    val au = List(culture, film, music, classical, books, stage, artAndDesign, games)
-    val us = List(culture, film, tvAndRadio, music, artAndDesign, books, stage, classical, games)
-    val int = uk
+    val uk = NavLinkLists(
+      List(culture, tvAndRadio, music, books, games),
+      List(artAndDesign, film, stage, classical, culture)
+    )
+    val au = NavLinkLists(
+      List(culture, books, music, artAndDesign, film),
+      List(games, stage, classical, culture)
+    )
+    val us = NavLinkLists(
+      List(culture, books, music, artAndDesign, tvAndRadio),
+      List(stage, classical, film, games)
+    )
+    val int = NavLinkLists(
+      List(culture, books, music, tvAndRadio, artAndDesign),
+      List(film, games, classical, stage)
+    )
   }
 
   case object Life extends EditionalisedNavigationSection {
     val name = "life"
 
-    val uk = List(lifestyle, fashion, food, travel, loveAndSex, family, home, health, women, tech)
-    val au = List(lifestyle, food, family, loveAndSex, health, home, women, travel, fashion)
-    val us = uk
-    val int = uk
+    val uk = NavLinkLists(
+      List(lifestyle, fashion, food, loveAndSex, family),
+      List(home, health, women, travel, tech)
+    )
+    val au = NavLinkLists(
+      List(lifestyle, fashion, food, loveAndSex, health),
+      List(family, women, travel, home)
+    )
+    val us = NavLinkLists(
+      List(lifestyle, fashion, lifestyle, food, loveAndSex),
+      List(home, health, women, family, travel, tech)
+    )
+    val int = NavLinkLists(
+      List(lifestyle, fashion, lifestyle, food, loveAndSex),
+      List(health, home, women, family, travel, tech)
+    )
   }
 
   case object NavFooterLinks extends EditionalisedNavigationSection {
     val name = ""
 
-    val uk = List(
+    val uk = NavLinkLists(List(
       NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
       NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS"),
       NavLink("dating", "https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES"),
@@ -209,23 +245,23 @@ object NewNavigation {
       NavLink("today's paper", "/theguardian"),
       NavLink("the observer", "/observer"),
       NavLink("crosswords", "/crosswords")
-    )
+    ))
 
-    val au = List(
+    val au = NavLinkLists(List(
       NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
       NavLink("masterclasses", "/guardian-masterclasses-australia"),
       NavLink("crosswords", "/crosswords"),
       NavLink("video", "/video")
-    )
+    ))
 
-    val us = List(
+    val us = NavLinkLists(List(
       NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
       NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_US_GU_JOBS"),
       NavLink("crosswords", "/crosswords"),
       NavLink("video", "/video")
-    )
+    ))
 
-    val int = List(
+    val int = NavLinkLists(List(
       NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
       NavLink("dating", "https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES"),
       NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS"),
@@ -234,31 +270,32 @@ object NewNavigation {
       NavLink("the observer", "/observer"),
       NavLink("crosswords", "/crosswords"),
       NavLink("video", "/video")
-    )
+    ))
   }
 
+//   TODO: should rethink how this editionalises, as we could do it in a simpler way maybe.
   case object MembershipLinks extends EditionalisedNavigationSection {
     val name = ""
 
-    val uk = List(
-      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/uk/supporter?INTCMP=mem_uk_web_newheader", "marque-36"),
-      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/uk?INTCMP=NGW_NEWHEADER_UK_GU_SUBSCRIBE", "device")
-    )
+    val uk = NavLinkLists(List(
+      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/uk/supporter?INTCMP=mem_uk_web_newheader", iconName= "marque-36"),
+      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/uk?INTCMP=NGW_NEWHEADER_UK_GU_SUBSCRIBE", iconName= "device")
+    ))
 
-    val au = List(
-      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/au/supporter?INTCMP=mem_au_web_newheader", "marque-36"),
-      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/au?INTCMP=NGW_NEWHEADER_AU_GU_SUBSCRIBE", "device")
-    )
+    val au = NavLinkLists(List(
+      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/au/supporter?INTCMP=mem_au_web_newheader", iconName= "marque-36"),
+      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/au?INTCMP=NGW_NEWHEADER_AU_GU_SUBSCRIBE", iconName= "device")
+    ))
 
-    val us = List(
-      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/us/supporter?INTCMP=mem_us_web_newheader", "marque-36"),
-      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/us?INTCMP=NGW_NEWHEADER_US_GU_SUBSCRIBE", "device")
-    )
+    val us = NavLinkLists(List(
+      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/us/supporter?INTCMP=mem_us_web_newheader", iconName= "marque-36"),
+      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/us?INTCMP=NGW_NEWHEADER_US_GU_SUBSCRIBE", iconName= "device")
+    ))
 
-    val int = List(
-      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/int/supporter?INTCMP=mem_int_web_newheader", "marque-36"),
-      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/int?INTCMP=NGW_NEWHEADER_INT_GU_SUBSCRIBE", "device")
-    )
+    val int = NavLinkLists(List(
+      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/int/supporter?INTCMP=mem_int_web_newheader", iconName= "marque-36"),
+      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/int?INTCMP=NGW_NEWHEADER_INT_GU_SUBSCRIBE", iconName= "device")
+    ))
   }
 
   object TertiaryNav {
@@ -421,10 +458,10 @@ object NewNavigation {
       }
 
       if (sectionList.isEmpty) {
-        ("News", News.getEditionalisedNavLinks(edition).drop(1))
+        ("News", News.getPopularEditionalisedNavLinks(edition).drop(1))
       } else {
         val section = sectionList.head
-        val parentSections = section.parentSection.getEditionalisedNavLinks(edition).drop(1)
+        val parentSections = section.parentSection.getPopularEditionalisedNavLinks(edition).drop(1)
 
         val (a, b) = parentSections.partition(_.uniqueSection != section.pageId)
 
