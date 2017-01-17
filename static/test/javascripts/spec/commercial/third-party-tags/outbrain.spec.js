@@ -34,6 +34,7 @@ define([
         injector = new Injector();
 
     describe('Outbrain', function () {
+        var loadScript = jasmine.createSpy('loadScript');
         beforeEach(function (done) {
             injector.mock('common/modules/email/run-checks', function() {
                 return Promise.resolve(false);
@@ -41,6 +42,7 @@ define([
             injector.mock('common/modules/commercial/dfp/track-ad-render', function(id) {
                 return Promise.resolve(ads[id]);
             });
+            injector.mock('common/utils/load-script', loadScript);
             injector.require([
                 'commercial/modules/third-party-tags/outbrain',
                 'commercial/modules/third-party-tags/outbrain-sections',
@@ -82,7 +84,7 @@ define([
             fixtures.clean(fixturesConfig.id);
         });
 
-        xit('should exist', function () {
+        it('should exist', function () {
             expect(sut).toBeDefined();
         });
 
@@ -91,14 +93,14 @@ define([
                 spyOn(sut, 'load');
             });
 
-            xit('should start outbrain component', function (done) {
+            it('should start outbrain component', function (done) {
                 sut.init().then(function () {
                     expect(sut.load).toHaveBeenCalled();
                     done();
                 });
             });
 
-            xit('should not load when sensitive content', function (done) {
+            it('should not load when sensitive content', function (done) {
                 commercialFeatures.outbrain = false;
                 sut.init().then(function () {
                     expect(sut.load).not.toHaveBeenCalled();
@@ -106,7 +108,7 @@ define([
                 });
             });
 
-            xit('should not load when isPreview', function (done) {
+            it('should not load when isPreview', function (done) {
                 config.page.isPreview = true;
 
                 sut.init().then(function () {
@@ -115,7 +117,7 @@ define([
                 });
             });
 
-            xit('should not load when user is logged in', function (done) {
+            it('should not load when user is logged in', function (done) {
                 identity.isUserLoggedIn = function () {
                     return true;
                 };
@@ -126,7 +128,7 @@ define([
                 });
             });
 
-            xit('should load when user is logged in but there are no comments on the page', function (done) {
+            it('should load when user is logged in but there are no comments on the page', function (done) {
                 identity.isUserLoggedIn = function () {
                     return true;
                 };
@@ -139,7 +141,7 @@ define([
                 });
             });
 
-            xit('should load instantly when ad block is in use', function (done) {
+            it('should load instantly when ad block is in use', function (done) {
                 detect.adblockInUse = Promise.resolve(false);
 
                 sut.init().then(function () {
@@ -148,7 +150,7 @@ define([
                 });
             });
 
-            xit('should load in the low-priority merch component', function (done) {
+            it('should load in the low-priority merch component', function (done) {
                 ads['dfp-ad--merchandising-high'] = true;
                 ads['dfp-ad--merchandising'] = false;
 
@@ -158,7 +160,7 @@ define([
                 });
             });
 
-            xit('should not load if both merch components are loaded', function (done) {
+            it('should not load if both merch components are loaded', function (done) {
                 ads['dfp-ad--merchandising-high'] = true;
                 ads['dfp-ad--merchandising'] = true;
 
@@ -170,20 +172,20 @@ define([
         });
 
         describe('Sections', function () {
-            xit('should return "news" for news sections', function () {
+            it('should return "news" for news sections', function () {
                 expect(getSection('uk-news')).toEqual('news');
                 expect(getSection('us-news')).toEqual('news');
                 expect(getSection('au-news')).toEqual('news');
             });
 
-            xit('should return "news" for selected sections', function () {
+            it('should return "news" for selected sections', function () {
                 expect(getSection('politics')).toEqual('news');
                 expect(getSection('world')).toEqual('news');
                 expect(getSection('business')).toEqual('news');
                 expect(getSection('commentisfree')).toEqual('news');
             });
 
-            xit('should return "defaults" for all other sections', function () {
+            it('should return "defaults" for all other sections', function () {
                 expect(getSection('culture')).toEqual('defaults');
                 expect(getSection('football')).toEqual('defaults');
             });
@@ -199,7 +201,7 @@ define([
                 requireStub.restore();
             });
 
-            xit('should create two containers for desktop with correct IDs for slot 1', function (done) {
+            it('should create two containers for desktop with correct IDs for slot 1', function (done) {
                 detect.getBreakpoint = function () {
                     return 'desktop';
                 };
@@ -212,7 +214,7 @@ define([
                 });
             });
 
-            xit('should create two containers for desktop with correct IDs for slot 2', function (done) {
+            it('should create two containers for desktop with correct IDs for slot 2', function (done) {
                 detect.getBreakpoint = function () {
                     return 'desktop';
                 };
@@ -225,7 +227,7 @@ define([
                 });
             });
 
-            xit('should detect wide breakpoint as desktop', function (done) {
+            it('should detect wide breakpoint as desktop', function (done) {
                 detect.getBreakpoint = function () {
                     return 'wide';
                 };
@@ -238,7 +240,7 @@ define([
                 });
             });
 
-            xit('should create two containers for tablet with correct IDs for slot 1', function (done) {
+            it('should create two containers for tablet with correct IDs for slot 1', function (done) {
                 detect.getBreakpoint = function () {
                     return 'tablet';
                 };
@@ -251,7 +253,7 @@ define([
                 });
             });
 
-            xit('should create two containers for tablet with correct IDs for slot 2', function (done) {
+            it('should create two containers for tablet with correct IDs for slot 2', function (done) {
                 detect.getBreakpoint = function () {
                     return 'tablet';
                 };
@@ -264,7 +266,7 @@ define([
                 });
             });
 
-            xit('should create only one container for mobile with correct IDs for slot 1', function (done) {
+            it('should create only one container for mobile with correct IDs for slot 1', function (done) {
                 detect.getBreakpoint = function () {
                     return 'mobile';
                 };
@@ -276,7 +278,7 @@ define([
                 });
             });
 
-            xit('should create only one container for mobile with correct IDs for slot 2', function (done) {
+            it('should create only one container for mobile with correct IDs for slot 2', function (done) {
                 detect.getBreakpoint = function () {
                     return 'mobile';
                 };
@@ -288,7 +290,7 @@ define([
                 });
             });
 
-            xit('should create two containers for destkop with correct IDs for slot merch', function (done) {
+            it('should create two containers for destkop with correct IDs for slot merch', function (done) {
                 detect.getBreakpoint = function () {
                     return 'desktop';
                 };
@@ -300,7 +302,7 @@ define([
                 });
             });
 
-            xit('should create two containers for tablet with correct IDs for slot merch', function (done) {
+            it('should create two containers for tablet with correct IDs for slot merch', function (done) {
                 detect.getBreakpoint = function () {
                     return 'tablet';
                 };
@@ -311,7 +313,7 @@ define([
                 });
             });
 
-            xit('should create only one container for mobile with correct IDs for slot merch', function (done) {
+            it('should create only one container for mobile with correct IDs for slot merch', function (done) {
                 detect.getBreakpoint = function () {
                     return 'mobile';
                 };
@@ -322,17 +324,16 @@ define([
                 });
             });
 
-            xit('should require outbrain javascript', function (done) {
+            it('should require outbrain javascript', function (done) {
                 sut.load().then(function () {
-                    var url = requireStub.args[1][0][0];
-                    expect(url).toBe('js!//widgets.outbrain.com/outbrain.js');
+                    expect(loadScript).toHaveBeenCalledWith('//widgets.outbrain.com/outbrain.js');
                     done();
                 });
             });
         });
 
         describe('Tracking', function () {
-            xit('should call tracking method', function (done) {
+            it('should call tracking method', function (done) {
                 // We don't care about the require for this test, so stub it
                 sinon.stub(window, 'require');
 
