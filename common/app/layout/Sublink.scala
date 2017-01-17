@@ -338,7 +338,7 @@ object ContentCard {
         isGallery = false,
         isAudio = false,
         kicker = None,
-        headline = apiContent.webTitle,
+        headline = apiContent.fields.flatMap(_.headline).getOrElse(apiContent.webTitle),
         url = EditionalisedLink(apiContent.webUrl)
       )
 
