@@ -59,7 +59,7 @@ define([
                         // make sure the DOM has finished updating
                         setTimeout(function () {
                             resolve(result);
-                        }, 20);
+                        }, 30);
                     }).catch(reject).then(function () {
                         server.restore();
                     });
