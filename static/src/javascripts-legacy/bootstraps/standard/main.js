@@ -102,7 +102,7 @@ define([
                     });
                 });
 
-                window.require(['ophan/ng'], function(ophan) {
+                require(['ophan/ng'], function(ophan) {
                     var a = el.querySelector('a');
                     var href = a && a.href;
 
