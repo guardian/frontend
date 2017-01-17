@@ -527,7 +527,7 @@ trait FeatureSwitches {
     "Use amp-youtube tag to render YouTube media atoms on AMP pages",
     owners = Seq(Owner.withGithub("michaelwmcnamara")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 20),
+    sellByDate = new LocalDate(2017, 2, 2),
     exposeClientSide = true
   )
 }
