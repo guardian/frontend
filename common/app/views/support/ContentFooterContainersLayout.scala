@@ -30,7 +30,6 @@ object ContentFooterContainersLayout {
     } else {
 
       Seq(
-        optional(!content.shouldHideAdverts, highRelevanceCommercialComponent),
         Some(storyPackagePlaceholder),
         Some(onwardPlaceholder),
         optional(content.trail.isCommentable, commentsPlaceholder),
