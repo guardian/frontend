@@ -42,10 +42,10 @@ define([
     function loadExternalContentWidget() {
 
         var externalTpl = template(externalContentContainerStr);
-        var documentAnchorClass = '.js-external-content-widget-anchor';
 
         function renderWidgetContainer(widgetType) {
-            $(documentAnchorClass).append(externalTpl({widgetType: widgetType}));
+            var anchors = document.querySelectorAll('.js-related, .js-onward');
+            $(anchors.length === 2 && anchors[0].textContent.trim() === '' ? anchors[1] : anchors[0]).after(externalTpl({widgetType: widgetType}));
         }
 
         var isMobileOrTablet = ['mobile', 'tablet'].indexOf(detect.getBreakpoint(false)) >= 0;
