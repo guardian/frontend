@@ -3,16 +3,18 @@ define([
     'common/utils/config',
     'common/modules/commercial/commercial-features',
     'commercial/modules/dfp/dfp-env',
-    'lodash/functions/memoize'
+    'lodash/functions/memoize',
+    'common/utils/load-script'
 ], function(
     Promise,
     config,
     commercialFeatures,
     dfpEnv,
-    memoize
+    memoize,
+    loadScript
 ){
     var setupSonobi = memoize(function () {
-        return Promise.resolve(require(['js!sonobi.js'])).then(catchPolyfillErrors);
+        return loadScript(config.libs.sonobi).then(catchPolyfillErrors);
     });
 
     // Wrap the native implementation of getOwnPropertyNames in a try-catch. If any polyfill attempts

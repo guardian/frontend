@@ -32,7 +32,8 @@ window.guardian = {
         page: { },
         images: {
             commercial: {}
-        }
+        },
+        libs: { }
     },
     css: {},
     adBlockers: {
