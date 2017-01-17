@@ -8,6 +8,7 @@ import model.{Article, Content}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
+import org.apache.commons.lang.StringEscapeUtils
 
 class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
@@ -29,12 +30,6 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     document
   }
 
-  //This method is to strip out some XML formatting resulting from the "toString" method used below.
-  private def tidyUrlString(urlString: String): String = {
-    urlString.replace("&quot;", "\"").replace("&apos;","'").replace("&lt;", "<").replace("&gt;", ">")
-
-  }
-
   private def cleanDocumentWithVideos(videoUrls: String*): Document = {
     val doc = <html>
                   <body>
@@ -46,7 +41,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                      }
                   </body>
               </html>.toString()
-    val document: Document = Jsoup.parse(tidyUrlString(doc))
+    val document: Document = Jsoup.parse(StringEscapeUtils.unescapeXml(doc))
     clean(document)
   }
 
@@ -65,9 +60,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
         </figure>
       </body>
     </html>.toString()
-
-    println(doc)
-    val document: Document = Jsoup.parse(tidyUrlString(doc))
+    val document: Document = Jsoup.parse(StringEscapeUtils.unescapeXml(doc))
     clean(document)
   }
 
