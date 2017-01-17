@@ -60,11 +60,19 @@ define([
             });
         });
 
+        function getMessageContent () {
+            return document.querySelector('.site-message__message--membership');
+        }
+
+        function expectMessageContentNotToBeShown () {
+            expect(getMessageContent()).toBeNull();
+        }
+
         function expectMessageToBeShown(done) {
             membershipMessages.init().then(function () {
                 mediator.emit('modules:onwards:breaking-news:ready', false);
                 var message = document.querySelector('.js-site-message');
-                var messageContent = document.querySelector('.site-message__message--membership');
+                var messageContent = getMessageContent();
                 expect(messageContent).not.toBeNull();
                 expect(message.className).toContain('membership-prominent');
                 expect(message.className).not.toContain('is-hidden');
@@ -74,8 +82,7 @@ define([
         function expectMessageNotToBeShown(done) {
             membershipMessages.init().then(function () {
                 mediator.emit('modules:onwards:breaking-news:ready', false);
-                var messageContent = document.querySelector('.site-message__message--membership');
-                expect(messageContent).toBeNull();
+                expectMessageContentNotToBeShown();
             }).then(done);
         }
 
@@ -109,8 +116,7 @@ define([
                 it('should not show the membership engagement banner', function (done) {
                     membershipMessages.init().then(function () {
                         mediator.emit('modules:onwards:breaking-news:ready', true);
-                        var messageContent = document.querySelector('.site-message__message--membership');
-                        expect(messageContent).toBeNull();
+                        expectMessageContentNotToBeShown();
                     }).then(done);
                 });
             });
