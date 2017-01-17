@@ -38,7 +38,7 @@ define([
         tracking.track('play', atomId);
 
         if (player.endSlate &&
-            !player.overlay.querySelector('.end-slate-container')) {
+            !player.overlay.parentNode.querySelector('.end-slate-container')) {
             player.endSlate.fetch(player.overlay.parentNode, 'html');
         }
     }
