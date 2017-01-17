@@ -36,46 +36,46 @@ define([
         };
 
         this.paras = {
-            H1: 'Support the Guardian',
-            H2: 'If you read us, if you like us, if you value our perspective – then become a Supporter and help make our future more secure.',
-            HA: 'We\'re introducing new ways to support the Guardian\'s quality journalism and independent voice',
-            P1: 'We want to make the world a better, fairer place. Which is why our most important relationship is with our readers.',
-            P2: 'If you value our independent journalism, please help to fund it by becoming a Supporter.'
+            Header: '<p>Support<br/>the Guardian</p>',
+            Header2: '<p>If you read us, if you like us, if you value our perspective – then become a Supporter and help make our future more secure.</p>',
+            VariantHeader2: '<p>We\'re introducing <strong>new ways</strong> to support the Guardian\'s quality journalism and independent voice</p>',
+            EnticementP1: '<p>We want to use our independent, thruthful journalism to make the world a better, fairer place. Which is why our most important relationship is with our readers.</p>',
+            EnticementP2: '<p>If you value our independent journalism, please help to fund it by becoming a Supporter.</p>'
         };
 
         this.variantCopy = {
             'control': {
-                H1: this.paras["H1"],
-                H2: this.paras["H2"],
-                P1: this.paras["P1"],
-                P2: this.paras["P2"]
+                H1: this.paras["Header"],
+                H2: this.paras["Header2"]//,
+                //P1: this.paras["EnticementP1"],
+                //P2: this.paras["PEnticementP22"]
             },
             'variant': {
-                H1: this.paras["H1"],
-                H2: this.paras["HA"],
-                P1: this.paras["P1"],
-                P2: this.paras["P2"]
+                H1: this.paras["Header"],
+                H2: this.paras["VariantHeader2"]//,
+                //P1: this.paras["EnticementP1"],
+                //P2: this.paras["PEnticementP22"]
             }
         };
 
         this.setCopy = function(variant) {
             if (this.thrasher()) {
                 var copy = variant === 'notintest' ? this.variantCopy.control : this.variantCopy.variant;
-                var copyH1El = document.querySelector('.membership-ab-thrasher_header h1');
-                if (copyH1El) {
-                    copyH1El.innerText = copy.H1;
+                var copyH1El = document.querySelector('.membership-ab-thrasher_header .main_title');
+                if (copyH1El && copy.H1) {
+                    copyH1El.innerHTML = copy.H1;
                 }
-                var copyH2El = document.querySelector('.membership-ab-thrasher_header h2');
-                if (copyH2El) {
-                    copyH2El.innerText = copy.H2;
+                var copyH2El = document.querySelector('.membership-ab-thrasher_header .sub_title');
+                if (copyH2El && copy.H2) {
+                    copyH2El.innerHTML = copy.H2;
                 }
-                var copyP1El = document.querySelector('.membership-ab-thrasher_header .enticementCopy1');
-                if (copyP1El) {
-                    copyP1El.innerText = copy.P1;
+                var copyP1El = document.querySelector('.membership-ab-thrasher_header .entice.primary');
+                if (copyP1El && copy.P1) {
+                    copyP1El.innerHTML = copy.P1;
                 }
-                var copyP2El = document.querySelector('.membership-ab-thrasher_header .enticementCopy2');
-                if (copyP2El) {
-                    copyP2El.innerText = copy.P2;
+                var copyP2El = document.querySelector('.membership-ab-thrasher_header .entice.secondary');
+                if (copyP2El && copy.P2) {
+                    copyP2El.innerHTML = copy.P2;
                 }
             }
         };
