@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
-process.env.BABEL_ENV = 'production';
+const path = require('path');
 
 const webpack = require('webpack');
-const path = require('path');
+const Visualizer = require('webpack-visualizer-plugin');
 
 module.exports = {
     devtool: '#source-map',
@@ -61,9 +61,11 @@ module.exports = {
         publicPath: '/assets/javascripts/',
     },
     plugins: [
-        // new webpack.optimize.UglifyJsPlugin(),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.AggressiveMergingPlugin(),
+        new Visualizer({
+            filename: './webpack-stats.html',
+        }),
     ],
     module: {
         loaders: [
