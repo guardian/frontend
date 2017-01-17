@@ -8,7 +8,9 @@ define([
 ], function (bean, $, ajax, config,  formatters, stripe) {
 
     var CARD_DETAILS = '.js-mem-card-details',
+        PAYPAL = '.js-mem-paypal',
         CHANGE_TIER_CARD_LAST4 = '.js-mem-card-last4',
+        PAYPAL_EMAIL = '.js-paypal-email',
         PACKAGE_COST = '.js-mem-package-cost',
         PACKAGE_CURRENT_RENEWAL_DATE = '.js-mem-current-renewal-date',
         PACKAGE_CURRENT_PERIOD_END = '.js-mem-current-period-end',
@@ -68,6 +70,8 @@ define([
 
         if (userDetails.subscription.card) {
             $(CHANGE_TIER_CARD_LAST4).text(userDetails.subscription.card.last4);
+        } else if(userDetails.subscription.payPalEmail){
+            $(PAYPAL_EMAIL).text(userDetails.subscription.payPalEmail);
         }
 
         $(PACKAGE_CURRENT_PERIOD_END).text(formatters.formatDate(userDetails.subscription.end));
@@ -103,8 +107,11 @@ define([
             $(MEMBER_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
             $(DETAILS_MEMBERSHIP_TIER_ICON_CURRENT).addClass('i-g-' + userDetails.tier.toLowerCase());
         } else if (userDetails.subscription.card) {
-            // only show card details if user hasn't changed their subscription and has a payment method
+            // only show card details if user hasn't changed their subscription and has stripe as payment method
             stripe.display(CARD_DETAILS, userDetails.subscription.card);
+        } else if(userDetails.subscription.payPalEmail){
+            // if the user hasn't changed their subscription and has PayPal as a payment method
+            $(PAYPAL).removeClass(IS_HIDDEN_CLASSNAME);
         }
 
         $(MEMBER_INFO).removeClass(IS_HIDDEN_CLASSNAME);
