@@ -11,7 +11,11 @@ define([
 ) {
     var scriptSrc = 'https://www.youtube.com/iframe_api';
     var promise = new Promise(function(resolve) {
-        window.onYouTubeIframeAPIReady = resolve;
+        if (window.YT && window.YT.Player) {
+            resolve();
+        } else {
+            window.onYouTubeIframeAPIReady = resolve;
+        }
     });
 
     function loadYoutubeJs() {
