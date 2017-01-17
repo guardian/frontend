@@ -12,6 +12,7 @@ define([
     'commercial/modules/dfp/on-slot-load',
     'commercial/modules/dfp/prepare-sonobi-tag',
     'commercial/modules/dfp/performance-logging',
+    'common/utils/load-script',
 
     // These are cross-frame protocol messaging routines:
     'commercial/modules/messenger/get-stylesheet',
@@ -33,7 +34,8 @@ define([
     onSlotRender,
     onSlotLoad,
     prepareSonobiTag,
-    performanceLogging
+    performanceLogging,
+    loadScript
 ) {
     return {
         init: init,
@@ -59,7 +61,7 @@ define([
             );
 
             // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
-            require(['js!googletag.js']);
+            loadScript(config.libs.googletag);
 
             // Return a promise that resolves after the async work is done.
             return new Promise(function(resolve){

@@ -1,6 +1,4 @@
 define('ophan/ng', [], function () { return { record: function () {} }; });
-define('js', [], function () { return function () {}; });
-define('js!//widgets.outbrain.com/outbrain.js', [], function () { return function () {}; });
 
 define([
     'Promise',
