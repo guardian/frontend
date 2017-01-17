@@ -43,9 +43,21 @@ define([
 
         var externalTpl = template(externalContentContainerStr);
 
-        function renderWidgetContainer(widgetType) {
-            var anchors = document.querySelectorAll('.js-related, .js-onward');
-            $(anchors.length === 2 && anchors[0].textContent.trim() === '' ? anchors[1] : anchors[0]).after(externalTpl({widgetType: widgetType}));
+        function findAnchor() {
+            var selector = !(config.page.seriesId || config.page.blogIds) ?
+                '.js-related, .js-outbrain-anchor' :
+                '.js-outbrain-anchor';
+            return Promise.resolve(document.querySelector(selector));
+        }
+
+        function renderWidget(widgetType, init) {
+            findAnchor()
+            .then(function (anchorNode) {
+                return fastdom.write(function () {
+                    $(anchorNode).after(externalTpl({widgetType: widgetType}));
+                })
+            })
+            .then(init);
         }
 
         var isMobileOrTablet = ['mobile', 'tablet'].indexOf(detect.getBreakpoint(false)) >= 0;
@@ -53,13 +65,9 @@ define([
         var shouldServePlista = config.switches.plistaForOutbrainAu && !shouldIgnoreSwitch;
 
         if (shouldServePlista) {
-            fastdom.write(function () {
-                renderWidgetContainer('plista');
-            }).then(plista.init);
+            renderWidget('plista', plista.init);
         } else {
-            fastdom.write(function () {
-                renderWidgetContainer('outbrain');
-            }).then(outbrain.init);
+            renderWidget('outbrain', outbrain.init);
         }
     }
 
