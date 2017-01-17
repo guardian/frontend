@@ -92,6 +92,8 @@ define([
                     return;
                 }
 
+                // interactives are always loaded with CURL, which is always inlined when interactives are present
+                // so this uses CURLS require
                 window.require([mainJS], function (interactive) {
                     fastdom.defer(function () {
                         robust.catchErrorsAndLog('interactive-bootstrap', function () {
@@ -100,7 +102,7 @@ define([
                     });
                 });
 
-                require(['ophan/ng'], function(ophan) {
+                window.require(['ophan/ng'], function(ophan) {
                     var a = el.querySelector('a');
                     var href = a && a.href;
 
