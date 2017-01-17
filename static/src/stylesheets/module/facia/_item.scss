@@ -197,9 +197,9 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     .u-faux-block-link--hover {
+        .youtube-media-atom,
         .fc-item__image-container {
             background-color: #000000;
-
             opacity: .9;
         }
 
