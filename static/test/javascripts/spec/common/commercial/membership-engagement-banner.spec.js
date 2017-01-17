@@ -64,7 +64,8 @@ define([
             membershipMessages.init().then(function () {
                 mediator.emit('modules:onwards:breaking-news:ready', false);
                 var message = document.querySelector('.js-site-message');
-                expect(message).not.toBeNull();
+                var messageContent = document.querySelector('.site-message__message--membership');
+                expect(messageContent).not.toBeNull();
                 expect(message.className).toContain('membership-prominent');
                 expect(message.className).not.toContain('is-hidden');
             }).then(done);
@@ -73,8 +74,8 @@ define([
         function expectMessageNotToBeShown(done) {
             membershipMessages.init().then(function () {
                 mediator.emit('modules:onwards:breaking-news:ready', false);
-                var message = document.querySelector('.js-site-message');
-                expect(message).toBeNull();
+                var messageContent = document.querySelector('.site-message__message--membership');
+                expect(messageContent).toBeNull();
             }).then(done);
         }
 
@@ -108,8 +109,8 @@ define([
                 it('should not show the membership engagement banner', function (done) {
                     membershipMessages.init().then(function () {
                         mediator.emit('modules:onwards:breaking-news:ready', true);
-                        var message = document.querySelector('.js-site-message');
-                        expect(message).toBeNull();
+                        var messageContent = document.querySelector('.site-message__message--membership');
+                        expect(messageContent).toBeNull();
                     }).then(done);
                 });
             });
