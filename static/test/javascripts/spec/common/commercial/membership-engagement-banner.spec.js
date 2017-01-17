@@ -92,6 +92,7 @@ define([
                 showMembershipMessages = commercialFeatures.async.canDisplayMembershipEngagementBanner;
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = Promise.resolve(true);
+                fixtures.render(conf);
                 storage.local.set('gu.alreadyVisited', 10);
                 done();
             });
@@ -99,18 +100,8 @@ define([
             afterEach(function () {
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = showMembershipMessages;
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
-            });
-
-            describe('has not shown', function () {
-                it('should show the membership engagement banner', function (done) {
-                    membershipMessages.init().then(function () {
-                        mediator.emit('modules:onwards:breaking-news:ready', false);
-                        var message = document.querySelector('.js-site-message');
-                        expect(message).not.toBeNull();
-                        expect(message.className).toContain('membership-prominent');
-                        expect(message.className).not.toContain('is-hidden');
-                    }).then(done);
-                });
+                fixtures.clean(conf.id);
+                mediator.removeAllListeners();
             });
 
             describe('has shown', function () {
@@ -120,6 +111,12 @@ define([
                         var message = document.querySelector('.js-site-message');
                         expect(message).toBeNull();
                     }).then(done);
+                });
+            });
+
+            describe('has not shown', function () {
+                it('should show the membership engagement banner', function (done) {
+                    expectMessageToBeShown(done);
                 });
             });
         });
