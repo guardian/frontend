@@ -519,4 +519,15 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2017, 1, 20),
     exposeClientSide = true
   )
+
+  //Owner Gideon Goldberg
+  val UseAmpYouTubeTagForMediaAtoms = Switch(
+    SwitchGroup.Feature,
+    "use-amp-youtube-tag-for-media-atoms",
+    "Use amp-youtube tag to render YouTube media atoms on AMP pages",
+    owners = Seq(Owner.withGithub("michaelwmcnamara")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 20),
+    exposeClientSide = true
+  )
 }
