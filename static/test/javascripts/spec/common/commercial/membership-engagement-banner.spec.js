@@ -134,6 +134,7 @@ define([
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = Promise.resolve(false);
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
                 storage.local.set('gu.alreadyVisited', 10);
+                fixtures.render(conf);
                 participations = storage.local.get('gu.ab.participations');
                 storage.local.remove('gu.ab.participations');
                 done();
@@ -143,6 +144,7 @@ define([
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = showMembershipMessages;
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
                 storage.local.set('gu.ab.participations', participations);
+                fixtures.clean(conf.id);
             });
 
             it('should not show any messages even to engaged readers', expectMessageNotToBeShown);
