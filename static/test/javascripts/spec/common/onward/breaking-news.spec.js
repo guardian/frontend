@@ -243,6 +243,8 @@ define([
 
         describe('banner emits ready events', function () {
 
+            var mediator;
+
             beforeEach(function (done) {
                 injector.require([
                     'common/utils/mediator'
