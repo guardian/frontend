@@ -53,7 +53,9 @@ object Badges {
 
   val nauru = Badge("news/series/nauru-files", Static("images/badges/nauru-files.svg"))
 
-  val allBadges = Seq(usElection, ausElection, voicesOfAmerica, nauru, rio2016, euElection, euRealityCheck, euBriefing, euSparrow)
+  val globalWarning = Badge("environment/series/global-warning", Static("images/badges/global-warning.png"), Some("global-warning"))
+
+  val allBadges = Seq(usElection, ausElection, voicesOfAmerica, nauru, rio2016, euElection, euRealityCheck, euBriefing, euSparrow, globalWarning)
 
   def badgeFor(c: ContentType) = {
     badgeForTags(c.tags.tags.map(_.id))

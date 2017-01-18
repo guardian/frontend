@@ -134,8 +134,8 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     getFrontPriorityFromConfig(id).contains(EmailPriority)
 
   // email fronts are only served if the email-friendly format has been specified in the request
-  def shouldServeFront(id: String, isEmailRequest: Boolean = false)(implicit context: ApplicationContext) = getPathIds.contains(id) &&
-    (context.isPreview || !isFrontHidden(id)) && (isEmailRequest || !isEmailFront(id))
+  def shouldServeFront(id: String)(implicit context: ApplicationContext) =
+    getPathIds.contains(id) && (context.isPreview || !isFrontHidden(id))
 
   def shouldServeEditionalisedFront(edition: Edition, id: String)(implicit context: ApplicationContext) = {
     shouldServeFront(s"${edition.id.toLowerCase}/$id")

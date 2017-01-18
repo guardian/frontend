@@ -100,10 +100,10 @@ define([
             !sensitiveContent &&
             switches.commercial;
 
-        this.frontCommercialComponents =
+        this.highMerch =
             this.dfpAdvertising &&
             !isMinuteArticle &&
-            config.page.isFront &&
+            !config.page.isFront &&
             switches.commercial;
 
         this.thirdPartyTags =
@@ -129,6 +129,11 @@ define([
             isLiveBlog &&
             this.dfpAdvertising &&
             switches.commercial;
+
+        this.paidforBand =
+            config.page.isAdvertisementFeature &&
+            !config.page.hasSuperStickyBanner &&
+            !supportsSticky;
 
         this.canReasonablyAskForMoney = // eg become a supporter, give a contribution
             !(userFeatures.isPayingMember() || config.page.shouldHideAdverts || config.page.isAdvertisementFeature);

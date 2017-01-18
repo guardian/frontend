@@ -9,18 +9,17 @@ define([
     $,
     loadScript
 ) {
-    var scriptId = 'youtube-script';
     var scriptSrc = 'https://www.youtube.com/iframe_api';
     var promise = new Promise(function(resolve) {
-        window.onYouTubeIframeAPIReady = resolve;
+        if (window.YT && window.YT.Player) {
+            resolve();
+        } else {
+            window.onYouTubeIframeAPIReady = resolve;
+        }
     });
 
     function loadYoutubeJs() {
-        fastdom.write(function () {
-            if (!document.getElementById(scriptId)) {
-                loadScript({ id: scriptId, src: scriptSrc });
-            }
-        }, this);
+        loadScript(scriptSrc);
     }
 
     function _onPlayerStateChange(event, handlers, el) {

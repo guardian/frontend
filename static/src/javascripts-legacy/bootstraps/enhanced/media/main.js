@@ -26,7 +26,8 @@ define([
     // on env
     'bootstraps/enhanced/media/video-player',
     'text!common/views/ui/loading.html',
-    'common/modules/commercial/user-features'
+    'common/modules/commercial/user-features',
+    'common/utils/load-script'
 ], function (
     bean,
     bonzo,
@@ -53,7 +54,8 @@ define([
     videojsOptions,
     videojs,
     loadingTmpl,
-    userFeatures
+    userFeatures,
+    loadScript
 ) {
     function initLoadingSpinner(player) {
         player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -385,12 +387,12 @@ define([
 
         if (config.switches.enhancedMediaPlayer) {
             if (shouldPreroll) {
-                require(['js!//imasdk.googleapis.com/js/sdkloader/ima3.js']).then(function () {
+                loadScript('//imasdk.googleapis.com/js/sdkloader/ima3.js').then(function () {
                     initWithRaven(true);
-                }, function (e) {
+                }).catch(function (e) {
                     raven.captureException(e, { tags: { feature: 'media', action: 'ads', ignored: true } });
                     initWithRaven();
-                });
+                })
             } else {
                 initWithRaven();
             }

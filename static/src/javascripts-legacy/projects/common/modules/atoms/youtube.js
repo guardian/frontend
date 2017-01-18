@@ -2,12 +2,18 @@ define([
     'fastdom',
     'common/modules/atoms/youtube-player',
     'common/modules/atoms/youtube-tracking',
-    'common/utils/$'
+    'common/modules/component',
+    'common/utils/$',
+    'common/utils/config',
+    'common/utils/detect'
 ], function (
     fastdom,
     youtubePlayer,
     tracking,
-    $
+    Component,
+    $,
+    config,
+    detect
 ) {
 
     var players = {};
@@ -25,9 +31,16 @@ define([
     }
 
     function onPlayerPlaying(atomId) {
+        var player = players[atomId];
+
         killProgressTracker(atomId);
         setProgressTracker(atomId);
         tracking.track('play', atomId);
+
+        if (player.endSlate &&
+            !player.overlay.parentNode.querySelector('.end-slate-container')) {
+            player.endSlate.fetch(player.overlay.parentNode, 'html');
+        }
     }
 
     function onPlayerPaused(atomId) {
@@ -41,7 +54,7 @@ define([
     }
 
     function setProgressTracker(atomId)  {
-        players[atomId].progressTracker = setInterval(recordPlayerProgress.bind(null, atomId), 1000); 
+        players[atomId].progressTracker = setInterval(recordPlayerProgress.bind(null, atomId), 1000);
     }
 
     function killProgressTracker(atomId) {
@@ -71,7 +84,31 @@ define([
         }
     }
 
+
+
+    function shouldAutoplay(){
+
+        function isAutoplayBlockingPlatform() {
+            return detect.isIOS() || detect.isAndroid();
+        }
+
+        function isInternalReferrer() {
+
+            if(config.page.isDev) {
+                return document.referrer.indexOf(window.location.origin) === 0;
+            }
+            else {
+                return document.referrer.indexOf(config.page.host) === 0;
+            }
+        }
+        return config.page.contentType === 'Video' && isInternalReferrer() && !isAutoplayBlockingPlatform();
+    }
+
     function onPlayerReady(atomId, overlay, event) {
+        if(shouldAutoplay()) {
+            event.target.playVideo();
+        }
+
         players[atomId] = {
             player: event.target,
             pendingTrackingCalls: [25, 50, 75]
@@ -79,7 +116,14 @@ define([
 
         if (overlay) {
             var formattedDuration = getFormattedDuration(players[atomId].player.getDuration());
+            
             setDuration(formattedDuration, overlay);
+            
+            players[atomId].overlay = overlay;
+
+            if (!!config.page.section && detect.isBreakpoint({ min: 'desktop' })) {
+                players[atomId].endSlate = getEndSlate(overlay);
+            }
         }
     }
 
@@ -94,7 +138,7 @@ define([
             times.push(formatTime(minutes));
         } else {
             times.push(minutes);
-        }    
+        }
         times.push(formatTime(seconds));
 
         return times.join(':');
@@ -108,6 +152,15 @@ define([
         var durationElem = overlay.querySelector('.youtube-media-atom__bottom-bar__duration');
 
         durationElem.innerText = formattedDuration;
+    }
+
+    function getEndSlate(overlay) {
+        var endSlatePath = overlay.parentNode.dataset.endSlate;
+        var endSlate = new Component();
+
+        endSlate.endpoint = endSlatePath;
+
+        return endSlate;
     }
 
     function onPlayerStateChange(atomId, event) {

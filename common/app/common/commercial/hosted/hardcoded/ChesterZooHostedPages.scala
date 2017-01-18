@@ -13,8 +13,7 @@ object ChesterZooHostedPages {
     logo = HostedLogo(
       "https://static.theguardian.com/commercial/hosted/act-for-wildlife/AFW+with+CZ+portrait+with+padding.png",
       Some(Dimensions(width = 280, height = 261)),
-      link = "",
-      trackingCode = ""
+      link = ""
     ),
     fontColour = Colour("#E31B22")
   )

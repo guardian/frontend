@@ -6,8 +6,8 @@ import common.commercial.{Sponsored, _}
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.{Page, PressedPage}
 import org.apache.commons.lang.StringEscapeUtils._
-import play.api.mvc.RequestHeader
 import play.api.libs.json.JsBoolean
+import play.api.mvc.RequestHeader
 
 object Commercial {
 
@@ -79,6 +79,10 @@ object Commercial {
     }
 
     allSponsors map (_ map escapeJavaScript)
+  }
+
+  def brandingType(page: Page)(implicit request: RequestHeader): Option[SponsorshipType] = {
+    page.branding(Edition(request)).map(_.sponsorshipType)
   }
 
   object topAboveNavSlot {

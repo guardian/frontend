@@ -84,7 +84,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     log.info(s"Serving Path: $path")
     if (shouldEditionRedirect(path))
       redirectTo(Editionalise(path, Edition(request)))
-    else if (!ConfigAgent.shouldServeFront(path, request.isEmail) || request.getQueryString("page").isDefined)
+    else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
       applicationsRedirect(path)
     else
       renderFrontPressResult(path)
@@ -118,7 +118,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           }
           else if (request.isJson)
             Cached(CacheTime.Facia)(JsonFront(faciaPage))
-          else if (request.isEmail) {
+          else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
             Cached(CacheTime.Facia) {
               RevalidatableResult.Ok(InlineStyles(views.html.frontEmail(faciaPage)))
             }

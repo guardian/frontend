@@ -3,18 +3,17 @@ define([
 ], function (Promise) {
     return loadScript;
 
-    function loadScript(props, attrs) {
+    function loadScript(src, attrs) {
+        if (typeof src !== 'string') {
+            return new Promise.reject('no src supplied');
+        }
         return new Promise(function (resolve) {
-            if (props && props.id && document.getElementById(props.id)) {
+            if (document.querySelector('script[src="' + src + '"]')) {
                 resolve();
             }
             var ref = document.scripts[0];
             var script = document.createElement('script');
-            if (props) {
-                Object.keys(props).forEach(function (prop) {
-                    script[prop] = props[prop];
-                });
-            }
+            script.src = src;
             if (attrs) {
                 Object.keys(attrs).forEach(function (attr) {
                     script.setAttribute(attr, attrs[attr]);

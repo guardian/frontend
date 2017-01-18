@@ -62,7 +62,8 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
     wire[SurgingContentAgentLifecycle],
     wire[DfpAgentLifecycle],
     wire[DfpDataCacheLifecycle],
-    wire[CachedHealthCheckLifeCycle]
+    wire[CachedHealthCheckLifeCycle],
+    wire[CommercialClientSideLoggingLifecycle]
   )
 
   lazy val router: Router = wire[Routes]

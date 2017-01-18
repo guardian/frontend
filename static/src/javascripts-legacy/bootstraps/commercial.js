@@ -1,18 +1,16 @@
 define([
     'Promise',
     'common/utils/config',
-    'common/utils/detect',
     'common/utils/mediator',
     'common/utils/robust',
     'common/utils/user-timing',
-    'common/modules/experiments/ab',
+    'commercial/modules/high-merch',
     'commercial/modules/article-aside-adverts',
     'commercial/modules/article-body-adverts',
     'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/prepare-googletag',
     'commercial/modules/dfp/prepare-sonobi-tag',
     'commercial/modules/dfp/fill-advert-slots',
-    'commercial/modules/gallery-adverts',
     'commercial/modules/hosted/about',
     'commercial/modules/hosted/video',
     'commercial/modules/hosted/gallery',
@@ -30,18 +28,16 @@ define([
 ], function (
     Promise,
     config,
-    detect,
     mediator,
     robust,
     userTiming,
-    ab,
+    highMerch,
     articleAsideAdverts,
     articleBodyAdverts,
     closeDisabledSlots,
     prepareGoogletag,
     prepareSonobiTag,
     fillAdvertSlots,
-    galleryAdverts,
     hostedAbout,
     hostedVideo,
     hostedGallery,
@@ -61,10 +57,10 @@ define([
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init],
         ['cm-prepare-googletag', prepareGoogletag.init, prepareGoogletag.customTiming],
+        ['cm-highMerch', highMerch.init],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
-        ['cm-galleryAdverts', galleryAdverts.init],
         ['cm-liveblogAdverts', liveblogAdverts.init],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
@@ -72,14 +68,11 @@ define([
     var secondaryModules = [
         ['cm-stickyTopBanner', stickyTopBanner.init],
         ['cm-fill-advert-slots', fillAdvertSlots.init, fillAdvertSlots.customTiming],
-        ['cm-paidContainers', paidContainers.init]
+        ['cm-paidContainers', paidContainers.init],
+        ['cm-paidforBand', paidforBand.init]
     ];
 
     var customTimingModules = [];
-
-    if (config.page.isAdvertisementFeature) {
-        secondaryModules.push(['cm-paidforBand', paidforBand.init]);
-    }
 
     if (config.page.isHosted) {
         secondaryModules.push(

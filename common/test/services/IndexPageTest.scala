@@ -51,15 +51,15 @@ import scala.concurrent.Future
           front.containers.length should be(1)
 
           val firstContainer = front.containers.head
-          firstContainer.displayName.get should equal("20 December 2016")
+          firstContainer.displayName.get should equal("13 January 2017")
           firstContainer.container.isInstanceOf[Fixed] should be(true)
           firstContainer.index should be(0)
           firstContainer.containerLayout.get.slices.length should be(2)
           firstContainer.containerLayout.get.remainingCards.length should be(1)
 
           firstContainer.items.length should be(pageSize)
-          firstContainer.items.head.header.headline should be("Horse racing tips: Wednesday 21 December")
-          firstContainer.items.head.header.url should be("/sport/2016/dec/20/horse-racing-tips-wednesday-21-december")
+          firstContainer.items.head.header.headline should be("Dave Brailsford appears to be losing his grip as hands spin out of control")
+          firstContainer.items.head.header.url should be("/sport/blog/2017/jan/13/dave-brailsford-team-sky-cycling-control")
       }
     }
   }

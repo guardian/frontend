@@ -19,7 +19,7 @@ sealed trait ElementProfile {
   def compression: Int
   def isPng: Boolean
   def autoFormat: Boolean
-
+  
   def elementFor(image: ImageMedia): Option[ImageAsset] = {
     val sortedCrops = image.imageCrops.sortBy(-_.width)
     width.flatMap{ desiredWidth =>
@@ -100,6 +100,8 @@ object Item640 extends Profile(width = Some(640))
 object Item700 extends Profile(width = Some(700))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
 object Video700 extends VideoProfile(width = Some(700), height = Some(394)) // 16:9
+
+object GoogleStructuredData extends Profile(width = Some(300), height = Some(300)) // 1:1
 
 abstract class ShareImage(shouldIncludeOverlay: Boolean) extends Profile(width = Some(1200)) {
   override val heightParam = "h=630"
@@ -198,7 +200,7 @@ object ImgSrc extends Logging with implicits.Strings {
     }
   }
 
-  private def findLargestSrc(ImageElement: ImageMedia, profile: Profile): Option[String] = {
+  def findLargestSrc(ImageElement: ImageMedia, profile: Profile): Option[String] = {
     profile.largestFor(ImageElement).flatMap(_.url).map{ largestImage =>
       ImgSrc(largestImage, profile)
     }

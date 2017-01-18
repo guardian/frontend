@@ -38,7 +38,7 @@ define([
 
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
-        var messageCode = 'engagement-banner-2016-11-10';
+        var messageCode = 'engagement-banner-2017-01-11';
 
         var baseParams = {
             minArticles: 10,
@@ -73,14 +73,15 @@ define([
             },
             AU: {
                 membership: {
-                    messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia Member for just $100 a year.',
+                    messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia member for just $10 a month.',
                     campaignCode: "mem_au_banner"
                 }
             },
             INT: {
                 membership: {
-                    messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $69/€49 per year.',
-                    campaignCode: "mem_int_banner"
+                    messageText: 'For less than the price of a coffee a week, you could help secure the Guardian\'s future. Support our journalism for $7 / €5 a month.',
+                    campaignCode: "mem_int_banner",
+                    minArticles: 3
                 }
             }
         };
@@ -171,9 +172,15 @@ define([
 
             if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
                 return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
+
                     if (canShow) {
-                        showBanner(bannerParams);
+                        mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
+                            if (!breakingShown) {
+                                showBanner(bannerParams);
+                            }
+                        });
                     }
+
                 });
             }
 
