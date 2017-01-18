@@ -7,12 +7,13 @@ import common._
 import common.commercial.ClientSideLogging
 import org.apache.commons.io.FileUtils
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
-import org.joda.time.{Seconds, Duration, DateTime}
+import org.joda.time.{DateTime, Duration, Seconds}
 import org.slf4j.LoggerFactory
 import play.api.inject.ApplicationLifecycle
 import services.S3
-import scala.concurrent.{Future, ExecutionContext}
+
 import scala.concurrent.duration._
+import scala.concurrent.{ExecutionContext, Future}
 
 object CommercialClientSideLogging extends Logging {
 
