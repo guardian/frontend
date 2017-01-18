@@ -35,33 +35,15 @@ define([
             return document.querySelector('.membership-ab-thrasher--wrapper');
         };
 
-        this.paras = {
-            Header: '<p>Support<br/>the Guardian</p>',
-            Header2: '<p>If you read us, if you like us, if you value our perspective – then become a Supporter and help make our future more secure.</p>',
-            VariantHeader2: '<p>We\'re introducing <strong>new ways</strong> to support the Guardian\'s quality journalism and independent voice. Choose from digital, print or a one-off contribution today.</p>'
-        };
-
-        this.variantCopy = {
-            'control': {
-                H1: this.paras["Header"],
-                H2: this.paras["Header2"]
-            },
-            'variant': {
-                H1: this.paras["Header"],
-                H2: this.paras["VariantHeader2"]
-            }
-        };
-
-        this.setCopy = function(variant) {
+        this.setCopy = function() {
             if (this.thrasher()) {
-                var copy = variant === 'control' ? this.variantCopy.control : this.variantCopy.variant;
                 var copyH1El = document.querySelector('.membership-ab-thrasher_header .main_title');
-                if (copyH1El && copy.H1) {
-                    copyH1El.innerHTML = copy.H1;
+                if (copyH1El) {
+                    copyH1El.innerHTML = '<p>Support<br/>the Guardian</p>';
                 }
                 var copyH2El = document.querySelector('.membership-ab-thrasher_header .sub_title');
-                if (copyH2El && copy.H2) {
-                    copyH2El.innerHTML = copy.H2;
+                if (copyH2El) {
+                    copyH2El.innerHTML = '<p>We\'re introducing <strong>new ways</strong> to support the Guardian\'s quality journalism and independent voice. Choose from digital, print or a one-off contribution today.</p>';
                 }
             }
         };
@@ -85,18 +67,12 @@ define([
         };
 
         this.setup = function(variant) {
-            this.setCopy(variant);
-            this.setLink(variant.toUpperCase());
+            this.setCopy();
+            this.setLink(variant);
             this.showThrasher();
         };
 
         this.variants = [
-            {
-                id: 'control',
-                test: function () {
-                    self.setup('control');
-                }
-            },
             {
                 id: 'A1',
                 test: function () {
