@@ -4,6 +4,7 @@ import common.Edition
 import model.Article
 import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpAd, AmpAdDataSlot, HtmlCleaner}
+import conf.Configuration
 
 import scala.collection.JavaConversions._
 
@@ -87,14 +88,25 @@ object AmpAdCleaner {
 case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends HtmlCleaner {
 
   def adAfter(element: Element) = {
-    val ampAd = <div class="amp-ad-container">
-          <amp-ad width="300" height="250" type="doubleclick" data-use-beta-a4a-implementation="true" data-loading-strategy="prefer-viewability-over-views"
-                  json={AmpAd(article, uri, edition.id.toLowerCase()).toString()}
-                  data-slot={AmpAdDataSlot(article).toString()}>
-          </amp-ad>
+    // data-use-beta-a4a-implementation will throw an error if the page is not in the AMP CDN
+    // Lets prevent it appearing in Dev and Code
+    if(Configuration.environment.stage.toLowerCase == "code" || Configuration.environment.stage.toLowerCase == "dev") {
+      val ampAd = <div class="amp-ad-container">
+        <amp-ad width="300" height="250" type="doubleclick" data-loading-strategy="prefer-viewability-over-views"
+                json={AmpAd(article, uri, edition.id.toLowerCase()).toString()}
+                data-slot={AmpAdDataSlot(article).toString()}>
+        </amp-ad>
       </div>
-
-    element.after(ampAd.toString())
+      element.after(ampAd.toString())
+    } else {
+      val ampAd = <div class="amp-ad-container">
+        <amp-ad width="300" height="250" type="doubleclick" data-use-beta-a4a-implementation="true" data-loading-strategy="prefer-viewability-over-views"
+                json={AmpAd(article, uri, edition.id.toLowerCase()).toString()}
+                data-slot={AmpAdDataSlot(article).toString()}>
+        </amp-ad>
+      </div>
+      element.after(ampAd.toString())
+    }
   }
 
   override def clean(document: Document): Document = {
