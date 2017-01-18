@@ -65,14 +65,7 @@ define([
             );
 
             // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
-            loadScript(config.libs.googletag);
-
-            // Return a promise that resolves after the async work is done.
-            return new Promise(function(resolve){
-                window.googletag.cmd.push(
-                    resolve
-                );
-            });
+            return loadScript(config.libs.googletag);
         }
 
         if (commercialFeatures.dfpAdvertising) {
