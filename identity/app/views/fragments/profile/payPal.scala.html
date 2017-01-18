@@ -10,9 +10,15 @@
 
         <div class="fieldset__fields">
             <div class="form-field">
-                <p>You are currently paying with PayPal using the account
-                <span class="paypal-email js-paypal-email"></span></p>
-                <p>Please login to PayPal to change your payment details</p>
+                <span class="paypal-message">
+                You paying with PayPal.
+                Please login to PayPal to change your payment details.
+                </span>
+                <span id="qa-show-paypal" class="submit-input manage-account-cta js-show-paypal-button" data-link-name="Show PayPal">Show account name</span>
+                <span class="is-hidden js-paypal-email-message">
+                    Your PayPal account is
+                    <span class="paypal-email js-paypal-email"></span>
+                </span>
             </div>
         </div>
     </li>
