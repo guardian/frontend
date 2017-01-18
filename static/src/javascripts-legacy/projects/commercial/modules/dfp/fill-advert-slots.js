@@ -21,9 +21,9 @@ define([
     }
 
     function fillAdvertSlots(moduleName) {
-        performanceLogging.moduleStart(moduleName);
 
         window.googletag.cmd.push(
+            moduleStart,
             createAdverts,
             queueAdverts,
             setPublisherProvidedId,
@@ -32,6 +32,10 @@ define([
             refreshOnResize,
             moduleEnd
         );
+
+        function moduleStart() {
+            performanceLogging.moduleStart(moduleName);
+        }
 
         function moduleEnd() {
             performanceLogging.moduleEnd(moduleName);
