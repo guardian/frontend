@@ -1,6 +1,7 @@
 package common
 
 import conf.Configuration
+import NavLinks._
 
 case class NavLink(title: String, url: String, longTitle: String = "", iconName: String = "", uniqueSection: String = "")
 case class SectionsLink(pageId: String, parentSection: NewNavigation.EditionalisedNavigationSection)
@@ -8,114 +9,6 @@ case class SubSectionLink(pageId: String, parentSection: NavLinkLists)
 case class NavLinkLists(mostPopular: Seq[NavLink], leastPopular: Seq[NavLink] = List())
 
 object NewNavigation {
-
-  /* NEWS */
-  val headlines = NavLink("headlines", "/", iconName = "home")
-  val ukNews = NavLink("UK news", "/uk-news", uniqueSection = "uk-news")
-  val world = NavLink("world news", "/world", uniqueSection = "world")
-  val environment = NavLink("environment", "/environment", uniqueSection = "environment")
-  val business = NavLink("business", "/business", uniqueSection = "business")
-  val economy = business.copy(title = "economy")
-  val money = NavLink("money", "/money", uniqueSection = "money")
-  val science = NavLink("science", "/science", uniqueSection = "science")
-  var tech = NavLink("tech", "/technology", uniqueSection = "technology")
-  var politics = NavLink("politics", "/politics", uniqueSection = "politics")
-  var media = NavLink("media", "/media", uniqueSection = "media")
-  var cities = NavLink("cities", "/cities", uniqueSection = "cities")
-  var globalDevelopment = NavLink("development", "/global-development", uniqueSection = "global-development")
-  var australiaNews = NavLink("australia news", "/australia-news", uniqueSection = "australia-news")
-  var auPolitics = NavLink("politics", "/australia-news/australian-politics", "australian politics")
-  var auImmigration = NavLink("immigration", "/australia-news/australian-immigration-and-asylum")
-  var indigenousAustralia = NavLink("indigenous australia", "/australia-news/indigenous-australians")
-  var usNews = NavLink("US news", "/us-news", uniqueSection = "us-news")
-  var usPolitics = NavLink("politics", "/us-news/us-politics", "US politics")
-  val education = NavLink("education", "/education")
-  val society = NavLink("society", "/society")
-  val law = NavLink("law", "/law")
-  val scotland = NavLink("scotland", "/uk/scotland")
-  val wales = NavLink("wales", "/uk/wales")
-  val northernIreland = NavLink("northern ireland", "/uk/northernireland")
-  val europe = NavLink("europe", "/world/europe-news")
-  val americas = NavLink("americas", "/world/americas")
-  val asia = NavLink("asia", "/world/asia")
-  val africa = NavLink("africa", "/world/africa")
-  val middleEast = NavLink("middle east", "/world/middleeast")
-  val economics = NavLink("economics", "/business/economics")
-  val banking = NavLink("banking", "/business/banking")
-  val retail = NavLink("retail", "/business/retail")
-  val markets = NavLink("markets", "/business/stock-markets")
-  val eurozone = NavLink("eurozone", "/business/eurozone")
-  val sustainableBusiness = NavLink("sustainable business", "/us/sustainable-business")
-  val diversityEquality = NavLink("diversity & equality in business", "/business/diversity-and-equality")
-  val smallBusiness = NavLink( "small business", "business/us-small-business")
-  val climateChange = NavLink("climate change", "/environment/climate-change")
-  val wildlife = NavLink("wildlife", "/environment/wildlife")
-  val energy = NavLink( "energy", "/environment/energy")
-  val pollution = NavLink("pollution", "/environment/pollution")
-  val property = NavLink("property", "/money/property")
-  val pensions = NavLink("pensions", "/money/pensions")
-  val savings = NavLink("savings", "/money/savings")
-  val borrowing = NavLink("borrowing", "/money/debt")
-  val careers = NavLink("careers", "/money/work-and-careers")
-
-  /* OPINION */
-  val opinion = NavLink("opinion home", "/commentisfree", iconName = "home", uniqueSection = "commentisfree")
-  var columnists = NavLink("columnists", "/index/contributors")
-  val theGuardianView = NavLink("the guardian view", "/profile/editorial")
-  val cartoons = NavLink("cartoons", "/cartoons/archive")
-
-  /* SPORT */
-  val sport = NavLink("sport home", "/sport", iconName = "home", uniqueSection = "sport")
-  val football = NavLink("football", "/football", uniqueSection = "football")
-  val soccer = football.copy(title = "soccer")
-  val cricket = NavLink("cricket", "/sport/cricket")
-  var rugbyUnion = NavLink("rugby union", "/sport/rugby-union")
-  var formulaOne = NavLink("F1", "/sport/formulaone")
-  var tennis = NavLink("tennis", "/sport/tennis")
-  var golf = NavLink("golf", "/sport/golf")
-  var cycling = NavLink("cycling", "/sport/cycling")
-  var boxing = NavLink("boxing", "/sport/boxing")
-  var usSports = NavLink("US sports", "/sport/us-sport")
-  val racing = NavLink("racing", "/sport/horse-racing")
-  val rugbyLeague = NavLink("rugby league", "/sport/rugbyleague")
-  val australiaSport = NavLink("australia sport", "/sport/australia-sport")
-  val AFL = NavLink("AFL", "/sport/afl")
-  val NRL = NavLink("NRL", "/sport/nrl")
-  val aLeague = NavLink("a-league", "/football/a-league")
-  val NFL = NavLink("NFL", "/sport/nfl")
-  val MLS = NavLink("MLS", "/sport/mls")
-  val MLB = NavLink("MLB", "/sport/mlb")
-  val NBA = NavLink("NBA", "/sport/nba")
-  val NHL = NavLink("NHL", "/sport/nhl")
-
-  /* ARTS */
-  val culture = NavLink("culture home", "/culture", iconName = "home", uniqueSection = "culture")
-  val film = NavLink("film", "/film", uniqueSection = "film")
-  val tvAndRadio = NavLink("tv & radio", "/tv-and-radio", uniqueSection = "tv-and-radio")
-  val music = NavLink("music", "/music", uniqueSection = "music")
-  val games = NavLink("games", "/technology/games")
-  val books = NavLink("books", "/books", uniqueSection = "books")
-  val artAndDesign = NavLink("art & design", "/artanddesign", uniqueSection = "artanddesign")
-  val stage = NavLink("stage", "/stage", uniqueSection = "stage")
-  val classical = NavLink("classical", "/music/classicalmusicandopera")
-
-  /* LIFE */
-  val lifestyle = NavLink("lifestyle home", "/lifeandstyle", iconName = "home", uniqueSection = "lifeandstyle")
-  val fashion = NavLink("fashion", "/fashion", uniqueSection = "fashion")
-  val food = NavLink("food", "/lifeandstyle/food-and-drink")
-  val travel = NavLink("travel", "/travel", uniqueSection = "travel")
-  val loveAndSex = NavLink("love & sex", "/lifeandstyle/love-and-sex")
-  var family = NavLink("family", "/lifeandstyle/family")
-  var home = NavLink("home & garden", "/lifeandstyle/home-and-garden")
-  var health = NavLink("health & fitness", "/lifeandstyle/health-and-wellbeing")
-  var women = NavLink("women", "/lifeandstyle/women")
-  var recipes = NavLink("recipes", "/tone/recipes")
-  val travelUk = NavLink("UK", "/travel/uk")
-  val travelEurope = NavLink("europe", "/travel/europe")
-  val travelUs = NavLink("US", "/travel/usa")
-  val skiing = NavLink("skiing", "/travel/skiing")
-  val travelAustralasia = NavLink("australasia", "/travel/australasia")
-  val travelAsia = NavLink("asia", "/travel/asia")
 
   var PrimaryLinks = List(
     NavLink("news", "/"),
@@ -543,4 +436,3 @@ object NewNavigation {
     }
   }
 }
-
