@@ -38,23 +38,17 @@ define([
         this.paras = {
             Header: '<p>Support<br/>the Guardian</p>',
             Header2: '<p>If you read us, if you like us, if you value our perspective – then become a Supporter and help make our future more secure.</p>',
-            VariantHeader2: '<p>We\'re introducing <strong>new ways</strong> to support the Guardian\'s quality journalism and independent voice</p>',
-            EnticementP1: '<p>We want to use our independent, thruthful journalism to make the world a better, fairer place. Which is why our most important relationship is with our readers.</p>',
-            EnticementP2: '<p>If you value our independent journalism, please help to fund it by becoming a Supporter.</p>'
+            VariantHeader2: '<p>We\'re introducing <strong>new ways</strong> to support the Guardian\'s quality journalism and independent voice. Choose from digital, print or a one-off contribution today.</p>'
         };
 
         this.variantCopy = {
             'control': {
                 H1: this.paras["Header"],
-                H2: this.paras["Header2"]//,
-                //P1: this.paras["EnticementP1"],
-                //P2: this.paras["PEnticementP22"]
+                H2: this.paras["Header2"]
             },
             'variant': {
                 H1: this.paras["Header"],
-                H2: this.paras["VariantHeader2"]//,
-                //P1: this.paras["EnticementP1"],
-                //P2: this.paras["PEnticementP22"]
+                H2: this.paras["VariantHeader2"]
             }
         };
 
@@ -68,14 +62,6 @@ define([
                 var copyH2El = document.querySelector('.membership-ab-thrasher_header .sub_title');
                 if (copyH2El && copy.H2) {
                     copyH2El.innerHTML = copy.H2;
-                }
-                var copyP1El = document.querySelector('.membership-ab-thrasher_header .entice.primary');
-                if (copyP1El && copy.P1) {
-                    copyP1El.innerHTML = copy.P1;
-                }
-                var copyP2El = document.querySelector('.membership-ab-thrasher_header .entice.secondary');
-                if (copyP2El && copy.P2) {
-                    copyP2El.innerHTML = copy.P2;
                 }
             }
         };
