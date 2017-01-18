@@ -34,10 +34,9 @@
     </div>
 
 
-    @if(displayCaption) {
-        <figcaption class="caption caption--main" itemprop="description">
-        @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon", "rounded-icon"))
-        @media.title</figcaption>
-    }
+@if(displayCaption) {
+    @simpleCaption(media.title)
+}
+
 }
 
