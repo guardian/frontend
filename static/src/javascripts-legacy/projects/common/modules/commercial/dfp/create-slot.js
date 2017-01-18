@@ -51,7 +51,7 @@ define([
             refresh: false,
             name: 'merchandising-high',
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.merchandisingHigh)
+                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.merchandisingHigh, adSizes.fluid)
             }
         },
         'high-merch-paid': {
@@ -59,7 +59,7 @@ define([
             refresh: false,
             name: 'merchandising-high',
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.merchandisingHighAdFeature)
+                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.merchandisingHighAdFeature, adSizes.fluid)
             }
         },
         inline: inlineDefinition,
