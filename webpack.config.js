@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const Visualizer = require('webpack-visualizer-plugin');
 
 module.exports = {
-    devtool: '#source-map',
+    devtool: 'cheap-module-source-map',
     entry: './static/src/javascripts/boot-webpack.js',
     resolve: {
         modulesDirectories: [
