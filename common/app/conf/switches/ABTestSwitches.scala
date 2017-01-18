@@ -24,7 +24,7 @@ trait ABTestSwitches {
     ABTests,
     "ab-editorial-email-variants",
     "Assign users to variants of our editorial emails",
-    owners = Seq(Owner.withGithub("katebee")),
+    owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 2, 16),
     exposeClientSide = true
