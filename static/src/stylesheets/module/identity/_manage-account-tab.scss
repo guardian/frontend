@@ -54,6 +54,17 @@
         vertical-align: middle;
     }
 
+    /* PayPal Details
+    ========================================================================== */
+    .paypal-email {
+        font-weight: bold;
+    }
+
+    .paypal-message {
+        display: inline-block;
+        width: 60%;
+    }
+
     /* manage-account CTA
    ========================================================================== */
     .manage-account-cta {
