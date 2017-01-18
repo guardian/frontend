@@ -740,6 +740,8 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     border-bottom: $gs-baseline / 3 solid #747a81;
     max-height: $gs-baseline * 3.4;
     overflow: hidden;
+    z-index: 1;
+    position: relative;
 
     @include mq($from: mobile, $until: mobileLandscape) {
         max-height: $gs-baseline * 3.5;
@@ -898,6 +900,77 @@ $caption-button-size: 32px;
                 border-left: $gs-baseline / 2 solid transparent;
                 border-right: $gs-baseline / 2 solid transparent;
             }
+        }
+    }
+}
+
+/****************
+ * FOOTER
+ ****************/
+
+.l-footer {
+    // these two lines are needed so that the footer sits over the nav
+    position: absolute;
+    z-index: 9999;
+    width: 100%;
+}
+.footer__back-to-top__container {
+    @include content-gutter();
+    background-color: $guardian-brand;
+}
+
+.footer__back-to-top {
+    @include fs-textSans(4);
+    position: relative;
+    text-align: right;
+
+    @include mq($from: mobile, $until: mobileLandscape) {
+        font-size: 14px;
+        font-size: 4.6vw;
+    }
+
+    @include mq(mobileLandscape) {
+        font-size: 20px;
+    }
+}
+
+.back-to-top__text {
+    display: inline-block;
+    color: white;
+    padding: 4px;
+
+    @include mq($mobile-medium) {
+        padding: 9px;
+    }
+}
+
+.back-to-top__icon {
+    position: relative;
+    float: right;
+    margin-top: -($gs-baseline / 2);
+    margin-bottom: -$gs-baseline;
+    border-radius: 100%;
+    background-color: $news-main-2;
+    cursor: pointer;
+    height: $veggie-burger-small;
+    min-width: $veggie-burger-small;
+
+    @include mq($mobile-medium) {
+        height: $veggie-burger-medium;
+        width: $veggie-burger-medium;
+    }
+
+    svg {
+        position: absolute;
+        top: -($gs-baseline / 2);
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
+
+        @include mq($mobile-medium) {
+            width: 30px;
+            height: 24px;
         }
     }
 }
