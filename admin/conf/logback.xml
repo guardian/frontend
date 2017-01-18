@@ -18,6 +18,26 @@
     <!-- DFP API logging -->
     <logger name="com.google.api.ads.dfp.lib.client.DfpServiceClient.soapXmlLogger" level="WARN"/>
     <logger name="com.google.api.client.http.HttpTransport" level="OFF"/>
+    <!-- END -->
+
+    <!-- Commercial client side logging -->
+    <appender name="COMMERCIAL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/frontend-commercial-client-side.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/frontend-commercial-client-side-archive/%d{yyyy-MM-dd--HH-mm}.log</fileNamePattern>
+            <maxHistory>40</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%msg%n%nopex</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="jobs.CommercialClientSideLogging" level="INFO" additivity="false">
+        <appender-ref ref="COMMERCIAL"/>
+    </logger>
+    <!-- END -->
 
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>

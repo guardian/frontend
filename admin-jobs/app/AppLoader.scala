@@ -14,7 +14,6 @@ import play.api.ApplicationLoader.Context
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import services.ConfigAgentLifecycle
-import jobs.CommercialClientSideLoggingLifecycle
 import play.api.http.HttpRequestHandler
 import play.api.{BuiltInComponentsFromContext, Environment}
 import router.Routes
@@ -39,8 +38,7 @@ trait AppComponents extends FrontendComponents with AdminJobsControllers with Ad
     wire[ConfigAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SwitchboardLifecycle],
-    wire[CachedHealthCheckLifeCycle],
-    wire[CommercialClientSideLoggingLifecycle]
+    wire[CachedHealthCheckLifeCycle]
   )
 
   lazy val router: Router = wire[Routes]
