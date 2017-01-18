@@ -16,7 +16,7 @@
 
             <nav class="new-header__nav" data-component="nav2">
                 @NewNavigation.PrimaryLinks.map { link =>
-                    <a class="new-header__nav__link @if(link.title == currentTopLevelSection && page.metadata.isFront) {section-indicator}"
+                    <a class="new-header__nav__link @if(link.title == currentTopLevelSection) {section-indicator}"
                         href="@LinkTo(link.url)"
                         data-link-name="nav2 : primary : @link.title">
                             @link.title
