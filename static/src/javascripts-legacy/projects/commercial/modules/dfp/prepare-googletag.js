@@ -44,17 +44,21 @@ define([
 
     function init(moduleName) {
 
+        function moduleStart() {
+            // Use Custom Timing to time the googletag code without the sonobi pre-loading.
+            performanceLogging.moduleStart(moduleName);
+        }
+
         function moduleEnd() {
             performanceLogging.moduleEnd(moduleName);
         }
 
         function setupAdvertising() {
-            // Use Custom Timing to time the googletag code without the sonobi pre-loading.
-            performanceLogging.moduleStart(moduleName);
 
             performanceLogging.addTag(dfpEnv.sonobiEnabled ? 'sonobi' : 'waterfall');
 
             window.googletag.cmd.push(
+                moduleStart,
                 setListeners,
                 setPageTargeting,
                 moduleEnd
