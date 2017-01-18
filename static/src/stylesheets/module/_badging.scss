@@ -88,7 +88,19 @@
         }
     }
 
-    .content__head--us-election .content__header .gs-container {
+    .content__head--global-warning {
+        .content__header .gs-container {
+            background-image: url('https://uploads.guim.co.uk/2017/01/18/global-warning-header.png');
+        }
+
+        &.tonal__head--tone-dead {
+            .content__header .gs-container {
+                background-image: url('https://uploads.guim.co.uk/2017/01/18/global-warning-header.png');
+            }
+        }
+    }
+
+    .content__head--us-election .content__header .gs-container,  .content__head--global-warning .content__header .gs-container{
         background-position: right bottom;
         background-repeat: no-repeat;
         background-size: gs-span(4);
