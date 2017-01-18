@@ -732,24 +732,25 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     background-color: #747a81;
     padding-top: $gs-baseline / 3;
     // Spacer that prevents links flowing beneath the veggie burger
-    padding-right: $gutter-medium + ($veggie-burger-medium / 2);
+    //padding-right: $gutter-medium + ($veggie-burger-medium / 2);
     padding-left: $gs-gutter / 2;
+    padding-right: $gutter-medium + ($veggie-burger-medium / 2);
     margin-left: -4px;
     border-bottom: $gs-baseline / 3 solid #747a81;
     max-height: $gs-baseline * 3.4;
     overflow: hidden;
 
     @include mq($from: mobile, $until: mobileLandscape) {
-        max-height: $gs-baseline * 4;
-        max-height: 14.8vw;
+        max-height: $gs-baseline * 3.5;
+        max-height: 13vw;
         margin-left: -.3em;
     }
 
     @include mq($from: mobileLandscape) {
-        max-height: $gs-baseline * 5.5;
+        max-height: $gs-baseline * 4.8;
         padding-left: $gs-gutter;
         margin-left: -5px;
-        padding-right: $gs-gutter;
+        padding-right: $gutter-large + ($veggie-burger-medium / 2);
     }
 }
 
