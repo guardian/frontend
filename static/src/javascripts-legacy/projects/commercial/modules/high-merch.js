@@ -19,7 +19,7 @@ define([
         var container = document.createElement('div');
 
         container.className = 'fc-container fc-container--commercial';
-        container.appendChild(createSlot('high-merch'));
+        container.appendChild(createSlot(config.page.isAdvertisementFeature ? 'high-merch-paid' : 'high-merch'));
 
         return fastdom.write(function () {
             anchor.parentNode.insertBefore(container, anchor);
