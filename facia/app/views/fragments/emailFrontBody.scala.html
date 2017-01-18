@@ -74,7 +74,7 @@
 @faciaCardSmall(card: ContentCard, withImage: Boolean) = {
     @paddedRow(Seq(toneClassFromStyle(card.cardStyle))) {
         @if(withImage) {
-            @fullRowWithSubColumns() {
+            @fullRowWithSubColumns(Seq("facia-card")) {
                 @subColumn(7, Seq("facia-card__text")) { @headline(card)}
                 @subColumn(5, Seq(), last = true) { @imgFromCard(card) }
             }
