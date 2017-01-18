@@ -884,7 +884,7 @@ $caption-button-size: 32px;
             padding-top: $gs-baseline / 2;
         }
 
-        .section-indicator:after {
+        .section-indicator:before {
             content: '';
             position: absolute;
             left: 50%;
