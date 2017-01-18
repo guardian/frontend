@@ -20,6 +20,15 @@ object NewNavigation {
 
   val topLevelSections = List(News, Opinion, Sport, Arts, Life)
 
+  def getMembershipLinks(edition: Edition) = {
+    val editionId = edition.id.toLowerCase()
+
+    NavLinkLists(List(
+      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/${editionId}/supporter?INTCMP=mem_${editionId}_web_newheader", iconName= "marque-36"),
+      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/${editionId}?INTCMP=NGW_NEWHEADER_${editionId}_GU_SUBSCRIBE", iconName= "device")
+    ))
+  }
+
   trait EditionalisedNavigationSection {
     def name: String
 
@@ -204,31 +213,6 @@ object NewNavigation {
       NavLink("the observer", "/observer"),
       NavLink("crosswords", "/crosswords"),
       NavLink("video", "/video")
-    ))
-  }
-
-//   TODO: should rethink how this editionalises, as we could do it in a simpler way maybe.
-  case object MembershipLinks extends EditionalisedNavigationSection {
-    val name = ""
-
-    val uk = NavLinkLists(List(
-      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/uk/supporter?INTCMP=mem_uk_web_newheader", iconName= "marque-36"),
-      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/uk?INTCMP=NGW_NEWHEADER_UK_GU_SUBSCRIBE", iconName= "device")
-    ))
-
-    val au = NavLinkLists(List(
-      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/au/supporter?INTCMP=mem_au_web_newheader", iconName= "marque-36"),
-      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/au?INTCMP=NGW_NEWHEADER_AU_GU_SUBSCRIBE", iconName= "device")
-    ))
-
-    val us = NavLinkLists(List(
-      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/us/supporter?INTCMP=mem_us_web_newheader", iconName= "marque-36"),
-      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/us?INTCMP=NGW_NEWHEADER_US_GU_SUBSCRIBE", iconName= "device")
-    ))
-
-    val int = NavLinkLists(List(
-      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/int/supporter?INTCMP=mem_int_web_newheader", iconName= "marque-36"),
-      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/int?INTCMP=NGW_NEWHEADER_INT_GU_SUBSCRIBE", iconName= "device")
     ))
   }
 

@@ -80,14 +80,14 @@
 
             @defining(Edition(request)) { edition =>
 
-                @NewNavigation.MembershipLinks.getAllEditionalisedNavLinks(edition).map { item =>
+                @NewNavigation.getMembershipLinks(edition).mostPopular.map { item =>
                     <li class="navigation-group__item js-editionalise-secondary-nav"
                         data-edition=@{edition.id.toLowerCase}>
 
-                            <a href="@item.url" data-link-name="nav2 : @item.title">
-                                @fragments.inlineSvg(item.iconName, "icon", List("main-menu__icon"))
-                                @item.title
-                            </a>
+                        <a href="@item.url" data-link-name="nav2 : @item.title">
+                            @fragments.inlineSvg(item.iconName, "icon", List("main-menu__icon"))
+                            @item.title
+                        </a>
                     </li>
                 }
             }
