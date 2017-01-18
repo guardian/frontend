@@ -9,8 +9,6 @@ import play.twirl.api.Html
 
 class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
 
-  OutbrainSwitch.switchOn()
-
   private def contentItem(showInRelatedContent: Boolean = true,
                           shouldHideAdverts: Boolean = false,
                           commentable: Boolean = true,
@@ -38,7 +36,7 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
   private def buildHtml(item: RelatedContentItem,
                         related: RelatedContent = relatedContent,
                         isAdFeature: Boolean = false): Html = {
-    ContentFooterContainersLayout(item.content.content, related, isAdFeature) {
+    ContentFooterContainersLayout(item.content.content, isAdFeature) {
       Html("storyPackageHtml ")
     } {
       Html("onwardHtml ")
@@ -50,15 +48,13 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
       Html("highRelevanceCommercialHtml ")
     } {
       Html("standardCommercialHtml ")
-    } {
-      Html("outbrainHtml ")
     }
   }
 
   it should "show all footer containers in right order by default" in {
     val html = buildHtml(contentItem())
     html.toString shouldBe
-      "highRelevanceCommercialHtml storyPackageHtml outbrainHtml onwardHtml commentsHtml mostPopularHtml " +
+      "highRelevanceCommercialHtml storyPackageHtml onwardHtml commentsHtml mostPopularHtml " +
         "standardCommercialHtml "
   }
 
@@ -75,34 +71,20 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
   it should "omit comments when article won't allow them" in {
     val html = buildHtml(contentItem(commentable = false))
     html.toString shouldBe
-      "highRelevanceCommercialHtml storyPackageHtml outbrainHtml onwardHtml mostPopularHtml standardCommercialHtml "
+      "highRelevanceCommercialHtml storyPackageHtml onwardHtml mostPopularHtml standardCommercialHtml "
   }
 
   it should "include story package placeholder even when there's no story package to show" in {
     val html = buildHtml(contentItem(showInRelatedContent = false), emptyRelatedContent)
     html.toString shouldBe
-      "highRelevanceCommercialHtml storyPackageHtml onwardHtml commentsHtml outbrainHtml mostPopularHtml " +
-        "standardCommercialHtml "
-  }
-
-  it should "show onward HTML before outbrain if article is part of a series and has no story package" in {
-    val html = buildHtml(contentItem(seriesId = Some("seriesId")), emptyRelatedContent)
-    html.toString shouldBe
-      "highRelevanceCommercialHtml storyPackageHtml onwardHtml outbrainHtml commentsHtml mostPopularHtml " +
-        "standardCommercialHtml "
-  }
-
-  it should "show onward HTML before outbrain if article is part of a blog and has no story package" in {
-    val html = buildHtml(contentItem(blogId = Some("blogId")), emptyRelatedContent)
-    html.toString shouldBe
-      "highRelevanceCommercialHtml storyPackageHtml onwardHtml outbrainHtml commentsHtml mostPopularHtml " +
+      "highRelevanceCommercialHtml storyPackageHtml onwardHtml commentsHtml mostPopularHtml " +
         "standardCommercialHtml "
   }
 
   it should "show containers in correct order when article doesn't have story package but has related content" in {
     val html = buildHtml(contentItem(), emptyRelatedContent)
     html.toString shouldBe
-      "highRelevanceCommercialHtml storyPackageHtml outbrainHtml onwardHtml commentsHtml mostPopularHtml " +
+      "highRelevanceCommercialHtml storyPackageHtml onwardHtml commentsHtml mostPopularHtml " +
         "standardCommercialHtml "
   }
 }

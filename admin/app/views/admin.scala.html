@@ -30,6 +30,7 @@
                 <div class="panel-body">
                     <ul>
                         <li><a href="/dev/switchboard">Switchboard</a></li>
+                        <li><a href="@Configuration.Elk.kibanaUrl/goto/643979153f817c4bb1b64f7d56a395a7">Deploy dashboard</a></li>
                         <li><a href="@controllers.admin.routes.RadiatorController.renderRadiator()">Radiator</a></li>
                         @if(R2PagePressServiceSwitch.isSwitchedOn) {
                             <li><a href="@controllers.admin.routes.R2PressController.pressForm()">Press-a-page</a></li>
@@ -37,7 +38,6 @@
                         <li><a href="@controllers.admin.routes.RedirectController.redirect()">Redirects</a></li>
                         <li><a href="@controllers.cache.routes.ImageDecacheController.renderImageDecacheForm()">Clear cache (images)</a></li>
                         <li><a href="@controllers.cache.routes.PageDecacheController.renderPageDecache(None)">Clear cache (content)</a></li>
-                        <li><a href="@Configuration.Elk.elasticsearchHeadUrl">Elasticsearch Head</a></li>
                     </ul>
                 </div>
             </div>

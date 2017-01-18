@@ -166,6 +166,21 @@
     </script>
 }
 
+@*
+ This add structured data markup for google enhanced search result (https://developers.google.com/search/docs/data-types/data-type-selector)
+ and the semantic web.
+ 
+ Sources of the markup is our own structured data from the Content API
+
+*@
+@Page.getContentPage(page).map(_.item).map { item =>
+    @for(recipe <- item.content.atoms.map(_.recipes).getOrElse(Nil)) {
+        @fragments.atoms.structureddata.recipe(recipe)
+    }
+
+    @* add here another atom (film, reviews, organisations, people, events, ...) *@
+}
+
 @page.metadata.iosId("google").map { iosId =>
     <link rel="alternate" href="ios-app://409128287/gnmguardian/@iosId" />
 }

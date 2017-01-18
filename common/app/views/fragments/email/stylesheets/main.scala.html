@@ -49,6 +49,10 @@
         color: #005689;
     }
 
+    @*
+     * !important is needed here and elsewhere because the base styles in the Ink CSS framework for email use
+     * !important and we need to override them. (See the ink stylesheet for notes on why the base styles need !important)
+     *@
     a:visited, a:active,
     h2 a:visited, h2 a:active {
         color: #005689 !important;

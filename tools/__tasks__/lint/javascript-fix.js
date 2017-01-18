@@ -1,8 +1,6 @@
 const execa = require('execa');
 
 const config = [
-    '--rulesdir',
-    'dev/eslint-rules',
     '--quiet',
     '--color',
     '--fix',

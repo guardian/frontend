@@ -1,20 +1,19 @@
 module.exports = {
     env: {
+        browser: true,
         amd: true,
         jasmine: true,
-        es6: false,
-        commonjs: false
+        commonjs: true
     },
     extends: 'eslint:recommended',
-	parserOptions: {
-		ecmaVersion: 5
-	},
+    parserOptions: {
+        ecmaVersion: 5,
+    },
     rules: {
         camelcase: 'off',
         'no-shadow': 'off',
         strict: 'off',
         'no-alert': 'off',
-        'no-all-lodash-import': 'error',
         'no-undef': 'error',
         'no-use-before-define': [
             'error',
@@ -23,8 +22,6 @@ module.exports = {
         'no-multi-spaces': 'off',
         'no-underscore-dangle': 'off',
         'key-spacing': 'off',
-        'import/no-amd': 'off',
-        'import/no-dynamic-require': 'off',
 
         // these are bad habits in react that we're already abusing.
         // if we go more [p]react we should look at them,
@@ -39,5 +36,16 @@ module.exports = {
         'react/no-string-refs': 'off',
         'react/prefer-stateless-function': 'off',
         'react/no-render-return-value': 'off',
+
+        // disallow modules we used to use but are retiring
+        'no-restricted-imports': ['error', {
+            paths: ['lodash'],
+            patterns: ['!lodash/*'],
+        }],
+
+        // these are re-defined because this config does not extend the main one
+        // which is annoying but this whole directory is not long for this world anwyay
+        'no-extend-native': 'error',
     },
+    root: true,
 }

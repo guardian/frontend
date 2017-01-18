@@ -4,8 +4,10 @@ import common.Edition
 import common.commercial.PaidContent
 import implicits.Dates._
 import model._
+import model.content.MediaAtom
 import model.pressed._
 import org.joda.time.DateTime
+import org.jsoup.Jsoup
 import org.scala_tools.time.Imports._
 
 import scala.util.Try
@@ -21,6 +23,21 @@ object FaciaContentFrontendHelpers {
       val defaultTrailPicture = faciaContent.properties.maybeContent.flatMap(_.trail.trailPicture)
       imageOverride.orElse(defaultTrailPicture)
     }
+
+
+    //TODO: Use the blocks field of CAPI to derive this in a more structured way
+    def mainYouTubeMediaAtom: Option[MediaAtom] =
+      for {
+       main <- faciaContent.properties.maybeContent.map(_.fields.main)
+       atoms <-  faciaContent.properties.maybeContent.flatMap(_.atoms)
+       document <- Some(Jsoup.parse(main))
+       atomContainer <- Option(document.getElementsByClass("element-atom").first())
+       bodyElement <- Some(atomContainer.getElementsByTag("gu-atom"))
+       youTubeIframe <- Option(bodyElement.select("iframe[src^=https://www.youtube.com]").first())
+       atomId <- Some(bodyElement.attr("data-atom-id"))
+       mainMediaAtom <- atoms.media.find(_.id == atomId)
+     } yield mainMediaAtom
+
 
     def mainVideo: Option[VideoElement] = {
       val elements: Seq[Element] = faciaContent.properties.maybeContent.map(_.elements.elements).getOrElse(Nil)
