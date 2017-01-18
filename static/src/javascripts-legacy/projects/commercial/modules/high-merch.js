@@ -13,8 +13,8 @@ define([
             return Promise.resolve();
         }
 
-        var selector = config.page.commentable ? '#comments + *' : '.content-footer > :first-child';
-        var anchor = document.querySelector(selector);
+        var anchorSelector = config.page.commentable ? '#comments + *' : '.content-footer > :first-child';
+        var anchor = document.querySelector(anchorSelector);
         var container = document.createElement('div');
 
         container.className = 'fc-container fc-container--commercial';
