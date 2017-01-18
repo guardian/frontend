@@ -17,12 +17,7 @@ define([
         if (commercialFeatures.dfpAdvertising) {
             fillAdvertSlots(moduleName);
         }
-        // Return a promise that resolves after the async work is done.
-        return new Promise(function(resolve){
-            window.googletag.cmd.push(
-                resolve
-            );
-        });
+        return Promise.resolve();
     }
 
     function fillAdvertSlots(moduleName) {
