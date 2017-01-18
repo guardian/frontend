@@ -8,7 +8,7 @@
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
     @fragments.discussionFooter(content.content, content.trail.isCommentable, content.trail.isClosedForComments, content.content.shortUrlId)
 
-    @ContentFooterContainersLayout(content.content, related, isPaidContent) {
+    @ContentFooterContainersLayout(content.content, isPaidContent) {
         @fragments.storyPackagePlaceholder(content, related, isPaidContent)
     } {
         @fragments.onwardPlaceholder(isPaidContent)
@@ -17,11 +17,11 @@
     } {
         @fragments.mostPopularPlaceholder(content.metadata.sectionId)
     } {
-        <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponentHigh(isPaidContent)</div>
+        @* The high-relevant commercial component will be inserted on the client-side
+         * <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponentHigh(isPaidContent)</div>
+         *@
     } {
         <div class="fc-container fc-container--commercial js-container--commercial">@fragments.commercial.commercialComponent()</div>
-    } {
-        @fragments.externalContentPlaceholder()
     }
 
 </div>

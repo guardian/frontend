@@ -144,17 +144,30 @@ define([
     }
 
     function ophanRecord(id, event, player) {
-        var ophanPath = isEmbed ? 'ophan/embed' : 'ophan/ng';
-        if (id) {
-            require([ophanPath], function (ophan) {
-                var eventObject = {};
-                eventObject[getMediaType(player)] = {
-                    id: id,
-                    eventType: event.type
-                };
-                ophan.record(eventObject);
-            });
+        if (!id) return;
+
+        function record(ophan) {
+            var eventObject = {};
+            eventObject[getMediaType(player)] = {
+                id: id,
+                eventType: event.type
+            };
+            ophan.record(eventObject);
         }
+
+        if (isEmbed) {
+            // this loads a hosted AMD module, which makes life hard for anything
+            // that isn't an AMD module loader e.g. webpack.
+            // however, since this is the embed page, we're already supplying curl,
+            // therefore we can build *this* for curl regardless of the loader in use.
+            // this is not ok medium/long term, but it gets us towards
+            // a finished webpack build for now...
+            window.require(['ophan/embed'], record)
+        } else {
+            // this will be webpack in weback land and curl `require` in r.js land
+            require(['ophan/ng'], record)
+        }
+
     }
 
     function initOphanTracking(player, mediaId) {

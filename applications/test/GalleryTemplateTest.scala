@@ -21,6 +21,11 @@ import scala.collection.JavaConversions._
     $(".gallery__item:not(.gallery__item--advert)").length should be (22)
   }
 
+  it should "insert ad slots after every four images" in goTo("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
+    import browser._
+    $(".gallery__item--advert").length should be (5)
+  }
+
   it should "show the twitter card meta-data" in goTo("/music/gallery/2012/jun/23/simon-bolivar-orchestra-dudamel-southbank-centre") { browser =>
     import browser._
     $("meta[name='twitter:card']").getAttributes("content").head should be ("summary_large_image")
