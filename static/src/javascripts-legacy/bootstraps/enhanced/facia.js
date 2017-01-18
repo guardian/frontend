@@ -93,12 +93,14 @@ define([
                 }
             },
 
-            hideMembershipABThrasher: function () {
-                var show = false;
-                if (config.switches['abMembershipBundlesThrasher']) {
+            showMembershipABThrasher: function () {
+                var show = false,
+                    featureName = 'MembershipBundlesThrasher';
+
+                if (config.switches['ab' + featureName]) {
                     var abParticipations = ab.getParticipations();
-                    if (abParticipations && abParticipations['MembershipBundlesThrasher']) {
-                        var variant = abParticipations['MembershipBundlesThrasher'].variant;
+                    if (abParticipations && abParticipations[featureName] && ab.testCanBeRun(featureName)) {
+                        var variant = abParticipations[featureName].variant;
                         if (variant && variant !== 'notintest') {
                             show = true;
                         }
@@ -123,7 +125,7 @@ define([
         ready = function () {
             forEach(robust.makeBlocks([
                 ['f-accessibility', accessibility.shouldHideFlashingElements],
-                ['f-hide-membership-ab-thrasher', modules.hideMembershipABThrasher],
+                ['f-show-membership-ab-thrasher', modules.showMembershipABThrasher],
                 ['f-snaps', modules.showSnaps],
                 ['f-show-more', modules.showContainerShowMore],
                 ['f-container-toggle', modules.showContainerToggle],

@@ -60,7 +60,7 @@ define([
 
         this.setCopy = function(variant) {
             if (this.thrasher()) {
-                var copy = variant === 'notintest' ? this.variantCopy.control : this.variantCopy.variant;
+                var copy = variant === 'control' ? this.variantCopy.control : this.variantCopy.variant;
                 var copyH1El = document.querySelector('.membership-ab-thrasher_header .main_title');
                 if (copyH1El && copy.H1) {
                     copyH1El.innerHTML = copy.H1;
@@ -118,33 +118,9 @@ define([
                 }
             },
             {
-                id: 'A2',
-                test: function () {
-                    self.setup('A2');
-                }
-            },
-            {
-                id: 'A3',
-                test: function () {
-                    self.setup('A3');
-                }
-            },
-            {
                 id: 'B1',
                 test: function () {
                     self.setup('B1');
-                }
-            },
-            {
-                id: 'B2',
-                test: function () {
-                    self.setup('B2');
-                }
-            },
-            {
-                id: 'B3',
-                test: function () {
-                    self.setup('B3');
                 }
             }
         ];
