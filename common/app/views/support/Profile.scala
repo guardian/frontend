@@ -200,7 +200,7 @@ object ImgSrc extends Logging with implicits.Strings {
     }
   }
 
-  private def findLargestSrc(ImageElement: ImageMedia, profile: Profile): Option[String] = {
+  def findLargestSrc(ImageElement: ImageMedia, profile: Profile): Option[String] = {
     profile.largestFor(ImageElement).flatMap(_.url).map{ largestImage =>
       ImgSrc(largestImage, profile)
     }
