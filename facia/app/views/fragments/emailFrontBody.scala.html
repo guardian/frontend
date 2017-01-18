@@ -73,16 +73,18 @@
 
 @faciaCardSmall(card: ContentCard, withImage: Boolean) = {
     @paddedRow(Seq(toneClassFromStyle(card.cardStyle))) {
-        @if(withImage) {
-            @fullRowWithSubColumns(Seq("facia-card")) {
-                @subColumn(7, Seq("facia-card__text")) { @headline(card)}
-                @subColumn(5, Seq(), last = true) { @imgFromCard(card) }
+        <div class="facia-card">
+            @if(withImage) {
+                @fullRowWithSubColumns() {
+                    @subColumn(7, Seq("facia-card__text")) { @headline(card)}
+                    @subColumn(5, Seq(), last = true) { @imgFromCard(card) }
+                }
+            } else {
+                @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
+                    @headline(card)
+                }
             }
-        } else {
-            @fullRow(Seq("facia-card", "facia-card__text", "facia-card__text--last")) {
-                @headline(card)
-            }
-        }
+        </div>
     }
 }
 
