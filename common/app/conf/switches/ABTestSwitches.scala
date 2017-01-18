@@ -22,6 +22,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-paid-content-vs-outbrain",
+    "Displays a paid content widget instead of Outbrain",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-editorial-email-variants",
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
