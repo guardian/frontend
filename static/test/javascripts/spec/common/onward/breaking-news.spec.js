@@ -240,5 +240,49 @@ define([
                 }).then(done).catch(done.fail);
             });
         });
+
+        describe('banner emits ready events', function () {
+
+            beforeEach(function (done) {
+                injector.require([
+                    'common/utils/mediator'
+                ], function () {
+                    mediator = arguments[0];
+                    done();
+                }, function () {
+                    done();
+                });
+            });
+
+            afterEach(function () {
+                mediator.removeAllListeners();
+            });
+
+            it('should pass false when banner will not show', function (done) {
+
+                mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
+                    expect(breakingShown).toBe(false);
+                    done();
+                })
+
+                mockBreakingNewsWith([]).catch(done.fail);
+
+            });
+
+            it('should pass true when banner will show', function (done) {
+
+                mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
+                    expect(breakingShown).toBe(true);
+                    done();
+                })
+
+                var collections = [
+                    alertThatIs('unknown', {age: 2, collection: 'uk'})
+                ];
+
+                mockBreakingNewsWith(collections).catch(done.fail);
+
+            });
+        });
     });
 });
