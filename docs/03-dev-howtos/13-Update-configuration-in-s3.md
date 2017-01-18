@@ -12,27 +12,27 @@ To add or update a configuration item you need to:
 aws s3 ls --profile=frontend s3://aws-frontend-store/config/
 ```
 
-look for the most recent version ( the `v18` part ):
+look for the most recent version ( the `v21` part ):
 
 ```
-2016-08-30 21:52:58      31386 eu-west-1-frontend.v18.conf
+2016-08-30 21:52:58      31386 eu-west-1-frontend.v21.conf
 ```
 
-- Create a new copy of the s3 and bump the version number (change `v18` to `v19` ).
+- Create a new copy of the s3 and bump the version number (change `v21` to `v22` ).
 
 ```
-aws s3 cp --profile=frontend s3://aws-frontend-store/config/eu-west-1-frontend.v18.conf s3://aws-frontend-store/config/eu-west-1-frontend.v19.conf
+aws s3 cp --profile=frontend s3://aws-frontend-store/config/eu-west-1-frontend.v21.conf s3://aws-frontend-store/config/eu-west-1-frontend.v22.conf
 ```
 
 -  Download the new file locally:
 ```
-aws s3 cp --profile=frontend s3://aws-frontend-store/config/eu-west-1-frontend.v19.conf .
+aws s3 cp --profile=frontend s3://aws-frontend-store/config/eu-west-1-frontend.v22.conf .
 ```
 
 - Make your changes ....
 -- Test them locally by uploading these to s3
 ```
-aws s3 cp --profile=frontend eu-west-1-frontend.v19.conf s3://aws-frontend-store/config/eu-west-1-frontend.v19.conf
+aws s3 cp --profile=frontend eu-west-1-frontend.v22.conf s3://aws-frontend-store/config/eu-west-1-frontend.v22.conf
 ```
 and bump the version number `var s3ConfigVersion` in [/common/app/common/configuration.scala](https://github.com/guardian/frontend/blob/master/common/app/common/configuration.scala) to match the version of the config file you created.
 
@@ -40,7 +40,7 @@ and bump the version number `var s3ConfigVersion` in [/common/app/common/configu
 
 - Delete the local copy once you have finished
 ```
-rm eu-west-1-frontend.v19.conf
+rm eu-west-1-frontend.v22.conf
 ```
 
 - Once your pull request is merged, everything is done!
