@@ -17,7 +17,6 @@ define([
      */
     function Sticky(element, options) {
         this.element  = element;
-        this.sticks   = false;
         this.opts     = defaults(options || {}, {
             top: 0,
             containInParent: true,
@@ -27,7 +26,7 @@ define([
 
     Sticky.prototype.init = function init() {
         fastdom.read(function () {
-            this.absolutePos = window.pageYOffset + this.element.getBoundingClientRect().top;
+            this.offsetFromParent = this.element.getBoundingClientRect().top - this.element.parentNode.getBoundingClientRect().top;
         }, this);
         mediator.on('window:throttledScroll', this.updatePosition.bind(this));
         // kick off an initial position update
@@ -41,22 +40,17 @@ define([
         var css, message, stick;
 
         // have we scrolled past the element
-        if (this.sticks) {
-            if (window.pageYOffset < this.absolutePos) {
-                stick = false;
-                css = { top: null };
-                message = 'unfixed';
-            }
+        if (0 < parentRect.top + this.offsetFromParent) {
+            stick = false;
+            css = { top: null };
+            message = 'unfixed';
         } else {
-            if (elementRect.top <= this.opts.top) {
-                // make sure the element stays within its parent
-                var fixedTop = this.opts.containInParent && parentRect.bottom < this.opts.top + elementHeight ?
-                    Math.floor(parentRect.bottom - elementHeight - this.opts.top) :
-                    this.opts.top;
-                stick = true;
-                css = { top: fixedTop };
-                message = 'fixed';
-            }
+            stick = true;
+            var top = this.opts.containInParent && parentRect.bottom <= elementRect.height ?
+                Math.floor(parentRect.bottom - elementHeight - this.opts.top) :
+                this.opts.top;
+            css = { top: top };
+            message = 'fixed';
         }
 
         if (this.opts.emitMessage && message && message !== this.lastMessage) {
@@ -66,7 +60,6 @@ define([
 
         if (css) {
             fastdom.write(function () {
-                this.sticks = stick;
                 if (stick) {
                     bonzo(this.element).addClass('is-sticky').css(css);
                 } else {

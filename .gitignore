@@ -67,3 +67,8 @@ static/src/stylesheets/pasteup/.npmrc
 # http://ensime.github.io/
 .ensime
 .ensime_cache/
+
+# SSL certificates
+*.crt
+*.key
+

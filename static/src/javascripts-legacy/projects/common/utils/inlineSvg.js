@@ -12,7 +12,7 @@ define([
             var prefix = 'inline-',
                 dirs = name.split('/'),
                 imageType = dirs[1],
-                fileName = dirs.pop();
+                fileName = dirs.pop().split('.svg')[0];
 
             text.get(req.toUrl(dirs.join('/') + '/' + fileName + '.svg'), function (svg) {
 

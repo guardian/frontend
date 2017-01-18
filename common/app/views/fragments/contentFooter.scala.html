@@ -8,7 +8,7 @@
 <div class="content-footer @if(cssClass){content-footer--@cssClass}">
     @fragments.discussionFooter(content.content, content.trail.isCommentable, content.trail.isClosedForComments, content.content.shortUrlId)
 
-    @ContentFooterContainersLayout(content.content, related, isPaidContent) {
+    @ContentFooterContainersLayout(content.content, isPaidContent) {
         @fragments.storyPackagePlaceholder(content, related, isPaidContent)
     } {
         @fragments.onwardPlaceholder(isPaidContent)
@@ -20,8 +20,6 @@
         <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponentHigh(isPaidContent)</div>
     } {
         <div class="fc-container fc-container--commercial js-container--commercial">@fragments.commercial.commercialComponent()</div>
-    } {
-        @fragments.externalContentPlaceholder()
     }
 
 </div>
