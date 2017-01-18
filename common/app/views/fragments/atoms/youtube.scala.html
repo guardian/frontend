@@ -1,6 +1,7 @@
 @import conf.Configuration.site.host
 @import conf.Configuration.Media
 @import views.support.{RenderClasses, Video700}
+@import views.html.fragments.atoms.mediaAtomCaption
 
 @(media: model.content.MediaAtom, displayCaption: Boolean, embedPage: Boolean)(implicit request: RequestHeader)
 
@@ -34,7 +35,7 @@
     </div>
 
     @if(displayCaption) {
-        @simpleCaption(media.title)
+        @mediaAtomCaption(media.title)
     }
 }
 
