@@ -49,7 +49,7 @@
 
 @imgValue(image: com.gu.contentatom.thrift.Image) = @{
     val media =  model.content.MediaAtom.imageMediaMake(image, "")
-    ImgSrc.findNearestSrc(media, GoogleStructuredData).getOrElse("")
+    ImgSrc.findLargestSrc(media, GoogleStructuredData).getOrElse("")
 }
 
 @formatDuration(mins: Short) = @{s"PT${mins}M"}
