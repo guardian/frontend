@@ -2,12 +2,18 @@ define([
     'Promise',
     'common/utils/config',
     'common/utils/fastdom-promise',
+    'common/modules/experiments/ab',
     'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features'
-], function (Promise, config, fastdom, createSlot, commercialFeatures) {
+], function (Promise, config, fastdom, ab, createSlot, commercialFeatures) {
     return {
         init: init
     };
+
+    function isLuckyBastard() {
+        var testName = 'PaidContentVsOutbrain';
+        return ab.testCanBeRun(testName) && ab.getTestVariantId(testName) === 'lucky-bastards';
+    }
 
     function init() {
         if (!commercialFeatures.highMerch) {
@@ -19,7 +25,12 @@ define([
         var container = document.createElement('div');
 
         container.className = 'fc-container fc-container--commercial';
-        container.appendChild(createSlot(config.page.isAdvertisementFeature ? 'high-merch-paid' : 'high-merch'));
+        container.appendChild(createSlot(config.page.isAdvertisementFeature ?
+            'high-merch-paid' :
+            isLuckyBastard() ?
+            'high-merch-lucky' :
+            'high-merch'
+        ));
 
         return fastdom.write(function () {
             anchor.parentNode.insertBefore(container, anchor);
