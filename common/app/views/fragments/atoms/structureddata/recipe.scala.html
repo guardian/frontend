@@ -2,6 +2,7 @@
 @import play.api.libs.json.Json
 @import views.support.{ImgSrc, GoogleStructuredData}
 @import org.joda.time.DateTime
+@import cats.implicits._
 
 <script type="application/ld+json">
      {
@@ -30,14 +31,10 @@
        "reviewCount": "52"
      },
      *@
-
-     @recipe.data.time.preparation.map {minutes => "prepTime": "@formatDuration(minutes)",}
-     @recipe.data.time.cooking.map {minutes => "cookTime": "@formatDuration(minutes)",}
-     
-     @* TODO - @recipe.data.time.total.map {minutes => "totalTime": "@formatDuration(minutes)",}  *@
-
-     @recipe.data.serves.map { serves => "recipeYield": "@yieldValue(serves)",}
-
+      @recipe.data.time.preparation.map {minutes => "prepTime": "PT@{minutes}M",}
+      @recipe.data.time.cooking.map {minutes => "cookTime": "PT@{minutes}M",}
+      @recipe.data.time.preparation.combine(recipe.data.time.cooking).map { minutes => "totalTime": "PT@{minutes}M",}
+      @recipe.data.serves.map { serves => "recipeYield": "@yieldValue(serves)",}
      @*
      TODO - We do not have nutrition in the model yet  
      "nutrition": {
@@ -56,8 +53,6 @@
     val media =  model.content.MediaAtom.imageMediaMake(image, "")
     ImgSrc.findLargestSrc(media, GoogleStructuredData).getOrElse("")
 }
-
-@formatDuration(mins: Short) = @{s"PT${mins}M"}
 
 @yieldValue(serves: com.gu.contentatom.thrift.atom.recipe.Serves) = @{
     serves.`type` match {
