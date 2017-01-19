@@ -6,13 +6,13 @@ import akka.util.Timeout
 import authentication.AuthenticationSupport
 import common.ExecutionContexts
 import conf.Configuration
-import controllers.BreakingNews.{BreakingNewsApi, BreakingNewsUpdater, GetAlertsRequest, NewNotificationRequest}
 import model.Cached.RevalidatableResult
-import model.{Cors, Cached}
+import model.{Cached, Cors}
 import models.NewsAlertNotification
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.BodyParsers.parse.{json => BodyJson}
 import play.api.mvc._
+import services.breakingnews._
 
 import scala.concurrent.duration._
 

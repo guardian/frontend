@@ -1,6 +1,7 @@
 @import conf.Configuration.site.host
 @import conf.Configuration.Media
 @import views.support.{RenderClasses, Video700}
+@import views.html.fragments.atoms.mediaAtomCaption
 
 @(media: model.content.MediaAtom, displayCaption: Boolean, embedPage: Boolean)(implicit request: RequestHeader)
 
@@ -33,11 +34,8 @@
             }
     </div>
 
-
     @if(displayCaption) {
-        <figcaption class="caption caption--main" itemprop="description">
-        @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon", "rounded-icon"))
-        @media.title</figcaption>
+        @mediaAtomCaption(media.title)
     }
 }
 

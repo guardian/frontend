@@ -187,23 +187,23 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
             });
         });
 
-        describe('Commercial components on fronts', function () {
-            it('Runs by default on fronts', function () {
+        describe('High-relevance commercial component', function () {
+            it('Does not run on fronts', function () {
                 config.page.isFront = true;
                 features = new CommercialFeatures;
-                expect(features.frontCommercialComponents).toBe(true);
+                expect(features.highMerch).toBe(false);
             });
 
-            it('Does not run outside fronts', function () {
+            it('Does run on outside of fronts', function () {
                 config.page.isFront = false;
                 features = new CommercialFeatures;
-                expect(features.frontCommercialComponents).toBe(false);
+                expect(features.highMerch).toBe(true);
             });
 
             it('Does not run on minute articles', function () {
                 config.page.isMinuteArticle = true;
                 features = new CommercialFeatures;
-                expect(features.frontCommercialComponents).toBe(false);
+                expect(features.highMerch).toBe(false);
             });
         });
 

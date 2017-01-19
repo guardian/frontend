@@ -7,6 +7,22 @@ $gutter-large: 55px;
 
 $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
+@mixin trailing-slash {
+    position: absolute;
+    pointer-events: none;
+    content: '/';
+    //optically aligns slashes
+    top: 0;
+    right: -.19em;
+}
+
+@mixin nav-links {
+    position: relative;
+    padding-left: .3em;
+    padding-right: .35em;
+    float: left;
+}
+
 // When the menu is open this class is added to the html to prevent users from scrolling
 .nav-is-open {
     overflow: hidden;
@@ -190,32 +206,26 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
 .new-header__nav__link {
     // Override a from _lists.scss
-    color: #ffffff;
-    position: relative;
-    padding-left: .3em;
-    padding-right: .35em;
-    float: left;
+    color: $news-support-1;
+    @include nav-links;
     cursor: pointer;
 
     &:focus,
     &:hover {
         text-decoration: none;
+        color: #ffffff;
     }
 
     &:first-child {
         padding-left: $gs-gutter / 2;
     }
 
-    &:before {
-        position: absolute;
-        pointer-events: none;
-        content: '/';
-        //optically aligns slashes
-        left: -.19em;
+    &:after {
+        @include trailing-slash;
         color: $news-main-2;
     }
 
-    &:first-of-type:before {
+    &:last-of-type:after {
         content: none;
     }
 }
@@ -719,51 +729,42 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 /****************
  * Tertiary Nav
  ****************/
-
-.tertiary-container {
-    overflow: hidden;
-    border-bottom: $gs-baseline / 2 solid #747a81;
-}
-
 .tertiary-navigation {
-    margin: 0;
     background-color: #747a81;
+    padding-top: $gs-baseline / 3;
+    // Spacer that prevents links flowing beneath the veggie burger
+    //padding-right: $gutter-medium + ($veggie-burger-medium / 2);
     padding-left: $gs-gutter / 2;
-    padding-right: $gs-gutter / 2;
-    list-style: none;
-    white-space: nowrap;
-    display: flex;
-    padding-top: $gs-baseline / 2;
+    padding-right: $gutter-medium + ($veggie-burger-medium / 2);
+    margin-left: -4px;
+    border-bottom: $gs-baseline / 3 solid #747a81;
     max-height: $gs-baseline * 3.4;
-    flex-wrap: wrap;
+    overflow: hidden;
 
     @include mq($from: mobile, $until: mobileLandscape) {
-        max-height: $gs-baseline * 4;
-        max-height: 14.8vw;
+        max-height: $gs-baseline * 3.5;
+        max-height: 13vw;
+        margin-left: -.3em;
     }
 
     @include mq($from: mobileLandscape) {
-        max-height: $gs-baseline*5.5;
+        max-height: $gs-baseline * 4.8;
         padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        margin-left: -5px;
+        padding-right: $gutter-large + ($veggie-burger-medium / 2);
     }
 }
 
 .tertiary-navigation__link {
-    @include fs-textSans(4);
-    position: relative;
+    @include fs-textSans(5);
+    @include nav-links
     color: $neutral-4;
-    display: block;
-    line-height: 1.5em;
+    line-height: 1.3em;
 
     &:hover,
     &:focus {
         text-decoration: none;
         color: #ffffff;
-    }
-
-    .tertiary-navigation__item--current-section & {
-        color: $news-support-1;
     }
 
     @include mq($from: mobile, $until: mobileLandscape) {
@@ -776,18 +777,17 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     }
 
     &:after {
-        pointer-events: none;
-        content: '/';
+        @include trailing-slash;
         color: rgba(255, 255, 255, .3);
-        margin-left: -.1em;
-        padding: 0 $gs-gutter / 10;
+    }
+
+    &:last-of-type:after {
+        content: none;
     }
 }
 
-.tertiary-navigation__item:last-of-type .tertiary-navigation__link {
-    &:after {
-        content: '';
-    }
+.tertiary-navigation__link--current-section {
+    color: #ffffff;
 }
 
 /****************
@@ -885,15 +885,19 @@ $caption-button-size: 32px;
             padding-top: $gs-baseline / 2;
         }
 
-        .section-indicator:after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            margin-left: -$gs-baseline / 2;
-            border-bottom: $gs-baseline / 2 solid #747a81;
-            border-left: $gs-baseline / 2 solid transparent;
-            border-right: $gs-baseline / 2 solid transparent;
+        .section-indicator {
+            color: #ffffff;
+
+            &:before {
+                content: '';
+                position: absolute;
+                left: 50%;
+                bottom: 0;
+                margin-left: -$gs-baseline / 2;
+                border-bottom: $gs-baseline / 2 solid #747a81;
+                border-left: $gs-baseline / 2 solid transparent;
+                border-right: $gs-baseline / 2 solid transparent;
+            }
         }
     }
 }

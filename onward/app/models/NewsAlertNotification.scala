@@ -2,11 +2,9 @@ package models
 
 import java.net.URI
 import java.util.UUID
-
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.json._
-
 import scala.util.{Failure, Success, Try}
 
 case class NewsAlertNotification(uid: UUID,

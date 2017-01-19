@@ -1,10 +1,10 @@
-package controllers.BreakingNews
+package services.breakingnews
 
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import play.api.libs.json._
-import services.S3
 import play.api.{Environment, Mode}
+import services.S3
 
 class S3BreakingNews(environment: Environment) extends S3 {
   override lazy val bucket = Configuration.aws.bucket

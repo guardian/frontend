@@ -1,19 +1,26 @@
-@(tags: model.Tags)
+@(tags: model.Tags, amp: Boolean = false)
+@import views.support.RenderClasses
 
 @tags.contributors.headOption.map { profile =>
     @profile.properties.twitterHandle.map{ twitter =>
         <div class="meta__twitter">
-            <a href="http://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="button button--small button--secondary tone-colour">
+            <a href="http://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="@RenderClasses(Map(
+                    "button button--small button--secondary" -> !amp,
+                    "rounded-icon social-icon centered-icon" -> amp
+                ), "tone-colour") ">
                     @fragments.inlineSvg("twitter-bird", "icon", Seq("inline-tone-fill", "i-left"))
-                    <div class="contact hide-until-leftcol">@@@twitter</div>
+                    <div class="contact hide-until-leftcol @if(amp) {u-h}">@@@twitter</div>
             </a>
         </div>
     }
     @profile.properties.emailAddress.map { email =>
         <div class="meta__email">
-            <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address" class="button button--small button--secondary tone-colour">
+            <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address" class="@RenderClasses(Map(
+                    "button button--small button--secondary" -> !amp,
+                    "rounded-icon social-icon centered-icon" -> amp
+                ), "tone-colour") ">
                     @fragments.inlineSvg("mail", "icon", Seq("inline-tone-fill", "i-left"))
-                    <div class="contact hide-until-leftcol">email</div>
+                    <div class="contact hide-until-leftcol @if(amp) {u-h}">email</div>
             </a>
         </div>
     }
