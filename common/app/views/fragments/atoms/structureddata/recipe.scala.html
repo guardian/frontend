@@ -62,20 +62,15 @@
     }
 }
 
-
 @*
   TODO - ingredient unit could be improved 1/8 instead of 0.125 for instance depending on the unit 
 *@
 @ingredientValues(ingredients: Seq[com.gu.contentatom.thrift.atom.recipe.Ingredient]) = @{
-    ingredients.map { ingredient => 
-        val q = if (ingredient.quantity.isDefined) {
-            formatQuantity(ingredient.quantity.get)    
-        } else if (ingredient.quantityRange.isDefined) {
-            val range = ingredient.quantityRange.get
-            s"${formatQuantity(range.from)}-${formatQuantity(range.to)}"
-        } else {
-            ""
-        }
+    ingredients.map { ingredient =>
+        val q = ingredient.quantity
+          .map(formatQuantity)
+          .orElse(ingredient.quantityRange.map(range => s"${formatQuantity(range.from)}-${formatQuantity(range.to)}" ))
+          .getOrElse("")
         s"""${q} ${formatUnit(ingredient.unit.getOrElse(""))} ${ingredient.item}"""
     }
 }
@@ -90,15 +85,12 @@
 }
 
 @formatQuantity(q: Double) = @{
-    if(q == q.toInt) {
-        q.toInt
-    } else {
-        q match {
-            case 0.75 => "3/4"
-            case 0.5 => "1/2"
-            case 0.25 => "1/4"
-            case 0.125 => "1/8"
-            case _ => q 
-        }
+    q match {
+        case qty if qty == qty.toInt => qty.toInt 
+        case 0.75 => "3/4"
+        case 0.5 => "1/2"
+        case 0.25 => "1/4"
+        case 0.125 => "1/8"
+        case _ => q 
     }
 }
