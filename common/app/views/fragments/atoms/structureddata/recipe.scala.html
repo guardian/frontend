@@ -20,7 +20,7 @@
       @recipe.atom.contentChangeDetails.published.map { published => "datePublished": "@{new DateTime(published.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
       @recipe.atom.contentChangeDetails.lastModified.map { modified => "dateModified": "@{new DateTime(modified.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
 
-      "description": "a tasteful @{recipe.data.tags.category.headOption.getOrElse("recipe")} with @{recipe.data.ingredientsLists.flatMap(_.ingredients).headOption.map(_.item).getOrElse("secrets ingredients! You need to know about them")}",
+      "description": "a tasty @{recipe.data.tags.category.headOption.getOrElse("recipe")} with @{recipe.data.ingredientsLists.flatMap(_.ingredients).headOption.map(_.item).getOrElse("secrets ingredients! You need to know about them")}",
      
      @* 
      TODO - We do not have this description and rating in the model yet  
