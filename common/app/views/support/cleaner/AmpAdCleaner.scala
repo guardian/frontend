@@ -89,8 +89,8 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
 
   def adAfter(element: Element) = {
     // data-use-beta-a4a-implementation will throw an error if the page is not in the AMP CDN
-    // Lets prevent it appearing in Dev and Code
-    if(Configuration.environment.stage.toLowerCase == "code" || Configuration.environment.stage.toLowerCase == "dev") {
+    // Lets prevent it appearing in Dev
+    if(Configuration.environment.stage.toLowerCase == "dev") {
       val ampAd = <div class="amp-ad-container">
         <amp-ad width="300" height="250" type="doubleclick" data-loading-strategy="prefer-viewability-over-views"
                 json={AmpAd(article, uri, edition.id.toLowerCase()).toString()}
