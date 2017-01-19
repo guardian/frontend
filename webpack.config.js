@@ -44,7 +44,7 @@ module.exports = {
             'videojs-persistvolume': 'components/videojs-persistvolume/videojs.persistvolume',
             'videojs-playlist': 'components/videojs-playlist-audio/videojs.playlist',
 
-            // once r.js is gone, these can be unaliased and modules updated
+            // #wp-rjs once r.js is gone, these can be unaliased and modules updated
             react: 'react/addons',
 
             // plugins
