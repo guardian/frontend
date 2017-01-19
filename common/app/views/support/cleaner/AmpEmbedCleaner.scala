@@ -48,6 +48,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   case class YoutubeExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-youtube")
   case class VimeoExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-vimeo")
 
+
   object AmpExternalVideo {
     def getAmpExternalVideoByUrl(videoUrl: String) : Option[AmpExternalVideo] = {
       val youtubePattern = """^https?:\/\/www\.youtube\.com\/watch\?v=([^#&?]+).*""".r
@@ -213,6 +214,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }
   }
 
+
   def cleanAmpMaps(document: Document) = {
     document.getElementsByClass("element-map").foreach { embed: Element =>
       embed.getElementsByTag("iframe").foreach { element: Element =>
@@ -242,6 +244,28 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     }
   }
 
+
+  def cleanAmpComments(document: Document) = {
+
+    document.getElementsByClass("element-comment").foreach { figure: Element =>
+      figure.getElementsByTag("img").foreach { image: Element =>
+        val ampImg = document.createElement("amp-img")
+        val attrs = Map(
+          "class" -> image.attr("class"),
+          "src" -> image.attr("src"),
+          "height" -> image.attr("height"),
+          "width" -> image.attr("width"),
+          "alt" -> image.attr("alt"),
+          "layout" -> "fixed")
+        attrs.foreach {
+          case (key, value) => ampImg.attr(key, value)
+        }
+        image.replaceWith(ampImg)
+      }
+    }
+  }
+
+
   def cleanAmpEmbed(document: Document) = {
     document.getElementsByClass("element-embed")
       .filter(_.getElementsByTag("iframe").nonEmpty)
@@ -267,6 +291,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     cleanAmpMaps(document)
     cleanAmpInstagram(document)
     cleanAmpInteractives(document)
+    cleanAmpComments(document)
     //run cleanAmpEmbed last as it has a generic action and can remove some embed types that are actioned by the other objects
     cleanAmpEmbed(document)
 

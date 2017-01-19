@@ -6,9 +6,12 @@ import java.net.URLDecoder
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import model.{Article, Content}
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
+import org.jsoup.nodes.{Element, Document}
 import org.scalatest.{FlatSpec, Matchers}
 import org.apache.commons.lang.StringEscapeUtils
+
+import scala.collection.JavaConversions._
+
 
 class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
@@ -29,6 +32,19 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     cleaner.clean(document)
     document
   }
+
+  private def article() = {
+    val contentApiItem = contentApi()
+    val content = Content.make(contentApiItem)
+    Article.make(content)
+  }
+
+  private def contentApi() = ApiContent(
+    id = "foo/2012/jan/07/bar",
+    webTitle = "Some article",
+    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar"
+  )
 
   private def cleanDocumentWithVideos(videoUrls: String*): Document = {
     val doc = <html>
@@ -346,16 +362,35 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
 
-  private def article() = {
-    val contentApiItem = contentApi()
-    val content = Content.make(contentApiItem)
-    Article.make(content)
-  }
+  /*
+  * Comments cleaner
+  */
 
-  private def contentApi() = ApiContent(
-    id = "foo/2012/jan/07/bar",
-    webTitle = "Some article",
-    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar"
-  )
+  "AmpEmbedCleaner" should "change the avatar img in a comment to be an amp-img" in {
+    val doc = s"""<html>
+      <body>
+      <figure class="element element-comment" data-canonical-url="https://discussion.theguardian.com/comment-permalink/88222201">
+        <div class="d2-comment-embedded" itemtype="http://schema.org/Comment">
+          <div class="d2-left-col">
+            <a href="https://profile.theguardian.com/user/id/12345678">
+              <img class="d2-avatar" src="https://avatar.guim.co.uk/user/15301515" height="40" width="40" alt="User avatar for fooBar">
+            </a>
+          </div>
+          <div class="d2-right-col">
+          </div>
+          <div class="d2-permalink">
+          </div>
+          <div class="d2-body" itemprop="text">
+            <p>foo bar foo foo bar</p>
+          </div>
+        </div>
+      </figure>
+      </body>
+      </html>"""
+    //val document = Jsoup.parse(StringEscapeUtils.unescapeXml(doc))
+    val document = Jsoup.parse(doc)
+    val result = clean(document)
+    assert((result.getElementsByTag("img").size == 0) && (result.getElementsByTag("amp-img").size == 1))
+
+  }
 }
