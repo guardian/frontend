@@ -76,9 +76,6 @@ define([
                     timingLabel: timingLabel
                 });
             } else {
-                if (!config.googleAnalytics.timingEvents) {
-                    config.googleAnalytics.timingEvents = [];
-                }
 
                 mediator.on('modules:ga:ready', mapEvents);
 
