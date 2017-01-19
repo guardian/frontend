@@ -56,7 +56,7 @@ object Dependencies {
   val scalajTime = "org.scalaj" % "scalaj-time_2.10.2" % "0.7"
   val scalaTest = "org.scalatest" %% "scalatest" % "2.2.6" % Test
   val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
-  val scalaUri = "com.netaporter" % "scala-uri_2.11" % "0.4.11"
+  val scalaUri = "com.netaporter" % "scala-uri" % "0.4.16"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % seleniumVersion
   val shadeMemcached = "com.bionicspirit" %% "shade" % "1.6.0"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % slf4jVersion
