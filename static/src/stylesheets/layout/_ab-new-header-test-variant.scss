@@ -917,6 +917,11 @@ $caption-button-size: 32px;
 .footer__back-to-top__container {
     @include content-gutter();
     background-color: $guardian-brand;
+
+    a:hover > &,
+    a:focus > & {
+        background-color: $guardian-brand-dark;
+    }
 }
 
 .footer__back-to-top {
@@ -937,10 +942,11 @@ $caption-button-size: 32px;
 .back-to-top__text {
     display: inline-block;
     color: white;
-    padding: 4px;
+    line-height: 30px;
+    padding-right: $gs-gutter / 2;
 
     @include mq($mobile-medium) {
-        padding: 9px;
+        line-height: 40px;
     }
 }
 
@@ -948,7 +954,7 @@ $caption-button-size: 32px;
     position: relative;
     float: right;
     margin-top: -($gs-baseline / 2);
-    margin-bottom: -$gs-baseline;
+    margin-bottom: -($gs-baseline / 2);
     border-radius: 100%;
     background-color: $news-main-2;
     cursor: pointer;
