@@ -45,12 +45,13 @@ const normaliseAssetMapForWebpack = assetMap =>
     // However, although we don't hash webpack files, they need to be in the hash directory
     // and in the asset map so we can get at them server side.
     // They're added to the map and copied, but since they're already hashed by webpack,
-    // we need to normalised the wepback asset name to a 'clean' one for use in templates e.g.
+    // we need to normalise the wepback asset name of the entry file to a 'clean' one
+    // for use in templates so that:
     //     'javascripts/boot-webpack.abc123.js': 'javascripts/boot-webpack.abc123.js'
-    //     ->
+    // becomes:
     //     'javascripts/boot-webpack.js': 'javascripts/boot-webpack.abc123.js'
     Object.keys(assetMap).reduce((normalisedAssetMap, asset) =>
-        Object.assign(normalisedAssetMap, { [asset.replace(/^(.+webpack)(\..+)(\.js)/, '$1$3')]: assetMap[asset] })
+        Object.assign(normalisedAssetMap, { [asset.replace(/(\/boot-webpack)(\..+)(\.js)/, '$1$3')]: assetMap[asset] })
     , {});
 
 function saveAssetMap(assetMap) {
