@@ -7,8 +7,13 @@ const Visualizer = require('webpack-visualizer-plugin');
 module.exports = {
     devtool: 'cheap-module-source-map',
     entry: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
+    output: {
+        path: path.join(__dirname, 'static', 'target', 'javascripts'),
+        filename: 'boot-webpack.[chunkhash].js',
+        publicPath: '/assets/javascripts/',
+    },
     resolve: {
-        modulesDirectories: [
+        modules: [
             path.join(__dirname, 'static', 'src'),
             path.join(__dirname, 'static', 'src', 'javascripts'),
             path.join(__dirname, 'static', 'src', 'javascripts-legacy'),
@@ -52,28 +57,34 @@ module.exports = {
             inlineSvg: 'projects/common/utils/inlineSvg',
         },
     },
-    externals: {
-        xhr2: {},
+    resolveLoader: {
+        alias: {
+            // these are only needed while require is still present
+            // should be updated once removed to be more wepback-like
+            text: 'raw-loader',
+            inlineSvg: 'inlineSvg-loader',
+        },
+        modules: [
+            path.resolve(__dirname, 'tools', 'packages'),
+            'node_modules',
+        ],
     },
-    output: {
-        path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: 'boot-webpack.[chunkhash].js',
-        publicPath: '/assets/javascripts/',
-    },
-    plugins: [
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.AggressiveMergingPlugin(),
-        new Visualizer({
-            filename: './webpack-stats.html',
-        }),
-    ],
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
                 exclude: /(node_modules|vendor|javascripts-legacy)/,
                 loader: 'babel-loader',
             },
         ],
+    },
+    plugins: [
+        new webpack.optimize.AggressiveMergingPlugin(),
+        new Visualizer({
+            filename: './webpack-stats.html',
+        }),
+    ],
+    externals: {
+        xhr2: {},
     },
 };

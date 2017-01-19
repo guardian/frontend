@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = (content) => {
+module.exports = function inlineSvgLoader(content) {
     // eslint-disable-next-line no-unused-expressions
     this.cacheable && this.cacheable(); // webpack-specfic weirdness
 
@@ -15,5 +15,3 @@ module.exports = (content) => {
 
     return `module.exports = ${JSON.stringify({ markup })}`;
 };
-
-module.exports.seperable = true;
