@@ -10,7 +10,6 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
         filename: 'boot-webpack.[chunkhash].js',
-        publicPath: '/assets/javascripts/',
     },
     resolve: {
         modules: [

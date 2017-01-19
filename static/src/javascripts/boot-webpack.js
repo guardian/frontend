@@ -2,6 +2,10 @@ import domready from 'domready';
 import raven from 'common/utils/raven';
 import bootStandard from 'bootstraps/standard/main';
 
+// let webpack know where to get files from
+// eslint-disable-next-line camelcase,no-undef
+__webpack_public_path__ = `${window.guardian.config.page.assetsPath}javascripts/`;
+
 domready(() => {
     const guardian = window.guardian;
     const config = guardian.config;
