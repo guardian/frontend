@@ -65,9 +65,6 @@
     }
 }
 
-@*
-  TODO - ingredient unit could be improved 1/8 instead of 0.125 for instance depending on the unit 
-*@
 @ingredientValues(ingredients: Seq[com.gu.contentatom.thrift.atom.recipe.Ingredient]) = @{
     ingredients.map { ingredient =>
         val q = ingredient.quantity
