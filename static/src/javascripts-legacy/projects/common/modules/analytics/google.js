@@ -67,24 +67,18 @@ define([
         if (window.performance) {
             // Value must be an integer - grabs the number of milliseconds since page load
             var timeSincePageLoad = Math.round(window.performance.now());
+            var eventObj = {
+                timingCategory: timingCategory,
+                timingVar: timingVar,
+                timeSincePageLoad: timeSincePageLoad,
+                timingLabel: timingLabel
+            };
 
             if (window.ga) {
-                sendPerformanceEvent({
-                    timingCategory: timingCategory,
-                    timingVar: timingVar,
-                    timeSincePageLoad: timeSincePageLoad,
-                    timingLabel: timingLabel
-                });
+                sendPerformanceEvent(eventObj);
             } else {
-
                 mediator.on('modules:ga:ready', mapEvents);
-
-                config.googleAnalytics.timingEvents.push({
-                    timingCategory: timingCategory,
-                    timingVar: timingVar,
-                    timeSincePageLoad: timeSincePageLoad,
-                    timingLabel: timingLabel
-                })
+                config.googleAnalytics.timingEvents.push(eventObj)
             }
         }
     }
