@@ -92,18 +92,51 @@ object NewNavigation {
     val name = "opinion"
 
     val uk = NavLinkLists(
-      List(opinion, NavLink("Polly Toynbee", "/profile/pollytoynbee"), NavLink("Owen Jones", "/profile/owen-jones"), NavLink("Marina Hyde", "/profile/marinahyde")),
-      List(NavLink("George Monbiot", "/profile/georgemonbiot"), NavLink("Gary Younge", "/profile/garyyounge"), NavLink("Nick Cohen", "/profile/nickcohen"), columnists, theGuardianView, cartoons)
+      List(
+        opinion,
+        NavLink("Polly Toynbee", "/profile/pollytoynbee"),
+        NavLink("Owen Jones", "/profile/owen-jones"),
+        NavLink("Marina Hyde", "/profile/marinahyde")
+      ),
+      List(
+        NavLink("George Monbiot", "/profile/georgemonbiot"),
+        NavLink("Gary Younge", "/profile/garyyounge"),
+        NavLink("Nick Cohen", "/profile/nickcohen"),
+        columnists,
+        theGuardianView,
+        cartoons
+      )
     )
 
     val au = NavLinkLists(
-      List(opinion, NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"), NavLink("Katharine Murphy", "/profile/katharine-murphy"), NavLink("Kristina Keneally", "/profile/kristina-keneally")),
-      List(NavLink("Richard Ackland", "/profile/richard-ackland"), NavLink("Van Badham", "/profile/van-badham"), NavLink("Lenore Taylor", "/profile/lenore-taylor"), NavLink("Jason Wilson", "/profile/wilson-jason"), NavLink("Brigid Delaney", "/profile/brigiddelaney"), columnists)
+      List(opinion,
+        NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
+        NavLink("Katharine Murphy", "/profile/katharine-murphy"),
+        NavLink("Kristina Keneally", "/profile/kristina-keneally")
+      ),
+      List(
+        NavLink("Richard Ackland", "/profile/richard-ackland"),
+        NavLink("Van Badham", "/profile/van-badham"),
+        NavLink("Lenore Taylor", "/profile/lenore-taylor"),
+        NavLink("Jason Wilson", "/profile/wilson-jason"),
+        NavLink("Brigid Delaney", "/profile/brigiddelaney"),
+        columnists
+      )
     )
 
     val us = NavLinkLists(
-      List(opinion, NavLink("Jill Abramson", "/profile/jill-abramson"), NavLink("Jessica Valenti", "/commentisfree/series/jessica-valenti-column"), NavLink( "Steven W Thrasher", "/profile/steven-w-thrasher")),
-      List(NavLink("Trevor Timm", "/profile/trevor-timm"), NavLink("Rebecca Carroll", "/commentisfree/series/rebecca-carroll-column"), NavLink("Chelsea E Manning", "/profile/chelsea-e-manning"), columnists)
+      List(
+        opinion,
+        NavLink("Jill Abramson", "/profile/jill-abramson"),
+        NavLink("Jessica Valenti", "/commentisfree/series/jessica-valenti-column"),
+        NavLink( "Steven W Thrasher", "/profile/steven-w-thrasher")
+      ),
+      List(
+        NavLink("Trevor Timm", "/profile/trevor-timm"),
+        NavLink("Rebecca Carroll", "/commentisfree/series/rebecca-carroll-column"),
+        NavLink("Chelsea E Manning", "/profile/chelsea-e-manning"),
+        columnists
+      )
     )
 
     val int = NavLinkLists(
