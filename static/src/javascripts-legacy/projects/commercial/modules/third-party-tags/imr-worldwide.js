@@ -1,7 +1,9 @@
 define([
-    'common/utils/config'
+    'common/utils/config',
+    'common/modules/experiments/ab',
 ], function (
-    config
+    config,
+    ab
 ) {
     // The Nielsen NetRatings tag. Also known as IMR worldwide.
     var imrWorldwideUrl = '//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js';
@@ -87,7 +89,7 @@ define([
     }
 
     return {
-        shouldRun: config.switches.imrWorldwide,
+        shouldRun: config.switches.imrWorldwide && ab.getTestVariantId("NeilsenCheck") === "opt-in",
         url: imrWorldwideUrl,
         onLoad: onLoad
     };
