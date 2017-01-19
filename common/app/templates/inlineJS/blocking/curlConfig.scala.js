@@ -52,7 +52,6 @@ window.curlConfig = {
             bean:                           'components/bean/bean',
             bonzo:                          'components/bonzo/bonzo',
             react:                          'vendor/react/react',
-            classnames:                     'components/classnames/index',
             domReady:                       'components/domready/ready',
             EventEmitter:                   'components/eventEmitter/EventEmitter',
             fastclick:                      'components/fastclick/fastclick',
