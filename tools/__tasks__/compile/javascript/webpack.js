@@ -17,8 +17,9 @@ module.exports = {
         bundler.apply(new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production'),
         }));
-        bundler.apply(new webpack.optimize.OccurrenceOrderPlugin(true));
-        bundler.apply(new webpack.optimize.UglifyJsPlugin());
+        bundler.apply(new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
+        }));
 
         bundler.run((err, stats) => {
             if (err) {
