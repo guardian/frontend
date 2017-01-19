@@ -1,6 +1,7 @@
 @(recipe: model.content.RecipeAtom)(implicit request: RequestHeader)
 @import play.api.libs.json.Json
 @import views.support.{ImgSrc, GoogleStructuredData}
+@import org.joda.time.DateTime
 
 <script type="application/ld+json">
      {
@@ -13,8 +14,10 @@
           "@@type": "Person",
           "name": "@name"
         },
-      } 
-      @recipe.atom.contentChangeDetails.published.map { published => "datePublished": "@published",}
+      }
+      @recipe.atom.contentChangeDetails.created.map { created => "dateCreated": "@{new DateTime(created.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
+      @recipe.atom.contentChangeDetails.published.map { published => "datePublished": "@{new DateTime(published.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
+      @recipe.atom.contentChangeDetails.lastModified.map { modified => "dateModified": "@{new DateTime(modified.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
      
      @* 
      TODO - We do not have this description and rating in the model yet  
