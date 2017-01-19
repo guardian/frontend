@@ -2,7 +2,6 @@
 @import play.api.libs.json.Json
 @import views.support.{ImgSrc, GoogleStructuredData}
 @import org.joda.time.DateTime
-@import cats.implicits._
 
 <script type="application/ld+json">
      {
@@ -33,7 +32,7 @@
      *@
       @recipe.data.time.preparation.map {minutes => "prepTime": "PT@{minutes}M",}
       @recipe.data.time.cooking.map {minutes => "cookTime": "PT@{minutes}M",}
-      @recipe.data.time.preparation.combine(recipe.data.time.cooking).map { minutes => "totalTime": "PT@{minutes}M",}
+      @totalTime(recipe).map { minutes => "totalTime": "PT@{minutes}M",}
       @recipe.data.serves.map { serves => "recipeYield": "@yieldValue(serves)",}
      @*
      TODO - We do not have nutrition in the model yet  
@@ -48,6 +47,10 @@
      "recipeInstructions": @Html(Json.stringify(Json.toJson(recipe.data.steps.zipWithIndex.map { case(step,index) => s"$index. $step" })))
     }
 </script>
+
+@totalTime(recipe: model.content.RecipeAtom) = @{
+    (recipe.data.time.preparation ++ recipe.data.time.cooking).map(_.toInt).reduceOption(_ + _)
+}
 
 @imgValue(image: com.gu.contentatom.thrift.Image) = @{
     val media =  model.content.MediaAtom.imageMediaMake(image, "")
