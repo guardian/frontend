@@ -36,7 +36,11 @@ define([
             });
         }
 
-        return require('discussion-frontend-preact', function (frontend) {
+        // #wp-rjs
+        // this should be a bundler-agnostic require, but waiting for
+        // discussion to update the module to make it wp-compatible.
+        // killing this in WP for now
+        return window.require('discussion-frontend-preact', function (frontend) {
             // - Inject the net module to work around the lack of a global fetch
             //   It can be removed once all browsers have window.fetch
             // - Well, it turns out that fetchJson uses reqwest which sends X-Requested-With
