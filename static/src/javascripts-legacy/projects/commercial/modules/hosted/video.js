@@ -14,7 +14,6 @@ define([
     'common/modules/video/events',
     'common/modules/video/videojs-options',
     'common/modules/media/videojs-plugins/fullscreener',
-    'lodash/collections/contains',
     'text!common/views/ui/loading.html'
 ], function (
     Promise,
@@ -28,7 +27,6 @@ define([
     events,
     videojsOptions,
     fullscreener,
-    contains,
     loadingTmpl
 ) {
     var player;
