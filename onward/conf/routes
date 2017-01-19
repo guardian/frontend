@@ -78,3 +78,7 @@ GET        /most-read-mf2.json                        controllers.MostPopularCon
 GET        /related-mf2/*path.json                    controllers.RelatedController.renderMf2(path)
 GET        /series-mf2/*path.json                     controllers.SeriesController.renderMf2SeriesStories(path)
 GET        /editionalised-nav.json                    controllers.NavigationController.renderAmpNav()
+
+## Breaking-news
+GET     /news-alert/alerts                            controllers.NewsAlertController.alerts()
+POST    /news-alert/alert                             controllers.NewsAlertController.create()

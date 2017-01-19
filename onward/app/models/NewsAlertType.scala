@@ -2,8 +2,6 @@ package models
 
 import play.api.libs.json._
 
-import scala.util.{Failure, Success, Try}
-
 
 sealed trait NewsAlertType
 object NewsAlertTypes {

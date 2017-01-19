@@ -10,38 +10,6 @@ class ShouldServeFrontTest extends FlatSpec with Matchers with WithTestContext {
 
   val fronts = ConfigJson(
     Map(
-      "email-front" -> FrontJson(
-        collections = List("e59785e9-ba82-48d8-b79a-0a80b2f9f808"),
-        navSection = None,
-        webTitle = None,
-        title = None,
-        description = None,
-        onPageDescription = None,
-        imageUrl = None,
-        imageWidth = None,
-        imageHeight = None,
-        isImageDisplayed = None,
-        priority = Some("email"),
-        isHidden = None,
-        canonical = Some("e59785e9-ba82-48d8-b79a-0a80b2f9f808"),
-        group = Some("US professional")
-      ),
-      "hidden-email-front" -> FrontJson(
-        collections = List("e59785e9-ba82-48d8-b79a-0a80b2f9f808"),
-        navSection = None,
-        webTitle = None,
-        title = None,
-        description = None,
-        onPageDescription = None,
-        imageUrl = None,
-        imageWidth = None,
-        imageHeight = None,
-        isImageDisplayed = None,
-        priority = Some("email"),
-        isHidden = Some(true),
-        canonical = Some("e59785e9-ba82-48d8-b79a-0a80b2f9f808"),
-        group = Some("US professional")
-      ),
       "editorial-front" -> FrontJson(
         collections = List("e59785e9-ba82-48d8-b79a-0a80b2f9f808"),
         navSection = None,
@@ -111,17 +79,4 @@ class ShouldServeFrontTest extends FlatSpec with Matchers with WithTestContext {
     val previewContext = ApplicationContext(Environment.simple(), ApplicationIdentity("preview"))
     ConfigAgent.shouldServeFront("editorial-front")(previewContext) should be(true)
   }
-
-  it should "not serve an email front requested as a normal front" in {
-    ConfigAgent.shouldServeFront("email-front") should be(false)
-  }
-
-  it should "serve an email front requested as an email front" in {
-    ConfigAgent.shouldServeFront("email-front", isEmailRequest = true) should be(true)
-  }
-
-  it should "not serve a hidden email front requested as an email front" in {
-    ConfigAgent.shouldServeFront("hidden-email-front", isEmailRequest = true) should be(false)
-  }
-
 }

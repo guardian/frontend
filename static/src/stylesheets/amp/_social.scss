@@ -31,6 +31,51 @@
     width: 88%;
 }
 
+.social__item--more {
+    float: none;
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+}
+
+.social__item--revealer {
+    display: none;
+}
+
+.social__item--revealer:checked {
+    & ~ .social__secondary {
+        display: block;
+    }
+
+    & ~ .social__item--more {
+        .social-icon--more__svg {
+            display: none;
+        }
+
+        .social-icon--more {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48cGF0aCBmaWxsPSIjNzY3Njc2IiBkPSJNNy41IDlsLTYuNS03IDEtMSA3IDYuNSA3LTYuNSAxIDEtNi41IDcgNi41IDctMSAxLTctNi41LTcgNi41LTEtMSA2LjUtN3oiLz48L3N2Zz4=);
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+}
+
+.social-icon--more {
+    background-color: $neutral-5;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 2rem;
+}
+
+.social-icon--more__svg {
+    fill: $neutral-2;
+    width: 60%;
+
+    .centered-icon & {
+        top: -$gs-baseline / 6;
+    }
+}
+
 .social-icon--facebook {
     background-color: $social-facebook;
 }

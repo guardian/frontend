@@ -50,7 +50,6 @@ trait PreviewLifecycleComponents extends SportServices with CommercialServices w
 
 trait PreviewControllerComponents
   extends ApplicationsControllers
-    with AdminJobsControllers
     with ArticleControllers
     with CommercialControllers
     with FaciaControllers
@@ -77,7 +76,6 @@ trait AppComponents
   extends FrontendComponents
   with PreviewControllerComponents
   with PreviewLifecycleComponents
-  with AdminJobsServices
   with OnwardServices
   with ApplicationsServices {
 

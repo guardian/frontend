@@ -1,21 +1,22 @@
 @import views.support.RenderClasses
+@import views.html.fragments.atoms.mediaAtomCaption
 
-@(media: model.content.MediaAtom, displayCaption: Boolean)(implicit request: RequestHeader)
+@(media: model.content.MediaAtom, displayCaption: Boolean, amp: Boolean)(implicit request: RequestHeader)
 
-    <div class="@RenderClasses(Map(
+    @if(!amp) {
+        <div class="@RenderClasses(Map(
         "u-responsive-ratio" -> true,
         "u-responsive-ratio--hd" -> true
     ))">
+        }
+    @Html(media.defaultHtml)
 
-        @Html(media.defaultHtml)
-
+    @if(!amp){
     </div>
+    }
 
-@if(displayCaption) {
-    <figcaption class="caption caption--main" itemprop="description">
-        @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon", "rounded-icon"))
-        @media.title
-    </figcaption>
-}
+    @if(displayCaption) {
+        @mediaAtomCaption(media.title)
+    }
 
 

@@ -19,6 +19,7 @@ import play.api.routing.Router
 import play.api.libs.ws.WSClient
 import router.Routes
 import services.OphanApi
+import services.breakingnews.{BreakingNewsApi, S3BreakingNews}
 import weather.WeatherApi
 
 class AppLoader extends FrontendApplicationLoader {
@@ -43,6 +44,8 @@ trait OnwardServices {
   lazy val mostViewedAudioAgent = wire[MostViewedAudioAgent]
   lazy val mostViewedGalleryAgent = wire[MostViewedGalleryAgent]
   lazy val mostViewedVideoAgent = wire[MostViewedVideoAgent]
+  lazy val s3BreakingNews = wire[S3BreakingNews]
+  lazy val breakingNewsApi = wire[BreakingNewsApi]
 }
 
 trait AppComponents extends FrontendComponents with OnwardControllers with OnwardServices {

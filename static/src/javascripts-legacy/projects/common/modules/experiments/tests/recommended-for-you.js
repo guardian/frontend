@@ -12,9 +12,9 @@ define([
     'common/utils/ajax',
     'text!common/views/experiments/recommended-for-you.html',
     'text!common/views/experiments/recommended-for-you-opt-in.html',
-    'inlineSvg!svgs/icon/profile-36',
-    'inlineSvg!svgs/icon/arrow-right',
-    'inlineSvg!svgs/icon/marque-36',
+    'inlineSvg!svgs/icon/profile-36.svg',
+    'inlineSvg!svgs/icon/arrow-right.svg',
+    'inlineSvg!svgs/icon/marque-36.svg',
     'common/utils/fetch-json'
 ], function (
     bean,
@@ -37,12 +37,14 @@ define([
 ) {
     return function () {
         this.id = 'RecommendedForYouRecommendations';
-        this.start = '2016-08-02';
+        this.start = '2017-01-17';
         this.expiry = '2017-02-21';
-        this.author = 'Joseph Smith';
-        this.description = 'Add a personalised container to fronts';
-        this.audience = 0;
-        this.audienceOffset = 0;
+        this.author = 'David Furey';
+        this.description = 'Add an extra container above Opinion on the home front with recommended content based on ' +
+            'each users history.  Users in the test group are prompted to opt-in.  Recommendations are only fetched' +
+            'if the user opts-in.';
+        this.audience = 0.01;
+        this.audienceOffset = 0.2;
         this.successMeasure = 'Visit frequency';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';

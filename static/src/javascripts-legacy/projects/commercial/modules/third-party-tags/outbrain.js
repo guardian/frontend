@@ -12,7 +12,8 @@ define([
     'commercial/modules/third-party-tags/outbrain-codes',
     'text!commercial/views/outbrain.html',
     'common/modules/email/run-checks',
-    'common/modules/experiments/ab-test-clash'
+    'common/modules/experiments/ab-test-clash',
+    'common/utils/load-script'
 ], function (
     Promise,
     fastdom,
@@ -27,7 +28,8 @@ define([
     getCode,
     outbrainStr,
     emailRunChecks,
-    clash
+    clash,
+    loadScript
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
     var outbrainTpl = template(outbrainStr);
@@ -86,7 +88,7 @@ define([
                 $outbrain.css('display', 'block');
             }).then(function () {
                 module.tracking(widgetCodes.code || widgetCodes.image);
-                require(['js!' + outbrainUrl]);
+                loadScript(outbrainUrl);
             });
         }
     }

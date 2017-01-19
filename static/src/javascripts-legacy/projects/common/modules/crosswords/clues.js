@@ -1,14 +1,14 @@
 define([
-    'classnames',
     'react',
     'bean',
     'fastdom',
+    './classNames',
     'common/utils/detect',
     'common/utils/scroller',
     'lodash/collections/map',
     'lodash/collections/filter',
     'common/utils/chain'
-], function (classNames, React, bean, fastdom, detect, scroller, map, filter, chain) {
+], function (React, bean, fastdom, classNames, detect, scroller, map, filter, chain) {
     var Clue = React.createClass({
 
         onClick: function () {

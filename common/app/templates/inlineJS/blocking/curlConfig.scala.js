@@ -36,9 +36,6 @@ window.curlConfig = {
             'bootstraps/enhanced/profile':          '@Static("javascripts/bootstraps/enhanced/profile.js")',
             'ophan/ng':                             '@{Configuration.javascript.config("ophanJsUrl")}',
 
-            'foresee.js':                       'vendor/foresee/20150703/foresee-trigger.js',
-            'googletag.js':                     '@{Configuration.javascript.config("googletagJsUrl")}',
-            'sonobi.js':                        '@{ if(!environment.isCode) Configuration.javascript.config("sonobiHeaderBiddingJsUrl") else "//mtrx.go.sonobi.com/morpheus.theguardian.12911_us_.js"}',
             react:                              '@Static("javascripts/vendor/react/react.js")',
             'discussion-frontend-react':        '@DiscussionAsset("discussion-frontend.react.amd")',
             'discussion-frontend-preact':       '@DiscussionAsset("discussion-frontend.preact.amd")',
@@ -55,7 +52,6 @@ window.curlConfig = {
             bean:                           'components/bean/bean',
             bonzo:                          'components/bonzo/bonzo',
             react:                          'vendor/react/react',
-            classnames:                     'components/classnames/index',
             domReady:                       'components/domready/ready',
             EventEmitter:                   'components/eventEmitter/EventEmitter',
             fastclick:                      'components/fastclick/fastclick',
@@ -68,9 +64,6 @@ window.curlConfig = {
             raven:                          'components/raven-js/raven',
             reqwest:                        'components/reqwest/reqwest',
 
-            'foresee.js':                   'vendor/foresee/20150703/foresee-trigger.js',
-            'googletag.js':                 '@{Configuration.javascript.config("googletagJsUrl")}',
-            'sonobi.js':                    '@{ if(!environment.isCode) Configuration.javascript.config("sonobiHeaderBiddingJsUrl") else "//mtrx.go.sonobi.com/morpheus.theguardian.12911_us_.js"}',
             'ophan/ng':                     '@{Configuration.javascript.config("ophanJsUrl")}',
             'discussion-frontend-react':    '@DiscussionAsset("discussion-frontend.react.amd")',
             'discussion-frontend-preact':   '@DiscussionAsset("discussion-frontend.preact.amd")',
