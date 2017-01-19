@@ -34,7 +34,7 @@ define([
     var player;
 
     function isDesktop() {
-        return contains(['desktop', 'leftCol', 'wide'], detect.getBreakpoint());
+        return detect.isBreakpoint({ min: 'desktop' });
     }
 
     function initLoadingSpinner(player) {
