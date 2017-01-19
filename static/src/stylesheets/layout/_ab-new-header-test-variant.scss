@@ -206,13 +206,14 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
 .new-header__nav__link {
     // Override a from _lists.scss
-    color: #ffffff;
+    color: $news-support-1;
     @include nav-links;
     cursor: pointer;
 
     &:focus,
     &:hover {
         text-decoration: none;
+        color: #ffffff;
     }
 
     &:first-child {
@@ -766,10 +767,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
         color: #ffffff;
     }
 
-    &--current-section {
-        color: $news-support-1;
-    }
-
     @include mq($from: mobile, $until: mobileLandscape) {
         font-size: 16px;
         font-size: 5.1vw;
@@ -787,6 +784,10 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     &:last-of-type:after {
         content: none;
     }
+}
+
+.tertiary-navigation__link--current-section {
+    color: #ffffff;
 }
 
 /****************
@@ -884,15 +885,19 @@ $caption-button-size: 32px;
             padding-top: $gs-baseline / 2;
         }
 
-        .section-indicator:before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            margin-left: -$gs-baseline / 2;
-            border-bottom: $gs-baseline / 2 solid #747a81;
-            border-left: $gs-baseline / 2 solid transparent;
-            border-right: $gs-baseline / 2 solid transparent;
+        .section-indicator {
+            color: #ffffff;
+
+            &:before {
+                content: '';
+                position: absolute;
+                left: 50%;
+                bottom: 0;
+                margin-left: -$gs-baseline / 2;
+                border-bottom: $gs-baseline / 2 solid #747a81;
+                border-left: $gs-baseline / 2 solid transparent;
+                border-right: $gs-baseline / 2 solid transparent;
+            }
         }
     }
 }
