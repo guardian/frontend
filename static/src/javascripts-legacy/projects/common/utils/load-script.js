@@ -6,12 +6,14 @@ define([
 
     function loadScript(src, props) {
         if (typeof src !== 'string') {
-            return new Promise.reject('no src supplied');
+            return Promise.reject('no src supplied');
         }
+
+        if (document.querySelector('script[src="' + src + '"]')) {
+            return Promise.resolve();
+        }
+
         return new Promise(function (resolve) {
-            if (document.querySelector('script[src="' + src + '"]')) {
-                resolve();
-            }
             var ref = document.scripts[0];
             var script = document.createElement('script');
             script.src = src;
