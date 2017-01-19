@@ -83,11 +83,11 @@
 
 @formatQuantity(q: Double) = @{
     q match {
-        case qty if qty == qty.toInt => qty.toInt 
+        case qty if qty == qty.toInt => qty.toInt.toString
         case 0.75 => "3/4"
         case 0.5 => "1/2"
         case 0.25 => "1/4"
         case 0.125 => "1/8"
-        case _ => q 
+        case _ => q.toString
     }
 }
