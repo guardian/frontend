@@ -6,14 +6,14 @@ const Visualizer = require('webpack-visualizer-plugin');
 
 module.exports = {
     devtool: 'cheap-module-source-map',
-    entry: './static/src/javascripts/boot-webpack.js',
+    entry: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
     resolve: {
         modulesDirectories: [
-            'static/src',
-            'static/src/javascripts',
-            'static/src/javascripts-legacy',
-            'static/vendor/javascripts',
-            'node_modules',
+            path.join(__dirname, 'static', 'src'),
+            path.join(__dirname, 'static', 'src', 'javascripts'),
+            path.join(__dirname, 'static', 'src', 'javascripts-legacy'),
+            path.join(__dirname, 'static', 'vendor', 'javascripts'),
+            'node_modules', // default location, but we're overiding above, so it needs to be explicit
         ],
         alias: {
             admin: 'projects/admin',
