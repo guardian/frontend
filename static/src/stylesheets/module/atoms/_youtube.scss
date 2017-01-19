@@ -95,6 +95,10 @@
         height: 34px;
         z-index: 2;
 
+        &:not(.youtube-media-atom__bottom-bar-enabled) {
+            @include hide;
+        }
+
         &::before,
         &::after {
             position: absolute;

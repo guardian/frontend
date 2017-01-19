@@ -115,9 +115,9 @@ define([
         };
 
         if (overlay) {
-            var formattedDuration = getFormattedDuration(players[atomId].player.getDuration());
-            
-            setDuration(formattedDuration, overlay);
+            if (!config.page.isFront) {
+                showDuration(atomId, overlay);
+            }    
             
             players[atomId].overlay = overlay;
 
@@ -148,10 +148,11 @@ define([
         return ('0' + time).slice(-2);
     }
 
-    function setDuration(formattedDuration, overlay) {
+    function showDuration(atomId, overlay) {
         var durationElem = overlay.querySelector('.youtube-media-atom__bottom-bar__duration');
 
-        durationElem.innerText = formattedDuration;
+        durationElem.innerText = getFormattedDuration(players[atomId].player.getDuration());
+        durationElem.parentNode.classList.add('youtube-media-atom__bottom-bar-enabled');
     }
 
     function getEndSlate(overlay) {
