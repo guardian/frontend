@@ -30,7 +30,6 @@ domready(() => {
 
     // 3. finally, try enhanced
     if (guardian.isEnhanced) {
-        // ********** WAITING FOR LOADerS **********
         require(['bootstraps/enhanced/main'], (bootEnhanced) => {
             bootEnhanced();
         });
