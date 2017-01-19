@@ -1,15 +1,17 @@
 define([
     'common/utils/config',
     'common/utils/cookies',
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/utils/load-script'
 ], function (
     config,
     Cookie,
-    detect
+    detect,
+    loadScript
     ) {
 
     function openForesee() {
-        require(['js!foresee.js']);
+        loadScript(window.guardian.config.libs.foresee);
     }
 
     function load() {

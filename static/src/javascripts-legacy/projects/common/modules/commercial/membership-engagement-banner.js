@@ -79,7 +79,7 @@ define([
             },
             INT: {
                 membership: {
-                    messageText: 'The Guardian’s voice is needed now more than ever. Support our journalism for just $69/€49 per year.',
+                    messageText: 'For less than the price of a coffee a week, you could help secure the Guardian\'s future. Support our journalism for $7 / €5 a month.',
                     campaignCode: "mem_int_banner",
                     minArticles: 3
                 }
@@ -172,9 +172,15 @@ define([
 
             if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
                 return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
+
                     if (canShow) {
-                        showBanner(bannerParams);
+                        mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
+                            if (!breakingShown) {
+                                showBanner(bannerParams);
+                            }
+                        });
                     }
+
                 });
             }
 

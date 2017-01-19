@@ -10,7 +10,7 @@ define([
         }
 
         return new Promise(function (resolve) {
-            var elem = document.querySelector('.facia-page > .paidfor-band, #article > .paidfor-band');
+            var elem = document.querySelector('.paidfor-band');
             if (elem) {
                 new Sticky(elem).init();
             }

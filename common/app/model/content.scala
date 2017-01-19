@@ -28,6 +28,7 @@ sealed trait ContentType {
   final def tags: Tags = content.tags
   final def elements: Elements = content.elements
   final def fields: Fields = content.fields
+  final def atoms: Option[Atoms] = content.atoms
   final def trail: Trail = content.trail
   final def metadata: MetaData = content.metadata
   final def commercial: Commercial = content.commercial

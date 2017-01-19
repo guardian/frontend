@@ -15,8 +15,7 @@ class CommercialTestSuite extends Suites (
   new soulmates.SoulmatesFeedTest,
   new LookupTest,
   new books.BookFinderTest,
-  new books.BookTest,
-  new test.CommercialAmpValidityTest
+  new books.BookTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19006
 }

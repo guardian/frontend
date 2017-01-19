@@ -143,9 +143,22 @@ define([
                 })[0] || {};
 
             return matchedRef.id;
-        }, getWhitelistedQueryParams = function() {
+        },
+        getWhitelistedQueryParams = function() {
             var whiteList = ['0p19G'];
             return pick(url.getUrlVars(), whiteList);
+        },
+        getBrandingType = function() {
+            switch(config.page.sponsorshipType) {
+                case 'sponsored':
+                    return 's';
+                case 'foundation':
+                    return 'f';
+                case 'paid-content':
+                    return 'p';
+                default:
+                    return '';
+            }
         };
 
     return function (opts) {
@@ -170,10 +183,11 @@ define([
                 ref:     getReferrer(),
                 co:      parseIds(page.authorIds),
                 bl:      parseIds(page.blogIds),
-                ob:      config.page.publication === 'The Observer' ? 't' : '',
+                ob:      page.publication === 'The Observer' ? 't' : '',
                 ms:      formatTarget(page.source),
                 fr:      getVisitedValue(),
-                tn:      uniq(compact([page.sponsorshipType].concat(parseIds(page.tones)))),
+                tn:      parseIds(page.tones),
+                br:      getBrandingType(),
                 // round video duration up to nearest 30 multiple
                 vl:      page.videoDuration ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
             }, getWhitelistedQueryParams());

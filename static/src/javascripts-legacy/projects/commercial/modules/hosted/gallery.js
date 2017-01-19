@@ -94,11 +94,19 @@ define([
     HostedGallery.prototype.initScroll = function () {
         bean.on(this.nextBtn, 'click', function(){
             this.scrollTo(this.index + 1);
-            this.trigger.bind(this, 'next', {nav: 'Click'});
+            if (this.index < this.$images.length) {
+                this.trigger('next', {nav: 'Click'});
+            } else {
+                this.trigger('reload');
+            }
         }.bind(this));
         bean.on(this.prevBtn, 'click', function(){
             this.scrollTo(this.index - 1);
-            this.trigger.bind(this, 'prev', {nav: 'Click'});
+            if (this.index > 1) {
+                this.trigger('prev', {nav: 'Click'});
+            } else {
+                this.trigger('reload');
+            }
         }.bind(this));
 
         bean.on(this.$scrollEl[0], 'scroll', throttle(this.fadeContent.bind(this), 20));
@@ -366,7 +374,8 @@ define([
 
     HostedGallery.prototype.trackNavBetweenImages = function (data) {
         if (data && data.nav) {
-            interactionTracking.trackNonClickInteraction(config.page.trackingPrefix + data.nav + ' - image ' + this.index);
+            var trackingPrefix = config.page.trackingPrefix || '';
+            interactionTracking.trackNonClickInteraction(trackingPrefix + data.nav + ' - image ' + this.index);
         }
     };
 
@@ -461,9 +470,11 @@ define([
                     gallery.loadAtIndex(parseInt(res[1], 10));
                 }
             }
+            return gallery;
         })
-        .then(function () {
+        .then(function (gallery) {
             performanceLogging.moduleEnd(moduleName);
+            return gallery;
         });
     }
 

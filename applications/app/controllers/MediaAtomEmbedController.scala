@@ -19,7 +19,7 @@ class MediaAtomEmbedController(contentApiClient: ContentApiClient)(implicit cont
     }
   }
 
-  def make(apiAtom: Option[ApiAtom]): Option[MediaAtom] = apiAtom map MediaAtom.make
+  def make(apiAtom: Option[ApiAtom]): Option[MediaAtom] = apiAtom map(atom => MediaAtom.make(atom = atom, endSlatePath = None))
 
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)

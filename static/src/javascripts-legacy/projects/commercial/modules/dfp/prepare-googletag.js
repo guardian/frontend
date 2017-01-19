@@ -12,6 +12,7 @@ define([
     'commercial/modules/dfp/on-slot-render',
     'commercial/modules/dfp/on-slot-load',
     'commercial/modules/dfp/performance-logging',
+    'common/utils/load-script',
 
     // These are cross-frame protocol messaging routines:
     'commercial/modules/messenger/get-stylesheet',
@@ -33,7 +34,8 @@ define([
     dfpEnv,
     onSlotRender,
     onSlotLoad,
-    performanceLogging
+    performanceLogging,
+    loadScript
 ) {
 
     var googleTagUrl = '//www.googletagservices.com/tag/js/gpt.js';
@@ -45,24 +47,28 @@ define([
 
     function init(moduleName) {
 
+        function moduleStart() {
+            // Use Custom Timing to time the googletag code without the sonobi pre-loading.
+            performanceLogging.moduleStart(moduleName);
+        }
+
         function moduleEnd() {
             performanceLogging.moduleEnd(moduleName);
         }
 
         function setupAdvertising() {
-            // Use Custom Timing to time the googletag code without the sonobi pre-loading.
-            performanceLogging.moduleStart(moduleName);
 
             performanceLogging.addTag(dfpEnv.sonobiEnabled ? 'sonobi' : 'waterfall');
 
             window.googletag.cmd.push(
+                moduleStart,
                 setListeners,
                 setPageTargeting,
                 moduleEnd
             );
 
             // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
-            return loadScript({ src: googleTagUrl, async: false });
+            return loadScript(config.libs.googletag, { async: false });
         }
 
         if (commercialFeatures.dfpAdvertising) {

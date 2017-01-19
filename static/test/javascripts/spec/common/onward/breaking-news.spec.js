@@ -59,7 +59,7 @@ define([
                         // make sure the DOM has finished updating
                         setTimeout(function () {
                             resolve(result);
-                        }, 20);
+                        }, 30);
                     }).catch(reject).then(function () {
                         server.restore();
                     });
@@ -238,6 +238,52 @@ define([
                     expect(storage.local.get(knownAlertIDsStorageKey).uk_known).not.toBeUndefined();
                     expect(storage.local.get(knownAlertIDsStorageKey).uk_dismissed).toBeUndefined();
                 }).then(done).catch(done.fail);
+            });
+        });
+
+        describe('banner emits ready events', function () {
+
+            var mediator;
+
+            beforeEach(function (done) {
+                injector.require([
+                    'common/utils/mediator'
+                ], function () {
+                    mediator = arguments[0];
+                    done();
+                }, function () {
+                    done();
+                });
+            });
+
+            afterEach(function () {
+                mediator.removeAllListeners();
+            });
+
+            it('should pass false when banner will not show', function (done) {
+
+                mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
+                    expect(breakingShown).toBe(false);
+                    done();
+                })
+
+                mockBreakingNewsWith([]).catch(done.fail);
+
+            });
+
+            it('should pass true when banner will show', function (done) {
+
+                mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
+                    expect(breakingShown).toBe(true);
+                    done();
+                })
+
+                var collections = [
+                    alertThatIs('unknown', {age: 2, collection: 'uk'})
+                ];
+
+                mockBreakingNewsWith(collections).catch(done.fail);
+
             });
         });
     });

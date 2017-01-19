@@ -3,22 +3,21 @@ define([
     'common/utils/config',
     'common/utils/load-script',
     'common/modules/commercial/commercial-features',
-    'commercial/modules/dfp/dfp-env'
+    'commercial/modules/dfp/dfp-env',
+    'common/utils/load-script'
 ], function(
     Promise,
     config,
     loadScript,
     commercialFeatures,
-    dfpEnv
+    dfpEnv,
+    loadScript
 ){
-
-    var sonobiUrl = '//mtrx.go.sonobi.com/morpheus.theguardian.12911_us_.js';
 
     function setupSonobi() {
         // Setting the async property to false will _still_ load the script in
-        // a non-blocking fashion but will ensure it is executed in an ordered
-        // fashion
-        return loadScript({ src: sonobiUrl, async: false }).then(catchPolyfillErrors);
+        // a non-blocking fashion but will ensure it is executed before googletag
+        return loadScript(config.libs.sonobi, { async: false }).then(catchPolyfillErrors);
     }
 
     // Wrap the native implementation of getOwnPropertyNames in a try-catch. If any polyfill attempts
@@ -29,7 +28,7 @@ define([
 
         // Skip polyfill error-catch in dev environments.
         if (config.page.isDev){
-            return Promise.resolve();
+            return;
         }
 
         var nativeGetOwnPropertyNames = Object.getOwnPropertyNames;
@@ -41,7 +40,6 @@ define([
                 return [];
             }
         };
-        return Promise.resolve();
     }
 
     function init() {

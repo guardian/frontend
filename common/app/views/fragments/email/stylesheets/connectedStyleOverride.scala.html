@@ -12,6 +12,10 @@
         background: #f6f6f6;
     }
 
+    @*
+     * !important is needed here and elsewhere because the base styles in the Ink CSS framework for email use
+     * !important and we need to override them. (See the ink stylesheet for notes on why the base styles need !important)
+     *@
     .panel {
         padding: 0 !important;
     }
@@ -29,7 +33,8 @@
     .tone-news .headline {
         color: #333333;
     }
-    .tone-news .fc-item__kicker {
+    .tone-news .fc-item__kicker,
+    .tone-news .byline {
         color: #005689;
     }
     .tone-news .kicker-separator {
@@ -49,7 +54,8 @@
     .tone-feature .headline {
         color: #333333;
     }
-    .tone-feature .fc-item__kicker {
+    .tone-feature .fc-item__kicker,
+    .tone-feature .byline {
         color: #951c55;
     }
     .tone-feature .kicker-separator {
@@ -69,7 +75,8 @@
     .tone-media .headline {
         color: #333333;
     }
-    .tone-media .fc-item__kicker {
+    .tone-media .fc-item__kicker,
+    .tone-media .byline {
         color: #ff9b0b;
     }
     .tone-media .kicker-separator {
@@ -89,7 +96,8 @@
     .tone-review .headline {
         color: #333333;
     }
-    .tone-review .fc-item__kicker {
+    .tone-review .fc-item__kicker,
+    .tone-review .byline {
         color: #ff9b0b;
     }
     .tone-review .kicker-separator {
@@ -109,8 +117,9 @@
     .tone-editorial .headline {
         color: #333333;
     }
-    .tone-editorial .fc-item__kicker {
-        color: #aad8f1;
+    .tone-editorial .fc-item__kicker,
+    .tone-editorial .byline {
+        color: #005689;
     }
     .tone-editorial .kicker-separator {
         color: #d6d6d6;
@@ -129,7 +138,8 @@
     .tone-external .headline {
         color: #333333;
     }
-    .tone-external .fc-item__kicker {
+    .tone-external .fc-item__kicker,
+    .tone-external .byline {
         color: #333333;
     }
     .tone-external .kicker-separator {
@@ -141,7 +151,7 @@
 
 
     .tone-live .facia-card {
-        border-top: 1px solid #fdadba;
+        border-top: 1px solid #b51800;
     }
     .tone-live .facia-card__text {
         background-color: #ffffff;
@@ -149,8 +159,9 @@
     .tone-live .headline {
         color: #333333;
     }
-    .tone-live .fc-item__kicker {
-        color: #fdadba;
+    .tone-live .fc-item__kicker,
+    .tone-live .byline {
+        color: #cc2b12;
     }
     .tone-live .kicker-separator {
         color: #d6d6d6;
@@ -169,7 +180,8 @@
     .tone-analysis .headline {
         color: #333333;
     }
-    .tone-analysis .fc-item__kicker {
+    .tone-analysis .fc-item__kicker,
+    .tone-analysis .byline {
         color: #767676;
     }
     .tone-analysis .kicker-separator {
@@ -189,7 +201,8 @@
     .tone-special-report .headline {
         color: #333333;
     }
-    .tone-special-report .fc-item__kicker {
+    .tone-special-report .fc-item__kicker,
+    .tone-special-report .byline {
         color: #fce800;
     }
     .tone-special-report .kicker-separator {
@@ -209,7 +222,8 @@
     .tone-comment .headline {
         color: #333333;
     }
-    .tone-comment .fc-item__kicker {
+    .tone-comment .fc-item__kicker,
+    .tone-comment .byline {
         color: #e6711b;
     }
     .tone-comment .kicker-separator {
@@ -229,7 +243,8 @@
     .tone-dead .headline {
         color: #333333;
     }
-    .tone-dead .fc-item__kicker {
+    .tone-dead .fc-item__kicker,
+    .tone-dead .byline {
         color: #cc2b12;
     }
     .tone-dead .kicker-separator {
@@ -240,7 +255,10 @@
     }
 
     /*  Media Queries */
-
+    @*
+     * !important is needed here and elsewhere because the base styles in the Ink CSS framework for email use
+     * !important and we need to override them. (See the ink stylesheet for notes on why the base styles need !important)
+     *@
     @@media only screen and (max-width: 600px) {
         table[class="body"] .container {
             width: 100% !important;
