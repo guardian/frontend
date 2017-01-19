@@ -59,6 +59,7 @@ module.exports = {
     },
     resolveLoader: {
         alias: {
+            // #wp-rjs
             // these are only needed while require is still present
             // should be updated once removed to be more wepback-like
             text: 'raw-loader',
