@@ -28,11 +28,11 @@ define([
                     return fastdom.write(function () {
                         var i;
                         for (i = 0; i < placeholders.length; i++) {
-                            placeholders[i].innerHTML = json.html;
+                            placeholders[i].innerHTML = placeholders[i].innerHTML + json.html;
                         }
                         new HostedCarousel.init();
                     });
-                })
+                });
         } else {
             fetchPromise = Promise.resolve();
         }
