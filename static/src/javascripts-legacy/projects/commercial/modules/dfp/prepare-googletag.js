@@ -36,8 +36,6 @@ define([
     performanceLogging
 ) {
 
-    var googleTagUrl = '//www.googletagservices.com/tag/js/gpt.js';
-
     return {
         init: init,
         customTiming: true
