@@ -13,6 +13,7 @@ define([
         this.audienceCriteria = '';
         this.dataLinkNames = '';
         this.idealOutcome = 'We generate more revenue *without* Outbrain and the brand image gets its shiny back';
+        this.showForSensitive = true;
 
         this.canRun = function () {
           return true;
