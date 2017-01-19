@@ -36,7 +36,6 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait Controllers
   extends AdminControllers
-  with AdminJobsControllers
   with ApplicationsControllers
   with ArticleControllers
   with CommercialControllers
@@ -65,7 +64,6 @@ trait AppComponents
   with SportServices
   with CommercialServices
   with DiscussionServices
-  with AdminJobsServices
   with OnwardServices
   with FapiServices
   with ApplicationsServices {

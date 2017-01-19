@@ -1,6 +1,6 @@
 package authentication
 
-import play.api.mvc.{Result, Results, Request, ActionBuilder}
+import play.api.mvc.{ActionBuilder, Request, Result, Results}
 
 import scala.concurrent.Future
 

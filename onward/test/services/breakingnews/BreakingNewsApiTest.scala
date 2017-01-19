@@ -1,4 +1,4 @@
-package controllers.BreakingNews
+package services.breakingnews
 
 import common.ExecutionContexts
 import org.joda.time.DateTime
