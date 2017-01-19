@@ -12,7 +12,6 @@ define([
     'commercial/modules/dfp/on-slot-render',
     'commercial/modules/dfp/on-slot-load',
     'commercial/modules/dfp/performance-logging',
-    'common/utils/load-script',
 
     // These are cross-frame protocol messaging routines:
     'commercial/modules/messenger/get-stylesheet',
@@ -34,8 +33,7 @@ define([
     dfpEnv,
     onSlotRender,
     onSlotLoad,
-    performanceLogging,
-    loadScript
+    performanceLogging
 ) {
 
     var googleTagUrl = '//www.googletagservices.com/tag/js/gpt.js';

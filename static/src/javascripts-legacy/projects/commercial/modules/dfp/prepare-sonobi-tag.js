@@ -3,15 +3,13 @@ define([
     'common/utils/config',
     'common/utils/load-script',
     'common/modules/commercial/commercial-features',
-    'commercial/modules/dfp/dfp-env',
-    'common/utils/load-script'
+    'commercial/modules/dfp/dfp-env'
 ], function(
     Promise,
     config,
     loadScript,
     commercialFeatures,
-    dfpEnv,
-    loadScript
+    dfpEnv
 ){
 
     function setupSonobi() {
