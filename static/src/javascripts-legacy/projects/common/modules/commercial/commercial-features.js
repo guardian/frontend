@@ -103,6 +103,7 @@ define([
         this.highMerch =
             this.dfpAdvertising &&
             !isMinuteArticle &&
+            !isHosted &&
             !config.page.isFront &&
             switches.commercial;
 
