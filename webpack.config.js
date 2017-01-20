@@ -9,7 +9,7 @@ module.exports = {
     entry: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: 'grauniapp.[chunkhash].js',
+        filename: 'boot-webpack.[chunkhash].js',
     },
     resolve: {
         modules: [
