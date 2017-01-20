@@ -16,7 +16,7 @@ define([
         getTest: function() {
             var eligibleTests = tests.filter(function (test) {
                 var t = new test();
-                var forced = new RegExp('^#ab-' + t.id).test(window.location.hash);
+                var forced = window.location.hash.indexOf('ab-' + t.id) > -1;
 
                 return forced || (t.canRun() && segmentUtil.isInTest(t));
             });
