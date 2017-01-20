@@ -21,7 +21,7 @@ define([
                 return forced || (t.canRun() && segmentUtil.isInTest(t));
             });
 
-            return eligibleTests && new eligibleTests[0]();
+            return eligibleTests[0] && new eligibleTests[0]();
         }
     }
 });
