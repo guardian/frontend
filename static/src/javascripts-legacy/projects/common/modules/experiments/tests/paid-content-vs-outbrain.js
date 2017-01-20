@@ -21,11 +21,11 @@ define([
 
         this.variants = [
             {
-                id: 'lucky-bastards',
+                id: 'paid-content',
                 test: function () {}
             },
             {
-                id: 'poor-souls',
+                id: 'outbrain',
                 test: function () {}
             }
         ];

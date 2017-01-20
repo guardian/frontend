@@ -92,7 +92,7 @@ define([
 
     function isLuckyBastard() {
         var testName = 'PaidContentVsOutbrain';
-        return ab.testCanBeRun(testName) && ab.getTestVariantId(testName) === 'lucky-bastards';
+        return ab.testCanBeRun(testName) && ab.getTestVariantId(testName) === 'paid-content';
     }
 
     function loadOther() {
