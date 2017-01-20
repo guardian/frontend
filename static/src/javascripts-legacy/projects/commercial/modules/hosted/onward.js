@@ -26,7 +26,7 @@ define([
                     return fastdom.write(function () {
                         var i;
                         for (i = 0; i < placeholders.length; i++) {
-                            placeholders[i].innerHTML = json.html;
+                            placeholders[i].insertAdjacentHTML('beforeend', json.html);
                         }
                     });
                 })
@@ -35,7 +35,7 @@ define([
                 })
                 .then(function () {
                     performanceLogging.moduleEnd(moduleName);
-                })
+                });
         }
 
         return Promise.resolve();
