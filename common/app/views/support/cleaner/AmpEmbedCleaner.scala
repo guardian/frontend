@@ -251,7 +251,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       figure.getElementsByTag("img").foreach { image: Element =>
         val ampImg = document.createElement("amp-img")
         val attrs = Map(
-          "class" -> image.attr("class"),
+          "class" -> ("d2-avatar-image " + image.attr("class")),
           "src" -> image.attr("src"),
           "height" -> image.attr("height"),
           "width" -> image.attr("width"),
@@ -260,7 +260,9 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
         attrs.foreach {
           case (key, value) => ampImg.attr(key, value)
         }
-        image.replaceWith(ampImg)
+        val imageParent = image.parent()
+        image.remove()
+        imageParent.appendChild(ampImg)
       }
     }
   }

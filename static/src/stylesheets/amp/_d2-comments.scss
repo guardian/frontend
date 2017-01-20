@@ -1,0 +1,55 @@
+/* Comments
+   ========================================================================== */
+
+.d2-comment-embedded {
+    background-color: #ffffff;
+    font-family: sans-serif;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 1.5em;
+    padding-top: 15px;
+    font-size: 14px;
+    padding-left: 28px; // aligns with top level comment's body
+    border-left: 8px solid $neutral-5;
+
+    @include mq(tablet) {
+        padding-left: 44px;
+        border-left-width: 16px;
+    }
+
+}
+
+.d2-avatar-image {
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 12px;
+
+    @include mq(tablet) {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+.d2-right-col {
+    position: relative;
+    top: -3px;
+    padding-right: 16px; // prevent colliding with badge
+}
+
+.d2-username {
+    font-family: $f-serif-text;
+
+    @include mq(tablet) {
+        font-size: 1.28571428571em;
+    }
+}
+
+.d2-permalink .d2-datetime {
+    color: $neutral-2;
+    font-size: .85714285714em;
+    font-family: $f-sans-serif-text; // Force font when used outside of comment context
+}
+
+.d2-permalink .d2-datetime:hover {
+    border-bottom: 1px dotted #757575;
+}

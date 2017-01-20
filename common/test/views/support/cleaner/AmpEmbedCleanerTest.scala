@@ -80,6 +80,34 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     clean(document)
   }
 
+
+  private def cleanDocumentWithCommentEmbed(): Document = {
+
+    val doc = <html>
+      <body>
+      <figure class="element element-comment" data-canonical-url="https://discussion.theguardian.com/comment-permalink/88222201">
+        <div class="d2-comment-embedded" itemtype="http://schema.org/Comment">
+          <div class="d2-left-col">
+            <a href="https://profile.theguardian.com/user/id/12345678">
+              <img class="d2-avatar" src="https://avatar.guim.co.uk/user/15301515" height="40" width="40" alt="User avatar for fooBar"/>
+            </a>
+          </div>
+          <div class="d2-right-col">
+          </div>
+          <div class="d2-permalink">
+          </div>
+          <div class="d2-body" itemprop="text">
+            <p>foo bar foo foo bar</p>
+          </div>
+        </div>
+      </figure>
+      </body>
+      </html>.toString()
+    val document = Jsoup.parse(StringEscapeUtils.unescapeXml(doc))
+    clean(document)
+  }
+
+
   /*
    * External video cleaner:
    */
@@ -367,30 +395,13 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   */
 
   "AmpEmbedCleaner" should "change the avatar img in a comment to be an amp-img" in {
-    val doc = s"""<html>
-      <body>
-      <figure class="element element-comment" data-canonical-url="https://discussion.theguardian.com/comment-permalink/88222201">
-        <div class="d2-comment-embedded" itemtype="http://schema.org/Comment">
-          <div class="d2-left-col">
-            <a href="https://profile.theguardian.com/user/id/12345678">
-              <img class="d2-avatar" src="https://avatar.guim.co.uk/user/15301515" height="40" width="40" alt="User avatar for fooBar">
-            </a>
-          </div>
-          <div class="d2-right-col">
-          </div>
-          <div class="d2-permalink">
-          </div>
-          <div class="d2-body" itemprop="text">
-            <p>foo bar foo foo bar</p>
-          </div>
-        </div>
-      </figure>
-      </body>
-      </html>"""
-    //val document = Jsoup.parse(StringEscapeUtils.unescapeXml(doc))
-    val document = Jsoup.parse(doc)
-    val result = clean(document)
-    assert((result.getElementsByTag("img").size == 0) && (result.getElementsByTag("amp-img").size == 1))
-
+    val result = cleanDocumentWithCommentEmbed()
+    result.getElementsByTag("amp-img").size should be(1)
   }
+
+  "AmpEmbedCleaner" should "not leave any img tags in the comment embed" in {
+    val result = cleanDocumentWithCommentEmbed()
+    result.getElementsByTag("img").size should be(0)
+  }
+
 }
