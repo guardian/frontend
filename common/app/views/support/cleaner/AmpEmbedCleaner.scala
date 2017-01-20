@@ -5,7 +5,6 @@ import java.net.URLDecoder
 import model.{Elements, Article, VideoAsset}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpSrcCleaner, HtmlCleaner}
-import conf.switches.Switches.AmpInteractivePlaceHolderAttribute
 
 import scala.annotation.switch
 import scala.collection.JavaConversions._
@@ -201,9 +200,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
           overflowElem.addClass("cta cta--medium cta--show-more cta--show-more__unindent")
           overflowElem.text("See the full visual")
           overflowElem.attr("overflow", "")
-          if (AmpInteractivePlaceHolderAttribute.isSwitchedOn) {
-            overflowElem.attr("placeholder", "")
-          }
+          overflowElem.attr("placeholder", "")
           link.remove()
           iframe.appendChild(overflowElem)
           interactive.appendChild(iframe)
