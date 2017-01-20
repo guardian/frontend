@@ -469,6 +469,10 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     .main-menu__icon__svg {
         fill: $neutral-2;
     }
+
+    .personalisation__icon:before {
+        border-color: $neutral-2;
+    }
 }
 
 .navigation-group__item {
@@ -571,20 +575,20 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
         .user-account__login {
             display: none;
         }
-
-        .main-menu__icon--chevron:before {
-            border-color: $neutral-2;
-        }
     }
 }
 
-.user-account__signed-in__links {
+.personalisation__links {
     margin-left: 0;
     margin-bottom: -$gs-baseline;
     background-color: rgba(0, 0, 0, .15);
 }
 
-.user-account__signed-in__link {
+.personalisation__link {
+    color: $neutral-3;
+}
+
+.personalisation__link--active {
     color: #ffffff;
 }
 
