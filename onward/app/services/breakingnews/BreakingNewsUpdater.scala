@@ -1,4 +1,4 @@
-package controllers.BreakingNews
+package services.breakingnews
 
 import akka.actor.Status.{Failure => ActorFailure}
 import akka.actor.{Actor, Props}

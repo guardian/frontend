@@ -5,6 +5,7 @@
 @import common.Edition
 @import views.support.{AmpAd, AmpAdDataSlot}
 @import org.joda.time.DateTimeZone
+@import play.api.Mode.Dev
 
 @liveBlogBlocksAMP(article: Article, timezone: DateTimeZone) = {
     @model.currentPage.currentPage.blocks.sliding(5, 5).zipWithIndex.map { case (blockGroup, index) =>
@@ -13,7 +14,10 @@
         @* Add advert every 5 blog posts, up to a maximum of 8 *@
         @if(blockGroup.length == 5 && index < 8) {
             <div id="amp-ad-@index" data-sort-time="1" class="block amp-ad-container amp-ad-container--live-blog">
-                <amp-ad width="300" height="250" type="doubleclick" data-loading-strategy="prefer-viewability-over-views"
+                <amp-ad width="300" height="250" type="doubleclick"
+                @if(context.environment.mode != Dev) {
+                  data-use-beta-a4a-implementation="true"
+                } data-loading-strategy="prefer-viewability-over-views"
                     json=@AmpAd(article, request.path, Edition(request).id.toLowerCase()).toString()
                     data-slot=@AmpAdDataSlot(article).toString()>
                 </amp-ad>

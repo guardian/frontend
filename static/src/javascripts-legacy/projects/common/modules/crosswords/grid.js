@@ -1,19 +1,19 @@
 define([
-    'classnames',
     'react',
     './helpers',
     './constants',
     './cell',
+    './classNames',
     'lodash/collections/forEach',
     'lodash/arrays/range',
     'lodash/collections/map',
     'lodash/objects/assign'
 ], function (
-    classNames,
     React,
     helpers,
     constants,
     Cell,
+    classNames,
     forEach,
     range,
     map,

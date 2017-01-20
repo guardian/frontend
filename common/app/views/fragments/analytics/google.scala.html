@@ -138,8 +138,10 @@
 
     }
 
-})();
+    // Mediator will be intialised if we need to use this, otherwise just use GA straight away
+    guardian.app && guardian.app.mediator && guardian.app.mediator.emit('modules:ga:ready');
 
+})();
 </script>
 
 @*

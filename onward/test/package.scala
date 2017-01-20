@@ -1,6 +1,8 @@
 package test
 
+import controllers._
 import org.scalatest.Suites
+import services.breakingnews.{BreakingNewsApiTest, BreakingNewsUpdaterTest}
 
 class OnwardTestSuite extends Suites (
   new controllers.ChangeEditionControllerTest,
@@ -14,7 +16,10 @@ class OnwardTestSuite extends Suites (
   new TopStoriesControllerTest,
   new VideoInSectionTest,
   new RichLinkControllerTest,
-  new NavigationControllerTest
+  new NavigationControllerTest,
+  new BreakingNewsApiTest,
+  new BreakingNewsUpdaterTest,
+  new NewsAlertControllerTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19011
 }

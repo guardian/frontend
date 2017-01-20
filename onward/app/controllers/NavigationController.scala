@@ -53,7 +53,7 @@ class NavigationController extends Controller {
       implicit val topLevelSectionWrites = new Writes[topLevelNavItems] {
         def writes(item: topLevelNavItems) = Json.obj(
           "title" -> item.editionalisedSection.name,
-          "subSections" -> item.editionalisedSection.getEditionalisedNavLinks(edition).map(subsection => navSectionLink(subsection))
+          "subSections" -> item.editionalisedSection.getAllEditionalisedNavLinks(edition).map(subsection => navSectionLink(subsection))
         )
       }
 
@@ -61,7 +61,7 @@ class NavigationController extends Controller {
         "items" -> Json.arr(
           Json.obj(
             "topLevelSections" -> NewNavigation.topLevelSections.map( section => topLevelNavItems(section) ),
-            "secondarySections" -> NewNavigation.NavFooterLinks.getEditionalisedNavLinks(edition).map(section => navSectionLink(section))
+            "secondarySections" -> NewNavigation.NavFooterLinks.getAllEditionalisedNavLinks(edition).map(section => navSectionLink(section))
           )
         )
       )
