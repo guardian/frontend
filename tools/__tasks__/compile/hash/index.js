@@ -13,7 +13,7 @@ const mkdirpp = pify(mkdirp);
 const { hash, target } = require('../../config').paths;
 
 const standardAssetsMap = () => {
-    const assets = glob.sync('**/!(*.map|*webpack*.js)', { nodir: true, cwd: target });
+    const assets = glob.sync('**/!(*.map|*grauniapp*.js)', { nodir: true, cwd: target });
     return assets.reduce((assetMap, asset) => {
         const assetHash = hasha.fromFileSync(path.resolve(target, asset), { algorithm: 'md5' });
         return Object.assign(assetMap, {
@@ -23,14 +23,14 @@ const standardAssetsMap = () => {
 };
 
 const sourceMapAssetsMap = (assetMap) => {
-    const sourceMaps = glob.sync('**/!(*webpack*)*.map', { nodir: true, cwd: target });
+    const sourceMaps = glob.sync('**/!(*grauniapp*)*.map', { nodir: true, cwd: target });
     return sourceMaps.reduce((sourceMapMap, sourceMap) => Object.assign(sourceMapMap, {
         [sourceMap]: `${assetMap[sourceMap.replace(/\.map$/, '')]}.map`,
     }), {});
 };
 
 const webpackAssetsMap = () => {
-    const webpackAssets = glob.sync('**/*webpack*.js', { nodir: true, cwd: target });
+    const webpackAssets = glob.sync('**/*grauniapp*.js', { nodir: true, cwd: target });
     return webpackAssets.reduce((assetMap, webpackAsset) => Object.assign(assetMap, {
         [webpackAsset]: webpackAsset,
     }), {});
@@ -47,11 +47,11 @@ const normaliseAssetMapForWebpack = assetMap =>
     // They're added to the map and copied, but since they're already hashed by webpack,
     // we need to normalise the wepback asset name of the entry file to a 'clean' one
     // for use in templates so that:
-    //     'javascripts/boot-webpack.abc123.js': 'javascripts/boot-webpack.abc123.js'
+    //     'javascripts/grauniapp.abc123.js': 'javascripts/grauniapp.abc123.js'
     // becomes:
-    //     'javascripts/boot-webpack.js': 'javascripts/boot-webpack.abc123.js'
+    //     'javascripts/grauniapp.js': 'javascripts/grauniapp.abc123.js'
     Object.keys(assetMap).reduce((normalisedAssetMap, asset) =>
-        Object.assign(normalisedAssetMap, { [asset.replace(/(\/boot-webpack)(\..+)(\.js)/, '$1$3')]: assetMap[asset] })
+        Object.assign(normalisedAssetMap, { [asset.replace(/(\/grauniapp)(\..+)(\.js)/, '$1$3')]: assetMap[asset] })
     , {});
 
 function saveAssetMap(assetMap) {
