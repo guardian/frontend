@@ -23,17 +23,17 @@ domready(() => {
             });
         }
 
-        require(['bootstraps/commercial'], raven.wrap({
-            tags: {
-                feature: 'commercial',
-            },
-        }, commercial => commercial.init()));
-    }
+        require(['bootstraps/commercial'], raven.wrap({ tags: { feature: 'commercial' } },
+            (commercial) => {
+                commercial.init();
 
-    // 3. finally, try enhanced
-    if (window.guardian.isEnhanced) {
-        require(['bootstraps/enhanced/main'], (bootEnhanced) => {
-            bootEnhanced();
-        });
+                // 3. finally, try enhanced
+                // this is defined here so that webpack's code-splitting algo
+                // excludes all the modules bundled in the commerical chunk from this one
+                if (window.guardian.isEnhanced) {
+                    require(['bootstraps/enhanced/main'], bootEnhanced => bootEnhanced());
+                }
+            })
+        );
     }
 });
