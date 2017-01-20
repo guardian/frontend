@@ -5,8 +5,6 @@ $gutter-small: 29px;
 $gutter-medium: 37px;
 $gutter-large: 55px;
 
-$mobile-medium: 375px; // Breakpoint for our most common device sizes
-
 @mixin trailing-slash {
     position: absolute;
     pointer-events: none;
@@ -55,13 +53,13 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     padding-right: $gs-gutter / 2;
 
     // Aspect ratio: 16:3
-    @include mq($until: $mobile-medium) {
+    @include mq($until: mobileMedium) {
         width: 170px;
         // height: auto doesn't work in Safari
         height: calc(3 / 16 * 170px);
     }
 
-    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+    @include mq($from: mobileMedium, $until: mobileLandscape) {
         width: 225px;
         height: calc(3 / 16 * 225px);
     }
@@ -91,7 +89,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
         font-size: 5.1vw;
     }
 
-    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+    @include mq($from: mobileMedium, $until: mobileLandscape) {
         line-height: $gs-baseline * 3;
     }
 
@@ -125,7 +123,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
         }
     }
 
-    @include mq($until: $mobile-medium) {
+    @include mq($until: mobileMedium) {
         //Smaller menu button
         height: $veggie-burger-small;
         min-width: $veggie-burger-small;
@@ -141,7 +139,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
         }
     }
 
-    @include mq($mobile-medium) {
+    @include mq(mobileMedium) {
         height: $veggie-burger-medium;
         width: $veggie-burger-medium;
         //Align with the 'i' in 'theguardian'
@@ -235,120 +233,6 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     padding-right: .8em;
 }
 
-/*****************
- * Edition Picker
- *****************/
-
-.edition-picker {
-    @include fs-textSans(3);
-    position: absolute;
-    left: 0;
-    color: $news-support-1;
-    // Override from fs-textSans mixin
-    line-height: 1;
-    padding-top: $gs-baseline / 2;
-    padding-left: $gs-gutter / 2;
-    width: gs-span(2);
-    z-index: $zindex-sticky;
-
-    @include mq($until: mobile) {
-        display: none;
-    }
-
-    // Smaller size compensates for how big the word "Australia" is
-    @include mq($until: $mobile-medium) {
-        font-size: 13px;
-    }
-
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter / 2;
-    }
-}
-
-.inline-world__svg {
-    fill: $news-support-1;
-    vertical-align: middle;
-    min-width: 14px;
-    min-height: 14px;
-    margin-right: 1px;
-    margin-top: -$gs-baseline / 4;
-}
-
-.edition-picker__dropdown {
-    display: none;
-    position: absolute;
-    top: 40px;
-    left: $gs-gutter / 2;
-    // overriding default styling
-    width: gs-span(2);
-    margin: 0;
-    list-style: none;
-    padding: 0;
-
-    @include mq(mobileLandscape) {
-        left: $gs-gutter;
-    }
-
-    &:before {
-        content: '';
-        position: absolute;
-        left: 15px;
-        top: -10px;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 0 $gs-gutter / 2 $gs-gutter / 2;
-        border-color: transparent transparent $guardian-brand-dark;
-    }
-}
-
-.edition-picker__dropdown-item-link {
-    color: #ffffff;
-    display: block;
-    padding-top: $gs-baseline;
-    padding-bottom: $gs-baseline;
-    padding-left: $gs-gutter;
-
-    &:hover {
-        text-decoration: none;
-        background-color: darken($guardian-brand-dark, 3%);
-    }
-}
-
-.edition-picker__current-edition {
-    width: gs-span(2);
-    padding-top: $gs-baseline / 2;
-    padding-bottom: $gs-baseline / 2;
-    display: block;
-    outline: none;
-    cursor: pointer;
-
-    &:hover {
-        color: #ffffff;
-
-        .inline-world__svg {
-            fill: #ffffff;
-        }
-    }
-}
-
-.edition-picker__button {
-    display: none;
-
-    &:checked,
-    &[aria-expanded='true'] {
-        & ~ .edition-picker__dropdown {
-            display: block;
-            background-color: $guardian-brand-dark;
-            box-shadow: 0 0 $gs-baseline * 2.5 0 rgba(0, 0, 0, .2);
-        }
-
-        & ~ .edition-picker__current-edition {
-            z-index: 3;
-        }
-    }
-}
-
 /****************
  * Menu Styling
  ****************/
@@ -389,11 +273,11 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     will-change: transform;
     transition: transform .2s cubic-bezier(.23, 1, .32, 1);
 
-    @include mq($until: $mobile-medium) {
+    @include mq($until: mobileMedium) {
         padding-top: $gs-baseline / 3;
     }
 
-    @include mq($mobile-medium) {
+    @include mq(mobileMedium) {
         //Larger font/icon size for larger devices
         font-size: 22px;
         padding-top: $gs-baseline;
@@ -413,11 +297,11 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     transform: translateX(-110%);
     transition: transform .4s cubic-bezier(.23, 1, .32, 1);
 
-    @include mq($until: $mobile-medium) {
+    @include mq($until: mobileMedium) {
         margin-right: $gutter-small + ($veggie-burger-small / 2);
     }
 
-    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+    @include mq($from: mobileMedium, $until: mobileLandscape) {
         margin-right: $gutter-medium + ($veggie-burger-medium / 2);
     }
 
@@ -945,7 +829,7 @@ $caption-button-size: 32px;
     line-height: 30px;
     padding-right: $gs-gutter / 2;
 
-    @include mq($mobile-medium) {
+    @include mq(mobileMedium) {
         line-height: 40px;
     }
 }
@@ -961,7 +845,7 @@ $caption-button-size: 32px;
     height: $veggie-burger-small;
     min-width: $veggie-burger-small;
 
-    @include mq($mobile-medium) {
+    @include mq(mobileMedium) {
         height: $veggie-burger-medium;
         width: $veggie-burger-medium;
     }
@@ -974,9 +858,11 @@ $caption-button-size: 32px;
         left: 0;
         margin: auto;
 
-        @include mq($mobile-medium) {
+        @include mq(mobileMedium) {
             width: 30px;
             height: 24px;
         }
     }
 }
+
+@import '../module/nav/_supporter-trapezoid';
