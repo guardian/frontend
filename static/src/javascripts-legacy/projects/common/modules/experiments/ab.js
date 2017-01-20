@@ -10,6 +10,7 @@ define([
     'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/opinion-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
+    'common/modules/experiments/tests/neilsen-check',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/tests/contributions-epic-brexit',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy'
@@ -24,6 +25,7 @@ define([
              EditorialEmailVariants,
              OpinionEmailVariants,
              RecommendedForYou,
+             NeilsenCheck,
              MembershipEngagementBannerTests,
              ContributionsEpicBrexit,
              ContributionsEpicAlwaysAskStrategy
@@ -32,6 +34,7 @@ define([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
         new RecommendedForYou(),
+        new NeilsenCheck(),
         new ContributionsEpicBrexit,
         new ContributionsEpicAlwaysAskStrategy
     ].concat(MembershipEngagementBannerTests);

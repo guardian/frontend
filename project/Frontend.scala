@@ -51,7 +51,8 @@ object Frontend extends Build with Prototypes {
       logback,
       kinesisLogbackAppender,
       targetingClient,
-      scanamo
+      scanamo,
+      scalaUri
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
@@ -94,9 +95,6 @@ object Frontend extends Build with Prototypes {
   )
 
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies ++= Seq(
-      scalaUri
-    ),
     TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._")
   )
 

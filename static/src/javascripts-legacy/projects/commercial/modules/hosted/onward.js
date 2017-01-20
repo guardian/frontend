@@ -17,10 +17,8 @@ define([
 
         var placeholders = document.getElementsByClassName('js-onward-placeholder');
 
-        var fetchPromise;
-
         if (placeholders.length) {
-            fetchPromise = fetchJson(config.page.ajaxUrl + '/'
+            fetchJson(config.page.ajaxUrl + '/'
                 + config.page.pageId + '/'
                 + config.page.contentType.toLowerCase() + '/'
                 + 'onward.json', {mode: 'cors'})
@@ -30,15 +28,16 @@ define([
                         for (i = 0; i < placeholders.length; i++) {
                             placeholders[i].innerHTML = placeholders[i].innerHTML + json.html;
                         }
-                        new HostedCarousel.init();
                     });
+                })
+                .then(function () {
+                    HostedCarousel.init();
+                })
+                .then(function () {
+                    performanceLogging.moduleEnd(moduleName);
                 });
-        } else {
-            fetchPromise = Promise.resolve();
         }
 
-        return fetchPromise.then(function () {
-            performanceLogging.moduleEnd(moduleName);
-        });
+        return Promise.resolve();
     }
 });

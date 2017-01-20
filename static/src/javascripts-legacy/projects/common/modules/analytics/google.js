@@ -1,7 +1,9 @@
 define([
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/mediator'
 ], function (
-    config
+    config,
+    mediator
 ) {
     var ga = window.ga;
     var trackerName = config.googleAnalytics.trackers.editorial;
@@ -48,15 +50,36 @@ define([
         });
     }
 
+    function mapEvents() {
+        config.googleAnalytics.timingEvents.map(sendPerformanceEvent);
+        mediator.off('modules:ga:ready', mapEvents);
+    }
+
+    function sendPerformanceEvent(event) {
+        window.ga(send, 'timing', event.timingCategory, event.timingVar, event.timeSincePageLoad, event.timingLabel);
+    }
+
     // Track important user timing metrics so that we can be notified and measure over time in GA
     // https://developers.google.com/analytics/devguides/collection/analyticsjs/user-timings
     // Tracks into Behaviour > Site Speed > User Timings in GA
     function trackPerformance(timingCategory, timingVar, timingLabel) {
         // Feature detect Navigation Timing API support.
-        if (window.performance) {
+        if (window.performance && window.performance.now) {
             // Value must be an integer - grabs the number of milliseconds since page load
             var timeSincePageLoad = Math.round(window.performance.now());
-            ga(send, 'timing', timingCategory, timingVar, timeSincePageLoad, timingLabel);
+            var eventObj = {
+                timingCategory: timingCategory,
+                timingVar: timingVar,
+                timeSincePageLoad: timeSincePageLoad,
+                timingLabel: timingLabel
+            };
+
+            if (window.ga) {
+                sendPerformanceEvent(eventObj);
+            } else {
+                mediator.on('modules:ga:ready', mapEvents);
+                config.googleAnalytics.timingEvents.push(eventObj)
+            }
         }
     }
 
