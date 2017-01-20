@@ -11,28 +11,38 @@
 
 
 @headline(card: ContentCard) = {
-    <h3 class="headline">
-        @card.header.kicker.map { kicker =>
-            <span class="fc-item__kicker">@Html(kicker.kickerHtml)</span>
-            <span class="kicker-separator">/</span>
-        }
-
-        @defining(if(request.isEmailConnectedStyle) "-connected" else "") { suffix =>
-            @if(card.header.isGallery) { @icon("gallery" + suffix) }
-            @if(card.header.isAudio) { @icon("podcast" + suffix) }
-            @if(card.header.isVideo) { @icon("video" + suffix) }
-        }
-
-        @if(card.header.quoted) {
-            @card.cardStyle match {
-                case Feature => { @icon("quote-feature") }
-                case _ => { @icon("quote") }
+    <a @Html(card.header.url.hrefWithRel) class="facia-link">
+        <h3 class="headline">
+            @card.header.kicker.map { kicker =>
+                <span class="fc-item__kicker">@Html(kicker.kickerHtml)</span>
+                <span class="kicker-separator">/</span>
             }
+
+            @defining(if(request.isEmailConnectedStyle) "-connected" else "") { suffix =>
+                @if(card.header.isGallery) { @icon("gallery" + suffix) }
+                @if(card.header.isAudio) { @icon("podcast" + suffix) }
+                @if(card.header.isVideo) { @icon("video" + suffix) }
+            }
+
+            @if(card.header.quoted) {
+                @card.cardStyle match {
+                    case Feature => { @icon("quote-feature") }
+                    case _ => { @icon("quote") }
+                }
+            }
+            @RemoveOuterParaHtml(card.header.headline)
+        </h3>
+        @if(card.header.quoted) {
+            @card.bylineText.map { byline => <h4 class="byline">@byline</h4> }
         }
-        @RemoveOuterParaHtml(card.header.headline)
-    </h3>
-    @if(card.header.quoted) {
-        @card.bylineText.map { byline => <h4 class="byline">@byline</h4> }
+    </a>
+}
+
+@trailText(card: ContentCard) = {
+    @card.trailText.map { trailText =>
+        <a @Html(card.header.url.hrefWithRel) class="facia-link">
+            <h4 class="trail-text">@Html(trailText)</h4>
+        </a>
     }
 }
 
@@ -41,29 +51,23 @@
         @headline(card)
     }
     @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
-        @card.trailText.map { trailText =>
-            <h4 class="trail-text">@Html(trailText)</h4>
-        }
+        @trailText(card)
     }
 }
 
 @faciaCardLarge(card: ContentCard, withImage: Boolean) = {
     @paddedRow(Seq(toneClassFromStyle(card.cardStyle))) {
-        <a @Html(card.header.url.hrefWithRel) class="facia-link">
-            <div class="facia-card @if(withImage){facia-card--large}">
-                @if(withImage) { @imgFromCard(card) }
-                @if(card.header.quoted) {
-                    @headlineAndTrailWithCutout(card)
-                } else {
-                    @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
-                        @headline(card)
-                        @card.trailText.map { trailText =>
-                            <h4 class="trail-text">@Html(trailText)</h4>
-                        }
-                    }
+        <div class="facia-card @if(withImage){facia-card--large}">
+            @if(withImage) { @imgFromCard(card) }
+            @if(card.header.quoted) {
+                @headlineAndTrailWithCutout(card)
+            } else {
+                @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
+                    @headline(card)
+                    @trailText(card)
                 }
-            </div>
-        </a>
+            }
+        </div>
     }
 }
 

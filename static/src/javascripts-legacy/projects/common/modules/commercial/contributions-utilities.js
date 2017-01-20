@@ -195,13 +195,6 @@ define([
             return function () {
                 return new ContributionsABTest(test);
             };
-        },
-
-        inAlwaysAskTest: function () {
-            var participations = storage.local.get('gu.ab.participations') || {};
-            var test = participations['ContributionsEpicAlwaysAskStrategy'];
-
-            return test && test.variant !== 'notintest';
         }
     };
 });

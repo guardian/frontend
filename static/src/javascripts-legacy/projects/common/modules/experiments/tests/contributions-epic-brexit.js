@@ -25,10 +25,6 @@ define([
         audienceOffset: 0,
         useTargetingTool: true,
 
-        canRun: function () {
-            return !contributionsUtilities.inAlwaysAskTest();
-        },
-
         variants: [
             {
                 id: 'control',
