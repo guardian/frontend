@@ -4,16 +4,18 @@
 @import views.html.fragments.atoms.mediaAtomCaption
 @import com.netaporter.uri.dsl._
 
-@(media: model.content.MediaAtom, displayCaption: Boolean, embedPage: Boolean, displayDuration: Boolean = true)(implicit request: RequestHeader)
+@(media: model.content.MediaAtom, displayCaption: Boolean, embedPage: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true)(implicit request: RequestHeader)
 
     <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
         "u-responsive-ratio" -> true,
         "u-responsive-ratio--hd" -> true,
         "youtube-media-atom" -> true
     ))"
-      @for(endSlate <- media.endSlatePath) {
-        data-end-slate="@endSlate"
-        }
+    @if(displayEndSlate) {
+        @for(endSlate <- media.endSlatePath) {
+            data-end-slate="@endSlate"
+            }
+    }
     >
             @defining(s"https://www.youtube.com/embed${
                 media.assets.head.id

@@ -88,10 +88,10 @@ data-test-id="facia-card"
                 </div>
             }
 
-            case Some(media@InlineYouTubeMediaAtom(_)) => {
+            case Some(media@InlineYouTubeMediaAtom(_)) if item.cardTypes.showVideoPlayer => {
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__video-container">
-                    @youtube(media = media.youTubeAtom, displayCaption = false, embedPage = false, displayDuration = false)
+                    @youtube(media = media.youTubeAtom, displayCaption = false, embedPage = false, displayDuration = false, displayEndSlate = item.cardTypes.showVideoEndSlate)
                     </div>
                 </div>
             }

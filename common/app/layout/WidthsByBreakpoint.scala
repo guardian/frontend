@@ -5,6 +5,7 @@ import BrowserWidth._
 import views.support.Profile
 
 object FaciaWidths {
+  println("IN FACIA WIDTHS")
   private val MediaMobile = Map[CardType, BrowserWidth](
     (MediaList, 127.px),
     (Standard, 95.vw)

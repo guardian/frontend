@@ -29,7 +29,7 @@ object MainCleaner {
         if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
         PictureCleaner(article, amp),
         MainFigCaptionCleaner,
-        AtomsCleaner(article.content.atoms, shouldFence = true, amp)
+        AtomsCleaner(article.content.atoms, shouldFence = true, amp, mainMedia = true)
       )
   }
 }

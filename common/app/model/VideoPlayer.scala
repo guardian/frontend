@@ -32,6 +32,8 @@ case class VideoPlayer(
   def height = profile.width.get
 
   def showEndSlate = width >= Video640.width.get
+  println(s"$width ${Video640.width.get}");
+  println(showEndSlate + "VIDEO PLAYER");
 
   def isRatioHd = overrideIsRatioHd getOrElse profile.isRatioHD
 
