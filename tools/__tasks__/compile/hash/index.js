@@ -32,6 +32,7 @@ module.exports = {
                         // webpack bundles come pre-hashed, so we won't hash them, just add them
                         if (webpackRegex.test(assetPath)) {
                             const sourcemap = hasSourceMap ? { [`${assetPath}.map`]: `${assetPath}.map` } : {};
+
                             return Object.assign(map, { [assetPath]: assetPath }, sourcemap);
                         }
 
