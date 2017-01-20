@@ -509,17 +509,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  //Owner Michael McNamara
-  val StressTestTailor = Switch(
-    SwitchGroup.Feature,
-    "stress-test-tailor-healthcheck",
-    "Sends a healthcheck metric for every page",
-    owners = Seq(Owner.withGithub("michaelwmcnamara")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 20),
-    exposeClientSide = true
-  )
-
   //Owner Gideon Goldberg
   val UseAmpYouTubeTagForMediaAtoms = Switch(
     SwitchGroup.Feature,
