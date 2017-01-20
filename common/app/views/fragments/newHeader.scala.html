@@ -1,6 +1,6 @@
 @(page: model.Page)(implicit request: RequestHeader)
 
-@import common.{LinkTo, NewNavigation, Edition}
+@import common.{LinkTo, NewNavigation}
 
 <header class="new-header" role="banner">
     @defining(
@@ -35,12 +35,6 @@
             </nav>
         </div>
 
-        <div class="tertiary-navigation">
-            @NewNavigation.SubSectionLinks.getSubSectionNavLinks(page.metadata.sectionId, Edition(request), page.metadata.isFront).map { link =>
-                <a class="tertiary-navigation__link @if((link.uniqueSection == page.metadata.sectionId) && !page.metadata.isFront){tertiary-navigation__link--current-section}" href="@LinkTo(link.url)" data-link-name="nav2 : tertiary : @{ if(link.longTitle.isEmpty) link.title else link.longTitle}">
-                    @link.title
-                </a>
-            }
-        </div>
+        @fragments.nav.subSectionNav(page)
     }
 </header>
