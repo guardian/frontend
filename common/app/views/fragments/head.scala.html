@@ -24,7 +24,7 @@ http://developers.theguardian.com/join-the-team.html
 
 @if(!(context.environment.mode == Dev)) {
     @if(WebpackTest.isParticipating) {
-        <link rel="prefetch" href="@Static("javascripts/boot-webpack.js")">
+        <link rel="prefetch" href="@Static("javascripts/app-webpack.js")">
     } else {
         <link rel="prefetch" href="@Static("javascripts/app.js")">
     }

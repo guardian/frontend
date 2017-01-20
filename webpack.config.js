@@ -4,12 +4,15 @@ const path = require('path');
 const webpack = require('webpack');
 const Visualizer = require('webpack-visualizer-plugin');
 
+const outputName = 'app-webpack';
+
 module.exports = {
     devtool: 'source-map',
     entry: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: 'boot-webpack.[chunkhash].js',
+        filename: `[chunkhash]/${outputName}.js`,
+        chunkFilename: `[chunkhash]/${outputName}.chunk-[id].js`,
     },
     resolve: {
         modules: [

@@ -12,54 +12,6 @@ const mkdirpp = pify(mkdirp);
 
 const { hash, target } = require('../../config').paths;
 
-const standardAssetsMap = () => {
-    const assets = glob.sync('**/!(*.map|*webpack*.js)', { nodir: true, cwd: target });
-    return assets.reduce((assetMap, asset) => {
-        const assetHash = hasha.fromFileSync(path.resolve(target, asset), { algorithm: 'md5' });
-        return Object.assign(assetMap, {
-            [asset]: path.join(path.dirname(asset), assetHash, path.basename(asset)),
-        });
-    }, {});
-};
-
-const sourceMapAssetsMap = (assetMap) => {
-    const sourceMaps = glob.sync('**/!(*webpack*)*.map', { nodir: true, cwd: target });
-    return sourceMaps.reduce((sourceMapMap, sourceMap) => Object.assign(sourceMapMap, {
-        [sourceMap]: `${assetMap[sourceMap.replace(/\.map$/, '')]}.map`,
-    }), {});
-};
-
-const webpackAssetsMap = () => {
-    const webpackAssets = glob.sync('**/*webpack*.js', { nodir: true, cwd: target });
-    return webpackAssets.reduce((assetMap, webpackAsset) => Object.assign(assetMap, {
-        [webpackAsset]: webpackAsset,
-    }), {});
-};
-
-function createHashedAsset(assetMap, asset) {
-    return cpFile(path.resolve(target, asset), path.resolve(hash, assetMap[asset]));
-}
-
-const normaliseAssetMapForWebpack = assetMap =>
-    // Webpack hashes its own files, and needs to know internally what those names are.
-    // However, although we don't hash webpack files, they need to be in the hash directory
-    // and in the asset map so we can get at them server side.
-    // They're added to the map and copied, but since they're already hashed by webpack,
-    // we need to normalise the wepback asset name of the entry file to a 'clean' one
-    // for use in templates so that:
-    //     'javascripts/boot-webpack.abc123.js': 'javascripts/boot-webpack.abc123.js'
-    // becomes:
-    //     'javascripts/boot-webpack.js': 'javascripts/boot-webpack.abc123.js'
-    Object.keys(assetMap).reduce((normalisedAssetMap, asset) =>
-        Object.assign(normalisedAssetMap, { [asset.replace(/(\/boot-webpack)(\..+)(\.js)/, '$1$3')]: assetMap[asset] })
-    , {});
-
-function saveAssetMap(assetMap) {
-    return mkdirpp(path.resolve(hash, 'assets')).then(() =>
-        writeFile(path.resolve(hash, 'assets', 'assets.map'), JSON.stringify(assetMap, null, 2))
-    );
-}
-
 module.exports = {
     description: 'Version assets',
     task: [
@@ -67,13 +19,46 @@ module.exports = {
         {
             description: 'Hash assets',
             task: () => {
-                const assetMap = Object.assign(standardAssetsMap(), webpackAssetsMap());
-                Object.assign(assetMap, sourceMapAssetsMap(assetMap));
+                const webpackRegex = /app-webpack/;
+                const webpackChunkRegex = /chunk/;
+                const sourcemapRegex = /\.map$/;
 
-                return Promise.all(
-                    Object.keys(assetMap)
-                        .map(createHashedAsset.bind(null, assetMap))
-                        .concat(saveAssetMap(normaliseAssetMapForWebpack(assetMap)))
+                // create the hashed asset map for all files in target
+                const assetMap = glob.sync('**/!(*.map)', { nodir: true, cwd: target })
+                    .reduce((map, assetPath) => {
+                        const assetLocation = path.resolve(target, assetPath);
+                        const hasSourceMap = fs.existsSync(`${assetLocation}.map`);
+
+                        // webpack bundles come pre-hashed, so we won't hash them, just add them
+                        if (webpackRegex.test(assetPath)) {
+                            const sourcemap = hasSourceMap ? { [`${assetPath}.map`]: `${assetPath}.map` } : {};
+                            return Object.assign(map, { [assetPath]: assetPath }, sourcemap);
+                        }
+
+                        // hash everything else as normal
+                        const assetHash = hasha.fromFileSync(assetLocation, { algorithm: 'md5' });
+                        const hashedPath = path.join(path.dirname(assetPath), assetHash, path.basename(assetPath));
+                        const sourcemap = hasSourceMap ? { [`${assetPath}.map`]: `${hashedPath}.map` } : {};
+
+                        return Object.assign(map, { [assetPath]: hashedPath }, sourcemap);
+                    }, {});
+
+                return Promise.all( // copy all the built files to their hash locations
+                    Object.keys(assetMap).map(asset =>
+                        cpFile(path.resolve(target, asset), path.resolve(hash, assetMap[asset]))
+                    )
+                ).then(() => { // add an unhashed keys for any webpack boot files for use in play templates
+                    const webpackBootfiles = Object.keys(assetMap).filter(key =>
+                        webpackRegex.test(key) && !webpackChunkRegex.test(key) && !sourcemapRegex.test(key)
+                    );
+
+                    return webpackBootfiles.reduce((map, webpackBootfile) => Object.assign({}, assetMap, {
+                        [webpackBootfile.replace(/(javascripts\/)(.+\/)/, '$1')]: assetMap[webpackBootfile],
+                    }), {});
+                }).then(normalisedAssetMap => // save the asset map
+                    mkdirpp(path.resolve(hash, 'assets')).then(() =>
+                        writeFile(path.resolve(hash, 'assets', 'assets.map'), JSON.stringify(normalisedAssetMap, null, 4))
+                    )
                 );
             },
         },
