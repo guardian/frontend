@@ -91,7 +91,7 @@ data-test-id="facia-card"
             case Some(media@InlineYouTubeMediaAtom(_)) => {
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__video-container">
-                    @youtube(media = media.youTubeAtom, displayCaption = false, embedPage = false)
+                    @youtube(media = media.youTubeAtom, displayCaption = false, embedPage = false, showDuration = false)
                     </div>
                 </div>
             }

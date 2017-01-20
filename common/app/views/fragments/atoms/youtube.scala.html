@@ -3,7 +3,7 @@
 @import views.support.{RenderClasses, Video700}
 @import views.html.fragments.atoms.mediaAtomCaption
 
-@(media: model.content.MediaAtom, displayCaption: Boolean, embedPage: Boolean)(implicit request: RequestHeader)
+@(media: model.content.MediaAtom, displayCaption: Boolean, embedPage: Boolean, showDuration: Boolean = true)(implicit request: RequestHeader)
 
     <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
         "u-responsive-ratio" -> true,
@@ -24,12 +24,14 @@
             @media.posterImage.map { image =>
                 <div class="youtube-media-atom__overlay vjs-big-play-button" style="background-image: url(@Video700.bestFor(image))">
                     <div class="youtube-media-atom__play-button vjs-control-text">Play Video</div>
-                    <div class="youtube-media-atom__bottom-bar">
-                        <div class="youtube-media-atom__bottom-bar__icon">
+                    @if(showDuration) {
+                        <div class="youtube-media-atom__bottom-bar">
+                            <div class="youtube-media-atom__bottom-bar__icon">
                             @fragments.inlineSvg("video-icon", "icon")
+                            </div>
+                            <div class="youtube-media-atom__bottom-bar__duration"></div>
                         </div>
-                        <div class="youtube-media-atom__bottom-bar__duration"></div>
-                    </div>
+                    }
                 </div>
             }
     </div>

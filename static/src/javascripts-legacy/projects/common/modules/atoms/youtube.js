@@ -115,10 +115,8 @@ define([
         };
 
         if (overlay) {
-            if (!config.page.isFront) {
-                showDuration(atomId, overlay);
-            }    
-            
+            showDuration(atomId, overlay);
+
             players[atomId].overlay = overlay;
 
             if (!!config.page.section && detect.isBreakpoint({ min: 'desktop' })) {
@@ -151,8 +149,9 @@ define([
     function showDuration(atomId, overlay) {
         var durationElem = overlay.querySelector('.youtube-media-atom__bottom-bar__duration');
 
-        durationElem.innerText = getFormattedDuration(players[atomId].player.getDuration());
-        durationElem.parentNode.classList.add('youtube-media-atom__bottom-bar-enabled');
+        if (durationElem) {
+            durationElem.innerText = getFormattedDuration(players[atomId].player.getDuration());
+        }
     }
 
     function getEndSlate(overlay) {
