@@ -7,7 +7,7 @@ module.exports = function inlineSvgLoader(content) {
     const match = content.match(/<svg([^>]+)+>([\s\S]+)<\/svg>/i);
     const prefix = 'inline-';
     const imageType = path.dirname(this.resourcePath).split('/').pop();
-    const fileName = path.basename(this.resourcePath).split('.svg')[0];
+    const fileName = path.basename(this.resourcePath, '.svg');
     const svg = match ? match[0].replace(/\n/g, ' ').trim() : '';
     const markup = `<span class="${prefix}${fileName} ${(imageType !== '' ? prefix + imageType : '')}">${svg}</span>`;
 
