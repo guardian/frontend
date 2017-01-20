@@ -53,6 +53,9 @@ define([
         it('should make an ajax call and insert html', function (done) {
             hostedOnward.init()
                 .then(function () {
+                    return hostedOnward.whenRendered;
+                })
+                .then(function () {
                     expect(mock).toHaveBeenCalledWith('some.url/pageId/gallery/onward.json', {mode: 'cors'});
                     expect($('.js-onward-placeholder .next-page', $fixturesContainer).length).toBeGreaterThan(0);
                 })
