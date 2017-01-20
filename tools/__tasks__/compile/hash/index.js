@@ -44,21 +44,28 @@ module.exports = {
                         return Object.assign(map, { [assetPath]: hashedPath }, sourcemap);
                     }, {});
 
-                return Promise.all( // copy all the built files to their hash locations
+                return Promise.all(
+                    // copy all the built files to their hash locations
                     Object.keys(assetMap).map(asset =>
                         cpFile(path.resolve(target, asset), path.resolve(hash, assetMap[asset]))
                     )
-                ).then(() => { // add unhashed keys for any webpack boot files for use in play templates
-                    const webpackBootfiles = Object.keys(assetMap).filter(key =>
+                ).then(() => {
+                    // we need unhashed keys for webpack entry bundles so we can refer to them in play templates.
+                    // since they arrived ready-hashed, we need to add some new ones from the hashed ones...
+
+                    // get the webpack entry bundles
+                    const webpackEntryBundles = Object.keys(assetMap).filter(key =>
                         webpackRegex.test(key) && !webpackChunkRegex.test(key) && !sourcemapRegex.test(key)
                     );
 
-                    return Object.assign({}, assetMap, webpackBootfiles.reduce((map, webpackBootfile) =>
+                    // create a new key for each one and add them them to asset map
+                    return Object.assign({}, assetMap, webpackEntryBundles.reduce((map, webpackEntryBundle) =>
                         Object.assign(map, {
-                            [webpackBootfile.replace(/(javascripts\/)(.+\/)/, '$1')]: assetMap[webpackBootfile],
+                            [webpackEntryBundle.replace(/(javascripts\/)(.+\/)/, '$1')]: assetMap[webpackEntryBundle],
                         }
                     ), {}));
-                }).then(normalisedAssetMap => // save the asset map
+                }).then(normalisedAssetMap =>
+                    // save the asset map
                     mkdirpp(path.resolve(hash, 'assets')).then(() =>
                         writeFile(path.resolve(hash, 'assets', 'assets.map'), JSON.stringify(normalisedAssetMap, null, 4))
                     )
