@@ -48,14 +48,16 @@ module.exports = {
                     Object.keys(assetMap).map(asset =>
                         cpFile(path.resolve(target, asset), path.resolve(hash, assetMap[asset]))
                     )
-                ).then(() => { // add an unhashed keys for any webpack boot files for use in play templates
+                ).then(() => { // add unhashed keys for any webpack boot files for use in play templates
                     const webpackBootfiles = Object.keys(assetMap).filter(key =>
                         webpackRegex.test(key) && !webpackChunkRegex.test(key) && !sourcemapRegex.test(key)
                     );
 
-                    return webpackBootfiles.reduce((map, webpackBootfile) => Object.assign({}, assetMap, {
-                        [webpackBootfile.replace(/(javascripts\/)(.+\/)/, '$1')]: assetMap[webpackBootfile],
-                    }), {});
+                    return Object.assign({}, assetMap, webpackBootfiles.reduce((map, webpackBootfile) =>
+                        Object.assign(map, {
+                            [webpackBootfile.replace(/(javascripts\/)(.+\/)/, '$1')]: assetMap[webpackBootfile],
+                        }
+                    ), {}));
                 }).then(normalisedAssetMap => // save the asset map
                     mkdirpp(path.resolve(hash, 'assets')).then(() =>
                         writeFile(path.resolve(hash, 'assets', 'assets.map'), JSON.stringify(normalisedAssetMap, null, 4))
