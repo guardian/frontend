@@ -494,7 +494,7 @@ trait FeatureSwitches {
     "Adds a placeholder attribute to interactives on amp so that they are allowed to display in the top part of the page",
     owners = Seq(Owner.withGithub("michaelwmcnamara")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 20),
+    sellByDate = new LocalDate(2017, 2, 20),
     exposeClientSide = true
   )
 
@@ -516,7 +516,7 @@ trait FeatureSwitches {
     "Sends a healthcheck metric for every page",
     owners = Seq(Owner.withGithub("michaelwmcnamara")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 20),
+    sellByDate = new LocalDate(2017, 3, 20),
     exposeClientSide = true
   )
 
