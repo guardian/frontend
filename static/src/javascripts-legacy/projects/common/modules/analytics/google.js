@@ -64,7 +64,7 @@ define([
     // Tracks into Behaviour > Site Speed > User Timings in GA
     function trackPerformance(timingCategory, timingVar, timingLabel) {
         // Feature detect Navigation Timing API support.
-        if (window.performance) {
+        if (window.performance && window.performance.now) {
             // Value must be an integer - grabs the number of milliseconds since page load
             var timeSincePageLoad = Math.round(window.performance.now());
             var eventObj = {
