@@ -4,6 +4,8 @@ import bootStandard from 'bootstraps/standard/main';
 import config from 'common/utils/config';
 
 // let webpack know where to get files from
+// __webpack_public_path__ is a special webpack variable
+// https://webpack.js.org/guides/public-path/#set-value-on-the-fly
 // eslint-disable-next-line camelcase,no-undef
 __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
