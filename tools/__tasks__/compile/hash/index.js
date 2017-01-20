@@ -13,7 +13,7 @@ const mkdirpp = pify(mkdirp);
 const { hash, target } = require('../../config').paths;
 
 const standardAssetsMap = () => {
-    const assets = glob.sync('**/!(*.map|*webpack*)', { nodir: true, cwd: target });
+    const assets = glob.sync('**/!(*.map|*webpack*.js)', { nodir: true, cwd: target });
     return assets.reduce((assetMap, asset) => {
         const assetHash = hasha.fromFileSync(path.resolve(target, asset), { algorithm: 'md5' });
         return Object.assign(assetMap, {
@@ -30,7 +30,7 @@ const sourceMapAssetsMap = (assetMap) => {
 };
 
 const webpackAssetsMap = () => {
-    const webpackAssets = glob.sync('**/*webpack*', { nodir: true, cwd: target });
+    const webpackAssets = glob.sync('**/*webpack*.js', { nodir: true, cwd: target });
     return webpackAssets.reduce((assetMap, webpackAsset) => Object.assign(assetMap, {
         [webpackAsset]: webpackAsset,
     }), {});
