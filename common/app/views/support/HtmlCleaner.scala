@@ -649,12 +649,14 @@ case class CommercialComponentHigh(isAdvertisementFeature: Boolean, isNetworkFro
 
       val adSlotHtml = views.html.fragments.commercial.commercialComponentHigh(isAdvertisementFeature, hasPageSkin)
 
-      val adSlot: Element = Jsoup.parseBodyFragment(adSlotHtml.toString).body().child(0)
+      val adSlot: Option[Element] = Jsoup.parseBodyFragment(adSlotHtml.toString).body().children().toList.headOption
 
-      containers.lift(containerIndex).map { case ((container, index)) => {
-          container.after(adSlot)
-          adSlot.wrap(s"""<div class="fc-container fc-container--commercial"></div>""")
-        }
+      for {
+        (container, index) <- containers.lift(containerIndex)
+        slot <- adSlot
+      } {
+          container.after(slot)
+          slot.wrap("""<div class="fc-container fc-container--commercial"></div>""")
       }
 
     }

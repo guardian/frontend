@@ -5,7 +5,6 @@ define([
     config,
     mediator
 ) {
-    var ga = window.ga;
     var trackerName = config.googleAnalytics.trackers.editorial;
     var send = trackerName + '.send';
 
@@ -18,33 +17,33 @@ define([
     }
 
     function trackNonClickInteraction(actionName) {
-        ga(send, 'event', 'Interaction', actionName, {
+        window.ga(send, 'event', 'Interaction', actionName, {
             nonInteraction: true // to avoid affecting bounce rate
         });
     }
 
     function trackSamePageLinkClick(target, tag) {
-        ga(send, 'event', 'click', 'in page', tag, {
+        window.ga(send, 'event', 'click', 'in page', tag, {
             nonInteraction: true, // to avoid affecting bounce rate
             dimension13: extractLinkText(target)
         });
     }
 
     function trackExternalLinkClick(target, tag) {
-        ga(send, 'event', 'click', 'external', tag, {
+        window.ga(send, 'event', 'click', 'external', tag, {
             dimension13: extractLinkText(target)
         });
     }
 
     function trackSponsorLogoLinkClick(target) {
         var sponsorName = target.dataset.sponsor;
-        ga(send, 'event', 'click', 'sponsor logo', sponsorName, {
+        window.ga(send, 'event', 'click', 'sponsor logo', sponsorName, {
             nonInteraction: true
         });
     }
 
     function trackNativeAdLinkClick(slotName, tag) {
-        ga(send, 'event', 'click', 'native ad', tag, {
+        window.ga(send, 'event', 'click', 'native ad', tag, {
             nonInteraction: true,
             dimension25: slotName
         });

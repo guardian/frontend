@@ -4,7 +4,7 @@ define([
     return function () {
         this.id = 'NeilsenCheck';
         this.start = '2017-01-19';
-        this.expiry = '2017-01-23';
+        this.expiry = '2017-01-31';
         this.author = 'Kate Whalen';
         this.description = 'Letting Neilsen opt in to get the updated script';
         this.audience = 0;
