@@ -110,7 +110,7 @@ final case class Content(
   lazy val hasTonalHeaderIllustration: Boolean = tags.isLetters
 
   lazy val showCircularBylinePicAtSide: Boolean =
-    cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1
+    cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1 && !tags.isInteractive
 
   lazy val signedArticleImage: String = {
     ImgSrc(rawOpenGraphImage, EmailImage)
