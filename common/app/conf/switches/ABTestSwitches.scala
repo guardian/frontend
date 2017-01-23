@@ -56,7 +56,7 @@ trait ABTestSwitches {
     "Test new params for Neilsen => Zero participation, will send them the opt-in link",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 23),
+    sellByDate = new LocalDate(2017, 1, 31),
     exposeClientSide = true
   )
 
