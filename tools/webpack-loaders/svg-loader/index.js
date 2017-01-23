@@ -1,9 +1,6 @@
 const path = require('path');
 
-module.exports = function inlineSvgLoader(content) {
-    // eslint-disable-next-line no-unused-expressions
-    this.cacheable && this.cacheable(); // webpack-specfic weirdness
-
+module.exports = function svgLoader(content) {
     const match = content.match(/<svg([^>]+)+>([\s\S]+)<\/svg>/i);
     const prefix = 'inline-';
     const imageType = path.dirname(this.resourcePath).split('/').pop();
