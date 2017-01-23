@@ -2,7 +2,7 @@
 @import play.api.Mode.Dev
 @import views.support.Commercial.listSponsorLogosOnPage
 @import views.support.{Commercial, GoogleAnalyticsAccount}
-@import mvt.WebpackTest
+@import mvt.{WebpackTest,WebpackControl}
 
 <script id='google_analytics'>
 
@@ -37,7 +37,15 @@
 
     // Please email Dotcom Platform before changing this value
     function getExperienceValue() {
-        return @if(WebpackTest.isParticipating) {'webpack'} else {'curl'};
+        @if(WebpackTest.isParticipating) {
+            return 'webpack';
+        } else {
+            @if(WebpackControl.isParticipating) {
+                return 'webpack-control';
+            } else {
+                return 'curl';
+            }
+        }
     }
 
     var identityId = null;
