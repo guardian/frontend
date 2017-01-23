@@ -4,6 +4,7 @@ import conf.Static
 import layout.ContentCard
 import model._
 import play.twirl.api.Html
+import play.api.mvc._
 
 object EmailHelpers {
   def columnNumber(n: Int): String = {
@@ -61,8 +62,9 @@ object EmailHelpers {
 
   def imgForFront = img(FrontEmailImage.knownWidth) _
 
-  def imgFromCard(card: ContentCard) = imageUrlFromCard(card).map { url =>
-    imgForFront(url, Some(card.header.headline))
+  def imgFromCard(card: ContentCard)(implicit requestHeader: RequestHeader) = imageUrlFromCard(card).map { url => Html {
+      s"""<a class="facia-link" ${card.header.url.hrefWithRel}>${imgForFront(url, Some(card.header.headline))}</a>"""
+    }
   }
 
   object Images {

@@ -133,6 +133,12 @@ case object KeepItInTheGround extends ArticleEmailMetadata {
   def test(c: ContentPage) = c.item.tags.series.exists(_.id == "environment/series/keep-it-in-the-ground-updates")
 }
 
+case object TheWeekInPatriarchy extends ArticleEmailMetadata {
+  val name = "The Week In Patriarchy"
+  override val banner = Some("this-week-in-the-patriarchy.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "world/series/the-week-in-patriarchy")
+}
+
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
   override val banner = Some("the-flyer.png")
@@ -145,11 +151,16 @@ case object Opinion extends FrontEmailMetadata {
   override val toneColour = Some("#e6711b")
 }
 
+case object TheGuardianTodayUS extends FrontEmailMetadata {
+  val name = "The Guardian Today US"
+  override val banner = Some("the-guardian-today-us.png")
+}
+
 
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
-  private val defaultToneColour = "#005689"
+  private val defaultToneColour = "#46bcdf"
   private val articleEmails     = Seq(
     ArtWeekly,
     DocumentariesUpdate,
@@ -168,11 +179,13 @@ object EmailAddons {
     OlympicsDailyBriefing,
     HandwrittenMediaBriefing,
     VaginaDispatches,
-    KeepItInTheGround)
+    KeepItInTheGround,
+    TheWeekInPatriarchy)
   private val frontEmails = Seq(
     TheFlyer,
     CuratedMediaBriefing,
-    Opinion
+    Opinion,
+    TheGuardianTodayUS
   )
 
   implicit class EmailContentType(p: Page) {

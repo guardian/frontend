@@ -18,40 +18,40 @@
                 <summary class="main-navigation__item__button user-account__signed-in__label"
                     data-link-name="nav2 : my account">
 
-                    <i class="main-menu__icon main-menu__icon--chevron"></i>
+                    <i class="main-menu__icon main-menu__icon--chevron personalisation__icon"></i>
                     my account
                 </summary>
 
-                <ul class="user-account__signed-in__links">
+                <ul class="personalisation__links">
                     @if(SaveForLaterSwitch.isSwitchedOn) {
-                        <li class="user-account__signed-in__link">
+                        <li class="personalisation__link">
                             <a href="@Configuration.id.url/saved-for-later"
                                 data-link-name="nav2 : saved for later">
                                     Saved for later
                             </a>
                         </li>
                     }
-                    <li class="user-account__signed-in__link js-add-comment-activity-link" hidden>
+                    <li class="personalisation__link js-add-comment-activity-link" hidden>
                         <a data-link-name="nav2 : comment activity">
                             Comment activity
                         </a>
                     </li>
-                    <li class="user-account__signed-in__link">
+                    <li class="personalisation__link">
                         <a href="@Configuration.id.url/public/edit" data-link-name="nav2 : edit profile">
                                 Edit profile
                         </a>
                     </li>
-                    <li class="user-account__signed-in__link">
+                    <li class="personalisation__link">
                         <a href="@Configuration.id.url/email-prefs" data-link-name="nav2 : email preferences">
                             Email preferences
                         </a>
                     </li>
-                    <li class="user-account__signed-in__link">
+                    <li class="personalisation__link">
                         <a href="@Configuration.id.url/password/change" data-link-name="nav2 : change password">
                             Change password
                         </a>
                     </li>
-                    <li class="user-account__signed-in__link">
+                    <li class="personalisation__link">
                         <a href="@Configuration.id.url/signout" data-link-name="nav2 : sign out">
                             Sign out
                         </a>

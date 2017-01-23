@@ -1,5 +1,6 @@
 package controllers
 
+import akka.actor.ActorSystem
 import com.softwaremill.macwire._
 import weather.controllers.{LocationsController, WeatherController}
 import business.StocksData
@@ -7,6 +8,7 @@ import contentapi.ContentApiClient
 import feed._
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
+import services.breakingnews.BreakingNewsApi
 import weather.WeatherApi
 
 trait OnwardControllers {
@@ -24,6 +26,8 @@ trait OnwardControllers {
   def mostViewedVideoAgent: MostViewedVideoAgent
   def mostViewedGalleryAgent: MostViewedGalleryAgent
   def mostViewedAudioAgent: MostViewedAudioAgent
+  def breakingNewsApi: BreakingNewsApi
+  def actorSystem: ActorSystem
 
   lazy val navigationController = wire[NavigationController]
   lazy val weatherController = wire[WeatherController]
@@ -47,4 +51,6 @@ trait OnwardControllers {
   lazy val seriesController = wire[SeriesController]
   lazy val stocksController = wire[StocksController]
   lazy val techFeedbackController = wire[TechFeedbackController]
+  lazy val newsAlertController = wire[NewsAlertController]
+
 }

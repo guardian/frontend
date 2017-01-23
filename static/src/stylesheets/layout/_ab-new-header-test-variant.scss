@@ -5,7 +5,21 @@ $gutter-small: 29px;
 $gutter-medium: 37px;
 $gutter-large: 55px;
 
-$mobile-medium: 375px; // Breakpoint for our most common device sizes
+@mixin trailing-slash {
+    position: absolute;
+    pointer-events: none;
+    content: '/';
+    //optically aligns slashes
+    top: 0;
+    right: -.19em;
+}
+
+@mixin nav-links {
+    position: relative;
+    padding-left: .3em;
+    padding-right: .35em;
+    float: left;
+}
 
 // When the menu is open this class is added to the html to prevent users from scrolling
 .nav-is-open {
@@ -39,13 +53,13 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     padding-right: $gs-gutter / 2;
 
     // Aspect ratio: 16:3
-    @include mq($until: $mobile-medium) {
+    @include mq($until: mobileMedium) {
         width: 170px;
         // height: auto doesn't work in Safari
         height: calc(3 / 16 * 170px);
     }
 
-    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+    @include mq($from: mobileMedium, $until: mobileLandscape) {
         width: 225px;
         height: calc(3 / 16 * 225px);
     }
@@ -75,7 +89,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
         font-size: 5.1vw;
     }
 
-    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+    @include mq($from: mobileMedium, $until: mobileLandscape) {
         line-height: $gs-baseline * 3;
     }
 
@@ -109,7 +123,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
         }
     }
 
-    @include mq($until: $mobile-medium) {
+    @include mq($until: mobileMedium) {
         //Smaller menu button
         height: $veggie-burger-small;
         min-width: $veggie-burger-small;
@@ -125,7 +139,7 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
         }
     }
 
-    @include mq($mobile-medium) {
+    @include mq(mobileMedium) {
         height: $veggie-burger-medium;
         width: $veggie-burger-medium;
         //Align with the 'i' in 'theguardian'
@@ -190,32 +204,26 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 
 .new-header__nav__link {
     // Override a from _lists.scss
-    color: #ffffff;
-    position: relative;
-    padding-left: .3em;
-    padding-right: .35em;
-    float: left;
+    color: $news-support-1;
+    @include nav-links;
     cursor: pointer;
 
     &:focus,
     &:hover {
         text-decoration: none;
+        color: #ffffff;
     }
 
     &:first-child {
         padding-left: $gs-gutter / 2;
     }
 
-    &:before {
-        position: absolute;
-        pointer-events: none;
-        content: '/';
-        //optically aligns slashes
-        left: -.19em;
+    &:after {
+        @include trailing-slash;
         color: $news-main-2;
     }
 
-    &:first-of-type:before {
+    &:last-of-type:after {
         content: none;
     }
 }
@@ -223,120 +231,6 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
 [data-link-name='nav2 : primary : life'] {
     padding-left: .35em;
     padding-right: .8em;
-}
-
-/*****************
- * Edition Picker
- *****************/
-
-.edition-picker {
-    @include fs-textSans(3);
-    position: absolute;
-    left: 0;
-    color: $news-support-1;
-    // Override from fs-textSans mixin
-    line-height: 1;
-    padding-top: $gs-baseline / 2;
-    padding-left: $gs-gutter / 2;
-    width: gs-span(2);
-    z-index: $zindex-sticky;
-
-    @include mq($until: mobile) {
-        display: none;
-    }
-
-    // Smaller size compensates for how big the word "Australia" is
-    @include mq($until: $mobile-medium) {
-        font-size: 13px;
-    }
-
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter / 2;
-    }
-}
-
-.inline-world__svg {
-    fill: $news-support-1;
-    vertical-align: middle;
-    min-width: 14px;
-    min-height: 14px;
-    margin-right: 1px;
-    margin-top: -$gs-baseline / 4;
-}
-
-.edition-picker__dropdown {
-    display: none;
-    position: absolute;
-    top: 40px;
-    left: $gs-gutter / 2;
-    // overriding default styling
-    width: gs-span(2);
-    margin: 0;
-    list-style: none;
-    padding: 0;
-
-    @include mq(mobileLandscape) {
-        left: $gs-gutter;
-    }
-
-    &:before {
-        content: '';
-        position: absolute;
-        left: 15px;
-        top: -10px;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 0 $gs-gutter / 2 $gs-gutter / 2;
-        border-color: transparent transparent $guardian-brand-dark;
-    }
-}
-
-.edition-picker__dropdown-item-link {
-    color: #ffffff;
-    display: block;
-    padding-top: $gs-baseline;
-    padding-bottom: $gs-baseline;
-    padding-left: $gs-gutter;
-
-    &:hover {
-        text-decoration: none;
-        background-color: darken($guardian-brand-dark, 3%);
-    }
-}
-
-.edition-picker__current-edition {
-    width: gs-span(2);
-    padding-top: $gs-baseline / 2;
-    padding-bottom: $gs-baseline / 2;
-    display: block;
-    outline: none;
-    cursor: pointer;
-
-    &:hover {
-        color: #ffffff;
-
-        .inline-world__svg {
-            fill: #ffffff;
-        }
-    }
-}
-
-.edition-picker__button {
-    display: none;
-
-    &:checked,
-    &[aria-expanded='true'] {
-        & ~ .edition-picker__dropdown {
-            display: block;
-            background-color: $guardian-brand-dark;
-            box-shadow: 0 0 $gs-baseline * 2.5 0 rgba(0, 0, 0, .2);
-        }
-
-        & ~ .edition-picker__current-edition {
-            z-index: 3;
-        }
-    }
 }
 
 /****************
@@ -379,11 +273,11 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     will-change: transform;
     transition: transform .2s cubic-bezier(.23, 1, .32, 1);
 
-    @include mq($until: $mobile-medium) {
+    @include mq($until: mobileMedium) {
         padding-top: $gs-baseline / 3;
     }
 
-    @include mq($mobile-medium) {
+    @include mq(mobileMedium) {
         //Larger font/icon size for larger devices
         font-size: 22px;
         padding-top: $gs-baseline;
@@ -403,11 +297,11 @@ $mobile-medium: 375px; // Breakpoint for our most common device sizes
     transform: translateX(-110%);
     transition: transform .4s cubic-bezier(.23, 1, .32, 1);
 
-    @include mq($until: $mobile-medium) {
+    @include mq($until: mobileMedium) {
         margin-right: $gutter-small + ($veggie-burger-small / 2);
     }
 
-    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+    @include mq($from: mobileMedium, $until: mobileLandscape) {
         margin-right: $gutter-medium + ($veggie-burger-medium / 2);
     }
 
@@ -575,6 +469,10 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     .main-menu__icon__svg {
         fill: $neutral-2;
     }
+
+    .personalisation__icon:before {
+        border-color: $neutral-2;
+    }
 }
 
 .navigation-group__item {
@@ -677,20 +575,20 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
         .user-account__login {
             display: none;
         }
-
-        .main-menu__icon--chevron:before {
-            border-color: $neutral-2;
-        }
     }
 }
 
-.user-account__signed-in__links {
+.personalisation__links {
     margin-left: 0;
     margin-bottom: -$gs-baseline;
     background-color: rgba(0, 0, 0, .15);
 }
 
-.user-account__signed-in__link {
+.personalisation__link {
+    color: $neutral-3;
+}
+
+.personalisation__link--active {
     color: #ffffff;
 }
 
@@ -719,51 +617,44 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 /****************
  * Tertiary Nav
  ****************/
-
-.tertiary-container {
-    overflow: hidden;
-    border-bottom: $gs-baseline / 2 solid #747a81;
-}
-
 .tertiary-navigation {
-    margin: 0;
     background-color: #747a81;
+    padding-top: $gs-baseline / 3;
+    // Spacer that prevents links flowing beneath the veggie burger
+    //padding-right: $gutter-medium + ($veggie-burger-medium / 2);
     padding-left: $gs-gutter / 2;
-    padding-right: $gs-gutter / 2;
-    list-style: none;
-    white-space: nowrap;
-    display: flex;
-    padding-top: $gs-baseline / 2;
+    padding-right: $gutter-medium + ($veggie-burger-medium / 2);
+    margin-left: -4px;
+    border-bottom: $gs-baseline / 3 solid #747a81;
     max-height: $gs-baseline * 3.4;
-    flex-wrap: wrap;
+    overflow: hidden;
+    z-index: 1;
+    position: relative;
 
     @include mq($from: mobile, $until: mobileLandscape) {
-        max-height: $gs-baseline * 4;
-        max-height: 14.8vw;
+        max-height: $gs-baseline * 3.5;
+        max-height: 13vw;
+        margin-left: -.3em;
     }
 
     @include mq($from: mobileLandscape) {
-        max-height: $gs-baseline*5.5;
+        max-height: $gs-baseline * 4.8;
         padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        margin-left: -5px;
+        padding-right: $gutter-large + ($veggie-burger-medium / 2);
     }
 }
 
 .tertiary-navigation__link {
-    @include fs-textSans(4);
-    position: relative;
+    @include fs-textSans(5);
+    @include nav-links
     color: $neutral-4;
-    display: block;
-    line-height: 1.5em;
+    line-height: 1.3em;
 
     &:hover,
     &:focus {
         text-decoration: none;
         color: #ffffff;
-    }
-
-    .tertiary-navigation__item--current-section & {
-        color: $news-support-1;
     }
 
     @include mq($from: mobile, $until: mobileLandscape) {
@@ -776,18 +667,17 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     }
 
     &:after {
-        pointer-events: none;
-        content: '/';
+        @include trailing-slash;
         color: rgba(255, 255, 255, .3);
-        margin-left: -.1em;
-        padding: 0 $gs-gutter / 10;
+    }
+
+    &:last-of-type:after {
+        content: none;
     }
 }
 
-.tertiary-navigation__item:last-of-type .tertiary-navigation__link {
-    &:after {
-        content: '';
-    }
+.tertiary-navigation__link--current-section {
+    color: #ffffff;
 }
 
 /****************
@@ -885,15 +775,98 @@ $caption-button-size: 32px;
             padding-top: $gs-baseline / 2;
         }
 
-        .section-indicator:after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            margin-left: -$gs-baseline / 2;
-            border-bottom: $gs-baseline / 2 solid #747a81;
-            border-left: $gs-baseline / 2 solid transparent;
-            border-right: $gs-baseline / 2 solid transparent;
+        .section-indicator {
+            color: #ffffff;
+
+            &:before {
+                content: '';
+                position: absolute;
+                left: 50%;
+                bottom: 0;
+                margin-left: -$gs-baseline / 2;
+                border-bottom: $gs-baseline / 2 solid #747a81;
+                border-left: $gs-baseline / 2 solid transparent;
+                border-right: $gs-baseline / 2 solid transparent;
+            }
         }
     }
 }
+
+/****************
+ * FOOTER
+ ****************/
+
+.l-footer {
+    // these two lines are needed so that the footer sits over the nav
+    position: absolute;
+    z-index: 9999;
+    width: 100%;
+}
+.footer__back-to-top__container {
+    @include content-gutter();
+    background-color: $guardian-brand;
+
+    a:hover > &,
+    a:focus > & {
+        background-color: $guardian-brand-dark;
+    }
+}
+
+.footer__back-to-top {
+    @include fs-textSans(4);
+    position: relative;
+    text-align: right;
+
+    @include mq($from: mobile, $until: mobileLandscape) {
+        font-size: 14px;
+        font-size: 4.6vw;
+    }
+
+    @include mq(mobileLandscape) {
+        font-size: 20px;
+    }
+}
+
+.back-to-top__text {
+    display: inline-block;
+    color: white;
+    line-height: 30px;
+    padding-right: $gs-gutter / 2;
+
+    @include mq(mobileMedium) {
+        line-height: 40px;
+    }
+}
+
+.back-to-top__icon {
+    position: relative;
+    float: right;
+    margin-top: -($gs-baseline / 2);
+    margin-bottom: -($gs-baseline / 2);
+    border-radius: 100%;
+    background-color: $news-main-2;
+    cursor: pointer;
+    height: $veggie-burger-small;
+    min-width: $veggie-burger-small;
+
+    @include mq(mobileMedium) {
+        height: $veggie-burger-medium;
+        width: $veggie-burger-medium;
+    }
+
+    svg {
+        position: absolute;
+        top: -($gs-baseline / 2);
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
+
+        @include mq(mobileMedium) {
+            width: 30px;
+            height: 24px;
+        }
+    }
+}
+
+@import '../module/nav/_supporter-trapezoid';
