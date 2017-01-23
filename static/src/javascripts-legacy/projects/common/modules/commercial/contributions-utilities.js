@@ -1,6 +1,7 @@
 define([
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/targeting-tool',
+    'common/modules/commercial/acquisitions-view-log',
     'common/utils/$',
     'common/utils/config',
     'common/utils/cookies',
@@ -8,9 +9,11 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/geolocation'
+    'common/utils/geolocation',
+
 ], function (commercialFeatures,
              targetingTool,
+             viewLog,
              $,
              config,
              cookies,
@@ -23,8 +26,6 @@ define([
     var membershipURL = 'https://membership.theguardian.com/supporter';
     var contributionsURL = 'https://contribute.theguardian.com';
 
-    var viewKey = 'gu.contributions.views';
-    var viewLog = storage.local.get(viewKey) || [];
 
     var lastContributionDate = cookies.get('gu.contributions.contrib-timestamp');
 
@@ -34,34 +35,9 @@ define([
      */
     var maxViews = {
         days: 7,
-        count: 6
+        count: 6,
+        minDaysBetweenViews: 0
     };
-
-    var maxLogEntries = 50;
-
-    /**
-     * Log that the user has seen an Epic test so we can limit how many times they see it.
-     * The number of entries is limited to the number in maxLogEntries.
-     *
-     * @param testId
-     */
-    function logView(testId) {
-        viewLog.push({
-            date: new Date().getTime(),
-            testId: testId
-        });
-
-        storage.local.set(viewKey, viewLog.slice(-maxLogEntries));
-    }
-
-    function viewsInPreviousDays(days) {
-        var ms = days * 1000 * 60 * 60 * 24;
-        var now = new Date().getTime();
-
-        return viewLog.filter(function (view) {
-            return view.date > (now - ms);
-        }).length;
-    }
 
     function daysSince(date) {
         var oneDay = 24 * 60 * 60 * 1000;
@@ -75,6 +51,9 @@ define([
             return Infinity;
         }
     }
+
+
+
 
     function ContributionsABTest(options) {
         this.id = options.id;
@@ -108,7 +87,6 @@ define([
         this.canRun = (function () {
             var testCanRun = (typeof options.canRun === 'function') ? options.canRun() : true;
             var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 90;
-            var acceptableViewCount = viewsInPreviousDays(maxViews.days) <= maxViews.count;
             var tagsMatch = options.useTargetingTool ? targetingTool.isAbTestTargeted(this) : true;
             var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle;
             var storedGeolocation = geolocation.getSync();
@@ -120,7 +98,6 @@ define([
             if (options.overrideCanRun) return tagsMatch && options.canRun();
 
             return enoughTimeSinceLastContribution &&
-                acceptableViewCount &&
                 tagsMatch &&
                 testCanRun &&
                 worksWellWithPageTemplate &&
@@ -141,6 +118,7 @@ define([
     function ContributionsABTestVariant(options, test) {
         this.campaignId = test.campaignId;
         this.id = options.id;
+        this.maxViews = options.maxViews || maxViews;
 
         this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, test.contributionsCampaignPrefix);
         this.membershipURL = options.membershipURL || this.makeURL(membershipURL, test.membershipCampaignPrefix);
@@ -161,7 +139,7 @@ define([
                             var elementInView = ElementInView(element, window, { top: 18 });
 
                             elementInView.on('firstview', function () {
-                                logView(test.id);
+                                viewLog.logView(test.id);
                                 mediator.emit(test.viewEvent);
                             });
                         });
