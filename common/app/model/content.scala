@@ -424,6 +424,17 @@ object Article {
     // `headOption` as the video could be main media or a regular embed, so just get the first video
     val videoDuration = content.elements.videos.headOption.map { v => JsNumber(v.videos.duration) }.getOrElse(JsNull)
 
+   def hasYouTubeAtom: Boolean = {
+     val hasYouTubeAtom: Option[Boolean] = for {
+       content <- content.atoms
+       media <- Some(content.media)
+       firstMediaAtom <- media.headOption
+       assets <- Some(firstMediaAtom.assets)
+       firstAsset <- assets.headOption
+     } yield firstAsset.platform == "Youtube"
+     hasYouTubeAtom.getOrElse(false)
+   }
+
     val javascriptConfig: Map[String, JsValue] = Map(
       ("isLiveBlog", JsBoolean(content.tags.isLiveBlog)),
       ("inBodyInternalLinkCount", JsNumber(content.linkCounts.internal)),
@@ -432,7 +443,7 @@ object Article {
       ("hasInlineMerchandise", JsBoolean(commercial.hasInlineMerchandise)),
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
-      ("hasYouTubeMediaAtom", JsBoolean(content.atoms.flatMap(_.media).toSeq.headOption.exists(_.assets.exists(_.platform == "Youtube")))),
+      ("hasYouTubeMediaAtom", JsBoolean(hasYouTubeAtom)),
       ("isImmersive", JsBoolean(content.isImmersive)),
       ("isHosted", JsBoolean(false)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
