@@ -427,10 +427,8 @@ object Article {
    def hasYouTubeAtom: Boolean = {
      val hasYouTubeAtom: Option[Boolean] = for {
        atoms <- content.atoms
-       media <- Some(atoms.media)
-       firstMediaAtom <- media.headOption
-       assets <- Some(firstMediaAtom.assets)
-       firstAsset <- assets.headOption
+       firstMediaAtom <- atoms.media.headOption
+       firstAsset <- firstMediaAtom.assets.headOption
      } yield firstAsset.platform == "Youtube"
      hasYouTubeAtom.getOrElse(false)
    }
