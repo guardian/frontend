@@ -77,7 +77,7 @@
             @if(withImage) {
                 @fullRowWithSubColumns() {
                     @subColumn(7, Seq("facia-card__text")) { @headline(card)}
-                    @subColumn(5, Seq(), last = true) { @imgFromCard(card) }
+                    @subColumn(5, Seq("facia-card__text"), last = true) { @imgFromCard(card) }
                 }
             } else {
                 @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
