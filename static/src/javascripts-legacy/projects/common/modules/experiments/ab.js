@@ -87,9 +87,12 @@ define([
     }
 
     function getActiveTests() {
-        var now = new Date();
+        var today = new Date();
+        // new Date(test.expiry) sets the expiry time to 00:00:00
+        // SetHours to allow the test to run until the END of the expiry day
+        today.setHours(0,0,0,0);
         return TESTS.filter(function (test) {
-            var expired = (now - new Date(test.expiry)) > 0;
+            var expired = (today > new Date(test.expiry));
             if (expired) {
                 removeParticipation(test);
                 return false;
