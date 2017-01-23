@@ -1,5 +1,4 @@
 .d2-comment-embedded {
-    background-color: $comment-support-2;
     font-family: sans-serif;
     overflow: hidden;
     position: relative;
@@ -18,7 +17,6 @@
 }
 
 .d2-right-col {
-    position: relative;
     top: -3px;
     padding-right: $gs-gutter;
 }
@@ -26,11 +24,6 @@
 .d2-permalink .d2-datetime {
     color: $neutral-2;
     font-size: .8em;
-    font-family: $f-sans-serif-text;
-}
-
-.d2-permalink .d2-datetime:hover {
-    border-bottom: 1px dotted $neutral-2;
 }
 
 .d2-body {
