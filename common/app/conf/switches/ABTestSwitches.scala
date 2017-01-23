@@ -26,7 +26,7 @@ trait ABTestSwitches {
     "Test appetite for first batch of bundles",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 20),
+    sellByDate = new LocalDate(2017, 2, 7),
     exposeClientSide = true
   )
 
