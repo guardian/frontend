@@ -1,9 +1,9 @@
 package model
 
 import campaigns.PersonalInvestmentsCampaign
+import com.gu.commercial.branding.{BrandingType, PaidContent, Sponsored}
 import com.gu.facia.api.models._
 import common.Edition
-import common.commercial.Branding
 import conf.Configuration
 import contentapi.Paths
 import model.facia.PressedCollection
@@ -53,7 +53,8 @@ object PressedPage {
       iosType = Some("front"),
       javascriptConfigOverrides = faciaPageMetaData,
       opengraphPropertiesOverrides = openGraph,
-      twitterPropertiesOverrides = twitterProperties
+      twitterPropertiesOverrides = twitterProperties,
+      editionBrandings = frontProperties.editionBrandings
     )
   }
 }
@@ -105,7 +106,10 @@ case class PressedPage (
 
   val keywordIds: Seq[String] = frontKeywordIds(id)
 
-  override def branding(edition: Edition): Option[Branding] = frontProperties.branding(edition)
-
   def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
+
+  private def hasBrandingOfType(edition: Edition, brandingType: BrandingType): Boolean =
+    metadata.branding(edition).exists(_.brandingType == brandingType)
+  def isSponsored(edition: Edition): Boolean = hasBrandingOfType(edition, Sponsored)
+  def isPaid(edition: Edition): Boolean = hasBrandingOfType(edition, PaidContent)
 }

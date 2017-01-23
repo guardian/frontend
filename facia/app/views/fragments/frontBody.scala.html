@@ -1,20 +1,21 @@
 @import common.Edition
-@import common.commercial.{ContainerModel, PaidContent, Sponsored}
+@import common.commercial.ContainerModel
 @import views.support.RenderClasses
+@import com.gu.commercial.branding.Sponsored
+@import com.gu.commercial.branding.PaidContent
 @(faciaPage: model.PressedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@defining((faciaPage.branding(Edition(request)).exists(_.sponsorshipType == Sponsored),
-           faciaPage.branding(Edition(request)).exists(_.sponsorshipType == PaidContent))) { case (isSponsored, isAdFeature) =>
+@defining((faciaPage.isSponsored(Edition(request)), faciaPage.isPaid(Edition(request)))) { case (isSponsored, isPaid) =>
     @if(faciaPage.collections.nonEmpty) {
         <div class="l-side-margins">
             <div class="@RenderClasses(Map(
                 "fc-container--sponsored" -> isSponsored,
-                "fc-container--paid-content paid-content" -> isAdFeature
+                "fc-container--paid-content paid-content" -> isPaid
             ), "facia-page")"
             data-link-name="Front | @request.path"
             role="main">
 
-            @if(isAdFeature){
+            @if(isPaid){
                 @fragments.guBand()
             }
 
@@ -25,7 +26,7 @@
                             containerDefinition,
                             faciaPage.frontProperties,
                             Some(faciaPage.id),
-                            isAdFeature,
+                            isPaid,
                             faciaPage.collections.find {
                                 _.id == containerDefinition.dataId
                             }.map {
@@ -46,7 +47,7 @@
 
                 @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
 
-                @if(!isAdFeature) {
+                @if(!isPaid) {
                     <div class="fc-container fc-container--commercial">
                     @fragments.commercial.commercialComponent()
                     </div>

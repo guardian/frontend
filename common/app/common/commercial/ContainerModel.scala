@@ -1,5 +1,6 @@
 package common.commercial
 
+import com.gu.commercial.branding.Branding
 import common.Edition
 import model.facia.PressedCollection
 

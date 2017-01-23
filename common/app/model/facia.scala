@@ -1,7 +1,8 @@
 package model
 
+import com.gu.commercial.branding.{Branding, PaidContent}
 import common.Edition._
-import common.commercial.{PaidContent, BrandHunter, Branding}
+import common.commercial.EditionBranding
 import common.{Edition, ExecutionContexts, Logging}
 import play.api.libs.json.Json
 
@@ -56,21 +57,27 @@ case class FrontProperties(
   imageHeight: Option[String],
   isImageDisplayed: Boolean,
   editorialType: Option[String],
-  activeBrandings: Option[Seq[Branding]]
+  editionBrandings: Option[Seq[EditionBranding]]
 ) {
-  def branding(edition: Edition): Option[Branding] =
-    BrandHunter.findBranding(activeBrandings, edition, publicationDate = None)
 
-  lazy val isAdvertisementFeature: Boolean = {
-    val branding = BrandHunter.findBranding(activeBrandings, defaultEdition, publicationDate = None)
-    branding.exists(_.sponsorshipType == PaidContent)
-  }
+  def branding(edition: Edition): Option[Branding] = EditionBranding.branding(editionBrandings, edition)
+
+  lazy val isAdvertisementFeature: Boolean = branding(defaultEdition).exists(_.brandingType == PaidContent)
 }
 
 object FrontProperties {
   implicit val jsonFormat = Json.format[FrontProperties]
 
-  val empty = FrontProperties(None, None, None, None, false, None, None)
+  val empty = FrontProperties(
+    onPageDescription = None,
+    imageUrl = None,
+    imageWidth = None,
+    imageHeight = None,
+    isImageDisplayed = false,
+    editorialType = None,
+    editionBrandings = None
+  )
 
-  def fromBranding(branding: Branding): FrontProperties = empty.copy(activeBrandings = Some(Seq(branding)))
+  def fromBranding(edition: Edition, branding: Branding): FrontProperties =
+    empty.copy(editionBrandings = Some(Seq(EditionBranding(edition, Some(branding)))))
 }

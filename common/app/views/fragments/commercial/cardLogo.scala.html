@@ -1,4 +1,6 @@
-@(branding: common.commercial.Branding, isStandardSizeCard: Boolean)(implicit request: RequestHeader)
+@import com.gu.commercial.branding.Branding
+@import views.html.fragments.commercial.logo
+@(branding: Branding, isStandardSizeCard: Boolean)(implicit request: RequestHeader)
 
 <div class="badge @if(isStandardSizeCard){badge--branded}">
     @logo(branding)
