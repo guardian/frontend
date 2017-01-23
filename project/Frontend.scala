@@ -98,8 +98,6 @@ object Frontend extends Build with Prototypes {
     TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._")
   )
 
-  val router = application("router")
-
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       uaDetectorResources,
@@ -201,7 +199,6 @@ object Frontend extends Build with Prototypes {
     applications,
     sport,
     discussion,
-    router,
     diagnostics,
     admin,
     identity,
