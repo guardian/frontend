@@ -89,3 +89,40 @@ function validate(form) {
 - https://davidwalsh.name/html5-email
 
 4) If all else fails, ExactTarget has checks in place for valid emails and also cleans the lists.
+
+## Email rendering
+
+Fronts and articles can be rendered in email-friendly HTML by appending the URL parameter `format=email`. The response from these endpoints can be put into an email body and will render well in a wide variety of email clients.
+ 
+For curating emails, you'll normally want to set up a custom front rather than co-opting an existing front. For
+this purpose, we have a notion of "Email fronts" (in addition to Commercial, Editorial, and Training). These
+are visible in the fronts tool: https://fronts.gutools.co.uk/email
+
+Email fronts will always render in email-friendly format, regardless of the `format` parameter. They also
+have a much smaller set of layout types than web fronts: **fast**, **medium** and **slow**. Here's an example of each along with a table summarising their differences:
+
+### Slow
+![picture 397](https://cloud.githubusercontent.com/assets/5122968/22215773/83d61456-e194-11e6-82bb-792e377f7168.png)
+
+### Medium
+![picture 398](https://cloud.githubusercontent.com/assets/5122968/22215781/89027276-e194-11e6-96f3-c90e5a6f4226.png)
+
+### Fast
+![picture 399](https://cloud.githubusercontent.com/assets/5122968/22215787/90b7230e-e194-11e6-9448-425a1b9d2ded.png)
+
+### Table summarising differences between slow/medium/fast
+
+```
+LAYOUT | CARD   | IMAGE?   | STANDFIRST? | HEADLINE?
+----------------|-----------------------------------
+slow   | 1st    | big      | yes         | big
+       | others | none     | yes         | small
+----------------|-----------------------------------
+medium | 1st    | big      | yes         | big
+       | others | none     | no          | small
+----------------|-----------------------------------
+fast   | 1st    | small    | no          | small
+       | others | none     | no          | small
+```
+
+
