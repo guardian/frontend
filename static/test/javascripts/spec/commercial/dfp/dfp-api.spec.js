@@ -1,5 +1,3 @@
-define('js', [], function () { return function () {}; });
-define('js!googletag.js', [], function () { return function () {}; });
 define([
     'bean',
     'bonzo',
@@ -59,6 +57,10 @@ define([
             });
 
             injector.mock('common/modules/commercial/dfp/apply-creative-template', function () {
+                return Promise.resolve();
+            });
+
+            injector.mock('common/utils/load-script', function () {
                 return Promise.resolve();
             });
 

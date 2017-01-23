@@ -1,13 +1,13 @@
 define([
     'react',
-    'classnames',
     './helpers',
-    './constants'
+    './constants',
+    './classNames'
 ], function (
     React,
-    classNames,
     helpers,
-    constants
+    constants,
+    classNames
 ) {
     var Cell = React.createClass({
 

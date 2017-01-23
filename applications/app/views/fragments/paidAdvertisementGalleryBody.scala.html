@@ -75,7 +75,11 @@
 
     @if(!page.gallery.content.shouldHideAdverts && rowNum % adInterval == 0) {
         <li class="gallery2__item gallery2__item--advert">
-            <div class="gallery2__img-container js-gallery-slot">
+            <div class="gallery2__img-container">
+                @defining(rowNum / adInterval) { inlineId =>
+                    @gallerySlot(inlineId)
+                    @gallerySlot(inlineId - 1, isMobile = true)
+                }
             </div>
         </li>
     }

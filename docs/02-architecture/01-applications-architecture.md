@@ -122,14 +122,11 @@ Admin app hosts a set of dashboards and tools used by Guardian developers to mon
 
 [All supported routes](https://github.com/guardian/frontend/blob/master/admin/conf/routes)
 
-# Admin-jobs
-Admin-jobs app has currently two endpoints to:
-
 - Create breaking-news alerts
 
 - [Get all breaking-news alert](http://api.nextgen.guardianapps.co.uk/news-alert/alerts)
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/admin-jobs/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/master/sport/conf/routes)
 
 # Archive
 In case none of the other apps can serve a given request, it is finally passed to the Archive app which checks if there is any redirect setup for this url or any old static content attached to it.

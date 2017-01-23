@@ -1,25 +1,36 @@
 @(page: model.Page)(implicit request: RequestHeader)
 
+@import conf.Configuration
 @import common.{LinkTo, NewNavigation, Edition}
 
 <header class="new-header" role="banner">
     @defining(
-        NewNavigation.SectionLinks.getSectionLinks(page.metadata.sectionId, Edition(request))
-    ) { case (currentTopLevelSection, sections) =>
+        NewNavigation.SectionLinks.getTopLevelSection(page.metadata.sectionId)
+    ) { case (currentTopLevelSection) =>
         <div class="new-header__inner gs-container">
             <a href="@LinkTo{/}" class="new-header__logo-wrapper" tabindex="0" data-link-name="nav2 : logo">
                 <h1 class="u-h">The Guardian</h1>
                 @fragments.inlineSvg("guardian-logo-160", "logo", List("new-header__logo"))
             </a>
 
-            @fragments.nav.editionPicker()
+            @defining(
+                Edition(request).id.toLowerCase()
+            ) { editionId =>
+                <a class="header__supporter-cta"
+                    data-link-name="nav2 : supporter-cta"
+                    data-edition=@{editionId}
+                    href="@{Configuration.id.membershipUrl}/@{editionId}/supporter?INTCMP=mem_@{editionId}_web_newheader_trapezoid">
+
+                    Become a <span>Supporter</span>
+                </a>
+            }
 
             <nav class="new-header__nav" data-component="nav2">
                 @NewNavigation.PrimaryLinks.map { link =>
-                    <a class="new-header__nav__link @if(link.title == currentTopLevelSection && page.metadata.isFront) {section-indicator}"
+                    <a class="new-header__nav__link @if(link.title == currentTopLevelSection) {section-indicator}"
                         href="@LinkTo(link.url)"
                         data-link-name="nav2 : primary : @link.title">
-                        @link.title
+                            @link.title
                     </a>
                 }
                 <label for="main-menu-toggle"
@@ -35,35 +46,6 @@
             </nav>
         </div>
 
-        @if(page.metadata.isFront) {
-
-            <div class="tertiary-container">
-            <ul class="tertiary-navigation">
-
-                    @defining(
-                        if(page.metadata.sectionId.isEmpty || page.metadata.isFront) page.metadata.id else page.metadata.sectionId
-                    ) { id =>
-
-                        @NewNavigation.TertiaryNav.getTertiaryNavLinks(id).map { tertiaryLink =>
-
-                            <li class="tertiary-navigation__item">
-                                <a class="tertiary-navigation__link" href="@LinkTo(tertiaryLink.url)" data-link-name="nav2 : tertiary : @tertiaryLink.title">
-                                    @Html(tertiaryLink.title)
-                                </a>
-                            </li>
-                        }
-                    }
-                    @sections.map { link =>
-                        <li class="tertiary-navigation__item @if((link.uniqueSection == page.metadata.sectionId) && !page.metadata.isFront){tertiary-navigation__item--current-section}">
-                            <a class="tertiary-navigation__link" href="@LinkTo(link.url)" data-link-name="nav2 : tertiary : @link.title">
-                                @Html(link.title)
-                            </a>
-                        </li>
-                    }
-                </ul>
-            </div>
-        }
-
+        @fragments.nav.subSectionNav(page)
     }
-
 </header>

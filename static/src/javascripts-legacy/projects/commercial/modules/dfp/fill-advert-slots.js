@@ -17,18 +17,13 @@ define([
         if (commercialFeatures.dfpAdvertising) {
             fillAdvertSlots(moduleName);
         }
-        // Return a promise that resolves after the async work is done.
-        return new Promise(function(resolve){
-            window.googletag.cmd.push(
-                resolve
-            );
-        });
+        return Promise.resolve();
     }
 
     function fillAdvertSlots(moduleName) {
-        performanceLogging.moduleStart(moduleName);
 
         window.googletag.cmd.push(
+            moduleStart,
             createAdverts,
             queueAdverts,
             setPublisherProvidedId,
@@ -37,6 +32,10 @@ define([
             refreshOnResize,
             moduleEnd
         );
+
+        function moduleStart() {
+            performanceLogging.moduleStart(moduleName);
+        }
 
         function moduleEnd() {
             performanceLogging.moduleEnd(moduleName);

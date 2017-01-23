@@ -6,10 +6,8 @@ module.exports = {
         require('./copy'),
         require('./babel'),
         require('./rjs'),
-        require('./rjs--webpack'),
         require('./webpack'),
-        require('./bundle-app--rjs'),
-        require('./bundle-app--webpack'),
+        require('./bundle-rjs'),
         require('./bundle-shims'),
     ],
 };

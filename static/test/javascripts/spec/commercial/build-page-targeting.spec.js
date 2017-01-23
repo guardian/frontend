@@ -106,7 +106,7 @@ define([
             expect(pageTargeting.co).toEqual(['gabrielle-chan']);
             expect(pageTargeting.bl).toEqual(['blog']);
             expect(pageTargeting.ms).toBe('itn');
-            expect(pageTargeting.tn).toEqual(['advertisement-features', 'news']);
+            expect(pageTargeting.tn).toEqual(['news']);
             expect(pageTargeting.vl).toEqual('90');
             expect(pageTargeting.pv).toEqual('presetOphanPageViewId');
         });
@@ -150,6 +150,26 @@ define([
         it('should not set Observer flag for Guardian content', function () {
             config.page.publication = 'The Guardian';
             expect(buildPageTargeting().ob).toEqual(undefined);
+        });
+
+        it('should set correct branding param for sponsored content', function () {
+            config.page.sponsorshipType = 'sponsored';
+            expect(buildPageTargeting().br).toEqual('s');
+        });
+
+        it('should set correct branding param for paid content', function () {
+            config.page.sponsorshipType = 'paid-content';
+            expect(buildPageTargeting().br).toEqual('p');
+        });
+
+        it('should set correct branding param for foundation-funded content', function () {
+            config.page.sponsorshipType = 'foundation';
+            expect(buildPageTargeting().br).toEqual('f');
+        });
+
+        it('should not set branding param for unbranded content', function () {
+            config.page.sponsorshipType = undefined;
+            expect(buildPageTargeting().br).toEqual(undefined);
         });
 
         it('should remove empty values', function () {

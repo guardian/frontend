@@ -3,6 +3,7 @@
 @import conf.Static
 @import play.api.libs.json.Json
 @import views.support.{CamelCase, JavaScriptPage, GoogleAnalyticsAccount}
+@import conf.Configuration.environment
 
 @defining(Edition(request)) { edition =>
     {
@@ -41,7 +42,13 @@
                 "editorialTest": "@{GoogleAnalyticsAccount.editorialTest.trackerName}",
                 "editorialProd": "@{GoogleAnalyticsAccount.editorialProd.trackerName}",
                 "editorial": "@{GoogleAnalyticsAccount.editorialTracker(context).trackerName}"
-            }
+            },
+            "timingEvents": []
+        },
+        "libs": {
+            "foresee": "vendor/foresee/20150703/foresee-trigger.js",
+            "googletag": "@{Configuration.javascript.config("googletagJsUrl")}",
+            "sonobi": "@{ if(!environment.isCode) Configuration.javascript.config("sonobiHeaderBiddingJsUrl") else "//mtrx.go.sonobi.com/morpheus.theguardian.12911_us_.js"}"
         }
     }
 }

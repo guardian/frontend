@@ -1,24 +1,24 @@
 define([
-    'Promise'
-], function (Promise) {
+    'Promise',
+    'common/utils/assign'
+], function (Promise, assign) {
     return loadScript;
 
-    function loadScript(props, attrs) {
+    function loadScript(src, props) {
+        if (typeof src !== 'string') {
+            return Promise.reject('no src supplied');
+        }
+
+        if (document.querySelector('script[src="' + src + '"]')) {
+            return Promise.resolve();
+        }
+
         return new Promise(function (resolve) {
-            if (props && props.id && document.getElementById(props.id)) {
-                resolve();
-            }
             var ref = document.scripts[0];
             var script = document.createElement('script');
+            script.src = src;
             if (props) {
-                Object.keys(props).forEach(function (prop) {
-                    script[prop] = props[prop];
-                });
-            }
-            if (attrs) {
-                Object.keys(attrs).forEach(function (attr) {
-                    script.setAttribute(attr, attrs[attr]);
-                });
+                assign(script, props);
             }
             script.onload = resolve;
             ref.parentNode.insertBefore(script, ref);

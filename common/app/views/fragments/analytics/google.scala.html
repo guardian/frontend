@@ -1,7 +1,7 @@
 @(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
-@import views.support.Commercial.listSponsorLogosOnPage
-@import views.support.GoogleAnalyticsAccount
 @import play.api.Mode.Dev
+@import views.support.Commercial.listSponsorLogosOnPage
+@import views.support.{Commercial, GoogleAnalyticsAccount}
 
 <script id='google_analytics'>
 
@@ -32,6 +32,11 @@
     function getAnalyticsTitle() {
         var analyticsTitle = (guardian.config.page.webTitle || '');
         return (analyticsTitle === 'Network Front') ? getAnalyticsEdition() + ' network front' : analyticsTitle;
+    }
+
+    // Please email Dotcom Platform before changing this value
+    function getExperienceValue() {
+        return 'test-experience';
     }
 
     var identityId = null;
@@ -94,6 +99,10 @@
         @for(sponsorLogos <- listSponsorLogosOnPage(page)) {
           ga('@{trackerName}.set', 'dimension31', '@Html(sponsorLogos.mkString("|"))');
         }
+        @for(brandingType <- Commercial.brandingType(page)) {
+          ga('@{trackerName}.set', 'dimension42', '@brandingType.name');
+        }
+        ga('@{trackerName}.set', 'dimension43', getExperienceValue()); @* 'Experience' dimension, for short-lived experiment values. *@
     }
 
     @defining(GoogleAnalyticsAccount.editorialTracker(context).trackerName) { trackerName =>
@@ -129,8 +138,10 @@
 
     }
 
-})();
+    // Mediator will be intialised if we need to use this, otherwise just use GA straight away
+    guardian.app && guardian.app.mediator && guardian.app.mediator.emit('modules:ga:ready');
 
+})();
 </script>
 
 @*

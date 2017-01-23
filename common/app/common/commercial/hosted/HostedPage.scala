@@ -89,7 +89,7 @@ object HostedCampaign {
   }
 }
 
-case class HostedLogo(src: String, dimensions: Option[Dimensions], link: String, trackingCode: String)
+case class HostedLogo(src: String, dimensions: Option[Dimensions], link: String)
 
 object HostedLogo {
 
@@ -103,7 +103,6 @@ object HostedLogo {
   ) = HostedLogo(
     src,
     dimensions map (d => Dimensions(d.width, d.height)),
-    link,
-    trackingCode = s"$campaignId logo"
+    link
   )
 }

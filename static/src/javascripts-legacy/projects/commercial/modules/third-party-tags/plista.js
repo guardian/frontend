@@ -8,7 +8,8 @@ define([
     'common/modules/identity/api',
     'common/modules/commercial/dfp/track-ad-render',
     'common/modules/commercial/commercial-features',
-    'text!commercial/views/plista.html'
+    'text!commercial/views/plista.html',
+    'common/utils/load-script'
 ], function (
     Promise,
     fastdom,
@@ -19,7 +20,8 @@ define([
     identity,
     trackAdRender,
     commercialFeatures,
-    plistaStr
+    plistaStr,
+    loadScript
 ) {
 
     var plistaTpl = template(plistaStr);
@@ -61,7 +63,7 @@ define([
                 categories: categories,
                 dataMode: 'data-display'
             };
-            require(['js!//static-au.plista.com/async/' + name + '.js']);
+            loadScript('//static-au.plista.com/async/' + name + '.js');
         } else {
             lib.widgets.push({name: widgetName, pre: u});
         }

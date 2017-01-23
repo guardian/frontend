@@ -4,12 +4,11 @@ import sbt._
 
 object Dependencies {
   val cucumberVersion = "1.1.5"
-  val identityLibVersion = "3.52"
+  val identityLibVersion = "3.71"
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
   val awsVersion = "1.11.7"
   val faciaVersion = "2.0.8"
-
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
   val apacheCommonsMath3 = "org.apache.commons" % "commons-math3" % "3.2"
@@ -28,7 +27,7 @@ object Dependencies {
   val commonsLang = "commons-lang" % "commons-lang" % "2.4"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.18"
-  val contentApiClient = "com.gu" %% "content-api-client" % "10.17"
+  val contentApiClient = "com.gu" %% "content-api-client" % "10.20"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.20.0"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3"
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % "0.11.3" % Test
@@ -57,7 +56,7 @@ object Dependencies {
   val scalajTime = "org.scalaj" % "scalaj-time_2.10.2" % "0.7"
   val scalaTest = "org.scalatest" %% "scalatest" % "2.2.6" % Test
   val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
-  val scalaUri = "com.netaporter" % "scala-uri_2.11" % "0.4.11"
+  val scalaUri = "com.netaporter" % "scala-uri_2.11" % "0.4.16"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % seleniumVersion
   val shadeMemcached = "com.bionicspirit" %% "shade" % "1.6.0"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % slf4jVersion

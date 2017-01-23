@@ -30,7 +30,7 @@ module.exports = {
             ].map(set => ({
                 description: `Run ${set} tests`,
                 task: () => exec('karma', ['start', `./static/test/javascripts/conf/${set}.js`, '--single-run']),
-            })).concat([require('./eslint')]),
+            })),
             concurrent: true,
         },
     ],

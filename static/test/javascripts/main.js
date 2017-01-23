@@ -40,11 +40,6 @@ requirejs.config({
         // raven
         raven:        '/base/static/vendor/javascripts/components/raven-js/raven',
         'common/utils/raven':        '/base/static/test/javascripts/fixtures/raven'
-    },
-    shim: {
-        googletag: {
-            exports: 'googletag'
-        }
     }
 });
 

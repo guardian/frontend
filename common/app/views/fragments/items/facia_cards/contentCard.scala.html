@@ -1,10 +1,11 @@
 @(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
 
 @import layout.{FaciaWidths, FrontendLatestSnap}
-@import model.{CrosswordSvg, InlineImage, InlineSlideshow, InlineVideo, VideoPlayer}
+@import model.{CrosswordSvg, InlineImage, InlineSlideshow, InlineVideo, InlineYouTubeMediaAtom, VideoPlayer}
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
 @import views.html.fragments.items.facia_cards.meta
+@import views.html.fragments.atoms.youtube
 @import views.html.fragments.media.video
 @import views.support.{CutOut, GetClasses, RemoveOuterParaHtml, RenderClasses, Video640}
 
@@ -76,11 +77,21 @@ data-test-id="facia-card"
                 }
             }
 
-            case Some(svg@CrosswordSvg(_)) => {
+
+
+           case Some(svg@CrosswordSvg(_)) => {
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__image-container u-responsive-ratio inlined-image">
                         <object type="image/svg+xml" data="@svg.imageUrl" class="responsive-img" alt=""
                         role="presentation" data-crossword-id="@svg.persistenceId" ></object>
+                    </div>
+                </div>
+            }
+
+            case Some(media@InlineYouTubeMediaAtom(_)) => {
+                <div class="fc-item__media-wrapper">
+                    <div class="fc-item__video-container">
+                    @youtube(media = media.youTubeAtom, displayCaption = false, embedPage = false)
                     </div>
                 </div>
             }

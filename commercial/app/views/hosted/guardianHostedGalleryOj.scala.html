@@ -1,19 +1,19 @@
 @import common.commercial.hosted.HostedCallToAction
 @(cta: HostedCallToAction)(implicit request: RequestHeader)
+    <div class="hosted-gallery__oj js-hosted-gallery-oj">
 
-<div class="hosted-gallery__oj js-hosted-gallery-oj">
-    <div class="hosted-gallery__oj-cta hosted-tone-border">
-        <div class="hosted-gallery__cta-title">
-            @{cta.label}
+        <div class="js-onward-placeholder hosted-gallery__next-page-wrapper">
+            <div class="hosted-gallery__oj-cta hosted-tone-border">
+                <div class="hosted-gallery__cta-title">
+                    @{cta.label}
+                </div>
+                <a class="hosted-gallery__cta-link hosted-tone-bg" href="@{cta.url}" target="_blank" data-link-name="@{cta.btnText}">
+                    @{cta.btnText} @fragments.inlineSvg("external-link", "icon")
+                </a>
+            </div>
         </div>
-        <a class="hosted-gallery__cta-link hosted-tone-bg" href="@{cta.url}" target="_blank" data-link-name="@{cta.btnText}">
-            @{cta.btnText} @fragments.inlineSvg("external-link", "icon")
-        </a>
-    </div>
-    <div class="js-onward-placeholder hosted-gallery__next-page-wrapper"></div>
-    <div class="hosted-gallery__oj-close js-hosted-gallery-oj-close">
-        @fragments.inlineSvg("arrow-up", "icon", List("close"))
-    </div>
-</div>
 
-
+        <div class="hosted-gallery__oj-close js-hosted-gallery-oj-close">
+            @fragments.inlineSvg("arrow-up", "icon", List("close"))
+        </div>
+    </div>

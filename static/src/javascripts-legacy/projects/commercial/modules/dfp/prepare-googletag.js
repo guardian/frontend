@@ -4,13 +4,13 @@ define([
     'bonzo',
     'common/utils/raven',
     'common/utils/config',
+    'common/utils/load-script',
     'common/utils/fastdom-promise',
     'common/modules/commercial/commercial-features',
     'commercial/modules/build-page-targeting',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/on-slot-render',
     'commercial/modules/dfp/on-slot-load',
-    'commercial/modules/dfp/prepare-sonobi-tag',
     'commercial/modules/dfp/performance-logging',
 
     // These are cross-frame protocol messaging routines:
@@ -26,15 +26,16 @@ define([
     bonzo,
     raven,
     config,
+    loadScript,
     fastdom,
     commercialFeatures,
     buildPageTargeting,
     dfpEnv,
     onSlotRender,
     onSlotLoad,
-    prepareSonobiTag,
     performanceLogging
 ) {
+
     return {
         init: init,
         customTiming: true
@@ -42,39 +43,37 @@ define([
 
     function init(moduleName) {
 
+        function moduleStart() {
+            // Use Custom Timing to time the googletag code without the sonobi pre-loading.
+            performanceLogging.moduleStart(moduleName);
+        }
+
         function moduleEnd() {
             performanceLogging.moduleEnd(moduleName);
         }
 
         function setupAdvertising() {
-            // Use Custom Timing to time the googletag code without the sonobi pre-loading.
-            performanceLogging.moduleStart(moduleName);
 
             performanceLogging.addTag(dfpEnv.sonobiEnabled ? 'sonobi' : 'waterfall');
 
             window.googletag.cmd.push(
+                moduleStart,
                 setListeners,
                 setPageTargeting,
                 moduleEnd
             );
 
             // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
-            require(['js!googletag.js']);
-
-            // Return a promise that resolves after the async work is done.
-            return new Promise(function(resolve){
-                window.googletag.cmd.push(
-                    resolve
-                );
-            });
+            return loadScript(config.libs.googletag, { async: false });
         }
 
         if (commercialFeatures.dfpAdvertising) {
-            return prepareSonobiTag.init().then(setupAdvertising)
+            setupAdvertising()
             // A promise error here, from a failed module load,
             // could be a network problem or an intercepted request.
             // Abandon the init sequence.
             .catch(removeAdSlots);
+            return Promise.resolve();
         }
 
         return removeAdSlots();

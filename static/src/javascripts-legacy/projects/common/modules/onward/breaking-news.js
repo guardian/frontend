@@ -10,6 +10,7 @@ define([
     'common/utils/report-error',
     'common/utils/storage',
     'common/utils/template',
+    'common/utils/mediator',
     'common/modules/ui/relativedates',
     'common/views/svgs',
     'text!common/views/breaking-news.html',
@@ -29,6 +30,7 @@ define([
     reportError,
     storage,
     template,
+    mediator,
     relativeDates,
     svgs,
     alertHtml,
@@ -179,6 +181,10 @@ define([
                     markAlertAsSeen(alert.id);
                 });
             }, alertDelay);
+
+            mediator.emit('modules:onwards:breaking-news:ready', true);
+        } else {
+            mediator.emit('modules:onwards:breaking-news:ready', false);
         }
         return alert;
     }

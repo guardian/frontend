@@ -2,27 +2,20 @@ define([
     'qwery',
     'fastdom',
     'ophan/ng',
-    'common/modules/navigation/edition-picker',
     'common/modules/navigation/user-account'
 ], function (
     qwery,
     fastdom,
     ophan,
-    editionPicker,
     userAccount
 ) {
     var html = qwery('html')[0];
     var menuItems = qwery('.js-close-nav-list');
-    var buttonClickHandlers = {
-        'main-menu-toggle': veggieBurgerClickHandler,
-        'edition-picker': editionPicker
-    };
     var enhanced = {};
 
     function weShouldEnhance(checkbox) {
         return !enhanced[checkbox.id] && checkbox && !checkbox.checked;
     }
-
 
     function applyEnhancementsTo(checkbox) {
         fastdom.read(function () {
@@ -39,7 +32,7 @@ define([
             button.setAttribute('aria-expanded', 'false');
 
             fastdom.write(function () {
-                var eventHandler = buttonClickHandlers[button.id];
+                var eventHandler = veggieBurgerClickHandler;
 
                 checkbox.parentNode.replaceChild(button, checkbox);
                 if (eventHandler) {
@@ -67,31 +60,27 @@ define([
     }
 
     function enhanceCheckboxesToButtons() {
-        var checkboxIds = ['main-menu-toggle', 'edition-picker'];
+        var checkbox = document.getElementById('main-menu-toggle');
 
-        checkboxIds.forEach(function (checkboxId) {
-            var checkbox = document.getElementById(checkboxId);
+        if (!checkbox) {
+            return;
+        }
 
-            if (!checkbox) {
-                return;
-            }
-            if (weShouldEnhance(checkbox)) {
+        if (weShouldEnhance(checkbox)) {
+
+            applyEnhancementsTo(checkbox);
+        } else {
+            checkbox.addEventListener('click', function closeMenuHandler() {
+
                 applyEnhancementsTo(checkbox);
-            } else {
-                checkbox.addEventListener('click', function closeMenuHandler() {
-                    applyEnhancementsTo(checkbox);
-                    checkbox.removeEventListener('click', closeMenuHandler);
-                });
-                if (checkboxId === 'main-menu-toggle') {
-                    // record in Ophan that the menu was opened in a fully expanded state
-                    // i.e. standard JS had not been loaded when menu was first opened
-                    ophan.record({
-                        component: 'main-navigation',
-                        value: 'is fully expanded'
-                    });
-                }
-            }
-        });
+                checkbox.removeEventListener('click', closeMenuHandler);
+            });
+
+            ophan.record({
+                component: 'main-navigation',
+                value: 'is fully expanded'
+            });
+        }
     }
 
     function veggieBurgerClickHandler(event) {

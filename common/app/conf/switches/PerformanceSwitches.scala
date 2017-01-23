@@ -5,6 +5,16 @@ import org.joda.time.LocalDate
 
 trait PerformanceSwitches {
 
+  val PanicSheddingSwitch = Switch(
+    SwitchGroup.Performance,
+    "panic-shedding",
+    "When this switch is on, the Panic Shedding system is enabled which can filter requests under high latency",
+    owners = Seq(Owner.withGithub("rich-nguyen")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val InlineJSStandardOptimisation = Switch(
     SwitchGroup.Performance,
     "inline-standard-optimisation",
@@ -50,9 +60,9 @@ trait PerformanceSwitches {
     SwitchGroup.Performance,
     "long-cache-comments-switch",
     "If this switch is on then closed comment threads will get a longer cache time",
-    owners = Seq(Owner.withGithub("nicl")),
+    owners = Seq(Owner.withGithub("jfsoul")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 1, 16),
+    sellByDate = new LocalDate(2017, 2, 1),
     exposeClientSide = false
   )
 

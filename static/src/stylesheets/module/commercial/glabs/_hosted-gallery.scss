@@ -689,6 +689,7 @@ $progressColor: #ffffff;
 
 .hosted-gallery__next-page-wrapper {
     display: flex;
+    width: 100%;
 }
 
 @include mq($until: tablet) {

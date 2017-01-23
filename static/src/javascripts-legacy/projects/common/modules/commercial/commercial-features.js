@@ -34,6 +34,8 @@ define([
 
         var isArticle = config.page.contentType === 'Article';
 
+        var isInteractive = config.page.contentType === 'Interactive';
+
         var isGallery = config.page.contentType == 'Gallery';
 
         var isLiveBlog = config.page.isLiveBlog;
@@ -100,10 +102,12 @@ define([
             !sensitiveContent &&
             switches.commercial;
 
-        this.frontCommercialComponents =
+        this.highMerch =
             this.dfpAdvertising &&
             !isMinuteArticle &&
-            config.page.isFront &&
+            !isHosted &&
+            !isInteractive &&
+            !config.page.isFront &&
             switches.commercial;
 
         this.thirdPartyTags =
@@ -129,6 +133,11 @@ define([
             isLiveBlog &&
             this.dfpAdvertising &&
             switches.commercial;
+
+        this.paidforBand =
+            config.page.isAdvertisementFeature &&
+            !config.page.hasSuperStickyBanner &&
+            !supportsSticky;
 
         this.canReasonablyAskForMoney = // eg become a supporter, give a contribution
             !(userFeatures.isPayingMember() || config.page.shouldHideAdverts || config.page.isAdvertisementFeature);

@@ -51,7 +51,8 @@ object Frontend extends Build with Prototypes {
       logback,
       kinesisLogbackAppender,
       targetingClient,
-      scanamo
+      scanamo,
+      scalaUri
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
@@ -94,9 +95,6 @@ object Frontend extends Build with Prototypes {
   )
 
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies ++= Seq(
-      scalaUri
-    ),
     TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._")
   )
 
@@ -157,10 +155,6 @@ object Frontend extends Build with Prototypes {
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
-  val adminJobs = application("admin-jobs")
-    .dependsOn(commonWithTests)
-    .aggregate(common)
-
   val dev = application("dev-build")
     .dependsOn(
       withTests(article)
@@ -174,8 +168,7 @@ object Frontend extends Build with Prototypes {
       identity,
       admin,
       commercial,
-      onward,
-      adminJobs
+      onward
     ).settings(
       RoutesKeys.routesImport += "bindables._",
       javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
@@ -188,8 +181,7 @@ object Frontend extends Build with Prototypes {
     applications,
     sport,
     commercial,
-    onward,
-    adminJobs
+    onward
   ).settings(
   )
 
@@ -217,8 +209,7 @@ object Frontend extends Build with Prototypes {
     onward,
     archive,
     preview,
-    rss,
-    adminJobs
+    rss
   ).settings(
     riffRaffBuildIdentifier := System.getenv().getOrDefault("BUILD_NUMBER", "0").replaceAll("\"",""),
     riffRaffUploadArtifactBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity")),
@@ -226,7 +217,6 @@ object Frontend extends Build with Prototypes {
     riffRaffManifestProjectName := s"dotcom:all",
     riffRaffArtifactResources := Seq(
       (packageBin in Universal in admin).value -> s"${(name in admin).value}/${(packageBin in Universal in admin).value.getName}",
-      (packageBin in Universal in adminJobs).value -> s"${(name in adminJobs).value}/${(packageBin in Universal in adminJobs).value.getName}",
       (packageBin in Universal in applications).value -> s"${(name in applications).value}/${(packageBin in Universal in applications).value.getName}",
       (packageBin in Universal in archive).value -> s"${(name in archive).value}/${(packageBin in Universal in archive).value.getName}",
       (packageBin in Universal in article).value -> s"${(name in article).value}/${(packageBin in Universal in article).value.getName}",
