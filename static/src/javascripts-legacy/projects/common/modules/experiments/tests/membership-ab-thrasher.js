@@ -8,16 +8,16 @@ define([
 
         this.id = 'MembershipBundlesThrasher';
         this.start = '2017-01-23';
-        this.expiry = '2017-02-07';
+        this.expiry = '2017-03-02'; // Thursday 2nd March
         this.author = 'Justin Pinner';
         this.description = 'Test appetite for membership bundles';
         this.showForSensitive = true;
-        this.audience = 0.01;
+        this.audience = 0.025;  // 2.5%
         this.audienceOffset = 0;
         this.successMeasure = '';
         this.audienceCriteria = 'People on UK network front';
         this.dataLinkNames = '';
-        this.idealOutcome = '';
+        this.idealOutcome = 'One landing page will accrue a higher number of intention interactions than the other';
 
         this.canRun = function () {
             // call me paranoid but...
