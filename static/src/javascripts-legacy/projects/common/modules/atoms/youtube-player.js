@@ -2,27 +2,19 @@ define([
     'fastdom',
     'Promise',
     'common/utils/$',
-    'common/utils/load-script',
-    'common/utils/mediator'
+    'common/utils/load-script'
 ], function (
     fastdom,
     Promise,
     $,
-    loadScript,
-    mediator
+    loadScript
 ) {
     var scriptSrc = 'https://www.youtube.com/iframe_api';
     var promise = new Promise(function(resolve) {
         if (window.YT && window.YT.Player) {
             resolve();
-        } else if (window.onYouTubeIframeAPIReady) {
-            mediator.on('onYouTubeIframeAPIReady', resolve);
         } else {
-            window.onYouTubeIframeAPIReady = function () {
-                resolve();
-                delete window.onYouTubeIframeAPIReady;
-                mediator.emit('onYouTubeIframeAPIReady');
-            };
+            window.onYouTubeIframeAPIReady = resolve;
         }
     });
 
