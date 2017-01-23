@@ -11,12 +11,7 @@
     font-size: 14px;
     padding-left: 28px; // aligns with top level comment's body
     border-left: 8px solid $neutral-5;
-
-    @include mq(tablet) {
-        padding-left: 44px;
-        border-left-width: 16px;
-    }
-
+    clear: left;
 }
 
 .d2-avatar-image {
@@ -38,18 +33,18 @@
 
 .d2-username {
     font-family: $f-serif-text;
-
-    @include mq(tablet) {
-        font-size: 1.28571428571em;
-    }
 }
 
 .d2-permalink .d2-datetime {
     color: $neutral-2;
-    font-size: .85714285714em;
+    font-size: .8em;
     font-family: $f-sans-serif-text; // Force font when used outside of comment context
 }
 
 .d2-permalink .d2-datetime:hover {
     border-bottom: 1px dotted #757575;
+}
+
+.d2-body {
+    clear: left;
 }
