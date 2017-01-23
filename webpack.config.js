@@ -1,16 +1,26 @@
 /* eslint-disable import/no-extraneous-dependencies */
-process.env.BABEL_ENV = 'production';
-
-const webpack = require('webpack');
 const path = require('path');
 
+const webpack = require('webpack');
+const Visualizer = require('webpack-visualizer-plugin');
+
+const outputName = 'app-webpack';
+
 module.exports = {
-    entry: './static/src/javascripts/boot-webpack.js',
+    devtool: 'source-map',
+    entry: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
+    output: {
+        path: path.join(__dirname, 'static', 'target', 'javascripts'),
+        filename: `[chunkhash]/${outputName}.js`,
+        chunkFilename: `[chunkhash]/${outputName}.chunk-[id].js`,
+    },
     resolve: {
-        modulesDirectories: [
-            'static/src/javascripts',
-            'static/src/javascripts-legacy',
-            'static/vendor/javascripts',
+        modules: [
+            path.join(__dirname, 'static', 'src'),
+            path.join(__dirname, 'static', 'src', 'javascripts'),
+            path.join(__dirname, 'static', 'src', 'javascripts-legacy'),
+            path.join(__dirname, 'static', 'vendor', 'javascripts'),
+            'node_modules', // default location, but we're overiding above, so it needs to be explicit
         ],
         alias: {
             admin: 'projects/admin',
@@ -41,29 +51,49 @@ module.exports = {
             'videojs-persistvolume': 'components/videojs-persistvolume/videojs.persistvolume',
             'videojs-playlist': 'components/videojs-playlist-audio/videojs.playlist',
 
+            // #wp-rjs once r.js is gone, these can be unaliased and modules updated
+            react: 'react/addons',
+
             // plugins
             text: 'components/requirejs-text/text',
             inlineSvg: 'projects/common/utils/inlineSvg',
         },
     },
-    externals: {
-        xhr2: {},
+    resolveLoader: {
+        alias: {
+            // #wp-rjs
+            // these are only needed while require is still present
+            // should be updated once removed to be more wepback-like
+            text: 'raw-loader',
+            inlineSvg: 'svg-loader',
+        },
+        modules: [
+            path.resolve(__dirname, 'tools', 'webpack-loaders'),
+            'node_modules',
+        ],
     },
-    output: {
-        path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: 'boot-webpack.js',
-    },
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin(),
-        new webpack.optimize.DedupePlugin(),
-    ],
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
                 exclude: /(node_modules|vendor|javascripts-legacy)/,
                 loader: 'babel-loader',
             },
         ],
+    },
+    plugins: [
+        new webpack.optimize.AggressiveMergingPlugin(),
+        new Visualizer({
+            filename: './webpack-stats.html',
+        }),
+        // Makes videosjs available to all modules in the videojs chunk.
+        // videojs plugins expect this object to be available globally,
+        // but it's sufficient to scope it at the chunk level
+        new webpack.ProvidePlugin({
+            videojs: 'videojs',
+        }),
+    ],
+    externals: {
+        xhr2: {},
     },
 };
