@@ -170,11 +170,7 @@ define([
     }
 
     function init() {
-        if (commercialFeatures.outbrain &&
-            !config.page.isFront &&
-            !config.page.isPreview &&
-            identityPolicy()
-        ) {
+        if (commercialFeatures.outbrain && identityPolicy() ) {
             // if there is no merch component, load the outbrain widget right away
             return loadInstantly().then(function(shouldLoadInstantly) {
                 if (shouldLoadInstantly) {
