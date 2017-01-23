@@ -11,10 +11,8 @@
         "u-responsive-ratio--hd" -> true,
         "youtube-media-atom" -> true
     ))"
-    @if(displayEndSlate) {
-        @for(endSlate <- media.endSlatePath) {
-            data-end-slate="@endSlate"
-            }
+    @if(displayEndSlate && media.endSlatePath.isDefined) {
+      data-end-slate="@media.endSlatePath.get"
     }
     >
             @defining(s"https://www.youtube.com/embed${
