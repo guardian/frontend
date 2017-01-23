@@ -1,8 +1,10 @@
 package views.support
 
+import common.{CanonicalLink, LinkTo}
 import conf.Static
 import layout.ContentCard
 import model._
+import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import play.api.mvc._
 
@@ -64,6 +66,17 @@ object EmailHelpers {
 
   def imgFromCard(card: ContentCard)(implicit requestHeader: RequestHeader) = imageUrlFromCard(card).map { url => Html {
       s"""<a class="facia-link" ${card.header.url.hrefWithRel}>${imgForFront(url, Some(card.header.headline))}</a>"""
+    }
+  }
+
+  def linkToWebVersion(page: Page)(implicit request: RequestHeader) = {
+    // Email fronts aren't visible as normal web fronts (since they don't always look very good),
+    // so link to email-friendly version that was used to produce the email
+    // But email articles actually look nicer on web than in email.
+    if (page.metadata.isFront) {
+      request.uri
+    } else {
+      LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))
     }
   }
 
