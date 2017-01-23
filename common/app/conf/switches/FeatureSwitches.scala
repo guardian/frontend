@@ -487,17 +487,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  //Owner Michael McNamara
-  val AmpInteractivePlaceHolderAttribute = Switch(
-    SwitchGroup.Feature,
-    "amp-interactive-placeholder-attribute",
-    "Adds a placeholder attribute to interactives on amp so that they are allowed to display in the top part of the page",
-    owners = Seq(Owner.withGithub("michaelwmcnamara")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 20),
-    exposeClientSide = true
-  )
-
   // Owner: Joseph Smith
   val RenderEmailConnectedStyle = Switch(
     SwitchGroup.Feature,
@@ -506,17 +495,6 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 1, 24),
-    exposeClientSide = true
-  )
-
-  //Owner Michael McNamara
-  val StressTestTailor = Switch(
-    SwitchGroup.Feature,
-    "stress-test-tailor-healthcheck",
-    "Sends a healthcheck metric for every page",
-    owners = Seq(Owner.withGithub("michaelwmcnamara")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 20),
     exposeClientSide = true
   )
 
