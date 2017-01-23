@@ -78,10 +78,13 @@ object EmailHelpers {
 
   def imgForFront = img(FrontEmailImage.knownWidth) _
 
-  def imgFromCard(card: ContentCard)(implicit requestHeader: RequestHeader) = imageUrlFromCard(card).map { url => Html {
-      s"""<a class="facia-link" ${card.header.url.hrefWithRel}>${imgForFront(url, Some(card.header.headline))}</a>"""
+  def imgFromCard(card: ContentCard, colWidth: Int = 12)(implicit requestHeader: RequestHeader) = imageUrlFromCard(card).map { url => Html {
+      val width = ((colWidth.toDouble / 12.toDouble) * FrontEmailImage.knownWidth).toInt
+      s"""<a class="facia-link" ${card.header.url.hrefWithRel}>${img(width)(url, Some(card.header.headline))}</a>"""
     }
   }
+
+
 
   object Images {
     val footerG = Static("images/email/grey-g.png")
