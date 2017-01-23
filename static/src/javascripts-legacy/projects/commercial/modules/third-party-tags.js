@@ -13,6 +13,7 @@ define([
     'commercial/modules/third-party-tags/audience-science-gateway',
     'commercial/modules/third-party-tags/audience-science-pql',
     'commercial/modules/third-party-tags/imr-worldwide',
+    'commercial/modules/third-party-tags/imr-worldwide-legacy',
     'commercial/modules/third-party-tags/remarketing',
     'commercial/modules/third-party-tags/krux',
     'common/modules/identity/api',
@@ -31,6 +32,7 @@ define([
     audienceScienceGateway,
     audienceSciencePql,
     imrWorldwide,
+    imrWorldwideLegacy,
     remarketing,
     krux,
     identity,
@@ -60,9 +62,7 @@ define([
             .then(init);
         }
 
-        var isMobileOrTablet = ['mobile', 'tablet'].indexOf(detect.getBreakpoint(false)) >= 0;
-        var shouldIgnoreSwitch =  isMobileOrTablet || config.page.section === 'world' || config.page.edition.toLowerCase() !== 'au';
-        var shouldServePlista = config.switches.plistaForOutbrainAu && !shouldIgnoreSwitch;
+        var shouldServePlista = config.switches.plistaForOutbrainAu && config.page.edition.toLowerCase() === 'au';
 
         if (shouldServePlista) {
             renderWidget('plista', plista.init);
@@ -89,6 +89,7 @@ define([
             audienceSciencePql,
             audienceScienceGateway,
             imrWorldwide,
+            imrWorldwideLegacy,
             remarketing,
             krux
         ].filter(function (_) { return _.shouldRun; });

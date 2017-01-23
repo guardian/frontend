@@ -42,7 +42,8 @@
                 "editorialTest": "@{GoogleAnalyticsAccount.editorialTest.trackerName}",
                 "editorialProd": "@{GoogleAnalyticsAccount.editorialProd.trackerName}",
                 "editorial": "@{GoogleAnalyticsAccount.editorialTracker(context).trackerName}"
-            }
+            },
+            "timingEvents": []
         },
         "libs": {
             "foresee": "vendor/foresee/20150703/foresee-trigger.js",

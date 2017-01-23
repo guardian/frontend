@@ -44,8 +44,6 @@
 
 <div class="main-menu-container">
 
-    <!-- TODO: Provide tabbable alternative -->
-
     <div class="main-menu-container__menu js-main-menu" id="main-menu" aria-hidden="true">
         <ul class="main-navigation">
             @NewNavigation.topLevelSections.map { section =>
@@ -94,6 +92,7 @@
 
             @fragments.nav.userAccountLinks()
 
+            @fragments.nav.editionPicker()
         </ul>
 
         @defining(Edition(request)) { edition =>

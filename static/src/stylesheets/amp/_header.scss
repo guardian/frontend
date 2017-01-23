@@ -18,51 +18,6 @@ $veggie-burger-medium: 52px;
     max-width: 600px;
 }
 
-.header__supporter-cta {
-    // Some very specific values in here, as it's all got to line up with the x-height of the logo
-    position: absolute;
-    left: ($gs-gutter / 4) - 1px;
-    padding: 10px 23px 12px 12px;
-    font-size: 13px;
-    line-height: .95;
-    color: $guardian-brand-dark;
-    overflow: hidden;
-
-    & > span {
-        display: block;
-    }
-
-    &:before {
-        content: '';
-        position: absolute;
-        top: -$gs-baseline / 2;
-        left: 1px;
-        right: 0;
-        border-top: $gs-baseline * 4 solid $news-main-2;
-        border-left: $gs-gutter / 4 solid transparent;
-        border-right: $gs-gutter solid transparent;
-        transform: rotate(-3deg);
-        z-index: -1;
-    }
-
-    @include mq($until: mobile) {
-        display: none;
-    }
-
-    @include mq($from: $mobile-medium) {
-        padding-top: 14px;
-        font-size: 14px;
-
-        &:before {
-            border-top-width: ($gs-baseline * 4) + ($gs-baseline / 2);
-        }
-    }
-
-    @include mq($from: mobileLandscape) {
-        left: $gs-gutter/2;
-    }
-}
-
 .header__logo-wrapper {
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline / 2;
@@ -75,13 +30,13 @@ $veggie-burger-medium: 52px;
     height: auto;
 
     // Aspect ratio: 16:3
-    @include mq($until: $mobile-medium) {
+    @include mq($until: mobileMedium) {
         width: 170px;
         // height: auto doesn't work in Safari
         height: calc(3 / 16 * 170px);
     }
 
-    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+    @include mq($from: mobileMedium, $until: mobileLandscape) {
         width: 225px;
         height: calc(3 / 16 * 225px);
     }
@@ -110,7 +65,7 @@ $veggie-burger-medium: 52px;
         font-size: 5.1vw;
     }
 
-    @include mq($from: $mobile-medium, $until: mobileLandscape) {
+    @include mq($from: mobileMedium, $until: mobileLandscape) {
         line-height: $gs-baseline * 3;
     }
 
@@ -134,7 +89,7 @@ $veggie-burger-medium: 52px;
     cursor: pointer;
     bottom: -$gs-baseline / 2;
 
-    @include mq($until: $mobile-medium) {
+    @include mq($until: mobileMedium) {
         //Smaller menu button
         height: $veggie-burger-small;
         min-width: $veggie-burger-small;
@@ -142,7 +97,7 @@ $veggie-burger-medium: 52px;
         right: $gutter-small;
     }
 
-    @include mq($mobile-medium) {
+    @include mq(mobileMedium) {
         height: $veggie-burger-medium;
         width: $veggie-burger-medium;
         //Align with the 'i' in 'theguardian'
@@ -225,7 +180,7 @@ $veggie-burger-medium: 52px;
     overflow: auto;
     font-size: 20px;
 
-    @include mq($mobile-medium) {
+    @include mq(mobileMedium) {
         //Larger font/icon size for larger devices
         font-size: 22px;
     }
@@ -245,11 +200,11 @@ $veggie-burger-medium: 52px;
     flex-wrap: wrap;
     overflow: hidden;
 
-    @include mq($until: $mobile-medium) {
+    @include mq($until: mobileMedium) {
         padding-top: $gs-baseline / 3;
     }
 
-    @include mq($mobile-medium) {
+    @include mq(mobileMedium) {
         padding-top: $gs-baseline;
     }
 }

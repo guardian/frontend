@@ -1,23 +1,24 @@
 define([
-    'Promise'
-], function (Promise) {
+    'Promise',
+    'common/utils/assign'
+], function (Promise, assign) {
     return loadScript;
 
-    function loadScript(src, attrs) {
+    function loadScript(src, props) {
         if (typeof src !== 'string') {
-            return new Promise.reject('no src supplied');
+            return Promise.reject('no src supplied');
         }
+
+        if (document.querySelector('script[src="' + src + '"]')) {
+            return Promise.resolve();
+        }
+
         return new Promise(function (resolve) {
-            if (document.querySelector('script[src="' + src + '"]')) {
-                resolve();
-            }
             var ref = document.scripts[0];
             var script = document.createElement('script');
             script.src = src;
-            if (attrs) {
-                Object.keys(attrs).forEach(function (attr) {
-                    script.setAttribute(attr, attrs[attr]);
-                });
+            if (props) {
+                assign(script, props);
             }
             script.onload = resolve;
             ref.parentNode.insertBefore(script, ref);
