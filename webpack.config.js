@@ -86,6 +86,9 @@ module.exports = {
         new Visualizer({
             filename: './webpack-stats.html',
         }),
+        new webpack.ProvidePlugin({
+            videojs: 'videojs',
+        }),
     ],
     externals: {
         xhr2: {},
