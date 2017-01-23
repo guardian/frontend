@@ -39,11 +39,11 @@ define([
             if (this.thrasher()) {
                 var copyH1El = document.querySelector('.membership-ab-thrasher_header .main_title');
                 if (copyH1El) {
-                    copyH1El.innerHTML = '<p>Support<br/>the Guardian</p>';
+                    copyH1El.innerHTML = '<p>Support<br>the Guardian</p>';
                 }
                 var copyH2El = document.querySelector('.membership-ab-thrasher_header .sub_title');
                 if (copyH2El) {
-                    copyH2El.innerHTML = '<p>We\'re introducing <strong>new ways</strong> to support the Guardian\'s quality journalism and independent voice. Choose from digital, print or a one-off contribution today.</p>';
+                    copyH2El.innerHTML = '<p>We\'re introducing <strong>new ways</strong> to support<br>the Guardian\'s quality journalism and independent voice. Choose from digital,<br>print or a contribution today.</p>';
                 }
             }
         };
