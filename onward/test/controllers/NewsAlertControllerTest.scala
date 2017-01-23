@@ -6,13 +6,13 @@ import java.util.UUID
 import akka.actor.Status.{Failure => ActorFailure}
 import akka.actor.{Actor, ActorSystem, Props}
 import akka.stream.Materializer
-import controllers.BreakingNews.{BreakingNewsApi, S3BreakingNews}
 import models.{NewsAlertNotification, NewsAlertTypes}
 import org.joda.time.DateTime
 import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import services.breakingnews.{BreakingNewsApi, S3BreakingNews}
 import test.{ConfiguredTestSuite, WithTestContext}
 
 @DoNotDiscover class NewsAlertControllerTest

@@ -1,4 +1,4 @@
-package controllers.BreakingNews
+package services.breakingnews
 
 import java.net.URI
 import java.util.UUID

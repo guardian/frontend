@@ -34,6 +34,8 @@ define([
 
         var isArticle = config.page.contentType === 'Article';
 
+        var isInteractive = config.page.contentType === 'Interactive';
+
         var isGallery = config.page.contentType == 'Gallery';
 
         var isLiveBlog = config.page.isLiveBlog;
@@ -103,6 +105,8 @@ define([
         this.highMerch =
             this.dfpAdvertising &&
             !isMinuteArticle &&
+            !isHosted &&
+            !isInteractive &&
             !config.page.isFront &&
             switches.commercial;
 

@@ -83,7 +83,7 @@
                     case ImageBlockElement(media, data, showCredit) => {
                         @EmailImage.bestFor(media).map { imageUrl =>
                             @fullRow {
-                                @if(article.isLiveBlog && block.url.isDefined) {
+                                @if(article.isTheMinute && block.url.isDefined) {
                                     <a href="@block.url.getOrElse("#")">
                                         @imgForArticle(imageUrl, data.get("alt"))
                                     </a>

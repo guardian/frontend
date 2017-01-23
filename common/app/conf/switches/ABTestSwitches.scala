@@ -62,6 +62,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-neilsen-check",
+    "Test new params for Neilsen => Zero participation, will send them the opt-in link",
+    owners = Seq(Owner.withGithub("katebee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 1, 23),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-epic-brexit",
     "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
     owners = Seq(Owner.withGithub("alexduf")),

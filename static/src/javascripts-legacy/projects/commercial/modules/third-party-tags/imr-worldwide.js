@@ -1,7 +1,9 @@
 define([
-    'common/utils/config'
+    'common/utils/config',
+    'common/modules/experiments/ab',
 ], function (
-    config
+    config,
+    ab
 ) {
     // The Nielsen NetRatings tag. Also known as IMR worldwide.
     var imrWorldwideUrl = '//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js';
@@ -56,12 +58,15 @@ define([
       "football": "TCC1AEBB6-7D1A-4F34-8256-EFC314E5D0C3",
       "technology": "T29EF991A-3FEE-4215-9F03-58EACA8286B9",
       "travel": "TD1CEDC3E-2653-4CB6-A4FD-8A315DE07548",
-      "tv-and-radio": "T66E48909-8FC9-49E8-A7E6-0D31C61805AD"
+      "tv-and-radio": "T66E48909-8FC9-49E8-A7E6-0D31C61805AD",
+      "brand-only": "T0EE0F4F4-8D7C-4082-A2A4-82C84728DC59"
     }
 
     function onLoad() {
       var sectionFromMeta = config.page.section.toLowerCase();
-      var subBrandApId = guMetadata[sectionFromMeta] || "";
+      var subBrandApId = guMetadata[sectionFromMeta] || guMetadata["brand-only"];
+
+      var sectionRef = (sectionFromMeta in guMetadata) ? sectionFromMeta : "The Guardian - brand only"
 
       var _nolggGlobalParams = {
         sfcode:"dcr",
@@ -76,15 +81,15 @@ define([
 
       var dcrStaticMetadata = {
         type: "static",
-        assetid: subBrandApId,
-        section: sectionFromMeta
+        assetid: config.page.pageId,
+        section: sectionRef
       }
 
       nSdkInstance.ggPM("staticstart", dcrStaticMetadata);
     }
 
     return {
-        shouldRun: config.switches.imrWorldwide,
+        shouldRun: config.switches.imrWorldwide && ab.getTestVariantId("NeilsenCheck") === "opt-in",
         url: imrWorldwideUrl,
         onLoad: onLoad
     };

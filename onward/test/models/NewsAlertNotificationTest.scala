@@ -1,6 +1,8 @@
 package models
+
 import java.net.URI
 import java.util.UUID
+
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json.Json
