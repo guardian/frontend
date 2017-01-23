@@ -6,7 +6,6 @@ import model.{Elements, Article, VideoAsset}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpSrcCleaner, HtmlCleaner}
 
-import scala.annotation.switch
 import scala.collection.JavaConversions._
 
 case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
@@ -257,9 +256,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
         attrs.foreach {
           case (key, value) => ampImg.attr(key, value)
         }
-        val imageParent = image.parent()
-        image.remove()
-        imageParent.appendChild(ampImg)
+        image.replaceWith(ampImg)
       }
     }
   }

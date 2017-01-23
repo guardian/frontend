@@ -26,6 +26,13 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   val soundcloudUrlV2 = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1234"
   val soundcloudUrlNoTrackId = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/foobar"
 
+  val contentApi = ApiContent(
+    id = "foo/2012/jan/07/bar",
+    webTitle = "Some article",
+    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar"
+  )
+
 
   private def clean(document: Document): Document = {
     val cleaner = AmpEmbedCleaner(article())
@@ -34,17 +41,10 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
   private def article() = {
-    val contentApiItem = contentApi()
+    val contentApiItem = contentApi
     val content = Content.make(contentApiItem)
     Article.make(content)
   }
-
-  private def contentApi() = ApiContent(
-    id = "foo/2012/jan/07/bar",
-    webTitle = "Some article",
-    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar"
-  )
 
   private def cleanDocumentWithVideos(videoUrls: String*): Document = {
     val doc = <html>
@@ -57,10 +57,18 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                      }
                   </body>
               </html>.toString()
-    val document: Document = Jsoup.parse(StringEscapeUtils.unescapeXml(doc))
+    val document: Document = parseTestData(doc)
     clean(document)
   }
 
+
+/*
+ * The format we are using for the test data - while eminently readable - is treated as XML when toString() is run on it.
+ * To parse it into a JSoup element, it is necessary to remove all the XML character encodings that have been introduced.
+ */
+  private def parseTestData(doc: String):Document = {
+    Jsoup.parse(StringEscapeUtils.unescapeXml(doc))
+  }
 
   private def cleanDocumentWithAudioEmbed(elementType: String, frameborder: Option[String], width: Option[String], height: Option[String], src: Option[String]): Document = {
     val srcString = if(src.nonEmpty){s"""src=\"${src.get}\" """}else{""}
@@ -76,7 +84,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
         </figure>
       </body>
     </html>.toString()
-    val document: Document = Jsoup.parse(StringEscapeUtils.unescapeXml(doc))
+    val document: Document = parseTestData(doc)
     clean(document)
   }
 
@@ -85,25 +93,18 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
     val doc = <html>
       <body>
-      <figure class="element element-comment" data-canonical-url="https://discussion.theguardian.com/comment-permalink/88222201">
+       <figure class="element element-comment" data-canonical-url="https://discussion.theguardian.com/comment-permalink/88222201">
         <div class="d2-comment-embedded" itemtype="http://schema.org/Comment">
           <div class="d2-left-col">
             <a href="https://profile.theguardian.com/user/id/12345678">
               <img class="d2-avatar" src="https://avatar.guim.co.uk/user/15301515" height="40" width="40" alt="User avatar for fooBar"/>
             </a>
           </div>
-          <div class="d2-right-col">
-          </div>
-          <div class="d2-permalink">
-          </div>
-          <div class="d2-body" itemprop="text">
-            <p>foo bar foo foo bar</p>
-          </div>
         </div>
-      </figure>
+       </figure>
       </body>
-      </html>.toString()
-    val document = Jsoup.parse(StringEscapeUtils.unescapeXml(doc))
+    </html>.toString()
+    val document: Document = parseTestData(doc)
     clean(document)
   }
 
@@ -298,7 +299,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
         <figure class="element-audio"></figure>
       </body>
     </html>.toString()
-    val document: Document = Jsoup.parse(doc)
+    val document: Document = parseTestData(doc)
     val cleanDoc: Document = clean(document)
     val result = (cleanDoc.getElementsByTag("amp-iframe").size, cleanDoc.getElementsByTag("amp-soundcloud").size)
     result should be ((0,0))
@@ -341,7 +342,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                     <figure class="element-audio"></figure>
                   </body>
               </html>.toString()
-    val document: Document = Jsoup.parse(doc)
+    val document: Document = parseTestData(doc)
     val result: Document = clean(document)
     result.getElementsByTag("amp-soundcloud").size should be(0)
   }
@@ -360,7 +361,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                     </figure>
                   </body>
               </html>.toString()
-    val document: Document = Jsoup.parse(doc)
+    val document: Document = parseTestData(doc)
     val result: Document = clean(document)
     result.getElementsByTag("amp-iframe").size should be(1)
   }
@@ -371,7 +372,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                     <figure class="element-map"></figure>
                   </body>
               </html>.toString()
-    val document: Document = Jsoup.parse(doc)
+    val document: Document = parseTestData(doc)
     val result: Document = clean(document)
     result.getElementsByTag("amp-iframe").size should be(0)
   }
@@ -384,7 +385,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                     </figure>
                   </body>
               </html>.toString()
-    val document: Document = Jsoup.parse(doc)
+    val document: Document = parseTestData(doc)
     val result: Document = clean(document)
     result.getElementsByTag("amp-iframe").first.attr("src") should be(googleMapsUrl)
   }
