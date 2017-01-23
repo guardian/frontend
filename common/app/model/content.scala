@@ -432,6 +432,7 @@ object Article {
       ("hasInlineMerchandise", JsBoolean(commercial.hasInlineMerchandise)),
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
+      ("hasYouTubeMediaAtom", JsBoolean(content.atoms.flatMap(_.media).toSeq.headOption.exists(_.assets.exists(_.platform == "Youtube")))),
       ("isImmersive", JsBoolean(content.isImmersive)),
       ("isHosted", JsBoolean(false)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
