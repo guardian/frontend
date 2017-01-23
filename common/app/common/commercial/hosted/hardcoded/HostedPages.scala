@@ -27,17 +27,11 @@ object HostedPages {
       case `visitBritainCampaignName` => VisitBritainHostedPages.fromPageName(pageName)
       case `leffeCampaignName` => LeffeHostedPages.fromPageName(pageName)
       case `singaporeGrandPrixCampaignName` => Formula1HostedPages.fromPageName(pageName)
-      case `chesterZooCampaignName` => ChesterZooHostedPages.fromPageName(pageName)
       case _ => None;
     }
   }
 
-  def nextPages(campaignName: String, pageName: String, contentType: Option[HostedContentType.Value] = None): List[NextHostedPage] = {
-    campaignName match {
-      case `chesterZooCampaignName` => ChesterZooHostedPages.nextPages(pageName, contentType)
-      case _ => Nil;
-    }
-  }
+  def nextPages(campaignName: String, pageName: String, contentType: Option[HostedContentType.Value] = None): List[NextHostedPage] = Nil
 
   def contentType(page: HostedPage): HostedContentType.Value = {
     page match {
