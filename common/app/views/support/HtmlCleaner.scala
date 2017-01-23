@@ -656,7 +656,7 @@ case class CommercialComponentHigh(isAdvertisementFeature: Boolean, isNetworkFro
         slot <- adSlot
       } {
           container.after(slot)
-          slot.wrap(s"""<div class="fc-container fc-container--commercial"></div>""")
+          slot.wrap("""<div class="fc-container fc-container--commercial"></div>""")
       }
 
     }
