@@ -93,29 +93,6 @@ define([
                 }
             },
 
-            showMembershipABThrasher: function () {
-                var show = false,
-                    featureName = 'MembershipBundlesThrasher';
-
-                if (config.switches['ab' + featureName]) {
-                    var abParticipations = ab.getParticipations();
-                    if (abParticipations && abParticipations[featureName] && ab.testCanBeRun(featureName)) {
-                        var variant = abParticipations[featureName].variant;
-                        if (variant && variant !== 'notintest') {
-                            show = true;
-                        }
-                    }
-                }
-                if (show) {
-                    mediator.on('page:front:ready', function() {
-                        var thrasher = document.querySelector('#membership-ab-thrasher');
-                        if (thrasher) {
-                            thrasher.classList.add('visible');
-                        }
-                    });
-                }
-            },
-
             finished: function () {
                 mediator.emit('page:front:ready');
             }
@@ -125,7 +102,6 @@ define([
         ready = function () {
             forEach(robust.makeBlocks([
                 ['f-accessibility', accessibility.shouldHideFlashingElements],
-                ['f-show-membership-ab-thrasher', modules.showMembershipABThrasher],
                 ['f-snaps', modules.showSnaps],
                 ['f-show-more', modules.showContainerShowMore],
                 ['f-container-toggle', modules.showContainerToggle],

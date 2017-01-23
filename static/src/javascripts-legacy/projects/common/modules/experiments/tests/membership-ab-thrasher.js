@@ -7,8 +7,8 @@ define([
         var self = this;
 
         this.id = 'MembershipBundlesThrasher';
-        this.start = '2017-01-12';
-        this.expiry = '2017-01-21';
+        this.start = '2017-01-23';
+        this.expiry = '2017-02-07';
         this.author = 'Justin Pinner';
         this.description = 'Test appetite for membership bundles';
         this.showForSensitive = true;
@@ -60,8 +60,8 @@ define([
         this.showThrasher = function() {
             var thrasherContainer = this.thrasherContainer();
             if (thrasherContainer) {
-                if (thrasherContainer.classList.contains('hidden')) {
-                    thrasherContainer.classList.remove('hidden');
+                if (!thrasherContainer.classList.contains('visible')) {
+                    thrasherContainer.classList.add('visible');
                 }
             }
         };
