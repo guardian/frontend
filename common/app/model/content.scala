@@ -426,8 +426,8 @@ object Article {
 
    def hasYouTubeAtom: Boolean = {
      val hasYouTubeAtom: Option[Boolean] = for {
-       content <- content.atoms
-       media <- Some(content.media)
+       atoms <- content.atoms
+       media <- Some(atoms.media)
        firstMediaAtom <- media.headOption
        assets <- Some(firstMediaAtom.assets)
        firstAsset <- assets.headOption
