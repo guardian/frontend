@@ -86,6 +86,9 @@ module.exports = {
         new Visualizer({
             filename: './webpack-stats.html',
         }),
+        // Makes videosjs available to all modules in the videojs chunk.
+        // videojs plugins expect this object to be available globally,
+        // but it's sufficient to scope it at the chunk level
         new webpack.ProvidePlugin({
             videojs: 'videojs',
         }),
