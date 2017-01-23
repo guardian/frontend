@@ -378,29 +378,22 @@ define([
         }
     }
 
-    function loadImaSdk() {
-        loadScript('//imasdk.googleapis.com/js/sdkloader/ima3.js').then(function () {
-            initWithRaven(true);
-        }).catch(function (e) {
-            raven.captureException(e, { tags: { feature: 'media', action: 'ads', ignored: true } });
-            initWithRaven();
-        })
-    }
-
     function init() {
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
         var shouldPreroll = commercialFeatures.videoPreRolls &&
             !config.page.hasMultipleVideosInPage &&
+            !config.page.hasYouTubeMediaAtom &&
             !config.page.isAdvertisementFeature &&
             !config.page.sponsorshipType;
 
         if (config.switches.enhancedMediaPlayer) {
             if (shouldPreroll) {
-                if (window.onYouTubeIframeAPIReady) {
-                    mediator.on('onYouTubeIframeAPIReady', loadImaSdk);
-                } else {
-                    loadImaSdk();
-                }
+                loadScript('//imasdk.googleapis.com/js/sdkloader/ima3.js').then(function () {
+                    initWithRaven(true);
+                }).catch(function (e) {
+                    raven.captureException(e, { tags: { feature: 'media', action: 'ads', ignored: true } });
+                    initWithRaven();
+                })
             } else {
                 initWithRaven();
             }
