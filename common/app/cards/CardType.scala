@@ -7,17 +7,19 @@ sealed trait CardType {
 
   def videoPlayer = this match {
     case FullMedia50 | FullMedia75 | FullMedia100 =>
-      println("IN CONDITION 1")
       VideoPlayerMode(show = true, showEndSlate = true)
     case ThreeQuarters | ThreeQuartersRight | Half | Third | Standard =>
-      println(this);
-      println("IN CONDITION 2")
       VideoPlayerMode(show = true, showEndSlate = false)
     case _ =>
-      println("IN CONDITION 3")
       VideoPlayerMode(show = false, showEndSlate = false)
   }
-  println(videoPlayer + "VIDEO PLAYER")
+
+  def youTubeMediaAtomPlayer = this match {
+    case FullMedia50 | FullMedia75 | FullMedia100 | ThreeQuarters | ThreeQuartersRight | Half =>
+      VideoPlayerMode(show = true, showEndSlate = true)
+    case _ =>
+      VideoPlayerMode(show = false, showEndSlate = false)
+  }
 
   def showCutOut = this match {
     case ListItem => false
