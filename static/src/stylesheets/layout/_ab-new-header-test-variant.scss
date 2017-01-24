@@ -115,6 +115,7 @@ $gutter-large: 55px;
 
     &--open {
         z-index: 1071;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
 
         &:before {
             // Extended hit area for veggie burger close state, for fat fingers
@@ -463,15 +464,16 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     }
 }
 
-.navigation-group--grey {
-    background-color: $neutral-1;
+.navigation-group--contrast {
+    color: $guardian-brand-dark;
+    background-color: $news-main-2;
 
     .main-menu__icon__svg {
-        fill: $neutral-2;
+        fill: $guardian-brand;
     }
 
     .personalisation__icon:before {
-        border-color: $neutral-2;
+        border-color: $guardian-brand;
     }
 }
 
@@ -483,10 +485,10 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
     a {
         display: block;
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-baseline / 1.5;
         padding-left: $navigation-horizontal-padding;
         padding-right: $gs-gutter;
-        padding-bottom: $gs-baseline;
+        padding-bottom: $gs-baseline / 1.5;
         // Override a from user agent stylesheet
         color: inherit;
 
@@ -578,18 +580,40 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     }
 }
 
+.navigation-group__item--edition-picker .main-navigation__item__button {
+    padding-bottom: $gs-baseline / 1.5;
+}
+
 .personalisation__links {
     margin-left: 0;
     margin-bottom: -$gs-baseline;
-    background-color: rgba(0, 0, 0, .15);
+    background-color: darken($news-main-2, 10%);
 }
 
 .personalisation__link {
-    color: $neutral-3;
+    color: $guardian-brand-dark;
 }
 
 .personalisation__link--active {
-    color: #ffffff;
+    color: $guardian-brand-dark;
+    position: relative;
+    font-weight: bold;
+
+    // Tick icon
+    &:before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 26px;
+            width: $gs-gutter / 4;
+            height: $gs-baseline;
+            border-width: 2px;
+            border-style: solid;
+            border-color: currentColor;
+            border-top: 0;
+            border-left: 0;
+            transform: rotate(45deg);
+        }
 }
 
 .no-text-transform {
