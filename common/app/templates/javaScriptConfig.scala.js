@@ -18,10 +18,6 @@
                 "ab-icon": "@Static("images/commercial/ab-icon.png")",
                 "abp-icon": "@Static("images/commercial/abp-icon.png")",
                 "abp-whitelist-instruction-chrome": "@Static("images/commercial/ad-block-instructions-chrome.png")"
-            },
-            "contributions": {
-                "ab-first-dog-dt": "@Static("images/membership/first-dog-dt.png")",
-                "ab-first-dog-mb": "@Static("images/membership/first-dog-mb.png")"
             }
         },
         "stylesheets": {
