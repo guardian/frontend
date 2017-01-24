@@ -22,20 +22,20 @@ define([
     }
 
     return contributionsUtilities.makeABTest({
-        id: 'ContributionsEpicAsk4Stagger',
-        campaignId: 'kr1_epic_ask4',
+        id: 'ContributionsEpicAskFourEarning',
+        campaignId: 'kr1_epic_ask_four_earning',
 
-        start: '2017-01-06',
-        expiry: '2017-03-01',
+        start: '2017-01-24',
+        expiry: '2017-05-01',
 
-        author: 'Alex Dufournet',
-        description: 'Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles',
+        author: 'Jonathan Rankin',
+        description: 'This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days',
         successMeasure: 'Conversion rate',
-        idealOutcome: 'The conversion rate is equal or above what we have observed on other campaigns',
+        idealOutcome: 'Acquires many Supporters',
 
         audienceCriteria: 'All',
-        audience: 1,
-        audienceOffset: 0,
+        audience: 0.88,
+        audienceOffset: 0.12,
 
         variants: [
             {
@@ -44,30 +44,6 @@ define([
                     days: 30,
                     count: 4,
                     minDaysBetweenViews: 0
-                },
-                template: getTemplate,
-                insertBeforeSelector: '.submeta',
-                successOnView: true
-            },
-
-            {
-                id: 'stagger_one_day',
-                maxViews: {
-                    days: 30,
-                    count: 4,
-                    minDaysBetweenViews: 1
-                },
-                template: getTemplate,
-                insertBeforeSelector: '.submeta',
-                successOnView: true
-            },
-
-            {
-                id: 'stagger_one_week',
-                maxViews: {
-                    days: 30,
-                    count: 4,
-                    minDaysBetweenViews: 7
                 },
                 template: getTemplate,
                 insertBeforeSelector: '.submeta',

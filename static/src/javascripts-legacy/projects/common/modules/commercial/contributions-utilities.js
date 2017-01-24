@@ -52,9 +52,6 @@ define([
         }
     }
 
-
-
-
     function ContributionsABTest(options) {
         this.id = options.id;
         this.start = options.start;

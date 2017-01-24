@@ -27,12 +27,10 @@ define([
         var now = new Date().getTime();
 
         return viewLog.filter(function (view) {
-            return (test ? view.testId === test.id : true) && view.date > (now - ms) ;
+            return (test ? view.testId === test.id : true) && view.date > (now - ms);
         }).length;
     }
-
-
-
+    
     return {
         logView: logView,
         viewsInPreviousDays: viewsInPreviousDays

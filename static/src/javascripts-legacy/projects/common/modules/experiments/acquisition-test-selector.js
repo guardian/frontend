@@ -3,18 +3,20 @@ define([
     'common/modules/commercial/acquisitions-view-log',
     'common/modules/experiments/tests/contributions-epic-brexit',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
-    'common/modules/experiments/tests/contributions-ask4-stagger'
+    'common/modules/experiments/tests/contributions-epic-ask-four-stagger',
+    'common/modules/experiments/tests/contributions-epic-ask-four-earning'
 ], function (
     segmentUtil,
     viewLog,
     brexit,
     alwaysAsk,
-    ask4Stagger
+    askFourStagger,
+    askFourEarning
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */
-    var tests = [ask4Stagger, alwaysAsk, brexit];
+    var tests = [alwaysAsk, askFourEarning, brexit, askFourStagger];
 
     return {
         getTest: function() {
@@ -22,11 +24,11 @@ define([
                 var t = new test();
                 var forced = window.location.hash.indexOf('ab-' + t.id) > -1;
                 var variant = segmentUtil.variantFor(t);
-                var acceptableViewCount =
-                    variant? viewLog.viewsInPreviousDays(variant.maxViews.days, t) <= variant.maxViews.count && viewLog.viewsInPreviousDays(variant.maxViews.minDaysBetweenViews, t) === 0 : false;
+                var acceptableViewCount = variant ? viewLog.viewsInPreviousDays(variant.maxViews.days, t) < variant.maxViews.count : false;
+                var acceptableTimeBetweenViews = variant ? viewLog.viewsInPreviousDays(variant.maxViews.minDaysBetweenViews, t) === 0 : false;
 
 
-                return forced || (t.canRun() && segmentUtil.isInTest(t) && acceptableViewCount);
+                return forced || (t.canRun() && segmentUtil.isInTest(t) && acceptableViewCount && acceptableTimeBetweenViews);
             });
 
             return eligibleTests[0] && new eligibleTests[0]();
