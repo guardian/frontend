@@ -47,8 +47,8 @@ object NewNavigation {
     def getAllEditionalisedNavLinks(edition: Edition) = edition match {
       case editions.Uk => uk.mostPopular ++ uk.leastPopular
       case editions.Au => au.mostPopular ++ au.leastPopular
-      case editions.Us => us.mostPopular ++ us.mostPopular
-      case editions.International => int.mostPopular
+      case editions.Us => us.mostPopular ++ us.leastPopular
+      case editions.International => int.mostPopular ++ int.leastPopular
     }
 
     def getEditionalisedSubSectionLinks(edition: Edition) = edition match {
