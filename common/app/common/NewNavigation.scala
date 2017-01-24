@@ -70,9 +70,9 @@ object NewNavigation {
   case object MostPopular extends EditionalisedNavigationSection {
     val name = "news"
 
-    val uk = NavLinkLists(List(headlines, ukNews, world, politics, science, business, football))
+    val uk = NavLinkLists(List(headlines, ukNews, world, politics, business, science, football))
     val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, auImmigration, football))
-    val us = NavLinkLists(List(headlines, usNews, world, science, usPolitics, business, soccer))
+    val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, science, soccer))
     val int = NavLinkLists(List(headlines, world, ukNews, science, cities, globalDevelopment, football))
   }
 
@@ -103,17 +103,19 @@ object NewNavigation {
     val uk = NavLinkLists(
       List(
         opinion,
-        NavLink("Polly Toynbee", "/profile/pollytoynbee"),
-        NavLink("Owen Jones", "/profile/owen-jones"),
-        NavLink("Marina Hyde", "/profile/marinahyde")
+        theGuardianView,
+        columnists,
+        cartoons,
+        NavLink("in my opinion", "/commentisfree/series/comment-is-free-weekly")
       ),
       List(
+        NavLink("Polly Toynbee", "/profile/pollytoyn"),
+        NavLink("Owen Jones", "/profile/owen-jones"),
+        NavLink("Jonathan Freedland", "/profile/jonathanfreedland"),
+        NavLink("Marina Hyde", "/profile/marinahyde"),
         NavLink("George Monbiot", "/profile/georgemonbiot"),
         NavLink("Gary Younge", "/profile/garyyounge"),
-        NavLink("Nick Cohen", "/profile/nickcohen"),
-        columnists,
-        theGuardianView,
-        cartoons
+        NavLink("Nick Cohen", "/profile/nickcohen")
       )
     )
 
@@ -157,8 +159,8 @@ object NewNavigation {
     val name = "sport"
 
     val uk = NavLinkLists(
-      List(sport, football, rugbyUnion, cricket, tennis, cycling),
-      List(formulaOne, boxing, rugbyLeague, racing, usSports, golf)
+      List(sport, football, rugbyUnion, cricket, tennis, cycling, formulaOne),
+      List(boxing, rugbyLeague, racing, usSports, golf)
     )
     val au = NavLinkLists(
       List(sport, football, rugbyUnion, cricket, AFL, tennis),
@@ -178,12 +180,12 @@ object NewNavigation {
     val name = "arts"
 
     val uk = NavLinkLists(
-      List(culture, tvAndRadio, music, books, games, artAndDesign),
-      List(film, stage, classical, culture)
+      List(culture, tvAndRadio, music, film, books, games, artAndDesign),
+      List(stage, classical)
     )
     val au = NavLinkLists(
       List(culture, books, music, artAndDesign, film, games),
-      List(stage, classical, culture)
+      List(stage, classical)
     )
     val us = NavLinkLists(
       List(culture, books, music, artAndDesign, tvAndRadio, stage),
