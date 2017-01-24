@@ -73,11 +73,9 @@
 
 @faciaCardSmall(card: ContentCard) = {
     @paddedRow(Seq(toneClassFromStyle(card.cardStyle))) {
-        <a @Html(card.header.url.hrefWithRel) class="facia-link">
-            @fullRow(Seq("facia-card", "facia-card__text", "facia-card__text--last")) {
-                @headline(card)
-            }
-        </a>
+        @fullRow(Seq("facia-card", "facia-card__text", "facia-card__text--last")) {
+            @headline(card)
+        }
     }
 }
 

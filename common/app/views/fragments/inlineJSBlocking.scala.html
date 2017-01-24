@@ -70,7 +70,7 @@
             var script = document.createElement('script');
             var ref = document.getElementsByTagName('script')[0];
             @if(WebpackTest.isParticipating) {
-                script.src = '@Static("javascripts/boot-webpack.js")';
+                script.src = '@Static("javascripts/app-webpack.js")';
             } else {
                 script.src = '@Static("javascripts/app.js")';
             }
