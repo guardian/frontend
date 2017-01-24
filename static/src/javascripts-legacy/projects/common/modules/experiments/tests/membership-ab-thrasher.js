@@ -12,7 +12,7 @@ define([
         this.author = 'Justin Pinner';
         this.description = 'Test appetite for membership bundles';
         this.showForSensitive = true;
-        this.audience = 0.025;  // 2.5%
+        this.audience = 0.05;  // 5% ~ 7,000 unique browser thrasher views per variant per day
         this.audienceOffset = 0;
         this.successMeasure = '';
         this.audienceCriteria = 'People on UK network front';
@@ -37,13 +37,13 @@ define([
 
         this.setCopy = function() {
             if (this.thrasher()) {
-                var copyH1El = document.querySelector('.membership-ab-thrasher_header .main_title');
-                if (copyH1El) {
-                    copyH1El.innerHTML = '<p>Support<br>the Guardian</p>';
+                var mainTitleEl = document.querySelector('.membership-ab-thrasher_header .main_title');
+                if (mainTitleEl) {
+                    mainTitleEl.innerHTML = '<p>Support<br>the Guardian</p>';
                 }
-                var copyH2El = document.querySelector('.membership-ab-thrasher_header .sub_title');
-                if (copyH2El) {
-                    copyH2El.innerHTML = '<p>We\'re introducing <strong>new ways</strong> to support<br>the Guardian\'s quality journalism and independent voice. Choose from digital,<br>print or a contribution today.</p>';
+                var subTitleEl = document.querySelector('.membership-ab-thrasher_header .sub_title');
+                if (subTitleEl) {
+                    subTitleEl.innerHTML = '<p>We\'re introducing <strong>new ways</strong> to support<br>the Guardian\'s quality journalism and independent voice. Choose from digital,<br>print or a contribution today.</p>';
                 }
             }
         };
@@ -74,15 +74,21 @@ define([
 
         this.variants = [
             {
-                id: 'A1',
+                id: 'A',
                 test: function () {
-                    self.setup('A1')
+                    self.setup('A')
                 }
             },
             {
                 id: 'B1',
                 test: function () {
                     self.setup('B1');
+                }
+            },
+            {
+                id: 'B2',
+                test: function () {
+                    self.setup('B2');
                 }
             }
         ];
