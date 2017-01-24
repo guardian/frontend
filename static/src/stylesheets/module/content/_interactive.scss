@@ -110,6 +110,7 @@
     // Ensure margins don't overlay full-page take over interactives
     .element-interactive {
         background-color: #ffffff;
+        line-height: 0;
     }
 
     //TODO: Temporary hack for live-streams until we discuss a better solution with composer
