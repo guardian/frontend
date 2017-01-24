@@ -73,6 +73,7 @@ define([
         robust.catchErrorsAndLog('ga-user-timing-commercial-request', function () {
             ga.trackPerformance('Javascript Load', 'commericalRequest', 'Commerical request time');
         });
+
         return promiseRequire(['bootstraps/commercial'])
             .then(raven.wrap(
                     { tags: { feature: 'commercial' } },
@@ -93,6 +94,7 @@ define([
             robust.catchErrorsAndLog('ga-user-timing-enhanced-request', function () {
                 ga.trackPerformance('Javascript Load', 'enhancedRequest', 'Enhanced request time');
             });
+
             return promiseRequire(['bootstraps/enhanced/main'])
                 .then(function (boot) {
                     userTiming.mark('enhanced boot');
