@@ -32,21 +32,21 @@ domready(() => {
             });
         }
 
-        userTiming.mark('commerical request');
+        userTiming.mark('commercial request');
         robust.catchErrorsAndLog('ga-user-timing-commercial-request', () => {
-            ga.trackPerformance('Javascript Load', 'commericalRequest', 'Commerical request time');
+            ga.trackPerformance('Javascript Load', 'commercialRequest', 'commercial request time');
         });
         require(['bootstraps/commercial'], raven.wrap({ tags: { feature: 'commercial' } },
             (commercial) => {
-                userTiming.mark('commerical boot');
+                userTiming.mark('commercial boot');
                 robust.catchErrorsAndLog('ga-user-timing-commercial-boot', () => {
-                    ga.trackPerformance('Javascript Load', 'commericalBoot', 'Commerical boot time');
+                    ga.trackPerformance('Javascript Load', 'commercialBoot', 'commercial boot time');
                 });
                 commercial.init();
 
                 // 3. finally, try enhanced
                 // this is defined here so that webpack's code-splitting algo
-                // excludes all the modules bundled in the commerical chunk from this one
+                // excludes all the modules bundled in the commercial chunk from this one
                 if (window.guardian.isEnhanced) {
                     userTiming.mark('enhanced request');
                     robust.catchErrorsAndLog('ga-user-timing-enhanced-request', () => {

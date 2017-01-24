@@ -69,18 +69,18 @@ define([
             });
         }
 
-        userTiming.mark('commerical request');
+        userTiming.mark('commercial request');
         robust.catchErrorsAndLog('ga-user-timing-commercial-request', function () {
-            ga.trackPerformance('Javascript Load', 'commericalRequest', 'Commerical request time');
+            ga.trackPerformance('Javascript Load', 'commercialRequest', 'commercial request time');
         });
 
         return promiseRequire(['bootstraps/commercial'])
             .then(raven.wrap(
                     { tags: { feature: 'commercial' } },
                     function (commercial) {
-                        userTiming.mark('commerical boot');
+                        userTiming.mark('commercial boot');
                         robust.catchErrorsAndLog('ga-user-timing-commercial-boot', function () {
-                            ga.trackPerformance('Javascript Load', 'commericalBoot', 'Commerical boot time');
+                            ga.trackPerformance('Javascript Load', 'commercialBoot', 'commercial boot time');
                         });
                         commercial.init();
                     }
