@@ -79,4 +79,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 2, 6),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-tailor-recommended-email",
+    "Use Tailor to target email signup form",
+    owners = Seq(Owner.withGithub("lindseydew")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
 }

@@ -13,6 +13,7 @@ define([
     'common/modules/experiments/tests/neilsen-check',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/acquisition-test-selector',
+    'common/modules/experiments/tests/tailor-recommended-email'
 ], function (reportError,
              config,
              cookies,
@@ -26,13 +27,15 @@ define([
              RecommendedForYou,
              NeilsenCheck,
              MembershipEngagementBannerTests,
-             acquisitionTestSelector
+             acquisitionTestSelector,
+             TailorRecommendedEmail
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
         new RecommendedForYou(),
         new NeilsenCheck(),
+        new TailorRecommendedEmail(),
         acquisitionTestSelector.getTest()
     ].concat(MembershipEngagementBannerTests));
 
