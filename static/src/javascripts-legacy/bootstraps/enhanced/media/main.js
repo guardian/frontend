@@ -383,6 +383,7 @@ define([
         var shouldPreroll = commercialFeatures.videoPreRolls &&
             !config.page.hasMultipleVideosInPage &&
             !config.page.hasYouTubeMediaAtom &&
+            !config.page.isFront &&
             !config.page.isAdvertisementFeature &&
             !config.page.sponsorshipType;
 
