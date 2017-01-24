@@ -25,6 +25,12 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   val soundcloudUrlV1 = "http://api.soundcloud.com%2Ftracks%2F1234"
   val soundcloudUrlV2 = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1234"
   val soundcloudUrlNoTrackId = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/foobar"
+  val commentAvatarClass = Some("d2-avatar")
+  val commentAvatarSrc = Some("https://avatar.guim.co.uk/user/15301515")
+  val commentAvatarHeight = Some("40")
+  val commentAvatarWidth = Some("40")
+  val commentAvatarAlt = Some("User avatar for fooBar")
+
 
   val contentApi = ApiContent(
     id = "foo/2012/jan/07/bar",
@@ -80,7 +86,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     val doc = <html>
       <body>
         <figure class={elementType}>
-          {iframe.toString}
+          {iframe}
         </figure>
       </body>
     </html>.toString()
@@ -89,15 +95,21 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
 
-  private def cleanDocumentWithCommentEmbed(): Document = {
+  private def cleanDocumentWithCommentEmbed(className: Option[String], src: Option[String], width: Option[String], height: Option[String], alt: Option[String]): Document = {
 
+    val classString = if(className.nonEmpty){s"""class=\"${className.get}\" """}else{""}
+    val srcString = if(src.nonEmpty){s"""src=\"${src.get}\" """}else{""}
+    val widthString = if(width.nonEmpty){s"""width=\"${width.get}\" """}else{""}
+    val heightString = if(height.nonEmpty){s"""height=\"${height.get}\" """}else{""}
+    val altString = if(alt.nonEmpty){s"""alt=\"${alt.get}\" """}else{""}
+    val avatarImage = s"""<img ${classString + srcString + heightString + widthString + altString}"""
     val doc = <html>
       <body>
        <figure class="element element-comment" data-canonical-url="https://discussion.theguardian.com/comment-permalink/88222201">
         <div class="d2-comment-embedded" itemtype="http://schema.org/Comment">
           <div class="d2-left-col">
             <a href="https://profile.theguardian.com/user/id/12345678">
-              <img class="d2-avatar" src="https://avatar.guim.co.uk/user/15301515" height="40" width="40" alt="User avatar for fooBar"/>
+              {avatarImage}
             </a>
           </div>
         </div>
@@ -218,8 +230,6 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     val result = clean(Jsoup.parse(interactiveSansiFrameWrapper))
     result.getElementsByTag("amp-iframe").size should be(0)
   }
-
-
 
 
   /* Element-audio cleaner:
@@ -396,13 +406,44 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   */
 
   "AmpEmbedCleaner" should "change the avatar img in a comment to be an amp-img" in {
-    val result = cleanDocumentWithCommentEmbed()
+    val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
     result.getElementsByTag("amp-img").size should be(1)
   }
 
   "AmpEmbedCleaner" should "not leave any img tags in the comment embed" in {
-    val result = cleanDocumentWithCommentEmbed()
+    val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
     result.getElementsByTag("img").size should be(0)
   }
+
+  "AmpEmbedCleaner" should "remove the image if the class attrib is missing" in {
+    val result = cleanDocumentWithCommentEmbed(None, commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
+    result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "remove the image if the class is present, but not the expected name" in {
+    val result = cleanDocumentWithCommentEmbed(Some("foo"), commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
+    result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "remove the image if the src attrib is missing" in {
+    val result = cleanDocumentWithCommentEmbed(commentAvatarClass, None, commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
+    result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "remove the image if the height attrib is missing" in {
+    val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, None, commentAvatarWidth, commentAvatarAlt)
+    result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "remove the image if the width attrib is missing" in {
+    val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, commentAvatarHeight, None, commentAvatarAlt)
+    result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "remove the image if the alt attrib is missing" in {
+    val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, None)
+    result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
+  }
+
 
 }

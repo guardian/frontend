@@ -245,18 +245,23 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
     document.getElementsByClass("element-comment").foreach { figure: Element =>
       figure.getElementsByTag("img").foreach { image: Element =>
-        val ampImg = document.createElement("amp-img")
-        val attrs = Map(
-          "class" -> ("d2-avatar-image " + image.attr("class")),
-          "src" -> image.attr("src"),
-          "height" -> image.attr("height"),
-          "width" -> image.attr("width"),
-          "alt" -> image.attr("alt"),
-          "layout" -> "fixed")
-        attrs.foreach {
-          case (key, value) => ampImg.attr(key, value)
+        val validImage = image.hasAttr("class") && image.attr("class").contains("d2-avatar") && image.hasAttr("src") && image.hasAttr("height") && image.hasAttr("width") && image.hasAttr("alt")
+        if (validImage) {
+          val ampImg = document.createElement("amp-img")
+          val attrs = Map(
+            "class" -> ("d2-avatar-image " + image.attr("class")),
+            "src" -> image.attr("src"),
+            "height" -> image.attr("height"),
+            "width" -> image.attr("width"),
+            "alt" -> image.attr("alt"),
+            "layout" -> "fixed")
+          attrs.foreach {
+            case (key, value) => ampImg.attr(key, value)
+          }
+          image.replaceWith(ampImg)
+        } else {
+          image.remove()
         }
-        image.replaceWith(ampImg)
       }
     }
   }
