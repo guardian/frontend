@@ -113,31 +113,12 @@ $gutter-large: 55px;
     cursor: pointer;
     bottom: -$gs-baseline / 2;
 
-    &--open {
-        z-index: 1071;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
-
-        &:before {
-            // Extended hit area for veggie burger close state, for fat fingers
-            content: '';
-            position: absolute;
-        }
-    }
-
     @include mq($until: mobileMedium) {
         //Smaller menu button
         height: $veggie-burger-small;
         min-width: $veggie-burger-small;
         //Align with the 'i' in 'theguardian'
         right: $gutter-small;
-
-        &--open:before {
-            height: $veggie-burger-small * 2;
-            width: $veggie-burger-small;
-            top: -$veggie-burger-small / 2;
-            right: $veggie-burger-small / 2;
-            border-radius: ($veggie-burger-small * 2) 0 0 ($veggie-burger-small * 2);
-        }
     }
 
     @include mq(mobileMedium) {
@@ -145,19 +126,38 @@ $gutter-large: 55px;
         width: $veggie-burger-medium;
         //Align with the 'i' in 'theguardian'
         right: $gutter-medium;
+    }
 
-        &--open:before {
+    @include mq(mobileLandscape) {
+        //Align with the 'i' in 'theguardian'
+        right: $gutter-large;
+    }
+}
+
+.new-header__nav__menu-button--open {
+    z-index: 1071;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
+
+    &:before {
+        // Extended hit area for veggie burger close state, for fat fingers
+        content: '';
+        position: absolute;
+
+        @include mq($until: mobileMedium) {
+            height: $veggie-burger-small * 2;
+            width: $veggie-burger-small;
+            top: -$veggie-burger-small / 2;
+            right: $veggie-burger-small / 2;
+            border-radius: ($veggie-burger-small * 2) 0 0 ($veggie-burger-small * 2);
+        }
+
+        @include mq(mobileMedium) {
             height: $veggie-burger-medium * 2;
             width: $veggie-burger-medium;
             top: -$veggie-burger-medium / 2;
             right: $veggie-burger-medium / 2;
             border-radius: ($veggie-burger-medium * 2) 0 0 ($veggie-burger-medium * 2);
         }
-    }
-
-    @include mq(mobileLandscape) {
-        //Align with the 'i' in 'theguardian'
-        right: $gutter-large;
     }
 }
 
