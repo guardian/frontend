@@ -90,7 +90,7 @@ define([
 
     function obWidgetIsShown() {
         var $outbrain = $('.js-outbrain-container');
-        return $outbrain && $outbrain.children && $outbrain.children.length > 0;
+        return $outbrain && $outbrain[0] && $outbrain[0].children && $outbrain[0].children.length > 0;
     }
 
     var canRunList = {
