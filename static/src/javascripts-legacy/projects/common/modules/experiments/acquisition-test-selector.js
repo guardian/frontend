@@ -24,11 +24,13 @@ define([
                 var t = new test();
                 var forced = window.location.hash.indexOf('ab-' + t.id) > -1;
                 var variant = segmentUtil.variantFor(t);
-                var acceptableViewCount = variant ? viewLog.viewsInPreviousDays(variant.maxViews.days, t) < variant.maxViews.count : false;
-                var acceptableTimeBetweenViews = variant ? viewLog.viewsInPreviousDays(variant.maxViews.minDaysBetweenViews, t) === 0 : false;
 
+                var hasNotReachedRateLimit = variant &&
+                    ((viewLog.viewsInPreviousDays(variant.maxViews.days, t) < variant.maxViews.count &&
+                    viewLog.viewsInPreviousDays(variant.maxViews.minDaysBetweenViews, t) === 0) ||
+                    variant.isUnlimited);
 
-                return forced || (t.canRun() && segmentUtil.isInTest(t) && acceptableViewCount && acceptableTimeBetweenViews);
+                return forced || (t.canRun() && segmentUtil.isInTest(t) && hasNotReachedRateLimit);
             });
 
             return eligibleTests[0] && new eligibleTests[0]();
