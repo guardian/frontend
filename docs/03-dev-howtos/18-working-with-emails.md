@@ -95,11 +95,26 @@ function validate(form) {
 Fronts and articles can be rendered in email-friendly HTML by appending the URL parameter `format=email`. The response from these endpoints can be put into an email body and will render well in a wide variety of email clients.
  
 For curating emails, you'll normally want to set up a custom front rather than co-opting an existing front. For
-this purpose, we have a notion of "Email fronts" (in addition to Commercial, Editorial, and Training). These
-are visible in the fronts tool: https://fronts.gutools.co.uk/email
+this purpose, we have a notion of "Email fronts" (in addition to Commercial, Editorial, and Training). Content can
+be placed into email fronts in the same way as for web fronts, via the [fronts tool](https://fronts.gutools.co.uk/email). 
 
-Email fronts will always render in email-friendly format, regardless of the `format` parameter. They also
-have a much smaller set of layout types than web fronts: **fast**, **medium** and **slow**. Here's an example of each along with a table summarising their differences:
+As for web fronts, other properties of email fronts can be configured via the [fronts config tool](https://fronts.gutools.co.uk/email/config).
+This includes creating containers and choosing their layout types.
+
+There are some differences between web fronts and email fronts.
+- Email fronts always render in email-friendly format, regardless of the `format` parameter
+- Email fronts have a much smaller set of layout types than web fronts:
+  - **Fast** is for news-like content which is expected to be scanned quickly. Cards are smaller,
+  containing just the headline.
+  - **Slow** is for more long-form/feature/opinion content which might be consumed more slowly. Cards are larger,
+  containing headline and standfirst.
+  - **Medium** is somewhere in between
+
+The use cases given (news-like vs feature-like) are just suggestions. In reality you can use whatever layout looks
+best for your design of email. For instance, longer emails will typically contain more containers with the **fast** layout since
+the email would take too long to scan from top to bottom otherwise.
+
+Here's an example of each layout type along with a table summarising their differences:
 
 ### Slow
 ![picture 397](https://cloud.githubusercontent.com/assets/5122968/22215773/83d61456-e194-11e6-82bb-792e377f7168.png)
