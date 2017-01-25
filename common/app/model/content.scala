@@ -436,7 +436,7 @@ object Article {
       ("isHosted", JsBoolean(false)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
       "videoDuration" -> videoDuration
-    ) ++ bookReviewIsbn
+    ) ++ bookReviewIsbn ++ AtomProperties(content.atoms)
 
     val opengraphProperties: Map[String, String] = Map(
       ("og:type", "article"),
@@ -562,6 +562,18 @@ final case class Audio (override val content: Content) extends ContentType {
 
 }
 
+object AtomProperties {
+
+  def hasYouTubeAtom(atoms: Option[Atoms]): Boolean = {
+    val hasYouTubeAtom: Option[Boolean] = atoms.map(_.media.exists(_.assets.exists(_.platform == "Youtube")))
+    hasYouTubeAtom.getOrElse(false)
+  }
+
+  def apply(atoms: Option[Atoms]): Map[String, JsBoolean] = {
+    Map("hasYouTubeAtom" -> JsBoolean(hasYouTubeAtom(atoms)))
+  }
+}
+
 object Video {
   def make(content: Content): Video = {
 
@@ -576,7 +588,8 @@ object Video {
       "isPodcast" -> JsBoolean(content.tags.isPodcast),
       "source" -> JsString(source.getOrElse("")),
       "embeddable" -> JsBoolean(elements.videos.find(_.properties.isMain).exists(_.videos.embeddable)),
-      "videoDuration" -> elements.videos.find(_.properties.isMain).map{ v => JsNumber(v.videos.duration)}.getOrElse(JsNull))
+      "videoDuration" -> elements.videos.find(_.properties.isMain).map{ v => JsNumber(v.videos.duration)}.getOrElse(JsNull)) ++ AtomProperties(content.atoms)
+
 
     val optionalOpengraphProperties = if(content.metadata.webUrl.startsWith("https://")) Map("og:video:secure_url" -> content.metadata.webUrl) else Nil
     val opengraphProperties = Map(
