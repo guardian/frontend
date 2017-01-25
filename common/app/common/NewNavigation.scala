@@ -47,8 +47,8 @@ object NewNavigation {
     def getAllEditionalisedNavLinks(edition: Edition) = edition match {
       case editions.Uk => uk.mostPopular ++ uk.leastPopular
       case editions.Au => au.mostPopular ++ au.leastPopular
-      case editions.Us => us.mostPopular ++ us.mostPopular
-      case editions.International => int.mostPopular
+      case editions.Us => us.mostPopular ++ us.leastPopular
+      case editions.International => int.mostPopular ++ int.leastPopular
     }
 
     def getEditionalisedSubSectionLinks(edition: Edition) = edition match {
@@ -164,7 +164,7 @@ object NewNavigation {
     )
     val au = NavLinkLists(
       List(sport, football, rugbyUnion, cricket, AFL, tennis),
-      List(cycling, aLeague, NRL, australiaSport, sport)
+      List(cycling, aLeague, NRL, australiaSport)
     )
     val us = NavLinkLists(
       List(sport, soccer, NFL, tennis, MLB, MLS),
@@ -209,12 +209,12 @@ object NewNavigation {
       List(family, women, travel, home)
     )
     val us = NavLinkLists(
-      List(lifestyle, fashion, lifestyle, food, recipes, loveAndSex),
-      List(home, health, women, family, travel, tech)
+      List(lifestyle, fashion, food, recipes, loveAndSex, home),
+      List(health, women, family, travel, tech)
     )
     val int = NavLinkLists(
-      List(lifestyle, fashion, lifestyle, food, recipes, loveAndSex),
-      List(health, home, women, family, travel, tech)
+      List(lifestyle, fashion, food, recipes, loveAndSex, health),
+      List(home, women, family, travel, tech)
     )
   }
 
