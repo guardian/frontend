@@ -1,7 +1,7 @@
 package views.support.cleaner
 
 import implicits.FakeRequests
-import model.content.{Atoms, MediaAsset, MediaAtom}
+import model.content.{Atoms, MediaAsset, MediaAssetPlatform, MediaAtom}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
@@ -16,7 +16,7 @@ class AtomCleanerTest extends FlatSpec
   val youTubeAtom = Some(Atoms(quizzes = Nil,
     media = Seq(MediaAtom(id = "887fb7b4-b31d-4a38-9d1f-26df5878cf9c",
       defaultHtml = "<iframe width=\"420\" height=\"315\"\n src=\"https://www.youtube.com/embed/nQuN9CUsdVg\" frameborder=\"0\"\n allowfullscreen=\"\">\n</iframe>",
-      assets = Seq(MediaAsset(id = "nQuN9CUsdVg", version = 1L, platform = "Youtube", mimeType = None)),
+      assets = Seq(MediaAsset(id = "nQuN9CUsdVg", version = 1L, platform = MediaAssetPlatform.Youtube, mimeType = None)),
       title = "Bird",
       duration = None,
       source = None,

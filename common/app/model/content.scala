@@ -12,7 +12,7 @@ import conf.Configuration
 import conf.switches.Switches._
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
-import model.content.{Atoms, MediaAtom, Quiz}
+import model.content.{Atoms, MediaAssetPlatform, MediaAtom, Quiz}
 import model.pressed._
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
@@ -565,7 +565,7 @@ final case class Audio (override val content: Content) extends ContentType {
 object AtomProperties {
 
   def hasYouTubeAtom(atoms: Option[Atoms]): Boolean = {
-    val hasYouTubeAtom: Option[Boolean] = atoms.map(_.media.exists(_.assets.exists(_.platform == "Youtube")))
+    val hasYouTubeAtom: Option[Boolean] = atoms.map(_.media.exists(_.assets.exists(_.platform == MediaAssetPlatform.Youtube)))
     hasYouTubeAtom.getOrElse(false)
   }
 
