@@ -183,7 +183,9 @@ figure {
         margin-bottom: $gs-baseline;
         position: relative;
     }
-    &.element-image {
+    &.element-image,
+    &.element-atom
+    {
         position: relative;
         figcaption {
             padding-top: ($gs-baseline/6)*4;
