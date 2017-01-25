@@ -2,10 +2,8 @@ define([
 ], function (
 ) {
     return function () {
-        console.log('TailorRecommendedEmail');
-        
         this.id = 'TailorRecommendedEmail';
-        this.start = '2017-01-24';
+        this.start = '2017-01-23';
         this.expiry = '2017-01-31';
         this.author = 'Lindsey Dew';
         this.description = 'Using Tailor to target email signup form';
@@ -17,27 +15,26 @@ define([
         this.idealOutcome = 'Tailor recommended email list has a higher sign-up than standard';
 
         this.canRun = function () {
-          console.log('canRun');
           return true;
         }
 
         function runTheTest(isControl) {
             if (isControl) {
-                console.log('control');
+                // console.log('control');
             } else {
-                console.log('tailor');
+                // console.log('tailor');
             }
         }
 
         this.variants = [
             {
-                id: 'Control',
+                id: 'control',
                 test: function () {
                     runTheTest(true);
                 }
             },
             {
-                id: 'Tailor-recommended',
+                id: 'tailor-recommended',
                 test: function () {
                     runTheTest(false);
                 }
