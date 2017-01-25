@@ -1,0 +1,31 @@
+.d2-comment-embedded {
+    font-family: sans-serif;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: $gs-baseline;
+    padding-top: $gs-baseline;
+    font-size: 14px;
+    padding-left: $gs-gutter;
+    border-left: 8px solid $neutral-4;
+    clear: left;
+}
+
+.d2-avatar-image {
+    float: left;
+    margin-right: $gs-gutter;
+    margin-bottom: $gs-baseline;
+}
+
+.d2-right-col {
+    top: -3px;
+    padding-right: $gs-gutter;
+}
+
+.d2-permalink .d2-datetime {
+    color: $neutral-2;
+    font-size: .8em;
+}
+
+.d2-body {
+    clear: left;
+}

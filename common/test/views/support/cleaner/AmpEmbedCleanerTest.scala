@@ -6,9 +6,12 @@ import java.net.URLDecoder
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import model.{Article, Content}
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
+import org.jsoup.nodes.{Element, Document}
 import org.scalatest.{FlatSpec, Matchers}
 import org.apache.commons.lang.StringEscapeUtils
+
+import scala.collection.JavaConversions._
+
 
 class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
@@ -22,12 +25,31 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   val soundcloudUrlV1 = "http://api.soundcloud.com%2Ftracks%2F1234"
   val soundcloudUrlV2 = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1234"
   val soundcloudUrlNoTrackId = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/foobar"
+  val commentAvatarClass = "d2-avatar"
+  val commentAvatarSrc = "https://avatar.guim.co.uk/user/15301515"
+  val commentAvatarHeight = "40"
+  val commentAvatarWidth = "40"
+  val commentAvatarAlt = "User avatar for fooBar"
+
+
+  val contentApi = ApiContent(
+    id = "foo/2012/jan/07/bar",
+    webTitle = "Some article",
+    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar"
+  )
 
 
   private def clean(document: Document): Document = {
     val cleaner = AmpEmbedCleaner(article())
     cleaner.clean(document)
     document
+  }
+
+  private def article() = {
+    val contentApiItem = contentApi
+    val content = Content.make(contentApiItem)
+    Article.make(content)
   }
 
   private def cleanDocumentWithVideos(videoUrls: String*): Document = {
@@ -41,28 +63,63 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                      }
                   </body>
               </html>.toString()
-    val document: Document = Jsoup.parse(StringEscapeUtils.unescapeXml(doc))
+    val document: Document = parseTestData(doc)
     clean(document)
   }
 
 
-  private def cleanDocumentWithAudioEmbed(elementType: String, frameborder: Option[String], width: Option[String], height: Option[String], src: Option[String]): Document = {
-    val srcString = if(src.nonEmpty){s"""src=\"${src.get}\" """}else{""}
-    val widthString = if(width.nonEmpty){s"""width=\"${width.get}\" """}else{""}
-    val heightString = if(height.nonEmpty){s"""height=\"${height.get}\" """}else{""}
-    val frameBorderString = if(frameborder.nonEmpty){s"""frameborder=\"${frameborder.get}\" """}else{""}
+/*
+ * The format we are using for the test data - while eminently readable - is treated as XML when toString() is run on it.
+ * To parse it into a JSoup element, it is necessary to remove all the XML character encodings that have been introduced.
+ */
+  private def parseTestData(doc: String):Document = {
+    Jsoup.parse(StringEscapeUtils.unescapeXml(doc))
+  }
+
+  private def cleanDocumentWithAudioEmbed(elementType: String, frameborder: String, width: String, height: String, src: String): Document = {
+    val srcString = if(src.nonEmpty) s"src='$src' " else ""
+    val widthString = if(width.nonEmpty) s"width='$width' " else ""
+    val heightString = if(height.nonEmpty) s"height='$height' " else ""
+    val frameBorderString = if(frameborder.nonEmpty) s"frameborder='$frameborder' " else ""
     val iframe = s"""<iframe ${srcString + widthString + heightString + frameBorderString}></iframe>"""
 
     val doc = <html>
       <body>
         <figure class={elementType}>
-          {iframe.toString}
+          {iframe}
         </figure>
       </body>
     </html>.toString()
-    val document: Document = Jsoup.parse(StringEscapeUtils.unescapeXml(doc))
+    val document: Document = parseTestData(doc)
     clean(document)
   }
+
+
+  private def cleanDocumentWithCommentEmbed(className: String, src: String, width: String, height: String, alt: String): Document = {
+    val classString = if(className.nonEmpty) s"class='$className' " else ""
+    val srcString = if(src.nonEmpty) s"src='$src' " else ""
+    val widthString = if(width.nonEmpty) s"width='$width' " else ""
+    val heightString = if(height.nonEmpty) s"height='$height' " else ""
+    val altString = if(alt.nonEmpty) s"alt='$alt' " else ""
+    val avatarImage = "<img " + classString + srcString + heightString + widthString + altString + ">"
+
+    val doc = <html>
+      <body>
+       <figure class="element element-comment" data-canonical-url="https://discussion.theguardian.com/comment-permalink/88222201">
+        <div class="d2-comment-embedded" itemtype="http://schema.org/Comment">
+          <div class="d2-left-col">
+            <a href="https://profile.theguardian.com/user/id/12345678">
+              {avatarImage}
+            </a>
+          </div>
+        </div>
+       </figure>
+      </body>
+    </html>.toString()
+    val document: Document = parseTestData(doc)
+    clean(document)
+  }
+
 
   /*
    * External video cleaner:
@@ -175,76 +232,74 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
 
-
-
   /* Element-audio cleaner:
    *  Soundcloud embeds are turned into amp-soundcloud embeds.
    *  Other audio embeds become amp-iframe embeds.
    */
 
   "AmpEmbedCleaner" should "replace an iframe in an audio-element that has a src url from soundcloud.com, with an amp-soundcloud element" in {
-    val result: Document = cleanDocumentWithAudioEmbed("element-audio", None, None, None, Option(soundcloudUrlV2))
+    val result: Document = cleanDocumentWithAudioEmbed("element-audio", "", "", "", soundcloudUrlV2)
     result.getElementsByTag("amp-soundcloud").size should be(1)
   }
 
   "AmpEmbedCleaner" should "create an amp-soundcloud element with a trackid from the iframe src that has a src url from soundcloud.com" in {
-    val result: Document = cleanDocumentWithAudioEmbed("element-audio", None, None, None, Option(soundcloudUrlV2))
+    val result: Document = cleanDocumentWithAudioEmbed("element-audio", "", "", "", soundcloudUrlV2)
     result.getElementsByTag("amp-soundcloud").first.attr("data-trackid") should be(soundcloudTrackid.toString)
   }
 
   "AmpEmbedCleaner" should " not create an amp-soundcloud element from an iframe src that does not have a track id even if the src uses the soundcloud url" in {
-    val result: Document = cleanDocumentWithAudioEmbed("element-audio", None, None, None, Option(soundcloudUrlNoTrackId))
+    val result: Document = cleanDocumentWithAudioEmbed("element-audio", "", "", "", soundcloudUrlNoTrackId)
     result.getElementsByTag("amp-soundcloud").size should be (0)
   }
 
   "AmpEmbedCleaner" should "add an amp-iframe element, not an amp-soundcloud element if an audio element contains an iframe with src url from that is not from soundcloud.com" in {
-    val frameborder = Some("0")
-    val width = Some("460")
-    val height = Some("300")
-    val src = Some(audioBoomUrl)
+    val frameborder = "0"
+    val width = "460"
+    val height = "300"
+    val src = audioBoomUrl
     val cleanDoc: Document = cleanDocumentWithAudioEmbed("element-audio", frameborder, width, height, src)
     val result = (cleanDoc.getElementsByTag("amp-iframe").size, cleanDoc.getElementsByTag("amp-soundcloud").size)
     result should be ((1,0))
   }
 
   "AmpEmbedCleaner" should "create an amp-iframe element with a data-main-player-id from the iframe src from an audioboom embed" in {
-    val frameborder = Some("0")
-    val width = Some("460")
-    val height = Some("300")
-    val src = Some(audioBoomUrl)
+    val frameborder = "0"
+    val width = "460"
+    val height = "300"
+    val src = audioBoomUrl
     val result: Document = cleanDocumentWithAudioEmbed("element-audio", frameborder, width, height, src)
     result.getElementsByTag("amp-iframe").first.attr("src") should be(audioBoomUrl)
   }
 
   "AmpEmbedCleaner" should "not add an amp-iframe element if the iframe does not have a src attribute" in {
-    val frameborder = Some("0")
-    val width = Some("460")
-    val height = Some("300")
-    val result = cleanDocumentWithAudioEmbed("element-audio", frameborder, width, height, None)
+    val frameborder = "0"
+    val width = "460"
+    val height = "300"
+    val result = cleanDocumentWithAudioEmbed("element-audio", frameborder, width, height, "")
     result.getElementsByTag("amp-iframe").size should be (0)
   }
 
   "AmpEmbedCleaner" should "not add an amp-iframe element if the iframe does not have a height attribute" in {
-    val frameborder = Some("0")
-    val width = Some("460")
-    val src = Some(audioBoomUrl)
-    val result = cleanDocumentWithAudioEmbed("element-audio", frameborder, width, None, src)
+    val frameborder = "0"
+    val width = "460"
+    val src = audioBoomUrl
+    val result = cleanDocumentWithAudioEmbed("element-audio", frameborder, width, "", src)
     result.getElementsByTag("amp-iframe").size should be (0)
   }
 
   "AmpEmbedCleaner" should "not add an amp-iframe element if the iframe does not have a width attribute" in {
-    val frameborder = Some("0")
-    val height = Some("300")
-    val src = Some(audioBoomUrl)
-    val result = cleanDocumentWithAudioEmbed("element-audio", frameborder, None, height, src)
+    val frameborder = "0"
+    val height = "300"
+    val src = audioBoomUrl
+    val result = cleanDocumentWithAudioEmbed("element-audio", frameborder, "", height, src)
     result.getElementsByTag("amp-iframe").size should be (0)
   }
 
   "AmpEmbedCleaner" should "not add an amp-iframe element if the iframe does not have a frameborder attribute" in {
-    val width = Some("460")
-    val height = Some("300")
-    val src = Some(audioBoomUrl)
-    val result = cleanDocumentWithAudioEmbed("element-audio", None, width, height, src)
+    val width = "460"
+    val height = "300"
+    val src = audioBoomUrl
+    val result = cleanDocumentWithAudioEmbed("element-audio", "", width, height, src)
     result.getElementsByTag("amp-iframe").size should be (0)
   }
 
@@ -254,7 +309,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
         <figure class="element-audio"></figure>
       </body>
     </html>.toString()
-    val document: Document = Jsoup.parse(doc)
+    val document: Document = parseTestData(doc)
     val cleanDoc: Document = clean(document)
     val result = (cleanDoc.getElementsByTag("amp-iframe").size, cleanDoc.getElementsByTag("amp-soundcloud").size)
     result should be ((0,0))
@@ -267,25 +322,25 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   */
 
   "AmpEmbedCleaner" should "replace an iframe in an audio-element that has a src url from soundcloud.com with an amp-soundcloud element" in {
-    val result: Document = cleanDocumentWithAudioEmbed("element-embed", None, None, None, Some(soundcloudUrlV2))
+    val result: Document = cleanDocumentWithAudioEmbed("element-embed", "", "", "", soundcloudUrlV2)
     result.getElementsByTag("amp-soundcloud").size should be(1)
   }
 
   "AmpEmbedCleaner" should "create an amp-soundcloud element with a trackid from an iframe src tht contains a url from soundcloud.com" in {
-    val result: Document = cleanDocumentWithAudioEmbed("element-embed", None, None, None, Some(soundcloudUrlV1))
+    val result: Document = cleanDocumentWithAudioEmbed("element-embed", "", "", "", soundcloudUrlV1)
     result.getElementsByTag("amp-soundcloud").first.attr("data-trackid") should be(soundcloudTrackid.toString)
   }
 
   "AmpEmbedCleaner" should " not create an amp-soundcloud element from an iframe src that does not have a track id" in {
-    val result: Document = cleanDocumentWithAudioEmbed("element-embed", None, None, None, Some(soundcloudUrlNoTrackId))
+    val result: Document = cleanDocumentWithAudioEmbed("element-embed", "", "", "", soundcloudUrlNoTrackId)
     result.getElementsByTag("amp-soundcloud").size should be (0)
   }
 
   "AmpEmbedCleaner" should "not add an amp-iframe or amp-soundcloud element, if an audio element contains an iframe with src url from that is not from soundcloud.com" in {
-    val frameborder = Some("0")
-    val width = Some("460")
-    val height = Some("300")
-    val src = Some(audioBoomUrl)
+    val frameborder = "0"
+    val width = "460"
+    val height = "300"
+    val src = audioBoomUrl
     val cleanDoc: Document = cleanDocumentWithAudioEmbed("element-embed", frameborder, width, height, src)
     val result = (cleanDoc.getElementsByTag("amp-iframe").size, cleanDoc.getElementsByTag("amp-soundcloud").size)
     result should be ((0,0))
@@ -297,7 +352,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                     <figure class="element-audio"></figure>
                   </body>
               </html>.toString()
-    val document: Document = Jsoup.parse(doc)
+    val document: Document = parseTestData(doc)
     val result: Document = clean(document)
     result.getElementsByTag("amp-soundcloud").size should be(0)
   }
@@ -316,7 +371,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                     </figure>
                   </body>
               </html>.toString()
-    val document: Document = Jsoup.parse(doc)
+    val document: Document = parseTestData(doc)
     val result: Document = clean(document)
     result.getElementsByTag("amp-iframe").size should be(1)
   }
@@ -327,7 +382,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                     <figure class="element-map"></figure>
                   </body>
               </html>.toString()
-    val document: Document = Jsoup.parse(doc)
+    val document: Document = parseTestData(doc)
     val result: Document = clean(document)
     result.getElementsByTag("amp-iframe").size should be(0)
   }
@@ -340,22 +395,55 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                     </figure>
                   </body>
               </html>.toString()
-    val document: Document = Jsoup.parse(doc)
+    val document: Document = parseTestData(doc)
     val result: Document = clean(document)
     result.getElementsByTag("amp-iframe").first.attr("src") should be(googleMapsUrl)
   }
 
 
-  private def article() = {
-    val contentApiItem = contentApi()
-    val content = Content.make(contentApiItem)
-    Article.make(content)
+  /*
+  * Comments cleaner
+  */
+
+  "AmpEmbedCleaner" should "change the avatar img in a comment to be an amp-img" in {
+    val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
+    result.getElementsByTag("amp-img").size should be(1)
   }
 
-  private def contentApi() = ApiContent(
-    id = "foo/2012/jan/07/bar",
-    webTitle = "Some article",
-    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar"
-  )
+  "AmpEmbedCleaner" should "not leave any img tags in the comment embed" in {
+    val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
+    result.getElementsByTag("img").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "remove the image if the class attrib is missing" in {
+    val result = cleanDocumentWithCommentEmbed("", commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
+    result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "remove the image if the class is present, but not the expected name" in {
+    val result = cleanDocumentWithCommentEmbed("foo", commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
+    result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "remove the image if the src attrib is missing" in {
+    val result = cleanDocumentWithCommentEmbed(commentAvatarClass, "", commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
+    result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "remove the image if the height attrib is missing" in {
+    val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, "", commentAvatarWidth, commentAvatarAlt)
+    result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "remove the image if the width attrib is missing" in {
+    val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, commentAvatarHeight, "", commentAvatarAlt)
+    result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "remove the image if the alt attrib is missing" in {
+    val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, "")
+    result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
+  }
+
+
 }

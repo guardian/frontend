@@ -33,9 +33,8 @@ object FaciaContentFrontendHelpers {
        document <- Some(Jsoup.parse(main))
        atomContainer <- Option(document.getElementsByClass("element-atom").first())
        bodyElement <- Some(atomContainer.getElementsByTag("gu-atom"))
-       youTubeIframe <- Option(bodyElement.select("iframe[src^=https://www.youtube.com]").first())
        atomId <- Some(bodyElement.attr("data-atom-id"))
-       mainMediaAtom <- atoms.media.find(_.id == atomId)
+       mainMediaAtom <- atoms.media.find(ma => ma.id == atomId && ma.assets.exists(_.platform == "Youtube"))
      } yield mainMediaAtom
 
 
