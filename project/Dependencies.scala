@@ -69,7 +69,7 @@ object Dependencies {
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.3.0"
   val targetingClient = "com.gu" %% "targeting-client" % "0.11.0"
   val scanamo = "com.gu" %% "scanamo" % "0.8.3"
-  val enumeratumPlay = "com.beachape" %% "enumeratum-play" % "1.5.5"
+  val enumeratumPlay = "com.beachape" %% "enumeratum-play" % "1.5.6"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"
