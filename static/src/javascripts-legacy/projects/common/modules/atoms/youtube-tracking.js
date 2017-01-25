@@ -36,7 +36,7 @@ define([
                 eventAction: eventAction(),
                 eventLabel: videoId,
                 dimension19: videoId,
-                dimension20: 'guardian-youtube'
+                dimension20: 'gu-video-youtube'
             }
         };
 
@@ -48,7 +48,7 @@ define([
                 ophanRecord(mediaEvent);
                 window.ga(gaTracker + '.send', 'event',
                     gaHelper.buildGoogleAnalyticsEvent(mediaEvent, events.metricMap, id,
-                        'gu-video-youtube', eventAction, id));
+                        'gu-video-youtube', eventAction, event.mediaId));
             });
         });
 
