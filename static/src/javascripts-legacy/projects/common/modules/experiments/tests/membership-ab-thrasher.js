@@ -15,13 +15,14 @@ define([
         this.audience = 0.05;  // 5% ~ 7,000 unique browser thrasher views per variant per day
         this.audienceOffset = 0;
         this.successMeasure = '';
-        this.audienceCriteria = 'People on UK network front';
+        this.audienceCriteria = 'People on UK network front with at least an 1140px wide display.';
         this.dataLinkNames = '';
         this.idealOutcome = 'One landing page will accrue a higher number of intention interactions than the other';
 
         this.canRun = function () {
             // call me paranoid but...
             return document.querySelector('#membership-ab-thrasher') &&
+                window.innerWidth >= 1140 &&
                 config.page.isFront &&
                 config.page.pageId.toLowerCase() === "uk" &&
                 config.page.edition.toUpperCase() === 'UK';
