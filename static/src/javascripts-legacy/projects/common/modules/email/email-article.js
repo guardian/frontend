@@ -175,6 +175,9 @@ define([
 
                 storage.session.set('email-sign-up-seen', 'true');
             }
+        },
+        doesIdMatch = function (id, listConfig) {
+            return id === listConfig.listId;
         };
 
     return {
@@ -186,10 +189,9 @@ define([
 
                     if (ab.isParticipating({id: 'TailorRecommendedEmail'}) &&
                         ab.isInVariant('TailorRecommendedEmail', 'tailor-recommended')) {
-
                         tailor.getEmail().then(function (data) {
-                             // console.log('get here...', data);
-                        })
+                            addListToPage(find(listConfigs, doesIdMatch.bind(null, data.email)));
+                        });
                     } else {
                         // Get the first list that is allowed on this page
                         addListToPage(find(listConfigs, emailRunChecks.listCanRun));
