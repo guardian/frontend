@@ -10,7 +10,7 @@
 @import views.support.TrailCssClasses.toneClassFromStyle
 
 
-@headline(card: ContentCard) = {
+@headline(card: ContentCard, largeHeadline: Boolean = false) = {
     <a @Html(card.header.url.hrefWithRel) class="facia-link">
         <h3 class="headline">
             @card.header.kicker.map { kicker =>
@@ -19,15 +19,15 @@
             }
 
             @defining(if(request.isEmailConnectedStyle) "-connected" else "") { suffix =>
-                @if(card.header.isGallery) { @icon("gallery" + suffix) }
-                @if(card.header.isAudio) { @icon("podcast" + suffix) }
-                @if(card.header.isVideo) { @icon("video" + suffix) }
+                @if(card.header.isGallery) { @icon("gallery" + suffix, largeHeadline) }
+                @if(card.header.isAudio) { @icon("podcast" + suffix, largeHeadline) }
+                @if(card.header.isVideo) { @icon("video" + suffix, largeHeadline) }
             }
 
             @if(card.header.quoted) {
                 @card.cardStyle match {
-                    case Feature => { @icon("quote-feature") }
-                    case _ => { @icon("quote") }
+                    case Feature => { @icon("quote-feature", largeHeadline) }
+                    case _ => { @icon("quote", largeHeadline) }
                 }
             }
             @RemoveOuterParaHtml(card.header.headline)
@@ -46,9 +46,9 @@
     }
 }
 
-@headlineAndTrailWithCutout(card: ContentCard) = {
+@headlineAndTrailWithCutout(card: ContentCard, withImage: Boolean) = {
     @fullRow(Seq("facia-card__text")) {
-        @headline(card)
+        @headline(card, withImage)
     }
     @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
         @trailText(card)
@@ -60,7 +60,7 @@
         <div class="facia-card @if(withImage){facia-card--large}">
             @if(withImage) { @imgFromCard(card) }
             @if(card.header.quoted) {
-                @headlineAndTrailWithCutout(card)
+                @headlineAndTrailWithCutout(card, withImage)
             } else {
                 @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
                     @headline(card)
