@@ -116,6 +116,7 @@ define([
         this.campaignId = test.campaignId;
         this.id = options.id;
         this.maxViews = options.maxViews || maxViews;
+        this.isUnlimited = options.isUnlimited || false;
 
         this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, test.contributionsCampaignPrefix);
         this.membershipURL = options.membershipURL || this.makeURL(membershipURL, test.membershipCampaignPrefix);
