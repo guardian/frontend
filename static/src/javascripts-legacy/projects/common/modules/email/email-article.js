@@ -13,7 +13,9 @@ define([
     'common/utils/page',
     'common/utils/storage',
     'common/modules/analytics/google',
-    'lodash/collections/find'
+    'lodash/collections/find',
+    'common/modules/experiments/ab',
+    'common/modules/tailor/tailor'
 ], function (
     $,
     bean,
@@ -29,7 +31,9 @@ define([
     page,
     storage,
     googleAnalytics,
-    find
+    find,
+    ab,
+    tailor
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
             $iframeEl.appendTo('.js-article__body');
@@ -179,8 +183,19 @@ define([
                 // First we need to check the user's email subscriptions
                 // so we don't insert the sign-up if they've already subscribed
                 emailRunChecks.getUserEmailSubscriptions().then(function () {
-                    // Get the first list that is allowed on this page
-                    addListToPage(find(listConfigs, emailRunChecks.listCanRun));
+
+                    if (ab.isParticipating({id: 'TailorRecommendedEmail'}) &&
+                        ab.isInVariant('TailorRecommendedEmail', 'tailor-recommended')) {
+
+                        tailor.getEmail().then(function (data) {
+                             // console.log('get here...', data);
+                        })
+                    } else {
+                        // Get the first list that is allowed on this page
+                        addListToPage(find(listConfigs, emailRunChecks.listCanRun));
+                    }
+
+
                 }).catch(function (error) {
                     robust.log('c-email', error);
                 });

@@ -20,9 +20,9 @@ define([
 
         function runTheTest(isControl) {
             if (isControl) {
-                // console.log('control');
+                console.log('control');
             } else {
-                // console.log('tailor');
+                console.log('tailor');
             }
         }
 
