@@ -10,7 +10,7 @@
 @import views.support.TrailCssClasses.toneClassFromStyle
 
 
-@headline(card: ContentCard, largeHeadline: Boolean = false) = {
+@headline(card: ContentCard, isLarge: Boolean = false) = {
     <a @Html(card.header.url.hrefWithRel) class="facia-link">
         <h3 class="headline">
             @card.header.kicker.map { kicker =>
@@ -19,15 +19,15 @@
             }
 
             @defining(if(request.isEmailConnectedStyle) "-connected" else "") { suffix =>
-                @if(card.header.isGallery) { @icon("gallery" + suffix, largeHeadline) }
-                @if(card.header.isAudio) { @icon("podcast" + suffix, largeHeadline) }
-                @if(card.header.isVideo) { @icon("video" + suffix, largeHeadline) }
+                @if(card.header.isGallery) { @icon("gallery" + suffix, isLarge) }
+                @if(card.header.isAudio) { @icon("podcast" + suffix, isLarge) }
+                @if(card.header.isVideo) { @icon("video" + suffix, isLarge) }
             }
 
             @if(card.header.quoted) {
                 @card.cardStyle match {
-                    case Feature => { @icon("quote-feature", largeHeadline) }
-                    case _ => { @icon("quote", largeHeadline) }
+                    case Feature => { @icon("quote-feature", isLarge) }
+                    case _ => { @icon("quote", isLarge) }
                 }
             }
             @RemoveOuterParaHtml(card.header.headline)
@@ -48,7 +48,7 @@
 
 @headlineAndTrailWithCutout(card: ContentCard, withImage: Boolean) = {
     @fullRow(Seq("facia-card__text")) {
-        @headline(card, withImage)
+        @headline(card, isLarge = withImage)
     }
     @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
         @trailText(card)
