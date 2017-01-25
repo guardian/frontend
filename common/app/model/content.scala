@@ -65,8 +65,7 @@ final case class Content(
   wordCount: Int,
   showByline: Boolean,
   hasStoryPackage: Boolean,
-  rawOpenGraphImage: String,
-  showFooterContainers: Boolean = false
+  rawOpenGraphImage: String
 ) {
 
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
@@ -110,7 +109,7 @@ final case class Content(
   lazy val hasTonalHeaderIllustration: Boolean = tags.isLetters
 
   lazy val showCircularBylinePicAtSide: Boolean =
-    cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1
+    cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1 && !tags.isInteractive
 
   lazy val signedArticleImage: String = {
     ImgSrc(rawOpenGraphImage, EmailImage)
@@ -484,8 +483,7 @@ object Article {
       trail = trail,
       commercial = commercial,
       metadata = metadata,
-      sharelinks = sharelinks,
-      showFooterContainers = !tags.isLiveBlog && !content.shouldHideAdverts
+      sharelinks = sharelinks
     )
 
     Article(contentOverrides, lightboxProperties)

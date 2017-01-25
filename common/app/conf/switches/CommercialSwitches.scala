@@ -1,7 +1,6 @@
 package conf.switches
 
 import conf.switches.Expiry.never
-import conf.switches.SwitchGroup.CommercialLabs
 import org.joda.time.LocalDate
 
 trait CommercialSwitches {
@@ -176,46 +175,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val showChesterZooGallery = Switch(
-    group = CommercialLabs,
-    "chester-zoo-gallery",
-    "Make the Chester Zoo gallery page available",
-    owners = Owner.group(CommercialLabs),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 25),
-    exposeClientSide = false
-  )
-
-  val showChesterZooArticles = Switch(
-    group = CommercialLabs,
-    "chester-zoo-articles",
-    "Make the Chester Zoo article pages available",
-    owners = Owner.group(CommercialLabs),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 25),
-    exposeClientSide = false
-  )
-
-  val showChesterZooArticlesWithVideo = Switch(
-    group = CommercialLabs,
-    "chester-zoo-articles-with-video",
-    "Make the Chester Zoo article (with video) pages available",
-    owners = Owner.group(CommercialLabs),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 25),
-    exposeClientSide = false
-  )
-
-  val showChesterZooVideos = Switch(
-    group = CommercialLabs,
-    "chester-zoo-videos",
-    "Make the Chester Zoo video pages available",
-    owners = Owner.group(CommercialLabs),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 25),
-    exposeClientSide = false
-  )
-
   val sonobiSwitch: Switch = Switch(
     group = SwitchGroup.Commercial,
     name = "sonobi-header-bidding",
@@ -226,4 +185,13 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val renaultSwitch: Switch = Switch(
+    group = SwitchGroup.Commercial,
+    name = "renault",
+    description = "Turn on hardcoded Renault campaign",
+    owners = Owner.group(SwitchGroup.Commercial),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 3, 1),
+    exposeClientSide = false
+  )
 }

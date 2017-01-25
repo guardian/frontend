@@ -115,10 +115,8 @@ define([
         };
 
         if (overlay) {
-            var formattedDuration = getFormattedDuration(players[atomId].player.getDuration());
-            
-            setDuration(formattedDuration, overlay);
-            
+            showDuration(atomId, overlay);
+
             players[atomId].overlay = overlay;
 
             if (!!config.page.section && detect.isBreakpoint({ min: 'desktop' })) {
@@ -148,10 +146,12 @@ define([
         return ('0' + time).slice(-2);
     }
 
-    function setDuration(formattedDuration, overlay) {
+    function showDuration(atomId, overlay) {
         var durationElem = overlay.querySelector('.youtube-media-atom__bottom-bar__duration');
 
-        durationElem.innerText = formattedDuration;
+        if (durationElem) {
+            durationElem.innerText = getFormattedDuration(players[atomId].player.getDuration());
+        }
     }
 
     function getEndSlate(overlay) {

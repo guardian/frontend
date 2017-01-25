@@ -62,10 +62,7 @@ define([
                 config.switches.emailInArticleOutbrain = false;
                 config.page = {
                     section: 'uk-news',
-                    isFront: false,
-                    isPreview: false,
-                    commentable: true,
-                    edition: 'UK'
+                    commentable: true
                 };
 
                 identity.isUserLoggedIn = function () {
@@ -96,23 +93,6 @@ define([
             it('should start outbrain component', function (done) {
                 sut.init().then(function () {
                     expect(sut.load).toHaveBeenCalled();
-                    done();
-                });
-            });
-
-            it('should not load when sensitive content', function (done) {
-                commercialFeatures.outbrain = false;
-                sut.init().then(function () {
-                    expect(sut.load).not.toHaveBeenCalled();
-                    done();
-                });
-            });
-
-            it('should not load when isPreview', function (done) {
-                config.page.isPreview = true;
-
-                sut.init().then(function () {
-                    expect(sut.load).not.toHaveBeenCalled();
                     done();
                 });
             });

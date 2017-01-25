@@ -2,12 +2,16 @@ define([
     'fastdom',
     'common/utils/formatters',
     'common/utils/mediator',
-    'common/utils/report-error'
+    'common/utils/report-error',
+    'common/utils/config',
+    'common/utils/load-script'
 ], function(
     fastdom,
     formatters,
     mediator,
-    reportError
+    reportError,
+    config,
+    loadScript
 ) {
     function load(ab, loader, opts) {
         function onDiscussionFrontendLoad (emitter) {
@@ -36,24 +40,35 @@ define([
             });
         }
 
-        return require('discussion-frontend-preact', function (frontend) {
-            // - Inject the net module to work around the lack of a global fetch
-            //   It can be removed once all browsers have window.fetch
-            // - Well, it turns out that fetchJson uses reqwest which sends X-Requested-With
-            //   which is not allowed by Access-Control-Allow-Headers, so don't use reqwest
-            //   until discussion API is fixed
-            // - Once fixed, or a global fetch is available through a polyfill, one can
-            //   modify discussion-frontend to remove `fetch` polyfill and pass, if needed,
-            //   opts.net = { json: fetchJson }
-
-            frontend(opts)
-            .then(onDiscussionFrontendLoad)
-            .catch(function (error) {
-                reportError(error, { feature: 'discussion' });
-            });
-        }, function (error) {
+        function error (error) {
             reportError(error, { feature: 'discussion' });
-        });
+        }
+
+        function init (frontend) {
+            frontend(opts)
+                .then(onDiscussionFrontendLoad)
+                .catch(error);
+        }
+
+        // - Inject the net module to work around the lack of a global fetch
+        //   It can be removed once all browsers have window.fetch
+        // - Well, it turns out that fetchJson uses reqwest which sends X-Requested-With
+        //   which is not allowed by Access-Control-Allow-Headers, so don't use reqwest
+        //   until discussion API is fixed
+        // - Once fixed, or a global fetch is available through a polyfill, one can
+        //   modify discussion-frontend to remove `fetch` polyfill and pass, if needed,
+        //   opts.net = { json: fetchJson }
+        if (config.tests && config.tests.abWebpackBundle) {
+            return loadScript(config.page.discussionFrontendUrl)
+                .then(function() {
+                    init(window.guardian.app.discussion);
+                })
+                .catch(error);
+        }
+
+        // #wp-rjs
+        // We can remove this when we go WP 100%
+        return window.require('discussion-frontend-preact', init, error);
     }
 
     return {

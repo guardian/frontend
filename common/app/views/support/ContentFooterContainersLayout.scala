@@ -1,7 +1,6 @@
 package views.support
 
-import conf.switches.Switches.OutbrainSwitch
-import model.{Content}
+import model.Content
 import play.twirl.api.{Html, HtmlFormat}
 
 import scala.collection.immutable.Seq
