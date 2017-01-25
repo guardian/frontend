@@ -1,7 +1,9 @@
 define([
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/detect'
 ], function (
-    config
+    config,
+    detect
 ) {
     return function () {
         var self = this;
@@ -22,7 +24,7 @@ define([
         this.canRun = function () {
             // call me paranoid but...
             return document.querySelector('#membership-ab-thrasher') &&
-                window.innerWidth >= 1140 &&
+                detect.isBreakpoint({min: 'leftCol'}) &&
                 config.page.isFront &&
                 config.page.pageId.toLowerCase() === "uk" &&
                 config.page.edition.toUpperCase() === 'UK';
