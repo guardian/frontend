@@ -1,4 +1,5 @@
-@(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean, embedPage: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@import model.content.MediaAssetPlatform
+@(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean, embedPage: Boolean = false, displayEndSlate: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @{
     media match {
@@ -7,7 +8,7 @@
                 doCaption = displayCaption,
                 // image_figureClasses needs to be defined to avoid extra indent on AMP (see imageFigure fragment)
                 image_figureClasses = Some(media.posterImage.get.largestImage.get, ""))
-            case youtube if media.assets.headOption.filter(_.platform == "Youtube") => if(amp) views.html.fragments.atoms.ampYoutube(media, displayCaption) else views.html.fragments.atoms.youtube(media, displayCaption, embedPage)
+            case youtube if media.assets.headOption.filter(_.platform == MediaAssetPlatform.Youtube) => if(amp) views.html.fragments.atoms.ampYoutube(media, displayCaption) else views.html.fragments.atoms.youtube(media, displayCaption, embedPage, displayEndSlate)
             case genericAsset if media.assets.nonEmpty => views.html.fragments.atoms.genericMedia(media, displayCaption, amp)
             case _ =>
         }
