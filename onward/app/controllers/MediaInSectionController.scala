@@ -83,7 +83,7 @@ class MediaInSectionController(contentApiClient: ContentApiClient)(implicit cont
         1,
         Fixed(FixedContainers.fixedMediumFastXI),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(trails.map(_.faciaContent) take 7, Nil, displayName, None, None, None),
+        CollectionEssentials(trails.take(7).map(_.faciaContent), Nil, displayName, None, None, None),
         componentId
       ).withTimeStamps,
       FrontProperties.empty
