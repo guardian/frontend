@@ -41,6 +41,8 @@ define([
     function getCode(data) {
         if (!(data.slot in outbrainCodes) || data.slot === 'defaults') {
             return outbrainCodes.defaults[getSection(data.section)][data.breakpoint === 'wide' ? 'desktop' : data.breakpoint];
+        } else if (data.slot == 'nonCompliant') {
+            return outbrainCodes.nonCompliant[data.breakpoint === 'wide' ? 'desktop' : data.breakpoint];
         } else {
             return outbrainCodes.merchandising[data.breakpoint === 'wide' ? 'desktop' : data.breakpoint];
         }
