@@ -1,0 +1,28 @@
+@import layout.ContentWidths.MainMedia
+
+@(mainMedia: Boolean, amp: Boolean, picture: model.ImageMedia, caption: String)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+    @defining(
+        if(mainMedia) {
+            Seq("maxed", "responsive-img")
+        } else {
+            Seq("gu-image")
+        }
+    ) { classes =>
+
+        @if(amp) {
+            @fragments.amp.ampImage(picture, caption)
+        } else {
+            @fragments.image(
+                picture,
+                classes,
+                MainMedia.inline,
+                caption,
+                isFeatureAndShowcase = false,
+                isImmersiveMainMedia = false
+            )
+        }
+    }
+    @fragments.atoms.mediaAtomCaption(caption, mainMedia = mainMedia)
+
+
