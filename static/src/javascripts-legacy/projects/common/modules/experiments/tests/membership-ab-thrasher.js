@@ -1,9 +1,12 @@
 define([
     'common/utils/config',
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/modules/commercial/user-features'
+
 ], function (
     config,
-    detect
+    detect,
+    userFeatures
 ) {
     return function () {
         var self = this;
@@ -22,8 +25,8 @@ define([
         this.idealOutcome = 'One landing page will accrue a higher number of intention interactions than the other';
 
         this.canRun = function () {
-            // call me paranoid but...
             return document.querySelector('#membership-ab-thrasher') &&
+                !userFeatures.isPayingMember() &&
                 detect.isBreakpoint({min: 'leftCol'}) &&
                 config.page.isFront &&
                 config.page.pageId.toLowerCase() === "uk" &&
