@@ -8,7 +8,7 @@ define([
 
     var bwidCookie = cookies.get('bwid');
 
-    function getEmail() {
+    function getEmailSuggestion() {
         if (!bwidCookie) {
             return;
         }
@@ -19,7 +19,7 @@ define([
     }
 
     return {
-        getEmail: getEmail
+        getEmailSuggestion: getEmailSuggestion
     };
 
 });

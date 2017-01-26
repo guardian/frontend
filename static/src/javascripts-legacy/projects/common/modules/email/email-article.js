@@ -186,18 +186,16 @@ define([
                 // First we need to check the user's email subscriptions
                 // so we don't insert the sign-up if they've already subscribed
                 emailRunChecks.getUserEmailSubscriptions().then(function () {
-
-                    if (ab.isParticipating({id: 'TailorRecommendedEmail'}) &&
-                        ab.isInVariant('TailorRecommendedEmail', 'tailor-recommended')) {
-                        tailor.getEmail().then(function (data) {
-                            addListToPage(find(listConfigs, doesIdMatch.bind(null, data.email)));
+                    if (ab.isParticipating({id: 'TailorRecommendedEmail'}) && ab.isInVariant('TailorRecommendedEmail', 'tailor-recommended')) {
+                        tailor.getEmailSuggestion().then(function (data) {
+                            if (data.email) {
+                                addListToPage(find(listConfigs, doesIdMatch.bind(null, data.email)));
+                            }
                         });
                     } else {
                         // Get the first list that is allowed on this page
                         addListToPage(find(listConfigs, emailRunChecks.listCanRun));
                     }
-
-
                 }).catch(function (error) {
                     robust.log('c-email', error);
                 });

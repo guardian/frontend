@@ -31,12 +31,20 @@ define([
                 id: 'control',
                 test: function () {
                     runTheTest(true);
+                },
+                impression: function(track) {
+                },
+                success: function(complete) {
                 }
             },
             {
                 id: 'tailor-recommended',
                 test: function () {
                     runTheTest(false);
+                },
+                impression: function(track) {
+                },
+                success: function(complete) {
                 }
             }
         ];
