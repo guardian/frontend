@@ -22,12 +22,14 @@ define([
     'domReady',
     'common/utils/raven',
     'common/utils/user-timing',
+    'common/utils/capture-timing',
     'common/utils/config'
 ], function (
     Promise,
     domReady,
     raven,
     userTiming,
+    captureTiming,
     config
 ) {
     // curl’s promise API is broken, so we must cast it to a real Promise
