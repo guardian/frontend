@@ -600,7 +600,7 @@ object MembershipEventCleaner extends HtmlCleaner {
     }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
+case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false, mainMedia: Boolean = false)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
@@ -613,7 +613,7 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomData <- findAtom(atomId)
       } {
-        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp).toString()
+        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mainMedia).toString()
         bodyElement.remove()
         atomContainer.append(html)
       }
@@ -649,12 +649,14 @@ case class CommercialComponentHigh(isAdvertisementFeature: Boolean, isNetworkFro
 
       val adSlotHtml = views.html.fragments.commercial.commercialComponentHigh(isAdvertisementFeature, hasPageSkin)
 
-      val adSlot: Element = Jsoup.parseBodyFragment(adSlotHtml.toString).body().child(0)
+      val adSlot: Option[Element] = Jsoup.parseBodyFragment(adSlotHtml.toString).body().children().toList.headOption
 
-      containers.lift(containerIndex).map { case ((container, index)) => {
-          container.after(adSlot)
-          adSlot.wrap(s"""<div class="fc-container fc-container--commercial"></div>""")
-        }
+      for {
+        (container, index) <- containers.lift(containerIndex)
+        slot <- adSlot
+      } {
+          container.after(slot)
+          slot.wrap("""<div class="fc-container fc-container--commercial"></div>""")
       }
 
     }

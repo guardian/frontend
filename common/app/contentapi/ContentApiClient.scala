@@ -57,7 +57,7 @@ object QueryDefaults extends implicits.Collections {
                 .map(date => date.toJodaDateTime)
                 .map(_ >= leadContentCutOff.toDateTimeAtStartOfDay)
                 .exists(identity)
-            }).map(Content(_)).take(1)
+            }).take(1).map(Content(_))
           else
             Nil
 

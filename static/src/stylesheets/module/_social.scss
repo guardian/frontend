@@ -68,7 +68,6 @@ category: Common
 }
 
 .social-icon {
-
     &.social-icon--more {
         @include social-icon($neutral-6);
         border-radius: 50%;
@@ -87,8 +86,6 @@ category: Common
     }
 }
 
-
-
 .social--hidden {
     display: none;
 }
@@ -98,21 +95,10 @@ category: Common
 }
 
 .social__saveforlater {
-    clear: left;
-    padding-bottom: 0;
-
-    .meta__save-for-later {
-        position: relative;
-        top: auto;
-        left: auto;
-        border: 0;
-        padding: 0;
-    }
+    display: none;
 }
 
 .social__tray-close {
-    float: right;
-    padding-bottom: 0;
     height: 32px;
 }
 
@@ -141,7 +127,21 @@ category: Common
     }
 }
 
+.content--article,
+.content--liveblog,
+.content--gallery,
+.content--media,
+.content--image,
+.content--interactive {
+    .social--top {
+        padding-top: $gs-baseline / 2;
+        padding-bottom: $gs-baseline / 2;
+    }
 
+    .social--expanded-top {
+        padding-bottom: 0;
+    }
+ }
 
 .social--expanded-top {
     position: absolute;
@@ -149,13 +149,17 @@ category: Common
     padding-right: calc(#{$gs-gutter/4} - 3px);
     left: -$gs-gutter/4;
     height: auto;
-    background: $neutral-6;
+    background: #ffffff;
     z-index: $zindex-popover;
     width: auto;
     display: inline-block;
     clear: both;
     box-sizing: border-box;
+    border-bottom: 1px dotted $neutral-4;
 
+    @include mq($until: mobileLandscape) {
+        right: 0;
+    }
 
     @include mq(tablet) {
         padding-left: $gs-gutter/2;

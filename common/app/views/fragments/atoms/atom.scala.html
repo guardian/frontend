@@ -1,11 +1,11 @@
-@(model: _root_.model.content.Atom, shouldFence: Boolean, amp: Boolean)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
+@(model: _root_.model.content.Atom, shouldFence: Boolean, amp: Boolean, mainMedia: Boolean)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 @import _root_.model.ShareLinkMeta
 @import _root_.model.content.{InteractiveAtom, MediaAtom, Quiz}
 
 @{
     model match {
         case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None, showResults = false, ShareLinkMeta(Nil, Nil))
-        case media: MediaAtom => views.html.fragments.atoms.media(media, amp, displayCaption = true)
+        case media: MediaAtom => views.html.fragments.atoms.media(media, amp, displayCaption = true, displayEndSlate = mainMedia)
         case interactive: InteractiveAtom => views.html.fragments.atoms.interactive(interactive, shouldFence)
         case _ =>
     }

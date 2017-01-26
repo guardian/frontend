@@ -226,7 +226,6 @@ object ContentTypeFormat {
     showByline: Boolean,
     hasStoryPackage: Boolean,
     rawOpenGraphImage: String,
-    showFooterContainers: Boolean,
     atoms: Option[Atoms])
 
   private case class JsonCommercial(
@@ -299,8 +298,7 @@ object ContentTypeFormat {
         jsonContent.wordCount,
         jsonContent.showByline,
         jsonContent.hasStoryPackage,
-        jsonContent.rawOpenGraphImage,
-        jsonContent.showFooterContainers
+        jsonContent.rawOpenGraphImage
        )
       }
     }
@@ -332,7 +330,6 @@ object ContentTypeFormat {
           content.showByline,
           content.hasStoryPackage,
           content.rawOpenGraphImage,
-          content.showFooterContainers,
           content.atoms
         ),
         JsonCommercial.apply(

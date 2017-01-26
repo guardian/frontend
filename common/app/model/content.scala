@@ -12,7 +12,7 @@ import conf.Configuration
 import conf.switches.Switches._
 import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
-import model.content.{Atoms, MediaAtom, Quiz}
+import model.content.{Atoms, MediaAssetPlatform, MediaAtom, Quiz}
 import model.pressed._
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
@@ -65,8 +65,7 @@ final case class Content(
   wordCount: Int,
   showByline: Boolean,
   hasStoryPackage: Boolean,
-  rawOpenGraphImage: String,
-  showFooterContainers: Boolean = false
+  rawOpenGraphImage: String
 ) {
 
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
@@ -110,7 +109,7 @@ final case class Content(
   lazy val hasTonalHeaderIllustration: Boolean = tags.isLetters
 
   lazy val showCircularBylinePicAtSide: Boolean =
-    cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1
+    cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1 && !tags.isInteractive
 
   lazy val signedArticleImage: String = {
     ImgSrc(rawOpenGraphImage, EmailImage)
@@ -437,7 +436,7 @@ object Article {
       ("isHosted", JsBoolean(false)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
       "videoDuration" -> videoDuration
-    ) ++ bookReviewIsbn
+    ) ++ bookReviewIsbn ++ AtomProperties(content.atoms)
 
     val opengraphProperties: Map[String, String] = Map(
       ("og:type", "article"),
@@ -484,8 +483,7 @@ object Article {
       trail = trail,
       commercial = commercial,
       metadata = metadata,
-      sharelinks = sharelinks,
-      showFooterContainers = !tags.isLiveBlog && !content.shouldHideAdverts
+      sharelinks = sharelinks
     )
 
     Article(contentOverrides, lightboxProperties)
@@ -564,6 +562,18 @@ final case class Audio (override val content: Content) extends ContentType {
 
 }
 
+object AtomProperties {
+
+  def hasYouTubeAtom(atoms: Option[Atoms]): Boolean = {
+    val hasYouTubeAtom: Option[Boolean] = atoms.map(_.media.exists(_.assets.exists(_.platform == MediaAssetPlatform.Youtube)))
+    hasYouTubeAtom.getOrElse(false)
+  }
+
+  def apply(atoms: Option[Atoms]): Map[String, JsBoolean] = {
+    Map("hasYouTubeAtom" -> JsBoolean(hasYouTubeAtom(atoms)))
+  }
+}
+
 object Video {
   def make(content: Content): Video = {
 
@@ -578,7 +588,8 @@ object Video {
       "isPodcast" -> JsBoolean(content.tags.isPodcast),
       "source" -> JsString(source.getOrElse("")),
       "embeddable" -> JsBoolean(elements.videos.find(_.properties.isMain).exists(_.videos.embeddable)),
-      "videoDuration" -> elements.videos.find(_.properties.isMain).map{ v => JsNumber(v.videos.duration)}.getOrElse(JsNull))
+      "videoDuration" -> elements.videos.find(_.properties.isMain).map{ v => JsNumber(v.videos.duration)}.getOrElse(JsNull)) ++ AtomProperties(content.atoms)
+
 
     val optionalOpengraphProperties = if(content.metadata.webUrl.startsWith("https://")) Map("og:video:secure_url" -> content.metadata.webUrl) else Nil
     val opengraphProperties = Map(

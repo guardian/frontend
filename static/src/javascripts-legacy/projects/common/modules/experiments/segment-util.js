@@ -34,10 +34,21 @@ define([
             return NOT_IN_TEST;
         }
     }
+    
+     function variantFor(test) {
+         var variantId = variantIdFor(test);
+         
+         return test.variants.filter(function(variant) { 
+             return variant.id === variantId;
+         })[0];
+     }
+    
 
     return {
         variantIdFor: memoize(variantIdFor, getId),
-
+        
+        variantFor: variantFor, 
+        
         isInTest: function(test) {
             return variantIdFor(test) !== NOT_IN_TEST;
         }

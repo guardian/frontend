@@ -10,7 +10,6 @@ define([
     'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/opinion-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
-    'common/modules/experiments/tests/neilsen-check',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/acquisition-test-selector',
 ], function (reportError,
@@ -24,7 +23,6 @@ define([
              EditorialEmailVariants,
              OpinionEmailVariants,
              RecommendedForYou,
-             NeilsenCheck,
              MembershipEngagementBannerTests,
              acquisitionTestSelector
     ) {
@@ -32,7 +30,6 @@ define([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
         new RecommendedForYou(),
-        new NeilsenCheck(),
         acquisitionTestSelector.getTest()
     ].concat(MembershipEngagementBannerTests));
 
