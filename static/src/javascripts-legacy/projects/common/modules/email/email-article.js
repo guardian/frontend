@@ -13,7 +13,8 @@ define([
     'common/utils/page',
     'common/utils/storage',
     'common/modules/analytics/google',
-    'lodash/collections/find'
+    'lodash/collections/find',
+    'common/modules/experiments/ab'
 ], function (
     $,
     bean,
@@ -29,7 +30,8 @@ define([
     page,
     storage,
     googleAnalytics,
-    find
+    find,
+    ab
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
             $iframeEl.appendTo('.js-article__body');
@@ -121,7 +123,17 @@ define([
                 listName: 'theGuardianToday',
                 campaignCode: 'guardian_today_article_bottom',
                 headline: 'Want stories like this in your inbox?',
-                description: 'Sign up to The Guardian Today daily email and get the biggest headlines each morning.',
+                description: (function () {
+                    if (ab.isInVariant('GuardianTodaySignupMessaging', 'message-a')) {
+                        return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning. (variant A)';
+                    } else if (ab.isInVariant('GuardianTodaySignupMessaging', 'message-b')) {
+                        return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning. (variant B)';
+                    } else if (ab.isInVariant('GuardianTodaySignupMessaging', 'message-c')) {
+                        return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning. (variant C)';
+                    } else {
+                        return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning.';
+                    }
+                }()),
                 successHeadline: 'Thank you for signing up to the Guardian Today',
                 successDescription: 'We will send you our picks of the most important headlines tomorrow morning.',
                 modClass: 'end-article',

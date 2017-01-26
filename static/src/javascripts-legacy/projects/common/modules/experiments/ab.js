@@ -11,7 +11,8 @@ define([
     'common/modules/experiments/tests/opinion-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
-    'common/modules/experiments/acquisition-test-selector',
+    'common/modules/experiments/tests/guardian-today-messaging',
+    'common/modules/experiments/acquisition-test-selector'
 ], function (reportError,
              config,
              cookies,
@@ -24,12 +25,14 @@ define([
              OpinionEmailVariants,
              RecommendedForYou,
              MembershipEngagementBannerTests,
+             GuardianTodayMessaging,
              acquisitionTestSelector
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
         new RecommendedForYou(),
+        new GuardianTodayMessaging(),
         acquisitionTestSelector.getTest()
     ].concat(MembershipEngagementBannerTests));
 
