@@ -56,6 +56,11 @@ define([
 
     function sendPerformanceEvent(event) {
         window.ga(send, 'timing', event.timingCategory, event.timingVar, event.timeSincePageLoad, event.timingLabel);
+
+        // temporaily send performance events as normal events, so we can get a lot of them
+        window.ga(config.googleAnalytics.trackers.editorial + '.send', 'event', event.timingCategory, event.timingVar, event.timeSincePageLoad, event.timingLabel, {
+            nonInteraction: true // to avoid affecting bounce rate
+        });
     }
 
     // Track important user timing metrics so that we can be notified and measure over time in GA
