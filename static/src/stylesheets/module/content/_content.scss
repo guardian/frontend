@@ -1273,14 +1273,16 @@
 
     .meta__social {
         .social--expanded-top {
-            background-color: $neutral-1;
+            background-color: $multimedia-support-5;
+            border-color: $neutral-1;
+            padding-bottom: 1px;
         }
 
         .social__tray-close .inline-close {
-            background-color: darken($neutral-1, 5%);
+            background-color: $neutral-1;
 
             &:hover {
-                background-color: $multimedia-support-5;
+                background-color: $neutral-2;
             }
 
             svg {
