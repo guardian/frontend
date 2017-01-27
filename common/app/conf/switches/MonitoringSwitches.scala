@@ -85,4 +85,14 @@ trait MonitoringSwitches {
     exposeClientSide = false
   )
 
+  val GAMegaPerfMonitoring = Switch(
+    SwitchGroup.Monitoring,
+    "ga-mega-perf-monitoring",
+    "**CHECK WITH Google.Analyticscore@guardian.co.uk BEFORE ENABLING** – sends GA timing events as standard events, to avoid the 0.1% sampling that affects timing events. Will send a LOT more JS timing events to GA.",
+    owners = Seq(Owner.withGithub("sndrs")),
+    safeState = Off,
+    never,
+    exposeClientSide = true
+  )
+
 }
