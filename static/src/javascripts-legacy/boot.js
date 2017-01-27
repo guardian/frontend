@@ -21,16 +21,12 @@ define([
     'Promise',
     'domReady',
     'common/utils/raven',
-    'common/utils/user-timing',
-    'common/utils/robust',
-    'common/modules/analytics/google'
+    'common/utils/user-timing'
 ], function (
     Promise,
     domReady,
     raven,
-    userTiming,
-    robust,
-    ga
+    userTiming
 ) {
     // curl’s promise API is broken, so we must cast it to a real Promise
     // https://github.com/cujojs/curl/issues/293
@@ -47,9 +43,6 @@ define([
         return promiseRequire(['bootstraps/standard/main'])
             .then(function (boot) {
                 userTiming.mark('standard boot');
-                robust.catchErrorsAndLog('ga-user-timing-standard-boot', function () {
-                    ga.trackPerformance('Javascript Load', 'standardBoot', 'Standard boot time');
-                });
                 boot();
             });
     };
@@ -70,18 +63,11 @@ define([
         }
 
         userTiming.mark('commercial request');
-        robust.catchErrorsAndLog('ga-user-timing-commercial-request', function () {
-            ga.trackPerformance('Javascript Load', 'commercialRequest', 'commercial request time');
-        });
-
         return promiseRequire(['bootstraps/commercial'])
             .then(raven.wrap(
                     { tags: { feature: 'commercial' } },
                     function (commercial) {
                         userTiming.mark('commercial boot');
-                        robust.catchErrorsAndLog('ga-user-timing-commercial-boot', function () {
-                            ga.trackPerformance('Javascript Load', 'commercialBoot', 'commercial boot time');
-                        });
                         commercial.init();
                     }
                 )
@@ -91,16 +77,9 @@ define([
     var bootEnhanced = function () {
         if (guardian.isEnhanced) {
             userTiming.mark('enhanced request');
-            robust.catchErrorsAndLog('ga-user-timing-enhanced-request', function () {
-                ga.trackPerformance('Javascript Load', 'enhancedRequest', 'Enhanced request time');
-            });
-
             return promiseRequire(['bootstraps/enhanced/main'])
                 .then(function (boot) {
                     userTiming.mark('enhanced boot');
-                    robust.catchErrorsAndLog('ga-user-timing-enhanced-boot', function () {
-                        ga.trackPerformance('Javascript Load', 'enhancedBoot', 'Enhanced boot time');
-                    });
                     boot();
                 });
         }

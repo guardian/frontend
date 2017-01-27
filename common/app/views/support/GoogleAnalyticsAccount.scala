@@ -6,7 +6,7 @@ import model.{ApplicationContext, ApplicationIdentity}
 object GoogleAnalyticsAccount {
 
   // NOTE that the 'samples rates' when set to 0, seem to be 100%
-  case class Tracker(trackingId: String, trackerName: String, samplePercentage: Int = 100, siteSpeedSamplePercentage: Int = 100)
+  case class Tracker(trackingId: String, trackerName: String, samplePercentage: Int = 100, siteSpeedSamplePercentage: Double = 0.1)
 
   // The "All editorial" property in the main GA account ("GNM Universal")
   val editorialProd = Tracker("UA-78705427-1", "allEditorialPropertyTracker")
