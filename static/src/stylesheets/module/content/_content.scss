@@ -441,54 +441,14 @@
 
 .badge +.content__dateline { clear: left; }
 
-.content__meta-container .byline-img {
-    @include circular;
-    position: relative;
-    width: gs-span(1);
-    height: 60px; //Intentionally off grid
-    margin: $gs-baseline/2 0;
-    overflow: hidden;
-    background-color: $neutral-7;
-
-    // fixes for webkit not properly scaling/clipping the child element (still broken on some android browsers...)
-    -webkit-transform: translateZ(0);
-    -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
-
-    @include mq(leftCol) {
-        width: gs-span(2);
-        height: gs-span(2); //This is intentionally square
-        margin-right: 0;
-        margin-bottom: $gs-baseline;
-    }
-}
-
-.content__meta-container .byline-img__img {
-    position: absolute;
-    width: auto;
-    //This centres the image within its container
-    height: 110%;
-    bottom: -6px;
-    left: -9999px;
-    right: -9999px;
-    margin: auto;
-
-    @include mq(leftCol) {
-        bottom: -14px;
-    }
-}
-
 .content__meta-container {
     min-height: gs-height(1);
     position: relative;
     margin-bottom: $gs-baseline;
-    border-top: 1px dotted $neutral-5;
-    border-bottom: 1px dotted $neutral-5;
 
     @include mq(leftCol) {
         position: absolute;
         top: 0;
-        border-top: 0;
-        border-bottom: 0;
         margin-left: ($left-column + $gs-gutter)*-1;
         margin-bottom: ($gs-baseline/3)*4;
         width: $left-column;
@@ -497,6 +457,46 @@
     @include mq(wide) {
         margin-left: ($left-column-wide + $gs-gutter)*-1;
         width: $left-column-wide;
+    }
+
+    .byline-img {
+        @include circular;
+        position: relative;
+        width: gs-span(1);
+        height: 60px; //Intentionally off grid
+        margin: $gs-baseline/2 0;
+        overflow: hidden;
+        background-color: $neutral-7;
+
+        // fixes for webkit not properly scaling/clipping the child element (still broken on some android browsers...)
+        -webkit-transform: translateZ(0);
+        -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+
+        @include mq(leftCol) {
+            width: gs-span(2);
+            height: gs-span(2); //This is intentionally square
+            margin-right: 0;
+            margin-bottom: $gs-baseline;
+        }
+    }
+
+    .byline-img__img {
+        position: absolute;
+        width: auto;
+        //This centres the image within its container
+        height: 110%;
+        bottom: -6px;
+        left: -9999px;
+        right: -9999px;
+        margin: auto;
+
+        @include mq(leftCol) {
+            bottom: -14px;
+        }
+    }
+
+    .meta__image {
+        border-top: 1px dotted $neutral-5;
     }
 }
 
@@ -547,7 +547,6 @@
 
     @include mq(leftCol) {
         border-top: 1px dotted $neutral-5;
-        border-bottom: 1px dotted $neutral-5;
         position: static;
         height: 36px;
         padding: $gs-baseline / 4 0;
@@ -600,9 +599,9 @@
         clear: both;
         margin-right: 0;
         display: block;
-        padding-top: $gs-baseline/6;
         border-top: 1px dotted $neutral-5;
         box-sizing: border-box;
+        padding-top: $gs-baseline/6;
         padding-bottom: $gs-baseline;
         min-height: $gs-baseline*4;
     }
@@ -1022,12 +1021,6 @@
     }
 }
 
-.meta__body {
-    @include mq(leftCol) {
-        clear: left;
-    }
-}
-
 .content__meta-heading {
     @include fs-header(1);
     padding-top: ($gs-baseline/3);
@@ -1040,6 +1033,12 @@
     position: relative;
     clear: both;
     min-height: 45px;
+    border-top: 1px dotted $neutral-5;
+    border-bottom: 1px dotted $neutral-5;
+
+    @include mq(leftCol) {
+        border: 0;
+    }
 
     .content__head--crossword & {
         clear: none;
