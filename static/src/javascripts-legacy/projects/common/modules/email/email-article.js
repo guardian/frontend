@@ -128,14 +128,11 @@ define([
                 insertEventName: 'GuardianTodaySignupMessaging:insert',
                 successEventName: 'GuardianTodaySignupMessaging:signup',
                 description: (function () {
-                    if (ab.isInVariant('GuardianTodaySignupMessaging', 'message-a')) {
-                        return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning. (variant A)';
-                    } else if (ab.isInVariant('GuardianTodaySignupMessaging', 'message-b')) {
-                        return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning. (variant B)';
-                    } else if (ab.isInVariant('GuardianTodaySignupMessaging', 'message-c')) {
-                        return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning. (variant C)';
-                    } else {
-                        return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning.';
+                    switch (ab.getTestVariantId('GuardianTodaySignupMessaging')) {
+                        case 'message-a': return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning. (variant A)';
+                        case 'message-b': return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning. (variant B)';
+                        case 'message-c': return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning. (variant C)';
+                        default: return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning.';
                     }
                 }()),
                 successHeadline: 'Thank you for signing up to the Guardian Today',
