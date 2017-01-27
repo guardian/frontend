@@ -1,4 +1,4 @@
-@(media: model.content.MediaAtom,  displayCaption: Boolean)(implicit request: RequestHeader)
+@(media: model.content.MediaAtom,  displayCaption: Boolean, mainMedia: Boolean)(implicit request: RequestHeader)
 @import conf.Configuration
 @import views.support.Video700
 @import conf.switches.Switches.UseAmpYouTubeTagForMediaAtoms
@@ -21,7 +21,7 @@
     </amp-iframe>
 }
 @if(displayCaption) {
-    @mediaAtomCaption(media.title)
+    @mediaAtomCaption(media.title, mainMedia)
 }
 
 

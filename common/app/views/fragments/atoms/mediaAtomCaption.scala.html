@@ -1,5 +1,12 @@
-@(captionText: String)(implicit request: RequestHeader)
-<figcaption class="caption caption--img caption--media-atom" itemprop="description">
+@import views.support.RenderClasses
+
+@(captionText: String, mainMedia: Boolean = false)(implicit request: RequestHeader)
+<figcaption class="@RenderClasses(Map(
+    "caption" -> true,
+    "caption--img" -> true,
+    "caption--media-atom" -> true,
+    "caption--main" -> mainMedia))"
+itemprop="description">
     @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon", "rounded-icon"))
     @captionText
 </figcaption>
