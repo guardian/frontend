@@ -27,6 +27,7 @@ domready(() => {
             });
         }
 
+        userTiming.mark('commercial request');
         require(['bootstraps/commercial'], raven.wrap({ tags: { feature: 'commercial' } },
             (commercial) => {
                 userTiming.mark('commercial boot');
@@ -36,6 +37,7 @@ domready(() => {
                 // this is defined here so that webpack's code-splitting algo
                 // excludes all the modules bundled in the commercial chunk from this one
                 if (window.guardian.isEnhanced) {
+                    userTiming.mark('enhanced request');
                     require(['bootstraps/enhanced/main'], (bootEnhanced) => {
                         userTiming.mark('enhanced boot');
                         bootEnhanced();

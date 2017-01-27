@@ -62,6 +62,7 @@ define([
             });
         }
 
+        userTiming.mark('commercial request');
         return promiseRequire(['bootstraps/commercial'])
             .then(raven.wrap(
                     { tags: { feature: 'commercial' } },
@@ -75,6 +76,7 @@ define([
 
     var bootEnhanced = function () {
         if (guardian.isEnhanced) {
+            userTiming.mark('enhanced request');
             return promiseRequire(['bootstraps/enhanced/main'])
                 .then(function (boot) {
                     userTiming.mark('enhanced boot');
