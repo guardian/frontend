@@ -14,7 +14,8 @@ define([
     'common/utils/storage',
     'common/modules/analytics/google',
     'lodash/collections/find',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'common/utils/mediator'
 ], function (
     $,
     bean,
@@ -31,7 +32,8 @@ define([
     storage,
     googleAnalytics,
     find,
-    ab
+    ab,
+    mediator
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
             $iframeEl.appendTo('.js-article__body');
@@ -123,6 +125,8 @@ define([
                 listName: 'theGuardianToday',
                 campaignCode: 'guardian_today_article_bottom',
                 headline: 'Want stories like this in your inbox?',
+                insertEventName: 'GuardianTodaySignupMessaging:insert',
+                successEventName: 'GuardianTodaySignupMessaging:signup',
                 description: (function () {
                     if (ab.isInVariant('GuardianTodaySignupMessaging', 'message-a')) {
                         return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning. (variant A)';
@@ -164,6 +168,11 @@ define([
                 bean.on(iframe, 'load', function () {
                     email.init(iframe);
                 });
+
+                if (listConfig.insertEventName) {
+                    mediator.emit(listConfig.insertEventName);
+                }
+
                 if (listConfig.insertMethod) {
                     fastdom.write(function () {
                         listConfig.insertMethod($iframeEl);

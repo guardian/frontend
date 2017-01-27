@@ -1,4 +1,6 @@
-define([], function () {
+define([
+    'common/utils/mediator'
+], function (mediator) {
     return function () {
         this.id = 'GuardianTodaySignupMessaging';
         this.start = '2017-01-01';
@@ -16,20 +18,29 @@ define([], function () {
             return true;
         };
 
-        // test behaviour is implemented in email-article.js
+        function createVariant(id) {
+            return {
+                id: id,
+                test: function () {}, // test behaviour is implemented in email-article.js
+                impression: function(track) {
+                    var eventName = 'GuardianTodaySignupMessaging:insert';
+                    mediator.on(eventName, function () {
+                        track();
+                    });
+                },
+                success: function(complete) {
+                    var eventName = 'GuardianTodaySignupMessaging:signup';
+                    mediator.on(eventName, function () {
+                        complete();
+                    });
+                }
+            };
+        }
+
         this.variants = [
-            {
-                id: 'message-a',
-                test: function () {}
-            },
-            {
-                id: 'message-b',
-                test: function () {}
-            },
-            {
-                id: 'message-c',
-                test: function () {}
-            }
+            createVariant('message-a'),
+            createVariant('message-b'),
+            createVariant('message-c')
         ];
     };
 });
