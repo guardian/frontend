@@ -5,7 +5,7 @@ import config from 'common/utils/config';
 import userTiming from 'common/utils/user-timing';
 import robust from 'common/utils/robust';
 import ga from 'common/modules/analytics/google';
-import captureTiming from 'common/utils/capture-timing';
+import capturePerfTimings from 'common/utils/capture-perf-timings';
 
 // let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -44,6 +44,11 @@ domready(() => {
                     require(['bootstraps/enhanced/main'], (bootEnhanced) => {
                         userTiming.mark('enhanced boot');
                         bootEnhanced();
+                        if (document.readyState === 'complete') {
+                            capturePerfTimings();
+                        } else {
+                            window.addEventListener('load', capturePerfTimings);
+                        }
                     });
                 }
             })
