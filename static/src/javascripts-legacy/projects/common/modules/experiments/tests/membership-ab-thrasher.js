@@ -43,10 +43,6 @@ define([
 
         this.setCopy = function() {
             if (this.thrasher()) {
-                var mainTitleEl = document.querySelector('.membership-ab-thrasher_header .main_title');
-                if (mainTitleEl) {
-                    mainTitleEl.innerHTML = '<p>Support<br>the Guardian</p>';
-                }
                 var subTitleEl = document.querySelector('.membership-ab-thrasher_header .sub_title');
                 if (subTitleEl) {
                     subTitleEl.innerHTML = '<p>We\'re introducing <strong>new ways</strong> to support<br>the Guardian\'s quality journalism and independent voice. Choose from digital,<br>print or a contribution today.</p>';
