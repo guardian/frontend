@@ -7,7 +7,7 @@ define([
 ) {
     var trackerName = config.googleAnalytics.trackers.editorial;
     var send = trackerName + '.send';
-    var gaMegaPerfMetrics = {
+    var boostGaUserTimingFidelityMetrics = {
         standardStart: 'metric18',
         standardEnd: 'metric19',
         commercialStart: 'metric20',
@@ -65,10 +65,11 @@ define([
     function sendPerformanceEvent(event) {
         window.ga(send, 'timing', event.timingCategory, event.timingVar, event.timeSincePageLoad, event.timingLabel);
 
-        // send performance events as normal events, so we can avoid the 0.1% sampling that affects timing events
-        if (config.switches.gaMegaPerfMonitoring) {
+        // send performance events as normal events too,
+        // so we can avoid the 0.1% sampling that affects timing events
+        if (config.switches.boostGaUserTimingFidelity) {
             // these are our own metrics that map to our timing events
-            var metric = gaMegaPerfMetrics[event.timingVar];
+            var metric = boostGaUserTimingFidelityMetrics[event.timingVar];
 
             var fieldsObject = {
                 nonInteraction: true, // to avoid affecting bounce rate
