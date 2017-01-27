@@ -7,6 +7,14 @@ define([
 ) {
     var trackerName = config.googleAnalytics.trackers.editorial;
     var send = trackerName + '.send';
+    var gaMegaPerfMetrics = {
+        standardStart: 'metric18',
+        standardEnd: 'metric19',
+        commercialStart: 'metric20',
+        commercialEnd: 'metric21',
+        enhancedStart: 'metric22',
+        enhancedEnd: 'metric23'
+    };
 
     function extractLinkText(el) {
         var text;
@@ -57,10 +65,20 @@ define([
     function sendPerformanceEvent(event) {
         window.ga(send, 'timing', event.timingCategory, event.timingVar, event.timeSincePageLoad, event.timingLabel);
 
-        // temporaily send performance events as normal events, so we can get a lot of them
-        window.ga(config.googleAnalytics.trackers.editorial + '.send', 'event', event.timingCategory, event.timingVar, event.timeSincePageLoad, event.timingLabel, {
-            nonInteraction: true // to avoid affecting bounce rate
-        });
+        // send performance events as normal events, so we can avoid the 0.1% sampling that affects timing events
+        if (config.switches.gaMegaPerfMonitoring) {
+            // these are our own metrics that map to our timing events
+            var metric = gaMegaPerfMetrics[event.timingVar];
+
+            var fieldsObject = {
+                nonInteraction: true, // to avoid affecting bounce rate
+                dimension44: metric // dimension44 is dotcomPerformance
+            };
+
+            fieldsObject[metric] = event.timeSincePageLoad;
+
+            window.ga(send, 'event', 'category', 'action', fieldsObject);
+        }
     }
 
     // Track important user timing metrics so that we can be notified and measure over time in GA
