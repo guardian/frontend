@@ -69,11 +69,6 @@ define([
             });
         }
 
-        userTiming.mark('commercial request');
-        robust.catchErrorsAndLog('ga-user-timing-commercial-request', function () {
-            ga.trackPerformance('Javascript Load', 'commercialRequest', 'commercial request time');
-        });
-
         return promiseRequire(['bootstraps/commercial'])
             .then(raven.wrap(
                     { tags: { feature: 'commercial' } },
@@ -90,11 +85,6 @@ define([
 
     var bootEnhanced = function () {
         if (guardian.isEnhanced) {
-            userTiming.mark('enhanced request');
-            robust.catchErrorsAndLog('ga-user-timing-enhanced-request', function () {
-                ga.trackPerformance('Javascript Load', 'enhancedRequest', 'Enhanced request time');
-            });
-
             return promiseRequire(['bootstraps/enhanced/main'])
                 .then(function (boot) {
                     userTiming.mark('enhanced boot');
