@@ -243,9 +243,10 @@ define([
      */
     function registerCompleteEvent(complete) {
         return function initListener(test) {
-            var variantId = segmentUtil.variantIdFor(test);
 
-            if (segmentUtil.isInTest(test)) {
+            var variantId = getTestVariantId(test.id);
+
+            if (variantId && variantId !== 'notintest') {
                 var variant = getVariant(test, variantId);
                 var listener = (complete ? variant.success : variant.impression) || noop;
 
