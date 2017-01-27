@@ -21,10 +21,12 @@ define([
     'Promise',
     'domReady',
     'common/utils/raven',
+    'common/utils/user-timing'
 ], function (
     Promise,
     domReady,
-    raven
+    raven,
+    userTiming
 ) {
     // curl’s promise API is broken, so we must cast it to a real Promise
     // https://github.com/cujojs/curl/issues/293
@@ -40,6 +42,7 @@ define([
     var bootStandard = function () {
         return promiseRequire(['bootstraps/standard/main'])
             .then(function (boot) {
+                userTiming.mark('standard boot');
                 boot();
             });
     };
@@ -63,6 +66,7 @@ define([
             .then(raven.wrap(
                     { tags: { feature: 'commercial' } },
                     function (commercial) {
+                        userTiming.mark('commercial boot');
                         commercial.init();
                     }
                 )
@@ -73,6 +77,7 @@ define([
         if (guardian.isEnhanced) {
             return promiseRequire(['bootstraps/enhanced/main'])
                 .then(function (boot) {
+                    userTiming.mark('enhanced boot');
                     boot();
                 });
         }

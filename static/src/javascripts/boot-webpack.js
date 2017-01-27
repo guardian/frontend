@@ -2,6 +2,7 @@ import domready from 'domready';
 import raven from 'common/utils/raven';
 import bootStandard from 'bootstraps/standard/main';
 import config from 'common/utils/config';
+import userTiming from 'common/utils/user-timing';
 
 // let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -11,6 +12,7 @@ __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
 domready(() => {
     // 1. boot standard, always
+    userTiming.mark('standard boot');
     bootStandard();
 
     // 2. once standard is done, next is commercial
@@ -27,6 +29,7 @@ domready(() => {
 
         require(['bootstraps/commercial'], raven.wrap({ tags: { feature: 'commercial' } },
             (commercial) => {
+                userTiming.mark('commercial boot');
                 commercial.init();
 
                 // 3. finally, try enhanced
@@ -34,6 +37,7 @@ domready(() => {
                 // excludes all the modules bundled in the commercial chunk from this one
                 if (window.guardian.isEnhanced) {
                     require(['bootstraps/enhanced/main'], (bootEnhanced) => {
+                        userTiming.mark('enhanced boot');
                         bootEnhanced();
                     });
                 }
