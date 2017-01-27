@@ -2,9 +2,6 @@ import domready from 'domready';
 import raven from 'common/utils/raven';
 import bootStandard from 'bootstraps/standard/main';
 import config from 'common/utils/config';
-import userTiming from 'common/utils/user-timing';
-import robust from 'common/utils/robust';
-import ga from 'common/modules/analytics/google';
 
 // let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -14,10 +11,6 @@ __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
 domready(() => {
     // 1. boot standard, always
-    userTiming.mark('standard boot');
-    robust.catchErrorsAndLog('ga-user-timing-standard-boot', () => {
-        ga.trackPerformance('Javascript Load', 'standardBoot', 'Standard boot time');
-    });
     bootStandard();
 
     // 2. once standard is done, next is commercial
@@ -34,10 +27,6 @@ domready(() => {
 
         require(['bootstraps/commercial'], raven.wrap({ tags: { feature: 'commercial' } },
             (commercial) => {
-                userTiming.mark('commercial boot');
-                robust.catchErrorsAndLog('ga-user-timing-commercial-boot', () => {
-                    ga.trackPerformance('Javascript Load', 'commercialBoot', 'commercial boot time');
-                });
                 commercial.init();
 
                 // 3. finally, try enhanced
@@ -45,10 +34,6 @@ domready(() => {
                 // excludes all the modules bundled in the commercial chunk from this one
                 if (window.guardian.isEnhanced) {
                     require(['bootstraps/enhanced/main'], (bootEnhanced) => {
-                        userTiming.mark('enhanced boot');
-                        robust.catchErrorsAndLog('ga-user-timing-enhanced-boot', () => {
-                            ga.trackPerformance('Javascript Load', 'enhancedBoot', 'Enhanced boot time');
-                        });
                         bootEnhanced();
                     });
                 }
