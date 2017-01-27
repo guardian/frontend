@@ -3,8 +3,6 @@ import raven from 'common/utils/raven';
 import bootStandard from 'bootstraps/standard/main';
 import config from 'common/utils/config';
 import userTiming from 'common/utils/user-timing';
-import robust from 'common/utils/robust';
-import ga from 'common/modules/analytics/google';
 import capturePerfTimings from 'common/utils/capture-perf-timings';
 
 // let webpack know where to get files from

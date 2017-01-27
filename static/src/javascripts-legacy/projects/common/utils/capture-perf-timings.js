@@ -8,11 +8,11 @@ define([
 
         if (timing) {
             performance = {
-                standardBoot: parseInt(userTiming.getTiming('standardBoot')),
-                commercialRequest: parseInt(userTiming.getTiming('commercialRequest')),
-                commercialBoot: parseInt(userTiming.getTiming('commercialBoot')),
-                enhancedRequest: parseInt(userTiming.getTiming('enhancedRequest')),
-                enhancedBoot: parseInt(userTiming.getTiming('enhancedBoot')),
+                standardBoot: parseInt(userTiming.getTiming('standard boot')),
+                commercialRequest: parseInt(userTiming.getTiming('commercial request')),
+                commercialBoot: parseInt(userTiming.getTiming('commercial boot')),
+                enhancedRequest: parseInt(userTiming.getTiming('enhanced request')),
+                enhancedBoot: parseInt(userTiming.getTiming('enhanced boot')),
                 dns: timing.domainLookupEnd - timing.domainLookupStart,
                 connection: timing.connectEnd - timing.connectStart,
                 firstByte: timing.responseStart - timing.connectEnd,
