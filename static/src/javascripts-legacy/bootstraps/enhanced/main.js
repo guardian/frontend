@@ -166,7 +166,14 @@ define([
         if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash.indexOf('force-sw') > -1) {
             var navigator = window.navigator;
             if (navigator && navigator.serviceWorker) {
-                navigator.serviceWorker.register('/service-worker.js');
+                navigator.serviceWorker.register('/service-worker.js')
+                .then(function () {
+                    return navigator.serviceWorker.ready;
+                })
+                .then(function (swreg) {
+                    var sw = swreg.active;
+                    sw.postMessage({ ias: window.location.hash.indexOf('noias') > -1 });
+                });
             }
         }
 
