@@ -78,7 +78,7 @@ define([
 
             fieldsObject[metric] = event.timeSincePageLoad;
 
-            window.ga(send, 'event', 'category', 'action', fieldsObject);
+            window.ga(send, 'event', event.timingCategory, event.timingVar, event.timingLabel, event.timeSincePageLoad, fieldsObject);
         }
     }
 
