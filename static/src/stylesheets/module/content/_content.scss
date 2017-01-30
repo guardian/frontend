@@ -496,7 +496,9 @@
     }
 
     .meta__image {
-        border-top: 1px dotted $neutral-5;
+        @include mq(leftCol) {
+            border-top: 1px dotted $neutral-5;
+        }
     }
 }
 
