@@ -51,6 +51,16 @@
         border-top-color: $media-mute;
         background-color: transparent;
     }
+
+    &.feedback-submitted .ad-feedback,
+    .ad-feedback__thanks-message {
+        display: none;
+    }
+
+    &.feedback-submitted .ad-feedback__thanks-message {
+        display: inline-block;
+        float:right;
+    }
 }
 
 /**

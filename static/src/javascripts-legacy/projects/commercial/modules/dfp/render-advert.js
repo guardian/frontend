@@ -1,6 +1,7 @@
 define([
     'bonzo',
     'qwery',
+    'bean',
     'Promise',
     'common/utils/raven',
     'common/utils/fastdom-promise',
@@ -16,6 +17,7 @@ define([
 ], function (
     bonzo,
     qwery,
+    bean,
     Promise,
     raven,
     fastdom,
@@ -171,24 +173,30 @@ define([
             }
 
             function applyFeedbackOnClickListeners(slotRenderEvent) {
+                var readyClass = 'js-onclick-ready';
                 return isRendered ? fastdom.write(function () {
-                    bonzo(qwery('[data-toggle="'+advert.node.id+'__popup--feedback"]')).each(function(el) {
-                        if (!bonzo(el).hasClass('js-onclick-ready')) {
-                            el.addEventListener('click', function() {
-                                if(bonzo(el).hasClass('is-active')) {
-                                    recordUserAdFeedback(window.location.pathname, advert.node.id, slotRenderEvent, 'ad-feedback-menu-opened');
-                                }
-                            });
-                            bonzo(el).addClass('js-onclick-ready');
-                        }
-                    });
                     bonzo(qwery('.popup__item-problem--option')).each(function(el) {
-                        if (!bonzo(el).hasClass('js-onclick-ready')) {
-                            el.addEventListener('click', function() {
-                                recordUserAdFeedback(window.location.pathname, el.attributes['slot'].nodeValue, slotRenderEvent, el.attributes['problem'].nodeValue);
-                            });
-                            bonzo(el).addClass('js-onclick-ready');
-                        }
+                        var option = bonzo(el);
+                        if (option.hasClass(readyClass)) return;
+                        bean.on(el, 'click', function() {
+                            recordUserAdFeedback(window.location.pathname, el.attributes['slot'].nodeValue, slotRenderEvent, el.attributes['problem'].nodeValue);
+                        });
+                        option.addClass(readyClass);
+                    });
+                    bonzo(qwery('.popup__item-problem--other')).each(function(el) {
+                        var option = bonzo(el);
+                        if (option.hasClass(readyClass)) return;
+                        var input = qwery('input', el);
+                        bean.on(el, 'click', function(e) {
+                            if (e.target.tagName === "svg") {
+                                var comment = input[0].value;
+                                recordUserAdFeedback(window.location.pathname, el.attributes['slot'].nodeValue, slotRenderEvent, el.attributes['problem'].nodeValue, comment);
+                            } else {
+                                e.preventDefault();
+                                e.stopImmediatePropagation();
+                            }
+                        });
+                        option.addClass(readyClass);
                     });
                 }) : Promise.resolve();
             }

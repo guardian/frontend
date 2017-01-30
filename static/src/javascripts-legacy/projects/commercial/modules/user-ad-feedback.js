@@ -14,39 +14,38 @@ define([
     detect
 ) {
 
-    return function recordUserAdFeedback(pagePath, adSlotId, slotRenderEvent, feedbackType) {
+    return function recordUserAdFeedback(pagePath, adSlotId, slotRenderEvent, feedbackType, comment) {
         var feedbackUrl = 'https://j2cy9stt59.execute-api.eu-west-1.amazonaws.com/prod/adFeedback';
         var stage = config.page.isProd ? 'PROD' : 'CODE';
         var ua = detect.getUserAgent;
         var breakPoint = detect.getBreakpoint();
 
-        var data = JSON.stringify({
+        var data = {
             stage: stage,
-            adPage: pagePath,
+            page: pagePath,
             adSlotId: adSlotId,
-            adCreativeId: slotRenderEvent.creativeId.toString(),
-            adLineId: slotRenderEvent.lineItemId.toString(),
-            adFeedback: feedbackType,
+            creativeId: slotRenderEvent.creativeId.toString(),
+            lineId: slotRenderEvent.lineItemId.toString(),
+            feedback: feedbackType,
+            comment: comment,
             browser: ua.browser.toString() + ua.version.toString(),
-            userAgent: window.navigator.userAgent,
             breakPoint: breakPoint
-        });
+        };
+
         return fetch(feedbackUrl, {
             method: 'post',
-            body: data,
+            body: JSON.stringify(data),
             mode: 'cors'
         }).then(
-            function () { return onComplete(adSlotId, feedbackType); },
-            function () { return onComplete(adSlotId, feedbackType); }
+            onComplete.bind(this, adSlotId),
+            onComplete.bind(this, adSlotId)
         );
     };
 
-    function onComplete(adSlotId, feedbackType) {    // we're complete - update the UI
-        if (feedbackType !== 'ad-feedback-menu-opened') {
-            fastdom.write(function() {
-                bonzo(qwery('#' + adSlotId + '>.ad-slot__label')).text('Advertisement (Thanks for your feedback)');
-            });
-        }
+    function onComplete(adSlotId) {    // we're complete - update the UI
+        fastdom.write(function() {
+            bonzo(qwery('#' + adSlotId + '>.ad-slot__label')).addClass('feedback-submitted');
+        });
     }
 
 });

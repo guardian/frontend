@@ -347,6 +347,7 @@ $control-offset: 36 + $gs-gutter/2;
     border: 1px solid #dcdcdc;
     text-align: left;
     z-index: $zindex-overlay;
+    padding: 0;
     ul {
         margin: 0;
     }
@@ -355,12 +356,11 @@ $control-offset: 36 + $gs-gutter/2;
     }
     h3 {
         color: #333333;
-        padding-top: 3px;
-        padding-bottom: 3px;
+        padding: 0;
         border-bottom-width: 1px;
     }
     .popup__group-header {
-        padding: 2px;
+        padding: $gs-baseline/2 $gs-gutter/2;
     }
     .popup__group-header:last-of-type {
         border-top: 0;
@@ -370,6 +370,7 @@ $control-offset: 36 + $gs-gutter/2;
         padding: 5px;
     }
     .popup__item {
+        padding: 0 $gs-gutter/2;
         font-size: 13px;
         line-height: 30px;
         border-bottom: 1px solid #dcdcdc;
@@ -386,6 +387,15 @@ $control-offset: 36 + $gs-gutter/2;
     }
     .popup__item:last-of-type {
         border: 0;
+        &:hover {
+            background: transparent;
+        }
     }
+    .inline-icon {
+        fill: $neutral-1;
+        padding: 0 $gs-gutter/2;
+        cursor: pointer;
+    }
+
 }
 

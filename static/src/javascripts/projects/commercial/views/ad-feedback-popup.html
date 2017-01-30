@@ -3,9 +3,9 @@
 
 <div class="ad-feedback popup popup--default popup__group <%=slot%>__popup--feedback is-off"
      id="ad-feedback-menu__<%=slot%>" style="z-index: 1050;">
-    <h3 class="ad-feedback popup__group-header"><p>Thank you for reporting this advert.</p>
-        <p>To help improve the ad experience on the Guardian, can you tell us why you're reporting it?</p></h3>
-
+    <h3 class="ad-feedback popup__group-header">
+        To help improve the ad experience on the Guardian, please tell us why you're reporting this:
+    </h3>
     <ul>
         <% for(option in feedbackOptions) { %>
             <li class="popup__item"><a>
@@ -14,5 +14,12 @@
                 </div>
             </a></li>
         <% } %>
+        <li class="popup__item">
+            <div class="popup__item-problem--other" slot="<%=slot%>" problem="other">
+                Other:
+                <input id="ad-feedback" class="" type="text" placeholder="">
+                <%= icon %>
+            </div>
+        </li>
     </ul>
 </div>
