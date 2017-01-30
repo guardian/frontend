@@ -181,11 +181,6 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-vimeo").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "replace an iframe in a http Facebook video-element with an amp-facebook element" in {
-    val result = cleanDocumentWithVideos("http://www.facebook.com/theguardian/videos/123456/")
-    result.getElementsByTag("amp-facebook").size should be(1)
-  }
-
   "AmpEmbedCleaner" should "replace a facebook video embed with a valid amp-facebook video embed" in {
     val faceookVideoId = "123456"
     val facebookVideoUrl = s"https://www.facebook.com/theguardian/videos/$faceookVideoId/"
