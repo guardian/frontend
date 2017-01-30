@@ -4,10 +4,11 @@ import com.gu.contentapi.client.model.v1.TagType
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
 import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
-import model.{ EndSlateComponents, ImageAsset, ImageMedia}
+import model.{EndSlateComponents, ImageAsset, ImageMedia}
 import org.joda.time.Duration
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
+import enumeratum._
 
 final case class Atoms(
   quizzes: Seq[Quiz],
@@ -37,14 +38,25 @@ final case class MediaAtom(
   }
 }
 
+sealed trait MediaAssetPlatform extends EnumEntry
+
+object MediaAssetPlatform extends PlayEnum[MediaAssetPlatform] {
+
+  val values = findValues
+
+  case object Youtube extends MediaAssetPlatform
+  case object Facebook extends MediaAssetPlatform
+  case object Dailymotion extends MediaAssetPlatform
+  case object Mainstream extends MediaAssetPlatform
+  case object Url extends MediaAssetPlatform
+}
 
 final case class MediaAsset(
   id: String,
   version: Long,
-  platform: String,
+  platform: MediaAssetPlatform,
   mimeType: Option[String]
 )
-
 
 final case class Quiz(
   override val id: String,
@@ -135,7 +147,7 @@ object MediaAtom extends common.Logging {
     MediaAsset(
       id = mediaAsset.id,
       version = mediaAsset.version,
-      platform = mediaAsset.platform.toString,
+      platform = MediaAssetPlatform.withName(mediaAsset.platform.name),
       mimeType = mediaAsset.mimeType)
   }
 
@@ -242,7 +254,7 @@ object Quiz extends common.Logging {
 }
 
 object InteractiveAtom {
-  def make(atom: AtomApiAtom): InteractiveAtom = {  
+  def make(atom: AtomApiAtom): InteractiveAtom = {
     val interactive = atom.data.asInstanceOf[AtomData.Interactive].interactive
     InteractiveAtom(
       id = atom.id,

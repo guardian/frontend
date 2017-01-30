@@ -143,14 +143,14 @@
 
 .meta__extras {
     clear: both;
+    border-top: 1px dotted $neutral-5;
+    border-bottom: 1px dotted $neutral-5;
 }
 
 .content__meta-container {
     min-height: gs-height(1);
     position: relative;
     margin-bottom: $gs-baseline;
-    border-top: 1px dotted $neutral-5;
-    border-bottom: 1px dotted $neutral-5;
 
     .byline-img {
         @include circular;
@@ -223,6 +223,10 @@
         fill: $neutral-2;
         margin-bottom: -1px;
     }
+}
+
+.meta__twitter {
+    display: inline-block;
 }
 
 .control__icon-wrapper {

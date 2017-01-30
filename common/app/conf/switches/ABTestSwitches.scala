@@ -29,6 +29,16 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 2, 23),
     exposeClientSide = true
   )
+  
+  Switch(
+    ABTests,
+    "ab-membership-bundles-thrasher",
+    "Test appetite for first batch of bundles",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 2), // Thursday March 2nd
+    exposeClientSide = true
+  )
 
   Switch(
     ABTests,

@@ -69,7 +69,7 @@ Loader.prototype.initTopComments = function() {
         this.gotoComment(commentId);
     });
 
-    return fetchJson('/discussion/top-comments/' + this.getDiscussionId() + '.json?commentable=' + config.page.commentable, {
+    return fetchJson('/discussion/top-comments/' + this.getDiscussionId() + '.json?commentsClosed=' + this.getDiscussionClosed(), {
         mode: 'cors'
     }).then(
         function render(resp) {
@@ -446,6 +446,9 @@ Loader.prototype.loadComments = function(options) {
     if (options && options.shouldTruncate && this.comments.isAllPageSizeActive()) {
         options.pageSize = 10;
     }
+    
+    // Closed state of comments is passed so we bust cache of comment thread when it is reopened
+    options.commentsClosed = this.getDiscussionClosed();
 
     return this.comments.fetchComments(options)
     .then(function(){

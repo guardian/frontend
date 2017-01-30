@@ -24,6 +24,7 @@ object Frontend extends Build with Prototypes {
       awsSts,
       awsSqs,
       contentApiClient,
+      enumeratumPlay,
       filters,
       commonsLang,
       configMagic,

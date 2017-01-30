@@ -178,8 +178,13 @@ define([
     function checkElemForVideo(elem) {
         fastdom.read(function () {
             $('.youtube-media-atom', elem).each(function (el) {
-                var atomId = el.getAttribute('data-media-atom-id');
                 var iframe = el.querySelector('iframe');
+
+                if (!iframe) {
+                    return;
+                }
+
+                var atomId = el.getAttribute('data-media-atom-id');
                 var overlay = el.querySelector('.youtube-media-atom__overlay');
                 var youtubeId = iframe.id;
 

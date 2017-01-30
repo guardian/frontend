@@ -12,7 +12,8 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/tests/guardian-today-messaging',
-    'common/modules/experiments/acquisition-test-selector'
+    'common/modules/experiments/acquisition-test-selector',
+    'common/modules/experiments/tests/membership-ab-thrasher'
 ], function (reportError,
              config,
              cookies,
@@ -26,14 +27,16 @@ define([
              RecommendedForYou,
              MembershipEngagementBannerTests,
              GuardianTodayMessaging,
-             acquisitionTestSelector
+             acquisitionTestSelector,
+             MembershipABThrasher
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
         new RecommendedForYou(),
         new GuardianTodayMessaging(),
-        acquisitionTestSelector.getTest()
+        acquisitionTestSelector.getTest(),
+        new MembershipABThrasher
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';
