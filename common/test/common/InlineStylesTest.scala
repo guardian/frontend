@@ -4,6 +4,7 @@ import org.jsoup.Jsoup
 import org.scalatest.{FlatSpec, Matchers}
 import play.twirl.api.Html
 import scala.collection.immutable.ListMap
+import scala.util.{Failure, Success, Try}
 
 class InlineStylesTest extends FlatSpec with Matchers {
   val stub: ListMap[String, String] = ListMap.empty
@@ -115,5 +116,34 @@ class InlineStylesTest extends FlatSpec with Matchers {
     // !important styles should end up on the right so expect "padding: 1px" and "color: red" to be on the right
 
     inlinedDocument.getElementById("h1").attr("style") should be("margin: 1px; border: 1px; padding: 1px; color: red")
+  }
+
+  implicit val onFail = (x: Throwable, y: Int) => ()
+
+  "retry" should "execute code once even if n is 0" in {
+    InlineStyles.retry(0)("hello") should be(Success("hello"))
+  }
+
+  it should "execute failing code n times" in {
+    var n = 0
+    val e = new Exception("problem")
+
+    InlineStyles.retry(3) {
+      n = n + 1
+      throw e
+    } should be(Failure(e))
+
+    n should be(3)
+  }
+
+  it should "only execute code once if it immediately succeeds" in {
+    var n = 0
+
+    InlineStyles.retry(3) {
+      n = n + 1
+      "hello"
+    } should be(Success("hello"))
+
+    n should be(1)
   }
 }
