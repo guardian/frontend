@@ -10,6 +10,8 @@ import userTiming from 'common/utils/user-timing';
 // eslint-disable-next-line camelcase,no-undef
 __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
+const hello = guardian.config;
+
 domready(() => {
     // 1. boot standard, always
     userTiming.mark('standard boot');

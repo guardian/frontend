@@ -2,6 +2,9 @@ module.exports = {
     settings: {
         'import/resolver': 'webpack',
     },
+    plugins: [
+        'frontend'
+    ],
     rules: {
         // require-specific overrides
         'import/no-dynamic-require': 'off',
@@ -24,6 +27,8 @@ module.exports = {
         'react/no-string-refs': 'off',
         'react/prefer-stateless-function': 'off',
         'react/no-render-return-value': 'off',
+
+        "frontend/global-config": 1,
 
         // disallow modules we used to use but are retiring
         'no-restricted-imports': ['error', {
