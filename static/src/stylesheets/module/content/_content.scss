@@ -468,10 +468,6 @@
         overflow: hidden;
         background-color: $neutral-7;
 
-        // fixes for webkit not properly scaling/clipping the child element (still broken on some android browsers...)
-        -webkit-transform: translateZ(0);
-        -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
-
         @include mq(leftCol) {
             width: gs-span(2);
             height: gs-span(2); //This is intentionally square
