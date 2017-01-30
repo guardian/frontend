@@ -4,31 +4,34 @@
 @import views.html.fragments.atoms.mediaAtomCaption
 @import com.netaporter.uri.dsl._
 
-@(media: model.content.MediaAtom, displayCaption: Boolean, embedPage: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true)(implicit request: RequestHeader)
+@(media: model.content.MediaAtom, displayCaption: Boolean, embedPage: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true)(implicit request: RequestHeader)
 
     <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
-        "u-responsive-ratio" -> true,
-        "u-responsive-ratio--hd" -> true,
-        "youtube-media-atom" -> true
+        ("u-responsive-ratio", true),
+        ("u-responsive-ratio--hd", true),
+        ("youtube-media-atom", true),
+        ("no-player", !playable)
     ))"
     @for(endSlatePath <- media.endSlatePath if displayCaption)  {
       data-end-slate="@endSlatePath"
     }
     >
-            @defining(s"https://www.youtube.com/embed${
+            @if(playable) {
+                @defining(s"https://www.youtube.com/embed${
                 media.assets.head.id
-                    .addParams(List(
-                    "modestbranding" -> 1,
-                    "enablejsapi" -> 1,
-                    "rel" -> 0,
-                    "showinfo" -> 1,
-                    "origin" -> (if(embedPage) Some(Media.externalEmbedHost) else if(!host.isEmpty) Some(host) else None)
+                .addParams(List(
+                "modestbranding" -> 1,
+                "enablejsapi" -> 1,
+                "rel" -> 0,
+                "showinfo" -> 1,
+                "origin" -> (if(embedPage) Some(Media.externalEmbedHost) else if(!host.isEmpty) Some(host) else None)
                 )).toString
-            }") { embedUri: String  =>
+                }") { embedUri: String  =>
                 <iframe class="youtube-media-atom__iframe" id="youtube-@media.assets.head.id" width="100%" height="100%"
-                src="@embedUri" frameborder="0"
-                allowfullscreen="">
+                        src="@embedUri" frameborder="0"
+                        allowfullscreen="">
                 </iframe>
+                }
             }
 
             @media.posterImage.map { image =>
