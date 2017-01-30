@@ -12,6 +12,7 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/acquisition-test-selector',
+    'common/modules/experiments/tests/membership-ab-thrasher'
 ], function (reportError,
              config,
              cookies,
@@ -24,13 +25,15 @@ define([
              OpinionEmailVariants,
              RecommendedForYou,
              MembershipEngagementBannerTests,
-             acquisitionTestSelector
+             acquisitionTestSelector,
+             MembershipABThrasher
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
         new RecommendedForYou(),
-        acquisitionTestSelector.getTest()
+        acquisitionTestSelector.getTest(),
+        new MembershipABThrasher
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';

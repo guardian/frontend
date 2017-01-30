@@ -66,8 +66,9 @@ object EmailHelpers {
     case p: PressedPage => p.frontProperties.onPageDescription
   }
 
-  def icon(name: String) = Html {
-    s"""<img src="${Static(s"images/email/icons/$name.png")}" class="icon icon-$name">"""
+  def icon(name: String, largeHeadline: Boolean = false) = Html {
+    val height = if(largeHeadline) 18 else 12
+    s"""<img height="$height" src="${Static(s"images/email/icons/$name.png")}" class="icon icon-$name">"""
   }
 
   private def img(width: Int)(src: String, alt: Option[String] = None) = Html {

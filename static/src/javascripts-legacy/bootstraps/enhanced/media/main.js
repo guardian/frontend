@@ -382,7 +382,7 @@ define([
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
         var shouldPreroll = commercialFeatures.videoPreRolls &&
             !config.page.hasMultipleVideosInPage &&
-            !config.page.hasYouTubeMediaAtom &&
+            !config.page.hasYouTubeAtom &&
             !config.page.isFront &&
             !config.page.isAdvertisementFeature &&
             !config.page.sponsorshipType;
