@@ -45,15 +45,19 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   sealed abstract class AmpExternalVideo(val videoId: String, val elementType: String)
   case class YoutubeExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-youtube")
   case class VimeoExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-vimeo")
+  case class FacebookExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-facebook")
+
 
 
   object AmpExternalVideo {
-    def getAmpExternalVideoByUrl(videoUrl: String) : Option[AmpExternalVideo] = {
+    def getAmpExternalVideoByUrl(videoUrl: String): Option[AmpExternalVideo] = {
       val youtubePattern = """^https?:\/\/www\.youtube\.com\/watch\?v=([^#&?]+).*""".r
       val vimeoPattern = """^https?:\/\/vimeo\.com\/(\d+).*""".r
+      val facebookPattern = """^https?:\/\/www\.facebook\.com\/theguardian\/videos\/(\d+).*\/""".r
       videoUrl match {
         case youtubePattern(videoId) => Some(YoutubeExternalVideo(videoId))
         case vimeoPattern(videoId) => Some(VimeoExternalVideo(videoId))
+        case facebookPattern(videoId) => Some(FacebookExternalVideo(videoId))
         case _ => None
       }
     }
@@ -66,15 +70,26 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       video.attr("layout", "responsive")
     }
 
+    def createFacebookVideoElement(document: Document, videoId: String, elementType: String): Element = {
+      val video = document.createElement(elementType)
+      video.attr("data-href", s"https://www.facebook.com/theguardian/videos/$videoId")
+      video.attr("data-embed-as", "video")
+      video.attr("width", "5")
+      video.attr("height", "3")
+      video.attr("layout", "responsive")
+    }
+
     def clean(document: Document) = {
       for {
         videoElement <- document.getElementsByClass("element-video")
         iframeElement <- videoElement.getElementsByTag("iframe")
         ampExternalVideo <- getAmpExternalVideoByUrl(videoElement.attr("data-canonical-url"))
       } yield {
-        val ampVideoElement = createElement(document, ampExternalVideo.videoId, ampExternalVideo.elementType)
-        videoElement.appendChild(ampVideoElement)
-        iframeElement.remove()
+        val ampVideoElement = ampExternalVideo.elementType match {
+          case "amp-facebook" => createFacebookVideoElement(document, ampExternalVideo.videoId, ampExternalVideo.elementType)
+          case _ => createElement(document, ampExternalVideo.videoId, ampExternalVideo.elementType)
+        }
+        iframeElement.replaceWith(ampVideoElement)
       }
     }
   }
