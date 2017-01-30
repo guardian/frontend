@@ -19,25 +19,6 @@
 }
 
 @metaBody() = {
-    @if(!item.content.isImmersiveGallery && !item.content.isExplore) {
-        @if(!item.content.hasTonalHeaderByline) {
-            @byline()
-        }
-
-        @item.content.contributorBio.map { bio => <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@bio</p> }
-
-        @if(item.content.tags.contributors.length == 1) {
-            @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) {
-                <p class="meta__contact-header">Contact author</p>
-            }
-            @fragments.meta.contactAuthor(item.tags, amp)
-        }
-
-        @if(!item.trail.shouldHidePublicationDate) {
-            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
-        }
-    }
-
     @if(showExtras) {
         <div class="meta__extras @if(!ageNotice.isEmpty){ meta__extras--notice }">
             <div class="meta__social" data-component="share">
@@ -58,6 +39,31 @@
             }
         </div>
     }
+
+    @if(item.content.showCircularBylinePicAtSide) {
+        <div class="media__img meta__image">
+            @fragments.meta.bylineImage(item.tags)
+        </div>
+    }
+
+    @if(!item.content.isImmersiveGallery && !item.content.isExplore) {
+        @if(!item.content.hasTonalHeaderByline) {
+            @byline()
+        }
+
+        @item.content.contributorBio.map { bio => <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@bio</p> }
+
+        @if(item.content.tags.contributors.length == 1) {
+            @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) {
+                <p class="meta__contact-header">Contact author</p>
+            }
+            @fragments.meta.contactAuthor(item.tags, amp)
+        }
+
+        @if(!item.trail.shouldHidePublicationDate) {
+            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
+        }
+    }
 }
 
 <div class="content__meta-container js-content-meta js-football-meta u-cf
@@ -77,14 +83,5 @@
         @fragments.commercial.badge(item, page)
     }
 
-    @if(item.content.showCircularBylinePicAtSide) {
-        <div class="media__body meta__body">
-            <div class="media__img meta__image">
-                @fragments.meta.bylineImage(item.tags)
-            </div>
-            @metaBody()
-        </div>
-    } else {
-        @metaBody()
-    }
+    @metaBody()
 </div>
