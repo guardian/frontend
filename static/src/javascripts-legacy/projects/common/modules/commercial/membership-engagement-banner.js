@@ -41,7 +41,7 @@ define([
         var messageCode = 'engagement-banner-2017-01-11';
 
         var baseParams = {
-            minArticles: 10,
+            minArticles: 3,
             colourStrategy: function() {
                 return 'membership-prominent ' + selectSequentiallyFrom(['yellow', 'purple', 'bright-blue', 'dark-blue']);
             }
@@ -80,8 +80,7 @@ define([
             INT: {
                 membership: {
                     messageText: 'For less than the price of a coffee a week, you could help secure the Guardian\'s future. Support our journalism for $7 / €5 a month.',
-                    campaignCode: "mem_int_banner",
-                    minArticles: 3
+                    campaignCode: "mem_int_banner"
                 }
             }
         };
