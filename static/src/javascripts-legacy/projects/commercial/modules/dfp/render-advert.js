@@ -175,7 +175,7 @@ define([
             function applyFeedbackOnClickListeners(slotRenderEvent) {
                 var readyClass = 'js-onclick-ready';
                 return isRendered ? fastdom.write(function () {
-                    bonzo(qwery('.popup__item-problem--option')).each(function(el) {
+                    bonzo(qwery('.js-ad-feedback-option')).each(function(el) {
                         var option = bonzo(el);
                         if (option.hasClass(readyClass)) return;
                         bean.on(el, 'click', function() {
@@ -183,7 +183,7 @@ define([
                         });
                         option.addClass(readyClass);
                     });
-                    bonzo(qwery('.popup__item-problem--other')).each(function(el) {
+                    bonzo(qwery('.js-ad-feedback-option-other')).each(function(el) {
                         var option = bonzo(el);
                         if (option.hasClass(readyClass)) return;
                         var input = qwery('input', el);

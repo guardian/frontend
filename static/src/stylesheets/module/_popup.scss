@@ -297,104 +297,73 @@ $control-offset: 36 + $gs-gutter/2;
    ========================================================================== */
 .ad-feedback.popup__toggle {
     float: right;
+    cursor: pointer;
 
-    // Display the down-pointing arrow to show it's a (currently closed) drop-down menu
-    &:after {
-        content: '';
-        display: inline-block;
-        pointer-events: none;
-        width: 0;
-        height: 0;
-        border-bottom: 0;
-        margin-top: 2px;
-        margin-bottom: 2px;
-        margin-left: 4px;
-        border-left: $popup-toggle-arrow-size solid transparent;
-        border-right: $popup-toggle-arrow-size solid transparent;
-        border-top: $popup-toggle-arrow-size solid #005689;
+    &::after {
+        border-top-color: $neutral-2-contrasted;
+        border-bottom-color: $neutral-2-contrasted;
     }
 
-    // When active (the menu is open)...
-    &.is-active {
-        &:before {
-            // We don't want to inherit the behaviour of the arrow that points back up to the link that opened it
-            display: none;
-        }
-        // We just want draw the up arrow instead of the down arrow, to show the (currently open) menu can be closed
-        &:after {
-            content: '';
-            display: inline-block;
-            width: 0;
-            height: 0;
-            border-top: 0;
-            margin-top: 2px;
-            margin-bottom: 2px;
-            margin-left: 4px;
-            border-left: $popup-toggle-arrow-size solid transparent;
-            border-right: $popup-toggle-arrow-size solid transparent;
-            border-bottom: $popup-toggle-arrow-size solid #005689;
-        }
+    &::before {
+        display: none;
     }
-
 }
 
 .ad-feedback.popup {
     width: 240px;
-    top: 18px;
-    left: inherit;
-    right: $gs-gutter;
-    background: $neutral-8;
-    border: 1px solid #dcdcdc;
-    text-align: left;
+    top: $gs-gutter;
+    left: auto;
+    right: $gs-gutter/2;
+    border: 1px solid $neutral-4;
     z-index: $zindex-overlay;
     padding: 0;
     ul {
         margin: 0;
     }
-    li.popup__item::before {
-        content: none;
-    }
-    h3 {
-        color: #333333;
-        padding: 0;
-        border-bottom-width: 1px;
-    }
     .popup__group-header {
-        padding: $gs-baseline/2 $gs-gutter/2;
-    }
-    .popup__group-header:last-of-type {
-        border-top: 0;
-        border-bottom: 1px solid #dcdcdc;
-    }
-    .popup__group {
-        padding: 5px;
+        padding-bottom: $gs-baseline/2;
+        border-bottom: 1px solid $neutral-4;
     }
     .popup__item {
         padding: 0 $gs-gutter/2;
-        font-size: 13px;
-        line-height: 30px;
-        border-bottom: 1px solid #dcdcdc;
-        .popup__item-option-text {
-            width: 100%;
-            height: 100%;
-        }
     }
-    .popup__item:hover {
-        background: #bdbdbd;
-    }
-    .popup__item a, &:hover {
-        text-decoration: none;
-    }
-    .popup__item:last-of-type {
-        border: 0;
+    .popup__item--option {
+        cursor: pointer;
+        border-bottom: 1px solid $neutral-4;
         &:hover {
-            background: transparent;
+            background: $neutral-5;
         }
+    }
+    input {
+        padding: 2px;
+        width: 145px;
     }
     .inline-icon {
         fill: $neutral-1;
         padding: 0 $gs-gutter/2;
         cursor: pointer;
+    }
+
+    .ad-slot--dark & {
+        background: $multimedia-support-5;
+        border-color: $neutral-1;
+        color: $neutral-3;
+        .popup__group-header {
+            color: $neutral-3;
+            border-bottom-color: $neutral-1;
+        }
+        .popup__item--option {
+            border-bottom-color: $neutral-1;
+            &:hover {
+                background: $neutral-1;
+            }
+        }
+        .inline-icon {
+            fill: $neutral-3;
+        }
+        input {
+            color: $neutral-1;
+        }
     }
 
 }

@@ -1,5 +1,5 @@
-<a class="ad-feedback popup__toggle" data-toggle="<%=slot%>__popup--feedback"
-   aria-haspopup="true" aria-controls="ad-feedback-menu__<%=slot%>">Report this ad</a>
+<div class="ad-feedback popup__toggle" data-toggle="<%=slot%>__popup--feedback"
+   aria-haspopup="true" aria-controls="ad-feedback-menu__<%=slot%>">Report this ad</div>
 
 <div class="ad-feedback popup popup--default popup__group <%=slot%>__popup--feedback is-off"
      id="ad-feedback-menu__<%=slot%>" style="z-index: 1050;">
@@ -8,18 +8,14 @@
     </h3>
     <ul>
         <% for(option in feedbackOptions) { %>
-            <li class="popup__item"><a>
-                <div class="popup__item-problem--option" slot="<%=slot%>" problem="<%=option%>">
-                    <%= feedbackOptions[option] %>
-                </div>
-            </a></li>
+            <li class="popup__item popup__item--option js-ad-feedback-option" slot="<%=slot%>" problem="<%=option%>">
+                 <%= feedbackOptions[option] %>
+            </li>
         <% } %>
-        <li class="popup__item">
-            <div class="popup__item-problem--other" slot="<%=slot%>" problem="other">
-                Other:
-                <input id="ad-feedback" class="" type="text" placeholder="">
-                <%= icon %>
-            </div>
+        <li class="popup__item js-ad-feedback-option-other" slot="<%=slot%>" problem="other">
+            Other:
+            <input id="ad-feedback" class="" type="text" placeholder="">
+            <%= icon %>
         </li>
     </ul>
 </div>
