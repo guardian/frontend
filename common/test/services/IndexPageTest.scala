@@ -42,25 +42,23 @@ import scala.concurrent.Future
   "Given a page Index, correct containers" should "be created" in {
     val edition = Uk
     val indexPage = getIndexPage("uk/sport", edition)
-    whenReady(indexPage) { indexPageMaybe =>
-      indexPageMaybe match {
-        case None =>
-          fail("Wrong type (expected: IndexPage, real: Result)")
-        case Some(indexPage) =>
-          val front = IndexPage.makeFront(indexPage, edition)
-          front.containers.length should be(1)
+    whenReady(indexPage) {
+      case None =>
+        fail("Wrong type (expected: IndexPage, real: Result)")
+      case Some(page) =>
+        val front = IndexPage.makeFront(page, edition)
+        front.containers.length should be(2)
 
-          val firstContainer = front.containers.head
-          firstContainer.displayName.get should equal("13 January 2017")
-          firstContainer.container.isInstanceOf[Fixed] should be(true)
-          firstContainer.index should be(0)
-          firstContainer.containerLayout.get.slices.length should be(2)
-          firstContainer.containerLayout.get.remainingCards.length should be(1)
+        val firstContainer = front.containers.head
+        firstContainer.displayName.get should equal("30 January 2017")
+        firstContainer.container.isInstanceOf[Fixed] should be(true)
+        firstContainer.index should be(0)
+        firstContainer.containerLayout.get.slices.length should be(1)
+        firstContainer.containerLayout.get.remainingCards.length should be(0)
 
-          firstContainer.items.length should be(pageSize)
-          firstContainer.items.head.header.headline should be("Dave Brailsford appears to be losing his grip as hands spin out of control")
-          firstContainer.items.head.header.url should be("/sport/blog/2017/jan/13/dave-brailsford-team-sky-cycling-control")
-      }
+        firstContainer.items.length should be(6)
+        firstContainer.items.head.header.headline should be("The Olympic skier from the Caribbean who inked tattoos to fund her comeback")
+        firstContainer.items.head.header.url should be("/sport/behind-the-lines/2017/jan/30/anais-caradeux-olympic-skier-caribbean-tattoo-artist-sochi")
     }
   }
 }

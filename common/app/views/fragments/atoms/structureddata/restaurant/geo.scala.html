@@ -1,0 +1,8 @@
+@import com.gu.contententity.thrift.Geolocation
+
+@(geo: Geolocation)(implicit request: RequestHeader)
+{
+"@@type": "GeoCoordinates",
+"latitude": @geo.lat,
+"longitude": @geo.lon
+}
