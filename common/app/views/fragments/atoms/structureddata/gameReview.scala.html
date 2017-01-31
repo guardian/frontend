@@ -25,11 +25,7 @@
   },
 
   "name": "@entity.title",
-  "author": {
-    "@@type": "Person",
-    "name": "@review.data.reviewer"
-  },
-
+  "author": @{fragments.atoms.structureddata.person(review.data.reviewer)},
   "reviewBody": "@review.data.reviewSnippet",
   "publisher": {
     "@@type": "Organization",
