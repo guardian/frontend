@@ -1,46 +1,19 @@
-@import common.commercial.hosted.hardcoded.NextHostedPage
-@(ctaText: Option[String], ctaLink: String, buttonText: Option[String], nextPages: List[NextHostedPage])
+@import common.commercial.hosted.HostedCallToAction
+@(cta: HostedCallToAction)(implicit request: RequestHeader)
     <div class="hosted-gallery__oj js-hosted-gallery-oj">
 
-        @for(nextPage <- nextPages.headOption){
+        <div class="js-onward-placeholder hosted-gallery__next-page-wrapper">
             <div class="hosted-gallery__oj-cta hosted-tone-border">
                 <div class="hosted-gallery__cta-title">
-                    @{ctaText}
+                    @{cta.label}
                 </div>
-                <a class="hosted-gallery__cta-link hosted-tone-bg" href="@{ctaLink}" target="_blank" data-link-name="@{buttonText}">
-                    @{buttonText} @fragments.inlineSvg("external-link", "icon")
+                <a class="hosted-gallery__cta-link hosted-tone-bg" href="@{cta.url}" target="_blank" data-link-name="@{cta.btnText}">
+                    @{cta.btnText} @fragments.inlineSvg("external-link", "icon")
                 </a>
             </div>
-        }
+        </div>
 
-        @for(nextPage <- nextPages){
-            <a href="@{nextPage.url}" class="hosted-gallery__oj-next-gallery hosted-tone-border">
-                <div class="hosted-gallery__next-gallery-title">
-                    <div class="hosted-gallery__oj-sub-header hosted-tone">
-                        More
-                    </div>
-                    <div class="hosted-gallery__cta-title">
-                        @{nextPage.title}
-                    </div>
-                </div>
-                <img class="hosted-gallery__next-gallery-image" src="@nextPage.imageUrl"/>
-            </a>
-        }
-
-        @if(nextPages.isEmpty){
-            <div class="js-onward-placeholder hosted-gallery__next-page-wrapper">
-                <div class="hosted-gallery__oj-cta hosted-tone-border">
-                    <div class="hosted-gallery__cta-title">
-                    @{ctaText}
-                    </div>
-                    <a class="hosted-gallery__cta-link hosted-tone-bg" href="@{ctaLink}" target="_blank" data-link-name="@{buttonText}">
-                        @{buttonText} @fragments.inlineSvg("external-link", "icon")
-                    </a>
-                </div>
-            </div>
-        }
         <div class="hosted-gallery__oj-close js-hosted-gallery-oj-close">
             @fragments.inlineSvg("arrow-up", "icon", List("close"))
         </div>
     </div>
-

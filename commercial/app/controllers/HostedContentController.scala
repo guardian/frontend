@@ -57,9 +57,6 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit conte
     .showTags("all")
     .showAtoms("all")
 
-  def renderLegacyHostedPage(campaignName: String, pageName: String) = Action.async { implicit request =>
-    renderPage(Future.successful(hardcoded.LegacyHostedPages.fromCampaignAndPageName(campaignName, pageName)))
-  }
 
   def renderHostedPage(campaignName: String, pageName: String) = Action.async { implicit request =>
 
@@ -72,11 +69,8 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit conte
       response
     }
 
-    val page = capiResponse.map {
+    val page = capiResponse map {
       _.content flatMap HostedPage.fromContent
-    }.recover {
-      case e: GuardianContentApiError if e.httpStatus == 404 =>
-        hardcoded.HostedPages.fromCampaignAndPageName(campaignName, pageName)
     }
 
     renderPage(page)
