@@ -13,6 +13,7 @@ module.exports = {
         'import/no-webpack-loader-syntax': 'off', // used for require plugins still
         'import/no-amd': 'off', // webpack dynamic requires
         'global-require': 'off',
+        'id-blacklist': ['error', 'guardian'],
 
         // these are bad habits in react that we're already abusing.
         // if we go more [p]react we should look at them.

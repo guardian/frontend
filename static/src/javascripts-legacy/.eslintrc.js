@@ -25,6 +25,7 @@ module.exports = {
         'no-multi-spaces': 'off',
         'no-underscore-dangle': 'off',
         'key-spacing': 'off',
+        'id-blacklist': ['error', 'guardian'],
 
         // these are bad habits in react that we're already abusing.
         // if we go more [p]react we should look at them,
