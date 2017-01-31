@@ -3,7 +3,7 @@ module.exports = {
         'import/resolver': 'webpack',
     },
     plugins: [
-        'frontend'
+        'guardian-frontend',
     ],
     rules: {
         // require-specific overrides
@@ -28,12 +28,14 @@ module.exports = {
         'react/prefer-stateless-function': 'off',
         'react/no-render-return-value': 'off',
 
-        "frontend/global-config": 1,
-
         // disallow modules we used to use but are retiring
         'no-restricted-imports': ['error', {
             paths: ['lodash'],
             patterns: ['!lodash/*'],
         }],
+
+        // our own rules for frontend
+        // live in tools/eslint-plugin-guardian-frontend
+        'guardian-frontend/global-config': 2,
     },
 };
