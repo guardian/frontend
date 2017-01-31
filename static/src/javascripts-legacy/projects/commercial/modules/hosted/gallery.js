@@ -453,29 +453,31 @@ define([
     function init(moduleName) {
         performanceLogging.moduleStart(moduleName);
 
-        return loadCssPromise
-        .then(function () {
-            var gallery,
-                match,
-                galleryHash = window.location.hash,
-                res;
+        if (qwery('.js-hosted-gallery-container').length) {
+            loadCssPromise
+            .then(function () {
+                var gallery,
+                    match,
+                    galleryHash = window.location.hash,
+                    res;
 
-            gallery = new HostedGallery();
-            match = /\?index=(\d+)/.exec(document.location.href);
-            if (match) { // index specified so launch gallery at that index
-                gallery.loadAtIndex(parseInt(match[1], 10));
-            } else {
-                res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
-                if (res) {
-                    gallery.loadAtIndex(parseInt(res[1], 10));
+                gallery = new HostedGallery();
+                match = /\?index=(\d+)/.exec(document.location.href);
+                if (match) { // index specified so launch gallery at that index
+                    gallery.loadAtIndex(parseInt(match[1], 10));
+                } else {
+                    res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
+                    if (res) {
+                        gallery.loadAtIndex(parseInt(res[1], 10));
+                    }
                 }
-            }
-            return gallery;
-        })
-        .then(function (gallery) {
-            performanceLogging.moduleEnd(moduleName);
-            return gallery;
-        });
+            })
+            .then(function () {
+                performanceLogging.moduleEnd(moduleName);
+            });
+        }
+
+        return Promise.resolve();
     }
 
     return {
