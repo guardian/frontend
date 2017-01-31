@@ -93,27 +93,7 @@ object InlineStyles {
     Html(document.toString)
   }
 
-  /**
-    * Execute some code n times, or until no exception is thrown
-    * (If n is 0, code still gets executed once)
-    */
-  def retry[T](n: Int)(r: => T)(implicit onFail: (Throwable, Int) => Unit) = {
-    def go(i: Int): Try[T] = {
-      Try(r) match {
-        case Failure(e) if i < n => {
-          onFail(e, i)
-          go(i + 1)
-        }
-        case f@Failure(e) => {
-          onFail(e, i)
-          f
-        }
-        case s@Success(v) => s
-      }
-    }
 
-    go(1)
-  }
 
   /**
     * Convert the styles in a document's <style> tags to a pair.
@@ -123,7 +103,7 @@ object InlineStyles {
     document.getElementsByTag("style").foldLeft((Seq.empty[CSSRule], Seq.empty[String])) { case ((inline, head), element) =>
       val source = new InputSource(new StringReader(element.html))
 
-      retry(3)(cssParser.parseStyleSheet(source, null, null)) { (e: Throwable, i: Int) =>
+      Retry(3)(cssParser.parseStyleSheet(source, null, null)) { (e: Throwable, i: Int) =>
         Logger.error(s"Attempt ${i} to parse stylesheet failed", e)
       } match {
         case Failure(exception) => {
