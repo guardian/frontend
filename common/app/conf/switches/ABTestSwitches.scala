@@ -22,6 +22,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-membership-bundles-thrasher",
+    "Test appetite for first batch of bundles",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 2), // Thursday March 2nd
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-editorial-email-variants",
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
@@ -52,16 +62,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-neilsen-check",
-    "Test new params for Neilsen => Zero participation, will send them the opt-in link",
-    owners = Seq(Owner.withGithub("katebee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 23),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-brexit",
     "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
     owners = Seq(Owner.withGithub("alexduf")),
@@ -77,6 +77,26 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 2, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-ask-four-stagger",
+    "Test to see if imposing a minimum-time-between-impressions for the epic has a positive effect on conversion",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 2, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-ask-four-earning",
+    "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 1),
     exposeClientSide = true
   )
 }

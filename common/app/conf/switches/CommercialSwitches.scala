@@ -1,7 +1,6 @@
 package conf.switches
 
 import conf.switches.Expiry.never
-import conf.switches.SwitchGroup.CommercialLabs
 import org.joda.time.LocalDate
 
 trait CommercialSwitches {
@@ -186,4 +185,13 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val renaultSwitch: Switch = Switch(
+    group = SwitchGroup.Commercial,
+    name = "renault",
+    description = "Turn on hardcoded Renault campaign",
+    owners = Owner.group(SwitchGroup.Commercial),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 3, 1),
+    exposeClientSide = false
+  )
 }

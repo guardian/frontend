@@ -2,6 +2,7 @@ package views.support
 
 import common.Edition
 import common.Maps.RichMap
+import conf.DiscussionAsset
 import conf.Configuration
 import conf.Configuration.environment
 import model._
@@ -64,7 +65,8 @@ object JavaScriptPage {
       ("requiresMembershipAccess", JsBoolean(requiresMembershipAccess)),
       ("membershipAccess", JsString(membershipAccess)),
       ("idWebAppUrl", JsString(Configuration.id.oauthUrl)),
-      ("cardStyle", JsString(cardStyle))
+      ("cardStyle", JsString(cardStyle)),
+      ("discussionFrontendUrl", JsString(DiscussionAsset("discussion-frontend.preact.iife")))
     )
   }
 }

@@ -5,11 +5,13 @@
   "dependencies": {
     "JSON2": "^0.1.0",
     "babel-runtime": "^6.20.0",
+    "domready": "^1.0.8",
     "es5-shim": "^4.5.9",
     "html5shiv": "^3.7.3",
     "hyperscript-helpers": "^3.0.0",
     "immutable": "^3.8.1",
     "monapt": "^0.5.4",
+    "react": "0.13.2",
     "tcp-ping": "^0.1.1",
     "virtual-dom": "^2.1.1",
     "webshot": "^0.18.0"
@@ -38,6 +40,7 @@
     "cssstats": "^3.0.0",
     "eslint": "3.11.1",
     "eslint-config-airbnb": "13.0.0",
+    "eslint-import-resolver-webpack": "^0.8.0",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jasmine": "^1.8.1",
     "eslint-plugin-jsx-a11y": "2.2.3",
@@ -80,6 +83,7 @@
     "postcss-pxtorem": "^3.3.1",
     "postcss-reporter": "^1.4.1",
     "prettysize": "^0.0.3",
+    "raw-loader": "^0.5.1",
     "requirejs": "^2.3.2",
     "rimraf": "^2.5.4",
     "sass-lint": "^1.9.1",
@@ -90,7 +94,8 @@
     "strip-ansi": "^3.0.1",
     "svgo": "^0.7.1",
     "uglify-js": "^2.7.4",
-    "webpack": "^1.13.3",
+    "webpack": "~2.2.0",
+    "webpack-visualizer-plugin": "^0.1.10",
     "yargs": "^6.0.0"
   },
   "optionalDependencies": {

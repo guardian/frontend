@@ -54,7 +54,8 @@ define([
     'inlineSvg!svgs/notifications-explainer-mobile.svg',
     'inlineSvg!svgs/commercial/adblock-coins-us.svg',
     'inlineSvg!svgs/icon/star.svg',
-    'common/views/svg'
+    'common/views/svg',
+    'common/utils/config'
 ], function (
     commentCount16icon,
     marque36icon,
@@ -107,7 +108,8 @@ define([
     notificationsExplainerMobile,
     adblockCoinsUS,
     star,
-    svg
+    svg,
+    config
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -164,6 +166,10 @@ define([
     };
 
     return function (name, classes, title) {
+        if (config.tests && config.tests.abWebpackBundle) {
+            return svg(svgs[name].markup, classes, title);
+        }
+
         return svg(svgs[name], classes, title);
     };
 });

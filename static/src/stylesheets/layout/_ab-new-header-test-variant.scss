@@ -113,30 +113,12 @@ $gutter-large: 55px;
     cursor: pointer;
     bottom: -$gs-baseline / 2;
 
-    &--open {
-        z-index: 1071;
-
-        &:before {
-            // Extended hit area for veggie burger close state, for fat fingers
-            content: '';
-            position: absolute;
-        }
-    }
-
     @include mq($until: mobileMedium) {
         //Smaller menu button
         height: $veggie-burger-small;
         min-width: $veggie-burger-small;
         //Align with the 'i' in 'theguardian'
         right: $gutter-small;
-
-        &--open:before {
-            height: $veggie-burger-small * 2;
-            width: $veggie-burger-small;
-            top: -$veggie-burger-small / 2;
-            right: $veggie-burger-small / 2;
-            border-radius: ($veggie-burger-small * 2) 0 0 ($veggie-burger-small * 2);
-        }
     }
 
     @include mq(mobileMedium) {
@@ -144,19 +126,38 @@ $gutter-large: 55px;
         width: $veggie-burger-medium;
         //Align with the 'i' in 'theguardian'
         right: $gutter-medium;
+    }
 
-        &--open:before {
+    @include mq(mobileLandscape) {
+        //Align with the 'i' in 'theguardian'
+        right: $gutter-large;
+    }
+}
+
+.new-header__nav__menu-button--open {
+    z-index: 1071;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
+
+    &:before {
+        // Extended hit area for veggie burger close state, for fat fingers
+        content: '';
+        position: absolute;
+
+        @include mq($until: mobileMedium) {
+            height: $veggie-burger-small * 2;
+            width: $veggie-burger-small;
+            top: -$veggie-burger-small / 2;
+            right: $veggie-burger-small / 2;
+            border-radius: ($veggie-burger-small * 2) 0 0 ($veggie-burger-small * 2);
+        }
+
+        @include mq(mobileMedium) {
             height: $veggie-burger-medium * 2;
             width: $veggie-burger-medium;
             top: -$veggie-burger-medium / 2;
             right: $veggie-burger-medium / 2;
             border-radius: ($veggie-burger-medium * 2) 0 0 ($veggie-burger-medium * 2);
         }
-    }
-
-    @include mq(mobileLandscape) {
-        //Align with the 'i' in 'theguardian'
-        right: $gutter-large;
     }
 }
 
@@ -373,31 +374,31 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
     .main-menu__icon--chevron:before {
         border-color: $news-support-2;
-        //optical alignment
-        margin-left: -.3em;
     }
 }
 
 .main-menu__icon--chevron {
     //optical alignment
-    margin-top: -.05em;
+    margin-top: -.2em;
 
     &:before {
         content: '';
         display: inline-block;
         width: 8px;
         height: 8px;
-        transform: rotate(-45deg);
+        transform: rotate(45deg);
         border-width: 2px;
         border-style: solid;
         border-top: 0;
         border-left: 0;
     }
 
-    details[open] &:before {
-        transform: rotate(45deg);
-        margin-bottom: .14em;
-        margin-left: 0;
+    details[open] & {
+        margin-top: .1em;
+
+        &:before {
+            transform: rotate(-135deg);
+        }
     }
 }
 
@@ -463,15 +464,16 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     }
 }
 
-.navigation-group--grey {
-    background-color: $neutral-1;
+.navigation-group--contrast {
+    color: $guardian-brand-dark;
+    background-color: $news-main-2;
 
     .main-menu__icon__svg {
-        fill: $neutral-2;
+        fill: $guardian-brand;
     }
 
     .personalisation__icon:before {
-        border-color: $neutral-2;
+        border-color: $guardian-brand;
     }
 }
 
@@ -483,10 +485,10 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
     a {
         display: block;
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-baseline / 1.5;
         padding-left: $navigation-horizontal-padding;
         padding-right: $gs-gutter;
-        padding-bottom: $gs-baseline;
+        padding-bottom: $gs-baseline / 1.5;
         // Override a from user agent stylesheet
         color: inherit;
 
@@ -565,6 +567,10 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 .navigation-group__item--user-account {
     .user-account__signed-in {
         display: none;
+
+        .main-navigation__item__button {
+            padding-bottom: $gs-baseline / 1.5;
+        }
     }
 
     &.user-signed-in {
@@ -580,16 +586,43 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
 .personalisation__links {
     margin-left: 0;
-    margin-bottom: -$gs-baseline;
-    background-color: rgba(0, 0, 0, .15);
+    background-color: darken($news-main-2, 10%);
+}
+
+.navigation-group__item--edition-picker {
+    .main-navigation__item__button {
+        padding-bottom: $gs-baseline / 1.5;
+    }
+
+    .personalisation__links {
+        margin-bottom: -$gs-baseline;
+    }
 }
 
 .personalisation__link {
-    color: $neutral-3;
+    color: $guardian-brand-dark;
 }
 
 .personalisation__link--active {
-    color: #ffffff;
+    color: $guardian-brand-dark;
+    position: relative;
+    font-weight: bold;
+
+    // Tick icon
+    &:before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 26px;
+            width: $gs-gutter / 4;
+            height: $gs-baseline;
+            border-width: 2px;
+            border-style: solid;
+            border-color: currentColor;
+            border-top: 0;
+            border-left: 0;
+            transform: rotate(45deg);
+        }
 }
 
 .no-text-transform {
@@ -689,7 +722,7 @@ $caption-button-size: 32px;
 
     // When the image is at the top of the article, the headline and byline are moved into a div with margins. This counteracts that
     // TODO: If this change is kept after the test the template will have to be rewriten and these overrides won't be needed
-    .content__head:not(.tonal__head--tone-dead, .tonal__head--tone-live) {
+    .content__head:not(.tonal__head--tone-dead, .tonal__head--tone-live, .tonal__head--tone-media) {
         @include mq($until: mobileLandscape) {
             margin-right: -$gs-gutter / 2;
             margin-left: -$gs-gutter / 2;

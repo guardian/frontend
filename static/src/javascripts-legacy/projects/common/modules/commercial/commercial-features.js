@@ -118,6 +118,8 @@ define([
             externalAdvertising &&
             !sensitiveContent &&
             switches.outbrain &&
+            isArticle &&
+            !config.page.isPreview &&
             config.page.showRelatedContent;
 
         this.commentAdverts =

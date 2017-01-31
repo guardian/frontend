@@ -39,7 +39,6 @@ define([
             'content:play',
             'content:end'
         ],
-        ga = window.ga,
         gaTracker = config.googleAnalytics.trackers.editorial;
 
 
@@ -125,7 +124,7 @@ define([
             return 'media:' + eventName;
         }).forEach(function(playerEvent) {
             player.on(playerEvent, function(_, mediaEvent) {
-                ga(gaTracker + '.send', 'event', gaHelper.buildGoogleAnalyticsEvent(mediaEvent, events, canonicalUrl,
+                window.ga(gaTracker + '.send', 'event', gaHelper.buildGoogleAnalyticsEvent(mediaEvent, events, canonicalUrl,
                     'guardian-videojs', gaHelper.getGoogleAnalyticsEventAction, mediaEvent.mediaId));
             });
         });

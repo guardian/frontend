@@ -9,7 +9,7 @@ object DataMapper {
 
   def toGuAdUnit(dfpAdUnit: AdUnit): GuAdUnit = {
     val ancestors = toSeq(dfpAdUnit.getParentPath)
-    val ancestorNames = if (ancestors.isEmpty) Nil else ancestors.map(_.getName).tail
+    val ancestorNames = if (ancestors.isEmpty) Nil else ancestors.tail.map(_.getName)
     GuAdUnit(dfpAdUnit.getId, ancestorNames :+ dfpAdUnit.getName, dfpAdUnit.getStatus.getValue)
   }
 

@@ -47,8 +47,8 @@ object NewNavigation {
     def getAllEditionalisedNavLinks(edition: Edition) = edition match {
       case editions.Uk => uk.mostPopular ++ uk.leastPopular
       case editions.Au => au.mostPopular ++ au.leastPopular
-      case editions.Us => us.mostPopular ++ us.mostPopular
-      case editions.International => int.mostPopular
+      case editions.Us => us.mostPopular ++ us.leastPopular
+      case editions.International => int.mostPopular ++ int.leastPopular
     }
 
     def getEditionalisedSubSectionLinks(edition: Edition) = edition match {
@@ -70,9 +70,9 @@ object NewNavigation {
   case object MostPopular extends EditionalisedNavigationSection {
     val name = "news"
 
-    val uk = NavLinkLists(List(headlines, ukNews, world, politics, science, business, football))
+    val uk = NavLinkLists(List(headlines, ukNews, world, politics, business, science, football))
     val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, auImmigration, football))
-    val us = NavLinkLists(List(headlines, usNews, world, science, usPolitics, business, soccer))
+    val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, science, soccer))
     val int = NavLinkLists(List(headlines, world, ukNews, science, cities, globalDevelopment, football))
   }
 
@@ -103,17 +103,19 @@ object NewNavigation {
     val uk = NavLinkLists(
       List(
         opinion,
-        NavLink("Polly Toynbee", "/profile/pollytoynbee"),
-        NavLink("Owen Jones", "/profile/owen-jones"),
-        NavLink("Marina Hyde", "/profile/marinahyde")
+        theGuardianView,
+        columnists,
+        cartoons,
+        NavLink("in my opinion", "/commentisfree/series/comment-is-free-weekly")
       ),
       List(
+        NavLink("Polly Toynbee", "/profile/pollytoyn"),
+        NavLink("Owen Jones", "/profile/owen-jones"),
+        NavLink("Jonathan Freedland", "/profile/jonathanfreedland"),
+        NavLink("Marina Hyde", "/profile/marinahyde"),
         NavLink("George Monbiot", "/profile/georgemonbiot"),
         NavLink("Gary Younge", "/profile/garyyounge"),
-        NavLink("Nick Cohen", "/profile/nickcohen"),
-        columnists,
-        theGuardianView,
-        cartoons
+        NavLink("Nick Cohen", "/profile/nickcohen")
       )
     )
 
@@ -157,12 +159,12 @@ object NewNavigation {
     val name = "sport"
 
     val uk = NavLinkLists(
-      List(sport, football, rugbyUnion, cricket, tennis, cycling),
-      List(formulaOne, boxing, rugbyLeague, racing, usSports, golf)
+      List(sport, football, rugbyUnion, cricket, tennis, cycling, formulaOne),
+      List(boxing, rugbyLeague, racing, usSports, golf)
     )
     val au = NavLinkLists(
       List(sport, football, rugbyUnion, cricket, AFL, tennis),
-      List(cycling, aLeague, NRL, australiaSport, sport)
+      List(cycling, aLeague, NRL, australiaSport)
     )
     val us = NavLinkLists(
       List(sport, soccer, NFL, tennis, MLB, MLS),
@@ -178,12 +180,12 @@ object NewNavigation {
     val name = "arts"
 
     val uk = NavLinkLists(
-      List(culture, tvAndRadio, music, books, games, artAndDesign),
-      List(film, stage, classical, culture)
+      List(culture, tvAndRadio, music, film, books, games, artAndDesign),
+      List(stage, classical)
     )
     val au = NavLinkLists(
       List(culture, books, music, artAndDesign, film, games),
-      List(stage, classical, culture)
+      List(stage, classical)
     )
     val us = NavLinkLists(
       List(culture, books, music, artAndDesign, tvAndRadio, stage),
@@ -207,12 +209,12 @@ object NewNavigation {
       List(family, women, travel, home)
     )
     val us = NavLinkLists(
-      List(lifestyle, fashion, lifestyle, food, recipes, loveAndSex),
-      List(home, health, women, family, travel, tech)
+      List(lifestyle, fashion, food, recipes, loveAndSex, home),
+      List(health, women, family, travel, tech)
     )
     val int = NavLinkLists(
-      List(lifestyle, fashion, lifestyle, food, recipes, loveAndSex),
-      List(health, home, women, family, travel, tech)
+      List(lifestyle, fashion, food, recipes, loveAndSex, health),
+      List(home, women, family, travel, tech)
     )
   }
 

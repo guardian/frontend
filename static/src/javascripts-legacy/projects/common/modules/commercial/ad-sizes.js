@@ -13,6 +13,7 @@ define(function () {
 
         // guardian proprietary ad sizes
         video:                  AdSize(620, 1),
+        video2:                 AdSize(620, 350),
         merchandisingHighAdFeature: AdSize(88, 89),
         merchandisingHigh:      AdSize(88, 87),
         merchandising:          AdSize(88, 88),

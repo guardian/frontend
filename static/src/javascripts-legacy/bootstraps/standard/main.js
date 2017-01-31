@@ -92,7 +92,9 @@ define([
                     return;
                 }
 
-                require([mainJS], function (interactive) {
+                // interactives are always loaded with CURL, which is always inlined when interactives are present
+                // so this uses CURLS require
+                window.require([mainJS], function (interactive) {
                     fastdom.defer(function () {
                         robust.catchErrorsAndLog('interactive-bootstrap', function () {
                             interactive.boot(el, document, config, mediator);
