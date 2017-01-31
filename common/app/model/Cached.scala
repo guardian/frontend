@@ -24,6 +24,8 @@ object CacheTime {
   object ArchiveRedirect extends CacheTime(300)
   object ShareCount extends CacheTime(600)
   object NotFound extends CacheTime(10) // This will be overwritten by fastly
+  object DiscussionDefault extends CacheTime(60)
+  object DiscussionClosed extends CacheTime(3800)
 
   def LastDayUpdated = CacheTime(extended(60))
   def NotRecentlyUpdated = CacheTime(extended(300))

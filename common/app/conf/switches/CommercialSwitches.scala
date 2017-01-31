@@ -185,16 +185,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val renaultSwitch: Switch = Switch(
-    group = SwitchGroup.Commercial,
-    name = "renault",
-    description = "Turn on hardcoded Renault campaign",
-    owners = Owner.group(SwitchGroup.Commercial),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 3, 1),
-    exposeClientSide = false
-  )
-
   val adFeedbackSwitch: Switch = Switch(
     group = SwitchGroup.Commercial,
     name = "ad-feedback",
