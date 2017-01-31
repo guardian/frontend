@@ -103,8 +103,8 @@ object InlineStyles {
     document.getElementsByTag("style").foldLeft((Seq.empty[CSSRule], Seq.empty[String])) { case ((inline, head), element) =>
       val source = new InputSource(new StringReader(element.html))
 
-      Retry(3)(cssParser.parseStyleSheet(source, null, null)) { (e: Throwable, i: Int) =>
-        Logger.error(s"Attempt ${i} to parse stylesheet failed", e)
+      Retry(3)(cssParser.parseStyleSheet(source, null, null)) { (exception, attemptNumber) =>
+        Logger.error(s"Attempt $attemptNumber to parse stylesheet failed", exception)
       } match {
         case Failure(exception) => {
           (inline, head :+ element.html)
