@@ -1,7 +1,6 @@
 define(['EventEmitter'], function (EventEmitter) {
     var mediator;
-    var guardian = window.guardian;
-    var app = guardian.app = guardian.app || {};
+    var app = window.guardian.app = window.guardian.app || {};
 
     if (app.mediator) {
         return app.mediator;
