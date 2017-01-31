@@ -15,7 +15,6 @@ module.exports = {
                                 (node.parent.type === 'MemberExpression' &&
                                    node.parent.object.type === 'Identifier' &&
                                     node.parent.object.name === 'guardian') ||
-                            // config, foo.guardian.config, foo.config.bar
                             (node.parent.type === 'ExpressionStatement' && node.parent.expression.name === 'window'))) {
                             context.report({
                                 node,
