@@ -65,7 +65,7 @@ define([
             }
         };
 
-        if (navigator && navigator.serviceWorker) {
+        if (config.switches.blockIas && navigator.serviceWorker) {
             navigator.serviceWorker.ready.then(function (swreg) {
                 var sw = swreg.active;
                 sw.postMessage({ ias: window.location.hash.indexOf('noias') > -1 });
