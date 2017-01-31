@@ -7,16 +7,16 @@ console.log(ruleTester);
 ruleTester.run('squiggly', rule, {
 
     valid: [
-        // 'config.page',
-        // 'config',
-        // 'var config = 2',
-        // 'foo.config',
-        // 'foo.config.bar',
+        'config.page',
+        'config',
+        'var config = 2',
+        'foo.config',
+        'foo.config.bar',
          'foo.guardian.config'
     ],
 
     invalid: [
-        /*{
+        {
             code: 'var hello = guardian.config',
             errors: [{
                 message: 'use da config module foo',
@@ -36,6 +36,6 @@ ruleTester.run('squiggly', rule, {
                 message: 'use da config module foo',
                 type: 'Identifier'
             }]
-        }*/
+        }
     ]
 });

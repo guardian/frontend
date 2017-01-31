@@ -1,17 +1,22 @@
 module.exports = {
     rules: {
         'global-config': {
-            create: function (context) {
+            create: function(context) {
                 return {
                     Identifier: (node) => {
-                        console.log('===========');
-                        console.log(node.name);
-                        console.log(node.parent);
                         if (
                             node.name === 'config' &&
-                            node.parent.object &&
-                            node.parent.object.name === 'guardian'
-                        ) {
+                            // window.guardian.config
+                            ((node.parent.type === 'MemberExpression' && 
+                                node.parent.object.type === 'MemberExpression' &&
+                                    node.parent.object.property.name === 'guardian' && 
+                                        node.parent.object.object.name === 'window') || 
+                                // guardian.config
+                                (node.parent.type === 'MemberExpression' &&
+                                   node.parent.object.type === 'Identifier' &&
+                                    node.parent.object.name === 'guardian') ||
+                            // config, foo.guardian.config, foo.config.bar
+                            (node.parent.type === 'ExpressionStatement' && node.parent.expression.name === 'window'))) {
                             context.report({
                                 node,
                                 message: 'use da config module foo'
