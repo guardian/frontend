@@ -6,16 +6,17 @@ module.exports = {
                     Identifier: (node) => {
                         if (
                             node.name === 'config' &&
-                            // window.guardian.config
-                            ((node.parent.type === 'MemberExpression' && 
-                                node.parent.object.type === 'MemberExpression' &&
+                            (node.parent.type === 'MemberExpression' && 
+                                // window.guardian.config
+                                (node.parent.object.type === 'MemberExpression' &&
                                     node.parent.object.property.name === 'guardian' && 
-                                        node.parent.object.object.name === 'window') || 
+                                        node.parent.object.object.name === 'window') ||
                                 // guardian.config
                                 (node.parent.type === 'MemberExpression' &&
                                    node.parent.object.type === 'Identifier' &&
-                                    node.parent.object.name === 'guardian') ||
-                            (node.parent.type === 'ExpressionStatement' && node.parent.expression.name === 'window'))) {
+                                    node.parent.object.name === 'guardian'))
+
+                            ) {
                             context.report({
                                 node,
                                 message: 'use da config module foo'
