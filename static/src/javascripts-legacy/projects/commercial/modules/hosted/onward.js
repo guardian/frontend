@@ -17,11 +17,11 @@ define([
     };
 
     function loadOnwardComponent(moduleName) {
-        performanceLogging.moduleStart(moduleName);
-
         var placeholders = document.getElementsByClassName('js-onward-placeholder');
 
         if (placeholders.length) {
+            performanceLogging.moduleStart(moduleName);
+
             fetchJson(config.page.ajaxUrl + '/'
                 + config.page.pageId + '/'
                 + config.page.contentType.toLowerCase() + '/'
