@@ -183,7 +183,7 @@ object PressedCardHeader {
       seriesOrBlogKicker = capiContent.flatMap(item =>
         fapiutils.ItemKicker.seriesOrBlogKicker(item).map(ItemKicker.makeTagKicker)),
       url = capiContent.map(SupportedUrl(_)).getOrElse(FaciaContentUtils.id(content)),
-      hasMainVideoElement = capiContent.flatMap(_.elements).exists(_.exists(e => e.`type` == ElementType.Video && e.relation == "main"))
+      hasMainVideoElement = Some(capiContent.flatMap(_.elements).exists(_.exists(e => e.`type` == ElementType.Video && e.relation == "main")))
     )
   }
 }
@@ -197,7 +197,7 @@ final case class PressedCardHeader(
   seriesOrBlogKicker: Option[TagKicker],
   headline: String,
   url: String,
-  hasMainVideoElement: Boolean
+  hasMainVideoElement: Option[Boolean]
 )
 
 object PressedDisplaySettings {

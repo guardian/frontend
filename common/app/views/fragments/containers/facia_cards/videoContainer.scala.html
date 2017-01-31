@@ -37,7 +37,7 @@
             @treats(containerDefinition, frontProperties)
         </li>
 
-        @containerDefinition.collectionEssentials.items.filter(i => i.header.isVideo && i.header.hasMainVideoElement).zipWithIndex.map { case (item, index) =>
+        @containerDefinition.collectionEssentials.items.filter(i => i.header.isVideo && i.header.hasMainVideoElement.exists(identity)).zipWithIndex.map { case (item, index) =>
            <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first}">
                 @item.properties.maybeContent.map { content =>
                     @content.elements.mainVideo.map { mainVideo =>

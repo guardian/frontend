@@ -39,7 +39,7 @@ object FixtureBuilder {
       seriesOrBlogKicker = None,
       headline = "",
       url = "",
-      hasMainVideoElement = false
+      hasMainVideoElement = None
     )
 
     def mkCard(): PressedCard = PressedCard(
