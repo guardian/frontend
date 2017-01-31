@@ -13,8 +13,8 @@ module.exports = {
                                         node.parent.object.object.name === 'window') ||
                                 // guardian.config
                                 (node.parent.type === 'MemberExpression' &&
-                                   node.parent.object.type === 'Identifier' &&
-                                    node.parent.object.name === 'guardian'))
+                                    node.parent.object.type === 'Identifier' &&
+                                        node.parent.object.name === 'guardian'))
 
                             ) {
                             context.report({
