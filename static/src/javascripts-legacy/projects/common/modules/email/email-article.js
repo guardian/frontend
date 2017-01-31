@@ -127,6 +127,7 @@ define([
                 headline: 'Want stories like this in your inbox?',
                 insertEventName: 'GuardianTodaySignupMessaging:insert',
                 successEventName: 'GuardianTodaySignupMessaging:signup',
+                trackingCode: 'GuardianTodaySignupMessaging-' + ab.getTestVariantId('GuardianTodaySignupMessaging'),
                 description: (function () {
                     switch (ab.getTestVariantId('GuardianTodaySignupMessaging')) {
                         case 'message-a': return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning. (variant A)';
@@ -173,7 +174,11 @@ define([
                 if (listConfig.insertMethod) {
                     fastdom.write(function () {
                         listConfig.insertMethod($iframeEl);
-
+                        if (listConfig.trackingCode) {
+                            require(['ophan/ng'], function (ophan) {
+                                ophan.trackComponentAttention(listConfig.trackingCode, $iframeEl[0]);
+                            });
+                        }
                         googleAnalytics.trackNonClickInteraction('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
                         emailRunChecks.setEmailInserted();
                         emailRunChecks.setEmailShown(listConfig.listName);
