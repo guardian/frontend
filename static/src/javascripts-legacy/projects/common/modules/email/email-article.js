@@ -124,15 +124,22 @@ define([
                 }()),
                 listName: 'theGuardianToday',
                 campaignCode: 'guardian_today_article_bottom',
-                headline: 'Want stories like this in your inbox?',
+                headline: (function () {
+                    switch (ab.getTestVariantId('GuardianTodaySignupMessaging')) {
+                        case 'message-a': return 'Get a headstart on the day';
+                        case 'message-b': return 'Cut through the noise';
+                        case 'message-c': return 'The headlines, the analysis, the debate';
+                        default: return 'Want stories like this in your inbox?';
+                    }
+                }()),
                 insertEventName: 'GuardianTodaySignupMessaging:insert',
                 successEventName: 'GuardianTodaySignupMessaging:signup',
                 trackingCode: 'GuardianTodaySignupMessaging-' + ab.getTestVariantId('GuardianTodaySignupMessaging'),
                 description: (function () {
                     switch (ab.getTestVariantId('GuardianTodaySignupMessaging')) {
-                        case 'message-a': return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning. (variant A)';
-                        case 'message-b': return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning. (variant B)';
-                        case 'message-c': return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning. (variant C)';
+                        case 'message-a': return 'The top headlines, candid commentary and the best features to keep you up to speed and spark debate. The Guardian Today daily email will get you asking bigger questions and make sure you don’t miss a thing.';
+                        case 'message-b': return 'Get straight to the heart of the day’s breaking news in double-quick time with the Guardian Today. We’ll email you the stories you need to read, and bundle them up with the best of sport, culture, lifestyle and more.';
+                        case 'message-c': return 'Get the whole picture from a source you trust, emailed to you every morning. The biggest stories examined, and diverse, independent views - the Guardian Today delivers the best of our journalism.';
                         default: return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning.';
                     }
                 }()),
