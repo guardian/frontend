@@ -1,7 +1,6 @@
 define([
     'bonzo',
     'qwery',
-    'bean',
     'Promise',
     'common/utils/raven',
     'common/utils/fastdom-promise',
@@ -17,7 +16,6 @@ define([
 ], function (
     bonzo,
     qwery,
-    bean,
     Promise,
     raven,
     fastdom,
@@ -175,19 +173,17 @@ define([
             function applyFeedbackOnClickListeners(slotRenderEvent) {
                 var readyClass = 'js-onclick-ready';
                 return isRendered ? fastdom.write(function () {
-                    bonzo(qwery('.js-ad-feedback-option')).each(function(el) {
+                    qwery('.js-ad-feedback-option:not(.js-onclick-ready)').forEach(function(el) {
                         var option = bonzo(el);
-                        if (option.hasClass(readyClass)) return;
-                        bean.on(el, 'click', function() {
+                        el.addEventListener('click', function() {
                             recordUserAdFeedback(window.location.pathname, el.attributes['slot'].nodeValue, slotRenderEvent, el.attributes['problem'].nodeValue);
                         });
                         option.addClass(readyClass);
                     });
-                    bonzo(qwery('.js-ad-feedback-option-other')).each(function(el) {
+                    qwery('.js-ad-feedback-option-other:not(.js-onclick-ready)').forEach(function(el) {
                         var option = bonzo(el);
-                        if (option.hasClass(readyClass)) return;
                         var input = qwery('input', el);
-                        bean.on(el, 'click', function(e) {
+                        el.addEventListener('click', function(e) {
                             if (e.target.tagName === "svg") {
                                 var comment = input[0].value;
                                 recordUserAdFeedback(window.location.pathname, el.attributes['slot'].nodeValue, slotRenderEvent, el.attributes['problem'].nodeValue, comment);
