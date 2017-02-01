@@ -62,7 +62,7 @@ case class FrontProperties(
 
   def branding(edition: Edition): Option[Branding] = EditionBranding.branding(editionBrandings, edition)
 
-  lazy val isAdvertisementFeature: Boolean = branding(defaultEdition).exists(_.brandingType == PaidContent)
+  lazy val isPaidContent: Boolean = branding(defaultEdition).exists(_.brandingType == PaidContent)
 }
 
 object FrontProperties {

@@ -27,7 +27,7 @@ object PressedPage {
       "keywords" -> JsString(seoData.webTitle.capitalize),
       "keywordIds" -> JsString(keywordIds.mkString(",")),
       "hasSuperStickyBanner" -> JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds)),
-      "isAdvertisementFeature" -> JsBoolean(frontProperties.isAdvertisementFeature)
+      "isAdvertisementFeature" -> JsBoolean(frontProperties.isPaidContent)
     )
 
     val openGraph: Map[String, String] = Map(
