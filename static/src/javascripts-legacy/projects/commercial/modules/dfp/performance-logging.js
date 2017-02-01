@@ -24,19 +24,6 @@ define([
         googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(reportTrackingData));
     }
 
-    // moduleCheckpoint() is called when a module has finished execution.
-    // The baseline allows us to determine whether the module was called in the first
-    // boot phase (primary) or the second boot phase (secondary).
-    function moduleCheckpoint(module, baseline) {
-        var timerEnd = userTiming.getCurrentTime();
-        var timerStart = getBaseline(baseline);
-        performanceLog.modules.push({
-            name: module,
-            start: timerStart,
-            duration: timerEnd - timerStart
-        });
-    }
-
     // moduleStart() and moduleEnd() can be used for measuring modules ad-hoc,
     // when they don't align to a baseline.
     function moduleStart(moduleName) {
@@ -121,7 +108,6 @@ define([
 
     return {
         setListeners : setListeners,
-        moduleCheckpoint : moduleCheckpoint,
         moduleStart: moduleStart,
         moduleEnd: moduleEnd,
         updateAdvertMetric : updateAdvertMetric,
