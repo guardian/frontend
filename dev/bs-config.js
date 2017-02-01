@@ -24,11 +24,6 @@ module.exports = {
         },
     },
     watchOptions: {},
-    files: [
-        'static/transpiled/javascripts/**/*.js',
-        'static/target/stylesheets/*.css',
-        'static/target/stylesheets/**/*.css',
-    ],
     server: false,
     proxy: 'localhost:9000',
     port: 3000,
