@@ -10,6 +10,7 @@ templates:
       bucket: aws-frontend-artifacts
     dependencies:
     - frontend-static
+    - frontend-ami
 
 deployments:
   admin:
@@ -46,3 +47,10 @@ deployments:
       bucket: aws-frontend-static
       cacheControl: public, max-age=315360000
       prefixStack: false
+  frontend-ami:
+    type: ami-cloudformation-parameter
+    parameters:
+      amiParametersToTags:
+        AmiId:
+          Recipe: frontend-base
+          AmigoStage: PROD
