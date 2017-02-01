@@ -169,7 +169,7 @@
 @*
  This add structured data markup for google enhanced search result (https://developers.google.com/search/docs/data-types/data-type-selector)
  and the semantic web.
- 
+
  Sources of the markup is our own structured data from the Content API
 
 *@
@@ -178,7 +178,13 @@
         @fragments.atoms.structureddata.recipe(recipe)
     }
 
-    @* add here another atom (film, reviews, organisations, people, events, ...) *@
+    @for(review <- item.content.atoms.map(_.reviews).getOrElse(Nil)) {
+        @review.data.game.map { game => @fragments.atoms.structureddata.gameReview(review, game) }
+        @review.data.film.map { film => @fragments.atoms.structureddata.filmReview(review, film) }
+        @review.data.restaurant.map { restaurant => @fragments.atoms.structureddata.restaurant.restaurantReview(review, restaurant) }
+    }
+
+    @* add here another atom (organisations, people, events, ...) *@
 }
 
 @page.metadata.iosId("google").map { iosId =>

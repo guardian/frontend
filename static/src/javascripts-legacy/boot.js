@@ -21,21 +21,20 @@ define([
     'Promise',
     'domReady',
     'common/utils/raven',
-    'common/utils/user-timing'
+    'common/utils/user-timing',
+    'common/utils/config'
 ], function (
     Promise,
     domReady,
     raven,
-    userTiming
+    userTiming,
+    config
 ) {
     // curl’s promise API is broken, so we must cast it to a real Promise
     // https://github.com/cujojs/curl/issues/293
     var promiseRequire = function (moduleIds) {
         return Promise.resolve(require(moduleIds));
     };
-
-    var guardian = window.guardian;
-    var config = guardian.config;
 
     var domReadyPromise = new Promise(function (resolve) { domReady(resolve); });
 
@@ -53,7 +52,7 @@ define([
         }
 
         if (config.page.isDev) {
-            guardian.adBlockers.onDetect.push(function (isInUse) {
+            window.guardian.adBlockers.onDetect.push(function (isInUse) {
                 var needsMessage = isInUse && window.console && window.console.warn;
                 var message = 'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
                 if (needsMessage) {
@@ -75,7 +74,7 @@ define([
     };
 
     var bootEnhanced = function () {
-        if (guardian.isEnhanced) {
+        if (window.guardian.isEnhanced) {
             userTiming.mark('enhanced request');
             return promiseRequire(['bootstraps/enhanced/main'])
                 .then(function (boot) {

@@ -1,0 +1,35 @@
+@import com.gu.contententity.thrift.entity.game.Game
+@import org.joda.time.DateTime
+
+@(review: model.content.ReviewAtom, entity: Game)(implicit request: RequestHeader)
+
+<script type="application/ld+json">
+{
+  "@@context": "http://schema.org/",
+  "@@type": "Review",
+
+  @review.atom.contentChangeDetails.published.map { published => "datePublished": "@{new DateTime(published.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
+  @review.atom.contentChangeDetails.lastModified.map { modified => "dateModified": "@{new DateTime(modified.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
+
+  "itemReviewed": {
+    "@@type": "Game",
+    "image": "",
+    "name": "@entity.title"
+  },
+
+  "reviewRating": {
+    "@@type": "Rating",
+    "worstRating":@review.data.rating.minRating.toInt,
+    "bestRating":@review.data.rating.maxRating.toInt,
+    "ratingValue": @review.data.rating.actualRating.toInt
+  },
+
+  "name": "@entity.title",
+  "author": @{fragments.atoms.structureddata.person(review.data.reviewer)},
+  "reviewBody": "@review.data.reviewSnippet",
+  "publisher": {
+    "@@type": "Organization",
+    "name": "The Guardian"
+  }
+}
+</script>
