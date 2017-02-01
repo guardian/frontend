@@ -320,6 +320,9 @@ $control-offset: 36 + $gs-gutter/2;
     ul {
         margin: 0;
     }
+    li.popup__item::before {
+        content: none;
+    }
     .popup__group-header {
         padding-bottom: $gs-baseline/2;
         border-bottom: 1px solid $neutral-4;

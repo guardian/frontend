@@ -12,7 +12,8 @@ define([
     'commercial/modules/dfp/render-advert-label',
     'common/modules/onward/geo-most-popular',
     'common/modules/ui/toggles',
-    'commercial/modules/user-ad-feedback'
+    'commercial/modules/user-ad-feedback',
+    'common/utils/config'
 ], function (
     bonzo,
     qwery,
@@ -27,7 +28,8 @@ define([
     renderAdvertLabel,
     geoMostPopular,
     Toggles,
-    recordUserAdFeedback
+    recordUserAdFeedback,
+    config
 ) {
     /**
      * ADVERT RENDERING
@@ -163,7 +165,7 @@ define([
             }
 
             function addFeedbackDropdownToggle() {
-                return isRendered ? fastdom.write(function () {
+                return (config.switches.adFeedback && isRendered) ? fastdom.write(function () {
                     if (!bonzo(advert.node).hasClass('js-toggle-ready')){
                         new Toggles(advert.node).init();
                     }
@@ -172,11 +174,11 @@ define([
 
             function applyFeedbackOnClickListeners(slotRenderEvent) {
                 var readyClass = 'js-onclick-ready';
-                return isRendered ? fastdom.write(function () {
+                return (config.switches.adFeedback && isRendered) ? fastdom.write(function () {
                     qwery('.js-ad-feedback-option:not(.js-onclick-ready)').forEach(function(el) {
                         var option = bonzo(el);
                         el.addEventListener('click', function() {
-                            recordUserAdFeedback(window.location.pathname, el.attributes['slot'].nodeValue, slotRenderEvent, el.attributes['problem'].nodeValue);
+                            recordUserAdFeedback(window.location.pathname, el.attributes['data-slot'].nodeValue, slotRenderEvent, el.attributes['data-problem'].nodeValue);
                         });
                         option.addClass(readyClass);
                     });
@@ -186,7 +188,7 @@ define([
                         el.addEventListener('click', function(e) {
                             if (e.target.tagName === "svg") {
                                 var comment = input[0].value;
-                                recordUserAdFeedback(window.location.pathname, el.attributes['slot'].nodeValue, slotRenderEvent, el.attributes['problem'].nodeValue, comment);
+                                recordUserAdFeedback(window.location.pathname, el.attributes['data-slot'].nodeValue, slotRenderEvent, el.attributes['data-problem'].nodeValue, comment);
                             } else {
                                 e.preventDefault();
                                 e.stopImmediatePropagation();
