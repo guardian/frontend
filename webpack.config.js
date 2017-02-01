@@ -6,12 +6,12 @@ const webpack = require('webpack');
 const outputName = 'app-webpack';
 
 module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
-    devtool: 'source-map',
+    devtool: env === 'dev' ? 'cheap-module-eval-source-map' : 'source-map',
     entry: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: `[chunkhash]/${outputName}.js`,
-        chunkFilename: `[chunkhash]/${outputName}.chunk-[id].js`,
+        filename: `${env === 'dev' ? '' : '[chunkhash]/'}${outputName}.js`,
+        chunkFilename: `${env === 'dev' ? '' : '[chunkhash]/'}${outputName}.chunk-[id].js`,
     },
     resolve: {
         modules: [
