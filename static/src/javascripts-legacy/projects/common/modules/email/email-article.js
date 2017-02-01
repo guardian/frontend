@@ -167,6 +167,9 @@ define([
         },
         addListToPage = function (listConfig) {
             if (listConfig) {
+                listConfig.insertEventName = listConfig.insertEventName || "";
+                listConfig.successEventName = listConfig.successEventName || "";
+                listConfig.trackingCode = listConfig.trackingCode || "";
                 var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
                     $iframeEl = $(iframe);
 
