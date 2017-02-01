@@ -161,7 +161,7 @@ define([
         if(ophan && ophan.pageViewId){
             return 'REFPVID=' + ophan.pageViewId
         } else {
-            return ''
+            return 'REFPVID=not_found'
         }
     }
 
