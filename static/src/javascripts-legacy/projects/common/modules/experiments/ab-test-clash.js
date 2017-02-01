@@ -42,9 +42,7 @@ define([
     var clashingTests = contributionsTests.concat(emailTests);
 
     function userIsInAClashingAbTest(tests) {
-        if (tests == null) {
-            tests = clashingTests
-        }
+        tests = tests || clashingTests;
         return _testABClash(ab.isInVariant, tests);
     }
 
