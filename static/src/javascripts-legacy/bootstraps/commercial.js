@@ -54,33 +54,33 @@ define([
     userFeatures
 ) {
     var primaryModules = [
-        ['cm-thirdPartyTags', thirdPartyTags.init, true],
-        ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
-        ['cm-prepare-googletag', prepareGoogletag.init, true],
-        ['cm-highMerch', highMerch.init, true],
-        ['cm-articleAsideAdverts', articleAsideAdverts.init], true,
-        ['cm-articleBodyAdverts', articleBodyAdverts.init, true],
-        ['cm-sliceAdverts', sliceAdverts.init, true],
-        ['cm-liveblogAdverts', liveblogAdverts.init, true],
-        ['cm-closeDisabledSlots', closeDisabledSlots.init, true]
+        ['cm-thirdPartyTags', thirdPartyTags.init],
+        ['cm-prepare-sonobi-tag', prepareSonobiTag.init],
+        ['cm-prepare-googletag', prepareGoogletag.init],
+        ['cm-highMerch', highMerch.init],
+        ['cm-articleAsideAdverts', articleAsideAdverts.init],
+        ['cm-articleBodyAdverts', articleBodyAdverts.init],
+        ['cm-sliceAdverts', sliceAdverts.init],
+        ['cm-liveblogAdverts', liveblogAdverts.init],
+        ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
 
     var secondaryModules = [
-        ['cm-stickyTopBanner', stickyTopBanner.init, true],
-        ['cm-fill-advert-slots', fillAdvertSlots.init, true],
-        ['cm-paidContainers', paidContainers.init, true],
-        ['cm-paidforBand', paidforBand.init, true]
+        ['cm-stickyTopBanner', stickyTopBanner.init],
+        ['cm-fill-advert-slots', fillAdvertSlots.init],
+        ['cm-paidContainers', paidContainers.init],
+        ['cm-paidforBand', paidforBand.init]
     ];
 
     var customTimingModules = [];
 
     if (config.page.isHosted) {
         secondaryModules.push(
-            ['cm-hostedAbout', hostedAbout.init, true],
-            ['cm-hostedVideo', hostedVideo.init, true],
-            ['cm-hostedGallery', hostedGallery.init, true],
-            ['cm-hostedOnward', hostedOnward.init, true],
-            ['cm-hostedOJCarousel', hostedOJCarousel.init, true]);
+            ['cm-hostedAbout', hostedAbout.init],
+            ['cm-hostedVideo', hostedVideo.init],
+            ['cm-hostedGallery', hostedGallery.init],
+            ['cm-hostedOnward', hostedOnward.init],
+            ['cm-hostedOJCarousel', hostedOJCarousel.init]);
     }
 
     function loadModules(modules, baseline) {
@@ -93,24 +93,14 @@ define([
 
             var moduleName = module[0];
             var moduleInit = module[1];
-            var hasCustomTiming = module[2];
 
             robust.catchErrorsAndLog(moduleName, function () {
-                if (hasCustomTiming) {
-                    // Modules that use custom timing perform their own measurement timings.
-                    // These modules all have async init procedures which don't block, and return a promise purely for
-                    // perf logging, to time when their async work is done. The command buffer guarantees execution order,
-                    // so we don't use the returned promise to order the bootstrap's module invocations.
-                    customTimingModules.push(moduleInit(moduleName));
-                } else {
-                    // Standard modules return a promise that must resolve before dependent bootstrap modules can begin
-                    // to execute. Timing is done here in the bootstrap, using the appropriate baseline.
-                    var modulePromise = moduleInit(moduleName).then(function () {
-                        performanceLogging.moduleCheckpoint(moduleName, baseline);
-                    });
-
-                    modulePromises.push(modulePromise);
-                }
+                // These modules all have async init procedures which don't block, and return a promise purely for
+                // perf logging, to time when their async work is done. The command buffer guarantees execution order,
+                // so we don't use the returned promise to order the bootstrap's module invocations.
+                var result = moduleInit(moduleName);
+                customTimingModules.push(result);
+                modulePromises.push(result);
             });
         });
 
