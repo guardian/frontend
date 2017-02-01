@@ -65,7 +65,6 @@ define([
     }
 
     return {
-        init: init,
-        customTiming: true
+        init: init
     };
 });

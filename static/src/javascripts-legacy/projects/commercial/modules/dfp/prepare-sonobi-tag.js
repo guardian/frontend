@@ -3,19 +3,22 @@ define([
     'common/utils/config',
     'common/utils/load-script',
     'common/modules/commercial/commercial-features',
+    'commercial/modules/dfp/performance-logging',
     'commercial/modules/dfp/dfp-env'
 ], function(
     Promise,
     config,
     loadScript,
     commercialFeatures,
+    performanceLogging,
     dfpEnv
 ){
 
-    function setupSonobi() {
+    function setupSonobi(start, stop) {
+        start();
         // Setting the async property to false will _still_ load the script in
         // a non-blocking fashion but will ensure it is executed before googletag
-        loadScript(config.libs.sonobi, { async: false }).then(catchPolyfillErrors);
+        loadScript(config.libs.sonobi, { async: false }).then(catchPolyfillErrors).then(stop);
     }
 
     // Wrap the native implementation of getOwnPropertyNames in a try-catch. If any polyfill attempts
@@ -40,9 +43,12 @@ define([
         };
     }
 
-    function init() {
+    function init(moduleName) {
         if (dfpEnv.sonobiEnabled && commercialFeatures.dfpAdvertising) {
-            setupSonobi();
+            setupSonobi(
+                performanceLogging.moduleStart.bind(null, moduleName),
+                performanceLogging.moduleEnd.bind(null, moduleName)
+            );
         }
 
         return Promise.resolve();
