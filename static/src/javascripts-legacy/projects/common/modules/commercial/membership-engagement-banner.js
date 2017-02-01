@@ -60,6 +60,7 @@ define([
         var REMIND_ME_THANKS_MESSAGE = null;
         var REMIND_ME_ERROR = null;
         var LIST_ID = 3813;
+        var EMAIL_PATH = '/email';
 
         var baseParams = {
             minArticles: 3,
@@ -200,6 +201,8 @@ define([
         function showThankYouMessage(){
             hideElement(REMIND_ME_TEXT_FIELD);
             hideElement(REMIND_ME_CTA);
+            hideElement(REMIND_ME_ERROR);
+
             showElement(REMIND_ME_THANKS_MESSAGE);
         }
 
@@ -211,22 +214,17 @@ define([
 
         function submitForm(email, listID) {
             var formQueryString =
-                'email+address=' + encodeURI(email) + '&' +
-                'lid=' + listID + '&' + 'mid=' + 1059028;
+                'email=' + encodeURI(email) + '&' +
+                'listId=' + listID;
 
-            //Exact target does not support OPTIONS request. Therefore we have to send a POST using
-            //'Content-Type': 'application/x-www-form-urlencoded'. Currently is failing because of CORS, we should
-            //ignore the (successful)302 or at least see if that is possible. If not, we should use another method than
-            //Web Collect (https://help.marketingcloud.com/en/documentation/exacttarget/subscribers/web_collect).
-            return fetch(
-                'http://cl.exct.net/subscribe.aspx', {
-                    method: 'post',
-                    body: formQueryString,
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    mode: 'cors'
-                });
+            return fetch(config.page.ajaxUrl + EMAIL_PATH,
+                        {   method: 'post',
+                            body: formQueryString,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        }
+            );
         }
 
         function getDOMElements(){
