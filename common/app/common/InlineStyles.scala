@@ -106,16 +106,14 @@ object InlineStyles {
       Retry(3)(cssParser.parseStyleSheet(source, null, null)) { (exception, attemptNumber) =>
         Logger.error(s"Attempt $attemptNumber to parse stylesheet failed", exception)
       } match {
-        case Failure(exception) => {
+        case Failure(exception) =>
           (inline, head :+ element.html)
-        }
-        case Success(sheet) => {
+        case Success(sheet) =>
           val (styles, others) = seq(sheet.getCssRules).partition(isStyleRule)
           val (inlineStyles, headStyles) = styles.flatMap(CSSRule.fromW3).flatten.partition(_.canInline)
           val newHead = (headStyles.map(_.toString) ++ others.map(_.getCssText)).mkString("\n")
 
           (inline ++ inlineStyles, (head :+ newHead).filter(_.nonEmpty))
-        }
       }
     }
   }
