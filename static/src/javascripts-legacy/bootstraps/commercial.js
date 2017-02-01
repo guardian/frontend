@@ -54,33 +54,33 @@ define([
     userFeatures
 ) {
     var primaryModules = [
-        ['cm-thirdPartyTags', thirdPartyTags.init],
-        ['cm-prepare-sonobi-tag', prepareSonobiTag.init],
-        ['cm-prepare-googletag', prepareGoogletag.init, prepareGoogletag.customTiming],
-        ['cm-highMerch', highMerch.init],
-        ['cm-articleAsideAdverts', articleAsideAdverts.init],
-        ['cm-articleBodyAdverts', articleBodyAdverts.init],
-        ['cm-sliceAdverts', sliceAdverts.init],
-        ['cm-liveblogAdverts', liveblogAdverts.init],
-        ['cm-closeDisabledSlots', closeDisabledSlots.init]
+        ['cm-thirdPartyTags', thirdPartyTags.init, true],
+        ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
+        ['cm-prepare-googletag', prepareGoogletag.init, true],
+        ['cm-highMerch', highMerch.init, true],
+        ['cm-articleAsideAdverts', articleAsideAdverts.init], true,
+        ['cm-articleBodyAdverts', articleBodyAdverts.init, true],
+        ['cm-sliceAdverts', sliceAdverts.init, true],
+        ['cm-liveblogAdverts', liveblogAdverts.init, true],
+        ['cm-closeDisabledSlots', closeDisabledSlots.init, true]
     ];
 
     var secondaryModules = [
-        ['cm-stickyTopBanner', stickyTopBanner.init],
-        ['cm-fill-advert-slots', fillAdvertSlots.init, fillAdvertSlots.customTiming],
-        ['cm-paidContainers', paidContainers.init],
-        ['cm-paidforBand', paidforBand.init]
+        ['cm-stickyTopBanner', stickyTopBanner.init, true],
+        ['cm-fill-advert-slots', fillAdvertSlots.init, true],
+        ['cm-paidContainers', paidContainers.init, true],
+        ['cm-paidforBand', paidforBand.init, true]
     ];
 
     var customTimingModules = [];
 
     if (config.page.isHosted) {
         secondaryModules.push(
-            ['cm-hostedAbout', hostedAbout.init],
-            ['cm-hostedVideo', hostedVideo.init, hostedVideo.customTiming],
-            ['cm-hostedGallery', hostedGallery.init, hostedGallery.customTiming],
-            ['cm-hostedOnward', hostedOnward.init, hostedOnward.customTiming],
-            ['cm-hostedOJCarousel', hostedOJCarousel.init]);
+            ['cm-hostedAbout', hostedAbout.init, true],
+            ['cm-hostedVideo', hostedVideo.init, true],
+            ['cm-hostedGallery', hostedGallery.init, true],
+            ['cm-hostedOnward', hostedOnward.init, true],
+            ['cm-hostedOJCarousel', hostedOJCarousel.init, true]);
     }
 
     function loadModules(modules, baseline) {
