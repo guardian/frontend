@@ -9,6 +9,9 @@ module.exports = {
     parserOptions: {
         ecmaVersion: 5,
     },
+    plugins: [
+        'guardian-frontend',
+    ],
     rules: {
         camelcase: 'off',
         'no-shadow': 'off',
@@ -22,6 +25,7 @@ module.exports = {
         'no-multi-spaces': 'off',
         'no-underscore-dangle': 'off',
         'key-spacing': 'off',
+        'id-blacklist': ['error', 'guardian'],
 
         // these are bad habits in react that we're already abusing.
         // if we go more [p]react we should look at them,
@@ -46,6 +50,10 @@ module.exports = {
         // these are re-defined because this config does not extend the main one
         // which is annoying but this whole directory is not long for this world anwyay
         'no-extend-native': 'error',
+
+        // our own rules for frontend
+        // live in tools/eslint-plugin-guardian-frontend
+        'guardian-frontend/global-config': 2,
     },
     root: true,
 }

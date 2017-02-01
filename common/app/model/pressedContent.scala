@@ -1,6 +1,7 @@
 package model.pressed
 
 import com.gu.commercial.branding.Branding
+import com.gu.contentapi.client.model.v1.ElementType
 import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
 import com.gu.facia.client.models.{Backfill, Branded, CollectionConfigJson, Metadata}
@@ -180,7 +181,8 @@ object PressedCardHeader {
       isGallery = FaciaContentUtils.isGallery(content),
       seriesOrBlogKicker = capiContent.flatMap(item =>
         fapiutils.ItemKicker.seriesOrBlogKicker(item).map(ItemKicker.makeTagKicker)),
-      url = capiContent.map(SupportedUrl(_)).getOrElse(FaciaContentUtils.id(content))
+      url = capiContent.map(SupportedUrl(_)).getOrElse(FaciaContentUtils.id(content)),
+      hasMainVideoElement = Some(capiContent.flatMap(_.elements).exists(_.exists(e => e.`type` == ElementType.Video && e.relation == "main")))
     )
   }
 }
@@ -193,7 +195,8 @@ final case class PressedCardHeader(
   kicker: Option[ItemKicker],
   seriesOrBlogKicker: Option[TagKicker],
   headline: String,
-  url: String
+  url: String,
+  hasMainVideoElement: Option[Boolean]
 )
 
 object PressedDisplaySettings {
