@@ -8,6 +8,7 @@ define([
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp/create-slot',
     'common/modules/article/space-filler',
+    'commercial/modules/dfp/performance-logging',
     'Promise'
 ], function (
     bonzo,
@@ -19,6 +20,7 @@ define([
     commercialFeatures,
     createSlot,
     spaceFiller,
+    performanceLogging,
     Promise
 ) {
     var INTERVAL = 5;      // number of posts between ads
@@ -94,18 +96,23 @@ define([
         Promise.resolve(getSpaceFillerRules(windowHeight, true)).then(fill);
     }
 
-    function init() {
+    function init(moduleName) {
         if (!commercialFeatures.liveblogAdverts) {
             return Promise.resolve();
         }
 
+        performanceLogging.moduleStart(moduleName);
+
         isMobile = detect.getBreakpoint() === 'mobile';
 
-        return fastdom.read(function () {
+        fastdom.read(function () {
             return windowHeight = document.documentElement.clientHeight;
         })
         .then(getSpaceFillerRules)
-        .then(fill);
+        .then(fill)
+        .then(performanceLogging.moduleEnd.bind(null, moduleName));
+
+        return Promise.resolve();
     }
 
     return {
