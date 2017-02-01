@@ -451,9 +451,9 @@ define([
     };
 
     function init(moduleName) {
-        performanceLogging.moduleStart(moduleName);
-
         if (qwery('.js-hosted-gallery-container').length) {
+            performanceLogging.moduleStart(moduleName);
+
             loadCssPromise
             .then(function () {
                 var gallery,
@@ -472,9 +472,7 @@ define([
                     }
                 }
             })
-            .then(function () {
-                performanceLogging.moduleEnd(moduleName);
-            });
+            .then(performanceLogging.moduleEnd.bind(null, moduleName));
         }
 
         return Promise.resolve();

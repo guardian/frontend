@@ -12,8 +12,7 @@ define([
         init: loadOnwardComponent,
         whenRendered: new Promise(function (resolve) {
             mediator.on('hosted:onward:done', resolve);
-        }),
-        customTiming: true
+        })
     };
 
     function loadOnwardComponent(moduleName) {
@@ -38,9 +37,7 @@ define([
                     HostedCarousel.init();
                     mediator.emit('hosted:onward:done');
                 })
-                .then(function () {
-                    performanceLogging.moduleEnd(moduleName);
-                });
+                .then(performanceLogging.moduleEnd.bind(null, moduleName));
         }
 
         return Promise.resolve();

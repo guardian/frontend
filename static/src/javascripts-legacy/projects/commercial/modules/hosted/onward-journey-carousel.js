@@ -1,13 +1,17 @@
 define([
     'bean',
+    'qwery',
     'fastdom',
     'Promise',
-    'common/utils/$'
+    'common/utils/$',
+    'commercial/modules/dfp/performance-logging'
 ], function (
     bean,
+    qwery,
     fastdom,
     Promise,
-    $
+    $,
+    performanceLogging
 ) {
 
     function HostedCarousel() {
@@ -64,8 +68,12 @@ define([
 
     };
 
-    function init() {
-        new HostedCarousel().bindButtons();
+    function init(moduleName) {
+        if (qwery('.js-carousel-pages').length) {
+            performanceLogging.moduleStart(moduleName);
+            new HostedCarousel().bindButtons();
+            performanceLogging.moduleEnd(moduleName);
+        }
         return Promise.resolve();
     }
 
