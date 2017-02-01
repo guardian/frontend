@@ -42,13 +42,16 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     })
   }
 
-  sealed abstract class AmpExternalVideo(val videoId: String, val elementType: String)
-  case class YoutubeExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-youtube")
-  case class VimeoExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-vimeo")
-  case class FacebookExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-facebook")
 
+  sealed abstract class AmpExternalVideo(val videoId: String, val elementType: String, customAttributes: String => Map[String, String]){
+    def getAttributes = customAttributes(videoId) ++ Map(("width", "5"), ("height", "3"), ("layout", "responsive"))
+  }
 
+  case class YoutubeExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-youtube", customAttributes = id => Map(("data-videoid", id)))
+  case class VimeoExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-vimeo", customAttributes = id => Map(("data-videoid", id)))
+  case class FacebookExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-facebook", customAttributes = id => Map(("data-href", s"https://www.facebook.com/theguardian/videos/$id"), ("data-embed-as", "video")))
 
+  
   object AmpExternalVideo {
     def getAmpExternalVideoByUrl(videoUrl: String): Option[AmpExternalVideo] = {
       val youtubePattern = """^https?:\/\/www\.youtube\.com\/watch\?v=([^#&?]+).*""".r
@@ -62,16 +65,12 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       }
     }
 
-    def createElement(document: Document, videoId: String, elementType: String): Element = {
+    def createElement(document: Document, elementType: String, customAttributes: Map[String, String]): Element = {
       val video = document.createElement(elementType)
-      elementType match {
-        case "amp-facebook" => video.attr("data-href", s"https://www.facebook.com/theguardian/videos/$videoId")
-          video.attr("data-embed-as", "video")
-        case _ => video.attr("data-videoid", videoId)
+      customAttributes.foreach{
+        case (key, value) => video.attr(key, value)
       }
-      video.attr("width", "5")
-      video.attr("height", "3")
-      video.attr("layout", "responsive")
+      video
     }
 
     def clean(document: Document) = {
@@ -80,7 +79,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
         iframeElement <- videoElement.getElementsByTag("iframe")
         ampExternalVideo <- getAmpExternalVideoByUrl(videoElement.attr("data-canonical-url"))
       } yield {
-        val ampVideoElement = createElement(document, ampExternalVideo.videoId, ampExternalVideo.elementType)
+        val ampVideoElement = createElement(document, ampExternalVideo.elementType, ampExternalVideo.getAttributes)
         iframeElement.replaceWith(ampVideoElement)
       }
     }
