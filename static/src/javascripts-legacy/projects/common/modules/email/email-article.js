@@ -124,6 +124,9 @@ define([
                 }()),
                 listName: 'theGuardianToday',
                 campaignCode: 'guardian_today_article_bottom',
+                insertEventName: 'GuardianTodaySignupMessaging:insert',
+                successEventName: 'GuardianTodaySignupMessaging:signup',
+                trackingCode: 'GuardianTodaySignupMessaging-' + ab.getTestVariantId('GuardianTodaySignupMessaging'),
                 headline: (function () {
                     switch (ab.getTestVariantId('GuardianTodaySignupMessaging')) {
                         case 'message-a': return 'Get a headstart on the day';
@@ -132,9 +135,6 @@ define([
                         default: return 'Want stories like this in your inbox?';
                     }
                 }()),
-                insertEventName: 'GuardianTodaySignupMessaging:insert',
-                successEventName: 'GuardianTodaySignupMessaging:signup',
-                trackingCode: 'GuardianTodaySignupMessaging-' + ab.getTestVariantId('GuardianTodaySignupMessaging'),
                 description: (function () {
                     switch (ab.getTestVariantId('GuardianTodaySignupMessaging')) {
                         case 'message-a': return 'The top headlines, candid commentary and the best features to keep you up to speed and spark debate. The Guardian Today daily email will get you asking bigger questions and make sure you don’t miss a thing.';
