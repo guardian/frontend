@@ -5,7 +5,8 @@ define([
     'common/utils/config',
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'commercial/modules/dfp/performance-logging'
 ], function (
     Promise,
     $,
@@ -13,7 +14,8 @@ define([
     config,
     fastdom,
     createSlot,
-    commercialFeatures
+    commercialFeatures,
+    performanceLogging
 ) {
     var minArticleHeight = 1300;
     var minFootballArticleHeight = 2200;
@@ -24,7 +26,7 @@ define([
     var adSlotContainerSelector = '.js-ad-slot-container';
     var componentsContainerSelector = '.js-components-container';
 
-    function init() {
+    function init(moduleName) {
         var $col        = $(rhColumnSelector);
         var $mainCol, $componentsContainer, $adSlotContainer;
 
@@ -33,13 +35,16 @@ define([
             return Promise.resolve(false);
         }
 
+        performanceLogging.moduleStart(moduleName);
+
         $mainCol = $(mainColumnSelector);
         $componentsContainer = $(componentsContainerSelector, $col[0]);
         $adSlotContainer = $(adSlotContainerSelector);
 
-        return fastdom.read(function () {
+        fastdom.read(function () {
             return $mainCol.dim().height;
-        }).then(function (mainColHeight) {
+        })
+        .then(function (mainColHeight) {
             var $adSlot, adType;
 
 
@@ -64,7 +69,10 @@ define([
 
                 return $adSlotContainer;
             });
-        });
+        })
+        .then(performanceLogging.moduleEnd.bind(null, moduleName));
+
+        return Promise.resolve();
     }
 
     return {
