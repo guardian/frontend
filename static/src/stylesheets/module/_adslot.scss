@@ -1,7 +1,7 @@
 .ad-slot {
     position: relative;
     z-index: $zindex-ads;
-    overflow: hidden;
+    overflow: initial;
 
     .js-off & {
         display: none;
@@ -35,6 +35,7 @@
 
 .ad-slot__label {
     @include font-size(12, 20);
+    position: relative;
     height: $mpu-ad-label-height;
     background-color: $neutral-8;
     margin: 0 auto;
@@ -49,6 +50,16 @@
         color: $neutral-3;
         border-top-color: $media-mute;
         background-color: transparent;
+    }
+
+    &.feedback-submitted .ad-feedback,
+    .ad-feedback__thanks-message {
+        display: none;
+    }
+
+    &.feedback-submitted .ad-feedback__thanks-message {
+        display: inline-block;
+        float:right;
     }
 }
 

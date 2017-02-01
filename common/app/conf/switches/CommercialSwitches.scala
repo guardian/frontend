@@ -184,4 +184,15 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2017, 3, 31), //Friday
     exposeClientSide = true
   )
+
+  val adFeedbackSwitch: Switch = Switch(
+    group = SwitchGroup.Commercial,
+    name = "ad-feedback",
+    description = "Solicit feedback for ad impressions",
+    owners = Owner.group(SwitchGroup.Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 1),
+    exposeClientSide = true
+  )
+
 }
