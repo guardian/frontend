@@ -4,6 +4,7 @@ define([
     'bonzo',
     'fastdom',
     'common/utils/$',
+    'common/utils/mediator',
     'qwery',
     'common/utils/config',
     'common/utils/url',
@@ -19,6 +20,7 @@ define([
              bonzo,
              fastdom,
              $,
+             mediator,
              qwery,
              config,
              url,
@@ -471,8 +473,12 @@ define([
                         gallery.loadAtIndex(parseInt(res[1], 10));
                     }
                 }
+                return gallery;
             })
-            .then(performanceLogging.moduleEnd.bind(null, moduleName));
+            .then(function (gallery) {
+                performanceLogging.moduleEnd(moduleName)
+                mediator.emit('page:hosted:gallery', gallery);
+            });
         }
 
         return Promise.resolve();
