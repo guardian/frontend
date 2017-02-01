@@ -3,16 +3,19 @@ define([
     'common/utils/config',
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/commercial-features'
-], function (Promise, config, fastdom, createSlot, commercialFeatures) {
+    'common/modules/commercial/commercial-features',
+    'commercial/modules/dfp/performance-logging'
+], function (Promise, config, fastdom, createSlot, commercialFeatures, performanceLogging) {
     return {
         init: init
     };
 
-    function init() {
+    function init(moduleName) {
         if (!commercialFeatures.highMerch) {
             return Promise.resolve();
         }
+
+        performanceLogging.moduleStart(moduleName);
 
         var anchorSelector = config.page.commentable ? '#comments + *' : '.content-footer > :first-child';
         var anchor = document.querySelector(anchorSelector);
@@ -24,5 +27,6 @@ define([
         return fastdom.write(function () {
             anchor.parentNode.insertBefore(container, anchor);
         })
+        .then(performanceLogging.moduleEnd.bind(null, moduleName));
     }
 });
