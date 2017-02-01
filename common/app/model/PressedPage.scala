@@ -1,7 +1,7 @@
 package model
 
 import campaigns.PersonalInvestmentsCampaign
-import com.gu.commercial.branding.{BrandingType, PaidContent, Sponsored}
+import com.gu.commercial.branding.Branding
 import com.gu.facia.api.models._
 import common.Edition
 import conf.Configuration
@@ -108,8 +108,7 @@ case class PressedPage (
 
   def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
 
-  private def hasBrandingOfType(edition: Edition, brandingType: BrandingType): Boolean =
-    metadata.branding(edition).exists(_.brandingType == brandingType)
-  def isSponsored(edition: Edition): Boolean = hasBrandingOfType(edition, Sponsored)
-  def isPaid(edition: Edition): Boolean = hasBrandingOfType(edition, PaidContent)
+  private def isBranding(edition: Edition)(p: Branding => Boolean): Boolean = metadata.branding(edition).exists(p)
+  def isSponsored(edition: Edition): Boolean = isBranding(edition)(_.isSponsored)
+  def isPaid(edition: Edition): Boolean = isBranding(edition)(_.isPaid)
 }

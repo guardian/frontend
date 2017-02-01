@@ -17,7 +17,7 @@ object Commercial {
     case p: model.Page if p.metadata.sectionId == "identity" => false
     case s: model.SimplePage if s.metadata.contentType == "Signup" => false
     case e: model.ContentPage if e.item.content.seriesName.contains("Newsletter sign-ups") => false
-    case p: model.CommercialExpiryPage => false
+    case _: model.CommercialExpiryPage => false
     case _ => true
   }
 
@@ -31,17 +31,16 @@ object Commercial {
     s"/guardian-labs$glabsUrlSuffix"
   }
 
-  private def isBrandedContent(page: Page, edition: Edition, brandingType: BrandingType): Boolean =
-    page.metadata.branding(edition).exists(_.brandingType == brandingType)
+  private def isBranding(page: Page, edition: Edition)(p: Branding => Boolean): Boolean =
+    page.metadata.branding(edition).exists(p)
 
-  def isPaidContent(page: Page): Boolean =
-    isBrandedContent(page, defaultEdition, PaidContent)
+  def isPaidContent(page: Page): Boolean = isBranding(page, defaultEdition)(_.isPaid)
 
   def isSponsoredContent(page: Page)(implicit request: RequestHeader): Boolean =
-    isBrandedContent(page, Edition(request), Sponsored)
+    isBranding(page, Edition(request))(_.isSponsored)
 
   def isFoundationFundedContent(page: Page)(implicit request: RequestHeader): Boolean =
-    isBrandedContent(page, defaultEdition, Foundation)
+    isBranding(page, defaultEdition)(_.isFoundationFunded)
 
   def isBrandedContent(page: Page)(implicit request: RequestHeader): Boolean = {
     isPaidContent(page) || isSponsoredContent(page) || isFoundationFundedContent(page)
