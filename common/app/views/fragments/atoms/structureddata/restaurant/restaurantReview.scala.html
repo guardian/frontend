@@ -1,12 +1,13 @@
 @import org.joda.time.DateTime
 @import com.gu.contententity.thrift.entity.restaurant.Restaurant
+@import model.Tag
 
-@(review: model.content.ReviewAtom, entity: Restaurant)(implicit request: RequestHeader)
+@(review: model.content.ReviewAtom, entity: Restaurant, contributors: Seq[Tag])(implicit request: RequestHeader)
 <script type="application/ld+json">
 {
   "@@context":"http://schema.org",
   "@@type":"Review",
-  "author": @fragments.atoms.structureddata.person(review.data.reviewer),
+  "author": @fragments.atoms.structureddata.contributor(review.data.reviewer, contributors),
   @review.data.sourceArticleId.map { articleId => "url": "https://www.theguardian.com/@articleId", }
   @review.atom.contentChangeDetails.published.map { published => "datePublished": "@{new DateTime(published.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
   @review.atom.contentChangeDetails.lastModified.map { modified => "dateModified": "@{new DateTime(modified.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}

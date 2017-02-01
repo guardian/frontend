@@ -171,13 +171,13 @@
 *@
 @Page.getContentPage(page).map(_.item).map { item =>
     @for(recipe <- item.content.atoms.map(_.recipes).getOrElse(Nil)) {
-        @fragments.atoms.structureddata.recipe(recipe)
+        @fragments.atoms.structureddata.recipe(recipe, item.tags.contributors)
     }
 
     @for(review <- item.content.atoms.map(_.reviews).getOrElse(Nil)) {
-        @review.data.game.map { game => @fragments.atoms.structureddata.gameReview(review, game) }
-        @review.data.film.map { film => @fragments.atoms.structureddata.filmReview(review, film) }
-        @review.data.restaurant.map { restaurant => @fragments.atoms.structureddata.restaurant.restaurantReview(review, restaurant) }
+        @review.data.game.map { game => @fragments.atoms.structureddata.gameReview(review, game, item.tags.contributors) }
+        @review.data.film.map { film => @fragments.atoms.structureddata.filmReview(review, film, item.tags.contributors) }
+        @review.data.restaurant.map { restaurant => @fragments.atoms.structureddata.restaurant.restaurantReview(review, restaurant, item.tags.contributors) }
     }
 
     @* add here another atom (organisations, people, events, ...) *@
