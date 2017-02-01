@@ -3,6 +3,7 @@ define([
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
+    'common/utils/mediator',
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features',
@@ -12,6 +13,7 @@ define([
     $,
     $css,
     config,
+    mediator,
     fastdom,
     createSlot,
     commercialFeatures,
@@ -70,9 +72,12 @@ define([
                 return $adSlotContainer;
             });
         })
-        .then(performanceLogging.moduleEnd.bind(null, moduleName));
+        .then(function ($adSlotContainer) {
+            performanceLogging.moduleEnd(moduleName);
+            mediator.emit('page:commercial:right', $adSlotContainer);
+        });
 
-        return Promise.resolve();
+        return Promise.resolve(true);
     }
 
     return {

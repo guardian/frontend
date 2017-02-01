@@ -1,13 +1,16 @@
+
 define([
     'fastdom',
     'qwery',
     'common/utils/$',
+    'common/utils/mediator',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
     fastdom,
     qwery,
     $,
+    mediator,
     fixtures,
     Injector
 ) {
@@ -53,30 +56,32 @@ define([
         });
 
         it('should return the ad slot container on init', function (done) {
-            var adSlotPromise = articleAsideAdverts.init();
-
-            adSlotPromise.then(function (adSlot) {
+            articleAsideAdverts.init();
+            mediator.once('page:commercial:right', function (adSlot) {
                 expect(adSlot[0]).toBe(qwery('.js-ad-slot-container', $fixturesContainer)[0]);
                 done();
             });
         });
 
         it('should append ad slot', function (done) {
-            articleAsideAdverts.init().then(function () {
+            articleAsideAdverts.init();
+            mediator.once('page:commercial:right', function () {
                 expect(qwery('.js-ad-slot-container > .ad-slot', $fixturesContainer).length).toBe(1);
                 done();
             });
         });
 
         it('should have the correct ad name', function (done) {
-            articleAsideAdverts.init().then(function () {
+            articleAsideAdverts.init();
+            mediator.once('page:commercial:right', function () {
                 expect($('.ad-slot', $fixturesContainer).data('name')).toBe('right');
                 done();
             });
         });
 
         it('should have the correct size mappings', function (done) {
-            articleAsideAdverts.init().then(function () {
+            articleAsideAdverts.init();
+            mediator.once('page:commercial:right', function () {
                 expect($('.ad-slot', $fixturesContainer).data('mobile')).toBe('1,1|2,2|300,250|fluid');
                 done();
             });
