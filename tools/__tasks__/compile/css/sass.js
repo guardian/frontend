@@ -10,38 +10,9 @@ const pxtorem = require('postcss-pxtorem');
 const pify = require('pify');
 
 const { src, target } = require('../../config').paths;
+const { sassSettings, browserslist, remifications } = require('../../../../dev/css-settings');
 
 const sassDir = path.resolve(src, 'stylesheets');
-
-const sassDefaults = {
-    outputStyle: 'compressed',
-    sourceMap: true,
-    precision: 5,
-};
-
-const browserslist = [
-    'Firefox >= 26',
-    'Explorer >= 10',
-    'Safari >= 5',
-    'Chrome >= 36',
-
-    'iOS >= 5',
-    'Android >= 2',
-    'BlackBerry >= 6',
-    'ExplorerMobile >= 7',
-
-    '> 2% in US',
-    '> 2% in AU',
-    '> 2% in GB',
-];
-
-const remifications = {
-    replace: true,
-    root_value: 16,
-    unit_precision: 5,
-    prop_white_list: [],
-};
-
 
 const sassRenderP = pify(sass.render);
 const writeFileP = pify(fs.writeFile);
@@ -53,7 +24,7 @@ const compile = (query, { browsers, remify = true }) => Promise.all(
         const sassOptions = Object.assign({
             file: filePath,
             outFile: dest,
-        }, sassDefaults);
+        }, sassSettings);
 
         const postcssPlugins = [autoprefixer({ browsers })];
         if (remify) {
