@@ -6,7 +6,8 @@ define([
     'common/utils/fastdom-promise',
     'common/modules/commercial/commercial-features',
     'common/utils/config',
-    'common/modules/commercial/user-features'
+    'common/modules/commercial/user-features',
+    'commercial/modules/dfp/performance-logging'
 ], function (
     bonzo,
     qwery,
@@ -15,7 +16,8 @@ define([
     fastdom,
     commercialFeatures,
     config,
-    userFeatures
+    userFeatures,
+    performanceLogging
 ) {
     var adSlotSelector = '.js-ad-slot';
 
@@ -23,7 +25,9 @@ define([
         init: init
     };
 
-    function init() {
+    function init(moduleName) {
+
+        performanceLogging.moduleStart(moduleName);
 
         var modulePromises = [];
 
@@ -44,7 +48,8 @@ define([
                 );
             });
 
-        return Promise.all(modulePromises);
+        return Promise.all(modulePromises)
+        .then(performanceLogging.moduleEnd.bind(null, moduleName));
     }
 
     function shouldDisableAdSlot($adSlot) {
