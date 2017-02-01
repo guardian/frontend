@@ -51,9 +51,11 @@
     "figures": "^2.0.0",
     "glob": "^7",
     "gulp": "^3.9.0",
+    "gulp-filter": "^5.0.0",
     "gulp-load-tasks": "^0.8.3",
     "gulp-postcss": "^6.1.1",
-    "gulp-sass": "^2.0.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-sass-grapher": "^0.1.4",
     "gulp-sourcemaps": "^1.5.2",
     "gzip-size": "^3.0.0",
     "hasha": "^2.2.0",
@@ -106,9 +108,7 @@
   },
   "scripts": {
     "postinstall": "./tools/task-runner/runner githooks --verbose",
-    "sass-watch": "node-sass -w ./static/src/stylesheets -o ./static/target/stylesheets --source-map=true",
     "babel-watch": "BABEL_ENV=development babel ./static/src/javascripts --watch -d ./static/transpiled/javascripts >/dev/null 2>&1",
-    "gulp-watch": "gulp --cwd ./dev watch",
-    "browser-sync": "browser-sync start --config ./dev/bs-config.js"
+    "gulp-watch": "gulp --cwd ./dev watch"
   }
 }
