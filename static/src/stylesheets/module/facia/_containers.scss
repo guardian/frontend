@@ -60,6 +60,14 @@
     }
 }
 
+// invert the normal visible/hidden rules for this element
+#membership-ab-thrasher {
+    display: none;
+}
+#membership-ab-thrasher.visible {
+    display: block;
+}
+
 .fc-container--thrasher {
     border-top: 0;
     margin-top: 0;

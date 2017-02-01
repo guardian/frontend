@@ -1,4 +1,3 @@
-/* global guardian */
 define([
     'bean',
     'qwery',
@@ -27,7 +26,7 @@ define([
     gaHelper
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
-        isEmbed = !!guardian.isEmbed,
+        isEmbed = !!window.guardian.isEmbed,
         QUARTILES = [25, 50, 75],
         // Advert and content events used by analytics. The expected order of bean events is:
         EVENTS = [

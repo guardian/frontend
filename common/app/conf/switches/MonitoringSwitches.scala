@@ -85,4 +85,14 @@ trait MonitoringSwitches {
     exposeClientSide = false
   )
 
+  val BoostGAUserTimingFidelity = Switch(
+    SwitchGroup.Monitoring,
+    "boost-ga-user-timing-fidelity",
+    "CAUTION: check with Google.Analyticscore@guardian.co.uk before enabling. Extends the standard 0.1% sampling of user timing events on Google Analytics to 100%. Will send a LOT more events to GA, which costs $$$.",
+    owners = Seq(Owner.withGithub("sndrs")),
+    safeState = Off,
+    never,
+    exposeClientSide = true
+  )
+
 }

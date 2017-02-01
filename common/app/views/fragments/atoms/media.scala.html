@@ -4,8 +4,8 @@
 @{
     media match {
             case posterOnly if media.assets.isEmpty && media.posterImage.isDefined  => views.html.fragments.atoms.posterImage(mainMedia = mainMedia, amp = amp,picture = media.posterImage.get, caption = media.title)
-            case youtube if media.assets.headOption.filter(_.platform == MediaAssetPlatform.Youtube) => if(amp) views.html.fragments.atoms.ampYoutube(media, displayCaption, mainMedia) else views.html.fragments.atoms.youtube(media, displayCaption, embedPage, displayEndSlate)
-            case genericAsset if media.assets.nonEmpty => views.html.fragments.atoms.genericMedia(media, displayCaption, amp)
+            case youtube if media.assets.headOption.filter(_.platform == MediaAssetPlatform.Youtube) => if(amp) views.html.fragments.atoms.ampYoutube(media = media, displayCaption = displayCaption, mainMedia = mainMedia) else views.html.fragments.atoms.youtube(media = media, displayCaption = displayCaption, embedPage = embedPage, displayEndSlate = displayEndSlate, mainMedia = mainMedia)
+            case genericAsset if media.assets.nonEmpty => views.html.fragments.atoms.genericMedia(media = media, displayCaption = displayCaption, amp = amp)
             case _ =>
         }
 }

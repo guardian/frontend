@@ -37,20 +37,21 @@
             @treats(containerDefinition, frontProperties)
         </li>
 
-        @containerDefinition.collectionEssentials.items.filter(_.header.isVideo).zipWithIndex.map { case (item, index) =>
-            <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first}">
+        @containerDefinition.collectionEssentials.items.filter(i => i.header.isVideo && i.header.hasMainVideoElement.exists(identity)).zipWithIndex.map { case (item, index) =>
+           <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first}">
                 @item.properties.maybeContent.map { content =>
-                    @defining(VideoPlayer(
-                        content.elements.mainVideo.get,
-                        Video640,
-                        item,
-                        autoPlay = false,
-                        showControlsAtStart = false,
-                        path = Some(content.metadata.id)
-                    )) { player =>
+                    @content.elements.mainVideo.map { mainVideo =>
+                        @defining(VideoPlayer(
+                            mainVideo,
+                            Video640,
+                            item,
+                            autoPlay = false,
+                            showControlsAtStart = false,
+                            path = Some(content.metadata.id)
+                        )) { player =>
                         <div class="fc-item__media-wrapper u-faux-block-link__promote media__container--hidden js-video-player video-playlist__item__player">
                             <div class="fc-item__video-container">
-                                @video(player, enhance = false, showEndSlate = false, showOverlay = true, showPoster = false)
+                            @video(player, enhance = false, showEndSlate = false, showOverlay = true, showPoster = false)
                             </div>
                         </div>
                         <div class="fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
@@ -59,7 +60,9 @@
                                 <div class="fc-item__image-container u-responsive-ratio inlined-image">
                                 @InlineImage.fromFaciaContent(item).map { fallbackImage =>
                                     <img
-                                        @if(index > 1){data-}src="@Video700.bestFor(fallbackImage.imageMedia)" class="js-video-playlist-image js-video-playlist-image--@{index}" />
+                                    @if(index > 1) {data-}src="@Video700.bestFor(fallbackImage.imageMedia)" class="js-video-playlist-image js-video-playlist-image--@{
+                                    index
+                                }" />
                                 }
                                 </div>
                             </div>
@@ -68,5 +71,8 @@
                 }
             </li>
         }
+      }
     </ul>
 </div>
+
+

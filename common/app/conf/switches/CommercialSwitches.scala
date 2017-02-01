@@ -194,14 +194,4 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2017, 3, 31), //Friday
     exposeClientSide = true
   )
-
-  val renaultSwitch: Switch = Switch(
-    group = SwitchGroup.Commercial,
-    name = "renault",
-    description = "Turn on hardcoded Renault campaign",
-    owners = Owner.group(SwitchGroup.Commercial),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 3, 1),
-    exposeClientSide = false
-  )
 }

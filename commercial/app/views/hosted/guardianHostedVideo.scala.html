@@ -1,5 +1,4 @@
 @import common.commercial.hosted.HostedVideoPage
-@import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import conf.Configuration.{environment => ConfigEnvironment}
 @import conf.Configuration.site.host
 @import views.html.hosted._
@@ -94,12 +93,7 @@
                             @hostedLogo(page.campaign)
                         </div>
                     </div>
-                    @for(nextPage <- page.nextVideo) {
-                        @hostedVideoAutoplay(nextPage.title, nextPage.imageUrl, nextPage.url, page.cta, page.campaign)
-                    }
-                    @if(page.nextVideo.isEmpty){
-                        <div class="js-autoplay-placeholder"></div>
-                    }
+                    <div class="js-autoplay-placeholder"></div>
                 </div>
             </div>
         </section>
@@ -119,13 +113,7 @@
                 </div>
             </div>
 
-            @page.nextPage.map { nextPage =>
-                <div class="hosted__next-page-wrapper">
-                    @hostedOnwardJourney(List(makeshiftPage(nextPage, page.campaign)), 1, 1)
-                </div>
-            }.getOrElse {
-                <div class="js-onward-placeholder hosted__next-page-wrapper"></div>
-            }
+            <div class="js-onward-placeholder hosted__next-page-wrapper"></div>
         </section>
         @guardianHostedCta(page, page.cta, isAMP = false)
     </div>
