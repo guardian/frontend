@@ -57,3 +57,6 @@ deployments:
         AMI:
           Recipe: frontend-base
           AmigoStage: PROD
+        RouterAMI:
+          Recipe: frontend-router
+          AmigoStage: PROD
