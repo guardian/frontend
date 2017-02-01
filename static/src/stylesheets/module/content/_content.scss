@@ -787,8 +787,6 @@
         }
     }
 
-
-
     .tone-news--item.rich-link {
         background: $paid-article-subheader;
     }
@@ -886,6 +884,16 @@
                 &:hover {
                     color: $neutral-1;
                 }
+            }
+        }
+
+        .meta__twitter .button {
+            color: $neutral-2-contrasted;
+            background-color: $neutral-6;
+
+            &:hover {
+                color: $neutral-2-contrasted;
+                background-color: $neutral-3;
             }
         }
 

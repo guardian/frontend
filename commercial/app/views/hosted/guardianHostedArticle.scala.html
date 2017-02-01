@@ -1,6 +1,5 @@
 @import common.commercial.hosted.HostedArticlePage
 @(page: HostedArticlePage)(implicit request: RequestHeader, context: model.ApplicationContext)
-@import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import views.html.hosted._
 @import model.hosted.HostedArticleQuotes.prepareQuotes
 
@@ -93,24 +92,14 @@
                         <div class="content__article-body from-content-api js-article__body">
                             <p class="intro">@Html(page.standfirst)</p>
 
-                            @page.pageName match {
-                                case "overview" => { @singaporeF1Overview() }
-                                case "offtrack" => { @singaporeF1Offtrack() }
-                                case "packages" => { @singaporeF1Packages() }
-                                case _ => { @Html(prepareQuotes(page.body)) }
-                            }
+                            @Html(prepareQuotes(page.body))
+
                             <div class="hosted__standfirst">
                                 @hostedExplainer()
                             </div>
                         </div>
                         <div class="hosted__onward-journey">
-                            @if(page.nextPages.nonEmpty) {
-                                @hostedOnwardJourney(page.nextPages.map { nextPage =>
-                                    makeshiftPage(nextPage, page.campaign)
-                                }, 2, 4)
-                            } else {
-                                <div class="js-onward-placeholder"></div>
-                            }
+                            <div class="js-onward-placeholder"></div>
                         </div>
                     </div>
                 </div>

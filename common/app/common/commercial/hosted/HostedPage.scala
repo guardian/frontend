@@ -31,9 +31,6 @@ trait HostedPage extends StandalonePage {
   def emailBodyText = s"${socialShareText.getOrElse(standfirst)} $encodedUrl"
 
   def cta: HostedCallToAction
-
-  // Todo: remove when hardcoded go
-  def pageName: String
 }
 
 object HostedPage extends Logging {

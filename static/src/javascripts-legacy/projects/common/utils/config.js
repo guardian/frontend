@@ -1,5 +1,3 @@
-/*global guardian:false */
-
 /*
  Common functions to simplify access to page data
  */
@@ -8,7 +6,8 @@ define([
     'common/utils/url',
     'common/utils/assign'
 ], function (pad, urlUtils, assign) {
-    var config         = guardian.config,
+    // eslint-disable-next-line guardian-frontend/global-config
+    var config         = window.guardian.config,
         adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
 
     if (adUnitOverride) {
