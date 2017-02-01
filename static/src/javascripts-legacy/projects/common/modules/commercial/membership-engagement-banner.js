@@ -206,7 +206,7 @@ define([
             showElement(REMIND_ME_THANKS_MESSAGE);
         }
 
-        function showErrorMessage(error){
+        function showErrorMessage(){
             hideElement(REMIND_ME_TEXT_FIELD);
             hideElement(REMIND_ME_CTA);
             showElement(REMIND_ME_ERROR);
