@@ -887,6 +887,16 @@
             }
         }
 
+        .meta__twitter .button {
+            color: $neutral-2-contrasted;
+            background-color: $neutral-6;
+
+            &:hover {
+                color: $neutral-2-contrasted;
+                background-color: $neutral-3;
+            }
+        }
+
         .button--tone-media {
             color: $neutral-1;
             background-color: $neutral-6;
