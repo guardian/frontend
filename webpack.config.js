@@ -2,11 +2,10 @@
 const path = require('path');
 
 const webpack = require('webpack');
-const Visualizer = require('webpack-visualizer-plugin');
 
 const outputName = 'app-webpack';
 
-module.exports = {
+module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     devtool: 'source-map',
     entry: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
     output: {
@@ -82,18 +81,16 @@ module.exports = {
         ],
     },
     plugins: [
-        new webpack.optimize.AggressiveMergingPlugin(),
-        new Visualizer({
-            filename: './webpack-stats.html',
-        }),
         // Makes videosjs available to all modules in the videojs chunk.
         // videojs plugins expect this object to be available globally,
         // but it's sufficient to scope it at the chunk level
         new webpack.ProvidePlugin({
             videojs: 'videojs',
         }),
+        // optional plugins passed in in production
+        ...plugins,
     ],
     externals: {
         xhr2: {},
     },
-};
+});
