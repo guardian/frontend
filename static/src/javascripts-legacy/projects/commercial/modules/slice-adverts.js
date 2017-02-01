@@ -8,7 +8,8 @@ define([
     'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/dfp/add-slot',
     'common/modules/user-prefs',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'commercial/modules/dfp/performance-logging'
 ], function (
     qwery,
     Promise,
@@ -19,7 +20,8 @@ define([
     createSlot,
     addSlot,
     userPrefs,
-    commercialFeatures
+    commercialFeatures,
+    performanceLogging
 ) {
     var containerSelector = '.fc-container:not(.fc-container--commercial)';
     var sliceSelector = '.js-fc-slice-mpu-candidate';
@@ -29,10 +31,12 @@ define([
         init: init
     };
 
-    function init() {
+    function init(moduleName) {
         if (!commercialFeatures.sliceAdverts) {
             return Promise.resolve(false);
         }
+
+        performanceLogging.moduleStart(moduleName);
 
         init.whenRendered = new Promise(function (resolve) {
             mediator.once('page:commercial:slice-adverts', resolve);
@@ -51,6 +55,7 @@ define([
         });
 
         if (containers.length === 0) {
+            done();
             return Promise.resolve(false);
         } else if (isMobile) {
             insertOnMobile(containers, getSlotNameOnMobile)
@@ -63,6 +68,11 @@ define([
         }
 
         return Promise.resolve(true);
+
+        function done() {
+            performanceLogging.moduleEnd(moduleName);
+            mediator.emit('page:commercial:slice-adverts');
+        }
     }
 
     // On mobile, a slot is inserted after each container
@@ -165,9 +175,5 @@ define([
 
     function addSlots(slots) {
         slots.forEach(addSlot);
-    }
-
-    function done() {
-        mediator.emit('page:commercial:slice-adverts');
     }
 });
