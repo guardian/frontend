@@ -186,7 +186,7 @@ define([
                         var option = bonzo(el);
                         var input = qwery('input', el);
                         el.addEventListener('click', function(e) {
-                            if (e.target.tagName === "svg") {
+                            if (e.target.tagName === "svg" || e.target.classList.contains('inline-tick')) {
                                 var comment = input[0].value;
                                 recordUserAdFeedback(window.location.pathname, el.attributes['data-slot'].nodeValue, slotRenderEvent, el.attributes['data-problem'].nodeValue, comment);
                             } else {

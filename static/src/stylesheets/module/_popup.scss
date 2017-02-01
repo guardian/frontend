@@ -343,8 +343,15 @@ $control-offset: 36 + $gs-gutter/2;
     }
     .inline-icon {
         fill: $neutral-1;
-        padding: 0 $gs-gutter/2;
+        padding: $gs-baseline;
+        position: absolute;
         cursor: pointer;
+        display: block;
+        right: 0;
+        bottom: 0;
+        width: $gs-gutter/2;
+        height: $gs-gutter/2;
+        line-height: $gs-gutter/2;
     }
 
     .ad-slot--dark & {
