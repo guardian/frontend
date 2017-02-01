@@ -83,13 +83,6 @@ define([
         });
     }
 
-    function getBaseline(baselineName) {
-        var index = performanceLog.baselines
-            .map(function (_) { return _.name; })
-            .indexOf(baselineName);
-        return index > -1 ? performanceLog.baselines[index].startTime : 0;
-    }
-
     // This posts the performance log to the beacon endpoint. It is expected that this be called
     // multiple times in a page view, so that partial data is captured, and then topped up as adverts load in.
     function reportTrackingData() {
