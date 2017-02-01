@@ -4,7 +4,7 @@ define([
     return function () {
         this.id = 'TailorRecommendedEmail';
         this.start = '2017-01-23';
-        this.expiry = '2017-01-31';
+        this.expiry = '2017-03-31';
         this.author = 'Lindsey Dew';
         this.description = 'Using Tailor to target email signup form';
         this.audience = 1;

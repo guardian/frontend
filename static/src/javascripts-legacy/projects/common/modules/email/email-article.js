@@ -15,7 +15,8 @@ define([
     'common/modules/analytics/google',
     'lodash/collections/find',
     'common/modules/experiments/ab',
-    'common/modules/tailor/tailor'
+    'common/modules/tailor/tailor',
+    'common/utils/cookies'
 ], function (
     $,
     bean,
@@ -33,7 +34,8 @@ define([
     googleAnalytics,
     find,
     ab,
-    tailor
+    tailor,
+    cookies
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
             $iframeEl.appendTo('.js-article__body');
@@ -189,9 +191,12 @@ define([
 
                     if (ab.isParticipating({id: 'TailorRecommendedEmail'}) &&
                         ab.isInVariant('TailorRecommendedEmail', 'tailor-recommended')) {
-                        tailor.getEmail().then(function (data) {
-                            addListToPage(find(listConfigs, doesIdMatch.bind(null, data.email)));
-                        });
+                        var bwidCookie = cookies.get('bwid');
+                        if(bwidCookie) {
+                            tailor.getEmail(bwidCookie).then(function (data) {
+                                addListToPage(find(listConfigs, doesIdMatch.bind(null, data.email)));
+                            });
+                        }
                     } else {
                         // Get the first list that is allowed on this page
                         addListToPage(find(listConfigs, emailRunChecks.listCanRun));

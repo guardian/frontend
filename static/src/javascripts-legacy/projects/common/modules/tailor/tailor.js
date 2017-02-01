@@ -1,19 +1,11 @@
 define([
-    'common/utils/fetch-json',
-    'common/utils/cookies'
+    'common/utils/fetch-json'
 ], function(
-    fetchJson,
-    cookies
+    fetchJson
 ) {
 
-    var bwidCookie = cookies.get('bwid');
-
-    function getEmail() {
-        if (!bwidCookie) {
-            return;
-        }
-
-        return fetchJson('https://tailor.guardianapis.com/email/' + bwidCookie, {
+    function getEmail(browserId) {
+        return fetchJson('https://tailor.guardianapis.com/email/' + browserId, {
             method: 'get'
         })
     }
