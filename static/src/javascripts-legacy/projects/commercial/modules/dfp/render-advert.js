@@ -83,6 +83,12 @@ define([
         });
     };
 
+    sizeCallbacks[adSizes.video2] = function (_, advert) {
+        fastdom.write(function () {
+            advert.node.classList.add('ad-slot--outstream');
+        });
+    };
+
     /**
      * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
      * and their containers closed up.
