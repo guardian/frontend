@@ -136,12 +136,12 @@ define([
     sizeCallbacks[adSizes.merchandising] = addFluid250(['ad-slot--commercial-component']);
 
     /**
-     * @param adSlotId - DOM ID of the rendered slot
+     * @param advert - as defined in commercial/modules/dfp/Advert
      * @param slotRenderEvent - GPT slotRenderEndedEvent
      * @returns {Promise} - resolves once all necessary rendering is queued up
      */
     function renderAdvert(advert, slotRenderEvent) {
-        removePlaceholders(advert.node);
+        addContentClass(advert.node);
 
         return applyCreativeTemplate(advert.node).then(function (isRendered) {
             return callSizeCallback()
@@ -207,13 +207,11 @@ define([
         }).catch(raven.captureException);
     }
 
-    function removePlaceholders(adSlotNode) {
-        var placeholder = qwery('.ad-slot__content--placeholder', adSlotNode);
-        var adSlotContent = qwery('div', adSlotNode);
+    function addContentClass(adSlotNode) {
+        var adSlotContent = qwery('> div:not(.ad-slot__label)', adSlotNode);
 
         if (adSlotContent.length) {
             fastdom.write(function () {
-                bonzo(placeholder).remove();
                 bonzo(adSlotContent).addClass('ad-slot__content');
             });
         }
