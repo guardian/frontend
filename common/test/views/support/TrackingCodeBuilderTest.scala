@@ -1,21 +1,24 @@
 package views.support
 
+import com.gu.commercial.branding._
 import common.commercial._
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers}
 import play.api.test.FakeRequest
-import Commercial.TrackingCodeBuilder
+import views.support.Commercial.TrackingCodeBuilder
 
 class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 
   private def mkBranding(sponsorName: String) = Branding(
-    sponsorshipType = Sponsored,
+    brandingType = Sponsored,
     sponsorName,
-    sponsorLogo = Logo("", None),
-    highContrastSponsorLogo = None,
-    sponsorLink = "",
-    aboutThisLink = "",
-    targeting = None,
-    foundationFundedContext = None
+    logo = Logo(
+      src = "",
+      dimensions = None,
+      link = "",
+      label = ""
+    ),
+    logoForDarkBackground = None,
+    aboutThisLink = None
   )
 
   private def mkCardContent(index: Int, branding: Option[Branding] = None) = CardContent(

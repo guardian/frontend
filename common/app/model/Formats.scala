@@ -1,5 +1,6 @@
 package model
 
+import common.commercial.EditionBranding
 import common.{NavItem, Pagination, SectionLink}
 import model.content._
 import model.facia.PressedCollection
@@ -88,7 +89,9 @@ object MetaDataFormat {
     javascriptConfigOverrides: Map[String, JsValue],
     opengraphPropertiesOverrides: Map[String, String],
     isHosted: Boolean,
-    twitterPropertiesOverrides: Map[String, String])
+    twitterPropertiesOverrides: Map[String, String],
+    editionBrandings: Option[Seq[EditionBranding]]
+  )
 
   val readsMetadata: Reads[MetaData] = {
 
@@ -123,7 +126,8 @@ object MetaDataFormat {
       part2.javascriptConfigOverrides,
       part2.opengraphPropertiesOverrides,
       part2.isHosted,
-      part2.twitterPropertiesOverrides
+      part2.twitterPropertiesOverrides,
+      editionBrandings = part2.editionBrandings
       )
     }
   }
@@ -161,7 +165,8 @@ object MetaDataFormat {
           meta.javascriptConfigOverrides,
           meta.opengraphPropertiesOverrides,
           meta.isHosted,
-          meta.twitterPropertiesOverrides
+          meta.twitterPropertiesOverrides,
+          meta.editionBrandings
         )
       )
     })

@@ -1,4 +1,6 @@
-@(branding: common.commercial.Branding, isOnTheLeft: Boolean)(implicit request: RequestHeader)
+@import com.gu.commercial.branding.Branding
+@import views.html.fragments.commercial.logo
+@(branding: Branding, isOnTheLeft: Boolean)(implicit request: RequestHeader)
 
 <div class="badge @if(isOnTheLeft){badge--alt}">
     @logo(branding)

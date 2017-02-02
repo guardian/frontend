@@ -1,8 +1,8 @@
 package model
 
 import com.gu.contentapi.client.model.v1.{Podcast => ApiPodcast, Reference => ApiReference, Tag => ApiTag}
-import common.commercial.{BrandHunter, Branding}
-import common.{Edition, Pagination, RelativePathEscaper}
+import common.commercial.EditionBranding
+import common.{Pagination, RelativePathEscaper}
 import conf.Configuration
 import contentapi.SectionTagLookUp
 import play.api.libs.json._
@@ -47,7 +47,8 @@ object Tag {
       },
       javascriptConfigOverrides = javascriptConfigOverrides,
       opengraphPropertiesOverrides = openGraphPropertiesOverrides,
-      twitterPropertiesOverrides = Map("twitter:card" -> "summary")
+      twitterPropertiesOverrides = Map("twitter:card" -> "summary"),
+      editionBrandings = tag.editionBrandings
     )
   }
 
@@ -133,30 +134,30 @@ object TagProperties {
       bylineImageUrl = tag.bylineImageUrl,
       podcast = tag.podcast.map(Podcast.make),
       references = tag.references.map(Reference.make),
-      activeBrandings = tag.activeSponsorships.map(_.map(Branding.make(tag.webTitle))),
-      paidContentType = tag.paidContentType
+      paidContentType = tag.paidContentType,
+      editionBrandings = Some(EditionBranding.fromTag(tag))
     )
   }
 }
 
 case class TagProperties(
-                          id: String,
-                          url: String,
-                          tagType: String,
-                          sectionId: String,
-                          sectionName: String,
-                          webTitle: String,
-                          webUrl: String,
-                          twitterHandle: Option[String],
-                          bio: Option[String],
-                          description: Option[String],
-                          emailAddress: Option[String],
-                          contributorLargeImagePath: Option[String],
-                          bylineImageUrl: Option[String],
-                          podcast: Option[Podcast],
-                          references: Seq[Reference],
-                          activeBrandings: Option[Seq[Branding]],
-                          paidContentType: Option[String]
+  id: String,
+  url: String,
+  tagType: String,
+  sectionId: String,
+  sectionName: String,
+  webTitle: String,
+  webUrl: String,
+  twitterHandle: Option[String],
+  bio: Option[String],
+  description: Option[String],
+  emailAddress: Option[String],
+  contributorLargeImagePath: Option[String],
+  bylineImageUrl: Option[String],
+  podcast: Option[Podcast],
+  references: Seq[Reference],
+  paidContentType: Option[String],
+  editionBrandings: Option[Seq[EditionBranding]]
 ) {
  val footballBadgeUrl = references.find(_.`type` == "pa-football-team")
       .map(_.id.split("/").drop(1).mkString("/"))
@@ -187,8 +188,4 @@ case class Tag (
   val isFootballTeam = properties.references.exists(_.`type` == "pa-football-team")
   val isFootballCompetition = properties.references.exists(_.`type` == "pa-football-competition")
   val contributorImagePath = properties.bylineImageUrl.map(ImgSrc(_, Contributor))
-
-  override def branding(edition: Edition): Option[Branding] = {
-    BrandHunter.findBranding(properties.activeBrandings, edition, publicationDate = None)
-  }
 }

@@ -2,8 +2,8 @@ package model
 
 import campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.v1.{Section => ApiSection}
-import common.commercial.{BrandHunter, Branding}
-import common.{Edition, Pagination}
+import common.Pagination
+import common.commercial.EditionBranding
 import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 
 object Section {
@@ -35,43 +35,29 @@ object Section {
         case "crosswords" => None
         case _ => Some("front")
       },
-      javascriptConfigOverrides = javascriptConfigOverrides
+      javascriptConfigOverrides = javascriptConfigOverrides,
+      editionBrandings = Some(EditionBranding.fromSection(section))
     )
 
     Section(
       metadata,
-      isEditionalised = section.editions.length > 1,
-      activeBrandings = section.activeSponsorships map (_ map Branding.make(section.webTitle))
+      isEditionalised = section.editions.length > 1
     )
   }
 }
 
-case class Section private (
+case class Section private(
   override val metadata: MetaData,
-  isEditionalised: Boolean,
-  activeBrandings: Option[Seq[Branding]]
-  ) extends StandalonePage {
+  isEditionalised: Boolean
+) extends StandalonePage
 
-  override def branding(edition: Edition): Option[Branding] = {
-    BrandHunter.findBranding(metadata.section.flatMap(_.activeBrandings), edition, publicationDate = None)
-  }
-}
-
-case class SectionSummary(
-  id: String,
-  activeBrandings: Option[Seq[Branding]]
-)
+case class SectionSummary(id: String)
 
 object SectionSummary {
 
   implicit val jsonFormat = Json.format[SectionSummary]
 
-  def fromCapiSection(section: ApiSection): SectionSummary = {
-    SectionSummary(
-      id = section.id,
-      activeBrandings = section.activeSponsorships map (_ map Branding.make(section.webTitle))
-    )
-  }
+  def fromCapiSection(section: ApiSection): SectionSummary = SectionSummary(id = section.id)
 
-  def fromId(sectionId: String): SectionSummary = SectionSummary(id = sectionId, activeBrandings = None)
+  def fromId(sectionId: String): SectionSummary = SectionSummary(id = sectionId)
 }
