@@ -8,17 +8,16 @@
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
     <div class="l-footer__primary">
-        <div id="footer-nav">
-            <div class="brand-bar modern-visible u-cf">
-                <a class="brand-bar__item brand-bar__item--action" data-link-name="back to top" href="#top">
-                    <span class="rounded-icon control__icon-wrapper">
-                        @fragments.inlineSvg("arrow-up", "icon")
-                    </span>
-                    <span class="control__info">back to top</span>
-                </a>
-            </div>
+        <div class="footer__primary">
+            <a data-link-name="back to top" href="#top">
+                <div class="footer__back-to-top__container">
+                    <div class="footer__back-to-top">
+                        <span class="back-to-top__text">back to top</span>
+                        @fragments.inlineSvg("arrow-up", "icon", List("back-to-top__icon"))
+                    </div>
+                </div>
+            </a>
 
-            @Page.getContentPage(page).map(fragments.breadcrumb(_))
         </div>
     </div>
 
