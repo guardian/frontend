@@ -45,16 +45,6 @@ trait MonitoringSwitches {
     exposeClientSide = true
   )
 
-  val CssLogging = Switch(
-    SwitchGroup.Monitoring,
-    "css-logging",
-    "If this is on, then a subset of clients will post css selector information for diagnostics.",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    never,
-    exposeClientSide = true
-  )
-
   val CspReporting = Switch(
     SwitchGroup.Monitoring,
     "csp-reporting",
