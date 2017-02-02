@@ -54,10 +54,10 @@ define([
     userFeatures
 ) {
     var primaryModules = [
+        ['cm-highMerch', highMerch.init],
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init],
         ['cm-prepare-googletag', prepareGoogletag.init, prepareGoogletag.customTiming],
-        ['cm-highMerch', highMerch.init],
         ['cm-articleAsideAdverts', articleAsideAdverts.init],
         ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-sliceAdverts', sliceAdverts.init],
