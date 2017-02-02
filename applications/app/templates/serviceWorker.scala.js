@@ -82,7 +82,6 @@ this.addEventListener('message', function (event) {
 });
 
 this.addEventListener('fetch', function (event) {
-    console.log(event.request.url);
     if (isRequestForAsset(event.request)) {
         handleAssetRequest(event);
     } else if (blockIAS && isIASRequest(event.request)) {
