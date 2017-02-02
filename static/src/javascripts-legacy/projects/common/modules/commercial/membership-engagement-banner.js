@@ -182,6 +182,11 @@ define([
                     trackDisplay: true,
                     cssModifierClass: colourClass
                 }).show(renderedBanner);
+
+            if(params.secondaryButtonCaption &&  SECONDARY_BUTTON != null) {
+                setSecondaryButtonListener();
+            }
+
             if (messageShown) {
                 mediator.emit('membership-message:display');
             }
@@ -226,7 +231,6 @@ define([
         }
 
         function getDOMElements(){
-            SECONDARY_BUTTON = document.querySelector(SECONDARY_BUTTON_SELECTOR);
             REMIND_ME_FORM = document.querySelector(REMIND_ME_FORM_SELECTOR);
             REMIND_ME_TEXT_FIELD = document.querySelector(REMIND_ME_TEXT_FIELD_SELECTOR);
             REMIND_ME_CTA = document.querySelector(REMIND_ME_CTA_SELECTOR);
@@ -244,12 +248,13 @@ define([
 
         function setSecondaryButtonListener() {
             getDOMElements();
-            bean.on($('.secondary')[0], 'click', function () {
+
+            SECONDARY_BUTTON.addEventListener('click', function () {
                 hideElement(SECONDARY_BUTTON);
                 showElement(REMIND_ME_FORM);
-            });
+            })
 
-            bean.on($('.membership__remind-me-form__cta')[0], 'click', function () {
+            REMIND_ME_CTA.addEventListener('click', function () {
                 var email = REMIND_ME_TEXT_FIELD.value;
                 if(emailIsValid(email)){
                     sendEmail(email);
@@ -261,6 +266,7 @@ define([
 
         function init() {
             var bannerParams = deriveBannerParams();
+            SECONDARY_BUTTON = document.querySelector(SECONDARY_BUTTON_SELECTOR);
 
             if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
                 return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
@@ -269,9 +275,6 @@ define([
                         mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
                             if (!breakingShown) {
                                 showBanner(bannerParams);
-                                if(bannerParams.secondaryButtonCaption) {
-                                    setSecondaryButtonListener();
-                                }
                             }
                         });
                     }
