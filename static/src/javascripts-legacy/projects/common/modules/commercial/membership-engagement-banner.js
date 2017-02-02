@@ -1,6 +1,6 @@
 define([
         'bean',
-        'qwery',
+        'common/utils/$',
         'common/utils/config',
         'common/utils/storage',
         'common/utils/template',
@@ -13,13 +13,12 @@ define([
         'common/utils/fastdom-promise',
         'common/modules/experiments/ab',
         'common/modules/experiments/tests/membership-engagement-banner-tests',
-        'common/utils/$',
         'lodash/objects/defaults',
         'lodash/collections/find',
         'common/views/svgs',
         'common/utils/fetch'
     ], function (bean,
-                 qwery,
+                 $,
                  config,
                  storage,
                  template,
@@ -32,7 +31,6 @@ define([
                  fastdom,
                  ab,
                  MembershipEngagementBannerTests,
-                 $,
                  defaults,
                  find,
                  svgs,
@@ -42,21 +40,14 @@ define([
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
         var messageCode = 'engagement-banner-2017-01-11';
 
-        var SECONDARY_BUTTON_SELECTOR = '.secondary';
-
         //Remind me form selectors
-        var REMIND_ME_FORM_SELECTOR = '.membership__remind-me-form';
-        var REMIND_ME_TEXT_FIELD_SELECTOR = '.membership__engagement-text-field';
-        var REMIND_ME_CTA_SELECTOR = '.membership__remind-me-form__cta';
-        var REMIND_ME_THANKS_MESSAGE_SELECTOR = '.membership__remind-me-form__thanks-message';
-        var REMIND_ME_ERROR_SELECTOR = '.membership__remind-me-form__error';
+        var SECONDARY_BUTTON = '.secondary';
+        var REMIND_ME_FORM = '.membership__remind-me-form';
+        var REMIND_ME_TEXT_FIELD = '.membership__engagement-text-field';
+        var REMIND_ME_CTA = '.membership__remind-me-form__cta';
+        var REMIND_ME_THANKS_MESSAGE = '.membership__remind-me-form__thanks-message';
+        var REMIND_ME_ERROR = '.membership__remind-me-form__error';
 
-        var SECONDARY_BUTTON = null;
-        var REMIND_ME_FORM = null;
-        var REMIND_ME_TEXT_FIELD = null;
-        var REMIND_ME_CTA = null;
-        var REMIND_ME_THANKS_MESSAGE = null;
-        var REMIND_ME_ERROR = null;
         var LIST_ID = 3813;
         var EMAIL_PATH = '/email';
 
@@ -184,7 +175,7 @@ define([
                     cssModifierClass: colourClass
                 }).show(renderedBanner);
 
-            if(params.secondaryButtonCaption &&  SECONDARY_BUTTON != null && params.showRemindMe) {
+            if(params.secondaryButtonCaption &&  $(SECONDARY_BUTTON)[0] != null && params.showRemindMe) {
                 setSecondaryButtonListener();
             }
 
@@ -203,17 +194,17 @@ define([
         }
 
         function showThankYouMessage(){
-            hideElement(REMIND_ME_TEXT_FIELD);
-            hideElement(REMIND_ME_CTA);
-            hideElement(REMIND_ME_ERROR);
+            hideElement($(REMIND_ME_TEXT_FIELD)[0]);
+            hideElement($(REMIND_ME_CTA)[0]);
+            hideElement($(REMIND_ME_ERROR)[0]);
 
-            showElement(REMIND_ME_THANKS_MESSAGE);
+            showElement($(REMIND_ME_THANKS_MESSAGE)[0]);
         }
 
         function showErrorMessage(){
-            hideElement(REMIND_ME_TEXT_FIELD);
-            hideElement(REMIND_ME_CTA);
-            showElement(REMIND_ME_ERROR);
+            hideElement($(REMIND_ME_TEXT_FIELD)[0]);
+            hideElement($(REMIND_ME_CTA)[0]);
+            showElement($(REMIND_ME_ERROR)[0]);
         }
 
         function submitForm(email, listID) {
@@ -222,52 +213,43 @@ define([
                 'listId=' + listID;
 
             return fetch(config.page.ajaxUrl + EMAIL_PATH,
-                        {   method: 'post',
-                            body: formQueryString,
-                            headers: {
-                                'Accept': 'application/json'
-                            }
-                        }
+                {   method: 'post',
+                    body: formQueryString,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }
             );
         }
 
-        function getDOMElements(){
-            REMIND_ME_FORM = document.querySelector(REMIND_ME_FORM_SELECTOR);
-            REMIND_ME_TEXT_FIELD = document.querySelector(REMIND_ME_TEXT_FIELD_SELECTOR);
-            REMIND_ME_CTA = document.querySelector(REMIND_ME_CTA_SELECTOR);
-            REMIND_ME_THANKS_MESSAGE = document.querySelector(REMIND_ME_THANKS_MESSAGE_SELECTOR);
-            REMIND_ME_ERROR = document.querySelector(REMIND_ME_ERROR_SELECTOR);
-        }
-
         function showElement(element) {
-            element.classList.remove('hide-element');
+            element.classList.remove('is-hidden');
         }
 
         function hideElement(element) {
-            element.classList.add('hide-element');
+            element.classList.add('is-hidden');
         }
 
         function setSecondaryButtonListener() {
-            getDOMElements();
 
-            SECONDARY_BUTTON.addEventListener('click', function () {
-                hideElement(SECONDARY_BUTTON);
-                showElement(REMIND_ME_FORM);
-            })
+            bean.on($(SECONDARY_BUTTON)[0], 'click', function () {
+                hideElement($(SECONDARY_BUTTON)[0]);
+                showElement($(REMIND_ME_FORM)[0]);
+            });
 
-            REMIND_ME_CTA.addEventListener('click', function () {
-                var email = REMIND_ME_TEXT_FIELD.value;
+            bean.on($(REMIND_ME_CTA)[0], 'click', function () {
+                var email = $(REMIND_ME_TEXT_FIELD)[0].value;
+
                 if(emailIsValid(email)){
                     sendEmail(email);
                 } else {
-                    showElement(REMIND_ME_ERROR);
+                    showElement($(REMIND_ME_ERROR)[0]);
                 }
             });
         }
 
         function init() {
             var bannerParams = deriveBannerParams();
-            SECONDARY_BUTTON = document.querySelector(SECONDARY_BUTTON_SELECTOR);
 
             if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
                 return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
