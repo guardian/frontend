@@ -12,8 +12,7 @@ define([
     'common/utils/mediator',
     'lodash/functions/throttle',
     'common/modules/analytics/interaction-tracking',
-    'common/utils/load-css-promise',
-    'commercial/modules/dfp/performance-logging'
+    'common/utils/load-css-promise'
 ], function (Promise,
              bean,
              bonzo,
@@ -27,8 +26,7 @@ define([
              mediator,
              throttle,
              interactionTracking,
-             loadCssPromise,
-             performanceLogging) {
+             loadCssPromise) {
 
 
     function HostedGallery() {
@@ -450,10 +448,10 @@ define([
         }
     };
 
-    function init(moduleName) {
-        if (qwery('.js-hosted-gallery-container').length) {
-            performanceLogging.moduleStart(moduleName);
+    function init(start, stop) {
+        start();
 
+        if (qwery('.js-hosted-gallery-container').length) {
             loadCssPromise
             .then(function () {
                 var gallery,
@@ -474,9 +472,11 @@ define([
                 return gallery;
             })
             .then(function (gallery) {
-                performanceLogging.moduleEnd(moduleName)
+                stop();
                 mediator.emit('page:hosted:gallery', gallery);
             });
+        } else {
+            stop();
         }
 
         return Promise.resolve();

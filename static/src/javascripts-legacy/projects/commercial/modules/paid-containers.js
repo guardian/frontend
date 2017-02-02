@@ -2,22 +2,17 @@ define([
     'Promise',
     'qwery',
     'bean',
-    'fastdom',
-    'commercial/modules/dfp/performance-logging',
-], function (Promise, qwery, bean, fastdom, performanceLogging) {
+    'fastdom'
+], function (Promise, qwery, bean, fastdom) {
 
     return {
         init: init
     };
 
     function init(moduleName) {
-        performanceLogging.moduleStart(moduleName);
-
         var showMores = qwery('.adverts__more > summary');
         bean.on(document, 'click', showMores, onOpenClick);
         bean.on(document, 'click', showMores, onKeyPress(onOpenClick));
-
-        performanceLogging.moduleEnd(moduleName);
 
         return Promise.resolve();
     }

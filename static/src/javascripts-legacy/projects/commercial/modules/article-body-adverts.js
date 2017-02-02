@@ -9,8 +9,7 @@ define([
     'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/dfp/track-ad-render',
     'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/commercial-features',
-    'commercial/modules/dfp/performance-logging'
+    'common/modules/commercial/commercial-features'
 ], function (
     Promise,
     qwery,
@@ -22,8 +21,7 @@ define([
     addSlot,
     trackAdRender,
     createSlot,
-    commercialFeatures,
-    performanceLogging
+    commercialFeatures
 ) {
 
     /* bodyAds is a counter that keeps track of the number of inline MPUs
@@ -32,12 +30,13 @@ define([
     var replaceTopSlot;
     var getSlotName;
 
-    function init(moduleName) {
+    function init(start, stop) {
+        start();
+
         if (!commercialFeatures.articleBodyAdverts) {
+            stop();
             return Promise.resolve(false);
         }
-
-        performanceLogging.moduleStart(moduleName);
 
         bodyAds = 0;
         replaceTopSlot = detect.isBreakpoint({max : 'phablet'});
@@ -50,16 +49,12 @@ define([
             // we must wait for DFP to return, since if the merch
             // component is empty, it might completely change the
             // positions where we insert those MPUs.
-            im.then(waitForMerch).then(addInlineAds).then(moduleEnd);
+            im.then(waitForMerch).then(addInlineAds).then(stop);
             return im;
         }
 
-        addInlineAds().then(moduleEnd);
+        addInlineAds().then(stop);
         return Promise.resolve(true);
-
-        function moduleEnd() {
-            performanceLogging.moduleEnd(moduleName);
-        }
     }
 
     return {

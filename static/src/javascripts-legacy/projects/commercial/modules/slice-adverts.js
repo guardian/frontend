@@ -8,7 +8,6 @@ define([
     'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/dfp/add-slot',
     'common/modules/user-prefs',
-    'common/modules/commercial/commercial-features',
     'commercial/modules/dfp/performance-logging'
 ], function (
     qwery,
@@ -20,7 +19,6 @@ define([
     createSlot,
     addSlot,
     userPrefs,
-    commercialFeatures,
     performanceLogging
 ) {
     var containerSelector = '.fc-container:not(.fc-container--commercial)';
@@ -31,12 +29,13 @@ define([
         init: init
     };
 
-    function init(moduleName) {
+    function init(start, stop) {
+        start();
+
         if (!commercialFeatures.sliceAdverts) {
+            stop();
             return Promise.resolve(false);
         }
-
-        performanceLogging.moduleStart(moduleName);
 
         init.whenRendered = new Promise(function (resolve) {
             mediator.once('page:commercial:slice-adverts', resolve);
@@ -70,7 +69,7 @@ define([
         return Promise.resolve(true);
 
         function done() {
-            performanceLogging.moduleEnd(moduleName);
+            stop();
             mediator.emit('page:commercial:slice-adverts');
         }
     }

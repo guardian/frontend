@@ -3,19 +3,18 @@ define([
     'common/utils/config',
     'common/utils/load-script',
     'common/modules/commercial/commercial-features',
-    'commercial/modules/dfp/performance-logging',
     'commercial/modules/dfp/dfp-env'
 ], function(
     Promise,
     config,
     loadScript,
     commercialFeatures,
-    performanceLogging,
     dfpEnv
 ){
 
     function setupSonobi(start, stop) {
         start();
+
         // Setting the async property to false will _still_ load the script in
         // a non-blocking fashion but will ensure it is executed before googletag
         loadScript(config.libs.sonobi, { async: false }).then(catchPolyfillErrors).then(stop);
@@ -43,12 +42,9 @@ define([
         };
     }
 
-    function init(moduleName) {
+    function init(start, stop) {
         if (dfpEnv.sonobiEnabled && commercialFeatures.dfpAdvertising) {
-            setupSonobi(
-                performanceLogging.moduleStart.bind(null, moduleName),
-                performanceLogging.moduleEnd.bind(null, moduleName)
-            );
+            setupSonobi(start, stop);
         }
 
         return Promise.resolve();

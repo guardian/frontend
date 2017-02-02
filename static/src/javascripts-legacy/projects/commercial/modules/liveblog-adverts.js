@@ -8,7 +8,6 @@ define([
     'common/modules/commercial/commercial-features',
     'common/modules/commercial/dfp/create-slot',
     'common/modules/article/space-filler',
-    'commercial/modules/dfp/performance-logging',
     'Promise'
 ], function (
     bonzo,
@@ -20,7 +19,6 @@ define([
     commercialFeatures,
     createSlot,
     spaceFiller,
-    performanceLogging,
     Promise
 ) {
     var INTERVAL = 5;      // number of posts between ads
@@ -96,12 +94,13 @@ define([
         Promise.resolve(getSpaceFillerRules(windowHeight, true)).then(fill);
     }
 
-    function init(moduleName) {
+    function init(start, stop) {
+        start();
+
         if (!commercialFeatures.liveblogAdverts) {
+            stop();
             return Promise.resolve();
         }
-
-        performanceLogging.moduleStart(moduleName);
 
         isMobile = detect.getBreakpoint() === 'mobile';
 
@@ -110,7 +109,7 @@ define([
         })
         .then(getSpaceFillerRules)
         .then(fill)
-        .then(performanceLogging.moduleEnd.bind(null, moduleName));
+        .then(stop);
 
         return Promise.resolve();
     }

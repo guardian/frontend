@@ -19,7 +19,6 @@ define([
     'common/modules/identity/api',
     'commercial/modules/third-party-tags/outbrain',
     'commercial/modules/third-party-tags/plista',
-    'commercial/modules/dfp/performance-logging',
     'text!common/views/commercial/external-content.html'
 ], function (
     Promise,
@@ -39,7 +38,6 @@ define([
     identity,
     outbrain,
     plista,
-    performanceLogging,
     externalContentContainerStr
     ) {
 
@@ -79,14 +77,10 @@ define([
             return Promise.resolve(false);
         }
 
-        performanceLogging.moduleStart(moduleName);
-
         // Outbrain/Plista needs to be loaded before first ad as it is checking for presence of high relevance component on page
         loadExternalContentWidget();
 
         loadOther();
-
-        performanceLogging.moduleEnd(moduleName);
 
         return Promise.resolve(true);
     }

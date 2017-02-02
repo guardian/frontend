@@ -2,18 +2,14 @@ define([
     'Promise',
     'bean',
     'common/utils/$',
-    'commercial/modules/survey/survey-simple',
-    'commercial/modules/dfp/performance-logging'
+    'commercial/modules/survey/survey-simple'
 ], function (
     Promise,
     bean,
     $,
-    SurveySimple,
-    performanceLogging
+    SurveySimple
 ) {
-    function init(moduleName) {
-        performanceLogging.moduleStart(moduleName);
-
+    function init() {
         var survey = new SurveySimple({
             id: 'hosted-about',
             header: 'Advertiser content',
@@ -29,8 +25,6 @@ define([
             e.preventDefault();
             $('.js-survey-overlay').removeClass('u-h');
         });
-
-        performanceLogging.moduleEnd(moduleName);
 
         return Promise.resolve();
     }

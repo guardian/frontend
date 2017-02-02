@@ -7,7 +7,6 @@ define([
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/track-ad-render',
     'common/modules/commercial/commercial-features',
-    'commercial/modules/dfp/performance-logging',
     'commercial/modules/messenger'
 ], function (
     Promise,
@@ -18,7 +17,6 @@ define([
     fastdom,
     trackAdRender,
     commercialFeatures,
-    performanceLogging,
     messenger
 ) {
     var topSlotId = 'dfp-ad--top-above-nav';
@@ -32,15 +30,17 @@ define([
         onScroll: onScroll
     };
 
-    function init(moduleName, _window) {
+    function init(start, stop, _window) {
+        start();
+
         if (!commercialFeatures.stickyTopBannerAd) {
+            stop();
             return Promise.resolve();
         }
 
         win = _window || window;
         topSlot = document.getElementById(topSlotId);
         if (topSlot && detect.isBreakpoint({ min: 'desktop' })) {
-            performanceLogging.moduleStart(moduleName);
             header = document.getElementById('header');
             stickyBanner = topSlot.parentNode;
 
@@ -51,9 +51,10 @@ define([
             .then(setupListeners);
             promise
             .then(onFirstRender)
-            .then(performanceLogging.moduleEnd.bind(null, moduleName));
+            .then(stop);
             return promise;
         } else {
+            stop();
             topSlot = null;
             return Promise.resolve();
         }

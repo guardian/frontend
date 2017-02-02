@@ -6,8 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/commercial-features',
-    'commercial/modules/dfp/performance-logging'
+    'common/modules/commercial/commercial-features'
 ], function (
     Promise,
     $,
@@ -16,8 +15,7 @@ define([
     mediator,
     fastdom,
     createSlot,
-    commercialFeatures,
-    performanceLogging
+    commercialFeatures
 ) {
     var minArticleHeight = 1300;
     var minFootballArticleHeight = 2200;
@@ -28,16 +26,17 @@ define([
     var adSlotContainerSelector = '.js-ad-slot-container';
     var componentsContainerSelector = '.js-components-container';
 
-    function init(moduleName) {
+    function init(start, stop) {
+        start();
+
         var $col        = $(rhColumnSelector);
         var $mainCol, $componentsContainer, $adSlotContainer;
 
         // are article aside ads disabled, or secondary column hidden?
         if (!(commercialFeatures.articleAsideAdverts && $col.length && $css($col, 'display') !== 'none')) {
+            stop();
             return Promise.resolve(false);
         }
-
-        performanceLogging.moduleStart(moduleName);
 
         $mainCol = $(mainColumnSelector);
         $componentsContainer = $(componentsContainerSelector, $col[0]);
@@ -73,7 +72,7 @@ define([
             });
         })
         .then(function ($adSlotContainer) {
-            performanceLogging.moduleEnd(moduleName);
+            stop();
             mediator.emit('page:commercial:right', $adSlotContainer);
         });
 

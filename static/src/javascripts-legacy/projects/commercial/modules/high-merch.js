@@ -15,8 +15,6 @@ define([
             return Promise.resolve();
         }
 
-        performanceLogging.moduleStart(moduleName);
-
         var anchorSelector = config.page.commentable ? '#comments + *' : '.content-footer > :first-child';
         var anchor = document.querySelector(anchorSelector);
         var container = document.createElement('div');
@@ -26,7 +24,6 @@ define([
 
         return fastdom.write(function () {
             anchor.parentNode.insertBefore(container, anchor);
-        })
-        .then(performanceLogging.moduleEnd.bind(null, moduleName));
+        });
     }
 });
