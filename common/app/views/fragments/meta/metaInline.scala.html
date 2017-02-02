@@ -1,6 +1,6 @@
-@(item: model.ContentType, isAmp: Boolean = false, page: model.Page)(implicit request: RequestHeader)
+@(item: model.ContentType, isAmp: Boolean = false)(implicit request: RequestHeader)
 
-@import common.{LinkTo, Localisation, NewNavigation, Edition}
+@import common.{LinkTo, Localisation}
 @import conf.switches.Switches.ArticleBadgesSwitch
 @import model.Badges.badgeFor
 @import views.support.RenderClasses
