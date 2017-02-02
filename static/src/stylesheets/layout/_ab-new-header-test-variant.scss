@@ -902,4 +902,69 @@ $caption-button-size: 32px;
     }
 }
 
+/****************
+ * Submeta
+ ****************/
+
+.submeta2 {
+    margin-top: $gs-baseline;
+}
+
+.submeta2__section-labels {
+    @include fs-textSans(5);
+    min-height: $gs-row-height;
+    border-top: 1px dotted $neutral-5;
+    border-bottom: 1px dotted $neutral-5;
+    padding: $gs-baseline / 2 0;
+
+
+    &:before {
+        @include fs-textSans(1);
+        content: "More";
+        color: $neutral-2;
+        display: block;
+        margin-bottom: -($gs-baseline / 4);
+    }
+}
+
+.submeta2__keywords {
+    @include fs-textSans(2);
+    line-height: 22px;
+    padding: $gs-baseline / 2 0 $gs-baseline;
+    border-bottom: 1px dotted $neutral-5;
+    margin-bottom: $gs-baseline / 2;
+}
+
+.submeta2__link {
+    font-weight: bold;
+    position: relative;
+    padding-left: .3em;
+    padding-right: .35em;
+
+    &:before {
+        position: absolute;
+        pointer-events: none;
+        content: '/';
+        //optically aligns slashes
+        left: -.28em;
+        color: $neutral-5;
+    }
+}
+
+.submeta2__link--first {
+    padding-left: 0;
+
+    &:before {
+        content: none;
+    }
+}
+
+.submeta2__badge {
+    width: 33px;
+    float: right;
+    margin-top: -$gs-baseline;
+    margin-left: $gs-gutter / 2;
+}
+
+
 @import '../module/nav/_supporter-trapezoid';
