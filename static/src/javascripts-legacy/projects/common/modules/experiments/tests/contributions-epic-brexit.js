@@ -28,6 +28,11 @@ define([
         variants: [
             {
                 id: 'control',
+                maxViews: {
+                    days: 7,
+                    count: 6,
+                    minDaysBetweenViews: 1
+                },
 
                 template: function (contributionUrl, membershipUrl) {
                     return template(contributionsEpicEqualButtons, {
