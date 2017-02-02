@@ -18,6 +18,10 @@ define([
         commercialFeatures,
         injector = new Injector();
 
+    function noop() {
+
+    }
+
     describe('Article Aside Adverts', function () {
 
         var fixturesConfig = {
@@ -56,7 +60,7 @@ define([
         });
 
         it('should return the ad slot container on init', function (done) {
-            articleAsideAdverts.init();
+            articleAsideAdverts.init(noop, noop);
             mediator.once('page:commercial:right', function (adSlot) {
                 expect(adSlot[0]).toBe(qwery('.js-ad-slot-container', $fixturesContainer)[0]);
                 done();
@@ -64,7 +68,7 @@ define([
         });
 
         it('should append ad slot', function (done) {
-            articleAsideAdverts.init();
+            articleAsideAdverts.init(noop, noop);
             mediator.once('page:commercial:right', function () {
                 expect(qwery('.js-ad-slot-container > .ad-slot', $fixturesContainer).length).toBe(1);
                 done();
@@ -72,7 +76,7 @@ define([
         });
 
         it('should have the correct ad name', function (done) {
-            articleAsideAdverts.init();
+            articleAsideAdverts.init(noop, noop);
             mediator.once('page:commercial:right', function () {
                 expect($('.ad-slot', $fixturesContainer).data('name')).toBe('right');
                 done();
@@ -80,7 +84,7 @@ define([
         });
 
         it('should have the correct size mappings', function (done) {
-            articleAsideAdverts.init();
+            articleAsideAdverts.init(noop, noop);
             mediator.once('page:commercial:right', function () {
                 expect($('.ad-slot', $fixturesContainer).data('mobile')).toBe('1,1|2,2|300,250|fluid');
                 done();
@@ -90,7 +94,7 @@ define([
         it('should not display ad slot if disabled in commercial-feature-switches', function (done) {
             commercialFeatures.articleAsideAdverts = false;
 
-            articleAsideAdverts.init().then(function (returned) {
+            articleAsideAdverts.init(noop, noop).then(function (returned) {
                 expect(returned).toBe(false);
                 expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
                 done();

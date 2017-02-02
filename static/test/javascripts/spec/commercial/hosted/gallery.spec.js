@@ -37,7 +37,7 @@ define([
                 'commercial/modules/hosted/gallery'
             ], function (galleryModule) {
                 $fixturesContainer = fixtures.render(fixturesConfig);
-                galleryModule.init();
+                galleryModule.init(noop, noop);
                 mediator.on('page:hosted:gallery', function(instance) {
                     gallery = instance;
                     done();
