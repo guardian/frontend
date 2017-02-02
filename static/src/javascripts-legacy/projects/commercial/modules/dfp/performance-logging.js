@@ -133,8 +133,6 @@ define([
 
     return {
         setListeners : setListeners,
-        moduleStart: moduleStart,
-        moduleEnd: moduleEnd,
         updateAdvertMetric : updateAdvertMetric,
         addStartTimeBaseline : addStartTimeBaseline,
         addEndTimeBaseline : addEndTimeBaseline,
