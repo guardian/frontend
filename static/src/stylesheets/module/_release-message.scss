@@ -473,7 +473,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 .site-message--membership-message-deep-purple {
-    background: #7d0068;
+    background: $features-main-1;
 }
 
 .site-message--membership-message-yellow {
@@ -483,7 +483,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message--membership-message-vibrant-blue {
     @include site-message-dark-text;
-    background: #4bc6df;
+    background: $news-main-2;
 }
 
 .site-message--membership-message-light-blue {
@@ -493,12 +493,12 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message--membership-message-teal {
     @include site-message-dark-text;
-    background: #69d1ca;
+    background: $news-support-3;
 }
 
 .site-message--contributions-message {
     @include site-message-dark-text;
-    background: #ffbb00;
+    background: $multimedia-main-2;
 }
 
 /*
@@ -980,7 +980,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 .membership__remind-me-form {
-    border-top: 1px dotted #333333;
+    border-top: 1px dotted $neutral-1;
     margin-top: $gs-baseline/2;
     width: 100%;
 }
@@ -1038,11 +1038,11 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 
     .membership__remind-me-form__error.yellow {
-        color: #b51800;
+        color: $live-main-1;
     }
 
     .membership__remind-me-form__error.bright-blue {
-        color: #b51800;
+        color: $live-main-1;
     }
 
     .membership__remind-me-form__error.purple {
@@ -1051,9 +1051,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
     .membership__remind-me-form__error.dark-blue {
         color: #ffffff;
-    }
-    .membership__remind-me-form__thanks-message {
-
     }
 
     .membership__remind-me-form__error.hide-element,

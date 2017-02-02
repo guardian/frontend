@@ -183,7 +183,7 @@ define([
                     trackDisplay: true,
                     cssModifierClass: colourClass
                 }).show(renderedBanner);
-            
+
             if(params.secondaryButtonCaption &&  SECONDARY_BUTTON != null && params.showRemindMe) {
                 setSecondaryButtonListener();
             }
@@ -194,7 +194,7 @@ define([
             mediator.emit('banner-message:complete');
         }
 
-        function emailIsValid(email){
+        function emailIsValid(email) {
             return typeof email === 'string' && email.indexOf('@') > -1;
         }
 
@@ -259,7 +259,7 @@ define([
                 var email = REMIND_ME_TEXT_FIELD.value;
                 if(emailIsValid(email)){
                     sendEmail(email);
-                }else{
+                } else {
                     showElement(REMIND_ME_ERROR);
                 }
             });
