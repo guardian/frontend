@@ -190,9 +190,11 @@ object ContentTypeFormat {
   implicit val mediaAssetFormat = Json.format[MediaAsset]
   implicit val mediaAtomFormat = Json.format[MediaAtom]
   implicit val interactiveAtomFormat = Json.format[InteractiveAtom]
-  implicit val genericThriftAtomFormat = GenericThriftAtomFormat 
+  implicit val genericThriftAtomFormat = GenericThriftAtomFormat
   implicit val recipeThriftAtomFormat = RecipeThriftAtomFormat
-  implicit val recipeAtomFormat = Json.format[RecipeAtom] 
+  implicit val reviewThriftAtomFormat = ReviewThriftAtomFormat
+  implicit val recipeAtomFormat = Json.format[RecipeAtom]
+  implicit val reviewAtomFormat = Json.format[ReviewAtom]
   implicit val atomsFormat = Json.format[Atoms]
   implicit val blockAttributesFormat = Json.format[BlockAttributes]
   implicit val bodyBlockFormat = Json.format[BodyBlock]
@@ -409,6 +411,11 @@ object GenericThriftAtomFormat extends Format[com.gu.contentatom.thrift.Atom] {
 object RecipeThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.recipe.RecipeAtom] {
  def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
  def writes(recipe: com.gu.contentatom.thrift.atom.recipe.RecipeAtom) = JsObject(Seq.empty)
+}
+
+object ReviewThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.review.ReviewAtom] {
+  def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
+  def writes(review: com.gu.contentatom.thrift.atom.review.ReviewAtom) = JsObject(Seq.empty)
 }
 
 object CardStyleFormat extends Format[CardStyle] {
