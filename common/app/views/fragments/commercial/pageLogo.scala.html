@@ -1,4 +1,6 @@
-@(branding: common.commercial.Branding,
+@import com.gu.commercial.branding.Branding
+@import views.html.fragments.commercial.logo
+@(branding: Branding,
   isInteractive: Boolean,
   onDarkBackground: Boolean = false
 )(implicit request: RequestHeader)

@@ -6,7 +6,7 @@ object StaticPages {
   def simpleSurveyStaticPageForId(id: String): SimplePage = SimplePage(
     MetaData.make(
       id = id,
-      section = Option(SectionSummary(id="global", activeBrandings=None)),
+      section = Option(SectionSummary(id="global")),
       webTitle = "Guardian Survey Page",
       contentType = "survey",
       iosType = None,
@@ -15,7 +15,7 @@ object StaticPages {
   def simpleEmailSignupPage(id: String, webTitle: String): SimplePage = SimplePage(
     MetaData.make(
       id = id,
-      section = Option(SectionSummary(id="email-signup-page", activeBrandings=None)),
+      section = Option(SectionSummary(id="email-signup-page")),
       webTitle = webTitle,
       contentType = "Signup",
       iosType = None,
@@ -24,7 +24,7 @@ object StaticPages {
   def simpleNewslettersPage(id: String): SimplePage = SimplePage(
     MetaData.make(
       id = id,
-      section = Option(SectionSummary(id="newsletter-signup-page", activeBrandings=None)),
+      section = Option(SectionSummary(id="newsletter-signup-page")),
       webTitle = "Sign up for Guardian emails",
       contentType = "Signup",
       iosType = None,

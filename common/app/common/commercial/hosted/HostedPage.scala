@@ -2,10 +2,10 @@ package common.commercial.hosted
 
 import java.net.URLEncoder
 
+import com.gu.commercial.branding.Dimensions
 import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery, Video}
 import com.gu.contentapi.client.model.v1.{Content, SponsorshipLogoDimensions}
 import common.Logging
-import common.commercial.Dimensions
 import common.commercial.hosted.HostedUtils.getAndLog
 import common.commercial.hosted.HostedVideoPage.log
 import conf.Configuration.site
@@ -92,8 +92,6 @@ object HostedCampaign {
 case class HostedLogo(src: String, dimensions: Option[Dimensions], link: String)
 
 object HostedLogo {
-
-  implicit val jsonFormat = Json.format[HostedLogo]
 
   def make(
     src: String,
