@@ -981,7 +981,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .membership__remind-me-form {
     border-top: 1px dotted #333333;
-    margin-top: 12px;
+    margin-top: $gs-baseline/2;
     width: 100%;
 }
 
@@ -993,18 +993,18 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     @include mq($from: mobile) {
         font-size: 12px;
         line-height: 24px;
-        height: 36px;
-        margin-top: 12px;
+        height: $gs-baseline * 3;
+        margin-top: $gs-baseline/2;
     }
     @include mq($from: tablet) {
         font-size: 14px;
         line-height: 28px;
-        height: 36px;
+        height: $gs-baseline * 3;
     }
     @include mq($from: desktop) {
         font-size: 14px;
-        line-height: 36px;
-        height: 36px;
+        line-height: $gs-baseline * 3;
+        height: $gs-baseline * 3;
         width: 269px;
     }
     position: relative;
@@ -1017,11 +1017,11 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     background-color: #333333;
     top: 0px;
     z-index: $zindex-popover + 1;
-    margin-top: 6px;
+    margin-top: $gs-baseline/2;
 
     @include mq($from: desktop) {
-        margin-left: 10px;
-        margin-top: 12px;
+        margin-left: $gs-gutter/2;
+        margin-top: $gs-baseline;
     }
 
 }
@@ -1062,20 +1062,20 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 
     .membership__remind-me-form__thanks-message {
-        margin-top: 12px;
-        margin-bottom: 12px;
+        margin-top: $gs-baseline;
+        margin-bottom: $gs-baseline;
         position:relative;
         display: block;
 
         @include mq($from: desktop) {
-            margin-bottom: 6px;
+            margin-bottom: $gs-baseline/2;
         }
     }
 
     .membership__remind-me-form__fields {
         @include mq($from: desktop) {
             float: left;
-            margin-bottom: 6px;
+            margin-bottom: $gs-baseline/2;
         }
     }
 }
