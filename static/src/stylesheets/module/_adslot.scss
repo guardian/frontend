@@ -129,7 +129,7 @@
         margin-left: calc(50% - #{(gs-span($gs-max-columns) + $gs-gutter * 2) / 2});
 
         .has-page-skin & {
-            margin-left: 0;
+            margin-left: auto;
         }
     }
 
