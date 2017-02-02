@@ -17,7 +17,6 @@ define([
         'lodash/objects/defaults',
         'lodash/collections/find',
         'common/views/svgs',
-        'common/modules/identity/api',
         'common/utils/fetch'
     ], function (bean,
                  qwery,
@@ -37,7 +36,6 @@ define([
                  defaults,
                  find,
                  svgs,
-                 identity,
                  fetch) {
 
         // change messageCode to force redisplay of the message to users who already closed it.
