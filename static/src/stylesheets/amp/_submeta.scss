@@ -1,0 +1,58 @@
+.submeta2 {
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+}
+
+.submeta2__section-labels {
+    min-height: $gs-row-height;
+    font-size: 16px;
+    border-top: 1px dotted $neutral-5;
+    border-bottom: 1px dotted $neutral-5;
+    padding: $gs-baseline / 2 0;
+
+
+    &:before {
+        content: "More";
+        font-size: 12px;
+        color: $neutral-2;
+        display: block;
+        margin-bottom: -($gs-baseline / 4);
+    }
+}
+
+.submeta2__keywords {
+    font-size: 14px;
+    padding: $gs-baseline / 2 0;
+    border-bottom: 1px dotted $neutral-5;
+    margin-bottom: $gs-baseline / 2;
+}
+
+.submeta2__link {
+    font-weight: 500;
+    line-height: 22px;
+    position: relative;
+    padding-left: .3em;
+    padding-right: .35em;
+
+    &:before {
+        position: absolute;
+        pointer-events: none;
+        content: '/';
+        //optically aligns slashes
+        left: -.28em;
+        color: $neutral-5;
+    }
+}
+
+.submeta2__link--first {
+    padding-left: 0;
+
+    &:before {
+        content: none;
+    }
+}
+
+.submeta2__badge {
+    float: right;
+    margin-top: -$gs-baseline;
+    margin-left: $gs-gutter / 2;
+}

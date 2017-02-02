@@ -1,4 +1,4 @@
-@(item: model.ContentType, isAmp: Boolean = false)(implicit request: RequestHeader)
+@(item: model.ContentType)(implicit request: RequestHeader)
 
 @import common.{LinkTo, Localisation}
 @import conf.switches.Switches.ArticleBadgesSwitch
@@ -14,11 +14,7 @@
         @badgeFor(item).map { badge =>
             <div class="badge-slot">
                 <a href="@LinkTo {/@badge.seriesTag}">
-                    @if(isAmp) {
-                        <amp-img class="badge-slot__img" src="@badge.imageUrl" layout="fixed" height="33" width="33"></amp-img>
-                    } else {
-                        <img class="badge-slot__img" src="@badge.imageUrl"/>
-                    }
+                    <img class="badge-slot__img" src="@badge.imageUrl"/>
                 </a>
             </div>
         }
@@ -46,17 +42,3 @@
         }
     }
 </div>
-
-@ObserverOrSectionLabel() = {
-    @if(item.content.isFromTheObserver) {
-        <div class="content__series-label">
-            <a class="content__series-label__link" href="http://observer.theguardian.com">The Observer</a>
-        </div>
-    } else {
-        <div class="content__series-label @if(item.content.isImmersive && item.content.tags.isArticle) { content__series-label--immersive-article }">
-            <a class="content__series-label__link" href="@LinkTo {/@item.content.sectionLabelLink}">
-                @Html(Localisation(item.content.sectionLabelName))
-            </a>
-        </div>
-    }
-}

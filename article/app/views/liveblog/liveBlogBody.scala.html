@@ -27,16 +27,18 @@
         </div>
 
         <header class="content__head tonal__head tonal__head--@toneClass(article)
-                      @if(ArticleBadgesSwitch.isSwitchedOn) {
-                          @badgeFor(article).map { badge => content__head--is-badged
-                              @badge.classModifier.map(modifier => s"content__head--$modifier")
-                          }
-                      }">
+            @if(ArticleBadgesSwitch.isSwitchedOn) {
+                @badgeFor(article).map { badge => content__head--is-badged
+                    @badge.classModifier.map(modifier => s"content__head--$modifier")
+                }
+            }">
             @* UPPER HEADER *@
             <div class="content__header tonal__header u-cf">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
-                        @fragments.meta.metaInline(article, amp)
+                        @if(!amp) {
+                            @fragments.meta.metaInline(article)
+                        }
                         <h1 itemprop="headline" class="content__headline js-score">@Html(article.trail.headline)</h1>
                     </div>
                 </div>
@@ -109,7 +111,7 @@
 
                     @if(amp) {
                         @views.html.liveblog.liveBlogBodyContentAMP(model)
-                        @fragments.submeta(article)
+                        @fragments.submeta(article, amp)
                         <div class="after-article js-after-article"></div>
                         <div class="js-bottom-marker"></div>
                     } else {
