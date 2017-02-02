@@ -4,43 +4,40 @@ define([
     'common/utils/cookies',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/modules/analytics/mvt-cookie',
-    'lodash/functions/memoize',
+    'lodash/arrays/compact',
     'lodash/utilities/noop',
+    'common/modules/experiments/segment-util',
     'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/opinion-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
-    'common/modules/experiments/tests/neilsen-check',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
-    'common/modules/experiments/tests/contributions-epic-brexit',
-    'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
-    'common/modules/experiments/tests/paid-content-vs-outbrain'
+    'common/modules/experiments/tests/paid-content-vs-outbrain',
+    'common/modules/experiments/acquisition-test-selector',
+    'common/modules/experiments/tests/membership-ab-thrasher'
 ], function (reportError,
              config,
              cookies,
              mediator,
              store,
-             mvtCookie,
-             memoize,
+             compact,
              noop,
+             segmentUtil,
              EditorialEmailVariants,
              OpinionEmailVariants,
              RecommendedForYou,
-             NeilsenCheck,
              MembershipEngagementBannerTests,
-             ContributionsEpicBrexit,
-             ContributionsEpicAlwaysAskStrategy,
-             PaidContentVsOutbrain
+             PaidContentVsOutbrain,
+             acquisitionTestSelector,
+             MembershipABThrasher
     ) {
-    var TESTS = [
+    var TESTS = compact([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
         new RecommendedForYou(),
-        new NeilsenCheck(),
-        new ContributionsEpicBrexit,
-        new ContributionsEpicAlwaysAskStrategy,
-        new PaidContentVsOutbrain
-    ].concat(MembershipEngagementBannerTests);
+        new PaidContentVsOutbrain,
+        acquisitionTestSelector.getTest(),
+        new MembershipABThrasher
+    ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';
 
@@ -172,7 +169,7 @@ define([
                 .forEach(function (test) {
                     var variant = getTestVariantId(test.id);
 
-                    if (variant && variant !== 'notintest') {
+                    if (variant && segmentUtil.isInTest(test)) {
                         log[test.id] = abData(variant, 'false');
                     }
                 });
@@ -226,40 +223,16 @@ define([
             var variant = getVariant(test, variantId);
             if (variant) {
                 variant.test();
-            } else if (variantId === 'notintest' && test.notInTest) {
+            } else if (!segmentUtil.isInTest(test) && test.notInTest) {
                 test.notInTest();
             }
         }
     }
 
-    /**
-     * Determine whether the user is in the test or not and return the associated
-     * variant ID.
-     *
-     * The test population is just a subset of mvt ids. A test population must
-     * begin from a specific value. Overlapping test ranges are permitted.
-     *
-     * @return {String} variant ID
-     */
-    var variantIdFor = memoize(function (test) {
-        var smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset;
-        var largestTestId = smallestTestId + mvtCookie.getMvtNumValues() * test.audience;
-        var mvtCookieId = mvtCookie.getMvtValue();
-
-        if (mvtCookieId && mvtCookieId > smallestTestId && mvtCookieId <= largestTestId) {
-            // This mvt test id is in the test range, so allocate it to a test variant.
-            var variantIds = test.variants.map(getId);
-
-            return variantIds[mvtCookieId % variantIds.length];
-        } else {
-            return 'notintest';
-        }
-    }, getId); // use test ids as memo cache keys
-
     function allocateUserToTest(test) {
         // Only allocate the user if the test is valid and they're not already participating.
         if (testCanBeRun(test) && !isParticipating(test)) {
-            addParticipation(test, variantIdFor(test));
+            addParticipation(test, segmentUtil.variantIdFor(test));
         }
     }
 
@@ -273,9 +246,9 @@ define([
      */
     function registerCompleteEvent(complete) {
         return function initListener(test) {
-            var variantId = variantIdFor(test);
+            var variantId = segmentUtil.variantIdFor(test);
 
-            if (variantId !== 'notintest') {
+            if (segmentUtil.isInTest(test)) {
                 var variant = getVariant(test, variantId);
                 var listener = (complete ? variant.success : variant.impression) || noop;
 
@@ -372,8 +345,8 @@ define([
             var test = getTest(testId);
 
             var variant = test && test.variants.filter(function (v) {
-                    return v.id.toLowerCase() === variantId.toLowerCase();
-                })[0];
+                return v.id.toLowerCase() === variantId.toLowerCase();
+            })[0];
 
             var impression = variant && variant.impression || noop;
             var complete = variant && variant.success || noop;
@@ -479,7 +452,7 @@ define([
         // testing
         reset: function () {
             TESTS = [];
-            variantIdFor.cache = {};
+            segmentUtil.variantIdFor.cache = {};
         }
     };
 

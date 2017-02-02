@@ -17,14 +17,14 @@ import conf.switches.Switches.ServerSideTests
 // }
 
 
-object ABNewNavVariantSix extends TestDefinition(
-  name = "ab-new-nav-variant-six",
-  description = "users in this test will see the new header sixth variant",
+object ABNewNavVariantSeven extends TestDefinition(
+  name = "ab-new-nav-variant-seven",
+  description = "users in this test will see the new header seventh variant",
   owners = Seq(Owner.withGithub("natalialkb")),
   sellByDate = new LocalDate(2017, 2, 8)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header").contains("variantsix")
+    request.headers.get("X-GU-ab-new-header").contains("variantseven")
   }
 }
 
@@ -43,7 +43,7 @@ object CommercialClientLoggingVariant extends TestDefinition(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Seq(Owner.withGithub("rich-nguyen")),
-  sellByDate = new LocalDate(2017, 2, 1)
+  sellByDate = new LocalDate(2018, 2, 1)
   ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ccl").contains("ccl-A")
@@ -85,7 +85,7 @@ trait ServerSideABTests {
 
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
-    ABNewNavVariantSix,
+    ABNewNavVariantSeven,
     ABNewNavControl,
     CommercialClientLoggingVariant,
     WebpackTest,

@@ -24,6 +24,7 @@ object Frontend extends Build with Prototypes {
       awsSts,
       awsSqs,
       contentApiClient,
+      enumeratumPlay,
       filters,
       commonsLang,
       configMagic,
@@ -52,7 +53,8 @@ object Frontend extends Build with Prototypes {
       kinesisLogbackAppender,
       targetingClient,
       scanamo,
-      scalaUri
+      scalaUri,
+      commercialShared
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
@@ -97,8 +99,6 @@ object Frontend extends Build with Prototypes {
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
     TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._")
   )
-
-  val router = application("router")
 
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
@@ -201,7 +201,6 @@ object Frontend extends Build with Prototypes {
     applications,
     sport,
     discussion,
-    router,
     diagnostics,
     admin,
     identity,

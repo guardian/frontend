@@ -19,8 +19,7 @@ define([
     }
 
     function initYoutubeEvents(videoId) {
-
-        var ga = window.ga;
+        
         var gaTracker = config.googleAnalytics.trackers.editorial;
 
         var events = {
@@ -37,7 +36,7 @@ define([
                 eventAction: eventAction(),
                 eventLabel: videoId,
                 dimension19: videoId,
-                dimension20: 'guardian-youtube'
+                dimension20: 'gu-video-youtube'
             }
         };
 
@@ -47,9 +46,9 @@ define([
             mediator.once(buildEventId(event, videoId), function(id) {
                 var mediaEvent = MediaEvent(videoId, 'video', event);
                 ophanRecord(mediaEvent);
-                ga(gaTracker + '.send', 'event',
+                window.ga(gaTracker + '.send', 'event',
                     gaHelper.buildGoogleAnalyticsEvent(mediaEvent, events.metricMap, id,
-                        'gu-video-youtube', eventAction, id));
+                        'gu-video-youtube', eventAction, event.mediaId));
             });
         });
 

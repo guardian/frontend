@@ -62,7 +62,8 @@ define([
         this.params = {
             orderBy: options.orderBy,
             displayThreaded: options.displayThreaded,
-            maxResponses: options.maxResponses
+            maxResponses: options.maxResponses,
+            commentsClosed: options.commentsClosed
         };
     }
 
@@ -105,7 +106,8 @@ define([
             orderBy: 'oldest',
             page: pageNumber,
             pageSize: commentsPerPage,
-            displayThreaded: this.params.displayThreaded
+            displayThreaded: this.params.displayThreaded,
+            commentsClosed: this.params.commentsClosed
         };
 
         if (this.params.maxResponses) {

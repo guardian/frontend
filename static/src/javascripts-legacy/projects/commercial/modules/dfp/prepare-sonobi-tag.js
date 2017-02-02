@@ -15,7 +15,7 @@ define([
     function setupSonobi() {
         // Setting the async property to false will _still_ load the script in
         // a non-blocking fashion but will ensure it is executed before googletag
-        return loadScript(config.libs.sonobi, { async: false }).then(catchPolyfillErrors);
+        loadScript(config.libs.sonobi, { async: false }).then(catchPolyfillErrors);
     }
 
     // Wrap the native implementation of getOwnPropertyNames in a try-catch. If any polyfill attempts
@@ -41,7 +41,11 @@ define([
     }
 
     function init() {
-        return dfpEnv.sonobiEnabled && commercialFeatures.dfpAdvertising ? setupSonobi() : Promise.resolve();
+        if (dfpEnv.sonobiEnabled && commercialFeatures.dfpAdvertising) {
+            setupSonobi();
+        }
+
+        return Promise.resolve();
     }
 
     return {

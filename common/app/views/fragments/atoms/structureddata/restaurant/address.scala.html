@@ -1,0 +1,18 @@
+@import com.gu.contententity.thrift.Address
+
+@(address: Address)(implicit request: RequestHeader)
+{
+"@@type": "PostalAddress",
+@streetName(address).map { name => "streetAddress": "@name", }
+@address.locality.map { locality => "addressLocality": "@locality", }
+@address.neighbourhood.map { neighbourhood => "addressRegion": "@neighbourhood", }
+@address.postCode.map { postCode => "postalCode": "@postCode", }
+@address.country.map { country => "addressCountry": "@country" }
+}
+
+@streetName(address: Address) = @{
+    for {
+        streetNumber <- address.streetNumber.map(_.toString) orElse Some("")
+        streetName <- address.streetName
+    } yield {s"$streetNumber $streetName".trim}
+}

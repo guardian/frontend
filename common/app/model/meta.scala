@@ -1,12 +1,13 @@
 package model
 
 import campaigns.PersonalInvestmentsCampaign
+import com.gu.commercial.branding.Branding
+import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import common.commercial.{AdUnitMaker, BrandHunter, Branding}
+import common.commercial.{AdUnitMaker, EditionBranding}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
-import contentapi.{Content => CapiContent}
 import conf.Configuration
 import cricketPa.CricketTeams
 import model.content.MediaAtom
@@ -111,8 +112,9 @@ object MetaData {
     javascriptConfigOverrides: Map[String, JsValue] = Map(),
     opengraphPropertiesOverrides: Map[String, String] = Map(),
     isHosted: Boolean = false,
-    twitterPropertiesOverrides: Map[String, String] = Map()
-    ): MetaData = {
+    twitterPropertiesOverrides: Map[String, String] = Map(),
+    editionBrandings: Option[Seq[EditionBranding]] = None
+  ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
     MetaData(
@@ -135,7 +137,9 @@ object MetaData {
       javascriptConfigOverrides = javascriptConfigOverrides,
       opengraphPropertiesOverrides = opengraphPropertiesOverrides,
       isHosted = isHosted,
-      twitterPropertiesOverrides = twitterPropertiesOverrides)
+      twitterPropertiesOverrides = twitterPropertiesOverrides,
+      editionBrandings = editionBrandings
+    )
   }
 
   def make(fields: Fields, apiContent: contentapi.Content) = {
@@ -159,7 +163,8 @@ object MetaData {
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdated
         else CacheTime.NotRecentlyUpdated
       },
-      isHosted = apiContent.isHosted
+      isHosted = apiContent.isHosted,
+      editionBrandings = Some(EditionBranding.fromItem(apiContent))
     )
   }
 }
@@ -192,7 +197,8 @@ final case class MetaData (
   opengraphPropertiesOverrides: Map[String, String] = Map(),
   isHosted: Boolean = false,
   twitterPropertiesOverrides: Map[String, String] = Map(),
-  contentWithSlimHeader: Boolean = false
+  contentWithSlimHeader: Boolean = false,
+  editionBrandings: Option[Seq[EditionBranding]]
 ){
   val sectionId = section map (_.id) getOrElse ""
 
@@ -278,6 +284,7 @@ final case class MetaData (
     */
   def normalisedContentType: String = StringUtils.remove(contentType.toLowerCase, ' ')
 
+  def branding(edition: Edition): Option[Branding] = EditionBranding.branding(editionBrandings, edition)
 }
 
 object Page {
@@ -300,7 +307,6 @@ object Page {
 // A Page is something that has metadata, and anything with Metadata can be rendered.
 trait Page {
   def metadata: MetaData
-  def branding(edition: Edition): Option[Branding] = None
 }
 
 // ContentPage objects use data from a ContentApi item to populate metadata.
@@ -327,9 +333,8 @@ trait ContentPage extends Page {
     metadata.twitterProperties ++
     item.content.twitterProperties ++
     metadata.twitterPropertiesOverrides
-
-  override def branding(edition: Edition): Option[Branding] = BrandHunter.findContentBranding(item, edition)
 }
+
 case class SimpleContentPage(content: ContentType) extends ContentPage {
   override lazy val item: ContentType = content
 }

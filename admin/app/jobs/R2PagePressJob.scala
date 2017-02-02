@@ -84,10 +84,9 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService) extends Exe
   private def parseAndClean(originalDocSource: String, convertToHttps: Boolean): Future[String] = {
     val cleaners = Seq(new PollsHtmlCleaner(wsClient), InteractiveHtmlCleaner, NextGenInteractiveHtmlCleaner, SimpleHtmlCleaner)
     val archiveDocument = Jsoup.parse(originalDocSource)
-    val doc: Document = cleaners.filter(_.canClean(archiveDocument))
-      .map(_.clean(archiveDocument, convertToHttps))
-      .headOption
-      .getOrElse(archiveDocument)
+    val doc: Document = cleaners.find(_.canClean(archiveDocument))
+                        .map(_.clean(archiveDocument, convertToHttps))
+                        .getOrElse(archiveDocument)
     Future.successful(doc.toString)
   }
 

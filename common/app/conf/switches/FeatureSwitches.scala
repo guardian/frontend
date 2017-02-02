@@ -483,18 +483,7 @@ trait FeatureSwitches {
     "Live blog chrome notifications - prod",
     owners = Seq(Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 1),
-    exposeClientSide = true
-  )
-
-  //Owner Michael McNamara
-  val AmpInteractivePlaceHolderAttribute = Switch(
-    SwitchGroup.Feature,
-    "amp-interactive-placeholder-attribute",
-    "Adds a placeholder attribute to interactives on amp so that they are allowed to display in the top part of the page",
-    owners = Seq(Owner.withGithub("michaelwmcnamara")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 20),
+    sellByDate = new LocalDate(2017, 4, 5),
     exposeClientSide = true
   )
 
@@ -505,18 +494,7 @@ trait FeatureSwitches {
     "Allows alternate email styling when passing ?format=email-connected, for testing two email design variants",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 24),
-    exposeClientSide = true
-  )
-
-  //Owner Michael McNamara
-  val StressTestTailor = Switch(
-    SwitchGroup.Feature,
-    "stress-test-tailor-healthcheck",
-    "Sends a healthcheck metric for every page",
-    owners = Seq(Owner.withGithub("michaelwmcnamara")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 20),
+    sellByDate = new LocalDate(2017, 2, 27),
     exposeClientSide = true
   )
 

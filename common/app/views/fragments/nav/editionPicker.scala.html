@@ -1,35 +1,31 @@
 @()(implicit request: RequestHeader)
 
 @import common.{Edition, LinkTo}
+@import views.support.RenderClasses
 
-<div class="edition-picker js-edition-picker-container" data-component="edition-picker">
+<li class="navigation-group__item navigation-group__item--edition-picker">
+    <details>
+        <summary class="main-navigation__item__button"
+        data-link-name="nav2 : edition picker">
 
-    <input class="edition-picker__button js-enhance-checkbox"
-        type="checkbox" id="edition-picker"
-        aria-controls="edition-picker__dropdown">
+            <i class="main-menu__icon main-menu__icon--chevron personalisation__icon"></i>
+            change your edition
+        </summary>
 
-    <label class="edition-picker__current-edition js-on-enter-click"
-        for="edition-picker" tabindex="0"
-        data-link-name="nav2 : edition-picker">
+        <ul class="personalisation__links">
+            @Edition.all.map { edition =>
+                <li class="@RenderClasses(Map(
+                    "personalisation__link" -> true,
+                    "personalisation__link--active" -> (edition == Edition(request))
+                    ))">
+                    <a data-link-name="nav2 : edition-picker: @edition.id"
+                        href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
 
-            @fragments.inlineSvg("world", "icon")
-            <span class="u-h"> Change editions from the </span>
-            @Edition(request).displayName
-    </label>
-
-    <ul class="edition-picker__dropdown js-edition-picker-dropdown" id="edition-picker__dropdown" aria-hidden="true">
-        @Edition.others(request).map { edition =>
-            <li class="edition-picker__dropdown__item">
-                <a class="edition-picker__dropdown-item-link"
-                    data-edition="@edition.id"
-                    data-link-name="nav2 : edition-picker : @edition.id"
-                    title="Switch to the @edition.id edition"
-                    tabindex="0"
-                    href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
                         <span class="u-h"> switch to the </span>
                         <span> @edition.displayName </span>
-                </a>
-            </li>
-        }
-    </ul>
-</div>
+                    </a>
+                </li>
+            }
+        </ul>
+    </details>
+</li>

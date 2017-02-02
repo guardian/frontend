@@ -68,11 +68,12 @@ define([
         }
 
         if (commercialFeatures.dfpAdvertising) {
-            return setupAdvertising()
+            setupAdvertising()
             // A promise error here, from a failed module load,
             // could be a network problem or an intercepted request.
             // Abandon the init sequence.
             .catch(removeAdSlots);
+            return Promise.resolve();
         }
 
         return removeAdSlots();

@@ -27,14 +27,13 @@ define([
     var track = {};
     track.seen = false;
 
-    var ga = window.ga;
     var gaTracker = config.googleAnalytics.trackers.editorial;
 
     function sendToGA(label, customDimensions) {
         var fieldsObject = assign({
             nonInteraction: true // to avoid affecting bounce rate
         }, (customDimensions || {}));
-        ga(gaTracker + '.send', 'event', 'element view', 'onpage item', label, fieldsObject);
+        window.ga(gaTracker + '.send', 'event', 'element view', 'onpage item', label, fieldsObject);
     }
 
     track.jumpedToComments = function () {

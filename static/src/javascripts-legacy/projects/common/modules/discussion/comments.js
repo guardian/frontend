@@ -163,7 +163,7 @@ Comments.prototype.fetchComments = function(options) {
         orderBy: orderBy,
         pageSize: options.pagesize || this.options.pagesize,
         displayThreaded: this.options.threading !== 'unthreaded',
-        commentable: config.page.commentable
+        commentsClosed: options.commentsClosed
     };
 
     if (options.page) {
@@ -182,7 +182,8 @@ Comments.prototype.fetchComments = function(options) {
             discussionId: this.options.discussionId,
             orderBy: queryParams.orderBy,
             displayThreaded: queryParams.displayThreaded,
-            maxResponses: queryParams.maxResponses
+            maxResponses: queryParams.maxResponses,
+            commentsClosed: queryParams.commentsClosed
         })
         .loadAllComments()
         .catch(function() {

@@ -1,4 +1,3 @@
-/* global guardian */
 define([
     'bean',
     'qwery',
@@ -27,7 +26,7 @@ define([
     gaHelper
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
-        isEmbed = !!guardian.isEmbed,
+        isEmbed = !!window.guardian.isEmbed,
         QUARTILES = [25, 50, 75],
         // Advert and content events used by analytics. The expected order of bean events is:
         EVENTS = [
@@ -39,7 +38,6 @@ define([
             'content:play',
             'content:end'
         ],
-        ga = window.ga,
         gaTracker = config.googleAnalytics.trackers.editorial;
 
 
@@ -125,7 +123,7 @@ define([
             return 'media:' + eventName;
         }).forEach(function(playerEvent) {
             player.on(playerEvent, function(_, mediaEvent) {
-                ga(gaTracker + '.send', 'event', gaHelper.buildGoogleAnalyticsEvent(mediaEvent, events, canonicalUrl,
+                window.ga(gaTracker + '.send', 'event', gaHelper.buildGoogleAnalyticsEvent(mediaEvent, events, canonicalUrl,
                     'guardian-videojs', gaHelper.getGoogleAnalyticsEventAction, mediaEvent.mediaId));
             });
         });
