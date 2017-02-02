@@ -108,7 +108,10 @@ define([
             start();
             var ret = fn.apply(null, arguments);
             if (ret instanceof Promise) {
-                ret.then(stop);
+                ret.then(stop, function(reason) {
+                    stop();
+                    throw reason;
+                });
             } else {
                 stop();
             }
@@ -123,6 +126,7 @@ define([
                 fn.apply(null, [start, stop].concat(arguments));
             } catch (e) {
                 stop();
+                throw e;
             }
         }
     }
