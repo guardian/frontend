@@ -198,14 +198,4 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
-  val UseLinkPreconnect = Switch(
-    SwitchGroup.Performance,
-    "use-link-preconnect",
-    "If this switch is on then link preconnect hints will be on the page",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 1),
-    exposeClientSide = false
-  )
-
 }
