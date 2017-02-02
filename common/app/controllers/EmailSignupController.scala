@@ -159,8 +159,6 @@ class EmailSignupController(wsClient: WSClient)(implicit context: ApplicationCon
           case OtherError   => InternalServerError("Internal error")
         }))
         case _ =>
-          println("Not accepts html or json")
-          println(render)
           NotAccepted.increment()
           NotAcceptable
       }
