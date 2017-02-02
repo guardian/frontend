@@ -7,8 +7,8 @@ define([
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/dfp/add-slot',
-    'common/modules/user-prefs',
-    'commercial/modules/dfp/performance-logging'
+    'common/modules/commercial/commercial-features',
+    'common/modules/user-prefs'
 ], function (
     qwery,
     Promise,
@@ -18,8 +18,8 @@ define([
     fastdom,
     createSlot,
     addSlot,
-    userPrefs,
-    performanceLogging
+    commercialFeatures,
+    userPrefs
 ) {
     var containerSelector = '.fc-container:not(.fc-container--commercial)';
     var sliceSelector = '.js-fc-slice-mpu-candidate';

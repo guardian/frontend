@@ -71,7 +71,7 @@ define([
         }
     }
 
-    function init(moduleName) {
+    function init() {
 
         if (!commercialFeatures.thirdPartyTags) {
             return Promise.resolve(false);

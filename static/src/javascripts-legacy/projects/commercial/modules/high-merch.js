@@ -3,14 +3,13 @@ define([
     'common/utils/config',
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/commercial-features',
-    'commercial/modules/dfp/performance-logging'
-], function (Promise, config, fastdom, createSlot, commercialFeatures, performanceLogging) {
+    'common/modules/commercial/commercial-features'
+], function (Promise, config, fastdom, createSlot, commercialFeatures) {
     return {
         init: init
     };
 
-    function init(moduleName) {
+    function init() {
         if (!commercialFeatures.highMerch) {
             return Promise.resolve();
         }

@@ -9,7 +9,7 @@ define([
         init: init
     };
 
-    function init(moduleName) {
+    function init() {
         var showMores = qwery('.adverts__more > summary');
         bean.on(document, 'click', showMores, onOpenClick);
         bean.on(document, 'click', showMores, onKeyPress(onOpenClick));
