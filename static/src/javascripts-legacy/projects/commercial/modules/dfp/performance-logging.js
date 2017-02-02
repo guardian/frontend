@@ -1,9 +1,11 @@
 define([
+    'Promise',
     'common/utils/raven',
     'common/utils/config',
     'common/utils/user-timing',
     'common/modules/analytics/beacon'
 ], function (
+    Promise,
     raven,
     config,
     userTiming,
@@ -99,6 +101,32 @@ define([
         performanceLog.tags.push(tag);
     }
 
+    function wrap(name, fn) {
+        var start = moduleStart.bind(null, name);
+        var stop = moduleEnd.bind(null, name);
+        return function() {
+            start();
+            var ret = fn.apply(null, arguments);
+            if (ret instanceof Promise) {
+                ret.then(stop);
+            } else {
+                stop();
+            }
+        };
+    }
+
+    function defer(name, fn) {
+        var start = moduleStart.bind(null, name);
+        var stop = moduleEnd.bind(null, name);
+        return function() {
+            try {
+                fn.apply(null, [start, stop].concat(arguments));
+            } catch (e) {
+                stop();
+            }
+        }
+    }
+
     return {
         setListeners : setListeners,
         moduleStart: moduleStart,
@@ -109,6 +137,8 @@ define([
         primaryBaseline : primaryBaseline,
         secondaryBaseline: secondaryBaseline,
         addTag: addTag,
+        wrap: wrap,
+        defer: defer,
         reportTrackingData: raven.wrap(reportTrackingData)
     };
 });
