@@ -29,7 +29,7 @@ define([
 
     return contributionsUtilities.makeABTest({
         id: 'ContributionsEpicAlwaysAskStrategy',
-        campaignId: 'epic_always_ask_strategy',
+        campaignId: 'always_ask_strategy',
 
         start: '2016-12-06',
         expiry: '2017-02-06',

@@ -10,7 +10,7 @@ define([
 
     return contributionsUtilities.makeABTest({
         id: 'ContributionsEpicBrexit',
-        campaignId: 'epic_brexit_2017_01',
+        campaignId: 'brexit_2017_01',
 
         start: '2017-01-06',
         expiry: '2017-03-01',

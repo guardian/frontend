@@ -10,6 +10,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/geolocation',
+    'common/modules/analytics/register'
 
 ], function (commercialFeatures,
              targetingTool,
@@ -21,7 +22,8 @@ define([
              fastdom,
              mediator,
              storage,
-             geolocation) {
+             geolocation,
+             register) {
 
     var membershipURL = 'https://membership.theguardian.com/supporter';
     var contributionsURL = 'https://contribute.theguardian.com';
@@ -54,11 +56,12 @@ define([
 
     function ContributionsABTest(options) {
         this.id = options.id;
+        this.epic = options.epic || true;
         this.start = options.start;
         this.expiry = options.expiry;
         this.author = options.author;
         this.idealOutcome = options.idealOutcome;
-        this.campaignId = options.campaignId;
+        this.campaignId = this.epic ? 'epic_component_' + options.campaignId : options.campaignId;
         this.description = options.description;
         this.showForSensitive = options.showForSensitive || false;
         this.audience = options.audience;
@@ -125,6 +128,7 @@ define([
             var component = $.create(options.template(this.contributeURL, this.membershipURL));
 
             function render() {
+                register.start(this.campaignId)
                 return fastdom.write(function () {
                     var sibling = $(options.insertBeforeSelector);
 
@@ -139,6 +143,7 @@ define([
                             elementInView.on('firstview', function () {
                                 viewLog.logView(test.id);
                                 mediator.emit(test.viewEvent);
+                                register.end(this.campaignId)
                             });
                         });
                     }
