@@ -248,13 +248,7 @@ define([
             getDOMElements();
             bean.on($('.secondary')[0], 'click', function () {
                 hideElement(SECONDARY_BUTTON);
-                if(!identity.isUserLoggedIn()){
-                    showElement(REMIND_ME_FORM);
-                }else{
-                    var email = identity.getUserFromCookie().primaryEmailAddress;
-                    sendEmail(email);
-                }
-
+                showElement(REMIND_ME_FORM);
             });
 
             bean.on($('.membership__remind-me-form__cta')[0], 'click', function () {
