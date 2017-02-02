@@ -1,4 +1,5 @@
 @import model.Tag
+@import conf.Configuration
 
 @(fullName: String, contributors: Seq[Tag])(implicit request: RequestHeader)
 {
@@ -9,7 +10,7 @@
 
 @authorSameAs = @{
     val byName: Tag => Boolean = _.id.contains(fullName.toLowerCase.replaceAll("\\s", "") || fullName.toLowerCase.replaceAll("//s", "-"))
-    val guardianUrl = "https://www.theguardian.com/"
+    val guardianUrl = Configuration.site.host
     def toContributorLink: Tag => String = guardianUrl + _.id
 
     contributors

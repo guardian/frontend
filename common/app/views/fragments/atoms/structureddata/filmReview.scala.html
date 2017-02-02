@@ -3,6 +3,7 @@
 @import play.api.libs.json.Json
 @import play.api.libs.json.JsArray
 @import model.Tag
+@import conf.Configuration
 
 @(review: model.content.ReviewAtom, entity: Film, contributors: Seq[Tag])(implicit request: RequestHeader)
 
@@ -17,7 +18,7 @@
   "publisher": {
       "@@type":"Organization",
       "name":"The Guardian",
-      "sameAs":"https://www.theguardian.com"
+      "sameAs": "@Configuration.site.host"
   },
   "description":"@review.data.reviewSnippet",
   "inLanguage":"en",
