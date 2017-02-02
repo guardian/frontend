@@ -170,7 +170,8 @@ define([
                 mainButtonCaption: params.mainButtonCaption,
                 secondaryButtonCaption: params.secondaryButtonCaption,
                 colourClass: colourClass,
-                arrowWhiteRight: svgs('arrowWhiteRight')
+                arrowWhiteRight: svgs('arrowWhiteRight'),
+                showRemindMe: params.showRemindMe || false
             });
 
             var messageShown = new Message(
@@ -182,8 +183,8 @@ define([
                     trackDisplay: true,
                     cssModifierClass: colourClass
                 }).show(renderedBanner);
-
-            if(params.secondaryButtonCaption &&  SECONDARY_BUTTON != null) {
+            
+            if(params.secondaryButtonCaption &&  SECONDARY_BUTTON != null && params.showRemindMe) {
                 setSecondaryButtonListener();
             }
 
