@@ -44,7 +44,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
 
   sealed abstract class AmpExternalVideo(val videoId: String, val elementType: String, customAttributes: String => Map[String, String]){
-    def getAttributes = customAttributes(videoId) ++ Map(("width", "5"), ("height", "3"), ("layout", "responsive"))
+    val commonVideoAttributes = Map(("width", "5"), ("height", "3"), ("layout", "responsive"))
+    def getAttributes = customAttributes(videoId) ++ commonVideoAttributes
   }
 
   def standardAttributes(videoId: String): Map[String,String] = { Map(("data-videoid", videoId)) }
