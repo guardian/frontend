@@ -43,22 +43,20 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   }
 
 
-  sealed abstract class AmpExternalVideo(val videoId: String, val elementType: String, customAttributes: String => Map[String, String]){
-    val commonVideoAttributes = Map(("width", "5"), ("height", "3"), ("layout", "responsive"))
-    def getAttributes = customAttributes(videoId) ++ commonVideoAttributes
+  sealed abstract class AmpExternalVideo(val videoId: String, val elementType: String, customAttributes: Map[String, String]){
+    val commonAttributes = Map(("width", "5"), ("height", "3"), ("layout", "responsive"))
+    val attributes = customAttributes ++ commonAttributes
   }
 
-  def standardAttributes(videoId: String): Map[String,String] = { Map(("data-videoid", videoId)) }
+  def standardAttributes(videoId: String): Map[String,String] = Map(("data-videoid", videoId))
 
-  def facebookAttributes(videoId: String): Map[String, String] = {
-    Map(("data-href", s"https://www.facebook.com/theguardian/videos/$videoId"), ("data-embed-as", "video"))
-  }
+  def facebookAttributes(videoId: String): Map[String, String] = Map(
+    ("data-href", s"https://www.facebook.com/theguardian/videos/$videoId"),
+    ("data-embed-as", "video"))
 
-
-
-  case class YoutubeExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-youtube", customAttributes = id => standardAttributes(id))
-  case class VimeoExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-vimeo", customAttributes = id => standardAttributes(id))
-  case class FacebookExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-facebook", customAttributes = id => facebookAttributes(id))
+  case class YoutubeExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-youtube", standardAttributes(videoId))
+  case class VimeoExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-vimeo", standardAttributes(videoId))
+  case class FacebookExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-facebook", facebookAttributes(videoId))
 
 
   object AmpExternalVideo {
@@ -88,7 +86,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
         iframeElement <- videoElement.getElementsByTag("iframe")
         ampExternalVideo <- getAmpExternalVideoByUrl(videoElement.attr("data-canonical-url"))
       } yield {
-        val ampVideoElement = createElement(document, ampExternalVideo.elementType, ampExternalVideo.getAttributes)
+        val ampVideoElement = createElement(document, ampExternalVideo.elementType, ampExternalVideo.attributes)
         iframeElement.replaceWith(ampVideoElement)
       }
     }
