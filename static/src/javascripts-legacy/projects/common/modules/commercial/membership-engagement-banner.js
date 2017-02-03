@@ -15,7 +15,8 @@ define([
         'common/modules/experiments/tests/membership-engagement-banner-tests',
         'lodash/objects/defaults',
         'lodash/collections/find',
-        'common/views/svgs',
+        'common/views/svg',
+        'inlineSvg!svgs/icon/arrow-white-right.svg',
         'common/utils/fetch'
     ], function (bean,
                  $,
@@ -33,7 +34,8 @@ define([
                  MembershipEngagementBannerTests,
                  defaults,
                  find,
-                 svgs,
+                 svg,
+                 arrowWhiteRight,
                  fetch) {
 
         // change messageCode to force redisplay of the message to users who already closed it.
@@ -158,7 +160,7 @@ define([
                 messageText: messageText,
                 buttonCaption: params.buttonCaption,
                 colourClass: colourClass,
-                arrowWhiteRight: svgs('arrowWhiteRight'),
+                arrowWhiteRight: svg(arrowWhiteRight),
                 showRemindMe: params.showRemindMe || false
             });
 
@@ -192,17 +194,17 @@ define([
         }
 
         function showThankYouMessage(){
-            hideElement($(REMIND_ME_TEXT_FIELD)[0]);
-            hideElement($(REMIND_ME_CTA)[0]);
-            hideElement($(REMIND_ME_ERROR)[0]);
+            hideElement($(REMIND_ME_TEXT_FIELD));
+            hideElement($(REMIND_ME_CTA));
+            hideElement($(REMIND_ME_ERROR));
 
-            showElement($(REMIND_ME_THANKS_MESSAGE)[0]);
+            showElement($(REMIND_ME_THANKS_MESSAGE));
         }
 
         function showErrorMessage(){
-            hideElement($(REMIND_ME_TEXT_FIELD)[0]);
-            hideElement($(REMIND_ME_CTA)[0]);
-            showElement($(REMIND_ME_ERROR)[0]);
+            hideElement($(REMIND_ME_TEXT_FIELD));
+            hideElement($(REMIND_ME_CTA));
+            showElement($(REMIND_ME_ERROR));
         }
 
         function submitForm(email, listID) {
@@ -231,8 +233,8 @@ define([
         function setSecondaryButtonListener() {
 
             bean.on($(SECONDARY_BUTTON)[0], 'click', function () {
-                hideElement($(SECONDARY_BUTTON)[0]);
-                showElement($(REMIND_ME_FORM)[0]);
+                hideElement($(SECONDARY_BUTTON));
+                showElement($(REMIND_ME_FORM));
             });
 
             bean.on($(REMIND_ME_CTA)[0], 'click', function () {
@@ -241,7 +243,7 @@ define([
                 if(emailIsValid(email)){
                     sendEmail(email);
                 } else {
-                    showElement($(REMIND_ME_ERROR)[0]);
+                    showElement($(REMIND_ME_ERROR));
                 }
             });
         }
