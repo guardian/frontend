@@ -1,7 +1,6 @@
 package views.support
 
-import java.text.Normalizer
-import java.net.URI
+import java.net.{URI, URISyntaxException}
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
@@ -155,8 +154,15 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
 
   def findContainerFromId(id: String, src: String): Option[ImageElement] = {
     // It is possible that a single data media id can appear multiple times in the elements array.
-    val srcImagePath = new URI(src).getPath()
+
     val imageContainers = article.elements.bodyImages.filter(_.properties.id == id)
+
+    val maybeSrcImagePath: Option[String] =
+      try {
+        Some(new URI(src.trim).getPath)
+      } catch {
+        case e: URISyntaxException => None
+      }
 
     // Try to match the container based on both URL and media ID.
     val fullyMatchedImage: Option[ImageElement] = {
@@ -164,7 +170,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
         container <- imageContainers
         asset <- container.images.imageCrops
         url <- asset.url
-        if url.contains(srcImagePath)
+        if maybeSrcImagePath.exists(url.contains)
       } yield { container }
     }.headOption
 
