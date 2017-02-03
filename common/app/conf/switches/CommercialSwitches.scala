@@ -35,6 +35,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val TourismAustraliaSwitch = Switch(
+    SwitchGroup.Commercial,
+    "tourism-australia",
+    "If this switch is on, the Tourism Australia pixel is added to the Ashes Australia travel section.",
+    owners = Seq(Owner.withName("commercial team")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val AudienceScienceGatewaySwitch = Switch(
     SwitchGroup.Commercial,
     "audience-science-gateway",
