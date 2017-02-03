@@ -23,6 +23,7 @@ define([
         this.variants = [
             {
                 id: 'control',
+
                 test: function () {},
                 impression: function(track) {
                     mediator.on('control:insert', function () {

@@ -147,7 +147,8 @@ define([
         var browser = detect.getUserAgent.browser,
          version = detect.getUserAgent.version;
 
-        return !config.page.shouldHideAdverts &&
+        return !config.page.shouldHideAdverts
+            &&
          !config.page.isSensitive &&
          !emailInserted &&
          !config.page.isFront &&

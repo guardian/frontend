@@ -193,7 +193,6 @@ define([
                 // First we need to check the user's email subscriptions
                 // so we don't insert the sign-up if they've already subscribed
                 emailRunChecks.getUserEmailSubscriptions().then(function () {
-
                     if (ab.isParticipating({id: 'TailorRecommendedEmail'}) &&
                         ab.isInVariant('TailorRecommendedEmail', 'tailor-recommended')) {
                         var bwidCookie = cookies.get('bwid') || false;
@@ -208,8 +207,6 @@ define([
                         addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'control:signup');
                         mediator.emit('control:insert');
                     }
-
-
                 }).catch(function (error) {
                     robust.log('c-email', error);
                 });
