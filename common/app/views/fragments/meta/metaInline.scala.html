@@ -14,7 +14,7 @@
         @badgeFor(item).map { badge =>
             <div class="badge-slot">
                 <a href="@LinkTo {/@badge.seriesTag}">
-                    <img class="badge-slot__img" src="@badge.imageUrl"/>
+                    <img class="badge-slot__img" src="@badge.imageUrl" alt="@item.content.blogOrSeriesTag.map(_.name)"/>
                 </a>
             </div>
         }

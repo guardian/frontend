@@ -15,11 +15,11 @@
                 @badgeFor(content).map { badge =>
                     <div class="submeta2__badge">
                         <a href="@LinkTo {/@badge.seriesTag}">
-                        @if(amp) {
-                            <amp-img class="badge-slot__img" src="@badge.imageUrl" layout="fixed" height="33" width="33"></amp-img>
-                        } else {
-                            <img class="badge-slot__img" src="@badge.imageUrl"/>
-                        }
+                            @if(amp) {
+                                <amp-img class="badge-slot__img" src="@badge.imageUrl" layout="fixed" height="33" width="33"></amp-img>
+                            } else {
+                                <img class="badge-slot__img" src="@badge.imageUrl" alt="@content.content.blogOrSeriesTag.map(_.name)"/>
+                            }
                         </a>
                     </div>
                 }
