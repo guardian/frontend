@@ -1,25 +1,11 @@
 @(media: model.content.MediaAtom,  displayCaption: Boolean, mainMedia: Boolean)(implicit request: RequestHeader)
-@import conf.Configuration
-@import views.support.Video700
-@import conf.switches.Switches.UseAmpYouTubeTagForMediaAtoms
 @import views.html.fragments.atoms.mediaAtomCaption
-
-@if(UseAmpYouTubeTagForMediaAtoms.isSwitchedOn){
     <amp-youtube
     data-videoid="@media.assets.head.id"
     layout="responsive"
     width="16" height="9" data-param-modestbranding="1" data-param-rel="0" data-param-showinfo="1">
     </amp-youtube>
-} else {
-    <amp-iframe
-    sandbox="allow-scripts allow-same-origin allow-popups"
-    layout="responsive"
-    width="16" height="9" src="@Configuration.Media.externalEmbedHost/embed/atom/media/@media.id">
-    @media.posterImage.map { posterImage =>
-        <amp-img layout="fill" src="@Video700.bestFor(posterImage)" placeholder></amp-img>
-    }
-    </amp-iframe>
-}
+
 @if(displayCaption) {
     @mediaAtomCaption(media.title, mainMedia)
 }
