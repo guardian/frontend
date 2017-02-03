@@ -15,6 +15,7 @@ define([
     'commercial/modules/third-party-tags/imr-worldwide',
     'commercial/modules/third-party-tags/imr-worldwide-legacy',
     'commercial/modules/third-party-tags/remarketing',
+    'commercial/modules/third-party-tags/tourism-australia',
     'commercial/modules/third-party-tags/krux',
     'common/modules/identity/api',
     'commercial/modules/third-party-tags/outbrain',
@@ -34,6 +35,7 @@ define([
     imrWorldwide,
     imrWorldwideLegacy,
     remarketing,
+    tourismAustralia,
     krux,
     identity,
     outbrain,
@@ -91,6 +93,7 @@ define([
             imrWorldwide,
             imrWorldwideLegacy,
             remarketing,
+            tourismAustralia,
             krux
         ].filter(function (_) { return _.shouldRun; });
 
@@ -104,10 +107,14 @@ define([
         var frag = document.createDocumentFragment();
         while (services.length) {
             var service = services.shift();
-            var script = document.createElement('script');
-            script.src = service.url;
-            script.onload = service.onLoad;
-            frag.appendChild(script);
+            if (service.useImage) {
+                new Image().src = service.url;
+            } else {
+                var script = document.createElement('script');
+                script.src = service.url;
+                script.onload = service.onLoad;
+                frag.appendChild(script);
+            }
         }
         ref.parentNode.insertBefore(frag, ref);
     }
