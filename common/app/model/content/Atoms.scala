@@ -41,7 +41,7 @@ final case class MediaAtom(
 
 sealed trait MediaAssetPlatform extends EnumEntry
 
-object MediaAssetPlatform extends PlayEnum[MediaAssetPlatform] {
+object MediaAssetPlatform extends Enum[MediaAssetPlatform] with PlayJsonEnum[MediaAssetPlatform] {
 
   val values = findValues
 
