@@ -51,7 +51,6 @@
     @include content-gutter();
     background-color: $guardian-brand;
 
-    a:hover > &,
     a:focus > & {
         background-color: $guardian-brand-dark;
     }
