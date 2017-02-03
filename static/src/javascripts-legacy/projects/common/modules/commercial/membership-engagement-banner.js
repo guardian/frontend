@@ -38,6 +38,8 @@ define([
                  arrowWhiteRight,
                  fetch) {
 
+        var gaTracker = config.googleAnalytics.trackers.editorial;
+
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
         var messageCode = 'engagement-banner-2017-01-11';
@@ -179,6 +181,8 @@ define([
 
                 if(params.showRemindMe) {
                     setSecondaryButtonListener();
+
+                    window.ga(gaTracker + '.send', 'event', 'display', 'engagement-banner', 'engagement-banner-remind-me');
                 }
             }
 
@@ -235,12 +239,16 @@ define([
             bean.on($(SECONDARY_BUTTON)[0], 'click', function () {
                 hideElement($(SECONDARY_BUTTON));
                 showElement($(REMIND_ME_FORM));
+
+                window.ga(gaTracker + '.send', 'event', 'click', 'engagement-banner', 'remind-me-button');
             });
 
             bean.on($(REMIND_ME_CTA)[0], 'click', function () {
                 var email = $(REMIND_ME_TEXT_FIELD)[0].value;
 
                 if(emailIsValid(email)){
+                    window.ga(gaTracker + '.send', 'event', 'click', 'engagement-banner', 'send-email');
+
                     sendEmail(email);
                 } else {
                     showElement($(REMIND_ME_ERROR));
