@@ -7,7 +7,7 @@
     font-size: 16px;
     border-top: 1px dotted $neutral-5;
     border-bottom: 1px dotted $neutral-5;
-    padding: $gs-baseline / 2 0;
+    padding: $gs-baseline / 2 0 $gs-baseline;
 
 
     &:before {
@@ -20,8 +20,8 @@
 }
 
 .submeta2__keywords {
-    font-size: 14px;
-    padding: $gs-baseline / 2 0;
+    font-size: 15px;
+    padding: $gs-baseline / 2 0 $gs-baseline;
     border-bottom: 1px dotted $neutral-5;
     margin-bottom: $gs-baseline / 2;
 }
@@ -40,6 +40,10 @@
         //optically aligns slashes
         left: -.28em;
         color: $neutral-5;
+    }
+
+    .submeta2__keywords & {
+        color: $neutral-2;
     }
 }
 

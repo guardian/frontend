@@ -915,7 +915,7 @@ $caption-button-size: 32px;
     min-height: $gs-row-height;
     border-top: 1px dotted $neutral-5;
     border-bottom: 1px dotted $neutral-5;
-    padding: $gs-baseline / 2 0;
+    padding: $gs-baseline / 2 0 $gs-baseline;
 
 
     &:before {
@@ -928,8 +928,7 @@ $caption-button-size: 32px;
 }
 
 .submeta2__keywords {
-    @include fs-textSans(2);
-    line-height: 22px;
+    @include fs-textSans(4);
     padding: $gs-baseline / 2 0 $gs-baseline;
     border-bottom: 1px dotted $neutral-5;
     margin-bottom: $gs-baseline / 2;
@@ -948,6 +947,10 @@ $caption-button-size: 32px;
         //optically aligns slashes
         left: -.28em;
         color: $neutral-5;
+    }
+
+    .submeta2__keywords & {
+        color: $neutral-2;
     }
 }
 
