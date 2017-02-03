@@ -38,7 +38,6 @@ define([
                  arrowWhiteRight,
                  fetch) {
 
-        var gaTracker = config.googleAnalytics.trackers.editorial;
 
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
@@ -182,11 +181,24 @@ define([
                 if(params.showRemindMe) {
                     setSecondaryButtonListener();
 
-                    window.ga(gaTracker + '.send', 'event', 'display', 'engagement-banner', 'engagement-banner-remind-me');
+                    trackGAEvent('display', 'engagement-banner', 'engagement-banner-remind-me');
                 }
             }
 
             mediator.emit('banner-message:complete');
+        }
+
+        function trackGAEvent(category, action, label) {
+            var gaTracker = null;
+
+            if(config.googleAnalytics) {
+                 gaTracker = config.googleAnalytics.trackers.editorial;
+            }
+
+            if(gaTracker && window.ga){
+                window.ga(gaTracker + '.send', 'event', category, action, label);
+            }
+
         }
 
         function emailIsValid(email) {
@@ -240,15 +252,14 @@ define([
                 hideElement($(SECONDARY_BUTTON));
                 showElement($(REMIND_ME_FORM));
 
-                window.ga(gaTracker + '.send', 'event', 'click', 'engagement-banner', 'remind-me-button');
+                trackGAEvent('click', 'engagement-banner', 'remind-me-button');
             });
 
             bean.on($(REMIND_ME_CTA)[0], 'click', function () {
                 var email = $(REMIND_ME_TEXT_FIELD)[0].value;
 
                 if(emailIsValid(email)){
-                    window.ga(gaTracker + '.send', 'event', 'click', 'engagement-banner', 'send-email');
-
+                    trackGAEvent('click', 'engagement-banner', 'send-email');
                     sendEmail(email);
                 } else {
                     showElement($(REMIND_ME_ERROR));
