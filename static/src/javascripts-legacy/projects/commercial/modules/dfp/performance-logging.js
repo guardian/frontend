@@ -119,11 +119,10 @@ define([
     }
 
     function defer(name, fn) {
-        var start = moduleStart.bind(null, name);
-        var stop = moduleEnd.bind(null, name);
+        var startStop = [moduleStart.bind(null, name), moduleEnd.bind(null, name)];
         return function() {
             try {
-                fn.apply(null, [start, stop].concat(arguments));
+                fn.apply(null, startStop.concat(startStop.slice.call(arguments)));
             } catch (e) {
                 stop();
                 throw e;
