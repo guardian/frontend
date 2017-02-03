@@ -326,9 +326,9 @@ object NewNavigation {
         val parentSection = section.parentSection.getPopularEditionalisedNavLinks(edition).drop(1)
 
         if (parentSection.contains(section.navLink)) {
-          section.parentSection.getPopularEditionalisedNavLinks(edition).drop(1)
+          parentSection
         } else {
-          Seq(section.navLink) ++ section.parentSection.getPopularEditionalisedNavLinks(edition).drop(1)
+          Seq(section.navLink) ++ parentSection
         }
       }
     }
