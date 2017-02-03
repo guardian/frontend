@@ -9,15 +9,15 @@
 }
 
 .l-footer__secondary {
-    font-size: 12px;
+    @include content-gutter();
     line-height: 1;
-    padding-right: $gs-gutter / 2;
-    padding-left: $gs-gutter / 2;
     font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 
     a {
         color: $neutral-4;
         text-transform: lowercase;
+        display: inline-block;
+        padding-bottom: $gs-baseline;
     }
 }
 
@@ -28,17 +28,12 @@
     padding: ($gs-baseline * 2) 0 ($gs-baseline / 2);
     column-count: 2;
     column-gap: 0;
-
-    a {
-        display: inline-block;
-        padding-bottom: $gs-baseline;
-    }
 }
 
 .really-serious-copyright {
     color: $neutral-4;
-    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
     margin-bottom: .25rem;
+    font-size: 12px;
 }
 
 .l-footer__misc {
