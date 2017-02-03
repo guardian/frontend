@@ -633,6 +633,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         background-color: #ff9b0b;
     }
     .message-button-rounded__cta.primary.purple {
+
         svg path {
             stroke: #ffffff;
             fill: #ffffff;
@@ -1041,10 +1042,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         color: $live-main-1;
     }
 
-    .membership__remind-me-form__error.purple {
-        color: #ffffff;
-    }
-
+    .membership__remind-me-form__error.purple,
     .membership__remind-me-form__error.dark-blue {
         color: #ffffff;
     }
