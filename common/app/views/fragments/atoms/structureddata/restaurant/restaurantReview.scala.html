@@ -24,7 +24,7 @@
     "name": "@entity.restaurantName",
     @entity.webAddress.map{ webAddress => "sameAs": "@webAddress", }
     "priceRange": "£££",
-    @for(address <- entity.address) { "address" : @fragments.atoms.structureddata.restaurant.address(address), }
+    @for(address <- entity.address) { @fragments.atoms.structureddata.restaurant.address(address) }
     @for(geoLocation <- entity.geolocation) { "geo" : @fragments.atoms.structureddata.restaurant.geo(geoLocation), }
     "image": ""
   },
