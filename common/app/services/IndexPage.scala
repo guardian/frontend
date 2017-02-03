@@ -1,7 +1,7 @@
 package services
 
+import com.gu.commercial.branding.Branding
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
-import common.commercial.Branding
 import common.{Edition, LinkTo}
 import conf.switches.Switches
 import contentapi.Paths
@@ -13,6 +13,7 @@ import model.pressed._
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.mvc.RequestHeader
 import slices.{Container, ContainerDefinition, Fixed, FixedContainers}
+
 import scala.Function.const
 import scala.annotation.tailrec
 
@@ -240,5 +241,5 @@ case class IndexPage(
 
   def allPath = s"/$idWithoutEdition"
 
-  def branding(edition: Edition): Option[Branding] = page.branding(edition)
+  def branding(edition: Edition): Option[Branding] = page.metadata.branding(edition)
 }

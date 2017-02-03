@@ -2,21 +2,23 @@
 @import org.joda.time.DateTime
 @import play.api.libs.json.Json
 @import play.api.libs.json.JsArray
+@import model.Tag
+@import conf.Configuration
 
-@(review: model.content.ReviewAtom, entity: Film)(implicit request: RequestHeader)
+@(review: model.content.ReviewAtom, entity: Film, contributors: Seq[Tag])(implicit request: RequestHeader)
 
 <script type="application/ld+json">
 {
   "@@context":"http://schema.org",
   "@@type":"Review",
-  "author": @fragments.atoms.structureddata.person(review.data.reviewer),
+  "author": @fragments.atoms.structureddata.contributor(review.data.reviewer, contributors),
   @review.data.sourceArticleId.map { articleId => "url" : s"https://www.theguardian.com/${articleId}",}
   @review.atom.contentChangeDetails.published.map { published => "datePublished": "@{new DateTime(published.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
   @review.atom.contentChangeDetails.lastModified.map { modified => "dateModified": "@{new DateTime(modified.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
   "publisher": {
       "@@type":"Organization",
       "name":"The Guardian",
-      "sameAs":"https://www.theguardian.com"
+      "sameAs": "@Configuration.site.host"
   },
   "description":"@review.data.reviewSnippet",
   "inLanguage":"en",

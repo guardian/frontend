@@ -1,13 +1,14 @@
 @(index: services.IndexPage)(implicit request: RequestHeader, context: model.ApplicationContext)
-@import common.commercial.PaidContent
+@import com.gu.commercial.branding.PaidContent
+@import common.commercial.EditionBranding
 @import common.{Edition, PagePaths}
 @import model.FrontProperties
 @import model.FrontProperties.empty
 @import services.IndexPage
 @import views.html.fragments.containers.facia_cards.{container, containerScaffold}
 @import views.html.fragments.pagination
-@import views.support.RenderClasses
 @import views.support.Commercial.container.isFirstNonThrasherContainer
+@import views.support.RenderClasses
 
 @if(index.page.metadata.id == "help/accessibility-help") {
     @containerScaffold("Preferences", "accesibility preferences") {
@@ -20,18 +21,18 @@
     case Some(branding) => {
         <div class="l-side-margins">
             <div
-            class="@RenderClasses(Map("fc-container--paid-content paid-content" -> (branding.sponsorshipType == PaidContent)), "u-cf index-page")"
+            class="@RenderClasses(Map("fc-container--paid-content paid-content" -> (branding.brandingType == PaidContent)), "u-cf index-page")"
             data-link-name="Front | @request.path"
             role="main">
 
-                @if(branding.sponsorshipType == PaidContent) {
+                @if(branding.brandingType == PaidContent) {
                     @fragments.guBand()
                 }
 
                 @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
                         @containers.map { containerDefinition =>
                             @container(containerDefinition,
-                                frontProperties = FrontProperties.fromBranding(branding),
+                                frontProperties = FrontProperties.fromBranding(Edition(request), branding),
                                 showFrontBranding = isFirstNonThrasherContainer(containerDefinition.index, containers))
                         }
                 }

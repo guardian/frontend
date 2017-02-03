@@ -24,7 +24,7 @@ object Frontend extends Build with Prototypes {
       awsSts,
       awsSqs,
       contentApiClient,
-      enumeratumPlay,
+      enumeratumPlayJson,
       filters,
       commonsLang,
       configMagic,
@@ -53,7 +53,8 @@ object Frontend extends Build with Prototypes {
       kinesisLogbackAppender,
       targetingClient,
       scanamo,
-      scalaUri
+      scalaUri,
+      commercialShared
     )
   ).settings(
       mappings in TestAssets ~= filterAssets

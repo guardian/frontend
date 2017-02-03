@@ -1,7 +1,9 @@
-@(recipe: model.content.RecipeAtom)(implicit request: RequestHeader)
 @import play.api.libs.json.Json
 @import views.support.{ImgSrc, GoogleStructuredData}
 @import org.joda.time.DateTime
+@import model.Tag
+
+@(recipe: model.content.RecipeAtom, contributors: Seq[Tag])(implicit request: RequestHeader)
 
 <script type="application/ld+json">
      {
@@ -10,7 +12,7 @@
       "name": "@recipe.data.title",
       @for(category <- recipe.data.tags.category) {"recipeCategory": "@category",}
       @recipe.data.images.headOption.map {img => "image": "@imgValue(img)",}
-      @recipe.data.credits.headOption.map { name => "author": @fragments.atoms.structureddata.person(name),}
+      @recipe.data.credits.headOption.map { name => "author": @fragments.atoms.structureddata.contributor(name, contributors),}
       @recipe.atom.contentChangeDetails.created.map { created => "dateCreated": "@{new DateTime(created.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
       @recipe.atom.contentChangeDetails.published.map { published => "datePublished": "@{new DateTime(published.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
       @recipe.atom.contentChangeDetails.lastModified.map { modified => "dateModified": "@{new DateTime(modified.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
