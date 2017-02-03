@@ -1,5 +1,7 @@
 define([
+    'common/utils/mediator'
 ], function (
+    mediator
 ) {
     return function () {
         this.id = 'TailorRecommendedEmail';
@@ -31,13 +33,34 @@ define([
                 id: 'control',
                 test: function () {
                     runTheTest(true);
+                },
+                impression: function(track) {
+                    mediator.on('control:insert', function () {
+                        track();
+                    });
+                },
+                success: function(complete) {
+                    mediator.on('control:signup', function () {
+                        complete();
+                    });
                 }
             },
             {
                 id: 'tailor-recommended',
                 test: function () {
                     runTheTest(false);
+                },
+                impression: function(track) {
+                    mediator.on('tailor-recommended:insert', function () {
+                        track();
+                    });
+                },
+                success: function(complete) {
+                    mediator.on('tailor-recommend:signup', function () {
+                        complete();
+                    });
                 }
+
             }
         ];
     };

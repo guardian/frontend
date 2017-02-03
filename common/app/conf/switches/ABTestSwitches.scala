@@ -86,7 +86,7 @@ trait ABTestSwitches {
     "Use Tailor to target email signup form",
     owners = Seq(Owner.withGithub("lindseydew")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 31),
+    sellByDate = new LocalDate(2017, 3, 31),
     exposeClientSide = true
   )
 }

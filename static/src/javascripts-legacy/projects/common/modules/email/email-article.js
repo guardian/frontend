@@ -16,7 +16,8 @@ define([
     'lodash/collections/find',
     'common/modules/experiments/ab',
     'common/modules/tailor/tailor',
-    'common/utils/cookies'
+    'common/utils/cookies',
+    'common/utils/mediator'
 ], function (
     $,
     bean,
@@ -35,7 +36,8 @@ define([
     find,
     ab,
     tailor,
-    cookies
+    cookies,
+    mediator
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
             $iframeEl.appendTo('.js-article__body');
@@ -150,8 +152,10 @@ define([
                 }
             };
         },
-        addListToPage = function (listConfig) {
+        addListToPage = function (listConfig, successEventName) {
+
             if (listConfig) {
+                listConfig.successEventName = successEventName || "";
                 var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
                     $iframeEl = $(iframe);
 
@@ -185,21 +189,24 @@ define([
     return {
         init: function () {
             if (emailRunChecks.allEmailCanRun()) {
+
                 // First we need to check the user's email subscriptions
                 // so we don't insert the sign-up if they've already subscribed
                 emailRunChecks.getUserEmailSubscriptions().then(function () {
 
                     if (ab.isParticipating({id: 'TailorRecommendedEmail'}) &&
                         ab.isInVariant('TailorRecommendedEmail', 'tailor-recommended')) {
-                        var bwidCookie = cookies.get('bwid');
+                        var bwidCookie = cookies.get('bwid') || false;
                         if(bwidCookie) {
                             tailor.getEmail(bwidCookie).then(function (data) {
-                                addListToPage(find(listConfigs, doesIdMatch.bind(null, data.email)));
+                                addListToPage(find(listConfigs, doesIdMatch.bind(null, data.email)), 'tailor-recommend:signup');
+                                mediator.emit('tailor-recommended:insert');
                             });
                         }
                     } else {
                         // Get the first list that is allowed on this page
-                        addListToPage(find(listConfigs, emailRunChecks.listCanRun));
+                        addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'control:signup');
+                        mediator.emit('control:insert');
                     }
 
 
