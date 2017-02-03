@@ -94,18 +94,24 @@ define([
         Promise.resolve(getSpaceFillerRules(windowHeight, true)).then(fill);
     }
 
-    function init() {
+    function init(start, stop) {
+        start();
+
         if (!commercialFeatures.liveblogAdverts) {
+            stop();
             return Promise.resolve();
         }
 
         isMobile = detect.getBreakpoint() === 'mobile';
 
-        return fastdom.read(function () {
+        fastdom.read(function () {
             return windowHeight = document.documentElement.clientHeight;
         })
         .then(getSpaceFillerRules)
-        .then(fill);
+        .then(fill)
+        .then(stop);
+
+        return Promise.resolve();
     }
 
     return {
