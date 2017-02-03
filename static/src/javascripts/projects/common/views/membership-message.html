@@ -4,12 +4,12 @@
             <%=messageText%>
         </span>
         <span id="membership__engagement-message-button" class="message-button-rounded__cta primary <%=colourClass%>">
-            <span id="membership__engagement-message-button-caption"><%=mainButtonCaption%></span><%=arrowWhiteRight%>
+            <span id="membership__engagement-message-button-caption"><%=buttonCaption%></span><%=arrowWhiteRight%>
         </span>
 
-        <% if(secondaryButtonCaption && showRemindMe) { %>
+        <% if(showRemindMe) { %>
             <span id="membership__engagement-message-button" class="message-button-rounded__cta secondary  <%=colourClass%>">
-                <span id="membership__engagement-message-button-caption"><%=secondaryButtonCaption%></span>
+                <span id="membership__engagement-message-button-caption">I will do it later</span>
             </span>
         <% } %>
     </div>

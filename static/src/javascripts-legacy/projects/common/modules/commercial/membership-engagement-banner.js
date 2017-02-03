@@ -60,13 +60,11 @@ define([
 
         var offeringParams = {
             membership: {
-                mainButtonCaption: 'Become a Supporter',
-                secondaryButtonCaption: 'I will do it later',
+                buttonCaption: 'Become a Supporter',
                 linkUrl: 'https://membership.theguardian.com/supporter'
             },
             contributions: {
-                mainButtonCaption: 'Make a Contribution',
-                secondaryButtonCaption: null,
+                buttonCaption: 'Make a Contribution',
                 linkUrl: 'https://contribute.theguardian.com/'
             }
         };
@@ -158,8 +156,7 @@ define([
             var renderedBanner = template(messageTemplate, {
                 linkHref: params.linkUrl + '?INTCMP=' + params.campaignCode,
                 messageText: messageText,
-                mainButtonCaption: params.mainButtonCaption,
-                secondaryButtonCaption: params.secondaryButtonCaption,
+                buttonCaption: params.buttonCaption,
                 colourClass: colourClass,
                 arrowWhiteRight: svgs('arrowWhiteRight'),
                 showRemindMe: params.showRemindMe || false
@@ -175,13 +172,14 @@ define([
                     cssModifierClass: colourClass
                 }).show(renderedBanner);
 
-            if(params.secondaryButtonCaption &&  $(SECONDARY_BUTTON)[0] != null && params.showRemindMe) {
-                setSecondaryButtonListener();
-            }
-
             if (messageShown) {
                 mediator.emit('membership-message:display');
+
+                if(params.showRemindMe) {
+                    setSecondaryButtonListener();
+                }
             }
+
             mediator.emit('banner-message:complete');
         }
 
@@ -223,11 +221,11 @@ define([
         }
 
         function showElement(element) {
-            element.classList.remove('is-hidden');
+            element.removeClass('is-hidden');
         }
 
         function hideElement(element) {
-            element.classList.add('is-hidden');
+            element.addClass('is-hidden');
         }
 
         function setSecondaryButtonListener() {
