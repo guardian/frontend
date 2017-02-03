@@ -6,7 +6,6 @@
     z-index: $zindex-content;
     width: 100%;
     clear: both;
-    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 }
 
 .l-footer__secondary {
@@ -14,6 +13,7 @@
     line-height: 1;
     padding-right: $gs-gutter / 2;
     padding-left: $gs-gutter / 2;
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 
     a {
         color: $neutral-4;
