@@ -1,0 +1,20 @@
+@import model.Tag
+@import conf.Configuration
+
+@(fullName: String, contributors: Seq[Tag])(implicit request: RequestHeader)
+{
+"@@type": "Person",
+@authorSameAs.map { sameAs => "sameAs": "@sameAs", }
+"name": "@fullName"
+}
+
+@authorSameAs = @{
+    val byName: Tag => Boolean = _.id.contains(fullName.toLowerCase.replaceAll("\\s", "") || fullName.toLowerCase.replaceAll("//s", "-"))
+    val guardianUrl = Configuration.site.host
+    def toContributorLink: Tag => String = guardianUrl + _.id
+
+    contributors
+        .find(byName).map(toContributorLink)
+        .orElse(contributors.headOption.map(toContributorLink))
+        .orElse(Some(guardianUrl)) // if they don't have a contributor tag we default to the URL for the Guardian so it still renders as a rich card.
+}

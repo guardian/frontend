@@ -483,7 +483,7 @@ trait FeatureSwitches {
     "Live blog chrome notifications - prod",
     owners = Seq(Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 1),
+    sellByDate = new LocalDate(2017, 4, 5),
     exposeClientSide = true
   )
 
@@ -494,7 +494,7 @@ trait FeatureSwitches {
     "Allows alternate email styling when passing ?format=email-connected, for testing two email design variants",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 24),
+    sellByDate = new LocalDate(2017, 2, 27),
     exposeClientSide = true
   )
 
@@ -505,7 +505,7 @@ trait FeatureSwitches {
     "Use amp-youtube tag to render YouTube media atoms on AMP pages",
     owners = Seq(Owner.withGithub("michaelwmcnamara")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 2),
+    sellByDate = new LocalDate(2017, 2, 8),
     exposeClientSide = true
   )
 }

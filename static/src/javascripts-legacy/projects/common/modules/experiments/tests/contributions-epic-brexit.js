@@ -21,13 +21,18 @@ define([
         idealOutcome: 'The conversion rate is equal or above what we have observed on other campaigns',
 
         audienceCriteria: 'All',
-        audience: 1,
-        audienceOffset: 0,
+        audience: 0.88,
+        audienceOffset: 0.12,
         useTargetingTool: true,
 
         variants: [
             {
                 id: 'control',
+                maxViews: {
+                    days: 7,
+                    count: 6,
+                    minDaysBetweenViews: 1
+                },
 
                 template: function (contributionUrl, membershipUrl) {
                     return template(contributionsEpicEqualButtons, {

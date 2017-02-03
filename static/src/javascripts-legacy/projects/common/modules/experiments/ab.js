@@ -10,9 +10,9 @@ define([
     'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/opinion-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
-    'common/modules/experiments/tests/neilsen-check',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/acquisition-test-selector',
+    'common/modules/experiments/tests/membership-ab-thrasher',
     'common/modules/experiments/tests/tailor-recommended-email'
 ], function (reportError,
              config,
@@ -25,18 +25,18 @@ define([
              EditorialEmailVariants,
              OpinionEmailVariants,
              RecommendedForYou,
-             NeilsenCheck,
              MembershipEngagementBannerTests,
              acquisitionTestSelector,
+             MembershipABThrasher,
              TailorRecommendedEmail
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
         new RecommendedForYou(),
-        new NeilsenCheck(),
-        new TailorRecommendedEmail(),
-        acquisitionTestSelector.getTest()
+        acquisitionTestSelector.getTest(),
+        new MembershipABThrasher,
+        new TailorRecommendedEmail()
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';
