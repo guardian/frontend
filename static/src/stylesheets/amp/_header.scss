@@ -233,25 +233,25 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
 .main-menu__icon--chevron {
     //optical alignment
-    margin-top: -.05em;
+    margin-top: -.2em;
 
     &:before {
         content: '';
         display: inline-block;
         width: 8px;
         height: 8px;
-        transform: rotate(-45deg);
+        transform: rotate(45deg);
         border: 2px solid $news-support-2;
         border-top: 0;
         border-left: 0;
-        //optical alignment
-        margin-left: -.3em;
     }
 
-    section[expanded] &:before {
-        transform: rotate(45deg);
-        margin-bottom: .14em;
-        margin-left: 0;
+    section[expanded] & {
+        margin-top: .2em;
+
+        &:before {
+            transform: rotate(-135deg);
+        }
     }
 }
 

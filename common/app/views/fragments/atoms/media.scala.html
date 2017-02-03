@@ -1,16 +1,11 @@
 @import model.content.MediaAssetPlatform
-@(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean, embedPage: Boolean = false, displayEndSlate: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean, embedPage: Boolean = false, displayEndSlate: Boolean = false, mainMedia: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @{
     media match {
-            case posterOnly if media.posterImage.isDefined && media.assets.isEmpty => views.html.fragments.imageFigure(media.posterImage.get,
-                amp = amp,
-                doCaption = displayCaption,
-                // image_figureClasses needs to be defined to avoid extra indent on AMP (see imageFigure fragment)
-                image_figureClasses = Some(media.posterImage.get.largestImage.get, ""))
-            case youtube if media.assets.headOption.filter(_.platform == MediaAssetPlatform.Youtube) => if(amp) views.html.fragments.atoms.ampYoutube(media, displayCaption) else views.html.fragments.atoms.youtube(media, displayCaption, embedPage, displayEndSlate)
-            case genericAsset if media.assets.nonEmpty => views.html.fragments.atoms.genericMedia(media, displayCaption, amp)
+            case posterOnly if media.assets.isEmpty && media.posterImage.isDefined  => views.html.fragments.atoms.posterImage(mainMedia = mainMedia, amp = amp,picture = media.posterImage.get, caption = media.title)
+            case youtube if media.assets.headOption.filter(_.platform == MediaAssetPlatform.Youtube) => if(amp) views.html.fragments.atoms.ampYoutube(media = media, displayCaption = displayCaption, mainMedia = mainMedia) else views.html.fragments.atoms.youtube(media = media, displayCaption = displayCaption, embedPage = embedPage, displayEndSlate = displayEndSlate, mainMedia = mainMedia)
+            case genericAsset if media.assets.nonEmpty => views.html.fragments.atoms.genericMedia(media = media, displayCaption = displayCaption, amp = amp)
             case _ =>
         }
-
 }

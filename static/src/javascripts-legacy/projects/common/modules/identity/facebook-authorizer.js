@@ -1,9 +1,10 @@
 /*global FB:false*/
-/*global guardian*/
 define([
-    'common/utils/load-script'
+    'common/utils/load-script',
+    'common/utils/config'
 ], function (
-    loadScript
+    loadScript,
+    config
 ) {
     var scriptSrc = '//connect.facebook.net/en_US/sdk/xfbml.ad.js#xfbml=1&version=v2.5';
 
@@ -104,7 +105,7 @@ define([
 
     FacebookAuthorizer.prototype._loadFacebookScript = function () {
         // don't tell Facebook about pages that have not launched yet
-        if (!guardian.config.page.isPreview) {
+        if (!config.page.isPreview) {
             loadScript(scriptSrc + '&appId=' + this.appId);
         }
     };

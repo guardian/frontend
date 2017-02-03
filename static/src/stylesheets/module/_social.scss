@@ -145,9 +145,7 @@ category: Common
 
 .social--expanded-top {
     position: absolute;
-    padding-left: $gs-gutter/4;
-    padding-right: calc(#{$gs-gutter/4} - 3px);
-    left: -$gs-gutter/4;
+    left: 0;
     height: auto;
     background: #ffffff;
     z-index: $zindex-popover;
@@ -155,20 +153,17 @@ category: Common
     display: inline-block;
     clear: both;
     box-sizing: border-box;
-    border-bottom: 1px dotted $neutral-4;
 
     @include mq($until: mobileLandscape) {
         right: 0;
     }
 
-    @include mq(tablet) {
-        padding-left: $gs-gutter/2;
-        padding-right: calc(#{$gs-gutter/2} - 3px);
-        left: -$gs-gutter/2;
+    @include mq($from: desktop) {
+        min-width: gs-span(2);
     }
 
-    @include mq($from: leftCol) {
-        min-width: 227px;
+    @include mq($from: wide) {
+        min-width: gs-span(3);
     }
 }
 

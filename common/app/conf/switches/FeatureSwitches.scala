@@ -483,7 +483,7 @@ trait FeatureSwitches {
     "Live blog chrome notifications - prod",
     owners = Seq(Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 1),
+    sellByDate = new LocalDate(2017, 4, 5),
     exposeClientSide = true
   )
 
@@ -495,17 +495,6 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 2, 27),
-    exposeClientSide = true
-  )
-
-  //Owner Gideon Goldberg
-  val UseAmpYouTubeTagForMediaAtoms = Switch(
-    SwitchGroup.Feature,
-    "use-amp-youtube-tag-for-media-atoms",
-    "Use amp-youtube tag to render YouTube media atoms on AMP pages",
-    owners = Seq(Owner.withGithub("michaelwmcnamara")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 2),
     exposeClientSide = true
   )
 }

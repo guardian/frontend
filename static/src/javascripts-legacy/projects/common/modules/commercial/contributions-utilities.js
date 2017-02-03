@@ -152,8 +152,22 @@ define([
         this.registerListener('success', 'successOnView', test.viewEvent, options);
     }
 
+    function getCampaignCodeParamter(campaignCodePrefix, campaignID, id) {
+        return 'INTCMP=' + campaignCodePrefix + '_' + campaignID + '_' + id;
+    }
+
+    function getPageviewIdParamter() {
+        var ophan = config.ophan;
+        if(ophan && ophan.pageViewId){
+            return 'REFPVID=' + ophan.pageViewId
+        } else {
+            return 'REFPVID=not_found'
+        }
+    }
+
     ContributionsABTestVariant.prototype.makeURL = function (base, campaignCodePrefix) {
-        return base + '?INTCMP=' + campaignCodePrefix + '_' + this.campaignId + '_' + this.id;
+        var params = [getCampaignCodeParamter(campaignCodePrefix, this.campaignId, this.id), getPageviewIdParamter()];
+        return base + '?' + params.filter(Boolean).join('&');
     };
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {
