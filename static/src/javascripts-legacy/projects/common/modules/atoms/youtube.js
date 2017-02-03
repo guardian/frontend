@@ -182,8 +182,10 @@ define([
                     return;
                 }
 
+                // append index of atom as iframe.id must be unique
                 iframe.id += '/' + index;
 
+                // append index of atom as atomId must be unique
                 var atomId = el.getAttribute('data-media-atom-id') + '/' + index;
                 var overlay = el.querySelector('.youtube-media-atom__overlay');
 
@@ -197,6 +199,7 @@ define([
         });
     }
 
+    // retrieves actual id of atom without appended index
     function getTrackingId(atomId) {
         return atomId.split('/')[0];
     }
