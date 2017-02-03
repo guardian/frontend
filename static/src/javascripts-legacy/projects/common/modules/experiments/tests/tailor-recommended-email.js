@@ -20,20 +20,10 @@ define([
           return true;
         }
 
-        function runTheTest(isControl) {
-            if (isControl) {
-                console.log('control');
-            } else {
-                console.log('tailor');
-            }
-        }
-
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-                    runTheTest(true);
-                },
+                test: function () {},
                 impression: function(track) {
                     mediator.on('control:insert', function () {
                         track();
@@ -47,9 +37,7 @@ define([
             },
             {
                 id: 'tailor-recommended',
-                test: function () {
-                    runTheTest(false);
-                },
+                test: function () {},
                 impression: function(track) {
                     mediator.on('tailor-recommended:insert', function () {
                         track();
