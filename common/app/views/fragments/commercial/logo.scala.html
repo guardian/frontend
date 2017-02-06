@@ -1,14 +1,14 @@
-@import common.commercial.{Branding, Logo, PaidContent}
+@import com.gu.commercial.branding.{Branding, Logo, PaidContent}
 @import implicits.Requests.RichRequestHeader
+@(branding: Branding, onDarkBackground: Boolean = false)(implicit request: RequestHeader)
 
-@(branding: common.commercial.Branding, onDarkBackground: Boolean = false)(implicit request: RequestHeader)
 @standardLogo(logo: Logo) = {
-    <img src="@logo.url" alt="@branding.sponsorName" class="badge__logo">
+    <img src="@logo.src" alt="@branding.sponsorName" class="badge__logo">
 }
 
 @ampLogo(logo: Logo) = {
     @logo.dimensions.map { dim =>
-        <amp-img src="@logo.url"
+        <amp-img src="@logo.src"
                  width="@dim.width"
                  height="@dim.height"
                  alt="@branding.sponsorName"
@@ -18,26 +18,26 @@
     }
 }
 
-@branding.label
-<a class="badge__link" href="@branding.sponsorLink" data-sponsor="@branding.sponsorName.toLowerCase">
+@branding.logo.label
+<a class="badge__link" href="@branding.logo.link" data-sponsor="@branding.sponsorName.toLowerCase">
     @if(request.isAmp) {
-        @if(onDarkBackground && branding.highContrastSponsorLogo.nonEmpty) {
-            @for(highContrastLogo <- branding.highContrastSponsorLogo) {
+        @if(onDarkBackground && branding.logoForDarkBackground.nonEmpty) {
+            @for(highContrastLogo <- branding.logoForDarkBackground) {
                 @ampLogo(highContrastLogo)
             }
         } else {
-            @ampLogo(branding.sponsorLogo)
+            @ampLogo(branding.logo)
         }
     } else {
-        @if(onDarkBackground && branding.highContrastSponsorLogo.nonEmpty) {
-            @for(highContrastLogo <- branding.highContrastSponsorLogo) {
+        @if(onDarkBackground && branding.logoForDarkBackground.nonEmpty) {
+            @for(highContrastLogo <- branding.logoForDarkBackground) {
                 @standardLogo(highContrastLogo)
             }
         } else {
-            @standardLogo(branding.sponsorLogo)
+            @standardLogo(branding.logo)
         }
     }
 </a>
-@if(branding.sponsorshipType != PaidContent) {
+@if(branding.brandingType != PaidContent) {
     <a href="@branding.aboutThisLink" class="badge__help">About this content</a>
 }

@@ -1,11 +1,11 @@
 package model.pressed
 
+import com.gu.commercial.branding.Branding
 import com.gu.contentapi.client.model.v1.ElementType
 import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
 import com.gu.facia.client.models.{Backfill, Branded, CollectionConfigJson, Metadata}
 import common.Edition
-import common.commercial.{BrandHunter, Branding}
 import model.{ContentType, SupportedUrl}
 import org.joda.time.DateTime
 
@@ -165,9 +165,7 @@ final case class PressedProperties(
   href: Option[String],
   webUrl: Option[String]
 ) {
-  def branding(edition: Edition): Option[Branding] = {
-    maybeContent map (BrandHunter.findContentBranding(_, edition)) getOrElse None
-  }
+  def branding(edition: Edition): Option[Branding] = maybeContent flatMap (_.metadata.branding(edition))
 }
 
 object PressedCardHeader {

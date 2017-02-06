@@ -51,13 +51,13 @@ object NavLinks {
   val careers = NavLink("careers", "/money/work-and-careers")
 
   /* OPINION */
-  val opinion = NavLink("opinion home", "/commentisfree", iconName = "home", uniqueSection = "commentisfree")
+  val opinion = NavLink("opinion", "/commentisfree", longTitle = "sport home", iconName = "home", uniqueSection = "commentisfree")
   var columnists = NavLink("columnists", "/index/contributors")
   val theGuardianView = NavLink("the guardian view", "/profile/editorial")
   val cartoons = NavLink("cartoons", "/cartoons/archive")
 
   /* SPORT */
-  val sport = NavLink("sport home", "/sport", iconName = "home", uniqueSection = "sport")
+  val sport = NavLink("sport", "/sport", longTitle = "sport home", iconName = "home", uniqueSection = "sport")
   val football = NavLink("football", "/football", uniqueSection = "football")
   val soccer = football.copy(title = "soccer")
   val cricket = NavLink("cricket", "/sport/cricket")
@@ -81,7 +81,7 @@ object NavLinks {
   val NHL = NavLink("NHL", "/sport/nhl")
 
   /* ARTS */
-  val culture = NavLink("culture home", "/culture", iconName = "home", uniqueSection = "culture")
+  val culture = NavLink("culture", "/culture", longTitle = "culture home", iconName = "home", uniqueSection = "culture")
   val film = NavLink("film", "/film", uniqueSection = "film")
   val tvAndRadio = NavLink("tv & radio", "/tv-and-radio", uniqueSection = "tv-and-radio")
   val music = NavLink("music", "/music", uniqueSection = "music")
@@ -92,7 +92,7 @@ object NavLinks {
   val classical = NavLink("classical", "/music/classicalmusicandopera")
 
   /* LIFE */
-  val lifestyle = NavLink("lifestyle home", "/lifeandstyle", iconName = "home", uniqueSection = "lifeandstyle")
+  val lifestyle = NavLink("lifestyle", "/lifeandstyle", longTitle = "lifestyle home", iconName = "home", uniqueSection = "lifeandstyle")
   val fashion = NavLink("fashion", "/fashion", uniqueSection = "fashion")
   val food = NavLink("food", "/lifeandstyle/food-and-drink")
   val travel = NavLink("travel", "/travel", uniqueSection = "travel")

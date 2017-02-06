@@ -78,6 +78,36 @@ class BookOffersController(bookFinder: BookFinder, bestsellersAgent: Bestsellers
     booksSample(specificIds, segment) map result
   }
 
+  def getBook = Action.async { implicit request =>
+    specificId map { isbn =>
+      bookFinder.findByIsbn(isbn) map {
+        _ map { book =>
+          val json = Json.toJson(book)
+          Cached(60.seconds){
+            JsonComponent(json)
+          }
+        } getOrElse {
+          Cached(componentMaxAge)(jsonFormat.nilResult)
+        }
+      } recover {
+        case e: FeedSwitchOffException =>
+          log.warn(e.getMessage)
+          NoCache(jsonFormat.nilResult.result)
+        case e: FeedMissingConfigurationException =>
+          log.warn(e.getMessage)
+          NoCache(jsonFormat.nilResult.result)
+        case e: CacheNotConfiguredException =>
+          log.warn(e.getMessage)
+          NoCache(jsonFormat.nilResult.result)
+        case NonFatal(e) =>
+          log.error(e.getMessage)
+          NoCache(jsonFormat.nilResult.result)
+      }
+    } getOrElse {
+      Future.successful(NoCache(jsonFormat.nilResult.result))
+    }
+  }
+
   def getBooks = Action.async { implicit request =>
     booksSample(specificIds, segment) map { books =>
       val json = Json.toJson(books)

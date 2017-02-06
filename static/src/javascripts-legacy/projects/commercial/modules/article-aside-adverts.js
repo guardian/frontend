@@ -3,6 +3,7 @@ define([
     'common/utils/$',
     'common/utils/$css',
     'common/utils/config',
+    'common/utils/mediator',
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/commercial-features'
@@ -11,6 +12,7 @@ define([
     $,
     $css,
     config,
+    mediator,
     fastdom,
     createSlot,
     commercialFeatures
@@ -24,12 +26,15 @@ define([
     var adSlotContainerSelector = '.js-ad-slot-container';
     var componentsContainerSelector = '.js-components-container';
 
-    function init() {
+    function init(start, stop) {
+        start();
+
         var $col        = $(rhColumnSelector);
         var $mainCol, $componentsContainer, $adSlotContainer;
 
         // are article aside ads disabled, or secondary column hidden?
         if (!(commercialFeatures.articleAsideAdverts && $col.length && $css($col, 'display') !== 'none')) {
+            stop();
             return Promise.resolve(false);
         }
 
@@ -37,9 +42,10 @@ define([
         $componentsContainer = $(componentsContainerSelector, $col[0]);
         $adSlotContainer = $(adSlotContainerSelector);
 
-        return fastdom.read(function () {
+        fastdom.read(function () {
             return $mainCol.dim().height;
-        }).then(function (mainColHeight) {
+        })
+        .then(function (mainColHeight) {
             var $adSlot, adType;
 
 
@@ -64,7 +70,13 @@ define([
 
                 return $adSlotContainer;
             });
+        })
+        .then(function ($adSlotContainer) {
+            stop();
+            mediator.emit('page:commercial:right', $adSlotContainer);
         });
+
+        return Promise.resolve(true);
     }
 
     return {

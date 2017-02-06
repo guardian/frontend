@@ -30,8 +30,11 @@ define([
     var replaceTopSlot;
     var getSlotName;
 
-    function init() {
+    function init(start, stop) {
+        start();
+
         if (!commercialFeatures.articleBodyAdverts) {
+            stop();
             return Promise.resolve(false);
         }
 
@@ -46,11 +49,11 @@ define([
             // we must wait for DFP to return, since if the merch
             // component is empty, it might completely change the
             // positions where we insert those MPUs.
-            im.then(waitForMerch).then(addInlineAds);
+            im.then(waitForMerch).then(addInlineAds).then(stop);
             return im;
         }
 
-        addInlineAds();
+        addInlineAds().then(stop);
         return Promise.resolve(true);
     }
 

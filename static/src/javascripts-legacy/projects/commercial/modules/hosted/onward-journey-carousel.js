@@ -1,10 +1,12 @@
 define([
     'bean',
+    'qwery',
     'fastdom',
     'Promise',
     'common/utils/$'
 ], function (
     bean,
+    qwery,
     fastdom,
     Promise,
     $
@@ -65,7 +67,9 @@ define([
     };
 
     function init() {
-        new HostedCarousel().bindButtons();
+        if (qwery('.js-carousel-pages').length) {
+            new HostedCarousel().bindButtons();
+        }
         return Promise.resolve();
     }
 

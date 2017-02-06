@@ -1,7 +1,7 @@
 .ad-slot {
     position: relative;
     z-index: $zindex-ads;
-    overflow: hidden;
+    overflow: initial;
 
     .js-off & {
         display: none;
@@ -35,6 +35,7 @@
 
 .ad-slot__label {
     @include font-size(12, 20);
+    position: relative;
     height: $mpu-ad-label-height;
     background-color: $neutral-8;
     margin: 0 auto;
@@ -49,6 +50,16 @@
         color: $neutral-3;
         border-top-color: $media-mute;
         background-color: transparent;
+    }
+
+    &.feedback-submitted .ad-feedback,
+    .ad-feedback__thanks-message {
+        display: none;
+    }
+
+    &.feedback-submitted .ad-feedback__thanks-message {
+        display: inline-block;
+        float:right;
     }
 }
 
@@ -127,9 +138,14 @@
     @include mq(wide) {
         padding-left: $left-column-wide + $gs-gutter * 2;
         margin-left: calc(50% - #{(gs-span($gs-max-columns) + $gs-gutter * 2) / 2});
+        text-align: left;
+
+        &:not(.ad-slot--fluid):not(.ad-slot--fabric):not(.ad-slot--fluid250) {
+            max-width: 970px;
+        }
 
         .has-page-skin & {
-            margin-left: 0;
+            margin-left: auto;
         }
     }
 
@@ -164,10 +180,6 @@
 
     .ad-slot__label {
         margin-top: (-1) * $gs-row-height / 2;
-    }
-
-    @include mq(wide) {
-        text-align: left;
     }
 }
 

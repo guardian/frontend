@@ -10,7 +10,10 @@ define([
     'commercial/modules/sticky-mpu',
     'commercial/modules/dfp/apply-creative-template',
     'commercial/modules/dfp/render-advert-label',
-    'common/modules/onward/geo-most-popular'
+    'common/modules/onward/geo-most-popular',
+    'common/modules/ui/toggles',
+    'commercial/modules/user-ad-feedback',
+    'common/utils/config'
 ], function (
     bonzo,
     qwery,
@@ -23,7 +26,10 @@ define([
     stickyMpu,
     applyCreativeTemplate,
     renderAdvertLabel,
-    geoMostPopular
+    geoMostPopular,
+    Toggles,
+    recordUserAdFeedback,
+    config
 ) {
     /**
      * ADVERT RENDERING
@@ -130,16 +136,18 @@ define([
     sizeCallbacks[adSizes.merchandising] = addFluid250(['ad-slot--commercial-component']);
 
     /**
-     * @param adSlotId - DOM ID of the rendered slot
+     * @param advert - as defined in commercial/modules/dfp/Advert
      * @param slotRenderEvent - GPT slotRenderEndedEvent
      * @returns {Promise} - resolves once all necessary rendering is queued up
      */
     function renderAdvert(advert, slotRenderEvent) {
-        removePlaceholders(advert.node);
+        addContentClass(advert.node);
 
         return applyCreativeTemplate(advert.node).then(function (isRendered) {
             return callSizeCallback()
                 .then(function () { return renderAdvertLabel(advert.node); })
+                .then(addFeedbackDropdownToggle)
+                .then(function () { return applyFeedbackOnClickListeners(slotRenderEvent); })
                 .then(addRenderedClass)
                 .then(function () {
                     return isRendered;
@@ -162,16 +170,48 @@ define([
                 }) : Promise.resolve();
             }
 
+            function addFeedbackDropdownToggle() {
+                return (config.switches.adFeedback && isRendered) ? fastdom.write(function () {
+                    if (!bonzo(advert.node).hasClass('js-toggle-ready')){
+                        new Toggles(advert.node).init();
+                    }
+                }) : Promise.resolve();
+            }
+
+            function applyFeedbackOnClickListeners(slotRenderEvent) {
+                var readyClass = 'js-onclick-ready';
+                return (config.switches.adFeedback && isRendered) ? fastdom.write(function () {
+                    qwery('.js-ad-feedback-option:not(.js-onclick-ready)').forEach(function(el) {
+                        var option = bonzo(el);
+                        el.addEventListener('click', function() {
+                            recordUserAdFeedback(window.location.pathname, el.attributes['data-slot'].nodeValue, slotRenderEvent, el.attributes['data-problem'].nodeValue);
+                        });
+                        option.addClass(readyClass);
+                    });
+                    qwery('.js-ad-feedback-option-other:not(.js-onclick-ready)').forEach(function(el) {
+                        var option = bonzo(el);
+                        var input = qwery('input', el);
+                        el.addEventListener('click', function(e) {
+                            if (e.target.tagName === "svg" || e.target.classList.contains('inline-tick')) {
+                                var comment = input[0].value;
+                                recordUserAdFeedback(window.location.pathname, el.attributes['data-slot'].nodeValue, slotRenderEvent, el.attributes['data-problem'].nodeValue, comment);
+                            } else {
+                                e.preventDefault();
+                                e.stopImmediatePropagation();
+                            }
+                        });
+                        option.addClass(readyClass);
+                    });
+                }) : Promise.resolve();
+            }
         }).catch(raven.captureException);
     }
 
-    function removePlaceholders(adSlotNode) {
-        var placeholder = qwery('.ad-slot__content--placeholder', adSlotNode);
-        var adSlotContent = qwery('div', adSlotNode);
+    function addContentClass(adSlotNode) {
+        var adSlotContent = qwery('> div:not(.ad-slot__label)', adSlotNode);
 
         if (adSlotContent.length) {
             fastdom.write(function () {
-                bonzo(placeholder).remove();
                 bonzo(adSlotContent).addClass('ad-slot__content');
             });
         }
