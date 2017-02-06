@@ -91,9 +91,6 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
 
     if (environment.isProd) {
       val londonTime = TimeZone.getTimeZone("Europe/London")
-      jobs.scheduleWeekdayJob("AdsStatusEmailJob", 44, 8, londonTime) {
-        AdsStatusEmailJob(emailService).run()
-      }
       jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
         log.info("Starting ExpiringSwitchesEmailJob")
         ExpiringSwitchesEmailJob(emailService).run()
@@ -126,7 +123,6 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
     jobs.deschedule("FrontPressJobHighFrequency")
     jobs.deschedule("FrontPressJobStandardFrequency")
     jobs.deschedule("FrontPressJobLowFrequency")
-    jobs.deschedule("AdsStatusEmailJob")
     jobs.deschedule("VideoEncodingsJob")
     jobs.deschedule("ExpiringSwitchesEmailJob")
     jobs.deschedule("AssetMetricsCache")

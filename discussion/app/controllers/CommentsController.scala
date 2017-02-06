@@ -1,8 +1,8 @@
 package controllers
 
 import common.{ExecutionContexts, JsonComponent}
-import discussion.api.{DiscussionApiLike, DiscussionParams}
 import discussion.api.DiscussionApiException._
+import discussion.api.{DiscussionApiLike, DiscussionParams}
 import discussion.model.{BlankComment, DiscussionAbuseReport, DiscussionKey}
 import discussion.{ThreadedCommentPage, UnthreadedCommentPage}
 import model.Cached.RevalidatableResult
@@ -12,9 +12,8 @@ import play.api.data._
 import play.api.data.validation._
 import play.api.mvc.{Action, RequestHeader, Result}
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import conf.switches.Switches.LongCacheCommentsSwitch
+
 import scala.concurrent.Future
-import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
 class CommentsController(val discussionApi: DiscussionApiLike, csrfCheck: CSRFCheck, csrfAddToken: CSRFAddToken)(implicit context: ApplicationContext) extends DiscussionController with ExecutionContexts {
@@ -44,7 +43,7 @@ class CommentsController(val discussionApi: DiscussionApiLike, csrfCheck: CSRFCh
   def comment(id: Int) = Action.async { implicit request =>
     discussionApi.commentFor(id, request.getQueryString("displayThreaded")) map {
       comment =>
-        Cached(60) {
+        Cached(CacheTime.DiscussionDefault) {
           if (request.isJson)
             JsonComponent(views.html.fragments.comment(comment, comment.discussion.isClosedForRecommendation))
           else
@@ -87,7 +86,7 @@ class CommentsController(val discussionApi: DiscussionApiLike, csrfCheck: CSRFCh
 
   def reportAbuseThankYou(commentId: Int) = Action.async { implicit request =>
     discussionApi.commentFor(commentId).map { comment =>
-      Cached(60) {
+      Cached(CacheTime.DiscussionDefault) {
         RevalidatableResult.Ok(views.html.discussionComments.reportCommentThankYou(comment.webUrl, reportAbuseThankYouPage))
       }
     } recover toResult
@@ -165,6 +164,6 @@ class CommentsController(val discussionApi: DiscussionApiLike, csrfCheck: CSRFCh
   // if the thread is switched on again the url changes and it cache busts itself.
   private def cacheTime(request: RequestHeader) = {
     val commentsClosed = request.getParameter("commentsClosed").contains("true")
-    if (commentsClosed && LongCacheCommentsSwitch.isSwitchedOn) CacheTime(3800) else CacheTime(60)
+    if (commentsClosed) CacheTime.DiscussionClosed else CacheTime.DiscussionDefault
   }
 }

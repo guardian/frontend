@@ -17,7 +17,7 @@ define([
         this.author = 'Justin Pinner';
         this.description = 'Test appetite for membership bundles';
         this.showForSensitive = true;
-        this.audience = 0.05;  // 5% ~ 7,000 unique browser thrasher views per variant per day
+        this.audience = 0.09;  // 9% ~ 45,000 thrasher impressions per variant per day
         this.audienceOffset = 0;
         this.successMeasure = '';
         this.audienceCriteria = 'People on UK network front with at least an 1140px wide display.';

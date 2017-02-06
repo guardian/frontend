@@ -305,6 +305,13 @@
     background-color: $paid-article-mpu;
 }
 
+.ad-slot--outstream {
+    @include mq(desktop) {
+        width: 620px;
+        height: $mpu-ad-label-height + 350px;
+    }
+}
+
 /**
  * Commercial Components
  */
