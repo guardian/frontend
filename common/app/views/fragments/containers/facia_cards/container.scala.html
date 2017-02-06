@@ -6,6 +6,8 @@
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
 @import views.support.GetClasses
 
+@import views.html.fragments.items.facia_cards.sliceSlot
+
 @(containerDefinition: layout.FaciaContainer,
   frontProperties: model.FrontProperties = model.FrontProperties.empty,
   frontId: Option[String] = None,
@@ -82,6 +84,29 @@
                     }
                 }
             </section>
+
+            @containerDefinition.container match {
+
+                case _: Dynamic | _: Fixed | Video => {
+
+                    @if(!isPaidFront && containerDefinition.index % 2 == 0) {
+                        <section>
+                        @defining(containerDefinition.index) { inlineId =>
+                            @sliceSlot(inlineId / 2, true)
+                        }
+                        </section>
+                    }
+                }
+                case MostPopular => {
+                    <section>
+                        @defining(containerDefinition.index) { inlineId =>
+                            @sliceSlot(inlineId, true)
+                        }
+                    </section>
+                }
+
+                case _ => {}
+            }
         }
     }
 }

@@ -14,7 +14,7 @@
             Seq("container-inline") ++ (if(isMobile) Some("mobile") else None),
             Map("mobile" -> sizes),
             optId = if(isMobile) Some(s"$slotName--mobile") else None,
-            optClassNames = if(isMobile) Some("mobile-only") else None
+            optClassNames = if(isMobile) Some("mobile-only") else Some("hide-until-tablet")
         ){ }
     }
 }

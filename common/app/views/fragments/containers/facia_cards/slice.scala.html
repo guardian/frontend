@@ -37,8 +37,8 @@
             }
 
             case MPU(colSpan) => {
-                <li class="fc-slice__item l-row__item l-row__item--span-@colSpan js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate">
-                  @sliceSlot(containerIndex)
+                <li class="fc-slice__item l-row__item l-row__item--span-@colSpan js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate fc-slice__item--mpu-candidate--desktop">
+                  @sliceSlot(containerIndex/2 + 1)
               </li>
             }
         }
