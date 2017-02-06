@@ -8,40 +8,40 @@
 
 @(page: model.Page, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: List[String], availableLists: EmailNewsletters)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@emailListCategoryList(theme: String, subscriptions: List[EmailNewsletter], isActive: Boolean) = {
+@emailListCategoryList(theme: String, newsletters: List[EmailNewsletter], isActive: Boolean) = {
     @fragments.dropdown(theme, isActive = isActive) {
-        @subscriptions.zipWithRowInfo.map { case (subscription, row) =>
+        @newsletters.zipWithRowInfo.map { case (newsletter, row) =>
             <div class="@RenderClasses(Map(
                 "u-cf" -> true,
                 "email-subscription" -> true,
-                "email-subscription--subscribed" -> subscription.subscribedTo(emailSubscriptions),
+                "email-subscription--subscribed" -> newsletter.subscribedTo(emailSubscriptions),
                 "email-subscription--first" -> row.isFirst))">
-                @if(subscription.subscribedTo(emailSubscriptions)){<input type="hidden" name="emailSubscription[]" value="@subscription.listId" />}
+                @if(newsletter.subscribedTo(emailSubscriptions)){<input type="hidden" name="emailSubscription[]" value="@newsletter.listId" />}
                 <div class="email-subscription__name">
-                    <h2 class="email-subscription__heading">@subscription.name</h2>
+                    <h2 class="email-subscription__heading">@newsletter.name</h2>
 
-                    @if(subscription.subheading.isDefined){
-                        <h3 class="email-subscription__subheading">@subscription.subheading</h3>
+                    @if(newsletter.subheading.isDefined){
+                        <h3 class="email-subscription__subheading">@newsletter.subheading</h3>
                     }
                 </div>
 
                 <div class="email-subscription__description">
-                  @subscription.description
-                  @if(subscription.exampleUrl.isDefined){<br>
-                  <a href="@LinkTo({ subscription.exampleUrl.getOrElse("") })" target="preview-email-@subscription.listId">See the latest email</a>}
+                  @newsletter.description
+                  @if(newsletter.exampleUrl.isDefined){<br>
+                  <a href="@LinkTo({ newsletter.exampleUrl.getOrElse("") })" target="preview-email-@newsletter.listId">See the latest email</a>}
                 </div>
 
                 <div class="email-subscription__meta u-cf">
                     <button class="email-subscription__button js-subscription-button"
-                            data-link-name="@if(subscription.subscribedTo(emailSubscriptions)){Unsubscribe}else{Subscribe} to @subscription.name"
+                            data-link-name="@if(newsletter.subscribedTo(emailSubscriptions)){Unsubscribe}else{Subscribe} to @newsletter.name"
                             name="addEmailSubscription"
                             type="button"
-                            value="@if(subscription.subscribedTo(emailSubscriptions)){unsubscribe-}@subscription.listId">
-                        @if(subscription.subscribedTo(emailSubscriptions)){Unsubscribe}else{Subscribe}
+                            value="@if(newsletter.subscribedTo(emailSubscriptions)){unsubscribe-}@newsletter.listId">
+                        @if(newsletter.subscribedTo(emailSubscriptions)){Unsubscribe}else{Subscribe}
                     </button>
                     <div class="email-subscription__frequency">
                         @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
-                        @subscription.frequency
+                        @newsletter.frequency
                     </div>
                 </div>
             </div>
