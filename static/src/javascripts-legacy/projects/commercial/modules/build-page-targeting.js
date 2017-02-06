@@ -104,7 +104,7 @@ define([
 
     function adtestParams() {
         var cookieAdtest = cookies.get('adtest');
-        if (cookiesAdtest) {
+        if (cookieAdtest) {
             if (cookieAdtest.substring(0, 4) === 'demo') {
                 cookies.remove('adtest');
             }
