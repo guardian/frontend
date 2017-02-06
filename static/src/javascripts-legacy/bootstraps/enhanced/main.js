@@ -163,7 +163,7 @@ define([
         }
 
         // use a #force-sw hash fragment to force service worker registration for local dev
-        if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash === '#force-sw') {
+        if ((window.location.protocol === 'https:' && config.page.section !== 'identity') || window.location.hash.indexOf('force-sw') > -1) {
             var navigator = window.navigator;
             if (navigator && navigator.serviceWorker) {
                 navigator.serviceWorker.register('/service-worker.js');
