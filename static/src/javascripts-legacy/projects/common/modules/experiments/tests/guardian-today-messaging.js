@@ -4,7 +4,7 @@ define([
     return function () {
         this.id = 'GuardianTodaySignupMessaging';
         this.start = '2017-01-01';
-        this.expiry = '2017-02-02';
+        this.expiry = '2017-03-28';
         this.author = 'David Furey';
         this.description = 'Test 3 different messages to encourage users to signup to the Guardian Today email newsletter';
         this.audience = 0.01;

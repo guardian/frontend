@@ -26,10 +26,10 @@ trait ABTestSwitches {
     "Test different signup messaging for Guardian Today emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 23),
+    sellByDate = new LocalDate(2017, 3, 28),
     exposeClientSide = true
   )
-  
+
   Switch(
     ABTests,
     "ab-membership-bundles-thrasher",
