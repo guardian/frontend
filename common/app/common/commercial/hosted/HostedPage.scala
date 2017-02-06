@@ -2,10 +2,10 @@ package common.commercial.hosted
 
 import java.net.URLEncoder
 
+import com.gu.commercial.branding.Dimensions
 import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery, Video}
 import com.gu.contentapi.client.model.v1.{Content, SponsorshipLogoDimensions}
 import common.Logging
-import common.commercial.Dimensions
 import common.commercial.hosted.HostedUtils.getAndLog
 import common.commercial.hosted.HostedVideoPage.log
 import conf.Configuration.site
@@ -31,9 +31,6 @@ trait HostedPage extends StandalonePage {
   def emailBodyText = s"${socialShareText.getOrElse(standfirst)} $encodedUrl"
 
   def cta: HostedCallToAction
-
-  // Todo: remove when hardcoded go
-  def pageName: String
 }
 
 object HostedPage extends Logging {
@@ -78,7 +75,12 @@ object HostedCampaign {
         id,
         name = section.webTitle,
         owner = sponsorship.sponsorName,
-        logo = HostedLogo.make(sponsorship.sponsorLogo, sponsorship.sponsorLogoDimensions, id),
+        logo = HostedLogo.make(
+          src = sponsorship.sponsorLogo,
+          dimensions = sponsorship.sponsorLogoDimensions,
+          link = sponsorship.sponsorLink,
+          campaignId = id
+        ),
         fontColour = Colour(hostedTag.paidContentCampaignColour getOrElse "")
       )
     }
@@ -87,15 +89,18 @@ object HostedCampaign {
   }
 }
 
-case class HostedLogo(url: String, dimensions: Option[Dimensions], trackingCode: String)
+case class HostedLogo(src: String, dimensions: Option[Dimensions], link: String)
 
 object HostedLogo {
 
-  implicit val jsonFormat = Json.format[HostedLogo]
-
-  def make(url: String, dimensions: Option[SponsorshipLogoDimensions], campaignId: String) = HostedLogo(
-    url,
+  def make(
+    src: String,
+    dimensions: Option[SponsorshipLogoDimensions],
+    link: String,
+    campaignId: String
+  ) = HostedLogo(
+    src,
     dimensions map (d => Dimensions(d.width, d.height)),
-    trackingCode = s"$campaignId logo"
+    link
   )
 }

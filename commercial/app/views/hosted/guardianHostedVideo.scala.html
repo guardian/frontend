@@ -1,5 +1,4 @@
 @import common.commercial.hosted.HostedVideoPage
-@import common.commercial.hosted.hardcoded.Support.makeshiftPage
 @import conf.Configuration.{environment => ConfigEnvironment}
 @import conf.Configuration.site.host
 @import views.html.hosted._
@@ -91,17 +90,10 @@
                             <h1 class="hosted__heading">@{page.video.title}</h1>
                         </div>
                         <div class="hostedbadge">
-                            <a href="@page.cta.url" data-link-name="@page.campaign.logo.trackingCode" target="_blank">
-                                <img class="hostedbadge__logo" src="@{page.campaign.logo.url}" alt="logo @{page.campaign.owner}">
-                            </a>
+                            @hostedLogo(page.campaign)
                         </div>
                     </div>
-                    @for(nextPage <- page.nextVideo) {
-                        @hostedVideoAutoplay(nextPage.title, nextPage.imageUrl, nextPage.url, page.cta, page.campaign)
-                    }
-                    @if(page.nextVideo.isEmpty){
-                        <div class="js-autoplay-placeholder"></div>
-                    }
+                    <div class="js-autoplay-placeholder"></div>
                 </div>
             </div>
         </section>
@@ -117,21 +109,11 @@
                 </div>
                 <div class="hosted__standfirst">
                     <p class="hosted__text">@Html(page.standfirst)</p>
-                    <div class="hosted__terms">Hosted content is used to describe content that is paid for and supplied by the advertiser. Find out more with our
-                        <div class="paidfor-label paidfor-meta__more has-popup hosted__link">
-                            <button class="u-button-reset paidfor-label__btn hosted__label-btn--small popup__toggle hosted__label-btn js-hosted-about" data-link-name="terms-and-conditions-text-link">commercial content explainer.</button>
-                        </div>
-                    </div>
+                    @hostedExplainer()
                 </div>
             </div>
 
-            @page.nextPage.map { nextPage =>
-                <div class="hosted__next-page-wrapper">
-                    @hostedOnwardJourney(List(makeshiftPage(nextPage, page.campaign)), 1, 1)
-                </div>
-            }.getOrElse {
-                <div class="js-onward-placeholder hosted__next-page-wrapper"></div>
-            }
+            <div class="js-onward-placeholder hosted__next-page-wrapper"></div>
         </section>
         @guardianHostedCta(page, page.cta, isAMP = false)
     </div>

@@ -1,5 +1,23 @@
-@import 'head.amp-common';
+@charset 'UTF-8';
+
+
+@import '_vars';
+@import '_mixins';
+@include grid-system;
+
+@import '_extends-only';
+@import 'base/_links';
+@import 'base/_lists';
+@import 'base/_inline-svgs';
+@import 'amp/_type';
+@import 'amp/_fonts';
+@import 'amp/_helpers';
+@import 'amp/_social';
 
 @import 'amp/_hosted';
 @import 'amp/_hosted-gallery';
 @import 'amp/_hosted-article';
+
+@import 'amp/_from-content-api';
+@import 'module/_icons.head';
+@import 'module/_rounded-icon';

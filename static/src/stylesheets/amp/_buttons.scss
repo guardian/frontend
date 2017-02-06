@@ -1,0 +1,115 @@
+.cta {
+    display: inline-block;
+    vertical-align: top;
+    width: auto;
+    font-weight: bold;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+.cta--medium {
+    height: $gs-row-height;
+    padding: 0 $gs-gutter / 2;
+    line-height: $gs-row-height;
+}
+
+.cta--show-more {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: $neutral-1;
+    background-color: #ffffff;
+
+    svg {
+        width: 18px;
+        height: 18px;
+        vertical-align: middle;
+        margin: -2px auto auto;
+        fill: $neutral-2;
+    }
+
+    &::after {
+        content: '';
+        background-color: $neutral-5;
+        border-radius: 18px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: gs-span(2);
+        z-index: -1;
+        color: #ffffff;
+    }
+}
+
+.cta--comments {
+    background-color: $news-main-1;
+    color: #ffffff;
+    border-radius: 18px;
+
+    svg {
+        // optically align svg
+        margin-bottom: -7px;
+    }
+}
+
+.main-site-link {
+    padding: 0;
+    float: right;
+
+    @include mq($until: 350px) {
+        float: none;
+        display: block;
+        margin-top: $gs-baseline;
+    }
+
+    .no-comments & {
+        float: none;
+    }
+}
+
+.witness-cta-wrapper {
+    overflow: hidden;
+    padding: 4px 0;
+    border-top: 1px dotted $neutral-4;
+}
+
+.witness__button {
+    position: relative;
+    float: left;
+    height: $gs-row-height;
+    padding-left: 38px;
+    padding-right: 12px;
+    background-color: $news-main-1;
+    color: $news-support-1;
+    border: 0;
+    border-radius: 9999px;
+    line-height: $gs-row-height;
+
+    &:hover {
+        background-color: $guardian-brand-dark;
+    }
+
+    .inline-plus__svg {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: $gs-gutter / 2;
+        margin: auto;
+    }
+}
+
+.witness-logo {
+    letter-spacing: -.04em;
+    text-transform: lowercase;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.witness-logo__witness {
+    margin-left: -.1875rem;
+    color: $news-support-1;
+}

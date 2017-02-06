@@ -10,10 +10,6 @@
     }
 }
 
-@socialLinks() = @{
-    if (amp) ShareLinkMeta.noneHidden(item.sharelinks.pageShares) else item.sharelinks.pageShares
-}
-
 @iconModifier() = @{
     if (item.content.isImmersiveGallery) List("social-icon-media") else Nil
 }
@@ -23,6 +19,33 @@
 }
 
 @metaBody() = {
+    @if(showExtras) {
+        <div class="meta__extras @if(!ageNotice.isEmpty){ meta__extras--notice }">
+            <div class="meta__social" data-component="share">
+                @fragments.social(item.sharelinks.pageShares, "top", iconModifier = iconModifier, amp = amp)
+            </div>
+            @if(item.content.tags.tags.exists(_.id == "tone/news")) {
+                @fragments.contentAgeNotice(ageNotice)
+            }
+            @if(!item.content.isExplore & !amp) {
+                <div class="meta__numbers">
+                    <div class="u-h meta__number js-sharecount">
+                    </div>
+                    <div class="u-h meta__number" data-discussion-id="@item.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
+                        !item.trail.isCommentable
+                    }">
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @if(item.content.showCircularBylinePicAtSide) {
+        <div class="media__img meta__image">
+            @fragments.meta.bylineImage(item.tags)
+        </div>
+    }
+
     @if(!item.content.isImmersiveGallery && !item.content.isExplore) {
         @if(!item.content.hasTonalHeaderByline) {
             @byline()
@@ -34,33 +57,12 @@
             @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) {
                 <p class="meta__contact-header">Contact author</p>
             }
-            @fragments.meta.contactAuthor(item.tags)
+            @fragments.meta.contactAuthor(item.tags, amp)
         }
 
         @if(!item.trail.shouldHidePublicationDate) {
             @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
         }
-    }
-
-    @if(showExtras) {
-        <div class="meta__extras @if(!ageNotice.isEmpty){ meta__extras--notice }">
-            <div class="meta__social" data-component="share">
-                @fragments.social(socialLinks, "top", iconModifier = iconModifier)
-            </div>
-            @if(item.content.tags.tags.exists(_.id == "tone/news")) {
-                @fragments.contentAgeNotice(ageNotice)
-            }
-            @if(!item.content.isExplore) {
-                <div class="meta__numbers">
-                    <div class="u-h meta__number js-sharecount">
-                    </div>
-                    <div class="u-h meta__number" data-discussion-id="@item.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
-                        !item.trail.isCommentable
-                    }">
-                    </div>
-                </div>
-            }
-        </div>
     }
 }
 
@@ -81,14 +83,5 @@
         @fragments.commercial.badge(item, page)
     }
 
-    @if(item.content.showCircularBylinePicAtSide) {
-        <div class="media__body meta__body">
-            <div class="media__img meta__image">
-                @fragments.meta.bylineImage(item.tags)
-            </div>
-            @metaBody()
-        </div>
-    } else {
-        @metaBody()
-    }
+    @metaBody()
 </div>

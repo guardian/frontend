@@ -1,11 +1,13 @@
 package views.support
 
+import com.gu.commercial.branding._
 import common.Edition
 import common.Edition.defaultEdition
-import common.commercial.{Sponsored, _}
+import common.commercial._
 import layout.{ColumnAndCards, ContentCard, FaciaContainer}
 import model.{Page, PressedPage}
 import org.apache.commons.lang.StringEscapeUtils._
+import play.api.libs.json.JsBoolean
 import play.api.mvc.RequestHeader
 
 object Commercial {
@@ -15,7 +17,7 @@ object Commercial {
     case p: model.Page if p.metadata.sectionId == "identity" => false
     case s: model.SimplePage if s.metadata.contentType == "Signup" => false
     case e: model.ContentPage if e.item.content.seriesName.contains("Newsletter sign-ups") => false
-    case p: model.CommercialExpiryPage => false
+    case _: model.CommercialExpiryPage => false
     case _ => true
   }
 
@@ -29,16 +31,16 @@ object Commercial {
     s"/guardian-labs$glabsUrlSuffix"
   }
 
-  private def isBrandedContent(page: Page, edition: Edition, sponsorshipType: SponsorshipType): Boolean =
-    page.branding(edition).exists(_.sponsorshipType == sponsorshipType)
+  private def isBranding(page: Page, edition: Edition)(p: Branding => Boolean): Boolean =
+    page.metadata.branding(edition).exists(p)
 
-  def isPaidContent(page: Page): Boolean = isBrandedContent(page, defaultEdition, PaidContent)
+  def isPaidContent(page: Page): Boolean = isBranding(page, defaultEdition)(_.isPaid)
 
   def isSponsoredContent(page: Page)(implicit request: RequestHeader): Boolean =
-    isBrandedContent(page, Edition(request), Sponsored)
+    isBranding(page, Edition(request))(_.isSponsored)
 
   def isFoundationFundedContent(page: Page)(implicit request: RequestHeader): Boolean =
-    isBrandedContent(page, defaultEdition, Foundation)
+    isBranding(page, defaultEdition)(_.isFoundationFunded)
 
   def isBrandedContent(page: Page)(implicit request: RequestHeader): Boolean = {
     isPaidContent(page) || isSponsoredContent(page) || isFoundationFundedContent(page)
@@ -49,7 +51,7 @@ object Commercial {
     val edition = Edition(request)
     def sponsor(branding: Edition => Option[Branding]) = branding(edition) map (_.sponsorName.toLowerCase)
 
-    val pageSponsor = sponsor(page.branding)
+    val pageSponsor = sponsor(page.metadata.branding)
 
     val allSponsors = page match {
       case front: PressedPage =>
@@ -62,7 +64,7 @@ object Commercial {
           val hasBrandedTag = container.config.showBranding
           lazy val hasNoSponsor = container.branding(edition).isEmpty
           lazy val hasOnlyPaidContent = container.curatedPlusBackfillDeduplicated.forall {
-            _.branding(edition).exists(_.sponsorshipType == PaidContent)
+            _.branding(edition).exists(_.brandingType == PaidContent)
           }
           if (hasBrandedTag && hasNoSponsor && hasOnlyPaidContent) {
             container.curatedPlusBackfillDeduplicated.flatMap { card =>
@@ -80,6 +82,10 @@ object Commercial {
     allSponsors map (_ map escapeJavaScript)
   }
 
+  def brandingType(page: Page)(implicit request: RequestHeader): Option[BrandingType] = {
+    page.metadata.branding(Edition(request)).map(_.brandingType)
+  }
+
   object topAboveNavSlot {
 
     val adSizes: Map[String, Seq[String]] = {
@@ -92,11 +98,15 @@ object Commercial {
     }
 
     // The sizesOverride parameter is for testing only.
-    val cssClasses: String = {
+    def cssClasses(metadata: model.MetaData): String = {
+      val topBannerDisableSticky = metadata.javascriptConfigOverrides.get("disableStickyTopBanner") match {
+        case Some(JsBoolean(true)) => Some("top-banner-ad-container--not-sticky")
+        case _                     => None
+      }
       val classes = Seq(
         "top-banner-ad-container",
         "js-top-banner"
-      )
+      ) ++ topBannerDisableSticky
 
       classes mkString " "
     }
@@ -112,12 +122,12 @@ object Commercial {
 
       def isPaid(containerModel: ContainerModel): Boolean = {
 
-        val isPaidContainer = containerModel.branding.exists(_.sponsorshipType == PaidContent)
+        val isPaidContainer = containerModel.branding.exists(_.brandingType == PaidContent)
 
         val isAllPaidContent = {
           val content = containerModel.content
           val cards = content.initialCards ++ content.showMoreCards
-          cards.nonEmpty && cards.forall(_.branding.exists(_.sponsorshipType == PaidContent))
+          cards.nonEmpty && cards.forall(_.branding.exists(_.brandingType == PaidContent))
         }
 
         isPaidContainer || isAllPaidContent

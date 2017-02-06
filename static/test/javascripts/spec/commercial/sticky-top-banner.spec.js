@@ -7,8 +7,11 @@ define([
     Injector,
     Promise
 ) {
+    function noop() {
+    }
+
     describe('Sticky ad banner', function () {
-        var sticky, detect, header, stickyBanner, messenger, register;
+        var sticky, detect, header, stickyBanner, messenger, register, commercialFeatures;
 
         var fixturesConfig = {
             id: 'sticky-ad-banner-test',
@@ -25,8 +28,6 @@ define([
             pageYOffset: 0
         };
 
-        var moduleName = 'sticky-top-banner';
-
         var injector = new Injector();
         injector.mock('common/modules/commercial/dfp/track-ad-render', function () {
             return Promise.resolve(true);
@@ -36,11 +37,15 @@ define([
             injector.require([
                 'common/utils/detect',
                 'commercial/modules/messenger',
-                'commercial/modules/sticky-top-banner'
-            ], function($1, $2, $3) {
+                'commercial/modules/sticky-top-banner',
+                'common/modules/commercial/commercial-features'
+            ], function($1, $2, $3, $4) {
                 detect = $1;
                 messenger = $2;
                 sticky = $3;
+                commercialFeatures = $4;
+
+                commercialFeatures.stickyTopBannerAd = true;
 
                 spyOn(detect, 'isBreakpoint').and.callFake(function () { return true; });
                 register = spyOn(messenger, 'register');
@@ -60,7 +65,7 @@ define([
         });
 
         it('should add listeners and classes', function (done) {
-            sticky.init(moduleName, mockWindow)
+            sticky.init(noop, noop, mockWindow)
             .then(function () {
                 expect(register.calls.count()).toBe(1);
                 expect(mockWindow.addEventListener).toHaveBeenCalled();
@@ -73,7 +78,7 @@ define([
 
         it('should not add classes when scrolled past the header', function (done) {
             mockWindow.pageYOffset = 501;
-            sticky.init(moduleName, mockWindow)
+            sticky.init(noop, noop, mockWindow)
             .then(function () {
                 mockWindow.pageYOffset = 0;
                 expect(header.classList.contains('l-header--animate')).toBe(false);
@@ -85,7 +90,7 @@ define([
 
         it('should set the slot height and the header top margin', function (done) {
             var randomHeight = Math.random() * 500 | 0;
-            sticky.init(moduleName)
+            sticky.init(noop, noop)
             .then(function () {
                 return sticky.resize(randomHeight);
             })
@@ -100,7 +105,7 @@ define([
         it('should adjust the scroll position', function (done) {
             var randomHeight = Math.random() * 500 | 0;
             mockWindow.pageYOffset = 501;
-            sticky.init(moduleName, mockWindow)
+            sticky.init(noop, noop, mockWindow)
             .then(function () {
                 return sticky.resize(randomHeight);
             })
@@ -119,7 +124,7 @@ define([
             var topSlot = document.getElementById('dfp-ad--top-above-nav');
             topSlot.style.paddingTop = pt + 'px';
             topSlot.style.paddingBottom = pb + 'px';
-            sticky.init(moduleName)
+            sticky.init(noop, noop)
             .then(function () {
                 return sticky.update(h, topSlot);
             })
@@ -142,7 +147,7 @@ define([
 
         it('should position the banner absolutely past the header', function (done) {
             mockWindow.pageYOffset = 501;
-            sticky.init(moduleName, mockWindow)
+            sticky.init(noop, noop, mockWindow)
             .then(sticky.onScroll)
             .then(function () {
                 expect(stickyBanner.style.position).toBe('absolute');

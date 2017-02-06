@@ -37,7 +37,6 @@ GET            /crosswords/search                                               
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
 # Email paths
-GET            /email                                                                                                            controllers.EmailSignupController.renderPage()
 GET            /email/form/$emailType<article|footer|plain|plaindark|plaintone>/:listId                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET            /email/:result                                                                                                    controllers.EmailSignupController.subscriptionResult(result: String)
 POST           /email                                                                                                            controllers.EmailSignupController.submit()
@@ -223,9 +222,7 @@ GET            /deduped                                                         
 GET            /deduped/*path                                                                                                    controllers.admin.WhatIsDeduped.dedupedFor(path)
 GET            /radiator                                                                                                         controllers.admin.RadiatorController.renderRadiator()
 GET            /radiator/commit/*hash                                                                                            controllers.admin.RadiatorController.commitDetail(hash)
-GET            /deploys-radiator/api/deploys                                                                                     controllers.admin.DeploysRadiatorController.getDeploys(pageSize: Option[String], projectName: Option[String], stage: Option[String])
-GET            /deploys-radiator/api/builds/:number                                                                              controllers.admin.DeploysRadiatorController.getBuild(number)
-GET            /deploys-radiator                                                                                                 controllers.admin.DeploysRadiatorController.renderDeploysRadiator()
+GET            /deploys                                                                                                          controllers.admin.DeploysController.getDeploys(stage: Option[String], pageSize: Option[Int])
 GET            /troubleshoot/football                                                                                            controllers.admin.SportTroubleshooterController.renderFootballTroubleshooter()
 GET            /troubleshoot/cricket                                                                                             controllers.admin.SportTroubleshooterController.renderCricketTroubleshooter()
 GET            /troubleshoot/pages                                                                                               controllers.admin.TroubleshooterController.index()
@@ -283,6 +280,7 @@ GET            /commercial/soulmates/$subgroup<\w+>.json                        
 GET            /commercial/api/soulmates.json                                                                                    commercial.controllers.SoulmatesController.getSoulmates
 GET            /commercial/books/book.json                                                                                       commercial.controllers.BookOffersController.renderBook
 GET            /commercial/books/books.json                                                                                      commercial.controllers.BookOffersController.renderBooks
+GET            /commercial/books/api/book.json                                                                                   commercial.controllers.BookOffersController.getBook
 GET            /commercial/books/api/books.json                                                                                  commercial.controllers.BookOffersController.getBooks
 GET            /commercial/liveevents/event.json                                                                                 commercial.controllers.LiveEventsController.renderEvent
 GET            /commercial/api/liveevent.json                                                                                    commercial.controllers.LiveEventsController.getLiveEvent
@@ -300,7 +298,6 @@ GET            /commercial/paid                                                 
 GET            /commercial/multi.json                                                                                            commercial.controllers.Multi.renderMulti
 GET            /commercial/api/multi.json                                                                                        commercial.controllers.Multi.getMulti
 GET            /$path<commercial-containers>                                                                                                controllers.FaciaController.renderFront(path)
-GET            /commercial/advertiser-content/:campaignName/:pageName                                                            commercial.controllers.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName/:cType/onward.json                                                    commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET            /advertiser-content/:campaignName/:pageName/autoplay.json                                                         commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
@@ -357,6 +354,7 @@ GET            /sitemaps/news.xml                                               
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
 GET            /service-worker.js                                                                                                controllers.WebAppController.serviceWorker()
 GET            /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>                                              controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
+GET            /sharecount/*path.json                                                                                            controllers.ShareCountController.fetch(path)
 
 #Notifications Store
 POST           /notification/store                                                                                               controllers.NotificationsController.saveSubscription()

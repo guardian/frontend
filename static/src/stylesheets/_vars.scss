@@ -48,6 +48,7 @@ $left-column-wide: gs-span(3);
 
 $mq-breakpoints: (
     mobile:          gs-span(4)  + $gs-gutter,   // 320px
+    mobileMedium:    gs-span(5)  - $gs-gutter/4, // 375px
     mobileLandscape: gs-span(6)  + $gs-gutter,   // 480px
     phablet:         gs-span(8)  + $gs-gutter*2, // 660px
     tablet:          gs-span(9)  + $gs-gutter*2, // 740px
@@ -227,6 +228,7 @@ $popup-toggle-arrow-size: 4px;
  * This shall stop the z-index chaos
  */
 
+$zindex-ui: 1000;      // UI elements
 $zindex-ads: 1010;     // Ads
 $zindex-content: 1015; // Modals and overlays inside content
 $zindex-sticky: 1020;  // Sticky header

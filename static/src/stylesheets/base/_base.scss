@@ -17,14 +17,6 @@ body {
     visibility: hidden !important;
 }
 
-
-@if $old-ie == false {
-    html,
-    body {
-        overflow-x: hidden;
-    }
-}
-
 ::selection {
     background: rgba($news-main-2, .4);
 }
@@ -104,4 +96,13 @@ body:after {
 ol,
 ul {
     list-style-position: inside;
+}
+
+/* disable 300ms delay for 'clicks' on mobile */
+/* see: https://webkit.org/blog/5610/more-responsive-tapping-on-ios/ */
+a,
+button,
+input[type="button"],
+input[type="submit"] {
+    touch-action: manipulation;
 }

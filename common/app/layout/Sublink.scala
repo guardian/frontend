@@ -277,6 +277,7 @@ case class ContentCard(
 
   def hasImage = displayElement match {
     case Some(InlineVideo(_, _, _, Some(_))) => true
+    case Some(InlineYouTubeMediaAtom(_)) => true
     case Some(InlineImage(_)) => true
     case Some(InlineSlideshow(_)) => true
     case Some(CrosswordSvg(_)) => true
@@ -304,6 +305,7 @@ case class ContentCard(
 
   val hasVideoMainMedia = displayElement match {
     case Some(a: InlineVideo) if !isMediaLink => true
+    case Some(a: InlineYouTubeMediaAtom) if !isMediaLink => true
     case _ => false
   }
 }
@@ -336,7 +338,7 @@ object ContentCard {
         isGallery = false,
         isAudio = false,
         kicker = None,
-        headline = apiContent.webTitle,
+        headline = apiContent.fields.flatMap(_.headline).getOrElse(apiContent.webTitle),
         url = EditionalisedLink(apiContent.webUrl)
       )
 
@@ -372,7 +374,7 @@ object ContentCard {
         trailText = fields.trailText,
         mediaType = None,
         displaySettings = unsetDisplaySettings,
-        isLive = apiContent.isLiveBlog,
+        isLive = apiContent.fields.flatMap(_.liveBloggingNow).exists(identity),
         timeStampDisplay = None,
         shortUrl = fields.shortUrl,
         useShortByline = false,

@@ -27,4 +27,8 @@ private[dfp] class ServicesWrapper(session: DfpSession) {
   lazy val creativeService = dfpServices.get(session, classOf[CreativeServiceInterface])
 
   lazy val networkService = dfpServices.get(session, classOf[NetworkServiceInterface])
+
+  lazy val orderService = dfpServices.get(session, classOf[OrderServiceInterface])
+
+  lazy val companyService = dfpServices.get(session, classOf[CompanyServiceInterface])
 }

@@ -96,16 +96,17 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
       element.getElementsByClass("gu-video").isEmpty
     }.foreach { element: Element =>
       val canonicalUrl = element.attr("data-canonical-url")
+      element.children().headOption.foreach { child =>
+        // As Facebook have declared that you have to use their video JS plugin, which in turn pulls in their whole JS API
+        // We've decided to use the canonical URL, and create the video element here rather that CAPI, as, if it changes
+        // again, we can change it here and it will also fix things retrospectively.
+        if (canonicalUrl.startsWith("https://www.facebook.com")) {
+          val facebookUrl = facebookVideoEmbedUrlFor(element.attr("data-canonical-url"))
+          child.attr("src", facebookUrl)
+        }
 
-      // As Facebook have declared that you have to use their video JS plugin, which in turn pulls in their whole JS API
-      // We've decided to use the canonical URL, and create the video element here rather that CAPI, as, if it changes
-      // again, we can change it here and it will also fix things retrospectively.
-      if (canonicalUrl.startsWith("https://www.facebook.com")) {
-        val facebookUrl = facebookVideoEmbedUrlFor(element.attr("data-canonical-url"))
-        element.child(0).attr("src", facebookUrl)
+        child.wrap("<div class=\"embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
       }
-
-      element.child(0).wrap("<div class=\"embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
     }
 
     cleanVideo(document)

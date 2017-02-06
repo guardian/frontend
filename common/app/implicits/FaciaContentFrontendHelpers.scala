@@ -1,11 +1,13 @@
 package implicits
 
-import common.Edition
-import common.commercial.PaidContent
+import com.gu.commercial.branding.PaidContent
+import common.Edition.defaultEdition
 import implicits.Dates._
 import model._
+import model.content.{MediaAssetPlatform, MediaAtom}
 import model.pressed._
 import org.joda.time.DateTime
+import org.jsoup.Jsoup
 import org.scala_tools.time.Imports._
 
 import scala.util.Try
@@ -22,6 +24,20 @@ object FaciaContentFrontendHelpers {
       imageOverride.orElse(defaultTrailPicture)
     }
 
+
+    //TODO: Use the blocks field of CAPI to derive this in a more structured way
+    def mainYouTubeMediaAtom: Option[MediaAtom] =
+      for {
+       main <- faciaContent.properties.maybeContent.map(_.fields.main)
+       atoms <-  faciaContent.properties.maybeContent.flatMap(_.atoms)
+       document <- Some(Jsoup.parse(main))
+       atomContainer <- Option(document.getElementsByClass("element-atom").first())
+       bodyElement <- Some(atomContainer.getElementsByTag("gu-atom"))
+       atomId <- Some(bodyElement.attr("data-atom-id"))
+       mainMediaAtom <- atoms.media.find(ma => ma.id == atomId && ma.assets.exists(_.platform == MediaAssetPlatform.Youtube))
+     } yield mainMediaAtom
+
+
     def mainVideo: Option[VideoElement] = {
       val elements: Seq[Element] = faciaContent.properties.maybeContent.map(_.elements.elements).getOrElse(Nil)
       val videos: Seq[VideoElement] = elements.flatMap {
@@ -32,7 +48,7 @@ object FaciaContentFrontendHelpers {
     }
 
     lazy val shouldHidePublicationDate: Boolean = {
-      faciaContent.branding(Edition.defaultEdition).exists(_.sponsorshipType == PaidContent) &&
+      faciaContent.branding(defaultEdition).exists(_.brandingType == PaidContent) &&
       faciaContent.card.webPublicationDateOption.exists(_.isOlderThan(2.weeks))
     }
 

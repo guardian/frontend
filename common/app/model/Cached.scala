@@ -22,7 +22,10 @@ object CacheTime {
   object RecentlyUpdated extends CacheTime(60)
   object Facia extends CacheTime(300)
   object ArchiveRedirect extends CacheTime(300)
+  object ShareCount extends CacheTime(600)
   object NotFound extends CacheTime(10) // This will be overwritten by fastly
+  object DiscussionDefault extends CacheTime(60)
+  object DiscussionClosed extends CacheTime(3800)
 
   def LastDayUpdated = CacheTime(extended(60))
   def NotRecentlyUpdated = CacheTime(extended(300))
@@ -123,7 +126,7 @@ object Cached extends implicits.Dates {
         (etag, result)
       }
     }.getOrElse(
-      (s""""johnRandom${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""", result) // just to see if they come back in
+      (s""""guRandomEtag${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""", result) // just to see if they come back in
     )
 
     validatedResult.withHeaders(

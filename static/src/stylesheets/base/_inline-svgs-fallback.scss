@@ -1,0 +1,13 @@
+.inline-icon__fallback {
+    display: none !important;
+}
+
+.no-svg {
+    .inline-icon {
+        display: none !important;
+    }
+
+    .inline-icon__fallback {
+        display: block !important;
+    }
+}

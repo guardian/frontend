@@ -1,6 +1,6 @@
 package jobs
 
-import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, TrainingPriority}
+import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, EmailPriority, TrainingPriority}
 import common.{AkkaAsync, ExecutionContexts, Logging}
 import conf.Configuration
 import services.{ConfigAgent, FrontPressNotification}
@@ -29,6 +29,7 @@ object RefreshFrontsJob extends Logging with ExecutionContexts {
         case Some(EditorialPriority) => StandardFrequency
         case Some(CommercialPriority) => LowFrequency
         case Some(TrainingPriority) => LowFrequency
+        case Some(EmailPriority) => LowFrequency
         case None => LowFrequency
       }
   }

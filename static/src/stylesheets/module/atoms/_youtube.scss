@@ -31,19 +31,20 @@
     }
 
     .youtube-media-atom__iframe {
-        top: 1px;
         z-index: 0;
+
+        &:hover {
+            ~ .youtube-media-atom__overlay .youtube-media-atom__play-button {
+                transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+                transform: translate(-50%,-50%) scale(1.12);
+                transform-origin: center;
+            }
+        }
 
         &:not(.youtube__video-ready),
         &.youtube__video-ended {
             ~ .youtube-media-atom__overlay {
                 @include hide;
-            }
-        }
-
-        &.youtube__video-ready:not(.youtube__video-started) {
-            ~ .youtube-media-atom__overlay {
-                @include fade-in;
             }
         }
 
@@ -58,6 +59,12 @@
         &.youtube__video-ended.youtube__video-started {
             ~ .youtube-media-atom__overlay {
                 @include fade-in;
+            }
+
+            @include mq($from: tablet) {
+                ~ .end-slate-container {
+                    display: block;
+                }
             }
         }
 	}
@@ -113,35 +120,37 @@
     .youtube-media-atom__bottom-bar__icon {
         float: left;
         height: 100%;
-        width: 30px;
+        width: 36px;
 
         svg {
             fill: $media-default;
-            width: 16px;
-            height: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            margin-left: 8px;
+            width: 19px;
+            height: 12px;
+            top: auto;
+            bottom: 10px;
+            left: 10px;
         }
     }
 
     .youtube-media-atom__bottom-bar__duration {
-        @include font($f-sans-serif-text, bold, 16, 34);
+        @include font($f-sans-serif-text, bold, 16, 30);
         color: $media-default;
         float: left;
+        -webkit-font-smoothing: subpixel-antialiased;
+        padding-top: 4px;
         padding-left: 8px;
         text-shadow: 0 0 16px rgba(51, 51, 51, .25);
 
         &::before {
             content: '';
-            width: 2px;
+            width: 1px;
             height: 16px;
             opacity: .5;
             position: absolute;
-            left: 30px;
+            left: 36px;
             background-color: $multimedia-main-2;
-            top: 50%;
-            transform: translateY(-50%);
+            top: auto;
+            bottom: 8px;
         }
     }
 }

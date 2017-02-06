@@ -22,11 +22,31 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-membership-bundles-thrasher",
+    "Test appetite for first batch of bundles",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 2), // Thursday March 2nd
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-editorial-email-variants",
     "Assign users to variants of our editorial emails",
-    owners = Seq(Owner.withGithub("katebee")),
+    owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 18),
+    sellByDate = new LocalDate(2017, 2, 16),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-opinion-email-variants",
+    "Assign users to variants of opinion emails",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 2, 8),
     exposeClientSide = true
   )
 
@@ -36,7 +56,17 @@ trait ABTestSwitches {
     "Test personalised container on fronts",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 10),
+    sellByDate = new LocalDate(2017, 2, 21),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-brexit",
+    "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
+    owners = Seq(Owner.withGithub("alexduf")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 1),
     exposeClientSide = true
   )
 
@@ -46,27 +76,27 @@ trait ABTestSwitches {
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 6),
+    sellByDate = new LocalDate(2017, 2, 6),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-contributions-epic-on-the-moon",
-    "Test with Epic variant containing a message from First Dog on the Moon",
-    owners = Seq(Owner.withGithub("alexduf")),
+    "ab-contributions-epic-ask-four-stagger",
+    "Test to see if imposing a minimum-time-between-impressions for the epic has a positive effect on conversion",
+    owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 12),
+    sellByDate = new LocalDate(2017, 2, 24),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-contributions-epic-us-eoy-all-control",
-    "Run the control variant for 100% of the US audience",
-    owners = Seq(Owner.withGithub("Mullefa")),
+    "ab-contributions-epic-ask-four-earning",
+    "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
+    owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 3),
+    sellByDate = new LocalDate(2017, 5, 1),
     exposeClientSide = true
   )
 }

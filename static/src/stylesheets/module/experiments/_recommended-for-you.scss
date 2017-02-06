@@ -1,5 +1,10 @@
 .rfy-light-blue {
     color: $news-main-2 !important;
+
+    @include mq($from: wide) {
+      display: block;
+      clear: both;
+    }
 }
 
 .rfy-dummy-text {
@@ -29,7 +34,7 @@
 }
 
 .rfy__image {
-  width:100%;
+    width: 100%;
 }
 
 .rfy-profile-icon {

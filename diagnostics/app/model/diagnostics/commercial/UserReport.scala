@@ -11,9 +11,6 @@ case class Module(
 
 case class Advert(
   createTime: Option[Double],
-  dfpFetching: Option[Double],
-  dfpReceived: Option[Double],
-  dfpRendered: Option[Double],
   id: Option[String],
   isEmpty: Option[Boolean],
   lazyWaitComplete: Option[Double],

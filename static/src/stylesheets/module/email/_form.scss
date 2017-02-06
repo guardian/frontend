@@ -334,6 +334,13 @@
     }
 }
 
+.email-sub--plaintone {
+    .email-sub__message__headline,
+    .email-sub__message__description {
+        color: $neutral-1;
+    }
+}
+
 // POST-ARTICLE
 
 .email-sub__iframe--post-article {

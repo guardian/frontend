@@ -1,35 +1,24 @@
 module.exports = {
-    env: {
-        amd: true,
-        jasmine: true,
-        es6: false,
-        commonjs: false
+    settings: {
+        'import/resolver': 'webpack',
     },
-    extends: 'eslint:recommended',
-	parserOptions: {
-		ecmaVersion: 5
-	},
+    plugins: [
+        'guardian-frontend',
+    ],
     rules: {
-        camelcase: 'off',
-        'no-shadow': 'off',
-        strict: 'off',
-        'no-alert': 'off',
-        'no-all-lodash-import': 'error',
-        'no-undef': 'error',
-        'no-use-before-define': [
-            'error',
-            'nofunc'
-        ],
-        'no-multi-spaces': 'off',
-        'no-underscore-dangle': 'off',
-        'key-spacing': 'off',
-        'import/no-amd': 'off',
+        // require-specific overrides
         'import/no-dynamic-require': 'off',
+        'import/no-extraneous-dependencies': 'off',
+        'import/extensions': 'off',
+        'import/no-webpack-loader-syntax': 'off', // used for require plugins still
+        'import/no-amd': 'off', // webpack dynamic requires
+        'global-require': 'off',
+        'id-blacklist': ['error', 'guardian'],
 
         // these are bad habits in react that we're already abusing.
-        // if we go more [p]react we should look at them,
-        // but we don't reuse modules or develop this stuff much.
-        // disabling for now.
+        // if we go more [p]react we should look at them.
+        // not saying it's ok, but we don't reuse modules or
+        // develop this stuff much. disabling for now.
         'react/prefer-es6-class': 'off',
         'react/no-multi-comp': 'off',
         'react/no-find-dom-node': 'off',
@@ -39,5 +28,15 @@ module.exports = {
         'react/no-string-refs': 'off',
         'react/prefer-stateless-function': 'off',
         'react/no-render-return-value': 'off',
+
+        // disallow modules we used to use but are retiring
+        'no-restricted-imports': ['error', {
+            paths: ['lodash'],
+            patterns: ['!lodash/*'],
+        }],
+
+        // our own rules for frontend
+        // live in tools/eslint-plugin-guardian-frontend
+        'guardian-frontend/global-config': 2,
     },
-}
+};

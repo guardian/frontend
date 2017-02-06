@@ -157,3 +157,13 @@ category: Common
         display: none;
     }
 }
+
+// Most Popular customisation: change layout to accomodate MPU
+.tabs--mostpop {
+    @include mq(desktop) {
+        .tabs__content {
+            display: table;
+            display: flex;
+        }
+    }
+}

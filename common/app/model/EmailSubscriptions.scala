@@ -1,5 +1,7 @@
 package model
 
+import controllers.ListIds
+
 case class EmailSubscriptions(subscriptions: List[EmailSubscription])
 case class EmailSubscription(
   name: String,
@@ -79,7 +81,7 @@ object EmailSubscriptions {
       frequency = "Weekday mornings",
       listId = "217",
       subscribedTo = subscribedListIds.exists{ x => x == "217" },
-      tone = Some("media"),
+      tone = Some("news"),
       signupPage = Some("/info/2016/feb/15/sign-up-to-the-media-briefing"),
       exampleUrl = Some("/media/series/mediaguardian-briefing/latest/email")
     ),
@@ -91,14 +93,14 @@ object EmailSubscriptions {
       frequency = "Tuesday mornings",
       listId = "3698",
       subscribedTo = subscribedListIds.exists{ x => x == "3698" },
-      tone = Some("brexit"),
+      tone = Some("news"),
       signupPage = Some("/politics/2016/may/31/eu-referendum-morning-briefing-sign-up"),
       exampleUrl = Some("/politics/series/eu-referendum-morning-briefing/latest/email")
     ),
     EmailSubscription(
       name = "Green Light",
       theme = "news",
-      teaser = "The most important stories for the planet, plus data, multimedia highlights and green living guides",
+      teaser = "Environment: the most important stories for the planet, plus data, multimedia highlights and green living guides",
       description = "In each weekly edition our editors highlight the most important environment stories of the week including data, opinion pieces and background guides. We'll also flag up our best video, picture galleries, podcasts, blogs and green living guides.",
       frequency = "Every Friday",
       listId = "38",
@@ -149,7 +151,7 @@ object EmailSubscriptions {
       frequency = "Weekday afternoons",
       listId = "218",
       subscribedTo = subscribedListIds.exists{ x => x == "218" },
-      tone = Some("feature"),
+      tone = Some("news"),
       signupPage = Some("/info/2016/jan/05/the-fiver-email-sign-up"),
       exampleUrl = Some("/football/series/thefiver/latest/email")
     ),
@@ -161,7 +163,7 @@ object EmailSubscriptions {
       frequency = "Every Thursday",
       listId = "219",
       subscribedTo = subscribedListIds.exists{ x => x == "219" },
-      tone = Some("feature"),
+      tone = Some("news"),
       signupPage = Some("/sport/2016/aug/18/sign-up-to-the-breakdown"),
       exampleUrl = Some("/sport/series/breakdown/latest/email")
     ),
@@ -173,7 +175,7 @@ object EmailSubscriptions {
       frequency = "Every Tuesday",
       listId = "220",
       subscribedTo = subscribedListIds.exists{ x => x == "220" },
-      tone = Some("feature"),
+      tone = Some("news"),
       signupPage = Some("/sport/2016/aug/18/sign-up-to-the-spin"),
       exampleUrl = Some("/sport/series/thespin/latest/email")
     ),
@@ -185,7 +187,7 @@ object EmailSubscriptions {
       frequency = "Every day",
       listId = "3766",
       subscribedTo = subscribedListIds.exists{ x => x == "3766" },
-      tone = Some("feature"),
+      tone = Some("news"),
       signupPage = Some("/info/2015/jun/05/guardian-australia-sport-newsletter-subscribe-by-email")
     )
   )
@@ -236,6 +238,7 @@ object EmailSubscriptions {
       description = "Everything you need to know from the Guardian's music site, squeezed into one handy email.",
       frequency = "Every Friday",
       listId = "39",
+      tone = Some("feature"),
       subscribedTo = subscribedListIds.exists{ x => x == "39" },
       signupPage = Some("/music/2016/aug/18/sign-up-to-sleeve-notes")
     ),
@@ -246,7 +249,7 @@ object EmailSubscriptions {
       description = "Rely on Close up to bring you Guardian film news, reviews and much, much more.",
       frequency = "Every Friday",
       listId = "40",
-      tone = Some("media"),
+      tone = Some("feature"),
       subscribedTo = subscribedListIds.exists{ x => x == "40" }
     ),
     EmailSubscription(
@@ -257,7 +260,7 @@ object EmailSubscriptions {
       frequency = "Every weekday",
       listId = "1950",
       subscribedTo = subscribedListIds.exists{ x => x == "1950" },
-      tone = Some("media"),
+      tone = Some("feature"),
       signupPage = Some("/info/2016/feb/12/film-today-email-sign-up")
     ),
     EmailSubscription(
@@ -267,6 +270,7 @@ object EmailSubscriptions {
       description = "A weekly email from the books team with our pick of the latest news, views and reviews, delivered to your inbox.",
       frequency = "Every Thursday",
       listId = "3039",
+      tone = Some("feature"),
       subscribedTo = subscribedListIds.exists{ x => x == "3039" },
       signupPage = Some("/books/2015/feb/03/sign-up-to-our-bookmarks-email")
     ),
@@ -277,6 +281,7 @@ object EmailSubscriptions {
       description = "For your art world low-down, sign up to the Guardian's Art Weekly email and get all the latest news, reviews and comment delivered straight to your inbox.",
       frequency = "Every Friday",
       listId = "99",
+      tone = Some("feature"),
       subscribedTo = subscribedListIds.exists{ x => x == "99" },
       signupPage = Some("/artanddesign/2015/oct/19/sign-up-to-the-art-weekly-email"),
       exampleUrl = Some("/artanddesign/series/art-weekly/latest/email")
@@ -301,6 +306,7 @@ object EmailSubscriptions {
       description = "Sign up to The Flyer for all the latest travel stories, plus find links to hundreds of UK hotel and restaurant reviews; insider tips on the world's best cities; a road-tripper's guide to the US; and highlights of our most inspiring top 10s.",
       frequency = "Every Wednesday",
       listId = "2211",
+      tone = Some("feature"),
       subscribedTo = subscribedListIds.exists{ x => x == "2211" || x == "3806" || x == "3807" },
       signupPage = Some("/travel/2016/aug/18/sign-up-to-the-flyer"),
       exampleUrl = Some("/email/the-flyer?format=email-connected")
@@ -323,6 +329,7 @@ object EmailSubscriptions {
       description = "The Guardian sorts the wheat from the chaff to deliver the latest news, views and shoes from the style frontline.",
       frequency = "Every Monday",
       listId = "105",
+      tone = Some("feature"),
       subscribedTo = subscribedListIds.exists{ x => x == "105" },
       signupPage = Some("/fashion/2016/aug/18/sign-up-for-the-guardians-fashion-email")
     ),
@@ -333,6 +340,7 @@ object EmailSubscriptions {
       description = "Register to receive our monthly crossword email by the Guardian's crossword editor with the latest issues and tips about theguardian.com/crosswords.",
       frequency = "Monthly",
       listId = "101",
+      tone = Some("feature"),
       subscribedTo = subscribedListIds.exists{ x => x == "101" },
       signupPage = Some("/crosswords/2016/aug/18/sign-up-to-the-crossword-editors-update-email"),
       exampleUrl = Some("/crosswords/series/crossword-editor-update/latest/email")
@@ -344,10 +352,17 @@ object EmailSubscriptions {
       description = "Sign up to the Observer Food Monthly newsletter for all your food and drink news, tips, offers, recipes and competitions.",
       frequency = "Monthly",
       listId = "248",
+      tone = Some("feature"),
       subscribedTo = subscribedListIds.exists{ x => x == "248" },
       signupPage = Some("/lifeandstyle/2015/oct/19/observer-food-monthly-newsletter")
     )
   )
+
+  private val isOpinionVariant = List(
+    ListIds.newBestOfOpinion,
+    ListIds.controlBestOfOpinion,
+    ListIds.theBestOfOpinion
+  ).map(_.toString).contains[String](_)
 
   def commentEmails(subscribedListIds: Iterable[String] = None) = List(
     EmailSubscription(
@@ -356,8 +371,8 @@ object EmailSubscriptions {
       teaser = "Get up to speed on the most interesting and provoking issues and join the debate every afternoon",
       description = "Guardian Opinion's daily email newsletter with the most shared opinion, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate every afternoon.",
       frequency = "Weekday afternoons",
-      listId = "2313",
-      subscribedTo = subscribedListIds.exists{ x => x == "2313" },
+      listId = ListIds.newBestOfOpinion.toString,
+      subscribedTo = subscribedListIds.exists(isOpinionVariant),
       subheading = Some("UK"),
       tone = Some("comment"),
       signupPage = Some("/commentisfree/2014/jan/29/comment-is-free-daily-roundup")

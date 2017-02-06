@@ -1,81 +1,111 @@
-@import layout.{FaciaCard, FaciaCardHeader}
-@import model.pressed.PressedContent
-@import layout.EditionalisedLink
-@import model.EmailAddons.EmailContentType
-
 @(page: model.PressedPage)(implicit request: RequestHeader)
 
-@import views.support.EmailHelpers._
-@import views.support.TrailCssClasses.toneClass
-@import model.pressed.{Feature, ExternalLink}
-@import implicits.Requests.RichRequestHeader
 @import implicits.ItemKickerImplicits._
+@import implicits.Requests.RichRequestHeader
+@import layout.{ContentCard, FaciaCard, ItemClasses}
+@import model.EmailAddons.EmailContentType
+@import model.pressed.{ExternalLink, Feature}
+@import views.support.EmailHelpers._
+@import views.support.RemoveOuterParaHtml
+@import views.support.TrailCssClasses.toneClassFromStyle
 
 
-@headline(pressedContent: PressedContent) = {
-    <h3 class="headline">
-        @defining(FaciaCardHeader.fromTrail(pressedContent, None)) { header =>
-            @header.kicker.map { kicker =>
+@headline(card: ContentCard, isLarge: Boolean = false) = {
+    <a @Html(card.header.url.hrefWithRel) class="facia-link">
+        <h3 class="headline">
+            @card.header.kicker.map { kicker =>
                 <span class="fc-item__kicker">@Html(kicker.kickerHtml)</span>
                 <span class="kicker-separator">/</span>
             }
 
-            @defining(if (request.isEmailConnectedStyle) "-connected" else "") { suffix =>
-                @if(header.isGallery) { @icon("gallery" + suffix) }
-                @if(header.isAudio) { @icon("podcast" + suffix) }
-                @if(header.isVideo) { @icon("video" + suffix) }
+            @defining(if(request.isEmailConnectedStyle) "-connected" else "") { suffix =>
+                @if(card.header.isGallery) { @icon("gallery" + suffix, isLarge) }
+                @if(card.header.isAudio) { @icon("podcast" + suffix, isLarge) }
+                @if(card.header.isVideo) { @icon("video" + suffix, isLarge) }
             }
 
-            @if(header.quoted) {
-                @pressedContent.card.cardStyle match {
-                    case Feature => { @icon("quote-feature") }
-                    case _ => { @icon("quote") }
+            @if(card.header.quoted) {
+                @card.cardStyle match {
+                    case Feature => { @icon("quote-feature", isLarge) }
+                    case _ => { @icon("quote", isLarge) }
                 }
             }
+            @RemoveOuterParaHtml(card.header.headline)
+        </h3>
+        @if(card.header.quoted) {
+            @card.bylineText.map { byline => <h4 class="byline">@byline</h4> }
         }
-        @pressedContent.header.headline
-    </h3>
+    </a>
 }
 
-@faciaCardLarge(pressedContent: PressedContent) = {
-    @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
-        @paddedRow(Seq(toneClass(pressedContent))) {
-            <a @Html(href) class="facia-link">
-                <div class="facia-card facia-card--large">
-                    @imgFromPressedContent(pressedContent)
-                    @fullRow(Seq("facia-card__text")) {
-                        @headline(pressedContent)
-                        @pressedContent.card.trailText.map { trailText =>
-                            <h4 class="trail-text">@trailText</h4>
-                        }
-                    }
-                </div>
-            </a>
-        }
+@trailText(card: ContentCard) = {
+    @card.trailText.map { trailText =>
+        <a @Html(card.header.url.hrefWithRel) class="facia-link">
+            <h4 class="trail-text">@Html(trailText)</h4>
+        </a>
     }
 }
 
-@faciaCardSmall(pressedContent: PressedContent) = {
-    @defining(EditionalisedLink.fromFaciaContent(pressedContent).hrefWithRel) { href =>
-        @paddedRow(Seq(toneClass(pressedContent))) {
-            <a @Html(href) class="facia-link">
-                @fullRow(Seq("facia-card", "facia-card__text")) {
-                    @headline(pressedContent)
+@headlineAndTrailWithCutout(card: ContentCard, withImage: Boolean) = {
+    @fullRow(Seq("facia-card__text")) {
+        @headline(card, isLarge = withImage)
+    }
+    @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
+        @trailText(card)
+    }
+}
+
+@faciaCardLarge(card: ContentCard, withImage: Boolean) = {
+    @paddedRow(Seq(toneClassFromStyle(card.cardStyle))) {
+        <div class="facia-card @if(withImage){facia-card--large}">
+            @if(withImage) { @imgFromCard(card) }
+            @if(card.header.quoted) {
+                @headlineAndTrailWithCutout(card, withImage)
+            } else {
+                @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
+                    @headline(card)
+                    @trailText(card)
                 }
-            </a>
-        }
+            }
+        </div>
     }
 }
 
-@firstCard(pressedContent: PressedContent) = {
-    @pressedContent.card.cardStyle match {
-        case ExternalLink => { @faciaCardSmall(pressedContent) }
-        case _ => { @faciaCardLarge(pressedContent) }
+@faciaCardSmall(card: ContentCard, withImage: Boolean) = {
+    @paddedRow(Seq(toneClassFromStyle(card.cardStyle))) {
+        <div class="facia-card">
+            @if(withImage && imgFromCard(card).isDefined) {
+                @fullRowWithSubColumns() {
+                    @subColumn(7, Seq("facia-card__text")) { @headline(card)}
+                    @subColumn(5, Seq("facia-card__text"), last = true) { @imgFromCard(card, 5) }
+                }
+            } else {
+                @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
+                    @headline(card)
+                }
+            }
+        </div>
     }
 }
 
-@card(pressedContent: PressedContent) = {
-    @faciaCardSmall(pressedContent)
+@firstCard(card: ContentCard, isFastLayout: Boolean) = {
+    @* if fast layout: small card, with image *@
+    @* if medium or slow layout: large card, with image *@
+    @card.cardStyle match {
+        case ExternalLink => { @faciaCardSmall(card, withImage = false) }
+        case _ if isFastLayout => { @faciaCardSmall(card, withImage = true) }
+        case _ => { @faciaCardLarge(card, withImage = true) }
+    }
+}
+
+@otherCard(card: ContentCard, isSlowLayout: Boolean) = {
+    @* if fast or medium layout: small card, no image *@
+    @* if slow layout: large card, no image *@
+    @if(isSlowLayout) {
+        @faciaCardLarge(card, withImage = false)
+    } else {
+        @faciaCardSmall(card, withImage = false)
+    }
 }
 
 @fullRow {
@@ -88,18 +118,20 @@
     }
 }
 
-@page.collections.zipWithIndex.map { case (collection, collectionIndex) =>
+@page.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.map { case (collection, collectionIndex) =>
     @paddedRow {
         <h2 class="container-title @if(collectionIndex > 0) { container-title--not-first }">
             @collection.displayName
         </h2>
     }
 
-    @collection.curatedPlusBackfillDeduplicated.zipWithIndex.map { case (pressedContent, cardIndex) =>
-        @if(cardIndex == 0) {
-            @firstCard(pressedContent)
-        } else {
-            @card(pressedContent)
+    @collection.curatedPlusBackfillDeduplicated.take(6).zipWithIndex.map { case (pressedContent, cardIndex) =>
+        @defining(FaciaCard.fromTrail(pressedContent, collection.config, ItemClasses.showMore, showSeriesAndBlogKickers = false)) { card =>
+            @if(cardIndex == 0) {
+                @firstCard(card, isFastLayout = collection.collectionType == "fast")
+            } else {
+                @otherCard(card, isSlowLayout = collection.collectionType == "slow")
+            }
         }
     }
 }

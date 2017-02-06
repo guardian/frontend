@@ -17,6 +17,10 @@
     }
 
     .panel {
+        @*
+         * !important is needed here and elsewhere because the base styles in the Ink CSS framework for email use
+         * !important and we need to override them. (See the ink stylesheet for notes on why the base styles need !important)
+         *@
         padding: 0 0 10px 0 !important;
         border: none;
     }
@@ -45,14 +49,25 @@
         text-decoration: none;
     }
     .facia-card__text {
+        padding: 0 10px 0px 10px !important;
+    }
+    .facia-card__text--last {
+        padding-bottom: 26px !important;
+    }
+    .facia-card__text.sub-columns {
         padding: 0 10px 26px 10px !important;
     }
+    .facia-card__text.sub-columns.last {
+        padding: 0 !important;
+    }
 
-    .headline, .trail-text {
+    .headline,
+    .trail-text {
         margin-top: 6px;
     }
 
-    .headline {
+    .headline,
+    .byline {
         font-family: "Guardian Egyptian Web Headline", Georgia, serif;
         font-size: 16px;
         line-height: 20px;
@@ -65,10 +80,10 @@
         line-height: 18px;
     }
 
-    .facia-card--large .headline {
+    .facia-card--large .headline,
+    .facia-card--large .byline {
         font-size: 22px;
         line-height: 26px;
-        color: inherit;
     }
 
     .kicker-separator {

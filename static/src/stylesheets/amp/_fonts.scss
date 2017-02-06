@@ -1,0 +1,88 @@
+@font-face {
+    font-family: 'Guardian Egyptian Web';
+    src: url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.eot');
+    src: url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.eot?#iefix') format('embedded-opentype'), url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff2') format('woff2'), url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff') format('woff'), url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf') format('truetype'), url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.svg#GuardianEgyptianWeb-Regular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal
+}
+@font-face {
+    font-family: 'Guardian Egyptian Web';
+    src: url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.eot');
+    src: url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.eot?#iefix') format('embedded-opentype'), url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff') format('woff'), url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.ttf') format('truetype'), url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.svg#GuardianEgyptianWeb-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+}
+
+@font-face {
+    font-family: 'Guardian Text Sans Web';
+    src: url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.eot');
+    src: url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.eot?#iefix') format('embedded-opentype'), url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff2') format('woff2'), url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff') format('woff'), url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.ttf') format('truetype'), url('https://pasteup.guim.co.uk/fonts/1.0.0/hinting-off/kerning-on/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.svg#GuardianTextSansWeb-Regular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+}
+
+.guardian-egyptian-loaded {
+    .content__headline,
+    .content__labels,
+    .element-pullquote,
+    .tonal__standfirst,
+    .drop-cap__inner,
+    .headline-list__count,
+    .signposting__item,
+    .team__info,
+    .team__score,
+    .fc-container__header__description,
+    .paid-content,
+    .witness__button,
+    .main-navigation .main-navigation_link,
+    .d2-username,
+    .liveblog-block-byline__name {
+        font-family: 'Guardian Egyptian Web', Georgia, serif;
+    }
+}
+
+.guardian-egyptian-loaded {
+    .byline,
+    .content__section-label__link,
+    .fc-item__header,
+    .fc-container__header__title,
+    .control__info,
+    .element-rich-link--not-upgraded a,
+    .element-pullquote footer,
+    .signposting__item a,
+    .from-content-api h2,
+    .from-content-api .block-elements h2,
+    .from-content-api p strong,
+    .header__supporter-cta {
+        font-family: 'Guardian Egyptian Web', Georgia, serif;
+        font-weight: 500;
+    }
+}
+
+.guardian-text-sans-loaded {
+    .hosted-page,
+    .hosted__header,
+    .header__nav__link,
+    .caption,
+    .content__dateline,
+    .ad-slot--paid-for-badge__header,
+    .element-rich-link--not-upgraded a:before,
+    .l-footer__secondary,
+    .contact,
+    .cta,
+    .element-interactive a,
+    .updated-time,
+    .published-time,
+    .timeline__date,
+    .timeline__title,
+    .liveblog-navigation,
+    .old-article-message,
+    .d2-permalink,
+    .d2-body,
+    .meta__contact-header {
+        font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    }
+}

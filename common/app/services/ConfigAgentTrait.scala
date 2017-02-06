@@ -2,9 +2,9 @@ package services
 
 import akka.util.Timeout
 import app.LifecycleComponent
-import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, FrontPriority, TrainingPriority}
+import com.gu.facia.api.models.{Front, _}
 import com.gu.facia.client.ApiClient
-import com.gu.facia.client.models.{ConfigJson => Config, FrontJson => Front}
+import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common._
 import conf.Configuration
 import fronts.FrontsApi
@@ -12,17 +12,16 @@ import model.pressed.CollectionConfig
 import model.{ApplicationContext, FrontProperties, SeoDataJson}
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.json.Json
-import conf.switches.Switches
 
-import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
 case class CollectionConfigWithId(id: String, config: CollectionConfig)
 
 trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit lazy val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
-  private lazy val configAgent = AkkaAgent[Option[Config]](None)
+  private lazy val configAgent = AkkaAgent[Option[ConfigJson]](None)
 
   def isLoaded() = configAgent.get().isDefined
 
@@ -39,11 +38,11 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     futureConfig.map(Option.apply).map(configAgent.send)
   }
 
-  def refreshWith(config: Config): Unit = {
+  def refreshWith(config: ConfigJson): Unit = {
     configAgent.send(Option(config))
   }
 
-  def refreshAndReturn(): Future[Option[Config]] =
+  def refreshAndReturn(): Future[Option[ConfigJson]] =
     getClient.config
       .flatMap(config => configAgent.alter{_ => Option(config)})
       .fallbackTo{
@@ -86,7 +85,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     configAgent.future()
       .map(_.flatMap(_.collections.get(id)).map(CollectionConfig.make))
 
-    def getAllCollectionIds: List[String] = {
+  def getAllCollectionIds: List[String] = {
     val config = configAgent.get()
     config.map(_.collections.keys.toList).getOrElse(Nil)
   }
@@ -108,18 +107,14 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 
   def getFrontPriorityFromConfig(pageId: String): Option[FrontPriority] = {
     configAgent.get() flatMap {
-      _.fronts.get(pageId) map {
-        _.priority match {
-          case Some("commercial") => CommercialPriority
-          case Some("training") => TrainingPriority
-          case _ => EditorialPriority
-        }
+      _.fronts.get(pageId) map { frontJson =>
+        Front.fromFrontJson(pageId, frontJson).priority
       }
     }
   }
 
   def fetchFrontProperties(id: String): FrontProperties = {
-    val frontOption: Option[Front] = configAgent.get().flatMap(_.fronts.get(id))
+    val frontOption: Option[FrontJson] = configAgent.get().flatMap(_.fronts.get(id))
 
     FrontProperties(
       onPageDescription = frontOption.flatMap(_.onPageDescription),
@@ -128,15 +123,19 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
       imageHeight = frontOption.flatMap(_.imageHeight).map(_.toString),
       isImageDisplayed = frontOption.flatMap(_.isImageDisplayed).getOrElse(false),
       editorialType = None, // value found in Content API
-      activeBrandings = None // value found in Content API
+      editionBrandings = None // value found in Content API
     )
   }
 
   def isFrontHidden(id: String): Boolean =
     configAgent.get().exists(_.fronts.get(id).flatMap(_.isHidden).exists(identity))
 
-  def shouldServeFront(id: String, isEmailRequest: Boolean = false)(implicit context: ApplicationContext) = getPathIds.contains(id) &&
-    (context.isPreview || (Switches.DisplayHiddenFrontsAsEmails.isSwitchedOn && isEmailRequest) || !isFrontHidden(id))
+  def isEmailFront(id: String): Boolean =
+    getFrontPriorityFromConfig(id).contains(EmailPriority)
+
+  // email fronts are only served if the email-friendly format has been specified in the request
+  def shouldServeFront(id: String)(implicit context: ApplicationContext) =
+    getPathIds.contains(id) && (context.isPreview || !isFrontHidden(id))
 
   def shouldServeEditionalisedFront(edition: Edition, id: String)(implicit context: ApplicationContext) = {
     shouldServeFront(s"${edition.id.toLowerCase}/$id")

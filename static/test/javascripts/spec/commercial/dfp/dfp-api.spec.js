@@ -1,5 +1,3 @@
-define('js', [], function () { return function () {}; });
-define('js!googletag.js', [], function () { return function () {}; });
 define([
     'bean',
     'bonzo',
@@ -17,6 +15,9 @@ define([
     fixtures,
     Injector
 ) {
+    function noop() {
+
+    }
     describe('DFP', function () {
 
         var $style,
@@ -59,6 +60,10 @@ define([
             });
 
             injector.mock('common/modules/commercial/dfp/apply-creative-template', function () {
+                return Promise.resolve();
+            });
+
+            injector.mock('common/utils/load-script', function () {
                 return Promise.resolve();
             });
 
@@ -181,7 +186,7 @@ define([
             });
 
             it('hides all ad slots', function (done) {
-                dfp.prepareGoogletag.init().then(function () {
+                dfp.prepareGoogletag.init(noop, noop).then(function () {
                     var remainingAdSlots = document.querySelectorAll('.js-ad-slot');
                     expect(remainingAdSlots.length).toBe(0);
                     done();
@@ -190,7 +195,11 @@ define([
         });
 
         it('should get the slots', function (done) {
-            dfp.prepareGoogletag.init().then(dfp.fillAdvertSlots.init).then(function () {
+            dfp.prepareGoogletag.init(noop, noop)
+            .then(function() {
+                return dfp.fillAdvertSlots.init(noop, noop);
+            })
+            .then(function () {
                 expect(Object.keys(dfp.getAdverts()).length).toBe(4);
                 done();
             });
@@ -199,8 +208,12 @@ define([
         it('should not get hidden ad slots', function (done) {
             $('.js-ad-slot').first().css('display', 'none');
             closeDisabledSlots.init()
-                .then(dfp.prepareGoogletag.init)
-                .then(dfp.fillAdvertSlots.init)
+                .then(function() {
+                    return dfp.prepareGoogletag.init(noop, noop);
+                })
+                .then(function() {
+                    return dfp.fillAdvertSlots.init(noop, noop);
+                })
                 .then(function () {
                     var slots = dfp.getAdverts();
                     expect(Object.keys(slots).length).toBe(3);
@@ -212,14 +225,18 @@ define([
         });
 
         it('should set listeners', function (done) {
-            dfp.prepareGoogletag.init().then(function () {
+            dfp.prepareGoogletag.init(noop, noop).then(function () {
                 expect(window.googletag.pubads().addEventListener).toHaveBeenCalledWith('slotRenderEnded');
                 done();
             });
         });
 
         it('should define slots', function (done) {
-            dfp.prepareGoogletag.init().then(dfp.fillAdvertSlots.init).then(function () {
+            dfp.prepareGoogletag.init(noop, noop)
+            .then(function() {
+                return dfp.fillAdvertSlots.init(noop, noop);
+            })
+            .then(function () {
                 [
                     ['dfp-ad-html-slot', [[300, 50]], [[[0, 0], [[300, 50]]]], 'html-slot'],
                     ['dfp-ad-script-slot', [[300, 50], [320, 50]], [[[0, 0], [[300, 50], [320, 50]]]], 'script-slot'],
@@ -244,7 +261,11 @@ define([
             detect.getBreakpoint = function () {
                 return 'wide';
             };
-            dfp.prepareGoogletag.init().then(dfp.fillAdvertSlots.init).then(function () {
+            dfp.prepareGoogletag.init(noop, noop)
+            .then(function() {
+                return dfp.fillAdvertSlots.init(noop, noop);
+            })
+            .then(function () {
                 expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
                 expect(window.googletag.pubads().collapseEmptyDivs).toHaveBeenCalled();
                 expect(window.googletag.enableServices).toHaveBeenCalled();
@@ -255,7 +276,11 @@ define([
 
         it('should be able to create "out of page" ad slot', function (done) {
             $('.js-ad-slot').first().attr('data-out-of-page', true);
-            dfp.prepareGoogletag.init().then(dfp.fillAdvertSlots.init).then(function () {
+            dfp.prepareGoogletag.init(noop, noop)
+            .then(function() {
+                return dfp.fillAdvertSlots.init(noop, noop);
+            })
+            .then(function () {
                 expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalled();
                 done();
             });
@@ -267,7 +292,11 @@ define([
             fakeEventOne.creativeId = '1';
             fakeEventTwo.creativeId = '2';
 
-            dfp.prepareGoogletag.init().then(dfp.fillAdvertSlots.init).then(function () {
+            dfp.prepareGoogletag.init(noop, noop)
+            .then(function() {
+                return dfp.fillAdvertSlots.init(noop, noop);
+            })
+            .then(function () {
                 window.googletag.pubads().listeners.slotRenderEnded(fakeEventOne);
                 window.googletag.pubads().listeners.slotRenderEnded(fakeEventTwo);
 
@@ -297,14 +326,18 @@ define([
         describe('keyword targeting', function () {
 
             it('should send page level keywords', function (done) {
-                dfp.prepareGoogletag.init().then(function () {
+                dfp.prepareGoogletag.init(noop, noop).then(function () {
                     expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
                 }).then(done).catch(done.fail);
             });
 
             it('should send container level keywords', function (done) {
                 $('.js-ad-slot').first().attr('data-keywords', 'country/china');
-                dfp.prepareGoogletag.init().then(dfp.fillAdvertSlots.init).then(function () {
+                dfp.prepareGoogletag.init(noop, noop)
+                .then(function() {
+                    return dfp.fillAdvertSlots.init(noop, noop);
+                })
+                .then(function () {
                     expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['china']);
                 }).then(done).catch(done.fail);
             });

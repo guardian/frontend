@@ -41,6 +41,7 @@ module.exports = {
             functions: 'never',
         }],
         'max-len': 'off',
+        'no-extend-native': 'error',
     },
     // don't look for eslintrcs above here
     root: true,

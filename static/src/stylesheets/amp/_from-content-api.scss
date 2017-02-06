@@ -1,0 +1,344 @@
+.gu-image {
+    width: 100%;
+}
+
+.gu-media-wrapper, .gu-video {
+    background: #000000;
+}
+
+.from-content-api {
+    word-wrap: break-word;
+    position: relative;
+}
+
+.from-content-api,
+.from-content-api .block-elements {
+    > p,
+    ul,
+    ol,
+    address {
+        margin: 0 0 $gs-baseline;
+        padding: 0;
+    }
+    > ol,
+    > blockquote > ul,
+    > ul {
+        margin-top: .8em;
+    }
+    > li, // sometimes HTML is malformed on purpose by editors
+    > ol,
+    > blockquote ul,
+    > ul {
+        list-style: none;
+    }
+    > ol {
+        counter-reset: li;
+    }
+    > ol > li:before {
+        font-size: 16px;
+        line-height: 20px;
+        content: counter(li);
+        counter-increment: li;
+        margin-right: 4px;
+    }
+    > ul ul,
+    > ol ol {
+        margin-left: $gs-gutter;
+    }
+    > ol li,
+    > ul li {
+        position: relative;
+        margin-bottom: .8em;
+    }
+    > h2 {
+        font-size: 18px;
+        line-height: 24px;
+    }
+    > h3 {
+        font-size: 16px;
+        line-height: 24px;
+        margin: 0;
+    }
+    > p,
+    > figure,
+    > video {
+        + h2 {
+            margin-top: 24px;
+        }
+        + h3 {
+            margin-top: $gs-baseline;
+        }
+    }
+}
+
+.from-content-api blockquote {
+    font-style: italic;
+    margin: 16px 0 28px 24px;
+
+    &.quoted {
+        color: $neutral-2;
+        margin-left: initial;
+        overflow: auto;
+    }
+}
+
+.is-breuer-mode .from-content-api {
+    p {
+        margin-bottom: 0;
+    }
+
+    p + p,
+    .element--thumbnail + p,
+    .element--supporting + p {
+        text-indent: $gs-gutter * 1.5;
+    }
+}
+
+
+/* Code */
+
+.from-content-api pre {
+    // Unset from `.from-content-api`
+    word-wrap: normal;
+    $x: lighten($guardian-brand-light, 30%);
+    background-color: $x;
+    border: 1px solid darken($x, 10%);
+    padding: $gs-baseline*.75 $gs-gutter*.75;
+    border-radius: 4px;
+}
+
+
+/* Bullet points */
+
+.bullet {
+    @include faux-bullet-point;
+    font-size: .1px;
+    line-height: .1px;
+    color: transparent;
+}
+
+.from-content-api ul,
+.content__standfirst ul {
+    list-style: none;
+
+    > li {
+        @include faux-bullet-point($right-space: 4px);
+
+        > p:first-child {
+            display: inline;
+        }
+    }
+}
+
+
+/* Captions */
+
+.caption {
+    font-size: 12px;
+    line-height: 16px;
+    color: $neutral-2;
+
+    .inline-information {
+        margin-right: $gs-gutter/10;
+        margin-top: -$gs-baseline/4;
+        width: 14px;
+        height: 14px;
+        background-color: $neutral-2;
+
+        .inline-information__svg {
+            width: 4px;
+            fill: #ffffff;
+
+            .tonal--tone-media & {
+                fill: $multimedia-support-5;
+            }
+
+            .content__main--minute-article & {
+                fill: $neutral-5;
+            }
+        }
+    }
+}
+
+.caption--main {
+    padding: ($gs-baseline/3)*2 $gs-gutter/2 $gs-baseline*2;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+}
+
+
+/* Figures */
+
+figure {
+    margin: 0;
+
+    img {
+        display: block;
+    }
+    &.element {
+        margin-top: ($gs-baseline/3)*4;
+        margin-bottom: $gs-baseline;
+        position: relative;
+    }
+    &.element-image,
+    &.element-atom
+    {
+        position: relative;
+        figcaption {
+            padding-top: ($gs-baseline/6)*4;
+        }
+    }
+    &.img--inline {
+        margin: 5px $gs-gutter 6px 0;
+    }
+}
+
+p + figure,
+p + video {
+    margin-top: $gs-baseline/3;
+}
+
+figure.element--thumbnail {
+    float: left;
+    clear: left;
+    margin-bottom: 0;
+    width: 7.5rem;
+    margin-right: 1.25rem;
+    margin-top: .375rem;
+
+    & + h2 {
+        display: inline;
+    }
+}
+
+figure.element-table {
+    margin: 0 .1rem 0 1.25rem;
+    float: right;
+    width: 18.75rem;
+
+    @include mq(500px) {
+        width: 100%;
+        margin: 0 .125rem;
+    }
+}
+
+
+/* Citations */
+
+.from-content-api {
+    cite {
+        font-size: 14px;
+        line-height: 20px;
+
+        a {
+            color: $neutral-2;
+
+            &:hover,
+            &:focus,
+            &:visited:focus,
+            &:visited:hover {
+                color: #4d4d4d;
+                border-bottom: 1px dotted #4d4d4d;
+            }
+            &:visited {
+                color: #808080;
+                border-bottom: 1px dotted #808080;
+            }
+        }
+    }
+}
+
+
+/* Tables */
+
+.from-content-api {
+    table {
+        margin-bottom: ($gs-baseline/3)*4;
+    }
+
+    // This is a weird xml output from the api
+    table caption {
+        font-size: 20px;
+        line-height: 24px;
+        padding: ($gs-baseline/3)*2 0;
+        text-align: left;
+        border-top: 1px solid #b3b3b4;
+    }
+    th,
+    td {
+        font-size: 13px;
+        line-height: 16px;
+        padding: ($gs-baseline/3)*2;
+    }
+    th {
+        font-weight: 600;
+    }
+    tbody tr:nth-child(odd) td {
+        background-color: darken($neutral-8, 4%);
+    }
+}
+
+
+/* Embeds */
+
+.from-content-api {
+    .element {
+        iframe {
+            width: 100%;
+            border: 0;
+        }
+    }
+}
+
+/* Videos embedded in live blogs have an unpredictable ratio */
+.embed-video-wrapper {
+    iframe,
+    video,
+    object,
+    embed {
+        width: 100%;
+    }
+}
+
+/* Pullquotes */
+
+.element-pullquote {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    margin-bottom: $gs-baseline;
+
+    blockquote {
+        margin: 0;
+        font-style: normal;
+
+        p {
+            font-size: 24px;
+            line-height: 28px;
+            color: $neutral-2;
+            margin-bottom: 0;
+        }
+    }
+    footer {
+        margin-top: 1px;
+    }
+    cite {
+        font-size: 16px;
+        line-height: 24px;
+        font-style: normal;
+        color: $neutral-2;
+
+        a,
+        a:visited {
+            border-bottom: 1px solid $neutral-4;
+
+            &:hover {
+                text-decoration: none;
+                border-bottom: 1px solid $neutral-2;
+            }
+        }
+    }
+}

@@ -6,23 +6,13 @@
     height: 32px;
 }
 
-.inline-icon__fallback,
-.submeta__tone,
-.submeta__head,
-.keyword-list,
-.submeta__syndication,
-.submeta hr:first-of-type {
+.social--top {
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline / 2;
+}
+
+.inline-icon__fallback {
     display: none;
-}
-
-.meta__extras {
-    padding: $gs-baseline/2 0;
-    clear: both;
-}
-
-.submeta hr, .meta__extras {
-    border: 0;
-    border-top: 1px dotted $neutral-4;
 }
 
 .social__item {
@@ -39,6 +29,51 @@
 .social-icon__svg {
     height: 88%;
     width: 88%;
+}
+
+.social__item--more {
+    float: none;
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+}
+
+.social__item--revealer {
+    display: none;
+}
+
+.social__item--revealer:checked {
+    & ~ .social__secondary {
+        display: block;
+    }
+
+    & ~ .social__item--more {
+        .social-icon--more__svg {
+            display: none;
+        }
+
+        .social-icon--more {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48cGF0aCBmaWxsPSIjNzY3Njc2IiBkPSJNNy41IDlsLTYuNS03IDEtMSA3IDYuNSA3LTYuNSAxIDEtNi41IDcgNi41IDctMSAxLTctNi41LTcgNi41LTEtMSA2LjUtN3oiLz48L3N2Zz4=);
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+}
+
+.social-icon--more {
+    background-color: $neutral-5;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 2rem;
+}
+
+.social-icon--more__svg {
+    fill: $neutral-2;
+    width: 60%;
+
+    .centered-icon & {
+        top: -$gs-baseline / 6;
+    }
 }
 
 .social-icon--facebook {

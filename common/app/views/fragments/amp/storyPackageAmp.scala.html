@@ -34,10 +34,10 @@
             <div class="fc-item__header">
                 <h2 class="fc-item__title">
                     <span>
-                        @if(content.header.isVideo) { @fragments.inlineSvg("video-icon", "icon") }
-                        @if(content.header.isGallery) { @fragments.inlineSvg("camera", "icon") }
+                        @if(content.header.isVideo) { @fragments.inlineSvg("video-icon", "icon", List("fc-item__video-icon")) }
+                        @if(content.header.isGallery) { @fragments.inlineSvg("camera", "icon", List("fc-item__cameria-icon")) }
                         @if(content.header.isAudio) { @fragments.inlineSvg("volume-high", "icon") }
-                        @if(content.header.isComment) { @fragments.inlineSvg("quote", "icon") }
+                        @if(content.header.isComment) { @fragments.inlineSvg("quote", "icon", List("fc-item__quote-icon")) }
                     </span>
                     @content.header.headline
                 </h2>

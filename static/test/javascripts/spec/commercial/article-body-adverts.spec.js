@@ -13,6 +13,10 @@ define([
     fixtures,
     Injector
 ) {
+    function noop() {
+
+    }
+
     describe('Article Body Adverts', function () {
         var injector = new Injector(),
             ads = {
@@ -39,21 +43,21 @@ define([
                 'common/modules/article/space-filler',
                 'common/utils/config',
                 'common/utils/detect'
-            ], function () {
-                articleBodyAdverts = arguments[0];
+            ], function ($1, $2, $3, $4, $5) {
+                articleBodyAdverts = $1;
 
-                commercialFeatures = arguments[1];
+                commercialFeatures = $2;
                 commercialFeatures.articleBodyAdverts = true;
 
-                spaceFiller = arguments[2];
+                spaceFiller = $3;
                 spaceFillerStub = sinon.stub(spaceFiller, 'fillSpace');
                 spaceFillerStub.returns(Promise.resolve(true));
 
-                config = arguments[3];
+                config = $4;
                 config.page = {};
                 config.switches = {};
 
-                detect = arguments[4];
+                detect = $5;
 
                 done();
             });
@@ -69,7 +73,7 @@ define([
 
         it('should exit if commercial feature disabled', function (done) {
             commercialFeatures.articleBodyAdverts = false;
-            articleBodyAdverts.init().then(function(executionResult){
+            articleBodyAdverts.init(noop, noop).then(function(executionResult){
                 expect(executionResult).toBe(false);
                 expect(spaceFiller.fillSpace).not.toHaveBeenCalled();
                 done();
@@ -77,7 +81,7 @@ define([
         });
 
         it('should call space-filler`s insertion method with the correct arguments', function (done) {
-            articleBodyAdverts.init().then(function () {
+            articleBodyAdverts.init(noop, noop).then(function () {
                 var args = spaceFillerStub.firstCall.args,
                     rulesArg = args[0],
                     writerArg = args[1];
@@ -98,7 +102,7 @@ define([
             });
 
             it('its first call to space-filler uses the inline-merch rules', function (done) {
-                articleBodyAdverts.init().then(function () {
+                articleBodyAdverts.init(noop, noop).then(function () {
                     var firstCall = spaceFillerStub.firstCall,
                         rules = firstCall.args[0];
 
@@ -114,7 +118,7 @@ define([
                     paragraph = document.createElement('p');
                 fixture.appendChild(paragraph);
 
-                articleBodyAdverts.init().then(function () {
+                articleBodyAdverts.init(noop, noop).then(function () {
                     var firstCall = spaceFillerStub.firstCall,
                         writer = firstCall.args[1];
                     writer([paragraph]);
@@ -137,11 +141,14 @@ define([
 
                 detect.getBreakpoint = function () {return 'tablet';};
                 ads['dfp-ad--im'] = false;
-                articleBodyAdverts.init()
-                    .then(articleBodyAdverts['@@tests'].waitForMerch)
-                    .then(function (countAdded) {
-                        expect(countAdded).toEqual(10);
-                    }).then(done);
+                articleBodyAdverts['@@tests'].addInlineMerchAd()
+                .then(articleBodyAdverts['@@tests'].waitForMerch)
+                .then(articleBodyAdverts['@@tests'].addInlineAds)
+                .then(function (countAdded) {
+                    expect(countAdded).toEqual(10);
+                })
+                .then(done)
+                .catch(done.fail);
             });
         });
 
@@ -154,18 +161,18 @@ define([
                 it('inserts up to ten adverts', function (done) {
                     spaceFillerStub.onCall(0).returns(Promise.resolve(2));
                     spaceFillerStub.onCall(1).returns(Promise.resolve(8));
-                    articleBodyAdverts.init()
-                        .then(articleBodyAdverts['@@tests'].insertLongAds)
-                        .then(function (countAdded) {
-                            expect(countAdded).toEqual(10);
-                        })
-                        .then(done);
+                    articleBodyAdverts['@@tests'].addInlineAds()
+                    .then(function (countAdded) {
+                        expect(countAdded).toEqual(10);
+                    })
+                    .then(done)
+                    .catch(done.fail);
                 });
 
                 it('inserts the third+ adverts with greater vertical spacing', function (done) {
                     // We do not want the same ad-density on long-read
                     // articles that we have on shorter pieces
-                    articleBodyAdverts.init().then(function () {
+                    articleBodyAdverts.init(noop, noop).then(function () {
                         var longArticleInsertionCalls = spaceFillerStub.args.slice(2);
                         var longArticleInsertionRules = longArticleInsertionCalls.map(function (call) {
                             return call[0];
@@ -263,7 +270,7 @@ define([
                 });
 
                 function getFirstRulesUsed() {
-                    return articleBodyAdverts.init().then(function () {
+                    return articleBodyAdverts.init(noop, noop).then(function () {
                         var firstCall = spaceFillerStub.firstCall;
                         return firstCall.args[0];
                     });

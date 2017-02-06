@@ -17,14 +17,14 @@ import conf.switches.Switches.ServerSideTests
 // }
 
 
-object ABNewNavVariantFour extends TestDefinition(
-  name = "ab-new-nav-variant-four",
-  description = "users in this test will see the new header fourth variant",
+object ABNewNavVariantSeven extends TestDefinition(
+  name = "ab-new-nav-variant-seven",
+  description = "users in this test will see the new header seventh variant",
   owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2017, 1, 5)
+  sellByDate = new LocalDate(2017, 2, 8)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header").contains("variantfour")
+    request.headers.get("X-GU-ab-new-header").contains("variantseven")
   }
 }
 
@@ -32,7 +32,7 @@ object ABNewNavControl extends TestDefinition(
   name = "ab-new-nav-control",
   description = "control for the new header test",
   owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2017, 1, 5)
+  sellByDate = new LocalDate(2017, 2, 8)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header").contains("control")
@@ -43,7 +43,7 @@ object CommercialClientLoggingVariant extends TestDefinition(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Seq(Owner.withGithub("rich-nguyen")),
-  sellByDate = new LocalDate(2017, 2, 1)
+  sellByDate = new LocalDate(2018, 2, 1)
   ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ccl").contains("ccl-A")
@@ -54,7 +54,7 @@ object WebpackTest extends TestDefinition(
   name = "ab-webpack-bundle",
   description = "for users in this test, website will serve standard JavaScript that has been bundled by Webpack",
   owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LocalDate(2017, 1, 9)
+  sellByDate = new LocalDate(2017, 2, 13)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-webpack-bundle").contains("webpack")
@@ -65,7 +65,7 @@ object WebpackControl extends TestDefinition(
   name = "ab-webpack-bundle-control",
   description = "control for Webpack test",
   owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LocalDate(2017, 1, 9)
+  sellByDate = new LocalDate(2017, 2, 13)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-webpack-bundle").contains("control")
@@ -85,7 +85,7 @@ trait ServerSideABTests {
 
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
-    ABNewNavVariantFour,
+    ABNewNavVariantSeven,
     ABNewNavControl,
     CommercialClientLoggingVariant,
     WebpackTest,
