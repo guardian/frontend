@@ -51,7 +51,7 @@ object NavLinks {
   val careers = NavLink("careers", "/money/work-and-careers")
 
   /* OPINION */
-  val opinion = NavLink("opinion", "/commentisfree", longTitle = "sport home", iconName = "home", uniqueSection = "commentisfree")
+  val opinion = NavLink("opinion", "/commentisfree", longTitle = "opinion home", iconName = "home", uniqueSection = "commentisfree")
   var columnists = NavLink("columnists", "/index/contributors")
   val theGuardianView = NavLink("the guardian view", "/profile/editorial")
   val cartoons = NavLink("cartoons", "/cartoons/archive")
@@ -75,7 +75,7 @@ object NavLinks {
   val NRL = NavLink("NRL", "/sport/nrl")
   val aLeague = NavLink("a-league", "/football/a-league")
   val NFL = NavLink("NFL", "/sport/nfl")
-  val MLS = NavLink("MLS", "/sport/mls")
+  val MLS = NavLink("MLS", "/football/mls")
   val MLB = NavLink("MLB", "/sport/mlb")
   val NBA = NavLink("NBA", "/sport/nba")
   val NHL = NavLink("NHL", "/sport/nhl")

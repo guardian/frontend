@@ -109,7 +109,7 @@ object NewNavigation {
         NavLink("in my opinion", "/commentisfree/series/comment-is-free-weekly")
       ),
       List(
-        NavLink("Polly Toynbee", "/profile/pollytoyn"),
+        NavLink("Polly Toynbee", "/profile/pollytoynbee"),
         NavLink("Owen Jones", "/profile/owen-jones"),
         NavLink("Jonathan Freedland", "/profile/jonathanfreedland"),
         NavLink("Marina Hyde", "/profile/marinahyde"),
