@@ -3,13 +3,13 @@ define([
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/storage',
+    'common/utils/assign',
     'common/utils/url',
     'commercial/modules/third-party-tags/krux',
     'common/modules/identity/api',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab',
     'lodash/arrays/compact',
-    'lodash/objects/merge',
     'lodash/arrays/uniq',
     'lodash/objects/pick'
 ], function (
@@ -17,13 +17,13 @@ define([
     cookies,
     detect,
     storage,
+    assign,
     url,
     krux,
     identity,
     userAdTargeting,
     ab,
     compact,
-    merge,
     uniq,
     pick
 ) {
@@ -167,7 +167,7 @@ define([
         var win         = (opts || {}).window || window;
         var page        = config.page;
         var contentType = formatTarget(page.contentType);
-        var pageTargets = merge({
+        var pageTargets = assign({
             url:     win.location.pathname,
             edition: page.edition && page.edition.toLowerCase(),
             se:      getSeries(page),
