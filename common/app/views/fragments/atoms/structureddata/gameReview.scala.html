@@ -1,7 +1,8 @@
 @import com.gu.contententity.thrift.entity.game.Game
 @import org.joda.time.DateTime
+@import model.Tag
 
-@(review: model.content.ReviewAtom, entity: Game)(implicit request: RequestHeader)
+@(review: model.content.ReviewAtom, entity: Game, contributors: Seq[Tag])(implicit request: RequestHeader)
 
 <script type="application/ld+json">
 {
@@ -25,7 +26,7 @@
   },
 
   "name": "@entity.title",
-  "author": @{fragments.atoms.structureddata.person(review.data.reviewer)},
+  "author": @{fragments.atoms.structureddata.contributor(review.data.reviewer, contributors)},
   "reviewBody": "@review.data.reviewSnippet",
   "publisher": {
     "@@type": "Organization",

@@ -6,7 +6,6 @@ define([
     'Promise',
     'commercial/modules/hosted/youtube',
     'commercial/modules/hosted/next-video-autoplay',
-    'commercial/modules/dfp/performance-logging',
     'common/utils/$',
     'common/utils/defer-to-analytics',
     'common/utils/detect',
@@ -19,7 +18,6 @@ define([
     Promise,
     hostedYoutube,
     nextVideoAutoplay,
-    performanceLogging,
     $,
     deferToAnalytics,
     detect,
@@ -115,16 +113,17 @@ define([
         }
     }
 
-    function init(moduleName) {
+    function init(start, stop) {
+        start();
+
         var $videoEl = $('.vjs-hosted__video, video');
         var $youtubeIframe = $('.js-hosted-youtube-video');
 
         if ($youtubeIframe.length === 0 && $videoEl.length === 0) {
             // halt execution
+            stop();
             return Promise.resolve();
         }
-
-        performanceLogging.moduleStart(moduleName);
 
         // Return a promise that resolves after the async work is done.
         Promise.resolve(require(['bootstraps/enhanced/media/main']))
@@ -138,17 +137,12 @@ define([
 
             $youtubeIframe.each(hostedYoutube.init);
         })
-        .then(moduleEnd, moduleEnd);
-
-        function moduleEnd(){
-            performanceLogging.moduleEnd(moduleName);
-        }
+        .then(stop, stop);
 
         return Promise.resolve();
     }
 
     return {
-        init: init,
-        customTiming: true
+        init: init
     };
 });

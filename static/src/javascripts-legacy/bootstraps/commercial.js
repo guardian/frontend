@@ -53,18 +53,18 @@ define([
 ) {
     var primaryModules = [
         ['cm-thirdPartyTags', thirdPartyTags.init],
-        ['cm-prepare-sonobi-tag', prepareSonobiTag.init],
-        ['cm-prepare-googletag', prepareGoogletag.init, prepareGoogletag.customTiming],
+        ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
+        ['cm-prepare-googletag', prepareGoogletag.init, true],
         ['cm-highMerch', highMerch.init],
-        ['cm-articleAsideAdverts', articleAsideAdverts.init],
-        ['cm-articleBodyAdverts', articleBodyAdverts.init],
-        ['cm-liveblogAdverts', liveblogAdverts.init],
+        ['cm-articleAsideAdverts', articleAsideAdverts.init, true],
+        ['cm-articleBodyAdverts', articleBodyAdverts.init, true],
+        ['cm-liveblogAdverts', liveblogAdverts.init, true],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
 
     var secondaryModules = [
-        ['cm-stickyTopBanner', stickyTopBanner.init],
-        ['cm-fill-advert-slots', fillAdvertSlots.init, fillAdvertSlots.customTiming],
+        ['cm-stickyTopBanner', stickyTopBanner.init, true],
+        ['cm-fill-advert-slots', fillAdvertSlots.init, true],
         ['cm-paidContainers', paidContainers.init],
         ['cm-paidforBand', paidforBand.init]
     ];
@@ -74,9 +74,9 @@ define([
     if (config.page.isHosted) {
         secondaryModules.push(
             ['cm-hostedAbout', hostedAbout.init],
-            ['cm-hostedVideo', hostedVideo.init, hostedVideo.customTiming],
-            ['cm-hostedGallery', hostedGallery.init, hostedGallery.customTiming],
-            ['cm-hostedOnward', hostedOnward.init, hostedOnward.customTiming],
+            ['cm-hostedVideo', hostedVideo.init, true],
+            ['cm-hostedGallery', hostedGallery.init, true],
+            ['cm-hostedOnward', hostedOnward.init, true],
             ['cm-hostedOJCarousel', hostedOJCarousel.init]);
     }
 
@@ -90,24 +90,18 @@ define([
 
             var moduleName = module[0];
             var moduleInit = module[1];
-            var hasCustomTiming = module[2];
+            var moduleDefer = module[2];
 
             robust.catchErrorsAndLog(moduleName, function () {
-                if (hasCustomTiming) {
-                    // Modules that use custom timing perform their own measurement timings.
-                    // These modules all have async init procedures which don't block, and return a promise purely for
-                    // perf logging, to time when their async work is done. The command buffer guarantees execution order,
-                    // so we don't use the returned promise to order the bootstrap's module invocations.
-                    customTimingModules.push(moduleInit(moduleName));
-                } else {
-                    // Standard modules return a promise that must resolve before dependent bootstrap modules can begin
-                    // to execute. Timing is done here in the bootstrap, using the appropriate baseline.
-                    var modulePromise = moduleInit(moduleName).then(function () {
-                        performanceLogging.moduleCheckpoint(moduleName, baseline);
-                    });
-
-                    modulePromises.push(modulePromise);
-                }
+                // These modules all have async init procedures which don't block, and return a promise purely for
+                // perf logging, to time when their async work is done. The command buffer guarantees execution order,
+                // so we don't use the returned promise to order the bootstrap's module invocations.
+                var wrapped = moduleDefer ?
+                    performanceLogging.defer(moduleName, moduleInit) :
+                    performanceLogging.wrap(moduleName, moduleInit);
+                var result = wrapped();
+                customTimingModules.push(result);
+                modulePromises.push(result);
             });
         });
 
