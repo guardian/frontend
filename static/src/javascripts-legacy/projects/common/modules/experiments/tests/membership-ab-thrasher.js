@@ -76,12 +76,6 @@ define([
 
         this.variants = [
             {
-                id: 'A1',
-                test: function () {
-                    self.setup('A1')
-                }
-            },
-            {
                 id: 'B1',
                 test: function () {
                     self.setup('B1');
