@@ -22,6 +22,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-guardian-today-signup-messaging",
+    "Test different signup messaging for Guardian Today emails",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 28),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-membership-bundles-thrasher",
     "Test appetite for first batch of bundles",
     owners = Seq(Owner.withGithub("justinpinner")),

@@ -11,6 +11,7 @@ define([
     'common/modules/experiments/tests/opinion-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
+    'common/modules/experiments/tests/guardian-today-messaging',
     'common/modules/experiments/acquisition-test-selector',
     'common/modules/experiments/tests/membership-ab-thrasher'
 ], function (reportError,
@@ -25,6 +26,7 @@ define([
              OpinionEmailVariants,
              RecommendedForYou,
              MembershipEngagementBannerTests,
+             GuardianTodayMessaging,
              acquisitionTestSelector,
              MembershipABThrasher
     ) {
@@ -32,6 +34,7 @@ define([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
         new RecommendedForYou(),
+        new GuardianTodayMessaging(),
         acquisitionTestSelector.getTest(),
         new MembershipABThrasher
     ].concat(MembershipEngagementBannerTests));
@@ -243,9 +246,10 @@ define([
      */
     function registerCompleteEvent(complete) {
         return function initListener(test) {
-            var variantId = segmentUtil.variantIdFor(test);
 
-            if (segmentUtil.isInTest(test)) {
+            var variantId = getTestVariantId(test.id);
+
+            if (variantId && variantId !== 'notintest') {
                 var variant = getVariant(test, variantId);
                 var listener = (complete ? variant.success : variant.impression) || noop;
 
