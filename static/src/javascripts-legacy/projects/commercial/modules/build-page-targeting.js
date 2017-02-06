@@ -95,14 +95,10 @@ define([
             if (config.tests) {
                 Object.keys(config.tests).forEach(function (testKey) {
                     var testValue = config.tests[testKey];
-                    if (typeof testValue === 'string' && isCommercialTest(testValue.toLowerCase())) {
-                        abParams.push(n);
+                    if (typeof testValue === 'string' && cmRegex.test(test)) {
+                        abParams.push(testValue);
                     }
                 });
-            }
-
-            function isCommercialTest(test) {
-                return cmRegex.test(test) || commercialRegex.test(test);
             }
 
             return abParams;
