@@ -1,26 +1,27 @@
 define([
     'common/utils/config',
+    'common/utils/mediator',
     'common/utils/fetch-json',
     'common/utils/fastdom-promise',
     'commercial/modules/hosted/onward-journey-carousel',
-    'commercial/modules/dfp/performance-logging',
     'Promise'
-], function (config, fetchJson, fastdom, HostedCarousel, performanceLogging, Promise) {
+], function (config, mediator, fetchJson, fastdom, HostedCarousel, Promise) {
 
     return {
         init: loadOnwardComponent,
-        customTiming: true
+        whenRendered: new Promise(function (resolve) {
+            mediator.on('hosted:onward:done', resolve);
+        })
     };
 
-    function loadOnwardComponent(moduleName) {
-        performanceLogging.moduleStart(moduleName);
+    function loadOnwardComponent(start, stop) {
+        start();
 
         var placeholders = document.getElementsByClassName('js-onward-placeholder');
 
-        var fetchPromise;
-
         if (placeholders.length) {
-            fetchPromise = fetchJson(config.page.ajaxUrl + '/'
+
+            fetchJson(config.page.ajaxUrl + '/'
                 + config.page.pageId + '/'
                 + config.page.contentType.toLowerCase() + '/'
                 + 'onward.json', {mode: 'cors'})
@@ -28,17 +29,19 @@ define([
                     return fastdom.write(function () {
                         var i;
                         for (i = 0; i < placeholders.length; i++) {
-                            placeholders[i].innerHTML = json.html;
+                            placeholders[i].insertAdjacentHTML('beforeend', json.html);
                         }
-                        new HostedCarousel.init();
                     });
                 })
+                .then(function () {
+                    HostedCarousel.init();
+                    mediator.emit('hosted:onward:done');
+                })
+                .then(stop);
         } else {
-            fetchPromise = Promise.resolve();
+            stop();
         }
 
-        return fetchPromise.then(function () {
-            performanceLogging.moduleEnd(moduleName);
-        });
+        return Promise.resolve();
     }
 });

@@ -12,20 +12,6 @@ define([
     defaults
 ) {
 
-    var paidforBandHeight;
-
-    function initPaidForBand(element) {
-        paidforBandHeight = 0;
-        if (config.page.isAdvertisementFeature) {
-            var paidforBand = document.querySelector('.paidfor-band');
-            if (paidforBand && paidforBand !== element) {
-                fastdom.read(function () {
-                    paidforBandHeight = paidforBand.offsetHeight;
-                });
-            }
-        }
-    }
-
     /**
      * @todo: check if browser natively supports "position: sticky"
      */
@@ -39,32 +25,32 @@ define([
     }
 
     Sticky.prototype.init = function init() {
-        if (paidforBandHeight === undefined) {
-            initPaidForBand(this.element);
-        }
+        fastdom.read(function () {
+            this.offsetFromParent = this.element.getBoundingClientRect().top - this.element.parentNode.getBoundingClientRect().top;
+        }, this);
         mediator.on('window:throttledScroll', this.updatePosition.bind(this));
         // kick off an initial position update
         fastdom.read(this.updatePosition, this);
     };
 
     Sticky.prototype.updatePosition = function updatePosition() {
+        var elementRect = this.element.getBoundingClientRect();
         var parentRect = this.element.parentNode.getBoundingClientRect();
-        var elementHeight = this.element.offsetHeight;
-        var css = {}, message, stick;
+        var elementHeight = elementRect.height;
+        var css, message, stick;
 
         // have we scrolled past the element
-        if (parentRect.top < this.opts.top + paidforBandHeight) {
-            // make sure the element stays within its parent
-            var fixedTop = this.opts.containInParent && parentRect.bottom < this.opts.top + elementHeight ?
+        if (0 < parentRect.top + this.offsetFromParent) {
+            stick = false;
+            css = { top: null };
+            message = 'unfixed';
+        } else {
+            stick = true;
+            var top = this.opts.containInParent && parentRect.bottom <= elementRect.height ?
                 Math.floor(parentRect.bottom - elementHeight - this.opts.top) :
                 this.opts.top;
-            stick = true;
-            css = { top: fixedTop };
+            css = { top: top };
             message = 'fixed';
-        } else {
-            stick = false;
-            css = { top: 0 };
-            message = 'unfixed';
         }
 
         if (this.opts.emitMessage && message && message !== this.lastMessage) {

@@ -2,6 +2,7 @@ define([
     'fastdom',
     'common/modules/atoms/youtube-player',
     'common/modules/atoms/youtube-tracking',
+    'common/modules/component',
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect'
@@ -9,6 +10,7 @@ define([
     fastdom,
     youtubePlayer,
     tracking,
+    Component,
     $,
     config,
     detect
@@ -29,9 +31,16 @@ define([
     }
 
     function onPlayerPlaying(atomId) {
+        var player = players[atomId];
+
         killProgressTracker(atomId);
         setProgressTracker(atomId);
-        tracking.track('play', atomId);
+        tracking.track('play', getTrackingId(atomId));
+
+        if (player.endSlate &&
+            !player.overlay.parentNode.querySelector('.end-slate-container')) {
+            player.endSlate.fetch(player.overlay.parentNode, 'html');
+        }
     }
 
     function onPlayerPaused(atomId) {
@@ -40,7 +49,7 @@ define([
 
     function onPlayerEnded(atomId) {
         killProgressTracker(atomId);
-        tracking.track('end', atomId);
+        tracking.track('end', getTrackingId(atomId));
         players[atomId].pendingTrackingCalls = [25, 50, 75];
     }
 
@@ -70,12 +79,10 @@ define([
         var percentPlayed = Math.round(((currentTime / player.duration) * 100));
 
         if (percentPlayed >= pendingTrackingCalls[0]) {
-            tracking.track(pendingTrackingCalls[0], atomId);
+            tracking.track(pendingTrackingCalls[0], getTrackingId(atomId));
             pendingTrackingCalls.shift();
         }
     }
-
-
 
     function shouldAutoplay(){
 
@@ -106,8 +113,13 @@ define([
         };
 
         if (overlay) {
-            var formattedDuration = getFormattedDuration(players[atomId].player.getDuration());
-            setDuration(formattedDuration, overlay);
+            showDuration(atomId, overlay);
+
+            players[atomId].overlay = overlay;
+
+            if (!!config.page.section && detect.isBreakpoint({ min: 'desktop' })) {
+                players[atomId].endSlate = getEndSlate(overlay);
+            }
         }
     }
 
@@ -132,10 +144,21 @@ define([
         return ('0' + time).slice(-2);
     }
 
-    function setDuration(formattedDuration, overlay) {
+    function showDuration(atomId, overlay) {
         var durationElem = overlay.querySelector('.youtube-media-atom__bottom-bar__duration');
 
-        durationElem.innerText = formattedDuration;
+        if (durationElem) {
+            durationElem.innerText = getFormattedDuration(players[atomId].player.getDuration());
+        }
+    }
+
+    function getEndSlate(overlay) {
+        var endSlatePath = overlay.parentNode.dataset.endSlate;
+        var endSlate = new Component();
+
+        endSlate.endpoint = endSlatePath;
+
+        return endSlate;
     }
 
     function onPlayerStateChange(atomId, event) {
@@ -152,20 +175,33 @@ define([
 
     function checkElemForVideo(elem) {
         fastdom.read(function () {
-            $('.youtube-media-atom', elem).each(function (el) {
-                var atomId = el.getAttribute('data-media-atom-id');
+            $('.youtube-media-atom', elem).each(function (el, index) {
                 var iframe = el.querySelector('iframe');
-                var overlay = el.querySelector('.youtube-media-atom__overlay');
-                var youtubeId = iframe.id;
 
-                tracking.init(atomId);
+                if (!iframe) {
+                    return;
+                }
+
+                // append index of atom as iframe.id must be unique
+                iframe.id += '/' + index;
+
+                // append index of atom as atomId must be unique
+                var atomId = el.getAttribute('data-media-atom-id') + '/' + index;
+                var overlay = el.querySelector('.youtube-media-atom__overlay');
+
+                tracking.init(getTrackingId(atomId));
 
                 youtubePlayer.init(iframe, {
                     onPlayerReady: onPlayerReady.bind(null, atomId, overlay),
                     onPlayerStateChange: onPlayerStateChange.bind(null, atomId)
-                }, youtubeId);
+                }, iframe.id);
             });
         });
+    }
+
+    // retrieves actual id of atom without appended index
+    function getTrackingId(atomId) {
+        return atomId.split('/')[0];
     }
 
     return {

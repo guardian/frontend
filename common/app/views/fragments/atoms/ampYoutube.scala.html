@@ -1,15 +1,14 @@
-@(media: model.content.MediaAtom)(implicit request: RequestHeader)
-@import conf.Configuration
-@import views.support.Video700
+@(media: model.content.MediaAtom,  displayCaption: Boolean, mainMedia: Boolean)(implicit request: RequestHeader)
+@import views.html.fragments.atoms.mediaAtomCaption
+    <amp-youtube
+    data-videoid="@media.assets.head.id"
+    layout="responsive"
+    width="16" height="9" data-param-modestbranding="1" data-param-rel="0" data-param-showinfo="1">
+    </amp-youtube>
 
-<amp-iframe
-sandbox="allow-scripts allow-same-origin allow-popups"
-layout="responsive"
-width="16" height="9" src="@Configuration.Media.externalEmbedHost/embed/atom/media/@media.id">
-@media.posterImage.map { posterImage =>
-    <amp-img layout="fill" src="@Video700.bestFor(posterImage)" placeholder></amp-img>
+@if(displayCaption) {
+    @mediaAtomCaption(media.title, mainMedia)
 }
-</amp-iframe>
 
 
 

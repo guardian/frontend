@@ -33,6 +33,11 @@ define([
                 width: 0
             },
             {
+                name: 'mobileMedium',
+                isTweakpoint: true,
+                width: 375
+            },
+            {
                 name: 'mobileLandscape',
                 isTweakpoint: true,
                 width: 480

@@ -1,19 +1,24 @@
 define([
     'Promise',
     'common/utils/config',
+    'common/utils/load-script',
     'common/modules/commercial/commercial-features',
-    'commercial/modules/dfp/dfp-env',
-    'lodash/functions/memoize'
+    'commercial/modules/dfp/dfp-env'
 ], function(
     Promise,
     config,
+    loadScript,
     commercialFeatures,
-    dfpEnv,
-    memoize
+    dfpEnv
 ){
-    var setupSonobi = memoize(function () {
-        return Promise.resolve(require(['js!sonobi.js'])).then(catchPolyfillErrors);
-    });
+
+    function setupSonobi(start, stop) {
+        start();
+
+        // Setting the async property to false will _still_ load the script in
+        // a non-blocking fashion but will ensure it is executed before googletag
+        loadScript(config.libs.sonobi, { async: false }).then(catchPolyfillErrors).then(stop);
+    }
 
     // Wrap the native implementation of getOwnPropertyNames in a try-catch. If any polyfill attempts
     // to re-implement this function, and doesn't consider the "access permissions" issue that exists in IE11,
@@ -23,7 +28,7 @@ define([
 
         // Skip polyfill error-catch in dev environments.
         if (config.page.isDev){
-            return Promise.resolve();
+            return;
         }
 
         var nativeGetOwnPropertyNames = Object.getOwnPropertyNames;
@@ -35,11 +40,14 @@ define([
                 return [];
             }
         };
-        return Promise.resolve();
     }
 
-    function init() {
-        return dfpEnv.sonobiEnabled && commercialFeatures.dfpAdvertising ? setupSonobi() : Promise.resolve();
+    function init(start, stop) {
+        if (dfpEnv.sonobiEnabled && commercialFeatures.dfpAdvertising) {
+            setupSonobi(start, stop);
+        }
+
+        return Promise.resolve();
     }
 
     return {

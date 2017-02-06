@@ -1,9 +1,9 @@
 package model
 
 import campaigns.PersonalInvestmentsCampaign
+import com.gu.commercial.branding.Branding
 import com.gu.facia.api.models._
 import common.Edition
-import common.commercial.Branding
 import conf.Configuration
 import contentapi.Paths
 import model.facia.PressedCollection
@@ -27,7 +27,7 @@ object PressedPage {
       "keywords" -> JsString(seoData.webTitle.capitalize),
       "keywordIds" -> JsString(keywordIds.mkString(",")),
       "hasSuperStickyBanner" -> JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds)),
-      "isAdvertisementFeature" -> JsBoolean(frontProperties.isAdvertisementFeature)
+      "isAdvertisementFeature" -> JsBoolean(frontProperties.isPaidContent)
     )
 
     val openGraph: Map[String, String] = Map(
@@ -53,7 +53,8 @@ object PressedPage {
       iosType = Some("front"),
       javascriptConfigOverrides = faciaPageMetaData,
       opengraphPropertiesOverrides = openGraph,
-      twitterPropertiesOverrides = twitterProperties
+      twitterPropertiesOverrides = twitterProperties,
+      editionBrandings = frontProperties.editionBrandings
     )
   }
 }
@@ -105,7 +106,9 @@ case class PressedPage (
 
   val keywordIds: Seq[String] = frontKeywordIds(id)
 
-  override def branding(edition: Edition): Option[Branding] = frontProperties.branding(edition)
-
   def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
+
+  private def isBranding(edition: Edition)(p: Branding => Boolean): Boolean = metadata.branding(edition).exists(p)
+  def isSponsored(edition: Edition): Boolean = isBranding(edition)(_.isSponsored)
+  def isPaid(edition: Edition): Boolean = isBranding(edition)(_.isPaid)
 }

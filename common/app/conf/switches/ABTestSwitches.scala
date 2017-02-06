@@ -7,7 +7,7 @@ import org.joda.time.LocalDate
 trait ABTestSwitches {
 
   for ((edition, testId) <- Map(
-    Uk -> "ab-membership-engagement-banner-uk-test13",
+    Uk -> "ab-membership-engagement-banner-uk-remind-me-later",
     International -> "ab-membership-engagement-international-experiment-test12",
     Au -> "ab-au-memb-engagement-msg-copy-test8"
   )) Switch(
@@ -22,11 +22,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-membership-bundles-thrasher",
+    "Test appetite for first batch of bundles",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 2), // Thursday March 2nd
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-editorial-email-variants",
     "Assign users to variants of our editorial emails",
-    owners = Seq(Owner.withGithub("katebee")),
+    owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 1, 18),
+    sellByDate = new LocalDate(2017, 2, 16),
     exposeClientSide = true
   )
 
@@ -67,6 +77,26 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 2, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-ask-four-stagger",
+    "Test to see if imposing a minimum-time-between-impressions for the epic has a positive effect on conversion",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 2, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-ask-four-earning",
+    "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 1),
     exposeClientSide = true
   )
 }

@@ -6,14 +6,12 @@ define([
     'bean',
     'reqwest',
     'fastdom',
-    'common/utils/$',
-    'common/utils/config'
+    'common/utils/$'
 ], function (
     bean,
     reqwest,
     fastdom,
-    $,
-    config
+    $
 ) {
     function reqwestEmailSubscriptionUpdate(buttonEl) {
         bean.on(buttonEl, 'click', function () {
@@ -155,10 +153,10 @@ define([
                 buttonString += 'addEmailSubscriptions[]=' + encodeURIComponent(value) + '&';
             }
             // hacks to deal with the various email variants and AB tests running on email listIDs
-            // delete me after 2017-02-01!
-            if (config.switches.abEditorialEmailVariants && value === 'unsubscribe-2211') {
-                buttonString += 'removeEmailSubscriptions[]=3806&';
-                buttonString += 'removeEmailSubscriptions[]=3807&';
+            // delete once the lists have been consolidated in ExactTarget!
+            if (value === 'unsubscribe-2211') {
+                buttonString += 'removeEmailSubscriptions[]=3806&'; // the flyer cards listId
+                buttonString += 'removeEmailSubscriptions[]=3807&'; // the flyer connected listId
             } else if (value === 'unsubscribe-2313') { // legacy opinion listId
                 buttonString += 'removeEmailSubscriptions[]=3811&'; // new opinion listId
                 buttonString += 'removeEmailSubscriptions[]=3814&'; // control group listId

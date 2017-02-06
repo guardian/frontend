@@ -1,0 +1,38 @@
+@import org.joda.time.DateTime
+@import com.gu.contententity.thrift.entity.restaurant.Restaurant
+@import model.Tag
+@import conf.Configuration
+
+@(review: model.content.ReviewAtom, entity: Restaurant, contributors: Seq[Tag])(implicit request: RequestHeader)
+<script type="application/ld+json">
+{
+  "@@context":"http://schema.org",
+  "@@type":"Review",
+  "author": @fragments.atoms.structureddata.contributor(review.data.reviewer, contributors),
+  @review.data.sourceArticleId.map { articleId => "url": "https://www.theguardian.com/@articleId", }
+  @review.atom.contentChangeDetails.published.map { published => "datePublished": "@{new DateTime(published.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
+  @review.atom.contentChangeDetails.lastModified.map { modified => "dateModified": "@{new DateTime(modified.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
+  "publisher": {
+      "@@type":"Organization",
+      "name":"The Guardian",
+      "sameAs":"@Configuration.site.host"
+  },
+  "description":"@review.data.reviewSnippet",
+  "inLanguage":"en",
+  "itemReviewed": {
+    "@@type":"Restaurant",
+    "name": "@entity.restaurantName",
+    @entity.webAddress.map{ webAddress => "sameAs": "@webAddress", }
+    "priceRange": "£££",
+    @for(address <- entity.address) { @fragments.atoms.structureddata.restaurant.address(address) }
+    @for(geoLocation <- entity.geolocation) { "geo" : @fragments.atoms.structureddata.restaurant.geo(geoLocation), }
+    "image": ""
+  },
+  "reviewRating": {
+    "@@type": "Rating",
+    "worstRating":@review.data.rating.minRating.toInt,
+    "bestRating":@review.data.rating.maxRating.toInt,
+    "ratingValue": @review.data.rating.actualRating.toInt
+  }
+}
+</script>

@@ -56,16 +56,6 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
-  val LongCacheCommentsSwitch = Switch(
-    SwitchGroup.Performance,
-    "long-cache-comments-switch",
-    "If this switch is on then closed comment threads will get a longer cache time",
-    owners = Seq(Owner.withGithub("nicl")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 1, 16),
-    exposeClientSide = false
-  )
-
   val interactivePressing = Switch(
     SwitchGroup.Performance,
     "interactive-pressing",
@@ -206,16 +196,6 @@ trait PerformanceSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
-  )
-
-  val UseLinkPreconnect = Switch(
-    SwitchGroup.Performance,
-    "use-link-preconnect",
-    "If this switch is on then link preconnect hints will be on the page",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 1),
-    exposeClientSide = false
   )
 
 }

@@ -9,13 +9,12 @@ define([
             return Promise.resolve(false);
         }
 
-        return new Promise(function (resolve) {
-            var elem = document.querySelector('.facia-page > .paidfor-band, #article > .paidfor-band');
-            if (elem) {
-                new Sticky(elem).init();
-            }
-            resolve();
-        });
+        var elem = document.querySelector('.paidfor-band');
+        if (elem) {
+            new Sticky(elem).init();
+        }
+
+        return Promise.resolve();
     }
 
     return {

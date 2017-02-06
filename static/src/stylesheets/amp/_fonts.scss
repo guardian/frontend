@@ -38,6 +38,7 @@
     .paid-content,
     .witness__button,
     .main-navigation .main-navigation_link,
+    .d2-username,
     .liveblog-block-byline__name {
         font-family: 'Guardian Egyptian Web', Georgia, serif;
     }
@@ -78,7 +79,10 @@
     .timeline__date,
     .timeline__title,
     .liveblog-navigation,
-    .old-article-message {
+    .old-article-message,
+    .d2-permalink,
+    .d2-body,
+    .meta__contact-header {
         font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
     }
 }

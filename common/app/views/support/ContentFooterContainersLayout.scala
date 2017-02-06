@@ -1,21 +1,19 @@
 package views.support
 
-import conf.switches.Switches.OutbrainSwitch
-import model.{Content, RelatedContent}
+import model.Content
 import play.twirl.api.{Html, HtmlFormat}
 
 import scala.collection.immutable.Seq
 
 object ContentFooterContainersLayout {
 
-  def apply(content: Content, related: RelatedContent, isAdvertisementFeature: Boolean)
+  def apply(content: Content, isAdvertisementFeature: Boolean)
            (storyPackagePlaceholder: => Html)
            (onwardPlaceholder: => Html)
            (commentsPlaceholder: => Html)
            (mostPopularPlaceholder: => Html)
            (highRelevanceCommercialComponent: => Html)
-           (standardCommercialComponent: => Html)
-           (externalContentPlaceholder: Html): Html = {
+           (standardCommercialComponent: => Html): Html = {
 
     def optional(p: => Boolean, htmlBlock: => Html): Option[Html] = if (p) Some(htmlBlock) else None
 
@@ -30,22 +28,7 @@ object ContentFooterContainersLayout {
 
     } else {
 
-      def includeExternalContentPlaceholder(htmlBlocks: Seq[Html]): Seq[Html] = {
-        if (content.showFooterContainers && !content.shouldHideAdverts && OutbrainSwitch.isSwitchedOn) {
-          val pos = if ((content.isSeries || content.isBlog) && !related.hasStoryPackage) {
-            // Essentially, is the related content slot there but empty
-            3
-          } else if (related.hasStoryPackage || content.showInRelated) {
-            2
-          } else {
-            4
-          }
-          (htmlBlocks.take(pos) :+ externalContentPlaceholder) ++ htmlBlocks.drop(pos)
-        } else htmlBlocks
-      }
-
-      val apartFromOutbrain = Seq(
-        optional(!content.shouldHideAdverts, highRelevanceCommercialComponent),
+      Seq(
         Some(storyPackagePlaceholder),
         Some(onwardPlaceholder),
         optional(content.trail.isCommentable, commentsPlaceholder),
@@ -53,7 +36,6 @@ object ContentFooterContainersLayout {
         optional(!content.shouldHideAdverts, standardCommercialComponent)
       ).flatten
 
-      includeExternalContentPlaceholder(apartFromOutbrain)
     }
 
     HtmlFormat.fill(htmlBlocks)

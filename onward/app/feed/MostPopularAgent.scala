@@ -22,7 +22,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient) extends Logging with 
   def refresh(edition: Edition) = contentApiClient.getResponse(contentApiClient.item("/", edition)
       .showMostViewed(true)
     ).map { response =>
-      val mostViewed = response.mostViewed.getOrElse(Nil) map { RelatedContentItem(_) } take 10
+      val mostViewed = response.mostViewed.getOrElse(Nil) take 10 map { RelatedContentItem(_) }
       agent.alter{ old =>
         old + (edition.id -> mostViewed)
       }
@@ -151,7 +151,7 @@ class MostPopularExpandableAgent(contentApiClient: ContentApiClient) extends Log
         .showMostViewed(true)
         .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
       ).foreach { response =>
-        val mostViewed = response.mostViewed.getOrElse(Nil) map { RelatedContentItem(_) } take 10
+        val mostViewed = response.mostViewed.getOrElse(Nil) take 10 map { RelatedContentItem(_) }
         agent.send{ old =>
           old + (edition.id -> mostViewed)
         }

@@ -56,12 +56,7 @@
                                 <div class="content__article-body from-content-api js-article__body">
                                     <p class="intro">@Html(page.standfirst)</p>
 
-                                    @page.pageName match {
-                                        case "overview" => { @singaporeF1Overview() }
-                                        case "offtrack" => { @singaporeF1Offtrack() }
-                                        case "packages" => { @singaporeF1Packages() }
-                                        case _ => { @Html(prepareQuotes(ampify(page.body))) }
-                                    }
+                                    @Html(prepareQuotes(ampify(page.body)))
 
                                 </div>
                                 <div class="hosted__standfirst">

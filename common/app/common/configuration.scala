@@ -67,7 +67,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 20
+    val s3ConfigVersion = 22
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -151,7 +151,9 @@ class GuardianConfiguration extends Logging {
 
     lazy val isProd = stage.equalsIgnoreCase("prod")
     lazy val isCode = stage.equalsIgnoreCase("code")
+    lazy val isDevInfra = stage.equalsIgnoreCase("devinfra")
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage.toLowerCase)
+    lazy val isNonDev = isProd || isCode || isDevInfra
   }
 
   object switches {
@@ -320,7 +322,7 @@ class GuardianConfiguration extends Logging {
     // If true in dev, assets are locally loaded from the `hash` build output, otherwise assets come from 'target' for css, and 'src' for js.
     lazy val useHashedBundles =  configuration.getStringProperty("assets.useHashedBundles")
       .map(_.toBoolean)
-      .getOrElse(environment.isProd || environment.isCode)
+      .getOrElse(environment.isNonDev)
   }
 
   object staticSport {

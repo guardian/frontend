@@ -26,6 +26,7 @@ define([
     'common/utils/cookies',
     'common/utils/robust',
     'common/utils/user-timing',
+    'common/utils/config',
     'common/modules/navigation/newHeaderNavigation',
     'common/modules/analytics/google',
     'lodash/functions/debounce'
@@ -44,14 +45,12 @@ define([
     cookies,
     robust,
     userTiming,
+    config,
     newHeaderNavigation,
     ga,
     debounce
 ) {
     return function () {
-        var guardian = window.guardian;
-        var config = guardian.config;
-
         userTiming.mark('standard start');
         robust.catchErrorsAndLog('ga-user-timing-standard-start', function () {
             ga.trackPerformance('Javascript Load', 'standardStart', 'Standard start parse time');
@@ -64,6 +63,13 @@ define([
                 oldOnError.apply(window, arguments);
             }
         };
+
+        if (config.switches.blockIas && navigator.serviceWorker) {
+            navigator.serviceWorker.ready.then(function (swreg) {
+                var sw = swreg.active;
+                sw.postMessage({ ias: window.location.hash.indexOf('noias') > -1 });
+            });
+        }
 
         // IE8 and below use attachEvent
         if (!window.addEventListener) {
@@ -92,7 +98,9 @@ define([
                     return;
                 }
 
-                require([mainJS], function (interactive) {
+                // interactives are always loaded with CURL, which is always inlined when interactives are present
+                // so this uses CURLS require
+                window.require([mainJS], function (interactive) {
                     fastdom.defer(function () {
                         robust.catchErrorsAndLog('interactive-bootstrap', function () {
                             interactive.boot(el, document, config, mediator);
@@ -155,7 +163,7 @@ define([
         //
 
         var alreadyVisited;
-        if (guardian.isEnhanced) {
+        if (window.guardian.isEnhanced) {
             alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
             storage.local.set('gu.alreadyVisited', alreadyVisited + 1);
         }

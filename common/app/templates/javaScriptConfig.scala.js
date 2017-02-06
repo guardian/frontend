@@ -3,6 +3,7 @@
 @import conf.Static
 @import play.api.libs.json.Json
 @import views.support.{CamelCase, JavaScriptPage, GoogleAnalyticsAccount}
+@import conf.Configuration.environment
 
 @defining(Edition(request)) { edition =>
     {
@@ -17,10 +18,6 @@
                 "ab-icon": "@Static("images/commercial/ab-icon.png")",
                 "abp-icon": "@Static("images/commercial/abp-icon.png")",
                 "abp-whitelist-instruction-chrome": "@Static("images/commercial/ad-block-instructions-chrome.png")"
-            },
-            "contributions": {
-                "ab-first-dog-dt": "@Static("images/membership/first-dog-dt.png")",
-                "ab-first-dog-mb": "@Static("images/membership/first-dog-mb.png")"
             }
         },
         "stylesheets": {
@@ -41,7 +38,13 @@
                 "editorialTest": "@{GoogleAnalyticsAccount.editorialTest.trackerName}",
                 "editorialProd": "@{GoogleAnalyticsAccount.editorialProd.trackerName}",
                 "editorial": "@{GoogleAnalyticsAccount.editorialTracker(context).trackerName}"
-            }
+            },
+            "timingEvents": []
+        },
+        "libs": {
+            "foresee": "vendor/foresee/20150703/foresee-trigger.js",
+            "googletag": "@{Configuration.javascript.config("googletagJsUrl")}",
+            "sonobi": "@{ if(!environment.isCode) Configuration.javascript.config("sonobiHeaderBiddingJsUrl") else "//mtrx.go.sonobi.com/morpheus.theguardian.12911_us_.js"}"
         }
     }
 }

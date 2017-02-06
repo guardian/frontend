@@ -1,4 +1,3 @@
-/* global guardian */
 define([
     'bean',
     'qwery',
@@ -27,7 +26,7 @@ define([
     gaHelper
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
-        isEmbed = !!guardian.isEmbed,
+        isEmbed = !!window.guardian.isEmbed,
         QUARTILES = [25, 50, 75],
         // Advert and content events used by analytics. The expected order of bean events is:
         EVENTS = [
@@ -39,7 +38,6 @@ define([
             'content:play',
             'content:end'
         ],
-        ga = window.ga,
         gaTracker = config.googleAnalytics.trackers.editorial;
 
 
@@ -125,7 +123,7 @@ define([
             return 'media:' + eventName;
         }).forEach(function(playerEvent) {
             player.on(playerEvent, function(_, mediaEvent) {
-                ga(gaTracker + '.send', 'event', gaHelper.buildGoogleAnalyticsEvent(mediaEvent, events, canonicalUrl,
+                window.ga(gaTracker + '.send', 'event', gaHelper.buildGoogleAnalyticsEvent(mediaEvent, events, canonicalUrl,
                     'guardian-videojs', gaHelper.getGoogleAnalyticsEventAction, mediaEvent.mediaId));
             });
         });
@@ -144,17 +142,30 @@ define([
     }
 
     function ophanRecord(id, event, player) {
-        var ophanPath = isEmbed ? 'ophan/embed' : 'ophan/ng';
-        if (id) {
-            require([ophanPath], function (ophan) {
-                var eventObject = {};
-                eventObject[getMediaType(player)] = {
-                    id: id,
-                    eventType: event.type
-                };
-                ophan.record(eventObject);
-            });
+        if (!id) return;
+
+        function record(ophan) {
+            var eventObject = {};
+            eventObject[getMediaType(player)] = {
+                id: id,
+                eventType: event.type
+            };
+            ophan.record(eventObject);
         }
+
+        if (isEmbed) {
+            // this loads a hosted AMD module, which makes life hard for anything
+            // that isn't an AMD module loader e.g. webpack.
+            // however, since this is the embed page, we're already supplying curl,
+            // therefore we can build *this* for curl regardless of the loader in use.
+            // this is not ok medium/long term, but it gets us towards
+            // a finished webpack build for now...
+            window.require(['ophan/embed'], record)
+        } else {
+            // this will be webpack in weback land and curl `require` in r.js land
+            require(['ophan/ng'], record)
+        }
+
     }
 
     function initOphanTracking(player, mediaId) {

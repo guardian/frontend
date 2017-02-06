@@ -12,6 +12,10 @@ define([
     var hostedOnward,
         injector = new Injector();
 
+    function noop() {
+
+    }
+
     describe('Hosted Onward Journey', function () {
         var mock = sinon.stub().returns(Promise.resolve({html:'<div class="next-page"></div>'}));
 
@@ -51,7 +55,10 @@ define([
         });
 
         it('should make an ajax call and insert html', function (done) {
-            hostedOnward.init()
+            hostedOnward.init(noop, noop)
+                .then(function () {
+                    return hostedOnward.whenRendered;
+                })
                 .then(function () {
                     expect(mock).toHaveBeenCalledWith('some.url/pageId/gallery/onward.json', {mode: 'cors'});
                     expect($('.js-onward-placeholder .next-page', $fixturesContainer).length).toBeGreaterThan(0);

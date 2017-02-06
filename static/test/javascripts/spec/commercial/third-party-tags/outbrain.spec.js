@@ -1,6 +1,4 @@
 define('ophan/ng', [], function () { return { record: function () {} }; });
-define('js', [], function () { return function () {}; });
-define('js!//widgets.outbrain.com/outbrain.js', [], function () { return function () {}; });
 define([
     'fastdom',
     'helpers/injector',
@@ -36,6 +34,7 @@ define([
         injector = new Injector();
 
     describe('Outbrain', function () {
+        var loadScript = jasmine.createSpy('loadScript');
         beforeEach(function (done) {
             injector.mock('common/modules/email/run-checks', function() {
                 return Promise.resolve(false);
@@ -43,6 +42,7 @@ define([
             injector.mock('common/modules/commercial/dfp/track-ad-render', function(id) {
                 return Promise.resolve(ads[id]);
             });
+            injector.mock('common/utils/load-script', loadScript);
             injector.require([
                 'commercial/modules/third-party-tags/outbrain',
                 'commercial/modules/third-party-tags/outbrain-sections',
@@ -62,10 +62,7 @@ define([
                 config.switches.emailInArticleOutbrain = false;
                 config.page = {
                     section: 'uk-news',
-                    isFront: false,
-                    isPreview: false,
-                    commentable: true,
-                    edition: 'UK'
+                    commentable: true
                 };
 
                 identity.isUserLoggedIn = function () {
@@ -96,23 +93,6 @@ define([
             it('should start outbrain component', function (done) {
                 sut.init().then(function () {
                     expect(sut.load).toHaveBeenCalled();
-                    done();
-                });
-            });
-
-            it('should not load when sensitive content', function (done) {
-                commercialFeatures.outbrain = false;
-                sut.init().then(function () {
-                    expect(sut.load).not.toHaveBeenCalled();
-                    done();
-                });
-            });
-
-            it('should not load when isPreview', function (done) {
-                config.page.isPreview = true;
-
-                sut.init().then(function () {
-                    expect(sut.load).not.toHaveBeenCalled();
                     done();
                 });
             });
@@ -326,8 +306,7 @@ define([
 
             it('should require outbrain javascript', function (done) {
                 sut.load().then(function () {
-                    var url = requireStub.args[1][0][0];
-                    expect(url).toBe('js!//widgets.outbrain.com/outbrain.js');
+                    expect(loadScript).toHaveBeenCalledWith('//widgets.outbrain.com/outbrain.js');
                     done();
                 });
             });

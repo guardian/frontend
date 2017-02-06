@@ -1,7 +1,8 @@
 @(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
-@import views.support.Commercial.listSponsorLogosOnPage
-@import views.support.GoogleAnalyticsAccount
 @import play.api.Mode.Dev
+@import views.support.Commercial.listSponsorLogosOnPage
+@import views.support.{Commercial, GoogleAnalyticsAccount}
+@import mvt.{WebpackTest,WebpackControl}
 
 <script id='google_analytics'>
 
@@ -34,6 +35,19 @@
         return (analyticsTitle === 'Network Front') ? getAnalyticsEdition() + ' network front' : analyticsTitle;
     }
 
+    // Please email Dotcom Platform before changing this value
+    function getExperienceValue() {
+        @if(WebpackTest.isParticipating) {
+            return 'webpack';
+        } else {
+            @if(WebpackControl.isParticipating) {
+                return 'webpack-control';
+            } else {
+                return 'curl';
+            }
+        }
+    }
+
     var identityId = null;
     if (guardian.config.user) {
         identityId = guardian.config.user.id;
@@ -54,7 +68,8 @@
     @for(tracker <- Seq(GoogleAnalyticsAccount.editorialProd, GoogleAnalyticsAccount.editorialTest)) {
         ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName', {
             'sampleRate': @{ if (context.environment.mode == Dev) 100 else tracker.samplePercentage },
-            'siteSpeedSampleRate': @{ if (context.environment.mode == Dev) 100 else tracker.siteSpeedSamplePercentage }
+            'siteSpeedSampleRate': @{ if (context.environment.mode == Dev) 100 else tracker.siteSpeedSamplePercentage },
+            'userId': identityId
         });
     }
 
@@ -94,6 +109,10 @@
         @for(sponsorLogos <- listSponsorLogosOnPage(page)) {
           ga('@{trackerName}.set', 'dimension31', '@Html(sponsorLogos.mkString("|"))');
         }
+        @for(brandingType <- Commercial.brandingType(page)) {
+          ga('@{trackerName}.set', 'dimension42', '@brandingType.name');
+        }
+        ga('@{trackerName}.set', 'dimension43', getExperienceValue()); @* 'Experience' dimension, for short-lived experiment values. *@
     }
 
     @defining(GoogleAnalyticsAccount.editorialTracker(context).trackerName) { trackerName =>
@@ -129,8 +148,10 @@
 
     }
 
-})();
+    // Mediator will be intialised if we need to use this, otherwise just use GA straight away
+    guardian.app && guardian.app.mediator && guardian.app.mediator.emit('modules:ga:ready');
 
+})();
 </script>
 
 @*

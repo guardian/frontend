@@ -10,7 +10,7 @@ define([
     var inlineDefinition = {
         sizeMappings: {
             mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.fluid),
-            desktop: compile(adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.video, adSizes.fluid)
+            desktop: compile(adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.video, adSizes.video2, adSizes.fluid)
         }
     };
 
@@ -44,6 +44,22 @@ define([
             refresh: false,
             sizeMappings: {
                 mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.inlineMerchandising, adSizes.fluid)
+            }
+        },
+        'high-merch': {
+            label: false,
+            refresh: false,
+            name: 'merchandising-high',
+            sizeMappings: {
+                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.merchandisingHigh, adSizes.fluid)
+            }
+        },
+        'high-merch-paid': {
+            label: false,
+            refresh: false,
+            name: 'merchandising-high',
+            sizeMappings: {
+                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.merchandisingHighAdFeature, adSizes.fluid)
             }
         },
         inline: inlineDefinition,

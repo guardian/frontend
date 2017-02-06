@@ -1,5 +1,6 @@
 package common.commercial
 
+import com.gu.commercial.branding.Branding
 import common.Edition
 import model.pressed.PressedContent
 import model.{ContentType, ImageMedia, ImageOverride}
@@ -74,7 +75,7 @@ object CardContent {
         val url = item.metadata.webUrl
         clickMacro map { cm => s"$cm$url" } getOrElse url
       },
-      branding = BrandHunter.findContentBranding(item, edition)
+      branding = item.metadata.branding(edition)
     )
   }
 }

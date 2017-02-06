@@ -1,5 +1,6 @@
 package model
 
+import common.commercial.EditionBranding
 import common.{NavItem, Pagination, SectionLink}
 import model.content._
 import model.facia.PressedCollection
@@ -88,7 +89,9 @@ object MetaDataFormat {
     javascriptConfigOverrides: Map[String, JsValue],
     opengraphPropertiesOverrides: Map[String, String],
     isHosted: Boolean,
-    twitterPropertiesOverrides: Map[String, String])
+    twitterPropertiesOverrides: Map[String, String],
+    editionBrandings: Option[Seq[EditionBranding]]
+  )
 
   val readsMetadata: Reads[MetaData] = {
 
@@ -123,7 +126,8 @@ object MetaDataFormat {
       part2.javascriptConfigOverrides,
       part2.opengraphPropertiesOverrides,
       part2.isHosted,
-      part2.twitterPropertiesOverrides
+      part2.twitterPropertiesOverrides,
+      editionBrandings = part2.editionBrandings
       )
     }
   }
@@ -161,7 +165,8 @@ object MetaDataFormat {
           meta.javascriptConfigOverrides,
           meta.opengraphPropertiesOverrides,
           meta.isHosted,
-          meta.twitterPropertiesOverrides
+          meta.twitterPropertiesOverrides,
+          meta.editionBrandings
         )
       )
     })
@@ -190,9 +195,11 @@ object ContentTypeFormat {
   implicit val mediaAssetFormat = Json.format[MediaAsset]
   implicit val mediaAtomFormat = Json.format[MediaAtom]
   implicit val interactiveAtomFormat = Json.format[InteractiveAtom]
-  implicit val genericThriftAtomFormat = GenericThriftAtomFormat 
+  implicit val genericThriftAtomFormat = GenericThriftAtomFormat
   implicit val recipeThriftAtomFormat = RecipeThriftAtomFormat
-  implicit val recipeAtomFormat = Json.format[RecipeAtom] 
+  implicit val reviewThriftAtomFormat = ReviewThriftAtomFormat
+  implicit val recipeAtomFormat = Json.format[RecipeAtom]
+  implicit val reviewAtomFormat = Json.format[ReviewAtom]
   implicit val atomsFormat = Json.format[Atoms]
   implicit val blockAttributesFormat = Json.format[BlockAttributes]
   implicit val bodyBlockFormat = Json.format[BodyBlock]
@@ -226,7 +233,6 @@ object ContentTypeFormat {
     showByline: Boolean,
     hasStoryPackage: Boolean,
     rawOpenGraphImage: String,
-    showFooterContainers: Boolean,
     atoms: Option[Atoms])
 
   private case class JsonCommercial(
@@ -299,8 +305,7 @@ object ContentTypeFormat {
         jsonContent.wordCount,
         jsonContent.showByline,
         jsonContent.hasStoryPackage,
-        jsonContent.rawOpenGraphImage,
-        jsonContent.showFooterContainers
+        jsonContent.rawOpenGraphImage
        )
       }
     }
@@ -332,7 +337,6 @@ object ContentTypeFormat {
           content.showByline,
           content.hasStoryPackage,
           content.rawOpenGraphImage,
-          content.showFooterContainers,
           content.atoms
         ),
         JsonCommercial.apply(
@@ -412,6 +416,11 @@ object GenericThriftAtomFormat extends Format[com.gu.contentatom.thrift.Atom] {
 object RecipeThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.recipe.RecipeAtom] {
  def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
  def writes(recipe: com.gu.contentatom.thrift.atom.recipe.RecipeAtom) = JsObject(Seq.empty)
+}
+
+object ReviewThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.review.ReviewAtom] {
+  def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
+  def writes(review: com.gu.contentatom.thrift.atom.review.ReviewAtom) = JsObject(Seq.empty)
 }
 
 object CardStyleFormat extends Format[CardStyle] {

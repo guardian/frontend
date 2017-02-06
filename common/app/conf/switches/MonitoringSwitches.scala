@@ -45,16 +45,6 @@ trait MonitoringSwitches {
     exposeClientSide = true
   )
 
-  val CssLogging = Switch(
-    SwitchGroup.Monitoring,
-    "css-logging",
-    "If this is on, then a subset of clients will post css selector information for diagnostics.",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    never,
-    exposeClientSide = true
-  )
-
   val CspReporting = Switch(
     SwitchGroup.Monitoring,
     "csp-reporting",
@@ -83,6 +73,16 @@ trait MonitoringSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
+  )
+
+  val BoostGAUserTimingFidelity = Switch(
+    SwitchGroup.Monitoring,
+    "boost-ga-user-timing-fidelity",
+    "CAUTION: check with Google.Analyticscore@guardian.co.uk before enabling. Extends the standard 0.1% sampling of user timing events on Google Analytics to 100%. Will send a LOT more events to GA, which costs $$$.",
+    owners = Seq(Owner.withGithub("sndrs")),
+    safeState = Off,
+    never,
+    exposeClientSide = true
   )
 
 }

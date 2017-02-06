@@ -2,6 +2,7 @@ package views.support
 
 import common.Edition
 import common.Maps.RichMap
+import conf.DiscussionAsset
 import conf.Configuration
 import conf.Configuration.environment
 import model._
@@ -23,7 +24,7 @@ object JavaScriptPage {
 
     val config = (Configuration.javascript.config ++ pageData).mapValues(JsString.apply)
     val sponsorshipType = {
-      val maybeSponsorshipType = page.branding(edition).map(_.sponsorshipType.name)
+      val maybeSponsorshipType = page.metadata.branding(edition).map(_.brandingType.name)
       maybeSponsorshipType.map("sponsorshipType" -> JsString(_))
     }
     val allowUserGeneratedContent = content.exists(_.allowUserGeneratedContent)
@@ -64,7 +65,8 @@ object JavaScriptPage {
       ("requiresMembershipAccess", JsBoolean(requiresMembershipAccess)),
       ("membershipAccess", JsString(membershipAccess)),
       ("idWebAppUrl", JsString(Configuration.id.oauthUrl)),
-      ("cardStyle", JsString(cardStyle))
+      ("cardStyle", JsString(cardStyle)),
+      ("discussionFrontendUrl", JsString(DiscussionAsset("discussion-frontend.preact.iife")))
     )
   }
 }
