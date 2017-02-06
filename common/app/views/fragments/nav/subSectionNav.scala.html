@@ -7,7 +7,7 @@
     @NewNavigation.SubSectionLinks.getSubSectionNavLinks(page.metadata.sectionId, Edition(request), page.metadata.isFront).map { link =>
         <a class="@RenderClasses(Map(
                 "tertiary-navigation__link" -> true,
-                "tertiary-navigation__link--current-section" -> NewNavigation.isCurrentSection(page.metadata.sectionId, link)
+                "tertiary-navigation__link--current-section" -> (page.metadata.sectionId == link.uniqueSection)
             ))"
             href="@LinkTo(link.url)" data-link-name="nav2 : tertiary : @{ if(link.longTitle.isEmpty) link.title else link.longTitle}">
                 @link.title

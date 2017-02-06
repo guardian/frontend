@@ -67,16 +67,6 @@ object NewNavigation {
     case "life" => Life
   }
 
-  def isCurrentSection(currentSection: String, navLink: NavLink): Boolean = {
-    val mainFront = List("uk", "au", "us", "international")
-
-    if (mainFront.contains(currentSection)) {
-      "headlines" == navLink.title
-    } else {
-      currentSection == navLink.uniqueSection
-    }
-  }
-
   case object MostPopular extends EditionalisedNavigationSection {
     val name = "news"
 
@@ -325,7 +315,7 @@ object NewNavigation {
         val section = sectionList.head
         val parentSection = section.parentSection.getPopularEditionalisedNavLinks(edition).drop(1)
 
-        if (parentSection.contains(section.navLink)) {
+        if (parentSection.contains(section.navLink) || section.navLink == headlines) {
           parentSection
         } else {
           Seq(section.navLink) ++ parentSection
