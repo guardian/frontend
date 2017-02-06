@@ -33,7 +33,7 @@ final case class MediaAtom(
   source: Option[String],
   posterImage: Option[ImageMedia],
   endSlatePath: Option[String],
-  expiry: Option[DateTime]
+  expired: Option[Boolean]
 ) extends Atom {
   def isoDuration: Option[String] = {
     duration.map(d => new Duration(Duration.standardSeconds(d)).toString)
@@ -137,7 +137,12 @@ object MediaAtom extends common.Logging {
     MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom, endSlatePath)
   }
 
-  def mediaAtomMake(id: String, defaultHtml: String, mediaAtom: AtomApiMediaAtom, endSlatePath: Option[String]): MediaAtom =
+  def mediaAtomMake(id: String, defaultHtml: String, mediaAtom: AtomApiMediaAtom, endSlatePath: Option[String]): MediaAtom = {
+    val expired: Option[Boolean] = for {
+      metadata <- mediaAtom.metadata
+      expiryDate <- metadata.expiryDate
+    } yield new DateTime(expiryDate).withZone(DateTimeZone.UTC).isBeforeNow
+
     MediaAtom(
       id = id,
       defaultHtml = defaultHtml,
@@ -147,8 +152,9 @@ object MediaAtom extends common.Logging {
       source = mediaAtom.source,
       posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title)),
       endSlatePath = endSlatePath,
-      expiry = mediaAtom.metadata.map(m => new DateTime(m.expiryDate).withZone(DateTimeZone.UTC))
+      expired = expired
     )
+  }
 
   def imageMediaMake(capiImage: AtomApiImage, caption: String): ImageMedia = {
     ImageMedia(capiImage.assets.map(mediaImageAssetMake(_, caption)))
