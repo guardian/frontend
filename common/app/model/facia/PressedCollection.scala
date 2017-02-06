@@ -1,7 +1,8 @@
 package model.facia
 
-import com.gu.commercial.branding.Branding
+import com.gu.commercial.branding.{BrandingFinder, ContainerBranding}
 import com.gu.facia.api.{models => fapi}
+import com.gu.facia.client.models.Branded
 import common.Edition
 import implicits.CollectionsOps._
 import model.pressed._
@@ -27,7 +28,8 @@ case class PressedCollection(
   hideKickers: Boolean,
   showDateHeader: Boolean,
   showLatestUpdate: Boolean,
-  config: CollectionConfig) {
+  config: CollectionConfig
+) {
 
   lazy val collectionConfigWithId = CollectionConfigWithId(id, config)
 
@@ -35,13 +37,11 @@ case class PressedCollection(
     c.properties.maybeContentId.getOrElse(c.card.id)
   }
 
-  def branding(edition: Edition): Option[Branding] = {
-    if (config.showBranding) {
-      val brandings = curatedPlusBackfillDeduplicated flatMap (_.branding(edition))
-      if (brandings.nonEmpty && brandings.forall(_ == brandings.head)) {
-        brandings.headOption
-      } else None
-    } else None
+  def branding(edition: Edition): Option[ContainerBranding] = {
+    BrandingFinder.findBranding(
+      isConfiguredForBranding = config.metadata.exists(_.contains(Branded)),
+      brandings = curatedPlusBackfillDeduplicated.flatMap(_.branding(edition)).toSet
+    )
   }
 }
 
@@ -51,7 +51,8 @@ object PressedCollection {
       collection: com.gu.facia.api.models.Collection,
       curated: List[PressedContent],
       backfill: List[PressedContent],
-      treats: List[PressedContent]): PressedCollection =
+    treats: List[PressedContent]
+  ): PressedCollection =
     PressedCollection(
       collection.id,
       collection.displayName,
@@ -71,5 +72,6 @@ object PressedCollection {
       collection.collectionConfig.hideKickers,
       collection.collectionConfig.showDateHeader,
       collection.collectionConfig.showLatestUpdate,
-      CollectionConfig.make(collection.collectionConfig))
+      CollectionConfig.make(collection.collectionConfig)
+    )
 }
