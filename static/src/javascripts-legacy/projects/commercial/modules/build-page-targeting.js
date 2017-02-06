@@ -51,6 +51,7 @@ define([
         if (page.seriesId) {
             return parseId(page.seriesId);
         }
+
         var seriesIdFromUrl = /\/series\/(.+)$/.exec(page.pageId);
         if (seriesIdFromUrl) {
             return seriesIdFromUrl[1];
@@ -69,10 +70,7 @@ define([
     }
 
     function parseIds(ids) {
-        if (!ids) {
-            return null;
-        }
-        return compact(ids.split(',').map(parseId));
+        return ids ? compact(ids.split(',').map(parseId)) : null;
     }
 
     function abParam() {
@@ -102,10 +100,9 @@ define([
     }
 
     function adtestParams() {
-        if (cookies.get('adtest')) {
-            var cookieAdtest = cookies.get('adtest'),
-                first4Char = cookieAdtest.substring(0, 4);
-            if (first4Char === 'demo') {
+        var cookieAdtest = cookies.get('adtest');
+        if (cookiesAdtest) {
+            if (cookieAdtest.substring(0, 4) === 'demo') {
                 cookies.remove('adtest');
             }
             return cookieAdtest;
@@ -164,35 +161,35 @@ define([
     }
 
     return function (opts) {
-        var win         = (opts || {}).window || window,
-            page        = config.page,
-            contentType = formatTarget(page.contentType),
-            pageTargets = merge({
-                url:     win.location.pathname,
-                edition: page.edition && page.edition.toLowerCase(),
-                se:      getSeries(page),
-                ct:      contentType,
-                p:       'ng',
-                k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
-                x:       krux.getSegments(),
-                su:      page.isSurging,
-                pv:      config.ophan.pageViewId,
-                bp:      detect.getBreakpoint(),
-                at:      adtestParams(),
-                si:      identity.isUserLoggedIn() ? 't' : 'f',
-                gdncrm:  userAdTargeting.getUserSegments(),
-                ab:      abParam(),
-                ref:     getReferrer(),
-                co:      parseIds(page.authorIds),
-                bl:      parseIds(page.blogIds),
-                ob:      page.publication === 'The Observer' ? 't' : '',
-                ms:      formatTarget(page.source),
-                fr:      getVisitedValue(),
-                tn:      parseIds(page.tones),
-                br:      getBrandingType(),
-                // round video duration up to nearest 30 multiple
-                vl:      page.videoDuration ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
-            }, getWhitelistedQueryParams());
+        var win         = (opts || {}).window || window;
+        var page        = config.page;
+        var contentType = formatTarget(page.contentType);
+        var pageTargets = merge({
+            url:     win.location.pathname,
+            edition: page.edition && page.edition.toLowerCase(),
+            se:      getSeries(page),
+            ct:      contentType,
+            p:       'ng',
+            k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
+            x:       krux.getSegments(),
+            su:      page.isSurging,
+            pv:      config.ophan.pageViewId,
+            bp:      detect.getBreakpoint(),
+            at:      adtestParams(),
+            si:      identity.isUserLoggedIn() ? 't' : 'f',
+            gdncrm:  userAdTargeting.getUserSegments(),
+            ab:      abParam(),
+            ref:     getReferrer(),
+            co:      parseIds(page.authorIds),
+            bl:      parseIds(page.blogIds),
+            ob:      page.publication === 'The Observer' ? 't' : '',
+            ms:      formatTarget(page.source),
+            fr:      getVisitedValue(),
+            tn:      parseIds(page.tones),
+            br:      getBrandingType(),
+            // round video duration up to nearest 30 multiple
+            vl:      page.videoDuration ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
+        }, getWhitelistedQueryParams());
 
         // filter out empty values
         return pick(pageTargets, function (target) {
