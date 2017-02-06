@@ -118,6 +118,9 @@ define([
                         default:
                             return '37';
 
+                        case 'US':
+                            return '1493';
+
                         case 'AU':
                             return '1506';
                     }
