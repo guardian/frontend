@@ -10,8 +10,6 @@ define([
     'common/modules/experiments/ab',
     'lodash/arrays/compact',
     'lodash/collections/map',
-    'lodash/objects/forIn',
-    'lodash/objects/keys',
     'lodash/objects/merge',
     'lodash/arrays/uniq',
     'lodash/objects/pick',
@@ -28,8 +26,6 @@ define([
     ab,
     compact,
     map,
-    forIn,
-    keys,
     merge,
     uniq,
     pick,
@@ -83,23 +79,29 @@ define([
             ));
         },
         abParam = function () {
-            var abParams = [],
-                abParticipations = ab.getParticipations();
+            var cmRegex = /^(cm|commercial)/;
+            var abParticipations = ab.getParticipations();
+            var abParams = [];
 
-            forIn(abParticipations, function (n, testKey) {
-                if (n.variant && n.variant !== 'notintest') {
-                    var testData = testKey + '-' + n.variant;
+            Object.keys(abParticipations).forEach(function (testKey) {
+                var testValue = abParticipations[testKey];
+                if (testValue.variant && testValue.variant !== 'notintest') {
+                    var testData = testKey + '-' + testValue.variant;
                     // DFP key-value pairs accept value strings up to 40 characters long
                     abParams.push(testData.substring(0, 40));
                 }
             });
 
-            forIn(keys(config.tests), function (n) {
-                if (n.toLowerCase().match(/^cm/) ||
-                    n.toLowerCase().match(/^commercial/)) {
+            Object.keys(config.tests).forEach(function (testKey) {
+                var testValue = config.tests[testKey];
+                if (typeof testValue === 'string' && isCommercialTest(testValue.toLowerCase())) {
                     abParams.push(n);
                 }
             });
+
+            function isCommercialTest(test) {
+                return cmRegex.test(test) || commercialRegex.test(test);
+            }
 
             return abParams;
         },
