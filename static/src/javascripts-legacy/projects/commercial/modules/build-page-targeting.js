@@ -9,7 +9,6 @@ define([
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab',
     'lodash/arrays/compact',
-    'lodash/collections/map',
     'lodash/objects/merge',
     'lodash/arrays/uniq',
     'lodash/objects/pick',
@@ -25,7 +24,6 @@ define([
     userAdTargeting,
     ab,
     compact,
-    map,
     merge,
     uniq,
     pick,
@@ -76,11 +74,7 @@ define([
         if (!ids) {
             return null;
         }
-        return compact(map(
-            ids.split(','), function (id) {
-                return parseId(id);
-            }
-        ));
+        return compact(ids.split(',').map(parseId));
     }
 
     function abParam() {
