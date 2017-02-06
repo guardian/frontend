@@ -11,8 +11,7 @@ define([
     'lodash/arrays/compact',
     'lodash/objects/merge',
     'lodash/arrays/uniq',
-    'lodash/objects/pick',
-    'lodash/objects/isArray'
+    'lodash/objects/pick'
 ], function (
     config,
     cookies,
@@ -26,8 +25,7 @@ define([
     compact,
     merge,
     uniq,
-    pick,
-    isArray
+    pick
 ) {
 
     function format(keyword) {
@@ -198,7 +196,7 @@ define([
 
         // filter out empty values
         return pick(pageTargets, function (target) {
-            if (isArray(target)) {
+            if (Array.isArray(target)) {
                 return target.length > 0;
             } else {
                 return target;
