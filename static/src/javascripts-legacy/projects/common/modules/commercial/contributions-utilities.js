@@ -9,8 +9,7 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/geolocation',
-    'common/modules/analytics/register'
+    'common/utils/geolocation'
 
 ], function (commercialFeatures,
              targetingTool,
@@ -22,8 +21,7 @@ define([
              fastdom,
              mediator,
              storage,
-             geolocation,
-             register) {
+             geolocation) {
 
     var membershipURL = 'https://membership.theguardian.com/supporter';
     var contributionsURL = 'https://contribute.theguardian.com';
@@ -61,7 +59,7 @@ define([
         this.expiry = options.expiry;
         this.author = options.author;
         this.idealOutcome = options.idealOutcome;
-        this.campaignId = this.epic ? 'epic_component_' + options.campaignId : options.campaignId;
+        this.campaignId = this.epic ? 'epic_' + options.campaignId : options.campaignId;
         this.description = options.description;
         this.showForSensitive = options.showForSensitive || false;
         this.audience = options.audience;
@@ -124,11 +122,12 @@ define([
         this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, test.contributionsCampaignPrefix);
         this.membershipURL = options.membershipURL || this.makeURL(membershipURL, test.membershipCampaignPrefix);
 
+        var campaignId  = this.campaignId;
         this.test = function () {
             var component = $.create(options.template(this.contributeURL, this.membershipURL));
 
             function render() {
-                register.start(this.campaignId)
+                mediator.emit('register:begin', campaignId);
                 return fastdom.write(function () {
                     var sibling = $(options.insertBeforeSelector);
 
@@ -143,7 +142,7 @@ define([
                             elementInView.on('firstview', function () {
                                 viewLog.logView(test.id);
                                 mediator.emit(test.viewEvent);
-                                register.end(this.campaignId)
+                                mediator.emit('register:end', campaignId);
                             });
                         });
                     }
