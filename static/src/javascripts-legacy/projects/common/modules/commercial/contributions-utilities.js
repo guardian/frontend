@@ -59,7 +59,7 @@ define([
         this.expiry = options.expiry;
         this.author = options.author;
         this.idealOutcome = options.idealOutcome;
-        this.campaignId = this.epic ? 'epic_' + options.campaignId : options.campaignId;
+        this.campaignId = options.campaignId;
         this.description = options.description;
         this.showForSensitive = options.showForSensitive || false;
         this.audience = options.audience;
@@ -122,12 +122,13 @@ define([
         this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, test.contributionsCampaignPrefix);
         this.membershipURL = options.membershipURL || this.makeURL(membershipURL, test.membershipCampaignPrefix);
 
-        var campaignId  = this.campaignId;
+        var trackingCampaignId  = test.epic ? 'epic_' + test.campaignId : test.campaignId;
+
         this.test = function () {
             var component = $.create(options.template(this.contributeURL, this.membershipURL));
 
             function render() {
-                mediator.emit('register:begin', campaignId);
+                mediator.emit('register:begin', trackingCampaignId);
                 return fastdom.write(function () {
                     var sibling = $(options.insertBeforeSelector);
 
@@ -142,7 +143,7 @@ define([
                             elementInView.on('firstview', function () {
                                 viewLog.logView(test.id);
                                 mediator.emit(test.viewEvent);
-                                mediator.emit('register:end', campaignId);
+                                mediator.emit('register:end', trackingCampaignId);
                             });
                         });
                     }
