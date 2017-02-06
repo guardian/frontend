@@ -4,14 +4,15 @@ import java.io.StringReader
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import com.steadystate.css.parser.{SACParserCSS3, CSSOMParser}
+import com.steadystate.css.parser.{CSSOMParser, SACParserCSS3}
 import org.w3c.css.sac.InputSource
-import org.w3c.dom.css.{CSSRule => W3CSSRule, CSSRuleList}
+import org.w3c.dom.css.{CSSRuleList, CSSRule => W3CSSRule}
+import play.api.Logger
 import play.twirl.api.Html
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable.ListMap
-import scala.util.Try
+import scala.util.{Failure, Success, Try}
 
 case class CSSRule(selector: String, styles: ListMap[String, String]) {
   val canInline = !selector.contains(":")
@@ -92,6 +93,8 @@ object InlineStyles {
     Html(document.toString)
   }
 
+
+
   /**
     * Convert the styles in a document's <style> tags to a pair.
     * The first item is the styles that should stay in the head, the second is everything that should be inlined.
@@ -100,14 +103,17 @@ object InlineStyles {
     document.getElementsByTag("style").foldLeft((Seq.empty[CSSRule], Seq.empty[String])) { case ((inline, head), element) =>
       val source = new InputSource(new StringReader(element.html))
 
-      Try(cssParser.parseStyleSheet(source, null, null)).toOption map { sheet =>
-        val (styles, others) = seq(sheet.getCssRules).partition(isStyleRule)
-        val (inlineStyles, headStyles) = styles.flatMap(CSSRule.fromW3).flatten.partition(_.canInline)
-        val newHead = (headStyles.map(_.toString) ++ others.map(_.getCssText)).mkString("\n")
+      Retry(3)(cssParser.parseStyleSheet(source, null, null)) { (exception, attemptNumber) =>
+        Logger.error(s"Attempt $attemptNumber to parse stylesheet failed", exception)
+      } match {
+        case Failure(exception) =>
+          (inline, head :+ element.html)
+        case Success(sheet) =>
+          val (styles, others) = seq(sheet.getCssRules).partition(isStyleRule)
+          val (inlineStyles, headStyles) = styles.flatMap(CSSRule.fromW3).flatten.partition(_.canInline)
+          val newHead = (headStyles.map(_.toString) ++ others.map(_.getCssText)).mkString("\n")
 
-        (inline ++ inlineStyles, (head :+ newHead).filter(_.nonEmpty))
-      } getOrElse {
-        (inline, head :+ element.html)
+          (inline ++ inlineStyles, (head :+ newHead).filter(_.nonEmpty))
       }
     }
   }
