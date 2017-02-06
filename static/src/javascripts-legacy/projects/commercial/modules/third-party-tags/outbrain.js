@@ -84,6 +84,9 @@ define([
                 if (slot === 'merchandising') {
                     $(selectors[slot].widget).replaceWith($outbrain[0]);
                 }
+                if (slot !== 'nonCompliant' && slot !== 'merchandising') {
+                    emailRunChecks.setCompliantOutbrain();
+                }
                 $container.append(widgetHtml);
                 $outbrain.css('display', 'block');
             }).then(function () {
