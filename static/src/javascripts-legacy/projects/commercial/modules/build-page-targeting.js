@@ -32,134 +32,144 @@ define([
     isArray
 ) {
 
-    var format = function (keyword) {
-            return keyword.replace(/[+\s]+/g, '-').toLowerCase();
-        },
-        formatTarget = function (target) {
-            return target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
-        },
-        parseId = function (id) {
-            if (!id) {
-                return null;
-            }
-            if (id === 'uk/uk') {
-                return id;
-            } else {
-                return format(id.split('/').pop());
-            }
-        },
-        getSeries = function (page) {
-            if (page.seriesId) {
-                return parseId(page.seriesId);
-            }
-            var seriesIdFromUrl = /\/series\/(.+)$/.exec(page.pageId);
-            if (seriesIdFromUrl) {
-                return seriesIdFromUrl[1];
-            }
+    function format(keyword) {
+        return keyword.replace(/[+\s]+/g, '-').toLowerCase();
+    }
 
-            if (page.keywordIds) {
-                var seriesIdFromKeywords = page.keywordIds.split(',').filter(function (keyword) {
-                    return keyword.indexOf('series/') === 0;
-                }).slice(0, 1);
-                if (seriesIdFromKeywords.length) {
-                    return seriesIdFromKeywords[0].split('/')[1];
-                }
-            }
+    function formatTarget(target) {
+        return target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
+    }
 
+    function parseId(id) {
+        if (!id) {
             return null;
-        },
-        parseIds = function (ids) {
-            if (!ids) {
-                return null;
-            }
-            return compact(map(
-                ids.split(','), function (id) {
-                    return parseId(id);
-                }
-            ));
-        },
-        abParam = function () {
-            var cmRegex = /^(cm|commercial)/;
-            var abParticipations = ab.getParticipations();
-            var abParams = [];
+        }
+        if (id === 'uk/uk') {
+            return id;
+        } else {
+            return format(id.split('/').pop());
+        }
+    }
 
-            Object.keys(abParticipations).forEach(function (testKey) {
-                var testValue = abParticipations[testKey];
-                if (testValue.variant && testValue.variant !== 'notintest') {
-                    var testData = testKey + '-' + testValue.variant;
-                    // DFP key-value pairs accept value strings up to 40 characters long
-                    abParams.push(testData.substring(0, 40));
+    function getSeries(page) {
+        if (page.seriesId) {
+            return parseId(page.seriesId);
+        }
+        var seriesIdFromUrl = /\/series\/(.+)$/.exec(page.pageId);
+        if (seriesIdFromUrl) {
+            return seriesIdFromUrl[1];
+        }
+
+        if (page.keywordIds) {
+            var seriesIdFromKeywords = page.keywordIds.split(',').filter(function (keyword) {
+                return keyword.indexOf('series/') === 0;
+            }).slice(0, 1);
+            if (seriesIdFromKeywords.length) {
+                return seriesIdFromKeywords[0].split('/')[1];
+            }
+        }
+
+        return null;
+    }
+
+    function parseIds(ids) {
+        if (!ids) {
+            return null;
+        }
+        return compact(map(
+            ids.split(','), function (id) {
+                return parseId(id);
+            }
+        ));
+    }
+
+    function abParam() {
+        var cmRegex = /^(cm|commercial)/;
+        var abParticipations = ab.getParticipations();
+        var abParams = [];
+
+        Object.keys(abParticipations).forEach(function (testKey) {
+            var testValue = abParticipations[testKey];
+            if (testValue.variant && testValue.variant !== 'notintest') {
+                var testData = testKey + '-' + testValue.variant;
+                // DFP key-value pairs accept value strings up to 40 characters long
+                abParams.push(testData.substring(0, 40));
+            }
+        });
+
+        if (config.tests) {
+            Object.keys(config.tests).forEach(function (testKey) {
+                var testValue = config.tests[testKey];
+                if (typeof testValue === 'string' && cmRegex.test(test)) {
+                    abParams.push(testValue);
                 }
             });
+        }
 
-            if (config.tests) {
-                Object.keys(config.tests).forEach(function (testKey) {
-                    var testValue = config.tests[testKey];
-                    if (typeof testValue === 'string' && cmRegex.test(test)) {
-                        abParams.push(testValue);
-                    }
-                });
-            }
+        return abParams;
+    }
 
-            return abParams;
-        },
-        adtestParams = function () {
-            if (cookies.get('adtest')) {
-                var cookieAdtest = cookies.get('adtest'),
-                    first4Char = cookieAdtest.substring(0, 4);
-                if (first4Char === 'demo') {
-                    cookies.remove('adtest');
-                }
-                return cookieAdtest;
+    function adtestParams() {
+        if (cookies.get('adtest')) {
+            var cookieAdtest = cookies.get('adtest'),
+                first4Char = cookieAdtest.substring(0, 4);
+            if (first4Char === 'demo') {
+                cookies.remove('adtest');
             }
-        },
-        getVisitedValue = function () {
-            var visitCount = storage.local.get('gu.alreadyVisited') || 0;
+            return cookieAdtest;
+        }
+    }
 
-            if (visitCount <= 5) {
-                return visitCount.toString();
-            } else if (visitCount >= 6 && visitCount <= 9) {
-                return '6-9';
-            } else if (visitCount >= 10 && visitCount <= 15) {
-                return '10-15';
-            } else if (visitCount >= 16 && visitCount <= 19) {
-                return '16-19';
-            } else if (visitCount >= 20 && visitCount <= 29) {
-                return '20-29';
-            } else if (visitCount >= 30) {
-                return '30plus';
-            }
-        },
-        getReferrer = function () {
-            var referrerTypes = [
-                    {id: 'facebook', match: 'facebook.com'},
-                    {id: 'twitter', match: 't.co/'}, // added (/) because without slash it is picking up reddit.com too
-                    {id: 'googleplus', match: 'plus.url.google'},
-                    {id: 'reddit', match: 'reddit.com'},
-                    {id: 'google', match: 'www.google'}
-                ],
-                matchedRef = referrerTypes.filter(function (referrerType) {
-                    return detect.getReferrer().indexOf(referrerType.match) > -1;
-                })[0] || {};
+    function getVisitedValue() {
+        var visitCount = storage.local.get('gu.alreadyVisited') || 0;
 
-            return matchedRef.id;
-        },
-        getWhitelistedQueryParams = function() {
-            var whiteList = ['0p19G'];
-            return pick(url.getUrlVars(), whiteList);
-        },
-        getBrandingType = function() {
-            switch(config.page.sponsorshipType) {
-                case 'sponsored':
-                    return 's';
-                case 'foundation':
-                    return 'f';
-                case 'paid-content':
-                    return 'p';
-                default:
-                    return '';
-            }
-        };
+        if (visitCount <= 5) {
+            return visitCount.toString();
+        } else if (visitCount >= 6 && visitCount <= 9) {
+            return '6-9';
+        } else if (visitCount >= 10 && visitCount <= 15) {
+            return '10-15';
+        } else if (visitCount >= 16 && visitCount <= 19) {
+            return '16-19';
+        } else if (visitCount >= 20 && visitCount <= 29) {
+            return '20-29';
+        } else if (visitCount >= 30) {
+            return '30plus';
+        }
+    }
+
+    function getReferrer() {
+        var referrerTypes = [
+                {id: 'facebook', match: 'facebook.com'},
+                {id: 'twitter', match: 't.co/'}, // added (/) because without slash it is picking up reddit.com too
+                {id: 'googleplus', match: 'plus.url.google'},
+                {id: 'reddit', match: 'reddit.com'},
+                {id: 'google', match: 'www.google'}
+            ],
+            matchedRef = referrerTypes.filter(function (referrerType) {
+                return detect.getReferrer().indexOf(referrerType.match) > -1;
+            })[0] || {};
+
+        return matchedRef.id;
+    }
+
+    function getWhitelistedQueryParams() {
+        var whiteList = ['0p19G'];
+        return pick(url.getUrlVars(), whiteList);
+    }
+
+    function getBrandingType() {
+        switch(config.page.sponsorshipType) {
+            case 'sponsored':
+                return 's';
+            case 'foundation':
+                return 'f';
+            case 'paid-content':
+                return 'p';
+            default:
+                return '';
+        }
+    }
 
     return function (opts) {
         var win         = (opts || {}).window || window,
