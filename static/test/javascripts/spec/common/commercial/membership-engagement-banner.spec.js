@@ -163,6 +163,7 @@ define([
             afterEach(function () {
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = showMembershipMessages;
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
+                mediator.removeAllListeners();
                 fixtures.clean(conf.id);
             });
 
@@ -189,11 +190,10 @@ define([
 
             describe('but has already closed a message', function () {
                 it('should not redisplay that message', function (done) {
-                    var edition = 'UK';
                     var message = new Message(membershipMessages.messageCode);
                     message.acknowledge();
 
-                    config.page = { edition: edition };
+                    config.page = { edition: 'UK' };
 
                     expectMessageNotToBeVisible(done);
                 });

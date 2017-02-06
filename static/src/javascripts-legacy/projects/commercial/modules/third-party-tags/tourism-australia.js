@@ -10,7 +10,7 @@ define([
         var ta_url = location.href;
         var ta_cachebreak = new Date().getTime();
 
-        return 'http://tourismaustralia.sc.omtrdc.net/b/ss/' + ta_account +
+        return '//tourismaustralia.sc.omtrdc.net/b/ss/' + ta_account +
             '/1/H.26.2/s' + ta_cachebreak +
             '?AQB=1&ndh=0&ns=tourismaustralia&pageName=' + encodeURIComponent(ta_pageName) +
             '&g= ' + encodeURIComponent(ta_url) +

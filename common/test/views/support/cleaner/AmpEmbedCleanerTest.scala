@@ -133,9 +133,13 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   "AmpEmbedCleaner" should "replace an iframe in a https YouTube video-element with an amp-youtube element" in {
     val result = cleanDocumentWithVideos("https://www.youtube.com/watch?v=foo_12-34")
     result.getElementsByTag("amp-youtube").size should be(1)
+    result.getElementsByTag("amp-youtube").attr("data-videoid") should be("foo_12-34")
+    result.getElementsByTag("amp-youtube").attr("width") should be("5")
+    result.getElementsByTag("amp-youtube").attr("height") should be("3")
+    result.getElementsByTag("amp-youtube").attr("layout") should be("responsive")
   }
 
-  "AmpEmbedCleaner" should "not replace an iframe in a fake YouTube video-element with an amp-vimeo element" in {
+  "AmpEmbedCleaner" should "not replace an iframe in a fake YouTube video-element with an amp-youtube element" in {
     val result = cleanDocumentWithVideos(
       "http://www.youtube.com.de/watch?v=foo_12-34",
       "http://myyoutube.com/watch?v=foo_12-34",
@@ -157,6 +161,10 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   "AmpEmbedCleaner" should "replace an iframe in a https Vimeo video-element with an amp-vimeo element" in {
     val result = cleanDocumentWithVideos("https://vimeo.com/1234")
     result.getElementsByTag("amp-vimeo").size should be(1)
+    result.getElementsByTag("amp-vimeo").attr("data-videoid") should be("1234")
+    result.getElementsByTag("amp-vimeo").attr("width") should be("5")
+    result.getElementsByTag("amp-vimeo").attr("height") should be("3")
+    result.getElementsByTag("amp-vimeo").attr("layout") should be("responsive")
   }
 
   "AmpEmbedCleaner" should "not replace an iframe in a fake Vimeo video-element with an amp-vimeo element" in {
@@ -173,13 +181,42 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-vimeo").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "be able to create an amp-youtube element and an amp-vimeo in the same document" in {
+  "AmpEmbedCleaner" should "replace a facebook video embed with a valid amp-facebook video embed" in {
+    val faceookVideoId = "123456"
+    val facebookVideoUrl = s"https://www.facebook.com/theguardian/videos/$faceookVideoId/"
+    val result = cleanDocumentWithVideos(facebookVideoUrl)
+    result.getElementsByTag("amp-facebook").size should be(1)
+    result.getElementsByTag("amp-facebook").attr("data-href") should be(s"https://www.facebook.com/theguardian/videos/$faceookVideoId")
+    result.getElementsByTag("amp-facebook").attr("data-embed-as") should be("video")
+    result.getElementsByTag("amp-facebook").attr("width") should be("5")
+    result.getElementsByTag("amp-facebook").attr("height") should be("3")
+    result.getElementsByTag("amp-facebook").attr("layout") should be("responsive")
+  }
+
+  "AmpEmbedCleaner" should "not replace an iframe in a fake Facebook video-element with an amp-facebook element" in {
+    val result = cleanDocumentWithVideos(
+      "https://www.facebook.com/nottheguardian/videos/123456",
+      "https://facbook.com.zz/theguardian/123456/",
+      "https://www.fakebook.com/theguardian/videos/123456/",
+      "https://myfacebook.com/theguardian/videos/123456"
+    )
+    result.getElementsByTag("amp-facebook").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "not create an amp-facebook element if videoid missing" in {
+    val result = cleanDocumentWithVideos("https://www.facebook.com/theguardian/videos/")
+    result.getElementsByTag("amp-facebook").size should be(0)
+  }
+
+  "AmpEmbedCleaner" should "be able to create an amp-youtube element, an amp-vimeo element and an amp facebook element in the same document" in {
     val result = cleanDocumentWithVideos(
       "https://www.youtube.com/watch?v=foo_12-34",
-      "https://vimeo.com/1234"
+      "https://vimeo.com/1234",
+      "https://www.facebook.com/theguardian/videos/123456/"
     )
     result.getElementsByTag("amp-youtube").size should be(1)
     result.getElementsByTag("amp-vimeo").size should be(1)
+    result.getElementsByTag("amp-facebook").size should be(1)
   }
 
 
