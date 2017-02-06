@@ -832,7 +832,7 @@ $caption-button-size: 32px;
 .l-footer {
     // these two lines are needed so that the footer sits over the nav
     position: absolute;
-    z-index: 9999;
+    z-index: $zindex-content;
     width: 100%;
 }
 .footer__back-to-top__container {

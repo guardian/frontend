@@ -577,10 +577,6 @@ final case class Tags(
   //this is for the immersive header to access this info
   lazy val isAdvertisementFeature = tags.exists( t => t.id == "tone/advertisement-features" )
 
-  lazy val isUSElection = tags.exists(t => t.id == "us-news/us-elections-2016")
-  lazy val isAusElection = tags.exists(t => t.id == "australia-news/australian-election-2016")
-  lazy val isElection = isUSElection || isAusElection
-
   lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
 
   // Specific Series
