@@ -3,6 +3,7 @@ package common
 import org.jsoup.Jsoup
 import org.scalatest.{FlatSpec, Matchers}
 import play.twirl.api.Html
+
 import scala.collection.immutable.ListMap
 
 class InlineStylesTest extends FlatSpec with Matchers {
