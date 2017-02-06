@@ -22,8 +22,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-bundles-thrasher",
-    "Test appetite for first batch of bundles",
+    "ab-membership-a1-a2-bundles-thrasher",
+    "Test A1 vs A2 bundle offers",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 3, 2), // Thursday March 2nd
