@@ -2,6 +2,12 @@
 
 @import common.LinkTo
 @import model.Tag
+@import conf.Configuration.debug.beaconUrl
+@import conf.switches.Switches.preflightServerSideAdCallSwitch
+
+@if(preflightServerSideAdCallSwitch.isSwitchedOn) {
+    <esi:include src="@beaconUrl" />
+}
 
 @index.page match {
     case tag: Tag => {
