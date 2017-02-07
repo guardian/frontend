@@ -7,7 +7,7 @@ import scala.collection.immutable.Seq
 
 object ContentFooterContainersLayout {
 
-  def apply(content: Content, isAdvertisementFeature: Boolean)
+  def apply(content: Content, isPaidContent: Boolean)
            (storyPackagePlaceholder: => Html)
            (onwardPlaceholder: => Html)
            (commentsPlaceholder: => Html)
@@ -17,7 +17,7 @@ object ContentFooterContainersLayout {
 
     def optional(p: => Boolean, htmlBlock: => Html): Option[Html] = if (p) Some(htmlBlock) else None
 
-    val htmlBlocks = if (isAdvertisementFeature) {
+    val htmlBlocks = if (isPaidContent) {
 
       // majority of footer components we don't want to appear on advertisement feature articles
       Seq(

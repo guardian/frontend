@@ -384,7 +384,7 @@ define([
             !config.page.hasMultipleVideosInPage &&
             !config.page.hasYouTubeAtom &&
             !config.page.isFront &&
-            !config.page.isAdvertisementFeature &&
+            !config.page.isPaidContent &&
             !config.page.sponsorshipType;
 
         if (config.switches.enhancedMediaPlayer) {
