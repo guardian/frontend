@@ -59,7 +59,7 @@ define([
             if (this.thrasher()) {
                 var linkEl = document.querySelector('.membership-ab-thrasher--wrapper .link-button');
                 if (linkEl && linkEl.getAttribute('href')) {
-                    linkEl.setAttribute('href', config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_A_THRASHER_' + config.page.edition.toUpperCase() + '_' + variant.toUpperCase());
+                    linkEl.setAttribute('href', config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_A_ADS_THRASHER_' + config.page.edition.toUpperCase() + '_' + variant.toUpperCase());
                 }
             }
         };
