@@ -630,6 +630,40 @@ object setSvgClasses {
   }
 }
 
+case class CommercialMPUsForFronts() extends HtmlCleaner {
+
+  override def clean(document: Document): Document = {
+
+    def hasAdjacentCommercialContainer(element: Element): Boolean = {
+
+      val maybeNextEl: Option[Element] = Option(element.nextElementSibling())
+      val maybePreviousEl: Option[Element] = Option(element.previousElementSibling())
+
+      return element.hasClass("fc-container--commercial") || maybeNextEl.exists(_.hasClass("fc-container--commercial"))
+    }
+
+    val containers: List[Element] = document.getElementsByClass("fc-container").toList
+
+    // remove container if it, or next sibling, is a fc-container--commercial
+    val containersAgain = containers.zipWithIndex.collect {
+      case (x,i) if !hasAdjacentCommercialContainer(x) => x
+    }
+
+    val containersFinal = containersAgain.zipWithIndex.collect {
+      case (x,i) if i % 2 == 0 => x
+    }
+
+    val sliceSlot = views.html.fragments.items.facia_cards.sliceSlot
+
+    val isMPUCandidate = true
+
+    for (container <- containersFinal) {
+      container.after(s"""<section class="CommercialMPUsForFronts">${sliceSlot(containersFinal.indexOf(container), isMPUCandidate)}</section>""")
+    }
+    document
+  }
+}
+
 case class CommercialComponentHigh(isAdvertisementFeature: Boolean, isNetworkFront: Boolean, hasPageSkin: Boolean) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {

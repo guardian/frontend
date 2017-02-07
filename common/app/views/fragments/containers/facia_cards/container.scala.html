@@ -84,29 +84,6 @@
                     }
                 }
             </section>
-
-            @containerDefinition.container match {
-
-                case _: Dynamic | _: Fixed | Video => {
-
-                    @if(!isPaidFront && containerDefinition.index % 2 == 0) {
-                        <section>
-                        @defining(containerDefinition.index) { inlineId =>
-                            @sliceSlot(inlineId / 2, true)
-                        }
-                        </section>
-                    }
-                }
-                case MostPopular => {
-                    <section>
-                        @defining(containerDefinition.index) { inlineId =>
-                            @sliceSlot(inlineId, true)
-                        }
-                    </section>
-                }
-
-                case _ => {}
-            }
         }
     }
 }
