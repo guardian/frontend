@@ -56,7 +56,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 8),
+    sellByDate = new LocalDate(2017, 2, 16),
     exposeClientSide = true
   )
 
@@ -86,7 +86,7 @@ trait ABTestSwitches {
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 6),
+    sellByDate = new LocalDate(2017, 5, 1),
     exposeClientSide = true
   )
 
