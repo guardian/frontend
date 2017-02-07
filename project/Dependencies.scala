@@ -31,7 +31,7 @@ object Dependencies {
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsLang = "commons-lang" % "commons-lang" % "2.4"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
-  val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.18"
+  val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.21"
   val contentApiClient = "com.gu" %% "content-api-client" % "11.0"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.20.0"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % dispatchVersion
