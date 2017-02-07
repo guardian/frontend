@@ -34,7 +34,6 @@ define([
                  defaults,
                  find,
                  svgs,
-                 arrowWhiteRight,
                  fetch) {
 
 
