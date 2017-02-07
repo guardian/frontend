@@ -175,6 +175,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       case classes if classes.contains(Showcase.className) => Showcase
       case classes if classes.contains(Thumbnail.className) => Thumbnail
       case classes if classes.contains(Immersive.className) => Immersive
+      case classes if classes.contains(Halfwidth.className) => Halfwidth
       case _ => Inline
     }
   }
@@ -457,6 +458,24 @@ case class PhotoEssayQuotes(isPhotoEssay: Boolean) extends HtmlCleaner {
     if(isPhotoEssay) {
       document.getElementsByClass("element-pullquote").foreach{ quotes =>
         quotes.addClass("element-pullquote--photoEssay")
+      }
+    }
+    document
+  }
+}
+
+case class HalfWidth(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean (document: Document): Document = {
+    if(isPhotoEssay){
+      document.getElementsByClass("element--halfWidth").foreach{ image =>
+        //check previous element has .wrapper
+        if(image.previousElementSibling().hasClass("halfWidth--wrapper")){
+          image.addClass("banana");
+        }else{
+          image.addClass("mango");
+        }
+        //if it doesnt wrap the element in div with .wrapper
+        // if it does, move it inside the .wrapper
       }
     }
     document

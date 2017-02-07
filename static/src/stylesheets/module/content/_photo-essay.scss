@@ -3,13 +3,6 @@
         padding-bottom: 0;
         margin-bottom: 0.5rem;
 
-        &:not(.element--showcase):not(.element--supporting):not(.element--immersive){
-            @include mq($from: wide) {
-                margin-left: -4rem;
-                margin-right: -4rem;
-            }
-        }
-
         &.fig--no-caption.fig--has-shares {
             padding-bottom: 0px !important;
         }
@@ -48,12 +41,36 @@
           }
         }
 
-        &.element--showcase {
-            @include mq($from: wide) {
-                margin-right: -4rem;
-            }
+        &.element--halfWidth {
+          width: 50%;
+          float: left;
+          margin-top: 0;
+          margin-bottom: 0;
+
+          .inline-expand-image {
+            display: none;
+          }
+
+          &:before{
+            content: '';
+            display: block;
+            width: 2px;
+            top: 0px;
+            bottom: 0px;
+            z-index: 300;
+            position: absolute;
+            background-color: white;
+          }
+
+          & + p {
+            clear: both;
+          }
+
         }
+
     }
+
+
     .element-pullquote--photoEssay {
         .pullquote-paragraph {
             color: $news-main-1;
