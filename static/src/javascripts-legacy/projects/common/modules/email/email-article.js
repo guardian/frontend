@@ -13,7 +13,8 @@ define([
     'common/utils/page',
     'common/utils/storage',
     'common/modules/analytics/google',
-    'lodash/collections/find'
+    'lodash/collections/find',
+    'common/utils/check-mediator'
 ], function (
     $,
     bean,
@@ -147,29 +148,30 @@ define([
         addListToPage = function (listConfig) {
             if (listConfig) {
                 var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
-                    $iframeEl = $(iframe);
+                    $iframeEl = $(iframe),
+                    onEmailAdded = function () {
+                        emailRunChecks.setEmailShown(listConfig.listName);
+                        checkMediator.isEmailInserted.resolve(true);
+                        storage.session.set('email-sign-up-seen', 'true');
+                    }
 
                 bean.on(iframe, 'load', function () {
                     email.init(iframe);
                 });
+
                 if (listConfig.insertMethod) {
                     fastdom.write(function () {
                         listConfig.insertMethod($iframeEl);
-
                         googleAnalytics.trackNonClickInteraction('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
-                        emailRunChecks.setEmailInserted();
-                        emailRunChecks.setEmailShown(listConfig.listName);
+                        onEmailAdded();
                     });
                 } else {
                     spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
                         $iframeEl.insertBefore(paras[0]);
                         googleAnalytics.trackNonClickInteraction('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
-                        emailRunChecks.setEmailInserted();
-                        emailRunChecks.setEmailShown(listConfig.listName);
+                        onEmailAdded();
                     });
                 }
-
-                storage.session.set('email-sign-up-seen', 'true');
             }
         };
 

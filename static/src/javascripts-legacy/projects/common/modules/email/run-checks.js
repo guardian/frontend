@@ -12,7 +12,8 @@ define([
     'common/modules/user-prefs',
     'common/modules/identity/api',
     'common/modules/experiments/ab-test-clash',
-    'Promise'
+    'Promise',
+    'common/utils/check-mediator'
 ], function (
     $,
     page,
@@ -27,7 +28,8 @@ define([
     userPrefs,
     Id,
     clash,
-    Promise
+    Promise,
+    checkMediator
 ) {
     var emailInserted = false;
     var emailShown;
@@ -127,14 +129,6 @@ define([
 
     // Public
 
-    function setEmailInserted() {
-        emailInserted = true;
-    }
-
-    function getEmailInserted() {
-        return emailInserted;
-    }
-
     function setEmailShown(emailName) {
         emailShown = emailName;
     }
@@ -145,18 +139,22 @@ define([
 
     function allEmailCanRun() {
         var browser = detect.getUserAgent.browser,
-            version = detect.getUserAgent.version;
+            version = detect.getUserAgent.version,
+            emailCanRun = !config.page.shouldHideAdverts &&
+                        !config.page.isSensitive &&
+                        !config.page.isFront &&
+                        config.switches.emailInArticle &&
+                        !clash.userIsInAClashingAbTest() &&
+                        storage.session.isAvailable() &&
+                        !userHasSeenThisSession() &&
+                        !obWidgetIsShown() &&
+                        !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
 
-        return !config.page.shouldHideAdverts &&
-            !config.page.isSensitive &&
-            !emailInserted &&
-            !config.page.isFront &&
-            config.switches.emailInArticle &&
-            !clash.userIsInAClashingAbTest() &&
-            storage.session.isAvailable() &&
-            !userHasSeenThisSession() &&
-            !obWidgetIsShown() &&
-            !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
+        if (!emailCanRun) {
+            checkMediator.isEmailInserted.resolve(false);
+        }
+
+        return emailCanRun;
     }
 
     function getUserEmailSubscriptions() {
@@ -184,8 +182,6 @@ define([
     return {
         setEmailShown: setEmailShown,
         getEmailShown: getEmailShown,
-        setEmailInserted: setEmailInserted,
-        getEmailInserted: getEmailInserted,
         allEmailCanRun: allEmailCanRun,
         getUserEmailSubscriptions: getUserEmailSubscriptions,
         listCanRun: listCanRun

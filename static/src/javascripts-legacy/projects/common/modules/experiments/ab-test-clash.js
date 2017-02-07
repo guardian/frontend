@@ -1,9 +1,11 @@
 define([
     'lodash/collections/some',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'common/utils/check-mediator'
 ], function (
     some,
-    ab
+    ab,
+    checkMediator
 ) {
     var ContributionsEpicAlwaysAskStrategy = {
         name: 'ContributionsEpicAlwaysAskStrategy',
@@ -29,7 +31,12 @@ define([
             ContributionsEpicAskFourStagger,
             ContributionsEpicAskFourEarning
         ];
-        return _testABClash(ab.isInVariant, clashingTests);
+
+        var isUserInAClashingAbTest = _testABClash(ab.isInVariant, clashingTests);
+
+        checkMediator.isUserInAClashingAbTest.resolve(isUserInAClashingAbTest);
+
+        return isUserInAClashingAbTest;
     }
 
     function _testABClash(f, clashingTests) {
