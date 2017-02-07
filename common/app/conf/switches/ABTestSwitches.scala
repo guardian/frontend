@@ -86,7 +86,7 @@ trait ABTestSwitches {
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 6),
+    sellByDate = new LocalDate(2017, 5, 1),
     exposeClientSide = true
   )
 
