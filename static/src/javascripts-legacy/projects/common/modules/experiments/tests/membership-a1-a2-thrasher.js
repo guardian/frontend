@@ -22,7 +22,7 @@ define([
         this.description = 'Test Supporter Bundle A1 (ad-free control) against A2 (with-ads variant)';
         this.showForSensitive = true;
         this.audience = 0.15;  // 7.5% per variant
-        this.audienceOffset = 0;
+        this.audienceOffset = 0.15; // use a new audience segment base
         this.successMeasure = '';
         this.audienceCriteria = 'People on UK network front with at least an 1140px wide display.';
         this.dataLinkNames = '';
@@ -59,7 +59,7 @@ define([
             if (this.thrasher()) {
                 var linkEl = document.querySelector('.membership-ab-thrasher--wrapper .link-button');
                 if (linkEl && linkEl.getAttribute('href')) {
-                    linkEl.setAttribute('href', config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_A_THRASHER_' + config.page.edition + '_' + variant.toUpperCase());
+                    linkEl.setAttribute('href', config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_A_THRASHER_' + config.page.edition.toUpperCase() + '_' + variant.toUpperCase());
                 }
             }
         };
