@@ -5,6 +5,7 @@
   "dependencies": {
     "JSON2": "^0.1.0",
     "babel-runtime": "^6.20.0",
+    "chokidar": "^1.6.1",
     "domready": "^1.0.8",
     "es5-shim": "^4.5.9",
     "html5shiv": "^3.7.3",
@@ -14,6 +15,7 @@
     "react": "0.13.2",
     "tcp-ping": "^0.1.1",
     "virtual-dom": "^2.1.1",
+    "webpack-dev-server": "^1.16.3",
     "webshot": "^0.18.0"
   },
   "devDependencies": {
@@ -111,6 +113,7 @@
   "scripts": {
     "postinstall": "./tools/task-runner/runner githooks --verbose",
     "babel-watch": "BABEL_ENV=development babel ./static/src/javascripts --watch -d ./static/transpiled/javascripts >/dev/null 2>&1",
-    "gulp-watch": "gulp --cwd ./dev watch"
+    "gulp-watch": "gulp --cwd ./dev watch",
+    "dev": "./dev/start-dev-server.js"
   }
 }
