@@ -105,7 +105,6 @@
     "fsevents": "*"
   },
   "scripts": {
-    "postinstall": "./tools/task-runner/runner githooks --verbose",
-    "babel-watch": "BABEL_ENV=development babel ./static/src/javascripts --watch -d ./static/transpiled/javascripts >/dev/null 2>&1"
+    "postinstall": "./tools/task-runner/runner githooks --verbose"
   }
 }
