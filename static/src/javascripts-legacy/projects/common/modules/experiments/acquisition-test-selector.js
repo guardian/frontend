@@ -26,8 +26,8 @@ define([
                 var variant = segmentUtil.variantFor(t);
 
                 var hasNotReachedRateLimit = variant &&
-                    ((viewLog.viewsInPreviousDays(variant.maxViews.days, t) < variant.maxViews.count &&
-                    viewLog.viewsInPreviousDays(variant.maxViews.minDaysBetweenViews, t) === 0) ||
+                    ((viewLog.viewsInPreviousDays(variant.maxViews.days) < variant.maxViews.count &&
+                    viewLog.viewsInPreviousDays(variant.maxViews.minDaysBetweenViews) === 0) ||
                     variant.isUnlimited);
 
                 return forced || (t.canRun() && segmentUtil.isInTest(t) && hasNotReachedRateLimit);
