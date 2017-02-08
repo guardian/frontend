@@ -1,6 +1,5 @@
 package model
 
-import com.gu.commercial.branding.PaidContent
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.Edition
@@ -93,7 +92,7 @@ final case class Trail (
   lazy val showByline: Boolean = tags.isComment
 
   def shouldHidePublicationDate(implicit request: RequestHeader): Boolean = {
-    val isPaidContent = metadata.branding(Edition(request)).exists(_.brandingType == PaidContent)
+    val isPaidContent = metadata.branding(Edition(request)).exists(_.isPaid)
     isPaidContent && webPublicationDate.isOlderThan(2.weeks)
   }
 

@@ -81,7 +81,7 @@ final case class Content(
     metadata.contentType.toLowerCase == "gallery" &&
     {
       val branding = metadata.branding(defaultEdition)
-      branding.isEmpty || branding.exists(_.brandingType != PaidContent)
+      branding.isEmpty || branding.exists(!_.isPaid)
     }
   }
   lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
@@ -156,7 +156,7 @@ final case class Content(
       tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog"
     }
 
-    lazy val isPaidContent = metadata.branding(defaultEdition).exists(_.brandingType == PaidContent)
+    lazy val isPaidContent = metadata.branding(defaultEdition).exists(_.isPaid)
 
     isChildrensBookBlog || isPaidContent
   }

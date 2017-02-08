@@ -1,6 +1,6 @@
 package model
 
-import com.gu.commercial.branding.{Branding, PaidContent}
+import com.gu.commercial.branding.Branding
 import common.Edition._
 import common.commercial.EditionBranding
 import common.{Edition, ExecutionContexts, Logging}
@@ -62,7 +62,7 @@ case class FrontProperties(
 
   def branding(edition: Edition): Option[Branding] = EditionBranding.branding(editionBrandings, edition)
 
-  lazy val isPaidContent: Boolean = branding(defaultEdition).exists(_.brandingType == PaidContent)
+  lazy val isPaidContent: Boolean = branding(defaultEdition).exists(_.isPaid)
 }
 
 object FrontProperties {

@@ -21,11 +21,11 @@
     case Some(branding) => {
         <div class="l-side-margins">
             <div
-            class="@RenderClasses(Map("fc-container--paid-content paid-content" -> (branding.brandingType == PaidContent)), "u-cf index-page")"
+            class="@RenderClasses(Map("fc-container--paid-content paid-content" -> (branding.isPaid)), "u-cf index-page")"
             data-link-name="Front | @request.path"
             role="main">
 
-                @if(branding.brandingType == PaidContent) {
+                @if(branding.isPaid) {
                     @fragments.guBand()
                 }
 
