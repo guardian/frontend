@@ -9,7 +9,7 @@ trait FeatureSwitches {
     "server-share-counts",
     "If this switch is on, share counts are fetched from the Facebook Graph API on the server",
     owners = Seq(Owner.withGithub("jfsoul")),
-    safeState = Off,
+    safeState = On,
     sellByDate = never,
     exposeClientSide = true
   )
