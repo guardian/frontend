@@ -89,13 +89,16 @@ define([
         });
     }
 
+    function isExpired(testExpiry) {
+      // new Date(test.expiry) sets the expiry time to 00:00:00
+      // Using SetHours allows a test to run until the END of the expiry day
+      var startOfToday = new Date().setHours(0,0,0,0);
+      return startOfToday > new Date(testExpiry);
+    }
+
     function getActiveTests() {
-        // new Date(test.expiry) sets the expiry time to 00:00:00
-        // Using SetHours allows a test to run until the END of the expiry day
-        var startOfToday = new Date().setHours(0,0,0,0);
         return TESTS.filter(function (test) {
-            var expired = startOfToday > new Date(test.expiry);
-            if (expired) {
+            if (isExpired(test.expiry)) {
                 removeParticipation(test);
                 return false;
             }
@@ -104,15 +107,13 @@ define([
     }
 
     function getExpiredTests() {
-        var startOfToday = new Date().setHours(0,0,0,0);
         return TESTS.filter(function (test) {
-            return (startOfToday > new Date(test.expiry));
+            return isExpired(test.expiry);
         });
     }
 
     function testCanBeRun(test) {
-        var startOfToday = new Date().setHours(0,0,0,0);
-        var expired = (startOfToday > new Date(test.expiry)),
+        var expired = isExpired(test.expiry),
             isSensitive = config.page.isSensitive;
 
         return ((isSensitive ? test.showForSensitive : true)
