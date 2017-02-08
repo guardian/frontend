@@ -21,7 +21,7 @@ object ABNewNavVariantSeven extends TestDefinition(
   name = "ab-new-nav-variant-seven",
   description = "users in this test will see the new header seventh variant",
   owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2017, 2, 8)
+  sellByDate = new LocalDate(2017, 3, 16)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header").contains("variantseven")
@@ -32,7 +32,7 @@ object ABNewNavControl extends TestDefinition(
   name = "ab-new-nav-control",
   description = "control for the new header test",
   owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2017, 2, 8)
+  sellByDate = new LocalDate(2017, 3, 16)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header").contains("control")

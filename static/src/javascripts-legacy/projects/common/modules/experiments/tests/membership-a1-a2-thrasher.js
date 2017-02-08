@@ -1,9 +1,13 @@
 define([
+    'bean',
+    'qwery',
     'common/utils/config',
     'common/utils/detect',
     'common/modules/commercial/user-features'
 
 ], function (
+    bean,
+    qwery,
     config,
     detect,
     userFeatures
@@ -11,18 +15,19 @@ define([
     return function () {
         var self = this;
 
-        this.id = 'MembershipBundlesThrasher';
-        this.start = '2017-01-23';
+        this.id = 'MembershipA1A2BundlesThrasher';
+        this.start = '2017-02-06';
         this.expiry = '2017-03-02'; // Thursday 2nd March
         this.author = 'Justin Pinner';
-        this.description = 'Test appetite for membership bundles';
+        this.description = 'Test Supporter Bundle A1 (ad-free control) against A2 (with-ads variant)';
         this.showForSensitive = true;
-        this.audience = 0.15;  // 5% per variant
-        this.audienceOffset = 0;
+        this.audience = 0.15;  // 7.5% per variant
+        this.audienceOffset = 0.15; // use a new audience segment base
         this.successMeasure = '';
         this.audienceCriteria = 'People on UK network front with at least an 1140px wide display.';
         this.dataLinkNames = '';
-        this.idealOutcome = 'One landing page will accrue a higher number of intention interactions than the other';
+        this.idealOutcome = 'We understand which of the A bundle variants is most desirable.';
+        this.hypothesis = 'An ad-free offering is desired by more readers.';
 
         this.canRun = function () {
             return document.querySelector('#membership-ab-thrasher') &&
@@ -54,7 +59,7 @@ define([
             if (this.thrasher()) {
                 var linkEl = document.querySelector('.membership-ab-thrasher--wrapper .link-button');
                 if (linkEl && linkEl.getAttribute('href')) {
-                    linkEl.setAttribute('href', config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_AB_THRASHER_' + config.page.edition + '_' + variant.toUpperCase());
+                    linkEl.setAttribute('href', config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_A_ADS_THRASHER_' + config.page.edition.toUpperCase() + '_' + variant.toUpperCase());
                 }
             }
         };
@@ -74,24 +79,25 @@ define([
             this.showThrasher();
         };
 
+        this.completeFunc = function(complete) {
+            // fire on thrasher's [find out more -->] button click
+            bean.on(qwery('.membership-ab-thrasher--wrapper .link-button')[0], 'click', complete);
+        };
+
         this.variants = [
             {
-                id: 'A1',
+                id: 'control',
                 test: function () {
-                    self.setup('A1')
-                }
+                    self.setup('control');   // A1 is our control group (for the benefit of abacus)
+                },
+                success: this.completeFunc
             },
             {
-                id: 'B1',
+                id: 'variant',
                 test: function () {
-                    self.setup('B1');
-                }
-            },
-            {
-                id: 'B2',
-                test: function () {
-                    self.setup('B2');
-                }
+                    self.setup('variant');  // variant is A2
+                },
+                success: this.completeFunc
             }
         ];
     };

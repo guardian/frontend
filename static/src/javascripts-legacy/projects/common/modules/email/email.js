@@ -108,7 +108,8 @@ define([
                     formSuccessDesc = (opts && opts.formSuccessDesc) || formData.formSuccessDesc,
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false,
                     formModClass = (opts && opts.formModClass) || formData.formModClass || false,
-                    formCloseButton = (opts && opts.formCloseButton) || formData.formCloseButton || false;
+                    formCloseButton = (opts && opts.formCloseButton) || formData.formCloseButton || false,
+                    formSuccessEventName = (opts && opts.formSuccessEventName) || formData.formSuccessEventName || false;
 
                 Id.getUserFromApi(function (userFromId) {
                     ui.updateFormForLoggedIn(userFromId, el);
@@ -145,6 +146,7 @@ define([
 
                 // Cache data on the form element
                 $('.js-email-sub__form', el).data('formData', {
+                    customSuccessEventName: formSuccessEventName,
                     campaignCode: formCampaignCode,
                     referrer: window.location.href,
                     customSuccessHeadline: formSuccessHeadline,
@@ -241,6 +243,9 @@ define([
                         state.submitting = true;
 
                         return new Promise(function () {
+                            if (formData.customSuccessEventName) {
+                                mediator.emit(formData.customSuccessEventName);
+                            }
                             googleAnalytics.trackNonClickInteraction(analyticsInfo.replace('%action%', 'subscribe clicked'));
                             return fetch(config.page.ajaxUrl + url, {
                                 method: 'post',

@@ -15,6 +15,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val BlockIASSwitch = Switch(
+    SwitchGroup.Commercial,
+    "block-ias",
+    "Controls whether the Service Worker can filter out IAS calls",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val AdFreeTrialSwitch = Switch(
     SwitchGroup.Commercial,
     "ad-free-membership-trial",

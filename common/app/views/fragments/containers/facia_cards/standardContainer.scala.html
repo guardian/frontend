@@ -1,3 +1,4 @@
+@import com.gu.commercial.branding.Branding
 @import common.commercial.ContainerModel
 @import common.{Edition, Localisation}
 @import views.html.fragments.commercial.containerLogo
@@ -18,7 +19,10 @@
 } else {
     @for(containerModel <- maybeContainerModel) {
         @for(containerBranding <- containerModel.branding) {
-            @containerLogo(containerBranding, isOnTheLeft = true)
+            @containerBranding match {
+                case branding: Branding => { @containerLogo(branding, isOnTheLeft = true) }
+                case _ => {}
+            }
         }
     }
 }

@@ -108,12 +108,13 @@ define([
             start();
             var ret = fn.apply(null, arguments);
             if (ret instanceof Promise) {
-                ret.then(stop, function(reason) {
+                return ret.then(stop, function(reason) {
                     stop();
                     throw reason;
                 });
             } else {
                 stop();
+                return ret;
             }
         };
     }
@@ -122,7 +123,7 @@ define([
         var startStop = [moduleStart.bind(null, name), moduleEnd.bind(null, name)];
         return function() {
             try {
-                fn.apply(null, startStop.concat(startStop.slice.call(arguments)));
+                return fn.apply(null, startStop.concat(startStop.slice.call(arguments)));
             } catch (e) {
                 stop();
                 throw e;
