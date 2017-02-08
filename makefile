@@ -41,12 +41,7 @@ check-yarn: # PRIVATE
 # Watch and automatically compile/reload all JS/SCSS.
 # Uses port 3000 insead of 9000.
 watch: compile-dev
-	@npm run gulp-watch
-
-# Watch and automatically compile/reload all JS/SCSS.
-# Uses port 3000 insead of 9000.
-watch2: compile-dev
-	@npm run dev
+	@npm run watch
 
 # *********************** ASSETS ***********************
 
