@@ -31,13 +31,12 @@ webpackBundler.watch({
 }, (err, stats) => {
     if (err) {
         // log any unexpected error
-        console.err('webpack error:', err);
+        console.log(chalk.red(err));
     }
 
     if (INITIAL_BUNDLE) {
         INITIAL_BUNDLE = false;
         wpNotification.succeed();
-        console.log('');
 
         // now have the initial bundles, we can start browsersync
         return browserSync.init(bsConfig);
