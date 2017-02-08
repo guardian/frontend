@@ -6,7 +6,7 @@
 @import conf.switches.Switches.preflightServerSideAdCallSwitch
 
 @if(preflightServerSideAdCallSwitch.isSwitchedOn) {
-    <!--esi <esi:include src="@beaconUrl" /> -->
+    <!--esi <esi:include src="@{s"$beaconUrl/esi/ad-call"}" /> -->
 }
 
 @index.page match {
