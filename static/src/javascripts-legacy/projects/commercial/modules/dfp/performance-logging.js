@@ -21,9 +21,10 @@ define([
         };
     var primaryBaseline = 'primary';
     var secondaryBaseline = 'secondary';
+    var reportData = raven.wrap(reportTrackingData);
 
     function setListeners(googletag) {
-        googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(reportTrackingData));
+        googletag.pubads().addEventListener('slotRenderEnded', reportData);
     }
 
     // moduleStart() and moduleEnd() can be used for measuring modules ad-hoc,
@@ -141,6 +142,6 @@ define([
         addTag: addTag,
         wrap: wrap,
         defer: defer,
-        reportTrackingData: raven.wrap(reportTrackingData)
+        reportTrackingData: reportData
     };
 });
