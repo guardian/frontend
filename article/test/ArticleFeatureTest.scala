@@ -173,7 +173,7 @@ import collection.JavaConversions._
         Then("I should see the start and end date of coverage")
         val liveBlogPosting = findFirst("[itemtype='http://schema.org/LiveBlogPosting']").getElement
         liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageStartTime']")).getAttribute("content") should be("2015-07-14T11:20:37+0100")
-        liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageEndTime']")).getAttribute("content") should be("2015-07-14T11:21:25+0100")
+        liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageEndTime']")).getAttribute("content") should be("2017-02-06T14:59:12+0000")
       }
     }
 
