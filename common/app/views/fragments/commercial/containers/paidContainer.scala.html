@@ -1,11 +1,10 @@
 @(frontId: String,
   containerIndex: Int,
   containerModel: common.commercial.ContainerModel)(implicit request: RequestHeader)
-
+@import com.gu.commercial.branding.Branding
 @import common.LinkTo
-@import views.html.fragments.commercial.containerWrapper
 @import views.html.fragments.commercial.containers._
-@import views.html.fragments.commercial.containerLogo
+@import views.html.fragments.commercial.{containerLogo, containerWrapper}
 @import views.html.fragments.inlineSvg
 @import views.support.Commercial.TrackingCodeBuilder.mkInteractionTrackingCode
 @import views.support.Commercial.glabsLink
@@ -66,6 +65,9 @@
 
 @logoSlot = {
     @for(branding <- containerModel.branding) {
-        @containerLogo(branding, isOnTheLeft = false)
+        @branding match {
+            case b: Branding => { @containerLogo(b, isOnTheLeft = false) }
+            case _ => {}
+        }
     }
 }

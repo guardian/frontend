@@ -22,8 +22,18 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-bundles-thrasher",
-    "Test appetite for first batch of bundles",
+    "ab-guardian-today-signup-messaging",
+    "Test different signup messaging for Guardian Today emails",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 28),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-membership-a1-a2-bundles-thrasher",
+    "Test A1 vs A2 bundle offers",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 3, 2), // Thursday March 2nd
@@ -46,7 +56,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 8),
+    sellByDate = new LocalDate(2017, 2, 16),
     exposeClientSide = true
   )
 
@@ -76,7 +86,7 @@ trait ABTestSwitches {
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 6),
+    sellByDate = new LocalDate(2017, 5, 1),
     exposeClientSide = true
   )
 

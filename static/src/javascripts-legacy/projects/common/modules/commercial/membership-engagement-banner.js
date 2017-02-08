@@ -15,8 +15,7 @@ define([
         'common/modules/experiments/tests/membership-engagement-banner-tests',
         'lodash/objects/defaults',
         'lodash/collections/find',
-        'common/views/svg',
-        'inlineSvg!svgs/icon/arrow-white-right.svg',
+        'common/views/svgs',
         'common/utils/fetch'
     ], function (bean,
                  $,
@@ -34,8 +33,7 @@ define([
                  MembershipEngagementBannerTests,
                  defaults,
                  find,
-                 svg,
-                 arrowWhiteRight,
+                 svgs,
                  fetch) {
 
 
@@ -161,7 +159,7 @@ define([
                 messageText: messageText,
                 buttonCaption: params.buttonCaption,
                 colourClass: colourClass,
-                arrowWhiteRight: svg(arrowWhiteRight),
+                arrowWhiteRight: svgs('arrowWhiteRight'),
                 showRemindMe: params.showRemindMe || false
             });
 
