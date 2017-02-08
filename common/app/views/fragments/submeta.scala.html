@@ -77,7 +77,7 @@
 
 }
 @if(!amp) {
-    <div class="submeta hide-on-mobile">
+    <div class="submeta @if(mvt.ABNewNavVariantSeven.isParticipating) {hide-on-mobile}">
         @if(content.tags.keywords.filterNot(_.isSectionTag).nonEmpty) {
             <hr/>
             <div data-link-name="keywords" data-component="keywords">
