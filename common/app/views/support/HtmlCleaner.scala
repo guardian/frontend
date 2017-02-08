@@ -630,34 +630,36 @@ object setSvgClasses {
   }
 }
 
-case class CommercialMPUsForFronts() extends HtmlCleaner {
+case class CommercialMPUsForFronts(isNetworkFront: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
 
+    def isNetworkFrontWithThrasher(element: Element, index: Int): Boolean = {
+      index == 0 && isNetworkFront && element.hasClass("fc-container--thrasher")
+    }
+
     def hasAdjacentCommercialContainer(element: Element): Boolean = {
-
       val maybeNextEl: Option[Element] = Option(element.nextElementSibling())
-
       element.hasClass("fc-container--commercial") || maybeNextEl.exists(_.hasClass("fc-container--commercial"))
-    }
-
-    val containers: List[Element] = document.getElementsByClass("fc-container").toList
-
-    // remove container if it, or the next sibling, is a `fc-container--commercial`
-    val containersAgain = containers.zipWithIndex.collect {
-      case (x,i) if !hasAdjacentCommercialContainer(x) => x
-    }
-
-    val containersFinal = containersAgain.zipWithIndex.collect {
-      case (x,i) if i % 2 == 0 => x
     }
 
     val sliceSlot = views.html.fragments.items.facia_cards.sliceSlot
 
-    for (container <- containersFinal) {
-      container.after(s"""<section>${sliceSlot(containersFinal.indexOf(container), isMobile = true)}</section>""")
+    val containers: List[Element] = document.getElementsByClass("fc-container").toList
+
+    // On mobile, we remove the first container if it is a thrasher on a Network Front
+    // and remove a container if it, or the next sibling, is a commercial container
+    // then we take every other container, up to a maximum of 10, for targeting MPU insertion
+    val containersForCommercialMPUs = containers.zipWithIndex.collect {
+      case (x, i) if !isNetworkFrontWithThrasher(x, i) && !hasAdjacentCommercialContainer(x) => x
+    }.zipWithIndex.collect {
+      case (x, i) if i % 2 == 0 => x
+    }.slice(0, 10)
+
+    for (container <- containersForCommercialMPUs) {
+      container.after(s"""<section>${sliceSlot(containersForCommercialMPUs.indexOf(container), isMobile = true)}</section>""")
     }
 
-    // On desktop, a slot is inserted when there is a slice available
+    // On desktop, a MPU slot is simply inserted when there is a slice available
     val slices: List[Element] = document.getElementsByClass("fc-slice__item--mpu-candidate--desktop").toList
 
     for (slice <- slices) {
