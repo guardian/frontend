@@ -5,25 +5,36 @@ define([
     Promise,
     config
 ) {
-    var isUserInAClashingAbTest = new DeferredCheck();
 
-    var isEmailInserted = new DeferredCheck();
-    
-    var isOutbrainNonCompliant = function () {
-        var checkList = [];
+    var registeredChecks = {};
 
-        if (config.switches.emailInArticleOutbrain) {
-            checkList.push(isEmailInserted.complete);
-        } 
+    var checkList = [{
+            id: 'isOutbrainNonCompliant',
+            customCheckBuilder: function () {
+                var isUserInAClashingAbTest = getCheck('isUserInAClashingAbTest');
+                var isEmailInserted = getCheck('isEmailInserted');
+                var dependentCheckPromises = [
+                    isUserInAClashingAbTest.complete
+                ];
 
-        checkList.push(isUserInAClashingAbTest.complete);
+                if (config.switches.emailInArticleOutbrain) {
+                    dependentCheckPromises.push(isEmailInserted.complete);
+                }
 
-        return new DeferredCheck(checkList);
-    };
+                return new DeferredCheck(dependentCheckPromises);
+            },
+            dependentChecks: [{
+                id: 'isUserInAClashingAbTest',
+                dependentChecks: []
+            }, {
+                id: 'isEmailInserted',
+                dependentChecks: []
+            }]
+        }];
 
-    function DeferredCheck(checkList) {
-        if (checkList) {
-            this.complete = Promise.all(checkList);
+    function DeferredCheck(dependentCheckPromises) {
+        if (dependentCheckPromises) {
+            this.complete = Promise.all(dependentCheckPromises);
         } else {
             this.complete = new Promise(function(resolve, reject) {
                 this.resolve = resolve;
@@ -32,9 +43,33 @@ define([
         }
     }
 
+    function getCheck(id) {
+        if (registeredChecks[id]) {
+            return registeredChecks[id];
+        }
+    }
+
+    function getDefferedCheck(check) {
+        check.dependentChecks.forEach(registerCheck);
+
+        if (check.customCheckBuilder) {
+            return check.customCheckBuilder();
+        }
+
+        return new DeferredCheck();
+    }
+
+    function registerCheck(check) {
+        registeredChecks[check.id] = getDefferedCheck(check);
+    }
+
+    function init() {
+        checkList.forEach(registerCheck);
+    }
+
+    init();
+
     return {
-        isOutbrainNonCompliant: isOutbrainNonCompliant(),
-        isUserInAClashingAbTest: isUserInAClashingAbTest,
-        isEmailInserted: isEmailInserted
-    };
+        getCheck: getCheck
+    }
 });

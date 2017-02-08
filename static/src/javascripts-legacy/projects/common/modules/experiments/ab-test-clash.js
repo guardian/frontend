@@ -34,7 +34,7 @@ define([
 
         var isUserInAClashingAbTest = _testABClash(ab.isInVariant, clashingTests);
 
-        checkMediator.isUserInAClashingAbTest.resolve(isUserInAClashingAbTest);
+        checkMediator.getCheck('isUserInAClashingAbTest').resolve(isUserInAClashingAbTest);
 
         return isUserInAClashingAbTest;
     }

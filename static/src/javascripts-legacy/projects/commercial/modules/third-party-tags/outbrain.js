@@ -121,7 +121,7 @@ define([
                 return result;
             };
 
-        return checkMediator.isOutbrainNonCompliant.complete
+        return checkMediator.getCheck('isOutbrainNonCompliant').complete
                     .then(function(resultList) {
                         if (resultList.some(isCheckNonCompliant)) {
                             return 'nonCompliant'
@@ -139,7 +139,6 @@ define([
             return loadInstantly().then(function(shouldLoadInstantly) {
                 if (shouldLoadInstantly) {
                     return checkDependencies().then(function (widgetType) {
-                        console.log('widgetType >>>', widgetType);
                         widgetType ? module.load(widgetType) : module.load();
                         return Promise.resolve(true);
                     });
@@ -163,7 +162,6 @@ define([
                             }
                         } else {
                             checkDependencies().then(function (widgetType) {
-                                console.log('widgetType >>>', widgetType);
                                 widgetType ? module.load(widgetType) : module.load();
                             });
                         }

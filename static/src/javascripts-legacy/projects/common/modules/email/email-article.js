@@ -30,7 +30,8 @@ define([
     page,
     storage,
     googleAnalytics,
-    find
+    find,
+    checkMediator
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
             $iframeEl.appendTo('.js-article__body');
@@ -151,7 +152,7 @@ define([
                     $iframeEl = $(iframe),
                     onEmailAdded = function () {
                         emailRunChecks.setEmailShown(listConfig.listName);
-                        checkMediator.isEmailInserted.resolve(true);
+                        checkMediator.getCheck('isEmailInserted').resolve(true);
                         storage.session.set('email-sign-up-seen', 'true');
                     }
 
