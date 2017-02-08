@@ -4,7 +4,7 @@
 @import implicits.Requests.RichRequestHeader
 @import layout.{ContentCard, FaciaCard, ItemClasses}
 @import model.EmailAddons.EmailContentType
-@import model.pressed.{ExternalLink, Feature}
+@import model.pressed.{ExternalLink, Feature, Review}
 @import views.support.EmailHelpers._
 @import views.support.RemoveOuterParaHtml
 @import views.support.TrailCssClasses.toneClassFromStyle
@@ -35,6 +35,15 @@
         @if(card.header.quoted) {
             @card.bylineText.map { byline => <h4 class="byline">@byline</h4> }
         }
+        @card.starRating.map { numberOfStars =>
+            <div class="review-stars">
+                @for(i <- 0 to 4) {
+                    @defining(if(i < numberOfStars) "positive" else "negative") { positiveOrNegative =>
+                        @icon("star-" + positiveOrNegative, isLarge)
+                    }
+                }
+            </div>
+        }
     </a>
 }
 
@@ -63,7 +72,7 @@
                 @headlineAndTrailWithCutout(card, withImage)
             } else {
                 @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
-                    @headline(card)
+                    @headline(card, isLarge = withImage)
                     @trailText(card)
                 }
             }
