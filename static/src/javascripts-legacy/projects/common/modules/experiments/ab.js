@@ -90,12 +90,11 @@ define([
     }
 
     function getActiveTests() {
-        var today = new Date();
         // new Date(test.expiry) sets the expiry time to 00:00:00
         // Using SetHours allows a test to run until the END of the expiry day
-        today.setHours(0,0,0,0);
+        var startOfToday = new Date().setHours(0,0,0,0);
         return TESTS.filter(function (test) {
-            var expired = today > new Date(test.expiry);
+            var expired = startOfToday > new Date(test.expiry);
             if (expired) {
                 removeParticipation(test);
                 return false;
@@ -105,14 +104,15 @@ define([
     }
 
     function getExpiredTests() {
-        var now = new Date();
+        var startOfToday = new Date().setHours(0,0,0,0);
         return TESTS.filter(function (test) {
-            return (now - new Date(test.expiry)) > 0;
+            return (startOfToday > new Date(test.expiry));
         });
     }
 
     function testCanBeRun(test) {
-        var expired = (new Date() - new Date(test.expiry)) > 0,
+        var startOfToday = new Date().setHours(0,0,0,0);
+        var expired = (startOfToday > new Date(test.expiry)),
             isSensitive = config.page.isSensitive;
 
         return ((isSensitive ? test.showForSensitive : true)
