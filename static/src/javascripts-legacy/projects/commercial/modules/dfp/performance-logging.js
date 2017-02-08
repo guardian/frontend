@@ -109,7 +109,10 @@ define([
             start();
             var ret = fn.apply(null, arguments);
             if (ret instanceof Promise) {
-                return ret.then(stop, function(reason) {
+                return ret.then(function (value) {
+                    stop();
+                    return value;
+                }, function(reason) {
                     stop();
                     throw reason;
                 });
