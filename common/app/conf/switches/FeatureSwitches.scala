@@ -4,13 +4,13 @@ import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 
 trait FeatureSwitches {
-  val ServerSideShareCounts = Switch(
+  val ShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",
-    "If this switch is on, share counts are fetched from a more recent Facebook Graph API version, server-side",
+    "If this switch is on, share counts are fetched from the Facebook Graph API on the server",
     owners = Seq(Owner.withGithub("jfsoul")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 8),
+    sellByDate = never,
     exposeClientSide = true
   )
 
