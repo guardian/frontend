@@ -484,6 +484,7 @@ $ima-controls-height: 70px;
 /* VJS: OVERLAYS
    ========================================================================== */
 
+
 .vjs-error-display {
     position: absolute;
     display: none;
@@ -492,7 +493,8 @@ $ima-controls-height: 70px;
     z-index: 3; // Ensures that it is above fullscreen clickbox.
 
     .gu-media--video.vjs-error &,
-    .gu-media__flash-fallback & {
+    .gu-media__flash-fallback &,
+    .youtube-media-atom__overlay & {
         display: block;
     }
     .gu-media__flash-fallback & {
