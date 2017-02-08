@@ -4,6 +4,7 @@ import common.Edition
 import common.editions.Uk
 import model.{Section, Tags}
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import slices.Fixed
@@ -50,7 +51,9 @@ import scala.concurrent.Future
         front.containers.length should be(1)
 
         val firstContainer = front.containers.head
-        firstContainer.displayName.get should equal("8 February 2017")
+        val formatter = DateTimeFormat.forPattern("d MMMM yyyy")
+        val parsedDate = formatter.parseDateTime(firstContainer.displayName.get)
+        parsedDate shouldBe a[DateTime]
         firstContainer.container.isInstanceOf[Fixed] should be(true)
         firstContainer.index should be(0)
         firstContainer.containerLayout.get.slices.length should be(2)
