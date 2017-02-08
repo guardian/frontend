@@ -107,18 +107,23 @@ define([
         var stop = moduleEnd.bind(null, name);
         return function() {
             start();
-            var ret = fn.apply(null, arguments);
-            if (ret instanceof Promise) {
-                return ret.then(function (value) {
+            try {
+                var ret = fn.apply(null, arguments);
+                if (ret instanceof Promise) {
+                    return ret.then(function (value) {
+                        stop();
+                        return value;
+                    }, function(reason) {
+                        stop();
+                        throw reason;
+                    });
+                } else {
                     stop();
-                    return value;
-                }, function(reason) {
-                    stop();
-                    throw reason;
-                });
-            } else {
+                    return ret;
+                }
+            } catch (e) {
                 stop();
-                return ret;
+                throw e;
             }
         };
     }
