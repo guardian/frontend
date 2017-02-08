@@ -66,7 +66,7 @@ define([
     ];
 
     var secondaryModules = [
-        ['cm-stickyTopBanner', stickyTopBanner.init, true],
+        ['cm-stickyTopBanner', stickyTopBanner.init],
         ['cm-fill-advert-slots', fillAdvertSlots.init, true],
         ['cm-paidContainers', paidContainers.init],
         ['cm-paidforBand', paidforBand.init]
