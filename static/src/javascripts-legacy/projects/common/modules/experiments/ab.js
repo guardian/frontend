@@ -12,8 +12,9 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/tests/paid-content-vs-outbrain',
+    'common/modules/experiments/tests/guardian-today-messaging',
     'common/modules/experiments/acquisition-test-selector',
-    'common/modules/experiments/tests/membership-ab-thrasher'
+    'common/modules/experiments/tests/membership-a1-a2-thrasher'
 ], function (reportError,
              config,
              cookies,
@@ -27,16 +28,18 @@ define([
              RecommendedForYou,
              MembershipEngagementBannerTests,
              PaidContentVsOutbrain,
+             GuardianTodayMessaging,
              acquisitionTestSelector,
-             MembershipABThrasher
+             MembershipA1A2Thrasher
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
         new RecommendedForYou(),
         new PaidContentVsOutbrain,
+        new GuardianTodayMessaging(),
         acquisitionTestSelector.getTest(),
-        new MembershipABThrasher
+        new MembershipA1A2Thrasher()
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';
@@ -246,9 +249,10 @@ define([
      */
     function registerCompleteEvent(complete) {
         return function initListener(test) {
-            var variantId = segmentUtil.variantIdFor(test);
 
-            if (segmentUtil.isInTest(test)) {
+            var variantId = getTestVariantId(test.id);
+
+            if (variantId && variantId !== 'notintest') {
                 var variant = getVariant(test, variantId);
                 var listener = (complete ? variant.success : variant.impression) || noop;
 

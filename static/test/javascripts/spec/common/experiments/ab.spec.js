@@ -288,6 +288,7 @@ define([
                 var spy = sinon.spy();
 
                 ab.addTest(test.one);
+                ab.segmentUser();
                 test.one.variants[0].success = spy;
                 ab.registerCompleteEvents();
 
@@ -297,6 +298,9 @@ define([
             it('should fire the success function when canRun is false', function() {
                 var spy = sinon.spy();
 
+                ab.addTest(test.one);
+                ab.segmentUser();
+                ab.clearTests();
                 test.one.canRun = function() { return false; };
                 ab.addTest(test.one);
                 test.one.variants[0].success = spy;
@@ -309,6 +313,7 @@ define([
                 var spy = sinon.spy();
 
                 ab.addTest(test.one);
+                ab.segmentUser();
 
                 /**
                  * impression events are only registered if every variant has an `impression` function

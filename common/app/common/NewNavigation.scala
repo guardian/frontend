@@ -4,7 +4,7 @@ import conf.Configuration
 import NavLinks._
 
 case class NavLink(title: String, url: String, longTitle: String = "", iconName: String = "", uniqueSection: String = "")
-case class SectionsLink(pageId: String, parentSection: NewNavigation.EditionalisedNavigationSection)
+case class SectionsLink(pageId: String, navLink: NavLink, parentSection: NewNavigation.EditionalisedNavigationSection)
 case class SubSectionLink(pageId: String, parentSection: NavLinkLists)
 case class NavLinkLists(mostPopular: Seq[NavLink], leastPopular: Seq[NavLink] = List())
 
@@ -65,6 +65,16 @@ object NewNavigation {
     case "sport" => Sport
     case "arts" => Arts
     case "life" => Life
+  }
+
+  def isCurrentSection(currentSection: String, navLink: NavLink): Boolean = {
+    val mainFront = List("uk", "au", "us", "international")
+
+    if (mainFront.contains(currentSection)) {
+      "headlines" == navLink.title
+    } else {
+      currentSection == navLink.uniqueSection
+    }
   }
 
   case object MostPopular extends EditionalisedNavigationSection {
@@ -264,44 +274,44 @@ object NewNavigation {
 
     var sectionLinks = List(
 
-      SectionsLink("uk", MostPopular),
-      SectionsLink("us", MostPopular),
-      SectionsLink("au", MostPopular),
-      SectionsLink("international", MostPopular),
-      SectionsLink("uk-news", News),
-      SectionsLink("world", News),
-      SectionsLink("politics", News),
-      SectionsLink("environment", News),
-      SectionsLink("business", News),
-      SectionsLink("technology", News),
-      SectionsLink("science", News),
-      SectionsLink("money", News),
-      SectionsLink("australia-news", News),
-      SectionsLink("media", News),
-      SectionsLink("us-news", News),
-      SectionsLink("cities", News),
-      SectionsLink("global-development", News),
-      SectionsLink("sustainable-business", News),
-      SectionsLink("law", News),
+      SectionsLink("uk", headlines, MostPopular),
+      SectionsLink("us", headlines, MostPopular),
+      SectionsLink("au", headlines, MostPopular),
+      SectionsLink("international", headlines, MostPopular),
+      SectionsLink("uk-news", ukNews,News),
+      SectionsLink("world", world, News),
+      SectionsLink("politics", politics, News),
+      SectionsLink("environment", environment, News),
+      SectionsLink("business", business, News),
+      SectionsLink("technology", tech, News),
+      SectionsLink("science", science, News),
+      SectionsLink("money", money, News),
+      SectionsLink("australia-news", australiaNews, News),
+      SectionsLink("media", media, News),
+      SectionsLink("us-news", usNews, News),
+      SectionsLink("cities", cities, News),
+      SectionsLink("global-development", globalDevelopment, News),
+      SectionsLink("sustainable-business", sustainableBusiness, News),
+      SectionsLink("law", law, News),
 
-      SectionsLink("commentisfree", Opinion),
-      SectionsLink("index", Opinion),
+      SectionsLink("commentisfree", opinion, Opinion),
+      SectionsLink("index", columnists, Opinion),
 
-      SectionsLink("sport", Sport),
-      SectionsLink("football", Sport),
+      SectionsLink("sport", sport, Sport),
+      SectionsLink("football", football, Sport),
 
-      SectionsLink("culture", Arts),
-      SectionsLink("film", Arts),
-      SectionsLink("tv-and-radio", Arts),
-      SectionsLink("music", Arts),
-      SectionsLink("books", Arts),
-      SectionsLink("artanddesign", Arts),
-      SectionsLink("stage", Arts),
+      SectionsLink("culture", culture, Arts),
+      SectionsLink("film", film, Arts),
+      SectionsLink("tv-and-radio", tvAndRadio, Arts),
+      SectionsLink("music", music, Arts),
+      SectionsLink("books", books, Arts),
+      SectionsLink("artanddesign", artAndDesign, Arts),
+      SectionsLink("stage", stage, Arts),
 
-      SectionsLink("lifeandstyle", Life),
-      SectionsLink("fashion", Life),
-      SectionsLink("travel", Life),
-      SectionsLink("society", Life)
+      SectionsLink("lifeandstyle", lifestyle, Life),
+      SectionsLink("fashion", fashion, Life),
+      SectionsLink("travel", travel, Life),
+      SectionsLink("society", society, Life)
     )
 
     def getSectionLinks(sectionName: String, edition: Edition) = {
@@ -313,11 +323,13 @@ object NewNavigation {
         News.getPopularEditionalisedNavLinks(edition).drop(1)
       } else {
         val section = sectionList.head
-        val parentSections = section.parentSection.getPopularEditionalisedNavLinks(edition).drop(1)
+        val parentSection = section.parentSection.getPopularEditionalisedNavLinks(edition).drop(1)
 
-        val (a, b) = parentSections.partition(_.uniqueSection != section.pageId)
-
-        b ++ a
+        if (parentSection.contains(section.navLink)) {
+          parentSection
+        } else {
+          Seq(section.navLink) ++ parentSection
+        }
       }
     }
 
@@ -423,9 +435,9 @@ object NewNavigation {
     }
 
     val editionalisedSubSectionLinks = List(
-      SectionsLink("business", businessSubNav),
-      SectionsLink("environment", environmentSubNav),
-      SectionsLink("travel", travelSubNav)
+      SectionsLink("business", business, businessSubNav),
+      SectionsLink("environment", environment, environmentSubNav),
+      SectionsLink("travel", travel, travelSubNav)
     )
 
     val subSectionLinks = List(

@@ -35,13 +35,13 @@ final case class MediaAtom(
   endSlatePath: Option[String]
 ) extends Atom {
   def isoDuration: Option[String] = {
-    duration.map(d => new Duration(d * 1000.toLong).toString)
+    duration.map(d => new Duration(Duration.standardSeconds(d)).toString)
   }
 }
 
 sealed trait MediaAssetPlatform extends EnumEntry
 
-object MediaAssetPlatform extends PlayEnum[MediaAssetPlatform] {
+object MediaAssetPlatform extends Enum[MediaAssetPlatform] with PlayJsonEnum[MediaAssetPlatform] {
 
   val values = findValues
 
