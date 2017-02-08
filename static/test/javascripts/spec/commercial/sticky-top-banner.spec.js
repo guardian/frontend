@@ -7,9 +7,6 @@ define([
     Injector,
     Promise
 ) {
-    function noop() {
-    }
-
     describe('Sticky ad banner', function () {
         var sticky, detect, header, stickyBanner, messenger, register, commercialFeatures;
 
@@ -65,7 +62,7 @@ define([
         });
 
         it('should add listeners and classes', function (done) {
-            sticky.init(noop, noop, mockWindow)
+            sticky.init(mockWindow)
             .then(function () {
                 expect(register.calls.count()).toBe(1);
                 expect(mockWindow.addEventListener).toHaveBeenCalled();
@@ -78,7 +75,7 @@ define([
 
         it('should not add classes when scrolled past the header', function (done) {
             mockWindow.pageYOffset = 501;
-            sticky.init(noop, noop, mockWindow)
+            sticky.init(mockWindow)
             .then(function () {
                 mockWindow.pageYOffset = 0;
                 expect(header.classList.contains('l-header--animate')).toBe(false);
@@ -90,7 +87,7 @@ define([
 
         it('should set the slot height and the header top margin', function (done) {
             var randomHeight = Math.random() * 500 | 0;
-            sticky.init(noop, noop)
+            sticky.init()
             .then(function () {
                 return sticky.resize(randomHeight);
             })
@@ -105,7 +102,7 @@ define([
         it('should adjust the scroll position', function (done) {
             var randomHeight = Math.random() * 500 | 0;
             mockWindow.pageYOffset = 501;
-            sticky.init(noop, noop, mockWindow)
+            sticky.init(mockWindow)
             .then(function () {
                 return sticky.resize(randomHeight);
             })
@@ -124,7 +121,7 @@ define([
             var topSlot = document.getElementById('dfp-ad--top-above-nav');
             topSlot.style.paddingTop = pt + 'px';
             topSlot.style.paddingBottom = pb + 'px';
-            sticky.init(noop, noop)
+            sticky.init()
             .then(function () {
                 return sticky.update(h, topSlot);
             })
@@ -147,7 +144,7 @@ define([
 
         it('should position the banner absolutely past the header', function (done) {
             mockWindow.pageYOffset = 501;
-            sticky.init(noop, noop, mockWindow)
+            sticky.init(mockWindow)
             .then(sticky.onScroll)
             .then(function () {
                 expect(stickyBanner.style.position).toBe('absolute');
