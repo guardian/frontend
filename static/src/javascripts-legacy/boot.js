@@ -22,15 +22,13 @@ define([
     'domReady',
     'common/utils/raven',
     'common/utils/user-timing',
-    'common/utils/robust',
-    'common/modules/analytics/google'
+    'common/utils/config'
 ], function (
     Promise,
     domReady,
     raven,
     userTiming,
-    robust,
-    ga
+    config
 ) {
     // curl’s promise API is broken, so we must cast it to a real Promise
     // https://github.com/cujojs/curl/issues/293
@@ -38,18 +36,12 @@ define([
         return Promise.resolve(require(moduleIds));
     };
 
-    var guardian = window.guardian;
-    var config = guardian.config;
-
     var domReadyPromise = new Promise(function (resolve) { domReady(resolve); });
 
     var bootStandard = function () {
         return promiseRequire(['bootstraps/standard/main'])
             .then(function (boot) {
                 userTiming.mark('standard boot');
-                robust.catchErrorsAndLog('ga-user-timing-standard-boot', function () {
-                    ga.trackPerformance('Javascript Load', 'standardBoot', 'Standard boot time');
-                });
                 boot();
             });
     };
@@ -60,7 +52,7 @@ define([
         }
 
         if (config.page.isDev) {
-            guardian.adBlockers.onDetect.push(function (isInUse) {
+            window.guardian.adBlockers.onDetect.push(function (isInUse) {
                 var needsMessage = isInUse && window.console && window.console.warn;
                 var message = 'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
                 if (needsMessage) {
@@ -70,18 +62,11 @@ define([
         }
 
         userTiming.mark('commercial request');
-        robust.catchErrorsAndLog('ga-user-timing-commercial-request', function () {
-            ga.trackPerformance('Javascript Load', 'commercialRequest', 'commercial request time');
-        });
-
         return promiseRequire(['bootstraps/commercial'])
             .then(raven.wrap(
                     { tags: { feature: 'commercial' } },
                     function (commercial) {
                         userTiming.mark('commercial boot');
-                        robust.catchErrorsAndLog('ga-user-timing-commercial-boot', function () {
-                            ga.trackPerformance('Javascript Load', 'commercialBoot', 'commercial boot time');
-                        });
                         commercial.init();
                     }
                 )
@@ -89,18 +74,11 @@ define([
     };
 
     var bootEnhanced = function () {
-        if (guardian.isEnhanced) {
+        if (window.guardian.isEnhanced) {
             userTiming.mark('enhanced request');
-            robust.catchErrorsAndLog('ga-user-timing-enhanced-request', function () {
-                ga.trackPerformance('Javascript Load', 'enhancedRequest', 'Enhanced request time');
-            });
-
             return promiseRequire(['bootstraps/enhanced/main'])
                 .then(function (boot) {
                     userTiming.mark('enhanced boot');
-                    robust.catchErrorsAndLog('ga-user-timing-enhanced-boot', function () {
-                        ga.trackPerformance('Javascript Load', 'enhancedBoot', 'Enhanced boot time');
-                    });
                     boot();
                 });
         }

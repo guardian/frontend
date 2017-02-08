@@ -14,9 +14,10 @@ final case class Atoms(
   quizzes: Seq[Quiz],
   media: Seq[MediaAtom],
   interactives: Seq[InteractiveAtom],
-  recipes: Seq[RecipeAtom]
+  recipes: Seq[RecipeAtom],
+  reviews: Seq[ReviewAtom]
 ) {
-  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes
+  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews
 }
 
 sealed trait Atom {
@@ -34,13 +35,13 @@ final case class MediaAtom(
   endSlatePath: Option[String]
 ) extends Atom {
   def isoDuration: Option[String] = {
-    duration.map(d => new Duration(d * 1000.toLong).toString)
+    duration.map(d => new Duration(Duration.standardSeconds(d)).toString)
   }
 }
 
 sealed trait MediaAssetPlatform extends EnumEntry
 
-object MediaAssetPlatform extends PlayEnum[MediaAssetPlatform] {
+object MediaAssetPlatform extends Enum[MediaAssetPlatform] with PlayJsonEnum[MediaAssetPlatform] {
 
   val values = findValues
 
@@ -83,6 +84,12 @@ final case class RecipeAtom(
   data: atomapi.recipe.RecipeAtom
 ) extends Atom
 
+final case class ReviewAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  data: atomapi.review.ReviewAtom
+) extends Atom
+
 
 object Atoms extends common.Logging {
   def extract[T](atoms: Option[Seq[AtomApiAtom]], extractFn: AtomApiAtom => T): Seq[T] = {
@@ -112,7 +119,9 @@ object Atoms extends common.Logging {
 
       val recipes = extract(atoms.recipes, atom => { RecipeAtom.make(atom) })
 
-      Atoms(quizzes = quizzes, media = media, interactives = interactives, recipes = recipes)
+      val reviews = extract(atoms.reviews, atom => { ReviewAtom.make(atom) })
+
+      Atoms(quizzes = quizzes, media = media, interactives = interactives, recipes = recipes, reviews = reviews)
     }
   }
 }
@@ -271,4 +280,8 @@ object InteractiveAtom {
 
 object RecipeAtom {
   def make(atom: AtomApiAtom): RecipeAtom = RecipeAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Recipe].recipe)
+}
+
+object ReviewAtom {
+  def make(atom: AtomApiAtom): ReviewAtom = ReviewAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Review].review)
 }

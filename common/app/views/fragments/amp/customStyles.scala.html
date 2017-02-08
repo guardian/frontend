@@ -1,15 +1,15 @@
 @(page: model.Page, mainPicture: String, ctaImage: Option[String], brandColour: String)(implicit request: RequestHeader, context: model.ApplicationContext)
-
 @import common.Edition
-@import common.commercial.PaidContent
+@import conf.Static
 @import play.api.Mode.Dev
+@import com.gu.commercial.branding.PaidContent
 
 <style amp-custom>
     @* TODO: these two stylesheets should be refactored into SCSS *@
     @if(page.metadata.isHosted) {
         @fragments.amp.stylesheets.hosted(mainPicture, ctaImage, brandColour)
     } else {
-        @if(page.branding(Edition(request)).exists(_.sponsorshipType == PaidContent)) {
+        @if(page.metadata.branding(Edition(request)).exists(_.isPaid)) {
             @fragments.amp.stylesheets.glabs()
         }
     }

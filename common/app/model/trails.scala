@@ -3,7 +3,6 @@ package model
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.Edition
-import common.commercial.BrandHunter
 import implicits.Dates._
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
@@ -93,7 +92,7 @@ final case class Trail (
   lazy val showByline: Boolean = tags.isComment
 
   def shouldHidePublicationDate(implicit request: RequestHeader): Boolean = {
-    val isPaidContent = BrandHunter.isPaidContent(this, Edition(request))
+    val isPaidContent = metadata.branding(Edition(request)).exists(_.isPaid)
     isPaidContent && webPublicationDate.isOlderThan(2.weeks)
   }
 

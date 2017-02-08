@@ -1,4 +1,3 @@
-/* global guardian */
 define([
     'bean',
     'bonzo',
@@ -96,8 +95,8 @@ define([
                 preload: 'metadata', // preload='none' & autoplay breaks ad loading on chrome35
                 plugins: {
                     embed: {
-                        embeddable: guardian.config.switches.externalVideoEmbeds && guardian.config.page.embeddable,
-                        location: guardian.config.page.externalEmbedHost + '/embed/video/' + guardian.config.page.pageId
+                        embeddable: config.switches.externalVideoEmbeds && config.page.embeddable,
+                        location: config.page.externalEmbedHost + '/embed/video/' + config.page.pageId
                     }
                 }
             }));

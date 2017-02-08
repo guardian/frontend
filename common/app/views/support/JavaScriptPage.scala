@@ -24,7 +24,7 @@ object JavaScriptPage {
 
     val config = (Configuration.javascript.config ++ pageData).mapValues(JsString.apply)
     val sponsorshipType = {
-      val maybeSponsorshipType = page.branding(edition).map(_.sponsorshipType.name)
+      val maybeSponsorshipType = page.metadata.branding(edition).map(_.brandingType.name)
       maybeSponsorshipType.map("sponsorshipType" -> JsString(_))
     }
     val allowUserGeneratedContent = content.exists(_.allowUserGeneratedContent)

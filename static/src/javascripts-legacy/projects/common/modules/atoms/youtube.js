@@ -35,7 +35,7 @@ define([
 
         killProgressTracker(atomId);
         setProgressTracker(atomId);
-        tracking.track('play', atomId);
+        tracking.track('play', getTrackingId(atomId));
 
         if (player.endSlate &&
             !player.overlay.parentNode.querySelector('.end-slate-container')) {
@@ -49,7 +49,7 @@ define([
 
     function onPlayerEnded(atomId) {
         killProgressTracker(atomId);
-        tracking.track('end', atomId);
+        tracking.track('end', getTrackingId(atomId));
         players[atomId].pendingTrackingCalls = [25, 50, 75];
     }
 
@@ -79,12 +79,10 @@ define([
         var percentPlayed = Math.round(((currentTime / player.duration) * 100));
 
         if (percentPlayed >= pendingTrackingCalls[0]) {
-            tracking.track(pendingTrackingCalls[0], atomId);
+            tracking.track(pendingTrackingCalls[0], getTrackingId(atomId));
             pendingTrackingCalls.shift();
         }
     }
-
-
 
     function shouldAutoplay(){
 
@@ -177,20 +175,33 @@ define([
 
     function checkElemForVideo(elem) {
         fastdom.read(function () {
-            $('.youtube-media-atom', elem).each(function (el) {
-                var atomId = el.getAttribute('data-media-atom-id');
+            $('.youtube-media-atom', elem).each(function (el, index) {
                 var iframe = el.querySelector('iframe');
-                var overlay = el.querySelector('.youtube-media-atom__overlay');
-                var youtubeId = iframe.id;
 
-                tracking.init(atomId);
+                if (!iframe) {
+                    return;
+                }
+
+                // append index of atom as iframe.id must be unique
+                iframe.id += '/' + index;
+
+                // append index of atom as atomId must be unique
+                var atomId = el.getAttribute('data-media-atom-id') + '/' + index;
+                var overlay = el.querySelector('.youtube-media-atom__overlay');
+
+                tracking.init(getTrackingId(atomId));
 
                 youtubePlayer.init(iframe, {
                     onPlayerReady: onPlayerReady.bind(null, atomId, overlay),
                     onPlayerStateChange: onPlayerStateChange.bind(null, atomId)
-                }, youtubeId);
+                }, iframe.id);
             });
         });
+    }
+
+    // retrieves actual id of atom without appended index
+    function getTrackingId(atomId) {
+        return atomId.split('/')[0];
     }
 
     return {

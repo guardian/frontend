@@ -10,7 +10,7 @@ object FrontsCleaner {
  def apply(page: PressedPage, html: String)(implicit request: RequestHeader, context: ApplicationContext) = {
     val edition = Edition(request)
     withJsoup(BulletCleaner(html))(
-      CommercialComponentHigh(page.frontProperties.isAdvertisementFeature, page.isNetworkFront, page.metadata.hasPageSkin(edition))
+      CommercialComponentHigh(page.frontProperties.isPaidContent, page.isNetworkFront, page.metadata.hasPageSkin(edition))
     )
   }
 }

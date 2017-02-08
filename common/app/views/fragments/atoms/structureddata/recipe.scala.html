@@ -1,7 +1,9 @@
-@(recipe: model.content.RecipeAtom)(implicit request: RequestHeader)
 @import play.api.libs.json.Json
 @import views.support.{ImgSrc, GoogleStructuredData}
 @import org.joda.time.DateTime
+@import model.Tag
+
+@(recipe: model.content.RecipeAtom, contributors: Seq[Tag])(implicit request: RequestHeader)
 
 <script type="application/ld+json">
      {
@@ -10,20 +12,16 @@
       "name": "@recipe.data.title",
       @for(category <- recipe.data.tags.category) {"recipeCategory": "@category",}
       @recipe.data.images.headOption.map {img => "image": "@imgValue(img)",}
-      @recipe.data.credits.headOption.map { name => "author": {
-          "@@type": "Person",
-          "name": "@name"
-        },
-      }
+      @recipe.data.credits.headOption.map { name => "author": @fragments.atoms.structureddata.contributor(name, contributors),}
       @recipe.atom.contentChangeDetails.created.map { created => "dateCreated": "@{new DateTime(created.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
       @recipe.atom.contentChangeDetails.published.map { published => "datePublished": "@{new DateTime(published.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
       @recipe.atom.contentChangeDetails.lastModified.map { modified => "dateModified": "@{new DateTime(modified.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
 
       "description": "a tasty @{recipe.data.tags.category.headOption.getOrElse("recipe")} with @{recipe.data.ingredientsLists.flatMap(_.ingredients).headOption.map(_.item).getOrElse("secrets ingredients! You need to know about them")}",
-     
-     @* 
-     TODO - We do not have this description and rating in the model yet  
-     
+
+     @*
+     TODO - We do not have this description and rating in the model yet
+
      "aggregateRating": {
        "@@type": "AggregateRating",
        "ratingValue": "5",
@@ -35,7 +33,7 @@
       @totalTime(recipe).map { minutes => "totalTime": "PT@{minutes}M",}
       @recipe.data.serves.map { serves => "recipeYield": "@yieldValue(serves)",}
      @*
-     TODO - We do not have nutrition in the model yet  
+     TODO - We do not have nutrition in the model yet
      "nutrition": {
        "@@type": "NutritionInformation",
        "servingSize": "1 bowl",
@@ -79,7 +77,7 @@
         unit match {
             case "dsp" => "dessert spoon"
             case "tsp" => "teaspoon"
-            case "tbsp" => "tablespoon" 
+            case "tbsp" => "tablespoon"
             case _ => unit
         }
 }

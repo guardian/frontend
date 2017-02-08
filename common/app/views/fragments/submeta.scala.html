@@ -1,20 +1,83 @@
-@(content: model.ContentType)(implicit request: RequestHeader)
-@import common.{LinkTo, RichRequestHeader}
-@import conf.switches.Switches.SaveForLaterSwitch
+@(content: model.ContentType, amp: Boolean = false)(implicit request: RequestHeader)
+
+@import common.{LinkTo, Localisation}
+@import conf.switches.Switches.{SaveForLaterSwitch, ArticleBadgesSwitch}
 @import model.ShareLinkMeta
+@import model.Badges.badgeFor
 @import views.support.ContentLayout.ContentLayout
+@import views.support.Seq2zipWithRowInfo
 
-@toneLink = {
-    @if(content.tags.isArticle && !content.tags.isLiveBlog) {
-        @content.tags.tones.headOption.map { tone =>
-            <a class="submeta__tone button button--small button--tag @content.tagTone.map("button--tone-" + _).getOrElse("button--secondary")"
-            href="@LinkTo(tone.metadata.url)" data-link-name="tone: @tone.name" itemprop="keywords">More @tone.name.toLowerCase </a>
+@if(amp || mvt.ABNewNavVariantSeven.isParticipating) {
+    <div class="submeta2 mobile-only">
+        <div class="submeta2__section-labels">
+
+            @if(ArticleBadgesSwitch.isSwitchedOn) {
+                @badgeFor(content).map { badge =>
+                    <div class="submeta2__badge">
+                        <a href="@LinkTo {/@badge.seriesTag}">
+                            @if(amp) {
+                                <amp-img class="badge-slot__img" src="@badge.imageUrl" layout="fixed" height="33" width="33"></amp-img>
+                            } else {
+                                <img class="badge-slot__img" src="@badge.imageUrl" alt="@content.content.blogOrSeriesTag.map(_.name)"/>
+                            }
+                        </a>
+                    </div>
+                }
+            }
+
+            @if(!(content.content.isImmersive && content.content.tags.isArticle)) {
+                <a class="submeta2__link submeta2__link--first"
+                    data-link-name="article section"
+                    href="@LinkTo {/@content.content.sectionLabelLink}">
+                        @Html(Localisation(content.content.sectionLabelName))
+                </a>
+            }
+
+            @content.content.blogOrSeriesTag.map { series =>
+                <a class="submeta2__link" href="@LinkTo {/@series.id}">@series.name</a>
+            }.getOrElse {
+                @if(content.content.isFromTheObserver) {
+                    <a class="submeta2__link" href="http://observer.theguardian.com">The Observer</a>
+                }
+            }
+        </div>
+
+        <div class="submeta2__keywords">
+            @if(content.tags.keywords.filterNot(_.isSectionTag).nonEmpty) {
+                @defining(content.tags.keywords.filterNot(_.isSectionTag).slice(1, 6)) { shownKeywords =>
+                    @if(shownKeywords.nonEmpty) {
+                        @shownKeywords.zipWithRowInfo.map{ case(keyword, row) =>
+                            <a class="submeta2__link @if(row.rowNum == 1){submeta2__link--first}"
+                                href="@LinkTo(keyword.metadata.url)"
+                                data-link-name="keyword: @keyword.id">
+                                    @keyword.name
+                                    @if(content.tags.keywords.filter(_ != keyword).find(_.name == keyword.name)){ (@keyword.properties.sectionName) }
+                            </a>
+                        }
+                    }
+                }
+
+                @if(content.tags.isArticle && !content.tags.isLiveBlog) {
+                    @content.tags.tones.headOption.map { tone =>
+                        <a class="submeta2__link"
+                            href="@LinkTo(tone.metadata.url)"
+                            data-link-name="tone: @tone.name">
+                                @tone.name.toLowerCase
+                        </a>
+                    }
+                }
+            }
+        </div>
+        @if(content.showBottomSocialButtons) {
+            <div data-component="share" class="submeta__share">
+                @Social(content.sharelinks.pageShares)
+            </div>
         }
-    }
-}
+    </div>
 
-@if(!request.isAmp) {
-    <div class="submeta">
+}
+@if(!amp) {
+    <div class="submeta @if(mvt.ABNewNavVariantSeven.isParticipating) {hide-on-mobile}">
         @if(content.tags.keywords.filterNot(_.isSectionTag).nonEmpty) {
             <hr/>
             <div data-link-name="keywords" data-component="keywords">
@@ -27,7 +90,7 @@
             <hr/>
             <div class="u-cf">
                 <div data-component="share" class="submeta__share">
-                    @Social(content.sharelinks.pageShares)
+                @Social(content.sharelinks.pageShares)
                 </div>
                 @if(SaveForLaterSwitch.isSwitchedOn) {
                     <div class="js-save-for-later submeta__save-for-later" data-position="bottom"></div>
@@ -43,4 +106,13 @@
 
 @Social(shares: ShareLinkMeta) = {
     @fragments.social(ShareLinkMeta.noneHidden(shares))
+}
+
+@toneLink = {
+    @if(content.tags.isArticle && !content.tags.isLiveBlog) {
+        @content.tags.tones.headOption.map { tone =>
+            <a class="submeta__tone button button--small button--tag @content.tagTone.map("button--tone-" + _).getOrElse("button--secondary")"
+            href="@LinkTo(tone.metadata.url)" data-link-name="tone: @tone.name" itemprop="keywords">More @tone.name.toLowerCase </a>
+        }
+    }
 }

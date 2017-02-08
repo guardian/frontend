@@ -15,11 +15,31 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val BlockIASSwitch = Switch(
+    SwitchGroup.Commercial,
+    "block-ias",
+    "Controls whether the Service Worker can filter out IAS calls",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val AdFreeTrialSwitch = Switch(
     SwitchGroup.Commercial,
     "ad-free-membership-trial",
     "Master switch for trialling ad-free membership perk",
     owners = Seq(Owner.withGithub("JustinPinner")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val TourismAustraliaSwitch = Switch(
+    SwitchGroup.Commercial,
+    "tourism-australia",
+    "If this switch is on, the Tourism Australia pixel is added to the Ashes Australia travel section.",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -185,13 +205,14 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val renaultSwitch: Switch = Switch(
+  val adFeedbackSwitch: Switch = Switch(
     group = SwitchGroup.Commercial,
-    name = "renault",
-    description = "Turn on hardcoded Renault campaign",
+    name = "ad-feedback",
+    description = "Solicit feedback for ad impressions",
     owners = Owner.group(SwitchGroup.Commercial),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2017, 3, 1),
-    exposeClientSide = false
+    exposeClientSide = true
   )
+
 }

@@ -42,28 +42,42 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     })
   }
 
-  sealed abstract class AmpExternalVideo(val videoId: String, val elementType: String)
-  case class YoutubeExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-youtube")
-  case class VimeoExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-vimeo")
+
+  sealed abstract class AmpExternalVideo(val videoId: String, val elementType: String, customAttributes: Map[String, String]){
+    val commonAttributes = Map(("width", "5"), ("height", "3"), ("layout", "responsive"))
+    val attributes = customAttributes ++ commonAttributes
+  }
+
+  def standardAttributes(videoId: String): Map[String,String] = Map(("data-videoid", videoId))
+
+  def facebookAttributes(videoId: String): Map[String, String] = Map(
+    ("data-href", s"https://www.facebook.com/theguardian/videos/$videoId"),
+    ("data-embed-as", "video"))
+
+  case class YoutubeExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-youtube", standardAttributes(videoId))
+  case class VimeoExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-vimeo", standardAttributes(videoId))
+  case class FacebookExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-facebook", facebookAttributes(videoId))
 
 
   object AmpExternalVideo {
-    def getAmpExternalVideoByUrl(videoUrl: String) : Option[AmpExternalVideo] = {
+    def getAmpExternalVideoByUrl(videoUrl: String): Option[AmpExternalVideo] = {
       val youtubePattern = """^https?:\/\/www\.youtube\.com\/watch\?v=([^#&?]+).*""".r
       val vimeoPattern = """^https?:\/\/vimeo\.com\/(\d+).*""".r
+      val facebookPattern = """^https?:\/\/www\.facebook\.com\/theguardian\/videos\/(\d+)\/""".r
       videoUrl match {
         case youtubePattern(videoId) => Some(YoutubeExternalVideo(videoId))
         case vimeoPattern(videoId) => Some(VimeoExternalVideo(videoId))
+        case facebookPattern(videoId) => Some(FacebookExternalVideo(videoId))
         case _ => None
       }
     }
 
-    def createElement(document: Document, videoId: String, elementType: String): Element = {
+    def createElement(document: Document, elementType: String, customAttributes: Map[String, String]): Element = {
       val video = document.createElement(elementType)
-      video.attr("data-videoid", videoId)
-      video.attr("width", "5")
-      video.attr("height", "3")
-      video.attr("layout", "responsive")
+      customAttributes.foreach{
+        case (key, value) => video.attr(key, value)
+      }
+      video
     }
 
     def clean(document: Document) = {
@@ -72,9 +86,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
         iframeElement <- videoElement.getElementsByTag("iframe")
         ampExternalVideo <- getAmpExternalVideoByUrl(videoElement.attr("data-canonical-url"))
       } yield {
-        val ampVideoElement = createElement(document, ampExternalVideo.videoId, ampExternalVideo.elementType)
-        videoElement.appendChild(ampVideoElement)
-        iframeElement.remove()
+        val ampVideoElement = createElement(document, ampExternalVideo.elementType, ampExternalVideo.attributes)
+        iframeElement.replaceWith(ampVideoElement)
       }
     }
   }

@@ -1,25 +1,23 @@
 package common.commercial
 
-import common.editions.Uk
+import com.gu.commercial.branding.{Branding, Foundation, Logo}
 import org.scalatest.{FlatSpec, Matchers}
 
 class BrandingTest extends FlatSpec with Matchers {
 
   "isTargeting" should "be true when there's no specific targeting" in {
     val branding = Branding(
-      sponsorshipType = Foundation,
+      brandingType = Foundation,
       sponsorName = "Bill and Melinda Gates Foundation",
-      sponsorLogo = Logo(
-        "https://static.theguardian.com/commercial/sponsor/world/series/united-nations-70-years/logo.png",
-        None
+      logo = Logo(
+        src = "https://static.theguardian.com/commercial/sponsor/world/series/united-nations-70-years/logo.png",
+        dimensions = None,
+        link = "http://www.theguardian.com/global-development",
+        label = ""
       ),
-      highContrastSponsorLogo = None,
-      sponsorLink = "http://www.theguardian.com/global-development",
-      aboutThisLink = "/sponsored-content",
-      targeting = None,
-      foundationFundedContext = None
+      logoForDarkBackground = None,
+      aboutThisLink = Some("/sponsored-content"),
+      hostedCampaignColour = None
     )
-
-    branding.isTargeting(None, Uk) shouldBe true
   }
 }

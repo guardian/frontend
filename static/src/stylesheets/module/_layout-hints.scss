@@ -96,7 +96,8 @@ figure.element.element--showcase {
 }
 
 figure.element.element--supporting,
-figure.element-video {
+figure.element-video,
+figure.element-atom {
     figcaption {
         padding-top: ($gs-baseline/3)*2;
         padding-bottom: ($gs-baseline/3)*2;
@@ -107,11 +108,6 @@ figure.element-video {
             top: 100%;
         }
     }
-}
-
-figcaption.caption--media-atom {
-    padding-top: ($gs-baseline/3)*2;
-    padding-bottom: ($gs-baseline/3)*2;
 }
 
 figure.element.element--showcase {

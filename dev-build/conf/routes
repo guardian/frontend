@@ -280,6 +280,7 @@ GET            /commercial/soulmates/$subgroup<\w+>.json                        
 GET            /commercial/api/soulmates.json                                                                                    commercial.controllers.SoulmatesController.getSoulmates
 GET            /commercial/books/book.json                                                                                       commercial.controllers.BookOffersController.renderBook
 GET            /commercial/books/books.json                                                                                      commercial.controllers.BookOffersController.renderBooks
+GET            /commercial/books/api/book.json                                                                                   commercial.controllers.BookOffersController.getBook
 GET            /commercial/books/api/books.json                                                                                  commercial.controllers.BookOffersController.getBooks
 GET            /commercial/liveevents/event.json                                                                                 commercial.controllers.LiveEventsController.renderEvent
 GET            /commercial/api/liveevent.json                                                                                    commercial.controllers.LiveEventsController.getLiveEvent
@@ -297,7 +298,6 @@ GET            /commercial/paid                                                 
 GET            /commercial/multi.json                                                                                            commercial.controllers.Multi.renderMulti
 GET            /commercial/api/multi.json                                                                                        commercial.controllers.Multi.getMulti
 GET            /$path<commercial-containers>                                                                                                controllers.FaciaController.renderFront(path)
-GET            /commercial/advertiser-content/:campaignName/:pageName                                                            commercial.controllers.HostedContentController.renderLegacyHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName                                                                       commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET            /advertiser-content/:campaignName/:pageName/:cType/onward.json                                                    commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET            /advertiser-content/:campaignName/:pageName/autoplay.json                                                         commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)

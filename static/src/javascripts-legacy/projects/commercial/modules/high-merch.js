@@ -23,6 +23,6 @@ define([
 
         return fastdom.write(function () {
             anchor.parentNode.insertBefore(container, anchor);
-        })
+        });
     }
 });

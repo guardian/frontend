@@ -374,31 +374,31 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
     .main-menu__icon--chevron:before {
         border-color: $news-support-2;
-        //optical alignment
-        margin-left: -.3em;
     }
 }
 
 .main-menu__icon--chevron {
     //optical alignment
-    margin-top: -.05em;
+    margin-top: -.2em;
 
     &:before {
         content: '';
         display: inline-block;
         width: 8px;
         height: 8px;
-        transform: rotate(-45deg);
+        transform: rotate(45deg);
         border-width: 2px;
         border-style: solid;
         border-top: 0;
         border-left: 0;
     }
 
-    details[open] &:before {
-        transform: rotate(45deg);
-        margin-bottom: .14em;
-        margin-left: 0;
+    details[open] & {
+        margin-top: .1em;
+
+        &:before {
+            transform: rotate(-135deg);
+        }
     }
 }
 
@@ -722,7 +722,7 @@ $caption-button-size: 32px;
 
     // When the image is at the top of the article, the headline and byline are moved into a div with margins. This counteracts that
     // TODO: If this change is kept after the test the template will have to be rewriten and these overrides won't be needed
-    .content__head:not(.tonal__head--tone-dead, .tonal__head--tone-live) {
+    .content__head:not(.tonal__head--tone-dead, .tonal__head--tone-live, .tonal__head--tone-media) {
         @include mq($until: mobileLandscape) {
             margin-right: -$gs-gutter / 2;
             margin-left: -$gs-gutter / 2;
@@ -832,7 +832,7 @@ $caption-button-size: 32px;
 .l-footer {
     // these two lines are needed so that the footer sits over the nav
     position: absolute;
-    z-index: 9999;
+    z-index: $zindex-content;
     width: 100%;
 }
 .footer__back-to-top__container {
@@ -901,5 +901,73 @@ $caption-button-size: 32px;
         }
     }
 }
+
+/****************
+ * Submeta
+ ****************/
+
+.submeta2 {
+    margin-top: $gs-baseline;
+}
+
+.submeta2__section-labels {
+    @include fs-textSans(5);
+    min-height: $gs-row-height;
+    border-top: 1px dotted $neutral-5;
+    border-bottom: 1px dotted $neutral-5;
+    padding: $gs-baseline / 2 0 $gs-baseline;
+
+
+    &:before {
+        @include fs-textSans(1);
+        content: "More";
+        color: $neutral-2;
+        display: block;
+        margin-bottom: -($gs-baseline / 4);
+    }
+}
+
+.submeta2__keywords {
+    @include fs-textSans(4);
+    padding: $gs-baseline / 2 0 $gs-baseline;
+    border-bottom: 1px dotted $neutral-5;
+    margin-bottom: $gs-baseline / 2;
+}
+
+.submeta2__link {
+    font-weight: bold;
+    position: relative;
+    padding-left: .3em;
+    padding-right: .35em;
+
+    &:before {
+        position: absolute;
+        pointer-events: none;
+        content: '/';
+        //optically aligns slashes
+        left: -.28em;
+        color: $neutral-5;
+    }
+
+    .submeta2__keywords & {
+        color: $neutral-2;
+    }
+}
+
+.submeta2__link--first {
+    padding-left: 0;
+
+    &:before {
+        content: none;
+    }
+}
+
+.submeta2__badge {
+    width: 33px;
+    float: right;
+    margin-top: -$gs-baseline;
+    margin-left: $gs-gutter / 2;
+}
+
 
 @import '../module/nav/_supporter-trapezoid';

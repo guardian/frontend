@@ -37,30 +37,20 @@ define([
 ) {
 
     return {
-        init: init,
-        customTiming: true
+        init: init
     };
 
-    function init(moduleName) {
-
-        function moduleStart() {
-            // Use Custom Timing to time the googletag code without the sonobi pre-loading.
-            performanceLogging.moduleStart(moduleName);
-        }
-
-        function moduleEnd() {
-            performanceLogging.moduleEnd(moduleName);
-        }
+    function init(start, stop) {
 
         function setupAdvertising() {
 
             performanceLogging.addTag(dfpEnv.sonobiEnabled ? 'sonobi' : 'waterfall');
 
             window.googletag.cmd.push(
-                moduleStart,
+                start,
                 setListeners,
                 setPageTargeting,
-                moduleEnd
+                stop
             );
 
             // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.

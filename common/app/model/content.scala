@@ -2,12 +2,13 @@ package model
 
 import java.net.URL
 
+import com.gu.commercial.branding.PaidContent
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.targeting.client.Campaign
+import common.Edition.defaultEdition
 import common._
-import common.commercial.{BrandHunter, PaidContent}
 import conf.Configuration
 import conf.switches.Switches._
 import cricketPa.CricketTeams
@@ -79,10 +80,8 @@ final case class Content(
   lazy val isImmersiveGallery = {
     metadata.contentType.toLowerCase == "gallery" &&
     {
-      val branding = tags.tags.flatMap { tag =>
-        BrandHunter.findBranding(tag.properties.activeBrandings, Edition.defaultEdition, None)
-      }.headOption
-      branding.isEmpty || branding.exists(_.sponsorshipType != PaidContent)
+      val branding = metadata.branding(defaultEdition)
+      branding.isEmpty || branding.exists(!_.isPaid)
     }
   }
   lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
@@ -157,12 +156,7 @@ final case class Content(
       tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog"
     }
 
-    lazy val isPaidContent = {
-      val branding = tags.tags.flatMap { tag =>
-        BrandHunter.findBranding(tag.properties.activeBrandings, Edition.defaultEdition, None)
-      }.headOption
-      branding.exists(_.sponsorshipType == PaidContent)
-    }
+    lazy val isPaidContent = metadata.branding(defaultEdition).exists(_.isPaid)
 
     isChildrensBookBlog || isPaidContent
   }
