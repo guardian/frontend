@@ -53,14 +53,6 @@
     "execa": "^0.5.0",
     "figures": "^2.0.0",
     "glob": "^7",
-    "gulp": "^3.9.0",
-    "gulp-filter": "^5.0.0",
-    "gulp-load-tasks": "^0.8.3",
-    "gulp-postcss": "^6.1.1",
-    "gulp-sass": "^3.1.0",
-    "gulp-sass-grapher": "^0.1.4",
-    "gulp-sourcemaps": "^1.5.2",
-    "gulp-util": "^3.0.8",
     "gzip-size": "^3.0.0",
     "hasha": "^2.2.0",
     "jasmine-core": "^2.3.2",
@@ -113,7 +105,6 @@
   "scripts": {
     "postinstall": "./tools/task-runner/runner githooks --verbose",
     "babel-watch": "BABEL_ENV=development babel ./static/src/javascripts --watch -d ./static/transpiled/javascripts >/dev/null 2>&1",
-    "gulp-watch": "gulp --cwd ./dev watch",
-    "dev": "./dev/start-dev-server.js"
+    "watch": "./dev/start-dev-server.js"
   }
 }
