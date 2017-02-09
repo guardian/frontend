@@ -9,6 +9,9 @@
     <!--esi <esi:include src="@{s"$beaconUrl/esi/ad-call"}" /> -->
 }
 
+<!-- make sure your beaconUrl config is localhost -->
+<script id="rich-esi" src="@{s"$beaconUrl/esi/ad-call"}"></script>
+
 @index.page match {
     case tag: Tag => {
         <meta name="twitter:url" content="@LinkTo(request.uri)" />
