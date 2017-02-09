@@ -6,34 +6,34 @@ define([
     config
 ) {
 
+    /**
+     * registeredChecks will store references to instances of DefferedCheck
+    **/
     var registeredChecks = {};
 
+    /**
+     * checkList is an array of object literals.
+     * Each object in this array will be converted to a DefferedCheck and added to registeredChecks
+     * Each object contains 3 fields: id (string), canRun (boolean), dependentChecks (nested array of checks)
+     * If object has dependentChecks then the DefferedCheck will resolve when these dependentChecks have all resolved
+     *
+    **/
     var checkList = [{
             id: 'isOutbrainNonCompliant',
-            customCheckBuilder: function () {
-                var isUserInAClashingAbTest = getCheck('isUserInAClashingAbTest');
-                var isEmailInserted = getCheck('isEmailInserted');
-                var dependentCheckPromises = [
-                    isUserInAClashingAbTest.complete
-                ];
-
-                if (config.switches.emailInArticleOutbrain) {
-                    dependentCheckPromises.push(isEmailInserted.complete);
-                }
-
-                return new DeferredCheck(dependentCheckPromises);
-            },
+            canRun: true,
             dependentChecks: [{
                 id: 'isUserInAClashingAbTest',
+                canRun: true,
                 dependentChecks: []
             }, {
                 id: 'isEmailInserted',
+                canRun: config.switches.emailInArticleOutbrain,
                 dependentChecks: []
             }]
         }];
 
     function DeferredCheck(dependentCheckPromises) {
-        if (dependentCheckPromises) {
+        if (dependentCheckPromises && dependentCheckPromises.length) {
             this.complete = Promise.all(dependentCheckPromises);
         } else {
             this.complete = new Promise(function(resolve, reject) {
@@ -50,17 +50,34 @@ define([
     }
 
     function getDefferedCheck(check) {
-        check.dependentChecks.forEach(registerCheck);
+        var dependentCheckPromises = [];
+        
+        check.dependentChecks.forEach(registerDependentCheck.bind(null, dependentCheckPromises));
 
-        if (check.customCheckBuilder) {
-            return check.customCheckBuilder();
-        }
-
-        return new DeferredCheck();
+        return new DeferredCheck(dependentCheckPromises);
     }
 
+    
+    function registerDependentCheck(dependentCheckPromises, dependentCheck) {
+        var registeredDependentCheck = registerCheck(dependentCheck);
+
+        if (registeredDependentCheck) {
+            dependentCheckPromises.push(registeredDependentCheck.complete);
+        }
+    }    
+
     function registerCheck(check) {
-        registeredChecks[check.id] = getDefferedCheck(check);
+        var registeredCheck;
+
+        if (!check.canRun) {
+            return false;
+        }
+
+        registeredCheck = getDefferedCheck(check);
+
+        registeredChecks[check.id] = registeredCheck;
+
+        return registeredCheck;
     }
 
     function init() {
