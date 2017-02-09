@@ -128,7 +128,7 @@ define([
                         }
 
                         return false;
-                    }).catch(function(error) {
+                    }).catch(function() {
                         return 'nonCompliant';
                     });
     }

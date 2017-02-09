@@ -31,7 +31,6 @@ define([
     Promise,
     checkMediator
 ) {
-    var emailInserted = false;
     var emailShown;
     var userListSubsChecked = false;
     var userListSubs = [];
