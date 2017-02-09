@@ -31,7 +31,6 @@ define([
     clash,
     Promise
 ) {
-    var compliantOutbrain = false;
     var emailShown;
     var userListSubsChecked = false;
     var userListSubs = [];
@@ -90,10 +89,6 @@ define([
         }
     }
 
-    function compliantObWidgetIsShown() {
-        return compliantOutbrain;
-    }
-
     var canRunList = {
         theCampaignMinute: function () {
             var isUSElection = page.keywordExists(['US elections 2016']);
@@ -149,7 +144,6 @@ define([
                         !clash.userIsInAClashingAbTest(clash.nonEmailClashingTests) &&
                         storage.session.isAvailable() &&
                         !userHasSeenThisSession() &&
-                        !obWidgetIsShown() &&
                         !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
 
         if (!emailCanRun) {
