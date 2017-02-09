@@ -5,6 +5,7 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/robust',
+    'common/utils/check-mediator',
     'lodash/collections/some',
     'lodash/collections/every',
     'lodash/collections/map',
@@ -12,8 +13,7 @@ define([
     'common/modules/user-prefs',
     'common/modules/identity/api',
     'common/modules/experiments/ab-test-clash',
-    'Promise',
-    'common/utils/check-mediator'
+    'Promise'
 ], function (
     $,
     page,
@@ -21,6 +21,7 @@ define([
     detect,
     storage,
     robust,
+    checkMediator,
     some,
     every,
     map,
@@ -28,8 +29,7 @@ define([
     userPrefs,
     Id,
     clash,
-    Promise,
-    checkMediator
+    Promise
 ) {
     var emailShown;
     var userListSubsChecked = false;
