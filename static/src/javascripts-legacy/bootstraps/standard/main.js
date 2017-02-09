@@ -20,6 +20,7 @@ define([
     'common/utils/storage',
     'common/utils/ajax',
     'common/utils/mediator',
+    'common/utils/check-mediator',
     'common/utils/add-event-listener',
     'common/modules/identity/api',
     'common/utils/url',
@@ -39,6 +40,7 @@ define([
     storage,
     ajax,
     mediator,
+    checkMediator,
     addEventListener,
     identity,
     url,
@@ -124,6 +126,11 @@ define([
                 }
             });
         }
+
+        //
+        // initilaise the checkMediator
+        //
+        checkMediator.init();
 
         //
         // Set adtest query if url param declares it.
@@ -274,6 +281,8 @@ define([
          *  New Header Navigation
          */
         newHeaderNavigation();
+
+
 
         userTiming.mark('standard end');
         robust.catchErrorsAndLog('ga-user-timing-standard-end', function () {

@@ -74,15 +74,13 @@ define([
         return registeredCheck;
     }
 
-    function init() {
-        checkList.forEach(registerCheck);
-    }
-
-    init();
-
     /**
      * public
     **/
+    function init() {
+        checkList.forEach(registerCheck);
+    }
+    
     function resolveCheck(id) {
         var argsArray = Array.prototype.slice.call(arguments, 1);
         
@@ -108,6 +106,7 @@ define([
     }
 
     return {
+        init: init,
         resolveCheck: resolveCheck,
         rejectCheck: rejectCheck,
         waitForCheck: waitForCheck,
