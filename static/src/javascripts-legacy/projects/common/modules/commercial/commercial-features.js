@@ -137,12 +137,12 @@ define([
             switches.commercial;
 
         this.paidforBand =
-            config.page.isAdvertisementFeature &&
+            config.page.isPaidContent &&
             !config.page.hasSuperStickyBanner &&
             !supportsSticky;
 
         this.canReasonablyAskForMoney = // eg become a supporter, give a contribution
-            !(userFeatures.isPayingMember() || config.page.shouldHideAdverts || config.page.isAdvertisementFeature);
+            !(userFeatures.isPayingMember() || config.page.shouldHideAdverts || config.page.isPaidContent);
 
         this.async = {
             canDisplayMembershipEngagementBanner : detect.adblockInUse.then(function (adblockUsed) {

@@ -8,7 +8,7 @@
     "content__standfirst--gallery" -> item.content.isImmersiveGallery,
     "content__standfirst--immersive-article" -> (item.content.isImmersive && item.tags.isArticle),
     "content__standfirst--explore" -> (item.content.isExplore && item.tags.isArticle),
-    "content__standfirst--advertisement" -> (item.content.isImmersive && item.tags.isAdvertisementFeature),
+    "content__standfirst--advertisement" -> (item.content.isImmersive && item.tags.isPaidContent),
     "content__standfirst--immersive-minute-article" -> item.tags.isTheMinuteArticle),
     "content__standfirst")" data-link-name="standfirst" data-component="standfirst">
     @item.fields.trailText.map{ t =>
