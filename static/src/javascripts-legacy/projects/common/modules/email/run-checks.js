@@ -31,6 +31,7 @@ define([
     clash,
     Promise
 ) {
+    var compliantOutbrain = false;
     var emailShown;
     var userListSubsChecked = false;
     var userListSubs = [];
@@ -89,9 +90,8 @@ define([
         }
     }
 
-    function obWidgetIsShown() {
-        var $outbrain = $('.js-outbrain-container');
-        return $outbrain && $outbrain.length > 0;
+    function compliantObWidgetIsShown() {
+        return compliantOutbrain;
     }
 
     var canRunList = {
@@ -127,6 +127,9 @@ define([
     };
 
     // Public
+    function setCompliantOutbrain() {
+        compliantOutbrain = true;
+    }
 
     function setEmailShown(emailName) {
         emailShown = emailName;
@@ -143,7 +146,7 @@ define([
                         !config.page.isSensitive &&
                         !config.page.isFront &&
                         config.switches.emailInArticle &&
-                        !clash.userIsInAClashingAbTest() &&
+                        !clash.userIsInAClashingAbTest(clash.nonEmailClashingTests) &&
                         storage.session.isAvailable() &&
                         !userHasSeenThisSession() &&
                         !obWidgetIsShown() &&
@@ -179,6 +182,7 @@ define([
     }
 
     return {
+        setCompliantOutbrain: setCompliantOutbrain,
         setEmailShown: setEmailShown,
         getEmailShown: getEmailShown,
         allEmailCanRun: allEmailCanRun,

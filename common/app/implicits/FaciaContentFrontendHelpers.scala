@@ -48,7 +48,7 @@ object FaciaContentFrontendHelpers {
     }
 
     lazy val shouldHidePublicationDate: Boolean = {
-      faciaContent.branding(defaultEdition).exists(_.brandingType == PaidContent) &&
+      faciaContent.branding(defaultEdition).exists(_.isPaid) &&
       faciaContent.card.webPublicationDateOption.exists(_.isOlderThan(2.weeks))
     }
 

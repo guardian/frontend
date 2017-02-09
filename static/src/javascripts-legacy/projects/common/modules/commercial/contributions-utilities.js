@@ -9,7 +9,7 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/geolocation',
+    'common/utils/geolocation'
 
 ], function (commercialFeatures,
              targetingTool,
@@ -54,6 +54,7 @@ define([
 
     function ContributionsABTest(options) {
         this.id = options.id;
+        this.epic = options.epic || true;
         this.start = options.start;
         this.expiry = options.expiry;
         this.author = options.author;
@@ -121,10 +122,13 @@ define([
         this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, test.contributionsCampaignPrefix);
         this.membershipURL = options.membershipURL || this.makeURL(membershipURL, test.membershipCampaignPrefix);
 
+        var trackingCampaignId  = test.epic ? 'epic_' + test.campaignId : test.campaignId;
+
         this.test = function () {
             var component = $.create(options.template(this.contributeURL, this.membershipURL));
 
             function render() {
+                mediator.emit('register:begin', trackingCampaignId);
                 return fastdom.write(function () {
                     var sibling = $(options.insertBeforeSelector);
 
@@ -139,6 +143,7 @@ define([
                             elementInView.on('firstview', function () {
                                 viewLog.logView(test.id);
                                 mediator.emit(test.viewEvent);
+                                mediator.emit('register:end', trackingCampaignId);
                             });
                         });
                     }

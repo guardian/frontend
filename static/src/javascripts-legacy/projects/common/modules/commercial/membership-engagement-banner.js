@@ -1,6 +1,6 @@
 define([
         'bean',
-        'qwery',
+        'common/utils/$',
         'common/utils/config',
         'common/utils/storage',
         'common/utils/template',
@@ -13,12 +13,12 @@ define([
         'common/utils/fastdom-promise',
         'common/modules/experiments/ab',
         'common/modules/experiments/tests/membership-engagement-banner-tests',
-        'common/utils/$',
         'lodash/objects/defaults',
         'lodash/collections/find',
-        'common/views/svgs'
+        'common/views/svgs',
+        'common/utils/fetch'
     ], function (bean,
-                 qwery,
+                 $,
                  config,
                  storage,
                  template,
@@ -31,14 +31,26 @@ define([
                  fastdom,
                  ab,
                  MembershipEngagementBannerTests,
-                 $,
                  defaults,
                  find,
-                 svgs) {
+                 svgs,
+                 fetch) {
+
 
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
         var messageCode = 'engagement-banner-2017-01-11';
+
+        //Remind me form selectors
+        var SECONDARY_BUTTON = '.secondary';
+        var REMIND_ME_FORM = '.membership__remind-me-form';
+        var REMIND_ME_TEXT_FIELD = '.membership__engagement-text-field';
+        var REMIND_ME_CTA = '.membership__remind-me-form__cta';
+        var REMIND_ME_THANKS_MESSAGE = '.membership__remind-me-form__thanks-message';
+        var REMIND_ME_ERROR = '.membership__remind-me-form__error';
+
+        var LIST_ID = 3813;
+        var EMAIL_PATH = '/email';
 
         var baseParams = {
             minArticles: 3,
@@ -84,7 +96,6 @@ define([
                 }
             }
         };
-
 
         /*
          * Params for the banner are overlaid in this order, earliest taking precedence:
@@ -148,7 +159,8 @@ define([
                 messageText: messageText,
                 buttonCaption: params.buttonCaption,
                 colourClass: colourClass,
-                arrowWhiteRight: svgs('arrowWhiteRight')
+                arrowWhiteRight: svgs('arrowWhiteRight'),
+                showRemindMe: params.showRemindMe || false
             });
 
             var messageShown = new Message(
@@ -160,10 +172,97 @@ define([
                     trackDisplay: true,
                     cssModifierClass: colourClass
                 }).show(renderedBanner);
+
             if (messageShown) {
                 mediator.emit('membership-message:display');
+
+                if(params.showRemindMe) {
+                    setSecondaryButtonListener();
+
+                    trackGAEvent('display', 'engagement-banner', 'engagement-banner-remind-me');
+                }
             }
+
             mediator.emit('banner-message:complete');
+        }
+
+        function trackGAEvent(category, action, label) {
+            var gaTracker = null;
+
+            if(config.googleAnalytics) {
+                 gaTracker = config.googleAnalytics.trackers.editorial;
+            }
+
+            if(gaTracker && window.ga){
+                window.ga(gaTracker + '.send', 'event', category, action, label);
+            }
+
+        }
+
+        function emailIsValid(email) {
+            return typeof email === 'string' && email.indexOf('@') > -1;
+        }
+
+        function sendEmail(email){
+            submitForm(email, LIST_ID).then(showThankYouMessage, showErrorMessage)
+        }
+
+        function showThankYouMessage(){
+            hideElement($(REMIND_ME_TEXT_FIELD));
+            hideElement($(REMIND_ME_CTA));
+            hideElement($(REMIND_ME_ERROR));
+
+            showElement($(REMIND_ME_THANKS_MESSAGE));
+        }
+
+        function showErrorMessage(){
+            hideElement($(REMIND_ME_TEXT_FIELD));
+            hideElement($(REMIND_ME_CTA));
+            showElement($(REMIND_ME_ERROR));
+        }
+
+        function submitForm(email, listID) {
+            var formQueryString =
+                'email=' + encodeURI(email) + '&' +
+                'listId=' + listID;
+
+            return fetch(config.page.ajaxUrl + EMAIL_PATH,
+                {   method: 'post',
+                    body: formQueryString,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }
+            );
+        }
+
+        function showElement(element) {
+            element.removeClass('is-hidden');
+        }
+
+        function hideElement(element) {
+            element.addClass('is-hidden');
+        }
+
+        function setSecondaryButtonListener() {
+
+            bean.on($(SECONDARY_BUTTON)[0], 'click', function () {
+                hideElement($(SECONDARY_BUTTON));
+                showElement($(REMIND_ME_FORM));
+
+                trackGAEvent('click', 'engagement-banner', 'remind-me-button');
+            });
+
+            bean.on($(REMIND_ME_CTA)[0], 'click', function () {
+                var email = $(REMIND_ME_TEXT_FIELD)[0].value;
+
+                if(emailIsValid(email)){
+                    trackGAEvent('click', 'engagement-banner', 'send-email');
+                    sendEmail(email);
+                } else {
+                    showElement($(REMIND_ME_ERROR));
+                }
+            });
         }
 
         function init() {
@@ -179,7 +278,6 @@ define([
                             }
                         });
                     }
-
                 });
             }
 
@@ -194,6 +292,5 @@ define([
             init: init,
             messageCode: messageCode
         };
-
     }
 );

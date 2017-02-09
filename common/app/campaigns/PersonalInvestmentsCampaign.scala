@@ -4,7 +4,7 @@ import org.joda.time.DateTime
 
 // The PI campaign will run for one year, during which all the related pages must provide a sticky
 // banner at the top that sticks all the way through, therefore overriding other config flags
-// such as isAdvertisementFeature
+// such as isPaidContent
 
 object PersonalInvestmentsCampaign {
     lazy val endDate = new DateTime(2017, 4, 26, 0, 0)

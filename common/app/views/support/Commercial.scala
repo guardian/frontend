@@ -57,20 +57,18 @@ object Commercial {
       case front: PressedPage =>
 
         val containerSponsors = front.collections.flatMap { container =>
-          sponsor(container.branding)
+          container.branding(edition) flatMap {
+            case b: Branding => Some(b.sponsorName.toLowerCase)
+            case _ => None
+          }
         }
 
         val cardSponsors = front.collections.flatMap { container =>
-          val hasBrandedTag = container.config.showBranding
-          lazy val hasNoSponsor = container.branding(edition).isEmpty
-          lazy val hasOnlyPaidContent = container.curatedPlusBackfillDeduplicated.forall {
-            _.branding(edition).exists(_.brandingType == PaidContent)
+          container.branding(edition) match {
+            case Some(PaidMultiSponsorBranding) =>
+              container.curatedPlusBackfillDeduplicated.flatMap(card => sponsor(card.branding))
+            case _ => Nil
           }
-          if (hasBrandedTag && hasNoSponsor && hasOnlyPaidContent) {
-            container.curatedPlusBackfillDeduplicated.flatMap { card =>
-              sponsor(card.branding)
-            }
-          } else Nil
         }
 
         val allSponsorsOnPage = pageSponsor.toList ++ containerSponsors ++ cardSponsors
@@ -122,12 +120,17 @@ object Commercial {
 
       def isPaid(containerModel: ContainerModel): Boolean = {
 
-        val isPaidContainer = containerModel.branding.exists(_.brandingType == PaidContent)
+        val isPaidContainer = {
+          containerModel.branding exists {
+            case PaidMultiSponsorBranding => true
+            case b: Branding => b.isPaid
+          }
+        }
 
         val isAllPaidContent = {
           val content = containerModel.content
           val cards = content.initialCards ++ content.showMoreCards
-          cards.nonEmpty && cards.forall(_.branding.exists(_.brandingType == PaidContent))
+          cards.nonEmpty && cards.forall(_.branding.exists(_.isPaid))
         }
 
         isPaidContainer || isAllPaidContent
@@ -198,8 +201,13 @@ object Commercial {
                                   containerIndex: Int,
                                   container: ContainerModel,
                                   card: CardContent)(implicit request: RequestHeader): String = {
-      val sponsor =
-        container.branding.map(_.sponsorName) orElse card.branding.map(_.sponsorName) getOrElse ""
+      val sponsor = {
+        val containerSponsorName = container.branding flatMap {
+          case b: Branding => Some(b.sponsorName)
+          case _ => None
+        }
+        containerSponsorName orElse card.branding.map(_.sponsorName) getOrElse ""
+      }
       val cardIndex =
         (container.content.initialCards ++ container.content.showMoreCards).indexWhere(_.headline == card.headline)
       Seq(

@@ -1,5 +1,5 @@
 @import model.Page
-@import model.{EmailSubscription, EmailSubscriptions}
+@import model.{EmailNewsletter, EmailNewsletters}
 @import views.support.RenderClasses
 @import views.support.`package`.Seq2zipWithRowInfo
 
@@ -20,7 +20,7 @@
     </iframe>
 }
 
-@emailListCategoryList(theme: String, emailListings: List[EmailSubscription]) = {
+@emailListCategoryList(theme: String, emailListings: List[EmailNewsletter]) = {
     <div class="newsletters-category__heading">
         @theme
     </div>
@@ -109,26 +109,26 @@
             <div class="newsletters-heading">newsletters</div>
 
             <div class="newsletters-category" name="news round ups">
-                @emailListCategoryList("news round ups", EmailSubscriptions.newsRoundUpEmails())
+                @emailListCategoryList("news round ups", EmailNewsletters.newsRoundUpEmails)
             </div>
 
             <div class="newsletters-category" name="news by topic">
-                @emailListCategoryList("news by topic", EmailSubscriptions.newsEmails())
+                @emailListCategoryList("news by topic", EmailNewsletters.newsEmails)
             </div>
             <div class="newsletters-category" name="features">
-                @emailListCategoryList("features", EmailSubscriptions.featureEmails())
+                @emailListCategoryList("features", EmailNewsletters.featureEmails)
             </div>
             <div class="newsletters-category" name="sport">
-                @emailListCategoryList("sport", EmailSubscriptions.sportEmails())
+                @emailListCategoryList("sport", EmailNewsletters.sportEmails)
             </div>
             <div class="newsletters-category" name="culture">
-                @emailListCategoryList("culture", EmailSubscriptions.cultureEmails())
+                @emailListCategoryList("culture", EmailNewsletters.cultureEmails)
             </div>
             <div class="newsletters-category" name="lifestyle">
-                @emailListCategoryList("lifestyle", EmailSubscriptions.lifestyleEmails())
+                @emailListCategoryList("lifestyle", EmailNewsletters.lifestyleEmails)
             </div>
             <div class="newsletters-category" name="comment">
-                @emailListCategoryList("comment", EmailSubscriptions.commentEmails())
+                @emailListCategoryList("comment", EmailNewsletters.commentEmails)
             </div>
 
         </div>

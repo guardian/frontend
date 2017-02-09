@@ -30,11 +30,8 @@ define([
         onScroll: onScroll
     };
 
-    function init(start, stop, _window) {
-        start();
-
+    function init(_window) {
         if (!commercialFeatures.stickyTopBannerAd) {
-            stop();
             return Promise.resolve();
         }
 
@@ -46,15 +43,11 @@ define([
 
             // First, let's assign some default values so that everything
             // is in good order before we start animating changes in height
-            var promise = initState()
+            return initState()
             // Second, start listening for height and scroll changes
-            .then(setupListeners);
-            promise
-            .then(onFirstRender)
-            .then(stop);
-            return promise;
+            .then(setupListeners)
+            .then(onFirstRender);
         } else {
-            stop();
             topSlot = null;
             return Promise.resolve();
         }

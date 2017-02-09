@@ -13,7 +13,7 @@ define([
             return Promise.resolve();
         }
 
-        return new Promise(function (resolve) {
+        return new Promise(function (resolve, reject) {
             var ref = document.scripts[0];
             var script = document.createElement('script');
             script.src = src;
@@ -21,6 +21,7 @@ define([
                 assign(script, props);
             }
             script.onload = resolve;
+            script.onerror = reject;
             ref.parentNode.insertBefore(script, ref);
         });
     }

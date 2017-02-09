@@ -100,7 +100,7 @@ define([
             var adName = getSlotName(index);
             var classNames = ['container-inline', 'mobile'];
             var slot, section;
-            if (config.page.isAdvertisementFeature) {
+            if (config.page.isPaidContent) {
                 classNames.push('adfeature');
             }
 
@@ -145,7 +145,7 @@ define([
             var classNames = ['container-inline'];
             var slot;
 
-            if (config.page.isAdvertisementFeature) {
+            if (config.page.isPaidContent) {
                 classNames.push('adfeature');
             }
 

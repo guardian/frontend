@@ -18,7 +18,8 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfter
       label = ""
     ),
     logoForDarkBackground = None,
-    aboutThisLink = None
+    aboutThisLink = None,
+    hostedCampaignColour = None
   )
 
   private def mkCardContent(index: Int, branding: Option[Branding] = None) = CardContent(

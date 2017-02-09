@@ -24,16 +24,48 @@ define([
         variants: ['control']
     };
 
-    function userIsInAClashingAbTest() {
-        var clashingTests = [
-            ContributionsEpicAlwaysAskStrategy,
-            ContributionsEpicBrexit,
-            ContributionsEpicAskFourStagger,
-            ContributionsEpicAskFourEarning
-        ];
+    var ContributionsEpicOneLineEdits = {
+        name: 'ContributionsEpicOneLineEdits',
+        variants: ['control', 'paywall', 'altfacts', 'billionaire']
+    };
 
-        var isUserInAClashingAbTest = _testABClash(ab.isInVariant, clashingTests);
+    var ContributionsEpicPaywall= {
+        name: 'ContributionsEpicPaywall',
+        variants: ['control', 'paywall']
+    };
 
+    var ContributionsEpicBillionaire = {
+        name: 'ContributionsEpicBillionaire',
+        variants: ['control', 'billionaire']
+    };
+    var GuardianTodaySignupMessaging = {
+        name: 'GuardianTodaySignupMessaging',
+        variants: ['message-a', 'message-b', 'message-c']
+    };
+
+    var contributionsTests = [
+        ContributionsEpicAlwaysAskStrategy,
+        ContributionsEpicBrexit,
+        ContributionsEpicAskFourStagger,
+        ContributionsEpicAskFourEarning,
+        ContributionsEpicOneLineEdits,
+        ContributionsEpicPaywall,
+        ContributionsEpicBillionaire
+    ];
+
+    var emailTests = [
+        GuardianTodaySignupMessaging
+    ];
+
+    var nonEmailClashingTests = contributionsTests;
+
+    var clashingTests = contributionsTests.concat(emailTests);
+
+    function userIsInAClashingAbTest(tests) {
+        tests = tests || clashingTests;
+
+        var isUserInAClashingAbTest = _testABClash(ab.isInVariant, tests);
+        
         checkMediator.resolveCheck('isUserInAClashingAbTest', isUserInAClashingAbTest);
 
         return isUserInAClashingAbTest;
@@ -54,6 +86,7 @@ define([
 
     return {
         userIsInAClashingAbTest: userIsInAClashingAbTest,
+        nonEmailClashingTests: nonEmailClashingTests,
         _testABClash: _testABClash // exposed for unit testing
     };
 });
