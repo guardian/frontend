@@ -2,8 +2,9 @@ package common
 
 import conf.Configuration
 import NavLinks._
+import model.Page
 
-case class NavLink(title: String, url: String, longTitle: String = "", iconName: String = "", uniqueSection: String = "")
+case class NavLink(title: String, url: String, uniqueSection: String = "", longTitle: String = "", iconName: String = "")
 case class SectionsLink(pageId: String, navLink: NavLink, parentSection: NewNavigation.EditionalisedNavigationSection)
 case class SubSectionLink(pageId: String, parentSection: NavLinkLists)
 case class NavLinkLists(mostPopular: Seq[NavLink], leastPopular: Seq[NavLink] = List())
@@ -67,16 +68,6 @@ object NewNavigation {
     case "life" => Life
   }
 
-  def isCurrentSection(currentSection: String, navLink: NavLink): Boolean = {
-    val mainFront = List("uk", "au", "us", "international")
-
-    if (mainFront.contains(currentSection)) {
-      "headlines" == navLink.title
-    } else {
-      currentSection == navLink.uniqueSection
-    }
-  }
-
   case object MostPopular extends EditionalisedNavigationSection {
     val name = "news"
 
@@ -116,10 +107,10 @@ object NewNavigation {
         theGuardianView,
         columnists,
         cartoons,
-        NavLink("in my opinion", "/commentisfree/series/comment-is-free-weekly")
+        inMyOpinion
       ),
       List(
-        NavLink("Polly Toynbee", "/profile/pollytoyn"),
+        NavLink("Polly Toynbee", "/profile/pollytoynbee"),
         NavLink("Owen Jones", "/profile/owen-jones"),
         NavLink("Jonathan Freedland", "/profile/jonathanfreedland"),
         NavLink("Marina Hyde", "/profile/marinahyde"),
@@ -293,12 +284,40 @@ object NewNavigation {
       SectionsLink("global-development", globalDevelopment, News),
       SectionsLink("sustainable-business", sustainableBusiness, News),
       SectionsLink("law", law, News),
+      SectionsLink("technology/games", games, News),
+      SectionsLink("us-news/us-politics", usPolitics, News),
+      SectionsLink("australia-news/australian-politics", auPolitics, News),
+      SectionsLink("australia-news/australian-immigration-and-asylum", auImmigration, News),
+      SectionsLink("australia-news/indigenous-australians", indigenousAustralia, News),
 
       SectionsLink("commentisfree", opinion, Opinion),
-      SectionsLink("index", columnists, Opinion),
+      SectionsLink("cartoons", cartoons, Opinion),
+      SectionsLink("index/contributors", columnists, Opinion),
+      SectionsLink("commentisfree/series/comment-is-free-weekly", inMyOpinion, Opinion),
+      SectionsLink("profile/editorial", theGuardianView, Opinion),
+
 
       SectionsLink("sport", sport, Sport),
       SectionsLink("football", football, Sport),
+      SectionsLink("sport/rugby-union", rugbyUnion, Sport),
+      SectionsLink("sport/cricket", cricket, Sport),
+      SectionsLink("sport/tennis", tennis, Sport),
+      SectionsLink("sport/cycling", cycling, Sport),
+      SectionsLink("sport/golf", golf, Sport),
+      SectionsLink("sport/us-sport", usSports, Sport),
+      SectionsLink("sport/horse-racing", racing, Sport),
+      SectionsLink("sport/rugbyleague", rugbyLeague, Sport),
+      SectionsLink("sport/boxing", boxing, Sport),
+      SectionsLink("sport/formulaone", formulaOne, Sport),
+      SectionsLink("sport/nfl", NFL, Sport),
+      SectionsLink("sport/mlb", MLB, Sport),
+      SectionsLink("football/mls", MLS, Sport),
+      SectionsLink("sport/nba", NBA, Sport),
+      SectionsLink("sport/nhl", NHL, Sport),
+      SectionsLink("sport/afl", AFL, Sport),
+      SectionsLink("football/a-league", aLeague, Sport),
+      SectionsLink("sport/nrl", NRL, Sport),
+      SectionsLink("sport/australia-sport", australiaSport, Sport),
 
       SectionsLink("culture", culture, Arts),
       SectionsLink("film", film, Arts),
@@ -307,11 +326,19 @@ object NewNavigation {
       SectionsLink("books", books, Arts),
       SectionsLink("artanddesign", artAndDesign, Arts),
       SectionsLink("stage", stage, Arts),
+      SectionsLink("music/classicalmusicandopera", classical, Arts),
 
       SectionsLink("lifeandstyle", lifestyle, Life),
       SectionsLink("fashion", fashion, Life),
       SectionsLink("travel", travel, Life),
-      SectionsLink("society", society, Life)
+      SectionsLink("society", society, Life),
+      SectionsLink("lifeandstyle/food-and-drink", food, Life),
+      SectionsLink("tone/recipes", recipes, Life),
+      SectionsLink("lifeandstyle/women", women, Life),
+      SectionsLink("lifeandstyle/health-and-wellbeing", health, Life),
+      SectionsLink("lifeandstyle/family", family, Life),
+      SectionsLink("lifeandstyle/home-and-garden", home, Life),
+      SectionsLink("lifeandstyle/love-and-sex", loveAndSex, Life)
     )
 
     def getSectionLinks(sectionName: String, edition: Edition) = {
@@ -325,7 +352,7 @@ object NewNavigation {
         val section = sectionList.head
         val parentSection = section.parentSection.getPopularEditionalisedNavLinks(edition).drop(1)
 
-        if (parentSection.contains(section.navLink)) {
+        if (parentSection.contains(section.navLink) || section.navLink == headlines) {
           parentSection
         } else {
           Seq(section.navLink) ++ parentSection
@@ -452,6 +479,21 @@ object NewNavigation {
 
     def isEditionalistedSubSection(sectionId: String) = {
       editionalisedSubSectionLinks.exists(_.pageId == sectionId)
+    }
+
+    def getSectionOrTagId(page: Page) = {
+      val tags = Navigation.getTagsFromPage(page)
+      val commonKeywords = tagPages.intersect(tags.keywordIds)
+      val isTagPage = page.metadata.isFront && tagPages.contains(page.metadata.id)
+      val isArticleInTagPageSection = commonKeywords.nonEmpty
+
+      if (isTagPage) {
+        page.metadata.id
+      } else if (isArticleInTagPageSection) {
+        commonKeywords.head
+      } else {
+        page.metadata.sectionId
+      }
     }
 
     def getSubSectionNavLinks(sectionId: String, edition: Edition, isFront: Boolean) = {
