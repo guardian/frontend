@@ -67,7 +67,7 @@ trait Index extends ConciergeRepository with Collections {
       .tag(s"$firstTag,$secondTag")
       .page(page)
       .pageSize(if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize)
-      .showFields(if (isRss) rssFields else QueryDefaults.trailFields)
+      .showFields(if (isRss) rssFields else QueryDefaults.trailFieldsWithMain)
     ).map {response =>
       val trails = response.results.map(IndexPageItem(_)).toList
       trails match {
