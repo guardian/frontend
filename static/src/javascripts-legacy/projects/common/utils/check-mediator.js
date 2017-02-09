@@ -105,13 +105,26 @@ define([
         return Promise.reject('no deferred check with id ' + id);
     }
 
+    /**
+     * exposed for unit testing
+    **/
+    function _testRegisterCheck(check) {
+        var registeredCheck;
+
+        if (!check.canRun) {
+            return false;
+        }
+
+        registeredCheck = registerDefferedCheck(check);
+
+        registeredChecks[check.id] = registeredCheck;
+    }
+
     return {
         init: init,
         resolveCheck: resolveCheck,
         rejectCheck: rejectCheck,
         waitForCheck: waitForCheck,
-        test: {
-            registerCheck: registerCheck   
-        }
+        _testRegisterCheck: _testRegisterCheck // exposed for unit testing
     };
 });

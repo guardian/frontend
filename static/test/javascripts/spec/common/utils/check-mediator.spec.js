@@ -35,7 +35,7 @@ define([
             }];
 
         beforeAll(function () {
-            checkList.forEach(checkMediator.test.registerCheck);
+            checkList.forEach(checkMediator._testRegisterCheck);
         });
 
         it('resolves a check with no dependent checks', function (done) {
