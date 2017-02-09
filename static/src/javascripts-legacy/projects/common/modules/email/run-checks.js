@@ -151,7 +151,7 @@ define([
                         !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
 
         if (!emailCanRun) {
-            checkMediator.getCheck('isEmailInserted').resolve(false);
+            checkMediator.resolveCheck('isEmailInserted', false);
         }
 
         return emailCanRun;

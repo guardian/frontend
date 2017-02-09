@@ -121,7 +121,7 @@ define([
                 return result;
             };
 
-        return checkMediator.getCheck('isOutbrainNonCompliant').complete
+        return checkMediator.waitForCheck('isOutbrainNonCompliant')
                     .then(function(resultList) {
                         if (resultList.some(isCheckNonCompliant)) {
                             return 'nonCompliant'

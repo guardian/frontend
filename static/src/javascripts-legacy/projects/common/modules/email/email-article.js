@@ -152,7 +152,7 @@ define([
                     $iframeEl = $(iframe),
                     onEmailAdded = function () {
                         emailRunChecks.setEmailShown(listConfig.listName);
-                        checkMediator.getCheck('isEmailInserted').resolve(true);
+                        checkMediator.resolveCheck('isEmailInserted', true);
                         storage.session.set('email-sign-up-seen', 'true');
                     }
 

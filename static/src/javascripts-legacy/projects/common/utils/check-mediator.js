@@ -43,13 +43,7 @@ define([
         }
     }
 
-    function getCheck(id) {
-        if (registeredChecks[id]) {
-            return registeredChecks[id];
-        }
-    }
-
-    function getDefferedCheck(check) {
+    function registerDefferedCheck(check) {
         var dependentCheckPromises = [];
         
         check.dependentChecks.forEach(registerDependentCheck.bind(null, dependentCheckPromises));
@@ -73,7 +67,7 @@ define([
             return false;
         }
 
-        registeredCheck = getDefferedCheck(check);
+        registeredCheck = registerDefferedCheck(check);
 
         registeredChecks[check.id] = registeredCheck;
 
@@ -86,7 +80,39 @@ define([
 
     init();
 
-    return {
-        getCheck: getCheck
+    /**
+     * public
+    **/
+    function resolveCheck(id) {
+        var argsArray = Array.prototype.slice.call(arguments, 1);
+        
+        if (registeredChecks[id]) {
+            return registeredChecks[id].resolve.apply(null, argsArray);
+        }
     }
+
+    function rejectCheck(id) {
+        var argsArray = Array.prototype.slice.call(arguments, 1);
+
+        if (registeredChecks[id]) {
+            return registeredChecks[id].reject.apply(null, argsArray);
+        }
+    }
+
+    function waitForCheck(id) {
+        if (registeredChecks[id]) {
+            return registeredChecks[id].complete;
+        }
+
+        return Promise.reject('no deferred check with id ' + id);
+    }
+
+    return {
+        resolveCheck: resolveCheck,
+        rejectCheck: rejectCheck,
+        waitForCheck: waitForCheck,
+        test: {
+            registerCheck: registerCheck   
+        }
+    };
 });
