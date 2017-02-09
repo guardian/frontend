@@ -122,10 +122,6 @@ define([
     };
 
     // Public
-    function setCompliantOutbrain() {
-        compliantOutbrain = true;
-    }
-
     function setEmailShown(emailName) {
         emailShown = emailName;
     }
@@ -176,7 +172,6 @@ define([
     }
 
     return {
-        setCompliantOutbrain: setCompliantOutbrain,
         setEmailShown: setEmailShown,
         getEmailShown: getEmailShown,
         allEmailCanRun: allEmailCanRun,
