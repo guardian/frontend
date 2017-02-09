@@ -483,14 +483,14 @@ object NewNavigation {
 
     def getSectionOrTagId(page: Page) = {
       val tags = Navigation.getTagsFromPage(page)
-      val intersectionalKeywords = tagPages.intersect(tags.keywordIds)
+      val commonKeywords = tagPages.intersect(tags.keywordIds)
       val isTagPage = page.metadata.isFront && tagPages.contains(page.metadata.id)
-      val isArticleInTagPageSection = intersectionalKeywords.nonEmpty
+      val isArticleInTagPageSection = commonKeywords.nonEmpty
 
       if (isTagPage) {
         page.metadata.id
       } else if (isArticleInTagPageSection) {
-        intersectionalKeywords.head
+        commonKeywords.head
       } else {
         page.metadata.sectionId
       }
