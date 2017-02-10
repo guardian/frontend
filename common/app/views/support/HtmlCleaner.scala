@@ -630,7 +630,7 @@ object setSvgClasses {
   }
 }
 
-case class CommercialMPUsForFronts(isNetworkFront: Boolean) extends HtmlCleaner {
+case class CommercialMPUForFronts(isNetworkFront: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
 
     def isNetworkFrontWithThrasher(element: Element, index: Int): Boolean = {
@@ -653,10 +653,10 @@ case class CommercialMPUsForFronts(isNetworkFront: Boolean) extends HtmlCleaner 
       case (x, i) if !isNetworkFrontWithThrasher(x, i) && !hasAdjacentCommercialContainer(x) => x
     }.zipWithIndex.collect {
       case (x, i) if i % 2 == 0 => x
-    }.slice(0, 10)
+    }.take(10)
 
     for (container <- containersForCommercialMPUs) {
-      container.after(s"""<section>${sliceSlot(containersForCommercialMPUs.indexOf(container), isMobile = true)}</section>""")
+      container.after(s"""<section class="fc-slice__item--mpu-candidate--mobile">${sliceSlot(containersForCommercialMPUs.indexOf(container), isMobile = true)}</section>""")
     }
 
     // On desktop, a MPU slot is simply inserted when there is a slice available

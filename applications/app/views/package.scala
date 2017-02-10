@@ -23,7 +23,7 @@ object IndexCleaner {
     val edition = Edition(request)
     withJsoup(BulletCleaner(html))(
       CommercialComponentHigh(isAdvertisementFeature = false, isNetworkFront = false, hasPageSkin = page.page.metadata.hasPageSkin(edition)),
-      CommercialMPUsForFronts(isNetworkFront = false)
+      CommercialMPUForFronts(isNetworkFront = false)
     )
   }
 }

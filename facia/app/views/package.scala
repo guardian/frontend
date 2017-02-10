@@ -3,7 +3,7 @@ package views
 import common.Edition
 import model.{ApplicationContext, PressedPage}
 import play.api.mvc.RequestHeader
-import views.support.{BulletCleaner, CommercialComponentHigh, CommercialMPUsForFronts}
+import views.support.{BulletCleaner, CommercialComponentHigh, CommercialMPUForFronts}
 import views.support.`package`.withJsoup
 
 object FrontsCleaner {
@@ -11,7 +11,7 @@ object FrontsCleaner {
     val edition = Edition(request)
     withJsoup(BulletCleaner(html))(
       CommercialComponentHigh(page.frontProperties.isPaidContent, page.isNetworkFront, page.metadata.hasPageSkin(edition)),
-      CommercialMPUsForFronts(page.isNetworkFront)
+      CommercialMPUForFronts(page.isNetworkFront)
     )
   }
 }

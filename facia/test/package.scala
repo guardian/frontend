@@ -51,6 +51,7 @@ class FaciaTestSuite extends Suites (
   new slices.DynamicFastTest,
   new slices.DynamicSlowTest,
   new slices.StoryTest,
+  new CommercialMPUForFrontsTest,
   new views.fragments.nav.NavigationTest,
   new FaciaControllerTest,
   new metadata.FaciaMetaDataTest
