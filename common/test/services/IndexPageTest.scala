@@ -60,8 +60,8 @@ import scala.concurrent.Future
         firstContainer.containerLayout.get.remainingCards.length should be(1)
 
         firstContainer.items.length should be(pageSize)
-        firstContainer.items.head.header.headline should be("Is DeMarcus Cousins the NBA's greatest ever bad guy?")
-        firstContainer.items.head.header.url should be("/sport/2017/feb/08/demarcus-cousins-rasheed-wallace-scaramento-kings-technical-fouls")
+        firstContainer.items.head.header.headline should be("Rio 2016 Olympic venues abandoned and derelict six months after Games – video")
+        firstContainer.items.head.header.url should be("/sport/video/2017/feb/10/rio-2016-olympic-venues-abandoned-derelict-video")
     }
   }
 }
