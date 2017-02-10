@@ -6,7 +6,7 @@ const webpack = require('webpack');
 const outputName = 'app-webpack';
 
 module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
-    devtool: env === 'dev' ? 'cheap-module-eval-source-map' : 'source-map',
+    devtool: env === 'dev' ? 'inline-source-map' : 'source-map',
     entry: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
