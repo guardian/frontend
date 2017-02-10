@@ -207,6 +207,8 @@ define([
                         onEmailAdded();
                     });
                 }
+            } else {
+                checkMediator.resolveCheck('isEmailInserted', false);
             }
         };
 
