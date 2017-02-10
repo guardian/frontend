@@ -121,12 +121,6 @@
     @imgForFront(page.banner, page.email.map(_.name))
 }
 
-@page.frontProperties.onPageDescription.map { description =>
-    @paddedRow {
-        <p class="introduction">@description</p>
-    }
-}
-
 @page.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.map { case (collection, collectionIndex) =>
     @paddedRow {
         <h2 class="container-title @if(collectionIndex > 0) { container-title--not-first }">
@@ -142,5 +136,11 @@
                 @otherCard(card, isSlowLayout = collection.collectionType == "slow")
             }
         }
+    }
+}
+
+@page.frontProperties.onPageDescription.map { description =>
+    @paddedRow {
+        <p class="message">@Html(description)</p>
     }
 }
