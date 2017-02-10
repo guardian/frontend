@@ -60,7 +60,8 @@ class ShouldServeFrontTest extends FlatSpec with Matchers with WithTestContext {
         showLatestUpdate = None,
         excludeFromRss = None,
         showTimestamps = None,
-        hideShowMore = None
+        hideShowMore = None,
+        displayHints = None
       )
     )
   )
