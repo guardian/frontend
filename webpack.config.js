@@ -2,16 +2,17 @@
 const path = require('path');
 
 const webpack = require('webpack');
+const Visualizer = require('webpack-visualizer-plugin');
 
 const outputName = 'app-webpack';
 
-module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
-    devtool: env === 'dev' ? 'cheap-module-eval-source-map' : 'source-map',
+module.exports = {
+    devtool: 'source-map',
     entry: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: `${env === 'dev' ? '' : '[chunkhash]/'}${outputName}.js`,
-        chunkFilename: `${env === 'dev' ? '' : '[chunkhash]/'}${outputName}.chunk-[id].js`,
+        filename: `[chunkhash]/${outputName}.js`,
+        chunkFilename: `[chunkhash]/${outputName}.chunk-[id].js`,
     },
     resolve: {
         modules: [
@@ -81,16 +82,18 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
         ],
     },
     plugins: [
+        new webpack.optimize.AggressiveMergingPlugin(),
+        new Visualizer({
+            filename: './webpack-stats.html',
+        }),
         // Makes videosjs available to all modules in the videojs chunk.
         // videojs plugins expect this object to be available globally,
         // but it's sufficient to scope it at the chunk level
         new webpack.ProvidePlugin({
             videojs: 'videojs',
         }),
-        // optional plugins passed in in production
-        ...plugins,
     ],
     externals: {
         xhr2: {},
     },
-});
+};

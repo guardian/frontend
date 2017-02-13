@@ -13,6 +13,7 @@ module.exports = {
             'stripe/**/*',
             'react/**/*',
             'ophan/**/*',
+            'foresee/**/*',
         ], path.resolve(target, 'javascripts', 'vendor'), {
             cwd: path.resolve(vendor, 'javascripts'),
             parents: true,

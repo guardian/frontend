@@ -5,7 +5,10 @@ define([
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/contributions-epic-ask-four-stagger',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
-    'common/modules/experiments/tests/contributions-epic-one-line-edits'
+    'common/modules/experiments/tests/contributions-epic-one-line-edits',
+    'common/modules/experiments/tests/contributions-epic-paywall',
+    'common/modules/experiments/tests/contributions-epic-billionaire'
+
 ], function (
     segmentUtil,
     viewLog,
@@ -13,12 +16,14 @@ define([
     alwaysAsk,
     askFourStagger,
     askFourEarning,
-    oneLineEdits
+    oneLineEdits,
+    paywall,
+    billionaire
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */
-    var tests = [alwaysAsk, oneLineEdits, askFourEarning, brexit, askFourStagger];
+    var tests = [alwaysAsk, oneLineEdits, paywall, billionaire, askFourEarning, brexit, askFourStagger];
 
     return {
         getTest: function() {

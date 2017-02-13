@@ -121,12 +121,6 @@
     @imgForFront(page.banner, page.email.map(_.name))
 }
 
-@page.frontProperties.onPageDescription.map { description =>
-    @paddedRow {
-        <p class="introduction">@description</p>
-    }
-}
-
 @page.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.map { case (collection, collectionIndex) =>
     @paddedRow {
         <h2 class="container-title @if(collectionIndex > 0) { container-title--not-first }">
@@ -134,7 +128,7 @@
         </h2>
     }
 
-    @collection.curatedPlusBackfillDeduplicated.take(6).zipWithIndex.map { case (pressedContent, cardIndex) =>
+    @collection.curatedPlusBackfillDeduplicated.take(collection.config.displayHints.flatMap(_.maxItemsToDisplay).getOrElse(6)).zipWithIndex.map { case (pressedContent, cardIndex) =>
         @defining(FaciaCard.fromTrail(pressedContent, collection.config, ItemClasses.showMore, showSeriesAndBlogKickers = false)) {
             case card: ContentCard => {
                 @if(cardIndex == 0) {
@@ -145,5 +139,11 @@
             }
             case _ => {}
         }
+    }
+}
+
+@page.frontProperties.onPageDescription.map { description =>
+    @paddedRow {
+        <p class="message">@Html(description)</p>
     }
 }
