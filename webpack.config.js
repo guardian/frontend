@@ -16,7 +16,6 @@ module.exports = {
     },
     resolve: {
         modules: [
-            path.join(__dirname, 'static', 'src'),
             path.join(__dirname, 'static', 'src', 'javascripts'),
             path.join(__dirname, 'static', 'src', 'javascripts-legacy'),
             path.join(__dirname, 'static', 'vendor', 'javascripts'),
@@ -29,20 +28,21 @@ module.exports = {
             membership: 'projects/membership',
             commercial: 'projects/commercial',
 
+            // #wp-rjs weird old aliasing from requirejs
             lodash: 'lodash-amd/compat',
             picturefill: 'projects/common/utils/picturefill',
             Promise: 'when/es6-shim/Promise',
+            raven: 'raven-js',
+            EventEmitter: 'wolfy87-eventemitter',
+            videojs: 'video.js',
+            'videojs-ads-lib': 'videojs-contrib-ads',
 
             stripe: 'stripe/stripe.min',
-            svgs: 'inline-svgs',
+            svgs: path.join(__dirname, 'static', 'src', 'inline-svgs'),
             'ophan/ng': 'ophan/ophan.ng',
 
             // #wp-rjs once r.js is gone, these can be unaliased and modules updated
             react: 'react/addons',
-
-            // plugins
-            text: 'components/requirejs-text/text',
-            inlineSvg: 'projects/common/utils/inlineSvg',
         },
     },
     resolveLoader: {
