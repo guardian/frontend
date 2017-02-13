@@ -216,33 +216,33 @@ object NewNavigation {
     val name = ""
 
     val uk = NavLinkLists(List(
-      NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
-      NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS"),
-      NavLink("dating", "https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES"),
+      apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
+      jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader"),
+      dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
       NavLink("professional", "/guardian-professional"),
-      NavLink("masterclasses", "/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"),
+      masterClasses.copy(url = masterClasses.url + "?INTCMP=masterclasses_uk_web_newheader"),
       NavLink("courses", "/?INTCMP=NGW_TOPNAV_UK_GU_COURSES"),
       NavLink("holidays", "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav"),
       todaysPaper, observer, crosswords
     ))
 
     val au = NavLinkLists(List(
-      NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
-      NavLink("masterclasses", "/guardian-masterclasses-australia"),
+      apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
+      masterClasses.copy(url = masterClasses.url + "?INTCMP=masterclasses_au_web_newheader"),
       crosswords, video
     ))
 
     val us = NavLinkLists(List(
-      NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
-      NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_US_GU_JOBS"),
+      apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
+      jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
       crosswords, video
     ))
 
     val int = NavLinkLists(List(
-      NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
-      NavLink("dating", "https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES"),
-      NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS"),
-      NavLink("masterclasses", "/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"),
+      apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
+      dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
+      jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
+      masterClasses.copy(url = masterClasses.url + "?INTCMP=masterclasses_int_web_newheader"),
       todaysPaper, observer, crosswords, video
     ))
   }
