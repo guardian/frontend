@@ -28,13 +28,10 @@
             >
 
             @article.contentCard match {
-                case card: ContentCard => {
-                    @contentCard(card, 0, 0, "all",  false, false)
-                }
+                case card: ContentCard => { @contentCard(card, 0, 0, "all",  false, false) }
                 case _ => {}
             }
-
-    </div>
+        </div>
     }
 }
 </div>
