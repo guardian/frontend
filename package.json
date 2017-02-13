@@ -10,6 +10,7 @@
     "html5shiv": "^3.7.3",
     "hyperscript-helpers": "^3.0.0",
     "immutable": "^3.8.1",
+    "lodash-amd": "~2.4.1",
     "monapt": "^0.5.4",
     "react": "0.13.2",
     "tcp-ping": "^0.1.1",

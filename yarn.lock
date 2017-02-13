@@ -4386,6 +4386,10 @@ localtunnel@1.8.1:
     request "2.65.0"
     yargs "3.29.0"
 
+lodash-amd@~2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/lodash-amd/-/lodash-amd-2.4.1.tgz#f8e1ceceeb818f7f3284ec0c3581d63c51f3ec63"
+
 lodash._arraycopy@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._arraycopy/-/lodash._arraycopy-3.0.0.tgz#76e7b7c1f1fb92547374878a562ed06a3e50f6e1"
