@@ -1,4 +1,5 @@
 @import common.LinkTo
+@import layout.ContentCard
 @import model.SaveForLaterItem
 @import views.html.fragments.items.facia_cards.contentCard
 @import views.support.RenderClasses
@@ -26,8 +27,14 @@
             }
             >
 
-            @contentCard(article.contentCard, 0, 0, "all",  false, false)
-        </div>
+            @article.contentCard match {
+                case card: ContentCard => {
+                    @contentCard(card, 0, 0, "all",  false, false)
+                }
+                case _ => {}
+            }
+
+    </div>
     }
 }
 </div>
