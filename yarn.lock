@@ -948,6 +948,10 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
+bean@~1.0.14:
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/bean/-/bean-1.0.15.tgz#b4a9fff82618b071471676c8b190868048c34775"
+
 beeper@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/beeper/-/beeper-1.1.0.tgz#9ee6fc1ce7f54feaace7ce73588b056037866a2c"
@@ -1018,6 +1022,10 @@ body-parser@^1.12.4:
     qs "6.2.0"
     raw-body "~2.1.7"
     type-is "~1.6.13"
+
+bonzo@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/bonzo/-/bonzo-2.0.0.tgz#a871618120acb62d891268377fff809162d159a0"
 
 boom@2.x.x:
   version "2.10.1"
@@ -2635,6 +2643,10 @@ fast-levenshtein@~2.0.4:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.5.tgz#bd33145744519ab1c36c3ee9f31f08e9079b67f2"
 
+fastdom@0.8.5:
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/fastdom/-/fastdom-0.8.5.tgz#4066d73a8a7ca9d9ee6cef103043aa1a0e2f19dd"
+
 fastparse@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/fastparse/-/fastparse-1.1.1.tgz#d1e2643b38a94d7583b479060e6c4affc94071f8"
@@ -2660,6 +2672,10 @@ fd-slicer@~1.0.1:
   resolved "https://registry.yarnpkg.com/fd-slicer/-/fd-slicer-1.0.1.tgz#8b5bcbd9ec327c5041bf9ab023fd6750f1177e65"
   dependencies:
     pend "~1.2.0"
+
+"fence@https://github.com/guardian/fence.git#~0.2.11":
+  version "0.2.11"
+  resolved "https://github.com/guardian/fence.git#de184dfb10c625ed2575b594407db58fcd83c3f2"
 
 figures:
   version "2.0.0"
@@ -7212,6 +7228,10 @@ window-size@^0.1.0, window-size@^0.1.2:
 window-size@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.2.0.tgz#b4315bb4214a3d7058ebeee892e13fa24d98b075"
+
+wolfy87-eventemitter@~4.2.6:
+  version "4.2.11"
+  resolved "https://registry.yarnpkg.com/wolfy87-eventemitter/-/wolfy87-eventemitter-4.2.11.tgz#f2b42aab226deab6f5352f4b449bd071d609ab33"
 
 wordwrap@0.0.2:
   version "0.0.2"

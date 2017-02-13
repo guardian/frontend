@@ -28,12 +28,8 @@ module.exports = {
             facia: 'projects/facia',
             membership: 'projects/membership',
             commercial: 'projects/commercial',
-            bean: 'components/bean/bean',
-            bonzo: 'components/bonzo/bonzo',
-            domReady: 'components/domready/ready',
-            EventEmitter: 'components/eventEmitter/EventEmitter',
-            fastdom: 'components/fastdom/index',
-            fence: 'components/fence/fence',
+
+
             lodash: 'components/lodash-amd',
             picturefill: 'projects/common/utils/picturefill',
             Promise: 'components/when/Promise',
