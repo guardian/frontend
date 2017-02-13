@@ -4,9 +4,10 @@ import com.gu.contentapi.client.ContentApiClientLogic
 import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.model.{ItemQuery, SearchQuery}
 import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
-import com.gu.facia.api.models.Collection
+import com.gu.facia.api.models.{Collection, Front}
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.ApiClient
+import com.gu.facia.client.models.{Breaking, Canonical, CollectionConfigJson, ConfigJson, Special}
 import common._
 import common.commercial.EditionBranding
 import conf.Configuration
@@ -183,12 +184,41 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
       .map(_.map(PressedContent.make))
   }
 
+  private def isHighPriorityCollection(collection: CollectionConfigJson): Boolean = {
+    collection.metadata.exists(_.exists({
+      case Breaking | Special | Canonical => true
+      case _ => false
+    }))
+  }
+
+  private def highPriorityCollectionsForPath(path: String, config: ConfigJson): List[String] = {
+    for {
+      front <- config.fronts.get(path).toList
+      collectionId <- front.collections
+      collectionConfig <- config.collections.get(collectionId) if isHighPriorityCollection(collectionConfig)
+    } yield collectionId
+  }
+
+  private def enrichEmailFronts(path: String, config: ConfigJson)(collections: List[String]) =
+    (path match {
+      case "email/uk/daily" => highPriorityCollectionsForPath("uk", config)
+      case "email/us/daily" => highPriorityCollectionsForPath("us", config)
+      case "email/au/daily" => highPriorityCollectionsForPath("au", config)
+      case _ => List.empty
+    }) ++ collections
+
   private def getCollectionIdsForPath(path: String): Response[List[String]] =
-    for(
-      fronts <- FAPI.getFronts()
-    ) yield fronts.find(_.id == path).map(_.collections).getOrElse {
-      log.warn(s"There are no collections for path $path")
-      throw new IllegalStateException(s"There are no collections for path $path")
+    for {
+      config <- Response.Async.Right(fapiClient.config)
+    } yield {
+      Front.frontsFromConfig(config)
+        .find(_.id == path)
+        .map(_.collections)
+        .map(enrichEmailFronts(path, config))
+        .getOrElse {
+        log.warn(s"There are no collections for path $path")
+        throw new IllegalStateException(s"There are no collections for path $path")
+      }
     }
 
   def getPressedFrontForPath(path: String): Response[PressedPage] = {
