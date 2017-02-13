@@ -16,6 +16,7 @@
     "immutable": "^3.8.1",
     "lodash-amd": "~2.4.1",
     "monapt": "^0.5.4",
+    "qwery": "3.4.2",
     "react": "0.13.2",
     "tcp-ping": "^0.1.1",
     "virtual-dom": "^2.1.1",
