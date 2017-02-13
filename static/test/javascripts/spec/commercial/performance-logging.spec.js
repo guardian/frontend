@@ -1,17 +1,15 @@
 define([
+    'Promise',
     'helpers/fixtures',
     'helpers/injector'
-], function (fixtures, Injector) {
+], function (Promise, fixtures, Injector) {
     describe('Performance Logging', function () {
         var injector = new Injector();
-        var googletag = {
-            pubads: function () { return pubads }
-        };
         var pubads = {
             addEventListener: jasmine.createSpy('addEventListener')
         };
-        var mockBeacon = {
-            postJson: jasmine.createSpy('postJson')
+        var googletag = {
+            pubads: function () { return pubads; }
         };
         var performanceLogging;
 
