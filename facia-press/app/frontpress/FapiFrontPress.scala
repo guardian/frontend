@@ -186,7 +186,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
 
   private def isHighPriorityCollection(collection: CollectionConfigJson): Boolean = {
     collection.metadata.exists(_.exists({
-      case Breaking | Special | Canonical => true
+      case Special | Canonical => true
       case _ => false
     }))
   }
