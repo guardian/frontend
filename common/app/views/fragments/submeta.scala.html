@@ -10,7 +10,6 @@
 @if(amp || mvt.ABNewNavVariantSeven.isParticipating) {
     <div class="submeta2 mobile-only">
         <div class="submeta2__section-labels">
-
             @if(ArticleBadgesSwitch.isSwitchedOn) {
                 @badgeFor(content).map { badge =>
                     <div class="submeta2__badge">
@@ -25,13 +24,15 @@
                 }
             }
 
-            @if(!(content.content.isImmersive && content.content.tags.isArticle)) {
-                <a class="submeta2__link submeta2__link--first"
-                    data-link-name="article section"
-                    href="@LinkTo {/@content.content.sectionLabelLink}">
-                        @Html(Localisation(content.content.sectionLabelName))
-                </a>
-            }
+            <div class="submeta2__links">
+                @if(!(content.content.isImmersive && content.content.tags.isArticle)) {
+                    <a class="submeta2__link submeta2__link--first"
+                        data-link-name="article section"
+                        href="@LinkTo {/@content.content.sectionLabelLink}">
+                            @Html(Localisation(content.content.sectionLabelName))
+                    </a>
+                }
+            </div>
 
             @content.content.blogOrSeriesTag.map { series =>
                 <a class="submeta2__link" href="@LinkTo {/@series.id}">@series.name</a>
@@ -43,30 +44,32 @@
         </div>
 
         <div class="submeta2__keywords">
-            @if(content.tags.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                @defining(content.tags.keywords.filterNot(_.isSectionTag).slice(1, 6)) { shownKeywords =>
-                    @if(shownKeywords.nonEmpty) {
-                        @shownKeywords.zipWithRowInfo.map{ case(keyword, row) =>
-                            <a class="submeta2__link @if(row.rowNum == 1){submeta2__link--first}"
-                                href="@LinkTo(keyword.metadata.url)"
-                                data-link-name="keyword: @keyword.id">
-                                    @keyword.name
-                                    @if(content.tags.keywords.filter(_ != keyword).find(_.name == keyword.name)){ (@keyword.properties.sectionName) }
+            <div class="submeta2__links">
+                @if(content.tags.keywords.filterNot(_.isSectionTag).nonEmpty) {
+                    @defining(content.tags.keywords.filterNot(_.isSectionTag).slice(1, 6)) { shownKeywords =>
+                        @if(shownKeywords.nonEmpty) {
+                            @shownKeywords.zipWithRowInfo.map{ case(keyword, row) =>
+                                <a class="submeta2__link @if(row.rowNum == 1){submeta2__link--first}"
+                                    href="@LinkTo(keyword.metadata.url)"
+                                    data-link-name="keyword: @keyword.id">
+                                        @keyword.name
+                                        @if(content.tags.keywords.filter(_ != keyword).find(_.name == keyword.name)){ (@keyword.properties.sectionName) }
+                                </a>
+                            }
+                        }
+                    }
+
+                    @if(content.tags.isArticle && !content.tags.isLiveBlog) {
+                        @content.tags.tones.headOption.map { tone =>
+                            <a class="submeta2__link"
+                                href="@LinkTo(tone.metadata.url)"
+                                data-link-name="tone: @tone.name">
+                                    @tone.name.toLowerCase
                             </a>
                         }
                     }
                 }
-
-                @if(content.tags.isArticle && !content.tags.isLiveBlog) {
-                    @content.tags.tones.headOption.map { tone =>
-                        <a class="submeta2__link"
-                            href="@LinkTo(tone.metadata.url)"
-                            data-link-name="tone: @tone.name">
-                                @tone.name.toLowerCase
-                        </a>
-                    }
-                }
-            }
+        </div>
         </div>
         @if(content.showBottomSocialButtons) {
             <div data-component="share" class="submeta__share">
