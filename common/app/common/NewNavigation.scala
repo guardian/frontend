@@ -11,14 +11,7 @@ case class NavLinkLists(mostPopular: Seq[NavLink], leastPopular: Seq[NavLink] = 
 
 object NewNavigation {
 
-  var PrimaryLinks = List(
-    NavLink("news", "/"),
-    NavLink("opinion", "/commentisfree"),
-    NavLink("sport", "/sport"),
-    NavLink("arts", "/culture"),
-    NavLink("life", "/lifeandstyle")
-  )
-
+  var PrimaryLinks = List(headlines, opinion, sport, culture, lifestyle)
   val topLevelSections = List(News, Opinion, Sport, Arts, Life)
 
   def getMembershipLinks(edition: Edition) = {
@@ -345,7 +338,7 @@ object NewNavigation {
         val section = sectionList.head
         val parentSection = section.parentSection.getPopularEditionalisedNavLinks(edition).drop(1)
 
-        if (parentSection.contains(section.navLink) || section.navLink == headlines) {
+        if (parentSection.contains(section.navLink) || NewNavigation.PrimaryLinks.contains(section.navLink)) {
           parentSection
         } else {
           Seq(section.navLink) ++ parentSection

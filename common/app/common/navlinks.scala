@@ -3,7 +3,7 @@ package common
 object NavLinks {
   /* NEWS */
 
-  val headlines = NavLink("headlines", "/", "", iconName = "home")
+  val headlines = NavLink("news", "/", "",longTitle = "headlines", iconName = "home")
   val ukNews = NavLink("UK", "/uk-news", "uk-news", longTitle = "UK news")
   val world = NavLink("world", "/world", "world", longTitle = "world news")
   val environment = NavLink("environment", "/environment", "environment")
@@ -83,7 +83,7 @@ object NavLinks {
   val NHL = NavLink("NHL", "/sport/nhl", "sport/nhl")
 
   /* ARTS */
-  val culture = NavLink("culture", "/culture", "culture", longTitle = "culture home", iconName = "home")
+  val culture = NavLink("arts", "/culture", "culture", longTitle = "culture home", iconName = "home")
   val film = NavLink("film", "/film", "film")
   val tvAndRadio = NavLink("tv & radio", "/tv-and-radio", "tv-and-radio")
   val music = NavLink("music", "/music", "music")
@@ -94,7 +94,7 @@ object NavLinks {
   val classical = NavLink("classical", "/music/classicalmusicandopera", "music/classicalmusicandopera")
 
   /* LIFE */
-  val lifestyle = NavLink("lifestyle", "/lifeandstyle", "lifeandstyle", longTitle = "lifestyle home", iconName = "home")
+  val lifestyle = NavLink("life", "/lifeandstyle", "lifeandstyle", longTitle = "lifestyle home", iconName = "home")
   val fashion = NavLink("fashion", "/fashion", "fashion")
   val food = NavLink("food", "/lifeandstyle/food-and-drink", "lifeandstyle/food-and-drink")
   val travel = NavLink("travel", "/travel", "travel")
