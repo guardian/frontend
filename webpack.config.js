@@ -34,7 +34,6 @@ module.exports = {
             Promise: 'when/Promise',
             raven: 'raven-js/raven',
 
-            reqwest: 'components/reqwest/reqwest',
             stripe: 'stripe/stripe.min',
             svgs: 'inline-svgs',
             'ophan/ng': 'ophan/ophan.ng',

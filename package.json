@@ -20,6 +20,7 @@
     "qwery": "3.4.2",
     "raven-js": "~1.1.16",
     "react": "0.13.2",
+    "reqwest": "2.0.5",
     "tcp-ping": "^0.1.1",
     "virtual-dom": "^2.1.1",
     "webshot": "^0.18.0",
