@@ -230,23 +230,19 @@ object NewNavigation {
       NavLink("masterclasses", "/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"),
       NavLink("courses", "/?INTCMP=NGW_TOPNAV_UK_GU_COURSES"),
       NavLink("holidays", "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav"),
-      NavLink("today's paper", "/theguardian"),
-      NavLink("the observer", "/observer"),
-      NavLink("crosswords", "/crosswords")
+      todaysPaper, observer, crosswords
     ))
 
     val au = NavLinkLists(List(
       NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
       NavLink("masterclasses", "/guardian-masterclasses-australia"),
-      NavLink("crosswords", "/crosswords"),
-      NavLink("video", "/video")
+      crosswords, video
     ))
 
     val us = NavLinkLists(List(
       NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
       NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_US_GU_JOBS"),
-      NavLink("crosswords", "/crosswords"),
-      NavLink("video", "/video")
+      crosswords, video
     ))
 
     val int = NavLinkLists(List(
@@ -254,10 +250,7 @@ object NewNavigation {
       NavLink("dating", "https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES"),
       NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS"),
       NavLink("masterclasses", "/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"),
-      NavLink("today's paper", "/theguardian"),
-      NavLink("the observer", "/observer"),
-      NavLink("crosswords", "/crosswords"),
-      NavLink("video", "/video")
+      todaysPaper, observer, crosswords, video
     ))
   }
 
@@ -375,20 +368,21 @@ object NewNavigation {
 
   object SubSectionLinks {
 
-    val ukNews = NavLinkLists(
-      List(education, media, society, law, scotland),
+    val ukNewsSubNav = NavLinkLists(
+      List(ukNews, education, media, society, law, scotland),
       List(wales, northernIreland)
     )
 
     val worldSubNav = NavLinkLists(
-      List(europe, usNews, americas, asia, australiaNews),
+      List(world, europe, usNews, americas, asia, australiaNews),
       List(africa, middleEast, cities, globalDevelopment)
     )
 
     val moneySubNav = NavLinkLists(List(property, pensions, savings, borrowing, careers))
 
-    val football = NavLinkLists(
+    val footballSubNav = NavLinkLists(
       List(
+        football,
         NavLink("live scores", "/football/live"),
         NavLink("tables", "/football/tables"),
         NavLink("competitions", "/football/competitions"),
@@ -398,8 +392,9 @@ object NewNavigation {
       )
     )
 
-    val todaysPaper = NavLinkLists(
+    val todaysPaperSubNav = NavLinkLists(
       List(
+        todaysPaper,
         NavLink("editorials & letters", "/theguardian/mainsection/editorialsandreply"),
         NavLink("obituaries", "/tone/obituaries"),
         NavLink("g2", "/theguardian/g2"),
@@ -409,16 +404,18 @@ object NewNavigation {
       )
     )
 
-    val theObserver = NavLinkLists(
+    val theObserverSubNav = NavLinkLists(
       List(
+        observer,
         NavLink("comment", "/theobserver/news/comment"),
         NavLink("the new review", "/theobserver/new-review"),
         NavLink("observer magazine", "/theobserver/magazine")
       )
     )
 
-    val crosswords = NavLinkLists(
+    val crosswordsSubNav = NavLinkLists(
       List(
+        crosswords,
         NavLink("blog", "/crosswords/crossword-blog"),
         NavLink("editor", "/crosswords/series/crossword-editor-update"),
         NavLink("quick", "/crosswords/series/quick"),
@@ -437,18 +434,18 @@ object NewNavigation {
     case object businessSubNav extends EditionalisedNavigationSection {
       val name = ""
 
-      val uk = NavLinkLists(List(economics, banking, retail, markets, eurozone))
-      val us = NavLinkLists(List(economics, sustainableBusiness, diversityEquality, smallBusiness))
-      val au = NavLinkLists(List(markets, money))
+      val uk = NavLinkLists(List(business, economics, banking, retail, markets, eurozone))
+      val us = NavLinkLists(List(business, economics, sustainableBusiness, diversityEquality, smallBusiness))
+      val au = NavLinkLists(List(business, markets, money))
       val int = uk
     }
 
     case object environmentSubNav extends EditionalisedNavigationSection {
       val name = ""
 
-      val uk = NavLinkLists(List(climateChange, wildlife, energy, pollution))
+      val uk = NavLinkLists(List(environment, climateChange, wildlife, energy, pollution))
       val us = uk
-      val au = NavLinkLists(List(cities, globalDevelopment, sustainableBusiness))
+      val au = NavLinkLists(List(environment, cities, globalDevelopment, sustainableBusiness))
       val int = uk
     }
 
@@ -468,13 +465,13 @@ object NewNavigation {
     )
 
     val subSectionLinks = List(
-      SubSectionLink("uk-news", ukNews),
+      SubSectionLink("uk-news", ukNewsSubNav),
       SubSectionLink("world", worldSubNav),
       SubSectionLink("money", moneySubNav),
-      SubSectionLink("football", football),
-      SubSectionLink("todayspaper", todaysPaper),
-      SubSectionLink("theobserver", theObserver),
-      SubSectionLink("crosswords", crosswords)
+      SubSectionLink("football", footballSubNav),
+      SubSectionLink("todayspaper", todaysPaperSubNav),
+      SubSectionLink("theobserver", theObserverSubNav),
+      SubSectionLink("crosswords", crosswordsSubNav)
     )
 
     def isEditionalistedSubSection(sectionId: String) = {

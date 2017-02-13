@@ -111,6 +111,11 @@ object NavLinks {
   val travelAustralasia = NavLink("australasia", "/travel/australasia", "travel/australasia")
   val travelAsia = NavLink("asia", "/travel/asia", "travel/asia")
 
+  val todaysPaper = NavLink("today's paper", "/theguardian")
+  val observer = NavLink("the observer", "/observer")
+  val crosswords = NavLink("crosswords", "/crosswords")
+  val video =  NavLink("video", "/video")
+
   val tagPages = List(
     "technology/games",
     "us-news/us-politics",
