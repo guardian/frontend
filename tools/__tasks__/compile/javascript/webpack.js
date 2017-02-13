@@ -5,21 +5,29 @@ const Observable = require('any-observable');
 
 const webpack = require('webpack');
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
+const Visualizer = require('webpack-visualizer-plugin');
 const chalk = require('chalk');
 
 module.exports = {
     description: 'Create Webpack bundles',
     task: () => new Observable((observer) => {
-        const bundler = webpack(require('../../../../webpack.config.js'));
-        bundler.apply(new ProgressPlugin((progress, msg) => observer.next(`${Math.round(progress * 100)}% ${msg}`)));
-
-        // set equivalents to -p flag
-        bundler.apply(new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production'),
-        }));
-        bundler.apply(new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-        }));
+        const config = require('../../../../webpack.config.js')({
+            env: 'production',
+            plugins: [
+                new webpack.optimize.AggressiveMergingPlugin(),
+                new Visualizer({
+                    filename: './webpack-stats.html',
+                }),
+                new webpack.DefinePlugin({
+                    'process.env.NODE_ENV': JSON.stringify('production'),
+                }),
+                new webpack.optimize.UglifyJsPlugin({
+                    sourceMap: true,
+                }),
+                new ProgressPlugin((progress, msg) => observer.next(`${Math.round(progress * 100)}% ${msg}`)),
+            ],
+        });
+        const bundler = webpack(config);
 
         bundler.run((err, stats) => {
             if (err) {
