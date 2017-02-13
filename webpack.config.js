@@ -33,7 +33,7 @@ module.exports = {
             picturefill: 'projects/common/utils/picturefill',
             Promise: 'when/Promise',
 
-            raven: 'components/raven-js/raven',
+            raven: 'raven-js/raven',
             classnames: 'components/classnames/index',
             reqwest: 'components/reqwest/reqwest',
             stripe: 'stripe/stripe.min',

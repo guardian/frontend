@@ -5823,6 +5823,10 @@ range-parser@^1.2.0, range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
+raven-js@~1.1.16:
+  version "1.1.22"
+  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-1.1.22.tgz#1a9d13621c5ec4d02981e1e4654359dad4104c8a"
+
 raw-body@~2.1.7:
   version "2.1.7"
   resolved "https://registry.yarnpkg.com/raw-body/-/raw-body-2.1.7.tgz#adfeace2e4fb3098058014d08c072dcc59758774"
