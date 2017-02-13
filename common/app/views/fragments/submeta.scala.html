@@ -32,15 +32,15 @@
                             @Html(Localisation(content.content.sectionLabelName))
                     </a>
                 }
-            </div>
 
-            @content.content.blogOrSeriesTag.map { series =>
-                <a class="submeta2__link" href="@LinkTo {/@series.id}">@series.name</a>
-            }.getOrElse {
-                @if(content.content.isFromTheObserver) {
-                    <a class="submeta2__link" href="http://observer.theguardian.com">The Observer</a>
+                @content.content.blogOrSeriesTag.map { series =>
+                    <a class="submeta2__link" href="@LinkTo {/@series.id}">@series.name</a>
+                }.getOrElse {
+                    @if(content.content.isFromTheObserver) {
+                        <a class="submeta2__link" href="http://observer.theguardian.com">The Observer</a>
+                    }
                 }
-            }
+            </div>
         </div>
 
         <div class="submeta2__keywords">
@@ -69,7 +69,7 @@
                         }
                     }
                 }
-        </div>
+            </div>
         </div>
         @if(content.showBottomSocialButtons) {
             <div data-component="share" class="submeta__share">
