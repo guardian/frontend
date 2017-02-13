@@ -32,7 +32,7 @@ module.exports = {
 
             lodash: 'lodash-amd',
             picturefill: 'projects/common/utils/picturefill',
-            Promise: 'components/when/Promise',
+            Promise: 'when/Promise',
             qwery: 'components/qwery/qwery',
             raven: 'components/raven-js/raven',
             classnames: 'components/classnames/index',
