@@ -32,9 +32,8 @@ module.exports = {
             lodash: 'lodash-amd',
             picturefill: 'projects/common/utils/picturefill',
             Promise: 'when/Promise',
-
             raven: 'raven-js/raven',
-            classnames: 'components/classnames/index',
+
             reqwest: 'components/reqwest/reqwest',
             stripe: 'stripe/stripe.min',
             svgs: 'inline-svgs',
