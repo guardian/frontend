@@ -30,7 +30,7 @@ module.exports = {
             commercial: 'projects/commercial',
 
 
-            lodash: 'components/lodash-amd',
+            lodash: 'lodash-amd',
             picturefill: 'projects/common/utils/picturefill',
             Promise: 'components/when/Promise',
             qwery: 'components/qwery/qwery',
