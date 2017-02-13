@@ -119,4 +119,24 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 2, 22),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-paywall",
+    "Tests a lack of paywall centric message on the epic",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 2, 22),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-billionaire",
+    "Tests a lack of billionaire owner centric message on the epic",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 2, 22),
+    exposeClientSide = true
+  )
 }

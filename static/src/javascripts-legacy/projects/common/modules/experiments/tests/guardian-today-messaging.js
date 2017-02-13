@@ -7,8 +7,8 @@ define([
         this.expiry = '2017-03-28';
         this.author = 'David Furey';
         this.description = 'Test 3 different messages to encourage users to signup to the Guardian Today email newsletter';
-        this.audience = 0.01;
-        this.audienceOffset = 0;
+        this.audience = 0.05;
+        this.audienceOffset = 0.5;
         this.successMeasure = 'Signup rate is higher for one variant';
         this.audienceCriteria = 'All users who visit an applicable article';
         this.dataLinkNames = '';
