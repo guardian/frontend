@@ -19,7 +19,7 @@ import scala.util.Try
 
 object QueryDefaults extends implicits.Collections {
   // NOTE - do NOT add body to this list
-  val trailFields = List(
+  val trailFieldsList = List[String](
     "byline",
     "headline",
     "trail-text",
@@ -31,8 +31,14 @@ object QueryDefaults extends implicits.Collections {
     "commentable",
     "commentCloseDate",
     "starRating",
-    "productionOffice"
-  ).mkString(",")
+    "productionOffice")
+
+  val mainField = List[String]("main")
+
+  val trailFields = trailFieldsList.mkString(",")
+
+  //main field is needed for Main Media Atom data required by InlineYouTubeDisplayElement
+  val trailFieldsWithMain: String = (trailFieldsList ::: mainField).mkString(",")
 
   val references = List(
     "pa-football-competition",
@@ -97,13 +103,15 @@ trait ApiQueryDefaults extends Logging {
     .showReferences(QueryDefaults .references)
     .showPackages(true)
     .showRights("syndicatable")
+    .showAtoms("media")
 
   //common fields that we use across most queries.
   def search(edition: Edition): SearchQuery = search
     .showTags("all")
     .showReferences(QueryDefaults.references)
-    .showFields(QueryDefaults.trailFields)
+    .showFields(QueryDefaults.trailFieldsWithMain)
     .showElements("all")
+    .showAtoms("media")
 }
 
 // This trait extends ContentApiClientLogic with Cloudwatch metrics that monitor

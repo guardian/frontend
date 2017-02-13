@@ -32,7 +32,8 @@ class ContainerModelTest extends FlatSpec with Matchers with OptionValues {
       showLatestUpdate = false,
       excludeFromRss = false,
       showTimestamps = false,
-      hideShowMore
+      hideShowMore,
+      displayHints = None
     )
 
     PressedCollection(

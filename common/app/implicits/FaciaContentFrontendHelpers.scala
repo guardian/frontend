@@ -35,7 +35,8 @@ object FaciaContentFrontendHelpers {
        bodyElement <- Some(atomContainer.getElementsByTag("gu-atom"))
        atomId <- Some(bodyElement.attr("data-atom-id"))
        mainMediaAtom <- atoms.media.find(ma => ma.id == atomId && ma.assets.exists(_.platform == MediaAssetPlatform.Youtube))
-     } yield mainMediaAtom
+       nonExpiredMediaAtom <- if (!mainMediaAtom.expired.getOrElse(false)) Some(mainMediaAtom) else None
+     } yield nonExpiredMediaAtom
 
 
     def mainVideo: Option[VideoElement] = {
