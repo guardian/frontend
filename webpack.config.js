@@ -29,10 +29,9 @@ module.exports = {
             membership: 'projects/membership',
             commercial: 'projects/commercial',
 
-            lodash: 'lodash-amd',
+            lodash: 'lodash-amd/compat',
             picturefill: 'projects/common/utils/picturefill',
-            Promise: 'when/Promise',
-            raven: 'raven-js/raven',
+            Promise: 'when/es6-shim/Promise',
 
             stripe: 'stripe/stripe.min',
             svgs: 'inline-svgs',
