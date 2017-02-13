@@ -216,8 +216,8 @@ object Commercial {
       cardHeadline: String
     ) {
       val pipeSeparated =
-        s"$context | ${ edition.id } | $frontId | ${ containerIndex + 1 } | $containerTitle | $sponsorName | " +
-        s"${ cardIndex + 1 } | $cardHeadline"
+        s"$context | ${ edition.id } | $frontId | container-${ containerIndex + 1 } | $containerTitle | " +
+        s"$sponsorName | card-${ cardIndex + 1 } | $cardHeadline"
     }
 
     def mkInteractionTrackingCode(
