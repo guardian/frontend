@@ -36,12 +36,6 @@ module.exports = {
             stripe: 'stripe/stripe.min',
             svgs: 'inline-svgs',
             'ophan/ng': 'ophan/ophan.ng',
-            videojs: 'components/video.js/video',
-            'videojs-embed': 'components/videojs-embed/videojs.embed',
-            'videojs-ima': 'components/videojs-ima/videojs.ima',
-            'videojs-ads-lib': 'components/videojs-contrib-ads/videojs.ads',
-            'videojs-persistvolume': 'components/videojs-persistvolume/videojs.persistvolume',
-            'videojs-playlist': 'components/videojs-playlist-audio/videojs.playlist',
 
             // #wp-rjs once r.js is gone, these can be unaliased and modules updated
             react: 'react/addons',
