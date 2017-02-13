@@ -205,21 +205,6 @@ object Commercial {
 
   object TrackingCodeBuilder extends implicits.Requests {
 
-    private case class TrackingCode(
-      context: String,
-      edition: Edition,
-      frontId: String,
-      containerIndex: Int,
-      containerTitle: String,
-      sponsorName: String,
-      cardIndex: Int,
-      cardHeadline: String
-    ) {
-      val pipeSeparated =
-        s"$context | ${ edition.id } | $frontId | container-${ containerIndex + 1 } | $containerTitle | " +
-        s"$sponsorName | card-${ cardIndex + 1 } | $cardHeadline"
-    }
-
     def mkInteractionTrackingCode(
       frontId: String,
       containerIndex: Int,
@@ -232,31 +217,23 @@ object Commercial {
       }
       val cardIndex =
         (container.content.initialCards ++ container.content.showMoreCards).indexWhere(_.headline == card.headline)
-      TrackingCode(
-        context = "Labs front container",
-        edition = Edition(request),
+      Seq(
+        "Labs front container",
+        Edition(request).id,
         frontId,
-        containerIndex,
-        containerTitle = container.content.title,
-        sponsorName = sponsor,
-        cardIndex,
+        s"container-${containerIndex + 1}",
+        container.content.title,
+        sponsor,
+        s"card-${cardIndex + 1}",
         card.headline
-      ).pipeSeparated
+      ) mkString " | "
     }
 
-    def mkInteractionTrackingCode(containerIndex: Int, cardIndex: Int, card: PaidCard)
-      (implicit request: RequestHeader): String = {
-      TrackingCode(
-        context = "labs content",
-        edition = Edition(request),
-        frontId = request.path,
-        containerIndex,
-        containerTitle = "unknown",
-        sponsorName = card.branding.map(_.sponsorName) getOrElse "unknown",
-        cardIndex,
-        card.headline
-      ).pipeSeparated
-    }
+    def mkInteractionTrackingCode(containerIndex: Int, cardIndex: Int, card: PaidCard): String = Seq(
+      card.branding.map(_.sponsorName) getOrElse "unknown",
+      s"card-${ cardIndex + 1 }",
+      card.headline
+    ).mkString(" | ")
 
     def mkCapiCardTrackingCode(
       multiplicity: String,
