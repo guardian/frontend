@@ -139,4 +139,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 2, 22),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-sleeve-notes-email-variants",
+    "Assign users to variants of sleeve notes emails",
+    owners = Seq(Owner.withGithub("lmath")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 3, 13), //TODO: update with actual value
+    exposeClientSide = true
+  )
 }
