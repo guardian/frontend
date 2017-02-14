@@ -11,9 +11,11 @@ define([
     'common/modules/experiments/tests/opinion-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
+    'common/modules/experiments/tests/guardian-today-messaging',
     'common/modules/experiments/acquisition-test-selector',
     'common/modules/experiments/tests/membership-ab-thrasher',
-    'common/modules/experiments/tests/tailor-recommended-email'
+    'common/modules/experiments/tests/tailor-recommended-email',
+    'common/modules/experiments/tests/membership-a1-a2-thrasher'
 ], function (reportError,
              config,
              cookies,
@@ -26,17 +28,21 @@ define([
              OpinionEmailVariants,
              RecommendedForYou,
              MembershipEngagementBannerTests,
+             GuardianTodayMessaging,
              acquisitionTestSelector,
              MembershipABThrasher,
-             TailorRecommendedEmail
+             TailorRecommendedEmail,
+             MembershipA1A2Thrasher
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
         new RecommendedForYou(),
+        new GuardianTodayMessaging(),
         acquisitionTestSelector.getTest(),
         new MembershipABThrasher,
         new TailorRecommendedEmail()
+        new MembershipA1A2Thrasher()
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';
@@ -89,11 +95,16 @@ define([
         });
     }
 
+    function isExpired(testExpiry) {
+      // new Date(test.expiry) sets the expiry time to 00:00:00
+      // Using SetHours allows a test to run until the END of the expiry day
+      var startOfToday = new Date().setHours(0,0,0,0);
+      return startOfToday > new Date(testExpiry);
+    }
+
     function getActiveTests() {
-        var now = new Date();
         return TESTS.filter(function (test) {
-            var expired = (now - new Date(test.expiry)) > 0;
-            if (expired) {
+            if (isExpired(test.expiry)) {
                 removeParticipation(test);
                 return false;
             }
@@ -102,14 +113,13 @@ define([
     }
 
     function getExpiredTests() {
-        var now = new Date();
         return TESTS.filter(function (test) {
-            return (now - new Date(test.expiry)) > 0;
+            return isExpired(test.expiry);
         });
     }
 
     function testCanBeRun(test) {
-        var expired = (new Date() - new Date(test.expiry)) > 0,
+        var expired = isExpired(test.expiry),
             isSensitive = config.page.isSensitive;
 
         return ((isSensitive ? test.showForSensitive : true)
@@ -246,9 +256,10 @@ define([
      */
     function registerCompleteEvent(complete) {
         return function initListener(test) {
-            var variantId = segmentUtil.variantIdFor(test);
 
-            if (segmentUtil.isInTest(test)) {
+            var variantId = getTestVariantId(test.id);
+
+            if (variantId && variantId !== 'notintest') {
                 var variant = getVariant(test, variantId);
                 var listener = (complete ? variant.success : variant.impression) || noop;
 

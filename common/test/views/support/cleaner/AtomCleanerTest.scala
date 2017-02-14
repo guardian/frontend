@@ -21,7 +21,8 @@ class AtomCleanerTest extends FlatSpec
       duration = None,
       source = None,
       posterImage = None,
-      endSlatePath = None)
+      endSlatePath = None,
+      expired = None)
     ),
     interactives = Nil,
     recipes = Nil,
@@ -51,10 +52,10 @@ class AtomCleanerTest extends FlatSpec
     result.select("figcaption").html should include("Bird")
   }
 
-  "AtomsCleaner" should "use amp-iframe markup if amp is true" in {
+  "AtomsCleaner" should "use amp-youtube markup if amp is true" in {
     Switches.UseAtomsSwitch.switchOn()
     val result: Document = clean(doc, youTubeAtom, amp = true)
-    result.select("amp-iframe").attr("src") should include("887fb7b4-b31d-4a38-9d1f-26df5878cf9c")
+    result.select("amp-youtube").attr("data-videoid") should be("nQuN9CUsdVg")
   }
 
 

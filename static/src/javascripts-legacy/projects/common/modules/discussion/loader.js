@@ -442,11 +442,13 @@ Loader.prototype.loadComments = function(options) {
 
     this.setState('loading');
 
+    options = options || {};
+
     // If the caller specified truncation, do not load all comments.
     if (options && options.shouldTruncate && this.comments.isAllPageSizeActive()) {
         options.pageSize = 10;
     }
-    
+
     // Closed state of comments is passed so we bust cache of comment thread when it is reopened
     options.commentsClosed = this.getDiscussionClosed();
 

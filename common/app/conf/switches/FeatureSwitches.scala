@@ -4,13 +4,13 @@ import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 
 trait FeatureSwitches {
-  val ServerSideShareCounts = Switch(
+  val ShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",
-    "If this switch is on, share counts are fetched from a more recent Facebook Graph API version, server-side",
+    "If this switch is on, share counts are fetched from the Facebook Graph API on the server",
     owners = Seq(Owner.withGithub("jfsoul")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 8),
+    safeState = On,
+    sellByDate = never,
     exposeClientSide = true
   )
 
@@ -71,7 +71,7 @@ trait FeatureSwitches {
     "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition (for web only).",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 8),
+    sellByDate = never,
     exposeClientSide = true
   )
 
@@ -498,14 +498,14 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  //Owner Gideon Goldberg
-  val UseAmpYouTubeTagForMediaAtoms = Switch(
+  // Owner: Alex Sanders
+  val Webpack = Switch(
     SwitchGroup.Feature,
-    "use-amp-youtube-tag-for-media-atoms",
-    "Use amp-youtube tag to render YouTube media atoms on AMP pages",
-    owners = Seq(Owner.withGithub("michaelwmcnamara")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 8),
+    "webpack",
+    "When ON, will serve webpack bundles instead of curl.",
+    owners = Seq(Owner.withGithub("asanders")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 2, 17),
     exposeClientSide = true
   )
 }

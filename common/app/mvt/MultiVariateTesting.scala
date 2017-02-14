@@ -21,7 +21,7 @@ object ABNewNavVariantSeven extends TestDefinition(
   name = "ab-new-nav-variant-seven",
   description = "users in this test will see the new header seventh variant",
   owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2017, 2, 8)
+  sellByDate = new LocalDate(2017, 3, 16)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header").contains("variantseven")
@@ -32,7 +32,7 @@ object ABNewNavControl extends TestDefinition(
   name = "ab-new-nav-control",
   description = "control for the new header test",
   owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2017, 2, 8)
+  sellByDate = new LocalDate(2017, 3, 16)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header").contains("control")
@@ -47,28 +47,6 @@ object CommercialClientLoggingVariant extends TestDefinition(
   ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ccl").contains("ccl-A")
-  }
-}
-
-object WebpackTest extends TestDefinition(
-  name = "ab-webpack-bundle",
-  description = "for users in this test, website will serve standard JavaScript that has been bundled by Webpack",
-  owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LocalDate(2017, 2, 13)
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-webpack-bundle").contains("webpack")
-  }
-}
-
-object WebpackControl extends TestDefinition(
-  name = "ab-webpack-bundle-control",
-  description = "control for Webpack test",
-  owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LocalDate(2017, 2, 13)
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-webpack-bundle").contains("control")
   }
 }
 
@@ -87,9 +65,7 @@ object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     ABNewNavVariantSeven,
     ABNewNavControl,
-    CommercialClientLoggingVariant,
-    WebpackTest,
-    WebpackControl
+    CommercialClientLoggingVariant
   )
 }
 

@@ -67,7 +67,7 @@ trait Index extends ConciergeRepository with Collections {
       .tag(s"$firstTag,$secondTag")
       .page(page)
       .pageSize(if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize)
-      .showFields(if (isRss) rssFields else QueryDefaults.trailFields)
+      .showFields(if (isRss) rssFields else QueryDefaults.trailFieldsWithMain)
     ).map {response =>
       val trails = response.results.map(IndexPageItem(_)).toList
       trails match {
@@ -111,7 +111,7 @@ trait Index extends ConciergeRepository with Collections {
 
   def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, PlayResult]] = {
     val pageSize = if (isRss) IndexPagePagination.rssPageSize else IndexPagePagination.pageSize
-    val fields = if (isRss) rssFields else QueryDefaults.trailFields
+    val fields = if (isRss) rssFields else QueryDefaults.trailFieldsWithMain
 
     val maybeSection = sectionsLookUp.get(path)
 

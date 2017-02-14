@@ -83,6 +83,7 @@ define([
         loadExternalContentWidget();
 
         loadOther();
+
         return Promise.resolve(true);
     }
 

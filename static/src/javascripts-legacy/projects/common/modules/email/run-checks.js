@@ -30,6 +30,7 @@ define([
     Promise
 ) {
     var emailInserted = false;
+    var compliantOutbrain = false;
     var emailShown;
     var userListSubsChecked = false;
     var userListSubs = [];
@@ -88,9 +89,8 @@ define([
         }
     }
 
-    function obWidgetIsShown() {
-        var $outbrain = $('.js-outbrain-container');
-        return $outbrain && $outbrain[0] && $outbrain[0].children && $outbrain[0].children.length > 0;
+    function compliantObWidgetIsShown() {
+        return compliantOutbrain;
     }
 
     var canRunList = {
@@ -127,6 +127,10 @@ define([
 
     // Public
 
+    function setCompliantOutbrain() {
+        compliantOutbrain = true;
+    }
+
     function setEmailInserted() {
         emailInserted = true;
     }
@@ -145,6 +149,7 @@ define([
 
     function allEmailCanRun() {
         var browser = detect.getUserAgent.browser,
+<<<<<<< HEAD
          version = detect.getUserAgent.version;
 
         return !config.page.shouldHideAdverts
@@ -158,6 +163,20 @@ define([
          !userHasSeenThisSession() &&
          !obWidgetIsShown() &&
          !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
+=======
+            version = detect.getUserAgent.version;
+
+        return !config.page.shouldHideAdverts &&
+            !config.page.isSensitive &&
+            !emailInserted &&
+            !config.page.isFront &&
+            config.switches.emailInArticle &&
+            !clash.userIsInAClashingAbTest(clash.nonEmailClashingTests) &&
+            storage.session.isAvailable() &&
+            !userHasSeenThisSession() &&
+            !compliantObWidgetIsShown() &&
+            !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
+>>>>>>> master
     }
 
     function getUserEmailSubscriptions() {
@@ -183,6 +202,7 @@ define([
     }
 
     return {
+        setCompliantOutbrain: setCompliantOutbrain,
         setEmailShown: setEmailShown,
         getEmailShown: getEmailShown,
         setEmailInserted: setEmailInserted,

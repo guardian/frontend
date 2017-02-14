@@ -36,9 +36,6 @@ define([
     describe('Outbrain', function () {
         var loadScript = jasmine.createSpy('loadScript');
         beforeEach(function (done) {
-            injector.mock('common/modules/email/run-checks', function() {
-                return Promise.resolve(false);
-            });
             injector.mock('common/modules/commercial/dfp/track-ad-render', function(id) {
                 return Promise.resolve(ads[id]);
             });

@@ -7,8 +7,8 @@ define([
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/dfp/add-slot',
-    'common/modules/user-prefs',
-    'common/modules/commercial/commercial-features'
+    'common/modules/commercial/commercial-features',
+    'common/modules/user-prefs'
 ], function (
     qwery,
     Promise,
@@ -18,8 +18,8 @@ define([
     fastdom,
     createSlot,
     addSlot,
-    userPrefs,
-    commercialFeatures
+    commercialFeatures,
+    userPrefs
 ) {
     var containerSelector = '.fc-container:not(.fc-container--commercial)';
     var sliceSelector = '.js-fc-slice-mpu-candidate';
@@ -29,8 +29,11 @@ define([
         init: init
     };
 
-    function init() {
+    function init(start, stop) {
+        start();
+
         if (!commercialFeatures.sliceAdverts) {
+            stop();
             return Promise.resolve(false);
         }
 
@@ -51,6 +54,7 @@ define([
         });
 
         if (containers.length === 0) {
+            done();
             return Promise.resolve(false);
         } else if (isMobile) {
             insertOnMobile(containers, getSlotNameOnMobile)
@@ -63,6 +67,11 @@ define([
         }
 
         return Promise.resolve(true);
+
+        function done() {
+            stop();
+            mediator.emit('page:commercial:slice-adverts');
+        }
     }
 
     // On mobile, a slot is inserted after each container
@@ -91,7 +100,7 @@ define([
             var adName = getSlotName(index);
             var classNames = ['container-inline', 'mobile'];
             var slot, section;
-            if (config.page.isAdvertisementFeature) {
+            if (config.page.isPaidContent) {
                 classNames.push('adfeature');
             }
 
@@ -136,7 +145,7 @@ define([
             var classNames = ['container-inline'];
             var slot;
 
-            if (config.page.isAdvertisementFeature) {
+            if (config.page.isPaidContent) {
                 classNames.push('adfeature');
             }
 
@@ -165,9 +174,5 @@ define([
 
     function addSlots(slots) {
         slots.forEach(addSlot);
-    }
-
-    function done() {
-        mediator.emit('page:commercial:slice-adverts');
     }
 });

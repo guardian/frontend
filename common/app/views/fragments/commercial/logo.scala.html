@@ -38,6 +38,6 @@
         }
     }
 </a>
-@if(branding.brandingType != PaidContent) {
+@if(!branding.isPaid) {
     <a href="@branding.aboutThisLink" class="badge__help">About this content</a>
 }

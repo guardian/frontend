@@ -7,6 +7,8 @@ $veggie-burger-medium: 52px;
 
 .header {
     background-color: $guardian-brand;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .header__inner {

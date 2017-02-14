@@ -9,7 +9,7 @@
     @if(page.metadata.isHosted) {
         @fragments.amp.stylesheets.hosted(mainPicture, ctaImage, brandColour)
     } else {
-        @if(page.metadata.branding(Edition(request)).exists(_.brandingType == PaidContent)) {
+        @if(page.metadata.branding(Edition(request)).exists(_.isPaid)) {
             @fragments.amp.stylesheets.glabs()
         }
     }

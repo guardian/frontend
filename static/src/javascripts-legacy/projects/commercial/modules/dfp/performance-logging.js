@@ -1,9 +1,11 @@
 define([
+    'Promise',
     'common/utils/raven',
     'common/utils/config',
     'common/utils/user-timing',
     'common/modules/analytics/beacon'
 ], function (
+    Promise,
     raven,
     config,
     userTiming,
@@ -19,22 +21,10 @@ define([
         };
     var primaryBaseline = 'primary';
     var secondaryBaseline = 'secondary';
+    var reportData = raven.wrap(reportTrackingData);
 
     function setListeners(googletag) {
-        googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(reportTrackingData));
-    }
-
-    // moduleCheckpoint() is called when a module has finished execution.
-    // The baseline allows us to determine whether the module was called in the first
-    // boot phase (primary) or the second boot phase (secondary).
-    function moduleCheckpoint(module, baseline) {
-        var timerEnd = userTiming.getCurrentTime();
-        var timerStart = getBaseline(baseline);
-        performanceLog.modules.push({
-            name: module,
-            start: timerStart,
-            duration: timerEnd - timerStart
-        });
+        googletag.pubads().addEventListener('slotRenderEnded', reportData);
     }
 
     // moduleStart() and moduleEnd() can be used for measuring modules ad-hoc,
@@ -96,13 +86,6 @@ define([
         });
     }
 
-    function getBaseline(baselineName) {
-        var index = performanceLog.baselines
-            .map(function (_) { return _.name; })
-            .indexOf(baselineName);
-        return index > -1 ? performanceLog.baselines[index].startTime : 0;
-    }
-
     // This posts the performance log to the beacon endpoint. It is expected that this be called
     // multiple times in a page view, so that partial data is captured, and then topped up as adverts load in.
     function reportTrackingData() {
@@ -119,17 +102,54 @@ define([
         performanceLog.tags.push(tag);
     }
 
+    function wrap(name, fn) {
+        var start = moduleStart.bind(null, name);
+        var stop = moduleEnd.bind(null, name);
+        return function() {
+            start();
+            try {
+                var ret = fn.apply(null, arguments);
+                if (ret instanceof Promise) {
+                    return ret.then(function (value) {
+                        stop();
+                        return value;
+                    }, function(reason) {
+                        stop();
+                        throw reason;
+                    });
+                } else {
+                    stop();
+                    return ret;
+                }
+            } catch (e) {
+                stop();
+                throw e;
+            }
+        };
+    }
+
+    function defer(name, fn) {
+        var startStop = [moduleStart.bind(null, name), moduleEnd.bind(null, name)];
+        return function() {
+            try {
+                return fn.apply(null, startStop.concat(startStop.slice.call(arguments)));
+            } catch (e) {
+                stop();
+                throw e;
+            }
+        }
+    }
+
     return {
         setListeners : setListeners,
-        moduleCheckpoint : moduleCheckpoint,
-        moduleStart: moduleStart,
-        moduleEnd: moduleEnd,
         updateAdvertMetric : updateAdvertMetric,
         addStartTimeBaseline : addStartTimeBaseline,
         addEndTimeBaseline : addEndTimeBaseline,
         primaryBaseline : primaryBaseline,
         secondaryBaseline: secondaryBaseline,
         addTag: addTag,
-        reportTrackingData: raven.wrap(reportTrackingData)
+        wrap: wrap,
+        defer: defer,
+        reportTrackingData: reportData
     };
 });

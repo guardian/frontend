@@ -22,14 +22,35 @@ define([
         variants: ['control']
     };
 
-    function userIsInAClashingAbTest() {
-        var clashingTests = [
-            ContributionsEpicAlwaysAskStrategy,
-            ContributionsEpicBrexit,
-            ContributionsEpicAskFourStagger,
-            ContributionsEpicAskFourEarning
-        ];
-        return _testABClash(ab.isInVariant, clashingTests);
+    var ContributionsEpicOneLineEdits = {
+        name: 'ContributionsEpicOneLineEdits',
+        variants: ['control', 'paywall', 'altfacts', 'billionaire']
+    };
+    
+    var GuardianTodaySignupMessaging = {
+        name: 'GuardianTodaySignupMessaging',
+        variants: ['message-a', 'message-b', 'message-c']
+    };
+
+    var contributionsTests = [
+        ContributionsEpicAlwaysAskStrategy,
+        ContributionsEpicBrexit,
+        ContributionsEpicAskFourStagger,
+        ContributionsEpicAskFourEarning,
+        ContributionsEpicOneLineEdits
+    ];
+
+    var emailTests = [
+        GuardianTodaySignupMessaging
+    ];
+
+    var nonEmailClashingTests = contributionsTests;
+
+    var clashingTests = contributionsTests.concat(emailTests);
+
+    function userIsInAClashingAbTest(tests) {
+        tests = tests || clashingTests;
+        return _testABClash(ab.isInVariant, tests);
     }
 
     function _testABClash(f, clashingTests) {
@@ -47,6 +68,7 @@ define([
 
     return {
         userIsInAClashingAbTest: userIsInAClashingAbTest,
+        nonEmailClashingTests: nonEmailClashingTests,
         _testABClash: _testABClash // exposed for unit testing
     };
 });
