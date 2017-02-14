@@ -45,11 +45,11 @@ watch: compile-dev
 
 # *********************** ASSETS ***********************
 
-# Compile all assets for production.
+# Compile all assets in production.
 compile: install
 	@./tools/task-runner/runner compile
 
-# Compile all assets for development.
+# Compile all assets in development.
 compile-dev: install
 	@./tools/task-runner/runner compile --dev
 
