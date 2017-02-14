@@ -491,10 +491,14 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
     document.getElementsByTag("h2").foreach{ h2 =>
         if (isImmersive && h2.text() == "* * *") {
             h2.before("""<hr class="section-rule" />""")
-            val next = h2.nextElementSibling()
-            if (next.nodeName() == "p") {
-                next.html(setDropCap(next))
-            }
+
+            val maybeNext = Option(h2.nextElementSibling())
+            maybeNext
+              .filter(_.nodeName() == "p")
+              .foreach { el =>
+                el.html(setDropCap(el))
+              }
+
             h2.remove()
         }
     }

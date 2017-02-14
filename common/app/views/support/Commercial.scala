@@ -4,7 +4,7 @@ import com.gu.commercial.branding._
 import common.Edition
 import common.Edition.defaultEdition
 import common.commercial._
-import layout.{ColumnAndCards, ContentCard, FaciaContainer}
+import layout.{ColumnAndCards, ContentCard, FaciaContainer, PaidCard}
 import model.{Page, PressedPage}
 import org.apache.commons.lang.StringEscapeUtils._
 import play.api.libs.json.JsBoolean
@@ -158,10 +158,12 @@ object Commercial {
 
   object CssClassBuilder {
 
-    private def cardLink(cardContent: CardContent,
-                         adClasses: Option[Seq[String]],
-                         sizeClass: Option[String],
-                         useCardBranding: Boolean): String = {
+    private def cardLink(
+      cardContent: PaidCard,
+      adClasses: Option[Seq[String]],
+      sizeClass: Option[String],
+      useCardBranding: Boolean
+    ): String = {
       val classes: Seq[String] = Seq(
         "advert",
         sizeClass getOrElse "",
@@ -173,21 +175,27 @@ object Commercial {
       classes mkString " "
     }
 
-    def linkFromStandardCard(cardContent: CardContent,
-                             adClasses: Option[Seq[String]],
-                             useCardBranding: Boolean): String = {
+    def linkFromStandardCard(
+      cardContent: PaidCard,
+      adClasses: Option[Seq[String]],
+      useCardBranding: Boolean
+    ): String = {
       cardLink(cardContent, adClasses, sizeClass = None, useCardBranding)
     }
 
-    def linkFromSmallCard(cardContent: CardContent,
-                          adClasses: Option[Seq[String]],
-                          useCardBranding: Boolean): String = {
+    def linkFromSmallCard(
+      cardContent: PaidCard,
+      adClasses: Option[Seq[String]],
+      useCardBranding: Boolean
+    ): String = {
       cardLink(cardContent, adClasses, sizeClass = Some("advert--small"), useCardBranding)
     }
 
-    def linkFromLargeCard(cardContent: CardContent,
-                          adClasses: Option[Seq[String]],
-                          useCardBranding: Boolean): String = {
+    def linkFromLargeCard(
+      cardContent: PaidCard,
+      adClasses: Option[Seq[String]],
+      useCardBranding: Boolean
+    ): String = {
       cardLink(cardContent, adClasses, sizeClass = Some("advert--large"), useCardBranding)
     }
 
@@ -197,15 +205,14 @@ object Commercial {
 
   object TrackingCodeBuilder extends implicits.Requests {
 
-    def mkInteractionTrackingCode(frontId: String,
-                                  containerIndex: Int,
-                                  container: ContainerModel,
-                                  card: CardContent)(implicit request: RequestHeader): String = {
+    def mkInteractionTrackingCode(
+      frontId: String,
+      containerIndex: Int,
+      container: ContainerModel,
+      card: PaidCard
+    )(implicit request: RequestHeader): String = {
       val sponsor = {
-        val containerSponsorName = container.branding flatMap {
-          case b: Branding => Some(b.sponsorName)
-          case _ => None
-        }
+        val containerSponsorName = container.branding collect { case b: Branding => b.sponsorName }
         containerSponsorName orElse card.branding.map(_.sponsorName) getOrElse ""
       }
       val cardIndex =
@@ -222,11 +229,19 @@ object Commercial {
       ) mkString " | "
     }
 
-    def mkCapiCardTrackingCode(multiplicity: String,
-                               optSection: Option[String],
-                               optContainerTitle: Option[String],
-                               omnitureId: String,
-                               card: CardContent)(implicit request: RequestHeader): String = {
+    def mkInteractionTrackingCode(containerIndex: Int, cardIndex: Int, card: PaidCard): String = Seq(
+      card.branding.map(_.sponsorName) getOrElse "unknown",
+      s"card-${ cardIndex + 1 }",
+      card.headline
+    ).mkString(" | ")
+
+    def mkCapiCardTrackingCode(
+      multiplicity: String,
+      optSection: Option[String],
+      optContainerTitle: Option[String],
+      omnitureId: String,
+      card: PaidCard
+    )(implicit request: RequestHeader): String = {
       Seq(
         "merchandising",
         "capi",
