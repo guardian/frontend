@@ -361,6 +361,7 @@
     }
 }
 
+.ad-slot--inline-book,
 .ad-slot--books-inline {
     @include mq(mobileLandscape) {
         width: gs-span(2);

@@ -491,10 +491,14 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
     document.getElementsByTag("h2").foreach{ h2 =>
         if (isImmersive && h2.text() == "* * *") {
             h2.before("""<hr class="section-rule" />""")
-            val next = h2.nextElementSibling()
-            if (next.nodeName() == "p") {
-                next.html(setDropCap(next))
-            }
+
+            val maybeNext = Option(h2.nextElementSibling())
+            maybeNext
+              .filter(_.nodeName() == "p")
+              .foreach { el =>
+                el.html(setDropCap(el))
+              }
+
             h2.remove()
         }
     }
@@ -670,13 +674,13 @@ case class CommercialMPUForFronts(isNetworkFront: Boolean) extends HtmlCleaner {
   }
 }
 
-case class CommercialComponentHigh(isAdvertisementFeature: Boolean, isNetworkFront: Boolean, hasPageSkin: Boolean) extends HtmlCleaner {
+case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boolean, hasPageSkin: Boolean) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
 
     val containers: List[(Element, Int)] = document.getElementsByClass("fc-container").toList.zipWithIndex
 
-    val minContainers = if (isAdvertisementFeature) 1 else 2
+    val minContainers = if (isPaidContent) 1 else 2
 
     if (containers.length >= minContainers) {
 
@@ -684,7 +688,7 @@ case class CommercialComponentHigh(isAdvertisementFeature: Boolean, isNetworkFro
         if (isNetworkFront) 3 else 2
       } else 0
 
-      val adSlotHtml = views.html.fragments.commercial.commercialComponentHigh(isAdvertisementFeature, hasPageSkin)
+      val adSlotHtml = views.html.fragments.commercial.commercialComponentHigh(isPaidContent, hasPageSkin)
 
       val adSlot: Option[Element] = Jsoup.parseBodyFragment(adSlotHtml.toString).body().children().toList.headOption
 

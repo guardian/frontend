@@ -29,7 +29,7 @@ object RefreshFrontsJob extends Logging with ExecutionContexts {
         case Some(EditorialPriority) => StandardFrequency
         case Some(CommercialPriority) => LowFrequency
         case Some(TrainingPriority) => LowFrequency
-        case Some(EmailPriority) => LowFrequency
+        case Some(EmailPriority) => StandardFrequency
         case None => LowFrequency
       }
   }

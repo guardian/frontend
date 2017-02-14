@@ -40,7 +40,7 @@ define([
         }).then(function () {
             if (noSticky) {
                 //if there is a sticky 'paid by' band move the sticky mpu down so it will be always visible
-                var options = config.page.isAdvertisementFeature ? {top: 43} : {};
+                var options = config.page.isPaidContent ? {top: 43} : {};
                 stickyElement = new Sticky($adSlot[0], options);
                 stickyElement.init();
                 messenger.register('resize', onResize);

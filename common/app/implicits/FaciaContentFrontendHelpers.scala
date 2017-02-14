@@ -34,7 +34,7 @@ object FaciaContentFrontendHelpers {
        atomContainer <- Option(document.getElementsByClass("element-atom").first())
        bodyElement <- Some(atomContainer.getElementsByTag("gu-atom"))
        atomId <- Some(bodyElement.attr("data-atom-id"))
-       mainMediaAtom <- atoms.media.find(ma => ma.id == atomId && ma.assets.exists(_.platform == MediaAssetPlatform.Youtube))
+       mainMediaAtom <- atoms.media.find(ma => (ma.id == atomId && !ma.expired.getOrElse(false)) && ma.assets.exists(_.platform == MediaAssetPlatform.Youtube))
      } yield mainMediaAtom
 
 

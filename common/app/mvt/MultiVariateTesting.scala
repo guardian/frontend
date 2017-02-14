@@ -50,28 +50,6 @@ object CommercialClientLoggingVariant extends TestDefinition(
   }
 }
 
-object WebpackTest extends TestDefinition(
-  name = "ab-webpack-bundle",
-  description = "for users in this test, website will serve standard JavaScript that has been bundled by Webpack",
-  owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LocalDate(2017, 2, 13)
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-webpack-bundle").contains("webpack")
-  }
-}
-
-object WebpackControl extends TestDefinition(
-  name = "ab-webpack-bundle-control",
-  description = "control for Webpack test",
-  owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LocalDate(2017, 2, 13)
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-webpack-bundle").contains("control")
-  }
-}
-
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -87,9 +65,7 @@ object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     ABNewNavVariantSeven,
     ABNewNavControl,
-    CommercialClientLoggingVariant,
-    WebpackTest,
-    WebpackControl
+    CommercialClientLoggingVariant
   )
 }
 

@@ -86,7 +86,7 @@ final case class Content(
   }
   lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
   lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore
-  lazy val isAdvertisementFeature: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
+  lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
   lazy val hasSingleContributor: Boolean = {
@@ -116,7 +116,7 @@ final case class Content(
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
-    if (isAdvertisementFeature && FacebookShareImageLogoOverlay.isSwitchedOn) {
+    if (isPaidContent && FacebookShareImageLogoOverlay.isSwitchedOn) {
       ImgSrc(rawOpenGraphImage, Item700)
     } else {
       ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
@@ -125,7 +125,7 @@ final case class Content(
 
   // URL of image to use in the twitter card. Image must be less than 1MB in size: https://dev.twitter.com/cards/overview
   lazy val twitterCardImage: String = {
-    if (isAdvertisementFeature && TwitterShareImageLogoOverlay.isSwitchedOn) {
+    if (isPaidContent && TwitterShareImageLogoOverlay.isSwitchedOn) {
       ImgSrc(rawOpenGraphImage, Item700)
     } else {
       ImgSrc(rawOpenGraphImage, TwitterImage)
@@ -220,7 +220,7 @@ final case class Content(
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
     ("isExplore", JsBoolean(isExplore)),
-    ("isAdvertisementFeature", JsBoolean(isAdvertisementFeature)),
+    ("isPaidContent", JsBoolean(isPaidContent)),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
   )
 
@@ -268,7 +268,7 @@ final case class Content(
     // But if we are in the super sticky banner campaign, we must ignore them!
     val canDisableStickyTopBanner =
       metadata.shouldHideHeaderAndTopAds ||
-      isAdvertisementFeature ||
+      isPaidContent ||
       metadata.contentType == "Interactive" ||
       metadata.contentType == "Crossword"
 

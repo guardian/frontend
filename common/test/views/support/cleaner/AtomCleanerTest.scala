@@ -21,7 +21,8 @@ class AtomCleanerTest extends FlatSpec
       duration = None,
       source = None,
       posterImage = None,
-      endSlatePath = None)
+      endSlatePath = None,
+      expired = None)
     ),
     interactives = Nil,
     recipes = Nil,

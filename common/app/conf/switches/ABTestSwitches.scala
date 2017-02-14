@@ -32,11 +32,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-a1-a2-bundles-thrasher",
-    "Test A1 vs A2 bundle offers",
+    "ab-membership-a3-a4-bundles-thrasher",
+    "Test A3 vs A4 bundle offers",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 2), // Thursday March 2nd
+    sellByDate = new LocalDate(2017, 3, 9), // Thursday March 9th
     exposeClientSide = true
   )
 
@@ -109,4 +109,15 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 5, 1),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-one-line-edits",
+    "Tests 3 slight variations on the epic where one line is changed",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 2, 22),
+    exposeClientSide = true
+  )
+
 }
