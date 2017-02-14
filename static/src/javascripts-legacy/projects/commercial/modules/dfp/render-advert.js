@@ -183,8 +183,8 @@ define([
                 return (config.switches.adFeedback && isRendered) ? fastdom.write(function () {
                     qwery('.js-ad-feedback-option:not(.js-onclick-ready)').forEach(function(el) {
                         var option = bonzo(el);
-                        var slotId = el.attributes['data-slot'].nodeValue;
-                        var problem = el.attributes['data-problem'].nodeValue;
+                        var slotId = el.getAttribute('data-slot');
+                        var problem = el.getAttribute('data-problem');
                         el.addEventListener('click', function() {
                             recordUserAdFeedback(window.location.pathname, slotId, slotRenderEvent, problem);
                         });
@@ -194,8 +194,7 @@ define([
                         var option = bonzo(el);
                         var form = qwery('form', el)[0];
                         var commentBox = qwery('input', el)[0];
-                        var slotId = el.attributes['data-slot'].nodeValue;
-                        var problem = el.attributes['data-problem'].nodeValue;
+                        var slotId = el.getAttribute('data-slot');
                         el.addEventListener('click', function(e) {
                             if(e.target === commentBox) {
                                 e.stopImmediatePropagation();
@@ -203,7 +202,7 @@ define([
                         });
                         form.addEventListener('submit', function(e) {
                             e.preventDefault();
-                            recordUserAdFeedback(window.location.pathname, slotId, slotRenderEvent, problem, commentBox.value);
+                            recordUserAdFeedback(window.location.pathname, slotId, slotRenderEvent, 'other', commentBox.value);
                         });
                         option.addClass(readyClass);
                     });

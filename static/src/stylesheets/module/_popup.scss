@@ -385,5 +385,16 @@ $control-offset: 36 + $gs-gutter/2;
         }
     }
 
+    .fc-container .ad-slot--container-inline & {
+        @include mq($until: tablet) {
+            top: -$gs-gutter/2;
+        }
+    }
+    .fc-slice__popular-mpu & {
+        @include mq($until: desktop) {
+            top: -$gs-gutter/2;
+        }
+    }
+
 }
 
