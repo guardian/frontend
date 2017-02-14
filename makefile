@@ -54,7 +54,7 @@ compile-dev: install
 	@./tools/task-runner/runner compile --dev
 
 # Compile all assets for watch.
-compile-watch: install
+compile-watch: install # PRIVATE
 	@./tools/task-runner/runner compile/index.watch
 
 compile-javascript: install # PRIVATE
