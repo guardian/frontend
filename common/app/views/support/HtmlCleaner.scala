@@ -656,11 +656,11 @@ case class CommercialMPUForFronts(isNetworkFront: Boolean) extends HtmlCleaner {
     }.take(10)
 
     for (container <- containersForCommercialMPUs) {
-      container.after(s"""<section class="fc-slice__item--mpu-candidate--mobile">${sliceSlot(containersForCommercialMPUs.indexOf(container), isMobile = true)}</section>""")
+      container.after(s"""<section class="fc-container__mpu--mobile">${sliceSlot(containersForCommercialMPUs.indexOf(container), isMobile = true)}</section>""")
     }
 
     // On desktop, a MPU slot is simply inserted when there is a slice available
-    val slices: List[Element] = document.getElementsByClass("fc-slice__item--mpu-candidate--desktop").toList
+    val slices: List[Element] = document.getElementsByClass("fc-slice__item--mpu-candidate").toList
 
     for (slice <- slices) {
       slice.append(s"${sliceSlot(slices.indexOf(slice) + 1)}")

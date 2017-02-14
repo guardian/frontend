@@ -26,12 +26,12 @@ import services.ConfigAgent
   lazy val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient))
   val frontWithThrasher = "au"
 
-  it should "have MPUs for desktop inserted into slices, and give them unique IDs" in {
+  it should "insert MPUs into applicable slices, and give them unique IDs" in {
     val result = faciaController.renderFront(frontWithThrasher)(TestRequest(frontWithThrasher))
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
 
-    val desktopMPUs = body.getElementsByClass("fc-slice__item--mpu-candidate--desktop")
+    val desktopMPUs = body.getElementsByClass("fc-slice__item--mpu-candidate")
     desktopMPUs.size should be (2)
     desktopMPUs.first.toString should include ("dfp-ad--inline1")
     desktopMPUs.last.toString should include ("dfp-ad--inline2")
@@ -42,7 +42,7 @@ import services.ConfigAgent
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
 
-    val mobileMPUs = body.getElementsByClass("fc-slice__item--mpu-candidate--mobile")
+    val mobileMPUs = body.getElementsByClass("fc-container__mpu--mobile")
     mobileMPUs.size should be (6)
     mobileMPUs.first.toString should include ("dfp-ad--top-above-nav--mobile")
     mobileMPUs.last.toString should include ("dfp-ad--inline5--mobile")
@@ -56,7 +56,7 @@ import services.ConfigAgent
     thrasher.id should be ("australia-header")
 
     val sectionAfterThrasher = thrasher.nextElementSibling()
-    sectionAfterThrasher.hasClass("fc-slice__item--mpu-candidate--mobile") should be (false)
+    sectionAfterThrasher.hasClass("fc-container__mpu--mobile") should be (false)
   }
 
   it should "avoid inserting next to commercial containers when adding mobile MPUs" in {
@@ -66,12 +66,12 @@ import services.ConfigAgent
     val commercialContainers = body.getElementsByClass("fc-container--commercial")
     commercialContainers.size should be (2)
 
-    commercialContainers.first.nextElementSibling.hasClass("fc-slice__item--mpu-candidate--mobile") should be (false)
-    commercialContainers.first.previousElementSibling.hasClass("fc-slice__item--mpu-candidate--mobile") should be (false)
-    commercialContainers.last.previousElementSibling.hasClass("fc-slice__item--mpu-candidate--mobile") should be (false)
+    commercialContainers.first.nextElementSibling.hasClass("fc-container__mpu--mobile") should be (false)
+    commercialContainers.first.previousElementSibling.hasClass("fc-container__mpu--mobile") should be (false)
+    commercialContainers.last.previousElementSibling.hasClass("fc-container__mpu--mobile") should be (false)
 
     if (commercialContainers.last.nextElementSibling != null) {
-      commercialContainers.last.nextElementSibling.hasClass("fc-slice__item--mpu-candidate--mobile") should be (false)
+      commercialContainers.last.nextElementSibling.hasClass("fc-container__mpu--mobile") should be (false)
     } else {
       commercialContainers.last.nextElementSibling should be (null)
     }
