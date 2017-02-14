@@ -13,9 +13,6 @@ are used to generate the confidence graphs on the frontend dashboard.
 
 <amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
 
-@*
-    <amp-analytics config="https://ophan.theguardian.com/amp.json" data-credentials="include"></amp-analytics>
-*@
 @if(AmpOphanTrackingIncludesCredentials.isSwitchedOn){
     <amp-analytics config="https://ophan.theguardian.com/amp.json" data-credentials="include"></amp-analytics>
 } else {
