@@ -84,7 +84,7 @@ define([
         .then(function (isRendered) {
             if (isRendered) {
                 var advert = getAdvertById(topSlotId);
-                if (advert.size[1] > 0) {
+                if (advert.size && advert.size[1] > 0) {
                     fastdom.read(function () {
                         var styles = window.getComputedStyle(topSlot);
                         return parseInt(styles.paddingTop) + parseInt(styles.paddingBottom) + advert.size[1];
