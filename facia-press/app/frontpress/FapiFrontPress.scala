@@ -7,7 +7,7 @@ import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuer
 import com.gu.facia.api.models.{Collection, Front}
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.ApiClient
-import com.gu.facia.client.models.{Breaking, Canonical, CollectionConfigJson, ConfigJson, Special}
+import com.gu.facia.client.models.{Breaking, ConfigJson, Special, Metadata}
 import common._
 import common.commercial.EditionBranding
 import conf.Configuration
@@ -184,28 +184,31 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
       .map(_.map(PressedContent.make))
   }
 
-  private def isHighPriorityCollection(collection: CollectionConfigJson): Boolean = {
-    collection.metadata.exists(_.exists({
-      case Breaking | Special | Canonical => true
-      case _ => false
-    }))
-  }
-
-  private def highPriorityCollectionsForPath(path: String, config: ConfigJson): List[String] = {
-    for {
-      front <- config.fronts.get(path).toList
+  private def collectionWithMetadata(metadata: Metadata, path: String, config: ConfigJson): Option[String] =
+    (for {
+      front <- config.fronts.get(path)
       collectionId <- front.collections
-      collectionConfig <- config.collections.get(collectionId) if isHighPriorityCollection(collectionConfig)
-    } yield collectionId
-  }
+      collectionConfig <- config.collections.get(collectionId) if collectionConfig.metadata.exists(_.contains(metadata))
+    } yield collectionId).headOption
+
+  private def withHigPriorityCollections(parentPath: String, config: ConfigJson, collections: List[String]): List[String] =
+    collections match {
+      case head :: tail =>
+        List(
+          collectionWithMetadata(Breaking, parentPath, config),
+          Some(head),
+          collectionWithMetadata(Special, parentPath, config)
+        ).flatten ++ tail
+      case Nil => Nil
+    }
 
   private def enrichEmailFronts(path: String, config: ConfigJson)(collections: List[String]) =
-    (path match {
-      case "email/uk/daily" => highPriorityCollectionsForPath("uk", config)
-      case "email/us/daily" => highPriorityCollectionsForPath("us", config)
-      case "email/au/daily" => highPriorityCollectionsForPath("au", config)
-      case _ => List.empty
-    }) ++ collections
+    path match {
+      case "email/uk/daily" => withHigPriorityCollections("uk", config, collections)
+      case "email/us/daily" => withHigPriorityCollections("us", config, collections)
+      case "email/au/daily" => withHigPriorityCollections("au", config, collections)
+      case _ => collections
+    }
 
   private def getCollectionIdsForPath(path: String): Response[List[String]] =
     Response.Async.Right(fapiClient.config) map { config =>
