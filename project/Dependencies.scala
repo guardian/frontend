@@ -75,7 +75,7 @@ object Dependencies {
   val targetingClient = "com.gu" %% "targeting-client" % "0.11.0"
   val scanamo = "com.gu" %% "scanamo" % "0.8.3"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.6"
-  val commercialShared = "com.gu" %% "commercial-shared" % "1.2.1"
+  val commercialShared = "com.gu" %% "commercial-shared" % "1.2.2"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"
