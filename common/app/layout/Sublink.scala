@@ -277,7 +277,7 @@ case class ContentCard(
 
   def hasImage = displayElement match {
     case Some(InlineVideo(_, _, _, Some(_))) => true
-    case Some(InlineYouTubeMediaAtom(_)) => true
+    case Some(InlineYouTubeMediaAtom(_, _)) => true
     case Some(InlineImage(_)) => true
     case Some(InlineSlideshow(_)) => true
     case Some(CrosswordSvg(_)) => true

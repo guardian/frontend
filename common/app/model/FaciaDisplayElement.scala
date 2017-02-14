@@ -23,7 +23,7 @@ object FaciaDisplayElement {
       case _ if faciaContent.properties.imageSlideshowReplace && itemClasses.canShowSlideshow =>
         InlineSlideshow.fromFaciaContent(faciaContent)
       case _ if faciaContent.properties.showMainVideo && faciaContent.mainYouTubeMediaAtom.isDefined  =>
-        Some(InlineYouTubeMediaAtom(faciaContent.mainYouTubeMediaAtom.get))
+        Some(InlineYouTubeMediaAtom(faciaContent.mainYouTubeMediaAtom.get, faciaContent.trailPicture))
       case _ => InlineImage.fromFaciaContent(faciaContent)
     }
   }
@@ -64,7 +64,7 @@ case class InlineVideo(
   fallBack: Option[InlineImage]
 ) extends FaciaDisplayElement
 
-case class InlineYouTubeMediaAtom(youTubeAtom: MediaAtom) extends FaciaDisplayElement
+case class InlineYouTubeMediaAtom(youTubeAtom: MediaAtom, posterOverride: Option[ImageMedia]) extends FaciaDisplayElement
 
 object InlineImage {
   def fromFaciaContent(faciaContent: PressedContent): Option[InlineImage] =
