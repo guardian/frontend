@@ -64,7 +64,7 @@ case class InlineVideo(
   fallBack: Option[InlineImage]
 ) extends FaciaDisplayElement
 
-case class InlineYouTubeMediaAtom(youTubeAtom: MediaAtom, posterOverride: Option[ImageMedia]) extends FaciaDisplayElement
+case class InlineYouTubeMediaAtom(youTubeAtom: MediaAtom, posterImageOverride: Option[ImageMedia]) extends FaciaDisplayElement
 
 object InlineImage {
   def fromFaciaContent(faciaContent: PressedContent): Option[InlineImage] =
