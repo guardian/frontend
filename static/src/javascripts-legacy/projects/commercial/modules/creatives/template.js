@@ -7,9 +7,6 @@ define([
     'commercial/modules/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
-    'text!commercial/views/creatives/gimbap.html',
-    'text!commercial/views/creatives/gimbap-simple.html',
-    'text!commercial/views/creatives/gimbap-richmedia.html',
     'text!commercial/views/creatives/manual-container.html'
 ], function (
     Promise,
@@ -40,11 +37,6 @@ define([
         this.params.logosoulmates = svgs('logosoulmates');
         this.params.logosoulmatesjoin = svgs('logosoulmatesjoin');
         this.params.logomembership = svgs('logomembershipwhite');
-        this.params.logosoulmateshorizontal = svgs('logosoulmates');
-        this.params.logomasterclasseshorizontal = svgs('logomasterclasseshorizontal');
-        this.params.logomembershorizontal = svgs('logomembershiphorizontal');
-        this.params.logojobshorizontal = svgs('logojobshorizontal');
-        this.params.logobookshophorizontal = svgs('logobookshophorizontal');
         this.params.logojobs = svgs('logojobs');
         this.params.logomasterclasses = svgs('logomasterclasses');
         this.params.arrowRight = svgs('arrowRight', ['i-right']);
