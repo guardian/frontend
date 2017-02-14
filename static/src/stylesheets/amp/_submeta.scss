@@ -26,31 +26,34 @@
     margin-bottom: $gs-baseline / 2;
 }
 
+.submeta2__links {
+    overflow: hidden;
+    margin-left: -.3em;
+}
+
 .submeta2__link {
     font-weight: 500;
     line-height: 22px;
     position: relative;
     padding-left: .3em;
     padding-right: .35em;
+    float: left;
 
-    &:before {
+    &:after {
         position: absolute;
         pointer-events: none;
         content: '/';
         //optically aligns slashes
-        left: -.28em;
+        top: 0;
+        right: -.19em;
         color: $neutral-5;
     }
 
     .submeta2__keywords & {
         color: $neutral-2;
     }
-}
 
-.submeta2__link--first {
-    padding-left: 0;
-
-    &:before {
+    &:last-of-type:after {
         content: none;
     }
 }

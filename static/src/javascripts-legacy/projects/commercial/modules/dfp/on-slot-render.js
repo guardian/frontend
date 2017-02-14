@@ -34,6 +34,7 @@ define([
             reportEmptyResponse(advert.id, event);
             emitRenderEvents(false);
         } else {
+            advert.size = event.size;
             dfpEnv.creativeIDs.push(event.creativeId);
             renderAdvert(advert, event)
             .then(emitRenderEvents);
