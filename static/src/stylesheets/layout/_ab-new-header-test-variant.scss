@@ -917,7 +917,6 @@ $caption-button-size: 32px;
     border-bottom: 1px dotted $neutral-5;
     padding: $gs-baseline / 2 0 $gs-baseline;
 
-
     &:before {
         @include fs-textSans(1);
         content: "More";
@@ -930,34 +929,30 @@ $caption-button-size: 32px;
 .submeta2__keywords {
     @include fs-textSans(4);
     padding: $gs-baseline / 2 0 $gs-baseline;
+    min-height: $gs-baseline * 2;
     border-bottom: 1px dotted $neutral-5;
     margin-bottom: $gs-baseline / 2;
 }
 
+.submeta2__links {
+    overflow: hidden;
+    margin-left: -.3em;
+}
+
 .submeta2__link {
     font-weight: bold;
-    position: relative;
-    padding-left: .3em;
-    padding-right: .35em;
+    @include nav-links;
 
-    &:before {
-        position: absolute;
-        pointer-events: none;
-        content: '/';
-        //optically aligns slashes
-        left: -.28em;
+    &:after {
+        @include trailing-slash;
         color: $neutral-5;
     }
 
     .submeta2__keywords & {
         color: $neutral-2;
     }
-}
 
-.submeta2__link--first {
-    padding-left: 0;
-
-    &:before {
+    &:last-of-type:after {
         content: none;
     }
 }
