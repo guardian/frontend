@@ -3,6 +3,7 @@
 @import model.ImageAsset
 @import com.gu.contentapi.client.model.v1.Asset
 @import com.gu.contentapi.client.model.v1.AssetType
+@import play.api.Mode
 @(page: HostedGalleryPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import views.html.hosted._
 @import conf.Configuration
@@ -39,7 +40,7 @@
 
         <amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
         @if(AmpOphanTrackingIncludesCredentials.isSwitchedOn){
-            <amp-analytics config="https://ophan.theguardian.com/amp.json" data-credentials="include"></amp-analytics>
+            <amp-analytics config="https://ophan.theguardian.com/amp.json" @if(context.environment.mode != Mode.Dev) { data-credentials="include" }></amp-analytics>
         } else {
             <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
         }
