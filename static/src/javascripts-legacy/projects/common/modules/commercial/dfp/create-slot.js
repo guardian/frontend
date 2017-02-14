@@ -71,7 +71,6 @@ define([
                     adSizes.outOfPage,
                     adSizes.empty,
                     adSizes.mpu,
-                    adSizes.fluid250,
                     adSizes.fabric,
                     adSizes.fluid
                 )

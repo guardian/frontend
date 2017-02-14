@@ -126,11 +126,6 @@ define([
     };
 
     /**
-     * Top banner ads with fluid250 size get special styling
-     */
-    sizeCallbacks[adSizes.fluid250] = addFluid250(['ad-slot--top-banner-ad']);
-
-    /**
      * Commercial components with merch sizing get fluid-250 styling
      */
     sizeCallbacks[adSizes.merchandising] = addFluid250(['ad-slot--commercial-component']);
