@@ -208,9 +208,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
     }) ++ collections
 
   private def getCollectionIdsForPath(path: String): Response[List[String]] =
-    for {
-      config <- Response.Async.Right(fapiClient.config)
-    } yield {
+    Response.Async.Right(fapiClient.config) map { config =>
       Front.frontsFromConfig(config)
         .find(_.id == path)
         .map(_.collections)
