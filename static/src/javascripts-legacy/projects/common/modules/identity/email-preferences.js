@@ -157,12 +157,18 @@ define([
             if (value === 'unsubscribe-2211') {
                 buttonString += 'removeEmailSubscriptions[]=3806&'; // the flyer cards listId
                 buttonString += 'removeEmailSubscriptions[]=3807&'; // the flyer connected listId
-            } else if (value === 'unsubscribe-2313') { // legacy opinion listId
-                buttonString += 'removeEmailSubscriptions[]=3811&'; // new opinion listId
-                buttonString += 'removeEmailSubscriptions[]=3814&'; // control group listId
             } else if (value === 'unsubscribe-3811') { // new opinion listId
                 buttonString += 'removeEmailSubscriptions[]=2313&'; // legacy opinion listId
                 buttonString += 'removeEmailSubscriptions[]=3814&'; // control group listId
+            } else if (value === 'unsubscribe-39') { //legacy sleevenotes listId
+                buttonString += 'removeEmailSubscriptions[]=3834&'; // new sleevenotes listId
+                buttonString += 'removeEmailSubscriptions[]=3835&'; // control sleevenotes listId
+            } else if (value === 'unsubscribe-3834') { //new sleevenotes listId
+                buttonString += 'removeEmailSubscriptions[]=39&'; // legacy sleevenotes listId
+                buttonString += 'removeEmailSubscriptions[]=3835&'; // control sleevenotes listId
+            } else if (value === 'unsubscribe-3835') { //legacy sleevenotes listId
+                buttonString += 'removeEmailSubscriptions[]=39&'; // legacy sleevenotes listId
+                buttonString += 'removeEmailSubscriptions[]=3834&'; // new sleevenotes listId
             }
             // end of hacks
         }

@@ -56,6 +56,8 @@ object ListIds {
 
   val documentaries = 3745
   val sleeveNotes = 39
+  val newSleeveNotes = 3834
+  val controlSleeveNotes = 3835
   val closeUp = 40
   val filmToday = 1950
   val bookmarks = 3039

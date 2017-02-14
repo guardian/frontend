@@ -249,7 +249,8 @@ object EmailNewsletters {
       description = "Everything you need to know from the Guardian's music site, squeezed into one handy email.",
       frequency = "Every Friday",
       listId = ListIds.sleeveNotes.toString,
-      tone = Some("feature"),
+      aliases = List(ListIds.sleeveNotes.toString, ListIds.newSleeveNotes.toString, ListIds.controlSleeveNotes.toString),
+      tone = Some("review"),
       signupPage = Some("/music/2016/aug/18/sign-up-to-sleeve-notes")
     ),
     EmailNewsletter(
