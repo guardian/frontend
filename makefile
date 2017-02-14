@@ -40,7 +40,7 @@ check-yarn: # PRIVATE
 
 # Watch and automatically compile/reload all JS/SCSS.
 # Uses port 3000 insead of 9000.
-watch: compile-dev
+watch: compile-watch
 	@./dev/watch.js
 
 # *********************** ASSETS ***********************
@@ -52,6 +52,10 @@ compile: install
 # Compile all assets in development.
 compile-dev: install
 	@./tools/task-runner/runner compile --dev
+
+# Compile all assets for watch.
+compile-watch: install
+	@./tools/task-runner/runner compile/index.watch
 
 compile-javascript: install # PRIVATE
 	@./tools/task-runner/runner compile/javascript
