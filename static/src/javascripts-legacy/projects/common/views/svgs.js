@@ -145,10 +145,6 @@ define([
     };
 
     return function (name, classes, title) {
-        if (config.switches.webpack) {
-            return svg(svgs[name].markup, classes, title);
-        }
-
-        return svg(svgs[name], classes, title);
+        return svg(svgs[name].markup, classes, title);
     };
 });
