@@ -19,7 +19,8 @@ define(['lodash/objects/assign'], function(assign) {
         // `preload="auto"` on < Chrome 35 and `preload="metadata"` on old Safari
         autoplay: false,
         preload: 'metadata',
-        techOrder: ['html5']
+        techOrder: ['html5'],
+        notSupportedMessage: 'This video is no longer available.'
     };
 
     return function(overrides) {
