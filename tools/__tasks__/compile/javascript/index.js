@@ -7,7 +7,6 @@ module.exports = {
         require('./babel'),
         require('./rjs'),
         require('./webpack'),
-        require('./bundle-rjs'),
         require('./bundle-shims'),
     ],
 };
