@@ -175,10 +175,7 @@ define([
         addListToPage = function (listConfig, successEventName) {
 
             if (listConfig) {
-                //tailor success
-                listConfig.successEventName = successEventName || "";
-                //other ab test
-                listConfig.successEventName = listConfig.successEventName || "";
+                listConfig.successEventName = successEventName || listConfig.successEventName || "";
                 var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
                     $iframeEl = $(iframe);
 
@@ -221,27 +218,35 @@ define([
     return {
         init: function () {
             if (emailRunChecks.allEmailCanRun()) {
-
                 // First we need to check the user's email subscriptions
                 // so we don't insert the sign-up if they've already subscribed
                 emailRunChecks.getUserEmailSubscriptions().then(function () {
                     if (ab.isParticipating({id: 'TailorRecommendedEmail'}) &&
                         ab.isInVariant('TailorRecommendedEmail', 'tailor-recommended')) {
-                        //var bwidCookie = cookies.get('bwid') || false;
-                        //var bwidCookie = 'sd';
-                                    //labnotes                  //football                                 //guardian today
-                        var bIds = ['RlTb-fq5KVTWm1k7e_eyCaYA','gia:A4F40CFD-474C-4DB8-BABB-1725E3BEB9EB','gia:519BEE10-BD8D-4B90-87E6-BDA5341C9B36','teCo6pkAD8T1KFetVfV145zA'];
-                        var bwidCookie = bIds[Math.floor(Math.random()*bIds.length)];
-                        if(bwidCookie) {
-                            tailor.getEmail(bwidCookie).then(function (data) {
-                                addListToPage(find(listConfigs, doesIdMatch.bind(null, data.email)), 'tailor-recommend:signup');
-                                mediator.emit('tailor-recommended:insert');
-                            });
+                        var bwidCookie = cookies.get('bwid') || false;
+
+                        if (bwidCookie) {
+                            var cachedTailorResponse = cookies.get('GU_TAILOR_EMAIL') || false;
+                            if(!cachedTailorResponse) {
+                                tailor.getEmail(bwidCookie).then(function (tailorRes) {
+                                    addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'tailor-recommend:signup');
+                                    mediator.emit('tailor-recommended:insert');
+                                    cookies.add('GU_TAILOR_EMAIL', tailorRes.email, 1)
+                                });
+                            }
+                            else {
+                                addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'tailor-recommend:signup');
+                            }
                         }
-                    } else {
+                    }
+                    else if (ab.isParticipating({id: 'TailorRecommendedEmail'}) &&
+                        ab.isInVariant('TailorRecommendedEmail', 'control')) {
                         // Get the first list that is allowed on this page
                         addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'control:signup');
                         mediator.emit('control:insert');
+                    }
+                    else {
+                        addListToPage(find(listConfigs, emailRunChecks.listCanRun));
                     }
                 }).catch(function (error) {
                     robust.log('c-email', error);
