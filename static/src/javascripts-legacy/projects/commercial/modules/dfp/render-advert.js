@@ -178,22 +178,26 @@ define([
                 return (config.switches.adFeedback && isRendered) ? fastdom.write(function () {
                     qwery('.js-ad-feedback-option:not(.js-onclick-ready)').forEach(function(el) {
                         var option = bonzo(el);
+                        var slotId = el.getAttribute('data-slot');
+                        var problem = el.getAttribute('data-problem');
                         el.addEventListener('click', function() {
-                            recordUserAdFeedback(window.location.pathname, el.attributes['data-slot'].nodeValue, slotRenderEvent, el.attributes['data-problem'].nodeValue);
+                            recordUserAdFeedback(window.location.pathname, slotId, slotRenderEvent, problem);
                         });
                         option.addClass(readyClass);
                     });
                     qwery('.js-ad-feedback-option-other:not(.js-onclick-ready)').forEach(function(el) {
                         var option = bonzo(el);
-                        var input = qwery('input', el);
+                        var form = qwery('form', el)[0];
+                        var commentBox = qwery('input', el)[0];
+                        var slotId = el.getAttribute('data-slot');
                         el.addEventListener('click', function(e) {
-                            if (e.target.tagName === "svg" || e.target.classList.contains('inline-tick')) {
-                                var comment = input[0].value;
-                                recordUserAdFeedback(window.location.pathname, el.attributes['data-slot'].nodeValue, slotRenderEvent, el.attributes['data-problem'].nodeValue, comment);
-                            } else {
-                                e.preventDefault();
+                            if(e.target.tagName !== 'BUTTON' || !commentBox.value) {
                                 e.stopImmediatePropagation();
                             }
+                        });
+                        form.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            recordUserAdFeedback(window.location.pathname, slotId, slotRenderEvent, 'other', commentBox.value);
                         });
                         option.addClass(readyClass);
                     });
