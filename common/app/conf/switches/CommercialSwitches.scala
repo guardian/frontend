@@ -220,7 +220,7 @@ trait CommercialSwitches {
     name = "preflight-ad-call",
     description = "A test feature to evaluate Switch Concepts' server-to-server preflight ad call",
     owners = Owner.group(SwitchGroup.Commercial),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2017, 3, 31),
     exposeClientSide = true
   )
