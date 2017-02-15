@@ -7,7 +7,7 @@
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, content: Option[model.ContentType]) = {
   @if(!page.metadata.shouldHideHeaderAndTopAds) {
-    @defining(showAdverts && (content.isEmpty || content.exists(content => !content.tags.isTheMinuteArticle))) { showTopSlot =>
+    @defining(showAdverts && !content.exists(_.tags.isTheMinuteArticle)) { showTopSlot =>
       <div id="bannerandheader">
         @if(showTopSlot) {
           @fragments.commercial.topBanner(page.metadata)
