@@ -65,8 +65,8 @@ define([
                 listId: '1950',
                 listName: 'theFilmToday',
                 campaignCode: 'film_article_signup',
-                headline: 'Want the best of Film, direct to your inbox?',
-                description: 'Sign up to Film Today and we\'ll deliver to you the latest movie news, blogs, big name interviews, festival coverage, reviews and more.',
+                headline: 'Film Today: now booking',
+                description: 'Sign up to the Guardian Film Today email and we\'ll make sure you don’t miss a thing - the day’s insider news and our latest reviews, plus big name interviews and film festival coverage.',
                 successHeadline: 'Thank you for signing up to Film Today',
                 successDescription: 'We will send you our picks of the most important headlines tomorrow afternoon.',
                 modClass: 'end-article',
@@ -76,8 +76,8 @@ define([
                 listId: '218',
                 listName: 'theFiver',
                 campaignCode: 'fiver_article_signup',
-                headline: 'Want a football roundup direct to your inbox?',
-                description: 'Sign up to the Fiver, our daily email on the world of football',
+                headline: 'Kick off your evenings with our football roundup',
+                description: 'Sign up to the Fiver, our daily email on the world of football. We\'ll deliver the day\'s news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way.',
                 successHeadline: 'Thank you for signing up',
                 successDescription: 'You\'ll receive the Fiver daily, around 5pm.',
                 modClass: 'end-article',
@@ -87,8 +87,8 @@ define([
                 listId: '3701',
                 listName: 'labNotes',
                 campaignCode: 'lab_notes_article_signup',
-                headline: 'Sign up to Lab notes',
-                description: 'Get a weekly round-up of the biggest stories in science, insider knowledge from our network of bloggers, and a healthy dose of fun.',
+                headline: 'Science news you’ll want to read. Fact.',
+                description: 'Sign up to Lab Notes and we’ll email you the top stories in science, from medical breakthroughs to dinosaur discoveries - plus brainteasers, podcasts and more.',
                 successHeadline: 'Thank you for signing up for Lab notes',
                 successDescription: 'You\'ll receive an email every week.',
                 modClass: 'end-article',
@@ -98,8 +98,8 @@ define([
                 listId: '3698',
                 listName: 'euRef',
                 campaignCode: 'eu_ref_article_signup',
-                headline: 'Brexit weekly briefing',
-                description: 'Get a weekly rundown of the debates and developments as Britain starts out on the long road to leaving the European Union.',
+                headline: 'Brexit: your weekly briefing',
+                description: 'Sign up and we’ll email you the key developments and most important debates as Britain takes its first steps on the long road to leaving the EU',
                 successHeadline: 'Thank you for signing up for the Brexit weekly briefing',
                 successDescription: 'You\'ll receive an email every morning.',
                 modClass: 'end-article',
@@ -227,7 +227,11 @@ define([
                 emailRunChecks.getUserEmailSubscriptions().then(function () {
                     if (ab.isParticipating({id: 'TailorRecommendedEmail'}) &&
                         ab.isInVariant('TailorRecommendedEmail', 'tailor-recommended')) {
-                        var bwidCookie = cookies.get('bwid') || false;
+                        //var bwidCookie = cookies.get('bwid') || false;
+                        //var bwidCookie = 'sd';
+                                    //labnotes                  //football                                 //guardian today
+                        var bIds = ['RlTb-fq5KVTWm1k7e_eyCaYA','gia:A4F40CFD-474C-4DB8-BABB-1725E3BEB9EB','gia:519BEE10-BD8D-4B90-87E6-BDA5341C9B36','teCo6pkAD8T1KFetVfV145zA'];
+                        var bwidCookie = bIds[Math.floor(Math.random()*bIds.length)];
                         if(bwidCookie) {
                             tailor.getEmail(bwidCookie).then(function (data) {
                                 addListToPage(find(listConfigs, doesIdMatch.bind(null, data.email)), 'tailor-recommend:signup');
