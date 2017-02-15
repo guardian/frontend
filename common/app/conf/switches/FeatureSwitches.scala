@@ -497,15 +497,4 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2017, 2, 27),
     exposeClientSide = true
   )
-
-  // Owner: Alex Sanders
-  val Webpack = Switch(
-    SwitchGroup.Feature,
-    "webpack",
-    "When ON, will serve webpack bundles instead of curl.",
-    owners = Seq(Owner.withGithub("asanders")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 2, 17),
-    exposeClientSide = true
-  )
 }
