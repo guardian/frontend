@@ -93,7 +93,6 @@ define([
         adSlot.id = 'dfp-ad--' + name;
         adSlot.className = 'js-ad-slot ad-slot ' + classes.join(' ');
         adSlot.setAttribute('data-link-name', 'ad slot ' + name);
-        adSlot.setAttribute('data-test-id', 'ad-slot-' + name);
         adSlot.setAttribute('data-name', name);
         Object.keys(attrs).forEach(function (attr) { adSlot.setAttribute(attr, attrs[attr]); });
         return adSlot;

@@ -30,7 +30,7 @@ define([
                 });
                 feedbackThanksMessage = '<i class="ad-feedback__thanks-message"> Thanks for your feedback </i>';
             }
-            var labelDiv = '<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement' +
+            var labelDiv = '<div class="ad-slot__label">Advertisement' +
                 feedbackPopup + feedbackThanksMessage +
                 '</div>';
             return fastdom.write(function () {
