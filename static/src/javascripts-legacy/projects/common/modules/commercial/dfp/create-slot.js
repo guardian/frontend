@@ -98,8 +98,8 @@ define([
         return adSlot;
     }
 
-    return function (name, slotTypes, series, keywords, slotTarget) {
-        var slotName = slotTarget ? slotTarget : name,
+    return function (name, slotTypes) {
+        var slotName = name,
             attributes = {},
             definition,
             classes = [];
@@ -115,18 +115,6 @@ define([
 
         if (definition.refresh === false) {
             attributes.refresh = 'false';
-        }
-
-        if (slotTarget) {
-            attributes['slot-target'] = slotTarget;
-        }
-
-        if (series) {
-            attributes.series = series;
-        }
-
-        if (keywords) {
-            attributes.keywords = keywords;
         }
 
         if (slotTypes) {
