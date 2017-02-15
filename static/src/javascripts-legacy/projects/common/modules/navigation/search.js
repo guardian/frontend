@@ -37,7 +37,6 @@ define([
                 searchLoader();
 
                 // Make sure search is always in the correct state
-                self.checkResults();
                 self.focusSearchField();
                 e.preventDefault();
                 mediator.emit('modules:search');
