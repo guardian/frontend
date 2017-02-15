@@ -1,7 +1,7 @@
 @import common.InlineJs
 @import conf.switches.Switches.{AsyncCss, FontSwitch}
 @import model.Page.getContent
-@import templates.inlineJS.blocking.js.{applyRenderConditions, config, curlConfig, enableStylesheets, loadFonts, shouldEnhance}
+@import templates.inlineJS.blocking.js.{applyRenderConditions, config, enableStylesheets, loadFonts, shouldEnhance}
 @import templates.inlineJS.blocking.polyfills.js.{classlist, details, matches, raf, setTimeout}
 
 @(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
@@ -32,11 +32,6 @@
     // Polyfill details
     @InlineJs(details().body, "details.js")
 
-
-    // ************* CONFIG *************
-
-
-    @Html(curlConfig().body)
 
     // ************* RENDER-CRITICAL BLOCKING JS *************
 
