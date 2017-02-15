@@ -58,17 +58,12 @@ define([
         // - Once fixed, or a global fetch is available through a polyfill, one can
         //   modify discussion-frontend to remove `fetch` polyfill and pass, if needed,
         //   opts.net = { json: fetchJson }
-        if (config.switches.webpack) {
-            return loadScript(config.page.discussionFrontendUrl)
-                .then(function() {
-                    init(window.guardian.app.discussion);
-                })
-                .catch(error);
-        }
 
-        // #wp-rjs
-        // We can remove this when we go WP 100%
-        return window.require('discussion-frontend-preact', init, error);
+        return loadScript(config.page.discussionFrontendUrl)
+            .then(function() {
+                init(window.guardian.app.discussion);
+            })
+            .catch(error);
     }
 
     return {
