@@ -12,23 +12,6 @@
 
 @fragments.analytics.comscore(page)
 
-<script>
-    @*
-        GA runs on both Core & 'Full experience'
-        We just need to run Ophan here.
-    *@
-
-    if (!guardian.isEnhanced) {
-        var ophanScript = document.createElement('script'),
-                sc = document.getElementsByTagName('script')[0];
-
-        ophanScript.src = '@Static("javascripts/bootstraps/enhanced/ophan.js")';
-        ophanScript.async = true;
-        sc.parentNode.insertBefore(ophanScript, sc);
-    }
-</script>
-
-
 @******************************************************************************
                             'Other' Analytics
 ******************************************************************************@
