@@ -149,21 +149,6 @@ define([
 
     function allEmailCanRun() {
         var browser = detect.getUserAgent.browser,
-<<<<<<< HEAD
-         version = detect.getUserAgent.version;
-
-        return !config.page.shouldHideAdverts
-            &&
-         !config.page.isSensitive &&
-         !emailInserted &&
-         !config.page.isFront &&
-         config.switches.emailInArticle &&
-         !clash.userIsInAClashingAbTest() &&
-         storage.session.isAvailable() &&
-         !userHasSeenThisSession() &&
-         !obWidgetIsShown() &&
-         !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
-=======
             version = detect.getUserAgent.version;
 
         return !config.page.shouldHideAdverts &&
@@ -176,7 +161,6 @@ define([
             !userHasSeenThisSession() &&
             !compliantObWidgetIsShown() &&
             !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
->>>>>>> master
     }
 
     function getUserEmailSubscriptions() {
