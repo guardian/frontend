@@ -327,31 +327,40 @@ $control-offset: 36 + $gs-gutter/2;
         padding-bottom: $gs-baseline/2;
         border-bottom: 1px solid $neutral-4;
     }
-    .popup__item {
+    .popup__item--other {
         padding: 0 $gs-gutter/2;
     }
+    .ad-feedback__submit-button {
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        bottom: 0;
+        right: 0;
+        border: 0;
+        padding: 0;
+        background: transparent;
+    }
     .popup__item--option {
-        cursor: pointer;
+        position: relative;
         border-bottom: 1px solid $neutral-4;
-        &:hover {
-            background: $neutral-5;
+        > button {
+            cursor: pointer;
+            padding: 0 $gs-gutter/2;
+            width: 100%;
+            border: 0;
+            background: transparent;
+            text-align: left;
+            &:focus, &:hover {
+                background: $neutral-5;
+            }
         }
     }
-    input {
+    .ad-feedback__comment-field {
         padding: 2px;
         width: 145px;
     }
     .inline-icon {
         fill: $neutral-1;
-        padding: $gs-baseline;
-        position: absolute;
-        cursor: pointer;
-        display: block;
-        right: 0;
-        bottom: 0;
-        width: $gs-gutter/2;
-        height: $gs-gutter/2;
-        line-height: $gs-gutter/2;
     }
 
     .ad-slot--dark & {
@@ -373,6 +382,17 @@ $control-offset: 36 + $gs-gutter/2;
         }
         input {
             color: $neutral-1;
+        }
+    }
+
+    .fc-container .ad-slot--container-inline & {
+        @include mq($until: tablet) {
+            top: -$gs-gutter/2;
+        }
+    }
+    .fc-slice__popular-mpu & {
+        @include mq($until: desktop) {
+            top: -$gs-gutter/2;
         }
     }
 
