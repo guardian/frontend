@@ -16,7 +16,6 @@ define([
     'commercial/modules/hosted/gallery',
     'commercial/modules/hosted/onward-journey-carousel',
     'commercial/modules/hosted/onward',
-    'commercial/modules/slice-adverts',
     'commercial/modules/liveblog-adverts',
     'commercial/modules/sticky-top-banner',
     'commercial/modules/third-party-tags',
@@ -43,7 +42,6 @@ define([
     hostedGallery,
     hostedOJCarousel,
     hostedOnward,
-    sliceAdverts,
     liveblogAdverts,
     stickyTopBanner,
     thirdPartyTags,
@@ -60,7 +58,6 @@ define([
         ['cm-highMerch', highMerch.init],
         ['cm-articleAsideAdverts', articleAsideAdverts.init, true],
         ['cm-articleBodyAdverts', articleBodyAdverts.init, true],
-        ['cm-sliceAdverts', sliceAdverts.init, true],
         ['cm-liveblogAdverts', liveblogAdverts.init, true],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
