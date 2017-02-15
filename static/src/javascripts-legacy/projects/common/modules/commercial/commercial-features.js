@@ -60,12 +60,7 @@ define([
             externalAdvertising &&
             !sensitiveContent;
 
-        this.topBannerAd =
-            this.dfpAdvertising &&
-            !isMinuteArticle;
-
         this.stickyTopBannerAd =
-            this.topBannerAd &&
             !config.page.disableStickyTopBanner &&
             !supportsSticky;
 
