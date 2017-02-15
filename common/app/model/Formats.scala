@@ -602,6 +602,7 @@ object FaciaImageFormat {
 }
 
 object PressedCollectionFormat {
+  implicit val displayHintsFormat = Json.format[DisplayHints]
   implicit val collectionConfigFormat = Json.format[CollectionConfig]
   implicit val pressedContentFormat = PressedContentFormat.format
   val format  = Json.format[PressedCollection]

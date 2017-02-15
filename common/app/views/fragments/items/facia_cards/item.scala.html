@@ -1,9 +1,9 @@
 @(card: layout.FaciaCardAndIndex, containerIndex: Int, isRow: Boolean = true, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader)
-
-@import views.support.GetClasses
-@import layout.{ContentCard, HtmlBlob}
-@import views.support.RenderClasses
+@import layout.{ContentCard, HtmlBlob, PaidCard}
+@import views.html.fragments.commercial
 @import views.html.fragments.items.facia_cards.contentCard
+@import views.support.Commercial.TrackingCodeBuilder.mkInteractionTrackingCode
+@import views.support.{GetClasses, RenderClasses}
 
 @defining((card.item, card.index)) { case (item, index) =>
 <li class="@RenderClasses(Map(
@@ -19,6 +19,15 @@
     @item match {
         case content: ContentCard => {
             @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
+        }
+
+        case paidCard: PaidCard => {
+            @commercial.cards.itemCard(
+                item = paidCard,
+                omnitureId = mkInteractionTrackingCode(containerIndex, index, paidCard),
+                optClassNames = Some(Seq("adverts--tone-paidfor")),
+                useCardBranding = true
+            )
         }
 
         case htmlBlob: HtmlBlob => {

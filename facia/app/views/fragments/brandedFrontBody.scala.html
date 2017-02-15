@@ -1,5 +1,4 @@
 @(faciaPage: model.PressedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
-@import com.gu.commercial.branding.{PaidContent, Sponsored}
 @import common.Edition
 @import common.commercial.ContainerModel
 @import views.support.Commercial.container.isFirstNonThrasherContainer
@@ -11,13 +10,13 @@
         @if(faciaPage.collections.nonEmpty) {
             <div class="l-side-margins">
                 <div class="@RenderClasses(Map(
-                    "fc-container--sponsored" -> (branding.brandingType == Sponsored),
-                    "fc-container--paid-content paid-content" -> (branding.brandingType == PaidContent)
+                    "fc-container--sponsored" -> branding.isSponsored,
+                    "fc-container--paid-content paid-content" -> branding.isPaid
                 ), "facia-page")"
                 data-link-name="Front | @request.path"
                 role="main">
 
-                    @if(branding.brandingType == PaidContent){ @fragments.guBand() }
+                    @if(branding.isPaid){ @fragments.guBand() }
 
                     @defining(layout.Front.fromPressedPage(faciaPage, Edition(request)).containers) { collections =>
                         @collections.map { containerDefinition =>
@@ -25,7 +24,7 @@
                                 containerDefinition,
                                 faciaPage.frontProperties,
                                 Some(faciaPage.id),
-                                branding.brandingType == PaidContent,
+                                branding.isPaid,
                                 faciaPage.collections.find {
                                     _.id == containerDefinition.dataId
                                 }.map {
@@ -47,7 +46,7 @@
 
                     @fragments.trendingTopics(faciaPage.allItems, faciaPage.id, faciaPage.allPath)
 
-                    @if(branding.brandingType != PaidContent) {
+                    @if(!branding.isPaid) {
                         <div class="fc-container fc-container--commercial">
                         @fragments.commercial.commercialComponent()
                         </div>

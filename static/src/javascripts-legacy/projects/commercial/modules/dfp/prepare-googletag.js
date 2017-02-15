@@ -14,6 +14,7 @@ define([
     'commercial/modules/dfp/performance-logging',
 
     // These are cross-frame protocol messaging routines:
+    'commercial/modules/messenger/type',
     'commercial/modules/messenger/get-stylesheet',
     'commercial/modules/messenger/resize',
     'commercial/modules/messenger/scroll',

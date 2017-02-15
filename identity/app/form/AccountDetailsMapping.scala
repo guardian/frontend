@@ -8,7 +8,7 @@ import play.api.i18n.MessagesApi
 
 class AccountDetailsMapping(val messagesApi: MessagesApi) extends UserFormMapping[AccountFormData] with AddressMapping with DateMapping with TelephoneNumberMapping {
 
-  private val genders = List("Male", "Female", "Transgender", "unknown", "")
+  private val genders = List("Male", "Female", "Transgender", "Other", "unknown", "")
 
   protected lazy val formMapping = {
     mapping(

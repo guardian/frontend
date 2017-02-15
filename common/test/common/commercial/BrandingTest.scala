@@ -16,7 +16,8 @@ class BrandingTest extends FlatSpec with Matchers {
         label = ""
       ),
       logoForDarkBackground = None,
-      aboutThisLink = Some("/sponsored-content")
+      aboutThisLink = Some("/sponsored-content"),
+      hostedCampaignColour = None
     )
   }
 }

@@ -21,9 +21,10 @@ define([
         };
     var primaryBaseline = 'primary';
     var secondaryBaseline = 'secondary';
+    var reportData = raven.wrap(reportTrackingData);
 
     function setListeners(googletag) {
-        googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(reportTrackingData));
+        googletag.pubads().addEventListener('slotRenderEnded', reportData);
     }
 
     // moduleStart() and moduleEnd() can be used for measuring modules ad-hoc,
@@ -106,14 +107,23 @@ define([
         var stop = moduleEnd.bind(null, name);
         return function() {
             start();
-            var ret = fn.apply(null, arguments);
-            if (ret instanceof Promise) {
-                ret.then(stop, function(reason) {
+            try {
+                var ret = fn.apply(null, arguments);
+                if (ret instanceof Promise) {
+                    return ret.then(function (value) {
+                        stop();
+                        return value;
+                    }, function(reason) {
+                        stop();
+                        throw reason;
+                    });
+                } else {
                     stop();
-                    throw reason;
-                });
-            } else {
+                    return ret;
+                }
+            } catch (e) {
                 stop();
+                throw e;
             }
         };
     }
@@ -122,7 +132,7 @@ define([
         var startStop = [moduleStart.bind(null, name), moduleEnd.bind(null, name)];
         return function() {
             try {
-                fn.apply(null, startStop.concat(startStop.slice.call(arguments)));
+                return fn.apply(null, startStop.concat(startStop.slice.call(arguments)));
             } catch (e) {
                 stop();
                 throw e;
@@ -140,6 +150,6 @@ define([
         addTag: addTag,
         wrap: wrap,
         defer: defer,
-        reportTrackingData: raven.wrap(reportTrackingData)
+        reportTrackingData: reportData
     };
 });

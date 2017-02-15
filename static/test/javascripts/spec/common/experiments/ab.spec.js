@@ -185,6 +185,21 @@ define([
                 expect(controlSpy.called || variantSpy.called).toBeTruthy();
             });
 
+            it('should run the test until the end of the expiry day', function () {
+                //... we need the current date in 'yyyy-mm-dd' format:
+                var dateString = new Date().toISOString().substring(0, 10);
+                test.one.expiry = dateString;
+                ab.addTest(test.one);
+                ab.segment();
+                ab.run();
+
+                var tests = Object.keys(ab.getParticipations()).map(function (k) { return k; }).toString();
+
+                expect(tests).toBe('DummyTest');
+                expect(ab.getExpiredTests().length).toBe(0);
+                expect(controlSpy.called || variantSpy.called).toBeTruthy();
+            });
+
             it('should not to run the after the expiry date', function () {
                 test.one.expiry = '2012-01-01';
                 ab.addTest(test.one);
@@ -288,6 +303,7 @@ define([
                 var spy = sinon.spy();
 
                 ab.addTest(test.one);
+                ab.segmentUser();
                 test.one.variants[0].success = spy;
                 ab.registerCompleteEvents();
 
@@ -297,6 +313,9 @@ define([
             it('should fire the success function when canRun is false', function() {
                 var spy = sinon.spy();
 
+                ab.addTest(test.one);
+                ab.segmentUser();
+                ab.clearTests();
                 test.one.canRun = function() { return false; };
                 ab.addTest(test.one);
                 test.one.variants[0].success = spy;
@@ -309,6 +328,7 @@ define([
                 var spy = sinon.spy();
 
                 ab.addTest(test.one);
+                ab.segmentUser();
 
                 /**
                  * impression events are only registered if every variant has an `impression` function

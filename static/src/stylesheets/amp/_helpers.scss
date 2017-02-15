@@ -39,17 +39,9 @@
     padding-bottom: aspect-ratio-height(16, 9);
 }
 
-.u-responsive-ratio--letterbox {
-    padding-bottom: aspect-ratio-height(5, 2);
-}
-
 .u-text-hyphenate {
     word-wrap: break-word;
     hyphens: auto;
-}
-
-.u-test-ellipsis {
-    @include ellipsis();
 }
 
 .u-button-reset {
@@ -80,23 +72,9 @@
     }
 }
 
-.u-nobr {
-    white-space: nowrap;
-}
-
 .meta-button {
     background: transparent;
     border: 0;
     margin: 0;
     padding: 0;
-}
-
-.u-font-weight-normal {
-    font-weight: normal;
-}
-
-.u-vertical-align-middle-icon {
-    svg {
-        vertical-align: middle;
-    }
 }

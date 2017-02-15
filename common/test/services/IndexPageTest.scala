@@ -4,6 +4,7 @@ import common.Edition
 import common.editions.Uk
 import model.{Section, Tags}
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import slices.Fixed
@@ -47,18 +48,20 @@ import scala.concurrent.Future
         fail("Wrong type (expected: IndexPage, real: Result)")
       case Some(page) =>
         val front = IndexPage.makeFront(page, edition)
-        front.containers.length should be(2)
+        front.containers.length should be(1)
 
         val firstContainer = front.containers.head
-        firstContainer.displayName.get should equal("30 January 2017")
+        val formatter = DateTimeFormat.forPattern("d MMMM yyyy")
+        val parsedDate = formatter.parseDateTime(firstContainer.displayName.get)
+        parsedDate shouldBe a[DateTime]
         firstContainer.container.isInstanceOf[Fixed] should be(true)
         firstContainer.index should be(0)
-        firstContainer.containerLayout.get.slices.length should be(1)
-        firstContainer.containerLayout.get.remainingCards.length should be(0)
+        firstContainer.containerLayout.get.slices.length should be(2)
+        firstContainer.containerLayout.get.remainingCards.length should be(1)
 
-        firstContainer.items.length should be(6)
-        firstContainer.items.head.header.headline should be("The Olympic skier from the Caribbean who inked tattoos to fund her comeback")
-        firstContainer.items.head.header.url should be("/sport/behind-the-lines/2017/jan/30/anais-caradeux-olympic-skier-caribbean-tattoo-artist-sochi")
+        firstContainer.items.length should be(pageSize)
+        firstContainer.items.head.header.headline should be("Rio 2016 Olympic venues abandoned and derelict six months after Games – video")
+        firstContainer.items.head.header.url should be("/sport/video/2017/feb/10/rio-2016-olympic-venues-abandoned-derelict-video")
     }
   }
 }

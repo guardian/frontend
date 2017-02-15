@@ -1,31 +1,35 @@
 package common.commercial
 
-import com.gu.commercial.branding.Branding
+import com.gu.commercial.branding.{Branding, ContainerBranding, PaidMultiSponsorBranding}
 import common.Edition
+import layout.PaidCard
 import model.facia.PressedCollection
 
 case class ContainerModel(
-                           id: String,
-                           layoutName: String,
-                           content: ContainerContent,
-                           branding: Option[Branding]
-                         ) {
-  val isSingleSponsorContainer: Boolean = branding.isDefined
+  id: String,
+  layoutName: String,
+  content: ContainerContent,
+  branding: Option[ContainerBranding]
+) {
+  val isSingleSponsorContainer: Boolean = branding exists {
+    case PaidMultiSponsorBranding => false
+    case _: Branding => true
+  }
 }
 
 case class ContainerContent(
-                             title: String,
-                             description: Option[String],
-                             targetUrl: Option[String],
-                             initialCards: Seq[CardContent],
-                             showMoreCards: Seq[CardContent]
-                           )
+  title: String,
+  description: Option[String],
+  targetUrl: Option[String],
+  initialCards: Seq[PaidCard],
+  showMoreCards: Seq[PaidCard]
+)
 
 object ContainerModel {
 
   def fromPressedCollection(edition: Edition)(collection: PressedCollection): ContainerModel = {
 
-    val cards = collection.curatedPlusBackfillDeduplicated map CardContent.fromPressedContent(edition)
+    val cards = collection.curatedPlusBackfillDeduplicated map PaidCard.fromPressedContent
     val layoutName = collection.collectionType
 
     val content = {

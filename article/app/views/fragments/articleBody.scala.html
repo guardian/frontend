@@ -63,7 +63,7 @@
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
-
+                        <div class="js-score"></div>
                         <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
 
                         @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
@@ -102,7 +102,7 @@
 
                         @fragments.witnessCallToAction(article.content)
 
-                        @fragments.submeta(article)
+                        @fragments.submeta(article, amp)
 
                         <div class="after-article js-after-article"></div>
                     </div>

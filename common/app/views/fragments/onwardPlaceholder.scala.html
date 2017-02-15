@@ -1,7 +1,7 @@
-@(isAdvertisementFeature: Boolean)(implicit request: RequestHeader)
+@(isPaidContent: Boolean)(implicit request: RequestHeader)
 <aside id="onward"
-  class="onward js-onward facia-container facia-container--layout-content @if(isAdvertisementFeature){ paid-content} js-outbrain-anchor"
+  class="onward js-onward facia-container facia-container--layout-content @if(isPaidContent){ paid-content} js-outbrain-anchor"
   role="complementary"></aside>
 <aside id="more-in-section"
-  class="more-in-section js-more-in-section facia-container facia-container--layout-content @if(isAdvertisementFeature){ paid-content}"
+  class="more-in-section js-more-in-section facia-container facia-container--layout-content @if(isPaidContent){ paid-content}"
   role="complementary"></aside>

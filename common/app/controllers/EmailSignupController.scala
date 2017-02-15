@@ -41,7 +41,9 @@ object ListIds {
   val controlBestOfOpinion = 3814
   val theFiver = 218
   val mediaBriefing = 217
+  val brexitBriefing = 3698
   val greenLight = 28
+  val labNotes = 3701
   val povertyMatters = 113
   val theLongRead = 3322
   val weekendReading = 3743
@@ -50,6 +52,7 @@ object ListIds {
 
   val theBreakdown = 219
   val theSpin = 220
+  val guardianAustraliaSports = 3766
 
   val documentaries = 3745
   val sleeveNotes = 39

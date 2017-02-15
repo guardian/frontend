@@ -35,8 +35,8 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
 
   private def buildHtml(item: RelatedContentItem,
                         related: RelatedContent = relatedContent,
-                        isAdFeature: Boolean = false): Html = {
-    ContentFooterContainersLayout(item.content.content, isAdFeature) {
+                        isPaidContent: Boolean = false): Html = {
+    ContentFooterContainersLayout(item.content.content, isPaidContent) {
       Html("storyPackageHtml ")
     } {
       Html("onwardHtml ")
@@ -64,7 +64,7 @@ class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
   }
 
   it should "just show the story package, commercial container and onward placeholder on ad features" in {
-    val html = buildHtml(contentItem(), isAdFeature = true)
+    val html = buildHtml(contentItem(), isPaidContent = true)
     html.toString shouldBe "highRelevanceCommercialHtml storyPackageHtml onwardHtml "
   }
 

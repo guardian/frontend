@@ -32,7 +32,7 @@ define([
         campaignId: 'epic_always_ask_strategy',
 
         start: '2016-12-06',
-        expiry: '2017-02-06',
+        expiry: '2017-05-01',
 
         author: 'Guy Dawson',
         description: 'Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period.',
@@ -65,7 +65,7 @@ define([
                         linkUrl1: membershipUrl,
                         linkUrl2: contributionUrl,
                         title: 'Since you’re here…',
-                        p1: '…we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+                        p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
                         p2: 'If everyone who reads our reporting, who likes it, helps to pay for it, our future would be much more secure.',
                         p3: '',
                         cta1: 'Become a Supporter',

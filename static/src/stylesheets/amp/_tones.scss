@@ -97,16 +97,7 @@
     background-color: $comment-support-2;
 }
 
-.tonal--tone-comment .tonal__header .content__labels,
-.tonal--tone-analysis .tonal__header .content__labels,
-.tonal--tone-editorial .tonal__header .content__labels,
-.tonal--tone-letters .tonal__header .content__labels {
-    border-bottom-color: rgba(118, 118, 118, .3);
-}
-
-.tonal--tone-comment .tonal__header .content__section-label__link,
 .tonal--tone-comment .tone-colour,
-.tonal--tone-letters .tonal__header .content__section-label__link,
 .tonal--tone-comment .tonal__main .element-pullquote cite,
 .tonal--tone-letters .tonal__main .element-pullquote cite,
 .tonal--tone-comment .tonal__main .drop-cap,
@@ -123,20 +114,6 @@
 .tonal--tone-review .tonal__main .element-pullquote cite,
 .tonal--tone-review .tonal__main .drop-cap {
     color: #615b52;
-}
-
-.tonal--tone-special-report .tonal__header .content__section-label__link {
-    color: $news-support-1;
-}
-
-.tonal--tone-feature .tonal__header .content__labels,
-.tonal--tone-review .tonal__header .content__labels,
-.tonal--tone-live .tonal__header .content__labels {
-    border-bottom-color: rgba(234, 234, 234, .3);
-}
-
-.tonal--tone-feature .tonal__header .content__section-label__link {
-    color: $features-support-3;
 }
 
 .tonal--tone-feature .tonal__standfirst ul>li:before,
@@ -160,10 +137,6 @@
     color: $comment-support-1;
 }
 
-.tonal--tone-review .tonal__header .content__section-label__link {
-    color: #ffce4b;
-}
-
 .tonal--tone-review .stars {
     margin-top: -1.125rem;
     margin-bottom: 1.125rem;
@@ -182,8 +155,6 @@
 .tonal--tone-feature .tonal__header .content__headline,
 .tonal--tone-live .tonal__header .content__headline,
 .tonal--tone-special-report .tonal__header .content__headline,
-.tonal--tone-special-report .tonal__header .content__series-label__link,
-.tonal--tone-live .tonal__header .content__section-label__link,
 .tonal--tone-letters .tonal__standfirst,
 .tonal--tone-letters .tonal__standfirst .content__standfirst,
 .tone-media .fc-item__title,
@@ -194,13 +165,6 @@
     color: #ffffff;
 }
 
-.tonal--tone-review .tonal__header .content__series-label__link,
-.tonal--tone-feature .tonal__header .content__series-label__link,
-.tonal--tone-live .tonal__header .content__series-label__link {
-    color: $neutral-5;
-}
-
-.tonal--tone-editorial .tonal__header .content__section-label__link,
 .tonal--tone-editorial .tone-colour,
 .tonal--tone-editorial .tonal__main .element-pullquote cite,
 .tonal--tone-editorial .tonal__main .drop-cap {
@@ -215,7 +179,6 @@
     color: $news-main-2;
 }
 
-.tonal--tone-dead .tonal__header .content__section-label__link,
 .tonal--tone-live .tone-colour,
 .tonal--tone-dead .tone-colour {
     color: $live-main-1;
@@ -226,7 +189,6 @@
     border-bottom-color: rgba(72, 72, 72, .3);
 }
 
-.tonal--tone-media .tonal__header .content__section-label__link,
 .tonal--tone-media .tone-colour {
     color: $multimedia-main-2;
 }
@@ -243,7 +205,6 @@
 .tonal--tone-live .tonal__standfirst .u-underline,
 .tonal--tone-media .tonal__standfirst .u-underline,
 .tonal--tone-special-report .tonal__standfirst .u-underline,
-.tonal--tone-special-report .tonal__header .content__labels,
 .tonal--tone-letters .tonal__standfirst .u-underline {
     color: #ffffff;
     border-bottom-color: rgba(255, 255, 255, .3);

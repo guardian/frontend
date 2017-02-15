@@ -22,11 +22,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-bundles-thrasher",
-    "Test appetite for first batch of bundles",
+    "ab-guardian-today-signup-messaging",
+    "Test different signup messaging for Guardian Today emails",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 28),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-membership-a3-a4-bundles-thrasher",
+    "Test A3 vs A4 bundle offers",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 2), // Thursday March 2nd
+    sellByDate = new LocalDate(2017, 3, 9), // Thursday March 9th
     exposeClientSide = true
   )
 
@@ -46,7 +56,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 8),
+    sellByDate = new LocalDate(2017, 2, 16),
     exposeClientSide = true
   )
 
@@ -76,7 +86,7 @@ trait ABTestSwitches {
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 6),
+    sellByDate = new LocalDate(2017, 5, 1),
     exposeClientSide = true
   )
 
@@ -99,4 +109,15 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 5, 1),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-one-line-edits",
+    "Tests 3 slight variations on the epic where one line is changed",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 2, 22),
+    exposeClientSide = true
+  )
+
 }

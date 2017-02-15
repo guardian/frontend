@@ -7,6 +7,7 @@ define([
     'common/utils/fastdom-promise',
     'common/modules/commercial/dfp/track-ad-render',
     'common/modules/commercial/commercial-features',
+    'commercial/modules/dfp/get-advert-by-id',
     'commercial/modules/messenger'
 ], function (
     Promise,
@@ -17,6 +18,7 @@ define([
     fastdom,
     trackAdRender,
     commercialFeatures,
+    getAdvertById,
     messenger
 ) {
     var topSlotId = 'dfp-ad--top-above-nav';
@@ -30,11 +32,8 @@ define([
         onScroll: onScroll
     };
 
-    function init(start, stop, _window) {
-        start();
-
+    function init(_window) {
         if (!commercialFeatures.stickyTopBannerAd) {
-            stop();
             return Promise.resolve();
         }
 
@@ -46,15 +45,11 @@ define([
 
             // First, let's assign some default values so that everything
             // is in good order before we start animating changes in height
-            var promise = initState()
+            return initState()
             // Second, start listening for height and scroll changes
-            .then(setupListeners);
-            promise
-            .then(onFirstRender)
-            .then(stop);
-            return promise;
+            .then(setupListeners)
+            .then(onFirstRender);
         } else {
-            stop();
             topSlot = null;
             return Promise.resolve();
         }
@@ -88,10 +83,24 @@ define([
         trackAdRender(topSlotId)
         .then(function (isRendered) {
             if (isRendered) {
-                fastdom.read(function () {
-                    return topSlot.offsetHeight;
-                })
-                .then(resizeStickyBanner);
+                var advert = getAdvertById(topSlotId);
+                if (advert.size &&
+                    // skip for Fabric/Fluid250 creatives
+                    advert.size[0] !== 88 &&
+                    // skip for native ads
+                    advert.size[1] > 0
+                ) {
+                    fastdom.read(function () {
+                        var styles = window.getComputedStyle(topSlot);
+                        return parseInt(styles.paddingTop) + parseInt(styles.paddingBottom) + advert.size[1];
+                    })
+                    .then(resizeStickyBanner);
+                } else {
+                    fastdom.read(function () {
+                        return topSlot.offsetHeight;
+                    })
+                    .then(resizeStickyBanner);
+                }
             }
         });
     }

@@ -43,7 +43,7 @@ define([
         this.description = 'Add an extra container above Opinion on the home front with recommended content based on ' +
             'each users history.  Users in the test group are prompted to opt-in.  Recommendations are only fetched' +
             'if the user opts-in.';
-        this.audience = 0.01;
+        this.audience = 0.02;
         this.audienceOffset = 0.2;
         this.successMeasure = 'Visit frequency';
         this.audienceCriteria = 'All users';

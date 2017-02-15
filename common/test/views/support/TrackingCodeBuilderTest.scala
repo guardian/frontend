@@ -2,6 +2,7 @@ package views.support
 
 import com.gu.commercial.branding._
 import common.commercial._
+import layout.PaidCard
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers}
 import play.api.test.FakeRequest
 import views.support.Commercial.TrackingCodeBuilder
@@ -18,10 +19,11 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfter
       label = ""
     ),
     logoForDarkBackground = None,
-    aboutThisLink = None
+    aboutThisLink = None,
+    hostedCampaignColour = None
   )
 
-  private def mkCardContent(index: Int, branding: Option[Branding] = None) = CardContent(
+  private def mkCardContent(index: Int, branding: Option[Branding] = None) = PaidCard(
     icon = None,
     headline = s"headline-$index",
     kicker = None,
