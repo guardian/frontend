@@ -196,7 +196,7 @@ define([
                         var commentBox = qwery('input', el)[0];
                         var slotId = el.getAttribute('data-slot');
                         el.addEventListener('click', function(e) {
-                            if(e.target === commentBox) {
+                            if(e.target.tagName !== 'BUTTON' || !commentBox.value) {
                                 e.stopImmediatePropagation();
                             }
                         });
