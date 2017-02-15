@@ -63,30 +63,11 @@
 
     // ************* LOAD THE MAIN APP ASYNC *************
 
-    @if(conf.Configuration.assets.useHashedBundles) {
-        // Polyfill for async script
-        (function (document) {
-            var script = document.createElement('script');
-            var ref = document.getElementsByTagName('script')[0];
-            @if(Webpack.isSwitchedOn) {
-                script.src = '@Static("javascripts/app-webpack.js")';
-            } else {
-                script.src = '@Static("javascripts/app.js")';
-            }
-            ref.parentNode.insertBefore(script, ref);
-        })(document);
-    } else {
-        @if(Webpack.isSwitchedOn) {
-            (function (document) {
-                var script = document.createElement('script');
-                var ref = document.getElementsByTagName('script')[0];
-                script.src = '@Static("javascripts/app-webpack.js")';
-                ref.parentNode.insertBefore(script, ref);
-            })(document);
-        } else {
-            @Html(common.Assets.js.curl);
-            require(['boot']);
-        }
-
-    }
+    // Polyfill for async script
+    (function (document) {
+        var script = document.createElement('script');
+        var ref = document.getElementsByTagName('script')[0];
+        script.src = '@Static("javascripts/app-webpack.js")';
+        ref.parentNode.insertBefore(script, ref);
+    })(document);
 </script>
