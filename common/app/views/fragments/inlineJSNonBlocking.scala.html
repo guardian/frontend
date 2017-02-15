@@ -30,15 +30,7 @@
     page.metadata.contentType == "LiveBlog" ||
     page.metadata.contentType == "Interactive"
 ) {
-    // provide CURL for interactives ASAP, and in perpetuity.
-    // this config may or may not be needed. but it has been present
-    // on the page for years, and if an interactive was released that assumed it,
-    // it will break. so we're providing just incase that is true.
-    window.curlConfig = {
-        baseUrl: '@{Configuration.assets.path}javascripts',
-        apiName: 'require'
-    };
-    window.curl = window.curlConfig;
+    // provide CURL for interactives ASAP, and in perpetuity
     @HtmlFormat.raw(common.Assets.js.curl)
 
     [].slice.apply(document.querySelectorAll('figure.interactive[data-interactive]')).forEach(function (el) {
