@@ -210,10 +210,7 @@ define([
 
                 storage.session.set('email-sign-up-seen', 'true');
             }
-        },
-        doesIdMatch = function (id, listConfig) {
-            return id === listConfig.listId;
-        };
+        }
 
     return {
         init: function () {
