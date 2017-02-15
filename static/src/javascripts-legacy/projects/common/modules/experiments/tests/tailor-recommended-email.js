@@ -9,7 +9,7 @@ define([
         this.expiry = '2017-03-31';
         this.author = 'Lindsey Dew';
         this.description = 'Using Tailor to target email signup form';
-        this.audience = 1;
+        this.audience = 0.01;
         this.audienceOffset = 0;
         this.successMeasure = 'We can trial a tailor recommeded email format against a standard email format';
         this.audienceCriteria = 'All users who visit article pages';
