@@ -26,19 +26,12 @@
 // Ophan pageview ID and browser ID are needed by Google Analytics, which runs just after this script tag
 @InlineJs(ophanConfig().body, "ophanConfig.js")
 
-@if(Webpack.isSwitchedOn &&
-    (
-        page.metadata.contentType == "Article" ||
-        page.metadata.contentType == "LiveBlog" ||
-        page.metadata.contentType == "Interactive"
-    )
+@if(page.metadata.contentType == "Article" ||
+    page.metadata.contentType == "LiveBlog" ||
+    page.metadata.contentType == "Interactive"
 ) {
-
-    //TODO: We're loading curl twice (once here, once in app-webpack.js) as interactives depend on it and app-webpack.js
-    //      may not have loaded in time. This problem will go away when we stop using curl to load the JS application
-    @if(Configuration.assets.useHashedBundles) {
-        @HtmlFormat.raw(common.Assets.js.curl)
-    }
+    // provide CURL for interactives ASAP, and in perpetuity
+    @HtmlFormat.raw(common.Assets.js.curl)
 
     [].slice.apply(document.querySelectorAll('figure.interactive[data-interactive]')).forEach(function (el) {
         require([el.getAttribute('data-interactive')], function (interactive) {
