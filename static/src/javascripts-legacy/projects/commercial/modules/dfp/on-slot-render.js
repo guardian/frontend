@@ -16,8 +16,6 @@ define([
         beacon.fire('/count/ad-render.gif');
     });
 
-    var allAdsAreRendered;
-
     return onSlotRender;
 
     function onSlotRender(event) {
@@ -43,7 +41,6 @@ define([
         function emitRenderEvents(isRendered) {
             Advert.stopRendering(advert, isRendered);
             mediator.emit('modules:commercial:dfp:rendered', event);
-            allAdsRendered();
         }
     }
 
@@ -63,17 +60,6 @@ define([
                 adSlot: adSlotId,
                 adKeywords: adKeywords
             }, false);
-        }
-    }
-
-    function allAdsRendered() {
-        if (!allAdsAreRendered) {
-            allAdsAreRendered = Promise.all(dfpEnv.adverts.map(function (_) { return _.whenRendered; }))
-            .then(function () {
-                userTiming.mark('All ads are rendered');
-                mediator.emit('modules:commercial:dfp:alladsrendered');
-                window.dispatchEvent(new CustomEvent('alladsrendered'));
-            });
         }
     }
 });

@@ -5,16 +5,18 @@
 @import views.support.{Commercial, RenderClasses}
 @import play.api.Mode.Dev
 
-@headerAndTopAds(showAdverts: Boolean, edition: Edition) = {
-    @if(!page.metadata.shouldHideHeaderAndTopAds) {
-        <div id="bannerandheader">
-            @if(showAdverts) {
-                @fragments.commercial.topBanner(page.metadata)
-            }
-            @fragments.header(page)
-        </div>
-        <div id="maincontent" tabindex="0"></div>
+@headerAndTopAds(showAdverts: Boolean, edition: Edition, content: Option[model.ContentType]) = {
+  @if(!page.metadata.shouldHideHeaderAndTopAds) {
+    @defining(showAdverts && !content.exists(_.tags.isTheMinuteArticle)) { showTopSlot =>
+      <div id="bannerandheader">
+        @if(showTopSlot) {
+          @fragments.commercial.topBanner(page.metadata)
+        }
+        @fragments.header(page)
+      </div>
+      <div id="maincontent" tabindex="0"></div>
     }
+  }
 }
 
 <!DOCTYPE html>
@@ -23,7 +25,7 @@
     @fragments.head(page, projectName, head)
 </head>
 
-@defining(Commercial.shouldShowAds(page), Edition(request)) { case (showAdverts, edition) =>
+@defining(getContent(page), Commercial.shouldShowAds(page), Edition(request)) { case (content, showAdverts, edition) =>
     @defining(Navigation.topLevelItem(edition.navigation, page)) { navigation =>
 
     <body
@@ -34,8 +36,8 @@
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
             ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
             ("has-new-header", mvt.ABNewNavVariantSeven.isParticipating),
-            ("is-immersive", getContent(page).exists(_.content.isImmersive)),
-            ("is-immersive-interactive", getContent(page).exists(content => content.tags.isInteractive && content.content.isImmersive))))"
+            ("is-immersive", content.exists(_.content.isImmersive)),
+            ("is-immersive-interactive", content.exists(content => content.tags.isInteractive && content.content.isImmersive))))"
         itemscope itemtype="http://schema.org/WebPage">
 
         @fragments.message(page.metadata)
@@ -49,7 +51,7 @@
         @page match {
             case page: model.ContentPage if (page.item.content.isImmersiveGallery && !page.item.content.tags.isInteractive) => {
                 <div class="immersive-header-container">
-                    @headerAndTopAds(showAdverts, edition)
+                    @headerAndTopAds(showAdverts, edition, content)
 
                     @fragments.immersiveGalleryMainMedia(page)
                 </div>
@@ -60,20 +62,20 @@
                     ("immersive-header-container--explore-series", page.item.content.tags.isExploreSeries),
                     ("explore-video-container", page.item.content.elements.hasMainVideo)))">
 
-                    @headerAndTopAds(showAdverts, edition)
+                    @headerAndTopAds(showAdverts, edition, content)
 
                     @fragments.exploreSeries(page)
                 </div>
             }
             case page: model.ContentPage if (page.item.content.isImmersive && !page.item.content.tags.isInteractive && !page.item.content.tags.isVideo) => {
                 <div class="@if(page.item.fields.main.nonEmpty) { immersive-header-container }">
-                    @headerAndTopAds(showAdverts, edition)
+                    @headerAndTopAds(showAdverts, edition, content)
                     @fragments.immersiveMainMedia(page)
                 </div>
             }
             case _: commercial.hosted.HostedPage => {}
             case _ => {
-                @headerAndTopAds(showAdverts, edition)
+                @headerAndTopAds(showAdverts, edition, content)
             }
         }
 
