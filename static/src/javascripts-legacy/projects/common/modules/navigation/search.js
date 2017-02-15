@@ -35,13 +35,13 @@ define([
 
             bean.on(document, 'click', '.js-search-toggle', function (e) {
                 var searchToggleLink = $('.js-search-toggle');
-                var searchPopup = $('.popup--search');
+                var searchPopup = $('.js-search-popup');
                 var maybeDismissSearchPopup = function(e) {
                     var el = $(e.target);
                     var clickedPop = false;
 
                     while (el.length && !clickedPop) {
-                        if (el.hasClass('popup--search')) {
+                        if (el.hasClass('js-search-popup')) {
                             clickedPop = true;
                         }
                         el = el.parent();
