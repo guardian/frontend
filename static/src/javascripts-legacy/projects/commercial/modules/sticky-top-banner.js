@@ -85,7 +85,7 @@ define([
             if (isRendered) {
                 var advert = getAdvertById(topSlotId);
                 if (advert.size &&
-                    // skip for Fabric/Fluid250 creatives
+                    // skip for Fabric creatives
                     advert.size[0] !== 88 &&
                     // skip for native ads
                     advert.size[1] > 0
