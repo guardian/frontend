@@ -13,8 +13,8 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: `${env === 'dev' ? '' : '[chunkhash]/[name].js'}`,
-        chunkFilename: `${env === 'dev' ? '' : `[chunkhash]/${outputName}.chunk-[id].js`}`,
+        filename: `${env === 'dev' ? '' : '[chunkhash]/'}[name].js`,
+        chunkFilename: `${env === 'dev' ? '' : '[chunkhash]/'}${outputName}.chunk-[id].js`,
     },
     resolve: {
         modules: [
