@@ -24,6 +24,13 @@ define([
         audience: 0.40,
         audienceOffset: 0.12,
 
+        // We don't want to run these tests in Australia,
+        // since they don't have a single shareholder,
+        // contrary to what one of the variants says.
+        locationCheck: function (countyCode) {
+            return countyCode !== 'AU';
+        },
+
         variants: [
             {
                 id: 'control',

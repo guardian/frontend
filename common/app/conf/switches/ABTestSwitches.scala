@@ -126,7 +126,7 @@ trait ABTestSwitches {
     "Test 2 variations to the epic: (1) social proofing; and (2) paywall + no billionaire owner",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 30),
+    sellByDate = new LocalDate(2017, 2, 28),
     exposeClientSide = true
   )
 
