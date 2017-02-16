@@ -13,7 +13,7 @@
 @containerHeader(containerDefinition, frontProperties)
 
 @if(showFrontBranding) {
-    @for(frontBranding <- frontProperties.branding(Edition(request))) {
+    @for(commercial <- frontProperties.commercial; frontBranding <- commercial.branding(Edition(request))) {
         @containerLogo(frontBranding, isOnTheLeft = true)
     }
 } else {

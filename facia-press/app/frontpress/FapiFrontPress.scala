@@ -8,7 +8,7 @@ import com.gu.facia.api.models.Collection
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.ApiClient
 import common._
-import common.commercial.EditionBranding
+import common.commercial.{CommercialProperties, EditionBranding}
 import conf.Configuration
 import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi.{CapiHttpClient, CircuitBreakingContentApiClient, ContentApiClient, QueryDefaults}
@@ -220,9 +220,11 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
 
       val frontProperties: FrontProperties = ConfigAgent.fetchFrontProperties(path).copy(
         editorialType = itemResp.flatMap(_.tag).map(_.`type`.name),
-        editionBrandings = itemResp flatMap { response =>
-          response.tag.map(EditionBranding.fromTag) orElse response.section.map(EditionBranding.fromSection)
-        }
+        commercial = for {
+          response <- itemResp
+          editionBrandings <- response.tag.map(EditionBranding.fromTag) orElse
+                              response.section.map(EditionBranding.fromSection)
+        } yield CommercialProperties(editionBrandings, editionAdTargetings = Nil)
       )
 
       val seoData: SeoData = SeoData(path, navSection, webTitle, title, description)

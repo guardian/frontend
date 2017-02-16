@@ -32,7 +32,7 @@ object EditionBranding {
 
   implicit val editionBrandingFormat = Json.format[EditionBranding]
 
-  def fromItem(item: Content): Seq[EditionBranding] = Edition.all.map { edition =>
+  def fromContent(item: Content): Seq[EditionBranding] = Edition.all.map { edition =>
     EditionBranding(edition, BrandingFinder.findBranding(item, edition.id))
   }
 
@@ -43,10 +43,4 @@ object EditionBranding {
   def fromTag(tag: Tag): Seq[EditionBranding] = Edition.all.map { edition =>
     EditionBranding(edition, BrandingFinder.findBranding(tag, edition.id))
   }
-
-  def branding(editionBrandings: Option[Seq[EditionBranding]], edition: Edition): Option[Branding] = for {
-    brandings <- editionBrandings
-    editionBranding <- brandings.find(_.edition == edition)
-    branding <- editionBranding.branding
-  } yield branding
 }

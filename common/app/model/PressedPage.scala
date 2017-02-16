@@ -54,7 +54,7 @@ object PressedPage {
       javascriptConfigOverrides = faciaPageMetaData,
       opengraphPropertiesOverrides = openGraph,
       twitterPropertiesOverrides = twitterProperties,
-      editionBrandings = frontProperties.editionBrandings
+      commercial = frontProperties.commercial
     )
   }
 }
@@ -108,7 +108,6 @@ case class PressedPage (
 
   def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
 
-  private def isBranding(edition: Edition)(p: Branding => Boolean): Boolean = metadata.branding(edition).exists(p)
-  def isSponsored(edition: Edition): Boolean = isBranding(edition)(_.isSponsored)
-  def isPaid(edition: Edition): Boolean = isBranding(edition)(_.isPaid)
+  def isSponsored(edition: Edition): Boolean = metadata.commercial.exists(_.isSponsored(edition))
+  val isPaid: Boolean = metadata.commercial.exists(_.isPaidContent)
 }
