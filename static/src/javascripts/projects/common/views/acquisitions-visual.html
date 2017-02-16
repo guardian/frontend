@@ -1,12 +1,40 @@
-<div class="contributions__epic contributions__epic--visual contributions__epic--visual--<%=id%>" data-step="1">
-    <h2 class="contributions__title contributions__title--visual-epic"><%=step1.title%></h2>
+<div class="contributions__wrapper" data-step="1">
+    <div class="contributions__epic contributions__epic--visual contributions__epic--visual--<%=id%>">
+        <div class="step-1 step-1--<%=id%>">
+            <h2 class="contributions__title contributions__title--visual-epic"><%=step1.title%></h2>
 
-    <div class="height-fix--<%=id%>">
-        <img class="contributions__epic--visual__image contributions__epic--visual__image--<%=id%>"
-              src="<%=step1.image%>">
-        <button
-            class="contributions__option-button contributions__option-button--visual contributions__option-button--visual--<%=id%>">
-            <%=step1.cta%>
-        </button>
+            <img class="contributions__epic--visual__image contributions__epic--visual__image--<%=id%>"
+                 src="<%=step1.image%>">
+            <button
+                class="contributions__option-button contributions__option-button--visual contributions__option-button--visual--<%=id%>">
+                <%=step1.cta%>
+            </button>
+        </div>
+
+        <div class="step-2 step-2--<%=id%>">
+            <h2 class="contributions__title contributions__title--visual-epic contributions__title--visual-epic--step-2--<%=id%>">
+                <%=step2.title%></h2>
+
+            <img class="contributions__epic--visual__image contributions__epic--visual__image--<%=id%>"
+                 src="<%=step2.image%>">
+
+            <h3 class="contributions__subtitle contributions__subtitle--visual-epic contributions__subtitle--visual-epic--<%=id%>">
+                <%=step2.subtitle%>
+            </h3>
+
+            <p class="contributions__epic--visual--copy"><%=step2.body%></p>
+        </div>
+    </div>
+
+    <div class="step-2">
+        <div class="contributions__epic--visual__cta">
+            <p class="contributions__epic--visual__cta--copy"><%=supportText%></p>
+
+            <a class="contributions__option-button contributions__option-button--visual__cta contributions__option-button--visual__cta--<%=id%>"
+               href="<%=link%>">
+                <span class="text">Become a Supporter for £5 a month</span>
+                <span class="icon"><%=buttonIcon%></span>
+            </a>
+        </div>
     </div>
 </div>

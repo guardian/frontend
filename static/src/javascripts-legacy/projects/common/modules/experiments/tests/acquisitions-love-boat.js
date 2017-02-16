@@ -1,13 +1,19 @@
 define([
+    'bean',
     'common/modules/commercial/contributions-utilities',
     'common/utils/template',
     'common/utils/config',
+    'common/utils/$',
+    'common/views/svgs',
     'text!common/views/contributions-epic-equal-buttons.html',
     'text!common/views/acquisitions-visual.html'
 ], function (
+    bean,
     contributionsUtilities,
     template,
     config,
+    $,
+    svgs,
     epicEqualButtons,
     visualTemplate
 ) {
@@ -24,6 +30,16 @@ define([
 
         catch (e) {
             return '';
+        }
+    }
+
+    function handleClick(container) {
+        var button = $('.contributions__option-button--visual', container);
+
+        if (button && button[0]) {
+            bean.on(button[0], 'click', function () {
+                container.attr('data-step', 2);
+            });
         }
     }
 
@@ -72,18 +88,28 @@ define([
                     return template(visualTemplate, {
                         id: 'love',
                         supportUrl: supportUrl,
+
                         step1: {
                             title: 'Like reading the Guardian?',
                             image: png('newspaper'),
                             cta: '<span class="heart">&hearts;</span> Show us your love'
-                        }
+                        },
+
+                        step2: {
+                            // there is an emoji here...
+                            title: 'Thanks! <span class="emoji">&#x1F60D;</span>',
+                            subtitle: '… but love alone doesn’t keep the lights on',
+                            image: png('newspaper-hearts'),
+                            body: 'The love and support of our readers is vital to securing our future. Our fearless, independent journalism takes a lot of time, hard work and money to produce. And it is increasingly funded by our readers. That’s why we need you to help.',
+                        },
+
+                        supportText: '<span class="brand">Guardian Supporters</span> help to secure our future. If you love the work we do, support us now and show how much you care.',
+                        buttonIcon: svgs('arrowRight'),
+                        link: supportUrl
                     });
                 },
 
-                onInsert: function(component) {
-                    // set up click listener
-                },
-
+                onInsert: handleClick,
                 successOnView: true
             },
             {

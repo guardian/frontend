@@ -14,14 +14,44 @@
     margin-bottom: $gs-baseline * 3;
 }
 
+.contributions__title.contributions__title--visual-epic.contributions__title--visual-epic--step-2--love {
+    @include f-headline;
+    @include font-size(48px);
+    font-weight: bold;
+    color: $error;
+    margin-bottom: 12px;
+
+    & .emoji {
+        @include font-size(38px);
+    }
+}
+
+.contributions__subtitle--visual-epic {
+    @include fs-header(4);
+}
+
+.contributions__subtitle--visual-epic--love {
+    color: $error;
+}
+
 .contributions__epic--visual__image,
 .contributions__option-button.contributions__option-button--visual {
     display: block;
     margin: auto;
 }
 
+.contributions__epic--visual__image {
+    margin-bottom: $gs-baseline * 2;
+}
+
 .contributions__epic--visual__image--love {
-    width: 168px;
+    .step-1 & {
+        width: 168px;
+    }
+
+    .step-2 & {
+        width: 50%;
+    }
 }
 
 .contributions__option-button.contributions__option-button--visual {
@@ -50,6 +80,96 @@
     }
 }
 
-.height-fix--love {
+.contributions__option-button.contributions__option-button--visual__cta {
+    @include font($f-sans-serif-text, normal, 16, 18);
+    background: $guardian-brand;
+    color: white;
+    text-align: left;
+    width: auto;
+    height: 35px;
+    margin-left: 0;
+    padding: $gs-baseline $gs-baseline * 2;
+
+    @include mq(tablet) {
+        margin-left: $gs-baseline * 2;
+    }
+
+    .text {
+        float: left;
+        width: 150px;
+    }
+
+    .icon {
+        float: right;
+        position: relative;
+        left: 15px;
+        margin-left: $gs-gutter / 2;
+        width: 32px;
+        height: 32px;
+        border: 1px solid white;
+        border-radius: 32px;
+    }
+
+    &:hover {
+        background: darken($guardian-brand, 10%);
+    }
+}
+
+.contributions__epic--visual--copy {
+    @include fs-bodyCopy(2);
+}
+
+
+.contributions__epic--visual__cta {
+    @include font($f-serif-headline, normal, 16, 20);
+    padding: $gs-baseline;
+    padding-top: 0;
+    background: $news-main-2;
+    color: $guardian-brand-dark;
+    font-weight: bold;
+
+    @include mq(tablet) {
+        display: flex;
+    }
+
+    & .brand {
+        color: white;
+    }
+}
+
+.contributions__epic--visual__cta--copy {
+    @include mq(tablet) {
+        flex: 1;
+    }
+}
+
+.step-1--love {
     margin-bottom: -36px;
+}
+
+.contributions__wrapper {
+    &[data-step='1'] {
+        .step-1 {
+            display: block;
+        }
+
+        .step-2 {
+            display: none;
+        }
+    }
+
+    &[data-step='2'] {
+        .step-1 {
+            display: none;
+        }
+
+        .step-2 {
+            display: block;
+        }
+
+        .contributions__epic--visual {
+            padding-bottom: 34px;
+            background-image: linear-gradient(-2deg, $news-main-2 7%, $neutral-8 7.1%);
+        }
+    }
 }
