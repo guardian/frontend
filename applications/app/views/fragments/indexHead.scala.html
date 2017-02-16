@@ -5,7 +5,8 @@
 @import conf.switches.Switches.preflightServerSideAdCallSwitch
 
 @if(preflightServerSideAdCallSwitch.isSwitchedOn) {
-    <esi:include src="/esi/ad-call" onerror="continue"/>
+    <!--esi remove if esi is enabled -->
+    <esi:include src="/esi/ad-call" />
 }
 
 @index.page match {
