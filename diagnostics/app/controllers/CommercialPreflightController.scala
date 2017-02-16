@@ -32,6 +32,6 @@ class CommercialPreflightController extends Controller with Logging {
 
   def adCall() = Action { implicit request =>
     val pageViewId = makeOphanViewId()
-    NoCache(Ok(templates.js.adCall(pageViewId)))
+    NoCache(Ok(views.html.adCall(pageViewId)))
   }
 }
