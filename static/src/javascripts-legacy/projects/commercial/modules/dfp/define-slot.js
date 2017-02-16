@@ -24,9 +24,6 @@ define([
             slot = window.googletag.defineSlot(adUnit, sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
         }
 
-        setTargeting(adSlotNode, slot, 'data-series', 'se');
-        setTargeting(adSlotNode, slot, 'data-keywords', 'k');
-
         slot.addService(window.googletag.pubads())
             .setTargeting('slot', slotTarget);
 
@@ -45,19 +42,6 @@ define([
             sizeMapping: sizeMapping,
             size: size
         };
-    }
-
-    function setTargeting(adSlotNode, slot, attribute, targetKey) {
-        var data = adSlotNode.getAttribute(attribute);
-        if (data) {
-            slot.setTargeting(targetKey, parseKeywords(data));
-        }
-    }
-
-    function parseKeywords(keywords) {
-        return (keywords || '').split(',').map(function (keyword) {
-            return keyword.substr(keyword.lastIndexOf('/') + 1);
-        });
     }
 
     /**

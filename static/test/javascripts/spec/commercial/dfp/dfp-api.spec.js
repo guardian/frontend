@@ -331,17 +331,6 @@ define([
                 }).then(done).catch(done.fail);
             });
 
-            it('should send container level keywords', function (done) {
-                $('.js-ad-slot').first().attr('data-keywords', 'country/china');
-                dfp.prepareGoogletag.init(noop, noop)
-                .then(function() {
-                    return dfp.fillAdvertSlots.init(noop, noop);
-                })
-                .then(function () {
-                    expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['china']);
-                }).then(done).catch(done.fail);
-            });
-
         });
     });
 });
