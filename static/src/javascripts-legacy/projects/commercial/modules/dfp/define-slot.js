@@ -5,15 +5,17 @@ define([
     'lodash/arrays/uniq',
     'lodash/arrays/flatten'
 ], function (urlUtils, config, detect, uniq, flatten) {
+    var adUnit = (function () {
+        var urlVars = urlUtils.getUrlVars();
+        return urlVars['ad-unit'] ?
+            '/' + config.page.dfpAccountId + '/' + adUnitOverride :
+            config.page.adUnit;
+    }());
+
     return defineSlot;
 
     function defineSlot(adSlotNode, sizes) {
         var slotTarget = adSlotNode.getAttribute('data-name');
-        var adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
-        // if ?ad-unit=x, use that
-        var adUnit = adUnitOverride ?
-            '/' + config.page.dfpAccountId + '/' + adUnitOverride :
-            config.page.adUnit;
         var sizeOpts = getSizeOpts(sizes);
         var id = adSlotNode.id;
         var slot;
