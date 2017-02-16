@@ -13,7 +13,7 @@ define([
         campaignId: 'kr1_epic_one_line_edits_v2',
 
         start: '2017-02-16',
-        expiry: '2017-02-30',
+        expiry: '2017-02-28',
 
         author: 'Guy Dawson',
         description: 'Test 2 variations to the epic: (1) social proofing; and (2) paywall + no billionaire owner',
