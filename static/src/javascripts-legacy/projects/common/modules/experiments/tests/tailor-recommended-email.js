@@ -17,8 +17,8 @@ define([
         this.idealOutcome = 'Tailor recommended email list has a higher sign-up than standard';
 
         this.canRun = function () {
-          return true;
-        }
+            storage.local.isStorageAvailable();
+        };
 
         this.variants = [
             {

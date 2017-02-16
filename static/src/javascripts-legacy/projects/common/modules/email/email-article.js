@@ -213,15 +213,18 @@ define([
         }
 
     function tailorInTest() {
+        var cacheKey = 'GU_TAILOR_EMAIL';
         var bwidCookie = cookies.get('bwid') || false;
+        var cacheExpiry = new Date(new Date().getTime() + 360000);
 
         if (bwidCookie) {
-            var cachedTailorResponse = cookies.get('GU_TAILOR_EMAIL') || false;
+            var cachedTailorResponse =  storage.local.get(cacheKey) || false;
+
             if (!cachedTailorResponse) {
                 tailor.getEmail(bwidCookie).then(function (tailorRes) {
                     addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'tailor-recommend:signup');
                     mediator.emit('tailor-recommended:insert');
-                    cookies.add('GU_TAILOR_EMAIL', tailorRes.email, 1)
+                    storage.local.set(cacheKey, tailorRes, {'expires': cacheExpiry});
                 });
             }
             else {
