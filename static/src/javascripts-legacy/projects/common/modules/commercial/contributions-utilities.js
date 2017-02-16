@@ -129,8 +129,10 @@ define([
 
             function render() {
                 mediator.emit('register:begin', trackingCampaignId);
+
                 return fastdom.write(function () {
-                    var sibling = $(options.insertBeforeSelector);
+                    var selector = options.insertBeforeSelector || '.submeta';
+                    var sibling = $(selector);
 
                     if (sibling.length > 0) {
                         component.insertBefore(sibling);
