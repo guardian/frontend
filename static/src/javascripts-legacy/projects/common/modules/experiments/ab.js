@@ -13,6 +13,7 @@ define([
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/tests/guardian-today-messaging',
     'common/modules/experiments/acquisition-test-selector',
+    'common/modules/experiments/tests/tailor-recommended-email',
     'common/modules/experiments/tests/membership-a3-a4-bundles-thrasher',
     'common/modules/experiments/tests/tailor-survey'
 ], function (reportError,
@@ -29,6 +30,7 @@ define([
              MembershipEngagementBannerTests,
              GuardianTodayMessaging,
              acquisitionTestSelector,
+             TailorRecommendedEmail,
              MembershipA3A4BundlesThrasher,
              TailorSurvey
     ) {
@@ -38,6 +40,7 @@ define([
         new RecommendedForYou(),
         new GuardianTodayMessaging(),
         acquisitionTestSelector.getTest(),
+        new TailorRecommendedEmail(),
         new MembershipA3A4BundlesThrasher(),
         new TailorSurvey()
     ].concat(MembershipEngagementBannerTests));
