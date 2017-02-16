@@ -1,9 +1,9 @@
 package commercial.controllers
 
 import commercial.model.capi.{CapiAgent, CapiMultiple, CapiSingle, Lookup}
-import common.commercial.CardContent
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
+import layout.PaidCard
 import model.{Cached, ContentType, NoCache}
 import play.api.mvc._
 
@@ -85,7 +85,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
         if (isMulti) {
           format.result(views.html.contentapi.items(
-            contents map (CardContent.fromContentItem(_, edition, optClickMacro, withDescription = false)),
+            contents map (PaidCard.fromContentItem(_, edition, optClickMacro, withDescription = false)),
             optSection,
             optLogo,
             optCapiTitle,
@@ -99,7 +99,7 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
           )
         } else {
           format.result(views.html.contentapi.item(
-            CardContent.fromContentItem(contents.head, edition, optClickMacro, withDescription = true),
+            PaidCard.fromContentItem(contents.head, edition, optClickMacro, withDescription = true),
             optSection,
             optLogo,
             optCapiTitle,

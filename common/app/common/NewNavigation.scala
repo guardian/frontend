@@ -11,14 +11,7 @@ case class NavLinkLists(mostPopular: Seq[NavLink], leastPopular: Seq[NavLink] = 
 
 object NewNavigation {
 
-  var PrimaryLinks = List(
-    NavLink("news", "/"),
-    NavLink("opinion", "/commentisfree"),
-    NavLink("sport", "/sport"),
-    NavLink("arts", "/culture"),
-    NavLink("life", "/lifeandstyle")
-  )
-
+  var PrimaryLinks = List(headlines, opinion, sport, culture, lifestyle)
   val topLevelSections = List(News, Opinion, Sport, Arts, Life)
 
   def getMembershipLinks(edition: Edition) = {
@@ -223,41 +216,34 @@ object NewNavigation {
     val name = ""
 
     val uk = NavLinkLists(List(
-      NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
-      NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS"),
-      NavLink("dating", "https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES"),
+      apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
+      jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader"),
+      dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
       NavLink("professional", "/guardian-professional"),
-      NavLink("masterclasses", "/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"),
+      masterClasses.copy(url = masterClasses.url + "?INTCMP=masterclasses_uk_web_newheader"),
       NavLink("courses", "/?INTCMP=NGW_TOPNAV_UK_GU_COURSES"),
       NavLink("holidays", "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav"),
-      NavLink("today's paper", "/theguardian"),
-      NavLink("the observer", "/observer"),
-      NavLink("crosswords", "/crosswords")
+      todaysPaper, observer, crosswords
     ))
 
     val au = NavLinkLists(List(
-      NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
-      NavLink("masterclasses", "/guardian-masterclasses-australia"),
-      NavLink("crosswords", "/crosswords"),
-      NavLink("video", "/video")
+      apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
+      masterClasses.copy(url = masterClasses.url + "?INTCMP=masterclasses_au_web_newheader"),
+      crosswords, video
     ))
 
     val us = NavLinkLists(List(
-      NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
-      NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_US_GU_JOBS"),
-      NavLink("crosswords", "/crosswords"),
-      NavLink("video", "/video")
+      apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
+      jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
+      crosswords, video
     ))
 
     val int = NavLinkLists(List(
-      NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android"),
-      NavLink("dating", "https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES"),
-      NavLink("jobs", "https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS"),
-      NavLink("masterclasses", "/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"),
-      NavLink("today's paper", "/theguardian"),
-      NavLink("the observer", "/observer"),
-      NavLink("crosswords", "/crosswords"),
-      NavLink("video", "/video")
+      apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
+      dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
+      jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
+      masterClasses.copy(url = masterClasses.url + "?INTCMP=masterclasses_int_web_newheader"),
+      todaysPaper, observer, crosswords, video
     ))
   }
 
@@ -352,7 +338,7 @@ object NewNavigation {
         val section = sectionList.head
         val parentSection = section.parentSection.getPopularEditionalisedNavLinks(edition).drop(1)
 
-        if (parentSection.contains(section.navLink) || section.navLink == headlines) {
+        if (parentSection.contains(section.navLink) || NewNavigation.PrimaryLinks.contains(section.navLink)) {
           parentSection
         } else {
           Seq(section.navLink) ++ parentSection
@@ -375,31 +361,33 @@ object NewNavigation {
 
   object SubSectionLinks {
 
-    val ukNews = NavLinkLists(
-      List(education, media, society, law, scotland),
+    val ukNewsSubNav = NavLinkLists(
+      List(ukNews, education, media, society, law, scotland),
       List(wales, northernIreland)
     )
 
     val worldSubNav = NavLinkLists(
-      List(europe, usNews, americas, asia, australiaNews),
+      List(world, europe, usNews, americas, asia, australiaNews),
       List(africa, middleEast, cities, globalDevelopment)
     )
 
-    val moneySubNav = NavLinkLists(List(property, pensions, savings, borrowing, careers))
+    val moneySubNav = NavLinkLists(List(money, property, pensions, savings, borrowing, careers))
 
-    val football = NavLinkLists(
+    val footballSubNav = NavLinkLists(
       List(
-        NavLink("live scores", "/football/live"),
-        NavLink("tables", "/football/tables"),
-        NavLink("competitions", "/football/competitions"),
-        NavLink("results", "/football/results"),
-        NavLink("fixtures", "/football/fixtures"),
-        NavLink("clubs", "/football/teams")
+        football,
+        NavLink("live scores", "/football/live", "football/live"),
+        NavLink("tables", "/football/tables", "football/tables"),
+        NavLink("competitions", "/football/competitions", "football/competitions"),
+        NavLink("results", "/football/results", "football/results"),
+        NavLink("fixtures", "/football/fixtures", "football/fixtures"),
+        NavLink("clubs", "/football/teams", "football/teams")
       )
     )
 
-    val todaysPaper = NavLinkLists(
+    val todaysPaperSubNav = NavLinkLists(
       List(
+        todaysPaper,
         NavLink("editorials & letters", "/theguardian/mainsection/editorialsandreply"),
         NavLink("obituaries", "/tone/obituaries"),
         NavLink("g2", "/theguardian/g2"),
@@ -409,16 +397,18 @@ object NewNavigation {
       )
     )
 
-    val theObserver = NavLinkLists(
+    val theObserverSubNav = NavLinkLists(
       List(
+        observer,
         NavLink("comment", "/theobserver/news/comment"),
         NavLink("the new review", "/theobserver/new-review"),
         NavLink("observer magazine", "/theobserver/magazine")
       )
     )
 
-    val crosswords = NavLinkLists(
+    val crosswordsSubNav = NavLinkLists(
       List(
+        crosswords,
         NavLink("blog", "/crosswords/crossword-blog"),
         NavLink("editor", "/crosswords/series/crossword-editor-update"),
         NavLink("quick", "/crosswords/series/quick"),
@@ -437,27 +427,27 @@ object NewNavigation {
     case object businessSubNav extends EditionalisedNavigationSection {
       val name = ""
 
-      val uk = NavLinkLists(List(economics, banking, retail, markets, eurozone))
-      val us = NavLinkLists(List(economics, sustainableBusiness, diversityEquality, smallBusiness))
-      val au = NavLinkLists(List(markets, money))
+      val uk = NavLinkLists(List(business, economics, banking, retail, markets, eurozone))
+      val us = NavLinkLists(List(business, economics, sustainableBusiness, diversityEquality, smallBusiness))
+      val au = NavLinkLists(List(business, markets, money))
       val int = uk
     }
 
     case object environmentSubNav extends EditionalisedNavigationSection {
       val name = ""
 
-      val uk = NavLinkLists(List(climateChange, wildlife, energy, pollution))
+      val uk = NavLinkLists(List(environment, climateChange, wildlife, energy, pollution))
       val us = uk
-      val au = NavLinkLists(List(cities, globalDevelopment, sustainableBusiness))
+      val au = NavLinkLists(List(environment, cities, globalDevelopment, sustainableBusiness))
       val int = uk
     }
 
     case object travelSubNav extends EditionalisedNavigationSection {
       val name = ""
 
-      val uk = NavLinkLists(List(travelUk, travelEurope, travelUs, skiing))
-      val us = NavLinkLists(List(travelUs, travelEurope, travelUk, skiing))
-      val au = NavLinkLists(List(travelAustralasia, travelAsia, travelUk, travelEurope, travelUs, skiing))
+      val uk = NavLinkLists(List(travel, travelUk, travelEurope, travelUs, skiing))
+      val us = NavLinkLists(List(travel, travelUs, travelEurope, travelUk, skiing))
+      val au = NavLinkLists(List(travel, travelAustralasia, travelAsia, travelUk, travelEurope, travelUs, skiing))
       val int = uk
     }
 
@@ -468,23 +458,33 @@ object NewNavigation {
     )
 
     val subSectionLinks = List(
-      SubSectionLink("uk-news", ukNews),
+      SubSectionLink("uk-news", ukNewsSubNav),
       SubSectionLink("world", worldSubNav),
       SubSectionLink("money", moneySubNav),
-      SubSectionLink("football", football),
-      SubSectionLink("todayspaper", todaysPaper),
-      SubSectionLink("theobserver", theObserver),
-      SubSectionLink("crosswords", crosswords)
+      SubSectionLink("football", footballSubNav),
+      SubSectionLink("theguardian", todaysPaperSubNav),
+      SubSectionLink("observer", theObserverSubNav),
+      SubSectionLink("crosswords", crosswordsSubNav)
     )
 
     def isEditionalistedSubSection(sectionId: String) = {
       editionalisedSubSectionLinks.exists(_.pageId == sectionId)
     }
 
+    val frontLikePages = List(
+      "theguardian",
+      "observer",
+      "football/live",
+      "football/tables",
+      "football/competitions",
+      "football/results",
+      "football/fixtures"
+    )
+
     def getSectionOrTagId(page: Page) = {
       val tags = Navigation.getTagsFromPage(page)
       val commonKeywords = tagPages.intersect(tags.keywordIds)
-      val isTagPage = page.metadata.isFront && tagPages.contains(page.metadata.id)
+      val isTagPage = (page.metadata.isFront || frontLikePages.contains(page.metadata.id)) && tagPages.contains(page.metadata.id)
       val isArticleInTagPageSection = commonKeywords.nonEmpty
 
       if (isTagPage) {
@@ -496,15 +496,59 @@ object NewNavigation {
       }
     }
 
-    def getSubSectionNavLinks(sectionId: String, edition: Edition, isFront: Boolean) = {
-      if (isFront) {
+    def simplifySectionId(sectionId: String) = {
+      val sectionMap = Map(
+        "football/live" -> "football",
+        "football/tables" -> "football",
+        "football/competitions" -> "football",
+        "football/results" -> "football",
+        "football/fixtures" -> "football",
+        "money/property" -> "money",
+        "money/pensions" -> "money",
+        "money/savings" -> "money",
+        "money/debt" -> "money",
+        "money/work-and-careers" -> "money",
+        "world/europe-news" -> "world",
+        "world/americas" -> "world",
+        "world/asia" -> "world",
+        "education" -> "uk-news",
+        "media" -> "uk-news",
+        "society" -> "uk-news",
+        "law" -> "uk-news",
+        "scotland" -> "uk-news",
+        "business/economics" -> "business",
+        "business/banking" -> "business",
+        "business/retail" -> "business",
+        "business/stock-markets" -> "business",
+        "business/eurozone" -> "business",
+        "us/sustainable-business" -> "business",
+        "business/us-small-business" -> "business",
+        "environment/climate-change" -> "environment",
+        "environment/wildlife" -> "environment",
+        "environment/energy" -> "environment",
+        "environment/pollution" -> "environment",
+        "travel/uk" -> "travel",
+        "travel/europe" -> "travel",
+        "travel/usa" -> "travel",
+        "travel/skiing" -> "travel",
+        "travel/australasia" -> "travel",
+        "travel/asia" -> "travel"
+      )
 
-        if (isEditionalistedSubSection(sectionId)) {
-          val subNav = editionalisedSubSectionLinks.filter(_.pageId == sectionId).head.parentSection
+      sectionMap.getOrElse(sectionId, sectionId)
+    }
+
+    def getSubSectionNavLinks(sectionId: String, edition: Edition, isFront: Boolean) = {
+      if (isFront || frontLikePages.contains(sectionId)) {
+
+        val id = simplifySectionId(sectionId)
+
+        if (isEditionalistedSubSection(id)) {
+          val subNav = editionalisedSubSectionLinks.filter(_.pageId == id).head.parentSection
 
           subNav.getEditionalisedSubSectionLinks(edition).mostPopular
         } else {
-          val subSectionList = subSectionLinks.filter(_.pageId == sectionId)
+          val subSectionList = subSectionLinks.filter(_.pageId == id)
 
           if (subSectionList.isEmpty) {
             NewNavigation.SectionLinks.getSectionLinks(sectionId, edition)

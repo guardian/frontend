@@ -15,7 +15,9 @@ define([
     */
     function onLoad(event) {
         var advert = getAdvertById(event.slot.getSlotElementId());
-        if (advert.size === 'fluid') {
+        if ((typeof advert.size === 'string' && advert.size === 'fluid') ||
+            (advert.size[0] === 0 && advert.size[1] === 0)
+        ) {
             var iframe = advert.node.getElementsByTagName('iframe')[0];
             postMessage({ id: iframe.id, host: host }, iframe.contentWindow);
         }

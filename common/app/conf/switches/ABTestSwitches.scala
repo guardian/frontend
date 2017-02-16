@@ -32,11 +32,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-a1-a2-bundles-thrasher",
-    "Test A1 vs A2 bundle offers",
+    "ab-membership-a3-a4-bundles-thrasher",
+    "Test A3 vs A4 bundle offers",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 2), // Thursday March 2nd
+    sellByDate = new LocalDate(2017, 3, 9), // Thursday March 9th
     exposeClientSide = true
   )
 
@@ -46,7 +46,7 @@ trait ABTestSwitches {
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 16),
+    sellByDate = new LocalDate(2017, 2, 23),
     exposeClientSide = true
   )
 
@@ -56,7 +56,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 16),
+    sellByDate = new LocalDate(2017, 2, 23),
     exposeClientSide = true
   )
 
@@ -122,21 +122,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-paywall",
-    "Tests a lack of paywall centric message on the epic",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-tailor-survey",
+    "Integrate Tailor with ab tests",
+    owners = Seq(Owner.withGithub("oilnam")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 22),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-billionaire",
-    "Tests a lack of billionaire owner centric message on the epic",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 22),
+    sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
 }

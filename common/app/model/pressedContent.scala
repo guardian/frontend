@@ -9,6 +9,14 @@ import common.Edition
 import model.{ContentType, SupportedUrl}
 import org.joda.time.DateTime
 
+object DisplayHints {
+  def make(displayHints: fapi.DisplayHints): DisplayHints = {
+    DisplayHints(displayHints.maxItemsToDisplay)
+  }
+}
+
+final case class DisplayHints(maxItemsToDisplay: Option[Int])
+
 object CollectionConfig {
   def make(config: fapi.CollectionConfig): CollectionConfig = {
     CollectionConfig(
@@ -27,7 +35,8 @@ object CollectionConfig {
       showLatestUpdate = config.showLatestUpdate,
       excludeFromRss = config.excludeFromRss,
       showTimestamps = config.showTimestamps,
-      hideShowMore = config.hideShowMore
+      hideShowMore = config.hideShowMore,
+      displayHints = config.displayHints.map(DisplayHints.make)
     )
   }
 
@@ -53,7 +62,8 @@ final case class CollectionConfig(
   showLatestUpdate: Boolean,
   excludeFromRss: Boolean,
   showTimestamps: Boolean,
-  hideShowMore: Boolean
+  hideShowMore: Boolean,
+  displayHints: Option[DisplayHints]
 ) {
   def showBranding = metadata exists (_ contains Branded)
 }

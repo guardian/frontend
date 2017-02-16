@@ -128,13 +128,16 @@
         </h2>
     }
 
-    @collection.curatedPlusBackfillDeduplicated.take(6).zipWithIndex.map { case (pressedContent, cardIndex) =>
-        @defining(FaciaCard.fromTrail(pressedContent, collection.config, ItemClasses.showMore, showSeriesAndBlogKickers = false)) { card =>
-            @if(cardIndex == 0) {
-                @firstCard(card, isFastLayout = collection.collectionType == "fast")
-            } else {
-                @otherCard(card, isSlowLayout = collection.collectionType == "slow")
+    @collection.curatedPlusBackfillDeduplicated.take(collection.config.displayHints.flatMap(_.maxItemsToDisplay).getOrElse(6)).zipWithIndex.map { case (pressedContent, cardIndex) =>
+        @defining(FaciaCard.fromTrail(pressedContent, collection.config, ItemClasses.showMore, showSeriesAndBlogKickers = false)) {
+            case card: ContentCard => {
+                @if(cardIndex == 0) {
+                    @firstCard(card, isFastLayout = collection.collectionType == "fast")
+                } else {
+                    @otherCard(card, isSlowLayout = collection.collectionType == "slow")
+                }
             }
+            case _ => {}
         }
     }
 }
