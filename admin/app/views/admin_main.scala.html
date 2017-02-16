@@ -85,15 +85,15 @@
 
         <script type="text/javascript">
 
-            @Html(curlConfig().body)
-
             @Html(config(model.AdminPage(title)).body)
 
-            window.curl.paths['bootstraps/admin'] = '@Static("javascripts/bootstraps/admin.js")';
+            (function (document) {
+                var script = document.createElement('script');
+                var ref = document.getElementsByTagName('script')[0];
+                script.src = '@Static("javascripts/admin.js")';
+                ref.parentNode.insertBefore(script, ref);
+            })(document);
 
-            @Html(common.Assets.js.curl);
-
-            require(['bootstraps/admin']);
         </script>
         @if(loadJquery){
             <script src="//code.jquery.com/jquery.js"></script>

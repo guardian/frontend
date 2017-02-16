@@ -7,11 +7,14 @@ const outputName = 'app-webpack';
 
 module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     devtool: env === 'dev' ? 'inline-source-map' : 'source-map',
-    entry: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
+    entry: {
+        [outputName]: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
+        admin: path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'admin.js'),
+    },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: `${env === 'dev' ? '' : '[chunkhash]/'}${outputName}.js`,
-        chunkFilename: `${env === 'dev' ? '' : '[chunkhash]/'}${outputName}.chunk-[id].js`,
+        filename: `${env === 'dev' ? '' : '[chunkhash]/[name].js'}`,
+        chunkFilename: `${env === 'dev' ? '' : `[chunkhash]/${outputName}.chunk-[id].js`}`,
     },
     resolve: {
         modules: [
