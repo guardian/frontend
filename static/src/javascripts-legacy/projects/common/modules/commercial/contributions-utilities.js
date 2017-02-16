@@ -149,10 +149,10 @@ define([
                             });
                         });
                     }
-                });
+                }.bind(this));
             }
 
-            return (typeof options.test === 'function') ? options.test(render) : render();
+            return (typeof options.test === 'function') ? options.test(render.bind(this)) : render.apply(this);
         };
 
         this.registerListener('impression', 'impressionOnInsert', test.insertEvent, options);
