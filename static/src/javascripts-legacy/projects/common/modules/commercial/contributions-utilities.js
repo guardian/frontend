@@ -126,6 +126,8 @@ define([
 
         this.test = function () {
             var component = $.create(options.template(this.contributeURL, this.membershipURL));
+            var onInsert = options.onInsert || noop;
+            var onView = options.onView || noop;
 
             function render() {
                 mediator.emit('register:begin', trackingCampaignId);
@@ -137,6 +139,7 @@ define([
                     if (sibling.length > 0) {
                         component.insertBefore(sibling);
                         mediator.emit(test.insertEvent, component);
+                        onInsert(component);
 
                         component.each(function (element) {
                             // top offset of 18 ensures view only counts when half of element is on screen
@@ -146,6 +149,7 @@ define([
                                 viewLog.logView(test.id);
                                 mediator.emit(test.viewEvent);
                                 mediator.emit('register:end', trackingCampaignId);
+                                onView();
                             });
                         });
                     }
@@ -185,6 +189,8 @@ define([
             }).bind(this);
         }
     };
+
+    function noop() {}
 
     return {
         makeABTest: function (test) {
