@@ -15,7 +15,8 @@ import scala.concurrent.Future
 
 class GzipperConfig() extends GzipFilterConfig {
   val excludeFromGzip = List(
-    "/esi/ad-call"
+    "/esi/ad-call",
+    "/world/ukraine"
   )
 
   override val shouldGzip: (RequestHeader, Result) => Boolean = (request, result) => {
