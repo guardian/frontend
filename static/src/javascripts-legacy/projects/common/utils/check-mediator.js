@@ -17,7 +17,7 @@ define([
      * EVERYCHECKPASSED: At least one dependentCheck has returned true
     **/
     var SOMECHECKSPASSED = Array.prototype.some;
-    var EVERYCHECKPASSED = Array.prototype.every;
+    // var EVERYCHECKPASSED = Array.prototype.every; // commented out as not used
     /**
      * checkList is an array of object literals.
      * Each object in this array will be converted to a DefferedCheck and added to registeredChecks
