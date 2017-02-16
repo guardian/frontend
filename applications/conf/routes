@@ -59,7 +59,7 @@ GET        /service-worker.js                                                   
 GET        /2015-06-24-manifest.json                                            controllers.WebAppController.manifest()
 
 # Index pages for structured data
-GET        /sdata/recipes/$filterType<cuisine|dietary|celebration|category>/:filterValue       controllers.StructuredDateIndexController.render(filterType, filterValue)
+GET        /sdata/recipes/$filterType<cuisine|dietary|celebration|category>/:filterValue       controllers.StructuredDataIndexController.render(filterType, filterValue)
 
 # Newspaper pages
 GET        /theguardian                                                                     controllers.NewspaperController.latestGuardianNewspaper()

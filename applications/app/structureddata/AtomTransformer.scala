@@ -69,9 +69,21 @@ object AtomTransformer {
   }
 
   def atomImageToApiElement(image: Image): ApiElement =
-    ApiElement(image.mediaId, "main", ApiElementType.Image, None,
+    ApiElement(
+      id = image.mediaId,
+      relation = "main",
+      `type` = ApiElementType.Image,
+      galleryIndex = None,
       assets = image.assets.map { asset =>
-        ApiAsset(ApiAssetType.Image, asset.mimeType, Some(asset.file), Some(ApiAssetFields(height = asset.dimensions.map(_.height), width = asset.dimensions.map(_.width))))
+        ApiAsset(
+          `type` = ApiAssetType.Image,
+          mimeType = asset.mimeType,
+          file = Some(asset.file),
+          typeData = Some(ApiAssetFields(
+            height = asset.dimensions.map(_.height),
+            width = asset.dimensions.map(_.width)
+          ))
+        )
       }
     )
 

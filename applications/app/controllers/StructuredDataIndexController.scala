@@ -4,13 +4,14 @@ import com.gu.contentapi.client.model.RecipesQuery
 import common.ExecutionContexts
 import common.`package`._
 import contentapi.ContentApiClient
-import model.{ApplicationContext, MetaData, SimplePage, Tags}
+import model.Cached.RevalidatableResult
+import model.{ApplicationContext, Cached, MetaData, SectionSummary, SimplePage, Tags}
 import org.joda.time.DateTime
 import play.api.mvc.Action
 import services.{IndexPage, IndexPagePagination}
 import structureddata.AtomTransformer._
 
-class StructuredDateIndexController(val contentApiClient: ContentApiClient)(implicit val context: ApplicationContext) extends Paging with ExecutionContexts {
+class StructuredDataIndexController(val contentApiClient: ContentApiClient)(implicit val context: ApplicationContext) extends Paging with ExecutionContexts {
 
   def render(filterType: String, filterValue: String) = Action.async { implicit request =>
 
@@ -27,20 +28,15 @@ class StructuredDateIndexController(val contentApiClient: ContentApiClient)(impl
 
     contentApiClient.getResponse(query(filterValue)) map { response =>
 
-      if (response.results.nonEmpty) {
-        val page = IndexPage(
-          page = SimplePage(MetaData.make(id = "", section = None, webTitle = s"${filterValue.capitalize} Recipes")),
+        val indexPage = IndexPage(
+          page = SimplePage(MetaData.make(id = "", section = Some(SectionSummary("lifeandstyle/food-and-drink")), webTitle = s"${filterValue.capitalize} Recipes")),
           contents = response.results flatMap recipeAtomToContent,
           tags = Tags(List.empty),
           date = DateTime.now,
           tzOverride = None
         )
 
-        Ok(views.html.index(page))
-
-      } else NotFound
-
-
+        Cached(indexPage.page)(RevalidatableResult.Ok(views.html.index(indexPage)))
     }
   }
 
