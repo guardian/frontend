@@ -614,7 +614,7 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomData <- findAtom(atomId)
       } {
-        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mainMedia).toString()
+        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mainMedia, immersiveMainMedia).toString()
         bodyElement.remove()
         atomContainer.append(html)
       }
