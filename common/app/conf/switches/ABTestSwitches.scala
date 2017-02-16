@@ -119,13 +119,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 3, 31),
     exposeClientSide = true
   )
+
   Switch(
-     ABTests,
-    "ab-contributions-epic-one-line-edits",
-    "Tests 3 slight variations on the epic where one line is changed",
-    owners = Seq(Owner.withGithub("jranks123")),
+    ABTests,
+    "ab-contributions-epic-one-line-edits-v2",
+    "Test 2 variations to the epic: (1) social proofing; and (2) paywall + no billionaire owner",
+    owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 22),
+    sellByDate = new LocalDate(2017, 2, 30),
     exposeClientSide = true
   )
 
