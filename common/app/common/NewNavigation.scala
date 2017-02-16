@@ -371,17 +371,17 @@ object NewNavigation {
       List(africa, middleEast, cities, globalDevelopment)
     )
 
-    val moneySubNav = NavLinkLists(List(property, pensions, savings, borrowing, careers))
+    val moneySubNav = NavLinkLists(List(money, property, pensions, savings, borrowing, careers))
 
     val footballSubNav = NavLinkLists(
       List(
         football,
-        NavLink("live scores", "/football/live"),
-        NavLink("tables", "/football/tables"),
-        NavLink("competitions", "/football/competitions"),
-        NavLink("results", "/football/results"),
-        NavLink("fixtures", "/football/fixtures"),
-        NavLink("clubs", "/football/teams")
+        NavLink("live scores", "/football/live", "football/live"),
+        NavLink("tables", "/football/tables", "football/tables"),
+        NavLink("competitions", "/football/competitions", "football/competitions"),
+        NavLink("results", "/football/results", "football/results"),
+        NavLink("fixtures", "/football/fixtures", "football/fixtures"),
+        NavLink("clubs", "/football/teams", "football/teams")
       )
     )
 
@@ -445,9 +445,9 @@ object NewNavigation {
     case object travelSubNav extends EditionalisedNavigationSection {
       val name = ""
 
-      val uk = NavLinkLists(List(travelUk, travelEurope, travelUs, skiing))
-      val us = NavLinkLists(List(travelUs, travelEurope, travelUk, skiing))
-      val au = NavLinkLists(List(travelAustralasia, travelAsia, travelUk, travelEurope, travelUs, skiing))
+      val uk = NavLinkLists(List(travel, travelUk, travelEurope, travelUs, skiing))
+      val us = NavLinkLists(List(travel, travelUs, travelEurope, travelUk, skiing))
+      val au = NavLinkLists(List(travel, travelAustralasia, travelAsia, travelUk, travelEurope, travelUs, skiing))
       val int = uk
     }
 
@@ -462,8 +462,8 @@ object NewNavigation {
       SubSectionLink("world", worldSubNav),
       SubSectionLink("money", moneySubNav),
       SubSectionLink("football", footballSubNav),
-      SubSectionLink("todayspaper", todaysPaperSubNav),
-      SubSectionLink("theobserver", theObserverSubNav),
+      SubSectionLink("theguardian", todaysPaperSubNav),
+      SubSectionLink("observer", theObserverSubNav),
       SubSectionLink("crosswords", crosswordsSubNav)
     )
 
@@ -471,10 +471,20 @@ object NewNavigation {
       editionalisedSubSectionLinks.exists(_.pageId == sectionId)
     }
 
+    val frontLikePages = List(
+      "theguardian",
+      "observer",
+      "football/live",
+      "football/tables",
+      "football/competitions",
+      "football/results",
+      "football/fixtures"
+    )
+
     def getSectionOrTagId(page: Page) = {
       val tags = Navigation.getTagsFromPage(page)
       val commonKeywords = tagPages.intersect(tags.keywordIds)
-      val isTagPage = page.metadata.isFront && tagPages.contains(page.metadata.id)
+      val isTagPage = (page.metadata.isFront || frontLikePages.contains(page.metadata.id)) && tagPages.contains(page.metadata.id)
       val isArticleInTagPageSection = commonKeywords.nonEmpty
 
       if (isTagPage) {
@@ -486,15 +496,59 @@ object NewNavigation {
       }
     }
 
-    def getSubSectionNavLinks(sectionId: String, edition: Edition, isFront: Boolean) = {
-      if (isFront) {
+    def simplifySectionId(sectionId: String) = {
+      val sectionMap = Map(
+        "football/live" -> "football",
+        "football/tables" -> "football",
+        "football/competitions" -> "football",
+        "football/results" -> "football",
+        "football/fixtures" -> "football",
+        "money/property" -> "money",
+        "money/pensions" -> "money",
+        "money/savings" -> "money",
+        "money/debt" -> "money",
+        "money/work-and-careers" -> "money",
+        "world/europe-news" -> "world",
+        "world/americas" -> "world",
+        "world/asia" -> "world",
+        "education" -> "uk-news",
+        "media" -> "uk-news",
+        "society" -> "uk-news",
+        "law" -> "uk-news",
+        "scotland" -> "uk-news",
+        "business/economics" -> "business",
+        "business/banking" -> "business",
+        "business/retail" -> "business",
+        "business/stock-markets" -> "business",
+        "business/eurozone" -> "business",
+        "us/sustainable-business" -> "business",
+        "business/us-small-business" -> "business",
+        "environment/climate-change" -> "environment",
+        "environment/wildlife" -> "environment",
+        "environment/energy" -> "environment",
+        "environment/pollution" -> "environment",
+        "travel/uk" -> "travel",
+        "travel/europe" -> "travel",
+        "travel/usa" -> "travel",
+        "travel/skiing" -> "travel",
+        "travel/australasia" -> "travel",
+        "travel/asia" -> "travel"
+      )
 
-        if (isEditionalistedSubSection(sectionId)) {
-          val subNav = editionalisedSubSectionLinks.filter(_.pageId == sectionId).head.parentSection
+      sectionMap.getOrElse(sectionId, sectionId)
+    }
+
+    def getSubSectionNavLinks(sectionId: String, edition: Edition, isFront: Boolean) = {
+      if (isFront || frontLikePages.contains(sectionId)) {
+
+        val id = simplifySectionId(sectionId)
+
+        if (isEditionalistedSubSection(id)) {
+          val subNav = editionalisedSubSectionLinks.filter(_.pageId == id).head.parentSection
 
           subNav.getEditionalisedSubSectionLinks(edition).mostPopular
         } else {
-          val subSectionList = subSectionLinks.filter(_.pageId == sectionId)
+          val subSectionList = subSectionLinks.filter(_.pageId == id)
 
           if (subSectionList.isEmpty) {
             NewNavigation.SectionLinks.getSectionLinks(sectionId, edition)

@@ -1,7 +1,9 @@
+@import play.api.Mode
 @(content: model.Content)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.Configuration
 @import views.support.FBPixel
+@import conf.switches.Switches.AmpOphanTrackingIncludesCredentials
 
 @*
 Baseline pageview confidence pixel.
@@ -11,7 +13,12 @@ are used to generate the confidence graphs on the frontend dashboard.
 <amp-pixel src="@{Configuration.debug.beaconUrl}/count/pv.gif"></amp-pixel>
 
 <amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
-<amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
+
+@if(AmpOphanTrackingIncludesCredentials.isSwitchedOn){
+    <amp-analytics config="https://ophan.theguardian.com/amp.json" @if(context.environment.mode != Mode.Dev) { data-credentials="include" }></amp-analytics>
+} else {
+    <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
+}
 
 @fragments.amp.googleAnalytics(content)
 

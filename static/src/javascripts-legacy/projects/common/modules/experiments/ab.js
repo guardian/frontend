@@ -14,7 +14,8 @@ define([
     'common/modules/experiments/tests/guardian-today-messaging',
     'common/modules/experiments/acquisition-test-selector',
     'common/modules/experiments/tests/tailor-recommended-email',
-    'common/modules/experiments/tests/membership-a3-a4-bundles-thrasher'
+    'common/modules/experiments/tests/membership-a3-a4-bundles-thrasher',
+    'common/modules/experiments/tests/tailor-survey'
 ], function (reportError,
              config,
              cookies,
@@ -30,7 +31,8 @@ define([
              GuardianTodayMessaging,
              acquisitionTestSelector,
              TailorRecommendedEmail,
-             MembershipA3A4BundlesThrasher
+             MembershipA3A4BundlesThrasher,
+             TailorSurvey
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
@@ -39,7 +41,8 @@ define([
         new GuardianTodayMessaging(),
         acquisitionTestSelector.getTest(),
         new TailorRecommendedEmail(),
-        new MembershipA3A4BundlesThrasher()
+        new MembershipA3A4BundlesThrasher(),
+        new TailorSurvey()
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';

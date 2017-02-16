@@ -87,19 +87,6 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
             });
         });
 
-        describe('Top banner ad', function () {
-            it('Runs by default', function () {
-                features = new CommercialFeatures;
-                expect(features.topBannerAd).toBe(true);
-            });
-
-            it('Doesn`t run in minute articles', function () {
-                config.page.isMinuteArticle = true;
-                features = new CommercialFeatures;
-                expect(features.topBannerAd).toBe(false);
-            });
-        });
-
         describe('Article body adverts', function () {
             it('Runs by default', function () {
                 features = new CommercialFeatures;

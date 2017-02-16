@@ -48,14 +48,10 @@ define([
     }
 
     function shouldDisableAdSlot($adSlot) {
-        return isAdfreeUser() || isVisuallyHidden() || isDisabledCommercialFeature();
+        return isAdfreeUser() || isVisuallyHidden();
 
         function isVisuallyHidden() {
             return $css($adSlot, 'display') === 'none';
-        }
-
-        function isDisabledCommercialFeature() {
-            return !commercialFeatures.topBannerAd && $adSlot.data('name') === 'top-above-nav';
         }
 
         function isAdfreeUser() {

@@ -1,7 +1,7 @@
 package model
 
 import com.gu.contentapi.client.model.v1.{Podcast => ApiPodcast, Reference => ApiReference, Tag => ApiTag}
-import common.commercial.EditionBranding
+import common.commercial.{AdContextTargeting, EditionBranding}
 import common.{Pagination, RelativePathEscaper}
 import conf.Configuration
 import contentapi.SectionTagLookUp
@@ -48,7 +48,8 @@ object Tag {
       javascriptConfigOverrides = javascriptConfigOverrides,
       opengraphPropertiesOverrides = openGraphPropertiesOverrides,
       twitterPropertiesOverrides = Map("twitter:card" -> "summary"),
-      editionBrandings = tag.editionBrandings
+      editionBrandings = tag.editionBrandings,
+      adContextTargetings = tag.adContextTargetings
     )
   }
 
@@ -135,7 +136,8 @@ object TagProperties {
       podcast = tag.podcast.map(Podcast.make),
       references = tag.references.map(Reference.make),
       paidContentType = tag.paidContentType,
-      editionBrandings = Some(EditionBranding.fromTag(tag))
+      editionBrandings = Some(EditionBranding.fromTag(tag)),
+      adContextTargetings = Some(AdContextTargeting.fromTag(tag))
     )
   }
 }
@@ -157,7 +159,8 @@ case class TagProperties(
   podcast: Option[Podcast],
   references: Seq[Reference],
   paidContentType: Option[String],
-  editionBrandings: Option[Seq[EditionBranding]]
+  editionBrandings: Option[Seq[EditionBranding]],
+  adContextTargetings: Option[Seq[AdContextTargeting]]
 ) {
  val footballBadgeUrl = references.find(_.`type` == "pa-football-team")
       .map(_.id.split("/").drop(1).mkString("/"))

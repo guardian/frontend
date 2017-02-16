@@ -3,7 +3,7 @@ package model
 import campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.v1.{Section => ApiSection}
 import common.Pagination
-import common.commercial.EditionBranding
+import common.commercial.{AdContextTargeting, EditionBranding}
 import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 
 object Section {
@@ -36,7 +36,8 @@ object Section {
         case _ => Some("front")
       },
       javascriptConfigOverrides = javascriptConfigOverrides,
-      editionBrandings = Some(EditionBranding.fromSection(section))
+      editionBrandings = Some(EditionBranding.fromSection(section)),
+      adContextTargetings = Some(AdContextTargeting.fromSection(section))
     )
 
     Section(

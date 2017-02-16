@@ -19,7 +19,6 @@ define(function () {
         merchandising:          AdSize(88, 88),
         inlineMerchandising:    AdSize(88, 85),
         fabric:                 AdSize(88, 71),
-        fluid250:               AdSize(88, 70),
         empty:                  AdSize(2, 2)
     };
     adSizes['970x250'] = adSizes.billboard;

@@ -46,7 +46,7 @@ trait ABTestSwitches {
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 16),
+    sellByDate = new LocalDate(2017, 2, 23),
     exposeClientSide = true
   )
 
@@ -56,7 +56,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 16),
+    sellByDate = new LocalDate(2017, 2, 23),
     exposeClientSide = true
   )
 
@@ -129,4 +129,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-tailor-survey",
+    "Integrate Tailor with ab tests",
+    owners = Seq(Owner.withGithub("oilnam")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
 }
