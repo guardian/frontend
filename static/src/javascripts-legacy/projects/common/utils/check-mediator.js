@@ -12,43 +12,66 @@ define([
     var registeredChecks = {};
 
     /**
+     * referenced as passCondition for dependentChecks
+     * SOMECHECKSPASSED: Every dependentCheck has returned true
+     * EVERYCHECKPASSED: At least one dependentCheck has returned true
+    **/
+    var SOMECHECKSPASSED = Array.prototype.some;
+    var EVERYCHECKPASSED = Array.prototype.every;
+    /**
      * checkList is an array of object literals.
      * Each object in this array will be converted to a DefferedCheck and added to registeredChecks
-     * Each object contains 3 fields: id (string), canRun (boolean), dependentChecks (nested array of checks)
+     * Each object contains 3 fields: id (string), canRun (boolean), dependentChecks (object)
+     * dependentChecks should contain 2 fields: passCondition (SOMECHECKSPASSED/EVERYCHECKPASSED), list (nested array of checks)
      * If object has dependentChecks then the DefferedCheck will resolve when these dependentChecks have all resolved
      *
     **/
     var checkList = [{
             id: 'isOutbrainNonCompliant',
             canRun: true,
-            dependentChecks: [{
-                id: 'isUserInAClashingAbTest',
-                canRun: true,
-                dependentChecks: []
-            }, {
-                id: 'isEmailInserted',
-                canRun: config.switches.emailInArticleOutbrain,
-                dependentChecks: []
-            }]
+            dependentChecks: {
+                passCondition: SOMECHECKSPASSED,
+                list:[{
+                    id: 'isUserInAClashingAbTest',
+                    canRun: true
+                }, {
+                    id: 'isEmailInserted',
+                    canRun: config.switches.emailInArticleOutbrain
+                }]
+            }
         }];
 
-    function DeferredCheck(dependentCheckPromises) {
-        if (dependentCheckPromises && dependentCheckPromises.length) {
-            this.complete = Promise.all(dependentCheckPromises);
-        } else {
-            this.complete = new Promise(function(resolve, reject) {
-                this.resolve = resolve;
-                this.reject = reject;
+    function DeferredCheck(dependentCheckPromises, dependentChecksPassCondition) {
+        this.complete = new Promise(function(resolve, reject) {
+            this.resolve = resolve;
+            this.reject = reject;
+        }.bind(this));
+
+        if (dependentCheckPromises) {
+            Promise.all(dependentCheckPromises).then(function(results) {
+                var hasPassed = function(result) {
+                    return result;
+                };
+
+                if (dependentChecksPassCondition.call(results, hasPassed)) {
+                    this.resolve(true);
+                } else {
+                    this.resolve(false);
+                }
             }.bind(this));
         }
     }
 
     function registerDefferedCheck(check) {
         var dependentCheckPromises = [];
-        
-        check.dependentChecks.forEach(registerDependentCheck.bind(null, dependentCheckPromises));
 
-        return new DeferredCheck(dependentCheckPromises);
+        if (check.dependentChecks) {
+            check.dependentChecks.list.forEach(registerDependentCheck.bind(null, dependentCheckPromises));
+        
+            return new DeferredCheck(dependentCheckPromises, check.dependentChecks.passCondition);
+        }
+
+        return new DeferredCheck();
     }
 
     

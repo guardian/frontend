@@ -116,30 +116,13 @@ define([
         });
     }
 
-    function checkDependencies() {
-        var isCheckNonCompliant = function(result) {
-                return result;
-            };
-
-        return checkMediator.waitForCheck('isOutbrainNonCompliant')
-                    .then(function(resultList) {
-                        if (resultList.some(isCheckNonCompliant)) {
-                            return 'nonCompliant'
-                        }
-
-                        return false;
-                    }).catch(function() {
-                        return 'nonCompliant';
-                    });
-    }
-
     function init() {
         if (commercialFeatures.outbrain && identityPolicy() ) {
             // if there is no merch component, load the outbrain widget right away
             return loadInstantly().then(function(shouldLoadInstantly) {
                 if (shouldLoadInstantly) {
-                    return checkDependencies().then(function (widgetType) {
-                        widgetType ? module.load(widgetType) : module.load();
+                    return checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (isOutbrainNonCompliant) {
+                        isOutbrainNonCompliant ? module.load('nonCompliant') : module.load();
                         return Promise.resolve(true);
                     });
                 } else {
@@ -161,8 +144,8 @@ define([
                                 module.load('merchandising');
                             }
                         } else {
-                            checkDependencies().then(function (widgetType) {
-                                widgetType ? module.load(widgetType) : module.load();
+                            checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (isOutbrainNonCompliant) {
+                                isOutbrainNonCompliant ? module.load('nonCompliant') : module.load();
                             });
                         }
                     });
