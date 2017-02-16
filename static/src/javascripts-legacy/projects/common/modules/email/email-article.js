@@ -212,37 +212,44 @@ define([
             }
         }
 
+    function tailorInTest() {
+        var bwidCookie = cookies.get('bwid') || false;
+
+        if (bwidCookie) {
+            var cachedTailorResponse = cookies.get('GU_TAILOR_EMAIL') || false;
+            if (!cachedTailorResponse) {
+                tailor.getEmail(bwidCookie).then(function (tailorRes) {
+                    addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'tailor-recommend:signup');
+                    mediator.emit('tailor-recommended:insert');
+                    cookies.add('GU_TAILOR_EMAIL', tailorRes.email, 1)
+                });
+            }
+            else {
+                mediator.emit('tailor-recommended:insert');
+                addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'tailor-recommend:signup');
+            }
+        }
+    }
+
+    function tailorControl() {
+        addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'tailor-control:signup');
+        mediator.emit('tailor-control:insert');
+    }
+
     return {
         init: function () {
             if (emailRunChecks.allEmailCanRun()) {
                 // First we need to check the user's email subscriptions
                 // so we don't insert the sign-up if they've already subscribed
                 emailRunChecks.getUserEmailSubscriptions().then(function () {
-                    if (ab.isParticipating({id: 'TailorRecommendedEmail'}) &&
-                        ab.isInVariant('TailorRecommendedEmail', 'tailor-recommended')) {
-                        var bwidCookie = cookies.get('bwid') || false;
 
-                        if (bwidCookie) {
-                            var cachedTailorResponse = cookies.get('GU_TAILOR_EMAIL') || false;
-                            if(!cachedTailorResponse) {
-                                tailor.getEmail(bwidCookie).then(function (tailorRes) {
-                                    addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'tailor-recommend:signup');
-                                    mediator.emit('tailor-recommended:insert');
-                                    cookies.add('GU_TAILOR_EMAIL', tailorRes.email, 1)
-                                });
-                            }
-                            else {
-                                addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'tailor-recommend:signup');
-                            }
+                    if (ab.isParticipating({id: 'TailorRecommendedEmail'})) {
+                        switch (ab.getTestVariantId) {
+                            case 'tailor-recommended': tailorInTest(); break;
+                            case 'control': tailorControl(); break;
+                            default: addListToPage(find(listConfigs, emailRunChecks.listCanRun)); break;
                         }
-                    }
-                    else if (ab.isParticipating({id: 'TailorRecommendedEmail'}) &&
-                        ab.isInVariant('TailorRecommendedEmail', 'control')) {
-                        // Get the first list that is allowed on this page
-                        addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'control:signup');
-                        mediator.emit('control:insert');
-                    }
-                    else {
+                    } else {
                         addListToPage(find(listConfigs, emailRunChecks.listCanRun));
                     }
                 }).catch(function (error) {

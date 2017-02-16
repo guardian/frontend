@@ -26,12 +26,12 @@ define([
 
                 test: function () {},
                 impression: function(track) {
-                    mediator.on('control:insert', function () {
+                    mediator.on('tailor-control:insert', function () {
                         track();
                     });
                 },
                 success: function(complete) {
-                    mediator.on('control:signup', function () {
+                    mediator.on('tailor-control:signup', function () {
                         complete();
                     });
                 }
