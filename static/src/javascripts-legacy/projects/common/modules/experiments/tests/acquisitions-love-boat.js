@@ -96,7 +96,6 @@ define([
                         },
 
                         step2: {
-                            // there is an emoji here...
                             title: 'Thanks! <span class="emoji">&#x1F60D;</span>',
                             subtitle: '… but love alone doesn’t keep the lights on',
                             image: png('newspaper-hearts'),
@@ -127,7 +126,6 @@ define([
                         },
 
                         step2: {
-                            // there is an emoji here...
                             title: 'We don’t have a billionaire owner … ',
                             image: png('boat-sinking'),
                             body: '<p>… we have only one shareholder, The Scott Trust, which keeps our independent, investigative, public-interest journalism free from commercial or political pressures.</p><p>Our reporting seeks truth, not approval. It takes a lot of time, hard work and money to produce, and is increasingly funded by our readers.</p>',
