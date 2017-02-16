@@ -75,6 +75,11 @@
 
     .youtube-media-atom__overlay {
         background-size: cover;
+        /**
+         * Fixed 1px line appearing above overlay occasionally.
+         * http://stackoverflow.com/questions/38695492/1px-glitch-appearing-below-image-when-browser-re-sizes-background-image
+         * http://stackoverflow.com/questions/14376328/background-sizecover-1px-whitespace-to-the-left
+        **/
         background-position: 49% 49%;
         background-repeat: no-repeat;
         z-index: 1;
