@@ -10,15 +10,21 @@ import scala.util.Random
 
 case class AdRequest(
   loadId: String,             // load_id
-  zoneIds: String,            // zone_ids
+  zoneIds: List[Int],            // zone_ids
+  /*
+
+  229   970x250, 728x90
+  228   300x250
+
+  * */
   ip: String,                 // ip
   userAgent: String,          // user_agent
   url: String,                // url
-  referrer: String,           // referrer
-  browserDimensions: String,  // browser_dimensions
-  switchUserId: String,       // switch_user_id
-  floorPrice: String,         // floor_price
-  targetingVariables: String  // targeting_variables
+  referrer: Option[String],           // referrer
+  browserDimensions: Option[String],  // browser_dimensions
+  switchUserId: Option[String],       // switch_user_id, SWID cookie
+  floorPrice: Option[String],         // floor_price
+  targetingVariables: Option[String]  // targeting_variables
 )
 
 class CommercialPreflightController extends Controller with Logging {
@@ -32,6 +38,20 @@ class CommercialPreflightController extends Controller with Logging {
 
   def adCall() = Action { implicit request =>
     val pageViewId = makeOphanViewId()
+
+    val adHubRequest = AdRequest(
+      loadId = pageViewId,
+      zoneIds = List(229),
+      ip = "",
+      userAgent = "",
+      url = "",
+      referrer = None,
+      browserDimensions = None,
+      switchUserId = None,
+      floorPrice = None,
+      targetingVariables = None
+    )
+
     NoCache(Ok(views.html.adCall(pageViewId)))
   }
 }
