@@ -91,6 +91,7 @@ define([
             var inCompatibleLocation = options.locations ? options.locations.some(function (geo) {
                 return geo === storedGeolocation;
             }) : true;
+            var locationCheck = (typeof options.locationCheck === 'function') ? options.locationCheck(storedGeolocation) : true;
             var isImmersive = config.page.isImmersive === true;
 
             if (options.overrideCanRun) return tagsMatch && options.canRun();
@@ -100,7 +101,7 @@ define([
                 testCanRun &&
                 worksWellWithPageTemplate &&
                 commercialFeatures.canReasonablyAskForMoney &&
-                inCompatibleLocation &&
+                (inCompatibleLocation && locationCheck) &&
                 !isImmersive;
         }).bind(this);
 
