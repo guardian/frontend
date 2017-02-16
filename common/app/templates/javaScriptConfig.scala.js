@@ -21,7 +21,9 @@
             },
             "acquisitions": {
                 "newspaper": "@Static("images/acquisitions/newspaper.png")",
-                "newspaper-hearts": "@Static("images/acquisitions/newspaper-hearts.png")"
+                "newspaper-hearts": "@Static("images/acquisitions/newspaper-hearts.png")",
+                "boat-floating": "@Static("images/acquisitions/boat-floating.png")",
+                "boat-sinking": "@Static("images/acquisitions/boat-sinking.png")",
             }
         },
         "stylesheets": {

@@ -47,6 +47,7 @@ define([
     'inlineSvg!svgs/notifications-explainer-mobile.svg',
     'inlineSvg!svgs/commercial/adblock-coins-us.svg',
     'inlineSvg!svgs/icon/star.svg',
+    'inlineSvg!svgs/icon/hand.svg',
     'common/views/svg',
     'common/utils/config'
 ], function (
@@ -94,6 +95,7 @@ define([
     notificationsExplainerMobile,
     adblockCoinsUS,
     star,
+    hand,
     svg,
     config
 ) {
@@ -141,6 +143,7 @@ define([
         notificationsExplainerDesktop: notificationsExplainerDesktop,
         notificationsExplainerMobile: notificationsExplainerMobile,
         star: star,
+        hand: hand,
         logomembershipwhite: membershipLogoWhite
     };
 

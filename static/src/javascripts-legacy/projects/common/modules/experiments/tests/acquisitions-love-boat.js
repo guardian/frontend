@@ -119,13 +119,27 @@ define([
                     return template(visualTemplate, {
                         id: 'boat',
                         supportUrl: supportUrl,
+
                         step1: {
-                            title: 'Like reading the Guardian?',
-                            image: '',
-                            button: '&hearts; Show us your love'
-                        }
+                            title: 'Why is the Guardian unique?',
+                            image: png('boat-floating'),
+                            cta: svgs('hand') + ' <span>Show</span>'
+                        },
+
+                        step2: {
+                            // there is an emoji here...
+                            title: 'We don’t have a billionaire owner … ',
+                            image: png('boat-sinking'),
+                            body: '<p>… we have only one shareholder, The Scott Trust, which keeps our independent, investigative, public-interest journalism free from commercial or political pressures.</p><p>Our reporting seeks truth, not approval. It takes a lot of time, hard work and money to produce, and is increasingly funded by our readers.</p>',
+                        },
+
+                        supportText: '<span class="brand">Guardian Supporters</span> help to secure our future. Please support our journalism and together we can hold the powerful to account.',
+                        buttonIcon: svgs('arrowRight'),
+                        link: supportUrl
                     });
                 },
+
+                onInsert: handleClick,
                 successOnView: true
             }
         ]

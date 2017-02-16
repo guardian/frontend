@@ -1,7 +1,9 @@
 <div class="contributions__wrapper" data-step="1">
     <div class="contributions__epic contributions__epic--visual contributions__epic--visual--<%=id%>">
         <div class="step-1 step-1--<%=id%>">
-            <h2 class="contributions__title contributions__title--visual-epic"><%=step1.title%></h2>
+            <h2 class="contributions__title contributions__title--visual-epic contributions__title--visual-epic--<%=id%>">
+                <%=step1.title%>
+            </h2>
 
             <img class="contributions__epic--visual__image contributions__epic--visual__image--<%=id%>"
                  src="<%=step1.image%>">
@@ -12,7 +14,7 @@
         </div>
 
         <div class="step-2 step-2--<%=id%>">
-            <h2 class="contributions__title contributions__title--visual-epic contributions__title--visual-epic--step-2--<%=id%>">
+            <h2 class="contributions__title contributions__title--visual-epic contributions__title--visual-epic--<%=id%> contributions__title--visual-epic--step-2--<%=id%>">
                 <%=step2.title%></h2>
 
             <img class="contributions__epic--visual__image contributions__epic--visual__image--<%=id%>"
