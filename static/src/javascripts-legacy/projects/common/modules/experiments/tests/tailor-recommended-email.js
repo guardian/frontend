@@ -1,7 +1,9 @@
 define([
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/utils/storage'
 ], function (
-    mediator
+    mediator,
+    storage
 ) {
     return function () {
         this.id = 'TailorRecommendedEmail';
