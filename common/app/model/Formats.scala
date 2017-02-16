@@ -127,7 +127,8 @@ object MetaDataFormat {
       part2.opengraphPropertiesOverrides,
       part2.isHosted,
       part2.twitterPropertiesOverrides,
-      editionBrandings = part2.editionBrandings
+      editionBrandings = part2.editionBrandings,
+      adContextTargetings = None
       )
     }
   }

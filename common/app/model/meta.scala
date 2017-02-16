@@ -5,7 +5,7 @@ import com.gu.commercial.branding.Branding
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import common.commercial.{AdUnitMaker, EditionBranding}
+import common.commercial.{AdContextTargeting, AdUnitMaker, EditionBranding}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
@@ -113,7 +113,8 @@ object MetaData {
     opengraphPropertiesOverrides: Map[String, String] = Map(),
     isHosted: Boolean = false,
     twitterPropertiesOverrides: Map[String, String] = Map(),
-    editionBrandings: Option[Seq[EditionBranding]] = None
+    editionBrandings: Option[Seq[EditionBranding]] = None,
+    adContextTargetings: Option[Seq[AdContextTargeting]] = None
   ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
@@ -138,7 +139,8 @@ object MetaData {
       opengraphPropertiesOverrides = opengraphPropertiesOverrides,
       isHosted = isHosted,
       twitterPropertiesOverrides = twitterPropertiesOverrides,
-      editionBrandings = editionBrandings
+      editionBrandings = editionBrandings,
+      adContextTargetings = adContextTargetings
     )
   }
 
@@ -164,7 +166,8 @@ object MetaData {
         else CacheTime.NotRecentlyUpdated
       },
       isHosted = apiContent.isHosted,
-      editionBrandings = Some(EditionBranding.fromItem(apiContent))
+      editionBrandings = Some(EditionBranding.fromItem(apiContent)),
+      adContextTargetings = Some(AdContextTargeting.fromContent(apiContent))
     )
   }
 }
@@ -198,7 +201,8 @@ final case class MetaData (
   isHosted: Boolean = false,
   twitterPropertiesOverrides: Map[String, String] = Map(),
   contentWithSlimHeader: Boolean = false,
-  editionBrandings: Option[Seq[EditionBranding]]
+  editionBrandings: Option[Seq[EditionBranding]],
+  adContextTargetings: Option[Seq[AdContextTargeting]]
 ){
   val sectionId = section map (_.id) getOrElse ""
 
@@ -285,6 +289,9 @@ final case class MetaData (
   def normalisedContentType: String = StringUtils.remove(contentType.toLowerCase, ' ')
 
   def branding(edition: Edition): Option[Branding] = EditionBranding.branding(editionBrandings, edition)
+
+  def adContextTargeting(edition: Edition): Map[String, String] =
+    AdContextTargeting.targeting(adContextTargetings, edition)
 }
 
 object Page {
