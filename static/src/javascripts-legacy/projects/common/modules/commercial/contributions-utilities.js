@@ -91,6 +91,7 @@ define([
             var inCompatibleLocation = options.locations ? options.locations.some(function (geo) {
                 return geo === storedGeolocation;
             }) : true;
+            var locationCheck = (typeof options.locationCheck === 'function') ? options.locationCheck(storedGeolocation) : true;
             var isImmersive = config.page.isImmersive === true;
 
             if (options.overrideCanRun) return tagsMatch && options.canRun();
@@ -100,7 +101,7 @@ define([
                 testCanRun &&
                 worksWellWithPageTemplate &&
                 commercialFeatures.canReasonablyAskForMoney &&
-                inCompatibleLocation &&
+                (inCompatibleLocation && locationCheck) &&
                 !isImmersive;
         }).bind(this);
 
@@ -126,15 +127,20 @@ define([
 
         this.test = function () {
             var component = $.create(options.template(this.contributeURL, this.membershipURL));
+            var onInsert = options.onInsert || noop;
+            var onView = options.onView || noop;
 
             function render() {
                 mediator.emit('register:begin', trackingCampaignId);
+
                 return fastdom.write(function () {
-                    var sibling = $(options.insertBeforeSelector);
+                    var selector = options.insertBeforeSelector || '.submeta';
+                    var sibling = $(selector);
 
                     if (sibling.length > 0) {
                         component.insertBefore(sibling);
                         mediator.emit(test.insertEvent, component);
+                        onInsert(component);
 
                         component.each(function (element) {
                             // top offset of 18 ensures view only counts when half of element is on screen
@@ -144,13 +150,14 @@ define([
                                 viewLog.logView(test.id);
                                 mediator.emit(test.viewEvent);
                                 mediator.emit('register:end', trackingCampaignId);
+                                onView();
                             });
                         });
                     }
-                });
+                }.bind(this));
             }
 
-            return (typeof options.test === 'function') ? options.test(render) : render();
+            return (typeof options.test === 'function') ? options.test(render.bind(this)) : render.apply(this);
         };
 
         this.registerListener('impression', 'impressionOnInsert', test.insertEvent, options);
@@ -183,6 +190,8 @@ define([
             }).bind(this);
         }
     };
+
+    function noop() {}
 
     return {
         makeABTest: function (test) {
