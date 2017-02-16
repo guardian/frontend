@@ -18,6 +18,10 @@
                 "ab-icon": "@Static("images/commercial/ab-icon.png")",
                 "abp-icon": "@Static("images/commercial/abp-icon.png")",
                 "abp-whitelist-instruction-chrome": "@Static("images/commercial/ad-block-instructions-chrome.png")"
+            },
+            "acquisitions": {
+                "newspaper": "@Static("images/acquisitions/newspaper.png")",
+                "newspaper-hearts": "@Static("images/acquisitions/newspaper-hearts.png")"
             }
         },
         "stylesheets": {

@@ -1,0 +1,55 @@
+.contributions__epic {
+    &.contributions__epic--visual {
+        background: $neutral-8;
+    }
+
+    &.contributions__epic--visual--love {
+        border-top-color: $features-support-3;
+    }
+}
+
+.contributions__title.contributions__title--visual-epic {
+    @include fs-headline(7);
+    font-weight: bold;
+    margin-bottom: $gs-baseline * 3;
+}
+
+.contributions__epic--visual__image,
+.contributions__option-button.contributions__option-button--visual {
+    display: block;
+    margin: auto;
+}
+
+.contributions__epic--visual__image--love {
+    width: 168px;
+}
+
+.contributions__option-button.contributions__option-button--visual {
+    color: white;
+    width: auto;
+    height: 50px;
+    padding: 0 $gs-gutter;
+    @include fs-textSans(5);
+
+    // couple of magic numbers here, necessary for the design
+    & .heart {
+        font-size: 28px;
+        position: relative;
+        top: 3px;
+        margin-right: 2px;
+    }
+
+    &.contributions__option-button--visual--love {
+        position: relative;
+        top: -102px;
+        background-color: $error;
+
+        &:hover {
+            background-color: darken($error, 5%);
+        }
+    }
+}
+
+.height-fix--love {
+    margin-bottom: -36px;
+}
