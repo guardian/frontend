@@ -6325,6 +6325,10 @@ text-table@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
 
+text@requirejs/text#2.0.13:
+  version "2.0.13"
+  resolved "https://codeload.github.com/requirejs/text/tar.gz/ddc6884c882a305264a27de02abbd77adb0c1d06"
+
 tfunk@^3.0.1:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/tfunk/-/tfunk-3.0.2.tgz#327ebc6176af2680c6cd0d6d22297c79d7f96efd"
@@ -6606,10 +6610,6 @@ videojs-ima@googleads/videojs-ima#0.3.0:
 videojs-persistvolume@guardian/videojs-persistvolume#0.1.4:
   version "0.1.4"
   resolved "https://codeload.github.com/guardian/videojs-persistvolume/tar.gz/31ac2b0771b12d91b91af835958ba77eb6638533"
-
-videojs-playlist@guardian/videojs-playlist#v0.1.0:
-  version "0.0.1"
-  resolved "https://codeload.github.com/guardian/videojs-playlist/tar.gz/413c111bd0f171f8107621d5e6221aa22fe6abb9"
 
 videojs-playlist@guardian/videojs-playlist#v0.1.4:
   version "0.1.4"
