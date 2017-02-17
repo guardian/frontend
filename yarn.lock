@@ -2172,7 +2172,7 @@ es5-ext@^0.10.7, es5-ext@^0.10.8, es5-ext@~0.10.11, es5-ext@~0.10.2, es5-ext@~0.
     es6-iterator "2"
     es6-symbol "~3.1"
 
-es5-shim, es5-shim@^4.1.4, es5-shim@^4.3.1:
+es5-shim, es5-shim@^4.1.4:
   version "4.5.9"
   resolved "https://registry.yarnpkg.com/es5-shim/-/es5-shim-4.5.9.tgz#2a1e2b9e583ff5fed0c20a3ee2cbf3f75230a5c0"
 
@@ -6563,21 +6563,6 @@ verror@1.3.6:
   dependencies:
     extsprintf "1.0.2"
 
-video.js@5.4.6:
-  version "5.4.6"
-  resolved "https://registry.yarnpkg.com/video.js/-/video.js-5.4.6.tgz#2e8fda6de6d234ec94f16da70eef2d291925f605"
-  dependencies:
-    global "^4.3.0"
-    lodash-compat "^3.9.3"
-    object.assign "^4.0.1"
-    safe-json-parse "^4.0.0"
-    tsml "1.0.1"
-    videojs-font "1.4.0"
-    videojs-ie8 "1.1.1"
-    videojs-swf "5.0.1"
-    videojs-vtt.js "^0.12.1"
-    xhr "~2.2.0"
-
 video.js@~5.3:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/video.js/-/video.js-5.3.0.tgz#4df1100a6bf2d0a9950548558e11b175e6f530e8"
@@ -6611,12 +6596,6 @@ videojs-ie8@1.1.0:
   dependencies:
     es5-shim "^4.1.4"
 
-videojs-ie8@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/videojs-ie8/-/videojs-ie8-1.1.1.tgz#269d624ff325b3bc9258495f2c86f0bc0f0206c0"
-  dependencies:
-    es5-shim "^4.3.1"
-
 videojs-ima@googleads/videojs-ima#0.3.0:
   version "0.3.0"
   resolved "https://codeload.github.com/googleads/videojs-ima/tar.gz/87389e121bb6b5f5bf6cbe9cf8c8ba27bdb261cc"
@@ -6632,13 +6611,13 @@ videojs-playlist@guardian/videojs-playlist#v0.1.0:
   version "0.0.1"
   resolved "https://codeload.github.com/guardian/videojs-playlist/tar.gz/413c111bd0f171f8107621d5e6221aa22fe6abb9"
 
+videojs-playlist@guardian/videojs-playlist#v0.1.4:
+  version "0.1.4"
+  resolved "https://codeload.github.com/guardian/videojs-playlist/tar.gz/6ce6f623de6d2ff647ae7574a8937243a49400e0"
+
 videojs-swf@5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/videojs-swf/-/videojs-swf-5.0.1.tgz#2186bd9ec5ffc5d065d5d956cb0df2533ffa2983"
-
-videojs-vtt.js@^0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/videojs-vtt.js/-/videojs-vtt.js-0.12.1.tgz#e313896ca8e838c1b2e16df8775c56981ae19f3a"
 
 vm-browserify@0.0.4:
   version "0.0.4"
