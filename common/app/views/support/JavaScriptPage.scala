@@ -2,11 +2,10 @@ package views.support
 
 import common.Edition
 import common.Maps.RichMap
-import conf.DiscussionAsset
-import conf.Configuration
 import conf.Configuration.environment
+import conf.{Configuration, DiscussionAsset}
 import model._
-import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
+import play.api.libs.json._
 import play.api.mvc.RequestHeader
 
 object JavaScriptPage {
@@ -41,9 +40,10 @@ object JavaScriptPage {
       "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(edition)),
       "shouldHideAdverts" -> JsBoolean(page match {
         case c: ContentPage if c.item.content.shouldHideAdverts => true
-        case c: CommercialExpiryPage => true
+        case _: CommercialExpiryPage => true
         case _ => false
-      })
+      }),
+      "adTargeting" -> Json.toJson(metaData.adContextTargeting(edition))
     ) ++ sponsorshipType
 
     val javascriptConfig = page match {

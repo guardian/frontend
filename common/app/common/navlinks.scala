@@ -111,9 +111,9 @@ object NavLinks {
   val travelAustralasia = NavLink("australasia", "/travel/australasia", "travel/australasia")
   val travelAsia = NavLink("asia", "/travel/asia", "travel/asia")
 
-  val todaysPaper = NavLink("today's paper", "/theguardian")
-  val observer = NavLink("the observer", "/observer")
-  val crosswords = NavLink("crosswords", "/crosswords")
+  val todaysPaper = NavLink("today's paper", "/theguardian", "theguardian")
+  val observer = NavLink("the observer", "/observer", "observer")
+  val crosswords = NavLink("crosswords", "/crosswords", "crosswords")
   val video =  NavLink("video", "/video")
   val jobs = NavLink("jobs", "https://jobs.theguardian.com")
   val dating = NavLink("dating", "https://soulmates.theguardian.com")
@@ -187,6 +187,14 @@ object NavLinks {
     "travel/usa",
     "travel/skiing",
     "travel/australasia",
-    "travel/asia"
+    "travel/asia",
+    "theguardian",
+    "observer",
+    "football/live",
+    "football/tables",
+    "football/competitions",
+    "football/results",
+    "football/fixtures",
+    "education"
   )
 }

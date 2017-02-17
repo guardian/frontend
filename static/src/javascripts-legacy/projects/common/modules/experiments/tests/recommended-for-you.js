@@ -152,7 +152,7 @@ define([
             var $oldSection = $recommendedForYouSection;
 
             $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
-                profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
+                profileIcon: svg(profileIcon.markup, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
                 items: items
             }));
 
@@ -183,9 +183,9 @@ define([
 
         function createOptInTemplate() {
             return $.create(template(recommendedForYouOptInTemplate, {
-                profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
-                rightArrowIcon: svg(rightArrowIcon, ['i-right']),
-                guardianLogo: svg(guardianLogo)
+                profileIcon: svg(profileIcon.markup, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
+                rightArrowIcon: svg(rightArrowIcon.markup, ['i-right']),
+                guardianLogo: svg(guardianLogo.markup)
             }));
         }
 

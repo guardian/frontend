@@ -84,7 +84,12 @@ define([
         .then(function (isRendered) {
             if (isRendered) {
                 var advert = getAdvertById(topSlotId);
-                if (advert.size && advert.size[1] > 0) {
+                if (advert.size &&
+                    // skip for Fabric creatives
+                    advert.size[0] !== 88 &&
+                    // skip for native ads
+                    advert.size[1] > 0
+                ) {
                     fastdom.read(function () {
                         var styles = window.getComputedStyle(topSlot);
                         return parseInt(styles.paddingTop) + parseInt(styles.paddingBottom) + advert.size[1];
