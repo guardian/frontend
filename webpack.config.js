@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
-
 const webpack = require('webpack');
 
 const outputName = 'app-webpack';
@@ -9,7 +8,7 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     devtool: env === 'dev' ? 'inline-source-map' : 'source-map',
     entry: {
         [outputName]: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
-        admin: path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'admin.js'),
+        'admin-webpack': path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'admin.js'),
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
