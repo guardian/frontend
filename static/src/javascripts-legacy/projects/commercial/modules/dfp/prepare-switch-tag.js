@@ -33,6 +33,16 @@ define([
         });
     }
 
+    function callSwitch(){
+        var __switch_zero = window.__switch_zero;
+
+        if (__switch_zero) {
+            __switch_zero.commands.push(function () {
+                __switch_zero.callSwitch();
+            });
+        }
+    }
+
     function init(start, stop) {
         if (dfpEnv.preFlightAdCallEnabled && commercialFeatures.dfpAdvertising) {
             setupSwitch(start, stop);
@@ -42,6 +52,7 @@ define([
     }
 
     return {
-        init: init
+        init: init,
+        callSwitch: callSwitch
     };
 });
