@@ -36,11 +36,7 @@
     // it will break. so we're providing just incase that is true.
     window.curlConfig = {
         baseUrl: '@{Configuration.assets.path}javascripts',
-        apiName: 'require',
-        paths: {
-            'discussion-frontend-react':  '@DiscussionAsset("discussion-frontend.react.amd")',
-            'discussion-frontend-preact': '@DiscussionAsset("discussion-frontend.preact.amd")'
-        }
+        apiName: 'require'
     };
     window.curl = window.curlConfig;
     @HtmlFormat.raw(common.Assets.js.curl)
