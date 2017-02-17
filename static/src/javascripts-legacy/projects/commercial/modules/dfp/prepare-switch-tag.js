@@ -43,6 +43,17 @@ define([
         }
     }
 
+    function pushAdUnit(dfpDivId, adUnitId) {
+        var __switch_zero = window.__switch_zero;
+
+        if (__switch_zero) {
+            __switch_zero.units.push({
+                dfpDivId: dfpDivId,
+                switchAdUnitId: adUnitId
+            });
+        }
+    }
+
     function init(start, stop) {
         if (dfpEnv.preFlightAdCallEnabled && commercialFeatures.dfpAdvertising) {
             setupSwitch(start, stop);
@@ -53,6 +64,7 @@ define([
 
     return {
         init: init,
-        callSwitch: callSwitch
+        callSwitch: callSwitch,
+        pushAdUnit: pushAdUnit
     };
 });
