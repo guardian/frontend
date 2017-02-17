@@ -209,9 +209,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
   "AmpEmbedCleaner" should "not replace an iframe in a fake Facebook video-element with an amp-facebook element" in {
     val result = cleanDocumentWithVideos(
-      "https://facbook.com.zz/theguardian/123456/",
-      "https://www.fakebook.com/theguardian/videos/123456/",
-      "https://myfacebook.com/theguardian/videos/123456"
+      "https://www.facebook.com.zz/theguardian/123456/"
     )
     result.getElementsByTag("amp-facebook").size should be(0)
   }
