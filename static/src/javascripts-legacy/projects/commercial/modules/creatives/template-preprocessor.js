@@ -1,8 +1,5 @@
 define([
-    'common/views/svgs',
-    'common/utils/config',
     'common/utils/template',
-    'lodash/objects/assign',
     'lodash/utilities/identity',
     'text!commercial/views/creatives/manual-card.html',
     'text!commercial/views/creatives/manual-card-large.html',
@@ -12,10 +9,7 @@ define([
     'text!commercial/views/creatives/manual-container-cta-soulmates.html',
     'text!commercial/views/creatives/manual-container-cta-membership.html'
 ], function (
-    svgs,
-    config,
     template,
-    assign,
     identity,
     manualCardStr,
     manualCardLargeStr,
