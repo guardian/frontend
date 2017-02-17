@@ -15,19 +15,25 @@ requirejs.config({
         facia:        'projects/facia',
         membership:   'projects/membership',
         commercial:   'projects/commercial',
-        bean:         '/base/static/vendor/javascripts/components/bean/bean',
-        bonzo:        '/base/static/vendor/javascripts/components/bonzo/bonzo',
-        react:        '/base/static/vendor/javascripts/react/react',
-        EventEmitter: '/base/static/vendor/javascripts/components/eventEmitter/EventEmitter',
-        fastclick:    '/base/static/vendor/javascripts/components/fastclick/fastclick',
-        fastdom:      '/base/static/vendor/javascripts/components/fastdom/index',
-        fence:        '/base/static/vendor/javascripts/components/fence/fence',
-        lodash:       '/base/static/vendor/javascripts/components/lodash-amd',
-        picturefill:  'projects/common/utils/picturefill',
-        Promise:      '/base/static/vendor/javascripts/components/when/Promise',
-        qwery:        '/base/static/vendor/javascripts/components/qwery/qwery',
-        reqwest:      '/base/static/vendor/javascripts/components/reqwest/reqwest',
+
+        bean:         '/base/node_modules/bean/bean',
+        bonzo:        '/base/node_modules/bonzo/bonzo',
+        react:        '/base/node_modules/react/dist/react-with-addons',
+        EventEmitter: '/base/node_modules/wolfy87-eventemitter/EventEmitter',
+        fastclick:    '/base/node_modules/fastclick/fastclick',
+        fastdom:      '/base/node_modules/fastdom/index',
+        fence:        '/base/node_modules/fence/fence',
+        lodash:       '/base/node_modules/lodash-amd/compat',
+        Promise:      '/base/node_modules/when/es6-shim/Promise',
+        qwery:        '/base/node_modules/qwery/qwery',
+        reqwest:      '/base/node_modules/reqwest/reqwest',
+        videojs:      '/base/node_modules/video.js',
+        'videojs-ads-lib': '/base/node_modules/videojs-contrib-ads',
+        text:         '/base/node_modules/text/text',
+        raven:        '/base/node_modules/raven-js/dist/raven',
+
         analytics:    'projects/common/modules/analytics/analytics',
+        picturefill:  'projects/common/utils/picturefill',
         // Test specific paths
         omniture:     '/base/static/vendor/javascripts/omniture/omniture',
         squire:       '/base/static/test/javascripts/components/squire/src/Squire',
@@ -35,11 +41,8 @@ requirejs.config({
         helpers:      '/base/static/test/javascripts/helpers',
         svgs:         '/base/static/src/inline-svgs',
         // plugins
-        text:         '/base/static/vendor/javascripts/components/requirejs-text/text',
         inlineSvg:    'projects/common/utils/inlineSvg',
-        // raven
-        raven:        '/base/static/vendor/javascripts/components/raven-js/raven',
-        'common/utils/raven':        '/base/static/test/javascripts/fixtures/raven'
+        'common/utils/raven': '/base/static/test/javascripts/fixtures/raven'
     }
 });
 
