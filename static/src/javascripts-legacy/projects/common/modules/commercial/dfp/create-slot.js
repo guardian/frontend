@@ -1,12 +1,18 @@
 define([
     'common/utils/config',
     'common/utils/assign',
-    'common/modules/commercial/ad-sizes'
+    'common/modules/commercial/ad-sizes',
+    'commercial/modules/dfp/prepare-switch-tag'
 ], function (
     config,
     assign,
-    adSizes
+    adSizes,
+    prepareSwitchTag
 ) {
+    var switchUnitId = {
+        mpu: 228,
+        top: 229
+    };
     var inlineDefinition = {
         sizeMappings: {
             mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.fluid),
@@ -22,7 +28,8 @@ define([
             adSizes.halfPage,
             config.page.edition === 'US' ? adSizes.portrait : null,
             adSizes.fluid
-        )
+        ),
+        switchUnitId: switchUnitId.mpu
     };
 
     var adSlotDefinitions = {
@@ -74,7 +81,8 @@ define([
                     adSizes.fabric,
                     adSizes.fluid
                 )
-            }
+            },
+            switchUnitId: switchUnitId.top
         }
     };
 
@@ -125,7 +133,7 @@ define([
 
         classes.push('ad-slot--' + name);
 
-        return createAdSlotElement(
+        var adSlot = createAdSlotElement(
             name,
             Object.keys(attributes).reduce(function (result, key) {
                 result['data-' + key] = attributes[key];
@@ -133,6 +141,12 @@ define([
             }, {}),
             classes
         );
+
+        if (definition.switchUnitId) {
+            prepareSwitchTag.pushAdUnit(adSlot.id, definition.switchUnitId);
+        }
+
+        return adSlot;
     };
 
 });
