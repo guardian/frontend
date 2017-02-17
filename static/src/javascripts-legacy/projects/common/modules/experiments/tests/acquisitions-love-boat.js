@@ -4,7 +4,9 @@ define([
     'common/utils/template',
     'common/utils/config',
     'common/utils/$',
-    'common/views/svgs',
+    'common/views/svg',
+    'inlineSvg!svgs/icon/hand.svg',
+    'inlineSvg!svgs/icon/arrow-right.svg',
     'text!common/views/epic-supporter-cta.html',
     'text!common/views/acquisitions-visual.html'
 ], function (
@@ -13,7 +15,9 @@ define([
     template,
     config,
     $,
-    svgs,
+    svg,
+    hand,
+    arrowRight,
     epicSupporterCta,
     visualTemplate
 ) {
@@ -101,7 +105,7 @@ define([
                         },
 
                         supportText: '<span class="brand">Guardian Supporters</span> help to secure our future. If you love the work we do, support us now and show how much you care.',
-                        buttonIcon: svgs('arrowRight'),
+                        buttonIcon: svg(arrowRight.markup),
                         link: supportUrl
                     });
                 },
@@ -120,7 +124,7 @@ define([
                         step1: {
                             title: 'Why is the Guardian unique?',
                             image: png('boat-floating'),
-                            cta: svgs('hand') + ' <span>Show</span>'
+                            cta: svg(hand.markup) + ' <span>Show</span>'
                         },
 
                         step2: {
@@ -130,7 +134,7 @@ define([
                         },
 
                         supportText: '<span class="brand">Guardian Supporters</span> help to secure our future. Please support our journalism and together we can hold the powerful to account.',
-                        buttonIcon: svgs('arrowRight'),
+                        buttonIcon: svg(arrowRight.markup),
                         link: supportUrl
                     });
                 },
