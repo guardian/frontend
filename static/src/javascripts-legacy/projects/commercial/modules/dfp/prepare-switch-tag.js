@@ -23,7 +23,7 @@ define([
     }
 
     function setupLoadId(){
-        var __switch_zero = __switch_zero || {};
+        var __switch_zero = window.__switch_zero || {};
         __switch_zero.units = __switch_zero.units || [];
         __switch_zero.commands = __switch_zero.commands || [];
 
