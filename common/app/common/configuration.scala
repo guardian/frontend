@@ -429,6 +429,8 @@ class GuardianConfiguration extends Logging {
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
 
     lazy val expiredPaidContentUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
+
+    val switchAdHubUrl = "https://delivery.guardian.switchadhub.com/"
   }
 
   object open {
