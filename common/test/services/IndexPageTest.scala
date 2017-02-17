@@ -48,7 +48,7 @@ import scala.concurrent.Future
         fail("Wrong type (expected: IndexPage, real: Result)")
       case Some(page) =>
         val front = IndexPage.makeFront(page, edition)
-        front.containers.length should be(1)
+        front.containers should not be empty
 
         val firstContainer = front.containers.head
         val formatter = DateTimeFormat.forPattern("d MMMM yyyy")
@@ -56,12 +56,8 @@ import scala.concurrent.Future
         parsedDate shouldBe a[DateTime]
         firstContainer.container.isInstanceOf[Fixed] should be(true)
         firstContainer.index should be(0)
-        firstContainer.containerLayout.get.slices.length should be(2)
-        firstContainer.containerLayout.get.remainingCards.length should be(1)
 
-        firstContainer.items.length should be(pageSize)
-        firstContainer.items.head.header.headline should be("Rio 2016 Olympic venues abandoned and derelict six months after Games – video")
-        firstContainer.items.head.header.url should be("/sport/video/2017/feb/10/rio-2016-olympic-venues-abandoned-derelict-video")
+        firstContainer.items should not be empty
     }
   }
 }
