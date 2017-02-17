@@ -16,7 +16,7 @@ define([
         adSlotSelector: '.js-ad-slot',
 
         /* sonobiEnabled: boolean. Set to true if sonobi real-time-bidding is enabled*/
-        sonobiEnabled: config.switches.sonobiHeaderBidding || url.getUrlVars()['sonobi'],
+        sonobiEnabled: config.switches.sonobiHeaderBidding && url.getUrlVars()['sonobi'],
 
         /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
         lazyLoadEnabled: false,
