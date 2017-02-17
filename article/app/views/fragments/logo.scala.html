@@ -1,12 +1,12 @@
+@import conf.Configuration
 @(amp: Boolean = false)
 
-@if(amp) {
-    @* AMP doesn't support sameAs *@
     <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
         <meta itemprop="url" content="https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2015/10/1/1443713974413/Guardiantitlepiecedigitalon.png">
         <meta itemprop="width" content="300">
         <meta itemprop="height" content="60">
     </div>
-} else {
-    <link itemprop="sameAs" href="http://www.theguardian.com">
+    @if(!amp) {
+        @* AMP doesn't support sameAs *@
+    <link itemprop="sameAs" href="@Configuration.site.host">
 }

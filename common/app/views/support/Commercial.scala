@@ -90,8 +90,8 @@ object Commercial {
       val fabricAdvertsTop = Seq("88,71")
       val fluidAdvertsTop = Seq("fluid")
       Map(
-        "tablet" -> (Seq("1,1", "2,2", "88,70", "728,90") ++ fabricAdvertsTop ++ fluidAdvertsTop),
-        "desktop" -> (Seq("1,1", "2,2", "88,70", "728,90", "940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)
+        "tablet" -> (Seq("1,1", "2,2", "728,90") ++ fabricAdvertsTop ++ fluidAdvertsTop),
+        "desktop" -> (Seq("1,1", "2,2", "728,90", "940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)
       )
     }
 

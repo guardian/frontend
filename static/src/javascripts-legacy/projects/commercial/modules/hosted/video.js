@@ -126,9 +126,13 @@ define([
         }
 
         // Return a promise that resolves after the async work is done.
-        Promise.resolve(require(['bootstraps/enhanced/media/main']))
+        new Promise(function(resolve){
+            require(['bootstraps/enhanced/media/main'], resolve);
+        })
         .then(function () {
-            return require(['bootstraps/enhanced/media/video-player']);
+            return new Promise(function(resolve){
+                require(['bootstraps/enhanced/media/video-player'], resolve);
+            });
         })
         .then(function (videojs) {
             $videoEl.each(function(el){

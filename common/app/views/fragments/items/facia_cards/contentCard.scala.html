@@ -88,10 +88,17 @@ data-test-id="facia-card"
                 </div>
             }
 
-            case Some(media@InlineYouTubeMediaAtom(_)) => {
+            case Some(media@InlineYouTubeMediaAtom(_,_)) => {
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__video-container">
-                    @youtube(media = media.youTubeAtom, displayCaption = false, embedPage = false, displayDuration = false, displayEndSlate = item.cardTypes.showYouTubeMediaAtomEndSlate, playable = item.cardTypes.showYouTubeMediaAtomPlayer)
+                    @youtube(
+                        media = media.youTubeAtom,
+                        displayCaption = false,
+                        embedPage = false,
+                        displayDuration = false,
+                        displayEndSlate = item.cardTypes.showYouTubeMediaAtomEndSlate,
+                        playable = item.cardTypes.showYouTubeMediaAtomPlayer,
+                        posterImageOverride = media.posterImageOverride)
                     </div>
                 </div>
             }

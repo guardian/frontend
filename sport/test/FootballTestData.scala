@@ -1,12 +1,11 @@
 package test
 
 import conf.FootballClient
-import org.scala_tools.time.Imports._
-import org.joda.time.DateTime
-import pa._
-import model.{Competition, Tag, TagProperties, TeamMap}
 import feed.CompetitionsService
-import org.scalatest.mock.MockitoSugar
+import model.{Competition, Tag, TagProperties, TeamMap}
+import org.joda.time.DateTime
+import org.scala_tools.time.Imports._
+import pa._
 
 trait FootballTestData {
 
@@ -100,8 +99,16 @@ object FootballTestData {
 
   val teamTags: Map[String, Tag] = Map(
     "Liverpool" -> Tag(
-      TagProperties("football/liverpool", "/football/liverpool", "Keyword", "football", "Football", "Liverpool",
-        "https://www.theguardian.com/football/liverpool", None, None, None, None, None, None, None, Seq(), None, None),
+      TagProperties(
+        "football/liverpool",
+        "/football/liverpool",
+        "Keyword",
+        "football",
+        "Football",
+        "Liverpool",
+        "https://www.theguardian.com/football/liverpool",
+        None, None, None, None, None, None, None, Seq(), None, None, None
+      ),
       None,
       None,
       None)
