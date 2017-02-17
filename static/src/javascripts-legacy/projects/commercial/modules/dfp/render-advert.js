@@ -69,7 +69,7 @@ define([
      */
     sizeCallbacks[adSizes.mpu] = function (_, advert) {
         var $node = bonzo(advert.node);
-        if ($node.hasClass('ad-slot--right')) {
+        if ($node.hasClass('js-sticky-mpu')) {
             stickyMpu($node);
         } else {
             return addFluid(['ad-slot--revealer'])(_, advert);
