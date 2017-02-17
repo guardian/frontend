@@ -3,19 +3,13 @@ define([
     'qwery',
     'Promise',
     'common/utils/$css',
-    'common/utils/fastdom-promise',
-    'common/modules/commercial/commercial-features',
-    'common/utils/config',
-    'common/modules/commercial/user-features'
+    'common/utils/fastdom-promise'
 ], function (
     bonzo,
     qwery,
     Promise,
     $css,
-    fastdom,
-    commercialFeatures,
-    config,
-    userFeatures
+    fastdom
 ) {
     var adSlotSelector = '.js-ad-slot';
 
@@ -23,40 +17,28 @@ define([
         init: init
     };
 
-    function init() {
-
-        var modulePromises = [];
+    function init(force) {
 
         // Get all ad slots
-        qwery(adSlotSelector)
+        var $adSlots = qwery(adSlotSelector)
             // convert them to bonzo objects
-            .map(bonzo)
+            .map(bonzo);
+
+        if (!force) {
             // remove the ones which should not be there
-            .filter(function ($adSlot) {
-                // filter out (and remove) hidden ads
-                return shouldDisableAdSlot($adSlot);
-            })
-            .forEach(function ($adSlot){
-                modulePromises.push(
-                    fastdom.write(function () {
-                        $adSlot.remove();
-                    })
-                );
+            $adSlots = $adSlots.filter(shouldDisableAdSlot);
+        }
+
+        var modulePromises = $adSlots.map(function ($adSlot){
+            return fastdom.write(function () {
+                $adSlot.remove();
             });
+        });
 
         return Promise.all(modulePromises);
     }
 
     function shouldDisableAdSlot($adSlot) {
-        return isAdfreeUser() || isVisuallyHidden();
-
-        function isVisuallyHidden() {
-            return $css($adSlot, 'display') === 'none';
-        }
-
-        function isAdfreeUser() {
-            return config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser();
-        }
+        return $css($adSlot, 'display') === 'none';
     }
-
 });
