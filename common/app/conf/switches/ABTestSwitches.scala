@@ -131,6 +131,7 @@ trait ABTestSwitches {
   )
 
   Switch(
+    ABTests,
     "ab-acquisitions-love-boat",
     "Tests 2 new designs for acquisitions asks",
     owners = Seq(Owner.withGithub("desbo")),
