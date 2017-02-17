@@ -5,7 +5,7 @@ define([
     'common/utils/config',
     'common/utils/$',
     'common/views/svgs',
-    'text!common/views/contributions-epic-equal-buttons.html',
+    'text!common/views/epic-supporter-cta.html',
     'text!common/views/acquisitions-visual.html'
 ], function (
     bean,
@@ -14,7 +14,7 @@ define([
     config,
     $,
     svgs,
-    epicEqualButtons,
+    epicSupporterCta,
     visualTemplate
 ) {
     var maxViews = {
@@ -68,15 +68,14 @@ define([
                 id: 'control',
                 maxViews: maxViews,
                 template: function epic(contributionUrl, membershipUrl) {
-                    return template(epicEqualButtons, {
+                    return template(epicSupporterCta, {
                         linkUrl1: membershipUrl,
                         linkUrl2: contributionUrl,
                         title: 'Since you’re here …',
                         p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
                         p2: 'If everyone who reads our reporting, who likes it, helps to pay for it, our future would be much more secure.',
                         p3: '',
-                        cta1: 'Become a Supporter',
-                        cta2: 'Make a contribution'
+                        cta1: 'Become a Supporter'
                     });
                 },
                 successOnView: true
