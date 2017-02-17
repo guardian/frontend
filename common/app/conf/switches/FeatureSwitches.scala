@@ -498,6 +498,17 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val AmpOphanTrackingIncludesCredentials = Switch(
+    SwitchGroup.Feature,
+    "amp-ophan-tracking-includes-credentials",
+    "allows access to id field when page viewed from google cache so that we keep tracking consistent",
+    owners = Seq(Owner.withGithub("michaelwmcnamara")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 10),
+    exposeClientSide = true
+
+  )
+
   // Owner: Alex Sanders
   val Webpack = Switch(
     SwitchGroup.Feature,
@@ -505,7 +516,7 @@ trait FeatureSwitches {
     "When ON, will serve webpack bundles instead of curl.",
     owners = Seq(Owner.withGithub("asanders")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 2, 17),
+    sellByDate = new LocalDate(2017, 2, 24),
     exposeClientSide = true
   )
 }

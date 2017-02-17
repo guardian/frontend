@@ -15,19 +15,19 @@ define([
     return function () {
         var self = this;
 
-        this.id = 'MembershipA1A2BundlesThrasher';
-        this.start = '2017-02-06';
-        this.expiry = '2017-03-02'; // Thursday 2nd March
+        this.id = 'MembershipA3A4BundlesThrasher';
+        this.start = '2017-02-14';
+        this.expiry = '2017-03-09'; // Thursday 9th March
         this.author = 'Justin Pinner';
-        this.description = 'Test Supporter Bundle A1 (ad-free control) against A2 (with-ads variant)';
+        this.description = 'Test Exclusive Content Supporter Bundle A3 (ad-free, control) against A2 (with-ads, variant)';
         this.showForSensitive = true;
         this.audience = 0.15;  // 7.5% per variant
-        this.audienceOffset = 0.15; // use a new audience segment base
+        this.audienceOffset = 0.30; // use a new audience segment base
         this.successMeasure = '';
         this.audienceCriteria = 'People on UK network front with at least an 1140px wide display.';
         this.dataLinkNames = '';
         this.idealOutcome = 'We understand which of the A bundle variants is most desirable.';
-        this.hypothesis = 'An ad-free offering is desired by more readers.';
+        this.hypothesis = 'An ad-free offering is desired by more readers (unaffected by commenting)';
 
         this.canRun = function () {
             return document.querySelector('#membership-ab-thrasher') &&
@@ -59,7 +59,7 @@ define([
             if (this.thrasher()) {
                 var linkEl = document.querySelector('.membership-ab-thrasher--wrapper .link-button');
                 if (linkEl && linkEl.getAttribute('href')) {
-                    linkEl.setAttribute('href', config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_A_ADS_THRASHER_' + config.page.edition.toUpperCase() + '_' + variant.toUpperCase());
+                    linkEl.setAttribute('href', config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_A_ADX_THRASHER_' + config.page.edition.toUpperCase() + '_' + variant.toUpperCase());
                 }
             }
         };
@@ -88,14 +88,14 @@ define([
             {
                 id: 'control',
                 test: function () {
-                    self.setup('control');   // A1 is our control group (for the benefit of abacus)
+                    self.setup('control');   // A3 is our control group (for the benefit of abacus)
                 },
                 success: this.completeFunc
             },
             {
                 id: 'variant',
                 test: function () {
-                    self.setup('variant');  // variant is A2
+                    self.setup('variant');  // variant is A4
                 },
                 success: this.completeFunc
             }
