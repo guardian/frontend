@@ -12,22 +12,16 @@ import java.lang.Long.{toString => toStringBase}
 import scala.util.{Success, Failure, Random}
 
 case class AdRequest(
-  load_id: String,             // load_id
-  zone_ids: List[Int],         // zone_ids
-  /*
-
-  229   970x250, 728x90
-  228   300x250
-
-  */
-  ip: String,                   // ip
-  user_agent: String,           // user_agent
-  url: String,                  // url
-  referrer: Option[String],             // referrer
-  browser_dimensions: Option[String],   // browser_dimensions
+  load_id: String,
+  zone_ids: List[Int],
+  ip: String,
+  user_agent: String,
+  url: String,
+  referrer: Option[String],
+  browser_dimensions: Option[String],
   switch_user_id: Option[String],       // switch_user_id, SWID cookie
-  floor_price: Option[String],          // floor_price
-  targeting_variables: Option[String]   // targeting_variables
+  floor_price: Option[String],
+  targeting_variables: Option[String]
 )
 
 object AdRequest {
@@ -48,7 +42,6 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
     val pageViewId = makeOphanViewId()
 
     val switchId = request.headers.get("X-GU-switch-id")
-
     val maybeClientIp = request.headers.get("X-GU-client-ip")
     val maybeTopUrl = request.headers.get("X-GU-topurl")
     val maybeUserAgent = request.headers.get("X-GU-user-agent")
@@ -58,9 +51,13 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
       topUrl <- maybeTopUrl
       userAgent <- maybeUserAgent
     } {
-      val adHubRequest = AdRequest(
+      val adHubRequest = Json.toJson(AdRequest(
         load_id = pageViewId,
         zone_ids = List(229, 228),
+        /*  id    sizes
+            229   970x250, 728x90
+            228   300x250
+        */
         ip = clientIp,
         user_agent = userAgent,
         url = topUrl,
@@ -69,14 +66,12 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
         switch_user_id = switchId,
         floor_price = None,
         targeting_variables = None
-      )
+      ))
 
-      log.logger.info(Json.toJson(adHubRequest).toString())
-
-      wsClient.url(Configuration.commercial.switchAdHubUrl)
-        .post(Json.toJson(adHubRequest))
+      wsClient.url(Configuration.switch.switchAdHubUrl)
+        .post(adHubRequest)
         .onComplete({
-          case Success(_) => log.logger.debug(s"switch ad call success for $clientIp, ${switchId.getOrElse("unknown user id")}")
+          case Success(_) => log.logger.debug(s"switch ad call success for ${adHubRequest.toString()}, ${switchId.getOrElse("unknown user id")}")
           case Failure(e) => log.logger.warn(s"switch ad call failed: ${e.getMessage}")
         })
     }
