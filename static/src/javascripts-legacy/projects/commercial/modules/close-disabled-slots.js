@@ -1,11 +1,9 @@
 define([
-    'bonzo',
     'qwery',
     'Promise',
     'common/utils/$css',
     'common/utils/fastdom-promise'
 ], function (
-    bonzo,
     qwery,
     Promise,
     $css,
@@ -20,25 +18,21 @@ define([
     function init(force) {
 
         // Get all ad slots
-        var $adSlots = qwery(adSlotSelector)
-            // convert them to bonzo objects
-            .map(bonzo);
+        var adSlots = qwery(adSlotSelector);
 
         if (!force) {
             // remove the ones which should not be there
-            $adSlots = $adSlots.filter(shouldDisableAdSlot);
+            adSlots = adSlots.filter(shouldDisableAdSlot);
         }
 
-        var modulePromises = $adSlots.map(function ($adSlot){
-            return fastdom.write(function () {
-                $adSlot.remove();
+        return fastdom.write(function () {
+            adSlots.forEach(function (adSlot) {
+                adSlot.parentNode.remove();
             });
         });
-
-        return Promise.all(modulePromises);
     }
 
-    function shouldDisableAdSlot($adSlot) {
-        return $css($adSlot, 'display') === 'none';
+    function shouldDisableAdSlot(adSlot) {
+        return window.getComputedStyle(adSlot).display === 'none';
     }
 });
