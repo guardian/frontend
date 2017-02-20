@@ -8,11 +8,6 @@ define([
 
         if (timing) {
             performance = {
-                standardBoot: parseInt(userTiming.getTiming('standard boot')),
-                commercialRequest: parseInt(userTiming.getTiming('commercial request')),
-                commercialBoot: parseInt(userTiming.getTiming('commercial boot')),
-                enhancedRequest: parseInt(userTiming.getTiming('enhanced request')),
-                enhancedBoot: parseInt(userTiming.getTiming('enhanced boot')),
                 dns: timing.domainLookupEnd - timing.domainLookupStart,
                 connection: timing.connectEnd - timing.connectStart,
                 firstByte: timing.responseStart - timing.connectEnd,
@@ -20,7 +15,29 @@ define([
                 domContentLoadedEvent: timing.domContentLoadedEventStart - timing.responseEnd,
                 loadEvent: timing.loadEventStart - timing.domContentLoadedEventStart,
                 navType: window.performance.navigation.type,
-                redirectCount: window.performance.navigation.redirectCount
+                redirectCount: window.performance.navigation.redirectCount,
+                assetsPerformance: [
+                    {
+                        name: 'standard boot',
+                        timing: parseInt(userTiming.getTiming('standard boot')),
+                    },
+                    {
+                        name: 'commercial request',
+                        timing: parseInt(userTiming.getTiming('commercial request')),
+                    },
+                    {
+                        name: 'commercial boot',
+                        timing: parseInt(userTiming.getTiming('commercial boot')),
+                    },
+                    {
+                        name: 'enhanced request',
+                        timing: parseInt(userTiming.getTiming('enhanced request')),
+                    },
+                    {
+                        name: 'enhanced boot',
+                        timing: parseInt(userTiming.getTiming('enhanced boot')),
+                    }
+                ],
             };
             ophan.record({ performance: performance });
         }
