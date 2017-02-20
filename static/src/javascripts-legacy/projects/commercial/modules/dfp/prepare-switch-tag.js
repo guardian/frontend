@@ -72,7 +72,7 @@ define([
     // Dynamically constructed slots that are made using create-slot are not supported here,
     // until callSwitch can handle lazy loading.
     function pushAdUnit(dfpDivId, sizeMapping) {
-        
+
         var __switch_zero = window.__switch_zero;
 
         if (__switch_zero) {
