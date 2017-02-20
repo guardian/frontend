@@ -20,6 +20,10 @@ module.exports = function (config) {
             { pattern: 'static/transpiled/javascripts/**/views/**/*.html', included: false },
             { pattern: 'static/public/javascripts/**/*.js', included: false },
             { pattern: 'static/vendor/javascripts/**/*.js', included: false },
+
+            // this ugly, but also the most performant way to get
+            // node_modules into karma/require
+            { pattern: 'node_modules/+(bean|bonzo|react|wolfy87-eventemitter|fastclick|fastdom|fence|lodash-amd|when|qwery|reqwest|video.js|videojs-contrib-ads|text|raven-js)/**/*.js', included: false },
         ],
 
         exclude: [],

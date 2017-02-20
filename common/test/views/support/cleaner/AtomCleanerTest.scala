@@ -21,7 +21,7 @@ class AtomCleanerTest extends FlatSpec
       duration = None,
       source = None,
       posterImage = None,
-      endSlatePath = None,
+      endSlatePath = Some("/video/end-slate/section/football.json?shortUrl=https://gu.com/p/6vf9z"),
       expired = None)
     ),
     interactives = Nil,
@@ -56,6 +56,12 @@ class AtomCleanerTest extends FlatSpec
     Switches.UseAtomsSwitch.switchOn()
     val result: Document = clean(doc, youTubeAtom, amp = true)
     result.select("amp-youtube").attr("data-videoid") should be("nQuN9CUsdVg")
+  }
+
+  "Youtube template" should "include endslate path" in {
+    val html = views.html.fragments.atoms.youtube(media = youTubeAtom.map(_.media.head).get, displayEndSlate = true, displayCaption = false, embedPage = false)(TestRequest())
+    val doc = Jsoup.parse(html.toString())
+    doc.select("div.youtube-media-atom").first().attr("data-end-slate") should be("/video/end-slate/section/football.json?shortUrl=https://gu.com/p/6vf9z")
   }
 
 

@@ -99,13 +99,14 @@ define([
     }
 
     return function (name, slotTypes) {
-        var slotName = name,
+        var slotName,
             attributes = {},
             definition,
             classes = [];
 
-        definition = adSlotDefinitions[slotName] || adSlotDefinitions.inline;
-        name = definition.name || name;
+        definition = adSlotDefinitions[name] || adSlotDefinitions.inline;
+
+        slotName = definition.name || name;
 
         assign(attributes, definition.sizeMappings);
 
@@ -123,10 +124,14 @@ define([
             });
         }
 
-        classes.push('ad-slot--' + name);
+        if(name === 'right-sticky') {
+            classes.push('js-sticky-mpu');
+        }
+
+        classes.push('ad-slot--' + slotName);
 
         return createAdSlotElement(
-            name,
+            slotName,
             Object.keys(attributes).reduce(function (result, key) {
                 result['data-' + key] = attributes[key];
                 return result;
