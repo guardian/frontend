@@ -5,11 +5,11 @@ define([
     'lodash/arrays/uniq',
     'lodash/arrays/flatten'
 ], function (urlUtils, config, detect, uniq, flatten) {
-    var adUnit = (function () {
+    var adUnitOverride = (function () {
         var urlVars = urlUtils.getUrlVars();
         return urlVars['ad-unit'] ?
-            '/' + config.page.dfpAccountId + '/' + adUnitOverride :
-            config.page.adUnit;
+            '/' + config.page.dfpAccountId + '/' + urlVars['ad-unit'] :
+            null;
     }());
 
     return defineSlot;
@@ -21,9 +21,9 @@ define([
         var slot;
 
         if (adSlotNode.getAttribute('data-out-of-page')) {
-            slot = window.googletag.defineOutOfPageSlot(adUnit, id).defineSizeMapping(sizeOpts.sizeMapping);
+            slot = window.googletag.defineOutOfPageSlot(adUnitOverride || config.page.adUnit, id).defineSizeMapping(sizeOpts.sizeMapping);
         } else {
-            slot = window.googletag.defineSlot(adUnit, sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
+            slot = window.googletag.defineSlot(adUnitOverride || config.page.adUnit, sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
         }
 
         slot.addService(window.googletag.pubads())
