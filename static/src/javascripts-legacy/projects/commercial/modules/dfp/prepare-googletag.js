@@ -65,7 +65,7 @@ define([
             // A promise error here, from a failed module load,
             // could be a network problem or an intercepted request.
             // Abandon the init sequence.
-            .catch(closeSlots.init.bind(null, true));
+            .catch(removeAdSlots);
             return Promise.resolve();
         }
 
@@ -86,5 +86,9 @@ define([
         Object.keys(targeting).forEach(function (key) {
             pubads.setTargeting(key, targeting[key]);
         });
+    }
+
+    function removeAdSlots() {
+        return closeSlots.init(true);
     }
 });
