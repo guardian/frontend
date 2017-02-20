@@ -9,6 +9,8 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     entry: {
         [outputName]: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
         'admin-webpack': path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'admin.js'),
+        'video-embed-webpack': path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'video-embed.js'),
+        'youtube-embed-webpack': path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'youtube-embed.js'),
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
