@@ -22,12 +22,14 @@ define([
     'domReady',
     'common/utils/raven',
     'common/utils/user-timing',
+    'common/utils/capture-perf-timings',
     'common/utils/config'
 ], function (
     Promise,
     domReady,
     raven,
     userTiming,
+    capturePerfTimings,
     config
 ) {
     // curl’s promise API is broken, so we must cast it to a real Promise
@@ -80,6 +82,11 @@ define([
                 .then(function (boot) {
                     userTiming.mark('enhanced boot');
                     boot();
+                    if (document.readyState === 'complete') {
+                        capturePerfTimings();
+                    } else {
+                        window.addEventListener('load', capturePerfTimings);
+                    }
                 });
         }
     };
