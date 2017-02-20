@@ -1,6 +1,5 @@
 @import conf.{Configuration, Static}
 @import model.{EmbedPage, VideoPlayer}
-@import templates.inlineJS.blocking.js.curlConfig
 @import views.support.{SeoOptimisedContentImage, StripHtmlTags, Video640}
 
 @(page: EmbedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
@@ -101,19 +100,12 @@
         </script>
 
         <script>
-            @Html(curlConfig().body)
-
-            @if(Configuration.assets.useHashedBundles) {
-                window.curl.paths['bootstraps/video-embed'] = '@Static("javascripts/bootstraps/video-embed.js")';
-                window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
-            } else {
-                window.curl.paths['bootstraps/video-embed'] = '@{Configuration.assets.path}javascripts/bootstraps/video-embed.js';
-                window.curl.paths['ophan/embed'] = '@{Configuration.javascript.config("ophanEmbedJsUrl")}';
-            }
-            @Html(common.Assets.js.curl)
-            require(['bootstraps/video-embed'], function(bootstrap) {
-                bootstrap.init();
-            });
+        (function (document) {
+            var script = document.createElement('script');
+            var ref = document.getElementsByTagName('script')[0];
+            script.src = '@Static("javascripts/video-embed-webpack.js")';
+            ref.parentNode.insertBefore(script, ref);
+        })(document);
         </script>
 
         @fragments.analytics.base(page)
