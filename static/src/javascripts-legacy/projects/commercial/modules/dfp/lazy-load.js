@@ -53,7 +53,7 @@ define([
 
         entries
         .filter(function (entry) {
-            return (!'isIntersecting' in entry) || entry.isIntersecting;
+            return !('isIntersecting' in entry) || entry.isIntersecting;
         })
         .forEach(function (entry) {
             observer.unobserve(entry.target);
