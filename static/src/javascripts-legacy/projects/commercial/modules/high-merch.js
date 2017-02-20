@@ -2,8 +2,8 @@ define([
     'Promise',
     'common/utils/config',
     'common/utils/fastdom-promise',
-    'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/commercial-features'
+    'commercial/modules/dfp/create-slot',
+    'commercial/modules/commercial-features'
 ], function (Promise, config, fastdom, createSlot, commercialFeatures) {
     return {
         init: init

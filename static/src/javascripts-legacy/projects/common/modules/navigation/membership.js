@@ -1,4 +1,4 @@
-define(['common/modules/commercial/user-features', 'common/utils/fastdom-promise', 'Promise', 'common/utils/$'], function (userFeatures, fastdom, Promise, $) {
+define(['commercial/modules/user-features', 'common/utils/fastdom-promise', 'Promise', 'common/utils/$'], function (userFeatures, fastdom, Promise, $) {
     var LAST_CLASS = 'brand-bar__item--split--last';
 
     function init() {

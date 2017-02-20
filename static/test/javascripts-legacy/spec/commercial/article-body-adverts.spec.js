@@ -30,16 +30,16 @@ define([
             detect;
 
         beforeEach(function (done) {
-            injector.mock('common/modules/commercial/dfp/track-ad-render', function trackAdRender(id) {
+            injector.mock('commercial/modules/dfp/track-ad-render', function trackAdRender(id) {
                 return Promise.resolve(ads[id]);
             });
 
-            injector.mock('common/modules/commercial/dfp/add-slot', function () {
+            injector.mock('commercial/modules/dfp/add-slot', function () {
                 /* noop */
             });
             injector.require([
                 'commercial/modules/article-body-adverts',
-                'common/modules/commercial/commercial-features',
+                'commercial/modules/commercial-features',
                 'common/modules/article/space-filler',
                 'common/utils/config',
                 'common/utils/detect'
