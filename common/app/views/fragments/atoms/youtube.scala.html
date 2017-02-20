@@ -13,7 +13,7 @@
         ("youtube-media-atom", true),
         ("no-player", !playable || expired )
     ))"
-    @for(endSlatePath <- media.endSlatePath if displayCaption)  {
+    @for(endSlatePath <- media.endSlatePath if displayEndSlate)  {
       data-end-slate="@endSlatePath"
     }
     >
