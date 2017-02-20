@@ -40,7 +40,6 @@ define([
         ],
         gaTracker = config.googleAnalytics.trackers.editorial;
 
-
     /**
      *
      * @param mediaId {string}
@@ -154,16 +153,9 @@ define([
         }
 
         if (isEmbed) {
-            // this loads a hosted AMD module, which makes life hard for anything
-            // that isn't an AMD module loader e.g. webpack.
-            // however, since this is the embed page, we're already supplying curl,
-            // therefore we can build *this* for curl regardless of the loader in use.
-            // this is not ok medium/long term, but it gets us towards
-            // a finished webpack build for now...
-            window.require(['ophan/embed'], record)
+            require(['ophan/embed'], record);
         } else {
-            // this will be webpack in weback land and curl `require` in r.js land
-            require(['ophan/ng'], record)
+            require(['ophan/ng'], record);
         }
 
     }

@@ -9,7 +9,9 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/geolocation'
+    'common/utils/geolocation',
+    'common/utils/template',
+    'text!common/views/contributions-epic-equal-buttons.html'
 
 ], function (commercialFeatures,
              targetingTool,
@@ -21,7 +23,9 @@ define([
              fastdom,
              mediator,
              storage,
-             geolocation) {
+             geolocation,
+             template,
+             contributionsEpicEqualButtons) {
 
     var membershipURL = 'https://membership.theguardian.com/supporter';
     var contributionsURL = 'https://contribute.theguardian.com';
@@ -91,6 +95,7 @@ define([
             var inCompatibleLocation = options.locations ? options.locations.some(function (geo) {
                 return geo === storedGeolocation;
             }) : true;
+            var locationCheck = (typeof options.locationCheck === 'function') ? options.locationCheck(storedGeolocation) : true;
             var isImmersive = config.page.isImmersive === true;
 
             if (options.overrideCanRun) return tagsMatch && options.canRun();
@@ -100,7 +105,7 @@ define([
                 testCanRun &&
                 worksWellWithPageTemplate &&
                 commercialFeatures.canReasonablyAskForMoney &&
-                inCompatibleLocation &&
+                (inCompatibleLocation && locationCheck) &&
                 !isImmersive;
         }).bind(this);
 
@@ -113,6 +118,19 @@ define([
         return this.id + ':' + event;
     };
 
+    function controlTemplate(membershipUrl, contributionUrl) {
+        return template(contributionsEpicEqualButtons, {
+            linkUrl1: membershipUrl,
+            linkUrl2: contributionUrl,
+            title: 'Since you’re here …',
+            p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism open to all. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+            p2: 'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
+            p3: '',
+            cta1: 'Become a Supporter',
+            cta2: 'Make a contribution'
+        });
+    }
+
     function ContributionsABTestVariant(options, test) {
         this.campaignId = test.campaignId;
         this.id = options.id;
@@ -122,19 +140,26 @@ define([
         this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, test.contributionsCampaignPrefix);
         this.membershipURL = options.membershipURL || this.makeURL(membershipURL, test.membershipCampaignPrefix);
 
+        this.template = options.template || controlTemplate;
+
         var trackingCampaignId  = test.epic ? 'epic_' + test.campaignId : test.campaignId;
 
         this.test = function () {
-            var component = $.create(options.template(this.contributeURL, this.membershipURL));
+            var component = $.create(this.template(this.contributeURL, this.membershipURL));
+            var onInsert = options.onInsert || noop;
+            var onView = options.onView || noop;
 
             function render() {
                 mediator.emit('register:begin', trackingCampaignId);
+
                 return fastdom.write(function () {
-                    var sibling = $(options.insertBeforeSelector);
+                    var selector = options.insertBeforeSelector || '.submeta';
+                    var sibling = $(selector);
 
                     if (sibling.length > 0) {
                         component.insertBefore(sibling);
                         mediator.emit(test.insertEvent, component);
+                        onInsert(component);
 
                         component.each(function (element) {
                             // top offset of 18 ensures view only counts when half of element is on screen
@@ -144,13 +169,14 @@ define([
                                 viewLog.logView(test.id);
                                 mediator.emit(test.viewEvent);
                                 mediator.emit('register:end', trackingCampaignId);
+                                onView();
                             });
                         });
                     }
-                });
+                }.bind(this));
             }
 
-            return (typeof options.test === 'function') ? options.test(render) : render();
+            return (typeof options.test === 'function') ? options.test(render.bind(this)) : render.apply(this);
         };
 
         this.registerListener('impression', 'impressionOnInsert', test.insertEvent, options);
@@ -183,6 +209,8 @@ define([
             }).bind(this);
         }
     };
+
+    function noop() {}
 
     return {
         makeABTest: function (test) {

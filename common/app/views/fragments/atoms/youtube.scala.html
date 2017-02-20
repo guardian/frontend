@@ -3,9 +3,10 @@
 @import views.support.{RenderClasses, Video700}
 @import views.html.fragments.atoms.mediaAtomCaption
 @import com.netaporter.uri.dsl._
+@import model.pressed.CardStyle
 
 @import model.ImageMedia
-@(media: model.content.MediaAtom, displayCaption: Boolean, embedPage: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, mainMedia: Boolean = false, posterImageOverride: Option[ImageMedia] = None)(implicit request: RequestHeader)
+@(media: model.content.MediaAtom, displayCaption: Boolean, embedPage: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, mainMedia: Boolean = false, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None)(implicit request: RequestHeader)
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
     <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
         ("u-responsive-ratio", true),
@@ -13,7 +14,7 @@
         ("youtube-media-atom", true),
         ("no-player", !playable || expired )
     ))"
-    @for(endSlatePath <- media.endSlatePath if displayCaption)  {
+    @for(endSlatePath <- media.endSlatePath if displayEndSlate)  {
       data-end-slate="@endSlatePath"
     }
     >
@@ -39,7 +40,11 @@
                 <div class="@RenderClasses(Map("youtube-media-atom__overlay" -> true, "vjs-big-play-button" -> !expired))" style="background-image: url(@Video700.bestFor(image))">
 
                 @if(!expired) {
-                    <div class="youtube-media-atom__play-button vjs-control-text">Play Video</div>
+                    @defining(!cardStyle.exists(c => c.toneString != "media" && !playable)) { showPlayButton: Boolean =>
+                        @if(showPlayButton) {
+                            <div class="youtube-media-atom__play-button vjs-control-text">Play Video</div>
+                        }
+                    }
                     @if(displayDuration) {
                         <div class="youtube-media-atom__bottom-bar">
                             <div class="youtube-media-atom__bottom-bar__icon">
