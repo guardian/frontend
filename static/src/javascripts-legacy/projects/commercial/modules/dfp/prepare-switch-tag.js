@@ -2,16 +2,20 @@ define([
     'Promise',
     'common/utils/config',
     'common/utils/load-script',
+    'common/modules/commercial/ad-sizes',
     'common/modules/commercial/commercial-features',
-    'commercial/modules/dfp/dfp-env'
+    'commercial/modules/dfp/dfp-env',
+    'lodash/arrays/uniq'
 ], function(
     Promise,
     config,
     loadScript,
+    adSizes,
     commercialFeatures,
-    dfpEnv
+    dfpEnv,
+    uniq
 ){
-    // The view id is used as the unique load id, for easier data querying.
+    // The view id is used as the unique load id, for easier Switch log querying.
     var loadId = window.esi && window.esi.viewId;
 
     function setupSwitch(start, stop) {
@@ -22,6 +26,8 @@ define([
         loadScript(config.libs.switch, { async: false }).then(setupLoadId).then(stop);
     }
 
+    // Set Switch's load id to the value of the ophan page view id. This id links the js
+    // ad retrieval call to the pre-flight ad call made by the edge node (Fastly).
     function setupLoadId(){
         var __switch_zero = window.__switch_zero || {};
         __switch_zero.units = __switch_zero.units || [];
@@ -33,6 +39,8 @@ define([
         });
     }
 
+    // The switch api's callSwitch function will perform the retrieval of a pre-flight ad call,
+    // using the load id that has been previously set with setupLoadId.
     function callSwitch(){
         var __switch_zero = window.__switch_zero;
 
@@ -43,13 +51,40 @@ define([
         }
     }
 
-    function pushAdUnit(dfpDivId, adUnitId) {
+    // Returns an array of valid Switch ad unit ids.
+    function findAdUnitIds(sizes){
+        return uniq(sizes
+            .map(function(size){
+                var sizeName = size[0] + 'x' + size [1],
+                    adSizeDefinition = adSizes[sizeName] || {};
+
+                return adSizeDefinition.switchUnitId;
+            })
+            .filter(function(id){
+                return !isNaN(id);
+            }));
+    }
+
+
+    // Whenever fill-advert-slots calls define-slot, a server-rendered html ad slot is being registered.
+    // Whenever a module calls create-slot, a slot is dynamically inserted onto the page.
+    //
+    // Dynamically constructed slots that are made using create-slot are not supported here,
+    // until callSwitch can handle lazy loading.
+    function pushAdUnit(dfpDivId, sizeMapping) {
+        
         var __switch_zero = window.__switch_zero;
 
         if (__switch_zero) {
-            __switch_zero.units.push({
-                dfpDivId: dfpDivId,
-                switchAdUnitId: adUnitId
+            var adUnitIds = findAdUnitIds(sizeMapping.size);
+
+            adUnitIds.forEach(function(adUnitId) {
+                if (adUnitId){
+                    __switch_zero.units.push({
+                        dfpDivId: dfpDivId,
+                        switchAdUnitId: adUnitId
+                    });
+                }
             });
         }
     }

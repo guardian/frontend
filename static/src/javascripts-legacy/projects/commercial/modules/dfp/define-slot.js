@@ -3,8 +3,9 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'lodash/arrays/uniq',
-    'lodash/arrays/flatten'
-], function (urlUtils, config, detect, uniq, flatten) {
+    'lodash/arrays/flatten',
+    'commercial/modules/dfp/prepare-switch-tag'
+], function (urlUtils, config, detect, uniq, flatten, prepareSwitchTag) {
     return defineSlot;
 
     function defineSlot(adSlotNode, sizes) {
@@ -22,6 +23,7 @@ define([
             slot = window.googletag.defineOutOfPageSlot(adUnit, id).defineSizeMapping(sizeOpts.sizeMapping);
         } else {
             slot = window.googletag.defineSlot(adUnit, sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
+             prepareSwitchTag.pushAdUnit(id, sizeOpts);
         }
 
         setTargeting(adSlotNode, slot, 'data-series', 'se');
