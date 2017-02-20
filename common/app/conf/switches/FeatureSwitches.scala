@@ -516,7 +516,7 @@ trait FeatureSwitches {
     "When ON, will serve webpack bundles instead of curl.",
     owners = Seq(Owner.withGithub("asanders")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 2, 17),
+    sellByDate = new LocalDate(2017, 2, 24),
     exposeClientSide = true
   )
 }
