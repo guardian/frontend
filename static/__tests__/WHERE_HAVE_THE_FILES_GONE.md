@@ -4,7 +4,7 @@
 
 ### Longer version
 
-In preparation for the move to ES6, all ES5 source JS tests has been moved to `static/test/javascripts-legacy`.
+In preparation for the move to ES6, all ES5 test source JS has been moved to `static/test/javascripts-legacy`.
 
 You can just edit them there as normal for now, we'll make sure everyone knows what's happening when the conversion starts.
 
