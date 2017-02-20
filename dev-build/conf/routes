@@ -295,7 +295,6 @@ GET            /commercial/capi-single-merch                                    
 GET            /commercial/api/traffic-driver.json                                                                               commercial.controllers.TrafficDriverController.renderJson
 GET            /commercial/paid.json                                                                                             commercial.controllers.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  commercial.controllers.PaidContentCardController.cardHtml
-GET            /commercial/multi.json                                                                                            commercial.controllers.Multi.renderMulti
 GET            /commercial/api/multi.json                                                                                        commercial.controllers.Multi.getMulti
 GET            /$path<commercial-containers>                                                                                                controllers.FaciaController.renderFront(path)
 GET            /advertiser-content/:campaignName/:pageName                                                                       commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)

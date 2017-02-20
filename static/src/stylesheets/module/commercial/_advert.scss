@@ -108,11 +108,6 @@
     &.u-text-hyphenate {
         max-width: 100%;
     }
-
-    .advert-blended__body & {
-        font-size: 14px;
-        line-height: 18px;
-    }
 }
 
 .advert__kicker {
@@ -160,10 +155,6 @@
         left: 0;
         right: 0;
         margin: 0;
-    }
-
-    .advert-blended__body & {
-        height: auto;
     }
 }
 
