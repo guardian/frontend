@@ -4,6 +4,13 @@ define([
 ], function (ophan, userTiming) {
     return function captureTiming() {
         var timing = window.performance && window.performance.timing;
+        var marks = [
+            'standard boot',
+            'commercial request',
+            'commercial boot',
+            'enhanced request',
+            'enhanced boot'
+        ];
         var performance;
 
         if (timing) {
@@ -16,28 +23,12 @@ define([
                 loadEvent: timing.loadEventStart - timing.domContentLoadedEventStart,
                 navType: window.performance.navigation.type,
                 redirectCount: window.performance.navigation.redirectCount,
-                assetsPerformance: [
-                    {
-                        name: 'standard boot',
-                        timing: parseInt(userTiming.getTiming('standard boot')),
-                    },
-                    {
-                        name: 'commercial request',
-                        timing: parseInt(userTiming.getTiming('commercial request')),
-                    },
-                    {
-                        name: 'commercial boot',
-                        timing: parseInt(userTiming.getTiming('commercial boot')),
-                    },
-                    {
-                        name: 'enhanced request',
-                        timing: parseInt(userTiming.getTiming('enhanced request')),
-                    },
-                    {
-                        name: 'enhanced boot',
-                        timing: parseInt(userTiming.getTiming('enhanced boot')),
-                    }
-                ],
+                assetsPerformance: marks.map(function(mark) {
+                    return {
+                        name: mark,
+                        timing: parseInt(userTiming.getTiming(mark)),
+                    };
+                }),
             };
             ophan.record({ performance: performance });
         }
