@@ -2,6 +2,7 @@
 @import model.Page.getContent
 @import play.api.Mode.Dev
 @import conf.switches.Switches.Webpack
+@import conf.switches.Switches.preflightServerSideAdCallSwitch
 
 <meta charset="utf-8" />
 <!--
@@ -40,6 +41,10 @@ Example: http://output.jsbin.com/jodureg/1
 <script>
     window.console = window.console || undefined;
 </script>
+
+@if(preflightServerSideAdCallSwitch.isSwitchedOn) {
+    <!--esi <esi:include src="/esi/ad-call" /> -->
+}
 
 @* inline JS - blocking *@
 @fragments.inlineJSBlocking(page)
