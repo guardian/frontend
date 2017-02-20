@@ -1,6 +1,8 @@
 @(section: String)(implicit request: RequestHeader)
 
 @import common.LinkTo
+@import items.facia_cards.sliceSlot
+@import commercial.adSlot
 
 @defining(Some(section).filter{ section => section.nonEmpty && !section.equals("global")}.map{ section => s"/most-read/$section" }.getOrElse("/most-read")){ url =>
     <section
@@ -14,8 +16,17 @@
                 </h2>
             </div>
             <div class="fc-container__body fc-container--rolled-up-hide js-popular-trails">
-
+              <div class="fc-slice__popular-mpu js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate" style="width:18.75rem;display:inline-block;">
+                @adSlot(
+                  "mostpop",
+                  Seq("container-inline"),
+                  Map("mobile" -> Seq("1,1", "2,2", "300,250", "fluid"), "desktop" -> Seq("1,1", "2,2", "300,250", "620,1", "620,350", "fluid")),
+                  optId = None,
+                  optClassNames = None
+                  ){ }
+                </div>
             </div>
+
         </div>
     </section>
 }

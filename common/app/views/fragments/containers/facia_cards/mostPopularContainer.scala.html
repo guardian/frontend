@@ -31,7 +31,8 @@
             Nil
         )
     )) { popular =>
-        @fragments.collections.popular(popular, Some(containerDefinition))
+      <!-- This only applies to facia / fronts. It is not used for the in-article -->
+        @fragments.collections.popular(popular, Some(containerDefinition), isFront = true)
     }
     </div>
 }
