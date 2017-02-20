@@ -1,18 +1,12 @@
 define([
     'common/utils/config',
     'common/utils/assign',
-    'common/modules/commercial/ad-sizes',
-    'commercial/modules/dfp/prepare-switch-tag'
+    'common/modules/commercial/ad-sizes'
 ], function (
     config,
     assign,
-    adSizes,
-    prepareSwitchTag
+    adSizes
 ) {
-    var switchUnitId = {
-        mpu: 228,
-        top: 229
-    };
     var inlineDefinition = {
         sizeMappings: {
             mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.fluid),
@@ -28,8 +22,7 @@ define([
             adSizes.halfPage,
             config.page.edition === 'US' ? adSizes.portrait : null,
             adSizes.fluid
-        ),
-        switchUnitId: switchUnitId.mpu
+        )
     };
 
     var adSlotDefinitions = {
@@ -81,8 +74,7 @@ define([
                     adSizes.fabric,
                     adSizes.fluid
                 )
-            },
-            switchUnitId: switchUnitId.top
+            }
         }
     };
 
@@ -141,10 +133,6 @@ define([
             }, {}),
             classes
         );
-
-        if (definition.switchUnitId) {
-            prepareSwitchTag.pushAdUnit(adSlot.id, definition.switchUnitId);
-        }
 
         return adSlot;
     };
