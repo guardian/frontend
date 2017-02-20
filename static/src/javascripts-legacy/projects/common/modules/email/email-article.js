@@ -223,6 +223,8 @@ define([
                 }).catch(function (error) {
                     robust.log('c-email', error);
                 });
+            } else {
+                checkMediator.resolveCheck('isEmailInserted', false);
             }
         }
     };

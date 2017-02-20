@@ -5,7 +5,6 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/robust',
-    'common/utils/check-mediator',
     'lodash/collections/some',
     'lodash/collections/every',
     'lodash/collections/map',
@@ -21,7 +20,6 @@ define([
     detect,
     storage,
     robust,
-    checkMediator,
     some,
     every,
     map,
@@ -132,21 +130,16 @@ define([
 
     function allEmailCanRun() {
         var browser = detect.getUserAgent.browser,
-            version = detect.getUserAgent.version,
-            emailCanRun = !config.page.shouldHideAdverts &&
-                        !config.page.isSensitive &&
-                        !config.page.isFront &&
-                        config.switches.emailInArticle &&
-                        !clash.userIsInAClashingAbTest(clash.nonEmailClashingTests) &&
-                        storage.session.isAvailable() &&
-                        !userHasSeenThisSession() &&
-                        !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
-
-        if (!emailCanRun) {
-            checkMediator.resolveCheck('isEmailInserted', false);
-        }
-
-        return emailCanRun;
+            version = detect.getUserAgent.version;
+            
+        return !config.page.shouldHideAdverts &&
+                !config.page.isSensitive &&
+                !config.page.isFront &&
+                config.switches.emailInArticle &&
+                !clash.userIsInAClashingAbTest(clash.nonEmailClashingTests) &&
+                storage.session.isAvailable() &&
+                !userHasSeenThisSession() &&
+                !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
     }
 
     function getUserEmailSubscriptions() {
