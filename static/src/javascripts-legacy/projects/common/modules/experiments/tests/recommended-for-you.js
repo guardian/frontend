@@ -38,7 +38,7 @@ define([
     return function () {
         this.id = 'RecommendedForYouRecommendations';
         this.start = '2017-01-17';
-        this.expiry = '2017-02-21';
+        this.expiry = '2017-03-08';
         this.author = 'David Furey';
         this.description = 'Add an extra container above Opinion on the home front with recommended content based on ' +
             'each users history.  Users in the test group are prompted to opt-in.  Recommendations are only fetched' +
