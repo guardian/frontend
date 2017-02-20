@@ -51,7 +51,11 @@ define([
     function onIntersect(entries, observer) {
         var advertIds = [];
 
-        entries.forEach(function (entry) {
+        entries
+        .filter(function (entry) {
+            return !('isIntersecting' in entry) || entry.isIntersecting;
+        })
+        .forEach(function (entry) {
             observer.unobserve(entry.target);
             displayAd(entry.target.id);
             advertIds.push(entry.target.id);
