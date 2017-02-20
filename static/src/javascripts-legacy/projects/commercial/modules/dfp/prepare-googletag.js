@@ -8,6 +8,7 @@ define([
     'common/utils/fastdom-promise',
     'commercial/modules/commercial-features',
     'commercial/modules/build-page-targeting',
+    'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/on-slot-render',
     'commercial/modules/dfp/on-slot-load',
@@ -31,6 +32,7 @@ define([
     fastdom,
     commercialFeatures,
     buildPageTargeting,
+    closeSlots,
     dfpEnv,
     onSlotRender,
     onSlotLoad,
@@ -63,7 +65,7 @@ define([
             // A promise error here, from a failed module load,
             // could be a network problem or an intercepted request.
             // Abandon the init sequence.
-            .catch(removeAdSlots);
+            .catch(closeSlots.init.bind(null, true));
             return Promise.resolve();
         }
 
@@ -85,11 +87,4 @@ define([
             pubads.setTargeting(key, targeting[key]);
         });
     }
-
-    function removeAdSlots() {
-        return fastdom.write(function () {
-            bonzo(qwery(dfpEnv.adSlotSelector)).remove();
-        });
-    }
-
 });
