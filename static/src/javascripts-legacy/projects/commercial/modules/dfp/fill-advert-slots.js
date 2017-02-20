@@ -9,8 +9,9 @@ define([
     'commercial/modules/dfp/queue-advert',
     'commercial/modules/dfp/display-lazy-ads',
     'commercial/modules/dfp/display-ads',
-    'commercial/modules/dfp/refresh-on-resize'
-], function (Promise, qwery, sha1, identity, commercialFeatures, dfpEnv, Advert, queueAdvert, displayLazyAds, displayAds, refreshOnResize) {
+    'commercial/modules/dfp/refresh-on-resize',
+    'commercial/modules/dfp/prepare-switch-tag'
+], function (Promise, qwery, sha1, identity, commercialFeatures, dfpEnv, Advert, queueAdvert, displayLazyAds, displayAds, refreshOnResize, prepareSwitchTag) {
 
     function init(start, stop) {
         if (commercialFeatures.dfpAdvertising) {
@@ -26,6 +27,7 @@ define([
             createAdverts,
             queueAdverts,
             setPublisherProvidedId,
+            prepareSwitchTag.callSwitch,
             dfpEnv.shouldLazyLoad() ? displayLazyAds : displayAds,
             // anything we want to happen after displaying ads
             refreshOnResize,
