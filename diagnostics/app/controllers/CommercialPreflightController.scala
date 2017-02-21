@@ -74,7 +74,7 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
       wsClient.url(Configuration.switch.switchAdHubUrl)
         .post(adHubRequest)
         .onComplete({
-          case Success(_) => log.logger.debug(s"switch ad call success for ${adHubRequest.toString()}, ${switchId.getOrElse("unknown user id")}")
+          case Success(_) => log.logger.info(s"switch ad call success for ${adHubRequest.toString()}, ${switchId.getOrElse("unknown user id")}")
           case Failure(e) => log.logger.warn(s"switch ad call failed: ${e.getMessage}")
         })
     }
