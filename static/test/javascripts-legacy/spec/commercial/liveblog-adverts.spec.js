@@ -1,6 +1,6 @@
 define([
     'commercial/modules/liveblog-adverts',
-    'commercial/modules/commercial-features',
+    'common/modules/commercial/commercial-features',
     'common/utils/mediator',
     'helpers/fixtures',
     'common/utils/$'

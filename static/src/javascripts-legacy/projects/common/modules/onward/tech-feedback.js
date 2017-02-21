@@ -4,7 +4,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'commercial/modules/dfp/get-creative-ids',
+    'common/modules/commercial/dfp/get-creative-ids',
     'common/modules/experiments/ab',
     'lodash/collections/map',
     'lodash/collections/reduce',

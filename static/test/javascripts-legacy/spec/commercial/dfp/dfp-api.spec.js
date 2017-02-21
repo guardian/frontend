@@ -59,7 +59,7 @@ define([
                 // No implementation
             });
 
-            injector.mock('commercial/modules/dfp/apply-creative-template', function () {
+            injector.mock('common/modules/commercial/dfp/apply-creative-template', function () {
                 return Promise.resolve();
             });
 
@@ -70,11 +70,11 @@ define([
             injector.require([
                 'commercial/modules/dfp/prepare-googletag',
                 'commercial/modules/dfp/fill-advert-slots',
-                'commercial/modules/dfp/get-adverts',
-                'commercial/modules/dfp/get-creative-ids',
+                'common/modules/commercial/dfp/get-adverts',
+                'common/modules/commercial/dfp/get-creative-ids',
                 'common/utils/config',
                 'commercial/modules/dfp/performance-logging',
-                'commercial/modules/commercial-features',
+                'common/modules/commercial/commercial-features',
                 'common/utils/detect',
                 'commercial/modules/close-disabled-slots',
                 'commercial/modules/dfp/dfp-env'

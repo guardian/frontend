@@ -24,7 +24,7 @@ define([
                     'common/utils/cookies',
                     'common/utils/detect',
                     'common/modules/identity/api',
-                    'commercial/modules/user-ad-targeting',
+                    'common/modules/commercial/user-ad-targeting',
                     'common/modules/experiments/ab',
                     'commercial/modules/third-party-tags/krux'],
                 function () {

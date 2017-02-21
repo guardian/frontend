@@ -4,8 +4,8 @@ define([
     'common/utils/config',
     'common/utils/storage',
     'common/utils/template',
-    'commercial/modules/commercial-features',
-    'commercial/modules/user-features',
+    'common/modules/commercial/commercial-features',
+    'common/modules/commercial/user-features',
     'common/utils/mediator'
 ], function (
     bean,

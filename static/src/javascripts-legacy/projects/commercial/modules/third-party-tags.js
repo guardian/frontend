@@ -9,7 +9,7 @@ define([
     'common/utils/mediator',
     'common/utils/fastdom-promise',
     'common/utils/template',
-    'commercial/modules/commercial-features',
+    'common/modules/commercial/commercial-features',
     'commercial/modules/third-party-tags/audience-science-gateway',
     'commercial/modules/third-party-tags/audience-science-pql',
     'commercial/modules/third-party-tags/imr-worldwide',

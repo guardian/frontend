@@ -2,7 +2,7 @@ define([
     'Promise',
     'common/utils/config',
     'common/modules/ui/sticky',
-    'commercial/modules/commercial-features'
+    'common/modules/commercial/commercial-features'
 ], function (Promise, config, Sticky, commercialFeatures) {
     function init() {
         if (!commercialFeatures.paidforBand) {

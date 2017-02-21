@@ -6,7 +6,7 @@ define([
     'common/utils/config',
     'common/utils/load-script',
     'common/utils/fastdom-promise',
-    'commercial/modules/commercial-features',
+    'common/modules/commercial/commercial-features',
     'commercial/modules/build-page-targeting',
     'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/dfp-env',

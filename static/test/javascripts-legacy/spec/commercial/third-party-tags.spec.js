@@ -11,7 +11,7 @@ define([
         beforeEach(function (done) {
             injector.require([
                 'commercial/modules/third-party-tags',
-                'commercial/modules/commercial-features'
+                'common/modules/commercial/commercial-features'
             ], function () {
                 tagsContainer = arguments[0];
                 commercialFeatures = arguments[1];

@@ -29,7 +29,7 @@ define([
 
     describe('Plista', function () {
         beforeEach(function (done) {
-            injector.mock('commercial/modules/dfp/track-ad-render', function(id) {
+            injector.mock('common/modules/commercial/dfp/track-ad-render', function(id) {
                 return Promise.resolve(ads[id]);
             });
 
@@ -39,7 +39,7 @@ define([
                 'common/utils/config',
                 'common/modules/identity/api',
                 'commercial/modules/third-party-tags/plista',
-                'commercial/modules/commercial-features'
+                'common/modules/commercial/commercial-features'
             ], function () {
                 config = arguments[0];
                 identity = arguments[1];

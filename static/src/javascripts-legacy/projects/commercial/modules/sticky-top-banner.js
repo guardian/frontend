@@ -5,8 +5,8 @@ define([
     'common/utils/detect',
     'common/utils/closest',
     'common/utils/fastdom-promise',
-    'commercial/modules/dfp/track-ad-render',
-    'commercial/modules/commercial-features',
+    'common/modules/commercial/dfp/track-ad-render',
+    'common/modules/commercial/commercial-features',
     'commercial/modules/dfp/get-advert-by-id',
     'commercial/modules/messenger'
 ], function (

@@ -11,7 +11,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/commercial/video-ad-url',
-    'commercial/modules/commercial-features',
+    'common/modules/commercial/commercial-features',
     'common/modules/component',
     'common/modules/experiments/ab',
     'common/modules/video/events',
@@ -26,7 +26,7 @@ define([
     // on env
     'bootstraps/enhanced/media/video-player',
     'text!common/views/ui/loading.html',
-    'commercial/modules/user-features',
+    'common/modules/commercial/user-features',
     'common/utils/load-script'
 ], function (
     bean,

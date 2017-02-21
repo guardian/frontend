@@ -7,9 +7,9 @@ define([
     'common/utils/fastdom-idle',
     'common/modules/identity/api',
     'common/modules/experiments/ab',
-    'commercial/modules/dfp/add-slot',
-    'commercial/modules/commercial-features',
-    'commercial/modules/dfp/create-slot',
+    'common/modules/commercial/dfp/add-slot',
+    'common/modules/commercial/commercial-features',
+    'common/modules/commercial/dfp/create-slot',
     'lodash/objects/defaults'
 ], function (
     Promise,

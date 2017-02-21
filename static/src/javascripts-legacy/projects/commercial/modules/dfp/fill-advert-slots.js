@@ -3,7 +3,7 @@ define([
     'qwery',
     'common/utils/sha1',
     'common/modules/identity/api',
-    'commercial/modules/commercial-features',
+    'common/modules/commercial/commercial-features',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/Advert',
     'commercial/modules/dfp/queue-advert',

@@ -23,7 +23,7 @@ define([
     'commercial/modules/paid-containers',
     'commercial/modules/dfp/performance-logging',
     'common/modules/analytics/google',
-    'commercial/modules/user-features'
+    'common/modules/commercial/user-features'
 ], function (
     Promise,
     config,

@@ -7,7 +7,7 @@ define([
     'common/utils/url',
     'commercial/modules/third-party-tags/krux',
     'common/modules/identity/api',
-    'commercial/modules/user-ad-targeting',
+    'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab',
     'lodash/arrays/compact',
     'lodash/arrays/uniq',

@@ -4,9 +4,9 @@ define([
     'common/utils/detect',
     'common/utils/config',
     'common/utils/mediator',
-    'commercial/modules/dfp/add-slot',
-    'commercial/modules/commercial-features',
-    'commercial/modules/dfp/create-slot',
+    'common/modules/commercial/dfp/add-slot',
+    'common/modules/commercial/commercial-features',
+    'common/modules/commercial/dfp/create-slot',
     'common/modules/article/space-filler',
     'Promise'
 ], function (
