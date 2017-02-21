@@ -245,6 +245,10 @@
         margin-top: $gs-baseline/3;
         margin-left: $gs-gutter;
     }
+
+    @include mq(tablet, leftCol) {
+        clear: left;
+    }
 }
 .ad-slot__content {
     > div {
