@@ -1,5 +1,5 @@
 define([
-    'commercial/modules/user-ad-targeting'
+    'common/modules/commercial/user-ad-targeting'
 ], function (
     userAdTargeting
 ) {
@@ -11,3 +11,4 @@ define([
 
     });
 });
+

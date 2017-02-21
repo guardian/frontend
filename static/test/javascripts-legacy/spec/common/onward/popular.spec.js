@@ -19,14 +19,14 @@ define([
 
         beforeEach(function (done) {
             injector.mock({
-                'commercial/modules/dfp/create-slot': function () {
+                'common/modules/commercial/dfp/create-slot': function () {
                     return '<div class="ad-slot"></div>';
                 },
-                'commercial/modules/dfp/add-slot': function () {}
+                'common/modules/commercial/dfp/add-slot': function () {}
             });
             injector.require([
                 'common/modules/onward/popular',
-                'commercial/modules/commercial-features',
+                'common/modules/commercial/commercial-features',
                 'common/utils/config',
                 'common/utils/mediator',
                 'common/utils/detect'
