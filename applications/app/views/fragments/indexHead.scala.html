@@ -2,11 +2,6 @@
 
 @import common.LinkTo
 @import model.Tag
-@import conf.switches.Switches.preflightServerSideAdCallSwitch
-
-@if(preflightServerSideAdCallSwitch.isSwitchedOn) {
-    <!--esi <esi:include src="/esi/ad-call" /> -->
-}
 
 @index.page match {
     case tag: Tag => {
