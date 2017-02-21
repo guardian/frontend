@@ -42,7 +42,7 @@ class StructuredDataIndexController(val contentApiClient: ContentApiClient)(impl
           tzOverride = None
         )
 
-        Cached(indexPage.page)(RevalidatableResult.Ok(views.html.index(indexPage)))
+        Cached(indexPage.page)(RevalidatableResult.Ok(views.html.structureddata(indexPage)))
     }
   }
 
