@@ -38,12 +38,12 @@ define([
     return function () {
         this.id = 'RecommendedForYouRecommendations';
         this.start = '2017-01-17';
-        this.expiry = '2017-02-21';
+        this.expiry = '2017-03-08';
         this.author = 'David Furey';
         this.description = 'Add an extra container above Opinion on the home front with recommended content based on ' +
             'each users history.  Users in the test group are prompted to opt-in.  Recommendations are only fetched' +
             'if the user opts-in.';
-        this.audience = 0.01;
+        this.audience = 0.02;
         this.audienceOffset = 0.2;
         this.successMeasure = 'Visit frequency';
         this.audienceCriteria = 'All users';
@@ -152,7 +152,7 @@ define([
             var $oldSection = $recommendedForYouSection;
 
             $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
-                profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
+                profileIcon: svg(profileIcon.markup, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
                 items: items
             }));
 
@@ -183,9 +183,9 @@ define([
 
         function createOptInTemplate() {
             return $.create(template(recommendedForYouOptInTemplate, {
-                profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
-                rightArrowIcon: svg(rightArrowIcon, ['i-right']),
-                guardianLogo: svg(guardianLogo)
+                profileIcon: svg(profileIcon.markup, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
+                rightArrowIcon: svg(rightArrowIcon.markup, ['i-right']),
+                guardianLogo: svg(guardianLogo.markup)
             }));
         }
 

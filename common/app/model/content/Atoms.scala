@@ -5,7 +5,7 @@ import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
 import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
 import model.{EndSlateComponents, ImageAsset, ImageMedia}
-import org.joda.time.Duration
+import org.joda.time.{DateTime, DateTimeZone, Duration}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 import enumeratum._
@@ -32,7 +32,8 @@ final case class MediaAtom(
   duration: Option[Long],
   source: Option[String],
   posterImage: Option[ImageMedia],
-  endSlatePath: Option[String]
+  endSlatePath: Option[String],
+  expired: Option[Boolean]
 ) extends Atom {
   def isoDuration: Option[String] = {
     duration.map(d => new Duration(Duration.standardSeconds(d)).toString)
@@ -136,7 +137,12 @@ object MediaAtom extends common.Logging {
     MediaAtom.mediaAtomMake(id, defaultHtml, mediaAtom, endSlatePath)
   }
 
-  def mediaAtomMake(id: String, defaultHtml: String, mediaAtom: AtomApiMediaAtom, endSlatePath: Option[String]): MediaAtom =
+  def mediaAtomMake(id: String, defaultHtml: String, mediaAtom: AtomApiMediaAtom, endSlatePath: Option[String]): MediaAtom = {
+    val expired: Option[Boolean] = for {
+      metadata <- mediaAtom.metadata
+      expiryDate <- metadata.expiryDate
+    } yield new DateTime(expiryDate).withZone(DateTimeZone.UTC).isBeforeNow
+
     MediaAtom(
       id = id,
       defaultHtml = defaultHtml,
@@ -145,8 +151,10 @@ object MediaAtom extends common.Logging {
       duration = mediaAtom.duration,
       source = mediaAtom.source,
       posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title)),
-      endSlatePath = endSlatePath
+      endSlatePath = endSlatePath,
+      expired = expired
     )
+  }
 
   def imageMediaMake(capiImage: AtomApiImage, caption: String): ImageMedia = {
     ImageMedia(capiImage.assets.map(mediaImageAssetMake(_, caption)))

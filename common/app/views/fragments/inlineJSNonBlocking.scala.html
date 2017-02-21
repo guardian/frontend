@@ -1,7 +1,6 @@
 @import common.InlineJs
-@import conf.switches.Switches.{IdentityProfileNavigationSwitch}
+@import conf.switches.Switches.{IdentityProfileNavigationSwitch,Webpack}
 @import conf.Configuration
-@import mvt.WebpackTest
 @import model.Page
 @import templates.inlineJS.nonBlocking.js._
 
@@ -27,7 +26,7 @@
 // Ophan pageview ID and browser ID are needed by Google Analytics, which runs just after this script tag
 @InlineJs(ophanConfig().body, "ophanConfig.js")
 
-@if(WebpackTest.isParticipating &&
+@if(Webpack.isSwitchedOn &&
     (
         page.metadata.contentType == "Article" ||
         page.metadata.contentType == "LiveBlog" ||

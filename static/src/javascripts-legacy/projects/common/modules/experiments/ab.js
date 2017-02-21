@@ -14,7 +14,9 @@ define([
     'common/modules/experiments/tests/paid-content-vs-outbrain',
     'common/modules/experiments/tests/guardian-today-messaging',
     'common/modules/experiments/acquisition-test-selector',
-    'common/modules/experiments/tests/membership-a1-a2-thrasher'
+    'common/modules/experiments/tests/tailor-recommended-email',
+    'common/modules/experiments/tests/membership-a3-a4-bundles-thrasher',
+    'common/modules/experiments/tests/tailor-survey'
 ], function (reportError,
              config,
              cookies,
@@ -30,7 +32,9 @@ define([
              PaidContentVsOutbrain,
              GuardianTodayMessaging,
              acquisitionTestSelector,
-             MembershipA1A2Thrasher
+             TailorRecommendedEmail,
+             MembershipA3A4BundlesThrasher,
+             TailorSurvey
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
@@ -39,7 +43,9 @@ define([
         new PaidContentVsOutbrain,
         new GuardianTodayMessaging(),
         acquisitionTestSelector.getTest(),
-        new MembershipA1A2Thrasher()
+        new TailorRecommendedEmail(),
+        new MembershipA3A4BundlesThrasher(),
+        new TailorSurvey()
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';
@@ -92,11 +98,16 @@ define([
         });
     }
 
+    function isExpired(testExpiry) {
+      // new Date(test.expiry) sets the expiry time to 00:00:00
+      // Using SetHours allows a test to run until the END of the expiry day
+      var startOfToday = new Date().setHours(0,0,0,0);
+      return startOfToday > new Date(testExpiry);
+    }
+
     function getActiveTests() {
-        var now = new Date();
         return TESTS.filter(function (test) {
-            var expired = (now - new Date(test.expiry)) > 0;
-            if (expired) {
+            if (isExpired(test.expiry)) {
                 removeParticipation(test);
                 return false;
             }
@@ -105,14 +116,13 @@ define([
     }
 
     function getExpiredTests() {
-        var now = new Date();
         return TESTS.filter(function (test) {
-            return (now - new Date(test.expiry)) > 0;
+            return isExpired(test.expiry);
         });
     }
 
     function testCanBeRun(test) {
-        var expired = (new Date() - new Date(test.expiry)) > 0,
+        var expired = isExpired(test.expiry),
             isSensitive = config.page.isSensitive;
 
         return ((isSensitive ? test.showForSensitive : true)

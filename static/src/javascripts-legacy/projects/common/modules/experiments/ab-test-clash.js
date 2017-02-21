@@ -21,6 +21,12 @@ define([
         name: 'ContributionsEpicAskFourEarning',
         variants: ['control']
     };
+
+    var ContributionsEpicOneLineEditsV2 = {
+        name: 'ContributionsEpicOneLineEditsV2',
+        variants: ['control', 'paywall_and_billionaire', 'social_proofing']
+    };
+
     var GuardianTodaySignupMessaging = {
         name: 'GuardianTodaySignupMessaging',
         variants: ['message-a', 'message-b', 'message-c']
@@ -30,7 +36,8 @@ define([
         ContributionsEpicAlwaysAskStrategy,
         ContributionsEpicBrexit,
         ContributionsEpicAskFourStagger,
-        ContributionsEpicAskFourEarning
+        ContributionsEpicAskFourEarning,
+        ContributionsEpicOneLineEditsV2
     ];
 
     var emailTests = [

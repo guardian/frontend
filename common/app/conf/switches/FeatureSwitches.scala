@@ -4,13 +4,13 @@ import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 
 trait FeatureSwitches {
-  val ServerSideShareCounts = Switch(
+  val ShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",
-    "If this switch is on, share counts are fetched from a more recent Facebook Graph API version, server-side",
+    "If this switch is on, share counts are fetched from the Facebook Graph API on the server",
     owners = Seq(Owner.withGithub("jfsoul")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 8),
+    safeState = On,
+    sellByDate = never,
     exposeClientSide = true
   )
 
@@ -495,6 +495,28 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 2, 27),
+    exposeClientSide = true
+  )
+
+  val AmpOphanTrackingIncludesCredentials = Switch(
+    SwitchGroup.Feature,
+    "amp-ophan-tracking-includes-credentials",
+    "allows access to id field when page viewed from google cache so that we keep tracking consistent",
+    owners = Seq(Owner.withGithub("michaelwmcnamara")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 10),
+    exposeClientSide = true
+
+  )
+
+  // Owner: Alex Sanders
+  val Webpack = Switch(
+    SwitchGroup.Feature,
+    "webpack",
+    "When ON, will serve webpack bundles instead of curl.",
+    owners = Seq(Owner.withGithub("asanders")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 2, 24),
     exposeClientSide = true
   )
 }

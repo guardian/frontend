@@ -42,11 +42,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-a1-a2-bundles-thrasher",
-    "Test A1 vs A2 bundle offers",
+    "ab-membership-a3-a4-bundles-thrasher",
+    "Test A3 vs A4 bundle offers",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 2), // Thursday March 2nd
+    sellByDate = new LocalDate(2017, 3, 9), // Thursday March 9th
     exposeClientSide = true
   )
 
@@ -56,7 +56,7 @@ trait ABTestSwitches {
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 16),
+    sellByDate = new LocalDate(2017, 2, 23),
     exposeClientSide = true
   )
 
@@ -66,7 +66,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 16),
+    sellByDate = new LocalDate(2017, 2, 23),
     exposeClientSide = true
   )
 
@@ -76,7 +76,7 @@ trait ABTestSwitches {
     "Test personalised container on fronts",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 21),
+    sellByDate = new LocalDate(2017, 3, 7),
     exposeClientSide = true
   )
 
@@ -117,6 +117,36 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 5, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-tailor-recommended-email",
+    "Use Tailor to target email signup form",
+    owners = Seq(Owner.withGithub("lindseydew")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-one-line-edits-v2",
+    "Test 2 variations to the epic: (1) social proofing; and (2) paywall + no billionaire owner",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 2, 28),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-tailor-survey",
+    "Integrate Tailor with ab tests",
+    owners = Seq(Owner.withGithub("oilnam")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
 }

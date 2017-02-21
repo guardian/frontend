@@ -1,9 +1,9 @@
 package commercial.controllers
 
 import commercial.model.capi.{CapiAgent, CapiMultiple, CapiSingle, Lookup}
-import common.commercial.CardContent
 import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
+import layout.PaidCard
 import model.{Cached, ContentType, NoCache}
 import play.api.mvc._
 
@@ -76,16 +76,16 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
         val optCapiButtonText = request.getParameter("clt")
         val optCapiReadMoreUrl = request.getParameter("rmd")
         val optCapiReadMoreText = request.getParameter("rmt")
-        val optCapiAdFeature = request.getParameter("af")
+        val optCapiPaidContent = request.getParameter("af")
         val optClickMacro = request.getParameter("clickMacro")
         val optOmnitureId = request.getParameter("omnitureId")
         val omnitureId = optOmnitureId orElse optCapiTitle getOrElse ""
-        val optSponsorTypeRefactor = optCapiAdFeature flatMap (feature => sponsorTypeToClassRefactor.get(feature))
-        val optSponsorLabel = optCapiAdFeature flatMap (feature => sponsorTypeToLabel.get(feature))
+        val optSponsorTypeRefactor = optCapiPaidContent flatMap (feature => sponsorTypeToClassRefactor.get(feature))
+        val optSponsorLabel = optCapiPaidContent flatMap (feature => sponsorTypeToLabel.get(feature))
 
         if (isMulti) {
           format.result(views.html.contentapi.items(
-            contents map (CardContent.fromContentItem(_, edition, optClickMacro, withDescription = false)),
+            contents map (PaidCard.fromContentItem(_, edition, optClickMacro, withDescription = false)),
             optSection,
             optLogo,
             optCapiTitle,
@@ -93,13 +93,13 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
             optCapiAbout,
             optClickMacro,
             omnitureId,
-            optCapiAdFeature,
+            optCapiPaidContent,
             optSponsorTypeRefactor,
             optSponsorLabel)
           )
         } else {
           format.result(views.html.contentapi.item(
-            CardContent.fromContentItem(contents.head, edition, optClickMacro, withDescription = true),
+            PaidCard.fromContentItem(contents.head, edition, optClickMacro, withDescription = true),
             optSection,
             optLogo,
             optCapiTitle,

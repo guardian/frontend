@@ -8,7 +8,7 @@ define([
     return defineSlot;
 
     function defineSlot(adSlotNode, sizes) {
-        var slotTarget = adSlotNode.getAttribute('data-slot-target') || adSlotNode.getAttribute('data-name');
+        var slotTarget = adSlotNode.getAttribute('data-name');
         var adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
         // if ?ad-unit=x, use that
         var adUnit = adUnitOverride ?

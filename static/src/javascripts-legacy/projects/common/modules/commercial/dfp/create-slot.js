@@ -79,7 +79,6 @@ define([
                     adSizes.outOfPage,
                     adSizes.empty,
                     adSizes.mpu,
-                    adSizes.fluid250,
                     adSizes.fabric,
                     adSizes.fluid
                 )
@@ -102,20 +101,20 @@ define([
         adSlot.id = 'dfp-ad--' + name;
         adSlot.className = 'js-ad-slot ad-slot ' + classes.join(' ');
         adSlot.setAttribute('data-link-name', 'ad slot ' + name);
-        adSlot.setAttribute('data-test-id', 'ad-slot-' + name);
         adSlot.setAttribute('data-name', name);
         Object.keys(attrs).forEach(function (attr) { adSlot.setAttribute(attr, attrs[attr]); });
         return adSlot;
     }
 
-    return function (name, slotTypes, series, keywords, slotTarget) {
-        var slotName = slotTarget ? slotTarget : name,
+    return function (name, slotTypes) {
+        var slotName,
             attributes = {},
             definition,
             classes = [];
 
-        definition = adSlotDefinitions[slotName] || adSlotDefinitions.inline;
-        name = definition.name || name;
+        definition = adSlotDefinitions[name] || adSlotDefinitions.inline;
+
+        slotName = definition.name || name;
 
         assign(attributes, definition.sizeMappings);
 
@@ -127,28 +126,20 @@ define([
             attributes.refresh = 'false';
         }
 
-        if (slotTarget) {
-            attributes['slot-target'] = slotTarget;
-        }
-
-        if (series) {
-            attributes.series = series;
-        }
-
-        if (keywords) {
-            attributes.keywords = keywords;
-        }
-
         if (slotTypes) {
             classes = (Array.isArray(slotTypes) ? slotTypes : [slotTypes]).map(function (type) {
                 return 'ad-slot--' + type;
             });
         }
 
-        classes.push('ad-slot--' + name);
+        if(name === 'right-sticky') {
+            classes.push('js-sticky-mpu');
+        }
+
+        classes.push('ad-slot--' + slotName);
 
         return createAdSlotElement(
-            name,
+            slotName,
             Object.keys(attributes).reduce(function (result, key) {
                 result['data-' + key] = attributes[key];
                 return result;

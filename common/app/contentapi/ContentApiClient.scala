@@ -4,7 +4,8 @@ import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
 import com.gu.contentapi.client.ContentApiClientLogic
 import com.gu.contentapi.client.model._
-import com.gu.contentapi.client.model.v1.ItemResponse
+import com.gu.contentapi.client.model.v1.{AtomsResponse, ItemResponse}
+import com.gu.contentapi.client.thrift.ThriftDeserializer
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common._
 import conf.Configuration
@@ -13,13 +14,14 @@ import conf.switches.Switches.CircuitBreakerSwitch
 import model.{Content, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
+
 import scala.concurrent.duration.{Duration, MILLISECONDS}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 
 object QueryDefaults extends implicits.Collections {
   // NOTE - do NOT add body to this list
-  val trailFields = List(
+  val trailFieldsList = List[String](
     "byline",
     "headline",
     "trail-text",
@@ -31,8 +33,14 @@ object QueryDefaults extends implicits.Collections {
     "commentable",
     "commentCloseDate",
     "starRating",
-    "productionOffice"
-  ).mkString(",")
+    "productionOffice")
+
+  val mainField = List[String]("main")
+
+  val trailFields = trailFieldsList.mkString(",")
+
+  //main field is needed for Main Media Atom data required by InlineYouTubeDisplayElement
+  val trailFieldsWithMain: String = (trailFieldsList ::: mainField).mkString(",")
 
   val references = List(
     "pa-football-competition",
@@ -97,13 +105,15 @@ trait ApiQueryDefaults extends Logging {
     .showReferences(QueryDefaults .references)
     .showPackages(true)
     .showRights("syndicatable")
+    .showAtoms("media")
 
   //common fields that we use across most queries.
   def search(edition: Edition): SearchQuery = search
     .showTags("all")
     .showReferences(QueryDefaults.references)
-    .showFields(QueryDefaults.trailFields)
+    .showFields(QueryDefaults.trailFieldsWithMain)
     .showElements("all")
+    .showAtoms("media")
 }
 
 // This trait extends ContentApiClientLogic with Cloudwatch metrics that monitor
@@ -179,6 +189,7 @@ class ContentApiClient(httpClient: HttpClient) extends ApiQueryDefaults {
   def search = getClient.search
   def sections = getClient.sections
   def editions = getClient.editions
+  def recipes = getClient.recipes
 
   def getResponse(itemQuery: ItemQuery)(implicit context: ExecutionContext) = getClient.getResponse(itemQuery)
 
@@ -189,6 +200,8 @@ class ContentApiClient(httpClient: HttpClient) extends ApiQueryDefaults {
   def getResponse(sectionsQuery: SectionsQuery)(implicit context: ExecutionContext) = getClient.getResponse(sectionsQuery)
 
   def getResponse(editionsQuery: EditionsQuery)(implicit context: ExecutionContext) = getClient.getResponse(editionsQuery)
+
+  def getResponse(recipesQuery: RecipesQuery)(implicit context: ExecutionContext): Future[AtomsResponse] = getClient.getResponse(recipesQuery)
 }
 
 // The Admin server uses this PreviewContentApi to check the preview environment.

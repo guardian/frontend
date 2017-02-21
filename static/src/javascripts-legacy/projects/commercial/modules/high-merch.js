@@ -22,13 +22,13 @@ define([
             return Promise.resolve();
         }
 
-        var slotName = config.page.isAdvertisementFeature ? 'high-merch-paid' : 'high-merch';
+        var slotName = config.page.isPaidContent ? 'high-merch-paid' : 'high-merch';
         var anchorSelector = config.page.commentable ? '#comments + *' : '.content-footer > :first-child';
         var anchor = document.querySelector(anchorSelector);
         var container = document.createElement('div');
 
         container.className = 'fc-container fc-container--commercial';
-        container.appendChild(createSlot(slotName));
+        container.appendChild(createSlot(config.page.isPaidContent ? 'high-merch-paid' : 'high-merch'));
 
         if (isLuckyBastard()) {
             insertAlternativeSlot(container);

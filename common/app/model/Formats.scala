@@ -127,7 +127,8 @@ object MetaDataFormat {
       part2.opengraphPropertiesOverrides,
       part2.isHosted,
       part2.twitterPropertiesOverrides,
-      editionBrandings = part2.editionBrandings
+      editionBrandings = part2.editionBrandings,
+      adContextTargetings = None
       )
     }
   }
@@ -602,6 +603,7 @@ object FaciaImageFormat {
 }
 
 object PressedCollectionFormat {
+  implicit val displayHintsFormat = Json.format[DisplayHints]
   implicit val collectionConfigFormat = Json.format[CollectionConfig]
   implicit val pressedContentFormat = PressedContentFormat.format
   val format  = Json.format[PressedCollection]
