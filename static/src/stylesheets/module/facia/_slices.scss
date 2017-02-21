@@ -199,6 +199,7 @@ Hence why a greater depth of selector specificity is needed.
 .popular-trails__content {
     @include mq(desktop) {
         min-width: gs-span(8);
+        max-width: (100% / 3) * 2;
     }
 }
 
@@ -206,6 +207,7 @@ Hence why a greater depth of selector specificity is needed.
     margin: $gs-baseline auto 0 auto;
 
     @include mq(desktop) {
+        min-width: $mpu-original-width;
         border-top: 1px solid $neutral-5;
         padding: $gs-baseline 0 0 $gs-gutter;
         margin-top: 39px; // magic number: unavoidable to match the tab headings
@@ -236,7 +238,6 @@ Hence why a greater depth of selector specificity is needed.
 
 .fc-slice__popular-mpu {
     width: $mpu-original-width + 20px;
-    display: block;
 
     .ad-slot {
         min-height: $mpu-original-height + $mpu-ad-label-height;
@@ -247,7 +248,6 @@ Hence why a greater depth of selector specificity is needed.
     }
 
     @include mq(desktop) {
-        display: inline-block;
         width: auto;
         margin-left: auto;
 
