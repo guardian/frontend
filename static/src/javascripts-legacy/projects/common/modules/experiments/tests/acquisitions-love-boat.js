@@ -60,8 +60,8 @@ define([
         idealOutcome: 'Acquires many Supporters',
 
         audienceCriteria: 'Everyone except AU',
-        audience: 0.15,
-        audienceOffset: 0.52,
+        audience: 0.32,
+        audienceOffset: 0.68,
 
         locationCheck: function (geo) {
             return geo !== 'AU';
