@@ -19,7 +19,7 @@ module.exports = {
         {
             description: 'Hash assets',
             task: () => {
-                const webpackRegex = /[app-webpack|admin-webpack]/;
+                const webpackRegex = /webpack/;
                 const webpackChunkRegex = /chunk/;
                 const sourcemapRegex = /\.map$/;
 
