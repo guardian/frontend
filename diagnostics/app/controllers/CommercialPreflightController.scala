@@ -75,7 +75,7 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
         .onComplete({
           case Success(result) => {
             result.status match {
-              case 200 => log.logger.info(s"switch ad call success, ${switchId.getOrElse("unknown user id")}")
+              case 200 => log.logger.info(s"switch ad call success, switch id: ${switchId.getOrElse("unknown user id")}")
               case _ => log.logger.info(s"switch ad call result:${result.status}, ${result.body}, ${adHubRequest.toString}")
             }
           }
