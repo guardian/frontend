@@ -20,7 +20,7 @@ const mainAppTests = [
     'facia',
 ].map(set => ({
     description: `Run ${set} tests`,
-    task: () => exec('karma', ['start', `./static/test/javascripts/conf/${set}.js`, '--single-run']),
+    task: () => exec('karma', ['start', `./static/test/javascripts-legacy/conf/${set}.js`, '--single-run']),
 }));
 
 module.exports = {
