@@ -25,7 +25,7 @@ Follow [this link](https://www.google.co.uk) and enter the relevant search strin
 
 # Local Test Server setup
 
-You can either set up the frontend through a [local install](#local-machine) on your machine or using [Docker](#docker). Before checking out the repository you may need to add your guardian email address to your github account and [add an SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/). Before pushing changes you may need to [create an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Also make sure, your github account was added to all concerned teams, in order to have full access.
+You can either set up the frontend through a [local install](#local-machine) on your machine or using [Docker](#docker). Before checking out the repository you may need to add your guardian email address to your github account and [add an SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/). Before pushing changes you may need to [create an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Make sure your dev manager has added you to the necessary teams, in case you have need write access.
 
 ## Local machine
 You need a Mac or Linux PC (Ubuntu).
