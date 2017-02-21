@@ -4,7 +4,7 @@ The Guardian frontend is a set of Play Framework 2 Scala applications.
 
 A Nginx **router** sits in front of all the applications and dispatches requests to the appropriate service based on the requested path.
 
-_[Nginx router config file (Private)](https://github.com/guardian/platform/blob/master/provisioning/puppet/modules/frontend/templates/etc/nginx/router.conf.erb)_
+_[Nginx router config file (Private)](https://github.com/guardian/platform/blob/master/router/files/router.conf)_
 
 
 # Facia
@@ -140,7 +140,7 @@ Diagnostics app is used internally to gather data and analytics from the Guardia
 
 [All supported routes](https://github.com/guardian/frontend/blob/master/diagnostics/conf/routes)
 
-# Preview 
+# Preview
 Preview is a standalone version of the guardian website (ie: an aggregation of all the other apps) used in the editorial tool to preview draft article before they are live.
 It allows us to have a fully functional version of the website without the overhead of maintaining an entire new stack.
 

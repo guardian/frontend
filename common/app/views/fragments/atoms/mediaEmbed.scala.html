@@ -1,7 +1,6 @@
 @import conf.Static
 @import model.MediaAtomEmbedPage
 @import conf.Configuration
-@import templates.inlineJS.blocking.js.curlConfig
 
 @(page: MediaAtomEmbedPage, displayCaption: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -50,17 +49,12 @@
         </script>
 
         <script>
-            @Html(curlConfig().body)
-
-            @if(Configuration.assets.useHashedBundles) {
-                window.curl.paths['bootstraps/youtube-embed'] = '@Static("javascripts/bootstraps/youtube-embed.js")';
-            } else {
-                window.curl.paths['bootstraps/youtube-embed'] = '@{Configuration.assets.path}javascripts/bootstraps/youtube-embed.js';
-            }
-            @Html(common.Assets.js.curl)
-            require(['bootstraps/youtube-embed'], function(bootstrap) {
-                bootstrap.init();
-            });
+            (function (document) {
+                var script = document.createElement('script');
+                var ref = document.getElementsByTagName('script')[0];
+                script.src = '@Static("javascripts/youtube-embed-webpack.js")';
+                ref.parentNode.insertBefore(script, ref);
+            })(document);
         </script>
 
         @fragments.analytics.base(page)

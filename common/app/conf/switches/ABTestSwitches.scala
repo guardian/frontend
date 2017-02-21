@@ -66,7 +66,7 @@ trait ABTestSwitches {
     "Test personalised container on fronts",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 21),
+    sellByDate = new LocalDate(2017, 3, 7),
     exposeClientSide = true
   )
 
@@ -96,7 +96,7 @@ trait ABTestSwitches {
     "Test to see if imposing a minimum-time-between-impressions for the epic has a positive effect on conversion",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 24),
+    sellByDate = new LocalDate(2017, 3, 24),
     exposeClientSide = true
   )
 
