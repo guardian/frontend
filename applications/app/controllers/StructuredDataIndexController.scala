@@ -32,7 +32,7 @@ class StructuredDataIndexController(val contentApiClient: ContentApiClient)(impl
         val indexPage = IndexPage(
           page = SimplePage(
             MetaData.make(
-              id = request.path,
+              id = request.path.stripPrefix("/"),
               section = Some(SectionSummary("lifeandstyle/food-and-drink")),
               webTitle = s"${filterValue.toLowerCase} recipes",
               pagination = Some(Pagination(currentPage = response.currentPage , lastPage = response.pages, totalContent = response.total)))),
