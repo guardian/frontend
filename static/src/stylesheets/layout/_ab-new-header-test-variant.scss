@@ -548,6 +548,25 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     height: 18px;
 }
 
+// Feedback prompt
+.new-header-feedback {
+    color: $news-support-1;
+    font-size: 15px;
+    line-height: 18px;
+    text-transform: none;
+    padding: 0 ($gs-gutter * 2) $gs-baseline $navigation-horizontal-padding;
+
+    .main-menu__icon__svg {
+        width: 1.4em;
+        height: 1.4em;
+    }
+
+    a {
+        color: #ffffff;
+        border-bottom: 1px solid rgba(255, 255, 255, .3)
+    }
+}
+
 .navigation-group__item--user-account {
     .user-account__signed-in {
         display: none;

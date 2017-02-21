@@ -74,6 +74,11 @@
             </ul>
         }
 
+        <div class="new-header-feedback">
+            @fragments.inlineSvg("information-circle", "icon", List("main-menu__icon", "main-menu__icon--information"))
+            This navigation is new. Do you have some feedback? <a href="">Let us know.</a>
+        </div>
+
         <ul class="navigation-group navigation-group--contrast secondary-navigation">
 
             @defining(Edition(request)) { edition =>
