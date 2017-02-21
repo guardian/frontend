@@ -5,7 +5,8 @@ define([
     'common/modules/component',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/utils/closest'
 ], function (
     fastdom,
     youtubePlayer,
@@ -13,7 +14,8 @@ define([
     Component,
     $,
     config,
-    detect
+    detect,
+    closest
 ) {
 
     var players = {};
@@ -84,33 +86,41 @@ define([
         }
     }
 
-    function shouldAutoplay(){
+    function shouldAutoplay(atomId){
 
         function isAutoplayBlockingPlatform() {
             return detect.isIOS() || detect.isAndroid();
         }
 
         function isInternalReferrer() {
-
-            if(config.page.isDev) {
+            if (config.page.isDev) {
                 return document.referrer.indexOf(window.location.origin) === 0;
             }
             else {
                 return document.referrer.indexOf(config.page.host) === 0;
             }
         }
-        return config.page.contentType === 'Video' && isInternalReferrer() && !isAutoplayBlockingPlatform();
-    }
 
-    function onPlayerReady(atomId, overlay, event) {
-        if(shouldAutoplay()) {
-            event.target.playVideo();
+        function isMainVideo() {
+            return closest(players[atomId].iframe, 'figure[data-component="main video"]');
         }
 
+        return config.page.contentType === 'Video' && 
+                isInternalReferrer() && 
+                !isAutoplayBlockingPlatform() &&
+                isMainVideo();
+    }
+
+    function onPlayerReady(atomId, overlay, iframe, event) {
         players[atomId] = {
             player: event.target,
-            pendingTrackingCalls: [25, 50, 75]
+            pendingTrackingCalls: [25, 50, 75],
+            iframe: iframe
         };
+
+        if(shouldAutoplay(atomId)) {
+            event.target.playVideo();
+        }
 
         if (overlay) {
             showDuration(atomId, overlay);
@@ -192,7 +202,7 @@ define([
                 tracking.init(getTrackingId(atomId));
 
                 youtubePlayer.init(iframe, {
-                    onPlayerReady: onPlayerReady.bind(null, atomId, overlay),
+                    onPlayerReady: onPlayerReady.bind(null, atomId, overlay, iframe),
                     onPlayerStateChange: onPlayerStateChange.bind(null, atomId)
                 }, iframe.id);
             });
