@@ -8,6 +8,7 @@
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
     "classnames": "~2.2.0",
+    "curl": "cujojs/curl#0.8.9",
     "domready": "^1.0.8",
     "es5-shim": "^4.5.9",
     "fastdom": "0.8.5",
