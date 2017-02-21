@@ -60,12 +60,28 @@
 }
 
 .contributions__epic--visual__image--love {
+    $mobile-image-width: 60%;
+    $tablet-image-width: 40%;
+
+    max-width: 220px;
+
     .contributions-wrapper__step-1 & {
-        width: 168px;
+        // this image is smaller than the one in the second step
+        // so this calculation is to display it at the same size
+        // the two numbers are the widths of each image
+        width: $mobile-image-width * (372/424);
+
+        @include mq(phablet) {
+            width: $tablet-image-width * (372/424)
+        }
     }
 
     .contributions-wrapper__step-2 & {
-        width: 50%;
+        width: $mobile-image-width;
+
+        @include mq(tablet) {
+            width: $tablet-image-width;
+        }
     }
 }
 
@@ -86,7 +102,7 @@
 
     &.contributions__option-button--visual--love {
         position: relative;
-        top: -102px;
+        top: -8px;
         background-color: $error;
 
         &:hover {

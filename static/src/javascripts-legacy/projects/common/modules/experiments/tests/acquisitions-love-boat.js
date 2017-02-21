@@ -93,14 +93,14 @@ define([
 
                         step1: {
                             title: 'Like reading the Guardian?',
-                            image: png('newspaper'),
+                            image: png('laptop'),
                             cta: '<span class="heart">&hearts;</span> Show us your love'
                         },
 
                         step2: {
                             title: 'Thanks! <span class="emoji">&#x1F60D;</span>',
                             subtitle: '… but love alone doesn’t keep the lights on',
-                            image: png('newspaper-hearts'),
+                            image: png('laptop-hearts'),
                             body: 'The love and support of our readers is vital to securing our future. Our fearless, independent journalism takes a lot of time, hard work and money to produce. And it is increasingly funded by our readers. That’s why we need you to help.',
                         },
 
@@ -123,13 +123,13 @@ define([
 
                         step1: {
                             title: 'Why is the Guardian unique?',
-                            image: png('boat-floating'),
+                            image: png('boat'),
                             cta: svg(hand.markup) + ' <span>Show</span>'
                         },
 
                         step2: {
                             title: 'We don’t have a billionaire owner … ',
-                            image: png('boat-sinking'),
+                            image: png('boat-left'),
                             body: '<p>… we have only one shareholder, The Scott Trust, which keeps our independent, investigative, public-interest journalism free from commercial or political pressures.</p><p>Our reporting seeks truth, not approval. It takes a lot of time, hard work and money to produce, and is increasingly funded by our readers.</p>',
                         },
 

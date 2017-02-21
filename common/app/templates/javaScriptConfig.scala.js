@@ -20,10 +20,10 @@
                 "abp-whitelist-instruction-chrome": "@Static("images/commercial/ad-block-instructions-chrome.png")"
             },
             "acquisitions": {
-                "newspaper": "@Static("images/acquisitions/newspaper.png")",
-                "newspaper-hearts": "@Static("images/acquisitions/newspaper-hearts.png")",
-                "boat-floating": "@Static("images/acquisitions/boat-floating.png")",
-                "boat-sinking": "@Static("images/acquisitions/boat-sinking.png")",
+                "laptop": "@Static("images/acquisitions/laptop.png")",
+                "laptop-hearts": "@Static("images/acquisitions/laptop-hearts.png")",
+                "boat": "@Static("images/acquisitions/boat.png")",
+                "boat-left": "@Static("images/acquisitions/boat-left.png")"
             }
         },
         "stylesheets": {
