@@ -62,22 +62,23 @@
 .contributions__epic--visual__image--love {
     $mobile-image-width: 60%;
     $tablet-image-width: 40%;
-
-    max-width: 220px;
+    $max-width: 220px;
 
     .contributions-wrapper__step-1 & {
         // this image is smaller than the one in the second step
         // so this calculation is to display it at the same size
         // the two numbers are the widths of each image
         width: $mobile-image-width * (372/424);
+        max-width: $max-width * (372/424);
 
         @include mq(phablet) {
-            width: $tablet-image-width * (372/424)
+            width: $tablet-image-width * (372/424);
         }
     }
 
     .contributions-wrapper__step-2 & {
         width: $mobile-image-width;
+        max-width: $max-width;
 
         @include mq(tablet) {
             width: $tablet-image-width;
@@ -166,14 +167,14 @@
 
 .contributions__epic--visual__cta {
     @include font($f-serif-headline, normal, 16, 20);
-    padding: $gs-baseline / 2;
-    padding-top: 0;
+    padding: 0 $gs-baseline / 2 $gs-baseline;
     background: $news-main-2;
     color: $guardian-brand-dark;
     font-weight: bold;
 
     @include mq(tablet) {
         display: flex;
+        padding-bottom: 0;
     }
 
     & .brand {
