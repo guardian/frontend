@@ -94,6 +94,7 @@ define([
                         step1: {
                             title: 'Like reading the Guardian?',
                             image: png('laptop'),
+                            imageAlt: 'A laptop showing the guardian website',
                             cta: '<span class="heart">&hearts;</span> Show us your love'
                         },
 
@@ -101,6 +102,7 @@ define([
                             title: 'Thanks! <span class="emoji">&#x1F60D;</span>',
                             subtitle: '… but love alone doesn’t keep the lights on',
                             image: png('laptop-hearts'),
+                            imageAlt: 'A laptop showing the guardian website surrounded by love hearts',
                             body: 'The love and support of our readers is vital to securing our future. Our fearless, independent journalism takes a lot of time, hard work and money to produce. And it is increasingly funded by our readers. That’s why we need you to help.',
                         },
 
@@ -124,6 +126,7 @@ define([
                         step1: {
                             title: 'Why is the Guardian unique?',
                             image: png('boat'),
+                            imageAlt: 'A boat on the ocean',
                             cta: svg(hand.markup) + ' <span>Show</span>'
                         },
 
@@ -131,6 +134,7 @@ define([
                             title: 'We don’t have a billionaire owner … ',
                             subtitle: '… we have only one shareholder, The Scott Trust.',
                             image: png('boat-left'),
+                            imageAlt: 'A boat moves off the edge of the image',
                             body: '<p>This keeps our independent, investigative, public-interest journalism free from commercial or political pressures.</p><p>Our reporting seeks truth, not approval. It takes a lot of time, hard work and money to produce, and is increasingly funded by our readers.</p>',
                         },
 
