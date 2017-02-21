@@ -129,8 +129,9 @@ define([
 
                         step2: {
                             title: 'We don’t have a billionaire owner … ',
+                            subtitle: '… we have only one shareholder, The Scott Trust.',
                             image: png('boat-left'),
-                            body: '<p>… we have only one shareholder, The Scott Trust, which keeps our independent, investigative, public-interest journalism free from commercial or political pressures.</p><p>Our reporting seeks truth, not approval. It takes a lot of time, hard work and money to produce, and is increasingly funded by our readers.</p>',
+                            body: '<p>This keeps our independent, investigative, public-interest journalism free from commercial or political pressures.</p><p>Our reporting seeks truth, not approval. It takes a lot of time, hard work and money to produce, and is increasingly funded by our readers.</p>',
                         },
 
                         supportText: '<span class="brand">Guardian Supporters</span> help to secure our future. Please support our journalism and together we can hold the powerful to account.',

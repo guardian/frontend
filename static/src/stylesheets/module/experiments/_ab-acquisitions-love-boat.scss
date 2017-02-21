@@ -18,10 +18,6 @@
     margin-bottom: $gs-baseline * 3;
 }
 
-.contributions__title--visual-epic--boat {
-    color: $news-support-2;
-}
-
 .contributions__title--visual-epic {
     @include fs-headline(7);
     font-weight: bold;
@@ -32,7 +28,6 @@
     @include f-headline;
     @include font-size(48px);
     font-weight: bold;
-    color: $error;
     margin-bottom: $gs-baseline;
 
     & .emoji {
@@ -40,12 +35,19 @@
     }
 }
 
-.contributions__subtitle--visual-epic {
-    @include fs-header(4);
-}
-
+.contributions__title--visual-epic__step-2--love,
 .contributions__subtitle--visual-epic--love {
     color: $error;
+}
+
+.contributions__title--visual-epic__step-2--boat,
+.contributions__subtitle--visual-epic--boat
+{
+    color: $news-support-2;
+}
+
+.contributions__subtitle--visual-epic {
+    @include fs-header(4);
 }
 
 .contributions__epic--visual__image,
@@ -55,8 +57,12 @@
 }
 
 .contributions__epic--visual__image {
-    width: 100%;
     margin-bottom: $gs-baseline * 2;
+}
+
+.contributions__epic--visual__image--boat {
+    width: calc(100% + #{$gs-baseline / 1.5});
+    margin-left: -($gs-baseline / 3);
 }
 
 .contributions__epic--visual__image--love {
