@@ -47,6 +47,7 @@
             &:first-child .advert__title,
             &:first-child .advert__standfirst {
                 padding-right: 80px;
+                max-width: 520px;
             }
 
             &:not(:first-child) > .advert {
