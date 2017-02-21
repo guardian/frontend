@@ -58,7 +58,7 @@ define([
 
     function ContributionsABTest(options) {
         this.id = options.id;
-        this.epic = options.epic || true;
+        this.channel = options.channel || 'epic';
         this.start = options.start;
         this.expiry = options.expiry;
         this.author = options.author;
@@ -141,8 +141,7 @@ define([
         this.membershipURL = options.membershipURL || this.makeURL(membershipURL, test.membershipCampaignPrefix);
 
         this.template = options.template || controlTemplate;
-
-        var trackingCampaignId  = test.epic ? 'epic_' + test.campaignId : test.campaignId;
+        var trackingCampaignCode  = 'acquisitions_' + this.channel + "_" + getCampaignCode(this.campaignId, this.id);
 
         this.test = function () {
             var component = $.create(this.template(this.membershipURL, this.contributeURL));
@@ -150,7 +149,7 @@ define([
             var onView = options.onView || noop;
 
             function render() {
-                mediator.emit('register:begin', trackingCampaignId);
+                mediator.emit('register:begin', trackingCampaignCode);
 
                 return fastdom.write(function () {
                     var selector = options.insertBeforeSelector || '.submeta';
@@ -168,7 +167,7 @@ define([
                             elementInView.on('firstview', function () {
                                 viewLog.logView(test.id);
                                 mediator.emit(test.viewEvent);
-                                mediator.emit('register:end', trackingCampaignId);
+                                mediator.emit('register:end', trackingCampaignCode);
                                 onView();
                             });
                         });
@@ -183,8 +182,12 @@ define([
         this.registerListener('success', 'successOnView', test.viewEvent, options);
     }
 
+    function getCampaignCode(campaignID, id) {
+        return campaignID + '_' + id;
+    }
+
     function getCampaignCodeParamter(campaignCodePrefix, campaignID, id) {
-        return 'INTCMP=' + campaignCodePrefix + '_' + campaignID + '_' + id;
+        return 'INTCMP=' + campaignCodePrefix + '_' + getCampaignCode(campaignCodePrefix, campaignID, id);
     }
 
     function getPageviewIdParamter() {
