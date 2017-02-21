@@ -27,7 +27,7 @@ define([
 
         return fastdom.write(function () {
             adSlots.forEach(function (adSlot) {
-                adSlot.parentNode.remove();
+                adSlot.parentNode.removeChild(adSlot);
             });
         });
     }
