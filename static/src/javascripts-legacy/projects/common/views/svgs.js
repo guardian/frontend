@@ -47,8 +47,7 @@ define([
     'inlineSvg!svgs/notifications-explainer-mobile.svg',
     'inlineSvg!svgs/commercial/adblock-coins-us.svg',
     'inlineSvg!svgs/icon/star.svg',
-    'common/views/svg',
-    'common/utils/config'
+    'common/views/svg'
 ], function (
     commentCount16icon,
     marque36icon,
@@ -94,8 +93,7 @@ define([
     notificationsExplainerMobile,
     adblockCoinsUS,
     star,
-    svg,
-    config
+    svg
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -145,10 +143,11 @@ define([
     };
 
     return function (name, classes, title) {
-        if (config.switches.webpack) {
+        // #wp-rjs - needed by karma
+        if (svgs[name].markup) { // webpack way
             return svg(svgs[name].markup, classes, title);
         }
-
+        // require way
         return svg(svgs[name], classes, title);
     };
 });
