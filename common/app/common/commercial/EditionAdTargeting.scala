@@ -1,6 +1,6 @@
 package common.commercial
 
-import com.gu.commercial.display.{AdCall, AdCallParamKey}
+import com.gu.commercial.display.{AdCall, AdCallParamKey, SurgeLookupService}
 import com.gu.contentapi.client.model.v1.{Content, Section, Tag}
 import common.Edition
 import play.api.libs.json.Json
@@ -11,7 +11,13 @@ object EditionAdTargeting {
 
   implicit val editionAdTargetingFormat = Json.format[EditionAdTargeting]
 
-  private val adCall = new AdCall(platform = "ng")
+  private val adCall = new AdCall(
+    platform = "ng",
+    surgeLookupService = new SurgeLookupService {
+      // to be implemented
+      def pageViewsPerMinute(pageId: String): Option[Int] = None
+    }
+  )
 
   private def editionTargeting(targeting: Edition => Map[AdCallParamKey, String]): Seq[EditionAdTargeting] = {
 

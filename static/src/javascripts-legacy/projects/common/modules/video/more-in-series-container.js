@@ -1,9 +1,11 @@
 define([
     'common/modules/component',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/modules/atoms/youtube'
 ], function(
     Component,
-    mediator
+    mediator,
+    youtube
 ) {
 
     function init(el, mediaType, section, shortUrl, series) {
@@ -17,6 +19,7 @@ define([
         component.endpoint = endpoint;
 
         component.fetch(el).then(function () {
+            youtube.checkElemsForVideos(el);
             mediator.emit('page:media:moreinloaded', el);
             mediator.emit('page:new-content', el);
         });
