@@ -46,6 +46,9 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
     val maybeTopUrl = request.headers.get("X-GU-topurl")
     val maybeUserAgent = request.headers.get("X-GU-user-agent")
 
+    // Log the request headers to check the esi subrequest is working.
+    log.logger.info(request.headers.toSimpleMap.toList.collect { case (key: String, value: String) => s"$key:$value" }.mkString(", "))
+
     for {
       clientIp <- maybeClientIp
       topUrl <- maybeTopUrl
