@@ -188,19 +188,27 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
+// specific to the most viewed component that appears at the bottom of articles
 .popular-trails {
     @include mq(desktop) {
-      display: inline-flex;;
+      min-height: gs-height(9);
+      display: inline-flex;
     }
+}
 
-    .fc-slice__popular-mpu {
-      margin-top: $gs-baseline * 2;
+.popular-trails__content {
+    @include mq(desktop) {
+        min-width: gs-span(8);
+    }
+}
 
-      @include mq(desktop) {
-          border-top: 1px solid $neutral-5;
-          padding-top: $gs-baseline;
-          margin-top: 39px;
-      }
+.popular-trails__mpu {
+    margin: $gs-baseline auto 0 auto;
+
+    @include mq(desktop) {
+        border-top: 1px solid $neutral-5;
+        padding: $gs-baseline 0 0 $gs-gutter;
+        margin-top: 39px; // magic number: unavoidable to match the tab headings
     }
 }
 
@@ -215,6 +223,7 @@ Hence why a greater depth of selector specificity is needed.
 
     @include mq(desktop) {
         .tabs__pane {
+            min-width: gs-span(8);
             min-height: 300px;
         }
 
