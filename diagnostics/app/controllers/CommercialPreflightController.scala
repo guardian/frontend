@@ -41,10 +41,10 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
   def adCall() = Action { implicit request =>
     val pageViewId = makeOphanViewId()
 
+    val maybeClientIp = request.headers.get("Fastly-Client-IP")
+    val maybeUserAgent = request.headers.get("User-Agent")
     val switchId = request.headers.get("X-GU-switch-id")
-    val maybeClientIp = request.headers.get("X-GU-client-ip")
     val maybeTopUrl = request.headers.get("X-GU-topurl")
-    val maybeUserAgent = request.headers.get("X-GU-user-agent")
 
     // Log the request headers to check the esi subrequest is working.
     log.logger.info(request.headers.toSimpleMap.toList.collect { case (key: String, value: String) => s"$key:$value" }.mkString(", "))
