@@ -1,8 +1,9 @@
 package controllers
 
 import com.gu.contentapi.client.model.RecipesQuery
-import common.ExecutionContexts
+import common.{ExecutionContexts, Pagination}
 import common.`package`._
+import conf.Configuration
 import contentapi.ContentApiClient
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, MetaData, SectionSummary, SimplePage, Tags}
@@ -29,7 +30,12 @@ class StructuredDataIndexController(val contentApiClient: ContentApiClient)(impl
     contentApiClient.getResponse(query(filterValue)) map { response =>
 
         val indexPage = IndexPage(
-          page = SimplePage(MetaData.make(id = "", section = Some(SectionSummary("lifeandstyle/food-and-drink")), webTitle = s"${filterValue.capitalize} Recipes")),
+          page = SimplePage(
+            MetaData.make(
+              id = request.path.stripPrefix("/"),
+              section = Some(SectionSummary("lifeandstyle/food-and-drink")),
+              webTitle = s"${filterValue.toLowerCase} recipes",
+              pagination = Some(Pagination(currentPage = response.currentPage , lastPage = response.pages, totalContent = response.total)))),
           contents = response.results flatMap recipeAtomToContent,
           tags = Tags(List.empty),
           date = DateTime.now,

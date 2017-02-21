@@ -5010,9 +5010,9 @@ openurl@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/openurl/-/openurl-1.1.0.tgz#e2f2189d999c04823201f083f0f1a7cd8903187a"
 
-ophan-tracker-js@^1.3.3:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/ophan-tracker-js/-/ophan-tracker-js-1.3.3.tgz#8825d4e7ca220962959d35eb98851498bf476dd5"
+ophan-tracker-js@^1.3.6:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/ophan-tracker-js/-/ophan-tracker-js-1.3.6.tgz#38369ef2248aad23284839005d282cdc10c0ccc8"
   dependencies:
     jspm "^0.16.31"
 

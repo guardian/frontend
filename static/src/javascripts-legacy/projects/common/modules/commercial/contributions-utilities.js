@@ -145,7 +145,7 @@ define([
         var trackingCampaignId  = test.epic ? 'epic_' + test.campaignId : test.campaignId;
 
         this.test = function () {
-            var component = $.create(this.template(this.contributeURL, this.membershipURL));
+            var component = $.create(this.template(this.membershipURL, this.contributeURL));
             var onInsert = options.onInsert || noop;
             var onView = options.onView || noop;
 
