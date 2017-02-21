@@ -19,7 +19,7 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfter
       label = ""
     ),
     logoForDarkBackground = None,
-    aboutThisLink = None,
+    aboutThisLink = Branding.defaultAboutThisLink,
     hostedCampaignColour = None
   )
 
