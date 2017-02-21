@@ -1,7 +1,6 @@
 @(page: model.Page, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import model.Page.getContent
 @import play.api.Mode.Dev
-@import conf.switches.Switches.Webpack
 
 <meta charset="utf-8" />
 <!--
@@ -23,11 +22,7 @@ http://developers.theguardian.com/join-the-team.html
 @fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
 
 @if(!(context.environment.mode == Dev)) {
-    @if(Webpack.isSwitchedOn) {
-        <link rel="prefetch" href="@Static("javascripts/app-webpack.js")">
-    } else {
-        <link rel="prefetch" href="@Static("javascripts/app.js")">
-    }
+    <link rel="prefetch" href="@Static("javascripts/app-webpack.js")">
 }
 
 @*
