@@ -43,6 +43,7 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
 
     val maybeClientIp = request.headers.get("Fastly-Client-IP")
     val maybeUserAgent = request.headers.get("User-Agent")
+    val maybeHost =  request.headers.get("Host")
     val switchId = request.headers.get("X-GU-switch-id")
     val maybeTopUrl = request.headers.get("X-GU-topurl")
 
@@ -51,6 +52,7 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
 
     for {
       clientIp <- maybeClientIp
+      host <- maybeHost
       topUrl <- maybeTopUrl
       userAgent <- maybeUserAgent
     } {
@@ -63,7 +65,7 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
         */
         ip = clientIp,
         user_agent = userAgent,
-        url = topUrl,
+        url = s"$host$topUrl",
         referrer = None,
         browser_dimensions = None,
         switch_user_id = switchId,
@@ -74,7 +76,12 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
       wsClient.url(Configuration.switch.switchAdHubUrl)
         .post(adHubRequest)
         .onComplete({
-          case Success(_) => log.logger.info(s"switch ad call success for ${adHubRequest.toString()}, ${switchId.getOrElse("unknown user id")}")
+          case Success(result) => {
+            result.status match {
+              case 200 => log.logger.info(s"switch ad call success, ${switchId.getOrElse("unknown user id")}")
+              case _ => log.logger.info(s"switch ad call result:${result.status}, ${result.body}, ${adHubRequest.toString}")
+            }
+          }
           case Failure(e) => log.logger.warn(s"switch ad call failed: ${e.getMessage}")
         })
     }
