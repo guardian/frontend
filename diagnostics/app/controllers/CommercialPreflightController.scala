@@ -2,7 +2,7 @@ package controllers
 
 import conf.Configuration
 import common.{ExecutionContexts, Logging}
-import model.NoCache
+import model.PrivateCache
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
@@ -79,6 +79,6 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
         })
     }
 
-    NoCache(Ok(views.html.adCall(pageViewId)))
+    PrivateCache(Ok(views.html.adCall(pageViewId)))
   }
 }
