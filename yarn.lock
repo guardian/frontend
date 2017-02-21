@@ -6101,6 +6101,10 @@ sass-lint:
     path-is-absolute "^1.0.0"
     util "^0.10.3"
 
+sass-mq@~3.0.0:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/sass-mq/-/sass-mq-3.3.2.tgz#3472e04c31a432bcd55b3b604edc72ae9a4def1a"
+
 sax@0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/sax/-/sax-0.4.2.tgz#39f3b601733d6bec97105b242a2a40fd6978ac3c"

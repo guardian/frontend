@@ -102,6 +102,7 @@
     "rimraf": "^2.5.4",
     "sass-graph": "^2.1.2",
     "sass-lint": "^1.9.1",
+    "sass-mq": "~3.0.0",
     "semver": "^5.3.0",
     "sorted-object": "^1.0.0",
     "split": "^1.0.0",
