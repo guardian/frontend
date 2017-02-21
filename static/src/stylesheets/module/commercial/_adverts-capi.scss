@@ -1,3 +1,7 @@
+.advert--branded {
+    padding-bottom: 80px;
+}
+
 .adverts--capi {
     .adverts__title {
         font-size: get-font-size(headline, 3);
@@ -26,6 +30,39 @@
 
             & > * + :nth-child(even)::before {
                 content: none;
+            }
+        }
+    }
+
+    .advert > :last-child {
+        margin-bottom: 0;
+    }
+
+    .advert-container {
+        @include mq($until: tablet) {
+            &:first-child > .advert {
+                padding-bottom: $gs-baseline / 2;
+            }
+
+            &:first-child .advert__title,
+            &:first-child .advert__standfirst {
+                padding-right: 80px;
+            }
+
+            &:not(:first-child) > .advert {
+                padding-right: 80px;
+                padding-bottom: 0;
+                min-height: 80px;
+            }
+
+            > .badge {
+                display: flex;
+                flex-direction: column;
+                width: 60px;
+            }
+
+            .badge__logo {
+                max-width: 100%;
             }
         }
     }
@@ -208,7 +245,7 @@
             }
         }
 
-        .advert__standfirst {
+        .advert__standfirst:not(:last-child) {
             margin-bottom: $gs-baseline / 2;
         }
     }

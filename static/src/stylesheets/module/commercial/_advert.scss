@@ -127,10 +127,6 @@
     color: $paid-card-kicker;
 }
 
-.advert--branded {
-    padding-bottom: $gs-row-height + $gs-baseline * 5; //96px = $gs-row-height + height of the logo
-}
-
 .advert-container {
     display: flex;
     align-items: stretch;
