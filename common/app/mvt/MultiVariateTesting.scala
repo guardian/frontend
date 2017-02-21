@@ -50,6 +50,17 @@ object CommercialClientLoggingVariant extends TestDefinition(
   }
 }
 
+object YouTubePosterOverride extends TestDefinition(
+  name = "youtube-poster-override",
+  description = "Users in the test will always see the trail image on YouTube atom content cards instead of the poster image",
+  owners = Seq(Owner.withGithub("gidsg")),
+  sellByDate = new LocalDate(2017, 4, 1)
+  ) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-youtube-poster-override").contains("true")
+  }
+}
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -65,7 +76,8 @@ object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     ABNewNavVariantSeven,
     ABNewNavControl,
-    CommercialClientLoggingVariant
+    CommercialClientLoggingVariant,
+    YouTubePosterOverride
   )
 }
 
