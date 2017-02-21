@@ -1,0 +1,9 @@
+{
+  "name": "frontend-js-tests",
+  "devDependencies": {
+    "jasmine": "~2.0.0",
+    "jasmine-sinon": "~0.4.0",
+    "sinonjs": "~1.10.2",
+    "squire": "~0.2.0"
+  }
+}
