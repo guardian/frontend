@@ -36,13 +36,13 @@ requirejs.config({
         picturefill:  'projects/common/utils/picturefill',
         // Test specific paths
         omniture:     '/base/static/vendor/javascripts/omniture/omniture',
-        squire:       '/base/static/test/javascripts/components/squire/src/Squire',
-        fixtures:     '/base/static/test/javascripts/fixtures',
-        helpers:      '/base/static/test/javascripts/helpers',
+        squire:       '/base/static/test/javascripts-legacy/components/squire/src/Squire',
+        fixtures:     '/base/static/test/javascripts-legacy/fixtures',
+        helpers:      '/base/static/test/javascripts-legacy/helpers',
         svgs:         '/base/static/src/inline-svgs',
         // plugins
         inlineSvg:    'projects/common/utils/inlineSvg',
-        'common/utils/raven': '/base/static/test/javascripts/fixtures/raven'
+        'common/utils/raven': '/base/static/test/javascripts-legacy/fixtures/raven'
     }
 });
 
