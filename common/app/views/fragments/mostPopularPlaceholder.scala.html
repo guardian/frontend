@@ -15,8 +15,11 @@
                     <a href="@LinkTo(url)" data-link-name="Most viewed @section">most viewed</a>
                 </h2>
             </div>
-            <div class="fc-container__body fc-container--rolled-up-hide js-popular-trails">
-              <div class="fc-slice__popular-mpu js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate" style="width:18.75rem;display:inline-block;">
+            <div class="fc-container__body fc-container--rolled-up-hide popular-trails">
+              <div class="js-popular-trails">
+
+              </div>
+              <div class="fc-slice__popular-mpu js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate">
                 @adSlot(
                   "mostpop",
                   Seq("container-inline"),
@@ -24,7 +27,7 @@
                   optId = None,
                   optClassNames = None
                   ){ }
-                </div>
+              </div>
             </div>
 
         </div>
