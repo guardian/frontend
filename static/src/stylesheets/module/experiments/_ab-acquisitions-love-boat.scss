@@ -166,7 +166,7 @@
 
 .contributions__epic--visual__cta {
     @include font($f-serif-headline, normal, 16, 20);
-    padding: $gs-baseline;
+    padding: $gs-baseline / 2;
     padding-top: 0;
     background: $news-main-2;
     color: $guardian-brand-dark;
