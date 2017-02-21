@@ -79,6 +79,7 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
         })
     }
 
+    // Since this controller is used as an esi endpoint, use cache-control:private to ensure the resource is not cached.
     PrivateCache(Ok(views.html.adCall(pageViewId)))
   }
 }
