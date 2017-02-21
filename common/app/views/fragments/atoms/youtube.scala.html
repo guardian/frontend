@@ -35,7 +35,7 @@
                 </iframe>
                 }
             }
-        @defining(posterImageOverride.filterNot(_ => playable) orElse media.posterImage) { bestPosterImage =>
+        @defining(posterImageOverride.filter(_ => !playable || mvt.YouTubePosterOverride.isParticipating) orElse media.posterImage) { bestPosterImage =>
             @bestPosterImage.map { image =>
                 <div class="@RenderClasses(Map("youtube-media-atom__overlay" -> true, "vjs-big-play-button" -> !expired))" style="background-image: url(@Video700.bestFor(image))">
 
