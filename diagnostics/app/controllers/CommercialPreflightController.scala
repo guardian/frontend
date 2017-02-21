@@ -65,7 +65,7 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
         */
         ip = clientIp,
         user_agent = userAgent,
-        url = s"$host$topUrl",
+        url = s"https://$host$topUrl",
         referrer = None,
         browser_dimensions = None,
         switch_user_id = switchId,
