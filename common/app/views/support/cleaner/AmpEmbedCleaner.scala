@@ -50,24 +50,24 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   def standardAttributes(videoId: String): Map[String,String] = Map(("data-videoid", videoId))
 
-  def facebookAttributes(videoId: String): Map[String, String] = Map(
-    ("data-href", s"https://www.facebook.com/theguardian/videos/$videoId"),
+  def facebookAttributes(organisation: String, videoId: String): Map[String, String] = Map(
+    ("data-href", s"https://www.facebook.com/$organisation/videos/$videoId"),
     ("data-embed-as", "video"))
 
   case class YoutubeExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-youtube", standardAttributes(videoId))
   case class VimeoExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-vimeo", standardAttributes(videoId))
-  case class FacebookExternalVideo(override val videoId: String) extends AmpExternalVideo(videoId, "amp-facebook", facebookAttributes(videoId))
+  case class FacebookExternalVideo(organisation: String, override val videoId: String) extends AmpExternalVideo(videoId, "amp-facebook", facebookAttributes(organisation, videoId))
 
 
   object AmpExternalVideo {
     def getAmpExternalVideoByUrl(videoUrl: String): Option[AmpExternalVideo] = {
       val youtubePattern = """^https?:\/\/www\.youtube\.com\/watch\?v=([^#&?]+).*""".r
       val vimeoPattern = """^https?:\/\/vimeo\.com\/(\d+).*""".r
-      val facebookPattern = """^https?:\/\/www\.facebook\.com\/theguardian\/videos\/(\d+)\/""".r
+      val facebookPattern = """^https?:\/\/www\.facebook\.com\/([\w.]+)\/videos\/(\d+)\/""".r
       videoUrl match {
         case youtubePattern(videoId) => Some(YoutubeExternalVideo(videoId))
         case vimeoPattern(videoId) => Some(VimeoExternalVideo(videoId))
-        case facebookPattern(videoId) => Some(FacebookExternalVideo(videoId))
+        case facebookPattern(organisation,videoId) => Some(FacebookExternalVideo(organisation,videoId))
         case _ => None
       }
     }

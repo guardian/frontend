@@ -241,5 +241,5 @@ case class IndexPage(
 
   def allPath = s"/$idWithoutEdition"
 
-  def branding(edition: Edition): Option[Branding] = page.metadata.branding(edition)
+  def branding(edition: Edition): Option[Branding] = page.metadata.commercial.flatMap(_.branding(edition))
 }

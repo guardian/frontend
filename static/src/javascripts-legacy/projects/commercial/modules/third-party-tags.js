@@ -9,7 +9,8 @@ define([
     'common/utils/mediator',
     'common/utils/fastdom-promise',
     'common/utils/template',
-    'common/modules/commercial/commercial-features',
+    'common/modules/experiments/ab',
+    'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/audience-science-gateway',
     'commercial/modules/third-party-tags/audience-science-pql',
     'commercial/modules/third-party-tags/imr-worldwide',
@@ -29,6 +30,7 @@ define([
     mediator,
     fastdom,
     template,
+    ab,
     commercialFeatures,
     audienceScienceGateway,
     audienceSciencePql,
@@ -80,11 +82,18 @@ define([
         }
 
         // Outbrain/Plista needs to be loaded before first ad as it is checking for presence of high relevance component on page
-        loadExternalContentWidget();
+        if (!isLuckyBastard()) {
+            loadExternalContentWidget();
+        }
 
         loadOther();
 
         return Promise.resolve(true);
+    }
+
+    function isLuckyBastard() {
+        var testName = 'PaidContentVsOutbrain';
+        return ab.testCanBeRun(testName) && ab.getTestVariantId(testName) === 'paid-content';
     }
 
     function loadOther() {

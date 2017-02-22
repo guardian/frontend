@@ -65,29 +65,6 @@ define([
             expect(new CommercialComponent()).toBeDefined();
         });
 
-        it('should load component with keyword params', function (done) {
-            mediator.once('modules:commercial:creatives:commercial-component:loaded', done);
-
-            server.respondWith(
-                '/commercial/soulmates/mixed.json?k=annerice&k=fiction&k=books&k=culture',
-                [200, {}, '{ "html": "" }']
-            );
-
-            new CommercialComponent(adSlot, { type: 'soulmates' }).create();
-        });
-
-        it('should use pageId if no keywordIds', function (done) {
-            mediator.once('modules:commercial:creatives:commercial-component:loaded', done);
-            config.page.keywordIds = '';
-
-            server.respondWith(
-                '/commercial/soulmates/mixed.json?k=prince-lestat-anne-rice-review',
-                [200, {}, '{ "html": "" }']
-            );
-
-            new CommercialComponent(adSlot, { type: 'soulmates' }).create();
-        });
-
         it('should load component into the slot', function (done) {
             mediator.once('modules:commercial:creatives:commercial-component:loaded', function () {
                     expect(adSlot.innerHTML).toBe('<p>Commercial Component</p>');
