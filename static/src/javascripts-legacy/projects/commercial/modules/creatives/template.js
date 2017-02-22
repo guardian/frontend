@@ -27,15 +27,12 @@ define([
         this.params = params;
 
         if (this.params.Toneclass) {
-            this.params.isSoulmates = params.Toneclass.indexOf('soulmates') !== -1;
             this.params.isMembership = params.Toneclass.indexOf('membership') !== -1;
             this.params.HeaderToneclass = 'commercial__header--' + this.params.Toneclass.replace('commercial--tone-', '');
         }
 
         this.params.marque36icon = svgs('marque36icon');
         this.params.marque54icon = svgs('marque54icon');
-        this.params.logosoulmates = svgs('logosoulmates');
-        this.params.logosoulmatesjoin = svgs('logosoulmatesjoin');
         this.params.logomembership = svgs('logomembershipwhite');
         this.params.logojobs = svgs('logojobs');
         this.params.logomasterclasses = svgs('logomasterclasses');
