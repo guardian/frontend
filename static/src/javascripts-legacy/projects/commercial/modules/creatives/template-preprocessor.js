@@ -1,28 +1,20 @@
 define([
-    'common/views/svgs',
-    'common/utils/config',
     'common/utils/template',
-    'lodash/objects/assign',
     'lodash/utilities/identity',
     'text!commercial/views/creatives/manual-card.html',
     'text!commercial/views/creatives/manual-card-large.html',
     'text!commercial/views/creatives/manual-card-cta.html',
     'text!commercial/views/creatives/manual-container-button.html',
     'text!commercial/views/creatives/manual-container-cta.html',
-    'text!commercial/views/creatives/manual-container-cta-soulmates.html',
     'text!commercial/views/creatives/manual-container-cta-membership.html'
 ], function (
-    svgs,
-    config,
     template,
-    assign,
     identity,
     manualCardStr,
     manualCardLargeStr,
     manualCardCtaStr,
     manualContainerButtonStr,
     manualContainerCtaStr,
-    manualContainerCtaSoulmatesStr,
     manualContainerCtaMembershipStr
 ) {
     var manualCardStrs = {
@@ -33,7 +25,6 @@ define([
     var manualCardCtaTpl;
     var manualContainerButtonTpl;
     var manualContainerCtaTpl;
-    var manualContainerCtaSoulmatesTpl;
     var manualContainerCtaMembershipTpl;
 
     function preprocessManualContainer(tpl) {
@@ -42,7 +33,6 @@ define([
             books: 'book',
             masterclasses: 'masterclass',
             travels: 'travel',
-            soulmates: 'soulmate',
             subscriptions: 'subscription',
             networks: 'network'
         };
@@ -53,13 +43,7 @@ define([
         tpl.params.classNames = ['manual'].concat(tpl.params.classNames).map(function (cn) { return 'adverts--' + cn; }).join(' ');
         tpl.params.title || (tpl.params.title = '');
 
-        if (tpl.params.isSoulmates) {
-            manualContainerCtaSoulmatesTpl || (manualContainerCtaSoulmatesTpl = template(manualContainerCtaSoulmatesStr));
-            tpl.params.title = tpl.params.marque54icon + tpl.params.logosoulmates + '<span class="u-h">The Guardian Soulmates</span>';
-            tpl.params.blurb = 'Meet someone <em>worth</em> meeting';
-            tpl.params.ctas = manualContainerCtaSoulmatesTpl(tpl.params);
-
-        } else if (tpl.params.isMembership) {
+        if (tpl.params.isMembership) {
             manualContainerCtaMembershipTpl || (manualContainerCtaMembershipTpl = template(manualContainerCtaMembershipStr));
             tpl.params.blurb = tpl.params.title;
             tpl.params.title = tpl.params.logomembership + '<span class="u-h">The Guardian Membership</span>';

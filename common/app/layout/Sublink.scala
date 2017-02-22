@@ -473,7 +473,7 @@ object PaidCard {
         val url = item.metadata.webUrl
         clickMacro map { cm => s"$cm$url" } getOrElse url
       },
-      branding = item.metadata.branding(edition)
+      branding = item.metadata.commercial.flatMap(_.branding(edition))
     )
   }
 }

@@ -7,12 +7,7 @@ define([
     'common/utils/assign'
 ], function (pad, urlUtils, assign) {
     // eslint-disable-next-line guardian-frontend/global-config
-    var config         = window.guardian.config,
-        adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
-
-    if (adUnitOverride) {
-        config.page.adUnit = ['/', config.page.dfpAccountId, '/', adUnitOverride].join('');
-    }
+    var config         = window.guardian.config;
 
     return assign({
         hasTone: function (name) {

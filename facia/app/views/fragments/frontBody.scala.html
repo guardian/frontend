@@ -1,11 +1,9 @@
 @import common.Edition
 @import common.commercial.ContainerModel
 @import views.support.RenderClasses
-@import com.gu.commercial.branding.Sponsored
-@import com.gu.commercial.branding.PaidContent
 @(faciaPage: model.PressedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@defining((faciaPage.isSponsored(Edition(request)), faciaPage.isPaid(Edition(request)))) { case (isSponsored, isPaid) =>
+@defining((faciaPage.isSponsored(Edition(request)), faciaPage.isPaid)) { case (isSponsored, isPaid) =>
     @if(faciaPage.collections.nonEmpty) {
         <div class="l-side-margins">
             <div class="@RenderClasses(Map(

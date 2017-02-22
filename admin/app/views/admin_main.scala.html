@@ -84,17 +84,9 @@
         <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
 
         <script type="text/javascript">
-
-            @Html(curlConfig().body)
-
             @Html(config(model.AdminPage(title)).body)
-
-            window.curl.paths['bootstraps/admin'] = '@Static("javascripts/bootstraps/admin.js")';
-
-            @Html(common.Assets.js.curl);
-
-            require(['bootstraps/admin']);
         </script>
+        <script src="@Static("javascripts/admin-webpack.js")"></script>
         @if(loadJquery){
             <script src="//code.jquery.com/jquery.js"></script>
         }

@@ -3,6 +3,8 @@ package common.commercial
 import com.gu.commercial.branding._
 import com.gu.contentapi.client.model.v1.{Content, Section, Tag}
 import common.Edition
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
 import play.api.libs.json._
 
 case class EditionBranding(edition: Edition, branding: Option[Branding])
@@ -27,12 +29,22 @@ object EditionBranding {
       }
     }
 
-    Json.format[Branding]
+    val brandingReads: Reads[Branding] = (
+      (JsPath \ "brandingType").read[BrandingType] and
+      (JsPath \ "sponsorName").read[String] and
+      (JsPath \ "logo").read[Logo] and
+      (JsPath \ "logoForDarkBackground").readNullable[Logo] and
+      // the 'about this' link has become required so this is to avoid breaking a lot of pressed fronts
+      (JsPath \ "aboutThisLink").readNullable[String].map(_.getOrElse("")) and
+      (JsPath \ "hostedCampaignColour").readNullable[String]
+      ) (Branding.apply _)
+
+    Format(brandingReads, Json.writes[Branding])
   }
 
   implicit val editionBrandingFormat = Json.format[EditionBranding]
 
-  def fromItem(item: Content): Seq[EditionBranding] = Edition.all.map { edition =>
+  def fromContent(item: Content): Seq[EditionBranding] = Edition.all.map { edition =>
     EditionBranding(edition, BrandingFinder.findBranding(item, edition.id))
   }
 
@@ -43,10 +55,4 @@ object EditionBranding {
   def fromTag(tag: Tag): Seq[EditionBranding] = Edition.all.map { edition =>
     EditionBranding(edition, BrandingFinder.findBranding(tag, edition.id))
   }
-
-  def branding(editionBrandings: Option[Seq[EditionBranding]], edition: Edition): Option[Branding] = for {
-    brandings <- editionBrandings
-    editionBranding <- brandings.find(_.edition == edition)
-    branding <- editionBranding.branding
-  } yield branding
 }
