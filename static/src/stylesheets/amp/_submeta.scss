@@ -40,12 +40,7 @@
     float: left;
 
     &:after {
-        position: absolute;
-        pointer-events: none;
-        content: '/';
-        //optically aligns slashes
-        top: 0;
-        right: -.19em;
+        @include trailing-slash;
         color: $neutral-5;
     }
 
