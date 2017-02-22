@@ -8,9 +8,12 @@
 @import model.ImageMedia
 @(media: model.content.MediaAtom, displayCaption: Boolean, embedPage: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, mainMedia: Boolean = false, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None)(implicit request: RequestHeader)
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
+@defining(playable && !posterImageOverride.exists(_ => mvt.YouTubePosterOverride.isParticipating)){sixteenByNine: Boolean =>
+
+
     <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
         ("u-responsive-ratio", true),
-        ("u-responsive-ratio--hd", playable),
+        ("u-responsive-ratio--hd", sixteenByNine),
         ("youtube-media-atom", true),
         ("no-player", !playable || expired )
     ))"
@@ -18,6 +21,8 @@
       data-end-slate="@endSlatePath"
     }
     >
+}
+
         @if(playable && !expired) {
             @defining(s"https://www.youtube.com/embed${
                 media.assets.head.id
