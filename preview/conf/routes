@@ -23,7 +23,6 @@ GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|
 
 # Commercial
 GET        /commercial/travel/offers.json                                                      commercial.controllers.TravelOffersController.renderTravel
-GET        /commercial/jobs.json                                                               commercial.controllers.JobsController.renderJobs
 GET        /commercial/masterclasses.json                                                      commercial.controllers.MasterclassesController.renderMasterclasses
 GET        /commercial/books/book.json                                                         commercial.controllers.BookOffersController.renderBook
 GET        /commercial/books/books.json                                                        commercial.controllers.BookOffersController.renderBooks
@@ -205,4 +204,3 @@ GET        /favicon.ico                                                         
 
 # Any "item" from the Content API
 GET        /*path                                                                              controllers.ItemController.render(path)
-

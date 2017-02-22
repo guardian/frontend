@@ -12,7 +12,6 @@ GET         /commercial/travel/offers.json                                  comm
 GET         /commercial/travel/api/offers.json                              commercial.controllers.TravelOffersController.getTravel
 
 # Job merchandising components
-GET         /commercial/jobs.json                                           commercial.controllers.JobsController.renderJobs
 GET         /commercial/jobs/api/jobs.json                                  commercial.controllers.JobsController.getJobs
 
 # Masterclass merchandising components

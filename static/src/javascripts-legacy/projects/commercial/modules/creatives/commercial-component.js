@@ -34,7 +34,6 @@ define([
         capi:           complexUrlBuilder('capi', false, false, true),
         paidforCard:    complexUrlBuilder('paid', '', false, true),
         books:          complexUrlBuilder('books/books', 'isbns'),
-        jobs:           complexUrlBuilder('jobs', 'jobIds', true),
         masterclasses:  complexUrlBuilder('masterclasses', 'ids', true),
         liveevents:     complexUrlBuilder('liveevents/event', 'id', true),
         travel:         complexUrlBuilder('travel/offers', 'ids', true),
