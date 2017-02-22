@@ -3,7 +3,7 @@ package common
 object NavLinks {
   /* NEWS */
 
-  val headlines = NavLink("headlines", "/", "", iconName = "home")
+  val headlines = NavLink("news", "/", "",longTitle = "headlines", iconName = "home")
   val ukNews = NavLink("UK", "/uk-news", "uk-news", longTitle = "UK news")
   val world = NavLink("world", "/world", "world", longTitle = "world news")
   val environment = NavLink("environment", "/environment", "environment")
@@ -83,7 +83,7 @@ object NavLinks {
   val NHL = NavLink("NHL", "/sport/nhl", "sport/nhl")
 
   /* ARTS */
-  val culture = NavLink("culture", "/culture", "culture", longTitle = "culture home", iconName = "home")
+  val culture = NavLink("arts", "/culture", "culture", longTitle = "culture home", iconName = "home")
   val film = NavLink("film", "/film", "film")
   val tvAndRadio = NavLink("tv & radio", "/tv-and-radio", "tv-and-radio")
   val music = NavLink("music", "/music", "music")
@@ -94,7 +94,7 @@ object NavLinks {
   val classical = NavLink("classical", "/music/classicalmusicandopera", "music/classicalmusicandopera")
 
   /* LIFE */
-  val lifestyle = NavLink("lifestyle", "/lifeandstyle", "lifeandstyle", longTitle = "lifestyle home", iconName = "home")
+  val lifestyle = NavLink("life", "/lifeandstyle", "lifeandstyle", longTitle = "lifestyle home", iconName = "home")
   val fashion = NavLink("fashion", "/fashion", "fashion")
   val food = NavLink("food", "/lifeandstyle/food-and-drink", "lifeandstyle/food-and-drink")
   val travel = NavLink("travel", "/travel", "travel")
@@ -110,6 +110,15 @@ object NavLinks {
   val skiing = NavLink("skiing", "/travel/skiing", "travel/skiing")
   val travelAustralasia = NavLink("australasia", "/travel/australasia", "travel/australasia")
   val travelAsia = NavLink("asia", "/travel/asia", "travel/asia")
+
+  val todaysPaper = NavLink("today's paper", "/theguardian", "theguardian")
+  val observer = NavLink("the observer", "/observer", "observer")
+  val crosswords = NavLink("crosswords", "/crosswords", "crosswords")
+  val video =  NavLink("video", "/video")
+  val jobs = NavLink("jobs", "https://jobs.theguardian.com")
+  val dating = NavLink("dating", "https://soulmates.theguardian.com")
+  val apps = NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android")
+  val masterClasses = NavLink("masterclasses", "/guardian-masterclasses")
 
   val tagPages = List(
     "technology/games",
@@ -178,6 +187,14 @@ object NavLinks {
     "travel/usa",
     "travel/skiing",
     "travel/australasia",
-    "travel/asia"
+    "travel/asia",
+    "theguardian",
+    "observer",
+    "football/live",
+    "football/tables",
+    "football/competitions",
+    "football/results",
+    "football/fixtures",
+    "education"
   )
 }

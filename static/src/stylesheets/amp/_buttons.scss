@@ -16,12 +16,20 @@
 }
 
 .cta--show-more {
-    position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     color: $neutral-1;
     background-color: #ffffff;
+
+    /*
+       According to the AMP docs we should be able to do this (https://www.ampproject.org/docs/reference/components/amp-list), but it was probably broken in https://github.com/ampproject/amphtml/pull/7061.
+
+      TODO: Remove this specificity hack, after [the issue](https://github.com/ampproject/amphtml/issues/7689) is resolved.
+    */
+    @at-root .cta#{&} {
+      position: absolute;
+    }
 
     svg {
         width: 18px;

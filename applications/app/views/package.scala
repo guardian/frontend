@@ -22,7 +22,8 @@ object IndexCleaner {
  def apply(page: IndexPage, html: String)(implicit request: RequestHeader, context: ApplicationContext) = {
     val edition = Edition(request)
     withJsoup(BulletCleaner(html))(
-      CommercialComponentHigh(isPaidContent = false, isNetworkFront = false, hasPageSkin = page.page.metadata.hasPageSkin(edition))
+      CommercialComponentHigh(isPaidContent = false, isNetworkFront = false, hasPageSkin = page.page.metadata.hasPageSkin(edition)),
+      CommercialMPUForFronts(isNetworkFront = false)
     )
   }
 }

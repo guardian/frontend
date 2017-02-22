@@ -4,8 +4,8 @@ define([
     'common/utils/config',
     'common/utils/storage',
     'common/utils/template',
-    'common/modules/commercial/commercial-features',
-    'common/modules/commercial/user-features',
+    'commercial/modules/commercial-features',
+    'commercial/modules/user-features',
     'common/utils/mediator'
 ], function (
     bean,
@@ -80,7 +80,7 @@ define([
         return this.addMessageVariant(variantId, {contributions: variantParams});
     };
 
-    return [new EditionTest('UK', 'MembershipEngagementBannerUkRemindMeLater', '2017-02-02', '2017-02-16', 'remind_me_later')
+    return [new EditionTest('UK', 'MembershipEngagementBannerUkRemindMeLater', '2017-02-02', '2017-02-24', 'remind_me_later')
         .addMembershipVariant('control', {})
         .addMembershipVariant('remind_me', {showRemindMe : true})
     ];

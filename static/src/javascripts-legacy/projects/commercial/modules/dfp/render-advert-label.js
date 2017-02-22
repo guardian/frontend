@@ -15,10 +15,8 @@ define([
 ) {
     function renderAdvertLabel(adSlotNode) {
         if (shouldRenderLabel(adSlotNode)) {
-            var zIndexOverlay = 1050;
             var feedbackPopup = '', feedbackThanksMessage = '';
             if (config.switches.adFeedback) {
-                adSlotNode.style.zIndex = zIndexOverlay;
                 feedbackPopup = template(popupTemplate, {
                     feedbackOptions: {
                         'distracting': 'Distracting',
@@ -32,7 +30,7 @@ define([
                 });
                 feedbackThanksMessage = '<i class="ad-feedback__thanks-message"> Thanks for your feedback </i>';
             }
-            var labelDiv = '<div class="ad-slot__label" data-test-id="ad-slot-label" style="z-index: 2010;">Advertisement' +
+            var labelDiv = '<div class="ad-slot__label">Advertisement' +
                 feedbackPopup + feedbackThanksMessage +
                 '</div>';
             return fastdom.write(function () {

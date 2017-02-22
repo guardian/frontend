@@ -245,6 +245,10 @@
         margin-top: $gs-baseline/3;
         margin-left: $gs-gutter;
     }
+
+    @include mq(tablet, leftCol) {
+        clear: left;
+    }
 }
 .ad-slot__content {
     > div {
@@ -361,6 +365,7 @@
     }
 }
 
+.ad-slot--inline-book,
 .ad-slot--books-inline {
     @include mq(mobileLandscape) {
         width: gs-span(2);

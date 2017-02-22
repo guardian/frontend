@@ -11,9 +11,12 @@ define([
     'common/modules/experiments/tests/opinion-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
+    'common/modules/experiments/tests/paid-content-vs-outbrain',
     'common/modules/experiments/tests/guardian-today-messaging',
     'common/modules/experiments/acquisition-test-selector',
-    'common/modules/experiments/tests/membership-a1-a2-thrasher'
+    'common/modules/experiments/tests/tailor-recommended-email',
+    'common/modules/experiments/tests/membership-a3-a4-bundles-thrasher',
+    'common/modules/experiments/tests/tailor-survey'
 ], function (reportError,
              config,
              cookies,
@@ -26,17 +29,23 @@ define([
              OpinionEmailVariants,
              RecommendedForYou,
              MembershipEngagementBannerTests,
+             PaidContentVsOutbrain,
              GuardianTodayMessaging,
              acquisitionTestSelector,
-             MembershipA1A2Thrasher
+             TailorRecommendedEmail,
+             MembershipA3A4BundlesThrasher,
+             TailorSurvey
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
         new RecommendedForYou(),
+        new PaidContentVsOutbrain,
         new GuardianTodayMessaging(),
         acquisitionTestSelector.getTest(),
-        new MembershipA1A2Thrasher()
+        new TailorRecommendedEmail(),
+        new MembershipA3A4BundlesThrasher(),
+        new TailorSurvey()
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';

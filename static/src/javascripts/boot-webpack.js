@@ -3,6 +3,7 @@ import raven from 'common/utils/raven';
 import bootStandard from 'bootstraps/standard/main';
 import config from 'common/utils/config';
 import userTiming from 'common/utils/user-timing';
+import capturePerfTimings from 'common/utils/capture-perf-timings';
 
 // let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -41,6 +42,11 @@ domready(() => {
                     require(['bootstraps/enhanced/main'], (bootEnhanced) => {
                         userTiming.mark('enhanced boot');
                         bootEnhanced();
+                        if (document.readyState === 'complete') {
+                            capturePerfTimings();
+                        } else {
+                            window.addEventListener('load', capturePerfTimings);
+                        }
                     });
                 }
             })

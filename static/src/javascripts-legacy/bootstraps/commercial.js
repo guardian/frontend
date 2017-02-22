@@ -16,7 +16,6 @@ define([
     'commercial/modules/hosted/gallery',
     'commercial/modules/hosted/onward-journey-carousel',
     'commercial/modules/hosted/onward',
-    'commercial/modules/slice-adverts',
     'commercial/modules/liveblog-adverts',
     'commercial/modules/sticky-top-banner',
     'commercial/modules/third-party-tags',
@@ -24,7 +23,7 @@ define([
     'commercial/modules/paid-containers',
     'commercial/modules/dfp/performance-logging',
     'common/modules/analytics/google',
-    'common/modules/commercial/user-features'
+    'commercial/modules/user-features'
 ], function (
     Promise,
     config,
@@ -43,7 +42,6 @@ define([
     hostedGallery,
     hostedOJCarousel,
     hostedOnward,
-    sliceAdverts,
     liveblogAdverts,
     stickyTopBanner,
     thirdPartyTags,
@@ -54,13 +52,12 @@ define([
     userFeatures
 ) {
     var primaryModules = [
+        ['cm-highMerch', highMerch.init],
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
         ['cm-prepare-googletag', prepareGoogletag.init, true],
-        ['cm-highMerch', highMerch.init],
         ['cm-articleAsideAdverts', articleAsideAdverts.init, true],
         ['cm-articleBodyAdverts', articleBodyAdverts.init, true],
-        ['cm-sliceAdverts', sliceAdverts.init, true],
         ['cm-liveblogAdverts', liveblogAdverts.init, true],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
@@ -122,7 +119,7 @@ define([
             }
 
             if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
-                closeDisabledSlots.init();
+                closeDisabledSlots.init(true);
                 return;
             }
 
