@@ -246,3 +246,21 @@
         padding-right: $gs-gutter;
     }
 }
+
+// Nav Mixins
+
+@mixin nav-links {
+    position: relative;
+    padding-left: .3em;
+    padding-right: .35em;
+    float: left;
+}
+
+@mixin trailing-slash {
+    position: absolute;
+    pointer-events: none;
+    content: '/';
+    //optically aligns slashes
+    top: 0;
+    right: -.19em;
+}
