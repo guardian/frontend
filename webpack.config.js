@@ -51,11 +51,10 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     },
     resolveLoader: {
         alias: {
-            // #wp-rjs
-            // these are only needed while require is still present
-            // should be updated once removed to be more wepback-like
+            // #karma-jest
+            // this is only needed for karma tests
+            // should be updated once karma is removed to be more wepback-like
             text: 'raw-loader',
-            inlineSvg: 'svg-loader',
         },
         modules: [
             path.resolve(__dirname, 'tools', 'webpack-loaders'),

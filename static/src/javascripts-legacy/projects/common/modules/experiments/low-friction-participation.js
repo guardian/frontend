@@ -7,7 +7,7 @@ define([
     'common/utils/$',
     'common/utils/fastdom-promise',
     'common/views/svg',
-    'inlineSvg!svgs/icon/star.svg',
+    'svg-loader!svgs/icon/star.svg',
     'text!common/views/experiments/participation/low-friction-wrapper.html',
     'text!common/views/experiments/participation/low-friction-contents.html',
     'text!common/views/experiments/participation/low-friction-buttons.html',

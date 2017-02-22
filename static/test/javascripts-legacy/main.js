@@ -41,7 +41,7 @@ requirejs.config({
         helpers:      '/base/static/test/javascripts-legacy/helpers',
         svgs:         '/base/static/src/inline-svgs',
         // plugins
-        inlineSvg:    'projects/common/utils/inlineSvg',
+        'svg-loader':    'projects/common/utils/svg-loader',
         'common/utils/raven': '/base/static/test/javascripts-legacy/fixtures/raven'
     }
 });
