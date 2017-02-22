@@ -2,11 +2,10 @@ package views.support
 
 import common.Edition
 import common.Maps.RichMap
-import conf.DiscussionAsset
-import conf.Configuration
 import conf.Configuration.environment
+import conf.{Configuration, DiscussionAsset}
 import model._
-import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
+import play.api.libs.json._
 import play.api.mvc.RequestHeader
 
 object JavaScriptPage {
@@ -23,10 +22,10 @@ object JavaScriptPage {
     }
 
     val config = (Configuration.javascript.config ++ pageData).mapValues(JsString.apply)
-    val sponsorshipType = {
-      val maybeSponsorshipType = page.metadata.branding(edition).map(_.brandingType.name)
-      maybeSponsorshipType.map("sponsorshipType" -> JsString(_))
-    }
+    val sponsorshipType = for {
+      commercial <- page.metadata.commercial
+      branding <- commercial.branding(edition)
+    } yield "sponsorshipType" -> JsString(branding.brandingType.name)
     val allowUserGeneratedContent = content.exists(_.allowUserGeneratedContent)
     val requiresMembershipAccess = content.exists(_.metadata.requiresMembershipAccess)
     val membershipAccess = content.flatMap(_.metadata.membershipAccess).getOrElse("")
@@ -41,9 +40,10 @@ object JavaScriptPage {
       "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(edition)),
       "shouldHideAdverts" -> JsBoolean(page match {
         case c: ContentPage if c.item.content.shouldHideAdverts => true
-        case c: CommercialExpiryPage => true
+        case _: CommercialExpiryPage => true
         case _ => false
-      })
+      }),
+      "adTargeting" -> Json.toJson(metaData.commercial.map(_.adTargeting(edition)).getOrElse(Map.empty))
     ) ++ sponsorshipType
 
     val javascriptConfig = page match {

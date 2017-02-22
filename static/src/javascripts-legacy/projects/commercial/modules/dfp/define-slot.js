@@ -5,27 +5,26 @@ define([
     'lodash/arrays/uniq',
     'lodash/arrays/flatten'
 ], function (urlUtils, config, detect, uniq, flatten) {
+    var adUnitOverride = (function () {
+        var urlVars = urlUtils.getUrlVars();
+        return urlVars['ad-unit'] ?
+            '/' + config.page.dfpAccountId + '/' + urlVars['ad-unit'] :
+            null;
+    }());
+
     return defineSlot;
 
     function defineSlot(adSlotNode, sizes) {
         var slotTarget = adSlotNode.getAttribute('data-name');
-        var adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
-        // if ?ad-unit=x, use that
-        var adUnit = adUnitOverride ?
-            '/' + config.page.dfpAccountId + '/' + adUnitOverride :
-            config.page.adUnit;
         var sizeOpts = getSizeOpts(sizes);
         var id = adSlotNode.id;
         var slot;
 
         if (adSlotNode.getAttribute('data-out-of-page')) {
-            slot = window.googletag.defineOutOfPageSlot(adUnit, id).defineSizeMapping(sizeOpts.sizeMapping);
+            slot = window.googletag.defineOutOfPageSlot(adUnitOverride || config.page.adUnit, id).defineSizeMapping(sizeOpts.sizeMapping);
         } else {
-            slot = window.googletag.defineSlot(adUnit, sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
+            slot = window.googletag.defineSlot(adUnitOverride || config.page.adUnit, sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
         }
-
-        setTargeting(adSlotNode, slot, 'data-series', 'se');
-        setTargeting(adSlotNode, slot, 'data-keywords', 'k');
 
         slot.addService(window.googletag.pubads())
             .setTargeting('slot', slotTarget);
@@ -45,19 +44,6 @@ define([
             sizeMapping: sizeMapping,
             size: size
         };
-    }
-
-    function setTargeting(adSlotNode, slot, attribute, targetKey) {
-        var data = adSlotNode.getAttribute(attribute);
-        if (data) {
-            slot.setTargeting(targetKey, parseKeywords(data));
-        }
-    }
-
-    function parseKeywords(keywords) {
-        return (keywords || '').split(',').map(function (keyword) {
-            return keyword.substr(keyword.lastIndexOf('/') + 1);
-        });
     }
 
     /**

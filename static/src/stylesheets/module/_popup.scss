@@ -296,7 +296,10 @@ $control-offset: 36 + $gs-gutter/2;
 /* Ad feedback menu
    ========================================================================== */
 .ad-feedback.popup__toggle {
-    float: right;
+    position: absolute;
+    padding-right: $gs-gutter/2;
+    right: 0;
+    top: 0;
     cursor: pointer;
 
     &::after {
@@ -311,7 +314,7 @@ $control-offset: 36 + $gs-gutter/2;
 
 .ad-feedback.popup {
     width: 240px;
-    top: $gs-gutter;
+    top: 100%;
     left: auto;
     right: $gs-gutter/2;
     border: 1px solid $neutral-4;
@@ -339,6 +342,9 @@ $control-offset: 36 + $gs-gutter/2;
         border: 0;
         padding: 0;
         background: transparent;
+        &:focus, &:hover {
+            background: $neutral-5;
+        }
     }
     .popup__item--option {
         position: relative;
@@ -388,11 +394,13 @@ $control-offset: 36 + $gs-gutter/2;
     .fc-container .ad-slot--container-inline & {
         @include mq($until: tablet) {
             top: -$gs-gutter/2;
+            left: $gs-gutter/2;
         }
     }
     .fc-slice__popular-mpu & {
         @include mq($until: desktop) {
             top: -$gs-gutter/2;
+            left: $gs-gutter/2;
         }
     }
 
