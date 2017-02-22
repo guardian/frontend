@@ -4,9 +4,9 @@ define([
     'Promise',
     'common/utils/$css',
     'common/utils/fastdom-promise',
-    'common/modules/commercial/commercial-features',
+    'commercial/modules/commercial-features',
     'common/utils/config',
-    'common/modules/commercial/user-features'
+    'commercial/modules/user-features'
 ], function (
     bonzo,
     qwery,
