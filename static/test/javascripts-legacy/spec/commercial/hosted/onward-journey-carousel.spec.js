@@ -2,7 +2,7 @@ define([
     'common/utils/$',
     'common/utils/fastdom-promise',
     'helpers/fixtures',
-    'text!fixtures/commercial/hosted/onward-journey-carousel.html',
+    'raw-loader!fixtures/commercial/hosted/onward-journey-carousel.html',
     'helpers/injector'
 ], function ($,
              fastdom,

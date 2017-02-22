@@ -4,7 +4,7 @@ define([
     'helpers/fixtures',
     'Promise',
     'fastdom',
-    'text!fixtures/commercial/hosted/gallery.html',
+    'raw-loader!fixtures/commercial/hosted/gallery.html',
     'helpers/injector'
 ], function (
     $,

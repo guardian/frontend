@@ -1,7 +1,7 @@
 define([
     'common/modules/commercial/contributions-utilities',
     'common/utils/template',
-    'text!common/views/contributions-epic-equal-buttons.html'
+    'raw-loader!common/views/contributions-epic-equal-buttons.html'
 ], function (
     contributionsUtilities,
     template,

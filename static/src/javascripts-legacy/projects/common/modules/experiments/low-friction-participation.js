@@ -8,9 +8,9 @@ define([
     'common/utils/fastdom-promise',
     'common/views/svg',
     'svg-loader!svgs/icon/star.svg',
-    'text!common/views/experiments/participation/low-friction-wrapper.html',
-    'text!common/views/experiments/participation/low-friction-contents.html',
-    'text!common/views/experiments/participation/low-friction-buttons.html',
+    'raw-loader!common/views/experiments/participation/low-friction-wrapper.html',
+    'raw-loader!common/views/experiments/participation/low-friction-contents.html',
+    'raw-loader!common/views/experiments/participation/low-friction-buttons.html',
     'common/utils/template',
     'common/utils/mediator'
 ], function (

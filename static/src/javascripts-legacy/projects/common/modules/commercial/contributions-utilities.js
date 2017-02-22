@@ -11,7 +11,7 @@ define([
     'common/utils/storage',
     'common/utils/geolocation',
     'common/utils/template',
-    'text!common/views/contributions-epic-equal-buttons.html'
+    'raw-loader!common/views/contributions-epic-equal-buttons.html'
 
 ], function (commercialFeatures,
              targetingTool,

@@ -10,7 +10,7 @@ define([
     'common/utils/mediator',
     'common/utils/fastdom-promise',
     'common/utils/private-browsing',
-    'text!common/views/experiments/tailor-survey.html',
+    'raw-loader!common/views/experiments/tailor-survey.html',
     'common/utils/fetch-json',
     'lodash/collections/forEach'
 ], function (

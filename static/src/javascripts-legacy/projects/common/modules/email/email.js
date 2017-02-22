@@ -15,8 +15,8 @@ define([
     'common/modules/analytics/google',
     'lodash/collections/contains',
     'common/views/svgs',
-    'text!common/views/email/submissionResponse.html',
-    'text!common/views/ui/close-button.html',
+    'raw-loader!common/views/email/submissionResponse.html',
+    'raw-loader!common/views/ui/close-button.html',
     'common/modules/identity/api',
     'common/modules/user-prefs',
     'lodash/arrays/uniq'
