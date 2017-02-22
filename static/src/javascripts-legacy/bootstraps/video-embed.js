@@ -12,8 +12,8 @@ define([
     'common/modules/video/events',
     'common/modules/media/videojs-plugins/fullscreener',
     'common/views/svgs',
-    'text!common/views/ui/loading.html',
-    'text!common/views/media/titlebar.html',
+    'raw-loader!common/views/ui/loading.html',
+    'raw-loader!common/views/media/titlebar.html',
     'lodash/functions/debounce',
     'common/modules/video/videojs-options'
 ], function (

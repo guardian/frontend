@@ -1,5 +1,7 @@
+/* Legacy SVG loader, still required by require.js */
+
 define([
-    'text'
+    'raw-loader'
 ], function (
     text
 ) {

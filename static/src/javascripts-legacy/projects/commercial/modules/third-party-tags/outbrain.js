@@ -10,7 +10,7 @@ define([
     'commercial/modules/dfp/track-ad-render',
     'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/outbrain-codes',
-    'text!commercial/views/outbrain.html',
+    'raw-loader!commercial/views/outbrain.html',
     'common/modules/email/run-checks',
     'common/modules/experiments/ab-test-clash',
     'common/utils/load-script'

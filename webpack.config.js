@@ -50,12 +50,6 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
         },
     },
     resolveLoader: {
-        alias: {
-            // #karma-jest
-            // this is only needed for karma tests
-            // should be updated once karma is removed to be more wepback-like
-            text: 'raw-loader',
-        },
         modules: [
             path.resolve(__dirname, 'tools', 'webpack-loaders'),
             'node_modules',
