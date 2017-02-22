@@ -5,8 +5,8 @@ define([
     'common/utils/config',
     'common/utils/$',
     'common/views/svg',
-    'inlineSvg!svgs/icon/hand.svg',
-    'inlineSvg!svgs/icon/arrow-right.svg',
+    'svg-loader!svgs/icon/hand.svg',
+    'svg-loader!svgs/icon/arrow-right.svg',
     'text!common/views/epic-supporter-cta.html',
     'text!common/views/acquisitions-visual.html'
 ], function (

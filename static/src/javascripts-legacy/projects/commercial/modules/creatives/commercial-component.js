@@ -30,7 +30,6 @@ define([
     reduce
 ) {
     var urlBuilders = {
-        soulmates:      defaultUrlBuilder('soulmates/mixed'),
         capiSingle:     complexUrlBuilder('capi-single', false, false, true),
         capi:           complexUrlBuilder('capi', false, false, true),
         paidforCard:    complexUrlBuilder('paid', '', false, true),
@@ -39,16 +38,8 @@ define([
         masterclasses:  complexUrlBuilder('masterclasses', 'ids', true),
         liveevents:     complexUrlBuilder('liveevents/event', 'id', true),
         travel:         complexUrlBuilder('travel/offers', 'ids', true),
-        multi:          complexUrlBuilder('multi', '', true),
-        book:           bookUrlBuilder('books/book'),
-        soulmatesGroup: soulmatesGroupUrlBuilder('soulmates/')
+        book:           bookUrlBuilder('books/book')
     };
-
-    function defaultUrlBuilder(url) {
-        return function (params) {
-            return buildComponentUrl(url, params);
-        };
-    }
 
     function bookUrlBuilder(url) {
         return function (params) {
@@ -58,12 +49,6 @@ define([
             } else {
                 return false;
             }
-        };
-    }
-
-    function soulmatesGroupUrlBuilder(url) {
-        return function (params) {
-            return buildComponentUrl(url + params.soulmatesFeedName, params);
         };
     }
 

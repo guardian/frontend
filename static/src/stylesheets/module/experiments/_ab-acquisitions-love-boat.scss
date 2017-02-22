@@ -134,13 +134,12 @@
 .contributions__option-button--visual__cta {
     width: 160px;
     height: 22px;
-    margin-right: $gs-gutter / 2;
+    margin: 0 $gs-gutter / 2;
 }
 
 .contributions__epic--visual--copy {
     @include fs-bodyCopy(2);
 }
-
 
 .contributions__epic--visual__cta {
     @include font($f-serif-headline, normal, 16, 20);
