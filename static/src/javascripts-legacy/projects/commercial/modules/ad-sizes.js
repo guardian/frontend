@@ -1,9 +1,14 @@
 define(function () {
+    var switchUnitId = {
+        mpu: 228,
+        leaderboard: 229,
+        billboard: 229
+    };
     var adSizes = {
         // standard ad sizes
-        billboard:              AdSize(970, 250),
-        leaderboard:            AdSize(728, 90),
-        mpu:                    AdSize(300, 250),
+        billboard:              AdSize(970, 250, switchUnitId.billboard),
+        leaderboard:            AdSize(728, 90,  switchUnitId.leaderboard),
+        mpu:                    AdSize(300, 250, switchUnitId.mpu),
         halfPage:               AdSize(300, 600),
         portrait:               AdSize(300, 1050),
 
@@ -29,7 +34,7 @@ define(function () {
 
     return adSizes;
 
-    function AdSize(width, height) {
+    function AdSize(width, height, switchUnitId) {
         function toString() {
             return width === height && height === 0 ? 'fluid' : width + ',' + height;
         }
@@ -37,6 +42,7 @@ define(function () {
         return Object.freeze({
             width: width,
             height: height,
+            switchUnitId: switchUnitId,
             toString: toString
         });
     }
