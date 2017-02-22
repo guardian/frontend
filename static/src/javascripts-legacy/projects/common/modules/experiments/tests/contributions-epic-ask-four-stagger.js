@@ -9,7 +9,7 @@ define([
         campaignId: 'kr1_epic_ask_four_stagger',
 
         start: '2017-01-24',
-        expiry: '2017-02-24',
+        expiry: '2017-03-24',
 
         author: 'Jonathan Rankin',
         description: 'Test to see if imposing a minimum-time-between-impressions for the epic has a positive effect on conversion',

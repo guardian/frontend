@@ -26,7 +26,7 @@ object CapiSingle {
     noArticles: Int = 1): CapiSingle = {
 
     val content = contentType.content
-    val branding = contentType.metadata.branding(edition)
+    val branding = contentType.metadata.commercial.flatMap(_.branding(edition))
     val imageInfo = CapiImages.buildImageData(content.trail.trailPicture, noArticles)
 
     CapiSingle(content.trail.headline, content.metadata.webUrl, content.trail.fields.trailText, imageInfo, content.tags.isAudio,

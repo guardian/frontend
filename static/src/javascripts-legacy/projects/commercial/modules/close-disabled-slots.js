@@ -1,21 +1,9 @@
 define([
-    'bonzo',
     'qwery',
-    'Promise',
-    'common/utils/$css',
-    'common/utils/fastdom-promise',
-    'commercial/modules/commercial-features',
-    'common/utils/config',
-    'commercial/modules/user-features'
+    'common/utils/fastdom-promise'
 ], function (
-    bonzo,
     qwery,
-    Promise,
-    $css,
-    fastdom,
-    commercialFeatures,
-    config,
-    userFeatures
+    fastdom
 ) {
     var adSlotSelector = '.js-ad-slot';
 
@@ -23,40 +11,24 @@ define([
         init: init
     };
 
-    function init() {
-
-        var modulePromises = [];
+    function init(force) {
 
         // Get all ad slots
-        qwery(adSlotSelector)
-            // convert them to bonzo objects
-            .map(bonzo)
+        var adSlots = qwery(adSlotSelector);
+
+        if (!force) {
             // remove the ones which should not be there
-            .filter(function ($adSlot) {
-                // filter out (and remove) hidden ads
-                return shouldDisableAdSlot($adSlot);
-            })
-            .forEach(function ($adSlot){
-                modulePromises.push(
-                    fastdom.write(function () {
-                        $adSlot.remove();
-                    })
-                );
+            adSlots = adSlots.filter(shouldDisableAdSlot);
+        }
+
+        return fastdom.write(function () {
+            adSlots.forEach(function (adSlot) {
+                adSlot.parentNode.removeChild(adSlot);
             });
-
-        return Promise.all(modulePromises);
+        });
     }
 
-    function shouldDisableAdSlot($adSlot) {
-        return isAdfreeUser() || isVisuallyHidden();
-
-        function isVisuallyHidden() {
-            return $css($adSlot, 'display') === 'none';
-        }
-
-        function isAdfreeUser() {
-            return config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser();
-        }
+    function shouldDisableAdSlot(adSlot) {
+        return window.getComputedStyle(adSlot).display === 'none';
     }
-
 });

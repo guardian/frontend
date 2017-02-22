@@ -14,8 +14,6 @@ define([
     'inlineSvg!svgs/icon/cross.svg',
     'inlineSvg!svgs/icon/quote.svg',
     'inlineSvg!svgs/logo/logo-guardian.svg',
-    'inlineSvg!svgs/commercial/logo-soulmates.svg',
-    'inlineSvg!svgs/commercial/soulmates-join.svg',
     'inlineSvg!svgs/commercial/logo-jobs.svg',
     'inlineSvg!svgs/commercial/logo-masterclasses.svg',
     'inlineSvg!svgs/commercial/paid-content.svg',
@@ -47,8 +45,7 @@ define([
     'inlineSvg!svgs/notifications-explainer-mobile.svg',
     'inlineSvg!svgs/commercial/adblock-coins-us.svg',
     'inlineSvg!svgs/icon/star.svg',
-    'common/views/svg',
-    'common/utils/config'
+    'common/views/svg'
 ], function (
     commentCount16icon,
     marque36icon,
@@ -61,8 +58,6 @@ define([
     crossIcon,
     quoteIcon,
     logoguardian,
-    logosoulmates,
-    logosoulmatesjoin,
     logojobs,
     logomasterclasses,
     paidContent,
@@ -94,8 +89,7 @@ define([
     notificationsExplainerMobile,
     adblockCoinsUS,
     star,
-    svg,
-    config
+    svg
 ) {
     var svgs = {
         commentCount16icon: commentCount16icon,
@@ -109,8 +103,6 @@ define([
         crossIcon: crossIcon,
         quoteIcon: quoteIcon,
         logoguardian: logoguardian,
-        logosoulmates: logosoulmates,
-        logosoulmatesjoin: logosoulmatesjoin,
         logojobs: logojobs,
         logomasterclasses: logomasterclasses,
         paidContent: paidContent,
@@ -145,10 +137,11 @@ define([
     };
 
     return function (name, classes, title) {
-        if (config.switches.webpack) {
+        // #wp-rjs - needed by karma
+        if (svgs[name].markup) { // webpack way
             return svg(svgs[name].markup, classes, title);
         }
-
+        // require way
         return svg(svgs[name], classes, title);
     };
 });

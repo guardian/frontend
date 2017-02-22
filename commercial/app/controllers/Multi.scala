@@ -76,45 +76,6 @@ class Multi(bestsellersAgent: BestsellersAgent,
     samples.map(realSamples => realSamples.flatMap(_.headOption))
   }
 
-  def renderMulti() = Action.async { implicit request =>
-    val requestedContent = request.getParameters("components").map {
-        case "books"  => "Book"
-        case "jobs"   => "Job"
-        case "travel" => "Travel"
-        case "masterclasses" => "Masterclass"
-        case "soulmates" => "Soulmates"
-        case _        => ""
-    }
-
-    val slotIds = request.getParameters("slotIds").map { slotId => if (slotId.trim.isEmpty) None else Some(slotId) }
-
-    val clickMacro = request.getParameter("clickMacro")
-
-    val omnitureId = request.getParameter("omnitureId")
-
-    val eventualContents = multiSample(requestedContent, slotIds, segment)
-
-    eventualContents map { contents =>
-      val content = contents map {
-        case b: Book        => views.html.books.booksBlended(b, clickMacro)
-        case j: Job         => views.html.jobs.jobsBlended(j, clickMacro)
-        case m: Masterclass => views.html.masterclasses.masterclassesBlended(m, clickMacro)
-        case p: MemberPair  => views.html.soulmates.soulmatesBlended(Random.shuffle(Seq(p.member1, p.member2)), clickMacro)
-        case t: TravelOffer => views.html.travel.travelBlended(t, clickMacro)
-        case _: LiveEvent   => Html("")
-        case _: Member      => Html("")
-      }
-
-      if (requestedContent.nonEmpty && content.size == requestedContent.size) {
-        Cached(componentMaxAge) {
-          jsonFormat.result(views.html.multi(content, omnitureId))
-        }
-      } else {
-        Cached(componentMaxAge)(jsonFormat.nilResult)
-      }
-    }
-  }
-
   def getMulti() = Action.async { implicit request =>
     val offerTypes = request.getParameters("offerTypes")
 

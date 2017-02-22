@@ -79,7 +79,6 @@
                     <option value="shop">Shop</option>
                     <option value="money">Money</option>
                     <option value="gardening">Gardening</option>
-                    <option value="soulmates">Soulmates</option>
                 </select>
             </dd>
         </dl>
@@ -132,7 +131,7 @@
                     });
 
                     var $palette    = $('#dfp-palette'),
-                        toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening', 'soulmates']
+                        toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening']
                             .map(function (tone) {
                                 return 'adverts--tone-' + tone;
                             });
@@ -429,98 +428,6 @@
 
     <div class="fc-container__inner">
         <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030887">
-                Merchandising: commercial component (soulmates) + feed
-            </a>
-        </h2>
-        <form class="js-soulmates-feed">
-            <label>Feed selection:
-                <select>
-                    <option value="mixednew" selected>Standard New</option>
-                    <option value="brighton">Brighton</option>
-                    <option value="east">East of England</option>
-                    <option value="eastmidlands">East Midlands</option>
-                    <option value="mature">Mature</option>
-                    <option value="men">Men</option>
-                    <option value="northeast">Northeast</option>
-                    <option value="northwest">Northwest</option>
-                    <option value="northwestnew">Northwest New</option>
-                    <option value="scotland">Scotland</option>
-                    <option value="south">South</option>
-                    <option value="southwest">Southwest</option>
-                    <option value="wales">Wales</option>
-                    <option value="westmidlands">West Midlands</option>
-                    <option value="women">Women</option>
-                    <option value="yorkshire">Yorkshire</option>
-                    <option value="young">Young</option>
-                </select>
-            </label>
-        </form>
-    </div>
-    <div class="fc-container fc-container--commercial">
-        <div class="js-merchandising-soulmates-feed ad-slot ad-slot--merchandising ad-slot--commercial-component"></div>
-    </div>
-    <script>
-    loadCommercial(function () {
-        require([
-            'bean',
-            'qwery',
-            'common/utils/$',
-            'commercial/modules/creatives/commercial-component'
-        ])
-            .then(function(
-                bean,
-                qwery,
-                $,
-                CommercialComponent
-            ) {
-                var $soulmatesFeed = $('.js-merchandising-soulmates-feed');
-
-                bean.on(qwery('.js-soulmates-feed select')[0], 'change', function (event) {
-                    var commercialComponent = new CommercialComponent($soulmatesFeed[0], {
-                        type: 'soulmatesGroup',
-                        omnitureId: '[%OmnitureID%]',
-                        clickMacro: '%%CLICK_URL_ESC%%',
-                        soulmatesFeedName: $(event.srcElement).val()
-                    });
-                    commercialComponent.postLoadEvents.soulmatesGroup = function () {
-                        $soulmatesFeed.removeClass('lazyloaded');
-                    };
-
-                    commercialComponent.create();
-                });
-                bean.fire(qwery('.js-soulmates-feed select')[0], 'change');
-            });
-        });
-    </script>
-
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030887">
-                Merchandising: commercial component (soulmates)
-            </a>
-        </h2>
-    </div>
-    <div class="fc-container fc-container--commercial">
-        <div class="js-merchandising-soulmates ad-slot ad-slot--merchandising ad-slot--commercial-component"></div>
-    </div>
-    <script>
-    loadCommercial(function () {
-        require(['commercial/modules/creatives/commercial-component'])
-            .then(function(
-                CommercialComponent
-            ) {
-                new CommercialComponent(document.querySelector('.js-merchandising-soulmates'), {
-                type: 'soulmates',
-                omnitureId: '[%OmnitureID%]',
-                clickMacro: '%%CLICK_URL_ESC%%'
-            }).create();
-        });
-    });
-    </script>
-
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
             <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10022487">Merchandising: blended component</a>
         </h2>
     </div>
@@ -533,7 +440,7 @@
                 ) {
                 new CommercialComponent(document.querySelector('.dfp-ad--merchandising-multi'), {
                     type: 'multi',
-                    components: ['soulmates', 'jobs', 'books', 'masterclasses'],
+                    components: ['jobs', 'books', 'masterclasses'],
                     slotIds: ['','','',''],
                     clickMacro: '%%CLICK_URL_ESC%%',
                     omnitureId: '[%OmnitureID%]'
@@ -653,42 +560,6 @@
                 ("relevance", "high"),
                 ("Toneclass", "commercial--tone-brand"),
                 ("prominent", "true"),
-                ("offer1title", "Offer 1 Title"),
-                ("offer1linktext", "Offer 1 Link Text"),
-                ("offer1url", "http://www.theguardian.com/uk"),
-                ("offer1meta", "Offer 1 Meta"),
-                ("offer1image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer2title", "Offer 2 Title"),
-                ("offer2linktext", "Offer 2 Link Text"),
-                ("offer2url", "http://www.theguardian.com/uk"),
-                ("offer2meta", "Offer 1 Meta"),
-                ("offer2image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer3title", "Offer 3 Title"),
-                ("offer3linktext", "Offer 3 Link Text"),
-                ("offer3url", "http://www.theguardian.com/uk"),
-                ("offer3meta", "Offer 1 Meta"),
-                ("offer3image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer4title", "Offer 4 Title"),
-                ("offer4linktext", "Offer 4 Link Text"),
-                ("offer4url", "http://www.theguardian.com/uk"),
-                ("offer4meta", "Offer 1 Meta"),
-                ("offer4image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("omnitureId", "[%OmnitureID%]"),
-                ("clickMacro", "%%CLICK_URL_ESC%%")
-            ))
-        ),
-        Map(
-            ("id", "multiple2"),
-            ("type", "multiple"),
-            ("creativeId", "10025847"),
-            ("args", Json.obj(
-                ("creative", "manual-multiple"),
-                ("base__url", "https://soulmates.theguardian.com"),
-                ("offerlinktext", "Offer link text"),
-                ("viewalltext", "View all text"),
-                ("offeramount", "offer-amount"),
-                ("relevance", "high"),
-                ("Toneclass", "commercial--tone-soulmates"),
                 ("offer1title", "Offer 1 Title"),
                 ("offer1linktext", "Offer 1 Link Text"),
                 ("offer1url", "http://www.theguardian.com/uk"),
