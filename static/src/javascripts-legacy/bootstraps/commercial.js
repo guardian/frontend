@@ -23,7 +23,7 @@ define([
     'commercial/modules/paid-containers',
     'commercial/modules/dfp/performance-logging',
     'common/modules/analytics/google',
-    'common/modules/commercial/user-features'
+    'commercial/modules/user-features'
 ], function (
     Promise,
     config,
@@ -119,7 +119,7 @@ define([
             }
 
             if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
-                closeDisabledSlots.init();
+                closeDisabledSlots.init(true);
                 return;
             }
 

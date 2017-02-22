@@ -355,21 +355,17 @@ Loader.prototype.getDiscussionClosed = function() {
 };
 
 Loader.prototype.renderCommentCount = function () {
-    if (window.curlConfig.paths['discussion-frontend-preact']) {
-        return discussionFrontend.load(ab, this, {
-            apiHost: config.page.discussionApiUrl,
-            avatarImagesHost: config.page.avatarImagesUrl,
-            closed: this.getDiscussionClosed(),
-            discussionId: this.getDiscussionId(),
-            element: document.getElementsByClassName('js-discussion-external-frontend')[0],
-            userFromCookie: !!Id.getUserFromCookie(),
-            profileUrl: config.page.idUrl,
-            profileClientId: config.switches.registerWithPhone ? 'comments' : '',
-            Promise: Promise
-        });
-    } else {
-        this.setState('empty');
-    }
+    return discussionFrontend.load(ab, this, {
+        apiHost: config.page.discussionApiUrl,
+        avatarImagesHost: config.page.avatarImagesUrl,
+        closed: this.getDiscussionClosed(),
+        discussionId: this.getDiscussionId(),
+        element: document.getElementsByClassName('js-discussion-external-frontend')[0],
+        userFromCookie: !!Id.getUserFromCookie(),
+        profileUrl: config.page.idUrl,
+        profileClientId: config.switches.registerWithPhone ? 'comments' : '',
+        Promise: Promise
+    });
 };
 
 Loader.prototype.getCommentIdFromHash = function() {

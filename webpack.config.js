@@ -1,16 +1,20 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
-
 const webpack = require('webpack');
 
 const outputName = 'app-webpack';
 
 module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     devtool: env === 'dev' ? 'inline-source-map' : 'source-map',
-    entry: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
+    entry: {
+        [outputName]: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
+        'admin-webpack': path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'admin.js'),
+        'video-embed-webpack': path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'video-embed.js'),
+        'youtube-embed-webpack': path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'youtube-embed.js'),
+    },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: `${env === 'dev' ? '' : '[chunkhash]/'}${outputName}.js`,
+        filename: `${env === 'dev' ? '' : '[chunkhash]/'}[name].js`,
         chunkFilename: `${env === 'dev' ? '' : '[chunkhash]/'}${outputName}.chunk-[id].js`,
     },
     resolve: {
@@ -38,7 +42,8 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
 
             stripe: 'stripe/stripe.min',
             svgs: path.join(__dirname, 'static', 'src', 'inline-svgs'),
-            'ophan/ng': 'ophan/ophan.ng',
+            'ophan/ng': 'ophan-tracker-js',
+            'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
 
             // #wp-rjs once r.js is gone, these can be unaliased and modules updated
             react: 'react/addons',

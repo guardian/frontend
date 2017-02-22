@@ -6,7 +6,7 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/closest',
     'common/utils/mediator',
-    'common/modules/commercial/ad-sizes',
+    'commercial/modules/ad-sizes',
     'commercial/modules/sticky-mpu',
     'commercial/modules/dfp/apply-creative-template',
     'commercial/modules/dfp/render-advert-label',
@@ -69,7 +69,7 @@ define([
      */
     sizeCallbacks[adSizes.mpu] = function (_, advert) {
         var $node = bonzo(advert.node);
-        if ($node.hasClass('ad-slot--right')) {
+        if ($node.hasClass('js-sticky-mpu')) {
             stickyMpu($node);
         } else {
             return addFluid(['ad-slot--revealer'])(_, advert);

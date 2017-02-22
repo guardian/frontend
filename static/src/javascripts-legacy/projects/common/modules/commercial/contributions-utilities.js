@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/commercial-features',
+    'commercial/modules/commercial-features',
     'common/modules/commercial/targeting-tool',
     'common/modules/commercial/acquisitions-view-log',
     'common/utils/$',
@@ -9,7 +9,9 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/utils/geolocation'
+    'common/utils/geolocation',
+    'common/utils/template',
+    'text!common/views/contributions-epic-equal-buttons.html'
 
 ], function (commercialFeatures,
              targetingTool,
@@ -21,7 +23,9 @@ define([
              fastdom,
              mediator,
              storage,
-             geolocation) {
+             geolocation,
+             template,
+             contributionsEpicEqualButtons) {
 
     var membershipURL = 'https://membership.theguardian.com/supporter';
     var contributionsURL = 'https://contribute.theguardian.com';
@@ -114,6 +118,19 @@ define([
         return this.id + ':' + event;
     };
 
+    function controlTemplate(membershipUrl, contributionUrl) {
+        return template(contributionsEpicEqualButtons, {
+            linkUrl1: membershipUrl,
+            linkUrl2: contributionUrl,
+            title: 'Since you’re here …',
+            p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism open to all. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+            p2: 'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
+            p3: '',
+            cta1: 'Become a Supporter',
+            cta2: 'Make a contribution'
+        });
+    }
+
     function ContributionsABTestVariant(options, test) {
         this.campaignId = test.campaignId;
         this.id = options.id;
@@ -123,10 +140,12 @@ define([
         this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, test.contributionsCampaignPrefix);
         this.membershipURL = options.membershipURL || this.makeURL(membershipURL, test.membershipCampaignPrefix);
 
+        this.template = options.template || controlTemplate;
+
         var trackingCampaignId  = test.epic ? 'epic_' + test.campaignId : test.campaignId;
 
         this.test = function () {
-            var component = $.create(options.template(this.contributeURL, this.membershipURL));
+            var component = $.create(this.template(this.membershipURL, this.contributeURL));
             var onInsert = options.onInsert || noop;
             var onView = options.onView || noop;
 
