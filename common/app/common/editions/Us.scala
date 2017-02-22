@@ -64,7 +64,7 @@ object Us extends Edition(
       NavItem(soccer, footballNav),
       NavItem(technology),
       NavItem(arts, cultureLocalNav),
-      NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
+      NavItem(lifeandstyle, Seq(foodanddrink, recipes, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
       NavItem(fashion),
       NavItem(business, businessLocalNav),
       NavItem(travel, Seq(usaTravel, europetravel, uktravel, skiingTravel)),
