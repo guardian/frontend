@@ -5,9 +5,9 @@ define([
     'common/utils/detect',
     'common/modules/component',
     'common/utils/mediator',
-    'common/modules/commercial/dfp/add-slot',
-    'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/commercial-features',
+    'commercial/modules/dfp/add-slot',
+    'commercial/modules/dfp/create-slot',
+    'commercial/modules/commercial-features',
     'common/modules/experiments/ab',
     'lodash/collections/contains'
 ], function (

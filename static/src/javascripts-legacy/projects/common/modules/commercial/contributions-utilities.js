@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/commercial-features',
+    'commercial/modules/commercial-features',
     'common/modules/commercial/targeting-tool',
     'common/modules/commercial/acquisitions-view-log',
     'common/utils/$',

@@ -2,7 +2,7 @@
 @import common.Edition
 @import views.html.fragments.commercial.pageLogo
 
-@for(branding <- page.metadata.branding(Edition(request))) {
+@for(commercial <- page.metadata.commercial; branding <- commercial.branding(Edition(request))) {
     @pageLogo(branding,
               content.tags.isInteractive,
               onDarkBackground = content.tags.isAudio || content.tags.isVideo || content.tags.isGallery

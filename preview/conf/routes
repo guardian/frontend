@@ -25,7 +25,6 @@ GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|
 GET        /commercial/travel/offers.json                                                      commercial.controllers.TravelOffersController.renderTravel
 GET        /commercial/jobs.json                                                               commercial.controllers.JobsController.renderJobs
 GET        /commercial/masterclasses.json                                                      commercial.controllers.MasterclassesController.renderMasterclasses
-GET        /commercial/soulmates/$subgroup<\w+>.json                                           commercial.controllers.SoulmatesController.renderSoulmates(subgroup)
 GET        /commercial/books/book.json                                                         commercial.controllers.BookOffersController.renderBook
 GET        /commercial/books/books.json                                                        commercial.controllers.BookOffersController.renderBooks
 GET        /advertiser-content/:campaignName/:pageName                                         commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)

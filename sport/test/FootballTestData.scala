@@ -107,7 +107,7 @@ object FootballTestData {
         "Football",
         "Liverpool",
         "https://www.theguardian.com/football/liverpool",
-        None, None, None, None, None, None, None, Seq(), None, None, None
+        None, None, None, None, None, None, None, Seq(), None, None
       ),
       None,
       None,

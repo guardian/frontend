@@ -10,9 +10,7 @@ define([
     // In rjs this module is shimmed in the config
     // https://github.com/guardian/frontend/blob/webpack-redux/tools/__tasks__/compile/javascript/rjs.config.js#L42
     // We can move this up to the define() when we go 100% WP
-    if (config.switches.webpack) {
-        require('videojs-ads-lib');
-    }
+    require('videojs-ads-lib');
 
     return video;
 });

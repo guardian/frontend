@@ -59,7 +59,7 @@ define([
                 // No implementation
             });
 
-            injector.mock('common/modules/commercial/dfp/apply-creative-template', function () {
+            injector.mock('commercial/modules/dfp/apply-creative-template', function () {
                 return Promise.resolve();
             });
 
@@ -70,11 +70,11 @@ define([
             injector.require([
                 'commercial/modules/dfp/prepare-googletag',
                 'commercial/modules/dfp/fill-advert-slots',
-                'common/modules/commercial/dfp/get-adverts',
-                'common/modules/commercial/dfp/get-creative-ids',
+                'commercial/modules/dfp/get-adverts',
+                'commercial/modules/dfp/get-creative-ids',
                 'common/utils/config',
                 'commercial/modules/dfp/performance-logging',
-                'common/modules/commercial/commercial-features',
+                'commercial/modules/commercial-features',
                 'common/utils/detect',
                 'commercial/modules/close-disabled-slots',
                 'commercial/modules/dfp/dfp-env'
@@ -328,17 +328,6 @@ define([
             it('should send page level keywords', function (done) {
                 dfp.prepareGoogletag.init(noop, noop).then(function () {
                     expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
-                }).then(done).catch(done.fail);
-            });
-
-            it('should send container level keywords', function (done) {
-                $('.js-ad-slot').first().attr('data-keywords', 'country/china');
-                dfp.prepareGoogletag.init(noop, noop)
-                .then(function() {
-                    return dfp.fillAdvertSlots.init(noop, noop);
-                })
-                .then(function () {
-                    expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['china']);
                 }).then(done).catch(done.fail);
             });
 

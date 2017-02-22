@@ -3,7 +3,7 @@ define([
     'qwery',
     'common/utils/config',
     'common/utils/detect',
-    'common/modules/commercial/user-features'
+    'commercial/modules/user-features'
 
 ], function (
     bean,
