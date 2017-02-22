@@ -1,7 +1,7 @@
 define([
     'common/utils/config',
     'common/utils/assign',
-    'common/modules/commercial/ad-sizes'
+    'commercial/modules/ad-sizes'
 ], function (
     config,
     assign,
@@ -52,6 +52,14 @@ define([
             name: 'merchandising-high',
             sizeMappings: {
                 mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.merchandisingHigh, adSizes.fluid)
+            }
+        },
+        'high-merch-lucky': {
+            label: false,
+            refresh: false,
+            name: 'merchandising-high-lucky',
+            sizeMappings: {
+                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.fluid)
             }
         },
         'high-merch-paid': {

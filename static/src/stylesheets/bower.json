@@ -1,6 +1,0 @@
-{
-  "name": "frontend-common-css",
-  "dependencies": {
-    "sass-mq": "~3.0.0"
-  }
-}

@@ -42,7 +42,7 @@ define([
 
         beforeEach(function (done) {
             injector.require([
-                'common/modules/commercial/commercial-features',
+                'commercial/modules/commercial-features',
                 'common/modules/commercial/membership-engagement-banner',
                 'common/utils/config',
                 'common/utils/storage',

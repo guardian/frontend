@@ -6,7 +6,7 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/closest',
     'common/utils/mediator',
-    'common/modules/commercial/ad-sizes',
+    'commercial/modules/ad-sizes',
     'commercial/modules/sticky-mpu',
     'commercial/modules/dfp/apply-creative-template',
     'commercial/modules/dfp/render-advert-label',
