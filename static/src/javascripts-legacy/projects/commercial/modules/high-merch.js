@@ -13,6 +13,10 @@ define([
     };
 
     function isLuckyBastard() {
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         var testName = 'PaidContentVsOutbrain';
         console.log(ab.testCanBeRun(testName));
         console.log(ab.getTestVariantId(testName) === 'paid-content');
