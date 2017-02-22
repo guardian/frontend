@@ -186,7 +186,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
 
   private def findCollectionByMetadata(metadata: Metadata, path: String, config: ConfigJson): Option[String] =
     (for {
-      front <- config.fronts.get(path)
+      front <- config.fronts.get(path).toList
       collectionId <- front.collections
       collectionConfig <- config.collections.get(collectionId) if collectionConfig.metadata.exists(_.contains(metadata))
     } yield collectionId).headOption
