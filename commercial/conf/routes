@@ -20,8 +20,6 @@ GET         /commercial/masterclasses.json                                  comm
 GET        /commercial/api/soulmates.json                                   commercial.controllers.SoulmatesController.getSoulmates
 
 # Book merchandising components
-GET         /commercial/books/book.json                                     commercial.controllers.BookOffersController.renderBook
-GET         /commercial/books/books.json                                    commercial.controllers.BookOffersController.renderBooks
 GET         /commercial/books/api/book.json                                 commercial.controllers.BookOffersController.getBook
 GET         /commercial/books/api/books.json                                commercial.controllers.BookOffersController.getBooks
 
