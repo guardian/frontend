@@ -191,7 +191,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
       collectionConfig <- config.collections.get(collectionId) if collectionConfig.metadata.exists(_.contains(metadata))
     } yield collectionId).headOption
 
-  private def withHigPriorityCollections(parentPath: String, config: ConfigJson, collections: List[String]): List[String] =
+  private def withHighPriorityCollections(parentPath: String, config: ConfigJson, collections: List[String]): List[String] =
     collections match {
       case head :: tail =>
         List(
@@ -204,9 +204,9 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
 
   private def enrichEmailFronts(path: String, config: ConfigJson)(collections: List[String]) =
     path match {
-      case "email/uk/daily" => withHigPriorityCollections("uk", config, collections)
-      case "email/us/daily" => withHigPriorityCollections("us", config, collections)
-      case "email/au/daily" => withHigPriorityCollections("au", config, collections)
+      case "email/uk/daily" => withHighPriorityCollections("uk", config, collections)
+      case "email/us/daily" => withHighPriorityCollections("us", config, collections)
+      case "email/au/daily" => withHighPriorityCollections("au", config, collections)
       case _ => collections
     }
 
