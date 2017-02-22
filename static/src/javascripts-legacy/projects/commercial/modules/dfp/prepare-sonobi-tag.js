@@ -2,7 +2,7 @@ define([
     'Promise',
     'common/utils/config',
     'common/utils/load-script',
-    'common/modules/commercial/commercial-features',
+    'commercial/modules/commercial-features',
     'commercial/modules/dfp/dfp-env'
 ], function(
     Promise,

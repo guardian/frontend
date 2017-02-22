@@ -35,7 +35,7 @@ define([
     describe('Outbrain', function () {
         var loadScript = jasmine.createSpy('loadScript');
         beforeEach(function (done) {
-            injector.mock('common/modules/commercial/dfp/track-ad-render', function(id) {
+            injector.mock('commercial/modules/dfp/track-ad-render', function(id) {
                 return Promise.resolve(ads[id]);
             });
             injector.mock('common/utils/load-script', loadScript);
@@ -44,7 +44,7 @@ define([
                 'commercial/modules/third-party-tags/outbrain-sections',
                 'common/utils/config',
                 'common/utils/detect',
-                'common/modules/commercial/commercial-features'
+                'commercial/modules/commercial-features'
             ], function () {
                 sut      = arguments[0];
                 getSection = arguments[1];

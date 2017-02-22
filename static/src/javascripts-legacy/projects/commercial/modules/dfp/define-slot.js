@@ -3,8 +3,9 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'lodash/arrays/uniq',
-    'lodash/arrays/flatten'
-], function (urlUtils, config, detect, uniq, flatten) {
+    'lodash/arrays/flatten',
+    'commercial/modules/dfp/prepare-switch-tag'
+], function (urlUtils, config, detect, uniq, flatten, prepareSwitchTag) {
     var adUnitOverride = (function () {
         var urlVars = urlUtils.getUrlVars();
         return urlVars['ad-unit'] ?
@@ -24,6 +25,11 @@ define([
             slot = window.googletag.defineOutOfPageSlot(adUnitOverride || config.page.adUnit, id).defineSizeMapping(sizeOpts.sizeMapping);
         } else {
             slot = window.googletag.defineSlot(adUnitOverride || config.page.adUnit, sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
+            prepareSwitchTag.pushAdUnit(id, sizeOpts);
+        }
+
+        if (slotTarget === 'im' && config.page.isbn) {
+            slot.setTargeting('isbn', config.page.isbn);
         }
 
         slot.addService(window.googletag.pubads())

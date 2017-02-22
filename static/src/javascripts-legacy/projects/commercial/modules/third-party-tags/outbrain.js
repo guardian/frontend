@@ -6,8 +6,8 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'common/utils/steady-page',
-    'common/modules/commercial/dfp/track-ad-render',
-    'common/modules/commercial/commercial-features',
+    'commercial/modules/dfp/track-ad-render',
+    'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/outbrain-codes',
     'text!commercial/views/outbrain.html',
     'common/modules/email/run-checks',
@@ -82,8 +82,8 @@ define([
                 if (slot === 'merchandising') {
                     $(selectors[slot].widget).replaceWith($outbrain[0]);
                 }
-                if (slot !== 'nonCompliant' && slot !== 'merchandising') {
-                    emailRunChecks.setCompliantOutbrain();
+                if (slot === 'nonCompliant' || slot === 'merchandising') {
+                    emailRunChecks.setNonCompliantOutbrain();
                 }
                 $container.append(widgetHtml);
                 $outbrain.css('display', 'block');
@@ -201,6 +201,8 @@ define([
                     });
                 }
             });
+        } else {
+            emailRunChecks.setNonCompliantOutbrain();
         }
 
         return Promise.resolve(true);

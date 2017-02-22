@@ -26,7 +26,7 @@ define([
         };
 
         var injector = new Injector();
-        injector.mock('common/modules/commercial/dfp/track-ad-render', function () {
+        injector.mock('commercial/modules/dfp/track-ad-render', function () {
             return Promise.resolve(true);
         });
 
@@ -35,7 +35,7 @@ define([
                 'common/utils/detect',
                 'commercial/modules/messenger',
                 'commercial/modules/sticky-top-banner',
-                'common/modules/commercial/commercial-features'
+                'commercial/modules/commercial-features'
             ], function($1, $2, $3, $4) {
                 detect = $1;
                 messenger = $2;

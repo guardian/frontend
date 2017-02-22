@@ -14,7 +14,7 @@ define(['helpers/injector'], function (Injector) {
         beforeEach(function (done) {
             injector.require([
                 'common/utils/cookies',
-                'common/modules/commercial/user-features',
+                'commercial/modules/user-features',
                 'common/modules/identity/api'
             ], function () {
                 cookies = arguments[0];

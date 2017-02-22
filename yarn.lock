@@ -1792,6 +1792,10 @@ ctype@0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/ctype/-/ctype-0.5.3.tgz#82c18c2461f74114ef16c135224ad0b9144ca12f"
 
+curl@cujojs/curl#0.8.9:
+  version "0.8.9"
+  resolved "https://codeload.github.com/cujojs/curl/tar.gz/261841045bc488c438d34347b588adfc1855faf1"
+
 currently-unhandled@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/currently-unhandled/-/currently-unhandled-0.4.1.tgz#988df33feab191ef799a61369dd76c17adf957ea"
@@ -6100,6 +6104,10 @@ sass-lint:
     merge "^1.2.0"
     path-is-absolute "^1.0.0"
     util "^0.10.3"
+
+sass-mq@~3.0.0:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/sass-mq/-/sass-mq-3.3.2.tgz#3472e04c31a432bcd55b3b604edc72ae9a4def1a"
 
 sax@0.4.2:
   version "0.4.2"

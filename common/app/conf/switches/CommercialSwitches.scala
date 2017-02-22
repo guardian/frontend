@@ -215,4 +215,13 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val preflightServerSideAdCallSwitch: Switch = Switch(
+    group = SwitchGroup.Commercial,
+    name = "preflight-ad-call",
+    description = "A test feature to evaluate Switch Concepts' server-to-server preflight ad call",
+    owners = Owner.group(SwitchGroup.Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
 }

@@ -229,6 +229,11 @@ class GuardianConfiguration extends Logging {
     lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12911.js")
   }
 
+  object switch {
+    val jsLocation = "//delivery.guardian.switchadhub.com/0.js"
+    val switchAdHubUrl = "https://delivery.guardian.switchadhub.com/"
+  }
+
   object frontend {
     lazy val store = configuration.getMandatoryStringProperty("frontend.store")
     lazy val webEngineersEmail = configuration.getStringProperty("email.web.engineers")
@@ -454,7 +459,8 @@ class GuardianConfiguration extends Logging {
       ("googletagJsUrl", googletag.jsLocation),
       ("membershipUrl", id.membershipUrl),
       ("stripePublicToken", id.stripePublicToken),
-      ("sonobiHeaderBiddingJsUrl", sonobi.jsLocation)
+      ("sonobiHeaderBiddingJsUrl", sonobi.jsLocation),
+      ("switchPreFlightJsUrl", switch.jsLocation)
     )
 
     lazy val pageData: Map[String, String] = {
