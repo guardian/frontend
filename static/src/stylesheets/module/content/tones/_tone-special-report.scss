@@ -61,9 +61,6 @@
         .content__dateline,
         .meta__numbers .sharecount__heading,
         .meta__numbers .sharecount__value,
-        .submeta__head {
-            color: #ffffff;
-        }
 
         .meta__numbers .inline-share {
             fill: #ffffff;
@@ -77,9 +74,6 @@
         .meta__social,
         .meta__numbers,
         .most-viewed-container--media,
-        .submeta {
-            border-color: mix($news-support-6, #ffffff, 70%);
-        }
 
         .button--tag {
             background-color: mix($news-support-6, $neutral-1, 70%);
