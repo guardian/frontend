@@ -30,11 +30,9 @@ class OptInController extends Controller {
   def handle(feature: String, choice: String) = Action { implicit request =>
     Cached(60)(WithoutRevalidationResult(feature match {
       case "headerseven" => headerSeven.opt(choice)
-      case "webpack" => webpack.opt(choice)
       case _ => NotFound
     }))
   }
 
   val headerSeven = OptInFeature("new_header_seven_opt_in")
-  val webpack = OptInFeature("webpack_opt_in")
 }

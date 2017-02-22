@@ -2,7 +2,7 @@ define([
     'admin/bootstraps/abtests',
     'admin/bootstraps/radiator',
     'admin/bootstraps/commercial-browser-performance',
-    'domReady'
+    'domready'
 ], function (
     abTests,
     radiator,

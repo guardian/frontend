@@ -6,8 +6,9 @@ define([
     'common/utils/config',
     'common/utils/load-script',
     'common/utils/fastdom-promise',
-    'common/modules/commercial/commercial-features',
+    'commercial/modules/commercial-features',
     'commercial/modules/build-page-targeting',
+    'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/on-slot-render',
     'commercial/modules/dfp/on-slot-load',
@@ -31,6 +32,7 @@ define([
     fastdom,
     commercialFeatures,
     buildPageTargeting,
+    closeSlots,
     dfpEnv,
     onSlotRender,
     onSlotLoad,
@@ -87,9 +89,6 @@ define([
     }
 
     function removeAdSlots() {
-        return fastdom.write(function () {
-            bonzo(qwery(dfpEnv.adSlotSelector)).remove();
-        });
+        return closeSlots.init(true);
     }
-
 });

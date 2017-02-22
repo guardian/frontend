@@ -57,8 +57,6 @@ static/src/stylesheets/icons/*
 .springBeans
 .cache
 
-bower_components
-
 # Scala test framework #
 local.conf
 
@@ -71,4 +69,3 @@ static/src/stylesheets/pasteup/.npmrc
 # SSL certificates
 *.crt
 *.key
-

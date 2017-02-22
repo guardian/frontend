@@ -5,7 +5,7 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/config',
     'common/utils/mediator',
-    'common/modules/commercial/dfp/track-ad-render',
+    'commercial/modules/dfp/track-ad-render',
     'lodash/functions/memoize'
 ], function (
     qwery,

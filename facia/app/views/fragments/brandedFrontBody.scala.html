@@ -4,7 +4,7 @@
 @import views.support.Commercial.container.isFirstNonThrasherContainer
 @import views.support.RenderClasses
 
-@faciaPage.metadata.branding(Edition(request)) match {
+@faciaPage.metadata.commercial.flatMap(_.branding(Edition(request))) match {
 
     case Some(branding) => {
         @if(faciaPage.collections.nonEmpty) {

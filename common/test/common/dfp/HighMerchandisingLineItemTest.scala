@@ -71,7 +71,6 @@ class HighMerchandisingLineItemTest extends FlatSpec with Matchers {
         None,
         Seq.empty,
         None,
-        None,
         None
       ),None,None,None
     ))

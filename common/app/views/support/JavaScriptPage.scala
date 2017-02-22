@@ -22,10 +22,10 @@ object JavaScriptPage {
     }
 
     val config = (Configuration.javascript.config ++ pageData).mapValues(JsString.apply)
-    val sponsorshipType = {
-      val maybeSponsorshipType = page.metadata.branding(edition).map(_.brandingType.name)
-      maybeSponsorshipType.map("sponsorshipType" -> JsString(_))
-    }
+    val sponsorshipType = for {
+      commercial <- page.metadata.commercial
+      branding <- commercial.branding(edition)
+    } yield "sponsorshipType" -> JsString(branding.brandingType.name)
     val allowUserGeneratedContent = content.exists(_.allowUserGeneratedContent)
     val requiresMembershipAccess = content.exists(_.metadata.requiresMembershipAccess)
     val membershipAccess = content.flatMap(_.metadata.membershipAccess).getOrElse("")
@@ -43,7 +43,7 @@ object JavaScriptPage {
         case _: CommercialExpiryPage => true
         case _ => false
       }),
-      "adTargeting" -> Json.toJson(metaData.adContextTargeting(edition))
+      "adTargeting" -> Json.toJson(metaData.commercial.map(_.adTargeting(edition)).getOrElse(Map.empty))
     ) ++ sponsorshipType
 
     val javascriptConfig = page match {

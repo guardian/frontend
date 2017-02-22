@@ -64,6 +64,7 @@ module.exports = (sassGlob, { remify = true, browsers = BROWSERS_LIST } = {}) =>
             file: filePath,
             outFile: dest,
             sourceMapContents: true,
+            includePaths: ['node_modules'],
         }, SASS_SETTINGS);
 
         const postcssPlugins = [autoprefixer({ browsers })];

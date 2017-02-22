@@ -22,6 +22,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-paid-content-vs-outbrain",
+    "Displays a paid content widget instead of Outbrain",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-guardian-today-signup-messaging",
     "Test different signup messaging for Guardian Today emails",
     owners = Seq(Owner.withGithub("davidfurey")),
@@ -96,7 +106,7 @@ trait ABTestSwitches {
     "Test to see if imposing a minimum-time-between-impressions for the epic has a positive effect on conversion",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 24),
+    sellByDate = new LocalDate(2017, 3, 24),
     exposeClientSide = true
   )
 

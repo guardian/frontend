@@ -76,7 +76,6 @@
     .byline,
     .content__dateline,
     .content__meta-container,
-    .submeta hr,
     .commentcount,
     .meta__numbers,
     .meta__social,
@@ -105,5 +104,21 @@
             }
         }
     }
+    .submeta__section-labels .submeta__link{
+        color: $neutral-6;
+    }
 
+    .submeta__section-labels,
+    .submeta__keywords {
+        border-color: $neutral-2;
+    }
+
+    .submeta__keywords .submeta__link {
+        color: $neutral-3;
+    }
+
+
+    .submeta__link:after {
+        color: $neutral-2;
+    }
 }
