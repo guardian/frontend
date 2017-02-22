@@ -84,8 +84,8 @@ define([
                 if (slot === 'merchandising') {
                     $(selectors[slot].widget).replaceWith($outbrain[0]);
                 }
-                if (slot !== 'nonCompliant' && slot !== 'merchandising') {
-                    emailRunChecks.setCompliantOutbrain();
+                if (slot === 'nonCompliant' || slot === 'merchandising') {
+                    emailRunChecks.setNonCompliantOutbrain();
                 }
                 $container.append(widgetHtml);
                 $outbrain.css('display', 'block');
@@ -207,6 +207,8 @@ define([
                     });
                 }
             });
+        } else {
+            emailRunChecks.setNonCompliantOutbrain();
         }
 
         return Promise.resolve(true);
