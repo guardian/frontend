@@ -14,6 +14,8 @@ import play.filters.gzip.{GzipFilterConfig, GzipFilter}
 import scala.concurrent.Future
 
 class GzipperConfig() extends GzipFilterConfig {
+  // These paths are used as a whitelist that means the server's
+  // outgoing response for this request will be uncompressed.
   val excludeFromGzip = List(
     "/esi/ad-call"
   )
