@@ -71,6 +71,7 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
       ))
 
       wsClient.url(Configuration.switch.switchAdHubUrl)
+        .withQueryString("load_id" -> pageViewId)
         .post(adHubRequest)
         .onComplete({
           case Success(result) => {
