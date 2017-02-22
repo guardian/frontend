@@ -21,7 +21,6 @@ GET         /commercial/books/api/book.json                                 comm
 GET         /commercial/books/api/books.json                                commercial.controllers.BookOffersController.getBooks
 
 # Live events merchandising components
-GET         /commercial/liveevents/event.json                               commercial.controllers.LiveEventsController.renderEvent
 GET         /commercial/api/liveevent.json                                  commercial.controllers.LiveEventsController.getLiveEvent
 
 # Multiple offer merchandising components

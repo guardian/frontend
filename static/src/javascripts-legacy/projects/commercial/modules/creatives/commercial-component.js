@@ -32,8 +32,7 @@ define([
     var urlBuilders = {
         capiSingle:     complexUrlBuilder('capi-single', false, false, true),
         capi:           complexUrlBuilder('capi', false, false, true),
-        paidforCard:    complexUrlBuilder('paid', '', false, true),
-        liveevents:     complexUrlBuilder('liveevents/event', 'id', true)
+        paidforCard:    complexUrlBuilder('paid', '', false, true)
     };
 
     function complexUrlBuilder(url, withSpecificId, withKeywords, withSection) {

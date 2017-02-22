@@ -276,8 +276,6 @@ GET            /commercial/jobs/api/jobs.json                                   
 GET            /commercial/api/soulmates.json                                                                                    commercial.controllers.SoulmatesController.getSoulmates
 GET            /commercial/books/api/book.json                                                                                   commercial.controllers.BookOffersController.getBook
 GET            /commercial/books/api/books.json                                                                                  commercial.controllers.BookOffersController.getBooks
-GET            /commercial/liveevents/event.json                                                                                 commercial.controllers.LiveEventsController.renderEvent
-GET            /commercial/api/liveevent.json                                                                                    commercial.controllers.LiveEventsController.getLiveEvent
 GET            /commercial/capi.json                                                                                             commercial.controllers.ContentApiOffersController.itemsJson
 GET            /commercial/capi                                                                                                  commercial.controllers.ContentApiOffersController.itemsHtml
 GET            /commercial/capi-single.json                                                                                      commercial.controllers.ContentApiOffersController.itemJson
