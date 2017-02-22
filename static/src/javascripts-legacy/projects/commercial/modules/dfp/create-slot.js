@@ -59,7 +59,7 @@ define([
             refresh: false,
             name: 'merchandising-high-lucky',
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.merchandisingHigh, adSizes.fluid)
+                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.fluid)
             }
         },
         'high-merch-paid': {
