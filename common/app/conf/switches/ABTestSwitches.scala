@@ -56,7 +56,7 @@ trait ABTestSwitches {
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 23),
+    sellByDate = new LocalDate(2017, 3, 9),
     exposeClientSide = true
   )
 
@@ -66,7 +66,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 23),
+    sellByDate = new LocalDate(2017, 3, 9),
     exposeClientSide = true
   )
 
