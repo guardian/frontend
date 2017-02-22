@@ -2,7 +2,7 @@ define([
     'Promise',
     'common/utils/config',
     'common/utils/load-script',
-    'commercial/modules//ad-sizes',
+    'commercial/modules/ad-sizes',
     'commercial/modules/commercial-features',
     'commercial/modules/dfp/dfp-env',
     'lodash/arrays/uniq'
