@@ -6,7 +6,7 @@ define([
     'common/modules/commercial/dfp/add-slot',
     'common/modules/commercial/dfp/create-slot',
     'common/modules/commercial/dfp/track-ad-render',
-    'common/modules/commercial/commercial-features'
+    'commercial/modules/commercial-features'
 ], function (Promise, config, fastdom, ab, addSlot, createSlot, trackAdRender, commercialFeatures) {
     return {
         init: init
@@ -14,6 +14,8 @@ define([
 
     function isLuckyBastard() {
         var testName = 'PaidContentVsOutbrain';
+        console.log(ab.testCanBeRun(testName));
+        console.log(ab.getTestVariantId(testName) === 'paid-content');
         return ab.testCanBeRun(testName) && ab.getTestVariantId(testName) === 'paid-content';
     }
 
@@ -52,9 +54,15 @@ define([
             var isLoResLoaded = args[1];
 
             if (!isHiResLoaded || !isLoResLoaded) {
+                var container = document.querySelector(isHiResLoaded ?
+                    '.js-container--commercial' :
+                    !(config.page.seriesId || config.page.blogIds) ?
+                    '.js-related, .js-outbrain-anchor' :
+                    '.js-outbrain-anchor'
+                );
                 return [
                     createSlot('high-merch-lucky'),
-                    isHiResLoaded ? document.querySelector('.js-container--commercial') : container
+                    container
                 ];
             }
         })
