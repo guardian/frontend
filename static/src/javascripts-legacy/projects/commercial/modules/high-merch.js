@@ -14,8 +14,6 @@ define([
 
     function isLuckyBastard() {
         var testName = 'PaidContentVsOutbrain';
-        console.log(ab.testCanBeRun(testName));
-        console.log(ab.getTestVariantId(testName) === 'paid-content');
         return ab.testCanBeRun(testName) && ab.getTestVariantId(testName) === 'paid-content';
     }
 
@@ -24,7 +22,6 @@ define([
             return Promise.resolve();
         }
 
-        var slotName = config.page.isPaidContent ? 'high-merch-paid' : 'high-merch';
         var anchorSelector = config.page.commentable ? '#comments + *' : '.content-footer > :first-child';
         var anchor = document.querySelector(anchorSelector);
         var container = document.createElement('div');
@@ -33,7 +30,7 @@ define([
         container.appendChild(createSlot(config.page.isPaidContent ? 'high-merch-paid' : 'high-merch'));
 
         if (isLuckyBastard()) {
-            insertAlternativeSlot(container);
+            insertAlternativeSlot();
         }
 
         return fastdom.write(function () {
@@ -41,7 +38,7 @@ define([
         });
     }
 
-    function insertAlternativeSlot(container) {
+    function insertAlternativeSlot() {
         trackAdRender('dfp-ad--merchandising-high')
         .then(function (isHiResLoaded) {
             return Promise.all([
