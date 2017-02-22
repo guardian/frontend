@@ -1,6 +1,6 @@
 define([
-], function (
-) {
+    'common/utils/config'
+], function (config) {
     return function () {
         this.id = 'PaidContentVsOutbrain';
         this.start = '2017-02-21';
@@ -16,7 +16,7 @@ define([
         this.showForSensitive = true;
 
         this.canRun = function () {
-          return true;
+          return config.page.edition === 'UK';
         };
 
         this.variants = [
