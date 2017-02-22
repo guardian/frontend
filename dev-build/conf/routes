@@ -271,7 +271,6 @@ GET            /admin/football/api/squad/:teamId                                
 
 
 # Commercial
-GET            /commercial/travel/offers.json                                                                                    commercial.controllers.TravelOffersController.renderTravel
 GET            /commercial/travel/api/offers.json                                                                                commercial.controllers.TravelOffersController.getTravel
 GET            /commercial/jobs/api/jobs.json                                                                                    commercial.controllers.JobsController.getJobs
 GET            /commercial/masterclasses.json                                                                                    commercial.controllers.MasterclassesController.renderMasterclasses

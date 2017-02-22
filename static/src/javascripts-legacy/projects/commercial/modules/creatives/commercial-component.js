@@ -36,7 +36,6 @@ define([
         books:          complexUrlBuilder('books/books', 'isbns'),
         masterclasses:  complexUrlBuilder('masterclasses', 'ids', true),
         liveevents:     complexUrlBuilder('liveevents/event', 'id', true),
-        travel:         complexUrlBuilder('travel/offers', 'ids', true),
         book:           bookUrlBuilder('books/book')
     };
 
