@@ -184,7 +184,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
       .map(_.map(PressedContent.make))
   }
 
-  private def collectionWithMetadata(metadata: Metadata, path: String, config: ConfigJson): Option[String] =
+  private def findCollectionByMetadata(metadata: Metadata, path: String, config: ConfigJson): Option[String] =
     (for {
       front <- config.fronts.get(path)
       collectionId <- front.collections
@@ -195,9 +195,9 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
     collections match {
       case head :: tail =>
         List(
-          collectionWithMetadata(Breaking, parentPath, config),
+          findCollectionByMetadata(Breaking, parentPath, config),
           Some(head),
-          collectionWithMetadata(Special, parentPath, config)
+          findCollectionByMetadata(Special, parentPath, config)
         ).flatten ++ tail
       case Nil => Nil
     }
