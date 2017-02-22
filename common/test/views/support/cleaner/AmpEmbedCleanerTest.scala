@@ -206,6 +206,31 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-facebook").attr("layout") should be("responsive")
   }
 
+  "AmpEmbedCleaner" should "replace a facebook non-guardian video embed, containing a '.' char in the username, with a valid amp-facebook video embed" in {
+    val facebookOrganisationId = "Channel.4"
+    val faceookVideoId = "10154084521542330"
+    val facebookVideoUrl = s"https://www.facebook.com/$facebookOrganisationId/videos/$faceookVideoId/"
+    val result = cleanDocumentWithVideos(facebookVideoUrl)
+    result.getElementsByTag("amp-facebook").size should be(1)
+    result.getElementsByTag("amp-facebook").attr("data-href") should be(s"https://www.facebook.com/$facebookOrganisationId/videos/$faceookVideoId")
+    result.getElementsByTag("amp-facebook").attr("data-embed-as") should be("video")
+    result.getElementsByTag("amp-facebook").attr("width") should be("5")
+    result.getElementsByTag("amp-facebook").attr("height") should be("3")
+    result.getElementsByTag("amp-facebook").attr("layout") should be("responsive")
+  }
+
+  "AmpEmbedCleaner" should "replace a facebook non-guardian video embed, containing a '-' char in the username, with a valid amp-facebook video embed" in {
+    val facebookOrganisationId = "Channel-4"
+    val faceookVideoId = "10154084521542330"
+    val facebookVideoUrl = s"https://www.facebook.com/$facebookOrganisationId/videos/$faceookVideoId/"
+    val result = cleanDocumentWithVideos(facebookVideoUrl)
+    result.getElementsByTag("amp-facebook").size should be(1)
+    result.getElementsByTag("amp-facebook").attr("data-href") should be(s"https://www.facebook.com/$facebookOrganisationId/videos/$faceookVideoId")
+    result.getElementsByTag("amp-facebook").attr("data-embed-as") should be("video")
+    result.getElementsByTag("amp-facebook").attr("width") should be("5")
+    result.getElementsByTag("amp-facebook").attr("height") should be("3")
+    result.getElementsByTag("amp-facebook").attr("layout") should be("responsive")
+  }
 
   "AmpEmbedCleaner" should "not replace an iframe in a fake Facebook video-element with an amp-facebook element" in {
     val result = cleanDocumentWithVideos(
