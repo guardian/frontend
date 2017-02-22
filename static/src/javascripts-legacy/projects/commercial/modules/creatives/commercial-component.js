@@ -33,7 +33,6 @@ define([
         capiSingle:     complexUrlBuilder('capi-single', false, false, true),
         capi:           complexUrlBuilder('capi', false, false, true),
         paidforCard:    complexUrlBuilder('paid', '', false, true),
-        masterclasses:  complexUrlBuilder('masterclasses', 'ids', true),
         liveevents:     complexUrlBuilder('liveevents/event', 'id', true)
     };
 

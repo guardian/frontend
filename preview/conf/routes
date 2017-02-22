@@ -22,7 +22,6 @@ GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|
 
 
 # Commercial
-GET        /commercial/masterclasses.json                                                      commercial.controllers.MasterclassesController.renderMasterclasses
 GET        /advertiser-content/:campaignName/:pageName                                         commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
 GET        /advertiser-content/:campaignName/:pageName/:cType/onward.json                      commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET        /advertiser-content/:campaignName/:pageName/autoplay.json                           commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
