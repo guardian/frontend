@@ -1,7 +1,7 @@
 define([
     'common/utils/config',
     'common/utils/assign',
-    'common/modules/commercial/ad-sizes'
+    'commercial/modules/ad-sizes'
 ], function (
     config,
     assign,

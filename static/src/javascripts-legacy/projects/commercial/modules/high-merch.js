@@ -3,9 +3,9 @@ define([
     'common/utils/config',
     'common/utils/fastdom-promise',
     'common/modules/experiments/ab',
-    'common/modules/commercial/dfp/add-slot',
-    'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/dfp/track-ad-render',
+    'commercial/modules/dfp/add-slot',
+    'commercial/modules/dfp/create-slot',
+    'commercial/modules/dfp/track-ad-render',
     'commercial/modules/commercial-features'
 ], function (Promise, config, fastdom, ab, addSlot, createSlot, trackAdRender, commercialFeatures) {
     return {
@@ -13,10 +13,6 @@ define([
     };
 
     function isLuckyBastard() {
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
         var testName = 'PaidContentVsOutbrain';
         console.log(ab.testCanBeRun(testName));
         console.log(ab.getTestVariantId(testName) === 'paid-content');

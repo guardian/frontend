@@ -10,7 +10,7 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/template',
     'common/modules/experiments/ab',
-    'common/modules/commercial/commercial-features',
+    'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/audience-science-gateway',
     'commercial/modules/third-party-tags/audience-science-pql',
     'commercial/modules/third-party-tags/imr-worldwide',

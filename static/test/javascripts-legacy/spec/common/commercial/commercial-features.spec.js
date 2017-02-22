@@ -7,12 +7,12 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
 
         beforeEach(function (done) {
             injector.require([
-                'common/modules/commercial/commercial-features',
+                'commercial/modules/commercial-features',
                 'common/utils/config',
                 'common/utils/location',
                 'common/modules/user-prefs',
                 'common/utils/detect',
-                'common/modules/commercial/user-features',
+                'commercial/modules/user-features',
                 'common/modules/identity/api'
             ], function () {
                 CommercialFeatures = arguments[0].constructor;
