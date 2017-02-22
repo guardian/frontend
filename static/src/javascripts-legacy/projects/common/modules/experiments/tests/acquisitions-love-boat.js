@@ -107,7 +107,6 @@ define([
                         },
 
                         supportText: '<span class="brand">Guardian Supporters</span> help to secure our future. If you love the work we do, support us now and show how much you care.',
-                        buttonIcon: svg(arrowRight.markup),
                         link: supportUrl
                     });
                 },
@@ -139,7 +138,6 @@ define([
                         },
 
                         supportText: '<span class="brand">Guardian Supporters</span> help to secure our future. Please support our journalism and together we can hold the powerful to account.',
-                        buttonIcon: svg(arrowRight.markup),
                         link: supportUrl
                     });
                 },

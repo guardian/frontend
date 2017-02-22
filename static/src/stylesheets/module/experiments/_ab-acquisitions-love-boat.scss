@@ -132,38 +132,9 @@
 }
 
 .contributions__option-button--visual__cta {
-    @include font($f-sans-serif-text, normal, 16, 18);
-    background: $guardian-brand;
-    color: white;
-    text-align: left;
-    width: auto;
-    height: 35px;
-    margin-left: 0;
-    padding: $gs-baseline $gs-baseline * 2;
-
-    @include mq(tablet) {
-        margin-left: $gs-baseline * 2;
-    }
-
-    .text {
-        float: left;
-        width: 150px;
-    }
-
-    .icon {
-        float: right;
-        position: relative;
-        left: 15px;
-        margin-left: $gs-gutter / 2;
-        width: 32px;
-        height: 32px;
-        border: 1px solid white;
-        border-radius: 32px;
-    }
-
-    &:hover {
-        background: darken($guardian-brand, 10%);
-    }
+    width: 160px;
+    height: 22px;
+    margin-right: $gs-gutter / 2;
 }
 
 .contributions__epic--visual--copy {
