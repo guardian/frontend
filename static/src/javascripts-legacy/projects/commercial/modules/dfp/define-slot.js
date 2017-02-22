@@ -26,6 +26,10 @@ define([
             slot = window.googletag.defineSlot(adUnitOverride || config.page.adUnit, sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
         }
 
+        if (slotTarget === 'im' && config.page.isbn) {
+            slot.setTargeting('isbn', config.page.isbn);
+        }
+
         slot.addService(window.googletag.pubads())
             .setTargeting('slot', slotTarget);
 
