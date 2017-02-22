@@ -137,7 +137,7 @@ define([
     };
 
     return function (name, classes, title) {
-        // #wp-rjs - needed by karma
+        // #karma-jest - needed by karma
         if (svgs[name].markup) { // webpack way
             return svg(svgs[name].markup, classes, title);
         }
