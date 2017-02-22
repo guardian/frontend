@@ -119,7 +119,7 @@ define([
             }
 
             if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
-                closeDisabledSlots.init();
+                closeDisabledSlots.init(true);
                 return;
             }
 

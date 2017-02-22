@@ -1,28 +1,24 @@
 define([
-    'lodash/functions/debounce',
     'common/utils/detect',
+    'common/utils/mediator',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/breakpoint-name-to-attribute'
-], function (debounce, detect, dfpEnv, breakpointNameToAttribute) {
+], function (detect, mediator, dfpEnv, breakpointNameToAttribute) {
     /* hasBreakpointChanged: ((string, string) -> undefined) -> undefined. Invokes the callback if a breakpoint has been crossed since last invocation */
     var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
 
     /* breakpointNames: array<string>. List of breakpoint names */
     var breakpointNames = detect.breakpoints.map(function (_) { return _.name; });
 
-    /* resizeTimeout: integer. Number of milliseconds to debounce the resize event */
-    var resizeTimeout = 2000;
-
-    /* windowResize: () -> undefined. Resize handler */
-    var windowResize = debounce(function () {
-        // refresh on resize
-        hasBreakpointChanged(refresh);
-    }, resizeTimeout);
-
     return refreshOnResize;
 
     function refreshOnResize() {
-        window.addEventListener('resize', windowResize);
+        mediator.on('window:throttledResize', windowResize);
+    }
+
+    function windowResize() {
+        // refresh on resize
+        hasBreakpointChanged(refresh);
     }
 
     // TODO: reset advert flags

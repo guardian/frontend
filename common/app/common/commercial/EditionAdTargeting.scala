@@ -5,11 +5,11 @@ import com.gu.contentapi.client.model.v1.{Content, Section, Tag}
 import common.Edition
 import play.api.libs.json.Json
 
-case class AdContextTargeting(edition: Edition, params: Map[String, String])
+case class EditionAdTargeting(edition: Edition, params: Map[String, String])
 
-object AdContextTargeting {
+object EditionAdTargeting {
 
-  implicit val adContextTargetingFormat = Json.format[AdContextTargeting]
+  implicit val editionAdTargetingFormat = Json.format[EditionAdTargeting]
 
   private val adCall = new AdCall(
     platform = "ng",
@@ -19,24 +19,24 @@ object AdContextTargeting {
     }
   )
 
-  private def editionTargeting(targeting: Edition => Map[AdCallParamKey, String]): Seq[AdContextTargeting] = {
+  private def editionTargeting(targeting: Edition => Map[AdCallParamKey, String]): Seq[EditionAdTargeting] = {
 
     def stringifyKeys(params: Map[AdCallParamKey, String]) = for ((k, v) <- params) yield (k.name, v)
 
     for (edition <- Edition.all)
-      yield AdContextTargeting(edition, params = stringifyKeys(targeting(edition)))
+      yield EditionAdTargeting(edition, params = stringifyKeys(targeting(edition)))
   }
 
-  def fromContent(item: Content): Seq[AdContextTargeting] =
+  def fromContent(item: Content): Seq[EditionAdTargeting] =
     editionTargeting(edition => adCall.pageLevelContextTargeting(item, edition.id))
 
-  def fromTag(tag: Tag): Seq[AdContextTargeting] =
+  def fromTag(tag: Tag): Seq[EditionAdTargeting] =
     editionTargeting(edition => adCall.pageLevelContextTargeting(tag, edition.id))
 
-  def fromSection(section: Section): Seq[AdContextTargeting] =
+  def fromSection(section: Section): Seq[EditionAdTargeting] =
     editionTargeting(edition => adCall.pageLevelContextTargeting(section, edition.id))
 
-  def targeting(adContextTargetings: Option[Seq[AdContextTargeting]], edition: Edition): Map[String, String] = {
+  def targeting(adContextTargetings: Option[Seq[EditionAdTargeting]], edition: Edition): Map[String, String] = {
     val params = for {
       targetings <- adContextTargetings
       targeting <- targetings.find(_.edition == edition)

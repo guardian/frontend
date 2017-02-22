@@ -2,7 +2,6 @@ package views.support
 
 import com.gu.commercial.branding._
 import common.Edition
-import common.Edition.defaultEdition
 import common.commercial._
 import layout.{ColumnAndCards, ContentCard, FaciaContainer, PaidCard}
 import model.{Page, PressedPage}
@@ -31,16 +30,12 @@ object Commercial {
     s"/guardian-labs$glabsUrlSuffix"
   }
 
-  private def isBranding(page: Page, edition: Edition)(p: Branding => Boolean): Boolean =
-    page.metadata.branding(edition).exists(p)
-
-  def isPaidContent(page: Page): Boolean = isBranding(page, defaultEdition)(_.isPaid)
+  def isPaidContent(page: Page): Boolean = page.metadata.commercial.exists(_.isPaidContent)
 
   def isSponsoredContent(page: Page)(implicit request: RequestHeader): Boolean =
-    isBranding(page, Edition(request))(_.isSponsored)
+    page.metadata.commercial.exists(_.isSponsored(Edition(request)))
 
-  def isFoundationFundedContent(page: Page)(implicit request: RequestHeader): Boolean =
-    isBranding(page, defaultEdition)(_.isFoundationFunded)
+  def isFoundationFundedContent(page: Page): Boolean = page.metadata.commercial.exists(_.isFoundationFunded)
 
   def isBrandedContent(page: Page)(implicit request: RequestHeader): Boolean = {
     isPaidContent(page) || isSponsoredContent(page) || isFoundationFundedContent(page)
@@ -49,9 +44,9 @@ object Commercial {
   def listSponsorLogosOnPage(page: Page)(implicit request: RequestHeader): Option[Seq[String]] = {
 
     val edition = Edition(request)
-    def sponsor(branding: Edition => Option[Branding]) = branding(edition) map (_.sponsorName.toLowerCase)
+    def sponsor(branding: Branding) = branding.sponsorName.toLowerCase
 
-    val pageSponsor = sponsor(page.metadata.branding)
+    val pageSponsor = page.metadata.commercial.flatMap(_.branding(edition)).map(sponsor)
 
     val allSponsors = page match {
       case front: PressedPage =>
@@ -66,7 +61,7 @@ object Commercial {
         val cardSponsors = front.collections.flatMap { container =>
           container.branding(edition) match {
             case Some(PaidMultiSponsorBranding) =>
-              container.curatedPlusBackfillDeduplicated.flatMap(card => sponsor(card.branding))
+              container.curatedPlusBackfillDeduplicated.flatMap(_.branding(edition).map(sponsor))
             case _ => Nil
           }
         }
@@ -80,9 +75,10 @@ object Commercial {
     allSponsors map (_ map escapeJavaScript)
   }
 
-  def brandingType(page: Page)(implicit request: RequestHeader): Option[BrandingType] = {
-    page.metadata.branding(Edition(request)).map(_.brandingType)
-  }
+  def brandingType(page: Page)(implicit request: RequestHeader): Option[BrandingType] = for {
+    commercial <- page.metadata.commercial
+    branding <- commercial.branding(Edition(request))
+  } yield branding.brandingType
 
   object topAboveNavSlot {
 
