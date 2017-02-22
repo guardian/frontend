@@ -42,10 +42,22 @@
 
 
                     @mainVideo.videos.caption.map { caption =>
-                        <figcaption data-link-name="Video caption link" class="caption caption--main caption--video" itemprop="description">
-                            @fragments.inlineSvg("information", "icon", List("rounded-icon", "centered-icon"))
-                            @Html(caption)
-                        </figcaption>
+                        @if(mvt.ABNewNavVariantSeven.isParticipating) {
+                            <input type="checkbox" id="show-caption" class="mobile-only u-h">
+
+                            <label class="mobile-only reveal-caption reveal-caption--img" for="show-caption">
+                                @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon"))
+                            </label>
+
+                            <figcaption data-link-name="Video caption link" class="caption caption--main caption--video" itemprop="description">
+                                @Html(caption)
+                            </figcaption>
+                        } else {
+                            <figcaption data-link-name="Video caption link" class="caption caption--main caption--video" itemprop="description">
+                                @fragments.inlineSvg("information", "icon", List("rounded-icon", "centered-icon"))
+                                @Html(caption)
+                            </figcaption>
+                        }
                     }
 
                 </figure>

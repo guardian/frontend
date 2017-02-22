@@ -744,16 +744,25 @@ $caption-button-size: 32px;
             z-index: 1;
             background-color: rgba($neutral-1, .4);
             border-radius: 50%;
+
+            &:after {
+                content: '';
+                position: absolute;
+                top: -$gs-gutter;
+                right: -$gs-gutter;
+                bottom: -$gs-gutter;
+                left: -$gs-gutter;
+                border-radius: 50%;
+                z-index: -1;
+            }
         }
+
         .reveal-caption--img {
             bottom: $gs-baseline/2;
         }
 
+        .caption--main.caption--img,
         .caption--main.caption--video {
-            padding-bottom: 0;
-        }
-
-        .caption--main.caption--img {
             position: absolute;
             background: rgba($multimedia-support-5, .8);
             color: #ffffff;
@@ -769,7 +778,8 @@ $caption-button-size: 32px;
                 color: #ffffff;
             }
 
-            &.caption--img {
+            &.caption--img,
+            &.caption--video {
                 bottom: 0;
                 padding-bottom: $gs-baseline;
             }
