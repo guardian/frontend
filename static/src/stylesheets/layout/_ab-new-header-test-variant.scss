@@ -554,11 +554,12 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     font-size: 15px;
     line-height: 18px;
     text-transform: none;
-    padding: 0 ($gs-gutter * 2) $gs-baseline $navigation-horizontal-padding;
+    padding: $gs-baseline $gs-gutter $gs-baseline * 2 $navigation-horizontal-padding;
+    background-color: rgba(0, 0, 0, .2);
 
     .main-menu__icon__svg {
-        width: 1.4em;
-        height: 1.4em;
+        width: 1.3em;
+        height: 1.3em;
     }
 
     a {
