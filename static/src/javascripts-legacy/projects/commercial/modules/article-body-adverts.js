@@ -5,11 +5,11 @@ define([
     'common/utils/detect',
     'common/utils/fastdom-promise',
     'common/modules/article/space-filler',
-    'common/modules/commercial/ad-sizes',
-    'common/modules/commercial/dfp/add-slot',
-    'common/modules/commercial/dfp/track-ad-render',
-    'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/commercial-features'
+    'commercial/modules/ad-sizes',
+    'commercial/modules/dfp/add-slot',
+    'commercial/modules/dfp/track-ad-render',
+    'commercial/modules/dfp/create-slot',
+    'commercial/modules/commercial-features'
 ], function (
     Promise,
     qwery,
