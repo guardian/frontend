@@ -132,16 +132,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-one-line-edits-v2",
-    "Test 2 variations to the epic: (1) social proofing; and (2) paywall + no billionaire owner",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 28),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-love-boat",
     "Tests 2 new designs for acquisitions asks",
     owners = Seq(Owner.withGithub("desbo")),
