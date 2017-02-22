@@ -1,26 +1,14 @@
 define([
     'qwery',
-    'common/utils/$',
     'common/utils/config',
-    'common/utils/detect',
     'common/modules/component',
     'common/utils/mediator',
-    'common/modules/commercial/dfp/add-slot',
-    'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/commercial-features',
-    'common/modules/experiments/ab',
     'lodash/collections/contains'
 ], function (
     qwery,
-    $,
     config,
-    detect,
     Component,
     mediator,
-    addSlot,
-    createSlot,
-    commercialFeatures,
-    ab,
     contains
 ) {
 
