@@ -53,6 +53,8 @@ define([
             if (!isHiResLoaded || !isLoResLoaded) {
                 var container = document.querySelector(isHiResLoaded ?
                     '.js-container--commercial' :
+                    !(config.page.seriesId || config.page.blogIds) ?
+                    '.js-related, .js-outbrain-anchor' :
                     '.js-outbrain-anchor'
                 );
                 return [
