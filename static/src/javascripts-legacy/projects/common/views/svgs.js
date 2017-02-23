@@ -45,6 +45,7 @@ define([
     'svg-loader!svgs/notifications-explainer-mobile.svg',
     'svg-loader!svgs/commercial/adblock-coins-us.svg',
     'svg-loader!svgs/icon/star.svg',
+    'svg-loader!svgs/icon/hand.svg',
     'common/views/svg'
 ], function (
     commentCount16icon,
@@ -89,6 +90,7 @@ define([
     notificationsExplainerMobile,
     adblockCoinsUS,
     star,
+    hand,
     svg
 ) {
     var svgs = {
@@ -133,6 +135,7 @@ define([
         notificationsExplainerDesktop: notificationsExplainerDesktop,
         notificationsExplainerMobile: notificationsExplainerMobile,
         star: star,
+        hand: hand,
         logomembershipwhite: membershipLogoWhite
     };
 

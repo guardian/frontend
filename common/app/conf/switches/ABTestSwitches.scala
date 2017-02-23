@@ -132,6 +132,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-love-boat",
+    "Tests 2 new designs for acquisitions asks",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 22),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-tailor-survey",
     "Integrate Tailor with ab tests",
     owners = Seq(Owner.withGithub("oilnam")),

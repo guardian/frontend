@@ -30,7 +30,6 @@ define([
     var membershipURL = 'https://membership.theguardian.com/supporter';
     var contributionsURL = 'https://contribute.theguardian.com';
 
-
     var lastContributionDate = cookies.get('gu.contributions.contrib-timestamp');
 
     /**
