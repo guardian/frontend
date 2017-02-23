@@ -22,6 +22,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-membership-engagement-banner-copy-test",
+    "Test copy for the engagement banner in all countries aside from the US and Australia",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-paid-content-vs-outbrain",
     "Displays a paid content widget instead of Outbrain",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
