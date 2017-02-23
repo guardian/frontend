@@ -133,7 +133,7 @@
     top: 0;
     z-index: $zindex-sticky;
 
-    .top-banner-ad-container ~ & {
+    .has-super-sticky-banner & {
         position: static;
     }
 
