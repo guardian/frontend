@@ -1,12 +1,12 @@
 define([
     'common/utils/template',
     'lodash/utilities/identity',
-    'text!commercial/views/creatives/manual-card.html',
-    'text!commercial/views/creatives/manual-card-large.html',
-    'text!commercial/views/creatives/manual-card-cta.html',
-    'text!commercial/views/creatives/manual-container-button.html',
-    'text!commercial/views/creatives/manual-container-cta.html',
-    'text!commercial/views/creatives/manual-container-cta-membership.html'
+    'raw-loader!commercial/views/creatives/manual-card.html',
+    'raw-loader!commercial/views/creatives/manual-card-large.html',
+    'raw-loader!commercial/views/creatives/manual-card-cta.html',
+    'raw-loader!commercial/views/creatives/manual-container-button.html',
+    'raw-loader!commercial/views/creatives/manual-container-cta.html',
+    'raw-loader!commercial/views/creatives/manual-container-cta-membership.html'
 ], function (
     template,
     identity,

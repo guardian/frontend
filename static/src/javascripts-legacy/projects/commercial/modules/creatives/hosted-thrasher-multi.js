@@ -3,7 +3,7 @@ define([
     'common/utils/config',
     'common/utils/template',
     'commercial/modules/creatives/add-tracking-pixel',
-    'text!commercial/views/creatives/hosted-thrasher-multi.html'
+    'raw-loader!commercial/views/creatives/hosted-thrasher-multi.html'
 ], function (
     fastdom,
     config,

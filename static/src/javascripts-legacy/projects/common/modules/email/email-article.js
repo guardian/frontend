@@ -5,7 +5,7 @@ define([
     'fastdom',
     'common/modules/email/email',
     'common/utils/config',
-    'text!common/views/email/iframe.html',
+    'raw-loader!common/views/email/iframe.html',
     'common/utils/template',
     'common/modules/article/space-filler',
     'common/utils/robust',

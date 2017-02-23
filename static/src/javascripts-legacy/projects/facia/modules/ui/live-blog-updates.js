@@ -9,7 +9,7 @@ define([
     'common/utils/mediator',
     'common/utils/storage',
     'common/utils/template',
-    'text!facia/views/liveblog-block.html',
+    'raw-loader!facia/views/liveblog-block.html',
     'lodash/arrays/compact',
     'lodash/objects/isUndefined',
     'lodash/collections/forEach',
