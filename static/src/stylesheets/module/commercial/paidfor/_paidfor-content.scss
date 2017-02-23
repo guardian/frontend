@@ -133,6 +133,10 @@
     top: 0;
     z-index: $zindex-sticky;
 
+    .top-banner-ad-container ~ & {
+        position: static;
+    }
+
     .paidfor-meta,
     .paidfor-meta__label,
     .paidfor-label {
