@@ -8,12 +8,19 @@
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, content: Option[model.ContentType]) = {
   @if(!page.metadata.shouldHideHeaderAndTopAds) {
     @defining(showAdverts && !content.exists(_.tags.isTheMinuteArticle)) { showTopSlot =>
-      <div id="bannerandheader">
-        @if(showTopSlot) {
-          @fragments.commercial.topBanner(page.metadata)
-        }
-        @fragments.header(page)
-      </div>
+      @if(content.exists(_.tags.hasSuperStickyBanner)) {
+          @if(showTopSlot) {
+            @fragments.commercial.topBanner(page.metadata)
+          }
+          @fragments.header(page)
+      } else {
+          <div id="bannerandheader">
+              @if(showTopSlot) {
+                @fragments.commercial.topBanner(page.metadata)
+              }
+              @fragments.header(page)
+          </div>
+      }
       <div id="maincontent" tabindex="0"></div>
     }
   }
