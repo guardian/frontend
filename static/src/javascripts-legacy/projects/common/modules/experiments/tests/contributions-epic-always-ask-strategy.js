@@ -60,7 +60,7 @@ define([
 
             {
                 id: 'alwaysAsk',
-                template: function (contributionUrl, membershipUrl) {
+                template: function (membershipUrl, contributionUrl) {
                     return template(contributionsEpicEqualButtons, {
                         linkUrl1: membershipUrl,
                         linkUrl2: contributionUrl,
