@@ -29,7 +29,7 @@ define([
         container.className = 'fc-container fc-container--commercial';
         container.appendChild(createSlot(config.page.isPaidContent ? 'high-merch-paid' : 'high-merch'));
 
-        if (isLuckyBastard()) {
+        if (commercialFeatures.outbrain && isLuckyBastard()) {
             insertAlternativeSlot();
         }
 
