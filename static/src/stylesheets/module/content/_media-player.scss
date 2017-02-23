@@ -229,6 +229,14 @@ $ima-controls-height: 70px;
         transition-delay: 0s;
     }
 
+    .gu-media-wrapper:hover .vjs-has-started.vjs-mousemoved & {
+        @include mq($until: tablet) {
+            bottom: 0;
+            transition: bottom 0s;
+            transition-delay: 0s;
+        }
+    }
+
     .vjs-using-native-controls & {
         display: none;
     }
@@ -1096,18 +1104,27 @@ $ima-controls-height: 70px;
 // We have to use vjs classes here, and not BEM modifiers as videojs
 // changes the classes names via JS, and last time we messed with that,
 // we had major refactoring issues.
-.gu-media--show-controls-at-start.vjs-paused {
+.gu-media--show-controls-at-start {
     .vjs-control-bar {
         bottom: 0;
+        
+        @include mq($until: tablet) {
+            bottom: $gs-baseline*-5;
+        }
     }
-
-    .vjs-big-play-button .vjs-control-text {
-        &:before {
-            background-color: $media-default;
+    &.vjs-has-started.vjs-paused {
+        .vjs-control-bar {
+            bottom: 0;
         }
 
-        &:after {
-            border-left-color: #333333;
+        .vjs-big-play-button .vjs-control-text {
+            &:before {
+                background-color: $media-default;
+            }
+
+            &:after {
+                border-left-color: #333333;
+            }
         }
     }
 }

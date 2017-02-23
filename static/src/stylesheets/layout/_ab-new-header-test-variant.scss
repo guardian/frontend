@@ -739,6 +739,7 @@ $caption-button-size: 32px;
         .reveal-caption {
             position: absolute;
             right: $gs-gutter / 4;
+            bottom: $gs-baseline/2;
             width: $caption-button-size;
             height: $caption-button-size;
             z-index: 1;
@@ -755,10 +756,6 @@ $caption-button-size: 32px;
                 border-radius: 50%;
                 z-index: -1;
             }
-        }
-
-        .reveal-caption--img {
-            bottom: $gs-baseline/2;
         }
 
         .caption--main.caption--img,
