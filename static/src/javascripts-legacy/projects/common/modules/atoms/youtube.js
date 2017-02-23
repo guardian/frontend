@@ -39,6 +39,12 @@ define([
         setProgressTracker(atomId);
         tracking.track('play', getTrackingId(atomId));
 
+        var mainContainer = document.querySelectorAll('.immersive-main-media .youtube-media-atom');
+        if (mainContainer.length>0) {
+            document.querySelector('.immersive-main-media').classList.add('playing');
+        }
+
+
         if (player.endSlate &&
             !player.overlay.parentNode.querySelector('.end-slate-container')) {
             player.endSlate.fetch(player.overlay.parentNode, 'html');
@@ -105,8 +111,8 @@ define([
             return closest(players[atomId].iframe, 'figure[data-component="main video"]');
         }
 
-        return config.page.contentType === 'Video' && 
-                isInternalReferrer() && 
+        return config.page.contentType === 'Video' &&
+                isInternalReferrer() &&
                 !isAutoplayBlockingPlatform() &&
                 isMainVideo();
     }
@@ -131,6 +137,8 @@ define([
                 players[atomId].endSlate = getEndSlate(overlay);
             }
         }
+
+        updateImmersiveButtonPos(players[atomId]);
     }
 
     function getFormattedDuration(durationInSeconds) {
@@ -207,6 +215,14 @@ define([
                 }, iframe.id);
             });
         });
+    }
+
+    function updateImmersiveButtonPos(player) {
+        if (closest(player.iframe, '.immersive-main-media__media')) {
+            var headlineHeight = document.querySelector('.immersive-main-media__headline-container').offsetHeight;
+            console.log(headlineHeight);
+            // update .youtube-media-atom__immersive-interface height
+        }
     }
 
     // retrieves actual id of atom without appended index
