@@ -13,9 +13,9 @@ const handleSuccess = (ctx) => {
 module.exports = {
     description: 'Fix JS linting errors',
     task: [{
-        description: 'Fix static/tests',
+        description: 'Fix static/tests/javascripts-legacy',
         task: ctx => execa('eslint', [
-            'static/test/javascripts/**/*.js',
+            'static/test/javascripts-legacy/**/*.js',
         ].concat(config)).then(handleSuccess.bind(null, ctx)),
     }, {
         description: 'Fix static/src',
