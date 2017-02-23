@@ -115,6 +115,9 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
       }
     }
 
+    def getPreviewUrl(lineItemId: Long, creativeId: Long, url: String): String =
+      licaService.getPreviewUrl(lineItemId, creativeId, url) //TODO: Create a new logAround method for this
+
     def create(licas: Seq[LineItemCreativeAssociation]): Seq[LineItemCreativeAssociation] = {
       logAroundCreate(typeName) {
         licaService.createLineItemCreativeAssociations(licas.toArray)
