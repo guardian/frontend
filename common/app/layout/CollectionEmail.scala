@@ -11,7 +11,7 @@ object EmailContainer {
   def fromPressedCollections(pressedCollections: List[PressedCollection]): List[EmailContainer] = {
     val (_, reversedContainers) = pressedCollections.foldLeft((List.empty[EditionalisedLink], List.empty[EmailContainer])) {
       case ((alreadySeen, emailContainers), pressedCollection) =>
-        val cards = cardsForCollection(pressedCollection, alreadySeen)
+        val cards = collectionCardsDeduplicated(pressedCollection, alreadySeen)
         val emailContainer = fromCollectionAndCards(pressedCollection, cards)
         val newUrls = cards.map(_.header.url)
         (newUrls ::: alreadySeen, emailContainer :: emailContainers)
@@ -19,12 +19,13 @@ object EmailContainer {
     reversedContainers.reverse.filter(_.cards.nonEmpty)
   }
 
-  private def cardsForCollection(collection: PressedCollection, seen: List[EditionalisedLink]): List[ContentCard] = {
+  private def collectionCardsDeduplicated(collection: PressedCollection, alreadySeen: List[EditionalisedLink]): List[ContentCard] = {
+    val maxItemsToDisplay = collection.config.displayHints.flatMap(_.maxItemsToDisplay).getOrElse(6)
     collection
       .curatedPlusBackfillDeduplicated
       .flatMap(contentCard(_, collection.config))
-      .filterNot({ content => seen.contains(content.header.url) })
-      .take(collection.config.displayHints.flatMap(_.maxItemsToDisplay).getOrElse(6))
+      .filterNot(content => alreadySeen.contains(content.header.url))
+      .take(maxItemsToDisplay)
   }
 
   private def fromCollectionAndCards(collection: PressedCollection, cards: List[ContentCard]) =
