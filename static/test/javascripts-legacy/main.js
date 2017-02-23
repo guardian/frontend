@@ -40,7 +40,7 @@ requirejs.config({
         helpers:      '/base/static/test/javascripts-legacy/helpers',
         svgs:         '/base/static/src/inline-svgs',
         // plugins
-        'raw-loader':    '/base/static/test/javascripts-legacy/components/text/raw-loader',
+        'raw-loader':    '/base/static/test/javascripts-legacy/helpers/raw-loader',
         'svg-loader':    '/base/static/test/javascripts-legacy/helpers/svg-loader',
         'common/utils/raven': '/base/static/test/javascripts-legacy/fixtures/raven'
     }
