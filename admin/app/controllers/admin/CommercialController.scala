@@ -1,14 +1,17 @@
 package controllers.admin
 
 import common.dfp.{GuCreativeTemplate, GuLineItem}
-import common.{ExecutionContexts, Logging}
+import common.{ExecutionContexts, JsonComponent, Logging}
 import conf.Configuration
-import dfp.{OrderAgent, CreativeTemplateAgent, DfpApi, DfpDataExtractor, AdvertiserAgent}
+import dfp.{AdvertiserAgent, CreativeTemplateAgent, DfpApi, DfpDataExtractor, OrderAgent}
 import model._
 import ophan.SurgingContentAgent
-import play.api.libs.json.JsString
-import play.api.mvc.{Action, Controller}
+import play.api.libs.json.{Format, JsString, JsValue, Json}
+import play.api.mvc.{Action, Controller, RequestHeader}
 import tools._
+
+import scala.concurrent.duration._
+import scala.util.Try
 
 case class CommercialPage() extends StandalonePage {
   override val metadata = MetaData.make(
@@ -74,13 +77,14 @@ class CommercialController(implicit context: ApplicationContext) extends Control
 
     val (hasNumericTestValue, hasStringTestValue) =
       lineItemsByAdTest partition { case (testValue, _) =>
-      def isNumber(s: String) = s forall Character.isDigit
+        def isNumber(s: String) = s forall Character.isDigit
+
         isNumber(testValue)
-    }
+      }
 
     val sortedGroups = {
-      hasNumericTestValue.toSeq.sortBy { case (testValue, _) => testValue.toInt} ++
-        hasStringTestValue.toSeq.sortBy { case (testValue, _) => testValue}
+      hasNumericTestValue.toSeq.sortBy { case (testValue, _) => testValue.toInt } ++
+        hasStringTestValue.toSeq.sortBy { case (testValue, _) => testValue }
     }
 
     NoCache(Ok(views.html.commercial.adTests(report.timestamp, sortedGroups)))
@@ -89,6 +93,31 @@ class CommercialController(implicit context: ApplicationContext) extends Control
   def renderCommercialRadiator() = Action.async { implicit request =>
     for (adResponseConfidenceGraph <- CloudWatch.eventualAdResponseConfidenceGraph) yield {
       Ok(views.html.commercial.commercialRadiator(adResponseConfidenceGraph))
+    }
+  }
+
+  def getLineItemsForOrder(orderId: String) = Action { implicit request =>
+    val lineItems: Seq[GuLineItem] = Store.getDfpLineItemsReport().lineItems filter (_.orderId.toString == orderId)
+
+    Cached(5.minutes){
+      JsonComponent(Json.toJson(lineItems))
+    }
+  }
+
+  def getCreativesListing(lineitemId: String, section: String) = Action { implicit request: RequestHeader =>
+
+    val validSections: List[String] = List("uk", "lifeandstyle", "sport", "science")
+
+    val previewUrls: Seq[String] =
+      (for {
+        lineItemId <- Try(lineitemId.toLong).toOption
+        section <- validSections.find(_ == section)
+      } yield {
+          DfpApi.getCreativeIds(lineItemId) flatMap (DfpApi.getPreviewUrl(lineItemId, _, s"https://theguardian.com/$section"))
+      }) getOrElse Nil
+
+    Cached(5.minutes) {
+      JsonComponent(Json.toJson(previewUrls))
     }
   }
 
