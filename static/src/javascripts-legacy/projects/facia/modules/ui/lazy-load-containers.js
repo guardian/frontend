@@ -1,12 +1,10 @@
 define([
-    'bonzo',
     'fastdom',
     'qwery',
     'common/utils/detect',
     'common/utils/mediator',
     'lodash/functions/throttle'
 ], function (
-    bonzo,
     fastdom,
     qwery,
     detect,
@@ -16,25 +14,19 @@ define([
     var distanceBeforeLoad = detect.getViewport().height;
 
     return function () {
-        var $frontBottom = bonzo(qwery('.js-front-bottom')),
-            containers = qwery('.js-container--lazy-load'),
+        var containers = qwery('.js-container--lazy-load'),
             lazyLoad = throttle(function () {
                 if (containers.length === 0) {
                     mediator.off('window:throttledScroll', lazyLoad);
                 } else {
                     fastdom.read(function () {
-                        var scrollTop = window.pageYOffset,
-                            scrollBottom = scrollTop + bonzo.viewport().height,
-                            bottomOffset = $frontBottom.offset().top,
-                            $container;
+                        var cs = split(containers, withinRange);
 
-                        if (scrollBottom > bottomOffset - distanceBeforeLoad) {
-                            $container = bonzo(containers.shift());
+                        containers = cs[1];
 
-                            fastdom.write(function () {
-                                $container.removeClass('fc-container--lazy-load');
-                            });
-                        }
+                        fastdom.write(function () {
+                            cs[0].forEach(displayContainer);
+                        });
                     });
                 }
             }, 500);
@@ -42,4 +34,30 @@ define([
         mediator.on('window:throttledScroll', lazyLoad);
         lazyLoad();
     };
+
+    // split :: [Element] -> (Element -> Bool) -> ([Element], [Element])
+    // invariant: { inA all fn ^ outA all (complement fn) | (inA, outA) = split xs fn }
+    function split(arr, testFn) {
+        var i = 0, ii = arr.length;
+        var result = [[], []];
+        while (i < ii) {
+            if (testFn(arr[i])) {
+                result[0].push(arr[i]);
+            } else {
+                result[1].push(arr[i]);
+            }
+            i++;
+        }
+
+        return result;
+    }
+
+    function withinRange(container) {
+        var top = container.nextElementSibling.getBoundingClientRect().top;
+        return -distanceBeforeLoad < top && top < 2 * distanceBeforeLoad;
+    }
+
+    function displayContainer(container) {
+        container.classList.remove('fc-container--lazy-load');
+    }
 });
