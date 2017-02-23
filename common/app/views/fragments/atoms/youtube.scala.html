@@ -8,7 +8,6 @@
 @import model.ImageMedia
 @(media: model.content.MediaAtom, displayCaption: Boolean, embedPage: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, mainMedia: Boolean = false, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None, immersiveMainMedia: Boolean = false)(implicit request: RequestHeader)
 
-@if(immersiveMainMedia){<h1>I AM IMMERSIVE</h1>}
 
 
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
