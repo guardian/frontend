@@ -29,7 +29,7 @@ define([
         container.className = 'fc-container fc-container--commercial';
         container.appendChild(createSlot(config.page.isPaidContent ? 'high-merch-paid' : 'high-merch'));
 
-        if (isLuckyBastard()) {
+        if (commercialFeatures.outbrain && isLuckyBastard()) {
             insertAlternativeSlot();
         }
 
@@ -66,7 +66,7 @@ define([
         .then(function (args) {
             if (args) {
                 fastdom.write(function () {
-                    args[1].appendChild(args[0]);
+                    args[1].parentNode.insertBefore(args[0], args[1].nextSibling);
                     addSlot(args[0]);
                 });
             }
