@@ -71,7 +71,7 @@ define([
             {
                 id: 'control',
                 maxViews: maxViews,
-                template: function epic(_, membershipUrl) {
+                template: function epic(membershipUrl) {
                     return template(epicSupporterCta, {
                         linkUrl1: membershipUrl,
                         title: 'Since you’re here …',
@@ -86,7 +86,7 @@ define([
             {
                 id: 'love',
                 maxViews: maxViews,
-                template: function love(_, supportUrl) {
+                template: function love(supportUrl) {
                     return template(visualTemplate, {
                         id: 'love',
                         supportUrl: supportUrl,
@@ -117,7 +117,7 @@ define([
             {
                 id: 'boat',
                 maxViews: maxViews,
-                template: function boat(_, supportUrl) {
+                template: function boat(supportUrl) {
                     return template(visualTemplate, {
                         id: 'boat',
                         supportUrl: supportUrl,
