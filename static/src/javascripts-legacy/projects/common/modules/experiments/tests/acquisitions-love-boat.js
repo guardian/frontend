@@ -7,8 +7,8 @@ define([
     'common/views/svg',
     'svg-loader!svgs/icon/hand.svg',
     'svg-loader!svgs/icon/arrow-right.svg',
-    'text!common/views/epic-supporter-cta.html',
-    'text!common/views/acquisitions-visual.html'
+    'raw-loader!common/views/epic-supporter-cta.html',
+    'raw-loader!common/views/acquisitions-visual.html'
 ], function (
     bean,
     contributionsUtilities,
