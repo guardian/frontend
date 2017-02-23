@@ -6,24 +6,24 @@ module.exports = {
         commonjs: false
     },
     extends: 'eslint:recommended',
-	parserOptions: {
-		ecmaVersion: 5
-	},
-	rules: {
-		camelcase: 'off',
-		'no-shadow': 'off',
-        'no-undef': 'error',
-        'no-use-before-define': [
-            'error',
-            'nofunc'
-        ],
-        'no-multi-spaces': 'off',
-        'no-underscore-dangle': 'off',
-        'key-spacing': 'off',
-        'import/no-amd': 'off',
-        'import/no-dynamic-require': 'off'
-	},
-	globals: {
-		sinon: true
-	}
+    parserOptions: {
+        ecmaVersion: 5
+    },
+    rules: {
+      camelcase: 'off',
+      'no-shadow': 'off',
+          'no-undef': 'error',
+          'no-use-before-define': [
+              'error',
+              'nofunc'
+          ],
+          'no-multi-spaces': 'off',
+          'no-underscore-dangle': 'off',
+          'key-spacing': 'off',
+          'import/no-amd': 'off',
+          'import/no-dynamic-require': 'off'
+    },
+    globals: {
+        sinon: true
+    }
 }

@@ -154,6 +154,10 @@ category: Common
     clear: both;
     box-sizing: border-box;
 
+    @include mq($until: mobileMedium) {
+        min-height: $gs-baseline * 8;
+    }
+
     @include mq($until: mobileLandscape) {
         right: 0;
     }

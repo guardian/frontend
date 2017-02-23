@@ -24,7 +24,8 @@ define([
                     buildText[name] = text.jsEscape(svg);
                 }
 
-                onLoad(svg);
+                // returning an object creates webpack compatibility
+                onLoad({markup: svg});
 
             }, onLoad.error);
         },
