@@ -37,6 +37,7 @@ define([
 
     // split :: [Element] -> (Element -> Bool) -> ([Element], [Element])
     // invariant: { inA all fn ^ outA all (complement fn) | (inA, outA) = split xs fn }
+    // Split an array of elements into two arrays, one where element comply, one where they don't
     function split(arr, testFn) {
         var i = 0, ii = arr.length;
         var result = [[], []];
@@ -52,11 +53,15 @@ define([
         return result;
     }
 
+    // withinRange :: Element -> Bool
+    // Checks whether the element is within one screenful above or below the viewport
     function withinRange(container) {
         var top = container.nextElementSibling.getBoundingClientRect().top;
         return -distanceBeforeLoad < top && top < 2 * distanceBeforeLoad;
     }
 
+    // displayContainer :: Element -> ()
+    // Removes the fc-container--lazy-load class
     function displayContainer(container) {
         container.classList.remove('fc-container--lazy-load');
     }
