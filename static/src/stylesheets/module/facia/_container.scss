@@ -105,6 +105,12 @@ $header-image-size-desktop: 100px;
         overflow: hidden;
 
         .fc-container__header__title {
+            float: left;
+        }
+        .fc-container__header__description {
+            float: right;
+        }
+        .fc-container__header__title {
             padding-right: $gs-gutter / 4;
         }
         .fc-container__header__description {
@@ -133,6 +139,7 @@ $header-image-size-desktop: 100px;
     color: $guardian-brand-dark;
 
     @include mq(tablet, leftCol) {
+        float: left;
         width: gs-span(4);
     }
 
@@ -243,7 +250,7 @@ $header-image-size-desktop: 100px;
     @include fs-headline(2);
     padding-bottom: $gs-baseline / 2;
     color: $neutral-2;
-    text-align: left;
+    text-align: right;
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline;
@@ -254,6 +261,7 @@ $header-image-size-desktop: 100px;
         clear: left;
         float: left;
         margin-top: 0;
+        text-align: left;
     }
 
     @include mq(wide) {
