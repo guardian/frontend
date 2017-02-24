@@ -1,5 +1,6 @@
 define([
     'bean',
+    'ophan/ng',
     'common/modules/commercial/contributions-utilities',
     'common/utils/template',
     'common/utils/config',
@@ -11,6 +12,7 @@ define([
     'raw-loader!common/views/acquisitions-visual.html'
 ], function (
     bean,
+    ophan,
     contributionsUtilities,
     template,
     config,
@@ -43,6 +45,7 @@ define([
         if (button && button[0]) {
             bean.on(button[0], 'click', function () {
                 container.attr('data-step', 2);
+                ophan.record({ component: 'show-button' });
             });
         }
     }
