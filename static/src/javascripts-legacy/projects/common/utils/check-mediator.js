@@ -1,9 +1,7 @@
 define([
-    'Promise',
-    'common/utils/config'
+    'Promise'
     ], function (
-    Promise,
-    config
+    Promise
 ) {
 
     /**
@@ -17,7 +15,7 @@ define([
      * EVERYCHECKPASSED: At least one dependentCheck has returned true
     **/
     var SOMECHECKSPASSED = Array.prototype.some;
-    // var EVERYCHECKPASSED = Array.prototype.every; // commented out as not used
+    var EVERYCHECKPASSED = Array.prototype.every;
     /**
      * checkList is an array of object literals.
      * Each object in this array will be converted to a DefferedCheck and added to registeredChecks
@@ -26,17 +24,25 @@ define([
      * If object has dependentChecks then the DefferedCheck will resolve when these dependentChecks have all resolved
      *
     **/
+
     var checkList = [{
             id: 'isOutbrainNonCompliant',
-            canRun: true,
             dependentChecks: {
                 passCondition: SOMECHECKSPASSED,
                 list:[{
-                    id: 'isUserInAClashingAbTest',
-                    canRun: true
+                    id: 'isUserInAClashingAbTest'
                 }, {
-                    id: 'isEmailInserted',
-                    canRun: config.switches.emailInArticleOutbrain
+                    id: 'canEmailBeInserted',
+                    dependentChecks: {
+                        passCondition: EVERYCHECKPASSED,
+                        list: [{
+                            id: 'emailCanRun'
+                        }, {
+                            id: 'listCanRun'
+                        }, {
+                            id: 'emailInArticleOutbrainEnabled'
+                        }]
+                    }
                 }]
             }
         }];
@@ -49,6 +55,7 @@ define([
 
         if (dependentCheckPromises) {
             Promise.all(dependentCheckPromises).then(function(results) {
+
                 var hasPassed = function(result) {
                     return result;
                 };
@@ -76,21 +83,11 @@ define([
 
     
     function registerDependentCheck(dependentCheckPromises, dependentCheck) {
-        var registeredDependentCheck = registerCheck(dependentCheck);
-
-        if (registeredDependentCheck) {
-            dependentCheckPromises.push(registeredDependentCheck.complete);
-        }
+        dependentCheckPromises.push(registerCheck(dependentCheck).complete);
     }    
 
     function registerCheck(check) {
-        var registeredCheck;
-
-        if (!check.canRun) {
-            return false;
-        }
-
-        registeredCheck = registerDefferedCheck(check);
+        var registeredCheck = registerDefferedCheck(check);
 
         registeredChecks[check.id] = registeredCheck;
 
@@ -133,10 +130,6 @@ define([
     **/
     function _testRegisterCheck(check) {
         var registeredCheck;
-
-        if (!check.canRun) {
-            return false;
-        }
 
         registeredCheck = registerDefferedCheck(check);
 

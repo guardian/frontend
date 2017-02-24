@@ -14,9 +14,9 @@ define([
     'common/utils/storage',
     'common/modules/analytics/google',
     'lodash/collections/find',
-    'common/utils/check-mediator',
     'common/modules/experiments/ab',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/utils/check-mediator'
 ], function (
     $,
     bean,
@@ -33,9 +33,9 @@ define([
     storage,
     googleAnalytics,
     find,
-    checkMediator,
     ab,
-    mediator
+    mediator,
+    checkMediator
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
             $iframeEl.appendTo('.js-article__body');
@@ -177,7 +177,6 @@ define([
                     $iframeEl = $(iframe),
                     onEmailAdded = function () {
                         emailRunChecks.setEmailShown(listConfig.listName);
-                        checkMediator.resolveCheck('isEmailInserted', true);
                         storage.session.set('email-sign-up-seen', 'true');
                     }
 
@@ -207,25 +206,26 @@ define([
                         onEmailAdded();
                     });
                 }
-            } else {
-                checkMediator.resolveCheck('isEmailInserted', false);
             }
         };
 
     return {
         init: function () {
-            if (emailRunChecks.allEmailCanRun()) {
-                // First we need to check the user's email subscriptions
-                // so we don't insert the sign-up if they've already subscribed
-                emailRunChecks.getUserEmailSubscriptions().then(function () {
-                    // Get the first list that is allowed on this page
-                    addListToPage(find(listConfigs, emailRunChecks.listCanRun));
-                }).catch(function (error) {
+            checkMediator.waitForCheck('emailCanRun')
+                .then(function (canEmailRun) {
+                    if (canEmailRun) {
+                        return emailRunChecks.getUserEmailSubscriptions();
+                    }
+                })
+                .then(function () {
+                    addListToPage(find(listConfigs, emailRunChecks.listCanRun))
+                })
+                .catch(function (error) {
                     robust.log('c-email', error);
                 });
-            } else {
-                checkMediator.resolveCheck('isEmailInserted', false);
-            }
+        },
+        getListConfigs: function () {
+            return listConfigs;
         }
     };
 });
