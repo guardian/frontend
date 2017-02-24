@@ -30,6 +30,7 @@ requirejs.config({
         videojs:      '/base/node_modules/video.js',
         'videojs-ads-lib': '/base/node_modules/videojs-contrib-ads',
         raven:        '/base/node_modules/raven-js/dist/raven',
+        'ophan/ng':   '/base/node_modules/ophan-tracker-js/build/ophan.ng',
 
         analytics:    'projects/common/modules/analytics/analytics',
         picturefill:  'projects/common/utils/picturefill',
