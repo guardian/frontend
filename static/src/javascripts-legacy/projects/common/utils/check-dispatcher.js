@@ -4,7 +4,7 @@ define([
     'common/modules/email/run-checks',
     'common/modules/email/email-article',
     'common/modules/experiments/ab-test-clash'
-    ], function (
+], function(
     config,
     checkMediator,
     emailRunChecks,
@@ -13,27 +13,27 @@ define([
 ) {
 
     var checksToDispatch = {
-    	isUserInAClashingAbTest: function () {
-    		return clash.userIsInAClashingAbTest();
-    	},
-    	emailCanRun: function () {
-    		return emailRunChecks.allEmailCanRun();
-    	},
-    	listCanRun: function () {
-    		return find(emailArticle.getListConfigs(), emailRunChecks.listCanRun) ? true : false;
-    	},
-    	emailInArticleOutbrainEnabled: function () {
-    		return config.switches.emailInArticleOutbrain;
-    	}
+        isUserInAClashingAbTest: function() {
+            return clash.userIsInAClashingAbTest();
+        },
+        emailCanRun: function() {
+            return emailRunChecks.allEmailCanRun();
+        },
+        listCanRun: function() {
+            return find(emailArticle.getListConfigs(), emailRunChecks.listCanRun) ? true : false;
+        },
+        emailInArticleOutbrainEnabled: function() {
+            return config.switches.emailInArticleOutbrain;
+        }
     };
 
     function init() {
-		Object.keys(checksToDispatch).forEach(function (key) {
-			checkMediator.resolveCheck(key, checksToDispatch[key]());	
-		});
+        Object.keys(checksToDispatch).forEach(function(key) {
+            checkMediator.resolveCheck(key, checksToDispatch[key]());
+        });
     }
 
     return {
-    	init: init
+        init: init
     };
 });

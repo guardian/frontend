@@ -8,58 +8,35 @@ define([
         var EVERYCHECKPASSED = Array.prototype.every;
 
         var checkList = [{
-                id: 'check-1',
-                canRun: true
+                id: 'check-1'
             }, {
                 id: "check-2",
-                canRun: true,
                 dependentChecks: {
                     passCondition: EVERYCHECKPASSED,
                     list: [{
-                        id: "check-3",
-                        canRun: true
+                        id: "check-3"
                     }, {
-                        id: "check-4",
-                        canRun: true
+                        id: "check-4"
                     }]
                 }
             }, {
                 id: "check-5",
-                canRun: true,
                 dependentChecks: {
                     passCondition: EVERYCHECKPASSED,
                     list: [{
-                        id: "check-6",
-                        canRun: true
+                        id: "check-6"
                     }, {
-                        id: "check-7",
-                        canRun: true
+                        id: "check-7"
                     }]
                 }
             }, {
                 id: "check-8",
-                canRun: true,
-                dependentChecks: {
-                    passCondition: EVERYCHECKPASSED,
-                    list: [{
-                        id: "check-9",
-                        canRun: false
-                    }, {
-                        id: "check-10",
-                        canRun: true
-                    }]
-                }
-            }, {
-                id: "check-11",
-                canRun: true,
                 dependentChecks: {
                     passCondition: SOMECHECKSPASSED,
                     list: [{
-                        id: "check-12",
-                        canRun: true
+                        id: "check-9"
                     }, {
-                        id: "check-13",
-                        canRun: true
+                        id: "check-10"
                     }]
                 }
             }];
@@ -105,18 +82,6 @@ define([
 
 
         it('resolves a check with dependent checks as true when passCondition is SOMECHECKSPASSED', function (done) {            
-            checkMediator.waitForCheck('check-11')
-            .then(function(result) {
-                expect(result).toBe(true);
-
-                done();
-            });
-
-            checkMediator.resolveCheck('check-12', true);
-            checkMediator.resolveCheck('check-13', false);
-        });
-
-        it('resolves a check with dependent checks as true if dependent check canRun equals false', function (done) {            
             checkMediator.waitForCheck('check-8')
             .then(function(result) {
                 expect(result).toBe(true);
@@ -124,8 +89,8 @@ define([
                 done();
             });
 
-            checkMediator.resolveCheck('check-9', false);
-            checkMediator.resolveCheck('check-10', true);
+            checkMediator.resolveCheck('check-9', true);
+            checkMediator.resolveCheck('check-10', false);
         });
 
         it('rejects a check if not registered', function (done) {           
