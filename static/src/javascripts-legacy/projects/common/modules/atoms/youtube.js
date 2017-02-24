@@ -6,7 +6,8 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/detect',
-    'common/utils/closest'
+    'common/utils/closest',
+    'lodash/functions/debounce'
 ], function (
     fastdom,
     youtubePlayer,
@@ -15,7 +16,8 @@ define([
     $,
     config,
     detect,
-    closest
+    closest,
+    debounce
 ) {
 
     var players = {};
@@ -41,9 +43,8 @@ define([
 
         var mainContainer = document.querySelectorAll('.immersive-main-media .youtube-media-atom');
         if (mainContainer.length>0) {
-            document.querySelector('.immersive-main-media').classList.add('playing');
+            document.querySelector('.immersive-main-media').classList.add('atom-playing');
         }
-
 
         if (player.endSlate &&
             !player.overlay.parentNode.querySelector('.end-slate-container')) {
@@ -111,7 +112,7 @@ define([
             return closest(players[atomId].iframe, 'figure[data-component="main video"]');
         }
 
-        return config.page.contentType === 'Video' &&
+            return config.page.contentType === 'Video' &&
                 isInternalReferrer() &&
                 !isAutoplayBlockingPlatform() &&
                 isMainVideo();
@@ -138,7 +139,10 @@ define([
             }
         }
 
-        updateImmersiveButtonPos(players[atomId]);
+        if (closest(players[atomId].iframe, '.immersive-main-media__media')) {
+            updateImmersiveButtonPos(players[atomId]);
+            window.addEventListener('resize', debounce(updateImmersiveButtonPos.bind(null, players[atomId]), 200));
+        }
     }
 
     function getFormattedDuration(durationInSeconds) {
@@ -218,11 +222,11 @@ define([
     }
 
     function updateImmersiveButtonPos(player) {
-        if (closest(player.iframe, '.immersive-main-media__media')) {
-            var headlineHeight = document.querySelector('.immersive-main-media__headline-container').offsetHeight;
-            console.log(headlineHeight);
-            // update .youtube-media-atom__immersive-interface height
-        }
+        var playerHeight = document.querySelector('.immersive-main-media__media .youtube-media-atom').offsetHeight;
+        var headlineHeight = document.querySelector('.immersive-main-media__headline-container').offsetHeight;
+        var buttonOffset = playerHeight - headlineHeight;
+        var immersiveInterface = document.querySelector('.youtube-media-atom__immersive-interface');
+        immersiveInterface.style.top = buttonOffset+'px';
     }
 
     // retrieves actual id of atom without appended index

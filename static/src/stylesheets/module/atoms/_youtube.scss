@@ -28,6 +28,7 @@
         height: 100%;
         width: 100%;
         position: absolute;
+        max-height: 100vh;
     }
 
     .youtube-media-atom__iframe {
@@ -177,7 +178,8 @@
         &__immersive-interface {
             position: absolute;
             top: 50vh;
-            transform: translateY(-50%);
+            transform: translateY(-100%);
+            padding-bottom: 24px;
         }
         &__play-button,
         &__bottom-bar__duration {

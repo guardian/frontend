@@ -21,6 +21,31 @@
         flex: 1;
         min-height: 400px;
     }
+
+    &.atom-playing {
+        .immersive-main-media__media__loading {
+            background-color: #161616;
+        }
+        .immersive-main-media__headline-container {
+            position: static;
+            margin-top: 100vh;
+            transform: translateY(-100%);
+            animation-name: slideImmersiveTitleDown;
+            animation-duration: 360ms;
+            animation-timing-function: ease-in;
+            animation-fill-mode: forwards;
+        }
+        @keyframes slideImmersiveTitleDown {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                background-color: transparent;
+                background: transparent;
+                transform: translateY(0);
+            }
+        }
+    }
 }
 
 .immersive-main-media__logo {
@@ -57,7 +82,7 @@
         // Override inline style coming from fence
         height: 100% !important;
         opacity: 0;
-        transition: .5s opacity ease-out;
+        transition: .5s opacity ease-in;
     }
 
     .fenced-rendered {
@@ -81,6 +106,7 @@
     bottom: 0;
     background-color: $neutral-5;
     color: $neutral-1;
+    transition: background-color 360ms ease-out;
 }
 
 .immersive-main-media__loading-animation {
