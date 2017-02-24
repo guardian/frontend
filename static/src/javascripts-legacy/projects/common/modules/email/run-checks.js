@@ -29,6 +29,7 @@ define([
     clash,
     Promise
 ) {
+
     var emailShown;
     var userListSubsChecked = false;
     var userListSubs = [];
@@ -116,10 +117,23 @@ define([
                 !pageHasBlanketBlacklist() &&
                 userReferredFromNetworkFront() &&
                 allowedArticleStructure();
+        },
+        sleevenotes: function () {
+            return config.page.section === "music";
+        },
+        longReads: function () {
+            return config.page.seriesId === 'news/series/the-long-read';
+        },
+        bookmarks: function () {
+            return config.page.section === "books";
+        },
+        greenLight: function () {
+            return config.page.section === "environment";
         }
     };
 
     // Public
+
     function setEmailShown(emailName) {
         emailShown = emailName;
     }

@@ -12,7 +12,7 @@ define([
     'common/utils/fastdom-promise',
     'common/modules/article/space-filler',
     'common/modules/ui/images',
-    'text!common/views/content/richLinkTag.html',
+    'raw-loader!common/views/content/richLinkTag.html',
     'lodash/collections/contains',
     'common/modules/experiments/ab'
 ], function (

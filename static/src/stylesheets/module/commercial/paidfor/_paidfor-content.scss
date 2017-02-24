@@ -133,6 +133,10 @@
     top: 0;
     z-index: $zindex-sticky;
 
+    .has-super-sticky-banner & {
+        position: static;
+    }
+
     .paidfor-meta,
     .paidfor-meta__label,
     .paidfor-label {

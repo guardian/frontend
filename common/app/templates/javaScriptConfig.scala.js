@@ -18,6 +18,12 @@
                 "ab-icon": "@Static("images/commercial/ab-icon.png")",
                 "abp-icon": "@Static("images/commercial/abp-icon.png")",
                 "abp-whitelist-instruction-chrome": "@Static("images/commercial/ad-block-instructions-chrome.png")"
+            },
+            "acquisitions": {
+                "laptop": "@Static("images/acquisitions/laptop.png")",
+                "laptop-hearts": "@Static("images/acquisitions/laptop-hearts.png")",
+                "boat": "@Static("images/acquisitions/boat.png")",
+                "boat-left": "@Static("images/acquisitions/boat-left.png")"
             }
         },
         "stylesheets": {
@@ -44,7 +50,8 @@
         "libs": {
             "foresee": "@Static("javascripts/vendor/foresee/20150703/foresee-trigger.js")",
             "googletag": "@{Configuration.javascript.config("googletagJsUrl")}",
-            "sonobi": "@{ if(!environment.isCode) Configuration.javascript.config("sonobiHeaderBiddingJsUrl") else "//mtrx.go.sonobi.com/morpheus.theguardian.12911_us_.js"}"
+            "sonobi": "@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}",
+            "switch": "@{Configuration.javascript.config("switchPreFlightJsUrl")}"
         }
     }
 }

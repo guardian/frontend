@@ -1,6 +1,5 @@
 @(page: InteractivePage)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.Edition
-@import conf.switches.Switches.Webpack
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
 @import views.InteractiveBodyCleaner
@@ -66,20 +65,5 @@
 
             @fragments.contentFooter(interactive, page.related, isPaidContent = isPaidContent)
         </div>
-    }
-
-    @if(!Webpack.isSwitchedOn) {
-        <script>
-            @HtmlFormat.raw(common.Assets.js.curl)
-
-            [].slice.apply(document.querySelectorAll('figure.interactive[data-interactive]')).forEach(function (el) {
-                require([el.getAttribute('data-interactive')], function (interactive) {
-                    interactive.boot(el, document, window.guardian.config);
-                }, function (err) {
-                    console.log('Interactive failed', mainJS);
-                    console.log('Error:', err);
-                });
-            });
-        </script>
     }
 }

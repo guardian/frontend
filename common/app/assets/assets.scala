@@ -117,7 +117,7 @@ object css {
 }
 
 object js {
-  val curl: String = Get(LoadFromClasspath("assets/curl-domReady.js").map(RelativePathEscaper.escapeLeadingDotPaths))
+  val curl: String = Get(LoadFromClasspath("assets/curl.js").map(RelativePathEscaper.escapeLeadingDotPaths))
 }
 
 object Get {

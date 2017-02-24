@@ -22,11 +22,11 @@ define([
         variants: ['control']
     };
 
-    var ContributionsEpicOneLineEdits = {
-        name: 'ContributionsEpicOneLineEdits',
-        variants: ['control', 'paywall', 'altfacts', 'billionaire']
+    var AcquisitionsLoveBoat = {
+        name: 'AcquisitionsLoveBoat',
+        variants: ['control', 'love', 'boat']
     };
-    
+
     var GuardianTodaySignupMessaging = {
         name: 'GuardianTodaySignupMessaging',
         variants: ['message-a', 'message-b', 'message-c']
@@ -37,7 +37,7 @@ define([
         ContributionsEpicBrexit,
         ContributionsEpicAskFourStagger,
         ContributionsEpicAskFourEarning,
-        ContributionsEpicOneLineEdits
+        AcquisitionsLoveBoat
     ];
 
     var emailTests = [

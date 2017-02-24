@@ -7,8 +7,8 @@ define([
     'common/utils/template',
     'common/views/svgs',
     'commercial/modules/creatives/gustyle',
-    'text!commercial/views/creatives/gu-style-comcontent.html',
-    'text!commercial/views/creatives/gu-style-hosted.html',
+    'raw-loader!commercial/views/creatives/gu-style-comcontent.html',
+    'raw-loader!commercial/views/creatives/gu-style-hosted.html',
     'lodash/objects/merge',
     'commercial/modules/creatives/add-tracking-pixel'
 ], function (

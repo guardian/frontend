@@ -8,12 +8,19 @@
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, content: Option[model.ContentType]) = {
   @if(!page.metadata.shouldHideHeaderAndTopAds) {
     @defining(showAdverts && !content.exists(_.tags.isTheMinuteArticle)) { showTopSlot =>
-      <div id="bannerandheader">
-        @if(showTopSlot) {
-          @fragments.commercial.topBanner(page.metadata)
-        }
-        @fragments.header(page)
-      </div>
+      @if(content.exists(_.tags.hasSuperStickyBanner)) {
+          @if(showTopSlot) {
+            @fragments.commercial.topBanner(page.metadata)
+          }
+          @fragments.header(page)
+      } else {
+          <div id="bannerandheader">
+              @if(showTopSlot) {
+                @fragments.commercial.topBanner(page.metadata)
+              }
+              @fragments.header(page)
+          </div>
+      }
       <div id="maincontent" tabindex="0"></div>
     }
   }
@@ -36,6 +43,7 @@
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
             ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
             ("has-new-header", mvt.ABNewNavVariantSeven.isParticipating),
+            ("has-super-sticky-banner", content.exists(_.tags.hasSuperStickyBanner)),
             ("is-immersive", content.exists(_.content.isImmersive)),
             ("is-immersive-interactive", content.exists(content => content.tags.isInteractive && content.content.isImmersive))))"
         itemscope itemtype="http://schema.org/WebPage">

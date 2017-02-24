@@ -8,8 +8,8 @@ define([
     'common/utils/storage',
     'common/utils/template',
     'common/views/svgs',
-    'text!commercial/views/creatives/fabric-expanding-v1.html',
-    'text!commercial/views/creatives/fabric-expanding-video.html',
+    'raw-loader!commercial/views/creatives/fabric-expanding-v1.html',
+    'raw-loader!commercial/views/creatives/fabric-expanding-video.html',
     'lodash/functions/bindAll',
     'lodash/objects/merge',
     'commercial/modules/creatives/add-tracking-pixel'

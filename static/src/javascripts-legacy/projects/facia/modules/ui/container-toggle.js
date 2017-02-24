@@ -7,7 +7,7 @@ define([
     'common/modules/user-prefs',
     'common/utils/template',
     'common/views/svgs',
-    'text!facia/views/button-toggle.html'
+    'raw-loader!facia/views/button-toggle.html'
 ], function (
     bean,
     bonzo,

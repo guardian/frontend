@@ -87,53 +87,6 @@ define([
             }
         });
 
-        /*
-         *  Interactive bootstraps.
-         *
-         *  Interactives are content, we want them booting as soon (and as stable) as possible.
-         */
-
-        if (!config.switches.webpack && /Article|LiveBlog/.test(config.page.contentType)) {
-            qwery('figure.interactive').forEach(function (el) {
-                var mainJS = el.getAttribute('data-interactive');
-                if (!mainJS) {
-                    return;
-                }
-
-                // interactives are always loaded with CURL, which is always inlined when interactives are present
-                // so this uses CURLS require
-                window.require([mainJS], function (interactive) {
-                    fastdom.defer(function () {
-                        robust.catchErrorsAndLog('interactive-bootstrap', function () {
-                            interactive.boot(el, document, config, mediator);
-                        });
-                    });
-                });
-
-                require(['ophan/ng'], function(ophan) {
-                    var a = el.querySelector('a');
-                    var href = a && a.href;
-
-                    if (href) {
-                        ophan.trackComponentAttention(href, el);
-                    }
-                });
-            });
-
-            qwery('iframe.interactive-atom-fence').forEach(function (el) {
-                var srcdoc;
-                if (!el.srcdoc) {
-                    fastdom.read(function () {
-                       srcdoc = el.getAttribute('srcdoc');
-                    });
-                    fastdom.write(function () {
-                        el.contentWindow.contents = srcdoc;
-                        el.src = 'javascript:window["contents"]';
-                    });
-                }
-            });
-        }
-
         //
         // initilaise the checkMediator
         //

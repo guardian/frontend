@@ -2,7 +2,7 @@
     "env": {
         "production": {
             "presets": [
-                "latest",
+                "env",
             ],
             "plugins": [
                 "add-module-exports",
@@ -12,7 +12,7 @@
         },
         "development": {
             "presets": [
-                "latest",
+                "env",
             ],
             "plugins": [
                 "add-module-exports",

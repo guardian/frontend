@@ -7,10 +7,10 @@ define([
     'common/utils/template',
     'common/utils/steady-page',
     'common/modules/identity/api',
-    'common/modules/commercial/dfp/track-ad-render',
-    'common/modules/commercial/commercial-features',
+    'commercial/modules/dfp/track-ad-render',
+    'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/outbrain-codes',
-    'text!commercial/views/outbrain.html',
+    'raw-loader!commercial/views/outbrain.html',
     'common/utils/load-script',
     'common/utils/check-mediator'
 ], function (

@@ -3,7 +3,7 @@ define([
     'common/utils/template',
     'common/utils/detect',
     'commercial/modules/creatives/add-tracking-pixel',
-    'text!commercial/views/creatives/revealer.html'
+    'raw-loader!commercial/views/creatives/revealer.html'
 ], function(fastdom, template, detect, addTrackingPixel, revealerStr) {
     var revealerTpl;
 

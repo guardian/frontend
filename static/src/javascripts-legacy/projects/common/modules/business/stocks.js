@@ -5,8 +5,8 @@ define([
     'common/utils/report-error',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/business/stock-value.html',
-    'text!common/views/business/stocks.html',
+    'raw-loader!common/views/business/stock-value.html',
+    'raw-loader!common/views/business/stocks.html',
     'lodash/collections/contains',
     'lodash/collections/map'
 ], function (
