@@ -39,6 +39,7 @@ $block-padding-right: $gs-gutter;
         position: static;
 
         .meta__numbers {
+            @include clearfix;
             position: static;
             border-top: 1px dotted $neutral-5;
             border-bottom: 0;
