@@ -140,8 +140,8 @@ define([
         }
 
         if (closest(players[atomId].iframe, '.immersive-main-media__media')) {
-            updateImmersiveButtonPos(players[atomId]);
-            window.addEventListener('resize', debounce(updateImmersiveButtonPos.bind(null, players[atomId]), 200));
+            updateImmersiveButtonPos();
+            window.addEventListener('resize', debounce(updateImmersiveButtonPos.bind(null), 200));
         }
     }
 
@@ -221,7 +221,7 @@ define([
         });
     }
 
-    function updateImmersiveButtonPos(player) {
+    function updateImmersiveButtonPos() {
         var playerHeight = document.querySelector('.immersive-main-media__media .youtube-media-atom').offsetHeight;
         var headlineHeight = document.querySelector('.immersive-main-media__headline-container').offsetHeight;
         var buttonOffset = playerHeight - headlineHeight;
