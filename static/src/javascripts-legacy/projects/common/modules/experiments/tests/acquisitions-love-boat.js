@@ -45,7 +45,10 @@ define([
         if (button && button[0]) {
             bean.on(button[0], 'click', function () {
                 container.attr('data-step', 2);
-                ophan.record({ component: 'show-button' });
+                ophan.record({
+                    component: 'kr2-visual-button',
+                    value: 'click'
+                });
             });
         }
     }
