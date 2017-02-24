@@ -1,6 +1,6 @@
 define([
     'common/utils/template',
-    'text!commercial/views/creatives/tracking-pixel.html'
+    'raw-loader!commercial/views/creatives/tracking-pixel.html'
 ], function (
     template,
     trackingPixelStr

@@ -1,10 +1,10 @@
 define([
     'bonzo',
     'helpers/injector',
-    'text!fixtures/commercial/ad-slots/im.html',
-    'text!fixtures/commercial/ad-slots/inline1.html',
-    'text!fixtures/commercial/ad-slots/right.html',
-    'text!fixtures/commercial/ad-slots/right-small.html'
+    'raw-loader!fixtures/commercial/ad-slots/im.html',
+    'raw-loader!fixtures/commercial/ad-slots/inline1.html',
+    'raw-loader!fixtures/commercial/ad-slots/right.html',
+    'raw-loader!fixtures/commercial/ad-slots/right-small.html'
 ], function (
     bonzo,
     Injector,
@@ -19,7 +19,7 @@ define([
             createSlot, config;
 
         beforeEach(function (done) {
-            injector.require(['common/modules/commercial/dfp/create-slot', 'common/utils/config'], function () {
+            injector.require(['commercial/modules/dfp/create-slot', 'common/utils/config'], function () {
                 createSlot = arguments[0];
                 config = arguments[1];
 

@@ -11,9 +11,12 @@
 
 
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
+@defining(playable && !posterImageOverride.exists(_ => mvt.YouTubePosterOverride.isParticipating)){sixteenByNine: Boolean =>
+
+
     <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
         ("u-responsive-ratio", true),
-        ("u-responsive-ratio--hd", playable),
+        ("u-responsive-ratio--hd", sixteenByNine),
         ("youtube-media-atom", true),
         ("no-player", !playable || expired )
     ))"
@@ -21,6 +24,8 @@
       data-end-slate="@endSlatePath"
     }
     >
+}
+
         @if(playable && !expired) {
             @defining(s"https://www.youtube.com/embed${
                 media.assets.head.id
@@ -38,7 +43,7 @@
                 </iframe>
                 }
             }
-        @defining(posterImageOverride.filterNot(_ => playable) orElse media.posterImage) { bestPosterImage =>
+        @defining(posterImageOverride.filter(_ => !playable || mvt.YouTubePosterOverride.isParticipating) orElse media.posterImage) { bestPosterImage =>
             @bestPosterImage.map { image =>
                 <div class="@RenderClasses(Map("youtube-media-atom__overlay" -> true, "vjs-big-play-button" -> !expired))" style="background-image: url(@Video700.bestFor(image))">
 

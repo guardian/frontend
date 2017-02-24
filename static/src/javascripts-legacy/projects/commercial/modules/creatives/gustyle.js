@@ -5,7 +5,7 @@ define([
     'common/utils/template',
     'common/modules/ui/toggles',
     'common/views/svgs',
-    'text!commercial/views/creatives/gustyle-label.html',
+    'raw-loader!commercial/views/creatives/gustyle-label.html',
     'lodash/objects/merge'
 ], function (
     fastdom,

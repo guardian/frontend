@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/commercial-features',
+    'commercial/modules/commercial-features',
     'common/modules/commercial/targeting-tool',
     'common/modules/commercial/acquisitions-view-log',
     'common/utils/$',
@@ -11,7 +11,7 @@ define([
     'common/utils/storage',
     'common/utils/geolocation',
     'common/utils/template',
-    'text!common/views/contributions-epic-equal-buttons.html'
+    'raw-loader!common/views/contributions-epic-equal-buttons.html'
 
 ], function (commercialFeatures,
              targetingTool,
@@ -29,7 +29,6 @@ define([
 
     var membershipURL = 'https://membership.theguardian.com/supporter';
     var contributionsURL = 'https://contribute.theguardian.com';
-
 
     var lastContributionDate = cookies.get('gu.contributions.contrib-timestamp');
 

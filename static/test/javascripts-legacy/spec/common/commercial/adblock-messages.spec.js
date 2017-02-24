@@ -58,7 +58,7 @@ define([
 
         beforeEach(function (done) {
 
-            injector.mock('common/modules/commercial/user-features', {isPayingMember : function(){
+            injector.mock('commercial/modules/user-features', {isPayingMember : function(){
                 return settings[counter].userFeatures;
             }
             });

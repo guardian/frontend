@@ -3,7 +3,7 @@ define([
     'common/utils/fastdom-promise',
     'common/utils/template',
     'common/views/svgs',
-    'text!commercial/views/ad-feedback-popup.html',
+    'raw-loader!commercial/views/ad-feedback-popup.html',
     'common/utils/config'
 ], function (
     Promise,

@@ -10,6 +10,7 @@ define([
     'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/prepare-googletag',
     'commercial/modules/dfp/prepare-sonobi-tag',
+    'commercial/modules/dfp/prepare-switch-tag',
     'commercial/modules/dfp/fill-advert-slots',
     'commercial/modules/hosted/about',
     'commercial/modules/hosted/video',
@@ -23,7 +24,7 @@ define([
     'commercial/modules/paid-containers',
     'commercial/modules/dfp/performance-logging',
     'common/modules/analytics/google',
-    'common/modules/commercial/user-features'
+    'commercial/modules/user-features'
 ], function (
     Promise,
     config,
@@ -36,6 +37,7 @@ define([
     closeDisabledSlots,
     prepareGoogletag,
     prepareSonobiTag,
+    prepareSwitchTag,
     fillAdvertSlots,
     hostedAbout,
     hostedVideo,
@@ -52,10 +54,11 @@ define([
     userFeatures
 ) {
     var primaryModules = [
+        ['cm-highMerch', highMerch.init],
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
+        ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
         ['cm-prepare-googletag', prepareGoogletag.init, true],
-        ['cm-highMerch', highMerch.init],
         ['cm-articleAsideAdverts', articleAsideAdverts.init, true],
         ['cm-articleBodyAdverts', articleBodyAdverts.init, true],
         ['cm-liveblogAdverts', liveblogAdverts.init, true],

@@ -10,8 +10,8 @@ const error = (ctx) => {
 module.exports = {
     description: 'Lint JS',
     task: [{
-        description: 'Lint static/tests',
-        task: `eslint static/test/javascripts/**/*.js ${config}`,
+        description: 'Lint static/test/javascripts-legacy',
+        task: `eslint static/test/javascripts-legacy/**/*.js ${config}`,
         onError: error,
     }, {
         description: 'Lint static/src',

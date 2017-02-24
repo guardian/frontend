@@ -22,6 +22,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-paid-content-vs-outbrain",
+    "Displays a paid content widget instead of Outbrain",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-guardian-today-signup-messaging",
     "Test different signup messaging for Guardian Today emails",
     owners = Seq(Owner.withGithub("davidfurey")),
@@ -46,7 +56,7 @@ trait ABTestSwitches {
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 23),
+    sellByDate = new LocalDate(2017, 3, 9),
     exposeClientSide = true
   )
 
@@ -56,7 +66,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 23),
+    sellByDate = new LocalDate(2017, 3, 9),
     exposeClientSide = true
   )
 
@@ -122,11 +132,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-one-line-edits-v2",
-    "Test 2 variations to the epic: (1) social proofing; and (2) paywall + no billionaire owner",
-    owners = Seq(Owner.withGithub("Mullefa")),
+    "ab-acquisitions-love-boat",
+    "Tests 2 new designs for acquisitions asks",
+    owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 28),
+    sellByDate = new LocalDate(2017, 3, 22),
     exposeClientSide = true
   )
 

@@ -39,7 +39,7 @@ define([
 
             injector.require([
                 'commercial/modules/article-aside-adverts',
-                'common/modules/commercial/commercial-features'
+                'commercial/modules/commercial-features'
             ], function () {
                 articleAsideAdverts = arguments[0];
                 commercialFeatures = arguments[1];

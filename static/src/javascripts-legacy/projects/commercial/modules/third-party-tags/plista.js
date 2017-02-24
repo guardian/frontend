@@ -6,9 +6,9 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'common/modules/identity/api',
-    'common/modules/commercial/dfp/track-ad-render',
-    'common/modules/commercial/commercial-features',
-    'text!commercial/views/plista.html',
+    'commercial/modules/dfp/track-ad-render',
+    'commercial/modules/commercial-features',
+    'raw-loader!commercial/views/plista.html',
     'common/utils/load-script'
 ], function (
     Promise,
