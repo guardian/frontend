@@ -40,9 +40,12 @@ $block-padding-right: $gs-gutter;
 
         .meta__numbers {
             @include clearfix;
-            position: static;
-            border-top: 1px dotted $neutral-5;
             border-bottom: 0;
+            border-top: 1px dotted $neutral-5;
+            height: 36px;
+            padding-bottom: $gs-baseline / 4;
+            padding-top: $gs-baseline / 4;
+            position: static;
         }
     }
 
