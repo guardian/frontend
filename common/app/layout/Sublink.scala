@@ -330,16 +330,15 @@ object ContentCard {
 
   def fromApiContent(apiContent: contentapi.Content): Option[ContentCard] = {
 
-    val cardTypesForRecommendations = ItemClasses(mobile = MediaList, tablet = Standard, None)
+    val cardTypesForRecommendations = ItemClasses(mobile = MediaList, tablet = Standard)
 
-    FaciaCard.fromTrail(
+    PartialFunction.condOpt(FaciaCard.fromTrail(
       faciaContent = FaciaContentConvert.contentToFaciaContent(apiContent),
       config = CollectionConfig.empty,
       cardTypes = cardTypesForRecommendations,
       showSeriesAndBlogKickers = false
-    ) match {
-      case content: ContentCard => Some(content)
-      case _ => None
+    )) {
+      case content: ContentCard => content
     }
 
   }
