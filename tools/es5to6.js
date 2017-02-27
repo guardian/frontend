@@ -6,6 +6,7 @@ const gitUser = require('git-user-name');
 const chalk = require('chalk');
 const mkdirp = require('mkdirp');
 const amdtoes6 = require('amd-to-es6');
+const lebab = require('lebab');
 const execa = require('execa');
 
 function error(message) {
@@ -77,15 +78,34 @@ git
     .then(() => {
         console.log('4. Convert module to es6');
         try {
-            const originalSrc = fs.readFileSync(es6Module);
-            const es6ModuleSrc = amdtoes6(originalSrc, {
+            const originalSrc = fs.readFileSync(es5Module);
+            const unAMDd = amdtoes6(originalSrc, {
                 beautify: true,
             });
-            return fs.writeFile(es6Module, es6ModuleSrc, err => {
-                if (err) error(err);
-            });
+            const {
+                code: es6ModuleSrc,
+                warnings,
+            } = lebab.transform(unAMDd, [
+                'arrow',
+                'let',
+                'arg-rest',
+                'arg-spread',
+                'obj-method',
+                'obj-shorthand',
+                'no-strict',
+                'class',
+            ]);
+            if (warnings.length) {
+                error(warnings);
+            }
+
+            try {
+                fs.writeFileSync(es6Module, es6ModuleSrc);
+            } catch (e) {
+                error(e);
+            }
         } catch (e) {
-            return error(e);
+            error(e);
         }
     })
     .then(() => {
@@ -108,9 +128,12 @@ git
                     });
             })
             .catch(e => {
-                console.log(e.stdout.trim());
-                error(
-                    '7. You need to fix some lint errors. Once they are sorted and commited, you can raise the PR.'
+                console.log(
+                    chalk.red(
+                        '7. You need to fix some lint errors. Once they are sorted and commited, you can raise the PR.\n\n'
+                    )
                 );
+                console.log(e.stdout.trim());
+                process.exit(1);
             });
     });
