@@ -96,6 +96,7 @@ $gutter-large: 55px;
     background-color: $news-main-2;
     cursor: pointer;
     bottom: -$gs-baseline / 2;
+    transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
 
     @include mq($until: mobileMedium) {
         //Smaller menu button
@@ -115,6 +116,11 @@ $gutter-large: 55px;
     @include mq(mobileLandscape) {
         //Align with the 'i' in 'theguardian'
         right: $gutter-large;
+    }
+
+    &:hover,
+    &:focus {
+        transform: scale(1.1);
     }
 }
 
@@ -196,7 +202,6 @@ $gutter-large: 55px;
     &:focus,
     &:hover {
         text-decoration: none;
-        color: #ffffff;
     }
 
     &:first-child {
@@ -520,7 +525,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
     // autoprefixer handles all the appropriate psuedo element selectors for placeholders
     &::placeholder {
-        color: #ffffff;
+        color: $news-support-1;
     }
 
     &:focus {
@@ -675,7 +680,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     &:hover,
     &:focus {
         text-decoration: none;
-        color: #ffffff;
     }
 
     @include mq($from: mobile, $until: mobileLandscape) {
@@ -826,11 +830,6 @@ $caption-button-size: 32px;
 .footer__back-to-top__container {
     @include content-gutter();
     background-color: $guardian-brand;
-
-    a:hover > &,
-    a:focus > & {
-        background-color: $guardian-brand-dark;
-    }
 }
 
 .footer__back-to-top {
@@ -869,6 +868,7 @@ $caption-button-size: 32px;
     cursor: pointer;
     height: $veggie-burger-small;
     min-width: $veggie-burger-small;
+    transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
 
     @include mq(mobileMedium) {
         height: $veggie-burger-medium;
@@ -887,6 +887,11 @@ $caption-button-size: 32px;
             width: 30px;
             height: 24px;
         }
+    }
+
+    .footer__back-to-top:hover &,
+    .footer__back-to-top:focus & {
+        transform: scale(1.1);
     }
 }
 
