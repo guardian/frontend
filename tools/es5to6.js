@@ -77,7 +77,7 @@ git
         console.log(`1. Create module conversion branch (${branchName})`);
     })
     .checkoutBranch(branchName, 'origin/master', err => {
-        if (err) console.log(err);
+        if (err) error(err);
     })
     .then(() => {
         console.log(`2. Move ${moduleId} to standard JS`);
@@ -86,9 +86,7 @@ git
         try {
             mkdirp.sync(path.dirname(es6Module));
 
-            fs.rename(es5Module, es6Module, err => {
-                if (err) throw new Error(err);
-            });
+            fs.renameSync(es5Module, es6Module);
 
             fs.writeFileSync(
                 path.resolve(__dirname, 'es5to6.json'),
