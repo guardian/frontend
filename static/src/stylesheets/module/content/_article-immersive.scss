@@ -24,25 +24,23 @@
 
     &.atom-playing {
         .immersive-main-media__media__loading {
-            background-color: #161616;
+            background-color: #fff;
         }
         .immersive-main-media__headline-container {
             position: static;
-            margin-top: 100vh;
+            margin-top: calc(100vh - 36px);
             transform: translateY(-100%);
-            animation-name: slideImmersiveTitleDown;
-            animation-duration: 360ms;
-            animation-timing-function: ease-in;
-            animation-fill-mode: forwards;
+            animation: slideImmersiveTitleDownHeadline 360ms ease-in-out forwards;
         }
-        @keyframes slideImmersiveTitleDown {
+        .immersive-main-media__headline-container--dark {
+            background: rgba(51,51,51,1);
+        }
+        @keyframes slideImmersiveTitleDownHeadline {
             0% {
-                transform: translateY(-100%);
+                transform: translateY(calc(-100% + 36px));
             }
             100% {
-                background-color: transparent;
-                background: transparent;
-                transform: translateY(0);
+                transform: translateY(36px);
             }
         }
     }
@@ -106,7 +104,6 @@
     bottom: 0;
     background-color: $neutral-5;
     color: $neutral-1;
-    transition: background-color 360ms ease-out;
 }
 
 .immersive-main-media__loading-animation {
