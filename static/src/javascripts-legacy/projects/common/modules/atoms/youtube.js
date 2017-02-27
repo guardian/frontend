@@ -59,6 +59,11 @@ define([
         killProgressTracker(atomId);
         tracking.track('end', getTrackingId(atomId));
         players[atomId].pendingTrackingCalls = [25, 50, 75];
+
+        if (document.querySelector('.immersive-main-media .youtube-media-atom')) {
+            document.querySelector('.immersive-main-media').classList.remove('atom-playing');
+        }
+
     }
 
     function setProgressTracker(atomId)  {
