@@ -32,6 +32,7 @@
     "wolfy87-eventemitter": "~4.2.6"
   },
   "devDependencies": {
+    "amd-to-es6": "^0.1.0",
     "amphtml-validator": "^1.0.10",
     "any-observable": "^0.2.0",
     "autoprefixer": "^6.5.3",
