@@ -11,10 +11,12 @@ const execa = require('execa');
 
 process.on('uncaughtException', message => {
     console.log(chalk.red(message));
+    console.log(chalk.red(message.stack));
     process.exit(1);
 });
 
 const remainingModules = require('./es5to6.json');
+
 const userModules = remainingModules[gitUser()];
 
 if (!userModules || !userModules.length) {
