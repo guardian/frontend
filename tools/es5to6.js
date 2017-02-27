@@ -117,20 +117,17 @@ git
         console.log('6. Lint the es6 module');
         return execa('eslint', [es6Module, '--color', '--fix'])
             .then(() => {
-                console.log(`7. Commit lint fixes.`);
-                git
-                    .add([es6Module])
-                    .commit(`convert ${moduleId} contents to es6`)
-                    .then(() => {
-                        console.log(
-                            `8. Conversion is complete. Double check the code then you can raise the PR.`
-                        );
-                    });
+                console.log(`7. Commit lint fixes`);
+                git.add([es6Module]).commit(`lint ${moduleId}`).then(() => {
+                    console.log(
+                        `8. Conversion is complete – double check the code then raise a PR!`
+                    );
+                });
             })
             .catch(e => {
                 console.log(
                     chalk.red(
-                        '7. You need to fix some lint errors. Once they are sorted and commited, you can raise the PR.\n\n'
+                        '7. You need to fix some lint errors. Once they are sorted and commited, double check the code then raise a PR!\n\n'
                     )
                 );
                 console.log(e.stdout.trim());
