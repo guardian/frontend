@@ -46,16 +46,18 @@ const es6Module = path.resolve(
 const branchName = `es6-${moduleId.split(path.sep).join('_')}`;
 
 git
-    // .status((err, status) => {
-    //     if (
-    //         status.current !== 'master' ||
-    //         status.files.length > 0 ||
-    //         status.ahead !== 0 ||
-    //         status.behind !== 0
-    //     ) {
-    //         throw new Error('Please run this from a clean, up to date copy of master.')
-    //     }
-    // })
+    .status((err, status) => {
+        if (
+            status.current !== 'master' ||
+            status.files.length > 0 ||
+            status.ahead !== 0 ||
+            status.behind !== 0
+        ) {
+            throw new Error(
+                'Please run this from a clean, up to date copy of master.'
+            );
+        }
+    })
     .then(() => {
         if (!fs.existsSync(es5Module)) {
             console.log(
