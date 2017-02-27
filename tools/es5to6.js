@@ -9,10 +9,12 @@ const amdtoes6 = require('amd-to-es6');
 const lebab = require('lebab');
 const execa = require('execa');
 
-process.on('uncaughtException', message => {
-    console.log(chalk.red(message.stack));
+function error(message) {
+    console.log(chalk.red(message));
     process.exit(1);
-});
+}
+
+process.on('uncaughtException', e => error(e.stack));
 
 const remainingModules = require('./es5to6.json');
 
@@ -53,9 +55,7 @@ git
             status.ahead !== 0 ||
             status.behind !== 0
         ) {
-            throw new Error(
-                'Please run this from a clean, up to date copy of master.'
-            );
+            error('Please run this in a clean, up to date copy of master.');
         }
     })
     .then(() => {
@@ -83,16 +83,22 @@ git
         console.log(`2. Move ${moduleId} to standard JS`);
     })
     .then(() => {
-        mkdirp.sync(path.dirname(es6Module));
+        try {
+            mkdirp.sync(path.dirname(es6Module));
 
-        fs.rename(es5Module, es6Module, err => {
-            if (err) throw new Error(err);
-        });
+            fs.rename(es5Module, es6Module, err => {
+                if (err) throw new Error(err);
+            });
 
-        fs.writeFileSync(
-            path.resolve(__dirname, 'es5to6.json'),
-            JSON.stringify(remainingModules, null, 2)
-        );
+            fs.writeFileSync(
+                path.resolve(__dirname, 'es5to6.json'),
+                JSON.stringify(remainingModules, null, 2)
+            );
+        } catch (e) {
+            error(
+                "The copy failed, you'll need to complete the process manually."
+            );
+        }
     })
     .then(() => {
         console.log(`3. Commit move`);
@@ -102,12 +108,18 @@ git
     .then(() => {
         console.log('4. Convert module to es6');
 
-        const originalSrc = fs.readFileSync(es6Module);
-        const unAMDd = amdtoes6(originalSrc, {
-            beautify: true,
-        });
+        try {
+            const originalSrc = fs.readFileSync(es6Module);
+            const unAMDd = amdtoes6(originalSrc, {
+                beautify: true,
+            });
 
-        fs.writeFileSync(es6Module, unAMDd);
+            fs.writeFileSync(es6Module, unAMDd);
+        } catch (e) {
+            error(
+                "The conversion failed, you'll need to complete the process manually."
+            );
+        }
     })
     .then(() => {
         console.log(`5. Commit conversion to es6 module`);
@@ -118,25 +130,31 @@ git
         console.log(`6. Convert contents to es6`);
     })
     .then(() => {
-        const originalSrc = fs.readFileSync(es6Module);
-        const {
-            code: es6ModuleSrc,
-            warnings,
-        } = lebab.transform(originalSrc, [
-            'arrow',
-            'let',
-            'arg-rest',
-            'arg-spread',
-            'obj-method',
-            'obj-shorthand',
-            'no-strict',
-            'class',
-        ]);
-        if (warnings.length) {
-            throw new Error(warnings);
-        }
+        try {
+            const originalSrc = fs.readFileSync(es6Module);
+            const {
+                code: es6ModuleSrc,
+                warnings,
+            } = lebab.transform(originalSrc, [
+                'arrow',
+                'let',
+                'arg-rest',
+                'arg-spread',
+                'obj-method',
+                'obj-shorthand',
+                'no-strict',
+                'class',
+            ]);
+            if (warnings.length) {
+                throw new Error(warnings);
+            }
 
-        fs.writeFileSync(es6Module, es6ModuleSrc);
+            fs.writeFileSync(es6Module, es6ModuleSrc);
+        } catch (e) {
+            error(
+                "The conversion failed, you'll need to complete the process manually."
+            );
+        }
     })
     .then(() => {
         console.log(`7. Commit conversion of content to es6`);
