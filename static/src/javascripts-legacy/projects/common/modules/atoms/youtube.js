@@ -111,10 +111,10 @@ define([
             return closest(players[atomId].iframe, 'figure[data-component="main video"]');
         }
 
-            return config.page.contentType === 'Video' &&
-                isInternalReferrer() &&
-                !isAutoplayBlockingPlatform() &&
-                isMainVideo();
+        return config.page.contentType === 'Video' &&
+            isInternalReferrer() &&
+            !isAutoplayBlockingPlatform() &&
+            isMainVideo();
     }
 
     function onPlayerReady(atomId, overlay, iframe, event) {
