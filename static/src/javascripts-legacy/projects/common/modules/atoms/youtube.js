@@ -226,7 +226,7 @@ define([
         var headlineHeight = (headline ? headline.offsetHeight : 0)
         var buttonOffset = playerHeight - headlineHeight;
         var immersiveInterface = document.querySelector('.youtube-media-atom__immersive-interface');
-        immersiveInterface.style.top = buttonOffset+'px';
+        immersiveInterface.style.top = buttonOffset + 'px';
     }
 
     // retrieves actual id of atom without appended index
