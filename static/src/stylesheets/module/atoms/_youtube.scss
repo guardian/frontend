@@ -179,7 +179,7 @@
             position: absolute;
             top: 50vh;
             transform: translateY(-100%);
-            padding-bottom: 24px;
+            padding-bottom: $gs-baseline * 2;
         }
         &__play-button,
         &__bottom-bar__duration {
