@@ -115,7 +115,7 @@ git
             fs.writeFileSync(es6Module, unAMDd);
         } catch (e) {
             error(
-                "The conversion failed, you'll need to complete the process manually."
+                "The conversion failed, you'll need to complete the process by hand: https://lebab.io/try-it"
             );
         }
     })
@@ -150,7 +150,7 @@ git
             fs.writeFileSync(es6Module, es6ModuleSrc);
         } catch (e) {
             error(
-                "The conversion failed, you'll need to complete the process manually."
+                "The conversion failed, you'll need to complete the process by hand: https://lebab.io/try-it"
             );
         }
     })
