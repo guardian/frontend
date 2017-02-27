@@ -133,6 +133,7 @@
     "bootstraps/enhanced/notifications.js"
   ],
   "sndrs": [
+    "projects/common/utils/$.js",
     "projects/common/utils/$css.js",
     "projects/common/utils/add-event-listener.js",
     "projects/common/utils/ajax.js",
@@ -289,7 +290,6 @@
     "projects/common/modules/experiments/low-friction-participation.js",
     "projects/common/modules/experiments/segment-util.js",
     "projects/common/modules/experiments/subscriber-number-form.js",
-    "projects/common/modules/experiments/tests/acquisitions-love-boat.js",
     "projects/common/modules/experiments/tests/contributions-epic-always-ask-strategy.js",
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-stagger.js",
@@ -303,10 +303,10 @@
     "projects/common/modules/experiments/tests/participation-discussion-test.js",
     "projects/common/modules/experiments/tests/recommended-for-you.js",
     "projects/common/modules/experiments/tests/tailor-recommended-email.js",
-    "projects/common/modules/experiments/tests/tailor-survey.js"
+    "projects/common/modules/experiments/tests/tailor-survey.js",
+    "projects/common/modules/gallery/lightbox.js"
   ],
   "davidfurey": [
-    "projects/common/modules/gallery/lightbox.js",
     "projects/common/modules/identity/account-profile.js",
     "projects/common/modules/identity/api.js",
     "projects/common/modules/identity/autosignin.js",
@@ -323,10 +323,10 @@
     "projects/common/modules/lazyload.js",
     "projects/common/modules/live/notification-bar.js",
     "projects/common/modules/media/videojs-plugins/fullscreener.js",
-    "projects/common/modules/media/videojs-plugins/skip-ad.js"
+    "projects/common/modules/media/videojs-plugins/skip-ad.js",
+    "projects/common/modules/navigation/membership.js"
   ],
   "jranks123": [
-    "projects/common/modules/navigation/membership.js",
     "projects/common/modules/navigation/navigation.js",
     "projects/common/modules/navigation/newHeaderNavigation.js",
     "projects/common/modules/navigation/profile.js",
@@ -343,10 +343,10 @@
     "projects/common/modules/onward/social-most-popular.js",
     "projects/common/modules/onward/socially-referred-burners.js",
     "projects/common/modules/onward/tech-feedback.js",
-    "projects/common/modules/onward/tonal.js"
+    "projects/common/modules/onward/tonal.js",
+    "projects/common/modules/open/cta.js"
   ],
   "ShaunYearStrong": [
-    "projects/common/modules/open/cta.js",
     "projects/common/modules/preferences/main.js",
     "projects/common/modules/router.js",
     "projects/common/modules/save-for-later.js",
@@ -363,10 +363,10 @@
     "projects/common/modules/sudoku/controls.js",
     "projects/common/modules/sudoku/flatMap.js",
     "projects/common/modules/sudoku/grid.js",
-    "projects/common/modules/sudoku/main.js"
+    "projects/common/modules/sudoku/main.js",
+    "projects/common/modules/sudoku/utils.js"
   ],
   "jfsoul": [
-    "projects/common/modules/sudoku/utils.js",
     "projects/common/modules/tailor/tailor.js",
     "projects/common/modules/ui/accessibility-prefs.js",
     "projects/common/modules/ui/autoupdate.js",
@@ -383,10 +383,10 @@
     "projects/common/modules/ui/notification-counter.js",
     "projects/common/modules/ui/relativedates.js",
     "projects/common/modules/ui/rhc.js",
-    "projects/common/modules/ui/selection-sharing.js"
+    "projects/common/modules/ui/selection-sharing.js",
+    "projects/common/modules/ui/smartAppBanner.js"
   ],
   "gustavpursche": [
-    "projects/common/modules/ui/smartAppBanner.js",
     "projects/common/modules/ui/sticky-social.js",
     "projects/common/modules/ui/sticky.js",
     "projects/common/modules/ui/tabs.js",
@@ -403,6 +403,7 @@
     "projects/common/views/svgs.js",
     "projects/facia/modules/onwards/geo-most-popular-front.js",
     "projects/facia/modules/onwards/search-tool.js",
-    "projects/facia/modules/onwards/weather.js"
+    "projects/facia/modules/onwards/weather.js",
+    "projects/facia/modules/ui/container-show-more.js"
   ]
 }
