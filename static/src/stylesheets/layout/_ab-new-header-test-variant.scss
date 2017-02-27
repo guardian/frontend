@@ -407,8 +407,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
 .main-navigation__secondary {
     color: #ffffff;
-    background-color: #003b5e;
-    padding-bottom: $gs-baseline / 2;
+    background: darken($guardian-brand-dark, 4%);
 
     .main-menu__icon__svg {
         margin-top: -.24em;
@@ -431,13 +430,14 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
         left: $navigation-horizontal-padding;
         right: 0;
         height: 1px;
-        background: #003b5e;
+        background: darken($guardian-brand-dark, 4%);
     }
 }
 
 [data-link-name='nav2 : crosswords'],
-[data-link-name='nav2 : today\'s paper'] {
-    margin-top: $gs-baseline;
+[data-link-name='nav2 : today\'s paper'],
+[data-link-name='nav2 : facebook'] {
+    margin-top: $gs-baseline * 2;
 }
 
 .navigation-group {
@@ -447,15 +447,12 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     margin-top: 0;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
-
-    & li:last-child {
-        padding-bottom: $gs-baseline;
-    }
 }
 
 .navigation-group--contrast {
     color: $guardian-brand-dark;
     background-color: $news-main-2;
+    padding-bottom: $gs-baseline;
 
     .main-menu__icon__svg {
         fill: $guardian-brand;
@@ -471,6 +468,10 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     list-style: none;
     position: relative;
     font-size: 1em;
+
+    details[open] &:last-child {
+        padding-bottom: $gs-baseline;
+    }
 
     a {
         display: block;
@@ -609,13 +610,17 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
         padding-bottom: $gs-baseline / 1.5;
     }
 
-    .personalisation__links {
+    details[open] .personalisation__links {
         margin-bottom: -$gs-baseline;
     }
 }
 
 .personalisation__link {
     color: $guardian-brand-dark;
+
+    &:last-child {
+        padding-bottom: $gs-baseline;
+    }
 }
 
 .no-text-transform {
