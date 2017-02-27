@@ -5,43 +5,30 @@ module.exports = {
         es6: true,
         node: true,
     },
-    extends: 'airbnb',
+    // eslint-config-prettier disables formatting rules from other configs (i.e. airbnb)
+    extends: ["airbnb", "prettier"],
+
+    // eslint-plugin-prettier switches prettier on
+    plugins: ["prettier"],
     parserOptions: {
-        sourceType: 'module',
+        sourceType: "module",
         ecmaVersion: 6,
         ecmaFeatures: {
             jsx: true,
         },
     },
     rules: {
-        indent: [
-            'error',
-            4, {
-                SwitchCase: 1,
-                MemberExpression: 1,
+        // prettier settings
+        "prettier/prettier": [
+            "error",
+            {
+                trailingComma: "es5",
+                singleQuote: false,
+                bracketSpacing: true,
+                tabWidth: 4,
             },
         ],
-        'linebreak-style': [
-            'error',
-            'unix',
-        ],
-        quotes: [
-            'error',
-            'single',
-        ],
-        semi: [
-            'error',
-            'always',
-        ],
-        'comma-dangle': ['error', {
-            arrays: 'always-multiline',
-            objects: 'always-multiline',
-            imports: 'never',
-            exports: 'never',
-            functions: 'never',
-        }],
-        'max-len': 'off',
-        'no-extend-native': 'error',
+        "no-extend-native": "error",
     },
     // don't look for eslintrcs above here
     root: true,

@@ -1,5 +1,5 @@
 module.exports = {
     rules: {
-        'global-require': 'off',
+        "global-require": "off",
     },
 };

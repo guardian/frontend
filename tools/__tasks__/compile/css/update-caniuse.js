@@ -1,4 +1,4 @@
 module.exports = {
-    description: 'Update caniuse DB',
-    task: 'npm update caniuse-db',
+    description: "Update caniuse DB",
+    task: "npm update caniuse-db",
 };

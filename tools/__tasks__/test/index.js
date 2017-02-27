@@ -1,7 +1,5 @@
 module.exports = {
-    description: 'Test assets',
-    task: [
-        require('./javascript'),
-    ],
+    description: "Test assets",
+    task: [require("./javascript")],
     concurrent: true,
 };
