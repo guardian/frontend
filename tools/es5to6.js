@@ -9,10 +9,10 @@ const amdtoes6 = require('amd-to-es6');
 const lebab = require('lebab');
 const execa = require('execa');
 
-function error(message) {
+process.on('uncaughtException', message => {
     console.log(chalk.red(message));
     process.exit(1);
-}
+});
 
 const remainingModules = require('./es5to6.json')[gitUser()];
 
@@ -51,7 +51,7 @@ git
     //         status.ahead !== 0 ||
     //         status.behind !== 0
     //     ) {
-    //         error('Please run this from a clean, up to date copy of master.')
+    //         throw new Error('Please run this from a clean, up to date copy of master.')
     //     }
     // })
     .then(() => {
@@ -67,7 +67,7 @@ git
         mkdirp.sync(path.dirname(es6Module));
 
         fs.rename(es5Module, es6Module, err => {
-            if (err) error(err);
+            if (err) throw new Error(err);
         });
     })
     .then(() => {
@@ -78,7 +78,7 @@ git
     .then(() => {
         console.log('4. Convert module to es6');
         try {
-            const originalSrc = fs.readFileSync(es5Module);
+            const originalSrc = fs.readFileSync(es6Module);
             const unAMDd = amdtoes6(originalSrc, {
                 beautify: true,
             });
@@ -96,16 +96,16 @@ git
                 'class',
             ]);
             if (warnings.length) {
-                error(warnings);
+                throw new Error(warnings);
             }
 
             try {
                 fs.writeFileSync(es6Module, es6ModuleSrc);
             } catch (e) {
-                error(e);
+                throw new Error(e);
             }
         } catch (e) {
-            error(e);
+            throw new Error(e);
         }
     })
     .then(() => {
