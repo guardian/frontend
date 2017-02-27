@@ -14,14 +14,15 @@ process.on('uncaughtException', message => {
     process.exit(1);
 });
 
-const remainingModules = require('./es5to6.json')[gitUser()];
+const remainingModules = require('./es5to6.json');
+const userModules = remainingModules[gitUser()];
 
-if (!remainingModules || !remainingModules.length) {
+if (!userModules || !userModules.length) {
     console.log(chalk.green('⭐️  You have no more modules to convert! ⭐️'));
     process.exit();
 }
 
-const moduleId = remainingModules.shift();
+const moduleId = userModules.shift();
 
 const es5Module = path.resolve(
     __dirname,
@@ -69,11 +70,16 @@ git
         fs.rename(es5Module, es6Module, err => {
             if (err) throw new Error(err);
         });
+
+        fs.writeFileSync(
+            path.resolve(__dirname, 'es5to6.json'),
+            JSON.stringify(remainingModules, null, 2)
+        );
     })
     .then(() => {
         console.log(`3. Commit move`);
     })
-    .add([es5Module, es6Module])
+    .add('./*')
     .commit(`copy ${moduleId} from legacy to standard JS`)
     .then(() => {
         console.log('4. Convert module to es6');
@@ -111,14 +117,14 @@ git
     .then(() => {
         console.log(`5. Commit conversion to es6 module`);
     })
-    .add([es6Module])
+    .add('./*')
     .commit(`convert ${moduleId} to an es6 module`)
     .then(() => {
         console.log('6. Lint the es6 module');
         return execa('eslint', [es6Module, '--color', '--fix'])
             .then(() => {
                 console.log(`7. Commit lint fixes`);
-                git.add([es6Module]).commit(`lint ${moduleId}`).then(() => {
+                git.add('./*').commit(`lint ${moduleId}`).then(() => {
                     console.log(
                         `8. Conversion is complete – double check the code then raise a PR!`
                     );
