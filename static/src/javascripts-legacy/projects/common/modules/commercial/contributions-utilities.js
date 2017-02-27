@@ -1,4 +1,5 @@
 define([
+    'lodash/arrays/uniq',
     'commercial/modules/commercial-features',
     'common/modules/commercial/targeting-tool',
     'common/modules/commercial/acquisitions-view-log',
@@ -12,20 +13,22 @@ define([
     'common/utils/geolocation',
     'common/utils/template',
     'raw-loader!common/views/contributions-epic-equal-buttons.html'
-
-], function (commercialFeatures,
-             targetingTool,
-             viewLog,
-             $,
-             config,
-             cookies,
-             ElementInView,
-             fastdom,
-             mediator,
-             storage,
-             geolocation,
-             template,
-             contributionsEpicEqualButtons) {
+], function (
+    uniq,
+    commercialFeatures,
+    targetingTool,
+    viewLog,
+    $,
+    config,
+    cookies,
+    ElementInView,
+    fastdom,
+    mediator,
+    storage,
+    geolocation,
+    template,
+    contributionsEpicEqualButtons
+) {
 
     var membershipURL = 'https://membership.theguardian.com/supporter';
     var contributionsURL = 'https://contribute.theguardian.com';
@@ -141,7 +144,7 @@ define([
         this.pageviewId = (config.ophan && config.ophan.pageViewId) || 'NOT_FOUND';
         this.contributeCampaignCode = getCampaignCode(test.contributionsCampaignPrefix, this.campaignId, this.id);
         this.membershipCampaignCode = getCampaignCode(test.membershipCampaignPrefix, this.campaignId, this.id);
-        this.campaignCodes = [this.contributeCampaignCode, this.membershipCampaignCode];
+        this.campaignCodes = uniq([this.contributeCampaignCode, this.membershipCampaignCode]);
 
         this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, this.contributeCampaignCode);
         this.membershipURL = options.membershipURL || this.makeURL(membershipURL, this.membershipCampaignCode);
