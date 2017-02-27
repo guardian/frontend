@@ -10,7 +10,6 @@ const lebab = require('lebab');
 const execa = require('execa');
 
 process.on('uncaughtException', message => {
-    console.log(chalk.red(message));
     console.log(chalk.red(message.stack));
     process.exit(1);
 });
@@ -85,36 +84,29 @@ git
     .commit(`copy ${moduleId} from legacy to standard JS`)
     .then(() => {
         console.log('4. Convert module to es6');
-        try {
-            const originalSrc = fs.readFileSync(es6Module);
-            const unAMDd = amdtoes6(originalSrc, {
-                beautify: true,
-            });
-            const {
-                code: es6ModuleSrc,
-                warnings,
-            } = lebab.transform(unAMDd, [
-                'arrow',
-                'let',
-                'arg-rest',
-                'arg-spread',
-                'obj-method',
-                'obj-shorthand',
-                'no-strict',
-                'class',
-            ]);
-            if (warnings.length) {
-                throw new Error(warnings);
-            }
 
-            try {
-                fs.writeFileSync(es6Module, es6ModuleSrc);
-            } catch (e) {
-                throw new Error(e);
-            }
-        } catch (e) {
-            throw new Error(e);
+        const originalSrc = fs.readFileSync(es6Module);
+        const unAMDd = amdtoes6(originalSrc, {
+            beautify: true,
+        });
+        const {
+            code: es6ModuleSrc,
+            warnings,
+        } = lebab.transform(unAMDd, [
+            'arrow',
+            'let',
+            'arg-rest',
+            'arg-spread',
+            'obj-method',
+            'obj-shorthand',
+            'no-strict',
+            'class',
+        ]);
+        if (warnings.length) {
+            throw new Error(warnings);
         }
+
+        fs.writeFileSync(es6Module, es6ModuleSrc);
     })
     .then(() => {
         console.log(`5. Commit conversion to es6 module`);
