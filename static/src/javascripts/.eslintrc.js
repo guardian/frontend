@@ -1,10 +1,13 @@
+// use prettier for formatting:
+// eslint-plugin-prettier swtiches it on
+// eslint-config-prettier disables formatting rules from other configs (i.e. airbnb)
+
 module.exports = {
     settings: {
         'import/resolver': 'webpack',
     },
-    plugins: [
-        'guardian-frontend',
-    ],
+    extends: ['prettier'],
+    plugins: ['guardian-frontend', 'prettier'],
     rules: {
         // require-specific overrides
         'import/no-dynamic-require': 'off',
@@ -30,10 +33,24 @@ module.exports = {
         'react/no-render-return-value': 'off',
 
         // disallow modules we used to use but are retiring
-        'no-restricted-imports': ['error', {
-            paths: ['lodash'],
-            patterns: ['!lodash/*'],
-        }],
+        'no-restricted-imports': [
+            'error',
+            {
+                paths: ['lodash'],
+                patterns: ['!lodash/*'],
+            },
+        ],
+
+        // prettier settings
+        'prettier/prettier': [
+            'error',
+            {
+                trailingComma: 'es5',
+                singleQuote: true,
+                bracketSpacing: true,
+                tabWidth: 4,
+            },
+        ],
 
         // our own rules for frontend
         // live in tools/eslint-plugin-guardian-frontend
