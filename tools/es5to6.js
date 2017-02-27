@@ -6,6 +6,7 @@ const gitUser = require('git-user-name');
 const chalk = require('chalk');
 const mkdirp = require('mkdirp');
 const amdtoes6 = require('amd-to-es6');
+const execa = require('execa');
 
 function error(message) {
     console.log(chalk.red(message));
@@ -53,7 +54,7 @@ git
     //     }
     // })
     .then(() => {
-        console.log(`1. Create module conversion branch\n - ${branchName}`);
+        console.log(`1. Create module conversion branch (${branchName})`);
     })
     .checkoutBranch(branchName, 'origin/master', err => {
         if (err) console.log(err);
@@ -91,4 +92,24 @@ git
         console.log(`5. Commit conversion to es6 module`);
     })
     .add([es6Module])
-    .commit(`convert ${moduleId} to an es6 module`);
+    .commit(`convert ${moduleId} to an es6 module`)
+    .then(() => {
+        console.log('6. Lint the es6 module');
+        return execa('eslint', [es6Module, '--color', '--fix'])
+            .then(() => {
+                git
+                    .add([es6Module])
+                    .commit(`convert ${moduleId} contents to es6`)
+                    .then(() => {
+                        console.log(
+                            `7. Conversion is complete. Double check the code then you can raise the PR.`
+                        );
+                    });
+            })
+            .catch(e => {
+                console.log(e.stdout.trim());
+                error(
+                    '7. You need to fix some lint errors. Once they are sorted and commited, you can raise the PR.'
+                );
+            });
+    });
