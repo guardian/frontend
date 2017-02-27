@@ -28,7 +28,7 @@
         }
         .immersive-main-media__headline-container {
             position: static;
-            margin-top: calc(100vh - ($gs-baseline * 3));
+            margin-top: calc(100vh - #{$gs-baseline * 3});
             transform: translateY(-100%);
             animation: slideImmersiveTitleDownHeadline 360ms ease-in-out forwards;
         }
@@ -37,7 +37,7 @@
         }
         @keyframes slideImmersiveTitleDownHeadline {
             0% {
-                transform: translateY(calc(-100% + ($gs-baseline * 3)));
+                transform: translateY(calc(-100% + #{$gs-baseline * 3}));
             }
             100% {
                 transform: translateY($gs-baseline * 3);
