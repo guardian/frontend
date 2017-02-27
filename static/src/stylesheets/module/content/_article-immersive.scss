@@ -33,7 +33,8 @@
             animation: slideImmersiveTitleDownHeadline 360ms ease-in-out forwards;
         }
         .immersive-main-media__headline-container--dark {
-            background: rgba(51,51,51,1);
+            background-color: rgba(51, 51, 51, 1);
+            background: linear-gradient(rgba(51, 51, 51, 1), rgba(51, 51, 51, 1));
         }
         @keyframes slideImmersiveTitleDownHeadline {
             0% {
@@ -128,6 +129,7 @@
 }
 
 .immersive-main-media__headline-container--dark {
+    transition: background 500ms ease-out 200ms, background-color 500ms ease-out 200ms;
     background-color: rgba(0, 0, 0, .6);
     background: linear-gradient(rgba(0, 0, 0, .5), $multimedia-support-5);
 }
