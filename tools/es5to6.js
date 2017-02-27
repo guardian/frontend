@@ -57,6 +57,21 @@ git
     //     }
     // })
     .then(() => {
+        if (!fs.existsSync(es5Module)) {
+            console.log(
+                chalk.green(
+                    `${moduleId} appears to have been removed!\n\nIt has been removed from your list.`
+                )
+            );
+            fs.writeFileSync(
+                path.resolve(__dirname, 'es5to6.json'),
+                JSON.stringify(remainingModules, null, 2)
+            );
+            git.add('./*').commit(`${moduleId} has been removed`);
+            process.exit();
+        }
+    })
+    .then(() => {
         console.log(`1. Create module conversion branch (${branchName})`);
     })
     .checkoutBranch(branchName, 'origin/master', err => {
