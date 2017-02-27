@@ -89,10 +89,20 @@ git
         const unAMDd = amdtoes6(originalSrc, {
             beautify: true,
         });
+
+        fs.writeFileSync(es6Module, unAMDd);
+    })
+    .then(() => {
+        console.log(`5. Commit conversion to es6 module`);
+    })
+    .add('./*')
+    .commit(`convert content to es6`)
+    .then(() => {
+        const originalSrc = fs.readFileSync(es6Module);
         const {
             code: es6ModuleSrc,
             warnings,
-        } = lebab.transform(unAMDd, [
+        } = lebab.transform(originalSrc, [
             'arrow',
             'let',
             'arg-rest',
@@ -109,25 +119,25 @@ git
         fs.writeFileSync(es6Module, es6ModuleSrc);
     })
     .then(() => {
-        console.log(`5. Commit conversion to es6 module`);
+        console.log(`6. Commit conversion of content to es6`);
     })
     .add('./*')
     .commit(`convert ${moduleId} to an es6 module`)
     .then(() => {
-        console.log('6. Lint the es6 module');
+        console.log('7. Lint the es6 module');
         return execa('eslint', [es6Module, '--color', '--fix'])
             .then(() => {
-                console.log(`7. Commit lint fixes`);
+                console.log(`8. Commit lint fixes`);
                 git.add('./*').commit(`lint ${moduleId}`).then(() => {
                     console.log(
-                        `8. Conversion is complete – double check the code then raise a PR!`
+                        `9. Conversion is complete – double check the code then raise a PR!`
                     );
                 });
             })
             .catch(e => {
                 console.log(
                     chalk.red(
-                        '7. You need to fix some lint errors. Once they are sorted and commited, double check the code then raise a PR!\n\n'
+                        '8. You need to fix some lint errors. Once they are sorted and commited, double check the code then raise a PR!\n\n'
                     )
                 );
                 console.log(e.stdout.trim());
