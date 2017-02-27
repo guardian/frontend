@@ -121,7 +121,9 @@ define([
         'AX'
     ];
 
-    // Returns one of { GB, US, AU, CA, EU, INT }.
+    // Returns one of { GB, US, AU, CA, EU, INT }
+    // These are the different 'regions' we accept when taking payment.
+    // See https://membership.theguardian.com/uk/supporter# for more context.
     function getSupporterPaymentRegion() {
         var location = getSync();
         for (var i = 0; i < regionCountryCodes.length; i++) {

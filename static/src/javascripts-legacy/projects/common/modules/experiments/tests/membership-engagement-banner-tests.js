@@ -191,6 +191,11 @@ define([
     // cta should be a function which returns the call-to-action which is placed after the message text.
     CopyTest.prototype.addVariant = function(variantId, messageText, cta) {
 
+        function createCampaignCode(variantId) {
+            // Campaign code follows convention. Talk to Alex for more information.
+            return 'gdnwb_copts_mem_kr3_learn_banner_copy_' + variantId;
+        }
+
         this.variants.push({
             id: variantId,
 
@@ -212,8 +217,7 @@ define([
                     },
                     linkUrl: 'https://membership.theguardian.com/supporter',
                     buttonCaption: 'Become a Supporter',
-                    // TODO
-                    campaignCode: 'TODO!'
+                    campaignCode: createCampaignCode(variantId)
                 }
             }
         });
@@ -226,6 +230,7 @@ define([
             .addMembershipVariant('control', {})
             .addMembershipVariant('remind_me', {showRemindMe : true}),
 
+        // Release the first 3 variants. The remaining 2 will be released when the 'Remind Me Later' test is complete.
         new CopyTest()
             .addVariant(
                 'control',
