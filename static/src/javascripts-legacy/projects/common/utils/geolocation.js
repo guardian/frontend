@@ -126,15 +126,11 @@ define([
     // See https://membership.theguardian.com/uk/supporter# for more context.
     function getSupporterPaymentRegion() {
         var location = getSync();
-        for (var i = 0; i < regionCountryCodes.length; i++) {
-            if (location === regionCountryCodes[i]) {
-                return location;
-            }
+        if (regionCountryCodes.indexOf(location) > -1) {
+            return location;
         }
-        for (var j = 0; j < europeCountryCodes.length; j++) {
-            if (location === europeCountryCodes[j]) {
-                return 'EU'
-            }
+        if (europeCountryCodes.indexOf(location) > -1) {
+            return 'EU';
         }
         return 'INT';
     }
