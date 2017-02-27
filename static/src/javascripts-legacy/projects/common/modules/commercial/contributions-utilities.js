@@ -141,7 +141,7 @@ define([
         this.maxViews = options.maxViews || maxViews;
         this.isUnlimited = options.isUnlimited || false;
 
-        this.pageviewId = (config.ophan && config.ophan.pageViewId) || 'NOT_FOUND';
+        this.pageviewId = (config.ophan && config.ophan.pageViewId) || 'not_found';
         this.contributeCampaignCode = getCampaignCode(test.contributionsCampaignPrefix, this.campaignId, this.id);
         this.membershipCampaignCode = getCampaignCode(test.membershipCampaignPrefix, this.campaignId, this.id);
         this.campaignCodes = uniq([this.contributeCampaignCode, this.membershipCampaignCode]);
