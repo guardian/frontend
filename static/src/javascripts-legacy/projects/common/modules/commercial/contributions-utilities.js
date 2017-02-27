@@ -131,17 +131,22 @@ define([
     }
 
     function ContributionsABTestVariant(options, test) {
+        var trackingCampaignId = test.epic ? 'epic_' + test.campaignId : test.campaignId;
+
         this.campaignId = test.campaignId;
         this.id = options.id;
         this.maxViews = options.maxViews || maxViews;
         this.isUnlimited = options.isUnlimited || false;
 
-        this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, test.contributionsCampaignPrefix);
-        this.membershipURL = options.membershipURL || this.makeURL(membershipURL, test.membershipCampaignPrefix);
+        this.pageviewId = (config.ophan && config.ophan.pageViewId) || 'NOT_FOUND';
+        this.contributeCampaignCode = getCampaignCode(test.contributionsCampaignPrefix, this.campaignId, this.id);
+        this.membershipCampaignCode = getCampaignCode(test.membershipCampaignPrefix, this.campaignId, this.id);
+        this.campaignCodes = [this.contributeCampaignCode, this.membershipCampaignCode];
+
+        this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, this.contributeCampaignCode);
+        this.membershipURL = options.membershipURL || this.makeURL(membershipURL, this.membershipCampaignCode);
 
         this.template = options.template || controlTemplate;
-
-        var trackingCampaignId  = test.epic ? 'epic_' + test.campaignId : test.campaignId;
 
         this.test = function () {
             var component = $.create(this.template(this.membershipURL, this.contributeURL));
@@ -182,23 +187,18 @@ define([
         this.registerListener('success', 'successOnView', test.viewEvent, options);
     }
 
-    function getCampaignCodeParamter(campaignCodePrefix, campaignID, id) {
-        return 'INTCMP=' + campaignCodePrefix + '_' + campaignID + '_' + id;
+    function getCampaignCode(campaignCodePrefix, campaignID, id) {
+        return campaignCodePrefix + '_' + campaignID + '_' + id;
     }
 
-    function getPageviewIdParamter() {
-        var ophan = config.ophan;
-        if(ophan && ophan.pageViewId){
-            return 'REFPVID=' + ophan.pageViewId
-        } else {
-            return 'REFPVID=not_found'
-        }
-    }
+    ContributionsABTestVariant.prototype.makeURL = function(base, campaignCode) {
+        var params = [
+            'INTCMP=' + campaignCode,
+            'REFPVID=' + this.pageviewId
+        ];
 
-    ContributionsABTestVariant.prototype.makeURL = function (base, campaignCodePrefix) {
-        var params = [getCampaignCodeParamter(campaignCodePrefix, this.campaignId, this.id), getPageviewIdParamter()];
         return base + '?' + params.filter(Boolean).join('&');
-    };
+    }
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {
         if (options[type]) this[type] = options[type];
