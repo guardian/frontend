@@ -14,7 +14,8 @@ const files = glob.sync('**/*.js', {
     cwd: es5Dir,
 });
 
-const filesPerHuman = (files, humans) => Math.max(files.length / humans.length);
+const filesPerHuman = (filesToCheck, humans) =>
+    Math.max(filesToCheck.length / humans.length);
 
 const commercial = [
     'janua',
