@@ -41,8 +41,7 @@ define([
         setProgressTracker(atomId);
         tracking.track('play', getTrackingId(atomId));
 
-        var mainContainer = document.querySelectorAll('.immersive-main-media .youtube-media-atom');
-        if (mainContainer.length>0) {
+        if (document.querySelector('.immersive-main-media .youtube-media-atom').length>0) {
             document.querySelector('.immersive-main-media').classList.add('atom-playing');
         }
 
