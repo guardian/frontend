@@ -138,7 +138,7 @@ define([
             }
         }
 
-        if (closest(players[atomId].iframe, '.immersive-main-media__media')) {
+        if (closest(iframe, '.immersive-main-media__media')) {
             updateImmersiveButtonPos();
             window.addEventListener('resize', debounce(updateImmersiveButtonPos.bind(null), 200));
         }
@@ -222,7 +222,8 @@ define([
 
     function updateImmersiveButtonPos() {
         var playerHeight = document.querySelector('.immersive-main-media__media .youtube-media-atom').offsetHeight;
-        var headlineHeight = document.querySelector('.immersive-main-media__headline-container').offsetHeight;
+        var headline = document.querySelector('.immersive-main-media__headline-container');
+        var headlineHeight = (headline ? headline.offsetHeight : 0)
         var buttonOffset = playerHeight - headlineHeight;
         var immersiveInterface = document.querySelector('.youtube-media-atom__immersive-interface');
         immersiveInterface.style.top = buttonOffset+'px';
