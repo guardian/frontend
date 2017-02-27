@@ -117,7 +117,7 @@ object NavLinks {
   val video =  NavLink("video", "/video")
   val jobs = NavLink("jobs", "https://jobs.theguardian.com")
   val dating = NavLink("dating", "https://soulmates.theguardian.com")
-  val apps = NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android")
+  val apps = NavLink("apps", "https://app.adjust.com/f8qm1x_8q69t7?campaign=NewHeader&adgroup=Mobile&creative=generic")
   val masterClasses = NavLink("masterclasses", "/guardian-masterclasses")
 
   val tagPages = List(
