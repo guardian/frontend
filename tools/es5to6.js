@@ -38,7 +38,7 @@ const es6Module = path.resolve(
     moduleId
 );
 
-const branchName = `es6-${es6Module.split(path.sep).join('_')}`;
+const branchName = `es6-${moduleId.split(path.sep).join('_')}`;
 
 git
     // .status((err, status) => {
