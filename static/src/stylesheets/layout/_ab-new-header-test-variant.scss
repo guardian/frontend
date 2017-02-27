@@ -613,28 +613,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     color: $guardian-brand-dark;
 }
 
-.personalisation__link--active {
-    color: $guardian-brand-dark;
-    position: relative;
-    font-weight: bold;
-
-    // Tick icon
-    &:before {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: 26px;
-            width: $gs-gutter / 4;
-            height: $gs-baseline;
-            border-width: 2px;
-            border-style: solid;
-            border-color: currentColor;
-            border-top: 0;
-            border-left: 0;
-            transform: rotate(45deg);
-        }
-}
-
 .no-text-transform {
     text-transform: none;
 }

@@ -9,22 +9,21 @@
         data-link-name="nav2 : edition picker">
 
             <i class="main-menu__icon main-menu__icon--chevron personalisation__icon"></i>
-            change your edition
+            @Edition(request).displayName
         </summary>
 
         <ul class="personalisation__links">
             @Edition.all.map { edition =>
-                <li class="@RenderClasses(Map(
-                    "personalisation__link" -> true,
-                    "personalisation__link--active" -> (edition == Edition(request))
-                    ))">
-                    <a data-link-name="nav2 : edition-picker: @edition.id"
-                        href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
+                 @if((edition != Edition(request))) {
+                    <li class="personalisation__link">
+                        <a data-link-name="nav2 : edition-picker: @edition.id"
+                            href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
 
-                        <span class="u-h"> switch to the </span>
-                        <span> @edition.displayName </span>
-                    </a>
-                </li>
+                            <span class="u-h"> switch to the </span>
+                            <span> @edition.displayName </span>
+                        </a>
+                    </li>
+                }
             }
         </ul>
     </details>
