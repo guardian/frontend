@@ -1,15 +1,15 @@
-const figures = require("figures");
-const chalk = require("chalk");
+const figures = require('figures');
+const chalk = require('chalk');
 
 const render = tasks => {
     // eslint-disable-next-line no-restricted-syntax
     for (const task of tasks) {
         task.subscribe(event => {
-            if (event.type === "SUBTASKS") {
+            if (event.type === 'SUBTASKS') {
                 render(task.subtasks);
                 return;
             }
-            if (event.type === "STATE") {
+            if (event.type === 'STATE') {
                 if (task.isPending()) {
                     console.log(`##teamcity[blockOpened name='${task.title}']`);
                 }
@@ -33,7 +33,7 @@ const render = tasks => {
                     console.log(`##teamcity[blockClosed name='${task.title}']`);
                 }
             }
-            if (event.type === "DATA") {
+            if (event.type === 'DATA') {
                 console.log(event.data);
             }
         });

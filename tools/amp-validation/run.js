@@ -1,10 +1,10 @@
-const amphtmlValidator = require("amphtml-validator");
-const partition = require("lodash/partition");
+const amphtmlValidator = require('amphtml-validator');
+const partition = require('lodash/partition');
 
-const validatorJs = require("./validator-js");
-const fetchPage = require("./fetch-page");
+const validatorJs = require('./validator-js');
+const fetchPage = require('./fetch-page');
 
-const isDev = process.env.NODE_ENV === "dev" || false;
+const isDev = process.env.NODE_ENV === 'dev' || false;
 
 function onError(error) {
     console.error(error.message);
@@ -28,13 +28,13 @@ function runValidator(validator, options) {
         })
         .then(res => {
             const result = validator.validateString(res);
-            const pass = result.status === "PASS";
+            const pass = result.status === 'PASS';
             const message = `${result.status} for: ${endpoint}`;
 
             (pass ? console.log : console.error)(message);
             if (options.logErrors) {
                 result.errors.forEach(error => {
-                    (error.severity === "ERROR" ? console.error : console.warn)(
+                    (error.severity === 'ERROR' ? console.error : console.warn)(
                         buildErrorMessage(error)
                     );
                 });

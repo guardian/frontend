@@ -1,9 +1,9 @@
 module.exports = {
-    description: "Compile CSS",
+    description: 'Compile CSS',
     task: [
-        require("./clean"),
-        require("./mkdir"),
-        require("../images"),
-        require("./sass"),
+        require('./clean'),
+        require('./mkdir'),
+        require('../images'),
+        require('./sass'),
     ],
 };

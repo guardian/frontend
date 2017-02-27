@@ -1,13 +1,13 @@
-const path = require("path");
-const fs = require("fs");
-const rimraf = require("rimraf");
-const { root } = require("../config").paths;
+const path = require('path');
+const fs = require('fs');
+const rimraf = require('rimraf');
+const { root } = require('../config').paths;
 
-const src = path.resolve(root, "git-hooks");
-const target = path.resolve(root, ".git", "hooks");
+const src = path.resolve(root, 'git-hooks');
+const target = path.resolve(root, '.git', 'hooks');
 
 module.exports = {
-    description: "Sync .git/hooks",
+    description: 'Sync .git/hooks',
     task: () => {
         // always try and remove any old ones
         try {
@@ -17,6 +17,6 @@ module.exports = {
         }
 
         // TC doesn't want them, but everyone else does
-        if (process.env.TEAMCITY !== "true") fs.symlinkSync(src, target);
+        if (process.env.TEAMCITY !== 'true') fs.symlinkSync(src, target);
     },
 };

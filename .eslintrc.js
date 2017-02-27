@@ -6,12 +6,12 @@ module.exports = {
         node: true,
     },
     // eslint-config-prettier disables formatting rules from other configs (i.e. airbnb)
-    extends: ["airbnb", "prettier"],
+    extends: ['airbnb', 'prettier'],
 
     // eslint-plugin-prettier switches prettier on
-    plugins: ["prettier"],
+    plugins: ['prettier'],
     parserOptions: {
-        sourceType: "module",
+        sourceType: 'module',
         ecmaVersion: 6,
         ecmaFeatures: {
             jsx: true,
@@ -19,16 +19,16 @@ module.exports = {
     },
     rules: {
         // prettier settings
-        "prettier/prettier": [
-            "error",
+        'prettier/prettier': [
+            'error',
             {
-                trailingComma: "es5",
-                singleQuote: false,
+                trailingComma: 'es5',
+                singleQuote: true,
                 bracketSpacing: true,
                 tabWidth: 4,
             },
         ],
-        "no-extend-native": "error",
+        'no-extend-native': 'error',
     },
     // don't look for eslintrcs above here
     root: true,

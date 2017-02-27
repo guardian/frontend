@@ -1,7 +1,7 @@
-const request = require("request");
-const promiseRetry = require("promise-retry");
-const once = require("lodash/once");
-const megalog = require("megalog");
+const request = require('request');
+const promiseRetry = require('promise-retry');
+const once = require('lodash/once');
+const megalog = require('megalog');
 
 function fetch(options) {
     const onError = once(error => {
@@ -10,7 +10,7 @@ function fetch(options) {
                 megalog.error(
                     `Are you running the article or dev-build app? \n \n ${error.message}`,
                     {
-                        heading: "A 200 was not returned",
+                        heading: 'A 200 was not returned',
                     }
                 );
             } catch (e) {
@@ -30,10 +30,10 @@ function fetch(options) {
                 body
             ) => {
                 if (error || resp.statusCode !== 200) {
-                    const errorDetails = error ? error.message : "";
+                    const errorDetails = error ? error.message : '';
                     const statusCodeMessage = resp
-                        ? ` Status code was ${resp ? resp.statusCode : ""}`
-                        : "";
+                        ? ` Status code was ${resp ? resp.statusCode : ''}`
+                        : '';
 
                     reject(
                         new Error(
@@ -54,7 +54,7 @@ function fetch(options) {
 exports.get = opts => {
     const options = Object.assign(
         {
-            endpoint: "",
+            endpoint: '',
             host: exports.hosts.dev,
         },
         opts
@@ -64,7 +64,7 @@ exports.get = opts => {
 };
 
 exports.hosts = {
-    dev: "http://localhost:9000",
-    amp: "https://amp.theguardian.com",
-    prod: "https://www.theguardian.com",
+    dev: 'http://localhost:9000',
+    amp: 'https://amp.theguardian.com',
+    prod: 'https://www.theguardian.com',
 };

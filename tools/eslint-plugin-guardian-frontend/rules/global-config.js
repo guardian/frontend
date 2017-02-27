@@ -1,13 +1,13 @@
 module.exports = {
     create(context) {
         const isDot = token =>
-            token && token.type === "Punctuator" && token.value === ".";
+            token && token.type === 'Punctuator' && token.value === '.';
         const isIdentifierOf = (prop, token) =>
-            token && token.type === "Identifier" && token.value === prop;
+            token && token.type === 'Identifier' && token.value === prop;
 
         return {
             Identifier: node => {
-                if (node.name === "config") {
+                if (node.name === 'config') {
                     const [
                         dot1,
                         parent,
@@ -20,8 +20,8 @@ module.exports = {
 
                     if (
                         isDot(dot1) &&
-                        isIdentifierOf("guardian", parent) &&
-                        (!isDot(dot2) || isIdentifierOf("window", grandparent))
+                        isIdentifierOf('guardian', parent) &&
+                        (!isDot(dot2) || isIdentifierOf('window', grandparent))
                     ) {
                         context.report({
                             node,

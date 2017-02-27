@@ -1,23 +1,23 @@
-const path = require("path");
-const fs = require("fs");
+const path = require('path');
+const fs = require('fs');
 
-const glob = require("glob");
-const hasha = require("hasha");
-const cpFile = require("cp-file");
-const mkdirp = require("mkdirp");
-const pify = require("pify");
+const glob = require('glob');
+const hasha = require('hasha');
+const cpFile = require('cp-file');
+const mkdirp = require('mkdirp');
+const pify = require('pify');
 
 const writeFile = pify(fs.writeFile);
 const mkdirpp = pify(mkdirp);
 
-const { hash, target } = require("../../config").paths;
+const { hash, target } = require('../../config').paths;
 
 module.exports = {
-    description: "Version assets",
+    description: 'Version assets',
     task: [
-        require("./clean"),
+        require('./clean'),
         {
-            description: "Hash assets",
+            description: 'Hash assets',
             task: () => {
                 const webpackRegex = /webpack/;
                 const webpackChunkRegex = /chunk/;
@@ -25,7 +25,7 @@ module.exports = {
 
                 // create the hashed asset map for all files in target
                 const assetMap = glob
-                    .sync("**/!(*.map)", { nodir: true, cwd: target })
+                    .sync('**/!(*.map)', { nodir: true, cwd: target })
                     .reduce(
                         (map, assetPath) => {
                             const assetLocation = path.resolve(
@@ -54,7 +54,7 @@ module.exports = {
                             // hash everything else as normal
                             const assetHash = hasha.fromFileSync(
                                 assetLocation,
-                                { algorithm: "md5" }
+                                { algorithm: 'md5' }
                             );
                             const hashedPath = path.join(
                                 path.dirname(assetPath),
@@ -105,7 +105,7 @@ module.exports = {
                                     Object.assign(map, {
                                         [webpackEntryBundle.replace(
                                             /(javascripts\/)(.+\/)/,
-                                            "$1"
+                                            '$1'
                                         )]: assetMap[webpackEntryBundle],
                                     }),
                                 {}
@@ -114,10 +114,10 @@ module.exports = {
                     })
                     .then(normalisedAssetMap => // save the asset map
                         mkdirpp(
-                            path.resolve(hash, "assets")
+                            path.resolve(hash, 'assets')
                         ).then(() =>
                             writeFile(
-                                path.resolve(hash, "assets", "assets.map"),
+                                path.resolve(hash, 'assets', 'assets.map'),
                                 JSON.stringify(normalisedAssetMap, null, 4)
                             )));
             },

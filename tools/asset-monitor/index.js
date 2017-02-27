@@ -1,25 +1,25 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
-const glob = require("glob");
-const gzipSize = require("gzip-size");
-const pretty = require("prettysize");
-const cssstats = require("cssstats");
-const chalk = require("chalk");
+const glob = require('glob');
+const gzipSize = require('gzip-size');
+const pretty = require('prettysize');
+const cssstats = require('cssstats');
+const chalk = require('chalk');
 
-const cloudwatch = require("./cloudwatch");
+const cloudwatch = require('./cloudwatch');
 
-const { target } = require("../__tasks__/config").paths;
+const { target } = require('../__tasks__/config').paths;
 
-const credentials = "/etc/gu/frontend.properties";
+const credentials = '/etc/gu/frontend.properties';
 
 const files = [].concat(
     glob.sync(`${target}/javascripts/**/*.js`, {
-        ignore: "**/{components,vendor}/**",
+        ignore: '**/{components,vendor}/**',
         nodir: true,
     }),
     glob.sync(`${target}/stylesheets/**/*`, {
-        ignore: "**/*head.identity.css",
+        ignore: '**/*head.identity.css',
         nodir: true,
     })
 );
@@ -52,7 +52,7 @@ const css = (filePath, fileData) => {
 const analyse = filePath => {
     console.log(`Analysing ${filePath}`);
     try {
-        const fileData = fs.readFileSync(filePath, "utf8");
+        const fileData = fs.readFileSync(filePath, 'utf8');
 
         const gzipData = size(filePath, fileData);
         const cssData = css(filePath, fileData);

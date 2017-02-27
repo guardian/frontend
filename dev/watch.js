@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-const path = require("path");
+const path = require('path');
 
-const chalk = require("chalk");
-const browserSync = require("browser-sync").create();
-const bsConfig = require("./bs-config");
+const chalk = require('chalk');
+const browserSync = require('browser-sync').create();
+const bsConfig = require('./bs-config');
 
 // ********************************** JAVASCRIPT **********************************
 
@@ -15,16 +15,16 @@ let INITIAL_BUNDLE = true;
 
 // just a bit of visual feedback while webpack creates its initial bundles.
 // fakes a listr step
-const ora = require("ora");
+const ora = require('ora');
 
 const wpNotification = ora({
-    text: "Create initial webpack bundles",
-    color: "yellow",
+    text: 'Create initial webpack bundles',
+    color: 'yellow',
 });
 wpNotification.start();
 
-const webpack = require("webpack");
-const webpackBundler = webpack(require("../webpack.config.js")());
+const webpack = require('webpack');
+const webpackBundler = webpack(require('../webpack.config.js')());
 
 webpackBundler.watch(
     {
@@ -46,10 +46,10 @@ webpackBundler.watch(
 
         // send editing errors to console and browser
         if (stats.hasErrors() || stats.hasWarnings()) {
-            console.log(chalk.red(stats.toString("errors-only")));
-            return browserSync.sockets.emit("fullscreen:message", {
-                title: "Webpack Error:",
-                body: stats.toString("errors-only"),
+            console.log(chalk.red(stats.toString('errors-only')));
+            return browserSync.sockets.emit('fullscreen:message', {
+                title: 'Webpack Error:',
+                body: stats.toString('errors-only'),
                 timeout: 100000,
             });
         }
@@ -61,20 +61,20 @@ webpackBundler.watch(
 
 // ********************************** Sass **********************************
 
-const chokidar = require("chokidar");
+const chokidar = require('chokidar');
 
-const sassDir = path.resolve(__dirname, "../", "static", "src", "stylesheets");
-const sassGraph = require("sass-graph").parseDir(sassDir, {
+const sassDir = path.resolve(__dirname, '../', 'static', 'src', 'stylesheets');
+const sassGraph = require('sass-graph').parseDir(sassDir, {
     loadPaths: sassDir,
 });
 
-const compileSass = require("../tools/compile-css");
+const compileSass = require('../tools/compile-css');
 
 // when we detect a change in a sass file, we look up the tree of imports
 // and only compile what we need to. anything matching this regex, we can just ignore in dev.
 const ignoredSassRegEx = /^(_|ie9|old-ie)/;
 
-chokidar.watch(`${sassDir}/**/*.scss`).on("change", changedFile => {
+chokidar.watch(`${sassDir}/**/*.scss`).on('change', changedFile => {
     // see what top-level files need to be recompiled
     const filesToCompile = [];
 
@@ -89,18 +89,18 @@ chokidar.watch(`${sassDir}/**/*.scss`).on("change", changedFile => {
     Promise.all(filesToCompile.map(compileSass))
         .then(() => {
             // clear any previous error messages
-            browserSync.sockets.emit("fullscreen:message:clear");
+            browserSync.sockets.emit('fullscreen:message:clear');
 
             // announce the changes
             browserSync.reload(
-                filesToCompile.map(file => file.replace("scss", "css"))
+                filesToCompile.map(file => file.replace('scss', 'css'))
             );
         })
         .catch(e => {
             // send editing errors to console and browser
             console.log(chalk.red(`\n${e.formatted}`));
-            browserSync.sockets.emit("fullscreen:message", {
-                title: "CSS Error:",
+            browserSync.sockets.emit('fullscreen:message', {
+                title: 'CSS Error:',
                 body: e.formatted,
                 timeout: 100000,
             });

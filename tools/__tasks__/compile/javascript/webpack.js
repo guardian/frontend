@@ -1,25 +1,25 @@
 // eslint-disable-next-line import/no-unassigned-import
-require("any-observable/register/rxjs-all");
+require('any-observable/register/rxjs-all');
 
-const Observable = require("any-observable");
+const Observable = require('any-observable');
 
-const webpack = require("webpack");
-const ProgressPlugin = require("webpack/lib/ProgressPlugin");
-const Visualizer = require("webpack-visualizer-plugin");
-const chalk = require("chalk");
+const webpack = require('webpack');
+const ProgressPlugin = require('webpack/lib/ProgressPlugin');
+const Visualizer = require('webpack-visualizer-plugin');
+const chalk = require('chalk');
 
 module.exports = {
-    description: "Create Webpack bundles",
+    description: 'Create Webpack bundles',
     task: () => new Observable(observer => {
-        const config = require("../../../../webpack.config.js")({
-            env: "production",
+        const config = require('../../../../webpack.config.js')({
+            env: 'production',
             plugins: [
                 new webpack.optimize.AggressiveMergingPlugin(),
                 new Visualizer({
-                    filename: "./webpack-stats.html",
+                    filename: './webpack-stats.html',
                 }),
                 new webpack.DefinePlugin({
-                    "process.env.NODE_ENV": JSON.stringify("production"),
+                    'process.env.NODE_ENV': JSON.stringify('production'),
                 }),
                 new webpack.optimize.UglifyJsPlugin({
                     sourceMap: true,

@@ -1,7 +1,7 @@
-const tcpp = require("tcp-ping");
-const pify = require("pify");
+const tcpp = require('tcp-ping');
+const pify = require('pify');
 
-const { port, domain } = require("./config");
+const { port, domain } = require('./config');
 
 module.exports = {
     description: `Probing ${domain} on port ${port}...`,

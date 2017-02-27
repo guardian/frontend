@@ -1,28 +1,28 @@
-const fs = require("fs");
-const AWS = require("aws-sdk");
+const fs = require('fs');
+const AWS = require('aws-sdk');
 
 let cloudwatch;
 
 module.exports.getProperty = (property, file) =>
     file
         .toString()
-        .split("\n")
+        .split('\n')
         .filter(line => line.search(property) !== -1)[0]
-        .split("=")[1];
+        .split('=')[1];
 
 module.exports.configure = filename => new Promise((resolve, reject) => {
-    fs.readFile(filename, { encoding: "utf-8" }, (err, data) => {
+    fs.readFile(filename, { encoding: 'utf-8' }, (err, data) => {
         if (err) {
             return reject(
-                new Error("Failed to read AWS credentials from file")
+                new Error('Failed to read AWS credentials from file')
             );
         }
 
         AWS.config.update({
-            region: "eu-west-1",
-            accessKeyId: module.exports.getProperty("aws.access.key", data),
+            region: 'eu-west-1',
+            accessKeyId: module.exports.getProperty('aws.access.key', data),
             secretAccessKey: module.exports.getProperty(
-                "aws.access.secret.key",
+                'aws.access.secret.key',
                 data
             ),
         });
@@ -41,27 +41,27 @@ module.exports.log = (metricName, metricData) => new Promise((
     reject
 ) => {
     const params = {
-        Namespace: "Assets",
+        Namespace: 'Assets',
         MetricData: [
             {
                 MetricName: metricName,
                 Value: metricData.uncompressed,
-                Unit: "Kilobytes",
+                Unit: 'Kilobytes',
                 Dimensions: [
                     {
-                        Name: "Compression",
-                        Value: "None",
+                        Name: 'Compression',
+                        Value: 'None',
                     },
                 ],
             },
             {
                 MetricName: metricName,
                 Value: metricData.compressed,
-                Unit: "Kilobytes",
+                Unit: 'Kilobytes',
                 Dimensions: [
                     {
-                        Name: "Compression",
-                        Value: "GZip",
+                        Name: 'Compression',
+                        Value: 'GZip',
                     },
                 ],
             },
@@ -71,11 +71,11 @@ module.exports.log = (metricName, metricData) => new Promise((
         params.MetricData.push({
             MetricName: metricName,
             Value: metricData.rules,
-            Unit: "Count",
+            Unit: 'Count',
             Dimensions: [
                 {
-                    Name: "Metric",
-                    Value: "Rules",
+                    Name: 'Metric',
+                    Value: 'Rules',
                 },
             ],
         });
@@ -85,11 +85,11 @@ module.exports.log = (metricName, metricData) => new Promise((
         params.MetricData.push({
             MetricName: metricName,
             Value: metricData.totalSelectors,
-            Unit: "Count",
+            Unit: 'Count',
             Dimensions: [
                 {
-                    Name: "Metric",
-                    Value: "Total Selectors",
+                    Name: 'Metric',
+                    Value: 'Total Selectors',
                 },
             ],
         });
@@ -99,11 +99,11 @@ module.exports.log = (metricName, metricData) => new Promise((
         params.MetricData.push({
             MetricName: metricName,
             Value: metricData.averageSelectors,
-            Unit: "Count",
+            Unit: 'Count',
             Dimensions: [
                 {
-                    Name: "Metric",
-                    Value: "Average Selectors",
+                    Name: 'Metric',
+                    Value: 'Average Selectors',
                 },
             ],
         });

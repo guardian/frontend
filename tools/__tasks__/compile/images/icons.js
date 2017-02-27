@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 
-const { src, root } = require("../../config").paths;
+const { src, root } = require('../../config').paths;
 
-const fs = require("fs");
-const path = require("path");
-const glob = require("glob");
-const btoa = require("btoa");
-const SVGO = require("svgo");
-const mkdirp = require("mkdirp");
+const fs = require('fs');
+const path = require('path');
+const glob = require('glob');
+const btoa = require('btoa');
+const SVGO = require('svgo');
+const mkdirp = require('mkdirp');
 
 const svgo = new SVGO();
 
 function getSVG(iconPath) {
     return new Promise((resolve, reject) => {
         // eslint-disable-next-line consistent-return
-        fs.readFile(iconPath, { encoding: "utf-8" }, (err, data) => {
+        fs.readFile(iconPath, { encoding: 'utf-8' }, (err, data) => {
             if (err) return reject(err);
             try {
                 svgo.optimize(data, result => resolve({
@@ -58,7 +58,7 @@ function generateSassForSVG(svg) {
             .svg .i-${name} {
                 @extend %svg-i-${name} !optional;
             }
-    `.replace(/ {8}/g, "");
+    `.replace(/ {8}/g, '');
 }
 
 function saveSass(sass, dest, fileName) {
@@ -75,7 +75,7 @@ function saveSass(sass, dest, fileName) {
                 }
             `
                 .trim()
-                .replace(/ {16}/g, ""),
+                .replace(/ {16}/g, ''),
             err => {
                 if (err) return reject(err);
                 return resolve();
@@ -85,22 +85,22 @@ function saveSass(sass, dest, fileName) {
 }
 
 module.exports = {
-    description: "Create sprites",
-    task: ["commercial", "global", "membership", "video"].map(target => ({
+    description: 'Create sprites',
+    task: ['commercial', 'global', 'membership', 'video'].map(target => ({
         description: `Spriting ${target}`,
         concurrent: true,
         task: () => {
-            const srcPath = path.join(src, "images", target);
-            const destPath = path.join(src, "stylesheets", "icons");
+            const srcPath = path.join(src, 'images', target);
+            const destPath = path.join(src, 'stylesheets', 'icons');
             const fileName = `_${target}-icons-svg.scss`;
 
-            const iconPaths = glob.sync(path.join(srcPath, "*.svg"));
+            const iconPaths = glob.sync(path.join(srcPath, '*.svg'));
 
             mkdirp.sync(destPath);
 
             return Promise.all(iconPaths.map(getSVG))
                 .then(sortSVGs)
-                .then(svgs => svgs.map(generateSassForSVG).join("").trim())
+                .then(svgs => svgs.map(generateSassForSVG).join('').trim())
                 .then(sass => saveSass(sass, destPath, fileName));
         },
     })),

@@ -1,16 +1,16 @@
 // eslint-disable-next-line import/no-unassigned-import
-require("any-observable/register/rxjs-all");
+require('any-observable/register/rxjs-all');
 
-const Observable = require("any-observable");
+const Observable = require('any-observable');
 
-const webpack = require("webpack");
-const ProgressPlugin = require("webpack/lib/ProgressPlugin");
-const chalk = require("chalk");
+const webpack = require('webpack');
+const ProgressPlugin = require('webpack/lib/ProgressPlugin');
+const chalk = require('chalk');
 
 module.exports = {
-    description: "Create Webpack bundles",
+    description: 'Create Webpack bundles',
     task: () => new Observable(observer => {
-        const config = require("../../../../webpack.config.js")({
+        const config = require('../../../../webpack.config.js')({
             plugins: [
                 new ProgressPlugin((progress, msg) =>
                     observer.next(`${Math.round(progress * 100)}% ${msg}`)),
