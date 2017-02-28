@@ -3,7 +3,7 @@ define([
     'bean',
     'common/utils/$',
     'common/utils/template',
-    'text!common/views/ui/video-ads-skip-overlay.html'
+    'raw-loader!common/views/ui/video-ads-skip-overlay.html'
 ], function(
     qwery,
     bean,

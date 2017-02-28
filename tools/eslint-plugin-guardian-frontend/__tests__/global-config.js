@@ -19,8 +19,10 @@ ruleTester.run('global-config', rule, {
         'var hello = loadscript(guardian.config)',
     ].map(code => ({
         code,
-        errors: [{
-            type: 'Identifier',
-        }],
+        errors: [
+            {
+                type: 'Identifier',
+            },
+        ],
     })),
 });

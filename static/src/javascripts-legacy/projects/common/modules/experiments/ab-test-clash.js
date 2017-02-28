@@ -31,7 +31,8 @@ define([
         ContributionsEpicAlwaysAskStrategy,
         ContributionsEpicBrexit,
         ContributionsEpicAskFourStagger,
-        ContributionsEpicAskFourEarning];
+        ContributionsEpicAskFourEarning
+    ];
 
     var emailTests = [
         GuardianTodaySignupMessaging

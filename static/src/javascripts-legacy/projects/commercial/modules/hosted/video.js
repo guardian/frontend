@@ -13,7 +13,7 @@ define([
     'common/modules/video/events',
     'common/modules/video/videojs-options',
     'common/modules/media/videojs-plugins/fullscreener',
-    'text!common/views/ui/loading.html'
+    'raw-loader!common/views/ui/loading.html'
 ], function (
     Promise,
     hostedYoutube,

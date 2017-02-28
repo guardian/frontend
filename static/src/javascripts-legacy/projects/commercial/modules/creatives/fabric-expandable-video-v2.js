@@ -5,8 +5,8 @@ define([
     'common/utils/assign',
     'common/utils/template',
     'common/views/svgs',
-    'text!commercial/views/creatives/fabric-expandable-video-v2.html',
-    'text!commercial/views/creatives/fabric-expandable-video-v2-cta.html',
+    'raw-loader!commercial/views/creatives/fabric-expandable-video-v2.html',
+    'raw-loader!commercial/views/creatives/fabric-expandable-video-v2-cta.html',
     'commercial/modules/creatives/add-tracking-pixel'
 ], function (
     bean,

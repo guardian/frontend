@@ -5,8 +5,8 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
-    'text!commercial/views/creatives/scrollable-mpu-v2.html',
-    'text!commercial/views/creatives/tracking-pixel.html',
+    'raw-loader!commercial/views/creatives/scrollable-mpu-v2.html',
+    'raw-loader!commercial/views/creatives/tracking-pixel.html',
     'lodash/functions/bindAll'
 ], function (
     Promise,

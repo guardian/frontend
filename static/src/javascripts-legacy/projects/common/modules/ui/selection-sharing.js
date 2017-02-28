@@ -7,7 +7,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/template',
-    'text!common/views/ui/selection-sharing.html',
+    'raw-loader!common/views/ui/selection-sharing.html',
     'common/views/svgs',
     'lodash/functions/debounce',
     'lodash/collections/some'

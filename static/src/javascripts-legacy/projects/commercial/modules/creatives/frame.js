@@ -4,8 +4,8 @@ define([
     'common/views/svgs',
     'common/modules/ui/toggles',
     'commercial/modules/creatives/add-tracking-pixel',
-    'text!commercial/views/creatives/frame.html',
-    'text!commercial/views/creatives/gustyle-label.html'
+    'raw-loader!commercial/views/creatives/frame.html',
+    'raw-loader!commercial/views/creatives/gustyle-label.html'
 ], function (
     fastdom,
     template,

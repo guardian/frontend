@@ -1,10 +1,10 @@
 define([
     'bonzo',
     'helpers/injector',
-    'text!fixtures/commercial/ad-slots/im.html',
-    'text!fixtures/commercial/ad-slots/inline1.html',
-    'text!fixtures/commercial/ad-slots/right.html',
-    'text!fixtures/commercial/ad-slots/right-small.html'
+    'raw-loader!fixtures/commercial/ad-slots/im.html',
+    'raw-loader!fixtures/commercial/ad-slots/inline1.html',
+    'raw-loader!fixtures/commercial/ad-slots/right.html',
+    'raw-loader!fixtures/commercial/ad-slots/right-small.html'
 ], function (
     bonzo,
     Injector,

@@ -25,7 +25,7 @@ define([
     // This must be the full path because we use curl config to change it based
     // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html',
+    'raw-loader!common/views/ui/loading.html',
     'commercial/modules/user-features',
     'common/utils/load-script'
 ], function (

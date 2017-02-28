@@ -5,14 +5,14 @@ define([
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/contributions-epic-ask-four-stagger',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning'
-
 ], function (
     segmentUtil,
     viewLog,
     brexit,
     alwaysAsk,
     askFourStagger,
-    askFourEarning) {
+    askFourEarning
+) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */

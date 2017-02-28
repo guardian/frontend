@@ -42,10 +42,14 @@ const css = (filePath, fileData) => {
         selectors: { total: totalSelectors },
     } = cssstats(fileData, { mediaQueries: false });
 
-    return { rules, totalSelectors, averageSelectors: +(totalSelectors / rules).toFixed(1) };
+    return {
+        rules,
+        totalSelectors,
+        averageSelectors: +(totalSelectors / rules).toFixed(1),
+    };
 };
 
-const analyse = (filePath) => {
+const analyse = filePath => {
     console.log(`Analysing ${filePath}`);
     try {
         const fileData = fs.readFileSync(filePath, 'utf8');
@@ -57,10 +61,15 @@ const analyse = (filePath) => {
         console.log(`Uncompressed: ${chalk.cyan(data.uncompressedPretty)}`);
         console.log(`Compressed: ${chalk.cyan(data.compressedPretty)}`);
 
-        return cloudwatch.configure(credentials)
+        return cloudwatch
+            .configure(credentials)
             .then(() => cloudwatch.log(path.basename(filePath), data))
-            .then((msg) => {
-                console.log(chalk.green(`Successfully logged file data to CloudWatch ${msg.id}`));
+            .then(msg => {
+                console.log(
+                    chalk.green(
+                        `Successfully logged file data to CloudWatch ${msg.id}`
+                    )
+                );
                 return true;
             })
             .catch(console.log);
