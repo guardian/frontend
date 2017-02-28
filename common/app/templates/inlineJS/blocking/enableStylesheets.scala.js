@@ -88,7 +88,7 @@
         return ss;
     };
 
-    preloadSpported = function() {
+    var preloadSpported = function() {
       try {
         return document.createElement('link').relList.supports('preload');
       } catch (e) {
@@ -97,7 +97,7 @@
     };
 
     // loop preload links and fetch using loadCSS
-    preloadPolyfill = function() {
+    var preloadPolyfill = function() {
       var links = document.getElementsByTagName('link');
       for (var i = 0; i < links.length; i++) {
           var link = links[i];
