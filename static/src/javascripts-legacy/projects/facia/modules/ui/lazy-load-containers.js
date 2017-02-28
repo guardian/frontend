@@ -20,12 +20,15 @@ define([
                     mediator.off('window:throttledScroll', lazyLoad);
                 } else {
                     fastdom.read(function () {
-                        var cs = split(containers, withinRange);
+                        var containersInRange = containers.reduce(function (result, container) {
+                            result[withinRange(container) ? 'in' : 'out'].push(container);
+                            return result;
+                        }, { in: [], out: [] });
 
-                        containers = cs[1];
+                        containers = containersInRange.out;
 
                         fastdom.write(function () {
-                            cs[0].forEach(displayContainer);
+                            containersInRange.in.forEach(displayContainer);
                         });
                     });
                 }
@@ -34,24 +37,6 @@ define([
         mediator.on('window:throttledScroll', lazyLoad);
         lazyLoad();
     };
-
-    // split :: [Element] -> (Element -> Bool) -> ([Element], [Element])
-    // invariant: { inA all fn ^ outA all (complement fn) | (inA, outA) = split xs fn }
-    // Split an array of elements into two arrays, one where element comply, one where they don't
-    function split(arr, testFn) {
-        var i = 0, ii = arr.length;
-        var result = [[], []];
-        while (i < ii) {
-            if (testFn(arr[i])) {
-                result[0].push(arr[i]);
-            } else {
-                result[1].push(arr[i]);
-            }
-            i++;
-        }
-
-        return result;
-    }
 
     // withinRange :: Element -> Bool
     // Checks whether the element is within one screenful above or below the viewport
