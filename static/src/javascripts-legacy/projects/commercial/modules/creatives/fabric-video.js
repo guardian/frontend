@@ -39,7 +39,10 @@ define([
         function create() {
             return fastdom.write(function () {
                 if (params.Trackingpixel) {
-                    addTrackingPixel(bonzo(adSlot), params.Trackingpixel + params.cacheBuster);
+                    addTrackingPixel(params.Trackingpixel + params.cacheBuster);
+                }
+                if (params.Researchpixel) {
+                    addTrackingPixel(params.Researchpixel + params.cacheBuster)
                 }
                 adSlot.insertAdjacentHTML('beforeend', fabricVideoTpl({ data: params }));
                 adSlot.classList.add('ad-slot--fabric');
