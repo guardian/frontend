@@ -1,7 +1,9 @@
 define([
-    'Promise'
+    'Promise',
+    'lodash/collections/map'
     ], function (
-    Promise
+    Promise,
+    map
 ) {
 
     /**
@@ -66,22 +68,17 @@ define([
     }
 
     function registerDefferedCheck(check) {
-        var dependentCheckPromises = [];
-
         if (check.dependentChecks) {
-            check.dependentChecks.list.forEach(registerDependentCheck.bind(null, dependentCheckPromises));
-        
-            return new DeferredCheck(dependentCheckPromises, check.dependentChecks.passCondition);
+          return new DeferredCheck(map(check.dependentChecks.list, registerDependentCheck), check.dependentChecks.passCondition);
         }
 
         return new DeferredCheck();
     }
 
-    
-    function registerDependentCheck(dependentCheckPromises, dependentCheck) {
-        dependentCheckPromises.push(registerCheck(dependentCheck).complete);
+    function registerDependentCheck(dependentCheck) {
+        return registerCheck(dependentCheck).complete;
     }    
-
+  
     function registerCheck(check) {
         var registeredCheck = registerDefferedCheck(check);
 
