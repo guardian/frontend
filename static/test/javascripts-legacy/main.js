@@ -18,7 +18,7 @@ requirejs.config({
 
         bean:         '/base/node_modules/bean/bean',
         bonzo:        '/base/node_modules/bonzo/bonzo',
-        react:        '/base/node_modules/react/dist/react-with-addons',
+        'react/addons': '/base/node_modules/react/dist/react-with-addons',
         EventEmitter: '/base/node_modules/wolfy87-eventemitter/EventEmitter',
         fastclick:    '/base/node_modules/fastclick/fastclick',
         fastdom:      '/base/node_modules/fastdom/index',
