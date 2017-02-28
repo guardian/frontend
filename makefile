@@ -113,3 +113,10 @@ validate-amp: install # PRIVATE
 # Take screenshots for a visual check.
 screenshots: install
 	@./tools/task-runner/runner screenshot
+
+
+
+# *********************** MISC ***********************
+
+es6: install
+	@node ./tools/es5to6.js
