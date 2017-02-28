@@ -1,6 +1,6 @@
 /* eslint-disable new-cap */
 define([
-    'react',
+    'react/addons',
     'common/modules/sudoku/constants',
     'lodash/collections/map',
     'lodash/arrays/range'
