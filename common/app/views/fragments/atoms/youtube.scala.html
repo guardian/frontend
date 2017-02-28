@@ -86,6 +86,6 @@
         </div>
 }
 
-@if(displayCaption) {
+@if(displayCaption & !immersiveMainMedia) {
     @mediaAtomCaption(media.title, mainMedia)
 }
