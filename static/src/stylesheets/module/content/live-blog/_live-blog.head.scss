@@ -1,0 +1,50 @@
+&.content__main-column--liveblog {
+    @include mq(desktop) {
+        margin-left: gs-span(4) + $gs-gutter;
+        margin-right: 0;
+        max-width: none;
+    }
+
+    @include mq(wide) {
+        margin-right: gs-span(4) + $gs-gutter;
+    }
+
+    .content__labels {
+        @include mq(desktop) {
+            float: left;
+            width: gs-span(3);
+            margin-left: (gs-span(4) + $gs-gutter) * -1;
+            border-bottom: 0;
+        }
+    }
+}
+
+.content__meta-container--liveblog {
+    @include mq(desktop) {
+        border-top: 0;
+        margin-left: 0;
+        min-height: gs-height(1)*1.5;
+        padding-top: 0;
+        position: static;
+        width: 100%;
+    }
+}
+
+.content__updated-container--liveblog {
+    @include fs-textSans(1);
+    padding-bottom: $gs-baseline / 6;
+    padding-top: $gs-baseline / 6;
+    margin-left: -($right-column + $gs-gutter);
+    position: absolute;
+    top: 0;
+}
+
+@include mq(desktop) {
+    .blog__left-col {
+        position: absolute;
+        top: 0;
+        z-index: 200;
+        left: ($right-column + $gs-gutter) * - 1;
+        width: $right-column;
+    }
+}

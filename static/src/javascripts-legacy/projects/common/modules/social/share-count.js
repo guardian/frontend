@@ -8,8 +8,8 @@ define([
     'common/utils/formatters',
     'common/utils/template',
     'common/views/svgs',
-    'text!common/views/content/share-count.html',
-    'text!common/views/content/share-count-immersive.html'
+    'raw-loader!common/views/content/share-count.html',
+    'raw-loader!common/views/content/share-count-immersive.html'
 ], function (
     fastdom,
     reportError,

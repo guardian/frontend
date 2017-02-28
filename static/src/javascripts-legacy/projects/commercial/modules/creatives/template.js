@@ -7,7 +7,7 @@ define([
     'commercial/modules/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
-    'text!commercial/views/creatives/manual-container.html'
+    'raw-loader!commercial/views/creatives/manual-container.html'
 ], function (
     Promise,
     config,
@@ -71,7 +71,7 @@ define([
                 this.params.classNames = ['legacy-inline', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
             }
 
-            require(['text!commercial/views/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+            require(['raw-loader!commercial/views/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
                 if (templatePreprocessor[this.params.creative]) {
                     templatePreprocessor[this.params.creative](this);
                 }

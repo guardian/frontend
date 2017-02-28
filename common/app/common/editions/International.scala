@@ -100,7 +100,7 @@ object International extends Edition(
       NavItem(opinion, Seq(columnists)),
       NavItem(culture, cultureLocalNav),
       NavItem(business, businessLocalNav),
-      NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
+      NavItem(lifeandstyle, Seq(foodanddrink, recipes, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
       NavItem(fashion),
       NavItem(environment, environmentLocalNav),
       NavItem(technology),

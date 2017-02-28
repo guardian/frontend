@@ -134,11 +134,6 @@ define([
     };
 
     return function (name, classes, title) {
-        // #karma-jest - needed by karma
-        if (svgs[name].markup) { // webpack way
-            return svg(svgs[name].markup, classes, title);
-        }
-        // require way
-        return svg(svgs[name], classes, title);
+        return svg(svgs[name].markup, classes, title);
     };
 });

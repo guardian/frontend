@@ -9,6 +9,9 @@
 
 "use strict";
 
+// increment number to force a refresh
+// version 1
+
 /**
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * CACHE HELPERS

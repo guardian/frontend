@@ -7,7 +7,7 @@ define([
     'common/utils/template',
     'commercial/modules/dfp/track-ad-render',
     'commercial/modules/commercial-features',
-    'text!commercial/views/plista.html',
+    'raw-loader!commercial/views/plista.html',
     'common/utils/load-script'
 ], function (
     Promise,

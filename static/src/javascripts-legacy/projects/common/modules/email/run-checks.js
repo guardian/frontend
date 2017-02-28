@@ -122,6 +122,18 @@ define([
                 !pageHasBlanketBlacklist() &&
                 userReferredFromNetworkFront() &&
                 allowedArticleStructure();
+        },
+        sleevenotes: function () {
+            return config.page.section === "music";
+        },
+        longReads: function () {
+            return config.page.seriesId === 'news/series/the-long-read';
+        },
+        bookmarks: function () {
+            return config.page.section === "books";
+        },
+        greenLight: function () {
+            return config.page.section === "environment";
         }
     };
 

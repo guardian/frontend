@@ -1,5 +1,7 @@
+/* Legacy SVG loader, still required by require.js */
+
 define([
-    'text'
+    'raw-loader'
 ], function (
     text
 ) {
@@ -22,7 +24,8 @@ define([
                     buildText[name] = text.jsEscape(svg);
                 }
 
-                onLoad(svg);
+                // returning an object creates webpack compatibility
+                onLoad({markup: svg});
 
             }, onLoad.error);
         },

@@ -7,10 +7,37 @@ const outputName = 'app-webpack';
 module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     devtool: env === 'dev' ? 'inline-source-map' : 'source-map',
     entry: {
-        [outputName]: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
-        'admin-webpack': path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'admin.js'),
-        'video-embed-webpack': path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'video-embed.js'),
-        'youtube-embed-webpack': path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'youtube-embed.js'),
+        [outputName]: path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts',
+            'boot-webpack.js'
+        ),
+        'admin-webpack': path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts-legacy',
+            'bootstraps',
+            'admin.js'
+        ),
+        'video-embed-webpack': path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts-legacy',
+            'bootstraps',
+            'video-embed.js'
+        ),
+        'youtube-embed-webpack': path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts-legacy',
+            'bootstraps',
+            'youtube-embed.js'
+        ),
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
@@ -50,12 +77,6 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
         },
     },
     resolveLoader: {
-        alias: {
-            // #karma-jest
-            // this is only needed for karma tests
-            // should be updated once karma is removed to be more wepback-like
-            text: 'raw-loader',
-        },
         modules: [
             path.resolve(__dirname, 'tools', 'webpack-loaders'),
             'node_modules',
