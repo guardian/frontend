@@ -9,10 +9,9 @@ const exec = (cmd, args) => {
     const cp = execa(cmd, args);
 
     return Observable.merge(
-            streamToObservable(cp.stdout.pipe(split()), { await: cp }),
-            streamToObservable(cp.stderr.pipe(split()), { await: cp })
-        )
-        .filter(Boolean);
+        streamToObservable(cp.stdout.pipe(split()), { await: cp }),
+        streamToObservable(cp.stderr.pipe(split()), { await: cp })
+    ).filter(Boolean);
 };
 
 const mainAppTests = ['commercial', 'common', 'facia'].map(set => ({
