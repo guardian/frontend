@@ -61,39 +61,45 @@ git
             'Commit any lint fixes': `git add .; git commit -m "fix lint errors with ${moduleId} after transform to es6"`,
         };
 
-        Object.keys(steps).reduce(
-            (allSteps, step, i) => allSteps.then(() => {
-                console.log('');
-                console.log(chalk.blue(`${i + 1}. ${step}`));
-                console.log(chalk.dim(steps[step]));
-                return execa
-                    .shell(steps[step].trim(), {
-                        stdio: 'inherit',
-                    })
-                    .then(() => {
-                        console.log(chalk.green('done'));
-                    })
-                    .catch(e => {
-                        console.log(chalk.red(e.stack));
-                        megalog.error(
-                            `\`${step}\` did not complete.
+        Object.keys(steps)
+            .reduce(
+                (allSteps, step, i) => allSteps.then(() => {
+                    console.log('');
+                    console.log(chalk.blue(`${i + 1}. ${step}`));
+                    console.log(chalk.dim(steps[step]));
+                    return execa
+                        .shell(steps[step].trim(), {
+                            stdio: 'inherit',
+                        })
+                        .then(() => {
+                            console.log(chalk.green('done'));
+                        })
+                        .catch(e => {
+                            console.log(chalk.red(e.stack));
+                            megalog.error(
+                                `\`${step}\` did not complete.
 
 Once you have fixed the problem, you'll need to run the remaining steps manually:
 ${Object.keys(steps)
-                                .slice(i)
-                                .map((remaingStep, remainingCount) => `
+                                    .slice(i)
+                                    .map((remaingStep, remainingCount) => `
 ${i + 1 + remainingCount}. ${remaingStep}
 \`${steps[remaingStep]}\`
 `)
-                                .join('')}
+                                    .join('')}
 If you get stuck, feel free to ping us in https://theguardian.slack.com/messages/dotcom-platform.`
-                        );
-                        process.exit(1);
-                    });
-            }),
-            Promise.resolve()
-        );
-        chalk.blue(
-            '\nConversion was successful. Double check the code, then create a PR!'
-        );
+                            );
+                            process.exit(1);
+                        });
+                }),
+                Promise.resolve()
+            )
+            .then(() => {
+                console.log(
+                    chalk.blue(
+                        `\n💫  Module is now es6! Double check the code, then create a PR.`
+                    )
+                );
+                console.log(chalk.dim(`New location: ${es6Module}\n`));
+            });
     });
