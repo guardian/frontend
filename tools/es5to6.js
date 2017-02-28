@@ -78,7 +78,7 @@ git
                         megalog.error(
                             `\`${step}\` did not complete.
 
-Once you have foxed the problem, you'll need to run the remaining steps manually:
+Once you have fixed the problem, you'll need to run the remaining steps manually:
 ${Object.keys(steps)
                                 .slice(i)
                                 .map((remaingStep, remainingCount) => `
