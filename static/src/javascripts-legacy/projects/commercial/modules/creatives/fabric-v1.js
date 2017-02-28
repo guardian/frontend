@@ -75,7 +75,11 @@ define([
         }
 
         if (this.params.trackingPixel) {
-            addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+            addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
+        }
+
+        if (this.params.researchPixel) {
+            addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
         }
 
         return fastdom.write(function () {
