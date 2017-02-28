@@ -51,6 +51,7 @@ define([
         };
 
         var templateOptions = {
+            id: 'fabric-' + (Math.random() * 10000 | 0).toString(16),
             showLabel: this.params.showAdLabel !== 'hide',
             video: this.params.videoURL ? iframeVideoTpl(merge(this.params, videoPosition)) : '',
             hasContainer: 'layerTwoAnimation' in this.params,
