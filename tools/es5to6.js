@@ -142,6 +142,7 @@ git
                 'obj-shorthand',
                 'no-strict',
                 'class',
+                'default-param',
             ]);
             if (warnings.length) {
                 throw new Error(warnings);
