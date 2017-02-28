@@ -105,14 +105,6 @@ define([
         }
     }
 
-    function rejectCheck(id) {
-        var argsArray = Array.prototype.slice.call(arguments, 1);
-
-        if (registeredChecks[id]) {
-            return registeredChecks[id].reject.apply(null, argsArray);
-        }
-    }
-
     function waitForCheck(id) {
         if (registeredChecks[id]) {
             return registeredChecks[id].complete;
@@ -135,7 +127,6 @@ define([
     return {
         init: init,
         resolveCheck: resolveCheck,
-        rejectCheck: rejectCheck,
         waitForCheck: waitForCheck,
         _testRegisterCheck: _testRegisterCheck // exposed for unit testing
     };
