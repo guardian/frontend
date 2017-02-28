@@ -416,8 +416,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 }
 
 .navigation-border,
-[data-link-name='nav2 : crosswords'],
-[data-link-name='nav2 : today\'s paper'] {
+[data-link-name='nav2 : the guardian app'] {
     // Creates a seamless line when section has dark background
     margin-top: -1px;
     position: relative;
@@ -433,8 +432,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     }
 }
 
-[data-link-name='nav2 : crosswords'],
-[data-link-name='nav2 : today\'s paper'],
+[data-link-name='nav2 : the guardian app'],
 [data-link-name='nav2 : facebook'] {
     margin-top: $gs-baseline * 2;
 }

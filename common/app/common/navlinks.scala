@@ -115,10 +115,13 @@ object NavLinks {
   val observer = NavLink("the observer", "/observer", "observer")
   val crosswords = NavLink("crosswords", "/crosswords", "crosswords")
   val video =  NavLink("video", "/video")
+  val podcasts =  NavLink("podcasts", "/podcasts")
+  val newsletters =  NavLink("newsletters", "/email-newsletters")
   val jobs = NavLink("jobs", "https://jobs.theguardian.com")
   val dating = NavLink("dating", "https://soulmates.theguardian.com")
-  val apps = NavLink("apps", "https://app.adjust.com/f8qm1x_8q69t7?campaign=NewHeader&adgroup=Mobile&creative=generic")
-  val masterClasses = NavLink("masterclasses", "/guardian-masterclasses")
+  val apps = NavLink("the guardian app", "https://app.adjust.com/f8qm1x_8q69t7?campaign=NewHeader&adgroup=Mobile&creative=generic")
+  val ukMasterClasses = NavLink("masterclasses", "/guardian-masterclasses")
+  val auMasterClasses = NavLink("masterclasses", "/guardian-masterclasses-australia")
 
   val tagPages = List(
     "technology/games",
