@@ -74,19 +74,25 @@ define([
     function pushAdUnit(dfpDivId, sizeMapping) {
 
         var __switch_zero = window.__switch_zero;
+        var promises = [];
 
         if (__switch_zero) {
             var adUnitIds = findAdUnitIds(sizeMapping.size);
 
             adUnitIds.forEach(function(adUnitId) {
                 if (adUnitId){
-                    __switch_zero.units.push({
-                        dfpDivId: dfpDivId,
-                        switchAdUnitId: adUnitId
+                    promises.push(new Promise(function(resolve){
+                        __switch_zero.units.push({
+                            dfpDivId: dfpDivId,
+                            switchAdUnitId: adUnitId,
+                            deliveryCallback: resolve
+                        });
                     });
                 }
             });
         }
+
+        return Promise.all(promises);
     }
 
     function init(start, stop) {
