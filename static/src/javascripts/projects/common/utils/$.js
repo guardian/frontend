@@ -6,7 +6,7 @@ import forEach from 'lodash/collections/forEach';
 bonzo.aug({
     height() {
         return this.dim().height;
-    }
+    },
 });
 
 function $(selector, context) {
@@ -21,9 +21,8 @@ $.ancestor = (el, c) => {
     }
     if (!el.parentNode || bonzo(el.parentNode).hasClass(c)) {
         return el.parentNode;
-    } else {
-        return $.ancestor(el.parentNode, c);
     }
+    return $.ancestor(el.parentNode, c);
 };
 
 $.forEachElement = (selector, fn) => {
