@@ -1,8 +1,4 @@
 module.exports = {
     description: 'Compile images',
-    task: [
-        require('./clean'),
-        require('./copy'),
-        require('./icons'),
-    ],
+    task: [require('./clean'), require('./copy'), require('./icons')],
 };

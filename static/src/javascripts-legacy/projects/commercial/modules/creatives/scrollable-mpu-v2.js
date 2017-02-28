@@ -6,7 +6,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'raw-loader!commercial/views/creatives/scrollable-mpu-v2.html',
-    'raw-loader!commercial/views/creatives/tracking-pixel.html',
+    'commercial/modules/creatives/add-tracking-pixel',
     'lodash/functions/bindAll'
 ], function (
     Promise,
@@ -16,7 +16,7 @@ define([
     mediator,
     template,
     scrollableMpuTpl,
-    trackingPixelStr,
+    addTrackingPixel,
     bindAll
 ) {
 
@@ -66,10 +66,17 @@ define([
             destination:      this.params.destination,
             layer1Image:      ScrollableMpu.hasScrollEnabled ? this.params.layer1Image : this.params.mobileImage,
             backgroundImage:       ScrollableMpu.hasScrollEnabled && this.params.backgroundImage ?
-                '<div class="creative--scrollable-mpu-image" style="background-image: url(' + this.params.backgroundImage + ');"></div>' : '',
-            trackingPixelImg: this.params.trackingPixel ? template(trackingPixelStr, { url: encodeURI(this.params.trackingPixel) }) : ''
+                '<div class="creative--scrollable-mpu-image" style="background-image: url(' + this.params.backgroundImage + ');"></div>' : ''
         };
         this.$scrollableMpu = $.create(template(scrollableMpuTpl, templateOptions)).appendTo(this.$adSlot);
+
+        if (this.params.trackingPixel) {
+            addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster)
+        }
+
+        if (this.params.researchPixel) {
+            addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
+        }
 
         if (ScrollableMpu.hasScrollEnabled) {
             // update bg position

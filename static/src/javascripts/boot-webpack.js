@@ -19,8 +19,10 @@ domready(() => {
     // 2. once standard is done, next is commercial
     if (config.switches.commercial) {
         if (config.page.isDev) {
-            window.guardian.adBlockers.onDetect.push((isInUse) => {
-                const needsMessage = isInUse && window.console && window.console.warn;
+            window.guardian.adBlockers.onDetect.push(isInUse => {
+                const needsMessage = isInUse &&
+                    window.console &&
+                    window.console.warn;
                 const message = 'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
                 if (needsMessage) {
                     window.console.warn(message);
@@ -29,8 +31,9 @@ domready(() => {
         }
 
         userTiming.mark('commercial request');
-        require(['bootstraps/commercial'], raven.wrap({ tags: { feature: 'commercial' } },
-            (commercial) => {
+        require(
+            ['bootstraps/commercial'],
+            raven.wrap({ tags: { feature: 'commercial' } }, commercial => {
                 userTiming.mark('commercial boot');
                 commercial.init();
 
@@ -39,7 +42,7 @@ domready(() => {
                 // excludes all the modules bundled in the commercial chunk from this one
                 if (window.guardian.isEnhanced) {
                     userTiming.mark('enhanced request');
-                    require(['bootstraps/enhanced/main'], (bootEnhanced) => {
+                    require(['bootstraps/enhanced/main'], bootEnhanced => {
                         userTiming.mark('enhanced boot');
                         bootEnhanced();
                         if (document.readyState === 'complete') {

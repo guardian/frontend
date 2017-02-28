@@ -9,10 +9,11 @@ const chalk = require('chalk');
 
 module.exports = {
     description: 'Create Webpack bundles',
-    task: () => new Observable((observer) => {
+    task: () => new Observable(observer => {
         const config = require('../../../../webpack.config.js')({
             plugins: [
-                new ProgressPlugin((progress, msg) => observer.next(`${Math.round(progress * 100)}% ${msg}`)),
+                new ProgressPlugin((progress, msg) =>
+                    observer.next(`${Math.round(progress * 100)}% ${msg}`)),
             ],
         });
         const bundler = webpack(config);
