@@ -4,7 +4,7 @@ define([
     'common/utils/$',
     'common/utils/template',
     'common/modules/component',
-    'text!common/views/sport/score-container.html'
+    'raw-loader!common/views/sport/score-container.html'
 ], function (
     bonzo,
     detect,

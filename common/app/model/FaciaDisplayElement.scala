@@ -27,32 +27,6 @@ object FaciaDisplayElement {
       case _ => InlineImage.fromFaciaContent(faciaContent)
     }
   }
-
-  def fromContent(apiContent: contentapi.Content): Option[FaciaDisplayElement] = {
-    val maybeEndSlateComponents = for {
-      sectionId <- apiContent.sectionId
-      fields <- apiContent.fields
-      shortUrl <- fields.shortUrl
-    } yield EndSlateComponents(None, sectionId, shortUrl)
-
-    val elements = Elements.make(apiContent)
-
-
-    maybeEndSlateComponents flatMap { endSlateComponents =>
-
-      def inlineVideo(videoElement: VideoElement) = InlineVideo(
-        videoElement = videoElement,
-        title = apiContent.webTitle,
-        endSlatePath = endSlateComponents.toUriPath,
-        Option(InlineImage(videoElement.images))
-      )
-
-      elements.mainVideo match {
-        case Some(videoElement) => Option(inlineVideo(videoElement))
-        case None => elements.mainPicture.map(picture => InlineImage(picture.images))
-      }
-    }
-  }
 }
 
 sealed trait FaciaDisplayElement

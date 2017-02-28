@@ -13,7 +13,7 @@ define([
     'common/utils/mediator',
     'common/modules/ui/relativedates',
     'common/views/svgs',
-    'text!common/views/breaking-news.html',
+    'raw-loader!common/views/breaking-news.html',
     'lodash/objects/isArray',
     'lodash/objects/has',
     'lodash/arrays/flatten',

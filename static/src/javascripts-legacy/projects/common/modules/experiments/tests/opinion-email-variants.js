@@ -16,7 +16,7 @@ define([
     return function () {
         this.id = 'OpinionEmailVariants';
         this.start = '2017-01-12';
-        this.expiry = '2017-02-23';
+        this.expiry = '2017-03-09';
         this.author = 'David Furey';
         this.description = 'Using the wonderful frontend AB testing framework to AB test emails, since the AB ' +
             'function in ExactTarget re-randomises all recipients on each send, and we need users to receive their ' +

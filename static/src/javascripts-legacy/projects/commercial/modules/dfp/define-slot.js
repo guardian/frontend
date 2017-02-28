@@ -3,14 +3,16 @@ define([
     'common/utils/config',
     'common/utils/detect',
     'lodash/arrays/uniq',
-    'lodash/arrays/flatten'
-], function (urlUtils, config, detect, uniq, flatten) {
-    var adUnitOverride = (function () {
+    'lodash/arrays/flatten',
+    'lodash/functions/once',
+    'commercial/modules/dfp/prepare-switch-tag'
+], function (urlUtils, config, detect, uniq, flatten, once, prepareSwitchTag) {
+    var adUnit = once(function () {
         var urlVars = urlUtils.getUrlVars();
         return urlVars['ad-unit'] ?
             '/' + config.page.dfpAccountId + '/' + urlVars['ad-unit'] :
-            null;
-    }());
+            config.page.adUnit;
+    });
 
     return defineSlot;
 
@@ -21,9 +23,14 @@ define([
         var slot;
 
         if (adSlotNode.getAttribute('data-out-of-page')) {
-            slot = window.googletag.defineOutOfPageSlot(adUnitOverride || config.page.adUnit, id).defineSizeMapping(sizeOpts.sizeMapping);
+            slot = window.googletag.defineOutOfPageSlot(adUnit(), id).defineSizeMapping(sizeOpts.sizeMapping);
         } else {
-            slot = window.googletag.defineSlot(adUnitOverride || config.page.adUnit, sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
+            slot = window.googletag.defineSlot(adUnit(), sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
+            prepareSwitchTag.pushAdUnit(id, sizeOpts);
+        }
+
+        if (slotTarget === 'im' && config.page.isbn) {
+            slot.setTargeting('isbn', config.page.isbn);
         }
 
         slot.addService(window.googletag.pubads())

@@ -11,4 +11,5 @@ static/src/javascripts-legacy/projects/common/utils/atob.js
 static/src/javascripts-legacy/projects/common/utils/picturefill.js
 
 # tests #karma-jest
-static/test/javascripts/components
+static/test/javascripts-legacy/components
+static/test/javascripts-legacy/helpers/raw-loader.js

@@ -29,8 +29,8 @@ requirejs.config({
         reqwest:      '/base/node_modules/reqwest/reqwest',
         videojs:      '/base/node_modules/video.js',
         'videojs-ads-lib': '/base/node_modules/videojs-contrib-ads',
-        text:         '/base/node_modules/text/text',
         raven:        '/base/node_modules/raven-js/dist/raven',
+        'ophan/ng':   '/base/node_modules/ophan-tracker-js/build/ophan.ng',
 
         analytics:    'projects/common/modules/analytics/analytics',
         picturefill:  'projects/common/utils/picturefill',
@@ -41,7 +41,8 @@ requirejs.config({
         helpers:      '/base/static/test/javascripts-legacy/helpers',
         svgs:         '/base/static/src/inline-svgs',
         // plugins
-        'svg-loader':    'projects/common/utils/svg-loader',
+        'raw-loader':    '/base/static/test/javascripts-legacy/helpers/raw-loader',
+        'svg-loader':    '/base/static/test/javascripts-legacy/helpers/svg-loader',
         'common/utils/raven': '/base/static/test/javascripts-legacy/fixtures/raven'
     }
 });

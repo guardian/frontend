@@ -55,26 +55,41 @@ const REMIFICATIONS = {
 
 const getFiles = sassGlob => glob.sync(path.resolve(sassDir, sassGlob));
 
-module.exports = (sassGlob, { remify = true, browsers = BROWSERS_LIST } = {}) => {
-    if (typeof sassGlob !== 'string') return Promise.reject('No glob provided.');
+module.exports = (
+    sassGlob,
+    { remify = true, browsers = BROWSERS_LIST } = {}
+) => {
+    if (typeof sassGlob !== 'string') {
+        return Promise.reject('No glob provided.');
+    }
 
-    return Promise.all(getFiles(sassGlob).map((filePath) => {
-        const dest = path.resolve(target, 'stylesheets', path.relative(sassDir, filePath).replace('scss', 'css'));
-        const sassOptions = Object.assign({
-            file: filePath,
-            outFile: dest,
-            sourceMapContents: true,
-            includePaths: ['node_modules'],
-        }, SASS_SETTINGS);
+    return Promise.all(
+        getFiles(sassGlob).map(filePath => {
+            const dest = path.resolve(
+                target,
+                'stylesheets',
+                path.relative(sassDir, filePath).replace('scss', 'css')
+            );
+            const sassOptions = Object.assign(
+                {
+                    file: filePath,
+                    outFile: dest,
+                    sourceMapContents: true,
+                    includePaths: ['node_modules'],
+                },
+                SASS_SETTINGS
+            );
 
-        const postcssPlugins = [autoprefixer({ browsers })];
-        if (remify) {
-            postcssPlugins.push(pxtorem(REMIFICATIONS));
-        }
+            const postcssPlugins = [autoprefixer({ browsers })];
+            if (remify) {
+                postcssPlugins.push(pxtorem(REMIFICATIONS));
+            }
 
-        mkdirp.sync(path.parse(dest).dir);
-        return sassRenderP(sassOptions)
-                .then(result => postcss(postcssPlugins).process(result.css.toString(), {
+            mkdirp.sync(path.parse(dest).dir);
+            return sassRenderP(sassOptions)
+                .then(result => postcss(
+                    postcssPlugins
+                ).process(result.css.toString(), {
                     from: filePath,
                     to: dest,
                     map: {
@@ -82,9 +97,11 @@ module.exports = (sassGlob, { remify = true, browsers = BROWSERS_LIST } = {}) =>
                         prev: result.map.toString(),
                     },
                 }))
-                .then(result => Promise.all([
-                    writeFileP(dest, result.css),
-                    writeFileP(`${dest}.map`, result.map),
-                ]));
-    }));
+                .then(result =>
+                    Promise.all([
+                        writeFileP(dest, result.css),
+                        writeFileP(`${dest}.map`, result.map),
+                    ]));
+        })
+    );
 };

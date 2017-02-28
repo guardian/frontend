@@ -56,7 +56,7 @@ trait ABTestSwitches {
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 23),
+    sellByDate = new LocalDate(2017, 3, 9),
     exposeClientSide = true
   )
 
@@ -66,7 +66,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 23),
+    sellByDate = new LocalDate(2017, 3, 9),
     exposeClientSide = true
   )
 
@@ -86,7 +86,7 @@ trait ABTestSwitches {
     "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
     owners = Seq(Owner.withGithub("alexduf")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 1),
+    sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
 
@@ -127,16 +127,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("lindseydew")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 3, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-one-line-edits-v2",
-    "Test 2 variations to the epic: (1) social proofing; and (2) paywall + no billionaire owner",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 28),
     exposeClientSide = true
   )
 

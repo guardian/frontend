@@ -21,7 +21,7 @@ define([
     'common/modules/identity/api',
     'commercial/modules/third-party-tags/outbrain',
     'commercial/modules/third-party-tags/plista',
-    'text!common/views/commercial/external-content.html'
+    'raw-loader!common/views/commercial/external-content.html'
 ], function (
     Promise,
     $,

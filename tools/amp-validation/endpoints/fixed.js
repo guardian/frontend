@@ -5,8 +5,7 @@
     suite in scala tests may be overkill as we add more tests
 */
 module.exports = (() => [
-
-        /*
+    /*
             Tones
          */
     '/commentisfree/2016/aug/09/jeremy-corbyn-supporters-voters-labour-leader-politics', // Comment tone
@@ -17,22 +16,22 @@ module.exports = (() => [
     '/lifeandstyle/shortcuts/2016/aug/09/why-truck-drivers-are-sick-of-chips-with-everything', // Features tone
     '/business/2016/aug/09/china-uk-investment-key-questions-following-hinkley-point-c-delay', // Analysis tone
 
-        /*
+    /*
             Embeds
          */
-        // TODO: enable the commented out endpoints once issues with each one have been fixed
+    // TODO: enable the commented out endpoints once issues with each one have been fixed
     '/world/2016/aug/25/spain-mariano-rajoy-third-general-election-christmas-day', // Guardian Video + Interactive
     '/us-news/live/2016/aug/25/donald-trump-news-hillary-clinton-campaign-live-coverage', // Image
     '/sport/2016/aug/25/katie-ledecky-first-pitch-washington-nationals-bryce-harper', // Instagram + Twitter
     '/sport/live/2016/aug/25/county-cricket-surrey-lancashire-live-blog', // Twitter
-        // '/sport/blog/2016/aug/25/baseball-olympic-games-2020-tokyo-mlb-team-selection', // Vine
+    // '/sport/blog/2016/aug/25/baseball-olympic-games-2020-tokyo-mlb-team-selection', // Vine
     '/stage/2016/aug/24/they-drink-it-in-the-congo-review-adam-brace', // Vimeo
     '/commentisfree/2016/aug/25/burkini-french-muslim-isis', // Videop
-        // '/music/musicblog/2010/sep/02/wiley-ustream', // uStream
-        // '/world/2015/mar/16/london-teenagers-stopped-syria-parents-islamic-state', // audioboom
+    // '/music/musicblog/2010/sep/02/wiley-ustream', // uStream
+    // '/world/2015/mar/16/london-teenagers-stopped-syria-parents-islamic-state', // audioboom
     '/sport/2014/jul/03/tour-de-france-2014-yellow-jersey-contenders-chris-froome-stats-history', // infrostrada
-        // '/education/live/2016/aug/25/gcse-results-day-2016-uk-students-get-their-grades-live',  // guardian witness
-    '/lifeandstyle/2016/jun/04/dont-talk-politics-sex-ex-10-ways-ruin-a-date',  // gif
+    // '/education/live/2016/aug/25/gcse-results-day-2016-uk-students-get-their-grades-live',  // guardian witness
+    '/lifeandstyle/2016/jun/04/dont-talk-politics-sex-ex-10-ways-ruin-a-date', // gif
     '/football/2016/jun/20/ngolo-kante-france-euro-2016-caen-jose-saez', // guardian audio
     '/science/2016/may/25/neanderthals-built-mysterious-cave-structures-175000-years-ago', // dailymotion
     '/sustainable-business/live/2016/sep/16/coffee-climate-change-smallholders-central-america-ethiopia-technology-funding', // commercial badge with dimensions
@@ -40,17 +39,17 @@ module.exports = (() => [
     '/news/2016/may/09/how-mossack-fonseca-missed-warning-signs-of-70-million-boiler-room-scam-panama-papers', // scribd
     '/sport/2015/nov/18/jonah-lomu-interview-2015-world-cup-audio', // soundcloud
     '/music/musicblog/2016/jul/21/yello-swiss-pop-pioneers-return-with-new-video-limbo', // vevo
-        // '/tv-and-radio/2014/nov/07/shelter-refuses-to-take-donations-from-itv-star-dapper-laughs', // vine #2
+    // '/tv-and-radio/2014/nov/07/shelter-refuses-to-take-donations-from-itv-star-dapper-laughs', // vine #2
     '/politics/2016/aug/25/how-has-the-brexit-vote-affected-your-life-share-your-experiences', // formstack
 
-        /*
+    /*
             Other
          */
     '/books/2011/aug/24/jorge-luis-borges-google-doodle', // More on this story
     '/uk-news/2016/aug/09/southern-rail-strike-war-of-words-heats-up-on-second-day', // Story package / tone news
     '/football/2016/jul/10/france-portugal-euro-2016-match-report', // Match summary
 
-        /*
+    /*
             Live blogs
          */
     '/us-news/live/2016/aug/12/donald-trump-republicans-hillary-clinton-us-election-live', // Live blog

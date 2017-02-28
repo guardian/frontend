@@ -23,52 +23,68 @@
             }
         }
 
-        <div class="submeta__links">
+        <ul class="submeta__links">
             @if(!(content.content.isImmersive && content.content.tags.isArticle)) {
-                <a class="submeta__link"
-                    data-link-name="article section"
-                    href="@LinkTo {/@content.content.sectionLabelLink}">
-                        @Html(Localisation(content.content.sectionLabelName))
-                </a>
+                <li class="submeta__link-item">
+                    <a class="submeta__link"
+                        data-link-name="article section"
+                        href="@LinkTo {/@content.content.sectionLabelLink}">
+                            @Html(Localisation(content.content.sectionLabelName))
+                    </a>
+                </li>
             }
 
             @content.content.blogOrSeriesTag.map { series =>
-                <a class="submeta__link" href="@LinkTo {/@series.id}">@series.name</a>
+                <li class="submeta__link-item">
+                    <a class="submeta__link"
+                       href="@LinkTo {/@series.id}">
+                            @series.name
+                    </a>
+                </li>
             }.getOrElse {
                 @if(content.content.isFromTheObserver) {
-                    <a class="submeta__link" href="http://observer.theguardian.com">The Observer</a>
+                    <li class="submeta__link-item">
+                        <a class="submeta__link"
+                           href="http://observer.theguardian.com">
+                               The Observer
+                        </a>
+                    </li>
                 }
             }
-        </div>
+        </ul>
     </div>
 
     <div class="submeta__keywords">
-        <div class="submeta__links">
+        <ul class="submeta__links">
             @if(content.tags.keywords.filterNot(_.isSectionTag).nonEmpty) {
                 @defining(content.tags.keywords.filterNot(_.isSectionTag).slice(1, 6)) { shownKeywords =>
                     @if(shownKeywords.nonEmpty) {
                         @shownKeywords.zipWithRowInfo.map{ case(keyword, row) =>
-                            <a class="submeta__link"
-                                href="@LinkTo(keyword.metadata.url)"
-                                data-link-name="keyword: @keyword.id">
-                                    @keyword.name
-                                    @if(content.tags.keywords.filter(_ != keyword).find(_.name == keyword.name)){ (@keyword.properties.sectionName) }
-                            </a>
+                            <li class="submeta__link-item">
+                                <a class="submeta__link"
+                                    href="@LinkTo(keyword.metadata.url)"
+                                    data-link-name="keyword: @keyword.id">
+                                        @keyword.name
+                                        @if(content.tags.keywords.filter(_ != keyword).find(_.name == keyword.name)){ (@keyword.properties.sectionName) }
+                                </a>
+                            </li>
                         }
                     }
                 }
 
                 @if(content.tags.isArticle && !content.tags.isLiveBlog) {
                     @content.tags.tones.headOption.map { tone =>
-                        <a class="submeta__link"
-                            href="@LinkTo(tone.metadata.url)"
-                            data-link-name="tone: @tone.name">
-                                @tone.name.toLowerCase
-                        </a>
+                        <li class="submeta__link-item">
+                            <a class="submeta__link"
+                                href="@LinkTo(tone.metadata.url)"
+                                data-link-name="tone: @tone.name">
+                                    @tone.name.toLowerCase
+                            </a>
+                        </li>
                     }
                 }
             }
-        </div>
+        </ul>
     </div>
     @if(content.showBottomSocialButtons) {
         <div data-component="share" class="submeta__share">

@@ -42,7 +42,7 @@ object Au extends Edition(
       NavItem(sport, Seq(australiaSport, afl, nrl, aLeague, football, cricket, rugbyunion, tennis, cycling, boxing)),
       NavItem(football, aLeague :: footballNav.toList),
       NavItem(culture, cultureLocalNav),
-      NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women)),
+      NavItem(lifeandstyle, Seq(foodanddrink, recipes, healthandwellbeing, loveAndSex, family, women)),
       NavItem(environment, Seq(cities, globalDevelopment, ausustainablebusiness)),
       NavItem(economy, economyLocalNav),
       NavItem(media),

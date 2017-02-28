@@ -5,7 +5,7 @@ define([
         'common/utils/storage',
         'common/utils/template',
         'common/modules/ui/message',
-        'text!common/views/membership-message.html',
+        'raw-loader!common/views/membership-message.html',
         'commercial/modules/commercial-features',
         'commercial/modules/user-features',
         'common/utils/mediator',

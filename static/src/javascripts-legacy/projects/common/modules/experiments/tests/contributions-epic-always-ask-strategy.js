@@ -6,7 +6,7 @@ define([
     'common/utils/cookies',
     'common/utils/storage',
     'common/utils/template',
-    'text!common/views/contributions-epic-equal-buttons.html',
+    'raw-loader!common/views/contributions-epic-equal-buttons.html',
 ], function (
             commercialFeatures,
             contributionsUtilities,
@@ -60,7 +60,7 @@ define([
 
             {
                 id: 'alwaysAsk',
-                template: function (contributionUrl, membershipUrl) {
+                template: function (membershipUrl, contributionUrl) {
                     return template(contributionsEpicEqualButtons, {
                         linkUrl1: membershipUrl,
                         linkUrl2: contributionUrl,

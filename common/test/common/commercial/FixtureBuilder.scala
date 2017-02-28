@@ -13,7 +13,7 @@ object FixtureBuilder {
       showByline = false,
       imageSlideshowReplace = false,
       maybeContent = None,
-      maybeContentId = None,
+      maybeContentId = Some(id.toString),
       isLiveBlog = false,
       isCrossword = false,
       byline = None,
@@ -38,7 +38,7 @@ object FixtureBuilder {
       kicker,
       seriesOrBlogKicker = None,
       headline = "",
-      url = "",
+      url = id.toString,
       hasMainVideoElement = None
     )
 
