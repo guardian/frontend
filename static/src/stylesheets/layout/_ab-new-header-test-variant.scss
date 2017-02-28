@@ -96,7 +96,6 @@ $gutter-large: 55px;
     background-color: $news-main-2;
     cursor: pointer;
     bottom: -$gs-baseline / 2;
-    transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
 
     @include mq($until: mobileMedium) {
         //Smaller menu button
@@ -116,11 +115,6 @@ $gutter-large: 55px;
     @include mq(mobileLandscape) {
         //Align with the 'i' in 'theguardian'
         right: $gutter-large;
-    }
-
-    &:hover,
-    &:focus {
-        transform: scale(1.1);
     }
 }
 
@@ -870,7 +864,6 @@ $caption-button-size: 32px;
     cursor: pointer;
     height: $veggie-burger-small;
     min-width: $veggie-burger-small;
-    transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
 
     @include mq(mobileMedium) {
         height: $veggie-burger-medium;
@@ -889,11 +882,6 @@ $caption-button-size: 32px;
             width: 30px;
             height: 24px;
         }
-    }
-
-    .footer__back-to-top:hover &,
-    .footer__back-to-top:focus & {
-        transform: scale(1.1);
     }
 }
 
