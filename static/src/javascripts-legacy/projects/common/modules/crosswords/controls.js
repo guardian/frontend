@@ -1,5 +1,5 @@
 define([
-    'react',
+    'react/addons',
     './confirm-button'
 ], function (
     React,

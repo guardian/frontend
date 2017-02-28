@@ -19,26 +19,34 @@ const mimeTypes = {
 
 const typeFaces = require('./index.config');
 
-const toDataURI = (srcPath, data) => `url(data:${mimeTypes[path.extname(srcPath).substr(1)]};base64,${data.toString()})`;
+const toDataURI = (srcPath, data) =>
+    `url(data:${mimeTypes[path
+            .extname(srcPath)
+            .substr(1)]};base64,${data.toString()})`;
 
-const generateCSS = (fontFamily, font) =>
-    readFile(path.resolve(src, 'fonts', `${font.src}`), 'base64')
-        .then(data => postcss([perfectionist({ format: 'compressed' })]).process(`
+const generateCSS = (fontFamily, font) => readFile(
+    path.resolve(src, 'fonts', `${font.src}`),
+    'base64'
+)
+    .then(data => postcss([perfectionist({ format: 'compressed' })]).process(
+        `
                 @font-face {
                     font-family: ${fontFamily};
                     src: ${toDataURI(font.src, data)};
                     ${[
-                        'font-weight',
-                        'font-style',
-                        'font-stretch',
-                        'font-variant',
-                        'font-feature-settings',
-                        'unicode-range',
-                    ].map(prop => (font[prop] ? `${prop}: ${font[prop]};` : '')).join('')}
+            'font-weight',
+            'font-style',
+            'font-stretch',
+            'font-variant',
+            'font-feature-settings',
+            'unicode-range',
+        ]
+            .map(prop => font[prop] ? `${prop}: ${font[prop]};` : '')
+            .join('')}
                 }
-            `)
-        )
-        .then(result => result.css);
+            `
+    ))
+    .then(result => result.css);
 
 module.exports = {
     description: 'Compile fonts',
@@ -49,16 +57,31 @@ module.exports = {
             task: () => {
                 mkdirp.sync(`${target}/fonts`);
 
-                return Promise.all(typeFaces.map((typeFace) => {
-                    const generateCSSwithFontFamily = generateCSS.bind(null, typeFace['font-family']);
-                    const dest = path.resolve(target, 'fonts', `${typeFace.dest}`);
+                return Promise.all(
+                    typeFaces.map(typeFace => {
+                        const generateCSSwithFontFamily = generateCSS.bind(
+                            null,
+                            typeFace['font-family']
+                        );
+                        const dest = path.resolve(
+                            target,
+                            'fonts',
+                            `${typeFace.dest}`
+                        );
 
-                    // the way this actually works, with the `guFont` callback, feels like
-                    // an anachronism. should be looked at when fonts are revisited...
-                    return Promise.all(typeFace.fonts.map(generateCSSwithFontFamily))
-                       .then(fontsCSS => fontsCSS.join(''))
-                       .then(CSS => writeFile(dest, `guFont(${JSON.stringify({ css: CSS })});`));
-                }));
+                        // the way this actually works, with the `guFont` callback, feels like
+                        // an anachronism. should be looked at when fonts are revisited...
+                        return Promise.all(
+                                typeFace.fonts.map(generateCSSwithFontFamily)
+                            )
+                            .then(fontsCSS => fontsCSS.join(''))
+                            .then(CSS =>
+                                writeFile(
+                                    dest,
+                                    `guFont(${JSON.stringify({ css: CSS })});`
+                                ));
+                    })
+                );
             },
         },
     ],

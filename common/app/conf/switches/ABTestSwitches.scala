@@ -22,6 +22,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-membership-engagement-banner-copy-test",
+    "Test copy for the engagement banner in all countries aside from the US and Australia",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-paid-content-vs-outbrain",
     "Displays a paid content widget instead of Outbrain",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
@@ -86,7 +96,7 @@ trait ABTestSwitches {
     "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
     owners = Seq(Owner.withGithub("alexduf")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 1),
+    sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
 
@@ -127,16 +137,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("lindseydew")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 3, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-love-boat",
-    "Tests 2 new designs for acquisitions asks",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 22),
     exposeClientSide = true
   )
 

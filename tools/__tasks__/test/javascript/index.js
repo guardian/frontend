@@ -9,18 +9,20 @@ const exec = (cmd, args) => {
     const cp = execa(cmd, args);
 
     return Observable.merge(
-        streamToObservable(cp.stdout.pipe(split()), { await: cp }),
-        streamToObservable(cp.stderr.pipe(split()), { await: cp })
-    ).filter(Boolean);
+            streamToObservable(cp.stdout.pipe(split()), { await: cp }),
+            streamToObservable(cp.stderr.pipe(split()), { await: cp })
+        )
+        .filter(Boolean);
 };
 
-const mainAppTests = [
-    'commercial',
-    'common',
-    'facia',
-].map(set => ({
+const mainAppTests = ['commercial', 'common', 'facia'].map(set => ({
     description: `Run ${set} tests`,
-    task: () => exec('karma', ['start', `./static/test/javascripts-legacy/conf/${set}.js`, '--single-run']),
+    task: () =>
+        exec('karma', [
+            'start',
+            `./static/test/javascripts-legacy/conf/${set}.js`,
+            '--single-run',
+        ]),
 }));
 
 module.exports = {

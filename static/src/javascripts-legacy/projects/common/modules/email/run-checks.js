@@ -89,11 +89,6 @@ define([
     }
 
     var canRunList = {
-        theCampaignMinute: function () {
-            var isUSElection = page.keywordExists(['US elections 2016']);
-            var isNotUSBriefingSeries = config.page.series !== 'Guardian US briefing';
-            return isUSElection && isNotUSBriefingSeries;
-        },
         theFilmToday: function () {
             return config.page.section === 'film';
         },

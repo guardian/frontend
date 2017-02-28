@@ -1,6 +1,6 @@
 
 define([
-    'react',
+    'react/addons',
     'common/modules/crosswords/crossword'
 ], function (React, Crossword) {
 

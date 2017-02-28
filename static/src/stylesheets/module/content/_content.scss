@@ -538,16 +538,18 @@
 }
 
 .meta__numbers {
-    padding: $gs-baseline / 2 0;
+    padding-bottom: $gs-baseline / 2;
+    padding-top: $gs-baseline / 2;
     position: absolute;
     right: 0;
     top: 0;
 
     @include mq(leftCol) {
         border-top: 1px dotted $neutral-5;
-        position: static;
         height: 36px;
-        padding: $gs-baseline / 4 0;
+        padding-bottom: $gs-baseline / 4;
+        padding-top: $gs-baseline / 4;
+        position: static;
     }
 }
 

@@ -21,7 +21,10 @@ define([
                 $adSlot[0].insertAdjacentHTML('beforeend', markup);
                 $adSlot.addClass('ad-slot--revealer ad-slot--fabric content__mobile-full-width');
                 if (params.trackingPixel) {
-                    addTrackingPixel($adSlot, params.trackingPixel + params.cacheBuster);
+                    addTrackingPixel(params.trackingPixel + params.cacheBuster);
+                }
+                if (params.researchPixel) {
+                    addTrackingPixel(params.researchPixel + params.cacheBuster);
                 }
             }).then(function () {
                 return fastdom.read(function () {

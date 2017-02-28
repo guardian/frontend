@@ -1,5 +1,5 @@
 define([
-    'react',
+    'react/addons',
     'lodash/objects/assign',
     './classNames'
 ], function (

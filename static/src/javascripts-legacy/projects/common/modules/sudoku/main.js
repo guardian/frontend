@@ -1,7 +1,7 @@
 /* eslint-disable new-cap */
 define([
     'bonzo',
-    'react',
+    'react/addons',
     'common/utils/$',
     'common/modules/sudoku/flatMap',
     'common/modules/sudoku/grid',
