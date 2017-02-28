@@ -287,26 +287,25 @@ define([
 
     return {
         init: function () {
-            checkMediator.waitForCheck('emailCanRun')
-                .then(function (canEmailRun) {
-                    if (canEmailRun) {
-                        return emailRunChecks.getUserEmailSubscriptions();
-                    }
-                })
-                .then(function () {
-                    if (ab.isParticipating({id: 'TailorRecommendedEmail'})) {
-                        switch (ab.getTestVariantId) {
-                            case 'tailor-recommended': tailorInTest(); break;
-                            case 'control': tailorControl(); break;
-                            default: addListToPage(find(listConfigs, emailRunChecks.listCanRun)); break;
+            checkMediator.waitForCheck('emailCanRun').then(function (canEmailRun) {
+                if (canEmailRun) {
+                    emailRunChecks.getUserEmailSubscriptions().then(function () {
+                        if (ab.isParticipating({id: 'TailorRecommendedEmail'})) {
+                            switch (ab.getTestVariantId) {
+                                case 'tailor-recommended': tailorInTest(); break;
+                                case 'control': tailorControl(); break;
+                                default: addListToPage(find(listConfigs, emailRunChecks.listCanRun)); break;
+                            }
+                        } else {
+                            addListToPage(find(listConfigs, emailRunChecks.listCanRun));
                         }
-                    } else {
-                        addListToPage(find(listConfigs, emailRunChecks.listCanRun));
-                    }
-                })
-                .catch(function (error) {
-                    robust.log('c-email', error);
-                });
+                    }).catch(function (error) {
+                        robust.log('c-email', error);
+                    });
+                }
+            }).catch(function (error) {
+                robust.log('check-mediator', error);
+            });
         },
         getListConfigs: function () {
             return listConfigs;
