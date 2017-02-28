@@ -6,6 +6,7 @@ define([
     'common/utils/template',
     'common/utils/mediator',
     'commercial/modules/creatives/add-tracking-pixel',
+    'commercial/modules/creatives/add-viewability-tracker',
     'raw-loader!commercial/views/creatives/fabric-v1.html',
     'raw-loader!commercial/views/creatives/iframe-video.html',
     'raw-loader!commercial/views/creatives/scrollbg.html',
@@ -18,6 +19,7 @@ define([
     template,
     mediator,
     addTrackingPixel,
+    addViewabilityTracker,
     fabricV1Html,
     iframeVideoStr,
     scrollBgStr,
@@ -102,6 +104,10 @@ define([
             this.$adSlot.addClass('ad-slot--fabric-v1 ad-slot--fabric content__mobile-full-width');
             if( this.$adSlot.parent().hasClass('top-banner-ad-container') ) {
                 this.$adSlot.parent().addClass('top-banner-ad-container--fabric');
+            }
+
+            if (this.params.viewabilityTracker) {
+                addViewabilityTracker(this.$adSlot[0], this.params.id, this.params.viewabilityTracker);
             }
 
             return true;
