@@ -20,7 +20,6 @@
 
 .submeta__keywords {
     font-size: 15px;
-    padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline;
     border-bottom: 1px dotted $neutral-5;
     margin-bottom: $gs-baseline / 2;
@@ -35,18 +34,15 @@
 }
 
 .submeta__link-item {
-    @include clearfix;
     @include nav-links;
 
-    .submeta__keywords & {
-        &:after {
-            @include trailing-slash;
-            color: $neutral-5;
-        }
+    &:after {
+        @include trailing-slash;
+        color: $neutral-5;
+    }
 
-        &:last-of-type:after {
-            content: none;
-        }
+    &:last-of-type:after {
+        content: none;
     }
 }
 
