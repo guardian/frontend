@@ -1,7 +1,7 @@
 package jobs
 
 import common.{ExecutionContexts, Logging}
-import conf.Configuration.frontend.webEngineersEmail
+import conf.Configuration.frontend.{webEngineersEmail, dotcomPlatformEmail}
 import conf.switches.{Switch, Switches}
 import services.EmailService
 
@@ -10,7 +10,10 @@ import scala.util.control.NonFatal
 
 case class ExpiringSwitchesEmailJob(emailService: EmailService) extends ExecutionContexts with Logging {
 
-  def run(): Future[Unit] = {
+  def run = run(webEngineersEmail)
+  def runReminder = run(dotcomPlatformEmail)
+
+  private def run(recipientsEmail: Option[String]): Future[Unit] = {
     (for (webEngineers <- webEngineersEmail) yield {
       val expiringSwitches = Switches.all.filter(Switch.expiry(_).expiresSoon)
 
@@ -65,7 +68,7 @@ case class ExpiringSwitches(switches: Seq[Switch]) {
 
     Seq(
       ExpiringSwitchesGroup(expiredSwitches, "already expired"),
-      ExpiringSwitchesGroup(expiringTodaySwitches, "expiring today"),
+      ExpiringSwitchesGroup(expiringTodaySwitches, "expiring today at 23:59 (London time)"),
       ExpiringSwitchesGroup(expiringTomorrowSwitches, "expiring tomorrow"),
       ExpiringSwitchesGroup(expiringInTwoDaysSwitches, "expiring in 2 days"),
       ExpiringSwitchesGroup(otherSwitches, "expiring within a week")

@@ -89,13 +89,15 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
       matchDayRecorder.record()
     }
 
-    if (environment.isProd) {
-      val londonTime = TimeZone.getTimeZone("Europe/London")
-      jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
-        log.info("Starting ExpiringSwitchesEmailJob")
-        ExpiringSwitchesEmailJob(emailService).run()
-      }
+    val londonTime = TimeZone.getTimeZone("Europe/London")
+    jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
+      log.info("Starting ExpiringSwitchesEmailJob")
+      ExpiringSwitchesEmailJob(emailService).run()
+    }
 
+    jobs.scheduleWeekdayJob("ExpiringSwitchesAfternoonEmailJob", 48, 15, londonTime) {
+      log.info("Starting ExpiringSwitchesAfternoonEmailJob")
+      ExpiringSwitchesEmailJob(emailService).runReminder()
     }
 
     //every 7, 22, 37, 52 minutes past the hour, 28 seconds past the minute (e.g 13:07:28, 13:22:28)

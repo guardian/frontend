@@ -41,6 +41,7 @@
 <html>
     <head></head>
     <body>
+        <p><em><b>Note on AB tests: </b>AB tests do not necessarily expire at the same time as their switch - they may have been configured to expire earlier.</em></p>
         @defining(ExpiringSwitches(switches).groupByPriority) { allGroups =>
             @for(group <- allGroups) {
                 @if(group.switches.nonEmpty) {
