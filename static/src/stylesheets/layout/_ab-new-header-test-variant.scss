@@ -564,7 +564,13 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
     a {
         color: #ffffff;
-        border-bottom: 1px solid rgba(255, 255, 255, .3)
+        border-bottom: 1px solid rgba(255, 255, 255, .3);
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+            border-color: #ffffff;
+        }
     }
 }
 
