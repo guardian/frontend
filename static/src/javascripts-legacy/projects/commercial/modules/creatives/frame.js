@@ -40,7 +40,10 @@ define([
             this.$adSlot[0].lastElementChild.insertAdjacentHTML('afterbegin', labelMarkup);
             this.$adSlot.addClass('ad-slot--frame');
             if (this.params.trackingPixel) {
-                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+                addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
+            }
+            if (this.params.researchPixel) {
+                addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
             }
             new Toggles(this.$adSlot[0]).init();
             return true;
