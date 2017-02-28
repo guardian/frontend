@@ -1,51 +1,20 @@
 const path = require('path');
-const fs = require('fs');
 
 const git = require('simple-git')();
 const gitUser = require('git-user-name');
 const chalk = require('chalk');
-const mkdirp = require('mkdirp');
-const amdtoes6 = require('amd-to-es6');
-const lebab = require('lebab');
 const execa = require('execa');
+const megalog = require('megalog');
 
-function error(message) {
-    console.log(chalk.red(message));
+function handleError(error) {
+    console.log(chalk.red(error.stack));
     process.exit(1);
 }
 
-process.on('uncaughtException', e => error(e.stack));
+process.on('unhandledRejection', handleError);
+process.on('uncaughtException', handleError);
 
 const remainingModules = require('./es5to6.json');
-
-const userModules = remainingModules[gitUser()];
-
-if (!userModules || !userModules.length) {
-    console.log(chalk.green('⭐️  You have no more modules to convert! ⭐️'));
-    process.exit();
-}
-
-const moduleId = userModules.shift();
-
-const es5Module = path.resolve(
-    __dirname,
-    '..',
-    'static',
-    'src',
-    'javascripts-legacy',
-    moduleId
-);
-
-const es6Module = path.resolve(
-    __dirname,
-    '..',
-    'static',
-    'src',
-    'javascripts',
-    moduleId
-);
-
-const branchName = `es6-${moduleId.split(path.sep).join('_')}`;
 
 git
     .status((err, status) => {
@@ -55,129 +24,79 @@ git
             status.ahead !== 0 ||
             status.behind !== 0
         ) {
-            error('Please run this in a clean, up to date copy of master.');
-        }
-    })
-    .then(() => {
-        if (!fs.existsSync(es5Module)) {
             console.log(
-                chalk.green(
-                    `${moduleId} appears to have been removed!\n\nIt has been removed from your list.`
+                chalk.red(
+                    'Please run this in a clean, up to date copy of master.'
                 )
             );
-            fs.writeFileSync(
-                path.resolve(__dirname, 'es5to6.json'),
-                JSON.stringify(remainingModules, null, 2)
+            process.exit(1);
+        }
+    })
+    .then(() => {
+        const userModules = remainingModules[gitUser()];
+        if (!userModules || !userModules.length) {
+            console.log(
+                chalk.green('⭐️  You have no more modules to convert! ⭐️')
             );
-            git.add('./*').commit(`${moduleId} has been removed`);
             process.exit();
         }
-    })
-    .then(() => {
-        console.log(`1. Create module conversion branch (${branchName})`);
-    })
-    .checkoutBranch(branchName, 'origin/master', err => {
-        if (err) error(err);
-    })
-    .then(() => {
-        console.log(`2. Move ${moduleId} to standard JS`);
-    })
-    .then(() => {
-        try {
-            mkdirp.sync(path.dirname(es6Module));
 
-            fs.renameSync(es5Module, es6Module);
+        // eslint-disable-next-line no-useless-escape
+        const moduleId = userModules.shift();
+        const es5Module = path.join(
+            'static',
+            'src',
+            'javascripts-legacy',
+            moduleId
+        );
+        const es6Module = path.join('static', 'src', 'javascripts', moduleId);
+        const branchName = `es6-${moduleId.split(path.sep).join('_')}`;
 
-            fs.writeFileSync(
-                path.resolve(__dirname, 'es5to6.json'),
-                JSON.stringify(remainingModules, null, 2)
-            );
-        } catch (e) {
-            error(
-                "The copy failed, you'll need to complete the process manually."
-            );
-        }
-    })
-    .then(() => {
-        console.log(`3. Commit move`);
-    })
-    .add('./*')
-    .commit(`copy ${moduleId} from legacy to standard JS`)
-    .then(() => {
-        console.log('4. Convert module to es6');
+        const steps = {
+            'Create a branch for the conversion': `git checkout -b ${branchName}`,
+            'Move the legacy module to the new location': `mkdir -p ${path.dirname(es6Module)}; mv ${es5Module} $_`,
+            'Commit the move': `git add .; git commit -m "move ${moduleId} from legacy to standard JS"`,
+            'Convert module to es6': `npm run -s amdtoes6 -- -d ${path.dirname(es6Module)} -o ${path.dirname(es6Module)} -g **/${path.basename(es6Module)} `,
+            'Commit the module tranform': `git add .; git commit -m "transform ${moduleId} to es6 module"`,
+            'Convert contents to es6': `npm run -s lebab -- ${es6Module}`,
+            'Commit the content tranform': `git add .; git commit -m "transform ${moduleId} content to es6"`,
+            'Fix lint errors': `npm run -s eslint-fix -- ${es6Module}`,
+            'Commit any lint fixes': `git add .; git commit -m "fix lint errors with ${moduleId} after transform to es6"`,
+        };
 
-        try {
-            const originalSrc = fs.readFileSync(es6Module, 'utf8');
-            const unAMDd = amdtoes6(originalSrc, {
-                beautify: true,
-            });
+        Object.keys(steps).reduce(
+            (allSteps, step, i) => allSteps.then(() => {
+                console.log('');
+                console.log(chalk.blue(`${i + 1}. ${step}`));
+                console.log(chalk.dim(steps[step]));
+                return execa
+                    .shell(steps[step].trim(), {
+                        stdio: 'inherit',
+                    })
+                    .then(() => {
+                        console.log(chalk.green('done'));
+                    })
+                    .catch(e => {
+                        console.log(chalk.red(e.stack));
+                        megalog.error(
+                            `\`${step}\` did not complete.
 
-            fs.writeFileSync(es6Module, unAMDd);
-        } catch (e) {
-            error(
-                "The conversion failed, you'll need to complete the process by hand: https://lebab.io/try-it"
-            );
-        }
-    })
-    .then(() => {
-        console.log(`5. Commit conversion to es6 module`);
-    })
-    .add('./*')
-    .commit(`convert ${moduleId} to an es6 module`)
-    .then(() => {
-        console.log(`6. Convert contents to es6`);
-    })
-    .then(() => {
-        try {
-            const originalSrc = fs.readFileSync(es6Module, 'utf8');
-            const {
-                code: es6ModuleSrc,
-                warnings,
-            } = lebab.transform(originalSrc, [
-                'arrow',
-                'let',
-                'arg-rest',
-                'arg-spread',
-                'obj-method',
-                'obj-shorthand',
-                'no-strict',
-                'class',
-                'default-param',
-            ]);
-            if (warnings.length) {
-                throw new Error(warnings);
-            }
-
-            fs.writeFileSync(es6Module, es6ModuleSrc);
-        } catch (e) {
-            error(
-                "The conversion failed, you'll need to complete the process by hand: https://lebab.io/try-it"
-            );
-        }
-    })
-    .then(() => {
-        console.log(`7. Commit conversion of content to es6`);
-    })
-    .add('./*')
-    .commit(`convert ${moduleId} to an es6 module`)
-    .then(() => {
-        console.log('8. Lint the es6 module');
-        return execa('eslint', [es6Module, '--color', '--fix'])
-            .then(() => {
-                console.log(`9. Commit lint fixes`);
-                git.add('./*').commit(`lint ${moduleId}`).then(() => {
-                    console.log(
-                        `10. Conversion is complete – double check the code then raise a PR!`
-                    );
-                });
-            })
-            .catch(e => {
-                console.log(
-                    chalk.red(
-                        '9. You need to fix some lint errors. Once they are sorted and commited, double check the code then raise a PR!\n\n'
-                    )
-                );
-                console.log(e.stdout.trim());
-                process.exit(1);
-            });
+    Once you have foxed the problem, you'll need to run the remaining steps manually:
+    ${Object.keys(steps)
+                                .slice(i)
+                                .map((remaingStep, remainingCount) => `
+    ${i + 1 + remainingCount}. ${remaingStep}
+    \`${steps[remaingStep]}\`
+    `)
+                                .join('')}
+    If you get stuck, feel free to ping us in https://theguardian.slack.com/messages/dotcom-platform.`
+                        );
+                        process.exit(1);
+                    });
+            }),
+            Promise.resolve()
+        );
+        chalk.blue(
+            '\nConversion was successful. Double check the code, then create a PR!'
+        );
     });
