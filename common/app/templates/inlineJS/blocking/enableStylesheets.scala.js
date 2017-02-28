@@ -2,7 +2,7 @@
 
 /* Based on loadCSS. [c]2017 Filament Group, Inc. MIT License */
 (function(w) {
-    var exposeLoadStatus = function() {
+    var exposeLoadedState = function() {
         // Set flag for when the CSS loads before the JS
         w.guardian.css.loaded = true;
 
@@ -74,7 +74,7 @@
             }
 
             ss.media = media || 'all';
-            exposeLoadStatus();
+            exposeLoadedState();
         }
 
         // once loaded, set link's media back to `all` so that the stylesheet applies once it loads
@@ -110,7 +110,7 @@
 
     // if link[rel=preload] is not supported, we must fetch the CSS manually using loadCSS
     if (preloadSpported()) {
-        exposeLoadStatus();
+        exposeLoadedState();
         return;
     }
 
