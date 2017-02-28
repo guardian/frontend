@@ -38,14 +38,14 @@ define([
         lazyLoad();
     };
 
-    // withinRange :: Element -> Bool
+    // withinRange(Element) : Bool
     // Checks whether the element is within one screenful above or below the viewport
     function withinRange(container) {
         var top = container.nextElementSibling.getBoundingClientRect().top;
         return -distanceBeforeLoad < top && top < 2 * distanceBeforeLoad;
     }
 
-    // displayContainer :: Element -> ()
+    // displayContainer(Element) : Void
     // Removes the fc-container--lazy-load class
     function displayContainer(container) {
         container.classList.remove('fc-container--lazy-load');
