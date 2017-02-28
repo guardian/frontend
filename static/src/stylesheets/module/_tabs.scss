@@ -158,11 +158,17 @@ category: Common
     }
 }
 
-// Most Popular FRONTS customisation: change layout to accomodate MPU (with or without tabs)
+// Most Popular FRONTS customisation: change layout to accommodate MPU (with or without tabs)
 .tabs--mostpop .tabs__content,
 .fc-slice--popular {
     @include mq(desktop) {
         display: table;
         display: flex;
+    }
+
+    .fc-slice__popular-mpu {
+        @include mq(desktop) {
+            padding-left: $gs-baseline;
+        }
     }
 }

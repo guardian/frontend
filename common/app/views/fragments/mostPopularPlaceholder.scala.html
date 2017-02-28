@@ -1,7 +1,6 @@
 @(section: String)(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import items.facia_cards.sliceSlot
 @import commercial.adSlot
 
 @defining(Some(section).filter{ section => section.nonEmpty && !section.equals("global")}.map{ section => s"/most-read/$section" }.getOrElse("/most-read")){ url =>
