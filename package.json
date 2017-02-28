@@ -89,6 +89,7 @@
     "lodash.capitalize": "^4.2.1",
     "lodash.flatten": "^4.4.0",
     "lodash.merge": "^4.6.0",
+    "lodash.pull": "^4.1.0",
     "lodash.takewhile": "^4.6.0",
     "lodash.uniq": "^4.5.0",
     "megalog": "^0.1.0",
