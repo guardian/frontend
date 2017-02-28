@@ -64,7 +64,7 @@ object NewNavigation {
   case object MostPopular extends EditionalisedNavigationSection {
     val name = "news"
 
-    val uk = NavLinkLists(List(headlines, ukNews, world, politics, business, science, football))
+    val uk = NavLinkLists(List(headlines, ukNews, world, business, environment, tech, football))
     val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, auImmigration, football))
     val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, science, soccer))
     val int = NavLinkLists(List(headlines, world, ukNews, science, cities, globalDevelopment, football))
@@ -74,8 +74,8 @@ object NewNavigation {
     val name = "news"
 
     val uk = NavLinkLists(
-      List(headlines, ukNews, world, politics, science, business),
-      List(tech, environment, money)
+      List(headlines, ukNews, world, business, environment, tech, politics),
+      List(science, money, globalDevelopment, cities)
     )
     val au = NavLinkLists(
       List(headlines, australiaNews, world, auPolitics, auImmigration),
@@ -195,8 +195,8 @@ object NewNavigation {
     val name = "life"
 
     val uk = NavLinkLists(
-      List(lifestyle, fashion, food, recipes, loveAndSex, family),
-      List(home, health, women, travel, tech)
+      List(lifestyle, fashion, food, recipes, travel, loveAndSex, family),
+      List(home, health, women, tech)
     )
     val au = NavLinkLists(
       List(lifestyle, fashion, food, loveAndSex, health),
@@ -362,7 +362,7 @@ object NewNavigation {
   object SubSectionLinks {
 
     val ukNewsSubNav = NavLinkLists(
-      List(ukNews, education, media, society, law, scotland),
+      List(ukNews, politics, education, media, society, law, scotland),
       List(wales, northernIreland)
     )
 
@@ -427,7 +427,7 @@ object NewNavigation {
     case object businessSubNav extends EditionalisedNavigationSection {
       val name = ""
 
-      val uk = NavLinkLists(List(business, economics, banking, retail, markets, eurozone))
+      val uk = NavLinkLists(List(business, economics, banking, money, markets, eurozone))
       val us = NavLinkLists(List(business, economics, sustainableBusiness, diversityEquality, smallBusiness))
       val au = NavLinkLists(List(business, markets, money))
       val int = uk
