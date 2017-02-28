@@ -107,7 +107,7 @@ git
         console.log('4. Convert module to es6');
 
         try {
-            const originalSrc = fs.readFileSync(es6Module);
+            const originalSrc = fs.readFileSync(es6Module, 'utf8');
             const unAMDd = amdtoes6(originalSrc, {
                 beautify: true,
             });
@@ -129,7 +129,7 @@ git
     })
     .then(() => {
         try {
-            const originalSrc = fs.readFileSync(es6Module);
+            const originalSrc = fs.readFileSync(es6Module, 'utf8');
             const {
                 code: es6ModuleSrc,
                 warnings,
