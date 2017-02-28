@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 const git = require('simple-git')();
-const gitUser = require('git-user-name');
+const gitEmail = require('git-user-email');
 const chalk = require('chalk');
 const mkdirp = require('mkdirp');
 const amdtoes6 = require('amd-to-es6');
@@ -18,7 +18,7 @@ process.on('uncaughtException', e => error(e.stack));
 
 const remainingModules = require('./es5to6.json');
 
-const userModules = remainingModules[gitUser()];
+const userModules = remainingModules[gitEmail()];
 
 if (!userModules || !userModules.length) {
     console.log(chalk.green('⭐️  You have no more modules to convert! ⭐️'));

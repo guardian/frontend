@@ -18,37 +18,37 @@ const filesPerHuman = (filesToCheck, humans) =>
     Math.max(filesToCheck.length / humans.length);
 
 const commercial = [
-    'janua',
-    'JonNorman',
-    'regiskuckaertz',
-    'rich-nguyen',
-    'katebee',
-    'Calum-Campbell',
-    'ScottPainterGNM',
+    'francis.carr@guardian.co.uk',
+    'jon.norman@guardian.co.uk',
+    'regis.kuckaertz@guardian.co.uk',
+    'rich.nguyen@guardian.co.uk',
+    'kate.whalen@guardian.co.uk',
+    'calum.campbell@guardian.co.uk',
+    'scott.painter@guardian.co.uk',
 ];
 const commercialModules = files.filter(_ => _.includes('commercial'));
 const commercialFilesPerHuman = filesPerHuman(commercialModules, commercial);
 
 const platform = [
-    'sndrs',
-    'gtrufitt',
-    'SiAdcock',
-    'NataliaLKB',
-    'GHaberis',
-    'stephanfowler',
+    'alex.sanders@guardian.co.uk',
+    'gareth.trufitt@guardian.co.uk',
+    'simon.adcock@guardian.co.uk',
+    'natalia.baltazar@guardian.co.uk',
+    'george.haberis@guardian.co.uk',
+    'stephan.fowler@guardian.co.uk',
 ];
 const platformModules = files.filter(_ => _.includes('projects/common/utils'));
 const platformFilesPerHuman = filesPerHuman(platformModules, platform);
 
 const misc = [
-    'desbo',
-    'akash1810',
-    'dominickendrick',
-    'davidfurey',
-    'jranks123',
-    'ShaunYearStrong',
-    'jfsoul',
-    'gustavpursche',
+    'sam.desborough@guardian.co.uk',
+    'akash.askoolum@guardian.co.uk',
+    'dominic.kendrick@guardian.co.uk',
+    'david.furey@guardian.co.uk',
+    'jonathan.rankin@guardian.co.uk',
+    'shaun.dillon@guardian.co.uk',
+    'jonathan.soul@guardian.co.uk',
+    'gustav.pursche@guardian.co.uk',
 ];
 const miscModules = files.filter(
     _ => !_.includes('commercial') && !_.includes('projects/common/utils')
