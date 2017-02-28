@@ -17,3 +17,16 @@ $tones: (
     (special-feature, $news-support-6, $news-support-6),
     (plaindark, $neutral-4, $neutral-4, $neutral-4, $multimedia-main-1)
 );
+
+// text, accent, background
+$article-tones: (
+    (analysis, $analysis-accent, $news-default),
+    (comment, $comment-support-4, $comment-support-4, $comment-support-4),
+    (feature, $feature-default, $feature-accent, $feature-mute),
+    (live, $live-default, $live-accent),
+    (media, #ffffff, $multimedia-main-2, $multimedia-main-1),
+    (news, #ffffff, $guardian-brand, $guardian-brand-light),
+    (review, $comment-support-3, darken($comment-support-3, 10%), $form-primary-colour, $review-background),
+    (special-feature, $news-support-6, $news-support-6),
+    (plaindark, $neutral-4, $neutral-4, $neutral-4, $multimedia-main-1)
+);

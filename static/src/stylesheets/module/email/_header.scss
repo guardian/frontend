@@ -17,9 +17,8 @@
     font-weight: bold;
 }
 
-// LANDING AND IN-ARTICLE (COMPOSER) PAGE MODS
-.email-sub__header--landing,
-.email-sub__header--article {
+// LANDING PAGE MODS
+.email-sub__header--landing {
     @include fs-headline(2);
     background-color: $form-primary-colour;
 
@@ -34,19 +33,6 @@
     }
 }
 
-// IN-ARTICLE (COMPOSER) PAGE MODS
-.email-sub__header--article {
-    .email-sub__heading {
-        color: #ffffff;
-        padding-right: 40px; // Avoid close icon
-    }
-
-    .email-sub__description {
-        background-color: transparent;
-        border-top: 0 none;
-        min-height: 20px; // Min-height required to avoid some of the layout thrashing from loading in an iframe
-    }
-}
 
 // TONE SPECIFIC MODS
 
@@ -60,6 +46,7 @@
         }
     }
 }
+
 
 
 // FOOTER MODS

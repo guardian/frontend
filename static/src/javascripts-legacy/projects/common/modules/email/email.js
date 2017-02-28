@@ -101,6 +101,8 @@ define([
         ui = {
             updateForm: function (thisRootEl, el, analytics, opts) {
                 var formData = $(thisRootEl).data(),
+                    formDisplayNameNormalText = (opts && opts.displayName && opts.displayName.normalText) || formData.formDisplayNameNormalText || false,
+                    formDisplayNameAccentedText = (opts && opts.displayName && opts.displayName.accentedText) || formData.formDisplayNameAccentedText || false,
                     formTitle = (opts && opts.formTitle) || formData.formTitle || false,
                     formDescription = (opts && opts.formDescription) || formData.formDescription || false,
                     formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || '',
@@ -117,6 +119,14 @@ define([
                 fastdom.write(function () {
                     if (formTitle) {
                         $('.js-email-sub__heading', el).text(formTitle);
+                    }
+
+                    if (formDisplayNameNormalText) {
+                        $('.js-email-sub__display-name-normal-text', el).text(formDisplayNameNormalText);
+                    }
+
+                    if (formDisplayNameAccentedText) {
+                        $('.js-email-sub__display-name-accented-text', el).text(formDisplayNameAccentedText);
                     }
 
                     if (formDescription) {

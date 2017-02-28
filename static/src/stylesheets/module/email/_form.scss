@@ -247,25 +247,6 @@
     }
 }
 
-// IN-ARTICLE (COMPOSER) PAGE MODS
-.email-sub--article {
-    border-top: 1px dotted $neutral-4;
-    padding: $gs-gutter / 4;
-
-    @include mq($from: phablet) {
-        padding-right: gs-span(1);
-    }
-
-    .email-sub__message {
-        padding: $gs-baseline $gs-gutter $gs-baseline $icon-padding;
-    }
-
-    .email-sub__message__headline,
-    .email-sub__message__description {
-        color: $neutral-1;
-    }
-}
-
 .email-sub__form--article,
 .email-sub__form--plain,
 .email-sub__form--plaindark,
