@@ -7,7 +7,8 @@ define([
     'common/views/svgs',
     'raw-loader!commercial/views/creatives/fabric-expandable-video-v2.html',
     'raw-loader!commercial/views/creatives/fabric-expandable-video-v2-cta.html',
-    'commercial/modules/creatives/add-tracking-pixel'
+    'commercial/modules/creatives/add-tracking-pixel',
+    'commercial/modules/creatives/add-viewability-tracker'
 ], function (
     bean,
     fastdom,
@@ -17,7 +18,8 @@ define([
     svgs,
     fabricExpandableVideoHtml,
     fabricExpandableCtaHtml,
-    addTrackingPixel
+    addTrackingPixel,
+    addViewabilityTracker
 ) {
     return FabricExpandableVideoV2;
 
@@ -34,6 +36,7 @@ define([
             var videoHeight = openedHeight;
             var plusIconPosition = params.showCrossInContainer.substring(3);
             var additionalParams = {
+                id: 'fabric-expandable-' + (Math.random() * 10000 | 0).toString(16),
                 desktopCTA: params.ctaDesktopImage ? ctaTpl({ media: 'hide-until-tablet', link: params.link, image: params.ctaDesktopImage, position: params.ctaDesktopPosition }): '',
                 mobileCTA: params.ctaMobileImage ? ctaTpl({ media: 'mobile-only', link: params.link, image: params.ctaMobileImage, position: params.ctaMobilePosition }): '',
                 showArrow: (params.showMoreType === 'arrow-only' || params.showMoreType === 'plus-and-arrow') ?
@@ -67,6 +70,9 @@ define([
                     addTrackingPixel(params.researchPixel + params.cacheBuster);
                 }
                 $fabricExpandableVideo.appendTo($adSlot);
+                if (params.viewabilityTracker) {
+                    addViewabilityTracker($adSlot[0], params.id, params.viewabilityTracker);
+                }
                 $adSlot.addClass('ad-slot--fabric');
                 if( $adSlot.parent().hasClass('top-banner-ad-container') ) {
                     $adSlot.parent().addClass('top-banner-ad-container--fabric');

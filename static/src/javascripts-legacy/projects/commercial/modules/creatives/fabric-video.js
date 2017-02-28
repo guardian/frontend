@@ -6,8 +6,9 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'commercial/modules/creatives/add-tracking-pixel',
+    'commercial/modules/creatives/add-viewability-tracker',
     'raw-loader!commercial/views/creatives/fabric-video.html'
-], function (qwery, bonzo, addEventListener, fastdom, detect, template, addTrackingPixel, fabricVideoStr) {
+], function (qwery, bonzo, addEventListener, fastdom, detect, template, addTrackingPixel, addViewabilityTracker, fabricVideoStr) {
     var fabricVideoTpl;
 
     return FabricVideo;
@@ -21,6 +22,8 @@ define([
         fabricVideoTpl || (fabricVideoTpl = template(fabricVideoStr));
 
         hasVideo = !(detect.isIOS() || detect.isAndroid() || isSmallScreen);
+
+        params.id = 'fabric-video-' + (Math.random() * 10000 | 0).toString(16);
 
         if (isSmallScreen) {
             params.posterMobile = '<div class="creative__poster" style="background-image:url(' + params.Videobackupimage + ')"></div>';
@@ -45,6 +48,9 @@ define([
                     addTrackingPixel(params.Researchpixel + params.cacheBuster)
                 }
                 adSlot.insertAdjacentHTML('beforeend', fabricVideoTpl({ data: params }));
+                if (params.viewabilityTracker) {
+                    addViewabilityTracker(adSlot, params.id, params.viewabilityTracker);
+                }
                 adSlot.classList.add('ad-slot--fabric');
                 if( adSlot.parentNode.classList.contains('top-banner-ad-container') ) {
                     adSlot.parentNode.classList.add('top-banner-ad-container--fabric');
