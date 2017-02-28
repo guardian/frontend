@@ -18,13 +18,13 @@ const filesPerHuman = (filesToCheck, humans) =>
     Math.max(filesToCheck.length / humans.length);
 
 const commercial = [
-    'janua',
+    'Francis Carr',
     'JonNorman',
-    'regiskuckaertz',
+    'Regis Kuckaertz',
     'rich-nguyen',
-    'katebee',
-    'Calum-Campbell',
+    'Kate Whalen',
     'ScottPainterGNM',
+    'Lydia Shepherd',
 ];
 const commercialModules = files.filter(_ => _.includes('commercial'));
 const commercialFilesPerHuman = filesPerHuman(commercialModules, commercial);
@@ -32,7 +32,7 @@ const commercialFilesPerHuman = filesPerHuman(commercialModules, commercial);
 const platform = [
     'sndrs',
     'gtrufitt',
-    'SiAdcock',
+    'Simon Adcock',
     'NataliaLKB',
     'GHaberis',
     'stephanfowler',
@@ -41,14 +41,16 @@ const platformModules = files.filter(_ => _.includes('projects/common/utils'));
 const platformFilesPerHuman = filesPerHuman(platformModules, platform);
 
 const misc = [
-    'desbo',
-    'akash1810',
+    'Sam Desborough',
+    'Akash A',
     'dominickendrick',
     'davidfurey',
     'jranks123',
     'ShaunYearStrong',
     'jfsoul',
-    'gustavpursche',
+    'Gustav Pursche',
+    'Joseph Smith',
+    'Calum Campbell',
 ];
 const miscModules = files.filter(
     _ => !_.includes('commercial') && !_.includes('projects/common/utils')
