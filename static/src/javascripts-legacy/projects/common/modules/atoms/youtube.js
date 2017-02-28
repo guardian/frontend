@@ -41,7 +41,7 @@ define([
         setProgressTracker(atomId);
         tracking.track('play', getTrackingId(atomId));
 
-        if (document.querySelector('.immersive-main-media .youtube-media-atom')) {
+        if (closest(player.iframe, '.immersive-main-media__media')) {
             document.querySelector('.immersive-main-media').classList.add('atom-playing');
         }
 
@@ -56,11 +56,13 @@ define([
     }
 
     function onPlayerEnded(atomId) {
+        var player = players[atomId];
+
         killProgressTracker(atomId);
         tracking.track('end', getTrackingId(atomId));
-        players[atomId].pendingTrackingCalls = [25, 50, 75];
+        player.pendingTrackingCalls = [25, 50, 75];
 
-        if (document.querySelector('.immersive-main-media .youtube-media-atom')) {
+        if (closest(player.iframe, '.immersive-main-media__media')) {
             document.querySelector('.immersive-main-media').classList.remove('atom-playing');
         }
 
