@@ -25,7 +25,7 @@
         if (before) {
             ref = before;
         } else {
-            var refs = (doc.body || doc.getElementsByTagName( 'head' )[ 0 ]).childNodes;
+            var refs = (doc.body || doc.getElementsByTagName('head')[ 0 ]).childNodes;
             ref = refs[refs.length - 1];
         }
 
@@ -36,7 +36,7 @@
         ss.media = 'only x';
 
         // wait until body is defined before injecting link. This ensures a non-blocking load in IE11.
-        function ready( cb ) {
+        function ready(cb) {
             if (doc.body) {
                 return cb();
             }
@@ -88,39 +88,45 @@
         return ss;
     };
 
-    var preloadSpported = function() {
-      try {
-        return document.createElement('link').relList.supports('preload');
-      } catch (e) {
-        return false;
-      }
-    };
-
-    // loop preload links and fetch using loadCSS
-    var preloadPolyfill = function() {
-      var links = document.getElementsByTagName('link');
-      for (var i = 0; i < links.length; i++) {
-          var link = links[i];
-          if(link.rel === 'preload' && link.getAttribute('as') === 'style') {
-              loadCSS(link.href, link, link.getAttribute('media'));
-              link.rel = null;
+    var initialize = function() {
+        var isPreloadSpported = function() {
+          try {
+            return document.createElement('link').relList.supports('preload');
+          } catch (e) {
+            return false;
           }
-      }
+        };
+
+        // loop preload links and fetch using loadCSS
+        var preloadPolyfill = function() {
+          var links = document.getElementsByTagName('link');
+          for (var i = 0; i < links.length; i++) {
+              var link = links[i];
+              if(link.rel === 'preload' && link.getAttribute('as') === 'style') {
+                  loadCSS(link.href, link, link.getAttribute('media'));
+                  link.rel = null;
+              }
+          }
+        };
+
+        /* if preload is supported, just expose the state and quit */
+        if (isPreloadSpported()) {
+            exposeLoadedState();
+            return;
+        }
+
+        preloadPolyfill();
+        var run = setInterval(preloadPolyfill, 300);
+
+        if (w.addEventListener) {
+            w.addEventListener('load', function() {
+              preloadPolyfill();
+              clearInterval(run);
+            });
+        } else {
+            clearInterval(run);
+        }
     };
 
-    // if link[rel=preload] is not supported, we must fetch the CSS manually using loadCSS
-    if (preloadSpported()) {
-        exposeLoadedState();
-        return;
-    }
-
-    preloadPolyfill();
-    var run = setInterval(preloadPolyfill, 300);
-
-    if (w.addEventListener) {
-        w.addEventListener('load', function() {
-          preloadPolyfill();
-          clearInterval(run);
-        });
-    }
+    initialize();
 }(window));
