@@ -60,11 +60,7 @@ define([
                     return result;
                 };
 
-                if (dependentChecksPassCondition.call(results, hasPassed)) {
-                    this.resolve(true);
-                } else {
-                    this.resolve(false);
-                }
+                this.resolve(dependentChecksPassCondition.call(results, hasPassed));
             }.bind(this));
         }
     }
