@@ -11,8 +11,8 @@ define([
 
     /**
      * referenced as passCondition for dependentChecks
-     * SOMECHECKSPASSED: Every dependentCheck has returned true
-     * EVERYCHECKPASSED: At least one dependentCheck has returned true
+     * SOMECHECKSPASSED: At least one dependentCheck has returned true
+     * EVERYCHECKPASSED: Every dependentCheck has returned true
     **/
     var SOMECHECKSPASSED = Array.prototype.some;
     var EVERYCHECKPASSED = Array.prototype.every;
