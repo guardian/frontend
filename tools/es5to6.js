@@ -78,15 +78,15 @@ git
                         megalog.error(
                             `\`${step}\` did not complete.
 
-    Once you have foxed the problem, you'll need to run the remaining steps manually:
-    ${Object.keys(steps)
+Once you have foxed the problem, you'll need to run the remaining steps manually:
+${Object.keys(steps)
                                 .slice(i)
                                 .map((remaingStep, remainingCount) => `
-    ${i + 1 + remainingCount}. ${remaingStep}
-    \`${steps[remaingStep]}\`
-    `)
+${i + 1 + remainingCount}. ${remaingStep}
+\`${steps[remaingStep]}\`
+`)
                                 .join('')}
-    If you get stuck, feel free to ping us in https://theguardian.slack.com/messages/dotcom-platform.`
+If you get stuck, feel free to ping us in https://theguardian.slack.com/messages/dotcom-platform.`
                         );
                         process.exit(1);
                     });
