@@ -1,6 +1,5 @@
 import bonzo from 'bonzo';
 import qwery from 'qwery';
-import forEach from 'lodash/collections/forEach';
 
 // Warning: side effect. This patches the bonzo module for use everywhere
 bonzo.aug({
@@ -27,7 +26,7 @@ $.ancestor = (el, c) => {
 
 $.forEachElement = (selector, fn) => {
     const els = qwery(selector);
-    forEach(els, fn);
+    els.forEach(fn);
     return els;
 };
 
