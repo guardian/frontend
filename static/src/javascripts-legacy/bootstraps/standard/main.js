@@ -88,7 +88,7 @@ define([
         });
 
         //
-        // initilaise the checkMediator
+        // initilaise the email/outbrain check mediator
         //
         checkMediator.init();
 

@@ -186,7 +186,7 @@ define([
             }
         });
 
-        // initialise email/outbrain checks 
+        // initialise email/outbrain check dispatcher
         checkDispatcher.init();
 
         // Mark the end of synchronous execution.

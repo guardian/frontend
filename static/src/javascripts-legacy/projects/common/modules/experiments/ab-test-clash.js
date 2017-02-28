@@ -45,9 +45,7 @@ define([
     function userIsInAClashingAbTest(tests) {
         tests = tests || clashingTests;
 
-        var isUserInAClashingAbTest = _testABClash(ab.isInVariant, tests);
-        
-        return isUserInAClashingAbTest;
+        return _testABClash(ab.isInVariant, tests);
     }
 
     function _testABClash(f, clashingTests) {
