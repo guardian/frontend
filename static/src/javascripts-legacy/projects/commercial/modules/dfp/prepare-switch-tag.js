@@ -87,7 +87,7 @@ define([
                             switchAdUnitId: adUnitId,
                             deliveryCallback: resolve
                         });
-                    });
+                    }));
                 }
             });
         }
