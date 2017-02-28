@@ -89,6 +89,7 @@
     "lodash.capitalize": "^4.2.1",
     "lodash.flatten": "^4.4.0",
     "lodash.merge": "^4.6.0",
+    "lodash.pull": "^4.1.0",
     "lodash.takewhile": "^4.6.0",
     "lodash.uniq": "^4.5.0",
     "megalog": "^0.1.0",
@@ -126,6 +127,9 @@
     "fsevents": "*"
   },
   "scripts": {
-    "postinstall": "./tools/task-runner/runner githooks --verbose"
+    "postinstall": "./tools/task-runner/runner githooks --verbose",
+    "amdtoes6": "amdtoes6 --beautify",
+    "lebab": "lebab --transform arrow,let,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,class,default-param --replace",
+    "eslint-fix": "eslint --color --fix"
   }
 }
