@@ -218,11 +218,6 @@ $gutter-large: 55px;
     }
 }
 
-[data-link-name='nav2 : primary : life'] {
-    padding-left: .35em;
-    padding-right: .8em;
-}
-
 /****************
  * Menu Styling
  ****************/
@@ -338,6 +333,10 @@ $gutter-large: 55px;
     list-style: none;
     color: $news-support-1;
     width: 100%;
+
+    &:last-child > details[open] {
+        margin-bottom: $gs-baseline;
+    }
 }
 
 //This variable is only used in open menu styling
@@ -476,9 +475,10 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     a {
         display: block;
         padding-top: $gs-baseline / 1.5;
-        padding-left: $navigation-horizontal-padding;
         padding-right: $gs-gutter;
         padding-bottom: $gs-baseline / 1.5;
+        padding-left: $navigation-horizontal-padding;
+
         // Override a from user agent stylesheet
         color: inherit;
 
@@ -651,10 +651,9 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 .tertiary-navigation {
     background-color: #747a81;
     padding-top: $gs-baseline / 3;
-    // Spacer that prevents links flowing beneath the veggie burger
-    //padding-right: $gutter-medium + ($veggie-burger-medium / 2);
     padding-left: $gs-gutter / 2;
-    padding-right: $gutter-medium + ($veggie-burger-medium / 2);
+    // Spacer that prevents links flowing beneath the veggie burger
+    padding-right: $gutter-medium + $veggie-burger-medium;
     margin-left: -4px;
     border-bottom: $gs-baseline / 3 solid #747a81;
     max-height: $gs-baseline * 3.4;
@@ -672,7 +671,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
         max-height: $gs-baseline * 4.8;
         padding-left: $gs-gutter;
         margin-left: -5px;
-        padding-right: $gutter-large + ($veggie-burger-medium / 2);
+        padding-right: $gutter-large + $veggie-burger-medium;
     }
 }
 
@@ -811,9 +810,9 @@ $caption-button-size: 32px;
             &:before {
                 content: '';
                 position: absolute;
-                left: 50%;
+                left: 49%;
                 bottom: 0;
-                margin-left: -$gs-baseline / 2;
+                transform: translateX(-50%);
                 border-bottom: $gs-baseline / 2 solid #747a81;
                 border-left: $gs-baseline / 2 solid transparent;
                 border-right: $gs-baseline / 2 solid transparent;
