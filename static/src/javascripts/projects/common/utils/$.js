@@ -4,7 +4,7 @@ import forEach from 'lodash/collections/forEach';
 
 // Warning: side effect. This patches the bonzo module for use everywhere
 bonzo.aug({
-    height: function() {
+    height() {
         return this.dim().height;
     }
 });
@@ -13,11 +13,9 @@ function $(selector, context) {
     return bonzo(qwery(selector, context));
 }
 
-$.create = function(s) {
-    return bonzo(bonzo.create(s));
-};
+$.create = s => bonzo(bonzo.create(s));
 
-$.ancestor = function(el, c) {
+$.ancestor = (el, c) => {
     if (el.nodeName.toLowerCase() === 'html') {
         return false;
     }
@@ -28,8 +26,8 @@ $.ancestor = function(el, c) {
     }
 };
 
-$.forEachElement = function(selector, fn) {
-    var els = qwery(selector);
+$.forEachElement = (selector, fn) => {
+    const els = qwery(selector);
     forEach(els, fn);
     return els;
 };
