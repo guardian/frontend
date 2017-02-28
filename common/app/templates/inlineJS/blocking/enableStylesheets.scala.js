@@ -116,15 +116,14 @@
         }
 
         preloadPolyfill();
-        var run = setInterval(preloadPolyfill, 300);
 
         if (w.addEventListener) {
+            var run = setInterval(preloadPolyfill, 300);
+
             w.addEventListener('load', function() {
               preloadPolyfill();
               clearInterval(run);
             });
-        } else {
-            clearInterval(run);
         }
     };
 
