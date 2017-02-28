@@ -1,4 +1,5 @@
-@(popular: Seq[model.MostPopular], containerDefinition: Option[layout.FaciaContainer] = None)(implicit request: RequestHeader)
+@(popular: Seq[model.MostPopular], containerDefinition: Option[layout.FaciaContainer] = None, isFront: Boolean = false)(implicit request: RequestHeader)
+
 @import common.Localisation
 @import layout.FaciaCardHeader
 @import views.html.fragments.items.elements.facia_cards.title
@@ -49,16 +50,13 @@
                 </ul>
             </div>
         }
-
-        @if(showMPU(containerDefinition)) {
+        @if(showMPU(containerDefinition) && isFront) {
             <div class="fc-slice__popular-mpu js-fc-slice-mpu-candidate fc-slice__item--mpu-candidate">
-          </div>
+            </div>
         }
-
         @if(isTabbed) {
                 </div>
             </div>
         }
-
     </div>
 }
