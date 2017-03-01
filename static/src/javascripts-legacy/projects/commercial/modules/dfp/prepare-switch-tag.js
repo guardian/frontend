@@ -103,7 +103,10 @@ define([
             });
         }
 
-        return timeout(REQUEST_TIMEOUT, Promise.all(promises));
+        return timeout(REQUEST_TIMEOUT, Promise.all(promises))
+            .catch(function(){
+                // The display needs to be called, even in the event of an error.
+            });
     }
 
     function init(start, stop) {
