@@ -30,14 +30,6 @@ case class EmailForm(
   referrer: Option[String],
   campaignCode: Option[String])
 
-object EmailTypes {
-  val footer = "footer"
-  val article = "article"
-  val landing = "landing"
-  val plain = "plain"
-  val plaindark = "plaindark"
-}
-
 class EmailFormService(wsClient: WSClient) {
 
   val testListId = 3485
