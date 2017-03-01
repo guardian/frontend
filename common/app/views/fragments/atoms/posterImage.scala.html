@@ -1,9 +1,9 @@
+@import model.content.MediaWrapper
 @import layout.ContentWidths.MainMedia
-
-@(mainMedia: Boolean, amp: Boolean, picture: model.ImageMedia, caption: String)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(mediaWrapper: Option[MediaWrapper], amp: Boolean, picture: model.ImageMedia, caption: String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
     @defining(
-        if(mainMedia) {
+        if(mediaWrapper.contains(MediaWrapper.MainMedia)) {
             Seq("maxed", "responsive-img")
         } else {
             Seq("gu-image")
@@ -23,6 +23,6 @@
             )
         }
     }
-    @fragments.atoms.mediaAtomCaption(caption, mainMedia = mainMedia)
+    @fragments.atoms.mediaAtomCaption(caption, mainMedia = mediaWrapper.contains(MediaWrapper.MainMedia))
 
 
