@@ -16,4 +16,4 @@ function deferToAnalytics(afterAnalytics) {
     }
 }
 
-export default deferToAnalytics; // define
+export default deferToAnalytics;
