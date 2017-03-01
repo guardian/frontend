@@ -10,10 +10,10 @@ import scala.util.control.NonFatal
 
 case class ExpiringSwitchesEmailJob(emailService: EmailService) extends ExecutionContexts with Logging {
 
-  def run = run(webEngineersEmail)
-  def runReminder = run(dotcomPlatformEmail)
+  def run = runJob(webEngineersEmail)
+  def runReminder = runJob(dotcomPlatformEmail)
 
-  private def run(baseRecipientEmail: Option[String]): Future[Unit] = {
+  def runJob(baseRecipientEmail: Option[String]): () => Future[Unit] = () => {
     (for (baseRecipients <- baseRecipientEmail) yield {
       val expiringSwitches = Switches.all.filter(Switch.expiry(_).expiresSoon)
 
