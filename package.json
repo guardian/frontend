@@ -57,7 +57,7 @@
     "cssstats": "^3.0.0",
     "eslint": "^3.16.1",
     "eslint-config-airbnb": "13.0.0",
-    "eslint-config-prettier": "^1.4.0",
+    "eslint-config-prettier": "^1.4.1",
     "eslint-import-resolver-webpack": "^0.8.0",
     "eslint-plugin-guardian-frontend": "file:tools/eslint-plugin-guardian-frontend",
     "eslint-plugin-import": "2.2.0",
@@ -89,6 +89,7 @@
     "lodash.capitalize": "^4.2.1",
     "lodash.flatten": "^4.4.0",
     "lodash.merge": "^4.6.0",
+    "lodash.pull": "^4.1.0",
     "lodash.takewhile": "^4.6.0",
     "lodash.uniq": "^4.5.0",
     "megalog": "^0.1.0",
@@ -101,7 +102,7 @@
     "postcss": "^5.2.6",
     "postcss-pxtorem": "^3.3.1",
     "postcss-reporter": "^1.4.1",
-    "prettier": "^0.19.0",
+    "prettier": "^0.20.0",
     "prettysize": "^0.0.3",
     "raw-loader": "^0.5.1",
     "requireindex": "^1.1.0",
@@ -126,6 +127,9 @@
     "fsevents": "*"
   },
   "scripts": {
-    "postinstall": "./tools/task-runner/runner githooks --verbose"
+    "postinstall": "./tools/task-runner/runner githooks --verbose",
+    "amdtoes6": "amdtoes6 --beautify",
+    "lebab": "lebab --transform arrow,let,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,class,default-param --replace",
+    "eslint-fix": "eslint --color --fix"
   }
 }

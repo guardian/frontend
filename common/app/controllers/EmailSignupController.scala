@@ -30,81 +30,22 @@ case class EmailForm(
   referrer: Option[String],
   campaignCode: Option[String])
 
-object ListIds {
-  val testList = 3485
-  val guardianTodayUk = 37
-  val guardianTodayUs = 1493
-  val guardianTodayAu = 1506
-
-  val theBestOfOpinion = 2313
-  val newBestOfOpinion = 3811
-  val controlBestOfOpinion = 3814
-  val theFiver = 218
-  val mediaBriefing = 217
-  val brexitBriefing = 3698
-  val greenLight = 38
-  val labNotes = 3701
-  val povertyMatters = 113
-  val theLongRead = 3322
-  val weekendReading = 3743
-  val morningMail = 2636
-  val australianPolitics = 1866
-
-  val theBreakdown = 219
-  val theSpin = 220
-  val guardianAustraliaSports = 3766
-
-  val documentaries = 3745
-  val sleeveNotes = 39
-  val newSleeveNotes = 3834
-  val controlSleeveNotes = 3835
-  val closeUp = 40
-  val filmToday = 1950
-  val bookmarks = 3039
-  val artWeekly = 99
-
-  val zipFile = 1902
-  val theFlyer = 2211
-  val theFlyerCards = 3806
-  val theFlyerConnected = 3807
-  val moneyTalks = 1079
-  val fashionStatement = 105
-  val crosswordEditorUpdate = 101
-  val theObserverFoodMonthly = 248
-
-  val firstDogOnTheMoon = 2635
-  val bestOfOpinionAUS = 2976
-  val bestOfOpinionUS = 3228
-
-  val theGuardianMasterclasses = 3561
-  val theGuardianGardener = 3562
-  val theGuardianBookshop = 3563
-
-  val UsElection = 3599
-
-  val morningMailUk = 3640
-}
-
-object EmailTypes {
-  val footer = "footer"
-  val article = "article"
-  val landing = "landing"
-  val plain = "plain"
-  val plaindark = "plaindark"
-}
-
 class EmailFormService(wsClient: WSClient) {
+
+  val testListId = 3485
+  val testListTrigger = 2529
+
   /**
     * Associate lists with triggered send keys in ExactTarget. In our case these have a 1:1 relationship.
     */
-  val listIdsWithTrigger: Map[Int, Option[Int]] = Map(
-    ListIds.testList -> Some(2529),
-    ListIds.guardianTodayUk -> Some(2529),
-    ListIds.guardianTodayUs -> Some(2564),
-    ListIds.guardianTodayAu -> Some(2563))
+  val listIdsWithTrigger: Map[Int, Int] = (for {
+    list <- EmailNewsletters.all.subscriptions
+    id <- list.allIds
+    triggerId <- list.triggerId
+  } yield id -> triggerId).toMap.updated(testListId, testListTrigger)
 
   def submit(form: EmailForm): Future[WSResponse] = {
-    val maybeTriggeredSendKey: Option[Int] = listIdsWithTrigger.getOrElse(form.listId, None)
+    val maybeTriggeredSendKey: Option[Int] = listIdsWithTrigger.get(form.listId)
 
     wsClient.url(Configuration.emailSignup.url).post(
       JsObject(Json.obj(

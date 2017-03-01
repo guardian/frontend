@@ -239,6 +239,12 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 expect(features.outbrain).toBe(false);
             });
 
+            it('Is disabled when user is logged in and page is commentable', function () {
+                isSignedIn = true;
+                config.page.commentable = true;
+                features = new CommercialFeatures;
+                expect(features.outbrain).toBe(false);
+            });
         });
 
         describe('Comment adverts', function () {
