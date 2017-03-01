@@ -124,15 +124,15 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
 
   object AmpAudioElements {
-    def createAmpIframeElement(document: Document, src: String, width: String, height: String, frameborder: String): Element = {
+    def createAmpIframeElement(document: Document, iframe: Element): Element = {
       val ampIframe = document.createElement("amp-iframe")
       val attrs = Map(
-        "width" -> width,
-        "height" -> height,
+        "width" -> iframe.attr("width"),
+        "height" -> iframe.attr("height"),
         "layout" -> "responsive",
         "sandbox" -> "allow-scripts allow-same-origin allow-popups",
-        "frameborder" -> frameborder,
-        "src" -> src)
+        "frameborder" -> iframe.attr("frameborder"),
+        "src" -> iframe.attr("src"))
       attrs.foreach {
         case (key, value) => ampIframe.attr(key, value)
       }
@@ -152,11 +152,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
         } else {
           // if iframe is not a SoundCloud Element, replace it with amp-iframe
           if (validIframe(iframeElement)) {
-            val src = iframeElement.attr("src")
-            val width = iframeElement.attr("width")
-            val height = iframeElement.attr("height")
-            val frameBorder = iframeElement.attr("frameborder")
-            iframeElement.replaceWith(createAmpIframeElement(document, src, width, height, frameBorder))
+            iframeElement.replaceWith(createAmpIframeElement(document, iframeElement))
           } else {
             iframeElement.remove()
           }
@@ -298,69 +294,91 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   }
 
 
-  def cleanAmpEmbed(document: Document) = {
-   /* document.getElementsByClass("element-embed")
-      .filter(_.getElementsByTag("iframe").nonEmpty)
-      .foreach(_.getElementsByTag("iframe").foreach {
-        //check for soundcloud embeds and remove any others
-        iframeElement: Element =>
-          val soundcloudElement = AmpSoundcloud.getSoundCloudElement(document, iframeElement)
-          if (soundcloudElement.nonEmpty) {
-            iframeElement.replaceWith(soundcloudElement.get)
-          } else
-            iframeElement.remove()
-      })*/
-  for {
-    embedElement <- document.getElementsByClass("element-embed")
-    iframeElement <- embedElement.getElementsByTag("iframe")
-  } yield {
-      val instagramUrl = embedElement.getElementsByTag("a").map(_.attr("href")).headOption.getOrElse("")
-      val src = iframeElement.attr("src")
-      val dataCanonical = embedElement.attr("data-canonical-url")
-      val href = iframeElement.getElementsByTag("a").map(_.attr("href")).headOption.getOrElse("")
+  sealed abstract class AmpElementEmbed(val ampElementName: String, matchingUrl: String, pattern: Regex, x: (Document, Element) => Option[Element]){
+    val isAMatch = pattern.findFirstIn(matchingUrl).isDefined
+    def createInstance(doc: Document, element: Element): Option[Element] = x.apply(doc,element)
+  }
 
-      val audioBoomPattern = """^https?:\/\/audioboom\.com\/""".r
-      val instagramPattern = """^\/\/platform\.instagram\/.com\/*""".r
-      val googleMapsPattern = """^https?:\/\/www\.google\.com\/maps\/embed*""".r
+  val audioBoomPattern = """^https?:\/\/audioboom\.com\/""".r
+  val instagramPattern = """^\/\/platform\.instagram\/.com\/*""".r
+  val googleMapsPattern = """^https?:\/\/www\.google\.com\/maps\/embed*""".r
 
-      val soundcloud = AmpSoundcloud.getSoundCloudElement(document, iframeElement)
-      val externalVideo = AmpExternalVideo.getAmpExternalVideoByUrl(dataCanonical)
+  case class GoogleMapsEmbed(document: Document, iframe: Element) extends  AmpElementEmbed("amp-iframe", getAttrib(iframe, "src"), googleMapsPattern, (d: Document, e: Element) => Some(AmpMaps.createMapElement(d, e)))
+  case class SoundCloudEmbed(document: Document, iframe: Element) extends AmpElementEmbed("amp-soundcloud", URLDecoder.decode(getAttrib(iframe, "src"),"UTF-8"), AmpSoundcloud.soundCloudPattern, (d: Document, e: Element) => AmpSoundcloud.getSoundCloudElement(d , e))
+  case class AudioBoomEmbed(document: Document, iframe: Element) extends  AmpElementEmbed("amp-iframe", getAttrib(iframe, "src"), audioBoomPattern, (d: Document, e: Element) => getAudioBoomElement(d , e))
+  case class InstagramEmbed(document: Document, iframe: Element) extends  AmpElementEmbed("amp-instagram", getHref(iframe), instagramPattern, (d: Document, e: Element) => AmpInstagram.createInstagramElement(d, getHref(e)))
+  case class YouTubeVideo(document: Document, figure: Element) extends  AmpElementEmbed("amp-youtube", getAttrib(figure, "data-canonical-url"), AmpExternalVideo.youtubePattern, (d: Document, e: Element) => getExternalVideoElement(d, e))
+  case class VimeoVideo(document: Document, figure: Element) extends  AmpElementEmbed("amp-vimeo", getAttrib(figure, "data-canonical-url"), AmpExternalVideo.vimeoPattern, (d: Document, e: Element) => getExternalVideoElement(d, e))
+  case class FacebookVideo(document: Document, figure: Element) extends  AmpElementEmbed("amp-facebook", getAttrib(figure, "data-canonical-url"), AmpExternalVideo.facebookPattern, (d: Document, e: Element) => getExternalVideoElement(d, e))
 
-      val soundcloudMatch = soundcloud.isDefined
-      val externalVideoMatch = externalVideo.isDefined
-      val audioBoomMatch = audioBoomPattern.findFirstIn(src).isDefined
-      val instagramMatch = instagramPattern.findFirstIn(href).isDefined
-      val googleMapsMatch = googleMapsPattern.findFirstIn(src).isDefined
+  def getAttrib(element: Element, name: String): String = {
+    if(element.hasAttr(name))
+      element.attr(name)
+    else
+      ""
+  }
 
-      val ampElement: Option[Element] = {
-        if(soundcloudMatch){
-          soundcloud
-        } else {
-          if (externalVideoMatch) {
-            for (video <- externalVideo) yield AmpExternalVideo.createElement(document, video.elementType, video.attributes)
-          } else {
-            if (audioBoomMatch){
-              Some(AmpAudioElements.createAmpIframeElement(document, src, iframeElement.attr("width"), iframeElement.attr("height"), iframeElement.attr("frameborder")))
-            } else {
-              if (instagramMatch) {
-                AmpInstagram.createInstagramElement(document, href)
-              } else {
-                if (googleMapsMatch) {
-                  Some(AmpMaps.createMapElement(document, iframeElement))
-                } else {
-                  None
-                }
-              }
-            }
-          }
+  def getHref(iframe: Element): String = {
+    iframe.getElementsByTag("a").map(_.attr("href")).headOption.getOrElse("")
+  }
+
+  def getAudioBoomElement(doc: Document, element: Element): Option[Element] = {
+    if(AmpAudioElements.validIframe(element))
+      Some(AmpAudioElements.createAmpIframeElement(doc, element))
+    else
+      None
+  }
+  def getInstagramElement(doc: Document, element: Element): Option[Element] = {
+    AmpInstagram.createInstagramElement(doc, getHref(element))
+  }
+
+  def getExternalVideoElement(doc: Document, element: Element): Option[Element] = {
+      val externalVideo = AmpExternalVideo.getAmpExternalVideoByUrl(element.attr("data-canonical-url"))
+      if(externalVideo.isDefined)
+        Some(AmpExternalVideo.createElement(doc, externalVideo.get.elementType, externalVideo.get.attributes))
+      else
+        None
+  }
+
+
+
+  object AmpElementEmbed {
+
+    def getElement(doc: Document, figure: Element, iframe: Element): Option[Element] = {
+      val elementSeq = Seq(GoogleMapsEmbed(doc, iframe),
+        SoundCloudEmbed(doc, iframe),
+        AudioBoomEmbed(doc, iframe),
+        InstagramEmbed(doc, iframe),
+        YouTubeVideo(doc, figure),
+        VimeoVideo(doc, figure),
+        FacebookVideo(doc, figure))
+
+      val createdElements = for (embedType <- elementSeq if embedType.isAMatch) yield {
+        embedType.ampElementName match {
+          case "amp-youtube" => embedType.createInstance(doc, figure)
+          case "amp-vimeo" => embedType.createInstance(doc, figure)
+          case "amp-facebook" => embedType.createInstance(doc, figure)
+          case _ => embedType.createInstance(doc, iframe)
         }
       }
-      ampElement match {
-        case Some(element) => iframeElement.replaceWith(element)
-        case None => iframeElement.remove()
+      createdElements.headOption.getOrElse(None)
+    }
+
+    def clean(document: Document) = {
+      for {
+        embedElement <- document.getElementsByClass("element-embed")
+        iframeElement <- embedElement.getElementsByTag("iframe")
+      } yield {
+        val ampElement = getElement(document, embedElement, iframeElement)
+        if (ampElement.isDefined)
+          iframeElement.replaceWith(ampElement.get)
+        else
+          embedElement.remove()
       }
-   }
+
+    }
   }
+
 
 
   private def getVideoAssets(id:String): Seq[VideoAsset] = article.elements.bodyVideos.filter(_.properties.id == id).flatMap(_.videos.videoAssets)
@@ -375,7 +393,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     cleanAmpInteractives(document)
     cleanAmpComments(document)
     //run cleanAmpEmbed last as it has a generic action and can remove some embed types that are actioned by the other objects
-    cleanAmpEmbed(document)
+    AmpElementEmbed.clean(document)
 
     document
   }
