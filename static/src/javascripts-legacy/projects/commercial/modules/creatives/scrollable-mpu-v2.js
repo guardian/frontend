@@ -32,7 +32,7 @@ define([
      * TODO: rather blunt instrument this, due to the fact *most* mobile devices don't have a fixed
      * background-attachment - need to make this more granular
      */
-    var hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
+    var hasScrollEnabled = !detect.isAndroid();
 
     function updateBgFluid250() {
         fastdom.write(function () {
