@@ -2,6 +2,8 @@ define([
     'Promise',
     'common/utils/config',
     'common/utils/load-script',
+    'common/utils/report-error',
+    'common/utils/timeout',
     'commercial/modules/ad-sizes',
     'commercial/modules/commercial-features',
     'commercial/modules/dfp/dfp-env',
@@ -10,6 +12,8 @@ define([
     Promise,
     config,
     loadScript,
+    reportError,
+    timeout,
     adSizes,
     commercialFeatures,
     dfpEnv,
@@ -17,6 +21,7 @@ define([
 ){
     // The view id is used as the unique load id, for easier Switch log querying.
     var loadId = window.esi && window.esi.viewId;
+    var REQUEST_TIMEOUT = 5000;
 
     function setupSwitch(start, stop) {
         start();
@@ -45,9 +50,15 @@ define([
         var __switch_zero = window.__switch_zero;
 
         if (__switch_zero) {
-            __switch_zero.commands.push(function () {
-                __switch_zero.callSwitch();
-            });
+            try {
+                __switch_zero.commands.push(function () {
+                    __switch_zero.callSwitch();
+                });
+            } catch(error) {
+                reportError(error, {
+                    feature: 'commercial'
+                }, false);
+            }
         }
     }
 
@@ -92,7 +103,7 @@ define([
             });
         }
 
-        return Promise.all(promises);
+        return timeout(REQUEST_TIMEOUT, Promise.all(promises));
     }
 
     function init(start, stop) {
