@@ -220,9 +220,9 @@ object NewNavigation {
       dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
       NavLink("holidays", "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav"),
       NavLink("courses", "https://courses.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_COURSES"),
-      ukMasterClasses.copy(url = ukMasterClasses.url + "?INTCMP=masterclasses_uk_web_newheader"),
+      ukMasterClasses,
       NavLink("professional networks", "/guardian-professional"),
-      apps.copy(url = apps.url),
+      apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
       podcasts,
       video,
       newsletters,
@@ -233,8 +233,8 @@ object NewNavigation {
 
     val au = NavLinkLists(List(
       jobs.copy(url = jobs.url + "/landingpage/2868291/jobs-australia-html/?INTCMP=jobs_au_web_newheader"),
-      auMasterClasses.copy(url = auMasterClasses.url + "?INTCMP=masterclasses_au_web_newheader"),
-      apps.copy(url = apps.url),
+      auMasterClasses,
+      apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
       podcasts,
       video,
       newsletters,
@@ -243,7 +243,7 @@ object NewNavigation {
 
     val us = NavLinkLists(List(
       jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
-      apps.copy(url = apps.url),
+      apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
       podcasts,
       video,
       newsletters,
@@ -253,7 +253,7 @@ object NewNavigation {
     val int = NavLinkLists(List(
       jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
       dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
-      apps.copy(url = apps.url),
+      apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
       podcasts,
       video,
       newsletters,
