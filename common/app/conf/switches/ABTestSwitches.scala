@@ -145,8 +145,8 @@ trait ABTestSwitches {
     "ab-sleeve-notes-email-variants",
     "Assign users to variants of sleeve notes emails",
     owners = Seq(Owner.withGithub("lmath")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 3, 13), //TODO: update with actual value
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
     exposeClientSide = true
   )
 }

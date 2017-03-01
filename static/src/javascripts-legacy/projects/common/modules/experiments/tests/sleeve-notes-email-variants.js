@@ -15,21 +15,21 @@ define([
 ) {
     return function () {
         this.id = 'SleevenotesEmailVariants';
-        this.start = '2017-02-16';
-        this.expiry = '2017-03-13'; //TODO:
+        this.start = '2017-03-03';
+        this.expiry = '2017-03-31';
         this.author = 'Leigh-Anne Mathieson';
         this.description = 'Using the wonderful frontend AB testing framework to AB test emails, since the AB ' +
             'function in ExactTarget re-randomises all recipients on each send, and we need users to receive their ' +
             'variant for several weeks. This test will ensure users are added to the corresponding email list ' +
             '(listId) in ExactTarget';
         this.audience = 0.6;
-        this.audienceOffset = 0; //TODO:
+        this.audienceOffset = 0;
         this.successMeasure = 'We can trial two different email formats to fairly compare their CTO rates';
         this.audienceCriteria = 'All users who visit the email sign up page';
         this.dataLinkNames = '';
         this.idealOutcome = '90% of users in new format list, 10% in the other list';
 
-        var SLEEVENOTES_URL = '/ng-interactive/2017/feb/16/58a2f713e4b09b65848eb7a5'; //TODO: update this!!!
+        var SLEEVENOTES_URL = '/info/ng-interactive/2017/feb/23/sign-up-for-the-sleeve-notes-email';
         var newSleevenotesListId = 3834;
         var controlListId = 3835;
 
