@@ -13,8 +13,8 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends Executio
   def run = run(webEngineersEmail)
   def runReminder = run(dotcomPlatformEmail)
 
-  private def run(recipientsEmail: Option[String]): Future[Unit] = {
-    (for (webEngineers <- webEngineersEmail) yield {
+  private def run(baseRecipientEmail: Option[String]): Future[Unit] = {
+    (for (baseRecipients <- baseRecipientEmail) yield {
       val expiringSwitches = Switches.all.filter(Switch.expiry(_).expiresSoon)
 
       if (expiringSwitches.nonEmpty) {
@@ -23,11 +23,11 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends Executio
 
         val recipients = {
           val switchOwners = expiringSwitches.flatMap(_.owners.flatMap(_.email)).distinct
-          webEngineers +: switchOwners
+          baseRecipients +: switchOwners
         }
 
         val eventualResult = emailService.send(
-          from = webEngineers,
+          from = baseRecipients,
           to = recipients,
           subject = "Expiring Feature Switches",
           htmlBody = Some(htmlBody))
