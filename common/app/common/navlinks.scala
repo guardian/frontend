@@ -15,7 +15,7 @@ object NavLinks {
   var politics = NavLink("politics", "/politics", "politics")
   var media = NavLink("media", "/media", "media")
   var cities = NavLink("cities", "/cities", "cities")
-  var globalDevelopment = NavLink("development", "/global-development", "global-development")
+  var globalDevelopment = NavLink("global development", "/global-development", "global-development")
   var australiaNews = NavLink("australia", "/australia-news", "australia-news", longTitle = "australia news")
   var auPolitics = NavLink("politics", "/australia-news/australian-politics", "australia-news/australian-politics", longTitle = "australian politics")
   var auImmigration = NavLink("immigration", "/australia-news/australian-immigration-and-asylum", "australia-news/australian-immigration-and-asylum")
@@ -56,7 +56,7 @@ object NavLinks {
   var columnists = NavLink("columnists", "/index/contributors", "index/contributors")
   val theGuardianView = NavLink("the guardian view", "/profile/editorial", "profile/editorial")
   val cartoons = NavLink("cartoons", "/cartoons/archive", "cartoons/archive")
-  val inMyOpinion = NavLink("in my opinion", "/commentisfree/series/comment-is-free-weekly", "commentisfree/series/comment-is-free-weekly")
+  val inMyOpinion = NavLink("opinion videos", "/commentisfree/series/comment-is-free-weekly", "commentisfree/series/comment-is-free-weekly")
 
   /* SPORT */
   val sport = NavLink("sport", "/sport", longTitle = "sport home", iconName = "home", uniqueSection = "sport")
@@ -115,10 +115,13 @@ object NavLinks {
   val observer = NavLink("the observer", "/observer", "observer")
   val crosswords = NavLink("crosswords", "/crosswords", "crosswords")
   val video =  NavLink("video", "/video")
+  val podcasts =  NavLink("podcasts", "/podcasts")
+  val newsletters =  NavLink("newsletters", "/email-newsletters")
   val jobs = NavLink("jobs", "https://jobs.theguardian.com")
   val dating = NavLink("dating", "https://soulmates.theguardian.com")
-  val apps = NavLink("apps", "/global/ng-interactive/2014/may/29/-sp-the-guardian-app-for-ios-and-android")
-  val masterClasses = NavLink("masterclasses", "/guardian-masterclasses")
+  val apps = NavLink("the guardian app", "https://app.adjust.com/f8qm1x_8q69t7?campaign=NewHeader&adgroup=Mobile&creative=generic")
+  val ukMasterClasses = NavLink("masterclasses", "/guardian-masterclasses?INTCMP=masterclasses_uk_web_newheader")
+  val auMasterClasses = NavLink("masterclasses", "/guardian-masterclasses-australia?INTCMP=masterclasses_au_web_newheader")
 
   val tagPages = List(
     "technology/games",
