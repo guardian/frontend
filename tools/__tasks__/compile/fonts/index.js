@@ -72,8 +72,8 @@ module.exports = {
                         // the way this actually works, with the `guFont` callback, feels like
                         // an anachronism. should be looked at when fonts are revisited...
                         return Promise.all(
-                                typeFace.fonts.map(generateCSSwithFontFamily)
-                            )
+                            typeFace.fonts.map(generateCSSwithFontFamily)
+                        )
                             .then(fontsCSS => fontsCSS.join(''))
                             .then(CSS =>
                                 writeFile(

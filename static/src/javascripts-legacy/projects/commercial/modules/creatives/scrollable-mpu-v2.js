@@ -7,6 +7,7 @@ define([
     'common/utils/template',
     'raw-loader!commercial/views/creatives/scrollable-mpu-v2.html',
     'commercial/modules/creatives/add-tracking-pixel',
+    'commercial/modules/creatives/add-viewability-tracker',
     'lodash/functions/bindAll'
 ], function (
     Promise,
@@ -17,6 +18,7 @@ define([
     template,
     scrollableMpuTpl,
     addTrackingPixel,
+    addViewabilityTracker,
     bindAll
 ) {
 
@@ -26,7 +28,6 @@ define([
     var ScrollableMpu = function ($adSlot, params) {
         this.$adSlot = $adSlot;
         this.params  = params;
-
         bindAll(this, 'updateBgPosition');
     };
 
@@ -62,6 +63,7 @@ define([
 
     ScrollableMpu.prototype.create = function () {
         var templateOptions = {
+            id:               'scrollable-mpu-' + (Math.random() * 10000 | 0).toString(16),
             clickMacro:       this.params.clickMacro,
             destination:      this.params.destination,
             layer1Image:      ScrollableMpu.hasScrollEnabled ? this.params.layer1Image : this.params.mobileImage,
@@ -76,6 +78,10 @@ define([
 
         if (this.params.researchPixel) {
             addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
+        }
+
+        if (this.params.viewabilityTracker) {
+            addViewabilityTracker(this.$adSlot[0], this.params.id, this.params.viewabilityTracker);
         }
 
         if (ScrollableMpu.hasScrollEnabled) {
