@@ -26,7 +26,7 @@ define([
 
             this.$adSlot.append(hostedThrasherTemplate({ data: this.params }));
             if (this.params.trackingPixel) {
-                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+                addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
             }
 
             return true;

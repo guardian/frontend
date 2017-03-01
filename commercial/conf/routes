@@ -8,27 +8,19 @@ GET         /commercial/test-page                                           comm
 GET         /_healthcheck                                                   commercial.controllers.HealthCheck.healthCheck()
 
 # Travel offer merchandising components
-GET         /commercial/travel/offers.json                                  commercial.controllers.TravelOffersController.renderTravel
 GET         /commercial/travel/api/offers.json                              commercial.controllers.TravelOffersController.getTravel
 
 # Job merchandising components
-GET         /commercial/jobs.json                                           commercial.controllers.JobsController.renderJobs
 GET         /commercial/jobs/api/jobs.json                                  commercial.controllers.JobsController.getJobs
-
-# Masterclass merchandising components
-GET         /commercial/masterclasses.json                                  commercial.controllers.MasterclassesController.renderMasterclasses
 
 # Soulmates merchandising components
 GET        /commercial/api/soulmates.json                                   commercial.controllers.SoulmatesController.getSoulmates
 
 # Book merchandising components
-GET         /commercial/books/book.json                                     commercial.controllers.BookOffersController.renderBook
-GET         /commercial/books/books.json                                    commercial.controllers.BookOffersController.renderBooks
 GET         /commercial/books/api/book.json                                 commercial.controllers.BookOffersController.getBook
 GET         /commercial/books/api/books.json                                commercial.controllers.BookOffersController.getBooks
 
 # Live events merchandising components
-GET         /commercial/liveevents/event.json                               commercial.controllers.LiveEventsController.renderEvent
 GET         /commercial/api/liveevent.json                                  commercial.controllers.LiveEventsController.getLiveEvent
 
 # Multiple offer merchandising components

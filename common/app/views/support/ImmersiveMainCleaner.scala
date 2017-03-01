@@ -8,7 +8,7 @@ object ImmersiveMainCleaner {
   def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext) = {
     implicit val edition = Edition(request)
     withJsoup(BulletCleaner(html))(
-      AtomsCleaner(article.content.atoms, shouldFence = true, amp)
+      AtomsCleaner(article.content.atoms, shouldFence = true, amp, immersiveMainMedia = true)
     )
   }
 }

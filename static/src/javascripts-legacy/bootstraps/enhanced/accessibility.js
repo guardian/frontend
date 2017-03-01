@@ -1,5 +1,5 @@
 define([
-    'react',
+    'react/addons',
     'common/modules/accessibility/main'
 ], function (
     React,

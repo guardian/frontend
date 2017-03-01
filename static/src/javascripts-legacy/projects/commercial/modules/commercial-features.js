@@ -115,7 +115,8 @@ define([
             switches.outbrain &&
             isArticle &&
             !config.page.isPreview &&
-            config.page.showRelatedContent;
+            config.page.showRelatedContent &&
+            !(identityApi.isUserLoggedIn() && config.page.commentable);
 
         this.commentAdverts =
             this.dfpAdvertising &&

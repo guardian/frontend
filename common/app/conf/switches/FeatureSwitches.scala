@@ -384,7 +384,7 @@ trait FeatureSwitches {
     "When ON, articles specified in the badges file will have visual elements added",
     owners = Seq(Owner.withGithub("superfrank")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 2, 28),
+    sellByDate = new LocalDate(2017, 3, 28),
     exposeClientSide = false
   )
 

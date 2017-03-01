@@ -267,58 +267,6 @@
 
     <div class="fc-container__inner">
         <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10024887">
-                Merchandising: commercial component (jobs)
-            </a>
-        </h2>
-    </div>
-    <div class="fc-container fc-container--commercial">
-        <div class="js-merchandising-jobs ad-slot ad-slot--merchandising ad-slot--commercial-component"></div>
-    </div>
-    <script>
-        loadCommercial(function () {
-            require(['commercial/modules/creatives/commercial-component'])
-                .then(function(
-                    CommercialComponent
-                ) {
-                    new CommercialComponent(document.querySelector('.js-merchandising-jobs'), {
-                        type: 'jobs',
-                        jobIds: '4977372',
-                        omnitureId: '[%OmnitureID%]',
-                        clickMacro: '%%CLICK_URL_ESC%%'
-                    }).create();
-                });
-        });
-    </script>
-
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030407">
-                Merchandising: commercial component (masterclasses)
-            </a>
-        </h2>
-    </div>
-    <div class="fc-container fc-container--commercial">
-        <div class="js-merchandising-masterclasses ad-slot ad-slot--merchandising ad-slot--commercial-component"></div>
-    </div>
-    <script>
-        loadCommercial(function () {
-            require(['commercial/modules/creatives/commercial-component'])
-                .then(function(
-                    CommercialComponent
-                ) {
-                    new CommercialComponent(document.querySelector('.js-merchandising-masterclasses'), {
-                        type: 'masterclasses',
-                        ids: '',
-                        omnitureId: '[%OmnitureID%]',
-                        clickMacro: '%%CLICK_URL_ESC%%'
-                    }).create();
-                });
-        });
-    </script>
-
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
             <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030287">
                 Merchandising: commercial component (books)
             </a>
@@ -367,61 +315,6 @@
                     });
 
                     bean.fire(qwery('.js-merchandising-books-layout select')[0], 'change');
-                });
-        });
-    </script>
-
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030527">
-                Merchandising: commercial component (travel)
-            </a>
-        </h2>
-        <form class="js-merchandising-travel-layout">
-            <label>Layout:
-                <select>
-                    <option value="standard" selected>Standard</option>
-                    <option value="prominent">Prominent</option>
-                </select>
-            </label>
-        </form>
-    </div>
-    <div class="fc-container fc-container--commercial">
-        <div class="js-merchandising-travel ad-slot ad-slot--merchandising ad-slot--commercial-component"></div>
-    </div>
-    <script>
-        loadCommercial(function () {
-            require([
-                'bean',
-                'qwery',
-                'common/utils/$',
-                'commercial/modules/creatives/commercial-component'
-            ])
-                .then(function (
-                    bean,
-                    qwery,
-                    $,
-                    CommercialComponent
-                ) {
-                    var $merchandisingTravel = $('.js-merchandising-travel');
-
-                    bean.on(qwery('.js-merchandising-travel-layout')[0], 'change', function (event) {
-                        var commercialComponent = new CommercialComponent($merchandisingTravel[0], {
-                            type: 'travel',
-                            layout: $(event.srcElement).val(),
-                            ids: '',
-                            omnitureId: '[%OmnitureID%]',
-                            clickMacro: '%%CLICK_URL_ESC%%'
-                        });
-
-                        commercialComponent.postLoadEvents.travel = function () {
-                            $merchandisingTravel.removeClass('lazyloaded');
-                        };
-
-                        commercialComponent.create();
-                    });
-
-                    bean.fire(qwery('.js-merchandising-travel-layout select')[0], 'change');
                 });
         });
     </script>

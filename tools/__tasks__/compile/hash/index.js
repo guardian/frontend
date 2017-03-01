@@ -75,26 +75,26 @@ module.exports = {
                     );
 
                 return Promise.all(
-                        // copy all the built files to their hash locations
-                        Object.keys(assetMap)
-                            .map(asset =>
-                                cpFile(
-                                    path.resolve(target, asset),
-                                    path.resolve(hash, assetMap[asset])
-                                ))
-                    )
+                    // copy all the built files to their hash locations
+                    Object.keys(assetMap).map(asset =>
+                        cpFile(
+                            path.resolve(target, asset),
+                            path.resolve(hash, assetMap[asset])
+                        ))
+                )
                     .then(() => {
                         // we need unhashed keys for webpack entry bundles so we can refer to them in play templates.
                         // since they arrived ready-hashed, we need to add some new ones from the hashed ones...
 
                         // get the webpack entry bundles
-                        const webpackEntryBundles = Object.keys(assetMap)
-                            .filter(
-                                key =>
-                                    webpackRegex.test(key) &&
-                                    !webpackChunkRegex.test(key) &&
-                                    !sourcemapRegex.test(key)
-                            );
+                        const webpackEntryBundles = Object.keys(
+                            assetMap
+                        ).filter(
+                            key =>
+                                webpackRegex.test(key) &&
+                                !webpackChunkRegex.test(key) &&
+                                !sourcemapRegex.test(key)
+                        );
 
                         // create a new key for each one and add them them to asset map
                         return Object.assign(
