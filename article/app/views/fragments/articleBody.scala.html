@@ -1,4 +1,3 @@
-@import model.ArticleSchemas
 @(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.LinkTo
@@ -7,13 +6,10 @@
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
 
-@* Feb 2015: Google does only support NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/Review *@
-@schemaType(page: ArticlePage) = @{
-    if (amp) ArticleSchemas.NewsArticle else page.article.metadata.schemaType
-}
+@schemaType(page: ArticlePage) = @{page.article.metadata.schemaType}
 
 @bodyType(page: ArticlePage) = @{
-    if (page.article.tags.isReview && !amp) "reviewBody" else "articleBody"
+    if (page.article.tags.isReview) "reviewBody" else "articleBody"
 }
 
 @defining(model.article) { article =>
