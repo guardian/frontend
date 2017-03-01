@@ -10,7 +10,7 @@ define([
     storage
 ) {
     var location;
-    var storageKey = 'gu.geolocation'
+    var storageKey = 'gu.geolocation';
     var editionToGeolocationMap = {
         'UK' : 'GB',
         'US' : 'US',
@@ -51,14 +51,94 @@ define([
         });
     }
 
+    function getSync() {
+        var geolocationFromStorage = storage.local.get(storageKey);
+        return geolocationFromStorage ? geolocationFromStorage : editionToGeolocation(config.page.edition)
+    }
+
+    var regionCountryCodes = [
+        'AU',
+        'CA',
+        'GB',
+        'US'
+    ];
+
+    var europeCountryCodes = [
+        'AD',
+        'AL',
+        'AT',
+        'BA',
+        'BE',
+        'BG',
+        'BL',
+        'CH',
+        'CY',
+        'CZ',
+        'DE',
+        'DK',
+        'EE',
+        'ES',
+        'FI',
+        'FO',
+        'FR',
+        'GF',
+        'GL',
+        'GP',
+        'GR',
+        'HR',
+        'HU',
+        'IE',
+        'IT',
+        'LI',
+        'LT',
+        'LU',
+        'LV',
+        'MC',
+        'ME',
+        'MF',
+        'IS',
+        'MQ',
+        'MT',
+        'NL',
+        'NO',
+        'PF',
+        'PL',
+        'PM',
+        'PT',
+        'RE',
+        'RO',
+        'RS',
+        'SE',
+        'SI',
+        'SJ',
+        'SK',
+        'SM',
+        'TF',
+        'TR',
+        'WF',
+        'YT',
+        'VA',
+        'AX'
+    ];
+
+    // Returns one of { GB, US, AU, CA, EU, INT }
+    // These are the different 'regions' we accept when taking payment.
+    // See https://membership.theguardian.com/uk/supporter# for more context.
+    function getSupporterPaymentRegion() {
+        var location = getSync();
+        if (regionCountryCodes.indexOf(location) > -1) {
+            return location;
+        }
+        if (europeCountryCodes.indexOf(location) > -1) {
+            return 'EU';
+        }
+        return 'INT';
+    }
+
     return {
         get: get,
-
-        getSync: function() {
-            var geolocationFromStorage = storage.local.get(storageKey);
-            return geolocationFromStorage ? geolocationFromStorage : editionToGeolocation(config.page.edition)
-        },
-
+        getSupporterPaymentRegion: getSupporterPaymentRegion,
+        getSync: getSync,
         init: init
     };
 });

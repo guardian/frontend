@@ -1,6 +1,6 @@
 /*eslint-disable new-cap*/
 define([
-    'react',
+    'react/addons',
     'common/modules/sudoku/cell',
     'common/modules/sudoku/controls',
     'common/modules/sudoku/constants',

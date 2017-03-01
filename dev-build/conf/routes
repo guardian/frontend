@@ -271,18 +271,11 @@ GET            /admin/football/api/squad/:teamId                                
 
 
 # Commercial
-GET            /commercial/travel/offers.json                                                                                    commercial.controllers.TravelOffersController.renderTravel
 GET            /commercial/travel/api/offers.json                                                                                commercial.controllers.TravelOffersController.getTravel
-GET            /commercial/jobs.json                                                                                             commercial.controllers.JobsController.renderJobs
 GET            /commercial/jobs/api/jobs.json                                                                                    commercial.controllers.JobsController.getJobs
-GET            /commercial/masterclasses.json                                                                                    commercial.controllers.MasterclassesController.renderMasterclasses
 GET            /commercial/api/soulmates.json                                                                                    commercial.controllers.SoulmatesController.getSoulmates
-GET            /commercial/books/book.json                                                                                       commercial.controllers.BookOffersController.renderBook
-GET            /commercial/books/books.json                                                                                      commercial.controllers.BookOffersController.renderBooks
 GET            /commercial/books/api/book.json                                                                                   commercial.controllers.BookOffersController.getBook
 GET            /commercial/books/api/books.json                                                                                  commercial.controllers.BookOffersController.getBooks
-GET            /commercial/liveevents/event.json                                                                                 commercial.controllers.LiveEventsController.renderEvent
-GET            /commercial/api/liveevent.json                                                                                    commercial.controllers.LiveEventsController.getLiveEvent
 GET            /commercial/capi.json                                                                                             commercial.controllers.ContentApiOffersController.itemsJson
 GET            /commercial/capi                                                                                                  commercial.controllers.ContentApiOffersController.itemsHtml
 GET            /commercial/capi-single.json                                                                                      commercial.controllers.ContentApiOffersController.itemJson

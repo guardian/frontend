@@ -188,6 +188,40 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
+// specific to the most viewed component that appears at the bottom of articles
+.popular-trails.fc-container__body {
+    padding-top: $gs-baseline;
+
+    @include mq(desktop) {
+      min-height: gs-height(8);
+      display: inline-flex;
+    }
+}
+
+.popular-trails__content {
+    @include mq(desktop) {
+        min-width: gs-span(8);
+        max-width: (100% / 3) * 2;
+    }
+}
+
+.popular-trails__mpu {
+    margin: $gs-baseline auto 0 auto;
+
+    @include mq(desktop) {
+        min-width: $mpu-original-width;
+        border-top: 1px solid $neutral-5;
+        padding: $gs-baseline 0 0 $gs-gutter;
+        margin-top: 39px; // magic number: unavoidable to match the tab headings
+    }
+
+    .fc-slice__item--no-mpu {
+        @include mq($until: desktop) {
+            min-height: 0;
+        }
+    }
+}
+
 .fc-slice--popular {
     .fc-slice__item:before {
         display: none;
@@ -199,7 +233,7 @@ Hence why a greater depth of selector specificity is needed.
 
     @include mq(desktop) {
         .tabs__pane {
-            width: (100% / 3) * 2;
+            min-width: gs-span(8);
             min-height: 300px;
         }
 
@@ -212,13 +246,10 @@ Hence why a greater depth of selector specificity is needed.
 
 .fc-slice__popular-mpu {
     width: $mpu-original-width + 20px;
+    margin: 0 auto;
 
     .ad-slot {
         min-height: $mpu-original-height + $mpu-ad-label-height;
-    }
-
-    @include mq(tablet, desktop) {
-        margin: 0 auto;
     }
 
     @include mq(desktop) {

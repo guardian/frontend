@@ -5,7 +5,6 @@ define([
     'commercial/modules/dfp/performance-logging'
 ], function (dfpEnv, loadAdvert, enableLazyLoad, performanceLogging) {
     var advertsToInstantlyLoad = [
-        'dfp-ad--pageskin-inread',
         'dfp-ad--merchandising-high',
         'dfp-ad--im'
     ];

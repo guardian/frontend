@@ -1,5 +1,5 @@
 define([
-    'react',
+    'react/addons',
     'common/views/svgs',
     './clue-input',
     './clue-preview',

@@ -65,15 +65,11 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
             raven: 'raven-js',
             EventEmitter: 'wolfy87-eventemitter',
             videojs: 'video.js',
-            'videojs-ads-lib': 'videojs-contrib-ads',
 
             stripe: 'stripe/stripe.min',
             svgs: path.join(__dirname, 'static', 'src', 'inline-svgs'),
             'ophan/ng': 'ophan-tracker-js',
             'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
-
-            // #wp-rjs once r.js is gone, these can be unaliased and modules updated
-            react: 'react/addons',
         },
     },
     resolveLoader: {

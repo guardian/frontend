@@ -26,7 +26,6 @@ define([
         },
         $fixtureContainer,
         config,
-        identity,
         detect,
         sut, // System under test
         getSection,
@@ -44,26 +43,20 @@ define([
                 'commercial/modules/third-party-tags/outbrain',
                 'commercial/modules/third-party-tags/outbrain-sections',
                 'common/utils/config',
-                'common/modules/identity/api',
                 'common/utils/detect',
                 'commercial/modules/commercial-features'
             ], function () {
                 sut      = arguments[0];
                 getSection = arguments[1];
                 config   = arguments[2];
-                identity = arguments[3];
-                detect   = arguments[4];
-                commercialFeatures = arguments[5];
+                detect   = arguments[3];
+                commercialFeatures = arguments[4];
 
                 config.switches.outbrain = true;
                 config.switches.emailInArticleOutbrain = false;
                 config.page = {
                     section: 'uk-news',
                     commentable: true
-                };
-
-                identity.isUserLoggedIn = function () {
-                    return false;
                 };
                 detect.adblockInUse = Promise.resolve(false);
 
@@ -88,30 +81,6 @@ define([
             });
 
             it('should start outbrain component', function (done) {
-                sut.init().then(function () {
-                    expect(sut.load).toHaveBeenCalled();
-                    done();
-                });
-            });
-
-            it('should not load when user is logged in', function (done) {
-                identity.isUserLoggedIn = function () {
-                    return true;
-                };
-
-                sut.init().then(function () {
-                    expect(sut.load).not.toHaveBeenCalled();
-                    done();
-                });
-            });
-
-            it('should load when user is logged in but there are no comments on the page', function (done) {
-                identity.isUserLoggedIn = function () {
-                    return true;
-                };
-
-                config.page.commentable = false;
-
                 sut.init().then(function () {
                     expect(sut.load).toHaveBeenCalled();
                     done();
