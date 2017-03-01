@@ -228,7 +228,8 @@ object EmailNewsletters {
     description = "Everything you need to know from the Guardian's music site, squeezed into one handy email.",
     frequency = "Every Friday",
     listId = 39,
-    tone = Some("feature"),
+    aliases = List(3834, 3835),
+    tone = Some("review"),
     signupPage = Some("/music/2016/aug/18/sign-up-to-sleeve-notes")
   )
 
