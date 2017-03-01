@@ -25,6 +25,7 @@ define([
             whenLoadedResolver: null,
             whenRendered: null,
             whenRenderedResolver: null,
+            whenSlotReady: null,
             timings: {
                 createTime: null,
                 startLoading: null,

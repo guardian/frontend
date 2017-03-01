@@ -27,9 +27,9 @@ define([
         this.successMeasure = 'We can trial two different email formats to fairly compare their CTO rates';
         this.audienceCriteria = 'All users who visit the email sign up page';
         this.dataLinkNames = '';
-        this.idealOutcome = '90% of users in new format list, 10% in the other list';
+        this.idealOutcome = '70% of users in new format list, 30% in the other list';
 
-        var SLEEVENOTES_URL = '/info/ng-interactive/2017/feb/23/sign-up-for-the-sleeve-notes-email';
+        var SLEEVENOTES_URL = 'info/ng-interactive/2017/feb/23/sign-up-for-the-sleeve-notes-email';
         var newSleevenotesListId = 3834;
         var controlListId = 3835;
 
