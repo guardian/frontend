@@ -36,6 +36,7 @@ const platform = [
     'NataliaLKB',
     'GHaberis',
     'stephanfowler',
+    'Gustav Pursche',
 ];
 const platformModules = files.filter(_ => _.includes('projects/common/utils'));
 const platformFilesPerHuman = filesPerHuman(platformModules, platform);
