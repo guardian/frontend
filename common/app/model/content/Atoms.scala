@@ -9,6 +9,7 @@ import org.joda.time.{DateTime, DateTimeZone, Duration}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 import enumeratum._
+import model.content.MediaAssetPlatform.findValues
 
 final case class Atoms(
   quizzes: Seq[Quiz],
@@ -51,6 +52,16 @@ object MediaAssetPlatform extends Enum[MediaAssetPlatform] with PlayJsonEnum[Med
   case object Dailymotion extends MediaAssetPlatform
   case object Mainstream extends MediaAssetPlatform
   case object Url extends MediaAssetPlatform
+}
+
+sealed trait MediaWrapper extends EnumEntry
+
+object MediaWrapper extends Enum[MediaWrapper] with PlayJsonEnum[MediaWrapper] {
+  val values = findValues
+
+  case object MainMedia extends MediaWrapper
+  case object ImmersiveMainMedia extends MediaWrapper
+  case object Embed extends MediaWrapper
 }
 
 final case class MediaAsset(

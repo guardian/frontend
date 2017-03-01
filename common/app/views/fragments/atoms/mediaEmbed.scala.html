@@ -2,6 +2,7 @@
 @import model.MediaAtomEmbedPage
 @import conf.Configuration
 
+@import model.content.MediaWrapper
 @(page: MediaAtomEmbedPage, displayCaption: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 <!DOCTYPE html>
@@ -16,7 +17,7 @@
         <base target="_parent"/>
     </head>
     <body>
-        @views.html.fragments.atoms.media(page.atom, displayCaption = displayCaption, embedPage = true)
+        @views.html.fragments.atoms.media(page.atom, displayCaption = displayCaption, mediaWrapper = Some(MediaWrapper.Embed))
  <script>
         var guardian = {
             isEmbed: true,
