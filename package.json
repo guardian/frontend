@@ -126,8 +126,38 @@
   "optionalDependencies": {
     "fsevents": "*"
   },
+  "jest": {
+    "roots": [
+      "<rootDir>/static/src/javascripts",
+      "<rootDir>/tools"
+    ],
+    "moduleDirectories": [
+      "<rootDir>/static/src/javascripts",
+      "<rootDir>/static/src/javascripts-legacy",
+      "<rootDir>/static/vendor/javascripts",
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "admin": "projects/admin",
+      "common": "projects/common",
+      "facia": "projects/facia",
+      "membership": "projects/membership",
+      "commercial": "projects/commercial",
+      "^lodash(.*)$": "lodash-amd/compat$1",
+      "picturefill": "projects/common/utils/picturefill",
+      "Promise": "when/es6-shim/Promise",
+      "raven": "raven-js",
+      "EventEmitter": "wolfy87-eventemitter",
+      "videojs": "video.js",
+      "stripe": "stripe/stripe.min",
+      "svgs": "<rootDir>/static/src/inline-svgs",
+      "ophan/ng": "ophan-tracker-js",
+      "ophan/embed": "ophan-tracker-js/build/ophan.embed"
+    }
+  },
   "scripts": {
     "postinstall": "./tools/task-runner/runner githooks --verbose",
+    "test": "jest",
     "amdtoes6": "amdtoes6 --beautify",
     "lebab": "lebab --transform arrow,let,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,class,default-param --replace",
     "eslint-fix": "eslint --color --fix"
