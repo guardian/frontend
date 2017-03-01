@@ -6,7 +6,6 @@ import org.scalatest.Suites
 import test.SingleServerSuite
 
 class CommercialTestSuite extends Suites (
-  new commercial.controllers.TravelOffersControllerTest,
   new books.MagentoBestsellersFeedTest,
   new books.MagentoExceptionTest,
   new jobs.JobTest,
