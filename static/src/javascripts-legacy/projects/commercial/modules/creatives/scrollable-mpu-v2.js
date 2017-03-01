@@ -7,8 +7,7 @@ define([
     'common/utils/template',
     'raw-loader!commercial/views/creatives/scrollable-mpu-v2.html',
     'commercial/modules/creatives/add-tracking-pixel',
-    'commercial/modules/creatives/add-viewability-tracker',
-    'lodash/functions/bindAll'
+    'commercial/modules/creatives/add-viewability-tracker'
 ], function (
     Promise,
     fastdom,
@@ -18,8 +17,7 @@ define([
     template,
     scrollableMpuTpl,
     addTrackingPixel,
-    addViewabilityTracker,
-    bindAll
+    addViewabilityTracker
 ) {
 
     /**
