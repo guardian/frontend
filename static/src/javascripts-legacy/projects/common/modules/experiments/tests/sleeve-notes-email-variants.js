@@ -22,7 +22,7 @@ define([
             'function in ExactTarget re-randomises all recipients on each send, and we need users to receive their ' +
             'variant for several weeks. This test will ensure users are added to the corresponding email list ' +
             '(listId) in ExactTarget';
-        this.audience = 0.6;
+        this.audience = 0;
         this.audienceOffset = 0;
         this.successMeasure = 'We can trial two different email formats to fairly compare their CTO rates';
         this.audienceCriteria = 'All users who visit the email sign up page';
@@ -47,8 +47,8 @@ define([
         function updateNewslettersPage(emailListID) {
 
             return fastdomPromise.write(function () {
-                var input = $('input[value=${newSleevenotesListId.toString()}]')[0];
-                var button = $('button[value=${newSleevenotesListId.toString()}]')[0];
+                var input = $('input[value="39"]')[0];
+                var button = $('button[value="39"]')[0];
                 input.setAttribute('value', emailListID);
                 button.setAttribute('value', emailListID);
             });

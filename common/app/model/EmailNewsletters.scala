@@ -227,8 +227,8 @@ object EmailNewsletters {
     teaser = "Everything you need to know from the Guardian's music site, squeezed into one handy email",
     description = "Everything you need to know from the Guardian's music site, squeezed into one handy email.",
     frequency = "Every Friday",
-    listId = 3834,
-    aliases = List(39, 3835),
+    listId = 39,
+    aliases = List(3834, 3835),
     tone = Some("review"),
     signupPage = Some("/info/ng-interactive/2017/feb/23/sign-up-for-the-sleeve-notes-email")
   )
