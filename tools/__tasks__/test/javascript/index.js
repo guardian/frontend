@@ -14,13 +14,14 @@ const exec = (cmd, args) => {
     ).filter(Boolean);
 };
 
-const mainAppTests = [
-    'commercial',
-    'common',
-    'facia',
-].map(set => ({
+const mainAppTests = ['commercial', 'common', 'facia'].map(set => ({
     description: `Run ${set} tests`,
-    task: () => exec('karma', ['start', `./static/test/javascripts/conf/${set}.js`, '--single-run']),
+    task: () =>
+        exec('karma', [
+            'start',
+            `./static/test/javascripts-legacy/conf/${set}.js`,
+            '--single-run',
+        ]),
 }));
 
 module.exports = {

@@ -2,12 +2,10 @@ package model
 
 import java.net.URL
 
-import com.gu.commercial.branding.PaidContent
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.facia.api.{utils => fapiutils}
 import com.gu.facia.client.models.TrailMetaData
 import com.gu.targeting.client.Campaign
-import common.Edition.defaultEdition
 import common._
 import conf.Configuration
 import conf.switches.Switches._
@@ -78,11 +76,7 @@ final case class Content(
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
   lazy val isImmersiveGallery = {
-    metadata.contentType.toLowerCase == "gallery" &&
-    {
-      val branding = metadata.branding(defaultEdition)
-      branding.isEmpty || branding.exists(!_.isPaid)
-    }
+    metadata.contentType.toLowerCase == "gallery" && !metadata.commercial.exists(_.isPaidContent)
   }
   lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
   lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore
@@ -103,7 +97,7 @@ final case class Content(
   }
 
   lazy val hasBeenModified: Boolean =
-    new Duration(trail.webPublicationDate, fields.lastModified).isLongerThan(Duration.standardSeconds(60))
+    new Duration(fields.firstPublicationDate.getOrElse(trail.webPublicationDate), fields.lastModified).isLongerThan(Duration.standardSeconds(60))
 
   lazy val hasTonalHeaderIllustration: Boolean = tags.isLetters
 
@@ -156,7 +150,7 @@ final case class Content(
       tag.id == "childrens-books-site/childrens-books-site" && tag.properties.tagType == "Blog"
     }
 
-    lazy val isPaidContent = metadata.branding(defaultEdition).exists(_.isPaid)
+    lazy val isPaidContent = metadata.commercial.exists(_.isPaidContent)
 
     isChildrensBookBlog || isPaidContent
   }

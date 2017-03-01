@@ -36,7 +36,7 @@
                             data-link-name="@if(newsletter.subscribedTo(emailSubscriptions)){Unsubscribe}else{Subscribe} to @newsletter.name"
                             name="addEmailSubscription"
                             type="button"
-                            value="@if(newsletter.subscribedTo(emailSubscriptions)){unsubscribe-}@newsletter.listId">
+                            value="@if(newsletter.subscribedTo(emailSubscriptions)){unsubscribe-@{newsletter.allIds.mkString(",")}}else{@newsletter.listId}">
                         @if(newsletter.subscribedTo(emailSubscriptions)){Unsubscribe}else{Subscribe}
                     </button>
                     <div class="email-subscription__frequency">

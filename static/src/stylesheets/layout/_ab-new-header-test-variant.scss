@@ -5,22 +5,6 @@ $gutter-small: 29px;
 $gutter-medium: 37px;
 $gutter-large: 55px;
 
-@mixin trailing-slash {
-    position: absolute;
-    pointer-events: none;
-    content: '/';
-    //optically aligns slashes
-    top: 0;
-    right: -.19em;
-}
-
-@mixin nav-links {
-    position: relative;
-    padding-left: .3em;
-    padding-right: .35em;
-    float: left;
-}
-
 // When the menu is open this class is added to the html to prevent users from scrolling
 .nav-is-open {
     overflow: hidden;
@@ -564,6 +548,32 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     height: 18px;
 }
 
+// Feedback prompt
+.new-header-feedback {
+    color: $news-support-1;
+    font-size: 15px;
+    line-height: 18px;
+    text-transform: none;
+    padding: $gs-baseline $gs-gutter $gs-baseline * 2 $navigation-horizontal-padding;
+    background-color: rgba(0, 0, 0, .2);
+
+    .main-menu__icon__svg {
+        width: 1.3em;
+        height: 1.3em;
+    }
+
+    a {
+        color: #ffffff;
+        border-bottom: 1px solid rgba(255, 255, 255, .3);
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+            border-color: #ffffff;
+        }
+    }
+}
+
 .navigation-group__item--user-account {
     .user-account__signed-in {
         display: none;
@@ -901,73 +911,5 @@ $caption-button-size: 32px;
         }
     }
 }
-
-/****************
- * Submeta
- ****************/
-
-.submeta2 {
-    margin-top: $gs-baseline;
-}
-
-.submeta2__section-labels {
-    @include fs-textSans(5);
-    min-height: $gs-row-height;
-    border-top: 1px dotted $neutral-5;
-    border-bottom: 1px dotted $neutral-5;
-    padding: $gs-baseline / 2 0 $gs-baseline;
-
-
-    &:before {
-        @include fs-textSans(1);
-        content: "More";
-        color: $neutral-2;
-        display: block;
-        margin-bottom: -($gs-baseline / 4);
-    }
-}
-
-.submeta2__keywords {
-    @include fs-textSans(4);
-    padding: $gs-baseline / 2 0 $gs-baseline;
-    border-bottom: 1px dotted $neutral-5;
-    margin-bottom: $gs-baseline / 2;
-}
-
-.submeta2__link {
-    font-weight: bold;
-    position: relative;
-    padding-left: .3em;
-    padding-right: .35em;
-
-    &:before {
-        position: absolute;
-        pointer-events: none;
-        content: '/';
-        //optically aligns slashes
-        left: -.28em;
-        color: $neutral-5;
-    }
-
-    .submeta2__keywords & {
-        color: $neutral-2;
-    }
-}
-
-.submeta2__link--first {
-    padding-left: 0;
-
-    &:before {
-        content: none;
-    }
-}
-
-.submeta2__badge {
-    width: 33px;
-    float: right;
-    margin-top: -$gs-baseline;
-    margin-left: $gs-gutter / 2;
-}
-
 
 @import '../module/nav/_supporter-trapezoid';

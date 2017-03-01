@@ -10,11 +10,11 @@ define([
     'common/views/svg',
     'common/modules/onward/history',
     'common/utils/ajax',
-    'text!common/views/experiments/recommended-for-you.html',
-    'text!common/views/experiments/recommended-for-you-opt-in.html',
-    'inlineSvg!svgs/icon/profile-36.svg',
-    'inlineSvg!svgs/icon/arrow-right.svg',
-    'inlineSvg!svgs/icon/marque-36.svg',
+    'raw-loader!common/views/experiments/recommended-for-you.html',
+    'raw-loader!common/views/experiments/recommended-for-you-opt-in.html',
+    'svg-loader!svgs/icon/profile-36.svg',
+    'svg-loader!svgs/icon/arrow-right.svg',
+    'svg-loader!svgs/icon/marque-36.svg',
     'common/utils/fetch-json'
 ], function (
     bean,
@@ -38,7 +38,7 @@ define([
     return function () {
         this.id = 'RecommendedForYouRecommendations';
         this.start = '2017-01-17';
-        this.expiry = '2017-02-21';
+        this.expiry = '2017-03-08';
         this.author = 'David Furey';
         this.description = 'Add an extra container above Opinion on the home front with recommended content based on ' +
             'each users history.  Users in the test group are prompted to opt-in.  Recommendations are only fetched' +
@@ -152,7 +152,7 @@ define([
             var $oldSection = $recommendedForYouSection;
 
             $recommendedForYouSection = $.create(template(recommendedForYouTemplate, {
-                profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
+                profileIcon: svg(profileIcon.markup, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
                 items: items
             }));
 
@@ -183,9 +183,9 @@ define([
 
         function createOptInTemplate() {
             return $.create(template(recommendedForYouOptInTemplate, {
-                profileIcon: svg(profileIcon, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
-                rightArrowIcon: svg(rightArrowIcon, ['i-right']),
-                guardianLogo: svg(guardianLogo)
+                profileIcon: svg(profileIcon.markup, ['rounded-icon', 'rfy-profile-icon', 'control__icon-wrapper']),
+                rightArrowIcon: svg(rightArrowIcon.markup, ['i-right']),
+                guardianLogo: svg(guardianLogo.markup)
             }));
         }
 

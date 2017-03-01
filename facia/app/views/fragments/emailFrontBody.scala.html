@@ -121,20 +121,18 @@
     @imgForFront(page.banner, page.email.map(_.name))
 }
 
-@page.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.map { case (collection, collectionIndex) =>
+@layout.CollectionEmail.fromPressedPage(page).collections.zipWithIndex.map { case (collection, collectionIndex) =>
     @paddedRow {
         <h2 class="container-title @if(collectionIndex > 0) { container-title--not-first }">
             @collection.displayName
         </h2>
     }
 
-    @collection.curatedPlusBackfillDeduplicated.take(6).zipWithIndex.map { case (pressedContent, cardIndex) =>
-        @defining(FaciaCard.fromTrail(pressedContent, collection.config, ItemClasses.showMore, showSeriesAndBlogKickers = false)) { card =>
-            @if(cardIndex == 0) {
-                @firstCard(card, isFastLayout = collection.collectionType == "fast")
-            } else {
-                @otherCard(card, isSlowLayout = collection.collectionType == "slow")
-            }
+    @collection.cards.zipWithIndex.map { case (card, cardIndex) =>
+        @if(cardIndex == 0) {
+            @firstCard(card, isFastLayout = collection.collectionType == "fast")
+        } else {
+            @otherCard(card, isSlowLayout = collection.collectionType == "slow")
         }
     }
 }

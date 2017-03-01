@@ -1,5 +1,5 @@
 define([
-    'react',
+    'react/addons',
     'common/modules/sudoku/constants'
 ], function (
     React,

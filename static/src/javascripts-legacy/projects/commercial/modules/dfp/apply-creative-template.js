@@ -15,9 +15,7 @@ define([
     'commercial/modules/creatives/fabric-expandable-video-v1',
     'commercial/modules/creatives/fabric-expandable-video-v2',
     'commercial/modules/creatives/fabric-video',
-    'commercial/modules/creatives/fluid250',
     'commercial/modules/creatives/hosted-thrasher-multi',
-    'commercial/modules/creatives/scrollable-mpu',
     'commercial/modules/creatives/scrollable-mpu-v2',
     'commercial/modules/creatives/template'
 ], function (
@@ -74,6 +72,7 @@ define([
         if (creativeConfig) {
             return hideIframe()
                 .then(JSON.parse)
+                .then(mergeViewabilityTracker)
                 .then(renderCreative)
                 .catch(function (err) {
                 reportError('Failed to get creative JSON ' + err);
@@ -90,6 +89,17 @@ define([
                 return null;
             }
 
+        }
+
+        function mergeViewabilityTracker(json) {
+            var viewabilityTrackerDiv = iFrame.contentDocument.getElementById('viewabilityTracker');
+            var viewabilityTracker = viewabilityTrackerDiv ?
+                viewabilityTrackerDiv.childNodes[0].nodeValue.trim() :
+                null;
+            if (viewabilityTracker) {
+                json.params.viewabilityTracker = viewabilityTracker;
+            }
+            return json;
         }
 
         function renderCreative(config) {

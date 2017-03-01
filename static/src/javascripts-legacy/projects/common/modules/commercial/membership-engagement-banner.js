@@ -5,9 +5,9 @@ define([
         'common/utils/storage',
         'common/utils/template',
         'common/modules/ui/message',
-        'text!common/views/membership-message.html',
-        'common/modules/commercial/commercial-features',
-        'common/modules/commercial/user-features',
+        'raw-loader!common/views/membership-message.html',
+        'commercial/modules/commercial-features',
+        'commercial/modules/user-features',
         'common/utils/mediator',
         'Promise',
         'common/utils/fastdom-promise',
@@ -131,6 +131,11 @@ define([
             var userVariant = engagementBannerTest ? find(engagementBannerTest.variants, function(variant) {
                 return variant.id == ab.getTestVariantId(engagementBannerTest.id);
             }) : undefined;
+
+            // If we have found a copy test variant, then defer building the banner params to the variant.
+            if (engagementBannerTest && engagementBannerTest.id === 'MembershipEngagementBannerCopyTest' && userVariant) {
+                return userVariant.deriveBannerParams()
+            }
 
             // offering = 'membership' or 'contributions'
             var offering = Object.keys(userVariant?userVariant.params:paramsByOfferingForUserEdition)[0];

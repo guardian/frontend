@@ -5,7 +5,9 @@ define([
     'common/modules/component',
     'common/utils/$',
     'common/utils/config',
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/utils/closest',
+    'lodash/functions/debounce'
 ], function (
     fastdom,
     youtubePlayer,
@@ -13,7 +15,9 @@ define([
     Component,
     $,
     config,
-    detect
+    detect,
+    closest,
+    debounce
 ) {
 
     var players = {};
@@ -37,6 +41,11 @@ define([
         setProgressTracker(atomId);
         tracking.track('play', getTrackingId(atomId));
 
+        var mainMedia = closest(player.iframe, '.immersive-main-media');
+        if (mainMedia) {
+            mainMedia.classList.add('atom-playing');
+        }
+
         if (player.endSlate &&
             !player.overlay.parentNode.querySelector('.end-slate-container')) {
             player.endSlate.fetch(player.overlay.parentNode, 'html');
@@ -48,9 +57,17 @@ define([
     }
 
     function onPlayerEnded(atomId) {
+        var player = players[atomId];
+
         killProgressTracker(atomId);
         tracking.track('end', getTrackingId(atomId));
-        players[atomId].pendingTrackingCalls = [25, 50, 75];
+        player.pendingTrackingCalls = [25, 50, 75];
+
+        var mainMedia = closest(player.iframe, '.immersive-main-media');
+        if (mainMedia) {
+            mainMedia.classList.remove('atom-playing');
+        }
+
     }
 
     function setProgressTracker(atomId)  {
@@ -84,33 +101,41 @@ define([
         }
     }
 
-    function shouldAutoplay(){
+    function shouldAutoplay(atomId){
 
         function isAutoplayBlockingPlatform() {
             return detect.isIOS() || detect.isAndroid();
         }
 
         function isInternalReferrer() {
-
-            if(config.page.isDev) {
+            if (config.page.isDev) {
                 return document.referrer.indexOf(window.location.origin) === 0;
             }
             else {
                 return document.referrer.indexOf(config.page.host) === 0;
             }
         }
-        return config.page.contentType === 'Video' && isInternalReferrer() && !isAutoplayBlockingPlatform();
-    }
 
-    function onPlayerReady(atomId, overlay, event) {
-        if(shouldAutoplay()) {
-            event.target.playVideo();
+        function isMainVideo() {
+            return closest(players[atomId].iframe, 'figure[data-component="main video"]');
         }
 
+        return config.page.contentType === 'Video' &&
+            isInternalReferrer() &&
+            !isAutoplayBlockingPlatform() &&
+            isMainVideo();
+    }
+
+    function onPlayerReady(atomId, overlay, iframe, event) {
         players[atomId] = {
             player: event.target,
-            pendingTrackingCalls: [25, 50, 75]
+            pendingTrackingCalls: [25, 50, 75],
+            iframe: iframe
         };
+
+        if(shouldAutoplay(atomId)) {
+            event.target.playVideo();
+        }
 
         if (overlay) {
             showDuration(atomId, overlay);
@@ -120,6 +145,11 @@ define([
             if (!!config.page.section && detect.isBreakpoint({ min: 'desktop' })) {
                 players[atomId].endSlate = getEndSlate(overlay);
             }
+        }
+
+        if (closest(iframe, '.immersive-main-media__media')) {
+            updateImmersiveButtonPos();
+            window.addEventListener('resize', debounce(updateImmersiveButtonPos.bind(null), 200));
         }
     }
 
@@ -192,11 +222,20 @@ define([
                 tracking.init(getTrackingId(atomId));
 
                 youtubePlayer.init(iframe, {
-                    onPlayerReady: onPlayerReady.bind(null, atomId, overlay),
+                    onPlayerReady: onPlayerReady.bind(null, atomId, overlay, iframe),
                     onPlayerStateChange: onPlayerStateChange.bind(null, atomId)
                 }, iframe.id);
             });
         });
+    }
+
+    function updateImmersiveButtonPos() {
+        var playerHeight = document.querySelector('.immersive-main-media__media .youtube-media-atom').offsetHeight;
+        var headline = document.querySelector('.immersive-main-media__headline-container');
+        var headlineHeight = headline ? headline.offsetHeight : 0;
+        var buttonOffset = playerHeight - headlineHeight;
+        var immersiveInterface = document.querySelector('.youtube-media-atom__immersive-interface');
+        immersiveInterface.style.top = buttonOffset + 'px';
     }
 
     // retrieves actual id of atom without appended index

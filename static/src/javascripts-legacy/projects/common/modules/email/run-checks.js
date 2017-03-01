@@ -30,7 +30,7 @@ define([
     Promise
 ) {
     var emailInserted = false;
-    var compliantOutbrain = false;
+    var nonCompliantOutbrain = false;
     var emailShown;
     var userListSubsChecked = false;
     var userListSubs = [];
@@ -89,16 +89,11 @@ define([
         }
     }
 
-    function compliantObWidgetIsShown() {
-        return compliantOutbrain;
+    function nonCompliantObWidgetIsShown() {
+        return nonCompliantOutbrain;
     }
 
     var canRunList = {
-        theCampaignMinute: function () {
-            var isUSElection = page.keywordExists(['US elections 2016']);
-            var isNotUSBriefingSeries = config.page.series !== 'Guardian US briefing';
-            return isUSElection && isNotUSBriefingSeries;
-        },
         theFilmToday: function () {
             return config.page.section === 'film';
         },
@@ -122,13 +117,25 @@ define([
                 !pageHasBlanketBlacklist() &&
                 userReferredFromNetworkFront() &&
                 allowedArticleStructure();
+        },
+        sleevenotes: function () {
+            return config.page.section === "music";
+        },
+        longReads: function () {
+            return config.page.seriesId === 'news/series/the-long-read';
+        },
+        bookmarks: function () {
+            return config.page.section === "books";
+        },
+        greenLight: function () {
+            return config.page.section === "environment";
         }
     };
 
     // Public
 
-    function setCompliantOutbrain() {
-        compliantOutbrain = true;
+    function setNonCompliantOutbrain() {
+        nonCompliantOutbrain = true;
     }
 
     function setEmailInserted() {
@@ -159,7 +166,7 @@ define([
             !clash.userIsInAClashingAbTest(clash.nonEmailClashingTests) &&
             storage.session.isAvailable() &&
             !userHasSeenThisSession() &&
-            !compliantObWidgetIsShown() &&
+            nonCompliantObWidgetIsShown() &&
             !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
     }
 
@@ -186,7 +193,7 @@ define([
     }
 
     return {
-        setCompliantOutbrain: setCompliantOutbrain,
+        setNonCompliantOutbrain: setNonCompliantOutbrain,
         setEmailShown: setEmailShown,
         getEmailShown: getEmailShown,
         setEmailInserted: setEmailInserted,

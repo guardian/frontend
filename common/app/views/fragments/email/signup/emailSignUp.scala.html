@@ -1,3 +1,4 @@
+@import model.EmailNewsletters._
 @(  componentClass: String,
     listId: Int,
     formHeading: String = "",
@@ -7,32 +8,25 @@
     formImage: String = "")(implicit request: RequestHeader)
 
 @import common.LinkTo
-@import controllers.ListIds._
 
-@listIdTones = @{ Map[Int, String] (
-    theBestOfOpinion -> "comment",
-    newBestOfOpinion -> "comment",
-    controlBestOfOpinion -> "comment",
-    bestOfOpinionAUS -> "comment",
-    bestOfOpinionUS -> "comment",
-    theFiver -> "feature",
-    mediaBriefing -> "media",
-    theLongRead -> "feature",
-    weekendReading -> "feature",
-    documentaries -> "plaindark",
-    theFlyer -> "feature",
-    theFlyerCards -> "feature",
-    theFlyerConnected -> "feature",
-    theBreakdown -> "feature",
-    theSpin -> "feature",
-    closeUp -> "review",
-    filmToday -> "media",
-    sleeveNotes -> "review",
-    newSleeveNotes -> "review",
-    controlSleeveNotes -> "review",
-    theObserverFoodMonthly -> "feature",
-    firstDogOnTheMoon -> "media"
-)}
+@listIdTones = @{  List(
+    bestOfOpinionUK.allIds.map(_ -> "comment"),
+    bestOfOpinionAUS.allIds.map(_ -> "comment"),
+    bestOfOpinionUS.allIds.map(_ -> "comment"),
+    theFiver.allIds.map(_ -> "feature"),
+    mediaBriefing.allIds.map(_ -> "media"),
+    theLongRead.allIds.map(_ -> "feature"),
+    weekendReading.allIds.map(_ -> "feature"),
+    documentaries.allIds.map(_ -> "plaindark"),
+    theFlyer.allIds.map(_ -> "feature"),
+    theBreakdown.allIds.map(_ -> "feature"),
+    theSpin.allIds.map(_ -> "feature"),
+    closeUp.allIds.map(_ -> "review"),
+    filmToday.allIds.map(_ -> "media"),
+    sleeveNotes.allIds.map(_ -> "review"),
+    theObserverFoodMonthly.allIds.map(_ -> "feature"),
+    firstDogOnTheMoon.allIds.map(_ -> "media")
+).flatten.toMap: Map[Int, String] }
 
 @formId = @{ componentClass + "-email-sub-form" }
 @inputId = @{ componentClass + "-email-sub-input" }

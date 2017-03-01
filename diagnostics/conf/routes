@@ -19,3 +19,5 @@ GET        /quiz/results/:quizId            controllers.QuizzesController.result
 OPTIONS    /quiz/results/:quizId            controllers.QuizzesController.resultsOptions(quizId)
 POST       /quiz/update                     controllers.QuizzesController.update()
 OPTIONS    /quiz/update                     controllers.QuizzesController.updateOptions
+
+GET        /esi/ad-call                     controllers.CommercialPreflightController.adCall()

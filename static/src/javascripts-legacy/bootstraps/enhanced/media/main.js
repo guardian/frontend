@@ -11,7 +11,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/commercial/video-ad-url',
-    'common/modules/commercial/commercial-features',
+    'commercial/modules/commercial-features',
     'common/modules/component',
     'common/modules/experiments/ab',
     'common/modules/video/events',
@@ -22,11 +22,9 @@ define([
     'common/modules/video/onward-container',
     'common/modules/video/more-in-series-container',
     'common/modules/video/videojs-options',
-    // This must be the full path because we use curl config to change it based
-    // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html',
-    'common/modules/commercial/user-features',
+    'raw-loader!common/views/ui/loading.html',
+    'commercial/modules/user-features',
     'common/utils/load-script'
 ], function (
     bean,

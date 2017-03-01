@@ -15,7 +15,7 @@
     line-height: $gs-row-height;
 }
 
-.cta--show-more {
+.cta--show-more[overflow] {
     position: absolute;
     bottom: 0;
     left: 0;

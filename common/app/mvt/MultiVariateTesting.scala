@@ -50,25 +50,14 @@ object CommercialClientLoggingVariant extends TestDefinition(
   }
 }
 
-object WebpackTest extends TestDefinition(
-  name = "ab-webpack-bundle",
-  description = "for users in this test, website will serve standard JavaScript that has been bundled by Webpack",
-  owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LocalDate(2017, 2, 13)
-) {
+object YouTubePosterOverride extends TestDefinition(
+  name = "youtube-poster-override",
+  description = "Users in the test will always see the trail image on YouTube atom content cards instead of the poster image",
+  owners = Seq(Owner.withGithub("gidsg")),
+  sellByDate = new LocalDate(2017, 4, 3)
+  ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-webpack-bundle").contains("webpack")
-  }
-}
-
-object WebpackControl extends TestDefinition(
-  name = "ab-webpack-bundle-control",
-  description = "control for Webpack test",
-  owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LocalDate(2017, 2, 13)
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-webpack-bundle").contains("control")
+    request.headers.get("X-GU-youtube-poster-override").contains("true")
   }
 }
 
@@ -88,8 +77,7 @@ object ActiveTests extends ServerSideABTests {
     ABNewNavVariantSeven,
     ABNewNavControl,
     CommercialClientLoggingVariant,
-    WebpackTest,
-    WebpackControl
+    YouTubePosterOverride
   )
 }
 

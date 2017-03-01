@@ -11,9 +11,12 @@ define([
     'common/modules/experiments/tests/opinion-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
+    'common/modules/experiments/tests/paid-content-vs-outbrain',
     'common/modules/experiments/tests/guardian-today-messaging',
     'common/modules/experiments/acquisition-test-selector',
-    'common/modules/experiments/tests/membership-a1-a2-thrasher',
+    'common/modules/experiments/tests/tailor-recommended-email',
+    'common/modules/experiments/tests/membership-a3-a4-bundles-thrasher',
+    'common/modules/experiments/tests/tailor-survey',
     'common/modules/experiments/tests/sleeve-notes-email-variants'
 ], function (reportError,
              config,
@@ -27,18 +30,24 @@ define([
              OpinionEmailVariants,
              RecommendedForYou,
              MembershipEngagementBannerTests,
+             PaidContentVsOutbrain,
              GuardianTodayMessaging,
              acquisitionTestSelector,
-             MembershipA1A2Thrasher,
+             TailorRecommendedEmail,
+             MembershipA3A4BundlesThrasher,
+             TailorSurvey,
              SleevenotesEmailVariants
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
         new RecommendedForYou(),
+        new PaidContentVsOutbrain,
         new GuardianTodayMessaging(),
         acquisitionTestSelector.getTest(),
-        new MembershipA1A2Thrasher(),
+        new TailorRecommendedEmail(),
+        new MembershipA3A4BundlesThrasher(),
+        new TailorSurvey(),
         new SleevenotesEmailVariants()
     ].concat(MembershipEngagementBannerTests));
 
@@ -158,11 +167,17 @@ define([
         return tag.join(',');
     }
 
-    function abData(variantName, complete) {
-        return {
+    function abData(variantName, complete, campaignCodes) {
+        var data = {
             'variantName': variantName,
             'complete': complete
-        };
+        }
+
+        if (campaignCodes) {
+            data.campaignCodes = campaignCodes;
+        }
+
+        return data;
     }
 
     function getAbLoggableObject() {
@@ -174,10 +189,11 @@ define([
                 .filter(isParticipating)
                 .filter(testCanBeRun)
                 .forEach(function (test) {
-                    var variant = getTestVariantId(test.id);
+                    var variantId = getTestVariantId(test.id);
+                    var variant = getVariant(test, variantId);
 
-                    if (variant && segmentUtil.isInTest(test)) {
-                        log[test.id] = abData(variant, 'false');
+                    if (variantId && segmentUtil.isInTest(test)) {
+                        log[test.id] = abData(variantId, 'false', variant.campaignCodes);
                     }
                 });
 
@@ -215,7 +231,9 @@ define([
      */
     function recordTestComplete(test, variantId, complete) {
         var data = {};
-        data[test.id] = abData(variantId, String(complete));
+        var variant = getVariant(test, variantId);
+
+        data[test.id] = abData(variantId, String(complete), variant.campaignCodes);
 
         return function () {
             recordOphanAbEvent(data);

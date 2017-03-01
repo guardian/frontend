@@ -3,7 +3,7 @@ define([
     'common/utils/config',
     'common/utils/template',
     'commercial/modules/creatives/add-tracking-pixel',
-    'text!commercial/views/creatives/hosted-thrasher-multi.html'
+    'raw-loader!commercial/views/creatives/hosted-thrasher-multi.html'
 ], function (
     fastdom,
     config,
@@ -26,7 +26,7 @@ define([
 
             this.$adSlot.append(hostedThrasherTemplate({ data: this.params }));
             if (this.params.trackingPixel) {
-                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+                addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
             }
 
             return true;

@@ -8,12 +8,23 @@ import common.ExecutionContexts
 import implicits.Responses._
 import model.ApplicationContext
 import play.api.http.HttpFilters
-import play.api.mvc.{EssentialFilter, Filter, RequestHeader, Result}
-import play.filters.gzip.GzipFilter
+import play.api.mvc._
+import play.filters.gzip.{GzipFilterConfig, GzipFilter}
 
 import scala.concurrent.Future
 
-class Gzipper(implicit val mat: Materializer) extends GzipFilter(shouldGzip = (_, result) => !result.header.isImage)
+class GzipperConfig() extends GzipFilterConfig {
+  // These paths are used as a whitelist that means the server's
+  // outgoing response for this request will be uncompressed.
+  val excludeFromGzip = List(
+    "/esi/ad-call"
+  )
+
+  override val shouldGzip: (RequestHeader, Result) => Boolean = (request, result) => {
+    !result.header.isImage && !excludeFromGzip.contains(request.path)
+  }
+}
+class Gzipper(implicit val mat: Materializer) extends GzipFilter(new GzipperConfig)
 
 class JsonVaryHeadersFilter(implicit val mat: Materializer) extends Filter with ExecutionContexts with implicits.Requests {
 

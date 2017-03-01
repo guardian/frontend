@@ -13,7 +13,7 @@ define([
     'common/modules/video/events',
     'common/modules/video/videojs-options',
     'common/modules/media/videojs-plugins/fullscreener',
-    'text!common/views/ui/loading.html'
+    'raw-loader!common/views/ui/loading.html'
 ], function (
     Promise,
     hostedYoutube,
@@ -126,9 +126,13 @@ define([
         }
 
         // Return a promise that resolves after the async work is done.
-        Promise.resolve(require(['bootstraps/enhanced/media/main']))
+        new Promise(function(resolve){
+            require(['bootstraps/enhanced/media/main'], resolve);
+        })
         .then(function () {
-            return require(['bootstraps/enhanced/media/video-player']);
+            return new Promise(function(resolve){
+                require(['bootstraps/enhanced/media/video-player'], resolve);
+            });
         })
         .then(function (videojs) {
             $videoEl.each(function(el){

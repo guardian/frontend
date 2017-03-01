@@ -271,19 +271,11 @@ GET            /admin/football/api/squad/:teamId                                
 
 
 # Commercial
-GET            /commercial/travel/offers.json                                                                                    commercial.controllers.TravelOffersController.renderTravel
 GET            /commercial/travel/api/offers.json                                                                                commercial.controllers.TravelOffersController.getTravel
-GET            /commercial/jobs.json                                                                                             commercial.controllers.JobsController.renderJobs
 GET            /commercial/jobs/api/jobs.json                                                                                    commercial.controllers.JobsController.getJobs
-GET            /commercial/masterclasses.json                                                                                    commercial.controllers.MasterclassesController.renderMasterclasses
-GET            /commercial/soulmates/$subgroup<\w+>.json                                                                         commercial.controllers.SoulmatesController.renderSoulmates(subgroup)
 GET            /commercial/api/soulmates.json                                                                                    commercial.controllers.SoulmatesController.getSoulmates
-GET            /commercial/books/book.json                                                                                       commercial.controllers.BookOffersController.renderBook
-GET            /commercial/books/books.json                                                                                      commercial.controllers.BookOffersController.renderBooks
 GET            /commercial/books/api/book.json                                                                                   commercial.controllers.BookOffersController.getBook
 GET            /commercial/books/api/books.json                                                                                  commercial.controllers.BookOffersController.getBooks
-GET            /commercial/liveevents/event.json                                                                                 commercial.controllers.LiveEventsController.renderEvent
-GET            /commercial/api/liveevent.json                                                                                    commercial.controllers.LiveEventsController.getLiveEvent
 GET            /commercial/capi.json                                                                                             commercial.controllers.ContentApiOffersController.itemsJson
 GET            /commercial/capi                                                                                                  commercial.controllers.ContentApiOffersController.itemsHtml
 GET            /commercial/capi-single.json                                                                                      commercial.controllers.ContentApiOffersController.itemJson
@@ -295,7 +287,6 @@ GET            /commercial/capi-single-merch                                    
 GET            /commercial/api/traffic-driver.json                                                                               commercial.controllers.TrafficDriverController.renderJson
 GET            /commercial/paid.json                                                                                             commercial.controllers.PaidContentCardController.cardJson
 GET            /commercial/paid                                                                                                  commercial.controllers.PaidContentCardController.cardHtml
-GET            /commercial/multi.json                                                                                            commercial.controllers.Multi.renderMulti
 GET            /commercial/api/multi.json                                                                                        commercial.controllers.Multi.getMulti
 GET            /$path<commercial-containers>                                                                                                controllers.FaciaController.renderFront(path)
 GET            /advertiser-content/:campaignName/:pageName                                                                       commercial.controllers.HostedContentController.renderHostedPage(campaignName, pageName)
@@ -431,6 +422,8 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>     
 
 
 # Applications
+
+GET            /sdata/recipes/$filterType<cuisine|dietary|celebration|category>/:filterValue                                     controllers.StructuredDataIndexController.render(filterType, filterValue)
 GET            /$path<international>                                                                                             controllers.FaciaController.renderFront(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                              controllers.IndexController.renderTrailsJson(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                                   controllers.IndexController.renderTrails(path)

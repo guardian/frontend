@@ -11,15 +11,6 @@ $block-padding-right: $gs-gutter;
 }
 
 .content__main-column--liveblog {
-    @include mq(desktop) {
-        margin-left: $right-column + $gs-gutter;
-        margin-right: 0;
-        max-width: none;
-    }
-    @include mq(wide) {
-        margin-right: gs-span(4) + $gs-gutter;
-    }
-
     .caption--main {
         padding-bottom: 0;
     }
@@ -31,17 +22,14 @@ $block-padding-right: $gs-gutter;
     border-bottom: 0;
 
     @include mq(desktop) {
-        border-top: 0;
-        padding-top: 0;
-        margin-left: 0;
-        width: $right-column;
-        min-height: gs-height(1)*1.5;
-        position: static;
-
         .meta__numbers {
-            position: static;
-            border-top: 1px dotted $neutral-5;
+            @include clearfix;
             border-bottom: 0;
+            border-top: 1px dotted $neutral-5;
+            height: 36px;
+            padding-bottom: $gs-baseline / 4;
+            padding-top: $gs-baseline / 4;
+            position: static;
         }
     }
 
@@ -68,14 +56,6 @@ $block-padding-right: $gs-gutter;
             top: $gs-baseline/1.5;
         }
     }
-}
-
-.content__updated-container--liveblog {
-    @include fs-textSans(1);
-    padding: $gs-baseline/6 0;
-    margin-left: -($right-column + $gs-gutter);
-    position: absolute;
-    top: 0;
 }
 
 /* Timestamps
@@ -824,15 +804,6 @@ $timeline-width: 15px;
         }
     }
 
-    .content__labels {
-        @include mq(desktop) {
-            float: left;
-            width: gs-span(3);
-            margin-left: (gs-span(4) + $gs-gutter) * -1;
-            border-bottom: 0;
-        }
-    }
-
     .content__section-label {
         @include mq(desktop) {
             @include fs-header(3);
@@ -851,16 +822,6 @@ $timeline-width: 15px;
         @include mq($until: wide) {
             display: none;
         }
-    }
-}
-
-@include mq(desktop) {
-    .blog__left-col {
-        position: absolute;
-        top: 0;
-        z-index: 200;
-        margin-left: ($right-column + $gs-gutter) * - 1;
-        width: $right-column;
     }
 }
 

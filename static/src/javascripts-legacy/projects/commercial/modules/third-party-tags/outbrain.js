@@ -6,11 +6,10 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'common/utils/steady-page',
-    'common/modules/identity/api',
-    'common/modules/commercial/dfp/track-ad-render',
-    'common/modules/commercial/commercial-features',
+    'commercial/modules/dfp/track-ad-render',
+    'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/outbrain-codes',
-    'text!commercial/views/outbrain.html',
+    'raw-loader!commercial/views/outbrain.html',
     'common/modules/email/run-checks',
     'common/modules/experiments/ab-test-clash',
     'common/utils/load-script'
@@ -22,7 +21,6 @@ define([
     detect,
     template,
     steadyPage,
-    identity,
     trackAdRender,
     commercialFeatures,
     getCode,
@@ -84,8 +82,8 @@ define([
                 if (slot === 'merchandising') {
                     $(selectors[slot].widget).replaceWith($outbrain[0]);
                 }
-                if (slot !== 'nonCompliant' && slot !== 'merchandising') {
-                    emailRunChecks.setCompliantOutbrain();
+                if (slot === 'nonCompliant' || slot === 'merchandising') {
+                    emailRunChecks.setNonCompliantOutbrain();
                 }
                 $container.append(widgetHtml);
                 $outbrain.css('display', 'block');
@@ -105,10 +103,6 @@ define([
                 }
             });
         });
-    }
-
-    function identityPolicy() {
-        return !(identity.isUserLoggedIn() && config.page.commentable);
     }
 
     /*
@@ -173,7 +167,7 @@ define([
     }
 
     function init() {
-        if (commercialFeatures.outbrain && identityPolicy() ) {
+        if (commercialFeatures.outbrain) {
             // if there is no merch component, load the outbrain widget right away
             return loadInstantly().then(function(shouldLoadInstantly) {
                 if (shouldLoadInstantly) {
@@ -207,6 +201,8 @@ define([
                     });
                 }
             });
+        } else {
+            emailRunChecks.setNonCompliantOutbrain();
         }
 
         return Promise.resolve(true);

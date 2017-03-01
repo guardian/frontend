@@ -31,6 +31,7 @@
     .fc-container__header__title {
         border-top-color: $story-package;
         color: $news-support-2;
+        float: none;
 
         & a:hover {
             color: $story-package;

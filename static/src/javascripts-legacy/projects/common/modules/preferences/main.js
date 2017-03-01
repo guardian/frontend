@@ -1,5 +1,5 @@
 define([
-    'react',
+    'react/addons',
     'common/utils/$',
     'common/utils/config',
     'common/modules/onward/history',

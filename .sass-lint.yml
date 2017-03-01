@@ -2,7 +2,6 @@ files:
   include: 'static/src/stylesheets/**/*.scss'
   ignore:
     # Do not lint external files.
-    - 'static/src/stylesheets/components/**/*.scss'
     - 'static/src/stylesheets/icons/**/*.scss'
 options:
   formatter: stylish
