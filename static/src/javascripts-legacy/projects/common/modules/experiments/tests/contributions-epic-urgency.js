@@ -1,7 +1,7 @@
 define([
     'common/modules/commercial/contributions-utilities',
     'common/utils/template',
-    'text!common/views/contributions-epic-equal-buttons.html'
+    'raw-loader!common/views/contributions-epic-equal-buttons.html'
 ], function (
     contributionsUtilities,
     template,
@@ -9,8 +9,8 @@ define([
 ) {
 
     return contributionsUtilities.makeABTest({
-        id: 'ContributionsEpicOneLineEditsV2',
-        campaignId: 'kr1_epic_one_line_edits_v2',
+        id: 'ContributionsEpicUrgency',
+        campaignId: 'kr1_epic_urgency',
 
         start: '2017-03-01',
         expiry: '2017-03-15',
@@ -24,12 +24,6 @@ define([
         audience: 0.40,
         audienceOffset: 0.12,
 
-        // We don't want to run these tests in Australia,
-        // since they don't have a single shareholder,
-        // contrary to what one of the variants says.
-        locationCheck: function (countyCode) {
-            return countyCode !== 'AU';
-        },
 
         variants: [
             {
@@ -65,7 +59,7 @@ define([
                 successOnView: true
             },
             {
-                id: 'values_tweaks',
+                id: 'values_tweak',
                 maxViews: {
                     days: 30,
                     count: 4,
@@ -76,7 +70,7 @@ define([
                         linkUrl1: membershipUrl,
                         linkUrl2: contributionUrl,
                         title: 'Now is the time …',
-                        p1: '… to defend progressive values and truthful, in-depth reporting. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can. So now we need your support. The Guardians independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because, at a time of fake news and ‘alternative facts’, we believe our perspective matters more than ever.',
+                        p1: '… to defend progressive values and truthful, in-depth reporting. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can. So now we need your support. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because, at a time of fake news and ‘alternative facts’, we believe our perspective matters more than ever.',
                         p2: 'If everyone who reads our reporting, who likes it, helps to pay for it, our future would be much more secure.',
                         p3: '',
                         cta1: 'Become a Supporter',
@@ -85,7 +79,8 @@ define([
                 },
                 insertBeforeSelector: '.submeta',
                 successOnView: true
-            },{
+            },
+            {
                 id: 'values_full',
                 maxViews: {
                     days: 30,
@@ -106,7 +101,7 @@ define([
                 },
                 insertBeforeSelector: '.submeta',
                 successOnView: true
-            },
+            }
 
         ]
     });

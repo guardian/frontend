@@ -136,7 +136,7 @@ trait ABTestSwitches {
     "Test 3 new variants with messaging that highlights the urgency of supporting the Guardian",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 15),
+    sellByDate = new LocalDate(2017, 3, 17),
     exposeClientSide = true
   )
 

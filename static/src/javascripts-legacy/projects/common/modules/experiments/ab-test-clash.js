@@ -35,7 +35,8 @@ define([
         ContributionsEpicAlwaysAskStrategy,
         ContributionsEpicBrexit,
         ContributionsEpicAskFourStagger,
-        ContributionsEpicAskFourEarning
+        ContributionsEpicAskFourEarning,
+        ContributionsEpicUrgency
     ];
 
     var emailTests = [
