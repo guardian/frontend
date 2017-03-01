@@ -16,15 +16,15 @@ module.exports = {
     task: () => {
         mkdirp.sync(dest);
         return Promise.all(
-                [
-                    require.resolve('es5-shim'),
-                    require.resolve('html5shiv'),
-                    path.resolve(
-                        path.dirname(require.resolve('JSON2')),
-                        'json2.js'
-                    ),
-                ].map(file => readFileP(file, 'utf8'))
-            )
+            [
+                require.resolve('es5-shim'),
+                require.resolve('html5shiv'),
+                path.resolve(
+                    path.dirname(require.resolve('JSON2')),
+                    'json2.js'
+                ),
+            ].map(file => readFileP(file, 'utf8'))
+        )
             .then(srcs => srcs.join(';'))
             .then(src => uglify.minify(src, { fromString: true }).code)
             .then(src => writeFileP(path.resolve(dest, 'es5-html5.js'), src));

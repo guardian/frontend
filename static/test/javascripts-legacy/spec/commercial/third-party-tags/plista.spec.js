@@ -22,7 +22,6 @@ define([
             'dfp-ad--merchandising-high': false
         },
         config,
-        identity,
         sut,
         commercialFeatures,
         injector = new Injector();
@@ -37,14 +36,12 @@ define([
 
             injector.require([
                 'common/utils/config',
-                'common/modules/identity/api',
                 'commercial/modules/third-party-tags/plista',
                 'commercial/modules/commercial-features'
             ], function () {
                 config = arguments[0];
-                identity = arguments[1];
-                sut = arguments[2];
-                commercialFeatures = arguments[3];
+                sut = arguments[1];
+                commercialFeatures = arguments[2];
 
                 commercialFeatures.thirdPartyTags = true;
                 commercialFeatures.outbrain = true;
@@ -55,10 +52,6 @@ define([
                     isFront: false,
                     commentable: true,
                     edition: 'AU'
-                };
-
-                identity.isUserLoggedIn = function () {
-                    return false;
                 };
 
                 fixtures.render(fixturesConfig);
@@ -109,39 +102,6 @@ define([
                 spyOn(sut, 'load');
                 sut.init().then(function () {
                     expect(sut.load).not.toHaveBeenCalled();
-                    done();
-                });
-            });
-
-            it('should not load when is preview', function (done) {
-                config.page.isPreview = true;
-                spyOn(sut, 'load');
-                sut.init().then(function(){
-                    expect(sut.load).not.toHaveBeenCalled();
-                    done();
-                });
-            });
-
-            it('should not load when user is logged in', function (done) {
-                identity.isUserLoggedIn = function () {
-                    return true;
-                };
-
-                sut.init().then(function(){
-                    expect(sut.load).not.toHaveBeenCalled();
-                    done();
-                });
-            });
-
-            it('should load when user is logged in but there are no comments on the page', function (done) {
-                identity.isUserLoggedIn = function () {
-                    return true;
-                };
-
-                config.page.commentable = false;
-                spyOn(sut, 'load');
-                sut.init().then(function(){
-                    expect(sut.load).toHaveBeenCalled();
                     done();
                 });
             });

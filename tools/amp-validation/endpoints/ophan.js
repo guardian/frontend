@@ -37,12 +37,8 @@ function getEndpointsFromResponse(res) {
                 body += chunk;
             })
             .on('end', () => {
-                const endpoints = JSON.parse(body)
-                    .map(hit =>
-                        hit.url.replace(
-                            /^https?:\/\/www\.theguardian\.com/,
-                            ''
-                        ));
+                const endpoints = JSON.parse(body).map(hit =>
+                    hit.url.replace(/^https?:\/\/www\.theguardian\.com/, ''));
                 resolve(endpoints);
             })
             .on('error', reject);

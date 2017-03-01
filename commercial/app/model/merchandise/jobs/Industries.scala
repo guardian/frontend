@@ -6,8 +6,6 @@ import contentapi.ContentApiClient
 
 import scala.concurrent.Future
 
-case class JobSector(path: String, name: String)
-
 object Industries {
 
   // note, these are ordered by importance
