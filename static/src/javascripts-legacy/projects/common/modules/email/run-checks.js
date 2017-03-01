@@ -60,20 +60,6 @@ define([
         return userListSubs;
     }
 
-    function userReferredFromNetworkFront() {
-        // Check whether the referring url ends in the edition
-        var networkFront = ['uk', 'us', 'au', 'international'],
-            originPathName = document.referrer.split(/\?|#/)[0];
-
-        if (originPathName) {
-            return some(networkFront, function (frontName) {
-                return originPathName.substr(originPathName.lastIndexOf('/') + 1) === frontName;
-            });
-        }
-
-        return false;
-    }
-
     function isParagraph($el) {
         return $el.nodeName && $el.nodeName === 'P';
     }
@@ -115,7 +101,6 @@ define([
         theGuardianToday: function () {
             return config.switches.emailInArticleGtoday &&
                 !pageHasBlanketBlacklist() &&
-                userReferredFromNetworkFront() &&
                 allowedArticleStructure();
         },
         sleevenotes: function () {
