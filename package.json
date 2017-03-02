@@ -159,7 +159,6 @@
   },
   "scripts": {
     "postinstall": "./tools/task-runner/runner githooks --verbose",
-    "test": "jest",
     "amdtoes6": "amdtoes6 --beautify",
     "lebab": "lebab --transform arrow,let,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,class,default-param --replace",
     "eslint-fix": "eslint --color --fix"
