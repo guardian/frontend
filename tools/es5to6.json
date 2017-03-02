@@ -153,7 +153,6 @@
     "bootstraps/enhanced/preferences.js"
   ],
   "Simon Adcock": [
-    "projects/common/utils/defer-to-analytics.js",
     "projects/common/utils/detect.js",
     "projects/common/utils/drop-while.js",
     "projects/common/utils/easing.js",
