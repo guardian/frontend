@@ -227,7 +227,6 @@
     "projects/common/modules/sudoku/grid.js",
     "projects/common/modules/sudoku/main.js",
     "projects/common/modules/sudoku/utils.js",
-    "projects/common/modules/tailor/tailor.js",
     "projects/common/modules/ui/accessibility-prefs.js",
     "projects/common/modules/ui/autoupdate.js",
     "projects/common/modules/ui/blockSharing.js",
