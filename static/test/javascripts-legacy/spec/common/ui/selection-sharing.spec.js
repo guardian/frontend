@@ -1,6 +1,6 @@
 define([
     'qwery',
-    'common/utils/$',
+    'lib/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
@@ -20,7 +20,7 @@ define([
 
         beforeEach(function (done) {
             injector.mock({
-                'common/utils/client-rects': {
+                'lib/client-rects': {
                     getBoundingClientRect: function () {
                         return {
                             left: 0,
@@ -28,7 +28,7 @@ define([
                         };
                     }
                 },
-                'common/utils/detect':  {
+                'lib/detect':  {
                     hasTouchScreen:      function () { return false; },
                     hasPushStateSupport: function () { return true; }
                 }

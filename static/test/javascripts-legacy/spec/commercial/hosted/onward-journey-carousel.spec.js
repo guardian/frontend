@@ -1,6 +1,6 @@
 define([
-    'common/utils/$',
-    'common/utils/fastdom-promise',
+    'lib/$',
+    'lib/fastdom-promise',
     'helpers/fixtures',
     'raw-loader!fixtures/commercial/hosted/onward-journey-carousel.html',
     'helpers/injector'

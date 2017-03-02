@@ -1,5 +1,5 @@
 define([
-    'common/utils/url'
+    'lib/url'
 ], function (
     url
 ) {

@@ -16,13 +16,13 @@ define([
         beforeEach(function (done) {
             injector.mock({
                 reqwest:  reqwestSpy,
-                'common/utils/config': {
+                'lib/config': {
                     page: {
                         ajaxUrl: 'http://api.nextgen.guardianapps.co.uk'
                     }
                 }
             });
-            injector.require(['common/utils/ajax'], function () {
+            injector.require(['lib/ajax'], function () {
                 ajax = arguments[0];
                 done();
             });

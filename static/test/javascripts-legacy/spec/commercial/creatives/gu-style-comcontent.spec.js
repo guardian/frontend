@@ -1,6 +1,6 @@
 define([
     'qwery',
-    'common/utils/$',
+    'lib/$',
     'helpers/fixtures',
     'commercial/modules/creatives/gu-style-comcontent'
 ], function (

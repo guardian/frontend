@@ -33,7 +33,7 @@ requirejs.config({
         'ophan/ng':   '/base/node_modules/ophan-tracker-js/build/ophan.ng',
 
         analytics:    'projects/common/modules/analytics/analytics',
-        picturefill:  'projects/common/utils/picturefill',
+        picturefill:  'lib/picturefill',
         // Test specific paths
         omniture:     '/base/static/vendor/javascripts/omniture/omniture',
         squire:       '/base/static/test/javascripts-legacy/components/squire/src/Squire',
@@ -43,11 +43,11 @@ requirejs.config({
         // plugins
         'raw-loader':    '/base/static/test/javascripts-legacy/helpers/raw-loader',
         'svg-loader':    '/base/static/test/javascripts-legacy/helpers/svg-loader',
-        'common/utils/raven': '/base/static/test/javascripts-legacy/fixtures/raven'
+        'lib/raven': '/base/static/test/javascripts-legacy/fixtures/raven'
     }
 });
 
-require(['Promise', 'common/utils/to-array'], function (Promise, toArray) {
+require(['Promise', 'lib/to-array'], function (Promise, toArray) {
     require(tests, function () {
         Promise.all(toArray(arguments)).then(function () {
             window.__karma__.start();

@@ -1,7 +1,7 @@
 define([
     'helpers/injector',
-    'common/utils/storage',
-    'common/utils/config'
+    'lib/storage',
+    'lib/config'
 ], function (
     Injector,
     storage,
@@ -71,7 +71,7 @@ define([
 
             injector.require([
                 'common/modules/commercial/adblock-messages',
-                'common/utils/detect'
+                'lib/detect'
             ], function () {
                 adblockMessage = arguments[0];
                 detect = arguments[1];

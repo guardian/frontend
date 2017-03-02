@@ -1,7 +1,7 @@
 define([
     'bonzo',
-    'common/utils/$',
-    'common/utils/detect'
+    'lib/$',
+    'lib/detect'
 ], function (
     bonzo,
     $,
