@@ -1,7 +1,7 @@
 define([
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
     'lodash/objects/assign',
     'lodash/collections/find'
 ], function (

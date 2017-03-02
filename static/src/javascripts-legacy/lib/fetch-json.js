@@ -1,6 +1,6 @@
 define([
-    'common/utils/config',
-    'common/utils/fetch'
+    'lib/config',
+    'lib/fetch'
 ], function (
     config,
     fetch

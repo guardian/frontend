@@ -1,7 +1,7 @@
 define([
     'raven',
-    'common/utils/config',
-    'common/utils/detect'
+    'lib/config',
+    'lib/detect'
 ], function (
     raven,
     config,

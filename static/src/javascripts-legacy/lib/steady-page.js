@@ -8,11 +8,11 @@
  */
 
 define([
-    'common/utils/fastdom-promise',
+    'lib/fastdom-promise',
     'Promise',
-    'common/utils/assign',
-    'common/utils/queue',
-    'common/utils/config'
+    'lib/assign',
+    'lib/queue',
+    'lib/config'
 ], function (
     fastdom,
     Promise,

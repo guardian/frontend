@@ -6,7 +6,7 @@
 /*global DocumentTouch: true */
 
 define([
-    'common/utils/mediator',
+    'lib/mediator',
     'lodash/functions/memoize',
     'Promise'
 ], function (

@@ -1,5 +1,5 @@
 define([
-    'common/utils/easing',
+    'lib/easing',
     'bonzo',
     'fastdom'
 ], function (
