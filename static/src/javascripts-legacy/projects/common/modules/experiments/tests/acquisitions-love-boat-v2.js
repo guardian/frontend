@@ -4,9 +4,6 @@ define([
     'common/utils/template',
     'common/utils/config',
     'common/utils/$',
-    'common/views/svg',
-    'svg-loader!svgs/icon/hand.svg',
-    'svg-loader!svgs/icon/arrow-right.svg',
     'text!common/views/epic-supporter-cta.html',
     'text!common/views/acquisitions-visual.html'
 ], function (
@@ -15,9 +12,6 @@ define([
     template,
     config,
     $,
-    svg,
-    hand,
-    arrowRight,
     epicSupporterCta,
     visualTemplate
 ) {
