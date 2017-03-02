@@ -162,8 +162,8 @@ define([
                 listName: 'greenLight',
                 campaignCode: 'green_light_article_bottom',
                 displayName: {
-                    normalText: 'film',
-                    accentedText: 'today'
+                    normalText: 'green',
+                    accentedText: 'light'
                 },
                 headline: 'The most important stories on the planet',
                 description: 'Sign up to Green Light for environment news emailed direct to you every Friday. And besides the week’s biggest stories and debates, you can expect beautifully curated wildlife galleries, absorbing podcasts and eco-living guides.',
