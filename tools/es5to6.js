@@ -24,12 +24,7 @@ if (!userModules || !userModules.length) {
 
 const moduleId = userModules.shift();
 const unique = `${Date.now()}`.slice(-4);
-const es5Module = path.join(
-    'static',
-    'src',
-    'javascripts-legacy',
-    moduleId
-);
+const es5Module = path.join('static', 'src', 'javascripts-legacy', moduleId);
 
 const es6Module = path.join('static', 'src', 'javascripts', moduleId);
 const es6Name = moduleId.split(path.sep).join('_').replace('.js', '');
