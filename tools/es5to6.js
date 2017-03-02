@@ -40,6 +40,7 @@ git
     })
     .then(() => {
         const moduleId = userModules.shift();
+        const unique = `${Date.now()}`.slice(-4);
         const es5Module = path.join(
             'static',
             'src',
@@ -47,18 +48,19 @@ git
             moduleId
         );
         const es6Module = path.join('static', 'src', 'javascripts', moduleId);
-        const branchName = `es6-${moduleId.split(path.sep).join('_')}`;
+        const es6Name = moduleId.split(path.sep).join('_').replace('.js', '');
+        const branchName = `es6-${es6Name}`;
 
         const steps = {
-            'Create a branch for the conversion': `git checkout -b ${branchName}`,
+            'Create a branch for the conversion': `git checkout -b "${branchName}" || git checkout -b "${branchName}-${unique}"`,
             'Move the legacy module to the new location': `mkdir -p ${path.dirname(es6Module)}; mv ${es5Module} $_; node ./tools/es5to6-remove-module.js ${moduleId}`,
             'Commit the move': `git add .; git commit -m "move ${moduleId} from legacy to standard JS"`,
-            'Convert module to es6': `npm run -s amdtoes6 -- -d ${path.dirname(es6Module)} -o ${path.dirname(es6Module)} -g **/${path.basename(es6Module)} `,
-            'Commit the module tranform': `git add .; git commit -m "transform ${moduleId} to es6 module"`,
-            'Convert contents to es6': `npm run -s lebab -- ${es6Module}`,
-            'Commit the content tranform': `git add .; git commit -m "transform ${moduleId} content to es6"`,
+            'Convert module to ES6': `npm run -s amdtoes6 -- -d ${path.dirname(es6Module)} -o ${path.dirname(es6Module)} -g **/${path.basename(es6Module)} `,
+            'Commit the module tranform': `git add .; git commit -m "transform ${moduleId} to ES6 module"`,
+            'Convert contents to ES6': `npm run -s lebab -- ${es6Module}`,
+            'Commit the content tranform': `git add .; git commit -m "transform ${moduleId} content to ES6"`,
             'Fix lint errors': `npm run -s eslint-fix -- ${es6Module}`,
-            'Commit any lint fixes': `git add .; git commit -m "fix lint errors with ${moduleId} after transform to es6"`,
+            'Commit any lint fixes': `git add .; git commit -m "fix lint errors with ${moduleId} after transform to ES6"`,
         };
 
         Object.keys(steps)
