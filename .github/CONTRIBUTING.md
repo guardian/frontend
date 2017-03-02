@@ -34,15 +34,15 @@ This is applicable to [GMG employees](http://www.gmgplc.co.uk/).
 - Understand what you are trying to achieve with the change (what does success look like?)
 - Fork the code and make your changes.
 - Test your branch locally by running unit and integration tests:
-    - ./sbt012 project &lt;project> test
-    - make test
+    - `./sbt project <project> test`
+    - `make test`
 - Open a pull request.
     - Explain why you are making this change in the pull request
     - Include information about how you plan to measure success (e.g. links to analytics reports)
     - If this change is not measurable be very clear about that fact.
-- A member of the team will review the changes. Once they are satisfied they will add +1 to the pull request.
+- A member of the team will review the changes. Once they are satisfied they will approve the pull request.
 - If there are no broken or ongoing builds in Teamcity, merge your branch and then ensure the master branch is built successfully: both [builds](http://teamcity.gudev.gnl:8111/project.html?projectId=project35&tab=projectOverview) and [integration tests](http://teamcity.gudev.gnl:8111/project.html?projectId=project41&tab=projectOverview).
-- Deploy the code yourself, first to CODE then to PROD.
+- Your build will continuously deploy straight to `PROD`
 - Pay close attention to our [monitoring](https://frontend.gutools.co.uk).
 
 ### External contributions
@@ -57,15 +57,11 @@ Firstly, thanks for helping make our service better! Secondly, we'll try and mak
 
 Here's some wise words from [@gklopper](https://github.com/gklopper).
 
-We only merge to master when the software is ready to go live. This will be different for each thing we do, it might be as simple as showing the person next to you that the typo has been fixed, or you might spend an afternoon with Chris, Nick, or Kay looking over your shoulder.
+We only merge to master when the software is ready to go live. This will be different for each thing we do, it might be as simple as showing the person next to you that the typo has been fixed, or you might spend an afternoon with Design or Dotcom Platform looking over your shoulder.
 
-If in doubt ask the team, the team is your conscience.
+If in doubt ask the team, **the team is your conscience**.
 
-When you merge your branch to master you need to check the builds go through and that the auto deploy happens to CODE. This is as simple as glancing at the [TeamCity](http://teamcity.gudev.gnl:8111/project.html?projectId=project35&tab=projectOverview) page and then hitting some URLs on CODE to ensure your software is doing what you expected it to do.
-
-If there are problems on CODE then revert your changes from master, fix and try again. Don't leave broken things lying around for others to trip themselves up on.
-
-You are nearly done, simply deploy to PROD (via *gu* tools) and again check that your software is doing what you expected.
+Once deployed to `PROD` check that your software is doing what you expected.
 
 If it is a bit late in the day or it is nearly lunch and you do not want to deploy to PROD immediately then do not merge to master.
 

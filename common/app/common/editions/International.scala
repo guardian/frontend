@@ -7,7 +7,7 @@ import org.joda.time.DateTimeZone
 
 object International extends Edition(
   id = "INT",
-  displayName = "International",
+  displayName = "International edition",
   timezone = DateTimeZone.forID("Europe/London"),
   locale = Locale.forLanguageTag("en"),
   networkFrontId = "international",
