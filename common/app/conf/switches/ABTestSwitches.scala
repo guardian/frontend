@@ -152,8 +152,18 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sleeve-notes-email-variants",
-    "Assign users to variants of sleeve notes emails",
+    "ab-sleeve-notes-new-email-variant",
+    "Assign some of the new sleeve notes subscribers to receive the new email",
+    owners = Seq(Owner.withGithub("lmath")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-sleeve-notes-legacy-email-variant",
+    "Assign some of the new sleeve notes subscribers to receive the old email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 3, 31),

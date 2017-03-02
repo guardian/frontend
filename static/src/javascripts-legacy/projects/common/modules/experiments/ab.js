@@ -17,7 +17,8 @@ define([
     'common/modules/experiments/tests/tailor-recommended-email',
     'common/modules/experiments/tests/membership-a3-a4-bundles-thrasher',
     'common/modules/experiments/tests/tailor-survey',
-    'common/modules/experiments/tests/sleeve-notes-email-variants'
+    'common/modules/experiments/tests/sleeve-notes-new-email-variant',
+    'common/modules/experiments/tests/sleeve-notes-legacy-email-variant'
 ], function (reportError,
              config,
              cookies,
@@ -36,7 +37,8 @@ define([
              TailorRecommendedEmail,
              MembershipA3A4BundlesThrasher,
              TailorSurvey,
-             SleevenotesEmailVariants
+             SleevenotesNewEmailVariant,
+             SleevenotesLegacyEmailVariant
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
@@ -48,7 +50,8 @@ define([
         new TailorRecommendedEmail(),
         new MembershipA3A4BundlesThrasher(),
         new TailorSurvey(),
-        new SleevenotesEmailVariants()
+        new SleevenotesNewEmailVariant(),
+        new SleevenotesLegacyEmailVariant()
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';
