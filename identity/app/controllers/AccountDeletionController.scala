@@ -81,7 +81,7 @@ class AccountDeletionController(
 
         case Right(deletionResult) =>
           logger.info(s"Account deletion succeeded: $deletionResult")
-          Future.successful(Ok(accountDeletionConfirm(page, deletionResult.output == "auto")))
+          Future.successful(Ok(accountDeletionConfirm(page, deletionResult.auto == "true")))
       }
     }
 }
