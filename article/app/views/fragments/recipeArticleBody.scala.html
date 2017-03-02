@@ -6,7 +6,6 @@
 @import common.LinkTo
 @import views.BodyCleaner
 
-@* Feb 2015: Google does only support NewsArticle in their amp carousel. To remove once Google starts supporting other schemas like schema.org/Review *@
 @schemaType(page: ArticlePage) = @{ page.article.metadata.schemaType }
 @bodyType(page: ArticlePage) = @{ "articleBody" }
 
