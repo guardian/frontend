@@ -5,7 +5,7 @@ define([
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/contributions-epic-ask-four-stagger',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
-    'common/modules/experiments/tests/acquisitions-love-boat'
+    'common/modules/experiments/tests/acquisitions-love-boat-v2'
 ], function (
     segmentUtil,
     viewLog,

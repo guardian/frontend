@@ -20,10 +20,8 @@
                 "abp-whitelist-instruction-chrome": "@Static("images/commercial/ad-block-instructions-chrome.png")"
             },
             "acquisitions": {
-                "laptop": "@Static("images/acquisitions/laptop.png")",
                 "laptop-hearts": "@Static("images/acquisitions/laptop-hearts.png")",
-                "boat": "@Static("images/acquisitions/boat.png")",
-                "boat-left": "@Static("images/acquisitions/boat-left.png")"
+                "boat": "@Static("images/acquisitions/boat.png")"
             }
         },
         "stylesheets": {

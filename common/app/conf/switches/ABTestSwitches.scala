@@ -132,11 +132,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-love-boat",
+    "ab-acquisitions-love-boat-v2",
     "Tests 2 new designs for acquisitions asks",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 22),
+    owners = Seq(Owner.withGithub("dominickendrick")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 4, 20), //Thursday
     exposeClientSide = true
   )
 

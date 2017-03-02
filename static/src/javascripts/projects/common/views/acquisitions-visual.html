@@ -1,36 +1,22 @@
-<div class="contributions-wrapper" data-step="1">
+<div class="contributions-wrapper">
     <div class="contributions__epic contributions__epic--visual contributions__epic--visual--<%=id%>">
-        <div class="contributions-wrapper__step-1 contributions-wrapper__step-1--<%=id%>">
-            <h2 class="contributions__title contributions__title--visual-epic contributions__title--visual-epic--<%=id%>">
-                <%=step1.title%>
-            </h2>
+        <div class="contributions-wrapper contributions-wrapper--<%=id%>">
+            <h2 class="contributions__title contributions__title--visual-epic contributions__title--visual-epic--<%=id%> contributions__title--visual-epic--<%=id%>">
+                <%=data.title%></h2>
 
             <img class="contributions__epic--visual__image contributions__epic--visual__image--<%=id%>"
-                 src="<%=step1.image%>"
-                 alt="<%=step1.imageAlt%>">
-            <button
-                class="contributions__option-button contributions__option-button--visual contributions__option-button--visual--<%=id%>">
-                <%=step1.cta%>
-            </button>
-        </div>
-
-        <div class="contributions-wrapper__step-2 contributions-wrapper__step-2--<%=id%>">
-            <h2 class="contributions__title contributions__title--visual-epic contributions__title--visual-epic--<%=id%> contributions__title--visual-epic__step-2--<%=id%>">
-                <%=step2.title%></h2>
-
-            <img class="contributions__epic--visual__image contributions__epic--visual__image--<%=id%>"
-                 src="<%=step2.image%>"
-                 alt="<%=step2.imageAlt%>">
+                 src="<%=data.image%>"
+                 alt="<%=data.imageAlt%>">
 
             <h3 class="contributions__subtitle contributions__subtitle--visual-epic contributions__subtitle--visual-epic--<%=id%>">
-                <%=step2.subtitle%>
+                <%=data.subtitle%>
             </h3>
 
-            <p class="contributions__epic--visual--copy"><%=step2.body%></p>
+            <p class="contributions__epic--visual--copy"><%=data.body%></p>
         </div>
     </div>
 
-    <div class="contributions-wrapper__step-2">
+    <div class="contributions-wrapper">
         <div class="contributions__epic--visual__cta">
             <p class="contributions__epic--visual__cta--copy"><%=supportText%></p>
 

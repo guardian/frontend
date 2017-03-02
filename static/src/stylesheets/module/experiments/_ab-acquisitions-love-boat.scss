@@ -24,23 +24,23 @@
     margin-bottom: $gs-baseline * 3;
 }
 
-.contributions__title--visual-epic__step-2--love {
+.contributions__title--visual-epic--love {
     @include f-headline;
-    @include font-size(48px);
+    @include font-size(36px);
     font-weight: bold;
     margin-bottom: $gs-baseline;
 
-    & .emoji {
+    @include mq(tablet) {
         @include font-size(38px);
     }
 }
 
-.contributions__title--visual-epic__step-2--love,
+.contributions__title--visual-epic--love,
 .contributions__subtitle--visual-epic--love {
     color: $error;
 }
 
-.contributions__title--visual-epic__step-2--boat,
+.contributions__title--visual-epic--boat,
 .contributions__subtitle--visual-epic--boat
 {
     color: $news-support-2;
@@ -70,19 +70,7 @@
     $tablet-image-width: 40%;
     $max-width: 220px;
 
-    .contributions-wrapper__step-1 & {
-        // this image is smaller than the one in the second step
-        // so this calculation is to display it at the same size
-        // the two numbers are the widths of each image
-        width: $mobile-image-width * (372/424);
-        max-width: $max-width * (372/424);
-
-        @include mq(phablet) {
-            width: $tablet-image-width * (372/424);
-        }
-    }
-
-    .contributions-wrapper__step-2 & {
+    .contributions-wrapper & {
         width: $mobile-image-width;
         max-width: $max-width;
 
@@ -164,33 +152,15 @@
     }
 }
 
-.step-1--love {
-    margin-bottom: -36px;
-}
-
 .contributions-wrapper {
-    &[data-step='1'] {
-        .contributions-wrapper__step-1 {
-            display: block;
-        }
 
-        .contributions-wrapper__step-2 {
-            display: none;
-        }
+    .contributions-wrapper {
+        display: block;
     }
 
-    &[data-step='2'] {
-        .contributions-wrapper__step-1 {
-            display: none;
-        }
-
-        .contributions-wrapper__step-2 {
-            display: block;
-        }
-
-        .contributions__epic--visual {
-            padding-bottom: 34px;
-            background-image: linear-gradient(-2deg, $news-main-2 7%, $neutral-8 7.1%);
-        }
+    .contributions__epic--visual {
+        padding-bottom: 34px;
+        background-image: linear-gradient(-2deg, $news-main-2 7%, $neutral-8 7.1%);
     }
+
 }
