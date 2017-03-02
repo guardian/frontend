@@ -1,3 +1,5 @@
+// @flow
+
 import domready from 'domready';
 import raven from 'common/utils/raven';
 import bootStandard from 'bootstraps/standard/main';
@@ -9,6 +11,7 @@ import capturePerfTimings from 'common/utils/capture-perf-timings';
 // __webpack_public_path__ is a special webpack variable
 // https://webpack.js.org/guides/public-path/#set-value-on-the-fly
 // eslint-disable-next-line camelcase,no-undef
+declare var __webpack_public_path__: string;
 __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
 domready(() => {
