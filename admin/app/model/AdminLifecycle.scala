@@ -127,6 +127,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
     jobs.deschedule("FrontPressJobLowFrequency")
     jobs.deschedule("VideoEncodingsJob")
     jobs.deschedule("ExpiringSwitchesEmailJob")
+    jobs.deschedule("ExpiringSwitchesAfternoonEmailJob")
     jobs.deschedule("AssetMetricsCache")
   }
 
