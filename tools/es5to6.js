@@ -48,11 +48,11 @@ git
             moduleId
         );
         const es6Module = path.join('static', 'src', 'javascripts', moduleId);
-        const es6Name = moduleId.split(path.sep).join('_');
-        const branchName = `es6-${es6Name}-${unique}`;
+        const es6Name = moduleId.split(path.sep).join('_').replace('.js', '');
+        const branchName = `es6-${es6Name}`;
 
         const steps = {
-            'Create a branch for the conversion': `git checkout -b ${branchName}`,
+            'Create a branch for the conversion': `git checkout -b "${branchName}" || git checkout -b "${branchName}-${unique}"`,
             'Move the legacy module to the new location': `mkdir -p ${path.dirname(es6Module)}; mv ${es5Module} $_; node ./tools/es5to6-remove-module.js ${moduleId}`,
             'Commit the move': `git add .; git commit -m "move ${moduleId} from legacy to standard JS"`,
             'Convert module to es6': `npm run -s amdtoes6 -- -d ${path.dirname(es6Module)} -o ${path.dirname(es6Module)} -g **/${path.basename(es6Module)} `,
