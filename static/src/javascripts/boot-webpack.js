@@ -35,8 +35,7 @@ domready(() => {
             ['bootstraps/commercial'],
             raven.wrap({ tags: { feature: 'commercial' } }, commercial => {
                 userTiming.mark('commercial boot');
-                commercial.init().then(function () {;
-
+                commercial.init().then(() => {
                     // 3. finally, try enhanced
                     // this is defined here so that webpack's code-splitting algo
                     // excludes all the modules bundled in the commercial chunk from this one
