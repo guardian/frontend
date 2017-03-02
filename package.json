@@ -155,7 +155,8 @@
       "ophan/ng": "ophan-tracker-js",
       "ophan/embed": "ophan-tracker-js/build/ophan.embed"
     },
-    "testResultsProcessor": "jest-teamcity-reporter"
+    "testResultsProcessor": "jest-teamcity-reporter",
+    "setupTestFrameworkScriptFile": "<rootDir>/jestSetup.js"
   },
   "scripts": {
     "postinstall": "./tools/task-runner/runner githooks --verbose",
