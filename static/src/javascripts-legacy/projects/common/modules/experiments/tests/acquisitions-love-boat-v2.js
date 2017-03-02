@@ -4,8 +4,8 @@ define([
     'common/utils/template',
     'common/utils/config',
     'common/utils/$',
-    'text!common/views/epic-supporter-cta.html',
-    'text!common/views/acquisitions-visual.html'
+    'raw-loader!common/views/epic-supporter-cta.html',
+    'raw-loader!common/views/acquisitions-visual.html'
 ], function (
     bean,
     contributionsUtilities,
