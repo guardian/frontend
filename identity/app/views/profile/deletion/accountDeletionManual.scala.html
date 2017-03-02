@@ -1,0 +1,19 @@
+@(
+    page: model.Page,
+    idRequest: services.IdentityRequest,
+    idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@import views.html.fragments.registrationFooter
+
+@main(page, projectName = Option("identity")){
+}{
+    <div class="identity-wrapper monocolumn-wrapper">
+        <h1 class="identity-title">Are you sure you want to delete your account?</h1>
+
+        <div class="identity-section">
+            To request account deletion please email <a href="mailto:userhelp@@theguardian.com">Userhelp</a> who will be happy to help.
+        </div>
+
+        @registrationFooter(idRequest, idUrlBuilder)
+    </div>
+}
