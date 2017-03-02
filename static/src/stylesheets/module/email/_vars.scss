@@ -13,7 +13,7 @@ $tones: (
     (live, $live-default, $live-accent),
     (media, $neutral-1, $neutral-1),
     (news, $news-default, $news-default),
-    (review, $comment-support-3, darken($comment-support-3, 10%), $form-primary-colour, $review-background),
+    (review, $comment-support-3, darken($comment-support-3, 10%), transparent, $review-background),
     (special-feature, $news-support-6, $news-support-6),
     (plaindark, $neutral-4, $neutral-4, $neutral-4, $multimedia-main-1)
 );
