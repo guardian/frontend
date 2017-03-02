@@ -163,8 +163,8 @@ define([
         }
     }
 
-    return function (opts) {
-        var win         = (opts || {}).window || window;
+    return function () {
+        var win         = window;
         var page        = config.page;
         var contentType = formatTarget(page.contentType);
         var pageTargets = assign({
