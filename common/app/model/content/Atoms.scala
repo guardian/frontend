@@ -61,7 +61,7 @@ object MediaWrapper extends Enum[MediaWrapper] with PlayJsonEnum[MediaWrapper] {
 
   case object MainMedia extends MediaWrapper
   case object ImmersiveMainMedia extends MediaWrapper
-  case object Embed extends MediaWrapper
+  case object EmbedPage extends MediaWrapper
 }
 
 final case class MediaAsset(

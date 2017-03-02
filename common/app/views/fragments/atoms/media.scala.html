@@ -4,9 +4,11 @@
 
 @{
     media match {
-            case posterOnly if media.assets.isEmpty && media.posterImage.isDefined  => views.html.fragments.atoms.posterImage(mediaWrapper = mediaWrapper, amp = amp,picture = media.posterImage.get, caption = media.title)
-            case youtube if media.assets.headOption.filter(_.platform == MediaAssetPlatform.Youtube) => if(amp) views.html.fragments.atoms.ampYoutube(media = media, displayCaption = displayCaption, mainMedia = mediaWrapper.contains(MediaWrapper.MainMedia)) else views.html.fragments.atoms.youtube(media = media, displayCaption = displayCaption, displayEndSlate = displayEndSlate)
-            case genericAsset if media.assets.nonEmpty => views.html.fragments.atoms.genericMedia(media = media, displayCaption = displayCaption, amp = amp)
+            case posterOnly if media.assets.isEmpty && media.posterImage.isDefined  => views.html.fragments.atoms.posterImage(mediaWrapper, amp, media.posterImage.get, media.title)
+            case youtube if media.assets.headOption.filter(_.platform == MediaAssetPlatform.Youtube) =>
+                if(amp) views.html.fragments.atoms.ampYoutube(media, displayCaption, mediaWrapper)
+                else views.html.fragments.atoms.youtube(media, displayCaption, displayEndSlate, mediaWrapper)
+            case genericAsset if media.assets.nonEmpty => views.html.fragments.atoms.genericMedia(media, displayCaption, amp)
             case _ =>
         }
 }
