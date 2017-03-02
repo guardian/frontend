@@ -11,6 +11,7 @@ define([
     'common/modules/experiments/ab',
     'lodash/arrays/compact',
     'lodash/arrays/uniq',
+    'lodash/functions/once',
     'lodash/objects/pick'
 ], function (
     config,
@@ -25,6 +26,7 @@ define([
     ab,
     compact,
     uniq,
+    once,
     pick
 ) {
 
@@ -163,7 +165,7 @@ define([
         }
     }
 
-    return function () {
+    return once(function () {
         var win         = window;
         var page        = config.page;
         var contentType = formatTarget(page.contentType);
@@ -195,12 +197,17 @@ define([
         }, getWhitelistedQueryParams());
 
         // filter out empty values
-        return pick(pageTargets, function (target) {
+        var pageTargeting = pick(pageTargets, function (target) {
             if (Array.isArray(target)) {
                 return target.length > 0;
             } else {
                 return target;
             }
         });
-    };
+
+        // third-parties wish to access our page targeting, before the googletag script is loaded.
+        page.pageAdTargeting = pageTargeting;
+
+        return pageTargeting;
+    });
 });
