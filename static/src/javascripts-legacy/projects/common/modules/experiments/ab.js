@@ -164,11 +164,17 @@ define([
         return tag.join(',');
     }
 
-    function abData(variantName, complete) {
-        return {
+    function abData(variantName, complete, campaignCodes) {
+        var data = {
             'variantName': variantName,
             'complete': complete
-        };
+        }
+
+        if (campaignCodes) {
+            data.campaignCodes = campaignCodes;
+        }
+
+        return data;
     }
 
     function getAbLoggableObject() {
@@ -180,10 +186,11 @@ define([
                 .filter(isParticipating)
                 .filter(testCanBeRun)
                 .forEach(function (test) {
-                    var variant = getTestVariantId(test.id);
+                    var variantId = getTestVariantId(test.id);
+                    var variant = getVariant(test, variantId);
 
-                    if (variant && segmentUtil.isInTest(test)) {
-                        log[test.id] = abData(variant, 'false');
+                    if (variantId && segmentUtil.isInTest(test)) {
+                        log[test.id] = abData(variantId, 'false', variant.campaignCodes);
                     }
                 });
 
@@ -221,7 +228,9 @@ define([
      */
     function recordTestComplete(test, variantId, complete) {
         var data = {};
-        data[test.id] = abData(variantId, String(complete));
+        var variant = getVariant(test, variantId);
+
+        data[test.id] = abData(variantId, String(complete), variant.campaignCodes);
 
         return function () {
             recordOphanAbEvent(data);

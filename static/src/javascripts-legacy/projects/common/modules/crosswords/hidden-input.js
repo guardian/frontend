@@ -1,5 +1,5 @@
 define([
-    'react',
+    'react/addons',
     'bonzo',
     'fastdom',
     'common/utils/$',

@@ -22,6 +22,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-membership-engagement-banner-copy-test",
+    "Test copy for the engagement banner in all countries aside from the US and Australia",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-paid-content-vs-outbrain",
     "Displays a paid content widget instead of Outbrain",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
@@ -56,7 +66,7 @@ trait ABTestSwitches {
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 23),
+    sellByDate = new LocalDate(2017, 3, 9),
     exposeClientSide = true
   )
 
@@ -66,7 +76,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 23),
+    sellByDate = new LocalDate(2017, 3, 9),
     exposeClientSide = true
   )
 
@@ -86,7 +96,7 @@ trait ABTestSwitches {
     "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
     owners = Seq(Owner.withGithub("alexduf")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 1),
+    sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
 
@@ -122,11 +132,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-tailor-recommended-email",
-    "Use Tailor to target email signup form",
-    owners = Seq(Owner.withGithub("lindseydew")),
+    "ab-contributions-epic-urgency",
+    "Test 3 new variants with messaging that highlights the urgency of supporting the Guardian",
+    owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 3, 17),
     exposeClientSide = true
   )
 
@@ -135,8 +145,18 @@ trait ABTestSwitches {
     "ab-acquisitions-love-boat-v2",
     "Tests 2 new designs for acquisitions asks",
     owners = Seq(Owner.withGithub("dominickendrick")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2017, 4, 20), //Thursday
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-tailor-recommended-email",
+    "Use Tailor to target email signup form",
+    owners = Seq(Owner.withGithub("lindseydew")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
     exposeClientSide = true
   )
 

@@ -29,8 +29,7 @@ define([
     clash,
     Promise
 ) {
-    var emailInserted = false;
-    var nonCompliantOutbrain = false;
+
     var emailShown;
     var userListSubsChecked = false;
     var userListSubs = [];
@@ -60,20 +59,6 @@ define([
         return userListSubs;
     }
 
-    function userReferredFromNetworkFront() {
-        // Check whether the referring url ends in the edition
-        var networkFront = ['uk', 'us', 'au', 'international'],
-            originPathName = document.referrer.split(/\?|#/)[0];
-
-        if (originPathName) {
-            return some(networkFront, function (frontName) {
-                return originPathName.substr(originPathName.lastIndexOf('/') + 1) === frontName;
-            });
-        }
-
-        return false;
-    }
-
     function isParagraph($el) {
         return $el.nodeName && $el.nodeName === 'P';
     }
@@ -89,16 +74,7 @@ define([
         }
     }
 
-    function nonCompliantObWidgetIsShown() {
-        return nonCompliantOutbrain;
-    }
-
     var canRunList = {
-        theCampaignMinute: function () {
-            var isUSElection = page.keywordExists(['US elections 2016']);
-            var isNotUSBriefingSeries = config.page.series !== 'Guardian US briefing';
-            return isUSElection && isNotUSBriefingSeries;
-        },
         theFilmToday: function () {
             return config.page.section === 'film';
         },
@@ -120,24 +96,23 @@ define([
         theGuardianToday: function () {
             return config.switches.emailInArticleGtoday &&
                 !pageHasBlanketBlacklist() &&
-                userReferredFromNetworkFront() &&
                 allowedArticleStructure();
+        },
+        sleevenotes: function () {
+            return config.page.section === "music";
+        },
+        longReads: function () {
+            return config.page.seriesId === 'news/series/the-long-read';
+        },
+        bookmarks: function () {
+            return config.page.section === "books";
+        },
+        greenLight: function () {
+            return config.page.section === "environment";
         }
     };
 
     // Public
-
-    function setNonCompliantOutbrain() {
-        nonCompliantOutbrain = true;
-    }
-
-    function setEmailInserted() {
-        emailInserted = true;
-    }
-
-    function getEmailInserted() {
-        return emailInserted;
-    }
 
     function setEmailShown(emailName) {
         emailShown = emailName;
@@ -150,17 +125,15 @@ define([
     function allEmailCanRun() {
         var browser = detect.getUserAgent.browser,
             version = detect.getUserAgent.version;
-
+            
         return !config.page.shouldHideAdverts &&
-            !config.page.isSensitive &&
-            !emailInserted &&
-            !config.page.isFront &&
-            config.switches.emailInArticle &&
-            !clash.userIsInAClashingAbTest(clash.nonEmailClashingTests) &&
-            storage.session.isAvailable() &&
-            !userHasSeenThisSession() &&
-            nonCompliantObWidgetIsShown() &&
-            !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
+                !config.page.isSensitive &&
+                !config.page.isFront &&
+                config.switches.emailInArticle &&
+                !clash.userIsInAClashingAbTest(clash.nonEmailClashingTests) &&
+                storage.session.isAvailable() &&
+                !userHasSeenThisSession() &&
+                !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
     }
 
     function getUserEmailSubscriptions() {
@@ -186,11 +159,8 @@ define([
     }
 
     return {
-        setNonCompliantOutbrain: setNonCompliantOutbrain,
         setEmailShown: setEmailShown,
         getEmailShown: getEmailShown,
-        setEmailInserted: setEmailInserted,
-        getEmailInserted: getEmailInserted,
         allEmailCanRun: allEmailCanRun,
         getUserEmailSubscriptions: getUserEmailSubscriptions,
         listCanRun: listCanRun

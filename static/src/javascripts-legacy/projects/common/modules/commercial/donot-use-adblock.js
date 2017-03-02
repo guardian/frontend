@@ -11,7 +11,7 @@ define([
     'common/modules/onward/history',
     'common/modules/ui/message',
     'common/modules/navigation/navigation',
-    'text!common/views/membership-message.html',
+    'raw-loader!common/views/membership-message.html',
     'common/views/svgs',
     'lodash/collections/sample'
 ], function (

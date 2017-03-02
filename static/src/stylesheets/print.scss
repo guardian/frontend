@@ -1,5 +1,5 @@
 .meta__extras,
-.submeta-container,
+.submeta__syndication,
 .gu-media-wrapper--video,
 .ad-slot,
 .article__fullscreen,
@@ -42,7 +42,6 @@ figure {
     &.element-image,
     &.media-primary,
 
-    .sudoku &,
     .gallery__item & {
         display: block !important;
     }

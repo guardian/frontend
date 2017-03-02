@@ -7,7 +7,7 @@ define([
     'commercial/modules/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
-    'text!commercial/views/creatives/manual-container.html'
+    'raw-loader!commercial/views/creatives/manual-container.html'
 ], function (
     Promise,
     config,
@@ -34,7 +34,6 @@ define([
         this.params.marque36icon = svgs('marque36icon');
         this.params.marque54icon = svgs('marque54icon');
         this.params.logomembership = svgs('logomembershipwhite');
-        this.params.logojobs = svgs('logojobs');
         this.params.logomasterclasses = svgs('logomasterclasses');
         this.params.arrowRight = svgs('arrowRight', ['i-right']);
         this.params.logoguardian = svgs('logoguardian');
@@ -72,7 +71,7 @@ define([
                 this.params.classNames = ['legacy-inline', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
             }
 
-            require(['text!commercial/views/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+            require(['raw-loader!commercial/views/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
                 if (templatePreprocessor[this.params.creative]) {
                     templatePreprocessor[this.params.creative](this);
                 }

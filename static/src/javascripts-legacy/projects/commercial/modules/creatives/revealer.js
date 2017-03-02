@@ -3,12 +3,15 @@ define([
     'common/utils/template',
     'common/utils/detect',
     'commercial/modules/creatives/add-tracking-pixel',
-    'text!commercial/views/creatives/revealer.html'
-], function(fastdom, template, detect, addTrackingPixel, revealerStr) {
+    'commercial/modules/creatives/add-viewability-tracker',
+    'raw-loader!commercial/views/creatives/revealer.html'
+], function(fastdom, template, detect, addTrackingPixel, addViewabilityTracker, revealerStr) {
     var revealerTpl;
 
     function Revealer($adSlot, params) {
         revealerTpl || (revealerTpl = template(revealerStr));
+
+        params.id = 'revealer-' + (Math.random() * 10000 | 0).toString(16);
 
         return Object.freeze({
             create: create
@@ -21,7 +24,13 @@ define([
                 $adSlot[0].insertAdjacentHTML('beforeend', markup);
                 $adSlot.addClass('ad-slot--revealer ad-slot--fabric content__mobile-full-width');
                 if (params.trackingPixel) {
-                    addTrackingPixel($adSlot, params.trackingPixel + params.cacheBuster);
+                    addTrackingPixel(params.trackingPixel + params.cacheBuster);
+                }
+                if (params.researchPixel) {
+                    addTrackingPixel(params.researchPixel + params.cacheBuster);
+                }
+                if (params.viewabilityTracker) {
+                    addViewabilityTracker($adSlot[0], params.id, params.viewabilityTracker);
                 }
             }).then(function () {
                 return fastdom.read(function () {

@@ -5,7 +5,7 @@ define([
     'fastdom',
     'common/modules/email/email',
     'common/utils/config',
-    'text!common/views/email/iframe.html',
+    'raw-loader!common/views/email/iframe.html',
     'common/utils/template',
     'common/modules/article/space-filler',
     'common/utils/robust',
@@ -17,7 +17,8 @@ define([
     'common/modules/experiments/ab',
     'common/modules/tailor/tailor',
     'common/utils/cookies',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/utils/check-mediator'
 ], function (
     $,
     bean,
@@ -37,39 +38,21 @@ define([
     ab,
     tailor,
     cookies,
-    mediator
+    mediator,
+    checkMediator
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
             $iframeEl.appendTo('.js-article__body');
         },
-        isUSMinuteArticle = config.page.isMinuteArticle && config.page.keywordIds.indexOf('us-news/us-elections-2016') > -1,
         listConfigs = {
-            theCampaignMinute: {
-                listId: '3599',
-                listName: 'theCampaignMinute',
-                campaignCode: isUSMinuteArticle ? 'the_minute_footer' : 'the_minute_election_article',
-                headline: isUSMinuteArticle ? 'Enjoying the minute?' : 'Want the latest election news?',
-                description: 'Sign up and we\'ll send you the campaign minute every weekday.',
-                successHeadline: 'Thank you for signing up to the Guardian US Campaign minute',
-                successDescription: 'We will send you the biggest political story lines of the day',
-                modClass: isUSMinuteArticle ? 'post-article' : 'end-article',
-                insertMethod: function ($iframeEl) {
-                    if (isUSMinuteArticle ) {
-                        $iframeEl.insertAfter('.js-article__container');
-                    } else {
-                        insertBottomOfArticle($iframeEl);
-                    }
-                }
-            },
             theFilmToday: {
                 listId: '1950',
                 listName: 'theFilmToday',
                 campaignCode: 'film_article_signup',
                 headline: 'Film Today: now booking',
-                description: 'Sign up to the Guardian Film Today email and we\'ll make sure you don’t miss a thing - the day’s insider news and our latest reviews, plus big name interviews and film festival coverage.',
+                description: 'Sign up to the Guardian Film Today email and we’ll make sure you don’t miss a thing - the day’s insider news and our latest reviews, plus big name interviews and film festival coverage.',
                 successHeadline: 'Thank you for signing up to Film Today',
-                successDescription: 'We will send you our picks of the most important headlines tomorrow afternoon.',
-                modClass: 'end-article',
+                successDescription: 'You’ll receive an email every afternoon.',
                 insertMethod: insertBottomOfArticle
             },
             theFiver: {
@@ -77,10 +60,9 @@ define([
                 listName: 'theFiver',
                 campaignCode: 'fiver_article_signup',
                 headline: 'Kick off your evenings with our football roundup',
-                description: 'Sign up to the Fiver, our daily email on the world of football. We\'ll deliver the day\'s news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way.',
+                description: 'Sign up to the Fiver, our daily email on the world of football. We’ll deliver the day’s news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way.',
                 successHeadline: 'Thank you for signing up',
-                successDescription: 'You\'ll receive the Fiver daily, around 5pm.',
-                modClass: 'end-article',
+                successDescription: 'You’ll receive the Fiver daily, around 5pm.',
                 insertMethod: insertBottomOfArticle
             },
             labNotes: {
@@ -90,8 +72,7 @@ define([
                 headline: 'Science news you’ll want to read. Fact.',
                 description: 'Sign up to Lab Notes and we’ll email you the top stories in science, from medical breakthroughs to dinosaur discoveries - plus brainteasers, podcasts and more.',
                 successHeadline: 'Thank you for signing up for Lab notes',
-                successDescription: 'You\'ll receive an email every week.',
-                modClass: 'end-article',
+                successDescription: 'You’ll receive an email every week.',
                 insertMethod: insertBottomOfArticle
             },
             euRef: {
@@ -99,10 +80,9 @@ define([
                 listName: 'euRef',
                 campaignCode: 'eu_ref_article_signup',
                 headline: 'Brexit: your weekly briefing',
-                description: 'Sign up and we’ll email you the key developments and most important debates as Britain takes its first steps on the long road to leaving the EU',
+                description: 'Sign up and we’ll email you the key developments and most important debates as Britain takes its first steps on the long road to leaving the EU.',
                 successHeadline: 'Thank you for signing up for the Brexit weekly briefing',
-                successDescription: 'You\'ll receive an email every morning.',
-                modClass: 'end-article',
+                successDescription: 'You’ll receive an email every morning.',
                 insertMethod: insertBottomOfArticle
             },
             usBriefing: {
@@ -113,7 +93,46 @@ define([
                 description: 'Sign up to the Guardian US briefing to get the top stories in your inbox every weekday.',
                 successHeadline: 'Thank you for signing up to the Guardian US briefing',
                 successDescription: 'We will send you our pick of the most important stories.',
-                modClass: 'end-article',
+                insertMethod: insertBottomOfArticle
+            },
+            sleevenotes: {
+                listId: '39',
+                listName: 'sleevenotes',
+                campaignCode: 'sleevenotes_article_bottom',
+                headline: 'Sleeve notes: sounds good',
+                description: 'Get music news, bold reviews and unexpected extras emailed direct to you from the Guardian’s music desk every Friday.',
+                successHeadline: 'Thank you for signing up to sleeve notes',
+                successDescription: 'You’ll receive an email every Friday.',
+                insertMethod: insertBottomOfArticle
+            },
+            longReads: {
+                listId: '3322',
+                listName: 'longReads',
+                campaignCode: 'long_reads_article_bottom',
+                headline: 'Here’s the real story',
+                description: 'Look a little deeper with The Long Read. Sign up to our weekly email for inside stories, murder, politics, and much more. Great writing, worth reading.',
+                successHeadline: 'Thank you for signing up to The Long Read',
+                successDescription: 'You’ll receive an email every weekend.',
+                insertMethod: insertBottomOfArticle
+            },
+            bookmarks: {
+                listId: '3039',
+                listName: 'bookmarks',
+                campaignCode: 'bookmarks_article_bottom',
+                headline: 'Bookmarks: read me first',
+                description: 'Sign up for our weekly email for book lovers and discover top 10s, expert book reviews, author interviews, and enjoy highlights from our columnists and community every weekend.',
+                successHeadline: 'Thank you for signing up to Bookmarks',
+                successDescription: 'You’ll receive an email every weekend.',
+                insertMethod: insertBottomOfArticle
+            },
+            greenLight: {
+                listId: '38',
+                listName: 'greenLight',
+                campaignCode: 'green_light_article_bottom',
+                headline: 'The most important stories on the planet',
+                description: 'Sign up to Green Light for environment news emailed direct to you every Friday. And besides the week’s biggest stories and debates, you can expect beautifully curated wildlife galleries, absorbing podcasts and eco-living guides.',
+                successHeadline: 'Thank you for signing up to Green Light',
+                successDescription: 'You’ll receive an email every Friday.',
                 insertMethod: insertBottomOfArticle
             },
             theGuardianToday: {
@@ -152,7 +171,6 @@ define([
                 }()),
                 successHeadline: 'Thank you for signing up to the Guardian Today',
                 successDescription: 'We will send you our picks of the most important headlines tomorrow morning.',
-                modClass: 'end-article',
                 insertMethod: insertBottomOfArticle
             }
         },
@@ -177,7 +195,11 @@ define([
             if (listConfig) {
                 listConfig.successEventName = successEventName || listConfig.successEventName || "";
                 var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
-                    $iframeEl = $(iframe);
+                    $iframeEl = $(iframe),
+                    onEmailAdded = function () {
+                        emailRunChecks.setEmailShown(listConfig.listName);
+                        storage.session.set('email-sign-up-seen', 'true');
+                    }
 
                 bean.on(iframe, 'load', function () {
                     email.init(iframe);
@@ -196,19 +218,15 @@ define([
                             });
                         }
                         googleAnalytics.trackNonClickInteraction('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
-                        emailRunChecks.setEmailInserted();
-                        emailRunChecks.setEmailShown(listConfig.listName);
+                        onEmailAdded();
                     });
                 } else {
                     spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
                         $iframeEl.insertBefore(paras[0]);
                         googleAnalytics.trackNonClickInteraction('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
-                        emailRunChecks.setEmailInserted();
-                        emailRunChecks.setEmailShown(listConfig.listName);
+                        onEmailAdded();
                     });
                 }
-
-                storage.session.set('email-sign-up-seen', 'true');
             }
         }
 
@@ -241,24 +259,28 @@ define([
 
     return {
         init: function () {
-            if (emailRunChecks.allEmailCanRun()) {
-                // First we need to check the user's email subscriptions
-                // so we don't insert the sign-up if they've already subscribed
-                emailRunChecks.getUserEmailSubscriptions().then(function () {
-
-                    if (ab.isParticipating({id: 'TailorRecommendedEmail'})) {
-                        switch (ab.getTestVariantId) {
-                            case 'tailor-recommended': tailorInTest(); break;
-                            case 'control': tailorControl(); break;
-                            default: addListToPage(find(listConfigs, emailRunChecks.listCanRun)); break;
+            checkMediator.waitForCheck('emailCanRun').then(function (canEmailRun) {
+                if (canEmailRun) {
+                    emailRunChecks.getUserEmailSubscriptions().then(function () {
+                        if (ab.isParticipating({id: 'TailorRecommendedEmail'})) {
+                            switch (ab.getTestVariantId) {
+                                case 'tailor-recommended': tailorInTest(); break;
+                                case 'control': tailorControl(); break;
+                                default: addListToPage(find(listConfigs, emailRunChecks.listCanRun)); break;
+                            }
+                        } else {
+                            addListToPage(find(listConfigs, emailRunChecks.listCanRun));
                         }
-                    } else {
-                        addListToPage(find(listConfigs, emailRunChecks.listCanRun));
-                    }
-                }).catch(function (error) {
-                    robust.log('c-email', error);
-                });
-            }
+                    }).catch(function (error) {
+                        robust.log('c-email', error);
+                    });
+                }
+            }).catch(function (error) {
+                robust.log('check-mediator', error);
+            });
+        },
+        getListConfigs: function () {
+            return listConfigs;
         }
     };
 });

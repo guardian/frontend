@@ -6,14 +6,12 @@ define([
     'common/utils/detect',
     'common/utils/template',
     'common/utils/steady-page',
-    'common/modules/identity/api',
     'commercial/modules/dfp/track-ad-render',
     'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/outbrain-codes',
-    'text!commercial/views/outbrain.html',
-    'common/modules/email/run-checks',
-    'common/modules/experiments/ab-test-clash',
-    'common/utils/load-script'
+    'raw-loader!commercial/views/outbrain.html',
+    'common/utils/load-script',
+    'common/utils/check-mediator'
 ], function (
     Promise,
     fastdom,
@@ -22,14 +20,12 @@ define([
     detect,
     template,
     steadyPage,
-    identity,
     trackAdRender,
     commercialFeatures,
     getCode,
     outbrainStr,
-    emailRunChecks,
-    clash,
-    loadScript
+    loadScript,
+    checkMediator
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
     var outbrainTpl = template(outbrainStr);
@@ -48,9 +44,6 @@ define([
             container: '.js-outbrain-container'
         }
     };
-
-    var emailSignupPromise;
-    var clashingABTestPromise;
 
     function build(codes, breakpoint) {
         var html = outbrainTpl({ widgetCode: codes.code || codes.image });
@@ -84,9 +77,6 @@ define([
                 if (slot === 'merchandising') {
                     $(selectors[slot].widget).replaceWith($outbrain[0]);
                 }
-                if (slot === 'nonCompliant' || slot === 'merchandising') {
-                    emailRunChecks.setNonCompliantOutbrain();
-                }
                 $container.append(widgetHtml);
                 $outbrain.css('display', 'block');
             }).then(function () {
@@ -107,10 +97,6 @@ define([
         });
     }
 
-    function identityPolicy() {
-        return !(identity.isUserLoggedIn() && config.page.commentable);
-    }
-
     /*
      Loading Outbrain is dependent on successful return of high relevance component
      from DFP. AdBlock is blocking DFP calls so we are not getting any response and thus
@@ -124,61 +110,13 @@ define([
         });
     }
 
-
-    function checkDependencies() {
-        return Promise.all([checkEmailSignup(), checkClashingABTest()])
-            .then(function(result) {
-
-                function findEmail(value) {
-                    return value == 'nonCompliant';
-                }
-
-                return result.find(findEmail);
-            })
-            .catch(function () {
-                return 'nonCompliant';
-            });
-    }
-
-    function checkClashingABTest() {
-        if (!clashingABTestPromise) {
-            clashingABTestPromise = new Promise(function (resolve) {
-                if (clash.userIsInAClashingAbTest()) {
-                    resolve('nonCompliant');
-                }
-                else {
-                    resolve();
-                }
-            });
-        }
-
-        return clashingABTestPromise;
-    }
-
-    function checkEmailSignup() {
-        if (!emailSignupPromise) {
-            emailSignupPromise = new Promise(function (resolve) {
-                if (config.switches.emailInArticleOutbrain &&
-                    emailRunChecks.getEmailInserted()) {
-                    // There is an email sign-up
-                    // so load the merchandising component
-                    resolve('nonCompliant');
-                } else {
-                    resolve();
-                }
-            });
-        }
-
-        return emailSignupPromise;
-    }
-
     function init() {
-        if (commercialFeatures.outbrain && identityPolicy() ) {
+        if (commercialFeatures.outbrain) {
             // if there is no merch component, load the outbrain widget right away
             return loadInstantly().then(function(shouldLoadInstantly) {
                 if (shouldLoadInstantly) {
-                    return checkDependencies().then(function (widgetType) {
-                        widgetType ? module.load(widgetType) : module.load();
+                    return checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
+                        outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
                         return Promise.resolve(true);
                     });
                 } else {
@@ -200,15 +138,13 @@ define([
                                 module.load('merchandising');
                             }
                         } else {
-                            checkDependencies().then(function (widgetType) {
-                                widgetType ? module.load(widgetType) : module.load();
+                            checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
+                                outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
                             });
                         }
                     });
                 }
             });
-        } else {
-            emailRunChecks.setNonCompliantOutbrain();
         }
 
         return Promise.resolve(true);

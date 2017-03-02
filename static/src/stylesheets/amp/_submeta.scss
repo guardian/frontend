@@ -27,29 +27,32 @@
 }
 
 .submeta__links {
+    list-style: none;
     overflow: hidden;
+    margin-bottom: 0;
     margin-left: -.3em;
+    margin-top: 0;
 }
 
-.submeta__link {
-    font-weight: 500;
-    line-height: 22px;
-    position: relative;
-    padding-left: .3em;
-    padding-right: .35em;
-    float: left;
+.submeta__link-item {
+    @include nav-links;
 
     &:after {
         @include trailing-slash;
         color: $neutral-5;
     }
 
-    .submeta__keywords & {
-        color: $neutral-2;
-    }
-
     &:last-of-type:after {
         content: none;
+    }
+}
+
+.submeta__link {
+    font-weight: 500;
+    line-height: 22px;
+
+    .submeta__keywords & {
+        color: $neutral-2;
     }
 }
 

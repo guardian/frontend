@@ -5,7 +5,8 @@ define([
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/contributions-epic-ask-four-stagger',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
-    'common/modules/experiments/tests/acquisitions-love-boat-v2'
+    'common/modules/experiments/tests/acquisitions-love-boat-v2',
+    'common/modules/experiments/tests/contributions-epic-urgency'
 ], function (
     segmentUtil,
     viewLog,
@@ -13,12 +14,13 @@ define([
     alwaysAsk,
     askFourStagger,
     askFourEarning,
-    loveBoat
+    loveBoat,
+    urgency
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */
-    var tests = [alwaysAsk, loveBoat, askFourEarning, brexit, askFourStagger];
+    var tests = [alwaysAsk, loveBoat, urgency, askFourEarning, brexit, askFourStagger];
 
     return {
         getTest: function() {

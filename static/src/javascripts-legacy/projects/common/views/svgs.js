@@ -14,7 +14,6 @@ define([
     'svg-loader!svgs/icon/cross.svg',
     'svg-loader!svgs/icon/quote.svg',
     'svg-loader!svgs/logo/logo-guardian.svg',
-    'svg-loader!svgs/commercial/logo-jobs.svg',
     'svg-loader!svgs/commercial/logo-masterclasses.svg',
     'svg-loader!svgs/commercial/paid-content.svg',
     'svg-loader!svgs/icon/close-central.svg',
@@ -45,7 +44,6 @@ define([
     'svg-loader!svgs/notifications-explainer-mobile.svg',
     'svg-loader!svgs/commercial/adblock-coins-us.svg',
     'svg-loader!svgs/icon/star.svg',
-    'svg-loader!svgs/icon/hand.svg',
     'common/views/svg'
 ], function (
     commentCount16icon,
@@ -59,7 +57,6 @@ define([
     crossIcon,
     quoteIcon,
     logoguardian,
-    logojobs,
     logomasterclasses,
     paidContent,
     closeCentralIcon,
@@ -90,7 +87,6 @@ define([
     notificationsExplainerMobile,
     adblockCoinsUS,
     star,
-    hand,
     svg
 ) {
     var svgs = {
@@ -105,7 +101,6 @@ define([
         crossIcon: crossIcon,
         quoteIcon: quoteIcon,
         logoguardian: logoguardian,
-        logojobs: logojobs,
         logomasterclasses: logomasterclasses,
         paidContent: paidContent,
         closeCentralIcon: closeCentralIcon,
@@ -135,16 +130,10 @@ define([
         notificationsExplainerDesktop: notificationsExplainerDesktop,
         notificationsExplainerMobile: notificationsExplainerMobile,
         star: star,
-        hand: hand,
         logomembershipwhite: membershipLogoWhite
     };
 
     return function (name, classes, title) {
-        // #karma-jest - needed by karma
-        if (svgs[name].markup) { // webpack way
-            return svg(svgs[name].markup, classes, title);
-        }
-        // require way
-        return svg(svgs[name], classes, title);
+        return svg(svgs[name].markup, classes, title);
     };
 });

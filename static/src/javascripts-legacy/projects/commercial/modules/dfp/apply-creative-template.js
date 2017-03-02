@@ -72,6 +72,7 @@ define([
         if (creativeConfig) {
             return hideIframe()
                 .then(JSON.parse)
+                .then(mergeViewabilityTracker)
                 .then(renderCreative)
                 .catch(function (err) {
                 reportError('Failed to get creative JSON ' + err);
@@ -88,6 +89,17 @@ define([
                 return null;
             }
 
+        }
+
+        function mergeViewabilityTracker(json) {
+            var viewabilityTrackerDiv = iFrame.contentDocument.getElementById('viewabilityTracker');
+            var viewabilityTracker = viewabilityTrackerDiv ?
+                viewabilityTrackerDiv.childNodes[0].nodeValue.trim() :
+                null;
+            if (viewabilityTracker) {
+                json.params.viewabilityTracker = viewabilityTracker;
+            }
+            return json;
         }
 
         function renderCreative(config) {

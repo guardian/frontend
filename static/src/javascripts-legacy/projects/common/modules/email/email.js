@@ -15,8 +15,8 @@ define([
     'common/modules/analytics/google',
     'lodash/collections/contains',
     'common/views/svgs',
-    'text!common/views/email/submissionResponse.html',
-    'text!common/views/ui/close-button.html',
+    'raw-loader!common/views/email/submissionResponse.html',
+    'raw-loader!common/views/ui/close-button.html',
     'common/modules/identity/api',
     'common/modules/user-prefs',
     'lodash/arrays/uniq'
@@ -107,7 +107,6 @@ define([
                     formSuccessHeadline = (opts && opts.formSuccessHeadline) || formData.formSuccessHeadline,
                     formSuccessDesc = (opts && opts.formSuccessDesc) || formData.formSuccessDesc,
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false,
-                    formModClass = (opts && opts.formModClass) || formData.formModClass || false,
                     formCloseButton = (opts && opts.formCloseButton) || formData.formCloseButton || false,
                     formSuccessEventName = (opts && opts.formSuccessEventName) || formData.formSuccessEventName || false;
 
@@ -126,10 +125,6 @@ define([
 
                     if (removeComforter) {
                         $('.js-email-sub__small', el).remove();
-                    }
-
-                    if (formModClass) {
-                        $(el).addClass('email-sub--' + formModClass);
                     }
 
                     if (formCloseButton) {

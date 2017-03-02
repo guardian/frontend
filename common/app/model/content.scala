@@ -97,7 +97,7 @@ final case class Content(
   }
 
   lazy val hasBeenModified: Boolean =
-    new Duration(trail.webPublicationDate, fields.lastModified).isLongerThan(Duration.standardSeconds(60))
+    new Duration(fields.firstPublicationDate.getOrElse(trail.webPublicationDate), fields.lastModified).isLongerThan(Duration.standardSeconds(60))
 
   lazy val hasTonalHeaderIllustration: Boolean = tags.isLetters
 

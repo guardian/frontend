@@ -7,8 +7,8 @@ define([
     'common/utils/template',
     'common/views/svgs',
     'commercial/modules/creatives/gustyle',
-    'text!commercial/views/creatives/gu-style-comcontent.html',
-    'text!commercial/views/creatives/gu-style-hosted.html',
+    'raw-loader!commercial/views/creatives/gu-style-comcontent.html',
+    'raw-loader!commercial/views/creatives/gu-style-hosted.html',
     'lodash/objects/merge',
     'commercial/modules/creatives/add-tracking-pixel'
 ], function (
@@ -74,7 +74,7 @@ define([
             this.$adSlot[0].insertAdjacentHTML('beforeend', markup);
 
             if (this.params.trackingPixel) {
-                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+                addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
             }
         }, this).then(gustyle.addLabel.bind(gustyle)).then(function () {
             return true;

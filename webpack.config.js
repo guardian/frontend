@@ -7,10 +7,37 @@ const outputName = 'app-webpack';
 module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     devtool: env === 'dev' ? 'inline-source-map' : 'source-map',
     entry: {
-        [outputName]: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
-        'admin-webpack': path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'admin.js'),
-        'video-embed-webpack': path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'video-embed.js'),
-        'youtube-embed-webpack': path.join(__dirname, 'static', 'src', 'javascripts-legacy', 'bootstraps', 'youtube-embed.js'),
+        [outputName]: path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts',
+            'boot-webpack.js'
+        ),
+        'admin-webpack': path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts-legacy',
+            'bootstraps',
+            'admin.js'
+        ),
+        'video-embed-webpack': path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts-legacy',
+            'bootstraps',
+            'video-embed.js'
+        ),
+        'youtube-embed-webpack': path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts-legacy',
+            'bootstraps',
+            'youtube-embed.js'
+        ),
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
@@ -38,24 +65,14 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
             raven: 'raven-js',
             EventEmitter: 'wolfy87-eventemitter',
             videojs: 'video.js',
-            'videojs-ads-lib': 'videojs-contrib-ads',
 
             stripe: 'stripe/stripe.min',
             svgs: path.join(__dirname, 'static', 'src', 'inline-svgs'),
             'ophan/ng': 'ophan-tracker-js',
             'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
-
-            // #wp-rjs once r.js is gone, these can be unaliased and modules updated
-            react: 'react/addons',
         },
     },
     resolveLoader: {
-        alias: {
-            // #karma-jest
-            // this is only needed for karma tests
-            // should be updated once karma is removed to be more wepback-like
-            text: 'raw-loader',
-        },
         modules: [
             path.resolve(__dirname, 'tools', 'webpack-loaders'),
             'node_modules',

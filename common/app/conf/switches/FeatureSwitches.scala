@@ -384,7 +384,7 @@ trait FeatureSwitches {
     "When ON, articles specified in the badges file will have visual elements added",
     owners = Seq(Owner.withGithub("superfrank")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 2, 28),
+    sellByDate = new LocalDate(2017, 3, 28),
     exposeClientSide = false
   )
 
@@ -494,7 +494,7 @@ trait FeatureSwitches {
     "Allows alternate email styling when passing ?format=email-connected, for testing two email design variants",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 27),
+    sellByDate = new LocalDate(2017, 3, 2),
     exposeClientSide = true
   )
 

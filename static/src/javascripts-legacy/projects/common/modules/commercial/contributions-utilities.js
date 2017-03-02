@@ -1,4 +1,5 @@
 define([
+    'lodash/arrays/uniq',
     'commercial/modules/commercial-features',
     'common/modules/commercial/targeting-tool',
     'common/modules/commercial/acquisitions-view-log',
@@ -11,21 +12,23 @@ define([
     'common/utils/storage',
     'common/utils/geolocation',
     'common/utils/template',
-    'text!common/views/contributions-epic-equal-buttons.html'
-
-], function (commercialFeatures,
-             targetingTool,
-             viewLog,
-             $,
-             config,
-             cookies,
-             ElementInView,
-             fastdom,
-             mediator,
-             storage,
-             geolocation,
-             template,
-             contributionsEpicEqualButtons) {
+    'raw-loader!common/views/contributions-epic-equal-buttons.html'
+], function (
+    uniq,
+    commercialFeatures,
+    targetingTool,
+    viewLog,
+    $,
+    config,
+    cookies,
+    ElementInView,
+    fastdom,
+    mediator,
+    storage,
+    geolocation,
+    template,
+    contributionsEpicEqualButtons
+) {
 
     var membershipURL = 'https://membership.theguardian.com/supporter';
     var contributionsURL = 'https://contribute.theguardian.com';
@@ -131,17 +134,22 @@ define([
     }
 
     function ContributionsABTestVariant(options, test) {
+        var trackingCampaignId = test.epic ? 'epic_' + test.campaignId : test.campaignId;
+
         this.campaignId = test.campaignId;
         this.id = options.id;
         this.maxViews = options.maxViews || maxViews;
         this.isUnlimited = options.isUnlimited || false;
 
-        this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, test.contributionsCampaignPrefix);
-        this.membershipURL = options.membershipURL || this.makeURL(membershipURL, test.membershipCampaignPrefix);
+        this.pageviewId = (config.ophan && config.ophan.pageViewId) || 'not_found';
+        this.contributeCampaignCode = getCampaignCode(test.contributionsCampaignPrefix, this.campaignId, this.id);
+        this.membershipCampaignCode = getCampaignCode(test.membershipCampaignPrefix, this.campaignId, this.id);
+        this.campaignCodes = uniq([this.contributeCampaignCode, this.membershipCampaignCode]);
+
+        this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, this.contributeCampaignCode);
+        this.membershipURL = options.membershipURL || this.makeURL(membershipURL, this.membershipCampaignCode);
 
         this.template = options.template || controlTemplate;
-
-        var trackingCampaignId  = test.epic ? 'epic_' + test.campaignId : test.campaignId;
 
         this.test = function () {
             var component = $.create(this.template(this.membershipURL, this.contributeURL));
@@ -182,23 +190,18 @@ define([
         this.registerListener('success', 'successOnView', test.viewEvent, options);
     }
 
-    function getCampaignCodeParamter(campaignCodePrefix, campaignID, id) {
-        return 'INTCMP=' + campaignCodePrefix + '_' + campaignID + '_' + id;
+    function getCampaignCode(campaignCodePrefix, campaignID, id) {
+        return campaignCodePrefix + '_' + campaignID + '_' + id;
     }
 
-    function getPageviewIdParamter() {
-        var ophan = config.ophan;
-        if(ophan && ophan.pageViewId){
-            return 'REFPVID=' + ophan.pageViewId
-        } else {
-            return 'REFPVID=not_found'
-        }
-    }
+    ContributionsABTestVariant.prototype.makeURL = function(base, campaignCode) {
+        var params = [
+            'INTCMP=' + campaignCode,
+            'REFPVID=' + this.pageviewId
+        ];
 
-    ContributionsABTestVariant.prototype.makeURL = function (base, campaignCodePrefix) {
-        var params = [getCampaignCodeParamter(campaignCodePrefix, this.campaignId, this.id), getPageviewIdParamter()];
         return base + '?' + params.filter(Boolean).join('&');
-    };
+    }
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {
         if (options[type]) this[type] = options[type];

@@ -1,5 +1,5 @@
 define([
-    'react',
+    'react/addons',
     'bean',
     'fastdom',
     './classNames',

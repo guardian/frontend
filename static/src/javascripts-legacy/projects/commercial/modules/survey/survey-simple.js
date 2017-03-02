@@ -5,7 +5,7 @@ define([
     'common/utils/template',
     'common/modules/user-prefs',
     'common/views/svgs',
-    'text!commercial/views/survey/survey-simple.html',
+    'raw-loader!commercial/views/survey/survey-simple.html',
     'lodash/arrays/uniq'
 ], function (
     bean,

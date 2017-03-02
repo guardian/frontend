@@ -1,5 +1,23 @@
-var isTeamcityReporterEnabled = process.env.TEAMCITY === 'true',
-    karmaReporters = [ isTeamcityReporterEnabled ? 'teamcity' : 'spec' ];
+var isTeamcityReporterEnabled = process.env.TEAMCITY === 'true';
+var karmaReporters = [isTeamcityReporterEnabled ? 'teamcity' : 'spec'];
+var includeNodeModules = [
+    'bean',
+    'bonzo',
+    'react',
+    'wolfy87-eventemitter',
+    'fastclick',
+    'fastdom',
+    'fence',
+    'lodash-amd',
+    'when',
+    'qwery',
+    'reqwest',
+    'video.js',
+    'videojs-contrib-ads',
+    'text',
+    'raven-js',
+    'ophan-tracker-js'
+].join('|');
 
 module.exports = function (config) {
     return {
@@ -23,7 +41,7 @@ module.exports = function (config) {
 
             // this ugly, but also the most performant way to get
             // node_modules into karma/require
-            { pattern: 'node_modules/+(bean|bonzo|react|wolfy87-eventemitter|fastclick|fastdom|fence|lodash-amd|when|qwery|reqwest|video.js|videojs-contrib-ads|text|raven-js)/**/*.js', included: false },
+            { pattern: 'node_modules/+(' + includeNodeModules + ')/**/*.js', included: false },
         ],
 
         exclude: [],
