@@ -19,7 +19,7 @@ const filesPerHuman = (filesToCheck, humans) =>
 
 const commercial = [
     'Francis Carr',
-    'JonNorman',
+    'Jon Norman',
     'Regis Kuckaertz',
     'rich-nguyen',
     'Kate Whalen',
@@ -31,11 +31,12 @@ const commercialFilesPerHuman = filesPerHuman(commercialModules, commercial);
 
 const platform = [
     'sndrs',
-    'gtrufitt',
+    'Gareth Trufitt',
     'Simon Adcock',
     'NataliaLKB',
     'GHaberis',
     'stephanfowler',
+    'Gustav Pursche',
 ];
 const platformModules = files.filter(_ => _.includes('projects/common/utils'));
 const platformFilesPerHuman = filesPerHuman(platformModules, platform);

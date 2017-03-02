@@ -14,8 +14,8 @@ const exec = (cmd, args) => {
     ).filter(Boolean);
 };
 
-const mainAppTests = ['commercial', 'common', 'facia'].map(set => ({
-    description: `Run ${set} tests`,
+const legacyTests = ['commercial', 'common', 'facia'].map(set => ({
+    description: `Run ${set} tests (legacy)`,
     task: () =>
         exec('karma', [
             'start',
@@ -35,10 +35,17 @@ module.exports = {
             description: 'Run tests',
             task: [
                 {
-                    description: 'Test eslint rules',
-                    task: 'jest tools/eslint-plugin-guardian-frontend/__tests__/*',
+                    description: 'Main app',
+                    task: () => exec('jest', ['static/src/javascripts']),
                 },
-                ...mainAppTests,
+                {
+                    description: 'Test eslint rules',
+                    task: () =>
+                        exec('jest', [
+                            'tools/eslint-plugin-guardian-frontend/__tests__/*',
+                        ]),
+                },
+                ...legacyTests,
             ],
             concurrent: true,
         },

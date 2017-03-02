@@ -17,7 +17,8 @@ define([
     'common/modules/experiments/ab',
     'common/modules/tailor/tailor',
     'common/utils/cookies',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/utils/check-mediator'
 ], function (
     $,
     bean,
@@ -37,7 +38,8 @@ define([
     ab,
     tailor,
     cookies,
-    mediator
+    mediator,
+    checkMediator
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
             $iframeEl.appendTo('.js-article__body');
@@ -193,7 +195,11 @@ define([
             if (listConfig) {
                 listConfig.successEventName = successEventName || listConfig.successEventName || "";
                 var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
-                    $iframeEl = $(iframe);
+                    $iframeEl = $(iframe),
+                    onEmailAdded = function () {
+                        emailRunChecks.setEmailShown(listConfig.listName);
+                        storage.session.set('email-sign-up-seen', 'true');
+                    }
 
                 bean.on(iframe, 'load', function () {
                     email.init(iframe);
@@ -212,19 +218,15 @@ define([
                             });
                         }
                         googleAnalytics.trackNonClickInteraction('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
-                        emailRunChecks.setEmailInserted();
-                        emailRunChecks.setEmailShown(listConfig.listName);
+                        onEmailAdded();
                     });
                 } else {
                     spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
                         $iframeEl.insertBefore(paras[0]);
                         googleAnalytics.trackNonClickInteraction('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
-                        emailRunChecks.setEmailInserted();
-                        emailRunChecks.setEmailShown(listConfig.listName);
+                        onEmailAdded();
                     });
                 }
-
-                storage.session.set('email-sign-up-seen', 'true');
             }
         }
 
@@ -257,24 +259,28 @@ define([
 
     return {
         init: function () {
-            if (emailRunChecks.allEmailCanRun()) {
-                // First we need to check the user's email subscriptions
-                // so we don't insert the sign-up if they've already subscribed
-                emailRunChecks.getUserEmailSubscriptions().then(function () {
-
-                    if (ab.isParticipating({id: 'TailorRecommendedEmail'})) {
-                        switch (ab.getTestVariantId) {
-                            case 'tailor-recommended': tailorInTest(); break;
-                            case 'control': tailorControl(); break;
-                            default: addListToPage(find(listConfigs, emailRunChecks.listCanRun)); break;
+            checkMediator.waitForCheck('emailCanRun').then(function (canEmailRun) {
+                if (canEmailRun) {
+                    emailRunChecks.getUserEmailSubscriptions().then(function () {
+                        if (ab.isParticipating({id: 'TailorRecommendedEmail'})) {
+                            switch (ab.getTestVariantId) {
+                                case 'tailor-recommended': tailorInTest(); break;
+                                case 'control': tailorControl(); break;
+                                default: addListToPage(find(listConfigs, emailRunChecks.listCanRun)); break;
+                            }
+                        } else {
+                            addListToPage(find(listConfigs, emailRunChecks.listCanRun));
                         }
-                    } else {
-                        addListToPage(find(listConfigs, emailRunChecks.listCanRun));
-                    }
-                }).catch(function (error) {
-                    robust.log('c-email', error);
-                });
-            }
+                    }).catch(function (error) {
+                        robust.log('c-email', error);
+                    });
+                }
+            }).catch(function (error) {
+                robust.log('check-mediator', error);
+            });
+        },
+        getListConfigs: function () {
+            return listConfigs;
         }
     };
 });

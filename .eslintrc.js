@@ -4,6 +4,7 @@ module.exports = {
         commonjs: true,
         es6: true,
         node: true,
+        jest: true,
     },
     // eslint-config-prettier disables formatting rules from other configs (i.e. airbnb)
     extends: ['airbnb', 'prettier'],

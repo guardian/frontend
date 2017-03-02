@@ -1,9 +1,15 @@
 @(videos: Seq[model.Video], componentId: String, heading: String)(implicit request: RequestHeader)
 
 @import views.support.Seq2zipWithRowInfo
+@import views.support.RenderClasses
 
-
-<div class="end-slate-container end-slate-container--video" data-component="video-end-slate-@componentId">
+<div class="@RenderClasses(
+    Map(
+        "end-slate-container--has-items" -> videos.nonEmpty
+    ),
+    "end-slate-container",
+    "end-slate-container--video"
+)" data-component="video-end-slate-@componentId">
     @if(videos.nonEmpty) {
         <div class="end-slate-container__header">
             <h3 class="end-slate-container__heading">@heading</h3>

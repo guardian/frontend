@@ -24,7 +24,10 @@ define([
     // TODO: reset advert flags
     function refresh(currentBreakpoint, previousBreakpoint) {
         // only refresh if the slot needs to
-        window.googletag.pubads().refresh(dfpEnv.advertsToRefresh.filter(shouldRefresh).map(function (_) { return _.slot; }));
+        var advertsToRefresh = dfpEnv.advertsToRefresh.filter(shouldRefresh);
+        if (advertsToRefresh.length) {
+            window.googletag.pubads().refresh(advertsToRefresh.map(function (_) { return _.slot; }));
+        }
 
         function shouldRefresh(advert) {
             // get the slot breakpoints

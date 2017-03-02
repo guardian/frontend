@@ -12,7 +12,8 @@ define([
     './common',
     './sport',
     'common/modules/analytics/google',
-    'common/utils/geolocation'
+    'common/utils/geolocation',
+    'common/utils/check-dispatcher'
 ], function (
     fastdom,
     bean,
@@ -27,7 +28,8 @@ define([
     common,
     sport,
     ga,
-    geolocation
+    geolocation,
+    checkDispatcher
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -67,12 +69,6 @@ define([
         if (config.page.isFront) {
             require(['bootstraps/enhanced/facia'], function (facia) {
                 bootstrapContext('facia', facia);
-            });
-        }
-
-        if (config.page.section === 'lifeandstyle' && config.page.series === 'Sudoku') {
-            require(['bootstraps/enhanced/sudoku'], function (sudoku) {
-                bootstrapContext('sudoku', sudoku);
             });
         }
 
@@ -183,6 +179,9 @@ define([
                 });
             }
         });
+
+        // initialise email/outbrain check dispatcher
+        checkDispatcher.init();
 
         // Mark the end of synchronous execution.
         userTiming.mark('App End');
