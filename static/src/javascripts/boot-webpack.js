@@ -47,7 +47,10 @@ domready(() => {
                             if (document.readyState === 'complete') {
                                 capturePerfTimings();
                             } else {
-                                window.addEventListener('load', capturePerfTimings);
+                                window.addEventListener(
+                                    'load',
+                                    capturePerfTimings
+                                );
                             }
                         });
                     }
