@@ -43,7 +43,7 @@ module.exports = {
             cwd: path.resolve(src, 'javascripts'),
             parents: true,
             nodir: true,
-            ignore: '*.js',
+            ignore: '**/*.js',
         }),
     ]),
 };
