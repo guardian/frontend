@@ -10,7 +10,7 @@ module.exports = {
             [`${src}/javascripts`, '--out-dir', `${transpiled}/javascripts`],
             {
                 env: {
-                    BABEL_ENV: 'production',
+                    BABEL_ENV: 'karma',
                 },
             }
         ),
