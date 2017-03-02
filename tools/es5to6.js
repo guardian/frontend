@@ -40,6 +40,7 @@ git
     })
     .then(() => {
         const moduleId = userModules.shift();
+        const unique = `${Date.now()}`.slice(-4);
         const es5Module = path.join(
             'static',
             'src',
@@ -47,7 +48,8 @@ git
             moduleId
         );
         const es6Module = path.join('static', 'src', 'javascripts', moduleId);
-        const branchName = `es6-${moduleId.split(path.sep).join('_')}`;
+        const es6Name = moduleId.split(path.sep).join('_');
+        const branchName = `es6-${es6Name}-${unique}`;
 
         const steps = {
             'Create a branch for the conversion': `git checkout -b ${branchName}`,
