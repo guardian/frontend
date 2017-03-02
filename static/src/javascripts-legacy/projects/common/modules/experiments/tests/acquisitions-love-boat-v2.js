@@ -60,10 +60,8 @@ define([
         idealOutcome: 'Acquires many Supporters',
 
         audienceCriteria: 'Everyone except AU',
-        //audience: 0.32,
-        //audienceOffset: 0.68,
-        audience: 1.0,
-        audienceOffset: 0,
+        audience: 0.32,
+        audienceOffset: 0.68,
         locationCheck: function (geo) {
             return geo !== 'AU';
         },
@@ -71,7 +69,7 @@ define([
         variants: [
             {
                 id: 'control',
-                //maxViews: maxViews,
+                maxViews: maxViews,
                 template: function epic(membershipUrl) {
                     return template(epicSupporterCta, {
                         linkUrl1: membershipUrl,
@@ -96,7 +94,7 @@ define([
                             subtitle: '… but love alone doesn’t keep the lights on',
                             image: png('laptop-hearts'),
                             imageAlt: 'A laptop showing the guardian website surrounded by love hearts',
-                            body: 'The love and support of our readers is vital to securing our future. Our fearless, independent journalism takes a lot of time, hard work and money to produce. And it is increasingly funded by our readers. So you can see why we need to ask for your help.',
+                            body: 'The love and support of our readers is vital to securing our future. Our fearless, independent journalism takes a lot of time, hard work and money to produce. And it is increasingly funded by our readers. That’s why we need you to help.',
                         },
 
                         supportText: '<span class="brand">Guardian Supporters</span> help to secure our future. If you love the work we do, support us now and show how much you care.',
@@ -116,7 +114,7 @@ define([
                         supportUrl: supportUrl,
                         data: {
                             title: 'We don’t have a billionaire owner … ',
-                            subtitle: '… we have only one shareholder, The Scott Trust.',
+                            subtitle: '… we have only one shareholder, The Scott Trust',
                             image: png('boat'),
                             imageAlt: 'A boat moves off the edge of the image',
                             body: '<p>This keeps our independent, investigative, public-interest journalism free from commercial or political pressures.</p><p>Our reporting seeks truth, not approval. It takes a lot of time, hard work and money to produce, and is increasingly funded by our readers.</p>',

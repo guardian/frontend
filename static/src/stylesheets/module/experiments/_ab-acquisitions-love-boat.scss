@@ -122,7 +122,12 @@
 .contributions__option-button--visual__cta {
     width: 160px;
     height: 22px;
-    margin: 0 $gs-gutter / 2;
+    margin: 0;
+    @include mq(tablet) {
+        margin: 0 $gs-gutter / 2;
+    }
+
+
 }
 
 .contributions__epic--visual--copy {
