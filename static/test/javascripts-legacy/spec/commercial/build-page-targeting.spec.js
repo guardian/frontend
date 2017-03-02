@@ -18,6 +18,11 @@ define([
             injector = new Injector();
 
         beforeEach(function (done) {
+
+            injector.mock('lodash/functions/once', function once(func) {
+                return func;
+            });
+
             injector.require([
                     'commercial/modules/build-page-targeting',
                     'common/utils/config',
