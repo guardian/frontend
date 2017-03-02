@@ -31,16 +31,6 @@ define([
         }
     }
 
-    function handleClick(container) {
-        var button = $('.contributions__option-button--visual', container);
-
-        if (button && button[0]) {
-            bean.on(button[0], 'click', function () {
-                container.attr('data-step', 2);
-            });
-        }
-    }
-
     return contributionsUtilities.makeABTest({
         id: 'AcquisitionsLoveBoatV2',
         campaignId: 'kr2_visual_v2',
@@ -96,7 +86,6 @@ define([
                     });
                 },
 
-                onInsert: handleClick,
                 successOnView: true
             },
             {
@@ -119,7 +108,6 @@ define([
                     });
                 },
 
-                onInsert: handleClick,
                 successOnView: true
             }
         ]
