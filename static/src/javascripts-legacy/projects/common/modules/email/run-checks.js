@@ -29,8 +29,7 @@ define([
     clash,
     Promise
 ) {
-    var emailInserted = false;
-    var nonCompliantOutbrain = false;
+
     var emailShown;
     var userListSubsChecked = false;
     var userListSubs = [];
@@ -75,10 +74,6 @@ define([
         }
     }
 
-    function nonCompliantObWidgetIsShown() {
-        return nonCompliantOutbrain;
-    }
-
     var canRunList = {
         theFilmToday: function () {
             return config.page.section === 'film';
@@ -119,18 +114,6 @@ define([
 
     // Public
 
-    function setNonCompliantOutbrain() {
-        nonCompliantOutbrain = true;
-    }
-
-    function setEmailInserted() {
-        emailInserted = true;
-    }
-
-    function getEmailInserted() {
-        return emailInserted;
-    }
-
     function setEmailShown(emailName) {
         emailShown = emailName;
     }
@@ -142,17 +125,15 @@ define([
     function allEmailCanRun() {
         var browser = detect.getUserAgent.browser,
             version = detect.getUserAgent.version;
-
+            
         return !config.page.shouldHideAdverts &&
-            !config.page.isSensitive &&
-            !emailInserted &&
-            !config.page.isFront &&
-            config.switches.emailInArticle &&
-            !clash.userIsInAClashingAbTest(clash.nonEmailClashingTests) &&
-            storage.session.isAvailable() &&
-            !userHasSeenThisSession() &&
-            nonCompliantObWidgetIsShown() &&
-            !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
+                !config.page.isSensitive &&
+                !config.page.isFront &&
+                config.switches.emailInArticle &&
+                !clash.userIsInAClashingAbTest(clash.nonEmailClashingTests) &&
+                storage.session.isAvailable() &&
+                !userHasSeenThisSession() &&
+                !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
     }
 
     function getUserEmailSubscriptions() {
@@ -178,11 +159,8 @@ define([
     }
 
     return {
-        setNonCompliantOutbrain: setNonCompliantOutbrain,
         setEmailShown: setEmailShown,
         getEmailShown: getEmailShown,
-        setEmailInserted: setEmailInserted,
-        getEmailInserted: getEmailInserted,
         allEmailCanRun: allEmailCanRun,
         getUserEmailSubscriptions: getUserEmailSubscriptions,
         listCanRun: listCanRun
