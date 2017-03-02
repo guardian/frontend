@@ -1,7 +1,7 @@
 define([
     'bean',
-    'common/utils/$',
-    'common/utils/mediator'
+    'lib/$',
+    'lib/mediator'
 ], function (
     bean,
     $,

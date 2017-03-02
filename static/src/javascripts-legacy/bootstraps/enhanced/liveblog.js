@@ -1,7 +1,7 @@
 define([
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/mediator',
+    'lib/config',
+    'lib/detect',
+    'lib/mediator',
     'common/modules/article/rich-links',
     'common/modules/experiments/affix',
     'common/modules/ui/autoupdate',
@@ -11,7 +11,7 @@ define([
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
     'bootstraps/enhanced/notifications',
-    'common/utils/robust'
+    'lib/robust'
 ], function (
     config,
     detect,

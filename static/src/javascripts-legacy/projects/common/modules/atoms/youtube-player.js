@@ -1,8 +1,8 @@
 define([
     'fastdom',
     'Promise',
-    'common/utils/$',
-    'common/utils/load-script'
+    'lib/$',
+    'lib/load-script'
 ], function (
     fastdom,
     Promise,

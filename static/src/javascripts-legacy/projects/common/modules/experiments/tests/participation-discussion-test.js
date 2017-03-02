@@ -1,6 +1,6 @@
 define([
     'qwery',
-    'common/utils/config',
+    'lib/config',
     'common/modules/experiments/tests/utils/comment-blocker',
     'common/modules/identity/api'
 ], function (

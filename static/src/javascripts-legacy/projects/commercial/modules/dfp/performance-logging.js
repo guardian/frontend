@@ -1,8 +1,8 @@
 define([
     'Promise',
-    'common/utils/raven',
-    'common/utils/config',
-    'common/utils/user-timing',
+    'lib/raven',
+    'lib/config',
+    'lib/user-timing',
     'common/modules/analytics/beacon'
 ], function (
     Promise,

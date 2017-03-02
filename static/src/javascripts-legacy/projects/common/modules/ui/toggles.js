@@ -1,8 +1,8 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/$',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/mediator',
     'lodash/collections/contains'
 ], function (
     bean,

@@ -1,4 +1,4 @@
-import mediator from 'common/utils/mediator';
+import mediator from 'lib/mediator';
 
 let analyticsReady = false;
 

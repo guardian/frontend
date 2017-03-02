@@ -1,5 +1,5 @@
 define([
-    'common/utils/storage',
+    'lib/storage',
     'lodash/collections/map'
 ], function (
     storage,

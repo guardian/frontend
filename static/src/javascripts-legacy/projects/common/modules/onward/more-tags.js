@@ -3,7 +3,7 @@
  Description: upgrades the 'Tags' list on content with a show more.
  */
 define([
-    'common/utils/$',
+    'lib/$',
     'bean'
 ], function (
     $,

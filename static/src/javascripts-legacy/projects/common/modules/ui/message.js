@@ -1,10 +1,10 @@
 define([
-    'common/utils/$',
+    'lib/$',
     'bean',
-    'common/utils/storage',
+    'lib/storage',
     'common/modules/user-prefs',
-    'common/utils/mediator',
-    'common/utils/detect',
+    'lib/mediator',
+    'lib/detect',
     'common/modules/analytics/register',
     'lodash/arrays/uniq'
 ], function (

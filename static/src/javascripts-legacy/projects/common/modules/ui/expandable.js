@@ -3,7 +3,7 @@
     Description: Used to make a list of items expand and contract
 */
 define([
-    'common/utils/$',
+    'lib/$',
     'bean',
     'bonzo'
 ], function (

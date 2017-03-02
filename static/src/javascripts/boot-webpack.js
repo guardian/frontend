@@ -1,9 +1,9 @@
 import domready from 'domready';
-import raven from 'common/utils/raven';
+import raven from 'lib/raven';
 import bootStandard from 'bootstraps/standard/main';
-import config from 'common/utils/config';
-import userTiming from 'common/utils/user-timing';
-import capturePerfTimings from 'common/utils/capture-perf-timings';
+import config from 'lib/config';
+import userTiming from 'lib/user-timing';
+import capturePerfTimings from 'lib/capture-perf-timings';
 
 // let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable

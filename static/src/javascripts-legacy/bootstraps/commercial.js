@@ -1,9 +1,9 @@
 define([
     'Promise',
-    'common/utils/config',
-    'common/utils/mediator',
-    'common/utils/robust',
-    'common/utils/user-timing',
+    'lib/config',
+    'lib/mediator',
+    'lib/robust',
+    'lib/user-timing',
     'commercial/modules/high-merch',
     'commercial/modules/article-aside-adverts',
     'commercial/modules/article-body-adverts',

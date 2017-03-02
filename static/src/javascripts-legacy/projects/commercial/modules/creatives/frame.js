@@ -1,6 +1,6 @@
 define([
-    'common/utils/fastdom-promise',
-    'common/utils/template',
+    'lib/fastdom-promise',
+    'lib/template',
     'common/views/svgs',
     'common/modules/ui/toggles',
     'commercial/modules/creatives/add-tracking-pixel',

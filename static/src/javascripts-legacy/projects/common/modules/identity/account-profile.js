@@ -5,12 +5,12 @@
  *  forms.
  */
 define([
-    'common/utils/$',
+    'lib/$',
     'bean',
     'bonzo',
-    'common/utils/url',
-    'common/utils/config',
-    'common/utils/ajax',
+    'lib/url',
+    'lib/config',
+    'lib/ajax',
     'common/modules/avatar/api'
 ], function (
     $,

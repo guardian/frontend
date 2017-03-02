@@ -1,8 +1,8 @@
 define([
-    'common/utils/mediator',
-    'common/utils/storage',
+    'lib/mediator',
+    'lib/storage',
     'common/modules/analytics/google',
-    'common/utils/robust'
+    'lib/robust'
 ], function (
     mediator,
     storage,

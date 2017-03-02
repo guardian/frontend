@@ -1,6 +1,6 @@
 define([
-    'common/utils/mediator',
-    'common/utils/storage'
+    'lib/mediator',
+    'lib/storage'
 ], function (
     mediator,
     storage

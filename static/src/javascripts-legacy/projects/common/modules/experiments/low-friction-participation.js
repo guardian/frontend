@@ -2,17 +2,17 @@ define([
     'bean',
     'lodash/objects/merge',
     'lodash/functions/memoize',
-    'common/utils/storage',
-    'common/utils/config',
-    'common/utils/$',
-    'common/utils/fastdom-promise',
+    'lib/storage',
+    'lib/config',
+    'lib/$',
+    'lib/fastdom-promise',
     'common/views/svg',
     'svg-loader!svgs/icon/star.svg',
     'raw-loader!common/views/experiments/participation/low-friction-wrapper.html',
     'raw-loader!common/views/experiments/participation/low-friction-contents.html',
     'raw-loader!common/views/experiments/participation/low-friction-buttons.html',
-    'common/utils/template',
-    'common/utils/mediator'
+    'lib/template',
+    'lib/mediator'
 ], function (
     bean,
     merge,

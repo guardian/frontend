@@ -1,5 +1,5 @@
 define([
-    'common/utils/config',
+    'lib/config',
     'common/modules/discussion/loader',
     'qwery'
 ], function (
