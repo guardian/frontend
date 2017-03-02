@@ -18,7 +18,7 @@ define([
     /**
      * acquisition tests in priority order (highest to lowest)
      */
-    var tests = [alwaysAsk, askFourEarning, brexit, askFourStagger, urgency];
+    var tests = [alwaysAsk, urgency, askFourEarning, brexit, askFourStagger];
 
     return {
         getTest: function() {
