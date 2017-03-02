@@ -162,7 +162,6 @@
     "projects/common/utils/fastdom-promise.js",
     "bootstraps/enhanced/profile.js",
     "bootstraps/enhanced/sport.js",
-    "bootstraps/enhanced/sudoku.js",
     "bootstraps/enhanced/trail.js",
     "bootstraps/enhanced/youtube.js",
     "bootstraps/standard/main.js",
@@ -220,13 +219,6 @@
     "projects/common/modules/analytics/register.js"
   ],
   "Gustav Pursche": [
-    "projects/common/modules/sudoku/cell.js",
-    "projects/common/modules/sudoku/constants.js",
-    "projects/common/modules/sudoku/controls.js",
-    "projects/common/modules/sudoku/flatMap.js",
-    "projects/common/modules/sudoku/grid.js",
-    "projects/common/modules/sudoku/main.js",
-    "projects/common/modules/sudoku/utils.js",
     "projects/common/modules/tailor/tailor.js",
     "projects/common/modules/ui/accessibility-prefs.js",
     "projects/common/modules/ui/autoupdate.js",
