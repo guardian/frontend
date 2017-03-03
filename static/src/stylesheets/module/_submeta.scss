@@ -10,7 +10,7 @@
 
     &:before {
         @include fs-textSans(1);
-        content: "More";
+        content: 'More';
         color: $neutral-2;
         display: block;
         margin-bottom: -($gs-baseline / 4);
