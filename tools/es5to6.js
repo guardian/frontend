@@ -58,12 +58,12 @@ git
             'Create a branch for the conversion': `git checkout -b "${branchName}" master || git checkout -b "${branchName}-${unique}" master`,
             'Move the legacy module to the new location': `mkdir -p ${es6Module}; mv ${es5Module} $_; node ./tools/es5to6-remove-module.js ${moduleId}`,
             'Commit the move': `git add ${es6Module} ${es5Module} ${responsibilityFile}; git commit -m "move ${moduleId} from legacy to standard JS"`,
-            'Convert module to es6': `npm run -s amdtoes6 -- -d ${es6Module} -o ${es6Module} -g **/${path.basename(es6Module)} `,
-            'Commit the module tranform': `git add ${es6Module}; git commit -m "transform ${moduleId} to es6 module"`,
-            'Convert contents to es6': `npm run -s lebab -- ${es6Module}`,
-            'Commit the content tranform': `git add ${es6Module}; git commit -m "transform ${moduleId} content to es6"`,
+            'Convert module to ES6': `npm run -s amdtoes6 -- -d ${es6Module} -o ${es6Module} -g **/${path.basename(es6Module)} `,
+            'Commit the module tranform': `git add ${es6Module}; git commit -m "transform ${moduleId} to ES6 module"`,
+            'Convert contents to ES6': `npm run -s lebab -- ${es6Module}`,
+            'Commit the content tranform': `git add ${es6Module}; git commit -m "transform ${moduleId} content to ES6"`,
             'Fix lint errors': `npm run -s eslint-fix -- ${es6Module}`,
-            'Commit any lint fixes': `git commit ${es6Module} -m "fix lint errors with ${moduleId} after transform to es6"`,
+            'Commit any lint fixes': `git commit ${es6Module} -m "fix lint errors with ${moduleId} after transform to ES6"`,
         };
 
         Object.keys(steps)
