@@ -2,7 +2,7 @@ module.exports = {
     settings: {
         'import/resolver': 'webpack',
     },
-    plugins: ['guardian-frontend'],
+    plugins: ['guardian-frontend', 'flowtype'],
     rules: {
         // require-specific overrides
         'import/no-dynamic-require': 'off',
@@ -39,5 +39,8 @@ module.exports = {
         // our own rules for frontend
         // live in tools/eslint-plugin-guardian-frontend
         'guardian-frontend/global-config': 2,
+
+        // Turn on flowtype
+        'flowtype/define-flow-type': 1,
     },
 };
