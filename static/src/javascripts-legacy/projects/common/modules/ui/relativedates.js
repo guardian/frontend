@@ -172,6 +172,7 @@ define([
     }
 
     function getLocaleTimezone(datetime) {
+        // extracts timezone from datetime, eg. EST from Fri Mar 03 2017 09:57:25 GMT-0500 (EST)
         return datetime.toString().match(/\(([^)]+)\)/)[1];
     }
 
