@@ -1,8 +1,8 @@
 define([
-    'common/utils/add-event-listener',
-    'common/utils/closest',
-    'common/utils/detect',
-    'common/utils/fastdom-promise',
+    'lib/add-event-listener',
+    'lib/closest',
+    'lib/detect',
+    'lib/fastdom-promise',
     'commercial/modules/messenger'
 ], function (addEventListener, closest, detect, fastdom, messenger) {
     // An intersection observer will allow us to efficiently send slot

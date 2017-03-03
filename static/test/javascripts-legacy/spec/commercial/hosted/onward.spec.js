@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'lib/$',
     'Promise',
     'helpers/fixtures',
     'helpers/injector'
@@ -34,8 +34,8 @@ define([
         }};
 
         beforeEach(function (done) {
-            injector.mock('common/utils/config', mockConfig);
-            injector.mock('common/utils/fetch-json', mock);
+            injector.mock('lib/config', mockConfig);
+            injector.mock('lib/fetch-json', mock);
             injector.require([
                 'commercial/modules/hosted/onward'
             ], function () {

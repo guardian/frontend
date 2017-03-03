@@ -6,7 +6,7 @@ define([
     'bean',
     'reqwest',
     'fastdom',
-    'common/utils/$'
+    'lib/$'
 ], function (
     bean,
     reqwest,

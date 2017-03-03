@@ -1,6 +1,6 @@
 define([
     'common/modules/commercial/contributions-utilities',
-    'common/utils/template',
+    'lib/template',
     'raw-loader!common/views/contributions-epic-equal-buttons.html'
 ], function (
     contributionsUtilities,

@@ -1,6 +1,6 @@
 define([
     'helpers/injector',
-    'common/utils/storage'
+    'lib/storage'
 ], function (
     Injector,
     storage
@@ -25,9 +25,9 @@ define([
 
             injector.require([
                     'commercial/modules/build-page-targeting',
-                    'common/utils/config',
-                    'common/utils/cookies',
-                    'common/utils/detect',
+                    'lib/config',
+                    'lib/cookies',
+                    'lib/detect',
                     'common/modules/identity/api',
                     'commercial/modules/user-ad-targeting',
                     'common/modules/experiments/ab',

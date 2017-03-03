@@ -2,9 +2,9 @@
  Common functions to simplify access to page data
  */
 define([
-    'common/utils/pad',
-    'common/utils/url',
-    'common/utils/assign'
+    'lib/pad',
+    'lib/url',
+    'lib/assign'
 ], function (pad, urlUtils, assign) {
     // eslint-disable-next-line guardian-frontend/global-config
     var config         = window.guardian.config;

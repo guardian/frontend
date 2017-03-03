@@ -1,5 +1,5 @@
 define([
-    'common/utils/check-mediator'
+    'lib/check-mediator'
 ], function (
     checkMediator
 ) {
@@ -56,7 +56,7 @@ define([
             checkMediator.resolveCheck('check-1', true);
         });
 
-        it('resolves a check with dependent checks as true when passCondition is EVERYCHECKPASSED', function (done) {            
+        it('resolves a check with dependent checks as true when passCondition is EVERYCHECKPASSED', function (done) {
             checkMediator.waitForCheck('check-2')
             .then(function(result) {
                 expect(result).toBe(true);
@@ -68,7 +68,7 @@ define([
             checkMediator.resolveCheck('check-4', true);
         });
 
-        it('resolves a check with dependent checks as false when passCondition is EVERYCHECKPASSED', function (done) {            
+        it('resolves a check with dependent checks as false when passCondition is EVERYCHECKPASSED', function (done) {
             checkMediator.waitForCheck('check-5')
             .then(function(result) {
                 expect(result).toBe(false);
@@ -81,7 +81,7 @@ define([
         });
 
 
-        it('resolves a check with dependent checks as true when passCondition is SOMECHECKSPASSED', function (done) {            
+        it('resolves a check with dependent checks as true when passCondition is SOMECHECKSPASSED', function (done) {
             checkMediator.waitForCheck('check-8')
             .then(function(result) {
                 expect(result).toBe(true);
@@ -93,7 +93,7 @@ define([
             checkMediator.resolveCheck('check-10', false);
         });
 
-        it('rejects a check if not registered', function (done) {           
+        it('rejects a check if not registered', function (done) {
             checkMediator.waitForCheck('check-666')
             .catch(function(error) {
                 expect(error).toBe('no deferred check with id check-666');

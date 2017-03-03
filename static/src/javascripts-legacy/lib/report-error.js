@@ -4,7 +4,7 @@
 // exceptions. This is optional because sometimes we log errors for tracking
 // user data.
 define([
-    'common/utils/raven'
+    'lib/raven'
     ],
     function (raven) {
     return function reportError(err, meta, shouldThrow) {

@@ -12,7 +12,7 @@ define([
 
         beforeEach(function (done) {
             injector.require([
-                'common/utils/QueueAsync'
+                'lib/QueueAsync'
             ], function () {
                 QueueAsync = arguments[0];
                 done();

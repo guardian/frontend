@@ -3,7 +3,7 @@
 
 define([
     'fastdom',
-    'common/utils/report-error'
+    'lib/report-error'
 ], function (
     fastdom,
     reportError

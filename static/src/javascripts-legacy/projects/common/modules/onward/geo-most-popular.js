@@ -7,8 +7,8 @@ define([
     'qwery',
     'common/modules/component',
     'common/modules/experiments/ab',
-    'common/utils/config',
-    'common/utils/mediator',
+    'lib/config',
+    'lib/mediator',
     'lodash/functions/once'
 ], function (
     Promise,

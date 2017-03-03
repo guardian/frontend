@@ -1,5 +1,5 @@
 define([
-    'common/utils/mediator'
+    'lib/mediator'
 ], function (mediator) {
     return function () {
         this.id = 'GuardianTodaySignupMessaging';

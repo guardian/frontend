@@ -1,8 +1,8 @@
 define([
-    'common/utils/config',
-    'common/utils/cookies',
-    'common/utils/detect',
-    'common/utils/load-script'
+    'lib/config',
+    'lib/cookies',
+    'lib/detect',
+    'lib/load-script'
 ], function (
     config,
     Cookie,

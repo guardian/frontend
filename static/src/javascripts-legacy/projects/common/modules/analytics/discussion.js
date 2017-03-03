@@ -1,9 +1,9 @@
 define([
     'bonzo',
-    'common/utils/$',
-    'common/utils/mediator',
-    'common/utils/assign',
-    'common/utils/config',
+    'lib/$',
+    'lib/mediator',
+    'lib/assign',
+    'lib/config',
     'common/modules/identity/api',
     'lodash/functions/debounce'
 ], function (

@@ -3,7 +3,7 @@
     For example "comments throwing an exception should not stop auto refresh"
  */
 define([
-    'common/utils/report-error'
+    'lib/report-error'
 ], function (
     reportError
 ) {

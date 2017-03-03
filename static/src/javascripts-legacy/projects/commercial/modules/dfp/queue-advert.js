@@ -1,5 +1,5 @@
 define([
-    'common/utils/detect',
+    'lib/detect',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/define-slot',
     'commercial/modules/dfp/breakpoint-name-to-attribute'

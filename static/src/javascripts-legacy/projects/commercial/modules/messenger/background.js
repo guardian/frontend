@@ -1,8 +1,8 @@
 define([
-    'common/utils/add-event-listener',
-    'common/utils/assign',
-    'common/utils/closest',
-    'common/utils/fastdom-promise',
+    'lib/add-event-listener',
+    'lib/assign',
+    'lib/closest',
+    'lib/fastdom-promise',
     'commercial/modules/messenger'
 ], function (addEventListener, assign, closest, fastdom, messenger) {
     messenger.register('background', function(specs, ret, iframe) {

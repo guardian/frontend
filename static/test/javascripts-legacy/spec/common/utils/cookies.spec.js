@@ -1,7 +1,7 @@
 define([
-    'common/utils/cookies',
+    'lib/cookies',
     'lodash/arrays/remove',
-    'common/utils/chain'
+    'lib/chain'
 ], function (cookies, remove, chain) {
     describe('Cookies', function () {
 

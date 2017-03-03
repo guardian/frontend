@@ -1,5 +1,5 @@
 define([
-    'common/utils/detect'
+    'lib/detect'
 ], function (detect) {
 
     var supportsPushState = detect.hasPushStateSupport(),

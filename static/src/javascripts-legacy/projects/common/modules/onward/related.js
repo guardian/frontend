@@ -1,9 +1,9 @@
 define([
     'bonzo',
     'qwery',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/config',
+    'lib/mediator',
     'common/modules/analytics/register',
     'common/modules/lazyload',
     'common/modules/ui/expandable',

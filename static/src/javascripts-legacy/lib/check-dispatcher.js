@@ -1,6 +1,6 @@
 define([
-    'common/utils/config',
-    'common/utils/check-mediator',
+    'lib/config',
+    'lib/check-mediator',
     'common/modules/email/run-checks',
     'common/modules/email/email-article',
     'common/modules/experiments/ab-test-clash'

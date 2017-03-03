@@ -1,7 +1,7 @@
 define([
     'bean',
-    'common/utils/$',
-    'common/utils/fastdom-promise',
+    'lib/$',
+    'lib/fastdom-promise',
     'lodash/collections/toArray'
 ], function (
     bean,

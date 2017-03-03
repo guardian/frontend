@@ -1,5 +1,5 @@
 define([
-    'common/utils/mediator',
+    'lib/mediator',
     'bean',
     'common/modules/ui/notification-counter'
 ], function (mediator, bean, NotificationCounter) {

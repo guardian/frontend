@@ -1,6 +1,6 @@
 define([
     'ophan/ng',
-    'common/utils/user-timing'
+    'lib/user-timing'
 ], function (ophan, userTiming) {
     return function captureTiming() {
         var timing = window.performance && window.performance.timing;

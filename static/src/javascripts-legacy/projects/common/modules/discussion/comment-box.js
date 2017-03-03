@@ -1,9 +1,9 @@
 define([
-    'common/utils/$',
+    'lib/$',
     'bean',
     'bonzo',
-    'common/utils/config',
-    'common/utils/mediator',
+    'lib/config',
+    'lib/mediator',
     'common/modules/discussion/api',
     'common/modules/identity/api',
     'common/modules/component',

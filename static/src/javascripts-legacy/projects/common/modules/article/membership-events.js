@@ -1,8 +1,8 @@
 define([
     'fastdom',
-    'common/utils/$',
-    'common/utils/fetch-json',
-    'common/utils/report-error'
+    'lib/$',
+    'lib/fetch-json',
+    'lib/report-error'
 ], function (
     fastdom,
     $,
