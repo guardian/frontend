@@ -75,12 +75,12 @@ class AccountDeletionController(
   private def executeAccountDeletionStepFunction[A](boundForm: Form[String])(implicit request: AuthenticatedActions.AuthRequest[A]): Future[Result] =
     idApiClient.executeAccountDeletionStepFunction(request.user.user.id, request.user.user.primaryEmailAddress, request.user.auth).map { _ match {
         case Left(error) =>
-          logger.error(s"Account deletion failed: $error")
+          logger.error(s"Account deletion failed for user ${request.user.user.id}: $error")
           SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url).flashing(boundForm.withGlobalError(
             "We are experiencing technical difficulties. Your account has not been deleted. Please try again later or contact Userhelp.").toFlash)
 
         case Right(deletionResult) =>
-          logger.info(s"Account deletion succeeded: $deletionResult")
+          logger.info(s"Account deletion succeeded for user ${request.user.user.id}: $deletionResult")
           Ok(accountDeletionConfirm(page, deletionResult.auto == "true"))
       }
     }
