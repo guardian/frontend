@@ -2,7 +2,7 @@ define([
     'bonzo',
     'lib/$',
     'lib/mediator',
-    'lib/assign',
+    'lodash/objects/assign',
     'lib/config',
     'common/modules/identity/api',
     'lodash/functions/debounce'

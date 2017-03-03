@@ -10,7 +10,7 @@
 define([
     'lib/fastdom-promise',
     'Promise',
-    'lib/assign',
+    'lodash/objects/assign',
     'lib/queue',
     'lib/config'
 ], function (

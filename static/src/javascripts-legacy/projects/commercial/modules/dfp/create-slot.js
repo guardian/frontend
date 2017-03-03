@@ -1,6 +1,6 @@
 define([
     'lib/config',
-    'lib/assign',
+    'lodash/objects/assign',
     'commercial/modules/ad-sizes'
 ], function (
     config,

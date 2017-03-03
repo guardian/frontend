@@ -1,6 +1,6 @@
 define([
     'Promise',
-    'lib/assign'
+    'lodash/objects/assign'
 ], function (Promise, assign) {
     return loadScript;
 
