@@ -10,8 +10,10 @@ import capturePerfTimings from 'common/utils/capture-perf-timings';
 // let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
 // https://webpack.js.org/guides/public-path/#set-value-on-the-fly
-// eslint-disable-next-line camelcase,no-undef
+// We need to declare it as a global var here for flow.
+// eslint-disable-next-line camelcase
 declare var __webpack_public_path__: string;
+// eslint-disable-next-line camelcase,no-undef
 __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
 domready(() => {
