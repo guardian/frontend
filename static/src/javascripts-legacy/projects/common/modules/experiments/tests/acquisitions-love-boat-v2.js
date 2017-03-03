@@ -1,9 +1,9 @@
 define([
     'bean',
     'common/modules/commercial/contributions-utilities',
-    'common/utils/template',
-    'common/utils/config',
-    'common/utils/$',
+    'lib/template',
+    'lib/config',
+    'lib/$',
     'raw-loader!common/views/epic-supporter-cta.html',
     'raw-loader!common/views/acquisitions-visual.html'
 ], function (
