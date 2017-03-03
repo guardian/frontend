@@ -26,7 +26,7 @@ if (!userModules || !userModules.length) {
 git
     .status((err, status) => {
         if (
-            status.current !== 'master' ||
+            status.current !== 'gp-es6-conversion-simplify' ||
             status.files.length > 0 ||
             status.ahead !== 0 ||
             status.behind !== 0
