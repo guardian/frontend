@@ -18,6 +18,11 @@ define([
             injector = new Injector();
 
         beforeEach(function (done) {
+
+            injector.mock('lodash/functions/once', function once(func) {
+                return func;
+            });
+
             injector.require([
                     'commercial/modules/build-page-targeting',
                     'common/utils/config',
@@ -182,16 +187,8 @@ define([
                 return [];
             };
 
-            var opts = {
-                window: {
-                    location: {
-                        pathname: '/a/page.html'
-                    }
-                }
-            };
-
-            expect(buildPageTargeting(opts)).toEqual({
-                url: '/a/page.html',
+            expect(buildPageTargeting()).toEqual({
+                url: '/context.html',
                 p: 'ng',
                 bp: 'mobile',
                 at: 'ng101',

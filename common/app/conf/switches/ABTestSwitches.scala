@@ -142,6 +142,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-love-boat-v2",
+    "Tests 2 new designs for acquisitions asks",
+    owners = Seq(Owner.withGithub("dominickendrick")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 20), //Thursday
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-tailor-recommended-email",
     "Use Tailor to target email signup form",
     owners = Seq(Owner.withGithub("lindseydew")),

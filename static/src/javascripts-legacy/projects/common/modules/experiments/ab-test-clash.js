@@ -26,6 +26,11 @@ define([
         variants: ['control', 'paywall_tweak', 'values_tweak', 'values_full']
     };
 
+    var AcquisitionsLoveBoatV2 = {
+        name: 'AcquisitionsLoveBoatV2',
+        variants: ['control','love','boat']
+    };
+
     var GuardianTodaySignupMessaging = {
         name: 'GuardianTodaySignupMessaging',
         variants: ['message-a', 'message-b', 'message-c']
@@ -36,7 +41,8 @@ define([
         ContributionsEpicBrexit,
         ContributionsEpicAskFourStagger,
         ContributionsEpicAskFourEarning,
-        ContributionsEpicUrgency
+        ContributionsEpicUrgency,
+        AcquisitionsLoveBoatV2
     ];
 
     var emailTests = [
