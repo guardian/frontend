@@ -149,6 +149,10 @@ define([
                     // There are no MPUs on hosted pages, so no slot render events, and therefore no reporting would be done.
                     Promise.all(customTimingModules).then(performanceLogging.reportTrackingData);
                 }
+            })
+            .catch(function () {
+                // Just in case something goes wrong, we don't want it to
+                // prevent enhanced from loading
             });
         }
     };

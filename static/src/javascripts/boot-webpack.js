@@ -35,23 +35,26 @@ domready(() => {
             ['bootstraps/commercial'],
             raven.wrap({ tags: { feature: 'commercial' } }, commercial => {
                 userTiming.mark('commercial boot');
-                commercial.init();
-
-                // 3. finally, try enhanced
-                // this is defined here so that webpack's code-splitting algo
-                // excludes all the modules bundled in the commercial chunk from this one
-                if (window.guardian.isEnhanced) {
-                    userTiming.mark('enhanced request');
-                    require(['bootstraps/enhanced/main'], bootEnhanced => {
-                        userTiming.mark('enhanced boot');
-                        bootEnhanced();
-                        if (document.readyState === 'complete') {
-                            capturePerfTimings();
-                        } else {
-                            window.addEventListener('load', capturePerfTimings);
-                        }
-                    });
-                }
+                commercial.init().then(() => {
+                    // 3. finally, try enhanced
+                    // this is defined here so that webpack's code-splitting algo
+                    // excludes all the modules bundled in the commercial chunk from this one
+                    if (window.guardian.isEnhanced) {
+                        userTiming.mark('enhanced request');
+                        require(['bootstraps/enhanced/main'], bootEnhanced => {
+                            userTiming.mark('enhanced boot');
+                            bootEnhanced();
+                            if (document.readyState === 'complete') {
+                                capturePerfTimings();
+                            } else {
+                                window.addEventListener(
+                                    'load',
+                                    capturePerfTimings
+                                );
+                            }
+                        });
+                    }
+                });
             })
         );
     }
