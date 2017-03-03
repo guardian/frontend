@@ -26,7 +26,10 @@ if (!userModules || !userModules.length) {
 git
     .status((err, status) => {
         if (
-            status.files.length > 0 || status.ahead !== 0 || status.behind !== 0
+            status.current !== 'master' ||
+            status.files.length > 0 ||
+            status.ahead !== 0 ||
+            status.behind !== 0
         ) {
             console.log(
                 chalk.red(
@@ -48,12 +51,13 @@ git
 
         const es6Module = path.join('static', 'src', 'javascripts', moduleId);
         const es6Name = moduleId.split(path.sep).join('_').replace('.js', '');
+        const responsibilityFile = path.resolve('./es5to6.json');
         const branchName = `es6-${es6Name}`;
 
         const steps = {
             'Create a branch for the conversion': `git checkout -b "${branchName}" master || git checkout -b "${branchName}-${unique}" master`,
             'Move the legacy module to the new location': `mkdir -p ${es6Module}; mv ${es5Module} $_; node ./tools/es5to6-remove-module.js ${moduleId}`,
-            'Commit the move': `git add ${es6Module} ${es5Module}; git commit -m "move ${moduleId} from legacy to standard JS"`,
+            'Commit the move': `git add ${es6Module} ${es5Module} ${responsibilityFile}; git commit -m "move ${moduleId} from legacy to standard JS"`,
             'Convert module to es6': `npm run -s amdtoes6 -- -d ${es6Module} -o ${es6Module} -g **/${path.basename(es6Module)} `,
             'Commit the module tranform': `git add ${es6Module}; git commit -m "transform ${moduleId} to es6 module"`,
             'Convert contents to es6': `npm run -s lebab -- ${es6Module}`,
