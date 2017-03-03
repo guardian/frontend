@@ -108,7 +108,7 @@
     }
 
     // Ensure margins don't overlay full-page take over interactives
-    &:not(.content--paid-content) .element-interactive{
+    &:not(.content--paid-content) .element-interactive {
         background-color: #ffffff;
     }
 
@@ -139,4 +139,3 @@
         display: none;
     }
 }
-
