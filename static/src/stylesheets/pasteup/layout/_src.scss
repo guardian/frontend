@@ -18,7 +18,7 @@
 
 @mixin flex-row($class) {
     @include mq(tablet) {
-        #{$class} {
+        .#{$class} {
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
@@ -29,33 +29,33 @@
         #{$class}--reverse {
             flex-direction: row-reverse;
         }
-        #{$class}__item {
+        .#{$class}__item {
             flex: 1;
             flex-grow: 1;
             flex-basis: 0;
             width: 0; // Prevent items to grow out of their parent in FF
         }
-        #{$class}__item--boost-1 {
+        .#{$class}__item--boost-1 {
             flex-grow: 1.5;
         }
-        #{$class}__item--boost-2 {
+        .#{$class}__item--boost-2 {
             flex-grow: 2;
         }
     }
 
     @include mq($until: tablet) {
-        #{$class}--layout-m {
+        .#{$class}--layout-m {
             display: flex;
             flex-wrap: wrap;
 
             // Items fill half the width of their container
-            #{$class}__item {
+            .#{$class}__item {
                 flex-basis: 50%;
             }
 
             // Break the flow on mobile:
             // Item will fill the whole width of its container
-            #{$class}__item--break-m {
+            .#{$class}__item--break-m {
                 flex: 1 100%;
             }
         }
@@ -63,17 +63,17 @@
 }
 
 @mixin no-flex-row($class, $fallback-width: 940px) {
-    #{$class} {
+    .#{$class} {
         @include clearfix;
         width: $fallback-width;
     }
 
-    #{$class}__item {
+    .#{$class}__item {
         float: left;
     }
 
     @each $i in 2, 3, 4 {
-        #{$class}--items-#{$i} #{$class}__item {
+        .#{$class}--items-#{$i} .#{$class}__item {
             width: $fallback-width / $i;
         }
     }
@@ -93,12 +93,12 @@
     $columns-fallback-columns: 3
 ) {
     @if $browser-supports-columns {
-        #{$class} {
+        .#{$class} {
             column-width: $column-min-width;
             column-gap: $column-gap;
             column-fill: balance;
         }
-        #{$class}__item {
+        .#{$class}__item {
             // Fix a bug in IE where hovering items would change
             // the column container's height
             height: 100%;
@@ -107,12 +107,12 @@
         }
     }
     @if not $browser-supports-columns {
-        #{$class} {
+        .#{$class} {
             @include clearfix;
             margin-left: $column-gap / 2 * -1;
             margin-right: $column-gap / 2 * -1;
         }
-        #{$class}__item {
+        .#{$class}__item {
             position: relative;
             display: block;
             margin-left: $column-gap / 2;
@@ -137,4 +137,3 @@
         }
     }
 }
-

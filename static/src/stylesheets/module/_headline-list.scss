@@ -109,7 +109,7 @@
 
 
 @include mq(tablet, desktop) {
-    @include layout-columns('.headline-column--tablet',
+    @include layout-columns('headline-column--tablet',
         $column-min-width: 340px,
         $columns-fallback-width: gs-span(9),
         $columns-fallback-columns: 2
@@ -121,7 +121,7 @@
 }
 
 @include mq(desktop) {
-    @include layout-columns('.headline-column--desktop',
+    @include layout-columns('headline-column--desktop',
         $column-min-width: 300px,
         $columns-fallback-width: gs-span(8),
         $columns-fallback-columns: 2
