@@ -119,7 +119,6 @@
     "bootstraps/enhanced/crosswords.js"
   ],
   "sndrs": [
-    "projects/common/utils/$.js",
     "projects/common/utils/$css.js",
     "projects/common/utils/add-event-listener.js",
     "projects/common/utils/ajax.js",

@@ -31,7 +31,22 @@ module.exports = {
         'no-restricted-imports': [
             'error',
             {
-                paths: ['lodash'],
+                paths: [
+                    'lodash',
+                    'lodash/collections/forEach',
+                    'lodash/collections/map',
+                    'lodash/collections/reduce',
+                    'lodash/collections/some',
+                    'lodash/collections/filter',
+                    'lodash/objects/assign',
+                    'lodash/objects/values',
+                    'lodash/objects/merge',
+                    'lodash/objects/keys',
+                    'lodash/collections/every',
+                    'lodash/collections/contains',
+                    'lodash/objects/isArray',
+                    'lodash/arrays/indexOf',
+                ],
                 patterns: ['!lodash/*'],
             },
         ],
