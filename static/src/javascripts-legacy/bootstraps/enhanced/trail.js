@@ -5,7 +5,7 @@ define([
     'qwery',
     'lib/$',
     'lib/config',
-    'lib/contains',
+    'lodash/collections/contains',
     'lib/mediator',
     'lib/robust',
     'lib/proximity-loader',
