@@ -136,8 +136,10 @@ object DfpApi extends Logging {
   }
 
   def getPreviewUrl(lineItemId: Long, creativeId: Long, url: String): Option[String] =
-    for (session <- SessionWrapper())
-      yield session.lineItemCreativeAssociations.getPreviewUrl(lineItemId, creativeId, url)
+    for {
+      session <- SessionWrapper()
+      previewUrl <- session.lineItemCreativeAssociations.getPreviewUrl(lineItemId, creativeId, url)
+    } yield previewUrl
 
   private def withDfpSession[T](block: SessionWrapper => Seq[T]): Seq[T] = {
     val results = for (session <- SessionWrapper()) yield block(session)
