@@ -126,3 +126,25 @@
         float: right;
     }
 }
+
+/* ==========================================================================
+   Fixtures list
+   ========================================================================== */
+
+.table--football tr.football-match--fixture {
+    td {
+        padding: $gs-baseline/3 $table-gutter;
+    }
+
+    time {
+        display: block;
+        
+        @include mq($from: phablet) {
+            min-width: 5rem;
+        }
+
+        @include mq($until: phablet) {
+            min-height: $gs-baseline*3;
+        }
+    }
+}
