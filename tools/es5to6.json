@@ -221,7 +221,6 @@
   "Gustav Pursche": [
     "projects/common/modules/tailor/tailor.js",
     "projects/common/modules/ui/accessibility-prefs.js",
-    "projects/common/modules/ui/autoupdate.js",
     "projects/common/modules/ui/blockSharing.js",
     "projects/common/modules/ui/clickstream.js",
     "projects/common/modules/ui/cookiesBanner.js",
