@@ -26,7 +26,7 @@
             align-items: stretch;
             width: 100%; // Prevent consecutive rows from flexing together in FF
         }
-        #{$class}--reverse {
+        .#{$class}--reverse {
             flex-direction: row-reverse;
         }
         .#{$class}__item {
