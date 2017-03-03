@@ -11,7 +11,7 @@ class AmpAdCleanerTest extends FlatSpec with Matchers {
   val tenChars = "qwertyasdf"
 
   private def adAfter(element: Element) = {
-    element.after("""<div class="amp-ad-container"><amp-ad width=300 height=250 type="doubleclick" data-use-beta-a4a-implementation="true" json='{"targeting":{"sc":["1"]}}' data-slot="/59666047/theguardian.com/uk"></amp-ad></div>""")
+    element.after("""<div class="amp-ad-container"><amp-ad width=300 height=250 type="doubleclick" json='{"targeting":{"sc":["1"]}}' data-slot="/59666047/theguardian.com/uk"></amp-ad></div>""")
   }
 
   private def clean(document: Document): Document = {
