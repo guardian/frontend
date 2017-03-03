@@ -159,14 +159,12 @@
     "lib/client-rects.js",
     "lib/closest.js",
     "lib/config.js",
-    "lib/contains.js",
     "lib/cookies.js"
   ],
   "NataliaLKB": [
     "lib/create-store.js",
     "lib/date-formats.js",
     "lib/detect.js",
-    "lib/drop-while.js",
     "lib/easing.js",
     "lib/element-inview.js",
     "lib/fastdom-errors.js",
@@ -197,7 +195,6 @@
     "lib/robust.js"
   ],
   "stephanfowler": [
-    "lib/scan.js",
     "lib/scroller.js",
     "lib/sha1.js",
     "lib/steady-page.js",
