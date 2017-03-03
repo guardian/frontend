@@ -3,7 +3,7 @@ define([
     'lib/cookies',
     'lib/detect',
     'lib/storage',
-    'lib/assign',
+    'lodash/objects/assign',
     'lib/url',
     'commercial/modules/third-party-tags/krux',
     'common/modules/identity/api',

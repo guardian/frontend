@@ -1,5 +1,5 @@
 define([
-    'lib/assign',
+    'lodash/objects/assign',
     'lib/fastdom-promise',
     'lib/report-error',
     'lib/url',

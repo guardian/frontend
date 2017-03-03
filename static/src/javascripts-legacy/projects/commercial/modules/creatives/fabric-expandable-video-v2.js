@@ -2,7 +2,7 @@ define([
     'bean',
     'lib/fastdom-promise',
     'lib/$',
-    'lib/assign',
+    'lodash/objects/assign',
     'lib/template',
     'common/views/svgs',
     'raw-loader!commercial/views/creatives/fabric-expandable-video-v2.html',

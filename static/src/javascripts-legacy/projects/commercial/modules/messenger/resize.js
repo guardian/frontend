@@ -1,5 +1,5 @@
 define([
-    'lib/assign',
+    'lodash/objects/assign',
     'lib/closest',
     'lib/fastdom-promise',
     'commercial/modules/messenger'

@@ -4,7 +4,7 @@
 define([
     'lib/pad',
     'lib/url',
-    'lib/assign'
+    'lodash/objects/assign'
 ], function (pad, urlUtils, assign) {
     // eslint-disable-next-line guardian-frontend/global-config
     var config         = window.guardian.config;
