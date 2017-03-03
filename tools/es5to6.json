@@ -203,7 +203,6 @@
     "lib/template.js",
     "lib/time.js",
     "lib/timeout.js",
-    "lib/to-array.js",
     "lib/url.js",
     "lib/user-timing.js",
     "projects/admin/bootstraps/abtests.js",
