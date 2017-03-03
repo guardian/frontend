@@ -494,7 +494,7 @@ trait FeatureSwitches {
     "Allows alternate email styling when passing ?format=email-connected, for testing two email design variants",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 2),
+    sellByDate = new LocalDate(2017, 3, 6),
     exposeClientSide = true
   )
 
