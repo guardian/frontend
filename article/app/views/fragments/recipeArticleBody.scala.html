@@ -1,22 +1,24 @@
 @import layout.ContentWidths.MainMedia
 @import model.content.MediaAtom
+@import model.ArticleSchemas
 @import common.Localisation
-@(articleModel: ArticlePage, recipes: Seq[model.content.RecipeAtom])(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
+
+@(articleModel: ArticlePage, recipes: Seq[model.content.RecipeAtom], amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.LinkTo
 @import views.BodyCleaner
 
-@schemaType(page: ArticlePage) = @{ page.article.metadata.schemaType }
+@schemaType(page: ArticlePage) = @{ ArticleSchemas.NewsArticle }
 @bodyType(page: ArticlePage) = @{ "articleBody" }
 
 @defining(articleModel.article) { article =>
-    <article id="article" data-test-id="article-root"
-            class="content content--recipes"
-            itemscope itemtype="@schemaType(articleModel)" role="main" >
+<article id="article" data-test-id="article-root"
+        class="content content--recipes"
+        itemscope itemtype="@schemaType(articleModel)" role="main" >
     <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
     <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
         <meta itemprop="name" content="The Guardian">
-        @fragments.logo(amp = false)
+        @fragments.logo(amp)
     </div>
 
     <div class="recipes__main">
@@ -47,7 +49,7 @@
             <div class="recipe__article">
                 <div class="recipe__article--meta">
                         @articleModel.item.content.blogOrSeriesTag.map { series =>
-                        <div class="content__series-label @if(articleModel.item.content.isImmersive && articleModel.item.content.tags.isArticle) { content__series-label--immersive-article }">
+                        <div class="content__series-label">
                             <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
                         </div>
                         }.getOrElse {
@@ -77,7 +79,7 @@
             </div>
         </div>
     </div>
-    </article>
+</article>
 
 }
 

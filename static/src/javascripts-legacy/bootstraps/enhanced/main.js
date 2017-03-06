@@ -12,8 +12,8 @@ define([
     './common',
     './sport',
     'common/modules/analytics/google',
-    'common/utils/geolocation',
-    'common/utils/check-dispatcher',
+    'lib/geolocation',
+    'lib/check-dispatcher',
     'lodash/collections/contains'
 ], function (
     fastdom,

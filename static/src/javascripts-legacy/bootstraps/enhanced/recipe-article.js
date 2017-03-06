@@ -1,6 +1,6 @@
 define([
-    'common/utils/$',
-    'common/utils/scroller',
+    'lib/$',
+    'lib/scroller',
     'bean',
     'lodash/functions/debounce'
 ], function (
@@ -12,7 +12,7 @@ define([
 
 function init() {
     var recipe = $('.recipe__article--structured');
-    var firstRecipe = $('.js-recipe__article--structured .js-recipe__article--structured-headline h1')
+    var firstRecipe = $('.js-recipe__article--structured .js-recipe__article--structured-headline h1');
     var nextWrapper = $('.js-recipe__article--next-recipe');
     var nextRecipeTitle = $('.js-recipe__article--next-title');
     var nextRecipeText = $('.js-recipe__article--next-text');
@@ -36,10 +36,10 @@ function init() {
         }
     }
 
-    function setMainImage(recipeInView){
-        var visibleRecipe = recipeInView.dataset['recipeIndex'];
+    function setMainImage(focalRecipe){
+        var focalRecipeIndex = focalRecipe.attr('data-recipe-index');
         var displayedImage = $('.' + displayClass);
-        var relatedImage = $('.' + visibleRecipe);
+        var relatedImage = $('.' + focalRecipeIndex);
         if (relatedImage.get(0) !== displayedImage.get(0)) {
             displayedImage.removeClass(displayClass);
             relatedImage.addClass(displayClass);
@@ -50,26 +50,26 @@ function init() {
         return $('.js-recipe__article--structured.inview + .js-recipe__article--structured .js-recipe__article--structured-headline h1');
     }
 
-    function getIntOfRecipeInView() {
-        var inView;
+    function getIntOfFocalRecipe() {
+        var focalRecipeInt;
         for (var i = 0; i < recipe.length; i++) {
-            if (isInView(i)) { inView = i; break; }
+            if (isFocalRecipe(i)) { focalRecipeInt = i; break; }
         }
-        return inView >= 0 ? inView : -1
+        return focalRecipeInt >= 0 ? focalRecipeInt : -1
     }
 
-    function isInView(i) {
+    function isFocalRecipe(i) {
         var position = recipe[i].getBoundingClientRect();
         var middleOfView = window.innerHeight / 2;
 
         return position.top <= middleOfView && position.bottom > middleOfView;
     }
 
-    function resetAssets(recipeInView){
+    function resetAssets(focalRecipeInt){
         $(recipe).removeClass('inview');
-        $(recipe[recipeInView]).addClass('inview');
+        $(recipe[focalRecipeInt]).addClass('inview');
 
-        if (recipeInView > -1) {setMainImage(recipe[recipeInView])}
+        if (focalRecipeInt > -1) {setMainImage($(recipe[focalRecipeInt]))}
         setKicker();
     }
 
@@ -77,7 +77,7 @@ function init() {
 
         $('.recipe__content').toggleClass('js-visible');
 
-        if (readMoreButtonText.text() == 'Read more') {
+        if (readMoreButtonText.text() === 'Read more') {
             readMoreButtonText.text('Hide')
             setKicker();
             nextButton.removeClass('top');
@@ -96,19 +96,19 @@ function init() {
     });
 
     window.addEventListener('scroll', debounce(function() {
-        var recipeInView = getIntOfRecipeInView();
-        if (recipeInView > -1 && !$(recipe[recipeInView]).hasClass('inview')) {
-            resetAssets(recipeInView);
+        var focalRecipeInt = getIntOfFocalRecipe();
+        if (focalRecipeInt > -1 && !$(recipe[focalRecipeInt]).hasClass('inview')) {
+            resetAssets(focalRecipeInt);
 
         }
     }), 100);
 
     function initalise() {
-        var recipeInView = getIntOfRecipeInView();
+        var focalRecipeInt = getIntOfFocalRecipe();
         nextWrapper.addClass('visible');
         nextRecipeText.addClass('visible');
-        resetAssets(recipeInView);
-        if (recipeInView < 0) { nextButton.removeClass('top'); }
+        resetAssets(focalRecipeInt);
+        if (focalRecipeInt < 0) { nextButton.removeClass('top'); }
     }
 
     initalise();

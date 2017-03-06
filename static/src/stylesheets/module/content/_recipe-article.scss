@@ -7,14 +7,15 @@ $purple:#B72166;
 $padding-wide: 100px;
 
 
-.recipe__article .recipe__article--headline h1 {
+.recipe__article .recipe__article--headline h1,
+ .recipe__article .recipe__article--structured-headline h1 {
     font-family: $f-serif-headline;
     font-weight: 200;
     font-size: 38px;
     line-height: 38px;
 
 
-    @include mq($from: desktop) {
+    @include mq($from: tablet) {
         font-size: 48px;
         line-height: 48px;
     }
@@ -48,7 +49,6 @@ $padding-wide: 100px;
     }
 }
 
-//image
 .recipe__images-wrapper {
     display: flex;
     flex-direction: column;
@@ -56,7 +56,7 @@ $padding-wide: 100px;
     top: 0;
     width: 100%;
 
-    @include mq($from: desktop){
+    @include mq($from: tablet){
         width: 40%;
         position: fixed;
         height: 100vh;
@@ -72,7 +72,7 @@ $padding-wide: 100px;
 .recipe__image__wrapper.recipe {
     display: none;
 
-    @include mq($from: desktop) {
+    @include mq($from: tablet) {
        display: block;
     }
 }
@@ -88,9 +88,6 @@ $padding-wide: 100px;
     width: 100%;
     height: 100%;
 
-    @include mq($from: desktop){
-        position: absolute;
-    }
 }
 
 .recipe__label {
@@ -104,25 +101,23 @@ $padding-wide: 100px;
     padding-top: 70px;
     color: white;
     left: 1px;
-    bottom: -40px;
     top: 0;
     line-height: initial;
+
+    @include mq($from: tablet) {
+        top: 5px;
+        left: 20px;
+    }
 }
 
-
-//article
 .recipe__article {
     padding: 0 12px;
     padding-bottom: 44px;
 
-    @include mq($from: desktop) {
-        padding: 0 0 0 100px;
-        padding-left: 100px;
-    }
 }
 
 .recipe__article-wrapper {
-    @include mq($from: desktop){
+    @include mq($from: tablet){
         width: 60%;
         float: right;
     }
@@ -133,7 +128,7 @@ $padding-wide: 100px;
 }
 
 .recipe__article--headline, .recipe__article--content {
-    @include mq($from: desktop){
+    @include mq($from: tablet){
         margin-left: auto;
         margin-right: auto;
     }
@@ -146,7 +141,7 @@ $padding-wide: 100px;
     float: left;
     margin-right: 12px;
 
-    @include mq($from: desktop){
+    @include mq($from: tablet){
         margin-left: -90px;
         position: fixed;
     }
@@ -155,8 +150,9 @@ $padding-wide: 100px;
 .recipe__article--headline {
     margin-top: 6px;
     margin-bottom: 24px;
+    color: $purple;
 
-    @include mq($from: desktop){
+    @include mq($from: tablet){
         margin-top: 20px;
     }
 
@@ -164,10 +160,6 @@ $padding-wide: 100px;
         h1{
             padding-right: $padding-wide;
         }
-    }
-
-    h2 {
-        color: $purple;
     }
 }
 
@@ -178,7 +170,7 @@ $padding-wide: 100px;
     p {
         font-size: 18px;
 
-        @include mq($from: desktop) {
+        @include mq($from: tablet) {
             padding-right: 50px;
         }
 
@@ -225,10 +217,8 @@ $padding-wide: 100px;
     bottom: 0px;
     transition: opacity 0.5s ease-in-out;
 
-    @include mq($from: desktop) {
-        margin-left: 82px;
+    @include mq($from: tablet) {
         color: $grey-three;
-        // color: white;
     }
     .kicker {
         color: $purple;
@@ -256,7 +246,7 @@ $padding-wide: 100px;
     transition: transform 0.5s ease-in-out;
     transform: rotate(90deg);
 
-    @include mq($from: desktop) {
+    @include mq($from: tablet) {
         width: 60px;
         height: 60px;
         float: left;
@@ -271,7 +261,7 @@ $padding-wide: 100px;
     svg {
         margin-left: auto;
         margin-right: auto;
-        @include mq($from: desktop) {
+        @include mq($from: tablet) {
             width: 60px;
             height: 60px;
         }
@@ -304,7 +294,7 @@ $padding-wide: 100px;
         font-size: 18px;
         line-height: 18px;
     }
-    @include mq($from: desktop) {
+    @include mq($from: tablet) {
         background-color: #fff;
         padding-left: 1%;
         padding-bottom: 14px;
@@ -315,13 +305,12 @@ $padding-wide: 100px;
     }
 }
 
-//start structure recipe
 .recipe__article--structured {
     margin-top: 36px;
     border-top: 4px solid $grey;
     padding-top: 8px;
 
-    @include mq($from: desktop) {
+    @include mq($from: tablet) {
         margin-top: 50px;
     }
     .structured-meta {
@@ -371,7 +360,7 @@ $padding-wide: 100px;
     margin-bottom: 24px;
     margin-top: 18px;
 
-    @include mq($from: desktop){
+    @include mq($from: tablet){
         -webkit-columns:2;
         padding-right: 50px;
     }
@@ -414,7 +403,7 @@ $padding-wide: 100px;
 .method-list {
     margin-bottom: 24px;
 
-    @include mq($from: desktop) {
+    @include mq($from: tablet) {
         padding-right: 50px;
     }
 
@@ -436,4 +425,4 @@ $padding-wide: 100px;
         margin-right: 12px;
         color: $purple;
     }
-} //end recipe__article
+}
