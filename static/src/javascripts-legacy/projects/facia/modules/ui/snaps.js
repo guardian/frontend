@@ -7,7 +7,7 @@ define([
     'lib/fetch',
     'lib/mediator',
     'lib/template',
-    'lib/to-array',
+    'lodash/collections/toArray',
     'lib/proximity-loader',
     'lib/report-error',
     'common/modules/ui/relativedates',
