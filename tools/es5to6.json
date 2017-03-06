@@ -59,7 +59,6 @@
     "projects/commercial/modules/dfp/refresh-on-resize.js",
     "projects/commercial/modules/dfp/render-advert-label.js",
     "projects/commercial/modules/dfp/render-advert.js",
-    "projects/commercial/modules/dfp/track-ad-load.js",
     "projects/commercial/modules/dfp/track-ad-render.js",
     "projects/commercial/modules/dfp/wait-for-advert.js"
   ],
@@ -172,7 +171,6 @@
     "lib/fastdom-promise.js",
     "lib/fetch-json.js",
     "lib/fetch.js",
-    "lib/filterPairs.js",
     "lib/formatters.js",
     "lib/formInlineLabels.js",
     "lib/fsm.js"
@@ -199,7 +197,6 @@
     "lib/sha1.js",
     "lib/steady-page.js",
     "lib/storage.js",
-    "lib/take-while.js",
     "lib/template.js",
     "lib/time.js",
     "lib/timeout.js",
@@ -210,8 +207,6 @@
     "projects/admin/modules/abtests/abtest-report-item.js"
   ],
   "Gustav Pursche": [
-    "projects/common/modules/onward/social-most-popular.js",
-    "projects/common/modules/onward/socially-referred-burners.js",
     "projects/common/modules/onward/tech-feedback.js",
     "projects/common/modules/onward/tonal.js",
     "projects/common/modules/open/cta.js",
@@ -287,8 +282,6 @@
     "projects/common/modules/experiments/ab.js",
     "projects/common/modules/experiments/acquisition-test-selector.js",
     "projects/common/modules/experiments/affix.js",
-    "projects/common/modules/experiments/content-websocket.js",
-    "projects/common/modules/experiments/low-friction-participation.js",
     "projects/common/modules/experiments/segment-util.js",
     "projects/common/modules/experiments/subscriber-number-form.js",
     "projects/common/modules/experiments/tests/contributions-epic-always-ask-strategy.js",
@@ -304,7 +297,6 @@
     "projects/common/modules/experiments/tests/membership-engagement-banner-tests.js",
     "projects/common/modules/experiments/tests/opinion-email-variants.js",
     "projects/common/modules/experiments/tests/paid-content-vs-outbrain.js",
-    "projects/common/modules/experiments/tests/participation-discussion-test.js",
     "projects/common/modules/experiments/tests/recommended-for-you.js",
     "projects/common/modules/experiments/tests/tailor-recommended-email.js",
     "projects/common/modules/experiments/tests/tailor-survey.js",
@@ -367,7 +359,6 @@
     "projects/common/modules/ui/rhc.js",
     "projects/common/modules/ui/selection-sharing.js",
     "projects/common/modules/ui/smartAppBanner.js",
-    "projects/common/modules/ui/sticky-social.js",
     "projects/common/modules/ui/sticky.js",
     "projects/common/modules/ui/tabs.js",
     "projects/common/modules/ui/toggles.js",
