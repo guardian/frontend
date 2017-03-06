@@ -174,7 +174,9 @@ define([
     }
 
     function addSlots(totalCount) {
-        qwery('.ad-slot--inline').forEach(addSlot);
+        qwery('.ad-slot--inline').forEach(function (slot) {
+            addSlot(slot);
+        });
         return totalCount;
     }
 });
