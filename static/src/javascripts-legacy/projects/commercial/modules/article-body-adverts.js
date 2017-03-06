@@ -29,6 +29,7 @@ define([
     var bodyAds;
     var replaceTopSlot;
     var getSlotName;
+    var getSlotType;
 
     function init(start, stop) {
         start();
@@ -41,6 +42,7 @@ define([
         bodyAds = 0;
         replaceTopSlot = detect.isBreakpoint({max : 'phablet'});
         getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;
+        getSlotType = replaceTopSlot ? getSlotTypeForMobile : getSlotTypeForDesktop;
 
         if (config.page.hasInlineMerchandise) {
             var im = addInlineMerchAd();
@@ -68,13 +70,19 @@ define([
     };
 
     function getSlotNameForMobile() {
-        bodyAds += 1;
         return bodyAds === 1 ? 'top-above-nav' : 'inline' + (bodyAds - 1);
     }
 
     function getSlotNameForDesktop() {
-        bodyAds += 1;
         return 'inline' + bodyAds;
+    }
+
+    function getSlotTypeForMobile() {
+        return bodyAds === 1 ? 'top-above-nav' : 'inline';
+    }
+
+    function getSlotTypeForDesktop() {
+        return 'inline';
     }
 
     function getRules() {
@@ -155,7 +163,8 @@ define([
             var slots = paras
             .slice(0, Math.min(paras.length, count))
             .map(function (para) {
-                return insertAdAtPara(para, getSlotName(), 'inline');
+                bodyAds += 1;
+                return insertAdAtPara(para, getSlotName(), getSlotType(), 'inline');
             });
 
             return Promise.all(slots)
@@ -165,8 +174,8 @@ define([
         }
     }
 
-    function insertAdAtPara(para, name, type) {
-        var ad = createSlot(name, type);
+    function insertAdAtPara(para, name, type, classes) {
+        var ad = createSlot(type, { name: name, classes: classes });
 
         return fastdom.write(function () {
             para.parentNode.insertBefore(ad, para);
