@@ -1,3 +1,4 @@
+// @flow
 import mediator from 'lib/mediator';
 
 let analyticsReady = false;
