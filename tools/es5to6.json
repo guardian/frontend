@@ -214,8 +214,6 @@
     "projects/common/modules/accessibility/main.js"
   ],
   "Gustav Pursche": [
-    "projects/common/modules/social/share-count.js",
-    "projects/common/modules/sport/football/football.js",
     "projects/common/modules/sport/football/match-info.js",
     "projects/common/modules/sport/football/match-list-live.js",
     "projects/common/modules/sport/football/tag-page-stats.js",
@@ -228,7 +226,9 @@
     "projects/common/modules/ui/cookiesBanner.js",
     "projects/common/modules/ui/dropdowns.js",
     "projects/common/modules/ui/expandable.js",
-    "projects/common/modules/ui/faux-block-link.js"
+    "projects/common/modules/ui/faux-block-link.js",
+    "projects/common/modules/ui/full-height.js",
+    "projects/common/modules/ui/images.js"
   ],
   "Sam Desborough": [
     "projects/common/modules/article/twitter.js",
@@ -285,7 +285,6 @@
     "projects/common/modules/experiments/acquisition-test-selector.js",
     "projects/common/modules/experiments/affix.js",
     "projects/common/modules/experiments/segment-util.js",
-    "projects/common/modules/experiments/subscriber-number-form.js",
     "projects/common/modules/experiments/tests/contributions-epic-always-ask-strategy.js",
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-stagger.js",
@@ -296,10 +295,10 @@
     "projects/common/modules/experiments/tests/membership-a3-a4-bundles-thrasher.js",
     "projects/common/modules/experiments/tests/membership-engagement-banner-tests.js",
     "projects/common/modules/experiments/tests/opinion-email-variants.js",
-    "projects/common/modules/experiments/tests/paid-content-vs-outbrain.js"
+    "projects/common/modules/experiments/tests/paid-content-vs-outbrain.js",
+    "projects/common/modules/experiments/tests/recommended-for-you.js"
   ],
   "jranks123": [
-    "projects/common/modules/experiments/tests/recommended-for-you.js",
     "projects/common/modules/experiments/tests/sleeve-notes-legacy-email-variant.js",
     "projects/common/modules/experiments/tests/sleeve-notes-new-email-variant.js",
     "projects/common/modules/experiments/tests/tailor-recommended-email.js",
@@ -313,10 +312,10 @@
     "projects/common/modules/identity/facebook-authorizer.js",
     "projects/common/modules/identity/forms.js",
     "projects/common/modules/identity/formstack-iframe-embed.js",
-    "projects/common/modules/identity/formstack-iframe.js"
+    "projects/common/modules/identity/formstack-iframe.js",
+    "projects/common/modules/identity/formstack.js"
   ],
   "ShaunYearStrong": [
-    "projects/common/modules/identity/formstack.js",
     "projects/common/modules/identity/public-profile.js",
     "projects/common/modules/identity/saved-for-later.js",
     "projects/common/modules/identity/validation-email.js",
@@ -330,11 +329,10 @@
     "projects/common/modules/navigation/profile.js",
     "projects/common/modules/navigation/search.js",
     "projects/common/modules/navigation/user-account.js",
-    "projects/common/modules/onward/breaking-news.js"
+    "projects/common/modules/onward/breaking-news.js",
+    "projects/common/modules/onward/geo-most-popular.js"
   ],
   "jfsoul": [
-    "projects/common/modules/onward/geo-most-popular.js",
-    "projects/common/modules/onward/history-containers.js",
     "projects/common/modules/onward/history.js",
     "projects/common/modules/onward/more-tags.js",
     "projects/common/modules/onward/onward-content.js",
@@ -347,11 +345,11 @@
     "projects/common/modules/router.js",
     "projects/common/modules/save-for-later.js",
     "projects/common/modules/social/hidden-share-toggle.js",
-    "projects/common/modules/social/pinterest.js"
+    "projects/common/modules/social/pinterest.js",
+    "projects/common/modules/social/share-count.js",
+    "projects/common/modules/sport/football/football.js"
   ],
   "Joseph Smith": [
-    "projects/common/modules/ui/full-height.js",
-    "projects/common/modules/ui/images.js",
     "projects/common/modules/ui/last-modified.js",
     "projects/common/modules/ui/message.js",
     "projects/common/modules/ui/notification-counter.js",
@@ -364,11 +362,11 @@
     "projects/common/modules/ui/toggles.js",
     "projects/common/modules/user-prefs.js",
     "projects/common/modules/video/events.js",
-    "projects/common/modules/video/ga-helper.js"
+    "projects/common/modules/video/ga-helper.js",
+    "projects/common/modules/video/metadata.js",
+    "projects/common/modules/video/more-in-series-container.js"
   ],
   "Calum Campbell": [
-    "projects/common/modules/video/metadata.js",
-    "projects/common/modules/video/more-in-series-container.js",
     "projects/common/modules/video/onward-container.js",
     "projects/common/modules/video/video-container.js",
     "projects/common/modules/video/videojs-options.js",
@@ -381,6 +379,8 @@
     "projects/facia/modules/ui/container-toggle.js",
     "projects/facia/modules/ui/football-snaps.js",
     "projects/facia/modules/ui/lazy-load-containers.js",
-    "projects/facia/modules/ui/live-blog-updates.js"
+    "projects/facia/modules/ui/live-blog-updates.js",
+    "projects/facia/modules/ui/snaps.js",
+    "projects/facia/modules/ui/sponsorship.js"
   ]
 }
