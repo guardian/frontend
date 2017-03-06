@@ -14,12 +14,12 @@ define([
     fastdomPromise
 ) {
     return function (props) {
-        this.id = props['id'];
-        this.start = props['start'];
-        this.expiry = props['end'];
-        this.author = props['author'];
-        this.audienceOffset = props['audienceOffset'];
-        this.audience = props['audience'];
+        this.id = props.id;
+        this.start = props.start;
+        this.expiry = props.end;
+        this.author = props.author;
+        this.audienceOffset = props.audienceOffset;
+        this.audience = props.audience;
 
         this.description = 'Using the wonderful frontend AB testing framework to AB test emails, since the AB ' +
             'function in ExactTarget re-randomises all recipients on each send, and we need users to receive their ' +
@@ -30,29 +30,29 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = '';
 
-        var SIGNUP_URL = props['signupPage'];
-        var CANONICAL_LIST_ID = props['canonicalListId'];
+        var SIGNUP_URL = props.signupPage;
+        var CANONICAL_LIST_ID = props.canonicalListId;
 
         this.canRun = function () {
             return config.page.contentId === SIGNUP_URL || config.page.pageId === '/email-newsletters';
         };
 
-        this.variants = props['testIds'].map(function(variant) {
+        this.variants = props.testIds.map(function(variant) {
             return {
-                id: variant['variantId'],
+                id: variant.variantId,
                 test: function () {
                     if (config.page.contentId === SIGNUP_URL) {
-                        enhanceWebView(variant['listId']);
+                        enhanceWebView(variant.listId);
                     } else {
-                        updateNewslettersPage(variant['listId']);
+                        updateNewslettersPage(variant.listId);
                     }
                 }
             };
         });
 
-        function enhanceWebView(emailListID) {
+        function enhanceWebView(emailListId) {
             var emailForm = $('.js-email-sub__iframe')[0];
-            emailForm.setAttribute('src', 'https://www.theguardian.com/email/form/plaintone/' + emailListID);
+            emailForm.setAttribute('src', 'https://www.theguardian.com/email/form/plaintone/' + emailListId);
         }
 
         function updateNewslettersPage(emailListId) {
