@@ -1,7 +1,7 @@
 define([
     'fastdom',
     'common/modules/accessibility/main',
-    'common/utils/$'
+    'lib/$'
 ], function (
     fastdom,
     accessibility,

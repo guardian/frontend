@@ -19,7 +19,7 @@ define([
             createSlot, config;
 
         beforeEach(function (done) {
-            injector.require(['commercial/modules/dfp/create-slot', 'common/utils/config'], function () {
+            injector.require(['commercial/modules/dfp/create-slot', 'lib/config'], function () {
                 createSlot = arguments[0];
                 config = arguments[1];
 

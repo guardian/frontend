@@ -1,11 +1,11 @@
 /*global escape:true */
 define([
-    'common/utils/ajax',
-    'common/utils/atob',
-    'common/utils/config',
-    'common/utils/cookies',
-    'common/utils/mediator',
-    'common/utils/storage',
+    'lib/ajax',
+    'lib/atob',
+    'lib/config',
+    'lib/cookies',
+    'lib/mediator',
+    'lib/storage',
     'common/modules/asyncCallMerger',
     'Promise'
 ], function (

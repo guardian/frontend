@@ -13,7 +13,7 @@ define(['helpers/injector'], function (Injector) {
 
         beforeEach(function (done) {
             injector.require([
-                'common/utils/cookies',
+                'lib/cookies',
                 'commercial/modules/user-features',
                 'common/modules/identity/api'
             ], function () {

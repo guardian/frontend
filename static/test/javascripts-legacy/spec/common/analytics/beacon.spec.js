@@ -15,7 +15,7 @@ define([
         };
 
     beforeEach(function (done) {
-        inject.mock('common/utils/config', config);
+        inject.mock('lib/config', config);
 
         inject.require(['common/modules/analytics/beacon'], function (beaconDependency) {
             beacon = beaconDependency;

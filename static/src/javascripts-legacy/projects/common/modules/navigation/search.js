@@ -1,10 +1,10 @@
 define([
     'bean',
     'fastdom',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
+    'lib/mediator',
     'lodash/functions/throttle'
 ], function (
     bean,

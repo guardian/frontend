@@ -2,7 +2,7 @@ define([
     'bean',
     'fastdom',
     'commercial/modules/hosted/next-video',
-    'common/utils/$',
+    'lib/$',
     'common/modules/analytics/google'
 ], function (
     bean,

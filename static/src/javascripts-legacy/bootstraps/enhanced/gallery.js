@@ -2,9 +2,9 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/config',
+    'lib/mediator',
     'common/modules/component',
     'bootstraps/enhanced/trail',
     'lodash/functions/debounce'

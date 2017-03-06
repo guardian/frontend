@@ -1,13 +1,13 @@
 define([
     'bean',
     'qwery',
-    'common/utils/config',
-    'common/utils/geolocation',
-    'common/utils/storage',
-    'common/utils/template',
+    'lib/config',
+    'lib/geolocation',
+    'lib/storage',
+    'lib/template',
     'commercial/modules/commercial-features',
     'commercial/modules/user-features',
-    'common/utils/mediator'
+    'lib/mediator'
 ], function (
     bean,
     qwery,

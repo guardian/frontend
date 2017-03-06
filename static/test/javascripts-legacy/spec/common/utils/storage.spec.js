@@ -1,4 +1,4 @@
-define(['common/utils/mediator', 'common/utils/storage'], function (mediator, storage) {
+define(['lib/mediator', 'lib/storage'], function (mediator, storage) {
     describe('Storage', function () {
 
         var date;

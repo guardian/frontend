@@ -1,5 +1,5 @@
 define([
-    'common/utils/fetch-json'
+    'lib/fetch-json'
 ], function (
     json
 ) {
