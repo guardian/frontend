@@ -46,11 +46,19 @@ Please note to enable browsersync when styling amp pages we have added this code
  * Please note that the tests will NOT pass validation with this line.
  * It won't affect prod but please comment out this line when running tests in DEV
  *@
-@if(env.mode == Dev) {
-    <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp.css")" />
+@if(context.environment.mode == Dev) {
+    @if(page.metadata.isHosted) {
+        <link rel="stylesheet" id="head-css" data-reload="head.hosted-amp" type="text/css" href="@Static("stylesheets/head.hosted-amp.css")" />
+    } else {
+        @if(page.metadata.contentType == "LiveBlog"){
+            <link rel="stylesheet" id="head-css" data-reload="head.amp-liveblog" type="text/css" href="@Static("stylesheets/head.amp-liveblog.css")" />
+        } else {
+            <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp.css")" />
+        }
+    }
 }
-
 ```
+in common/app/views/fragments/amp/customStyles.scala.html.
 
 When validating locally please comment out the <link> as this will always fail validation.
 This change was made to improve the experience of developing and styling amp pages. If there is a better way please suggest it!
