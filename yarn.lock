@@ -2352,6 +2352,12 @@ eslint-module-utils@^2.0.0:
     debug "2.2.0"
     pkg-dir "^1.0.0"
 
+"eslint-plugin-flow-header@https://github.com/eirikurn/eslint-plugin-flow-header":
+  version "0.1.1"
+  resolved "https://github.com/eirikurn/eslint-plugin-flow-header#62b28b991a142da7230a25e0024a1fba75233618"
+  dependencies:
+    requireindex "~1.1.0"
+
 eslint-plugin-flowtype@^2.30.0:
   version "2.30.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.30.0.tgz#3054a265f9c8afe3046c3d41b72d32a736f9b4ae"
