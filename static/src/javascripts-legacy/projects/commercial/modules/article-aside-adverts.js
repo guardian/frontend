@@ -1,10 +1,10 @@
 define([
     'Promise',
-    'common/utils/$',
-    'common/utils/$css',
-    'common/utils/config',
-    'common/utils/mediator',
-    'common/utils/fastdom-promise',
+    'lib/$',
+    'lib/$css',
+    'lib/config',
+    'lib/mediator',
+    'lib/fastdom-promise',
     'commercial/modules/dfp/create-slot',
     'commercial/modules/commercial-features'
 ], function (

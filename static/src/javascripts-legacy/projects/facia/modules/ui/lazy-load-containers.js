@@ -1,8 +1,8 @@
 define([
     'fastdom',
     'qwery',
-    'common/utils/detect',
-    'common/utils/mediator',
+    'lib/detect',
+    'lib/mediator',
     'lodash/functions/throttle'
 ], function (
     fastdom,

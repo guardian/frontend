@@ -1,8 +1,8 @@
 define([
     'bean',
-    'common/utils/config',
+    'lib/config',
     'common/modules/component',
-    'common/utils/mediator'
+    'lib/mediator'
 ], function(
     bean,
     config,

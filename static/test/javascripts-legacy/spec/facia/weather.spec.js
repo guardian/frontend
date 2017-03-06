@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/$',
+    'lib/$',
     'helpers/injector'
 ], function (
     bean,
@@ -17,7 +17,7 @@ define([
 
         beforeEach(function (done) {
 
-            injector.require(['facia/modules/onwards/weather', 'common/utils/config'], function () {
+            injector.require(['facia/modules/onwards/weather', 'lib/config'], function () {
                 sut = arguments[0];
                 config = arguments[1];
 

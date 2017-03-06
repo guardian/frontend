@@ -32,7 +32,7 @@ define([
 
         beforeEach(function (done) {
             injector.require([
-                'common/utils/detect',
+                'lib/detect',
                 'commercial/modules/messenger',
                 'commercial/modules/sticky-top-banner',
                 'commercial/modules/commercial-features'

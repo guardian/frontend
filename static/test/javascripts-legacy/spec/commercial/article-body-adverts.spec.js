@@ -2,7 +2,7 @@ define([
     'fastdom',
     'qwery',
     'Promise',
-    'common/utils/$',
+    'lib/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
@@ -41,8 +41,8 @@ define([
                 'commercial/modules/article-body-adverts',
                 'commercial/modules/commercial-features',
                 'common/modules/article/space-filler',
-                'common/utils/config',
-                'common/utils/detect'
+                'lib/config',
+                'lib/detect'
             ], function ($1, $2, $3, $4, $5) {
                 articleBodyAdverts = $1;
 

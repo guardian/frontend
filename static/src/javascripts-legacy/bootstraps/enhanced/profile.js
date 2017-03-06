@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'lib/$',
     'qwery',
     'common/modules/identity/forms',
     'common/modules/identity/formstack', // oldskool inside
@@ -12,7 +12,7 @@ define([
     'common/modules/identity/saved-for-later',
     'common/modules/identity/email-preferences',
     'common/modules/discussion/user-avatars',
-    'common/utils/mediator',
+    'lib/mediator',
     'common/modules/ui/tabs'
 ], function (
     $,

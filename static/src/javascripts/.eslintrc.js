@@ -11,7 +11,6 @@ module.exports = {
         'import/no-webpack-loader-syntax': 'off', // used for require plugins still
         'import/no-amd': 'off', // webpack dynamic requires
         'global-require': 'off',
-        'id-blacklist': ['error', 'guardian'],
 
         // these are bad habits in react that we're already abusing.
         // if we go more [p]react we should look at them.
@@ -27,11 +26,32 @@ module.exports = {
         'react/prefer-stateless-function': 'off',
         'react/no-render-return-value': 'off',
 
-        // disallow modules we used to use but are retiring
+        // disallow naming variables 'guardian', because
+        // window.guardian is our global config/settings object
+        'id-blacklist': ['error', 'guardian'],
+
+        // disallow modules we used to use but have retired, either for
+        // babel polyfills or browser natives
         'no-restricted-imports': [
             'error',
             {
-                paths: ['lodash'],
+                paths: [
+                    'lodash',
+                    'lodash/collections/forEach',
+                    'lodash/collections/map',
+                    'lodash/collections/reduce',
+                    'lodash/collections/some',
+                    'lodash/collections/filter',
+                    'lodash/objects/assign',
+                    'lodash/objects/values',
+                    'lodash/objects/merge',
+                    'lodash/objects/keys',
+                    'lodash/collections/every',
+                    'lodash/collections/contains',
+                    'lodash/objects/isArray',
+                    'lodash/arrays/indexOf',
+                    'Promise',
+                ],
                 patterns: ['!lodash/*'],
             },
         ],

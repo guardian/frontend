@@ -1,8 +1,8 @@
 define([
-    'common/utils/config',
-    'common/utils/closest',
-    'common/utils/mediator',
-    'common/utils/fastdom-promise',
+    'lib/config',
+    'lib/closest',
+    'lib/mediator',
+    'lib/fastdom-promise',
     'common/modules/ui/sticky',
     'commercial/modules/messenger',
     'Promise'

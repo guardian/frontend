@@ -1,16 +1,16 @@
 define([
     'bean',
     'fastdom',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
     'commercial/modules/dfp/get-creative-ids',
     'common/modules/experiments/ab',
     'lodash/collections/map',
     'lodash/collections/reduce',
     'lodash/objects/assign',
     'lodash/objects/keys',
-    'common/utils/cookies'
+    'lib/cookies'
 ], function (
     bean,
     fastdom,

@@ -193,8 +193,8 @@ Hence why a greater depth of selector specificity is needed.
     padding-top: $gs-baseline;
 
     @include mq(desktop) {
-      min-height: gs-height(8);
-      display: inline-flex;
+        min-height: gs-height(8);
+        display: inline-flex;
     }
 }
 
@@ -206,7 +206,7 @@ Hence why a greater depth of selector specificity is needed.
 }
 
 .popular-trails__mpu {
-    margin: $gs-baseline auto 0 auto;
+    margin: $gs-baseline auto 0;
 
     @include mq(desktop) {
         min-width: $mpu-original-width;

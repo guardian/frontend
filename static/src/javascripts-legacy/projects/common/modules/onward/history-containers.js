@@ -4,14 +4,14 @@
  */
 define([
     'Promise',
-    'common/utils/$',
-    'common/utils/ajax',
+    'lib/$',
+    'lib/ajax',
     'common/modules/onward/history',
     'common/modules/ui/images',
     'lodash/arrays/first',
     'lodash/arrays/compact',
     'lodash/collections/map',
-    'common/utils/chain'
+    'lib/chain'
 ], function (Promise, $, ajax, history, images, first, compact, map, chain) {
     // Maximum number of favourite containers to inject
     var maxContainers = 3,

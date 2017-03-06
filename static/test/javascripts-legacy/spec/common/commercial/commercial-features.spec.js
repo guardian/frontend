@@ -8,10 +8,10 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
         beforeEach(function (done) {
             injector.require([
                 'commercial/modules/commercial-features',
-                'common/utils/config',
-                'common/utils/location',
+                'lib/config',
+                'lib/location',
                 'common/modules/user-prefs',
-                'common/utils/detect',
+                'lib/detect',
                 'commercial/modules/user-features',
                 'common/modules/identity/api'
             ], function () {

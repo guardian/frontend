@@ -1,6 +1,6 @@
 define([
-    'common/utils/ajax',
-    'common/utils/config',
+    'lib/ajax',
+    'lib/config',
     'Promise'
 ], function (
     ajax,

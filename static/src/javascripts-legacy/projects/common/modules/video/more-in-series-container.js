@@ -1,6 +1,6 @@
 define([
     'common/modules/component',
-    'common/utils/mediator',
+    'lib/mediator',
     'common/modules/atoms/youtube'
 ], function(
     Component,

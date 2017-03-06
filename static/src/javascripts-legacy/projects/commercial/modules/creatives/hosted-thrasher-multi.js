@@ -1,7 +1,7 @@
 define([
-    'common/utils/fastdom-promise',
-    'common/utils/config',
-    'common/utils/template',
+    'lib/fastdom-promise',
+    'lib/config',
+    'lib/template',
     'commercial/modules/creatives/add-tracking-pixel',
     'raw-loader!commercial/views/creatives/hosted-thrasher-multi.html'
 ], function (

@@ -27,9 +27,9 @@ define([
             injector.require([
                 'common/modules/onward/popular',
                 'commercial/modules/commercial-features',
-                'common/utils/config',
-                'common/utils/mediator',
-                'common/utils/detect'
+                'lib/config',
+                'lib/mediator',
+                'lib/detect'
             ], function () {
                 Popular = arguments[0];
                 commercialFeatures = arguments[1];

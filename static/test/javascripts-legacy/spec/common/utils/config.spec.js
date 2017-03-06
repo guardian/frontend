@@ -7,7 +7,7 @@ define([
         var config, injector = new Injector();
 
         beforeAll(function (done) {
-            injector.require(['common/utils/config'], function (_config) {
+            injector.require(['lib/config'], function (_config) {
                 config = _config;
                 config.page = {
                     tones: 'foo',

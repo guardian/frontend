@@ -1,7 +1,7 @@
 define([
     'qwery',
-    'common/utils/$',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/mediator',
     'common/modules/discussion/comment-count',
     'fixtures/commentcounts'],
 function (

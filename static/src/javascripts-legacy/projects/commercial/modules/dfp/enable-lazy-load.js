@@ -1,5 +1,5 @@
 define([
-    'common/utils/mediator',
+    'lib/mediator',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/lazy-load'
 ], function (mediator, dfpEnv, lazyLoad) {

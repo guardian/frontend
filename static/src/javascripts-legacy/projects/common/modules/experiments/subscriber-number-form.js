@@ -1,7 +1,7 @@
 define([
     'bean',
-    'common/utils/$',
-    'common/utils/storage'
+    'lib/$',
+    'lib/storage'
 ], function (
     bean,
     $,

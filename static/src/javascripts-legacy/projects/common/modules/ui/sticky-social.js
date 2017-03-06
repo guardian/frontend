@@ -1,8 +1,8 @@
 define([
     'fastdom',
-    'common/utils/$',
-    'common/utils/detect',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/detect',
+    'lib/mediator',
     'common/modules/experiments/ab',
     'lodash/functions/memoize'
 ], function (

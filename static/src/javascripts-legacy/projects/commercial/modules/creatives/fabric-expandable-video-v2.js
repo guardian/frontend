@@ -1,9 +1,9 @@
 define([
     'bean',
-    'common/utils/fastdom-promise',
-    'common/utils/$',
-    'common/utils/assign',
-    'common/utils/template',
+    'lib/fastdom-promise',
+    'lib/$',
+    'lodash/objects/assign',
+    'lib/template',
     'common/views/svgs',
     'raw-loader!commercial/views/creatives/fabric-expandable-video-v2.html',
     'raw-loader!commercial/views/creatives/fabric-expandable-video-v2-cta.html',

@@ -13,7 +13,7 @@ define([
     'lodash/arrays/uniq',
     'lodash/collections/filter',
     'lodash/collections/some',
-    'common/utils/chain'
+    'lib/chain'
 ], function (
     constants,
     findIndex,

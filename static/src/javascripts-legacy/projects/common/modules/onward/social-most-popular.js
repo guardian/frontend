@@ -1,6 +1,6 @@
 define([
     'common/modules/component',
-    'common/utils/mediator'
+    'lib/mediator'
 ], function (
     Component,
     mediator
