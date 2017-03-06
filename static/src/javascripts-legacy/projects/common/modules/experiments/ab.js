@@ -50,8 +50,8 @@ define([
         new TailorRecommendedEmail(),
         new MembershipA3A4BundlesThrasher(),
         new TailorSurvey(),
-        new SleevenotesNewEmailVariant(),
-        new SleevenotesLegacyEmailVariant()
+        SleevenotesNewEmailVariant,
+        SleevenotesLegacyEmailVariant
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';

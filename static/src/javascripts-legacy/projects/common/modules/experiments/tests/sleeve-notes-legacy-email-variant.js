@@ -3,18 +3,18 @@ define([
 ], function (
     genericEmailTest
 ) {
-    return genericEmailTest.createTest(
+    return new genericEmailTest(
         {
-            id: 'SleevenotesLegacyEmailVariant',
+            id: 'SleeveNotesLegacyEmailVariant',
             start: '2017-03-02',
             end: '2017-03-31',
             author: 'Leigh-Anne Mathieson',
             audience: 0, //will be 0.3
             audienceOffset: 0.7,
             signupPage: 'info/ng-interactive/2017/feb/23/sign-up-for-the-sleeve-notes-email',
-            canonicalListId: 3835,
+            canonicalListId: 39,
             testIds: [
-                { variantId: 'Sleevenotes-Legacy', listId: 3835 },
+                { variantId: 'Sleevenotes-Legacy', listId: 3835 }
             ]
         }
     );
