@@ -186,22 +186,25 @@ body {
 .email-sub__form--article {
     @include right-padding-to-match-article-content;
 
-    .email-sub__text-input {
-        margin-bottom: $gs-baseline;
-    }
-
-    .email-sub__submit-input {
-        @include mq(mobile) {
-            border: none;
-        }
-    }
-
     @include mq(mobileLandscape) {
         @include pill-style-input-and-button;
     }
 
     @include mq(phablet) {
         @include separate-input-and-button;
+    }
+
+    .email-sub__text-input {
+        margin-bottom: $gs-baseline;
+        @include mq(mobile) {
+            border: none;
+        }
+    }
+
+    .email-sub__submit-input {
+        @include mq(mobile) {
+            border: none;
+        }
     }
 }
 
