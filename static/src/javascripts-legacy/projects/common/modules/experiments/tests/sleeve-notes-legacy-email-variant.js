@@ -14,7 +14,7 @@ define([
             signupPage: 'info/ng-interactive/2017/feb/23/sign-up-for-the-sleeve-notes-email',
             canonicalListId: 39,
             testIds: [
-                { variantId: 'Sleevenotes-Legacy', listId: 3835 }
+                { variantId: 'SleeveNotes-Legacy', listId: 3835 }
             ]
         }
     );
