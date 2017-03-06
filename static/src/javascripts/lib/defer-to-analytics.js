@@ -7,7 +7,7 @@ mediator.on('analytics:ready', () => {
     analyticsReady = true;
 });
 
-function deferToAnalytics(afterAnalytics) {
+function deferToAnalytics(afterAnalytics: () => void) {
     if (analyticsReady) {
         afterAnalytics();
     } else {
