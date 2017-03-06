@@ -11,6 +11,14 @@ import capturePerfTimings from 'lib/capture-perf-timings';
 // eslint-disable-next-line camelcase,no-undef
 __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
+// Selectively attempt to pollute the global namespace with babel polfills.
+// The polyfills babel provides from core-js will be browser natives where
+// available anyway, so this shouldn't muck about with UAs that don't need it.
+if (!window.Promise) {
+    // used by webpack `import`
+    window.Promise = Promise;
+}
+
 domready(() => {
     // 1. boot standard, always
     userTiming.mark('standard boot');
@@ -31,8 +39,7 @@ domready(() => {
         }
 
         userTiming.mark('commercial request');
-        require(
-            ['bootstraps/commercial'],
+        import('bootstraps/commercial').then(
             raven.wrap({ tags: { feature: 'commercial' } }, commercial => {
                 userTiming.mark('commercial boot');
                 commercial.init().then(() => {
@@ -41,7 +48,9 @@ domready(() => {
                     // excludes all the modules bundled in the commercial chunk from this one
                     if (window.guardian.isEnhanced) {
                         userTiming.mark('enhanced request');
-                        require(['bootstraps/enhanced/main'], bootEnhanced => {
+                        import(
+                            'bootstraps/enhanced/main'
+                        ).then(bootEnhanced => {
                             userTiming.mark('enhanced boot');
                             bootEnhanced();
                             if (document.readyState === 'complete') {

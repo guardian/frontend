@@ -1,16 +1,13 @@
 module.exports = {
+    parser: 'babel-eslint',
     settings: {
         'import/resolver': 'webpack',
     },
     plugins: ['guardian-frontend'],
     rules: {
-        // require-specific overrides
-        'import/no-dynamic-require': 'off',
-        'import/no-extraneous-dependencies': 'off',
+        'import/no-extraneous-dependencies': 'off', // necessary while we use aliases
         'import/extensions': 'off',
         'import/no-webpack-loader-syntax': 'off', // used for require plugins still
-        'import/no-amd': 'off', // webpack dynamic requires
-        'global-require': 'off',
         'id-blacklist': ['error', 'guardian'],
 
         // these are bad habits in react that we're already abusing.
