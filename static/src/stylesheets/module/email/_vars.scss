@@ -18,15 +18,14 @@ $tones: (
     (plaindark, $neutral-4, $neutral-4, $neutral-4, $multimedia-main-1)
 );
 
-// text, accent, background
+// title, accent, text, button-text, background
 $article-tones: (
-    (analysis, $analysis-accent, $news-default),
-    (comment, $comment-support-4, $comment-support-4, $comment-support-4),
-    (feature, $feature-default, $feature-accent, $feature-mute),
-    (live, $live-default, $live-accent),
-    (media, #ffffff, $multimedia-main-2, $multimedia-main-1),
-    (news, #ffffff, $guardian-brand, $guardian-brand-light),
-    (review, $comment-support-3, darken($comment-support-3, 10%), $form-primary-colour, $review-background),
-    (special-feature, $news-support-6, $news-support-6),
-    (plaindark, $neutral-4, $neutral-4, $neutral-4, $multimedia-main-1)
+    (analysis, $guardian-brand, $analysis-accent, $neutral-2, #ffffff,  #f1f1f1),
+    (comment, $neutral-1, $comment-support-4, $neutral-1, #ffffff, $comment-support-2),
+    (feature, #ffffff, $features-support-3, #ffffff, $features-support-1, $features-support-1),
+    (live, #ffffff, $features-support-3, #ffffff, $live-main-1, $live-main-1),
+    (media, #ffffff, $multimedia-main-2, #ffffff, $neutral-1, $multimedia-main-1),
+    (news, #ffffff, $news-support-1, #ffffff, $guardian-brand, $guardian-brand),
+    (review, #ffffff, $comment-support-3, #ffffff, #615B52, #615B52),
+    (special-feature, #ffffff, $multimedia-main-2, #ffffff, $news-support-6, $news-support-6)
 );
