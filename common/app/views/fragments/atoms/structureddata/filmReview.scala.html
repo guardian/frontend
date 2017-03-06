@@ -12,7 +12,7 @@
   "@@context":"http://schema.org",
   "@@type":"Review",
   "author": @fragments.atoms.structureddata.contributor(review.data.reviewer, contributors),
-  @review.data.sourceArticleId.map { articleId => "url" : s"https://www.theguardian.com/${articleId}",}
+  @review.data.sourceArticleId.map { articleId => "url" : "https://www.theguardian.com/@{articleId}",}
   @review.atom.contentChangeDetails.published.map { published => "datePublished": "@{new DateTime(published.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
   @review.atom.contentChangeDetails.lastModified.map { modified => "dateModified": "@{new DateTime(modified.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
   "publisher": {

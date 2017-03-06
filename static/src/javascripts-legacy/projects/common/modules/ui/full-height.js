@@ -1,8 +1,8 @@
 define([
-    'common/utils/fastdom-promise',
-    'common/utils/$',
-    'common/utils/mediator',
-    'common/utils/detect'
+    'lib/fastdom-promise',
+    'lib/$',
+    'lib/mediator',
+    'lib/detect'
 ], function (
     fastdomPromise,
     $,

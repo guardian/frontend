@@ -2,17 +2,18 @@ define([
     'fastdom',
     'bean',
     'qwery',
-    'common/utils/raven',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/user-timing',
-    'common/utils/robust',
+    'lib/raven',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
+    'lib/user-timing',
+    'lib/robust',
     'common/modules/experiments/ab',
     './common',
     './sport',
     'common/modules/analytics/google',
-    'common/utils/geolocation'
+    'lib/geolocation',
+    'lib/check-dispatcher'
 ], function (
     fastdom,
     bean,
@@ -27,7 +28,8 @@ define([
     common,
     sport,
     ga,
-    geolocation
+    geolocation,
+    checkDispatcher
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -67,12 +69,6 @@ define([
         if (config.page.isFront) {
             require(['bootstraps/enhanced/facia'], function (facia) {
                 bootstrapContext('facia', facia);
-            });
-        }
-
-        if (config.page.section === 'lifeandstyle' && config.page.series === 'Sudoku') {
-            require(['bootstraps/enhanced/sudoku'], function (sudoku) {
-                bootstrapContext('sudoku', sudoku);
             });
         }
 
@@ -183,6 +179,9 @@ define([
                 });
             }
         });
+
+        // initialise email/outbrain check dispatcher
+        checkDispatcher.init();
 
         // Mark the end of synchronous execution.
         userTiming.mark('App End');

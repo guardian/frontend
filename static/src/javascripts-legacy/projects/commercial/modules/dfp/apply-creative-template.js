@@ -2,8 +2,8 @@ define([
     'bean',
     'bonzo',
     'Promise',
-    'common/utils/fastdom-promise',
-    'common/utils/report-error',
+    'lib/fastdom-promise',
+    'lib/report-error',
 
     // These need to be bundled, so that they can be fetched asynchronously in production
     'commercial/modules/creatives/commercial-component',

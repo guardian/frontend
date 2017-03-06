@@ -1,7 +1,7 @@
 define([
     'fastdom',
     'bean',
-    'common/utils/$'
+    'lib/$'
 ], function (
     fastdom,
     bean,

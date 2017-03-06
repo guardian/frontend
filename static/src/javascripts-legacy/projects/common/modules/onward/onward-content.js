@@ -1,6 +1,6 @@
 define([
-    'common/utils/config',
-    'common/utils/mediator',
+    'lib/config',
+    'lib/mediator',
     'common/modules/analytics/register',
     'common/modules/component',
     'lodash/arrays/union'

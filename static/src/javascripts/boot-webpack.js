@@ -1,9 +1,9 @@
 import domready from 'domready';
-import raven from 'common/utils/raven';
+import raven from 'lib/raven';
 import bootStandard from 'bootstraps/standard/main';
-import config from 'common/utils/config';
-import userTiming from 'common/utils/user-timing';
-import capturePerfTimings from 'common/utils/capture-perf-timings';
+import config from 'lib/config';
+import userTiming from 'lib/user-timing';
+import capturePerfTimings from 'lib/capture-perf-timings';
 
 // let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -35,23 +35,26 @@ domready(() => {
             ['bootstraps/commercial'],
             raven.wrap({ tags: { feature: 'commercial' } }, commercial => {
                 userTiming.mark('commercial boot');
-                commercial.init();
-
-                // 3. finally, try enhanced
-                // this is defined here so that webpack's code-splitting algo
-                // excludes all the modules bundled in the commercial chunk from this one
-                if (window.guardian.isEnhanced) {
-                    userTiming.mark('enhanced request');
-                    require(['bootstraps/enhanced/main'], bootEnhanced => {
-                        userTiming.mark('enhanced boot');
-                        bootEnhanced();
-                        if (document.readyState === 'complete') {
-                            capturePerfTimings();
-                        } else {
-                            window.addEventListener('load', capturePerfTimings);
-                        }
-                    });
-                }
+                commercial.init().then(() => {
+                    // 3. finally, try enhanced
+                    // this is defined here so that webpack's code-splitting algo
+                    // excludes all the modules bundled in the commercial chunk from this one
+                    if (window.guardian.isEnhanced) {
+                        userTiming.mark('enhanced request');
+                        require(['bootstraps/enhanced/main'], bootEnhanced => {
+                            userTiming.mark('enhanced boot');
+                            bootEnhanced();
+                            if (document.readyState === 'complete') {
+                                capturePerfTimings();
+                            } else {
+                                window.addEventListener(
+                                    'load',
+                                    capturePerfTimings
+                                );
+                            }
+                        });
+                    }
+                });
             })
         );
     }

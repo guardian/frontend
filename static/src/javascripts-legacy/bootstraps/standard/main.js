@@ -14,19 +14,20 @@
 define([
     'qwery',
     'fastdom',
-    'common/utils/raven',
+    'lib/raven',
     'common/modules/user-prefs',
     'common/modules/ui/images',
-    'common/utils/storage',
-    'common/utils/ajax',
-    'common/utils/mediator',
-    'common/utils/add-event-listener',
+    'lib/storage',
+    'lib/ajax',
+    'lib/mediator',
+    'lib/check-mediator',
+    'lib/add-event-listener',
     'common/modules/identity/api',
-    'common/utils/url',
-    'common/utils/cookies',
-    'common/utils/robust',
-    'common/utils/user-timing',
-    'common/utils/config',
+    'lib/url',
+    'lib/cookies',
+    'lib/robust',
+    'lib/user-timing',
+    'lib/config',
     'common/modules/navigation/newHeaderNavigation',
     'common/modules/analytics/google',
     'lodash/functions/debounce'
@@ -39,6 +40,7 @@ define([
     storage,
     ajax,
     mediator,
+    checkMediator,
     addEventListener,
     identity,
     url,
@@ -84,6 +86,11 @@ define([
                 raven.captureException(error);
             }
         });
+
+        //
+        // initilaise the email/outbrain check mediator
+        //
+        checkMediator.init();
 
         //
         // Set adtest query if url param declares it.
@@ -234,6 +241,8 @@ define([
          *  New Header Navigation
          */
         newHeaderNavigation();
+
+
 
         userTiming.mark('standard end');
         robust.catchErrorsAndLog('ga-user-timing-standard-end', function () {

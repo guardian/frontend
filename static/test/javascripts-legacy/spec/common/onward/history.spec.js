@@ -1,5 +1,5 @@
 define([
-    'common/utils/storage',
+    'lib/storage',
     'common/modules/onward/history',
     'fixtures/history/contains',
     'fixtures/history/max'

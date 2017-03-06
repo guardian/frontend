@@ -188,9 +188,9 @@ $gutter-large: 55px;
 }
 
 .new-header__nav__link {
+    @include nav-links;
     // Override a from _lists.scss
     color: $news-support-1;
-    @include nav-links;
     cursor: pointer;
 
     &:focus,
@@ -845,7 +845,7 @@ $caption-button-size: 32px;
 
 .back-to-top__text {
     display: inline-block;
-    color: white;
+    color: #ffffff;
     line-height: 30px;
     padding-right: $gs-gutter / 2;
 

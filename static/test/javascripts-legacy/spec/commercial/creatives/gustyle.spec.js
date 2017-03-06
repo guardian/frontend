@@ -1,6 +1,6 @@
 define([
     'helpers/injector',
-    'common/utils/$',
+    'lib/$',
     'fastdom',
     'helpers/fixtures'
 ], function (
@@ -26,7 +26,7 @@ define([
         beforeEach(function (done) {
             injector.require([
                 'commercial/modules/creatives/gustyle',
-                'common/utils/config'
+                'lib/config'
                 ], function () {
                 Sut = arguments[0];
                 config = arguments[1];

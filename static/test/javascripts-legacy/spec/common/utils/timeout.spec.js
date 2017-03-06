@@ -1,6 +1,6 @@
 define([
     'Promise',
-    'common/utils/timeout'
+    'lib/timeout'
 ], function (
     Promise,
     timeout

@@ -1,5 +1,5 @@
 define([
-    'common/utils/robust'
+    'lib/robust'
 ], function (
     robust
 ) {

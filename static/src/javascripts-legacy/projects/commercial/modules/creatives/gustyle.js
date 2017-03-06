@@ -1,8 +1,8 @@
 define([
-    'common/utils/fastdom-promise',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/template',
+    'lib/fastdom-promise',
+    'lib/$',
+    'lib/config',
+    'lib/template',
     'common/modules/ui/toggles',
     'common/views/svgs',
     'raw-loader!commercial/views/creatives/gustyle-label.html',

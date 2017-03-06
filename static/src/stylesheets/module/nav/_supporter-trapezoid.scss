@@ -1,7 +1,7 @@
 .header__supporter-cta {
     // Some very specific values in here, as it's all got to line up with the x-height of the logo
     position: absolute;
-    font-family: "Guardian Egyptian Web", "Guardian Text Egyptian Web", Georgia, serif;
+    font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
     font-weight: 500;
     left: ($gs-gutter / 4) - 1px;
     padding: 10px 23px 12px 12px;

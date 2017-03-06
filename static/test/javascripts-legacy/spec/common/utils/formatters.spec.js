@@ -1,4 +1,4 @@
-define(['common/utils/formatters'], function (formatters) {
+define(['lib/formatters'], function (formatters) {
     describe('integerCommas', function () {
 
         it('should correctly add a comma for >=4 digit numbers', function () {

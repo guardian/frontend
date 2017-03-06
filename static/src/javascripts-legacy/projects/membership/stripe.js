@@ -1,9 +1,9 @@
 /* global StripeCheckout */
 define([
-    'common/utils/$',
+    'lib/$',
     'bean',
-    'common/utils/ajax',
-    'common/utils/config',
+    'lib/ajax',
+    'lib/config',
     'fastdom'
 ], function ($, bean, ajax, config, fastdom) {
 

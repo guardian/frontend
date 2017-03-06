@@ -2,9 +2,9 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'common/utils/config',
-    'common/utils/ajax',
-    'common/utils/mediator',
+    'lib/config',
+    'lib/ajax',
+    'lib/mediator',
     'common/modules/identity/api',
     'lodash/objects/assign'
 ], function (

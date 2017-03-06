@@ -1,7 +1,7 @@
 define([
     'Promise',
-    'common/utils/config',
-    'common/utils/fastdom-promise',
+    'lib/config',
+    'lib/fastdom-promise',
     'common/modules/experiments/ab',
     'commercial/modules/dfp/add-slot',
     'commercial/modules/dfp/create-slot',

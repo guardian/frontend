@@ -1,6 +1,6 @@
 define([
     'Promise',
-    'common/utils/config',
+    'lib/config',
     'common/modules/ui/sticky',
     'commercial/modules/commercial-features'
 ], function (Promise, config, Sticky, commercialFeatures) {

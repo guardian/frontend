@@ -1,5 +1,5 @@
 define([
-    'common/utils/closest',
+    'lib/closest',
     'common/modules/analytics/google',
     'commercial/modules/messenger'
 ], function (closest, google, messenger) {

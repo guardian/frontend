@@ -21,10 +21,6 @@ define([
         name: 'ContributionsEpicAskFourEarning',
         variants: ['control']
     };
-    var ContributionsEpicUrgency = {
-        name: 'ContributionsEpicUrgency',
-        variants: ['control', 'paywall_tweak', 'values_tweak', 'values_full']
-    };
 
     var GuardianTodaySignupMessaging = {
         name: 'GuardianTodaySignupMessaging',
@@ -35,8 +31,7 @@ define([
         ContributionsEpicAlwaysAskStrategy,
         ContributionsEpicBrexit,
         ContributionsEpicAskFourStagger,
-        ContributionsEpicAskFourEarning,
-        ContributionsEpicUrgency
+        ContributionsEpicAskFourEarning
     ];
 
     var emailTests = [
@@ -49,6 +44,7 @@ define([
 
     function userIsInAClashingAbTest(tests) {
         tests = tests || clashingTests;
+
         return _testABClash(ab.isInVariant, tests);
     }
 

@@ -1,5 +1,5 @@
 define([
-    'common/utils/storage'
+    'lib/storage'
 ], function (
     storage
 ) {

@@ -6,7 +6,7 @@
  *  run analytics over (eg. ab tests, enhancement).
  */
 define([
-    'common/utils/mediator',
+    'lib/mediator',
     'lodash/collections/where'
 ], function (
     mediator,

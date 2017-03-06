@@ -1,7 +1,7 @@
 define([
     'facia/modules/ui/container-toggle',
-    'common/utils/$',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/mediator',
     'bonzo',
     'bean',
     'fastdom',
