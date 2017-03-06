@@ -33,7 +33,7 @@
         </div>
     </article>
 
-    @if(page.item.content.showInRelated) {
+    @if(page.item.content.showInRelated && !isPaidContent(page)) {
         <div class="gallery__most-popular facia-container fc-container fc-container--media hide-on-childrens-books-site js-gallery-most-popular tonal--@toneClass(page.item)">
             <div class="fc-container__inner">
                 <div class="fc-container__header">

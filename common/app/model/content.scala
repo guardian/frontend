@@ -75,11 +75,9 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrlId
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
-  lazy val isImmersiveGallery = {
-    metadata.contentType.toLowerCase == "gallery" && !metadata.commercial.exists(_.isPaidContent)
-  }
+  lazy val isGallery = metadata.contentType.toLowerCase == "gallery"
   lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isExplore
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
