@@ -16,7 +16,8 @@ define([
     'common/modules/experiments/acquisition-test-selector',
     'common/modules/experiments/tests/tailor-recommended-email',
     'common/modules/experiments/tests/membership-a3-a4-bundles-thrasher',
-    'common/modules/experiments/tests/tailor-survey'
+    'common/modules/experiments/tests/tailor-survey',
+    'ophan/ng'
 ], function (reportError,
              config,
              cookies,
@@ -34,7 +35,8 @@ define([
              acquisitionTestSelector,
              TailorRecommendedEmail,
              MembershipA3A4BundlesThrasher,
-             TailorSurvey
+             TailorSurvey,
+             ophan
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
@@ -211,10 +213,8 @@ define([
     }
 
     function recordOphanAbEvent(data) {
-        require(['ophan/ng'], function (ophan) {
-            ophan.record({
-                abTestRegister: data
-            });
+        ophan.record({
+            abTestRegister: data
         });
     }
 

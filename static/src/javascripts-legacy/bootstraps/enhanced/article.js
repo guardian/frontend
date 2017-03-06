@@ -14,7 +14,8 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/atoms/quiz',
     'bootstraps/enhanced/article-liveblog-common',
-    'bootstraps/enhanced/trail'
+    'bootstraps/enhanced/trail',
+    'ophan/ng'
 ], function (
     qwery,
     bean,
@@ -30,7 +31,8 @@ define([
     geoMostPopular,
     quiz,
     articleLiveblogCommon,
-    trail
+    trail,
+    ophan
 ) {
     var modules = {
         initCmpParam: function () {
@@ -55,9 +57,7 @@ define([
 
         initQuizListeners: function () {
             // This event is for older-style quizzes implemented as interactives. See https://github.com/guardian/quiz-builder
-            require(['ophan/ng'], function (ophan) {
-                mediator.on('quiz/ophan-event', ophan.record);
-            });
+            mediator.on('quiz/ophan-event', ophan.record);
         }
     },
 

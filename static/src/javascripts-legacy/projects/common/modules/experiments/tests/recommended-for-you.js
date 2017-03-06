@@ -15,7 +15,8 @@ define([
     'svg-loader!svgs/icon/profile-36.svg',
     'svg-loader!svgs/icon/arrow-right.svg',
     'svg-loader!svgs/icon/marque-36.svg',
-    'lib/fetch-json'
+    'lib/fetch-json',
+    'ophan/ng'
 ], function (
     bean,
     fastdom,
@@ -33,7 +34,8 @@ define([
     profileIcon,
     rightArrowIcon,
     guardianLogo,
-    fetchJson
+    fetchJson,
+    ophan
 ) {
     return function () {
         this.id = 'RecommendedForYouRecommendations';
@@ -143,9 +145,7 @@ define([
         }
 
         function setupComponentAttentionTracking(trackingCode) {
-            require(['ophan/ng'], function (ophan) {
-                ophan.trackComponentAttention(trackingCode, $recommendedForYouSection[0]);
-            });
+            ophan.trackComponentAttention(trackingCode, $recommendedForYouSection[0]);
         }
 
         function insertSection(items) {
