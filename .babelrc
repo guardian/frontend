@@ -2,50 +2,65 @@
     "env": {
         "production": {
             "presets": [
-                ["env", {
-                    "modules": false
-                }]
+                [
+                    "babel-preset-env",
+                    {
+                        "modules": false
+                    }
+                ]
             ],
             "plugins": [
-                "transform-runtime",
-            ],
+                "babel-plugin-syntax-dynamic-import",
+                "babel-plugin-transform-runtime"
+            ]
         },
         "development": {
             "presets": [
-                ["env", {
-                    "modules": false
-                }]
+                [
+                    "babel-preset-env",
+                    {
+                        "modules": false
+                    }
+                ]
             ],
             "plugins": [
-                "transform-runtime",
-            ],
+                "babel-plugin-syntax-dynamic-import",
+                "babel-plugin-transform-runtime"
+            ]
         },
         "internal": {
             "presets": [
-                ["env", {
-                    "targets": {
-                        "browsers": [
-                            "last 2 Chrome versions",
-                            "last 1 Safari version",
-                            "last 2 Firefox versions",
-                            "last 2 Edge versions",
-                        ],
+                [
+                    "babel-preset-env",
+                    {
+                        "targets": {
+                            "browsers": [
+                                "last 2 Chrome versions",
+                                "last 1 Safari version",
+                                "last 2 Firefox versions",
+                                "last 2 Edge versions"
+                            ]
+                        }
                     }
-                }],
-            ],
+                ]
+            ]
         },
         "karma": {
             "presets": [
-                ["env", {
-                    "modules": "amd"
-                }]
+                [
+                    "babel-preset-env",
+                    {
+                        "modules": "amd"
+                    }
+                ]
             ],
             "plugins": [
-                "transform-runtime",
-            ],
-        },
+                "babel-plugin-dynamic-import-amd",
+                "babel-plugin-transform-runtime"
+            ]
+        }
     },
     "ignore": [
-        "eslintrc.js",
-    ],
+        "eslintrc.js"
+    ]
 }
