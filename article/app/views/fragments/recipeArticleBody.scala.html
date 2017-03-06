@@ -2,6 +2,7 @@
 @import model.content.MediaAtom
 @import model.ArticleSchemas
 @import common.Localisation
+@import model.content.RecipeAtom
 
 @(articleModel: ArticlePage, recipes: Seq[model.content.RecipeAtom], amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
@@ -10,6 +11,7 @@
 
 @schemaType(page: ArticlePage) = @{ ArticleSchemas.NewsArticle }
 @bodyType(page: ArticlePage) = @{ "articleBody" }
+@defaultImage = @{articleModel.article.content.elements.mainPicture.map{ _.images}.getOrElse(null) }
 
 @defining(articleModel.article) { article =>
 <article id="article" data-test-id="article-root"
@@ -36,7 +38,7 @@
 
             @for((recipe, i) <- recipes.zipWithIndex){
                 <div class="recipe__image__wrapper recipe recipe__@i">
-                @fragments.image(picture = getPicture(recipe),
+                @fragments.image(picture = RecipeAtom.getPicture(recipe, defaultImage),
                     classes = Seq("recipe__image", "fadeIn"),
                     imageAltText = "alt text here",
                     widths = MainMedia.immersive,
@@ -96,10 +98,10 @@
                     @for(serves <- maybeServes) {
                         <span class="rounded-icon structured-meta__circle">@serves.from</span>
                         @if(serves.from != serves.to) {to<span class="rounded-icon structured-meta__circle">@serves.to</span> }
-                        @yieldServingType(serves)
+                        @RecipeAtom.yieldServingType(serves)
                     }
                 }
-                @if(totalTime(recipe)) {<span class="rounded-icon structured-meta__circle">@totalTime(recipe)</span>hours }
+                @if(RecipeAtom.totalTime(recipe)) {<span class="rounded-icon structured-meta__circle">@RecipeAtom.totalTime(recipe)</span>hours }
             </div>
         </div>
 
@@ -108,7 +110,7 @@
             <ul class="ingredients-list">
                 <li class="ingredients-title">@if(list.title) {@list.title} else {Ingredients}</li>
                 @for(ingredient <- list.ingredients) {
-                    <li itemprop="recipeIngredient">@ingredientValue(ingredient)</li>
+                    <li itemprop="recipeIngredient">@RecipeAtom.ingredientValue(ingredient)</li>
                 }
             </ul>
         }
@@ -122,55 +124,4 @@
     </div>
 }
 
-@totalTime(recipe: model.content.RecipeAtom) = @{
-    (recipe.data.time.preparation ++ recipe.data.time.cooking).map(_.toInt).reduceOption(_ + _)
-}
 
-
-@yieldServingType(serves: com.gu.contentatom.thrift.atom.recipe.Serves) = @{
-    serves.`type` match {
-        case "serves" => "servings"
-        case "makes" => s"${serves.unit}"
-        case "quantity" => "portions"
-    }
-}
-
-@ingredientValue(ingredient: com.gu.contentatom.thrift.atom.recipe.Ingredient) = @{
-    val q = ingredient.quantity
-    .map(formatQuantity)
-    .orElse(ingredient.quantityRange.map(range => s"${formatQuantity(range.from)}-${formatQuantity(range.to)}" ))
-    .getOrElse("")
-    s"""${q} ${formatUnit(ingredient.unit.getOrElse(""))} ${ingredient.item}"""
-}
-
-@formatUnit(unit: String) = @{
-    unit match {
-    case "dsp" => "dessert spoon"
-    case "tsp" => "teaspoon"
-    case "tbsp" => "tablespoon"
-    case _ => unit
-    }
-}
-
-@formatQuantity(q: Double) = @{
-    q match {
-    case qty if qty == qty.toInt => qty.toInt.toString
-    case 0.75 => "¾"
-    case 0.5 => "½"
-    case 0.25 => "¼"
-    case 0.125 => "⅛"
-    case _ => q.toString
-    }
-}
-
-@getImage(r: model.content.RecipeAtom) = @{
-    r.data.images.headOption.map{img =>
-        img.assets.sortBy(_.dimensions.map(_.width)).lastOption.map(_.file)
-    }.getOrElse("")
-}
-
-@getPicture(r: model.content.RecipeAtom) = @{
-    r.data.images.headOption.map{ img => MediaAtom.imageMediaMake(img, "caption here")}.getOrElse(defaultImage)
-}
-
-@defaultImage = @{articleModel.article.content.elements.mainPicture.map{ _.images}.getOrElse(null) }
