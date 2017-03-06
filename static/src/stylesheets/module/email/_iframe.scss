@@ -186,9 +186,7 @@ body {
 .email-sub__form--article {
     @include right-padding-to-match-article-content;
 
-    @include mq(mobileLandscape) {
-        @include pill-style-input-and-button;
-    }
+    @include pill-style-input-and-button;
 
     @include mq(phablet) {
         @include separate-input-and-button;
