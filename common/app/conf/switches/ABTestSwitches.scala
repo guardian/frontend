@@ -132,26 +132,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-urgency",
-    "Test 3 new variants with messaging that highlights the urgency of supporting the Guardian",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 17),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-love-boat-v2",
-    "Tests 2 new designs for acquisitions asks",
-    owners = Seq(Owner.withGithub("dominickendrick")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 20), //Thursday
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-tailor-recommended-email",
     "Use Tailor to target email signup form",
     owners = Seq(Owner.withGithub("lindseydew")),

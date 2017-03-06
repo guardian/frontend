@@ -1,13 +1,13 @@
 define([
-    'common/utils/config',
-    'common/utils/$',
-    'common/utils/cookies',
-    'common/utils/detect',
-    'common/utils/storage',
-    'common/utils/template',
+    'lib/config',
+    'lib/$',
+    'lib/cookies',
+    'lib/detect',
+    'lib/storage',
+    'lib/template',
     'common/modules/user-prefs',
     'common/modules/ui/message',
-    'common/utils/mediator'
+    'lib/mediator'
 ], function (
     config,
     $,

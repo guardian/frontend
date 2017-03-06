@@ -81,11 +81,11 @@
 }
 
 .contributions__option-button--visual {
-    color: white;
+    @include fs-textSans(5);
+    color: #ffffff;
     width: auto;
     height: 50px;
     padding: 0 $gs-gutter;
-    @include fs-textSans(5);
 
     // couple of magic numbers here, necessary for the design
     .heart {
@@ -147,7 +147,7 @@
     }
 
     & .brand {
-        color: white;
+        color: #ffffff;
     }
 }
 

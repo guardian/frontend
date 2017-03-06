@@ -2,7 +2,7 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'common/utils/$'
+    'lib/$'
 ], function (
     bean,
     bonzo,

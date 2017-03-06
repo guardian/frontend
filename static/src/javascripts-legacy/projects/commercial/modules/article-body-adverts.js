@@ -1,9 +1,9 @@
 define([
     'Promise',
     'qwery',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/fastdom-promise',
+    'lib/config',
+    'lib/detect',
+    'lib/fastdom-promise',
     'common/modules/article/space-filler',
     'commercial/modules/ad-sizes',
     'commercial/modules/dfp/add-slot',

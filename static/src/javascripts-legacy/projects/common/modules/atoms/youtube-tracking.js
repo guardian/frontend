@@ -1,7 +1,7 @@
 define([
-    'common/utils/mediator',
+    'lib/mediator',
     'lodash/collections/forEach',
-    'common/utils/config',
+    'lib/config',
     'common/modules/video/ga-helper'
 ], function (
     mediator,
@@ -19,7 +19,7 @@ define([
     }
 
     function initYoutubeEvents(videoId) {
-        
+
         var gaTracker = config.googleAnalytics.trackers.editorial;
 
         var events = {

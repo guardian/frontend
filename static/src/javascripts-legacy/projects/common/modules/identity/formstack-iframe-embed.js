@@ -15,7 +15,7 @@
 
 define([
     'bean',
-    'common/utils/$',
+    'lib/$',
     'common/modules/identity/api',
     'lodash/objects/assign'
 ], function (

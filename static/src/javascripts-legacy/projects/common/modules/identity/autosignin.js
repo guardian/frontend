@@ -1,8 +1,8 @@
 define([
     'bonzo',
-    'common/utils/ajax',
-    'common/utils/config',
-    'common/utils/time',
+    'lib/ajax',
+    'lib/config',
+    'lib/time',
     'common/modules/identity/api',
     'common/modules/identity/facebook-authorizer',
     'common/modules/navigation/profile',

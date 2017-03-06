@@ -1,12 +1,12 @@
 define([
     'bean',
-    'common/utils/$',
-    'common/utils/fetch-json',
-    'common/utils/mediator',
-    'common/utils/report-error',
+    'lib/$',
+    'lib/fetch-json',
+    'lib/mediator',
+    'lib/report-error',
     'lodash/collections/forEach',
     'lodash/arrays/initial',
-    'common/utils/chain'
+    'lib/chain'
 ], function (
     bean,
     $,

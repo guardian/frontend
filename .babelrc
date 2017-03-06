@@ -2,22 +2,22 @@
     "env": {
         "production": {
             "presets": [
-                "env",
+                ["env", {
+                    "modules": false
+                }]
             ],
             "plugins": [
-                "add-module-exports",
-                "transform-es2015-modules-amd",
                 "transform-runtime",
                 "transform-flow-strip-types",
             ],
         },
         "development": {
             "presets": [
-                "env",
+                ["env", {
+                    "modules": false
+                }]
             ],
             "plugins": [
-                "add-module-exports",
-                "transform-es2015-modules-amd",
                 "transform-runtime",
                 "transform-flow-strip-types",
             ],
@@ -34,6 +34,16 @@
                         ],
                     }
                 }],
+            ],
+        },
+        "karma": {
+            "presets": [
+                ["env", {
+                    "modules": "amd"
+                }]
+            ],
+            "plugins": [
+                "transform-runtime",
             ],
         },
     },

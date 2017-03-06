@@ -1,9 +1,9 @@
 define([
     'Promise',
-    'common/utils/config',
-    'common/utils/load-script',
-    'common/utils/report-error',
-    'common/utils/timeout',
+    'lib/config',
+    'lib/load-script',
+    'lib/report-error',
+    'lib/timeout',
     'commercial/modules/ad-sizes',
     'commercial/modules/commercial-features',
     'commercial/modules/dfp/dfp-env',

@@ -1,9 +1,9 @@
 define([
     'commercial/modules/liveblog-adverts',
     'commercial/modules/commercial-features',
-    'common/utils/mediator',
+    'lib/mediator',
     'helpers/fixtures',
-    'common/utils/$'
+    'lib/$'
 ], function (
     liveblogAdverts,
     commercialFeatures,

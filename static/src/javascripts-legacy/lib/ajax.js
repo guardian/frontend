@@ -1,14 +1,14 @@
 define([
     'reqwest',
-    'common/utils/config',
-    'common/utils/raven'
+    'lib/config',
+    'lib/raven'
 ], function (
     reqwest,
     config,
     raven
 ) {
     // This should no longer be used.
-    // Prefer the new 'common/utils/fetch' or 'common/utils/fetch-json' library instead, which are es6 compliant.
+    // Prefer the new 'lib/fetch' or 'lib/fetch-json' library instead, which are es6 compliant.
     var ajaxHost = config.page.ajaxUrl || '';
 
     function ajax(params) {

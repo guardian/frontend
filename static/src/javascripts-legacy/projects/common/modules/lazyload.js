@@ -1,6 +1,6 @@
 define([
-    'common/utils/ajax',
-    'common/utils/steady-page',
+    'lib/ajax',
+    'lib/steady-page',
     'bonzo',
     'lodash/objects/merge'
 ], function (
@@ -47,7 +47,7 @@ define([
                         $container.html(options.beforeInsert(resp.html))
                             .addClass('lazyloaded');
                     }).then(function(){
-                        options.success(resp);    
+                        options.success(resp);
                     });
                 })
                 .catch(options.error)

@@ -1,9 +1,9 @@
 define([
     'fastdom',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/mediator',
-    'common/utils/user-timing',
+    'lib/config',
+    'lib/detect',
+    'lib/mediator',
+    'lib/user-timing',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/load-advert',
     'commercial/modules/dfp/performance-logging',

@@ -1,7 +1,7 @@
 define([
-    'common/utils/raven',
-    'common/utils/fastdom-promise',
-    'common/utils/QueueAsync',
+    'lib/raven',
+    'lib/fastdom-promise',
+    'lib/QueueAsync',
     'Promise',
     'common/modules/article/spacefinder'
 ], function (

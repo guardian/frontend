@@ -1,6 +1,6 @@
 define([
-    'common/utils/detect',
-    'common/utils/mediator',
+    'lib/detect',
+    'lib/mediator',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/breakpoint-name-to-attribute'
 ], function (detect, mediator, dfpEnv, breakpointNameToAttribute) {

@@ -1,6 +1,6 @@
 define([
     'bonzo',
-    'common/utils/mediator',
+    'lib/mediator',
     'fastdom',
     'lodash/collections/filter',
     'lodash/functions/debounce'

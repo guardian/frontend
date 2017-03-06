@@ -1,10 +1,12 @@
 define([
-    'common/utils/config',
-    'common/utils/check-mediator',
+    'lodash/collections/find',
+    'lib/config',
+    'lib/check-mediator',
     'common/modules/email/run-checks',
     'common/modules/email/email-article',
     'common/modules/experiments/ab-test-clash'
 ], function(
+    find,
     config,
     checkMediator,
     emailRunChecks,
@@ -20,7 +22,7 @@ define([
             return emailRunChecks.allEmailCanRun();
         },
         listCanRun: function() {
-            return find(emailArticle.getListConfigs(), emailRunChecks.listCanRun) ? true : false;
+            return !!find(emailArticle.getListConfigs(), emailRunChecks.listCanRun);
         },
         emailInArticleOutbrainEnabled: function() {
             return config.switches.emailInArticleOutbrain;
