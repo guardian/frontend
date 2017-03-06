@@ -7,12 +7,24 @@ import config from 'lib/config';
 import userTiming from 'lib/user-timing';
 import capturePerfTimings from 'lib/capture-perf-timings';
 
+// Flow Type Declarations
+// Declare webpack's require.ensure
+declare var require: {
+    (id: string): any,
+    ensure(
+        ids: Array<string>,
+        callback?: { (require: typeof require): void },
+        chunk?: string
+    ): void,
+};
+
+// Declare webpack's public path global var
+// eslint-disable-next-line camelcase
+declare var __webpack_public_path__: string;
+
 // let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
 // https://webpack.js.org/guides/public-path/#set-value-on-the-fly
-// We need to declare it as a global var here for flow.
-// eslint-disable-next-line camelcase
-declare var __webpack_public_path__: string;
 // eslint-disable-next-line camelcase,no-undef
 __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
