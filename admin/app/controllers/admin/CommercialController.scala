@@ -111,9 +111,9 @@ class CommercialController(implicit context: ApplicationContext) extends Control
     val previewUrls: Seq[String] =
       (for {
         lineItemId <- Try(lineitemId.toLong).toOption
-        section <- validSections.find(_ == section)
+        validSection <- validSections.find(_ == section)
       } yield {
-          DfpApi.getCreativeIds(lineItemId) flatMap (DfpApi.getPreviewUrl(lineItemId, _, s"https://theguardian.com/$section"))
+          DfpApi.getCreativeIds(lineItemId) flatMap (DfpApi.getPreviewUrl(lineItemId, _, s"https://theguardian.com/$validSection"))
       }) getOrElse Nil
 
     Cached(5.minutes) {
