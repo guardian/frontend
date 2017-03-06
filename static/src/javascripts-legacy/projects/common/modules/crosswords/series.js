@@ -1,6 +1,6 @@
 define([
-    'common/utils/config',
-    'common/utils/proximity-loader',
+    'lib/config',
+    'lib/proximity-loader',
     'common/modules/onward/onward-content'
 ], function (
     config,

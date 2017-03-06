@@ -8,7 +8,7 @@ import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.{AdminConfiguration, Configuration}
 import dfp.Reader.read
-import dfp.SessionLogger.{logAroundCreate, logAroundPerform, logAroundRead}
+import dfp.SessionLogger.{logAroundCreate, logAroundPerform, logAroundRead, logAroundReadSingle}
 
 import scala.util.control.NonFatal
 
@@ -114,6 +114,11 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
         }
       }
     }
+
+    def getPreviewUrl(lineItemId: Long, creativeId: Long, url: String): Option[String] =
+      logAroundReadSingle(typeName) {
+        licaService.getPreviewUrl(lineItemId, creativeId, url)
+      }
 
     def create(licas: Seq[LineItemCreativeAssociation]): Seq[LineItemCreativeAssociation] = {
       logAroundCreate(typeName) {

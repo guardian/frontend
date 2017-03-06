@@ -1,6 +1,6 @@
 define([
     'common/modules/identity/api',
-    'common/utils/storage'
+    'lib/storage'
 ],
 function (
     Id,

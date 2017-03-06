@@ -2,9 +2,9 @@ define([
     'react/addons',
     'bonzo',
     'fastdom',
-    'common/utils/$',
-    'common/utils/scroller',
-    'common/utils/detect'
+    'lib/$',
+    'lib/scroller',
+    'lib/detect'
 ], function (
     React,
     bonzo,

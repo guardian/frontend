@@ -19,9 +19,9 @@ define([
 
             injector.mock('reqwest', reqwestStub);
             injector.require(['common/modules/identity/api',
-                           'common/utils/config',
-                           'common/utils/cookies',
-                           'common/utils/storage'], function () {
+                           'lib/config',
+                           'lib/cookies',
+                           'lib/storage'], function () {
 
                                Id = arguments[0];
                                config = arguments[1];

@@ -188,15 +188,14 @@ $gutter-large: 55px;
 }
 
 .new-header__nav__link {
+    @include nav-links;
     // Override a from _lists.scss
     color: $news-support-1;
-    @include nav-links;
     cursor: pointer;
 
     &:focus,
     &:hover {
         text-decoration: none;
-        color: #ffffff;
     }
 
     &:first-child {
@@ -211,11 +210,6 @@ $gutter-large: 55px;
     &:last-of-type:after {
         content: none;
     }
-}
-
-[data-link-name='nav2 : primary : life'] {
-    padding-left: .35em;
-    padding-right: .8em;
 }
 
 /****************
@@ -333,6 +327,10 @@ $gutter-large: 55px;
     list-style: none;
     color: $news-support-1;
     width: 100%;
+
+    &:last-child > details[open] {
+        margin-bottom: $gs-baseline;
+    }
 }
 
 //This variable is only used in open menu styling
@@ -402,8 +400,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
 .main-navigation__secondary {
     color: #ffffff;
-    background-color: #003b5e;
-    padding-bottom: $gs-baseline / 2;
+    background: darken($guardian-brand-dark, 4%);
 
     .main-menu__icon__svg {
         margin-top: -.24em;
@@ -413,8 +410,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 }
 
 .navigation-border,
-[data-link-name='nav2 : crosswords'],
-[data-link-name='nav2 : today\'s paper'] {
+[data-link-name='nav2 : the guardian app'] {
     // Creates a seamless line when section has dark background
     margin-top: -1px;
     position: relative;
@@ -426,13 +422,13 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
         left: $navigation-horizontal-padding;
         right: 0;
         height: 1px;
-        background: #003b5e;
+        background: darken($guardian-brand-dark, 4%);
     }
 }
 
-[data-link-name='nav2 : crosswords'],
-[data-link-name='nav2 : today\'s paper'] {
-    margin-top: $gs-baseline;
+[data-link-name='nav2 : the guardian app'],
+[data-link-name='nav2 : facebook'] {
+    margin-top: $gs-baseline * 2;
 }
 
 .navigation-group {
@@ -442,15 +438,12 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     margin-top: 0;
     // Unset ul from user agent stylesheet
     margin-bottom: 0;
-
-    & li:last-child {
-        padding-bottom: $gs-baseline;
-    }
 }
 
 .navigation-group--contrast {
     color: $guardian-brand-dark;
     background-color: $news-main-2;
+    padding-bottom: $gs-baseline;
 
     .main-menu__icon__svg {
         fill: $guardian-brand;
@@ -467,12 +460,17 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     position: relative;
     font-size: 1em;
 
+    details[open] &:last-child {
+        padding-bottom: $gs-baseline;
+    }
+
     a {
         display: block;
         padding-top: $gs-baseline / 1.5;
-        padding-left: $navigation-horizontal-padding;
         padding-right: $gs-gutter;
         padding-bottom: $gs-baseline / 1.5;
+        padding-left: $navigation-horizontal-padding;
+
         // Override a from user agent stylesheet
         color: inherit;
 
@@ -520,7 +518,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
     // autoprefixer handles all the appropriate psuedo element selectors for placeholders
     &::placeholder {
-        color: #ffffff;
+        color: $news-support-1;
     }
 
     &:focus {
@@ -604,35 +602,17 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
         padding-bottom: $gs-baseline / 1.5;
     }
 
-    .personalisation__links {
+    details[open] .personalisation__links {
         margin-bottom: -$gs-baseline;
     }
 }
 
 .personalisation__link {
     color: $guardian-brand-dark;
-}
 
-.personalisation__link--active {
-    color: $guardian-brand-dark;
-    position: relative;
-    font-weight: bold;
-
-    // Tick icon
-    &:before {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: 26px;
-            width: $gs-gutter / 4;
-            height: $gs-baseline;
-            border-width: 2px;
-            border-style: solid;
-            border-color: currentColor;
-            border-top: 0;
-            border-left: 0;
-            transform: rotate(45deg);
-        }
+    &:last-child {
+        padding-bottom: $gs-baseline;
+    }
 }
 
 .no-text-transform {
@@ -663,10 +643,9 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 .tertiary-navigation {
     background-color: #747a81;
     padding-top: $gs-baseline / 3;
-    // Spacer that prevents links flowing beneath the veggie burger
-    //padding-right: $gutter-medium + ($veggie-burger-medium / 2);
     padding-left: $gs-gutter / 2;
-    padding-right: $gutter-medium + ($veggie-burger-medium / 2);
+    // Spacer that prevents links flowing beneath the veggie burger
+    padding-right: $gutter-medium + $veggie-burger-medium;
     margin-left: -4px;
     border-bottom: $gs-baseline / 3 solid #747a81;
     max-height: $gs-baseline * 3.4;
@@ -684,7 +663,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
         max-height: $gs-baseline * 4.8;
         padding-left: $gs-gutter;
         margin-left: -5px;
-        padding-right: $gutter-large + ($veggie-burger-medium / 2);
+        padding-right: $gutter-large + $veggie-burger-medium;
     }
 }
 
@@ -697,7 +676,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     &:hover,
     &:focus {
         text-decoration: none;
-        color: #ffffff;
     }
 
     @include mq($from: mobile, $until: mobileLandscape) {
@@ -824,9 +802,9 @@ $caption-button-size: 32px;
             &:before {
                 content: '';
                 position: absolute;
-                left: 50%;
+                left: 49%;
                 bottom: 0;
-                margin-left: -$gs-baseline / 2;
+                transform: translateX(-50%);
                 border-bottom: $gs-baseline / 2 solid #747a81;
                 border-left: $gs-baseline / 2 solid transparent;
                 border-right: $gs-baseline / 2 solid transparent;
@@ -848,11 +826,6 @@ $caption-button-size: 32px;
 .footer__back-to-top__container {
     @include content-gutter();
     background-color: $guardian-brand;
-
-    a:hover > &,
-    a:focus > & {
-        background-color: $guardian-brand-dark;
-    }
 }
 
 .footer__back-to-top {
@@ -872,7 +845,7 @@ $caption-button-size: 32px;
 
 .back-to-top__text {
     display: inline-block;
-    color: white;
+    color: #ffffff;
     line-height: 30px;
     padding-right: $gs-gutter / 2;
 

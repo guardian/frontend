@@ -1,14 +1,14 @@
 define([
     'Promise',
     'fastdom',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/template',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
+    'lib/template',
     'commercial/modules/dfp/track-ad-render',
     'commercial/modules/commercial-features',
     'raw-loader!commercial/views/plista.html',
-    'common/utils/load-script'
+    'lib/load-script'
 ], function (
     Promise,
     fastdom,

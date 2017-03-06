@@ -1,11 +1,11 @@
 define([
     'bonzo',
-    'common/utils/$',
-    'common/utils/steady-page',
+    'lib/$',
+    'lib/steady-page',
     'helpers/fixtures',
     'Promise',
     'helpers/injector',
-    'common/utils/fastdom-promise'
+    'lib/fastdom-promise'
 ], function (
     bonzo,
     $,
@@ -58,7 +58,7 @@ define([
             sinon.spy(window, 'scrollTo');
 
             injector.require([
-                'common/utils/config'
+                'lib/config'
             ], function (injConfig) {
                 config = injConfig;
                 config.switches.steadyPageUtil = true;

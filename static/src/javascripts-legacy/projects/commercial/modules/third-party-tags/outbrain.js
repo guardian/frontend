@@ -1,18 +1,17 @@
 define([
     'Promise',
-    'common/utils/fastdom-promise',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/template',
-    'common/utils/steady-page',
+    'lib/fastdom-promise',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
+    'lib/template',
+    'lib/steady-page',
     'commercial/modules/dfp/track-ad-render',
     'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/outbrain-codes',
     'raw-loader!commercial/views/outbrain.html',
-    'common/modules/email/run-checks',
-    'common/modules/experiments/ab-test-clash',
-    'common/utils/load-script'
+    'lib/load-script',
+    'lib/check-mediator'
 ], function (
     Promise,
     fastdom,
@@ -25,9 +24,8 @@ define([
     commercialFeatures,
     getCode,
     outbrainStr,
-    emailRunChecks,
-    clash,
-    loadScript
+    loadScript,
+    checkMediator
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
     var outbrainTpl = template(outbrainStr);
@@ -46,9 +44,6 @@ define([
             container: '.js-outbrain-container'
         }
     };
-
-    var emailSignupPromise;
-    var clashingABTestPromise;
 
     function build(codes, breakpoint) {
         var html = outbrainTpl({ widgetCode: codes.code || codes.image });
@@ -81,9 +76,6 @@ define([
             return steadyPage.insert($container[0], function() {
                 if (slot === 'merchandising') {
                     $(selectors[slot].widget).replaceWith($outbrain[0]);
-                }
-                if (slot === 'nonCompliant' || slot === 'merchandising') {
-                    emailRunChecks.setNonCompliantOutbrain();
                 }
                 $container.append(widgetHtml);
                 $outbrain.css('display', 'block');
@@ -118,61 +110,13 @@ define([
         });
     }
 
-
-    function checkDependencies() {
-        return Promise.all([checkEmailSignup(), checkClashingABTest()])
-            .then(function(result) {
-
-                function findEmail(value) {
-                    return value == 'nonCompliant';
-                }
-
-                return result.find(findEmail);
-            })
-            .catch(function () {
-                return 'nonCompliant';
-            });
-    }
-
-    function checkClashingABTest() {
-        if (!clashingABTestPromise) {
-            clashingABTestPromise = new Promise(function (resolve) {
-                if (clash.userIsInAClashingAbTest()) {
-                    resolve('nonCompliant');
-                }
-                else {
-                    resolve();
-                }
-            });
-        }
-
-        return clashingABTestPromise;
-    }
-
-    function checkEmailSignup() {
-        if (!emailSignupPromise) {
-            emailSignupPromise = new Promise(function (resolve) {
-                if (config.switches.emailInArticleOutbrain &&
-                    emailRunChecks.getEmailInserted()) {
-                    // There is an email sign-up
-                    // so load the merchandising component
-                    resolve('nonCompliant');
-                } else {
-                    resolve();
-                }
-            });
-        }
-
-        return emailSignupPromise;
-    }
-
     function init() {
         if (commercialFeatures.outbrain) {
             // if there is no merch component, load the outbrain widget right away
             return loadInstantly().then(function(shouldLoadInstantly) {
                 if (shouldLoadInstantly) {
-                    return checkDependencies().then(function (widgetType) {
-                        widgetType ? module.load(widgetType) : module.load();
+                    return checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
+                        outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
                         return Promise.resolve(true);
                     });
                 } else {
@@ -194,15 +138,13 @@ define([
                                 module.load('merchandising');
                             }
                         } else {
-                            checkDependencies().then(function (widgetType) {
-                                widgetType ? module.load(widgetType) : module.load();
+                            checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
+                                outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
                             });
                         }
                     });
                 }
             });
-        } else {
-            emailRunChecks.setNonCompliantOutbrain();
         }
 
         return Promise.resolve(true);

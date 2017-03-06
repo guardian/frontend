@@ -1,6 +1,6 @@
 define([
-    'common/utils/config',
-    'common/utils/url'
+    'lib/config',
+    'lib/url'
 ], function (config, urlUtils) {
 
     var gatewayUrl = '//pq-direct.revsci.net/pql';

@@ -1,6 +1,6 @@
 define([
     'bonzo',
-    'common/utils/$',
+    'lib/$',
     'common/modules/charts/doughnut'
 ], function (
     bonzo,

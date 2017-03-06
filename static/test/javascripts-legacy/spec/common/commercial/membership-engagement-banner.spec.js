@@ -2,7 +2,7 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
-    'common/utils/$',
+    'lib/$',
     'common/modules/user-prefs',
     'helpers/fixtures',
     'helpers/injector',
@@ -44,9 +44,9 @@ define([
             injector.require([
                 'commercial/modules/commercial-features',
                 'common/modules/commercial/membership-engagement-banner',
-                'common/utils/config',
-                'common/utils/storage',
-                'common/utils/mediator'
+                'lib/config',
+                'lib/storage',
+                'lib/mediator'
             ], function () {
                 commercialFeatures = arguments[0];
                 membershipMessages = arguments[1];

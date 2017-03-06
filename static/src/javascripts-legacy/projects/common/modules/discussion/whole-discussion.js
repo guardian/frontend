@@ -3,9 +3,9 @@ define([
     'bonzo',
     'qwery',
     'Promise',
-    'common/utils/$',
-    'common/utils/fetch-json',
-    'common/utils/url',
+    'lib/$',
+    'lib/fetch-json',
+    'lib/url',
     'lodash/arrays/range'
 ], function (
     bean,

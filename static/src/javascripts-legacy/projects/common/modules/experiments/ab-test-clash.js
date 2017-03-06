@@ -44,6 +44,7 @@ define([
 
     function userIsInAClashingAbTest(tests) {
         tests = tests || clashingTests;
+
         return _testABClash(ab.isInVariant, tests);
     }
 

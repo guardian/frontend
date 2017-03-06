@@ -1,10 +1,10 @@
 /** Bootstrap for functionality common to articles and live blogs */
 define([
     'fence',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/mediator',
-    'common/utils/robust',
+    'lib/$',
+    'lib/config',
+    'lib/mediator',
+    'lib/robust',
     'common/modules/accessibility/helpers',
     'common/modules/article/twitter',
     'common/modules/open/cta',

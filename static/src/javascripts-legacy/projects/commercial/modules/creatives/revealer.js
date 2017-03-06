@@ -1,7 +1,7 @@
 define([
-    'common/utils/fastdom-promise',
-    'common/utils/template',
-    'common/utils/detect',
+    'lib/fastdom-promise',
+    'lib/template',
+    'lib/detect',
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker',
     'raw-loader!commercial/views/creatives/revealer.html'

@@ -2,7 +2,7 @@ define([
     'bonzo',
     'bean',
     'fastdom',
-    'common/utils/$',
+    'lib/$',
     'common/modules/navigation/navigation',
     'helpers/fixtures'
 ], function (

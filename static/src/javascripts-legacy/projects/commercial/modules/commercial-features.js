@@ -1,8 +1,8 @@
 define([
-    'common/utils/location',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/robust',
+    'lib/location',
+    'lib/config',
+    'lib/detect',
+    'lib/robust',
     'commercial/modules/user-features',
     'common/modules/identity/api',
     'common/modules/user-prefs'

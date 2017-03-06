@@ -188,7 +188,6 @@ body {
 
     .email-sub__text-input {
         margin-bottom: $gs-baseline;
-        border: none;
     }
 
     .email-sub__submit-input {
@@ -206,7 +205,6 @@ body {
     }
 }
 
-// title, accent, text, button-text, background
 @each $tone-class, $tone-colour-title, $tone-colour-accent, $tone-colour-text, $tone-colour-button-text, $tone-colour-background in $article-tones {
     .email-sub--article.email-sub--tone-#{$tone-class} {
         background-color: $tone-colour-background;
@@ -236,7 +234,6 @@ body {
 
         .email-sub__submit-input {
             color: $tone-colour-button-text;
-
             background-color: $tone-colour-accent;
             border-color: $tone-colour-accent;
 

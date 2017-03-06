@@ -1,11 +1,11 @@
 define([
     'commercial/modules/commercial-features',
     'common/modules/commercial/contributions-utilities',
-    'common/utils/ajax',
-    'common/utils/config',
-    'common/utils/cookies',
-    'common/utils/storage',
-    'common/utils/template',
+    'lib/ajax',
+    'lib/config',
+    'lib/cookies',
+    'lib/storage',
+    'lib/template',
     'raw-loader!common/views/contributions-epic-equal-buttons.html',
 ], function (
             commercialFeatures,

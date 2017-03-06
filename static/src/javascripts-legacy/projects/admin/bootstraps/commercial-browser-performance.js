@@ -1,8 +1,8 @@
 /*global $, Epoch*/
 define([
-    'common/utils/config',
-    'common/utils/fetch-json',
-    'common/utils/template',
+    'lib/config',
+    'lib/fetch-json',
+    'lib/template',
     'lodash/collections/countBy',
     'lodash/collections/find',
     'lodash/collections/map',

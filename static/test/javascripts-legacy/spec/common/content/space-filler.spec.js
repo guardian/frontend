@@ -20,7 +20,7 @@ define([
                 'common/modules/article/space-filler',
                 'common/modules/article/spacefinder',
                 'Promise',
-                'common/utils/raven'
+                'lib/raven'
             ], function () {
                 spaceFiller = arguments[0];
                 spaceFinder = arguments[1];

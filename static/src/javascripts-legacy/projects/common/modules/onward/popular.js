@@ -1,8 +1,8 @@
 define([
     'qwery',
-    'common/utils/config',
+    'lib/config',
     'common/modules/component',
-    'common/utils/mediator',
+    'lib/mediator',
     'lodash/collections/contains'
 ], function (
     qwery,
