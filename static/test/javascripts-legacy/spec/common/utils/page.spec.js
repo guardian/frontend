@@ -9,7 +9,7 @@ define([
             page, config;
 
         beforeEach(function (done) {
-            injector.require(['common/utils/page', 'common/utils/config'], function () {
+            injector.require(['lib/page', 'lib/config'], function () {
                 page = arguments[0];
                 config = arguments[1];
 

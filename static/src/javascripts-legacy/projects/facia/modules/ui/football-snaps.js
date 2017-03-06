@@ -1,6 +1,6 @@
 define([
     'bonzo',
-    'common/utils/detect'
+    'lib/detect'
 ], function (
     bonzo,
     detect

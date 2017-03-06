@@ -1,7 +1,9 @@
 define([
     'Promise',
-    'common/utils/config',
-    'common/utils/load-script',
+    'lib/config',
+    'lib/load-script',
+    'lib/report-error',
+    'lib/timeout',
     'commercial/modules/ad-sizes',
     'commercial/modules/commercial-features',
     'commercial/modules/dfp/dfp-env',
@@ -10,6 +12,8 @@ define([
     Promise,
     config,
     loadScript,
+    reportError,
+    timeout,
     adSizes,
     commercialFeatures,
     dfpEnv,
@@ -17,6 +21,7 @@ define([
 ){
     // The view id is used as the unique load id, for easier Switch log querying.
     var loadId = window.esi && window.esi.viewId;
+    var REQUEST_TIMEOUT = 5000;
 
     function setupSwitch(start, stop) {
         start();
@@ -45,9 +50,15 @@ define([
         var __switch_zero = window.__switch_zero;
 
         if (__switch_zero) {
-            __switch_zero.commands.push(function () {
-                __switch_zero.callSwitch();
-            });
+            try {
+                __switch_zero.commands.push(function () {
+                    __switch_zero.callSwitch();
+                });
+            } catch(error) {
+                reportError(error, {
+                    feature: 'commercial'
+                }, false);
+            }
         }
     }
 
@@ -74,19 +85,28 @@ define([
     function pushAdUnit(dfpDivId, sizeMapping) {
 
         var __switch_zero = window.__switch_zero;
+        var promises = [];
 
         if (__switch_zero) {
             var adUnitIds = findAdUnitIds(sizeMapping.size);
 
             adUnitIds.forEach(function(adUnitId) {
                 if (adUnitId){
-                    __switch_zero.units.push({
-                        dfpDivId: dfpDivId,
-                        switchAdUnitId: adUnitId
-                    });
+                    promises.push(new Promise(function(resolve){
+                        __switch_zero.units.push({
+                            dfpDivId: dfpDivId,
+                            switchAdUnitId: adUnitId,
+                            deliveryCallback: resolve
+                        });
+                    }));
                 }
             });
         }
+
+        return timeout(REQUEST_TIMEOUT, Promise.all(promises))
+            .catch(function(){
+                // The display needs to be called, even in the event of an error.
+            });
     }
 
     function init(start, stop) {

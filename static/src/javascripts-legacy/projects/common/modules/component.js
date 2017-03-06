@@ -2,7 +2,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/ajax',
+    'lib/ajax',
     'lodash/objects/assign',
     'lodash/objects/clone'
 ], function (

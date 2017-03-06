@@ -38,7 +38,7 @@ echo ""
 for dir in */; do
     dirname=$(cleanDirectoryName $dir)
     echo "##[$dirname]($dir)"
-    cd $dir
+    cd $dir > /dev/null
     for doc in *.md; do
         if [ "$doc" != "README.md" ]; then
             filepath=$dir$doc

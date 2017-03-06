@@ -1,6 +1,6 @@
 define([
-    'common/utils/storage',
-    'common/utils/time',
+    'lib/storage',
+    'lib/time',
     'common/modules/identity/api'
 ], function (
     storage,

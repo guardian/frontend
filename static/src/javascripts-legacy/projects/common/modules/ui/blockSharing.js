@@ -2,7 +2,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/utils/$'
+    'lib/$'
 ], function (
     bean,
     bonzo,

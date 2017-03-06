@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-define(['common/modules/ui/clickstream', 'bean', 'common/utils/mediator', 'helpers/fixtures'], function (Clickstream, bean, mediator, fixtures) {
+define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtures'], function (Clickstream, bean, mediator, fixtures) {
 
     describe('Clickstream', function () {
         var fixtureId = 'clickstream-fixture',

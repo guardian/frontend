@@ -1,5 +1,5 @@
 define([
-    'common/utils/detect',
+    'lib/detect',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/define-slot',
     'commercial/modules/dfp/breakpoint-name-to-attribute'
@@ -8,7 +8,9 @@ define([
 
     function queueAdvert(advert, index) {
         advert.sizes = getAdBreakpointSizes(advert);
-        advert.slot = defineSlot(advert.node, advert.sizes);
+        var slotDefinition = defineSlot(advert.node, advert.sizes);
+        advert.slot = slotDefinition.slot;
+        advert.whenSlotReady = slotDefinition.slotReady;
         dfpEnv.advertsToLoad.push(advert);
         // Add to the array of ads to be refreshed (when the breakpoint changes)
         // only if its `data-refresh` attribute isn't set to false.

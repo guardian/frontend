@@ -37,7 +37,7 @@
         &:hover {
             ~ .youtube-media-atom__overlay .youtube-media-atom__play-button {
                 transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
-                transform: translate(-50%,-50%) scale(1.12);
+                transform: translate(-50%, -50%) scale(1.12);
                 transform-origin: center;
             }
             ~ .youtube-media-atom__overlay .youtube-media-atom__immersive-interface .youtube-media-atom__play-button {
@@ -224,7 +224,7 @@
             left: 6px;
             height: 32px;
             padding: 0 12px;
-            background-color: rgba(51,51,51,.7);
+            background-color: rgba(51, 51, 51, .7);
             border-radius: 32px;
             &:before {
                 display: none;

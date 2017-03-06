@@ -3,11 +3,11 @@ define([
     'bean',
     'fastdom',
     './classNames',
-    'common/utils/detect',
-    'common/utils/scroller',
+    'lib/detect',
+    'lib/scroller',
     'lodash/collections/map',
     'lodash/collections/filter',
-    'common/utils/chain'
+    'lib/chain'
 ], function (React, bean, fastdom, classNames, detect, scroller, map, filter, chain) {
     var Clue = React.createClass({
 

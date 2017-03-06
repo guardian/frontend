@@ -1,16 +1,17 @@
 define([
-    'common/utils/config',
-    'common/utils/cookies',
-    'common/utils/detect',
-    'common/utils/storage',
-    'common/utils/assign',
-    'common/utils/url',
+    'lib/config',
+    'lib/cookies',
+    'lib/detect',
+    'lib/storage',
+    'lodash/objects/assign',
+    'lib/url',
     'commercial/modules/third-party-tags/krux',
     'common/modules/identity/api',
     'commercial/modules/user-ad-targeting',
     'common/modules/experiments/ab',
     'lodash/arrays/compact',
     'lodash/arrays/uniq',
+    'lodash/functions/once',
     'lodash/objects/pick'
 ], function (
     config,
@@ -25,6 +26,7 @@ define([
     ab,
     compact,
     uniq,
+    once,
     pick
 ) {
 
@@ -163,8 +165,8 @@ define([
         }
     }
 
-    return function (opts) {
-        var win         = (opts || {}).window || window;
+    return once(function () {
+        var win         = window;
         var page        = config.page;
         var contentType = formatTarget(page.contentType);
         var pageTargets = assign({
@@ -195,12 +197,17 @@ define([
         }, getWhitelistedQueryParams());
 
         // filter out empty values
-        return pick(pageTargets, function (target) {
+        var pageTargeting = pick(pageTargets, function (target) {
             if (Array.isArray(target)) {
                 return target.length > 0;
             } else {
                 return target;
             }
         });
-    };
+
+        // third-parties wish to access our page targeting, before the googletag script is loaded.
+        page.pageAdTargeting = pageTargeting;
+
+        return pageTargeting;
+    });
 });

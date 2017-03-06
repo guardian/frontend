@@ -23,8 +23,8 @@ define([
         beforeEach(function (done) {
             injector.require([
                 'commercial/modules/creatives/commercial-component',
-                'common/utils/config',
-                'common/utils/mediator'], function () {
+                'lib/config',
+                'lib/mediator'], function () {
 
                     CommercialComponent = arguments[0];
                     config = arguments[1];

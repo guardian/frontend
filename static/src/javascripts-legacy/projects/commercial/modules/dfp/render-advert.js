@@ -2,10 +2,10 @@ define([
     'bonzo',
     'qwery',
     'Promise',
-    'common/utils/raven',
-    'common/utils/fastdom-promise',
-    'common/utils/closest',
-    'common/utils/mediator',
+    'lib/raven',
+    'lib/fastdom-promise',
+    'lib/closest',
+    'lib/mediator',
     'commercial/modules/ad-sizes',
     'commercial/modules/sticky-mpu',
     'commercial/modules/dfp/apply-creative-template',
@@ -13,7 +13,7 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/ui/toggles',
     'commercial/modules/user-ad-feedback',
-    'common/utils/config'
+    'lib/config'
 ], function (
     bonzo,
     qwery,

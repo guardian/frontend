@@ -35,7 +35,7 @@ define([
             window.guardian.adBlockers.active = true;
 
             injector.require([
-                'common/utils/config',
+                'lib/config',
                 'commercial/modules/third-party-tags/plista',
                 'commercial/modules/commercial-features'
             ], function () {

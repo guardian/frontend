@@ -1,5 +1,5 @@
 /*eslint-disable no-new*/
-define(['common/utils/$', 'common/modules/ui/expandable', 'helpers/fixtures'],
+define(['lib/$', 'common/modules/ui/expandable', 'helpers/fixtures'],
 function ($, Expandable, fixtures) {
     describe('Expandable', function () {
 

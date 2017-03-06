@@ -3,8 +3,8 @@ define([
     'helpers/injector',
     'helpers/fixtures',
 
-    'common/utils/$',
-    'common/utils/template',
+    'lib/$',
+    'lib/template',
 
     'raw-loader!common/views/content/richLinkTag.html'
 ], function (
@@ -37,7 +37,7 @@ define([
         beforeEach(function (done) {
             articleBodyFixtureElement = fixtures.render(articleBodyConf);
 
-            injector.require(['common/modules/article/rich-links', 'common/utils/config', 'common/modules/article/space-filler'], function () {
+            injector.require(['common/modules/article/rich-links', 'lib/config', 'common/modules/article/space-filler'], function () {
                 richLinks = arguments[0];
                 config = arguments[1];
                 spaceFiller = arguments[2];

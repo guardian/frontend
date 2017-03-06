@@ -11,7 +11,7 @@ define([
         beforeEach(function (done) {
             injector.require([
                 'commercial/modules/third-party-tags/audience-science-pql',
-                'common/utils/config'], function () {
+                'lib/config'], function () {
 
                     audienceScienceGateway = arguments[0];
                     config = arguments[1];

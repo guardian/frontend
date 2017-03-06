@@ -1,7 +1,7 @@
 define([
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/storage',
+    'lib/config',
+    'lib/detect',
+    'lib/storage',
     'commercial/modules/user-features',
     'Promise'
 ], function (

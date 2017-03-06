@@ -64,7 +64,7 @@ object NewNavigation {
   case object MostPopular extends EditionalisedNavigationSection {
     val name = "news"
 
-    val uk = NavLinkLists(List(headlines, ukNews, world, politics, business, science, football))
+    val uk = NavLinkLists(List(headlines, ukNews, world, business, environment, tech, football))
     val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, auImmigration, football))
     val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, science, soccer))
     val int = NavLinkLists(List(headlines, world, ukNews, science, cities, globalDevelopment, football))
@@ -74,8 +74,8 @@ object NewNavigation {
     val name = "news"
 
     val uk = NavLinkLists(
-      List(headlines, ukNews, world, politics, science, business),
-      List(tech, environment, money)
+      List(headlines, ukNews, world, business, environment, tech, politics),
+      List(science, money, globalDevelopment, cities)
     )
     val au = NavLinkLists(
       List(headlines, australiaNews, world, auPolitics, auImmigration),
@@ -195,8 +195,8 @@ object NewNavigation {
     val name = "life"
 
     val uk = NavLinkLists(
-      List(lifestyle, fashion, food, recipes, loveAndSex, family),
-      List(home, health, women, travel, tech)
+      List(lifestyle, fashion, food, recipes, travel, loveAndSex, family),
+      List(home, health, women, tech)
     )
     val au = NavLinkLists(
       List(lifestyle, fashion, food, loveAndSex, health),
@@ -216,34 +216,46 @@ object NewNavigation {
     val name = ""
 
     val uk = NavLinkLists(List(
-      apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
       jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader"),
       dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
-      NavLink("professional", "/guardian-professional"),
-      masterClasses.copy(url = masterClasses.url + "?INTCMP=masterclasses_uk_web_newheader"),
-      NavLink("courses", "/?INTCMP=NGW_TOPNAV_UK_GU_COURSES"),
       NavLink("holidays", "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav"),
-      todaysPaper, observer, crosswords
+      NavLink("courses", "https://courses.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_COURSES"),
+      ukMasterClasses,
+      NavLink("professional networks", "/guardian-professional"),
+      apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
+      podcasts,
+      video,
+      todaysPaper,
+      observer,
+      crosswords
     ))
 
     val au = NavLinkLists(List(
+      jobs.copy(url = jobs.url + "/landingpage/2868291/jobs-australia-html/?INTCMP=jobs_au_web_newheader"),
+      auMasterClasses,
       apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
-      masterClasses.copy(url = masterClasses.url + "?INTCMP=masterclasses_au_web_newheader"),
-      crosswords, video
+      podcasts,
+      video,
+      crosswords
     ))
 
     val us = NavLinkLists(List(
-      apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
       jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
-      crosswords, video
+      apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
+      podcasts,
+      video,
+      crosswords
     ))
 
     val int = NavLinkLists(List(
-      apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
-      dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
       jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
-      masterClasses.copy(url = masterClasses.url + "?INTCMP=masterclasses_int_web_newheader"),
-      todaysPaper, observer, crosswords, video
+      dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
+      apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
+      podcasts,
+      video,
+      todaysPaper,
+      observer,
+      crosswords
     ))
   }
 
@@ -362,7 +374,7 @@ object NewNavigation {
   object SubSectionLinks {
 
     val ukNewsSubNav = NavLinkLists(
-      List(ukNews, education, media, society, law, scotland),
+      List(ukNews, politics, education, media, society, law, scotland),
       List(wales, northernIreland)
     )
 
@@ -427,7 +439,7 @@ object NewNavigation {
     case object businessSubNav extends EditionalisedNavigationSection {
       val name = ""
 
-      val uk = NavLinkLists(List(business, economics, banking, retail, markets, eurozone))
+      val uk = NavLinkLists(List(business, economics, banking, money, markets, eurozone))
       val us = NavLinkLists(List(business, economics, sustainableBusiness, diversityEquality, smallBusiness))
       val au = NavLinkLists(List(business, markets, money))
       val int = uk

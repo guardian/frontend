@@ -1,10 +1,10 @@
 define([
     'fastdom',
-    'common/utils/formatters',
-    'common/utils/mediator',
-    'common/utils/report-error',
-    'common/utils/config',
-    'common/utils/load-script'
+    'lib/formatters',
+    'lib/mediator',
+    'lib/report-error',
+    'lib/config',
+    'lib/load-script'
 ], function(
     fastdom,
     formatters,

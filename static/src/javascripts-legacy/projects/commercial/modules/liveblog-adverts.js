@@ -1,9 +1,9 @@
 define([
     'bonzo',
-    'common/utils/fastdom-promise',
-    'common/utils/detect',
-    'common/utils/config',
-    'common/utils/mediator',
+    'lib/fastdom-promise',
+    'lib/detect',
+    'lib/config',
+    'lib/mediator',
     'commercial/modules/dfp/add-slot',
     'commercial/modules/commercial-features',
     'commercial/modules/dfp/create-slot',

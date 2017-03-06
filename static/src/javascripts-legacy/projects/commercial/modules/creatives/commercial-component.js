@@ -5,9 +5,9 @@
 define([
     'fastdom',
     'Promise',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/config',
+    'lib/mediator',
     'common/modules/lazyload',
     'common/modules/ui/toggles',
     'lodash/objects/isArray',
