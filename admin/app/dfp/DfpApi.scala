@@ -125,6 +125,22 @@ object DfpApi extends Logging {
     } sortBy (_._2)
   }
 
+  def getCreativeIds(lineItemId: Long): Seq[Long] = {
+    val stmtBuilder = new StatementBuilder().where("status = :status AND lineItemId = :lineItemId")
+      .withBindVariableValue("status", LineItemCreativeAssociationStatus._ACTIVE)
+      .withBindVariableValue("lineItemId", lineItemId)
+
+    withDfpSession { session =>
+      session.lineItemCreativeAssociations.get(stmtBuilder) map (id => Long2long(id.getCreativeId))
+    }
+  }
+
+  def getPreviewUrl(lineItemId: Long, creativeId: Long, url: String): Option[String] =
+    for {
+      session <- SessionWrapper()
+      previewUrl <- session.lineItemCreativeAssociations.getPreviewUrl(lineItemId, creativeId, url)
+    } yield previewUrl
+
   private def withDfpSession[T](block: SessionWrapper => Seq[T]): Seq[T] = {
     val results = for (session <- SessionWrapper()) yield block(session)
     results getOrElse Nil
