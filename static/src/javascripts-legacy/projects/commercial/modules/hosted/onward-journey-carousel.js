@@ -3,7 +3,7 @@ define([
     'qwery',
     'fastdom',
     'Promise',
-    'common/utils/$'
+    'lib/$'
 ], function (
     bean,
     qwery,

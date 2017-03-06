@@ -1,7 +1,7 @@
 define([
     'Promise',
-    'common/utils/config',
-    'common/utils/fastdom-promise',
+    'lib/config',
+    'lib/fastdom-promise',
     'common/modules/experiments/ab',
     'commercial/modules/dfp/add-slot',
     'commercial/modules/dfp/create-slot',
@@ -67,7 +67,9 @@ define([
             if (args) {
                 fastdom.write(function () {
                     args[1].parentNode.insertBefore(args[0], args[1].nextSibling);
-                    addSlot(args[0]);
+                })
+                .then(function () {
+                    addSlot(args[0], true);
                 });
             }
         });

@@ -1,11 +1,11 @@
 define([
     'bean',
-    'common/utils/fastdom-promise',
-    'common/utils/$',
-    'common/utils/element-inview',
+    'lib/fastdom-promise',
+    'lib/$',
+    'lib/element-inview',
     'bootstraps/enhanced/media/video-player',
     'lodash/objects/assign',
-    'common/utils/create-store'
+    'lib/create-store'
 ], function (
     bean,
     fastdom,

@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/mediator',
+    'lib/mediator',
     'fastdom',
     'lodash/functions/bindAll'
 ], function (

@@ -2,8 +2,8 @@
 define([
     'fastdom',
     'qwery',
-    'common/utils/$',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/mediator',
     'helpers/fixtures',
     'helpers/injector'
 ], function (

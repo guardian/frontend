@@ -1,24 +1,24 @@
 define([
-    'common/utils/$',
+    'lib/$',
     'bean',
     'bonzo',
     'fastdom',
     'common/modules/email/email',
-    'common/utils/config',
+    'lib/config',
     'raw-loader!common/views/email/iframe.html',
-    'common/utils/template',
+    'lib/template',
     'common/modules/article/space-filler',
-    'common/utils/robust',
+    'lib/robust',
     'common/modules/email/run-checks',
-    'common/utils/page',
-    'common/utils/storage',
+    'lib/page',
+    'lib/storage',
     'common/modules/analytics/google',
     'lodash/collections/find',
     'common/modules/experiments/ab',
     'common/modules/tailor/tailor',
-    'common/utils/cookies',
-    'common/utils/mediator',
-    'common/utils/check-mediator'
+    'lib/cookies',
+    'lib/mediator',
+    'lib/check-mediator'
 ], function (
     $,
     bean,
@@ -162,8 +162,8 @@ define([
                 listName: 'greenLight',
                 campaignCode: 'green_light_article_bottom',
                 displayName: {
-                    normalText: 'film',
-                    accentedText: 'today'
+                    normalText: 'green',
+                    accentedText: 'light'
                 },
                 headline: 'The most important stories on the planet',
                 description: 'Sign up to Green Light for environment news emailed direct to you every Friday. And besides the week’s biggest stories and debates, you can expect beautifully curated wildlife galleries, absorbing podcasts and eco-living guides.',

@@ -132,16 +132,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-urgency",
-    "Test 3 new variants with messaging that highlights the urgency of supporting the Guardian",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 17),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-tailor-recommended-email",
     "Use Tailor to target email signup form",
     owners = Seq(Owner.withGithub("lindseydew")),
@@ -157,6 +147,26 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("oilnam")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-sleeve-notes-new-email-variant",
+    "Assign some of the new sleeve notes subscribers to receive the new email",
+    owners = Seq(Owner.withGithub("lmath")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-sleeve-notes-legacy-email-variant",
+    "Assign some of the new sleeve notes subscribers to receive the old email",
+    owners = Seq(Owner.withGithub("lmath")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
     exposeClientSide = true
   )
 }

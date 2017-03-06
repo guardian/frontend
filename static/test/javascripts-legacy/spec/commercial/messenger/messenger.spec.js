@@ -20,7 +20,7 @@ define([
         };
 
         var injector = new Injector();
-        injector.mock('common/utils/report-error', routines.noop);
+        injector.mock('lib/report-error', routines.noop);
 
         beforeEach(function (done) {
             injector.require([

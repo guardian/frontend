@@ -1,8 +1,8 @@
 define([
-    'common/utils/assign',
-    'common/utils/fastdom-promise',
-    'common/utils/report-error',
-    'common/utils/url',
+    'lodash/objects/assign',
+    'lib/fastdom-promise',
+    'lib/report-error',
+    'lib/url',
     'Promise'
 ], function (
     assign,

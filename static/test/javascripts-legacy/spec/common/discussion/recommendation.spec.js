@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'lib/$',
     'common/modules/discussion/upvote',
     'Promise'
 ],

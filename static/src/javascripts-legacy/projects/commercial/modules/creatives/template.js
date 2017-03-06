@@ -1,8 +1,8 @@
 define([
     'Promise',
-    'common/utils/config',
-    'common/utils/template',
-    'common/utils/fastdom-promise',
+    'lib/config',
+    'lib/template',
+    'lib/fastdom-promise',
     'common/views/svgs',
     'commercial/modules/creatives/template-preprocessor',
 

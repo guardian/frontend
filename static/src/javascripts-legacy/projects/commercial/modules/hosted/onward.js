@@ -1,8 +1,8 @@
 define([
-    'common/utils/config',
-    'common/utils/mediator',
-    'common/utils/fetch-json',
-    'common/utils/fastdom-promise',
+    'lib/config',
+    'lib/mediator',
+    'lib/fetch-json',
+    'lib/fastdom-promise',
     'commercial/modules/hosted/onward-journey-carousel',
     'Promise'
 ], function (config, mediator, fetchJson, fastdom, HostedCarousel, Promise) {

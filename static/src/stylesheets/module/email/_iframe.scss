@@ -186,8 +186,17 @@ body {
 .email-sub__form--article {
     @include right-padding-to-match-article-content;
 
+    @include pill-style-input-and-button;
+
+    @include mq(phablet) {
+        @include separate-input-and-button;
+    }
+
     .email-sub__text-input {
         margin-bottom: $gs-baseline;
+        @include mq(mobile) {
+            border: none;
+        }
     }
 
     .email-sub__submit-input {
@@ -195,17 +204,9 @@ body {
             border: none;
         }
     }
-
-    @include mq(mobileLandscape) {
-        @include pill-style-input-and-button;
-    }
-
-    @include mq(phablet) {
-        @include separate-input-and-button;
-    }
 }
 
-@each $tone-class, $tone-colour-text, $tone-colour-accent, $tone-colour-background in $article-tones {
+@each $tone-class, $tone-colour-title, $tone-colour-accent, $tone-colour-text, $tone-colour-button-text, $tone-colour-background in $article-tones {
     .email-sub--article.email-sub--tone-#{$tone-class} {
         background-color: $tone-colour-background;
         border-color: $tone-colour-accent;
@@ -225,7 +226,7 @@ body {
         }
 
         .email-sub__heading {
-            color: $tone-colour-text;
+            color: $tone-colour-title;
         }
 
         .email-sub__description {
@@ -233,8 +234,7 @@ body {
         }
 
         .email-sub__submit-input {
-            color: $tone-colour-background;
-
+            color: $tone-colour-button-text;
             background-color: $tone-colour-accent;
             border-color: $tone-colour-accent;
 
@@ -246,5 +246,3 @@ body {
         }
     }
 }
-
-

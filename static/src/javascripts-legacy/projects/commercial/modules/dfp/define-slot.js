@@ -1,8 +1,8 @@
 define([
     'Promise',
-    'common/utils/url',
-    'common/utils/config',
-    'common/utils/detect',
+    'lib/url',
+    'lib/config',
+    'lib/detect',
     'lodash/arrays/uniq',
     'lodash/arrays/flatten',
     'lodash/functions/once',

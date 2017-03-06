@@ -1,5 +1,5 @@
 define([
-    'common/utils/fetch',
+    'lib/fetch',
     'Promise'
 ], function (
     fetch,

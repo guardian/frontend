@@ -1,6 +1,6 @@
 define([
     'Promise',
-    'common/utils/report-error',
+    'lib/report-error',
     'commercial/modules/messenger/dfp-origin',
     'commercial/modules/messenger/post-message'
 ], function (Promise, reportError, dfpOrigin, postMessage) {

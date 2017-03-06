@@ -1,6 +1,6 @@
 define([
-    'common/utils/config',
-    'common/utils/url',
+    'lib/config',
+    'lib/url',
     'commercial/modules/build-page-targeting'
 ], function (
     config,
