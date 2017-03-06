@@ -67,7 +67,9 @@ define([
             if (args) {
                 fastdom.write(function () {
                     args[1].parentNode.insertBefore(args[0], args[1].nextSibling);
-                    addSlot(args[0]);
+                })
+                .then(function () {
+                    addSlot(args[0], true);
                 });
             }
         });
