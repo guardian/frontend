@@ -7,7 +7,7 @@ define([
     'lib/mediator',
     'lib/robust',
     'lib/storage',
-    'lib/to-array',
+    'lodash/collections/toArray',
     'common/modules/accessibility/helpers',
     'common/modules/experiments/ab',
     'common/modules/business/stocks',
