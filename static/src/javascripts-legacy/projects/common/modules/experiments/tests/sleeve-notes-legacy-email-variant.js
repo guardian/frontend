@@ -1,5 +1,5 @@
 define([
-    'generic-email-variants'
+    'common/modules/experiments/tests/generic-email-variants'
 ], function (
     genericEmailTest
 ) {
