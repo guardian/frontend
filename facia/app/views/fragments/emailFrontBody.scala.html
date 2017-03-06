@@ -3,8 +3,7 @@
 @(page: model.PressedPage)(implicit request: RequestHeader)
 
 @import implicits.ItemKickerImplicits._
-@import implicits.Requests.RichRequestHeader
-@import layout.{ContentCard}
+@import layout.ContentCard
 @import model.EmailAddons.EmailContentType
 @import model.pressed.{ExternalLink, Feature}
 @import views.support.EmailHelpers._
@@ -20,11 +19,9 @@
                 <span class="kicker-separator">/</span>
             }
 
-            @defining(if(request.isEmailConnectedStyle) "-connected" else "") { suffix =>
-                @if(card.header.isGallery) { @icon("gallery" + suffix, isLarge) }
-                @if(card.header.isAudio) { @icon("podcast" + suffix, isLarge) }
-                @if(card.header.isVideo) { @icon("video" + suffix, isLarge) }
-            }
+            @if(card.header.isGallery) { @icon("gallery", isLarge) }
+            @if(card.header.isAudio) { @icon("podcast", isLarge) }
+            @if(card.header.isVideo) { @icon("video", isLarge) }
 
             @if(card.header.quoted) {
                 @card.cardStyle match {
