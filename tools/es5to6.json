@@ -214,7 +214,6 @@
     "projects/common/modules/accessibility/main.js"
   ],
   "Gustav Pursche": [
-    "projects/common/modules/sport/football/match-info.js",
     "projects/common/modules/sport/football/match-list-live.js",
     "projects/common/modules/sport/football/tag-page-stats.js",
     "projects/common/modules/sport/score-board.js",
