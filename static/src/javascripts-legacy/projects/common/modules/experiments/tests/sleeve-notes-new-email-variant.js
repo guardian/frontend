@@ -9,9 +9,9 @@ define([
             start: '2017-03-02',
             end: '2017-03-31',
             author: 'Leigh-Anne Mathieson',
-            audience: 0, //will be 0.7
+            audience: 0.7,
             audienceOffset: 0,
-            signupPage: 'info/ng-interactive/2017/feb/23/sign-up-for-the-sleeve-notes-email',
+            signupPage: 'info/ng-interactive/2017/mar/06/sign-up-for-the-sleeve-notes-email',
             canonicalListId: 39,
             testIds: [
                 { variantId: 'SleeveNotes-New', listId: 3834 }
