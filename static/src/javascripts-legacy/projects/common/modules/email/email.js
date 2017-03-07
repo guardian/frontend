@@ -163,7 +163,7 @@ define([
                 if (userFromId && userFromId.primaryEmailAddress) {
                     fastdom.write(function () {
                         $('.js-email-sub__inline-label', el).addClass('email-sub__inline-label--is-hidden');
-                        $('.js-email-sub__submit-input', el).addClass('email-sub__submit-input--solo');
+                        $('.js-email-sub__submit-button', el).addClass('email-sub__submit-button--solo');
                         $('.js-email-sub__text-input', el).val(userFromId.primaryEmailAddress);
                     });
                 }

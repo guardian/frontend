@@ -10,7 +10,8 @@ define([
     'lodash/arrays/indexOf',
     'lodash/functions/throttle',
     'lodash/objects/forOwn',
-    'common/modules/video/ga-helper'
+    'common/modules/video/ga-helper',
+    'ophan/ng'
 ], function (
     bean,
     qwery,
@@ -23,7 +24,8 @@ define([
     indexOf,
     throttle,
     forOwn,
-    gaHelper
+    gaHelper,
+    ophan
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!window.guardian.isEmbed,
@@ -155,7 +157,7 @@ define([
         if (isEmbed) {
             require(['ophan/embed'], record);
         } else {
-            require(['ophan/ng'], record);
+            record(ophan);
         }
 
     }

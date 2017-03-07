@@ -18,7 +18,8 @@ define([
     'common/modules/tailor/tailor',
     'lib/cookies',
     'lib/mediator',
-    'lib/check-mediator'
+    'lib/check-mediator',
+    'ophan/ng'
 ], function (
     $,
     bean,
@@ -39,7 +40,8 @@ define([
     tailor,
     cookies,
     mediator,
-    checkMediator
+    checkMediator,
+    ophan
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
             $iframeEl.prependTo('.content-footer');
@@ -242,7 +244,10 @@ define([
                     });
                 }
             }
-        }
+        },
+        doesIdMatch = function (id, listConfig) {
+            return id === listConfig.listId;
+        };
 
     function tailorInTest() {
         var cacheKey = 'GU_TAILOR_EMAIL';
@@ -254,14 +259,14 @@ define([
 
             if (!cachedTailorResponse) {
                 tailor.getEmail(bwidCookie).then(function (tailorRes) {
-                    addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'tailor-recommend:signup');
+                    addListToPage(find(listConfigs, doesIdMatch.bind(null, tailorRes.email)),'tailor-recommend:signup');
                     mediator.emit('tailor-recommended:insert');
                     storage.local.set(cacheKey, tailorRes, {'expires': cacheExpiry});
                 });
             }
             else {
                 mediator.emit('tailor-recommended:insert');
-                addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'tailor-recommend:signup');
+                addListToPage(find(listConfigs, doesIdMatch.bind(null, cachedTailorResponse.email)),'tailor-recommend:signup');
             }
         }
     }
@@ -271,19 +276,28 @@ define([
         mediator.emit('tailor-control:insert');
     }
 
+    function tailorRandom() {
+        var listIds = ['39','3322','3039','1950','38','3698'];
+        var listId = listIds[Math.floor(Math.random()*listIds.length)];
+        addListToPage(find(listConfigs,doesIdMatch.bind(null, listId)), 'tailor-random:signup');
+        mediator.emit('tailor-random:insert');
+    }
+
     return {
         init: function () {
             checkMediator.waitForCheck('emailCanRun').then(function (canEmailRun) {
                 if (canEmailRun) {
                     emailRunChecks.getUserEmailSubscriptions().then(function () {
                         if (ab.isParticipating({id: 'TailorRecommendedEmail'})) {
-                            switch (ab.getTestVariantId) {
+                            switch (ab.getTestVariantId('TailorRecommendedEmail')) {
                                 case 'tailor-recommended': tailorInTest(); break;
                                 case 'control': tailorControl(); break;
+                                case 'tailor-random': tailorRandom(); break;
                                 default: addListToPage(find(listConfigs, emailRunChecks.listCanRun)); break;
                             }
                         } else {
                             addListToPage(find(listConfigs, emailRunChecks.listCanRun));
+
                         }
                     }).catch(function (error) {
                         robust.log('c-email', error);

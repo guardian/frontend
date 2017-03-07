@@ -7,11 +7,11 @@ body {
 * IFRAME MODS
 */
 .email-sub__text-input,
-.email-sub__submit-input {
+.email-sub__submit-button {
     border-radius: 1000px;
 }
 
-.email-sub__submit-input {
+.email-sub__submit-button {
     // Duplicate some required styles so we don't have to include pasteUp buttons in email.css
     border-width: 1px;
     border-style: solid;
@@ -42,36 +42,52 @@ body {
 // When we are in an iframe, our widths are based on the iframe so we need to set
 // our media queries explicitly to match what the element width is (hey there, element queries)
 
+@mixin separate-input {
+    border: thin solid;
+    border-radius: 1000px;
+    float: left;
+    width: 70%;
+}
+
+@mixin separate-button {
+    border: thin solid;
+    border-radius: 1000px;
+    width: 25%;
+    margin: 0 0 0 3%;
+}
+
 @mixin separate-input-and-button {
     .email-sub__text-input {
-        border: thin solid;
-        border-radius: 1000px;
-        float: left;
-        width: 70%;
+        @include separate-input;
     }
 
-    .email-sub__submit-input {
-        border: thin solid;
-        border-radius: 1000px;
-        width: 25%;
-        margin: 0 0 0 3%;
+    .email-sub__submit-button {
+        @include separate-button;
     }
+}
+
+@mixin pill-style-input {
+    border-right: 0;
+    border-radius: 1000px 0 0 1000px;
+    float: left;
+    width: 62%;
+}
+
+@mixin pill-style-button {
+    border-radius: 0 1000px 1000px 0;
+    border-left-width: 0px;
+    float: left;
+    margin-right: 0;
+    width: 38%;
 }
 
 @mixin pill-style-input-and-button {
     .email-sub__text-input {
-        border-right: 0;
-        border-radius: 1000px 0 0 1000px;
-        float: left;
-        width: 62%;
+        @include pill-style-input;
     }
 
-    .email-sub__submit-input {
-        border-radius: 0 1000px 1000px 0;
-        border-left-width: 0px;
-        float: left;
-        margin-right: 0;
-        width: 38%;
+    .email-sub__submit-button {
+        @include pill-style-button;
     }
 }
 
@@ -84,9 +100,10 @@ body {
 
         // Solo submit button - for logged in users where we remove the input
         // because we know the email address already
-        .email-sub__submit-input--solo {
+        .email-sub__submit-button--solo {
             border-radius: 1000px;
             border-left-width: 1px;
+            margin-left: 0;
         }
 
         .email-sub__small--mark {
@@ -99,7 +116,7 @@ body {
     .email-sub__form--plain,
     .email-sub__form--plaindark,
     .email-sub__form--plaintone {
-        .email-sub__submit-input {
+        .email-sub__submit-button {
             padding-left: $gs-gutter / 2;
         }
     }
@@ -117,7 +134,7 @@ body {
             border-radius: 1000px;
         }
 
-        .email-sub__submit-input {
+        .email-sub__submit-button {
             margin-right: 0;
             width: 100%;
         }
@@ -129,6 +146,9 @@ body {
 @include mq($from: 606px) {
     .email-sub--plaintone {
         @include separate-input-and-button;
+        .email-sub__submit-button--solo {
+            margin-left: 0;
+        }
    }
 }
 
@@ -192,6 +212,12 @@ body {
         @include separate-input-and-button;
     }
 
+    .email-sub__submit-button--solo {
+        @include separate-button;
+        width: 33%;
+        margin-left: 0;
+    }
+
     .email-sub__text-input {
         margin-bottom: $gs-baseline;
         @include mq(mobile) {
@@ -199,7 +225,7 @@ body {
         }
     }
 
-    .email-sub__submit-input {
+    .email-sub__submit-button {
         @include mq(mobile) {
             border: none;
         }
@@ -233,7 +259,7 @@ body {
             color: $tone-colour-text;
         }
 
-        .email-sub__submit-input {
+        .email-sub__submit-button {
             color: $tone-colour-button-text;
             background-color: $tone-colour-accent;
             border-color: $tone-colour-accent;
@@ -243,6 +269,10 @@ body {
                 border-color: darken($tone-colour-accent, 10%);
                 background-color: darken($tone-colour-accent, 10%);
             }
+        }
+
+        .submit-input__icon svg {
+            fill: $tone-colour-button-text;
         }
     }
 }
