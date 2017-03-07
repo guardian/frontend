@@ -42,36 +42,52 @@ body {
 // When we are in an iframe, our widths are based on the iframe so we need to set
 // our media queries explicitly to match what the element width is (hey there, element queries)
 
+@mixin separate-input {
+    border: thin solid;
+    border-radius: 1000px;
+    float: left;
+    width: 70%;
+}
+
+@mixin separate-button {
+    border: thin solid;
+    border-radius: 1000px;
+    width: 25%;
+    margin: 0 0 0 3%;
+}
+
 @mixin separate-input-and-button {
     .email-sub__text-input {
-        border: thin solid;
-        border-radius: 1000px;
-        float: left;
-        width: 70%;
+        @include separate-input;
     }
 
     .email-sub__submit-input {
-        border: thin solid;
-        border-radius: 1000px;
-        width: 25%;
-        margin: 0 0 0 3%;
+        @include separate-button;
     }
+}
+
+@mixin pill-style-input {
+    border-right: 0;
+    border-radius: 1000px 0 0 1000px;
+    float: left;
+    width: 62%;
+}
+
+@mixin pill-style-button {
+    border-radius: 0 1000px 1000px 0;
+    border-left-width: 0px;
+    float: left;
+    margin-right: 0;
+    width: 38%;
 }
 
 @mixin pill-style-input-and-button {
     .email-sub__text-input {
-        border-right: 0;
-        border-radius: 1000px 0 0 1000px;
-        float: left;
-        width: 62%;
+        @include pill-style-input;
     }
 
     .email-sub__submit-input {
-        border-radius: 0 1000px 1000px 0;
-        border-left-width: 0px;
-        float: left;
-        margin-right: 0;
-        width: 38%;
+        @include pill-style-button;
     }
 }
 
@@ -87,6 +103,7 @@ body {
         .email-sub__submit-input--solo {
             border-radius: 1000px;
             border-left-width: 1px;
+            margin-left: 0;
         }
 
         .email-sub__small--mark {
@@ -129,6 +146,9 @@ body {
 @include mq($from: 606px) {
     .email-sub--plaintone {
         @include separate-input-and-button;
+        .email-sub__submit-input--solo {
+            margin-left: 0;
+        }
    }
 }
 
@@ -190,6 +210,12 @@ body {
 
     @include mq(phablet) {
         @include separate-input-and-button;
+    }
+
+    .email-sub__submit-input--solo {
+        @include separate-button;
+        width: 33%;
+        margin-left: 0;
     }
 
     .email-sub__text-input {
