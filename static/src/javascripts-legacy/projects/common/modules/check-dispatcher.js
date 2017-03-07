@@ -1,7 +1,7 @@
 define([
     'lodash/collections/find',
     'lib/config',
-    'lib/check-mediator',
+    'common/modules/check-mediator',
     'common/modules/email/run-checks',
     'common/modules/email/email-article',
     'common/modules/experiments/ab-test-clash'

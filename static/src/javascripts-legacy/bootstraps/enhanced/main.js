@@ -13,7 +13,7 @@ define([
     './sport',
     'common/modules/analytics/google',
     'lib/geolocation',
-    'lib/check-dispatcher',
+    'common/modules/check-dispatcher',
     'lodash/collections/contains'
 ], function (
     fastdom,

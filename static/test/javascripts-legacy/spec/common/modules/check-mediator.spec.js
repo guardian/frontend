@@ -1,5 +1,5 @@
 define([
-    'lib/check-mediator'
+    'common/modules/check-mediator'
 ], function (
     checkMediator
 ) {
