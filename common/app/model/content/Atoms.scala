@@ -305,7 +305,7 @@ object RecipeAtom {
     }
   }
 
-  def ingredientValue(ingredient: com.gu.contentatom.thrift.atom.recipe.Ingredient): String = {
+  def formatIngredientValue(ingredient: com.gu.contentatom.thrift.atom.recipe.Ingredient): String = {
     val q = ingredient.quantity
       .map(formatQuantity)
       .orElse(ingredient.quantityRange.map(range => s"${formatQuantity(range.from)}-${formatQuantity(range.to)}" ))

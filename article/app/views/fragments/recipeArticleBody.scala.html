@@ -118,7 +118,7 @@
             <ul class="ingredients-list">
                 <li class="ingredients-title">@if(list.title) {@list.title} else {Ingredients}</li>
                 @for(ingredient <- list.ingredients) {
-                    <li itemprop="recipeIngredient">@RecipeAtom.ingredientValue(ingredient)</li>
+                    <li itemprop="recipeIngredient">@RecipeAtom.formatIngredientValue(ingredient)</li>
                 }
             </ul>
         }
