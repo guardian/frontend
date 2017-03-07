@@ -13,7 +13,8 @@ define([
     './sport',
     'common/modules/analytics/google',
     'lib/geolocation',
-    'lib/check-dispatcher'
+    'lib/check-dispatcher',
+    'lodash/collections/contains'
 ], function (
     fastdom,
     bean,
@@ -29,7 +30,8 @@ define([
     sport,
     ga,
     geolocation,
-    checkDispatcher
+    checkDispatcher,
+    contains
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -169,6 +171,12 @@ define([
         if (config.page.pageId === 'help/accessibility-help') {
             require(['bootstraps/enhanced/accessibility'], function (accessibility) {
                 bootstrapContext('accessibility', accessibility);
+            });
+        }
+
+        if (contains(config.page.nonKeywordTagIds.split(','), 'tone/recipes')) {
+            require(['bootstraps/enhanced/recipe-article'], function (recipes) {
+                bootstrapContext('recipes', recipes);
             });
         }
 
