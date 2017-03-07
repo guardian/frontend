@@ -8,7 +8,7 @@ import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
-import model.content.{Atom, Atoms}
+import model.content.{Atom, Atoms, MediaWrapper}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
@@ -601,7 +601,7 @@ object MembershipEventCleaner extends HtmlCleaner {
     }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false, mainMedia: Boolean = false, immersiveMainMedia: Boolean = false)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
+case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false, mediaWrapper: Option[MediaWrapper] = None)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
@@ -614,7 +614,7 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomData <- findAtom(atomId)
       } {
-        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mainMedia, immersiveMainMedia).toString()
+        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
         bodyElement.remove()
         atomContainer.append(html)
       }

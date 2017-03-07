@@ -1,4 +1,5 @@
-@(media: model.content.MediaAtom,  displayCaption: Boolean, mainMedia: Boolean)(implicit request: RequestHeader)
+@import model.content.MediaWrapper
+@(media: model.content.MediaAtom,  displayCaption: Boolean, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader)
 @import views.html.fragments.atoms.mediaAtomCaption
     <amp-youtube
     data-videoid="@media.assets.head.id"
@@ -7,7 +8,7 @@
     </amp-youtube>
 
 @if(displayCaption) {
-    @mediaAtomCaption(media.title, mainMedia)
+    @mediaAtomCaption(media.title, mediaWrapper.contains(MediaWrapper.MainMedia))
 }
 
 

@@ -6,7 +6,9 @@
 @import model.pressed.CardStyle
 
 @import model.ImageMedia
-@(media: model.content.MediaAtom, displayCaption: Boolean, embedPage: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, mainMedia: Boolean = false, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None, immersiveMainMedia: Boolean = false)(implicit request: RequestHeader)
+@import model.content.MediaWrapper._
+@import model.content.MediaWrapper
+@(media: model.content.MediaAtom, displayCaption: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None, mediaWrapper: Option[MediaWrapper] = None)(implicit request: RequestHeader)
 
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
 @defining(playable && !posterImageOverride.exists(_ => mvt.YouTubePosterOverride.isParticipating)){sixteenByNine: Boolean =>
@@ -32,7 +34,7 @@
                 "enablejsapi" -> 1,
                 "rel" -> 0,
                 "showinfo" -> 1,
-                "origin" -> (if(embedPage) Some(Media.externalEmbedHost) else if(!host.isEmpty) Some(host) else None)
+                "origin" -> (if(mediaWrapper.contains(EmbedPage)) Some(Media.externalEmbedHost) else if(!host.isEmpty) Some(host) else None)
                 )).toString
                 }") { embedUri: String  =>
                 <iframe class="youtube-media-atom__iframe" id="youtube-@media.assets.head.id" width="100%" height="100%"
@@ -46,7 +48,7 @@
                 <div class="@RenderClasses(Map("youtube-media-atom__overlay" -> true, "vjs-big-play-button" -> !expired))" style="background-image: url(@Video700.bestFor(image))">
 
                 @if(!expired) {
-                    @if(immersiveMainMedia) {
+                    @if(mediaWrapper.contains(ImmersiveMainMedia)) {
                         <div class='gs-container'>
                             <div class='content__main-column'>
                                 <div class='youtube-media-atom__immersive-interface'>
@@ -86,6 +88,6 @@
         </div>
 }
 
-@if(displayCaption & !immersiveMainMedia) {
-    @mediaAtomCaption(media.title, mainMedia)
+@if(displayCaption & !mediaWrapper.contains(ImmersiveMainMedia)) {
+    @mediaAtomCaption(media.title, mediaWrapper.contains(MainMedia))
 }
