@@ -5,7 +5,6 @@
   "dependencies": {
     "JSON2": "^0.1.0",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-es2015-modules-amd": "^6.22.0",
     "babel-runtime": "^6.20.0",
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
@@ -41,6 +40,7 @@
     "aws-sdk": "~2.0.0-rc4",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
+    "babel-jest": "^19.0.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-env": "^1.1.4",
@@ -161,6 +161,7 @@
     "postinstall": "./tools/task-runner/runner githooks --verbose",
     "amdtoes6": "amdtoes6 --beautify",
     "lebab": "lebab --transform arrow,let,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,class,default-param --replace",
-    "eslint-fix": "eslint --color --fix"
+    "eslint-fix": "eslint --color --fix",
+    "test": "jest"
   }
 }

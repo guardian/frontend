@@ -663,14 +663,6 @@ babel-plugin-transform-es2015-literals@^6.3.13:
     babel-runtime "^6.0.0"
 
 babel-plugin-transform-es2015-modules-amd@^6.18.0, babel-plugin-transform-es2015-modules-amd@^6.8.0:
-  version "6.18.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-modules-amd/-/babel-plugin-transform-es2015-modules-amd-6.18.0.tgz#49a054cbb762bdf9ae2d8a807076cfade6141e40"
-  dependencies:
-    babel-plugin-transform-es2015-modules-commonjs "^6.18.0"
-    babel-runtime "^6.0.0"
-    babel-template "^6.8.0"
-
-babel-plugin-transform-es2015-modules-amd@^6.22.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-modules-amd/-/babel-plugin-transform-es2015-modules-amd-6.22.0.tgz#bf69cd34889a41c33d90dfb740e0091ccff52f21"
   dependencies:
@@ -678,16 +670,7 @@ babel-plugin-transform-es2015-modules-amd@^6.22.0:
     babel-runtime "^6.22.0"
     babel-template "^6.22.0"
 
-babel-plugin-transform-es2015-modules-commonjs@^6.18.0, babel-plugin-transform-es2015-modules-commonjs@^6.6.0:
-  version "6.18.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-modules-commonjs/-/babel-plugin-transform-es2015-modules-commonjs-6.18.0.tgz#c15ae5bb11b32a0abdcc98a5837baa4ee8d67bcc"
-  dependencies:
-    babel-plugin-transform-strict-mode "^6.18.0"
-    babel-runtime "^6.0.0"
-    babel-template "^6.16.0"
-    babel-types "^6.18.0"
-
-babel-plugin-transform-es2015-modules-commonjs@^6.22.0:
+babel-plugin-transform-es2015-modules-commonjs@^6.22.0, babel-plugin-transform-es2015-modules-commonjs@^6.6.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-modules-commonjs/-/babel-plugin-transform-es2015-modules-commonjs-6.23.0.tgz#cba7aa6379fb7ec99250e6d46de2973aaffa7b92"
   dependencies:
@@ -799,13 +782,6 @@ babel-plugin-transform-runtime@^6.15.0:
   dependencies:
     babel-runtime "^6.9.0"
 
-babel-plugin-transform-strict-mode@^6.18.0:
-  version "6.18.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-strict-mode/-/babel-plugin-transform-strict-mode-6.18.0.tgz#df7cf2991fe046f44163dcd110d5ca43bc652b9d"
-  dependencies:
-    babel-runtime "^6.0.0"
-    babel-types "^6.18.0"
-
 babel-plugin-transform-strict-mode@^6.22.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-strict-mode/-/babel-plugin-transform-strict-mode-6.22.0.tgz#e008df01340fdc87e959da65991b7e05970c8c7c"
@@ -890,17 +866,7 @@ babel-runtime@^6.22.0:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
 
-babel-template@^6.14.0, babel-template@^6.15.0, babel-template@^6.16.0, babel-template@^6.8.0, babel-template@^6.9.0:
-  version "6.16.0"
-  resolved "https://registry.yarnpkg.com/babel-template/-/babel-template-6.16.0.tgz#e149dd1a9f03a35f817ddbc4d0481988e7ebc8ca"
-  dependencies:
-    babel-runtime "^6.9.0"
-    babel-traverse "^6.16.0"
-    babel-types "^6.16.0"
-    babylon "^6.11.0"
-    lodash "^4.2.0"
-
-babel-template@^6.22.0, babel-template@^6.23.0:
+babel-template@^6.14.0, babel-template@^6.15.0, babel-template@^6.16.0, babel-template@^6.22.0, babel-template@^6.23.0, babel-template@^6.8.0, babel-template@^6.9.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-template/-/babel-template-6.23.0.tgz#04d4f270adbb3aa704a8143ae26faa529238e638"
   dependencies:
@@ -910,21 +876,7 @@ babel-template@^6.22.0, babel-template@^6.23.0:
     babylon "^6.11.0"
     lodash "^4.2.0"
 
-babel-traverse@^6.16.0, babel-traverse@^6.18.0, babel-traverse@^6.21.0:
-  version "6.21.0"
-  resolved "https://registry.yarnpkg.com/babel-traverse/-/babel-traverse-6.21.0.tgz#69c6365804f1a4f69eb1213f85b00a818b8c21ad"
-  dependencies:
-    babel-code-frame "^6.20.0"
-    babel-messages "^6.8.0"
-    babel-runtime "^6.20.0"
-    babel-types "^6.21.0"
-    babylon "^6.11.0"
-    debug "^2.2.0"
-    globals "^9.0.0"
-    invariant "^2.2.0"
-    lodash "^4.2.0"
-
-babel-traverse@^6.23.0:
+babel-traverse@^6.18.0, babel-traverse@^6.23.0:
   version "6.23.1"
   resolved "https://registry.yarnpkg.com/babel-traverse/-/babel-traverse-6.23.1.tgz#d3cb59010ecd06a97d81310065f966b699e14f48"
   dependencies:
@@ -938,20 +890,34 @@ babel-traverse@^6.23.0:
     invariant "^2.2.0"
     lodash "^4.2.0"
 
-babel-types@^6.16.0, babel-types@^6.18.0, babel-types@^6.21.0, babel-types@^6.8.0, babel-types@^6.9.0:
+babel-traverse@^6.21.0:
   version "6.21.0"
-  resolved "https://registry.yarnpkg.com/babel-types/-/babel-types-6.21.0.tgz#314b92168891ef6d3806b7f7a917fdf87c11a4b2"
+  resolved "https://registry.yarnpkg.com/babel-traverse/-/babel-traverse-6.21.0.tgz#69c6365804f1a4f69eb1213f85b00a818b8c21ad"
   dependencies:
+    babel-code-frame "^6.20.0"
+    babel-messages "^6.8.0"
     babel-runtime "^6.20.0"
-    esutils "^2.0.2"
+    babel-types "^6.21.0"
+    babylon "^6.11.0"
+    debug "^2.2.0"
+    globals "^9.0.0"
+    invariant "^2.2.0"
     lodash "^4.2.0"
-    to-fast-properties "^1.0.1"
 
-babel-types@^6.22.0, babel-types@^6.23.0:
+babel-types@^6.16.0, babel-types@^6.18.0, babel-types@^6.22.0, babel-types@^6.23.0, babel-types@^6.8.0, babel-types@^6.9.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-types/-/babel-types-6.23.0.tgz#bb17179d7538bad38cd0c9e115d340f77e7e9acf"
   dependencies:
     babel-runtime "^6.22.0"
+    esutils "^2.0.2"
+    lodash "^4.2.0"
+    to-fast-properties "^1.0.1"
+
+babel-types@^6.21.0:
+  version "6.21.0"
+  resolved "https://registry.yarnpkg.com/babel-types/-/babel-types-6.21.0.tgz#314b92168891ef6d3806b7f7a917fdf87c11a4b2"
+  dependencies:
+    babel-runtime "^6.20.0"
     esutils "^2.0.2"
     lodash "^4.2.0"
     to-fast-properties "^1.0.1"
