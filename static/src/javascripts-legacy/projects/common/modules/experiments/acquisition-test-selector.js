@@ -19,8 +19,8 @@ define([
      * acquisition tests in priority order (highest to lowest)
      */
     var tests = [
-        acquisitionsEpicDesignVariations,
         alwaysAsk,
+        acquisitionsEpicDesignVariations,
         askFourEarning,
         brexit,
         askFourStagger

@@ -85,8 +85,8 @@ define([
         idealOutcome: 'Find a variant which has a higher conversion rate than the control',
 
         audienceCriteria: 'All',
-        audience: 1, // TODO
-        audienceOffset: 0, // TODO
+        audience: 0.5,
+        audienceOffset: 0.5,
 
         variants: [
             buildVariant('control'),
