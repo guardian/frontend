@@ -4,6 +4,8 @@
 [include]
 
 [libs]
+flow-libdefs-guardian/
+
 
 [options]
 module.name_mapper='^admin' -> 'projects/admin'
