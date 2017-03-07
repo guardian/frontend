@@ -39,8 +39,8 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: `${env === 'dev' ? '' : '[chunkhash]/'}guardian.[name].js`,
-        chunkFilename: `${env === 'dev' ? '' : '[chunkhash]/'}guardian.[name].js`,
+        filename: `${env === 'dev' ? '' : '[chunkhash]/'}graun.[name].js`,
+        chunkFilename: `${env === 'dev' ? '' : '[chunkhash]/'}graun.[name].js`,
     },
     resolve: {
         modules: [
