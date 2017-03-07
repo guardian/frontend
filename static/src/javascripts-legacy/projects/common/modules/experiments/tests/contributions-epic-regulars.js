@@ -1,31 +1,33 @@
 define([
     'common/modules/commercial/contributions-utilities',
-    'common/utils/template',
-    'text!common/views/contributions-epic-equal-buttons.html',
+    'lib/template',
+    'lib/cookies',
+    'raw-loader!common/views/contributions-epic-equal-buttons.html',
     'common/modules/tailor/tailor'
 ], function (
     contributionsUtilities,
     template,
+    cookies,
     contributionsEpicEqualButtons,
     tailor
 ) {
 
 
 
-    var bwidCookie = cookies.get('bwid') || false;
+    var bwidCookie = cookies.get('bwid') || 'REoxHzMfyQTNGGp0t9603p0w';
 
     function controlTemplate(regular) {
         var suffix = regular ? '_regular' : '_non_regular';
 
-        return function (contributionUrl, membershipUrl) {
+        return function (makeURL, contributionsURL, membershipURL, contributeCampaignCode, membershipCampaignCode, pageviewId) {
             return template(contributionsEpicEqualButtons, {
-                linkUrl1: membershipUrl + suffix,
-                linkUrl2: contributionUrl + suffix,
+                linkUrl1: makeURL(membershipURL, membershipCampaignCode + suffix, pageviewId),
+                linkUrl2: makeURL(contributionsURL, contributeCampaignCode + suffix, pageviewId),
                 title: 'Since you’re here …',
                 p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can. So you can see why we need to ask for your help. The Guardian has only one shareholder, The Scott Trust, which keeps our independent, investigative, public-interest journalism free from commercial or political interference. Our journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
                 p2: 'If everyone who reads our reporting, who likes it, helps to pay for it, our future would be much more secure.',
                 p3: '',
-                cta1: 'Become a regular Supporter',
+                cta1: 'Become a Supporter',
                 cta2: 'Make a contribution'
             });
         }
@@ -121,15 +123,17 @@ define([
                 id: 'control',
                 maxViews: {
                     days: 30,
-                    count: 4,
+                    count: 10000,
                     minDaysBetweenViews: 0
                 },
-                test: function(render) {
-                    if (bwid) {
+                test: function(render, makeURL, contributionsURL, membershipURL, contributeCampaignCode, membershipCampaignCode, pageviewId) {
+                    if (bwidCookie) {
                         tailor.getRegularStatus(bwidCookie).then(function (regular) {
-                            render(controlTemplate(regular));
+                            render(controlTemplate(regular)(makeURL, contributionsURL, membershipURL, contributeCampaignCode, membershipCampaignCode, pageviewId));
                         });
 
+                    }else{
+                        render(controlTemplate(false)(makeURL, contributionsURL, membershipURL, contributeCampaignCode, membershipCampaignCode, pageviewId));
                     }
                 },
                 insertBeforeSelector: '.submeta',
@@ -143,7 +147,7 @@ define([
                     minDaysBetweenViews: 0
                 },
                 test: function(render) {
-                    if (bwid) {
+                    if (bwidCookie) {
                         tailor.getRegularStatus(bwidCookie).then(function (regular) {
                             render(fairnessMildTemplate(regular));
                         });
@@ -161,7 +165,7 @@ define([
                     minDaysBetweenViews: 0
                 },
                 test: function(render) {
-                    if (bwid) {
+                    if (bwidCookie) {
                         tailor.getRegularStatus(bwidCookie).then(function (regular) {
                             render(fairnessStrongTemplate(regular));
                         });
@@ -179,7 +183,7 @@ define([
                     minDaysBetweenViews: 0
                 },
                 test: function(render) {
-                    if (bwid) {
+                    if (bwidCookie) {
                         tailor.getRegularStatus(bwidCookie).then(function (regular) {
                             render(fairnessStrongAlternateHookTemplate(regular));
                         });
@@ -197,7 +201,7 @@ define([
                     minDaysBetweenViews: 0
                 },
                 test: function(render) {
-                    if (bwid) {
+                    if (bwidCookie) {
                         tailor.getRegularStatus(bwidCookie).then(function (regular) {
                             render(relianceTemplate(regular));
                         });

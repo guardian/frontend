@@ -22,6 +22,10 @@ define([
         variants: ['control']
     };
 
+    var ContributionsEpicRegulars = {
+        name: 'ContributionsEpicRegulars',
+        variants: ['control', 'fairness_mild', 'fairness_strong', 'fairness_strong_alternate_hook', 'reliance']
+	};
     var AcquisitionsEpicDesignVariations = {
         name: 'AcquisitionsDesignVariations',
         variants: ['control', 'extra_paragraph', 'large_hook', 'subtle', 'prominent', 'highlight']
@@ -37,6 +41,7 @@ define([
         ContributionsEpicBrexit,
         ContributionsEpicAskFourStagger,
         ContributionsEpicAskFourEarning,
+        ContributionsEpicRegulars,
         AcquisitionsEpicDesignVariations
     ];
 

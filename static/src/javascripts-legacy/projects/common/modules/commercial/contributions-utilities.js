@@ -146,19 +146,19 @@ define([
         this.membershipCampaignCode = getCampaignCode(test.membershipCampaignPrefix, this.campaignId, this.id);
         this.campaignCodes = uniq([this.contributeCampaignCode, this.membershipCampaignCode]);
 
-        this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, this.contributeCampaignCode);
-        this.membershipURL = options.membershipURL || this.makeURL(membershipURL, this.membershipCampaignCode);
+        this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, this.contributeCampaignCode, this.pageviewId);
+        this.membershipURL = options.membershipURL || this.makeURL(membershipURL, this.membershipCampaignCode, this.pageviewId);
 
         this.template = options.template || controlTemplate;
 
         this.test = function () {
-            var component = $.create(this.template(this.membershipURL, this.contributeURL));
             var onInsert = options.onInsert || noop;
             var onView = options.onView || noop;
+            var component = $.create(this.template(this.membershipURL, this.contributeURL));
 
-            function render() {
+            function render(t) {
+                var component = $.create(t);
                 mediator.emit('register:begin', trackingCampaignId);
-
                 return fastdom.write(function () {
                     var selector = options.insertBeforeSelector || '.submeta';
                     var sibling = $(selector);
@@ -182,8 +182,9 @@ define([
                     }
                 }.bind(this));
             }
-
-            return (typeof options.test === 'function') ? options.test(render.bind(this)) : render.apply(this);
+            return (typeof options.test === 'function') ? 
+                options.test(render.bind(this),  this.makeURL, contributionsURL, membershipURL, this.contributeCampaignCode, this.membershipCampaignCode, this.pageviewId) 
+                : render.apply(this,component);
         };
 
         this.registerListener('impression', 'impressionOnInsert', test.insertEvent, options);
@@ -194,10 +195,10 @@ define([
         return campaignCodePrefix + '_' + campaignID + '_' + id;
     }
 
-    ContributionsABTestVariant.prototype.makeURL = function(base, campaignCode) {
+    ContributionsABTestVariant.prototype.makeURL = function(base, campaignCode, pageViewId) {
         var params = [
-            'INTCMP=' + campaignCode,
-            'REFPVID=' + this.pageviewId
+            'REFPVID=' + pageViewId,
+            'INTCMP=' + campaignCode
         ];
 
         return base + '?' + params.filter(Boolean).join('&');
