@@ -4,6 +4,7 @@ define([
     'lib/config',
     'lib/detect',
     'lib/fastdom-promise',
+    'common/modules/experiments/ab',
     'common/modules/article/space-filler',
     'commercial/modules/ad-sizes',
     'commercial/modules/dfp/add-slot',
@@ -16,6 +17,7 @@ define([
     config,
     detect,
     fastdom,
+    ab,
     spaceFiller,
     adSizes,
     addSlot,
@@ -30,6 +32,7 @@ define([
     var replaceTopSlot;
     var getSlotName;
     var getSlotType;
+    var isOffsetingAds = ab.testCanBeRun('IncreaseInlineAds') && ab.getTestVariantId('IncreaseInlineAds') === 'yes';
 
     function init(start, stop) {
         start();
