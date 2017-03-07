@@ -4,19 +4,27 @@ define([
     'common/modules/experiments/tests/contributions-epic-brexit',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/contributions-epic-ask-four-stagger',
-    'common/modules/experiments/tests/contributions-epic-ask-four-earning'
+    'common/modules/experiments/tests/contributions-epic-ask-four-earning',
+    'common/modules/experiments/tests/acquisitions-epic-design-variations'
 ], function (
     segmentUtil,
     viewLog,
     brexit,
     alwaysAsk,
     askFourStagger,
-    askFourEarning
+    askFourEarning,
+    acquisitionsEpicDesignVariations
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */
-    var tests = [alwaysAsk, askFourEarning, brexit, askFourStagger];
+    var tests = [
+        acquisitionsEpicDesignVariations,
+        alwaysAsk,
+        askFourEarning,
+        brexit,
+        askFourStagger
+    ];
 
     return {
         getTest: function() {
