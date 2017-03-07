@@ -11,7 +11,7 @@ define([
     'commercial/modules/third-party-tags/outbrain-codes',
     'raw-loader!commercial/views/outbrain.html',
     'lib/load-script',
-    'common/modules/email/check-mediator',
+    'common/modules/check-mediator',
     'ophan/ng'
 ], function (
     Promise,

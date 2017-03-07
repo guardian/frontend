@@ -18,7 +18,7 @@ define([
     'common/modules/tailor/tailor',
     'lib/cookies',
     'lib/mediator',
-    'common/modules/email/check-mediator',
+    'common/modules/check-mediator',
     'ophan/ng'
 ], function (
     $,

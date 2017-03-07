@@ -20,7 +20,7 @@ define([
     'lib/storage',
     'lib/ajax',
     'lib/mediator',
-    'common/modules/email/check-mediator',
+    'common/modules/check-mediator',
     'lib/add-event-listener',
     'common/modules/identity/api',
     'lib/url',
