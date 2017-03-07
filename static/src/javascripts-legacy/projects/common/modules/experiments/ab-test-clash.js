@@ -24,7 +24,7 @@ define([
 
     var AcquisitionsEpicDesignVariations = {
         name: 'AcquisitionsDesignVariations',
-        variants: ['control', 'paragraph']
+        variants: ['control', 'extra_paragraph', 'large_hook', 'subtle', 'prominent', 'highlight']
     };
 
     var GuardianTodaySignupMessaging = {
