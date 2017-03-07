@@ -132,6 +132,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-contributions-epic-regulars",
+    "Test messages aimed at our regular readers",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-tailor-recommended-email",
     "Use Tailor to target email signup form",
     owners = Seq(Owner.withGithub("lindseydew")),
