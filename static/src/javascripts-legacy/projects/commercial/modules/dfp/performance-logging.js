@@ -3,13 +3,15 @@ define([
     'lib/raven',
     'lib/config',
     'lib/user-timing',
-    'common/modules/analytics/beacon'
+    'common/modules/analytics/beacon',
+    'ophan/ng'
 ], function (
     Promise,
     raven,
     config,
     userTiming,
-    beacon
+    beacon,
+    ophan
 ) {
 
     var performanceLog = {
@@ -90,11 +92,8 @@ define([
     // multiple times in a page view, so that partial data is captured, and then topped up as adverts load in.
     function reportTrackingData() {
         if (config.tests.commercialClientLogging) {
-            require(['ophan/ng'], function (ophan) {
-                performanceLog.viewId = ophan.viewId;
-
-                beacon.postJson('/commercial-report', JSON.stringify(performanceLog));
-            });
+            performanceLog.viewId = ophan.viewId;
+            beacon.postJson('/commercial-report', JSON.stringify(performanceLog));
         }
     }
 

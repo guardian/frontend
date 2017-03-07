@@ -30,7 +30,8 @@ define([
     'lib/config',
     'common/modules/navigation/newHeaderNavigation',
     'common/modules/analytics/google',
-    'lodash/functions/debounce'
+    'lodash/functions/debounce',
+    'ophan/ng'
 ], function (
     qwery,
     fastdom,
@@ -50,7 +51,8 @@ define([
     config,
     newHeaderNavigation,
     ga,
-    debounce
+    debounce,
+    ophan
 ) {
     return function () {
         userTiming.mark('standard start');
@@ -163,9 +165,7 @@ define([
         }
         addEventListener(window, 'resize', debounce(onResize, 200), { passive: true });
 
-        require(['ophan/ng'], function(ophan) {
-            ophan.setEventEmitter(mediator);
-        });
+        ophan.setEventEmitter(mediator);
 
         //
         // Membership access

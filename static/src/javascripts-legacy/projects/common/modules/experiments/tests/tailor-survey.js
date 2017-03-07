@@ -12,7 +12,8 @@ define([
     'lib/private-browsing',
     'raw-loader!common/views/experiments/tailor-survey.html',
     'lib/fetch-json',
-    'lodash/collections/forEach'
+    'lodash/collections/forEach',
+    'ophan/ng'
 ], function (
     bean,
     bonzo,
@@ -27,7 +28,8 @@ define([
     privateBrowsing,
     quickSurvey,
     fetchJson,
-    forEach
+    forEach,
+    ophan
 ) {
     return function () {
         this.id = 'TailorSurvey';
@@ -116,11 +118,9 @@ define([
         }
 
         function recordOphanAbEvent(answer) {
-            require(['ophan/ng'], function (ophan) {
-                ophan.record({
-                    component: 'tailor-survey',
-                    value: answer
-                });
+            ophan.record({
+                component: 'tailor-survey',
+                value: answer
             });
         }
 

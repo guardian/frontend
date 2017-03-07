@@ -18,7 +18,8 @@ define([
     'common/modules/tailor/tailor',
     'lib/cookies',
     'lib/mediator',
-    'lib/check-mediator'
+    'lib/check-mediator',
+    'ophan/ng'
 ], function (
     $,
     bean,
@@ -39,7 +40,8 @@ define([
     tailor,
     cookies,
     mediator,
-    checkMediator
+    checkMediator,
+    ophan
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
             $iframeEl.prependTo('.content-footer');
@@ -253,9 +255,7 @@ define([
                     fastdom.write(function () {
                         listConfig.insertMethod($iframeEl);
                         if (listConfig.trackingCode) {
-                            require(['ophan/ng'], function (ophan) {
-                                ophan.trackComponentAttention(listConfig.trackingCode, $iframeEl[0]);
-                            });
+                            ophan.trackComponentAttention(listConfig.trackingCode, $iframeEl[0]);
                         }
                         googleAnalytics.trackNonClickInteraction('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
                         onEmailAdded();
