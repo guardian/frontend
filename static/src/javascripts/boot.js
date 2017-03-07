@@ -11,6 +11,14 @@ import capturePerfTimings from 'lib/capture-perf-timings';
 // eslint-disable-next-line camelcase,no-undef
 __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
+// Selectively attempt to pollute the global namespace with babel polfills.
+// The polyfills babel provides from core-js will be browser natives where
+// available anyway, so this shouldn't muck about with UAs that don't need it.
+// 1. Promise – https://webpack.js.org/guides/code-splitting-import/#promise-polyfill
+if (!window.Promise) {
+    window.Promise = Promise;
+}
+
 domready(() => {
     // 1. boot standard, always
     userTiming.mark('standard boot');
