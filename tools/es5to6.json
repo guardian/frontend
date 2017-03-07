@@ -334,7 +334,6 @@
   ],
   "jfsoul": [
     "projects/common/modules/onward/history.js",
-    "projects/common/modules/onward/more-tags.js",
     "projects/common/modules/onward/onward-content.js",
     "projects/common/modules/onward/popular.js",
     "projects/common/modules/onward/related.js",

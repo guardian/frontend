@@ -4,8 +4,8 @@
 @import model.Tag
 @import views.support.{RowInfo, Seq2zipWithRowInfo}
 
-@renderItem(keyword: Tag, row: RowInfo, clazz: String = "", trailingComma: Boolean = false) = {
-    <li class="submeta__link-item @clazz">
+@renderItem(keyword: Tag, row: RowInfo) = {
+    <li class="submeta__link-item">
         <a class="@if(keyword.isFootballTeam){js-football-team} @if(keyword.isFootballCompetition){ js-football-competition} submeta__link"
            href="@LinkTo(keyword.metadata.url)"
            data-link-name="keyword: @keyword.id"
@@ -16,10 +16,13 @@
     </li>
 }
 
-@defining(keywords.filterNot(_.isSectionTag).take(if(keywords.filterNot(_.isSectionTag).length == (visibleKeywords + 1)){visibleKeywords + 1} else {visibleKeywords})) { shownKeywords =>
-    @defining(keywords.filterNot(_.isSectionTag).drop(if(keywords.filterNot(_.isSectionTag).length == (visibleKeywords + 1)){visibleKeywords + 1} else {visibleKeywords})) { hiddenKeywords =>
-        @if(shownKeywords.nonEmpty || allPath.nonEmpty) {
-            <div class="submeta__keywords submeta__keywords--borderless">
+@defining(keywords.filterNot(_.isSectionTag).take(if(keywords.filterNot(_.isSectionTag).length == (visibleKeywords + 1)){visibleKeywords + 1} else {visibleKeywords})) { visibleKeywords =>
+    @if(visibleKeywords.nonEmpty || allPath.nonEmpty) {
+        <div class="submeta submeta--borderless-bottom"
+             data-link-name="keywords">
+            <span class="submeta__label">Topics</span>
+
+            <div class="submeta__keywords">
                 <ul class="submeta__links">
                     @allPath.map { path =>
                         <li class="submeta__link-item">
@@ -29,23 +32,11 @@
                         </li>
                     }
 
-                    @shownKeywords.zipWithRowInfo.map{ case(keyword, row) =>
-                        @renderItem(keyword, row, trailingComma = hiddenKeywords.nonEmpty)
-                    }
-
-                    @if(hiddenKeywords.nonEmpty) {
-
-                        <li class="submeta__link-item js-more-tags more-tags modern-hidden">
-                            <button class="u-button-reset js-more-tags__link button button--small button--tag @tone.map("button--tone-" + _ + "-variant").getOrElse("button--tertiary") button--more"
-                               data-link-name="more-tags">More…</button>
-                        </li>
-
-                        @hiddenKeywords.zipWithRowInfo.map{ case(keyword, row) =>
-                            @renderItem(keyword, row, clazz = "modern-hidden modern-hidden-tag")
-                        }
+                    @visibleKeywords.zipWithRowInfo.map{ case(keyword, row) =>
+                        @renderItem(keyword, row)
                     }
                 </ul>
             </div>
-        }
+        </div>
     }
 }
