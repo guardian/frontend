@@ -11,7 +11,11 @@
 <div class="l-side-margins l-side-margins--media l-side-margins--gallery">
 
     <article id="article" class="@RenderClasses(
-            "content", "content--media", "content--gallery", "tonal", "content--immersive", s"tonal--${toneClass(page.item)}"
+            Map(
+                s"tonal--${toneClass(page.item)}" -> !isPaidContent(page),
+                "tonal--tone-paidcontent"         -> isPaidContent(page)
+            ),
+            "content", "content--media", "content--gallery", "tonal", "content--immersive"
         )"
         itemscope itemtype="@page.item.metadata.schemaType" role="main">
 
