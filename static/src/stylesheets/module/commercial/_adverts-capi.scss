@@ -73,6 +73,11 @@
             max-width: 100%;
         }
 
+        .badge__link {
+            /* [1] Prevents IE11 bug where the height would go ballooney */
+            height: 100%;
+        }
+
         .badge__label {
             text-align: center;
             width: 100%;
