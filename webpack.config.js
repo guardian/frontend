@@ -2,17 +2,15 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const outputName = 'app-webpack';
-
 module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     devtool: env === 'dev' ? 'inline-source-map' : 'source-map',
     entry: {
-        [outputName]: path.join(
+        standard: path.join(
             __dirname,
             'static',
             'src',
             'javascripts',
-            'boot-webpack.js'
+            'boot.js'
         ),
         'admin-webpack': path.join(
             __dirname,
@@ -41,8 +39,8 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: `${env === 'dev' ? '' : '[chunkhash]/'}[name].js`,
-        chunkFilename: `${env === 'dev' ? '' : '[chunkhash]/'}${outputName}.chunk-[id].js`,
+        filename: `${env === 'dev' ? '' : '[chunkhash]/'}guardian.[name].js`,
+        chunkFilename: `${env === 'dev' ? '' : '[chunkhash]/'}guardian.[name].js`,
     },
     resolve: {
         modules: [

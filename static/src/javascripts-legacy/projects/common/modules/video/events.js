@@ -155,11 +155,12 @@ define([
         }
 
         if (isEmbed) {
-            require(['ophan/embed'], record);
+            require.ensure([], function (require) {
+                record(require('ophan/embed'));
+            }, 'ophan-embed');
         } else {
             record(ophan);
         }
-
     }
 
     function initOphanTracking(player, mediaId) {
