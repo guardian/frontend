@@ -124,7 +124,8 @@ class ArticleController(contentApiClient: ContentApiClient)(implicit context: Ap
         else if (request.isAmp) views.html.articleAMP(article)
         else if (article.article.isRecipeArticle && false) {
           val recipeAtoms = article.article.content.atoms.fold(Nil: Seq[RecipeAtom])(_.recipes)
-          views.html.recipeArticle(article, recipeAtoms)
+          val maybeMainImage: Option[ImageMedia] = article.article.content.elements.mainPicture.map{ _.images}
+          views.html.recipeArticle(article, recipeAtoms, maybeMainImage)
         }
         else views.html.article(article)
       }

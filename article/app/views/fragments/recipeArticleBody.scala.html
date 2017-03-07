@@ -1,17 +1,17 @@
 @import layout.ContentWidths.MainMedia
 @import model.content.MediaAtom
+@import model.ImageMedia
 @import model.ArticleSchemas
 @import common.Localisation
 @import model.content.RecipeAtom
 
-@(articleModel: ArticlePage, recipes: Seq[model.content.RecipeAtom], amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
+@(articleModel: ArticlePage, recipes: Seq[model.content.RecipeAtom], maybeMainImage: Option[ImageMedia], amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.LinkTo
 @import views.BodyCleaner
 
 @schemaType(page: ArticlePage) = @{ ArticleSchemas.NewsArticle }
 @bodyType(page: ArticlePage) = @{ "articleBody" }
-@defaultImage = @{articleModel.article.content.elements.mainPicture.map{ _.images}.getOrElse(null) }
 
 @defining(articleModel.article) { article =>
 <article id="article" data-test-id="article-root"
@@ -29,20 +29,28 @@
                 <h2>food &amp; drink</h2>
             </div>
             <div class="recipe__image__wrapper recipe__image__wrapper--is-displayed">
-            @fragments.image(picture = defaultImage,
-                classes = Seq("recipe__image", "fadeIn"),
-                imageAltText = "main alt text here",
-                widths = MainMedia.immersive,
-                isImmersiveMainMedia = true)
+                @maybeMainImage.map{ image =>
+                    @fragments.image(
+                        picture = image,
+                        classes = Seq("recipe__image"),
+                        imageAltText = image.allImages.headOption.flatMap( _.altText).getOrElse(""),
+                        widths = MainMedia.immersive,
+                        isImmersiveMainMedia = true
+                    )
+                }
             </div>
 
             @for((recipe, i) <- recipes.zipWithIndex){
                 <div class="recipe__image__wrapper recipe recipe__@i">
-                @fragments.image(picture = RecipeAtom.getPicture(recipe, defaultImage),
-                    classes = Seq("recipe__image", "fadeIn"),
-                    imageAltText = "alt text here",
-                    widths = MainMedia.immersive,
-                    isImmersiveMainMedia = true)
+                    @RecipeAtom.picture(recipe).orElse(maybeMainImage).map { image =>
+                        @fragments.image(
+                            picture = image,
+                            classes = Seq("recipe__image"),
+                            imageAltText = "",
+                            widths = MainMedia.immersive,
+                            isImmersiveMainMedia = true
+                        )
+                    }
                 </div>
             }
         </div>

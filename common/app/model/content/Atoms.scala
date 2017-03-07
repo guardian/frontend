@@ -289,8 +289,8 @@ object InteractiveAtom {
 object RecipeAtom {
   def make(atom: AtomApiAtom): RecipeAtom = RecipeAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Recipe].recipe)
 
-  def getPicture(r: RecipeAtom, defaultImage: model.ImageMedia): model.ImageMedia = {
-    r.data.images.headOption.map{ img => MediaAtom.imageMediaMake(img, "caption here")}.getOrElse(defaultImage)
+  def picture(r: RecipeAtom): Option[model.ImageMedia] = {
+    r.data.images.headOption.map{ img => MediaAtom.imageMediaMake(img, "")}
   }
 
   def totalTime(recipe: RecipeAtom): Option[Int] = {
