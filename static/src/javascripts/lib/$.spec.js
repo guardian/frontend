@@ -23,7 +23,12 @@ test('$', () => {
         '<p class="red"></p><p class="blue red"></p>'
     );
 
-    expect($.ancestor(document, 'grandparent')).toBeFalsy();
+    expect(
+        $.ancestor(
+            document.querySelector('.grandchild'),
+            'no-element-has-this-class'
+        )
+    ).toBeFalsy();
     expect(
         $.ancestor(document.querySelector('.grandchild'), 'grandparent').id
     ).toEqual('ancestorTarget');
