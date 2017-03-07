@@ -9,6 +9,8 @@
             "plugins": [
                 "transform-runtime",
                 "transform-flow-strip-types",
+                "add-module-exports",
+                "transform-es2015-modules-amd"
             ],
         },
         "development": {
@@ -20,6 +22,8 @@
             "plugins": [
                 "transform-runtime",
                 "transform-flow-strip-types",
+                "add-module-exports",
+                "transform-es2015-modules-amd"
             ],
         },
         "internal": {

@@ -7,12 +7,9 @@ module.exports = {
     plugins: ['guardian-frontend', 'flowtype'],
     rules: {
         // require-specific overrides
-        'import/no-dynamic-require': 'off',
-        'import/no-extraneous-dependencies': 'off',
+        'import/no-extraneous-dependencies': 'off', // necessary while we use aliases
         'import/extensions': 'off',
         'import/no-webpack-loader-syntax': 'off', // used for require plugins still
-        'import/no-amd': 'off', // webpack dynamic requires
-        'global-require': 'off',
 
         // these are bad habits in react that we're already abusing.
         // if we go more [p]react we should look at them.

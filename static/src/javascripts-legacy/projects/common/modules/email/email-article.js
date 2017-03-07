@@ -18,7 +18,8 @@ define([
     'common/modules/tailor/tailor',
     'lib/cookies',
     'lib/mediator',
-    'lib/check-mediator'
+    'lib/check-mediator',
+    'ophan/ng'
 ], function (
     $,
     bean,
@@ -39,16 +40,21 @@ define([
     tailor,
     cookies,
     mediator,
-    checkMediator
+    checkMediator,
+    ophan
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
-            $iframeEl.appendTo('.js-article__body');
+            $iframeEl.prependTo('.content-footer');
         },
         listConfigs = {
             theFilmToday: {
                 listId: '1950',
                 listName: 'theFilmToday',
                 campaignCode: 'film_article_signup',
+                displayName: {
+                    normalText: 'film',
+                    accentedText: 'today'
+                },
                 headline: 'Film Today: now booking',
                 description: 'Sign up to the Guardian Film Today email and we’ll make sure you don’t miss a thing - the day’s insider news and our latest reviews, plus big name interviews and film festival coverage.',
                 successHeadline: 'Thank you for signing up to Film Today',
@@ -59,6 +65,10 @@ define([
                 listId: '218',
                 listName: 'theFiver',
                 campaignCode: 'fiver_article_signup',
+                displayName: {
+                    normalText: 'the',
+                    accentedText: 'fiver'
+                },
                 headline: 'Kick off your evenings with our football roundup',
                 description: 'Sign up to the Fiver, our daily email on the world of football. We’ll deliver the day’s news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way.',
                 successHeadline: 'Thank you for signing up',
@@ -69,6 +79,10 @@ define([
                 listId: '3701',
                 listName: 'labNotes',
                 campaignCode: 'lab_notes_article_signup',
+                displayName: {
+                    normalText: 'lab',
+                    accentedText: 'notes'
+                },
                 headline: 'Science news you’ll want to read. Fact.',
                 description: 'Sign up to Lab Notes and we’ll email you the top stories in science, from medical breakthroughs to dinosaur discoveries - plus brainteasers, podcasts and more.',
                 successHeadline: 'Thank you for signing up for Lab notes',
@@ -79,6 +93,10 @@ define([
                 listId: '3698',
                 listName: 'euRef',
                 campaignCode: 'eu_ref_article_signup',
+                displayName: {
+                    normalText: 'brexit',
+                    accentedText: 'briefing'
+                },
                 headline: 'Brexit: your weekly briefing',
                 description: 'Sign up and we’ll email you the key developments and most important debates as Britain takes its first steps on the long road to leaving the EU.',
                 successHeadline: 'Thank you for signing up for the Brexit weekly briefing',
@@ -89,6 +107,10 @@ define([
                 listId: '1493',
                 listName: 'usBriefing',
                 campaignCode: 'guardian_today_article_bottom',
+                displayName: {
+                    normalText: 'us',
+                    accentedText: 'briefing'
+                },
                 headline: 'Want stories like this in your inbox?',
                 description: 'Sign up to the Guardian US briefing to get the top stories in your inbox every weekday.',
                 successHeadline: 'Thank you for signing up to the Guardian US briefing',
@@ -99,6 +121,10 @@ define([
                 listId: '39',
                 listName: 'sleevenotes',
                 campaignCode: 'sleevenotes_article_bottom',
+                displayName: {
+                    normalText: 'sleeve',
+                    accentedText: 'notes'
+                },
                 headline: 'Sleeve notes: sounds good',
                 description: 'Get music news, bold reviews and unexpected extras emailed direct to you from the Guardian’s music desk every Friday.',
                 successHeadline: 'Thank you for signing up to sleeve notes',
@@ -109,6 +135,10 @@ define([
                 listId: '3322',
                 listName: 'longReads',
                 campaignCode: 'long_reads_article_bottom',
+                displayName: {
+                    normalText: 'long',
+                    accentedText: 'reads'
+                },
                 headline: 'Here’s the real story',
                 description: 'Look a little deeper with The Long Read. Sign up to our weekly email for inside stories, murder, politics, and much more. Great writing, worth reading.',
                 successHeadline: 'Thank you for signing up to The Long Read',
@@ -119,6 +149,10 @@ define([
                 listId: '3039',
                 listName: 'bookmarks',
                 campaignCode: 'bookmarks_article_bottom',
+                displayName: {
+                    normalText: 'book',
+                    accentedText: 'marks'
+                },
                 headline: 'Bookmarks: read me first',
                 description: 'Sign up for our weekly email for book lovers and discover top 10s, expert book reviews, author interviews, and enjoy highlights from our columnists and community every weekend.',
                 successHeadline: 'Thank you for signing up to Bookmarks',
@@ -129,6 +163,10 @@ define([
                 listId: '38',
                 listName: 'greenLight',
                 campaignCode: 'green_light_article_bottom',
+                displayName: {
+                    normalText: 'green',
+                    accentedText: 'light'
+                },
                 headline: 'The most important stories on the planet',
                 description: 'Sign up to Green Light for environment news emailed direct to you every Friday. And besides the week’s biggest stories and debates, you can expect beautifully curated wildlife galleries, absorbing podcasts and eco-living guides.',
                 successHeadline: 'Thank you for signing up to Green Light',
@@ -153,6 +191,10 @@ define([
                 insertEventName: 'GuardianTodaySignupMessaging:insert',
                 successEventName: 'GuardianTodaySignupMessaging:signup',
                 trackingCode: 'GuardianTodaySignupMessaging-' + ab.getTestVariantId('GuardianTodaySignupMessaging'),
+                displayName: {
+                    normalText: 'theguardian',
+                    accentedText: 'today'
+                },
                 headline: (function () {
                     switch (ab.getTestVariantId('GuardianTodaySignupMessaging')) {
                         case 'message-a': return 'Get a headstart on the day';
@@ -213,9 +255,7 @@ define([
                     fastdom.write(function () {
                         listConfig.insertMethod($iframeEl);
                         if (listConfig.trackingCode) {
-                            require(['ophan/ng'], function (ophan) {
-                                ophan.trackComponentAttention(listConfig.trackingCode, $iframeEl[0]);
-                            });
+                            ophan.trackComponentAttention(listConfig.trackingCode, $iframeEl[0]);
                         }
                         googleAnalytics.trackNonClickInteraction('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
                         onEmailAdded();
@@ -228,7 +268,10 @@ define([
                     });
                 }
             }
-        }
+        },
+        doesIdMatch = function (id, listConfig) {
+            return id === listConfig.listId;
+        };
 
     function tailorInTest() {
         var cacheKey = 'GU_TAILOR_EMAIL';
@@ -240,14 +283,14 @@ define([
 
             if (!cachedTailorResponse) {
                 tailor.getEmail(bwidCookie).then(function (tailorRes) {
-                    addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'tailor-recommend:signup');
+                    addListToPage(find(listConfigs, doesIdMatch.bind(null, tailorRes.email)),'tailor-recommend:signup');
                     mediator.emit('tailor-recommended:insert');
                     storage.local.set(cacheKey, tailorRes, {'expires': cacheExpiry});
                 });
             }
             else {
                 mediator.emit('tailor-recommended:insert');
-                addListToPage(find(listConfigs, emailRunChecks.listCanRun), 'tailor-recommend:signup');
+                addListToPage(find(listConfigs, doesIdMatch.bind(null, cachedTailorResponse.email)),'tailor-recommend:signup');
             }
         }
     }
@@ -257,19 +300,28 @@ define([
         mediator.emit('tailor-control:insert');
     }
 
+    function tailorRandom() {
+        var listIds = ['39','3322','3039','1950','38','3698'];
+        var listId = listIds[Math.floor(Math.random()*listIds.length)];
+        addListToPage(find(listConfigs,doesIdMatch.bind(null, listId)), 'tailor-random:signup');
+        mediator.emit('tailor-random:insert');
+    }
+
     return {
         init: function () {
             checkMediator.waitForCheck('emailCanRun').then(function (canEmailRun) {
                 if (canEmailRun) {
                     emailRunChecks.getUserEmailSubscriptions().then(function () {
                         if (ab.isParticipating({id: 'TailorRecommendedEmail'})) {
-                            switch (ab.getTestVariantId) {
+                            switch (ab.getTestVariantId('TailorRecommendedEmail')) {
                                 case 'tailor-recommended': tailorInTest(); break;
                                 case 'control': tailorControl(); break;
+                                case 'tailor-random': tailorRandom(); break;
                                 default: addListToPage(find(listConfigs, emailRunChecks.listCanRun)); break;
                             }
                         } else {
                             addListToPage(find(listConfigs, emailRunChecks.listCanRun));
+
                         }
                     }).catch(function (error) {
                         robust.log('c-email', error);

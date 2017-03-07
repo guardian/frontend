@@ -101,6 +101,8 @@ define([
         ui = {
             updateForm: function (thisRootEl, el, analytics, opts) {
                 var formData = $(thisRootEl).data(),
+                    formDisplayNameNormalText = (opts && opts.displayName && opts.displayName.normalText) || formData.formDisplayNameNormalText || false,
+                    formDisplayNameAccentedText = (opts && opts.displayName && opts.displayName.accentedText) || formData.formDisplayNameAccentedText || false,
                     formTitle = (opts && opts.formTitle) || formData.formTitle || false,
                     formDescription = (opts && opts.formDescription) || formData.formDescription || false,
                     formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || '',
@@ -117,6 +119,14 @@ define([
                 fastdom.write(function () {
                     if (formTitle) {
                         $('.js-email-sub__heading', el).text(formTitle);
+                    }
+
+                    if (formDisplayNameNormalText) {
+                        $('.js-email-sub__display-name-normal-text', el).text(formDisplayNameNormalText);
+                    }
+
+                    if (formDisplayNameAccentedText) {
+                        $('.js-email-sub__display-name-accented-text', el).text(formDisplayNameAccentedText);
                     }
 
                     if (formDescription) {
@@ -153,7 +163,7 @@ define([
                 if (userFromId && userFromId.primaryEmailAddress) {
                     fastdom.write(function () {
                         $('.js-email-sub__inline-label', el).addClass('email-sub__inline-label--is-hidden');
-                        $('.js-email-sub__submit-input', el).addClass('email-sub__submit-input--solo');
+                        $('.js-email-sub__submit-button', el).addClass('email-sub__submit-button--solo');
                         $('.js-email-sub__text-input', el).val(userFromId.primaryEmailAddress);
                     });
                 }
