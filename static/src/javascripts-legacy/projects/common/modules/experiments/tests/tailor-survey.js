@@ -152,7 +152,7 @@ define([
 
                         var json = getJsonFromSurvey(surveySuggestionToShow);
 
-                        var componentName = 'tailor-survey-' + json.id;
+                        var componentName = 'data_tailor_survey_' + json.id;
 
                         mediator.emit('register:begin', componentName);
 
