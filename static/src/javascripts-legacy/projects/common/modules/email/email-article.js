@@ -18,8 +18,7 @@ define([
     'common/modules/tailor/tailor',
     'lib/cookies',
     'lib/mediator',
-    'lib/check-mediator',
-    'ophan/ng'
+    'lib/check-mediator'
 ], function (
     $,
     bean,
@@ -40,8 +39,7 @@ define([
     tailor,
     cookies,
     mediator,
-    checkMediator,
-    ophan
+    checkMediator
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
             $iframeEl.prependTo('.content-footer');
