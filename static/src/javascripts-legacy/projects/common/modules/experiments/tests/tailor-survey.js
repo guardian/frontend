@@ -56,7 +56,9 @@ define([
             // behaves as usual.
             var surveyToShow = localStorage.getItem('surveyToShow');
 
-            var endpoint = 'https://tailor.guardianapis.com/suggestions?browserId=' + bwid + '&edition=' + config.page.edition +
+            var endpoint = 'https://tailor.guardianapis.com/suggestions'+
+                '?browserId=' + bwid +
+                '&edition=' + config.page.edition +
                 '&surveyToShow=' + surveyToShow +
                 '&surveysNotToShow=' + surveysNotShowAgain;
             return fetchJson(endpoint, {
