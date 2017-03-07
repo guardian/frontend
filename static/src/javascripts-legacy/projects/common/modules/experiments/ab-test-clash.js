@@ -22,11 +22,6 @@ define([
         variants: ['control']
     };
 
-    var GuardianTodaySignupMessaging = {
-        name: 'GuardianTodaySignupMessaging',
-        variants: ['message-a', 'message-b', 'message-c']
-    };
-
     var contributionsTests = [
         ContributionsEpicAlwaysAskStrategy,
         ContributionsEpicBrexit,
@@ -34,9 +29,7 @@ define([
         ContributionsEpicAskFourEarning
     ];
 
-    var emailTests = [
-        GuardianTodaySignupMessaging
-    ];
+    var emailTests = [];
 
     var nonEmailClashingTests = contributionsTests;
 
