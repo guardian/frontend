@@ -34,10 +34,9 @@ domready(() => {
         require.ensure(
             [],
             require => {
-                const commercial = require('bootstraps/commercial');
                 raven.context({ tags: { feature: 'commercial' } }, () => {
                     userTiming.mark('commercial boot');
-                    commercial.init().then(() => {
+                    require('bootstraps/commercial').init().then(() => {
                         // 3. finally, try enhanced
                         // this is defined here so that webpack's code-splitting algo
                         // excludes all the modules bundled in the commercial chunk from this one
@@ -45,12 +44,12 @@ domready(() => {
                             userTiming.mark('enhanced request');
                             require.ensure(
                                 [],
+                                // webpack needs the require function to be called 'require'
+                                // eslint-disable-next-line no-shadow
                                 require => {
-                                    const bootEnhanced = require(
-                                        'bootstraps/enhanced/main'
-                                    );
                                     userTiming.mark('enhanced boot');
-                                    bootEnhanced();
+                                    require('bootstraps/enhanced/main')();
+
                                     if (document.readyState === 'complete') {
                                         capturePerfTimings();
                                     } else {
