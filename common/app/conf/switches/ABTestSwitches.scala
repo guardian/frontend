@@ -32,6 +32,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-increase-inline-ads",
+    "Displays more inline ads in articles on desktop",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-paid-content-vs-outbrain",
     "Displays a paid content widget instead of Outbrain",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
