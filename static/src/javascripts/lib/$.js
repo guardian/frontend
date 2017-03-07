@@ -1,12 +1,11 @@
 import bonzo from 'bonzo';
 import qwery from 'qwery';
-import forEach from 'lodash/collections/forEach';
 
 // Warning: side effect. This patches the bonzo module for use everywhere
 bonzo.aug({
     height() {
         return this.dim().height;
-    }
+    },
 });
 
 function $(selector, context) {
@@ -15,21 +14,20 @@ function $(selector, context) {
 
 $.create = s => bonzo(bonzo.create(s));
 
-$.ancestor = (el, c) => {
+$.ancestor = (el, className) => {
     if (el.nodeName.toLowerCase() === 'html') {
         return false;
     }
-    if (!el.parentNode || bonzo(el.parentNode).hasClass(c)) {
+    if (!el.parentNode || bonzo(el.parentNode).hasClass(className)) {
         return el.parentNode;
-    } else {
-        return $.ancestor(el.parentNode, c);
     }
+    return $.ancestor(el.parentNode, className);
 };
 
 $.forEachElement = (selector, fn) => {
     const els = qwery(selector);
-    forEach(els, fn);
+    els.forEach(fn);
     return els;
 };
 
-export default $; // define
+export default $;
