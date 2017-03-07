@@ -226,7 +226,7 @@ define([
     };
 
     return [
-        new EditionTest('UK', 'MembershipEngagementBannerUkRemindMeLater', '2017-02-02', '2017-03-06', 'remind_me_later')
+        new EditionTest('UK', 'MembershipEngagementBannerUkRemindMeLater', '2017-02-02', '2017-03-20', 'remind_me_later')
             .addMembershipVariant('control', {})
             .addMembershipVariant('remind_me', {showRemindMe : true}),
 
