@@ -34,7 +34,7 @@ define([
     return function () {
         this.id = 'TailorSurvey';
         this.start = '2017-03-07';
-        this.expiry = '2017-04-30';
+        this.expiry = '2017-04-28';
         this.author = 'Manlio & Mahana';
         this.description = 'Testing Tailor surveys';
         this.audience = 0.01;
