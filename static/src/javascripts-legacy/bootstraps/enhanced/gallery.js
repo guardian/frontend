@@ -27,10 +27,6 @@ define([
                         max = $imgs.parent().dim().width, // portrait images shouldn't be taller than landscapes are wide
                         height = Math.max(min, Math.min(max, window.innerHeight * 0.9));
                     $imgs.css('max-height', height);
-
-                    // Portrait containers use padding-bottom to set the height of the container prior to upgrading.
-                    // This needs to be synchronised with the new image height.
-                    $('.gallery2__img-container--portrait').css('padding-bottom', height);
                 }
             };
 

@@ -993,9 +993,7 @@
             @include icon(camera-black-large, $with-width: false);
         }
 
-        .content__standfirst,
-        .gallery2__caption,
-        .gallery2__credit {
+        .content__standfirst {
             color: $neutral-2-contrasted;
 
             a {
