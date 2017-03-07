@@ -1,6 +1,5 @@
 {
   "sndrs": [
-    "lib/$.js",
     "lib/$css.js",
     "lib/add-event-listener.js",
     "lib/ajax.js",
