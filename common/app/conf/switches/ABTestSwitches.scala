@@ -56,7 +56,7 @@ trait ABTestSwitches {
     "Test A3 vs A4 bundle offers",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 9), // Thursday March 9th
+    sellByDate = new LocalDate(2017, 3, 23), // Thursday March 23rd
     exposeClientSide = true
   )
 
