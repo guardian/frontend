@@ -25,6 +25,10 @@
     margin-bottom: $gs-baseline / 2;
 }
 
+.submeta__keywords--borderless {
+    border-bottom: none;
+}
+
 .submeta__links {
     list-style: none;
     overflow: hidden;
@@ -41,7 +45,8 @@
         color: $neutral-5;
     }
 
-    &:last-of-type:after {
+    &:last-of-type:after,
+    &.more-tags:after {
         content: none;
     }
 }
