@@ -270,5 +270,9 @@ body {
                 background-color: darken($tone-colour-accent, 10%);
             }
         }
+
+        .submit-input__icon svg {
+            fill: $tone-colour-button-text;
+        }
     }
 }
