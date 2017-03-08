@@ -136,7 +136,7 @@ trait ABTestSwitches {
     "Integrate Tailor with ab tests",
     owners = Seq(Owner.withGithub("oilnam")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
+    sellByDate = new LocalDate(2017, 4, 28),
     exposeClientSide = true
   )
 
@@ -157,6 +157,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-design-variations",
+    "Test design variations to the Epic",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 17),
     exposeClientSide = true
   )
 }

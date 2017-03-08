@@ -22,11 +22,17 @@ define([
         variants: ['control']
     };
 
+    var AcquisitionsEpicDesignVariations = {
+        name: 'AcquisitionsDesignVariations',
+        variants: ['control', 'extra_paragraph', 'large_hook', 'subtle', 'prominent', 'highlight']
+    };
+
     var contributionsTests = [
         ContributionsEpicAlwaysAskStrategy,
         ContributionsEpicBrexit,
         ContributionsEpicAskFourStagger,
-        ContributionsEpicAskFourEarning
+        ContributionsEpicAskFourEarning,
+        AcquisitionsEpicDesignVariations
     ];
 
     var emailTests = [];
