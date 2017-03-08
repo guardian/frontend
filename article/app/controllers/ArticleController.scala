@@ -8,6 +8,7 @@ import contentapi.ContentApiClient
 import controllers.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.Cached.WithoutRevalidationResult
 import model._
+import model.content.RecipeAtom
 import model.liveblog.BodyBlock
 import org.joda.time.DateTime
 import play.api.libs.functional.syntax._
@@ -121,6 +122,11 @@ class ArticleController(contentApiClient: ContentApiClient)(implicit context: Ap
         else if (article.article.isExplore) views.html.articleExplore(article)
         else if (article.article.isImmersive) views.html.articleImmersive(article)
         else if (request.isAmp) views.html.articleAMP(article)
+        else if (article.article.isRecipeArticle && false) {
+          val recipeAtoms = article.article.content.atoms.fold(Nil: Seq[RecipeAtom])(_.recipes)
+          val maybeMainImage: Option[ImageMedia] = article.article.content.elements.mainPicture.map{ _.images}
+          views.html.recipeArticle(article, recipeAtoms, maybeMainImage)
+        }
         else views.html.article(article)
       }
 

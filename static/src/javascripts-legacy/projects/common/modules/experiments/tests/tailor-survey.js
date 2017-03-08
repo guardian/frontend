@@ -12,7 +12,9 @@ define([
     'lib/private-browsing',
     'raw-loader!common/views/experiments/tailor-survey.html',
     'lib/fetch-json',
-    'lodash/collections/forEach'
+    'lodash/collections/forEach',
+    'ophan/ng',
+    'lib/template'
 ], function (
     bean,
     bonzo,
@@ -25,19 +27,21 @@ define([
     mediator,
     fastdomPromise,
     privateBrowsing,
-    quickSurvey,
+    tailorSurvey,
     fetchJson,
-    forEach
+    forEach,
+    ophan,
+    template
 ) {
     return function () {
         this.id = 'TailorSurvey';
-        this.start = '2017-01-25';
-        this.expiry = '2017-03-31';
-        this.author = 'Manlio';
+        this.start = '2017-03-07';
+        this.expiry = '2017-04-28';
+        this.author = 'Manlio & Mahana';
         this.description = 'Testing Tailor surveys';
         this.audience = 0.01;
         this.audienceOffset = 0.7;
-        this.successMeasure = 'We can show a survey on Frontend to regular users only (as decided by Tailor)';
+        this.successMeasure = 'We can show a survey on Frontend as decided by Tailor';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = 'Tailor survey';
         this.idealOutcome = '';
@@ -46,31 +50,124 @@ define([
             return !(config.page.isAdvertisementFeature) &&
                 config.page.contentType === 'Article'
         };
+        function callTailor(bwid, surveysNotShowAgain) {
+            // If we want to force tailor to show a particular survey we can set an attribute in local storage to have
+            // key = 'surveyToShow', and value = the survey id. Tailor will then override other logic for display, and
+            // look for a survey with this ID to return. This is useful as we can easily see how a particular survey
+            // would be rendered, without actually putting it live. If this parameter is empty or not specified, tailor
+            // behaves as usual.
+            var surveyToShow = localStorage.getItem('surveyToShow');
 
-        function callTailor(bwid) {
-            var endpoint = 'https://tailor.guardianapis.com/suggestions?browserId=' + bwid;
+            var endpoint = 'https://tailor.guardianapis.com/suggestions'+
+                '?browserId=' + bwid +
+                '&edition=' + config.page.edition +
+                '&surveyToShow=' + surveyToShow +
+                '&surveysNotToShow=' + surveysNotShowAgain;
             return fetchJson(endpoint, {
                 type: 'json',
                 method: 'get'
             });
         }
 
+        // Every time we show a survey to a user, we cannot show it again to that suer for a specified number of days.
+        // We store 'surveyId=dayShowAgain' in the cookie, and pass any surveys that cannot currently be shown in the
+        // call to tailor.
+        function storeSurveyShowedInCookie(data) {
+            var id = data.survey.surveyId;
+            var dayCanShowAgain = data.dayCanShowAgain;
+
+            var newCookieValue = id + '=' + dayCanShowAgain;
+
+
+
+            var currentCookieValues = cookies.get('GU_TAILOR_SURVEY');
+
+            if (currentCookieValues) {
+                // we've shown surveys already
+                currentCookieValues = currentCookieValues + ',' + newCookieValue;
+                cookies.remove('GU_TAILOR_SURVEY');
+                cookies.add('GU_TAILOR_SURVEY', currentCookieValues, 365);
+            }
+            else {
+                // first time we show any survey
+                cookies.add('GU_TAILOR_SURVEY', newCookieValue, 365);
+            }
+        }
+        // Given a response from tailor, we see if the response has a survey suggestion, and if so return the first
+        // survey suggestion (there should only ever be one, but just in case).
+        function getSurveySuggestionToShow(response) {
+            if (response.suggestions) {
+                var surveySuggestions = response.suggestions.filter(function (suggestion) {
+                    return suggestion.class === 'SurveySuggestion';
+                });
+
+                if (surveySuggestions.length > 0) {
+                    return surveySuggestions[0];
+                }
+            }
+        }
+
+        // We go through the list of surveys that have already been shown to the user, and return a list of survey ids
+        // that aren't currently allowed to be shown.
+        function getSurveyIdsNotToShow() {
+            var currentCookieValues = cookies.get('GU_TAILOR_SURVEY');
+
+            var values = currentCookieValues ? currentCookieValues.split(',') : [];
+
+            var isAfterToday = function (cookieValue) {
+                var date = cookieValue.split('=')[1];
+                return new Date(date).valueOf() > new Date().valueOf();
+            };
+
+            var surveysWeCannotShow = values.filter(isAfterToday);
+
+            return surveysWeCannotShow.map(function (idAndDate) {
+                return idAndDate.split('=')[0];
+            }).toString();
+        }
+
+        // Getting simple json from tailor's reponse to be passed to the html template
+        function getJsonFromSurvey(survey) {
+            return {
+                question : survey.question,
+                id : survey.surveyId
+            };
+        }
+
         function renderQuickSurvey() {
+
             var bwid = cookies.get('bwid');
-            var hasSeenTheSurveyAlready = cookies.get('GU_TAILOR_SURVEY_1') || false;
 
-            if (bwid && !hasSeenTheSurveyAlready) {
-                return callTailor(bwid).then(function (response) {
-                    if (response.userDataForClient.regular) {
+            // we only call tailor if the user has a browser ID defined
+            if (bwid) {
+                // get the list of surveys that can't be shown as they have been shown recently
+                var ids = getSurveyIdsNotToShow();
 
-                        cookies.add('GU_TAILOR_SURVEY_1', 1, 100); // do not show this survey to the user for the next 100 days
+                return callTailor(bwid, ids).then(function (response) {
+
+                    // get the survey to show
+                    var surveySuggestionToShow = getSurveySuggestionToShow(response);
+
+                    if(surveySuggestionToShow) {
+
+                        storeSurveyShowedInCookie(surveySuggestionToShow.data);
+
+                        var json = getJsonFromSurvey(surveySuggestionToShow.data.survey);
+
+                        var componentName = 'data_tailor_survey_' + json.id;
+
+                        mediator.emit('register:begin', componentName);
+
+                        // renders the survey, and returns the survey ID
 
                         return fastdomPromise.write(function () {
                             var article = document.getElementsByClassName('content__article-body')[0];
                             var insertionPoint = article.getElementsByTagName('p')[1];
-                            var surveyDiv = document.createElement('div');
-                            surveyDiv.innerHTML = quickSurvey;
-                            article.insertBefore(surveyDiv, insertionPoint);
+                            var survey = bonzo.create(template(tailorSurvey, json));
+                            bonzo(survey).insertBefore(insertionPoint);
+                            mediator.emit('register:end', componentName);
+
+                            return surveySuggestionToShow.data.survey.surveyId;
                         });
                     }
                 });
@@ -79,8 +176,8 @@ define([
 
         function disableRadioButtons(buttonClassName) {
             var radioButtons = document.getElementsByClassName(buttonClassName);
-            bonzo(radioButtons).each(function(button) {
-                button.disabled=true;
+            bonzo(radioButtons).each(function (button) {
+                button.disabled = true;
             });
         }
 
@@ -94,14 +191,14 @@ define([
             surveyThanks[0].classList.add('js-impressions-survey__fadein');
         }
 
-        function handleSurveyResponse() {
+        function handleSurveyResponse(surveyId) {
             var surveyQuestions = document.getElementsByClassName('fi-survey__button');
 
-            forEach(surveyQuestions, function(question) {
+            forEach(surveyQuestions, function (question) {
                 bean.on(question, 'click', function (event) {
                     if (event.target.attributes.getNamedItem("data-link-name")) {
                         var answer = event.target.attributes.getNamedItem("data-link-name").value;
-                        recordOphanAbEvent(answer);
+                        recordOphanAbEvent(answer, surveyId);
 
                         mediator.emit('tailor:survey:clicked');
                         fastdom.write(function () {
@@ -111,16 +208,14 @@ define([
                         });
                     }
                 });
-                }
+            }
             );
         }
 
-        function recordOphanAbEvent(answer) {
-            require(['ophan/ng'], function (ophan) {
-                ophan.record({
-                    component: 'tailor-survey',
-                    value: answer
-                });
+        function recordOphanAbEvent(answer, surveyId) {
+            ophan.record({
+                component: 'tailor-survey-' + surveyId,
+                value: answer
             });
         }
 
@@ -133,15 +228,15 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    Promise.all([renderQuickSurvey(), privateBrowsing]).then(function () {
+                    Promise.all([renderQuickSurvey(), privateBrowsing]).then(function (surveyId) {
                         mediator.emit('survey-added');
-                        handleSurveyResponse();
+                        handleSurveyResponse(surveyId);
                     });
                 },
-                impression: function(track) {
+                impression: function (track) {
                     mediator.on('survey-added', track);
                 },
-                success: function(complete) {
+                success: function (complete) {
                     mediator.on('tailor:survey:clicked', complete);
                 }
             }

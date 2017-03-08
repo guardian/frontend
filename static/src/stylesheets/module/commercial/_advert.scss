@@ -125,10 +125,6 @@
 .advert-container {
     display: flex;
     align-items: stretch;
-
-    > * {
-        width: 100%;
-    }
 }
 
 /* [1] Prevents IE11 bug where the image container's height would go ballooney */

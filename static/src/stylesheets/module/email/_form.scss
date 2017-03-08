@@ -83,7 +83,7 @@
     padding: .667em 1.25em;
 }
 
-.email-sub__submit-input {
+.email-sub__submit-button {
     background-color: transparent;
     border: 1px solid $news-support-1;
     color: $form-primary-colour;
@@ -96,7 +96,7 @@
     }
 }
 
-.email-sub__submit-input--solo {
+.email-sub__submit-button--solo {
 
     .submit-input__icon {
         display: inline-block;
@@ -105,12 +105,12 @@
 }
 
 .email-sub__text-input,
-.email-sub__submit-input {
+.email-sub__submit-button {
     width: 100%;
 }
 
 .email-sub__label,
-.email-sub__submit-input,
+.email-sub__submit-button,
 .email-sub__text-input {
     @include fs-textSans(1, $size-only: true);
     line-height: 1.5;
@@ -197,7 +197,7 @@
     margin-bottom: $gs-baseline;
     padding: 0 $gs-gutter;
 
-    .email-sub__submit-input {
+    .email-sub__submit-button {
         background-color: $neutral-2;
         border-color: $neutral-2;
         margin-bottom: $gs-baseline;
@@ -260,13 +260,13 @@
         border-color: $neutral-3;
     }
 
-    .email-sub__submit-input {
+    .email-sub__submit-button {
         background-color: $guardian-brand;
         border-color: $guardian-brand;
     }
 
     .email-sub__label,
-    .email-sub__submit-input,
+    .email-sub__submit-button,
     .email-sub__text-input {
         @include fs-textSans(3, $size-only: true);
     }
@@ -289,7 +289,7 @@
 .email-sub__form--plaindark {
     padding: 0;
 
-    .email-sub__submit-input {
+    .email-sub__submit-button {
         background-color: $neutral-4;
         border-color: $neutral-4;
         color: $neutral-1;
@@ -308,7 +308,7 @@
 .email-sub__form--plaintone {
     padding: 0;
 
-    .email-sub__submit-input {
+    .email-sub__submit-button {
         background-color: $neutral-4;
         border-color: $neutral-4;
         color: $neutral-1;
@@ -344,7 +344,7 @@
             }
         }
 
-        .email-sub__submit-input {
+        .email-sub__submit-button {
             background-color: $tone-colour-accent;
             border-color: $tone-colour-accent;
             color: #ffffff;
@@ -366,7 +366,7 @@
             border-color: $tone-colour-border;
         }
 
-        .email-sub__submit-input {
+        .email-sub__submit-button {
             border-color: $tone-colour-border;
             color: $tone-colour-text;
         }

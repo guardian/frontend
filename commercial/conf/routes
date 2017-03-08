@@ -35,8 +35,6 @@ GET         /commercial/capi-single                                         comm
 GET         /commercial/capi-single-merch.json                              commercial.controllers.ContentApiOffersController.itemJson
 GET         /commercial/capi-single-merch                                   commercial.controllers.ContentApiOffersController.itemHtml
 GET         /commercial/api/traffic-driver.json                             commercial.controllers.TrafficDriverController.renderJson
-GET         /commercial/paid.json                                           commercial.controllers.PaidContentCardController.cardJson
-GET         /commercial/paid                                                commercial.controllers.PaidContentCardController.cardHtml
 
 # Piggyback pixel from AppNexus, used for resizing mpus
 GET         /commercial/anx/anxresize.js                                    commercial.controllers.PiggybackPixelController.resize

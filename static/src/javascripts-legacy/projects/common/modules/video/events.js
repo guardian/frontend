@@ -10,7 +10,8 @@ define([
     'lodash/arrays/indexOf',
     'lodash/functions/throttle',
     'lodash/objects/forOwn',
-    'common/modules/video/ga-helper'
+    'common/modules/video/ga-helper',
+    'ophan/ng'
 ], function (
     bean,
     qwery,
@@ -23,7 +24,8 @@ define([
     indexOf,
     throttle,
     forOwn,
-    gaHelper
+    gaHelper,
+    ophan
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!window.guardian.isEmbed,
@@ -153,11 +155,12 @@ define([
         }
 
         if (isEmbed) {
-            require(['ophan/embed'], record);
+            require.ensure([], function (require) {
+                record(require('ophan/embed'));
+            }, 'ophan-embed');
         } else {
-            require(['ophan/ng'], record);
+            record(ophan);
         }
-
     }
 
     function initOphanTracking(player, mediaId) {
@@ -275,12 +278,17 @@ define([
         events.ready();
     }
 
+    function hideCaption() {
+        $('.js-hide-on-play').hide();
+    }
+
     // These events are so that other libraries (e.g. Ophan) can hook into events without
     // needing to know about videojs
     function bindGlobalEvents(player) {
         player.on('playing', function () {
             kruxTracking(player, 'videoPlaying');
             bean.fire(document.body, 'videoPlaying');
+            hideCaption();
         });
         player.on('pause', function () {
             bean.fire(document.body, 'videoPause');
