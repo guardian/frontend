@@ -46,7 +46,11 @@ define([
     // =======================
 
     // Common variant properties.
-    var maxViews = {};
+    var maxViews = {
+        days: 30,
+        count: 4,
+        minDaysBetweenViews: 0
+    };
     var successOnView = true;
 
     var defaultVariantArgs = {
