@@ -8,7 +8,7 @@
             ],
             "plugins": [
                 "babel-plugin-transform-runtime",
-                "transform-flow-strip-types",
+                "babel-plugin-transform-flow-strip-types",
                 "babel-plugin-add-module-exports",
             ],
         },
@@ -20,7 +20,7 @@
             ],
             "plugins": [
                 "babel-plugin-transform-runtime",
-                "transform-flow-strip-types",
+                "babel-plugin-transform-flow-strip-types",
                 "babel-plugin-add-module-exports",
             ],
         },
@@ -31,7 +31,10 @@
                         "node": "current"
                     }
                 }]
-            ]
+            ],
+            "plugins": [
+                "babel-plugin-transform-flow-strip-types",
+            ],
         },
         "internal": {
             "presets": [
@@ -55,7 +58,7 @@
             ],
             "plugins": [
                 "babel-plugin-transform-runtime",
-                "transform-flow-strip-types"
+                "babel-plugin-transform-flow-strip-types",
                 "babel-plugin-add-module-exports",
             ],
         },
