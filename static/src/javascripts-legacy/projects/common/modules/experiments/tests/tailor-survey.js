@@ -15,22 +15,24 @@ define([
     'lodash/collections/forEach',
     'ophan/ng',
     'lib/template'
-], function (bean,
-             bonzo,
-             fastdom,
-             Promise,
-             debounce,
-             config,
-             cookies,
-             storage,
-             mediator,
-             fastdomPromise,
-             privateBrowsing,
-             tailorSurvey,
-             fetchJson,
-             forEach,
-             ophan,
-             template) {
+], function (
+    bean,
+    bonzo,
+    fastdom,
+    Promise,
+    debounce,
+    config,
+    cookies,
+    storage,
+    mediator,
+    fastdomPromise,
+    privateBrowsing,
+    tailorSurvey,
+    fetchJson,
+    forEach,
+    ophan,
+    template
+) {
     return function () {
         this.id = 'TailorSurvey';
         this.start = '2017-03-07';
