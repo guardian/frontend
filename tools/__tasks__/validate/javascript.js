@@ -11,6 +11,12 @@ const error = ctx => {
     );
 };
 
+const flowError = ctx => {
+    ctx.messages.push(
+        `Your editor may be able to catch flow errors as you work:\n${chalk.underline('https://github.com/ryyppy/flow-guide#editor-integration')}`
+    );
+};
+
 module.exports = {
     description: 'Lint JS',
     task: [
@@ -28,6 +34,11 @@ module.exports = {
             description: 'Lint everything else',
             task: `eslint *.js tools/**/*.js dev/**/*.js ${config}`,
             onError: error,
+        },
+        {
+            description: 'Run Flowtype checks on static/src/javascripts/',
+            task: `flow`,
+            onError: flowError,
         },
     ],
     concurrent: true,
