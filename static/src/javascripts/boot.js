@@ -1,3 +1,5 @@
+// @flow
+
 import domready from 'domready';
 import raven from 'lib/raven';
 import bootStandard from 'bootstraps/standard/main';

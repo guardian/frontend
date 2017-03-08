@@ -8,6 +8,7 @@
             ],
             "plugins": [
                 "babel-plugin-transform-runtime",
+                "transform-flow-strip-types",
                 "babel-plugin-add-module-exports",
             ],
         },
@@ -19,6 +20,7 @@
             ],
             "plugins": [
                 "babel-plugin-transform-runtime",
+                "transform-flow-strip-types",
                 "babel-plugin-add-module-exports",
             ],
         },
@@ -53,6 +55,7 @@
             ],
             "plugins": [
                 "babel-plugin-transform-runtime",
+                "transform-flow-strip-types"
                 "babel-plugin-add-module-exports",
             ],
         },

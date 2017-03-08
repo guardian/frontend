@@ -278,12 +278,17 @@ define([
         events.ready();
     }
 
+    function hideCaption() {
+        $('.js-hide-on-play').hide();
+    }
+
     // These events are so that other libraries (e.g. Ophan) can hook into events without
     // needing to know about videojs
     function bindGlobalEvents(player) {
         player.on('playing', function () {
             kruxTracking(player, 'videoPlaying');
             bean.fire(document.body, 'videoPlaying');
+            hideCaption();
         });
         player.on('pause', function () {
             bean.fire(document.body, 'videoPause');
