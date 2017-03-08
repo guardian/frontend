@@ -115,42 +115,40 @@ define([
         });
     }
 
-    return {
-        init: function () {
-            if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
-                closeDisabledSlots.init(true);
-                return Promise.resolve();
-            }
-
-            userTiming.mark('commercial start');
-            robust.catchErrorsAndLog('ga-user-timing-commercial-start', function () {
-                ga.trackPerformance('Javascript Load', 'commercialStart', 'Commercial start parse time');
-            });
-
-            // Stub the command queue
-            window.googletag = { cmd: [] };
-
-            return loadModules(commercialModules, performanceLogging.primaryBaseline)
-            .then(function () {
-                mediator.emit('page:commercial:ready');
-                userTiming.mark('commercial end');
-                robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
-                    ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
-                });
-                if (config.page.isHosted) {
-                    // Wait for all custom timing async work to finish before manually reporting the perf data.
-                    // There are no MPUs on hosted pages, so no slot render events, and therefore no reporting would be done.
-                    Promise.all(customTimingModules).then(performanceLogging.reportTrackingData);
-                }
-            })
-            .catch(function (err) {
-                // Just in case something goes wrong, we don't want it to
-                // prevent enhanced from loading
-                reportError(err, {
-                    feature: 'commercial'
-                });
-            });
+    return function () {
+        if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
+            closeDisabledSlots.init(true);
+            return Promise.resolve();
         }
-    };
+
+        userTiming.mark('commercial start');
+        robust.catchErrorsAndLog('ga-user-timing-commercial-start', function () {
+            ga.trackPerformance('Javascript Load', 'commercialStart', 'Commercial start parse time');
+        });
+
+        // Stub the command queue
+        window.googletag = { cmd: [] };
+
+        return loadModules(commercialModules, performanceLogging.primaryBaseline)
+        .then(function () {
+            mediator.emit('page:commercial:ready');
+            userTiming.mark('commercial end');
+            robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
+                ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
+            });
+            if (config.page.isHosted) {
+                // Wait for all custom timing async work to finish before manually reporting the perf data.
+                // There are no MPUs on hosted pages, so no slot render events, and therefore no reporting would be done.
+                Promise.all(customTimingModules).then(performanceLogging.reportTrackingData);
+            }
+        })
+        .catch(function (err) {
+            // Just in case something goes wrong, we don't want it to
+            // prevent enhanced from loading
+            reportError(err, {
+                feature: 'commercial'
+            });
+        });
+    }
 
 });
