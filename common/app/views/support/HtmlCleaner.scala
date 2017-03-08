@@ -464,24 +464,6 @@ case class PhotoEssayQuotes(isPhotoEssay: Boolean) extends HtmlCleaner {
   }
 }
 
-case class HalfWidth(isPhotoEssay: Boolean) extends HtmlCleaner {
-  override def clean (document: Document): Document = {
-    if(isPhotoEssay){
-      document.getElementsByClass("element--halfWidth").foreach{ image =>
-        //check previous element has .wrapper
-        if(image.previousElementSibling().hasClass("halfWidth--wrapper")){
-          image.addClass("banana");
-        }else{
-          image.addClass("mango");
-        }
-        //if it doesnt wrap the element in div with .wrapper
-        // if it does, move it inside the .wrapper
-      }
-    }
-    document
-  }
-}
-
 case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isImmersive) {
