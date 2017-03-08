@@ -58,8 +58,8 @@ define([
     function buildVariant(variantId, templateArgs) {
         var args = { id: variantId };
         if (variantId !== 'control') {
-            args.template = function(membershipUrl, contributionUrl) {
-                return buildHtml(membershipUrl, contributionUrl, templateArgs)
+            args.template = function(variant) {
+                return buildHtml(variant.membershipURL, variant.contributeURL, templateArgs)
             }
         }
         return assign({}, defaultVariantArgs, args)
