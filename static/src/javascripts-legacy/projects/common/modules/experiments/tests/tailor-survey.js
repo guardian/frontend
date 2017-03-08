@@ -72,9 +72,9 @@ define([
         // Every time we show a survey to a user, we cannot show it again to that suer for a specified number of days.
         // We store 'surveyId=dayShowAgain' in the cookie, and pass any surveys that cannot currently be shown in the
         // call to tailor.
-        function storeSurveyShowedInCookie(surveySuggestionToShow) {
-            var id = surveySuggestionToShow.data.survey.surveyId;
-            var dayCanShowAgain = surveySuggestionToShow.data.dayCanShowAgain;
+        function storeSurveyShowedInCookie(data) {
+            var id = data.survey.surveyId;
+            var dayCanShowAgain = data.dayCanShowAgain;
 
             var newCookieValue = id + '=' + dayCanShowAgain;
 
@@ -98,10 +98,10 @@ define([
         function getSurveySuggestionToShow(response) {
             if (response.suggestions) {
                 var surveySuggestions = response.suggestions.filter(function (suggestion) {
-                    return suggestion.class == 'SurveySuggestion';
+                    return suggestion.class === 'SurveySuggestion';
                 });
 
-                if (surveySuggestions) {
+                if (surveySuggestions.length > 0) {
                     return surveySuggestions[0];
                 }
             }
@@ -122,15 +122,15 @@ define([
             var surveysWeCannotShow = values.filter(isAfterToday);
 
             return surveysWeCannotShow.map(function (idAndDate) {
-                return idAndDate.split('=')[0]
+                return idAndDate.split('=')[0];
             }).toString();
         }
 
         // Getting simple json from tailor's reponse to be passed to the html template
-        function getJsonFromSurvey(surveySuggestionToShow) {
+        function getJsonFromSurvey(survey) {
             return {
-                "question" : surveySuggestionToShow.data.survey.question,
-                "id" : surveySuggestionToShow.data.survey.surveyId
+                question : survey.question,
+                id : survey.surveyId
             };
         }
 
@@ -150,9 +150,9 @@ define([
 
                     if(surveySuggestionToShow) {
 
-                        storeSurveyShowedInCookie(surveySuggestionToShow);
+                        storeSurveyShowedInCookie(surveySuggestionToShow.data);
 
-                        var json = getJsonFromSurvey(surveySuggestionToShow);
+                        var json = getJsonFromSurvey(surveySuggestionToShow.data.survey);
 
                         var componentName = 'data_tailor_survey_' + json.id;
 
@@ -195,20 +195,20 @@ define([
             var surveyQuestions = document.getElementsByClassName('fi-survey__button');
 
             forEach(surveyQuestions, function (question) {
-                    bean.on(question, 'click', function (event) {
-                        if (event.target.attributes.getNamedItem("data-link-name")) {
-                            var answer = event.target.attributes.getNamedItem("data-link-name").value;
-                            recordOphanAbEvent(answer, surveyId);
+                bean.on(question, 'click', function (event) {
+                    if (event.target.attributes.getNamedItem("data-link-name")) {
+                        var answer = event.target.attributes.getNamedItem("data-link-name").value;
+                        recordOphanAbEvent(answer, surveyId);
 
-                            mediator.emit('tailor:survey:clicked');
-                            fastdom.write(function () {
-                                disableRadioButtons('fi-survey__button');
-                                surveyFadeOut();
-                                thankyouFadeIn();
-                            });
-                        }
-                    });
-                }
+                        mediator.emit('tailor:survey:clicked');
+                        fastdom.write(function () {
+                            disableRadioButtons('fi-survey__button');
+                            surveyFadeOut();
+                            thankyouFadeIn();
+                        });
+                    }
+                });
+            }
             );
         }
 
