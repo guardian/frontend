@@ -118,12 +118,12 @@ define([
     return {
         init: function () {
             if (!config.switches.commercial) {
-                return;
+                return Promise.resolve();
             }
 
             if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
                 closeDisabledSlots.init(true);
-                return;
+                return Promise.resolve();
             }
 
             userTiming.mark('commercial start');

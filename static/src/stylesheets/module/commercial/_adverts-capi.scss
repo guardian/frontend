@@ -40,6 +40,11 @@
 
     .advert-container {
         @include mq($until: tablet) {
+
+            .advert__standfirst {
+                min-height: $gs-row-height;
+            }
+
             &:first-child > .advert {
                 padding-bottom: $gs-baseline / 2;
             }
@@ -61,10 +66,26 @@
                 flex-direction: column;
                 width: 60px;
             }
+        }
 
-            .badge__logo {
-                max-width: 100%;
-            }
+        .badge {
+            padding-right: 0;
+            max-width: 100%;
+        }
+
+        .badge__link {
+            /* [1] Prevents IE11 bug where the height would go ballooney */
+            height: 100%;
+        }
+
+        .badge__label {
+            text-align: center;
+            width: 100%;
+        }
+
+        .badge__logo {
+            max-width: 100%;
+            margin-left: 0;
         }
     }
 }
@@ -276,6 +297,8 @@
     @include f-textSans;
     background: $paid-article-card-bg;
     border-top-color: $paid-article-brand;
+    width: 100%;
+    padding-bottom: $gs-baseline * 8;
 
     &:hover,
     &:focus {

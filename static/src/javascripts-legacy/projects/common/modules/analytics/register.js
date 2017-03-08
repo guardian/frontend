@@ -7,10 +7,12 @@
  */
 define([
     'lib/mediator',
-    'lodash/collections/where'
+    'lodash/collections/where',
+    'ophan/ng'
 ], function (
     mediator,
-    where
+    where,
+    ophan
 ) {
     var register = [],
         startTime = Date.now();
@@ -39,10 +41,8 @@ define([
     }
 
     function sendEvent() {
-        require(['ophan/ng'], function (ophan) {
-            ophan.record({
-                register: register
-            });
+        ophan.record({
+            register: register
         });
     }
 

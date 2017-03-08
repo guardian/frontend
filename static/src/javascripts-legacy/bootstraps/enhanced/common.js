@@ -51,7 +51,8 @@ define([
     'common/modules/email/email',
     'common/modules/email/email-article',
     'bootstraps/enhanced/identity-common',
-    'lodash/collections/forEach'
+    'lodash/collections/forEach',
+    'ophan/ng'
 ], function (
     fastdom,
     bean,
@@ -103,7 +104,8 @@ define([
     email,
     emailArticle,
     identity,
-    forEach
+    forEach,
+    ophan
 ) {
     var modules = {
             initialiseTopNavItems: function () {
@@ -159,15 +161,13 @@ define([
             loadAnalytics: function () {
                 interactionTracking.init();
                 if (config.switches.ophan) {
-                    require(['ophan/ng'], function (ophan) {
-                        if (config.switches.scrollDepth) {
-                            mediator.on('scrolldepth:data', ophan.record);
+                    if (config.switches.scrollDepth) {
+                        mediator.on('scrolldepth:data', ophan.record);
 
-                            new ScrollDepth({
-                                isContent: /Article|LiveBlog/.test(config.page.contentType)
-                            });
-                        }
-                    });
+                        new ScrollDepth({
+                            isContent: /Article|LiveBlog/.test(config.page.contentType)
+                        });
+                    }
                 }
             },
 

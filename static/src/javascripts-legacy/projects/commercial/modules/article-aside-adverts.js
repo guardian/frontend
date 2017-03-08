@@ -59,7 +59,7 @@ define([
                          ? 'right-sticky' : 'right-small';
             }
 
-            $adSlot = createSlot(adType, 'mpu-banner-ad');
+            $adSlot = createSlot(adType, { classes: 'mpu-banner-ad' });
 
             return fastdom.write(function () {
                 if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {

@@ -70,7 +70,7 @@ define([
                 'top-above-nav' : isMobile ?
                 'inline' + slotCounter :
                 'inline' + (slotCounter + 1);
-            var $adSlot = bonzo(createSlot(slotName, 'liveblog-inline block'));
+            var $adSlot = bonzo(createSlot('inline', { name: slotName, classes: 'liveblog-inline' }));
             $adSlot.insertAfter(slots[i]);
             addSlot($adSlot);
             slotCounter += 1;
