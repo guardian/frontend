@@ -3,15 +3,10 @@
 @import views.support.Commercial.isPaidContent
 @import views.support.ContributorLinks
 @import views.support.TrailCssClasses.toneClass
-@import views.support.RenderClasses
 
 @(page: ContentPage)(implicit request: RequestHeader)
 
-<div class="@RenderClasses(Map(
-        "tonal--@toneClass(page.item)" -> !isPaidContent(page),
-        "tonal--tone-paidcontent" -> isPaidContent(page)
-    ), "content", "content--immersive", "tonal", "immersive-main-media"
-    )">
+<div class="content content--immersive tonal tonal--@toneClass(page.item) immersive-main-media">
 
     @if(isPaidContent(page)) {
         @fragments.guBand()
