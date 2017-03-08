@@ -81,9 +81,6 @@
                     @fragments.immersiveMainMedia(page)
                 </div>
             }
-            case page: model.ContentPage if (page.item.content.isRecipeArticle && false) => {
-                @headerAndTopAds(showAdverts, edition, content)
-            }
             case _: commercial.hosted.HostedPage => {}
             case _ => {
                 @headerAndTopAds(showAdverts, edition, content)

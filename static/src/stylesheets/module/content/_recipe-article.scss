@@ -13,6 +13,7 @@ $padding-wide: 100px;
 .recipes__main {
     display: flex;
     flex-wrap: nowrap;
+    justify-content: space-between;
 }
 
 .recipe__article .recipe__article--headline h1,
