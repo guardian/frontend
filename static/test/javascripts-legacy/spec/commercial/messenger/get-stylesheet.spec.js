@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'lib/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (

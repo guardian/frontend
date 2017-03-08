@@ -1,9 +1,9 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/url',
+    'lib/$',
+    'lib/config',
+    'lib/url',
     'common/modules/component',
     'common/modules/discussion/activity-stream',
     'lodash/objects/mapValues'

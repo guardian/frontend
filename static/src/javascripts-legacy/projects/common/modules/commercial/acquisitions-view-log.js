@@ -1,5 +1,5 @@
 define([
-    'common/utils/storage'
+    'lib/storage'
 ], function (storage) {
 
     var viewKey = 'gu.contributions.views';
@@ -30,7 +30,7 @@ define([
             return (test ? view.testId === test.id : true) && view.date > (now - ms);
         }).length;
     }
-    
+
     return {
         logView: logView,
         viewsInPreviousDays: viewsInPreviousDays

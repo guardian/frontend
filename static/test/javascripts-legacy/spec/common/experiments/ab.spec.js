@@ -17,7 +17,7 @@ define([
             ab, config, mvtCookie;
 
         beforeEach(function (done) {
-            injector.require(['common/modules/experiments/ab', 'common/utils/config', 'common/modules/analytics/mvt-cookie'], function () {
+            injector.require(['common/modules/experiments/ab', 'lib/config', 'common/modules/analytics/mvt-cookie'], function () {
                 ab = arguments[0];
                 config = arguments[1];
                 mvtCookie = arguments[2];

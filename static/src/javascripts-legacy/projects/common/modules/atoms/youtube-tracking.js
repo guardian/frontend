@@ -1,13 +1,15 @@
 define([
-    'common/utils/mediator',
+    'lib/mediator',
     'lodash/collections/forEach',
-    'common/utils/config',
-    'common/modules/video/ga-helper'
+    'lib/config',
+    'common/modules/video/ga-helper',
+    'ophan/ng'
 ], function (
     mediator,
     forEach,
     config,
-    gaHelper
+    gaHelper,
+    ophan
 ) {
 
     function eventAction() {
@@ -19,7 +21,7 @@ define([
     }
 
     function initYoutubeEvents(videoId) {
-        
+
         var gaTracker = config.googleAnalytics.trackers.editorial;
 
         var events = {
@@ -53,15 +55,13 @@ define([
         });
 
         function ophanRecord(event) {
-            require(['ophan/ng'], function (ophan) {
-                var eventObject = {
-                    video: {
-                        id: 'gu-video-youtube-' + event.mediaId,
-                        eventType: 'video:content:' + event.eventType
-                    }
-                };
-                ophan.record(eventObject);
-            });
+            var eventObject = {
+                video: {
+                    id: 'gu-video-youtube-' + event.mediaId,
+                    eventType: 'video:content:' + event.eventType
+                }
+            };
+            ophan.record(eventObject);
         }
     }
 

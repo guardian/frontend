@@ -2,9 +2,9 @@ define([
     'commercial/modules/hosted/next-video-autoplay',
     'common/modules/atoms/youtube-player',
     'common/modules/atoms/youtube-tracking',
-    'common/utils/$',
-    'common/utils/detect',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/detect',
+    'lib/mediator',
     'lodash/collections/contains',
     'lodash/collections/forEach'
 ], function (

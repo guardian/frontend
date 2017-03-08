@@ -1,6 +1,6 @@
 define([
     'bean',
-    'common/utils/$',
+    'lib/$',
     'helpers/injector'
 ], function (
     bean,
@@ -14,7 +14,7 @@ define([
             SearchTool, mediator;
 
         beforeEach(function (done) {
-            injector.require(['facia/modules/onwards/search-tool', 'common/utils/mediator'], function () {
+            injector.require(['facia/modules/onwards/search-tool', 'lib/mediator'], function () {
                 SearchTool = arguments[0];
                 mediator = arguments[1];
 

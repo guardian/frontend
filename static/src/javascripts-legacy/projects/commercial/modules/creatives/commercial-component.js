@@ -5,9 +5,9 @@
 define([
     'fastdom',
     'Promise',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/config',
+    'lib/mediator',
     'common/modules/lazyload',
     'common/modules/ui/toggles',
     'lodash/objects/isArray',
@@ -31,8 +31,7 @@ define([
 ) {
     var urlBuilders = {
         capiSingle:     complexUrlBuilder('capi-single', false, false, true),
-        capi:           complexUrlBuilder('capi', false, false, true),
-        paidforCard:    complexUrlBuilder('paid', '', false, true)
+        capi:           complexUrlBuilder('capi', false, false, true)
     };
 
     function complexUrlBuilder(url, withSpecificId, withKeywords, withSection) {
@@ -49,12 +48,6 @@ define([
     function createToggle(el) {
         if (el.querySelector('.popup__toggle')) {
             new Toggles(el).init();
-        }
-    }
-
-    function setFluid(el) {
-        if (el.classList.contains('ad-slot--container-inline')) {
-            el.classList.add('ad-slot--fluid');
         }
     }
 
@@ -141,11 +134,7 @@ define([
 
     CommercialComponent.prototype.postLoadEvents = {
         capi: createToggle,
-        capiSingle: createToggle,
-        paidforCard: function (el) {
-            setFluid(el);
-            createToggle(el);
-        }
+        capiSingle: createToggle
     };
 
     return CommercialComponent;

@@ -156,6 +156,12 @@ case object TheGuardianTodayUS extends FrontEmailMetadata {
   override val banner = Some("the-guardian-today-us.png")
 }
 
+case object SleeveNotes extends FrontEmailMetadata {
+  val name = "Sleeve Notes"
+  override val banner = Some("sleeve-notes.png")
+  override val toneColour = Some("#ffbb00")
+}
+
 
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
@@ -185,7 +191,8 @@ object EmailAddons {
     TheFlyer,
     CuratedMediaBriefing,
     Opinion,
-    TheGuardianTodayUS
+    TheGuardianTodayUS,
+    SleeveNotes
   )
 
   implicit class EmailContentType(p: Page) {

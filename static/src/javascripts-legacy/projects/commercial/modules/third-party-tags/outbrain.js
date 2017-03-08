@@ -1,17 +1,18 @@
 define([
     'Promise',
-    'common/utils/fastdom-promise',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/template',
-    'common/utils/steady-page',
+    'lib/fastdom-promise',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
+    'lib/template',
+    'lib/steady-page',
     'commercial/modules/dfp/track-ad-render',
     'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/outbrain-codes',
     'raw-loader!commercial/views/outbrain.html',
-    'common/utils/load-script',
-    'common/utils/check-mediator'
+    'lib/load-script',
+    'common/modules/check-mediator',
+    'ophan/ng'
 ], function (
     Promise,
     fastdom,
@@ -25,7 +26,8 @@ define([
     getCode,
     outbrainStr,
     loadScript,
-    checkMediator
+    checkMediator,
+    ophan
 ) {
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
     var outbrainTpl = template(outbrainStr);
@@ -87,13 +89,10 @@ define([
     }
 
     function tracking(widgetCode) {
-        // Ophan
-        require(['ophan/ng'], function (ophan) {
-            ophan.record({
-                outbrain: {
-                    widgetId: widgetCode
-                }
-            });
+        ophan.record({
+            outbrain: {
+                widgetId: widgetCode
+            }
         });
     }
 

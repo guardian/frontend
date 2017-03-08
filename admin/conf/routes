@@ -93,6 +93,8 @@ GET         /commercial/adops/takeovers-empty-mpus/create                       
 POST        /commercial/adops/takeovers-empty-mpus/create                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
 POST        /commercial/adops/takeovers-empty-mpus/remove                                           controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(takeoverStr)
 GET         /commercial/invalid-lineitems                                                           controllers.admin.CommercialController.renderInvalidItems()
+GET         /commercial/adgrabber/order/:orderId                                                    controllers.admin.CommercialController.getLineItemsForOrder(orderId: String)
+GET         /commercial/adgrabber/previewUrls/:lineItemId/:section                                  controllers.admin.CommercialController.getCreativesListing(lineItemId: String, section: String)
 
 # Metrics
 GET         /metrics/loadbalancers                                                                  controllers.admin.MetricsController.renderLoadBalancers()

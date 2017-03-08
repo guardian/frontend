@@ -2,9 +2,9 @@ define([
     'qwery',
     'bean',
     'Promise',
-    'common/utils/fastdom-promise',
-    'common/utils/config',
-    'common/utils/mediator',
+    'lib/fastdom-promise',
+    'lib/config',
+    'lib/mediator',
     'commercial/modules/dfp/track-ad-render',
     'lodash/functions/memoize'
 ], function (

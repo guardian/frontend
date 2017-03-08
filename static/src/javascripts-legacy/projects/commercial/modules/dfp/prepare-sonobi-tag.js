@@ -1,14 +1,16 @@
 define([
     'Promise',
-    'common/utils/config',
-    'common/utils/load-script',
+    'lib/config',
+    'lib/load-script',
     'commercial/modules/commercial-features',
+    'commercial/modules/build-page-targeting',
     'commercial/modules/dfp/dfp-env'
 ], function(
     Promise,
     config,
     loadScript,
     commercialFeatures,
+    buildPageTargeting,
     dfpEnv
 ){
 
@@ -44,6 +46,7 @@ define([
 
     function init(start, stop) {
         if (dfpEnv.sonobiEnabled && commercialFeatures.dfpAdvertising) {
+            buildPageTargeting();
             setupSonobi(start, stop);
         }
 

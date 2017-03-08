@@ -1,8 +1,8 @@
 define([
-    'common/utils/$',
+    'lib/$',
     'bonzo',
     'common/modules/avatar/api',
-    'common/utils/config'
+    'lib/config'
 ], function ($, bonzo, avatarApi, config) {
 
     function init() {

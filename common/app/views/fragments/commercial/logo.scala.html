@@ -18,7 +18,9 @@
     }
 }
 
-@branding.logo.label
+<div class="badge__label">
+  @branding.logo.label
+</div>
 <a class="badge__link" href="@branding.logo.link" data-sponsor="@branding.sponsorName.toLowerCase">
     @if(request.isAmp) {
         @if(onDarkBackground && branding.logoForDarkBackground.nonEmpty) {

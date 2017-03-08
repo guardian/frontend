@@ -188,9 +188,9 @@ $gutter-large: 55px;
 }
 
 .new-header__nav__link {
+    @include nav-links;
     // Override a from _lists.scss
     color: $news-support-1;
-    @include nav-links;
     cursor: pointer;
 
     &:focus,
@@ -743,21 +743,27 @@ $caption-button-size: 32px;
         .reveal-caption {
             position: absolute;
             right: $gs-gutter / 4;
+            bottom: $gs-baseline/2;
             width: $caption-button-size;
             height: $caption-button-size;
             z-index: 1;
             background-color: rgba($neutral-1, .4);
             border-radius: 50%;
-        }
-        .reveal-caption--img {
-            bottom: $gs-baseline/2;
+
+            &:after {
+                content: '';
+                position: absolute;
+                top: -$gs-gutter;
+                right: -$gs-gutter;
+                bottom: -$gs-gutter;
+                left: -$gs-gutter;
+                border-radius: 50%;
+                z-index: -1;
+            }
         }
 
+        .caption--main.caption--img,
         .caption--main.caption--video {
-            padding-bottom: 0;
-        }
-
-        .caption--main.caption--img {
             position: absolute;
             background: rgba($multimedia-support-5, .8);
             color: #ffffff;
@@ -773,7 +779,8 @@ $caption-button-size: 32px;
                 color: #ffffff;
             }
 
-            &.caption--img {
+            &.caption--img,
+            &.caption--video {
                 bottom: 0;
                 padding-bottom: $gs-baseline;
             }
@@ -845,7 +852,7 @@ $caption-button-size: 32px;
 
 .back-to-top__text {
     display: inline-block;
-    color: white;
+    color: #ffffff;
     line-height: 30px;
     padding-right: $gs-gutter / 2;
 

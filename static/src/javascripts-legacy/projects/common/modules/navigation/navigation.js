@@ -2,9 +2,9 @@ define([
     'bean',
     'qwery',
     'fastdom',
-    'common/utils/mediator',
-    'common/utils/detect',
-    'common/utils/$'
+    'lib/mediator',
+    'lib/detect',
+    'lib/$'
 ], function (
     bean,
     qwery,

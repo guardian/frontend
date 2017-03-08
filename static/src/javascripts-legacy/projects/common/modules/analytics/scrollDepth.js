@@ -1,5 +1,5 @@
 define([
-    'common/utils/mediator',
+    'lib/mediator',
     'lodash/objects/assign',
     'lodash/functions/bindAll',
     'lodash/functions/debounce'

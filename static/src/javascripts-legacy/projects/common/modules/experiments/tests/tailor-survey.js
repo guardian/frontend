@@ -4,15 +4,16 @@ define([
     'fastdom',
     'Promise',
     'lodash/functions/debounce',
-    'common/utils/config',
-    'common/utils/cookies',
-    'common/utils/storage',
-    'common/utils/mediator',
-    'common/utils/fastdom-promise',
-    'common/utils/private-browsing',
+    'lib/config',
+    'lib/cookies',
+    'lib/storage',
+    'lib/mediator',
+    'lib/fastdom-promise',
+    'lib/private-browsing',
     'raw-loader!common/views/experiments/tailor-survey.html',
-    'common/utils/fetch-json',
-    'lodash/collections/forEach'
+    'lib/fetch-json',
+    'lodash/collections/forEach',
+    'ophan/ng'
 ], function (
     bean,
     bonzo,
@@ -27,7 +28,8 @@ define([
     privateBrowsing,
     quickSurvey,
     fetchJson,
-    forEach
+    forEach,
+    ophan
 ) {
     return function () {
         this.id = 'TailorSurvey';
@@ -116,11 +118,9 @@ define([
         }
 
         function recordOphanAbEvent(answer) {
-            require(['ophan/ng'], function (ophan) {
-                ophan.record({
-                    component: 'tailor-survey',
-                    value: answer
-                });
+            ophan.record({
+                component: 'tailor-survey',
+                value: answer
             });
         }
 

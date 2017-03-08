@@ -1,13 +1,15 @@
 define([
     'Promise',
-    'common/utils/config',
-    'common/utils/fastdom-promise',
+    'lib/config',
+    'lib/fastdom-promise',
     'common/modules/experiments/ab',
+    'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/add-slot',
     'commercial/modules/dfp/create-slot',
     'commercial/modules/dfp/track-ad-render',
+    'commercial/modules/dfp/get-advert-by-id',
     'commercial/modules/commercial-features'
-], function (Promise, config, fastdom, ab, addSlot, createSlot, trackAdRender, commercialFeatures) {
+], function (Promise, config, fastdom, ab, dfpEnv, addSlot, createSlot, trackAdRender, getAdvertById, commercialFeatures) {
     return {
         init: init
     };
@@ -67,7 +69,14 @@ define([
             if (args) {
                 fastdom.write(function () {
                     args[1].parentNode.insertBefore(args[0], args[1].nextSibling);
-                    addSlot(args[0]);
+                })
+                .then(function () {
+                    addSlot(args[0], true);
+
+                    // Horrible but temporary hack. addSlot queue the ad for display,
+                    // i.e. it adds in onto the advertsToLoad stack
+                    var advert = getAdvertById(args[0].id);
+                    dfpEnv.advertsToLoad.splice(dfpEnv.advertsToLoad.indexOf(advert));
                 });
             }
         });

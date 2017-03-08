@@ -21,15 +21,6 @@ define([
         name: 'ContributionsEpicAskFourEarning',
         variants: ['control']
     };
-    var ContributionsEpicUrgency = {
-        name: 'ContributionsEpicUrgency',
-        variants: ['control', 'paywall_tweak', 'values_tweak', 'values_full']
-    };
-
-    var AcquisitionsLoveBoatV2 = {
-        name: 'AcquisitionsLoveBoatV2',
-        variants: ['control','love','boat']
-    };
 
     var GuardianTodaySignupMessaging = {
         name: 'GuardianTodaySignupMessaging',
@@ -40,9 +31,7 @@ define([
         ContributionsEpicAlwaysAskStrategy,
         ContributionsEpicBrexit,
         ContributionsEpicAskFourStagger,
-        ContributionsEpicAskFourEarning,
-        ContributionsEpicUrgency,
-        AcquisitionsLoveBoatV2
+        ContributionsEpicAskFourEarning
     ];
 
     var emailTests = [

@@ -1,13 +1,13 @@
 define([
     'bean',
     'qwery',
-    'common/utils/config',
-    'common/utils/geolocation',
-    'common/utils/storage',
-    'common/utils/template',
+    'lib/config',
+    'lib/geolocation',
+    'lib/storage',
+    'lib/template',
     'commercial/modules/commercial-features',
     'commercial/modules/user-features',
-    'common/utils/mediator'
+    'lib/mediator'
 ], function (
     bean,
     qwery,
@@ -226,7 +226,7 @@ define([
     };
 
     return [
-        new EditionTest('UK', 'MembershipEngagementBannerUkRemindMeLater', '2017-02-02', '2017-03-06', 'remind_me_later')
+        new EditionTest('UK', 'MembershipEngagementBannerUkRemindMeLater', '2017-02-02', '2017-03-20', 'remind_me_later')
             .addMembershipVariant('control', {})
             .addMembershipVariant('remind_me', {showRemindMe : true}),
 

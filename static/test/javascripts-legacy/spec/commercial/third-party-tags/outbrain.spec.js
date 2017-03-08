@@ -3,7 +3,7 @@ define([
     'fastdom',
     'helpers/injector',
     'helpers/fixtures',
-    'common/utils/$',
+    'lib/$',
     'Promise'
 ], function (
     fastdom,
@@ -38,12 +38,12 @@ define([
             injector.mock('commercial/modules/dfp/track-ad-render', function(id) {
                 return Promise.resolve(ads[id]);
             });
-            injector.mock('common/utils/load-script', loadScript);
+            injector.mock('lib/load-script', loadScript);
             injector.require([
                 'commercial/modules/third-party-tags/outbrain',
                 'commercial/modules/third-party-tags/outbrain-sections',
-                'common/utils/config',
-                'common/utils/detect',
+                'lib/config',
+                'lib/detect',
                 'commercial/modules/commercial-features'
             ], function () {
                 sut      = arguments[0];

@@ -1,6 +1,6 @@
 define([
-    'common/utils/url',
-    'common/utils/config'
+    'lib/url',
+    'lib/config'
 ], function (url, config) {
     var dfpEnv = {
         /* renderStartTime: integer. Point in time when DFP kicks in */
