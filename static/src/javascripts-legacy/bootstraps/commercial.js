@@ -53,7 +53,7 @@ define([
     ga,
     userFeatures
 ) {
-    var primaryModules = [
+    var commercialModules = [
         ['cm-highMerch', highMerch.init],
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
@@ -62,10 +62,7 @@ define([
         ['cm-articleAsideAdverts', articleAsideAdverts.init, true],
         ['cm-articleBodyAdverts', articleBodyAdverts.init, true],
         ['cm-liveblogAdverts', liveblogAdverts.init, true],
-        ['cm-closeDisabledSlots', closeDisabledSlots.init]
-    ];
-
-    var secondaryModules = [
+        ['cm-closeDisabledSlots', closeDisabledSlots.init],
         ['cm-stickyTopBanner', stickyTopBanner.init],
         ['cm-fill-advert-slots', fillAdvertSlots.init, true],
         ['cm-paidContainers', paidContainers.init],
@@ -75,12 +72,13 @@ define([
     var customTimingModules = [];
 
     if (config.page.isHosted) {
-        secondaryModules.push(
+        commercialModules.push(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init, true],
             ['cm-hostedGallery', hostedGallery.init, true],
             ['cm-hostedOnward', hostedOnward.init, true],
-            ['cm-hostedOJCarousel', hostedOJCarousel.init]);
+            ['cm-hostedOJCarousel', hostedOJCarousel.init]
+        );
     }
 
     function loadModules(modules, baseline) {
@@ -134,10 +132,7 @@ define([
             // Stub the command queue
             window.googletag = { cmd: [] };
 
-            return loadModules(primaryModules, performanceLogging.primaryBaseline)
-            .then(function () {
-                return loadModules(secondaryModules, performanceLogging.secondaryBaseline);
-            })
+            return loadModules(commercialModules, performanceLogging.primaryBaseline)
             .then(function () {
                 mediator.emit('page:commercial:ready');
                 userTiming.mark('commercial end');
