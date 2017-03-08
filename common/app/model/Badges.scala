@@ -37,21 +37,10 @@ case class SpecialBadge(salt: String, hashedTag: String) extends BaseBadge {
 }
 
 object Badges {
-
-  val ausElection = Badge("australia-news/australian-election-2016", Static("images/badges/aus-election.png"), Some("aus-election"))
-  val voicesOfAmerica = Badge("us-news/series/voices-of-america", Static("images/badges/voices-of-america.svg"), Some("voices-of-america"))
-
-  val rio2016 = Badge("sport/rio-2016", Static("images/badges/rio-2016.svg"))
-
-  val nauru = Badge("news/series/nauru-files", Static("images/badges/nauru-files.svg"))
-
-  val globalWarning = Badge("environment/series/global-warning", Static("images/badges/global-warning.png"), Some("global-warning"))
-
   val newArrivals = Badge("world/series/the-new-arrivals", Static("images/badges/new-arrivals.png"), Some("new-arrivals"))
-
   val brexitGamble = Badge("uk-news/series/the-brexit-gamble", Static("images/badges/EUReferendumBadge.svg"))
 
-  val allBadges = Seq(ausElection, voicesOfAmerica, nauru, rio2016, globalWarning, newArrivals, brexitGamble)
+  val allBadges = Seq(newArrivals, brexitGamble)
 
   def badgeFor(c: ContentType) = {
     badgeForTags(c.tags.tags.map(_.id))
