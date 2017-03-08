@@ -2,7 +2,7 @@
 define([
     'lib/config',
     'lib/fetch-json',
-    'lib/template',
+    'lodash/utilities/template',
     'lodash/collections/countBy',
     'lodash/collections/find',
     'lodash/collections/map',

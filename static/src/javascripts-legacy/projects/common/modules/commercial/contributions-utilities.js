@@ -11,7 +11,7 @@ define([
     'lib/mediator',
     'lib/storage',
     'lib/geolocation',
-    'lib/template',
+    'lodash/utilities/template',
     'raw-loader!common/views/contributions-epic-equal-buttons.html'
 ], function (
     uniq,

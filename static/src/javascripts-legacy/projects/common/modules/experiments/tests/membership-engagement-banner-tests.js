@@ -4,7 +4,7 @@ define([
     'lib/config',
     'lib/geolocation',
     'lib/storage',
-    'lib/template',
+    'lodash/utilities/template',
     'commercial/modules/commercial-features',
     'commercial/modules/user-features',
     'lib/mediator'

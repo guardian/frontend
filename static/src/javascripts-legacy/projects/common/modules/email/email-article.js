@@ -6,7 +6,7 @@ define([
     'common/modules/email/email',
     'lib/config',
     'raw-loader!common/views/email/iframe.html',
-    'lib/template',
+    'lodash/utilities/template',
     'common/modules/article/space-filler',
     'lib/robust',
     'common/modules/email/run-checks',
