@@ -91,21 +91,21 @@ test: install
 coverage: install
 	@./tools/task-runner/runner test/javascript/coverage --stdout
 
-# Lint all assets.
+# Validate all assets.
 validate: install
-	@./tools/task-runner/runner lint --verbose
+	@./tools/task-runner/runner validate --verbose
 
-# Lint all SCSS.
+# Validate all SCSS.
 validate-sass: install # PRIVATE
-	@./tools/task-runner/runner lint/sass --verbose
+	@./tools/task-runner/runner validate/sass --verbose
 
-# Lint all JS.
+# Validate all JS.
 validate-javascript: install # PRIVATE
-	@./tools/task-runner/runner lint/javascript
+	@./tools/task-runner/runner validate/javascript
 
-# Lint all assets.
+# Validate all assets.
 fix: install
-	@./tools/task-runner/runner lint/javascript-fix
+	@./tools/task-runner/runner validate/javascript-fix
 
 validate-amp: install # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js

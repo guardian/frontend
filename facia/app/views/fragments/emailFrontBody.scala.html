@@ -1,3 +1,5 @@
+@import layout.EmailCardStyle
+@import layout.EmailLayouts
 @(page: model.PressedPage)(implicit request: RequestHeader)
 
 @import implicits.ItemKickerImplicits._
@@ -61,7 +63,7 @@
     }
 }
 
-@faciaCardLarge(card: ContentCard, withImage: Boolean) = {
+@faciaCardWithTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
     @paddedRow(Seq(toneClassFromStyle(card.cardStyle))) {
         <div class="facia-card @if(withImage){facia-card--large}">
             @if(withImage) { @imgFromCard(card) }
@@ -69,7 +71,7 @@
                 @headlineAndTrailWithCutout(card, withImage)
             } else {
                 @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
-                    @headline(card, isLarge = withImage)
+                    @headline(card, isLarge = largeHeadline)
                     @trailText(card)
                 }
             }
@@ -77,40 +79,47 @@
     }
 }
 
-@faciaCardSmall(card: ContentCard, withImage: Boolean) = {
+@faciaCardWithoutTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
     @paddedRow(Seq(toneClassFromStyle(card.cardStyle))) {
         <div class="facia-card">
             @if(withImage && imgFromCard(card).isDefined) {
                 @fullRowWithSubColumns() {
-                    @subColumn(7, Seq("facia-card__text")) { @headline(card)}
                     @subColumn(5, Seq("facia-card__text"), last = true) { @imgFromCard(card, 5) }
+                    @subColumn(7, Seq("facia-card__text")) { @headline(card) }
                 }
             } else {
                 @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
-                    @headline(card)
+                    @headline(card, largeHeadline)
                 }
             }
         </div>
     }
 }
 
-@firstCard(card: ContentCard, isFastLayout: Boolean) = {
-    @* if fast layout: small card, with image *@
-    @* if medium or slow layout: large card, with image *@
+@renderCard(card: ContentCard, cardStyle: EmailCardStyle) = {
     @card.cardStyle match {
-        case ExternalLink => { @faciaCardSmall(card, withImage = false) }
-        case _ if isFastLayout => { @faciaCardSmall(card, withImage = true) }
-        case _ => { @faciaCardLarge(card, withImage = true) }
-    }
-}
-
-@otherCard(card: ContentCard, isSlowLayout: Boolean) = {
-    @* if fast or medium layout: small card, no image *@
-    @* if slow layout: large card, no image *@
-    @if(isSlowLayout) {
-        @faciaCardLarge(card, withImage = false)
-    } else {
-        @faciaCardSmall(card, withImage = false)
+        case ExternalLink => {
+            @faciaCardWithoutTrailText(
+                card = card,
+                withImage = false,
+                largeHeadline = false
+            )
+        }
+        case _ => {
+            @if(cardStyle.trailText) {
+                @faciaCardWithTrailText(
+                    card = card,
+                    withImage = cardStyle.image,
+                    largeHeadline = cardStyle.largeHeadline
+                )
+            } else {
+                @faciaCardWithoutTrailText(
+                    card = card,
+                    withImage = cardStyle.image,
+                    largeHeadline = cardStyle.largeHeadline
+                )
+            }
+        }
     }
 }
 
@@ -127,9 +136,9 @@
 
     @collection.cards.zipWithIndex.map { case (card, cardIndex) =>
         @if(cardIndex == 0) {
-            @firstCard(card, isFastLayout = collection.collectionType == "fast")
+            @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).firstCard)
         } else {
-            @otherCard(card, isSlowLayout = collection.collectionType == "slow")
+            @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).otherCards)
         }
     }
 }
