@@ -14,34 +14,32 @@ define([
     // =======================================================================================
 
     // Default arguments for the template.
-    function defaultTemplateArguments() {
-        return {
-            // copy
-            p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism open to all. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-            p1Highlight: '',
-            p1PostHighlight: '',
-            p2: 'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
-            p3: '',
+    var defaultTemplateArgument = {
+        // copy
+        p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism open to all. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+        p1Highlight: '',
+        p1PostHighlight: '',
+        p2: 'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
+        p3: '',
 
-            // element classes
-            epicClass: '' ,
-            epicTitleClass: '',
-            p1Class: '',
-            p1HighlightClass: '',
-            supporterButtonClass: '',
-            contributorButtonClass: ''
-        };
-    }
+        // element classes
+        epicClass: '' ,
+        epicTitleClass: '',
+        p1Class: '',
+        p1HighlightClass: '',
+        buttonClass: ''
+    };
 
     // Merges submitted and default template arguments.
-    function buildTemplateArguments(args) {
-        var out = defaultTemplateArguments();
-        assign(out, args);
-        return out;
+    function buildTemplateArguments(membershipUrl, contributionUrl, args) {
+        return assign({}, defaultTemplateArgument, args, {
+            membershipUrl: membershipUrl,
+            contributionUrl: contributionUrl
+        });
     }
 
-    function buildHtml(args) {
-        return template(acquisitionEpicDesignVariations, buildTemplateArguments(args));
+    function buildHtml(membershipUrl, contributionUrl, args) {
+        return template(acquisitionEpicDesignVariations, buildTemplateArguments(membershipUrl, contributionUrl, args));
     }
 
     // Building a test variant
@@ -51,22 +49,19 @@ define([
     var maxViews = {};
     var successOnView = true;
 
-    function defaultVariantArgs() {
-        return {
-            maxViews: maxViews,
-            successOnView: successOnView
-        }
-    }
+    var defaultVariantArgs = {
+        maxViews: maxViews,
+        successOnView: successOnView
+    };
 
-    function buildVariant(id, templateArgs) {
-        var out = defaultVariantArgs();
-        out.id = id;
-        if (id !== 'control') {
-            out.template = function() {
-                return buildHtml(templateArgs)
+    function buildVariant(variantId, templateArgs) {
+        var args = { id: variantId };
+        if (variantId !== 'control') {
+            args.template = function(membershipUrl, contributionUrl) {
+                return buildHtml(membershipUrl, contributionUrl, templateArgs)
             }
         }
-        return out;
+        return assign({}, defaultVariantArgs, args)
     }
 
     // Building the test
@@ -74,7 +69,7 @@ define([
 
     return contributionUtilities.makeABTest({
         id: 'AcquisitionsEpicDesignVariations',
-        campaignId: 'kr1_design_variations',
+        campaignId: 'kr1_epic_design_variations',
 
         start: '2017-03-07',
         expiry: '2017-03-17',
@@ -110,8 +105,7 @@ define([
             buildVariant('prominent', {
                 epicClass: 'contributions__epic--prominent',
                 epicTitleClass: 'contributions__title--epic--large',
-                supporterButtonClass: 'contributions__option--button--prominent',
-                contributorButtonClass: 'contributions__option--button--prominent'
+                buttonClass: 'contributions__option--button--prominent'
             }),
 
             buildVariant('highlight', {
