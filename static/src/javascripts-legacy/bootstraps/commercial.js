@@ -4,6 +4,7 @@ define([
     'lib/mediator',
     'lib/robust',
     'lib/user-timing',
+    'lib/report-error',
     'commercial/modules/high-merch',
     'commercial/modules/article-aside-adverts',
     'commercial/modules/article-body-adverts',
@@ -31,6 +32,7 @@ define([
     mediator,
     robust,
     userTiming,
+    reportError,
     highMerch,
     articleAsideAdverts,
     articleBodyAdverts,
@@ -141,9 +143,12 @@ define([
                     Promise.all(customTimingModules).then(performanceLogging.reportTrackingData);
                 }
             })
-            .catch(function () {
+            .catch(function (err) {
                 // Just in case something goes wrong, we don't want it to
                 // prevent enhanced from loading
+                reportError(err, {
+                    feature: 'commercial'
+                });
             });
         }
     };
