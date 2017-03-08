@@ -2,34 +2,43 @@ import $ from './$';
 
 beforeEach(() => {
     document.body.innerHTML = `
-        <div class="main">
-            <div class="child">child content</div>
-            <div class="forEachTarget"><p></p><p class="blue"></p></div>
-            <div id="ancestorTarget" class="grandparent"><h1><em><span class="grandchild"></span></em></h1>
+        <div class="grandparent" id="ancestorTarget">
+            <div class="parent">
+                <div class="child">child content</div>
+                <div class="sibling"></div>
             </div>
-        </div>
-    `;
+        </div>`;
 });
 
-test('$', () => {
-    expect($('.child').text()).toEqual('child content');
+describe('$', () => {
+    test('finds an element and bonzos it', () => {
+        expect($('.child').text()).toEqual('child content');
+    });
 
-    expect($.create('<p><span class="test-class"></span></p>').html()).toEqual(
-        '<span class="test-class"></span>'
+    test('creates an element and bonzos it', () => {
+        expect(
+            $.create('<p><span class="test-class"></span></p>').html()
+        ).toEqual('<span class="test-class"></span>');
+    });
+
+    test(
+        'applies a function to an array of elements described by a selector',
+        () => {
+            $.forEachElement('.parent > *', el => el.classList.add('red'));
+            expect($('.child').hasClass('red')).toBe(true);
+            expect($('.sibling').hasClass('red')).toBe(true);
+        }
     );
 
-    $.forEachElement('.forEachTarget > *', el => el.classList.add('red'));
-    expect($('.forEachTarget').html()).toEqual(
-        '<p class="red"></p><p class="blue red"></p>'
-    );
-
-    expect(
-        $.ancestor(
-            document.querySelector('.grandchild'),
-            'no-element-has-this-class'
-        )
-    ).toBeFalsy();
-    expect(
-        $.ancestor(document.querySelector('.grandchild'), 'grandparent').id
-    ).toEqual('ancestorTarget');
+    test("can find an element's ancestor", () => {
+        expect(
+            $.ancestor(
+                document.querySelector('.child'),
+                'no-element-has-this-class'
+            )
+        ).toBe(false);
+        expect(
+            $.ancestor(document.querySelector('.child'), 'grandparent').id
+        ).toEqual('ancestorTarget');
+    });
 });
