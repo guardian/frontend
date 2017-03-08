@@ -48,6 +48,7 @@
             ],
             "plugins": [
                 "transform-runtime",
+                "transform-flow-strip-types"
             ],
         },
     },
