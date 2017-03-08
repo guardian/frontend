@@ -73,6 +73,7 @@ define([
     return {
         userIsInAClashingAbTest: userIsInAClashingAbTest,
         contributionsTests: contributionsTests,
+        emailTests: emailTests,
         _testABClash: _testABClash // exposed for unit testing
     };
 });

@@ -284,6 +284,7 @@ define([
     return {
         init: function () {
             checkMediator.waitForCheck('emailCanRun').then(function (canEmailRun) {
+                console.log('canEmailRun --->', canEmailRun);
                 if (canEmailRun) {
                     emailRunChecks.getUserEmailSubscriptions().then(function () {
                         if (ab.isParticipating({id: 'TailorRecommendedEmail'})) {

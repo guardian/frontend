@@ -34,10 +34,12 @@ define([
                 list:[{
                     id: 'isUserInContributionsAbTest'
                 }, {
-                    id: 'canEmailBeInserted',
+                    id: 'isUserInEmailAbTestAndCanEmailBeAdded',
                     dependentChecks: {
                         passCondition: EVERYCHECKPASSED,
-                        list: [{ 
+                        list: [{
+                            id: 'isUserNotInContributionsAbTest'
+                        }, { 
                             id: 'isUserInEmailAbTest' 
                         }, {
                             id: 'emailCanRunPreCheck'
@@ -52,15 +54,19 @@ define([
         }, {
             id: 'emailCanRun',
             dependentChecks: {
-                passCondition: EVERYCHECKPASSED,
+                passCondition: SOMECHECKSPASSED,
                 list: [{ 
-                    id: 'isOutbrainNonCompliant' 
-                }, { 
-                    id: 'emailCanRunPreCheck' 
-                }, { 
-                    id: 'listCanRun' 
-                }, { 
-                    id: 'emailInArticleOutbrainEnabled' 
+                    id: 'isUserInEmailAbTestAndCanEmailBeAdded'
+                }, {
+                    id: 'isOutbrainBlockedByAds',
+                    dependentChecks: {
+                        passCondition: EVERYCHECKPASSED,
+                        list: [{
+                            id: 'isHighResAdLoaded'
+                        }, {
+                            id: 'isLowResAdLoaded'
+                        }]
+                    }
                 }]
             }
         }];

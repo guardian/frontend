@@ -119,29 +119,57 @@ define([
                         return Promise.resolve(true);
                     });
                 } else {
-                    return trackAdRender('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
-                        // if the high-priority merch component has loaded, we wait until
-                        // the low-priority one has loaded to decide if an outbrain widget is loaded
-                        // if it hasn't loaded, the outbrain widget is loaded at its default
-                        // location right away
-                        return Promise.all([
-                            isHiResLoaded,
-                            isHiResLoaded ? trackAdRender('dfp-ad--merchandising') : true
-                        ]);
-                    }).then(function (args) {
-                        var isHiResLoaded = args[0];
-                        var isLoResLoaded = args[1];
-
-                        if (isHiResLoaded) {
-                            if (!isLoResLoaded) {
-                                module.load('merchandising');
-                            }
-                        } else {
-                            checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
-                                outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
+                    checkMediator.waitForCheck('isOutbrainBlockedByAds').then(function(outbrainBlockedByAds) {
+                        console.log('outbrainBlockedByAds ---->', outbrainBlockedByAds);
+                        if (!outbrainBlockedByAds) {
+                            checkMediator.waitForCheck('isHighResAdLoaded').then(function (highResAdLoaded) {
+                                console.log('highResAdLoaded ---->', highResAdLoaded);
+                                
+                                if (highResAdLoaded) {
+                                    checkMediator.waitForCheck('isLowResAdLoaded').then(function (lowResAdLoaded) {
+                                        console.log('lowResAdLoaded ---->', lowResAdLoaded);
+                                        if (!lowResAdLoaded) {
+                                            module.load('merchandising');
+                                        }
+                                    });            
+                                } else {
+                                    checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
+                                        console.log('outbrainIsNonCompliant ---->', outbrainIsNonCompliant);
+                                        outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
+                                    });
+                                }
                             });
                         }
                     });
+                    // return trackAdRender('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
+                    //     // if the high-priority merch component has loaded, we wait until
+                    //     // the low-priority one has loaded to decide if an outbrain widget is loaded
+                    //     // if it hasn't loaded, the outbrain widget is loaded at its default
+                    //     // location right away
+
+                    //     return Promise.all([
+                    //         isHiResLoaded,
+                    //         isHiResLoaded ? trackAdRender('dfp-ad--merchandising') : true
+                    //     ]);
+                    // }).then(function (args) {
+                    //     var isHiResLoaded = args[0];
+                    //     var isLoResLoaded = args[1];
+
+                    //     if (isHiResLoaded) {
+                    //         // mediator to say nonCompliant
+                    //         if (!isLoResLoaded) {
+                    //             module.load('merchandising'); // we have a non-compliant outbrain
+                    //         } else {
+                    //             // we have no outbrain
+                    //         }
+                    //     } else {
+                    //         // mediator to say?
+                    //         checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
+                    //             console.log('outbrainIsNonCompliant --->', outbrainIsNonCompliant);
+                    //             outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
+                    //         });
+                    //     }
+                    // });
                 }
             });
         }
