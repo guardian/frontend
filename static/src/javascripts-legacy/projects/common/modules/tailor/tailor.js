@@ -17,7 +17,11 @@ define([
 
     function getRegularStatus(browserID) {
         return getSuggestions(browserID).then(function(res) {
-            return res.userDataForClient.regular;
+            try {
+                return res.userDataForClient.regular;
+            } catch (e) {
+                return false
+            }
         })
     }
 
