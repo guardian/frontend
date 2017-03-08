@@ -101,17 +101,18 @@ define([
      */
     Component.prototype.render = function (parent) {
         this.checkAttached();
+        var template = this.template;
 
-        if (!this.template && this.templateName) {
+        if (!template && this.templateName) {
             var templateEl = document.getElementById('tmpl-' + this.templateName);
 
             if (templateEl) {
-                this.template = templateEl.innerHTML;
+                template = templateEl.innerHTML;
             }
         }
 
         if (this.template) {
-            this.elem = bonzo.create(this.template)[0];
+            this.elem = bonzo.create(template)[0];
             this._prerender();
             bonzo(parent || document.body)[this.manipulationType](this.elem);
         }
