@@ -30,8 +30,8 @@ define([
     contributionsEpicEqualButtons
 ) {
 
-    var membershipURL = 'https://membership.theguardian.com/supporter';
-    var contributionsURL = 'https://contribute.theguardian.com';
+    var membershipBaseURL = 'https://membership.theguardian.com/supporter';
+    var contributionsBaseURL = 'https://contribute.theguardian.com';
 
     var lastContributionDate = cookies.get('gu.contributions.contrib-timestamp');
 
@@ -120,10 +120,10 @@ define([
         return this.id + ':' + event;
     };
 
-    function controlTemplate(membershipUrl, contributionUrl) {
+    function controlTemplate(variant) {
         return template(contributionsEpicEqualButtons, {
-            linkUrl1: membershipUrl,
-            linkUrl2: contributionUrl,
+            linkUrl1: variant.membershipURL,
+            linkUrl2: variant.contributeURL,
             title: 'Since you’re here …',
             p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism open to all. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
             p2: 'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
@@ -146,18 +146,19 @@ define([
         this.membershipCampaignCode = getCampaignCode(test.membershipCampaignPrefix, this.campaignId, this.id);
         this.campaignCodes = uniq([this.contributeCampaignCode, this.membershipCampaignCode]);
 
-        this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, this.contributeCampaignCode, this.pageviewId);
-        this.membershipURL = options.membershipURL || this.makeURL(membershipURL, this.membershipCampaignCode, this.pageviewId);
+        this.contributeURL = options.contributeURL || this.makeURL(contributionsBaseURL, this.contributeCampaignCode);
+        this.membershipURL = options.membershipURL || this.makeURL(membershipBaseURL, this.membershipCampaignCode);
 
         this.template = options.template || controlTemplate;
 
         this.test = function () {
             var onInsert = options.onInsert || noop;
             var onView = options.onView || noop;
-            var component = $.create(this.template(this.membershipURL, this.contributeURL));
 
-            function render(t) {
-                var component = $.create(t);
+            function render(templateFn) {
+                var template = templateFn || this.template;
+                var component = $.create(template(this));
+
                 mediator.emit('register:begin', trackingCampaignId);
                 return fastdom.write(function () {
                     var selector = options.insertBeforeSelector || '.submeta';
@@ -182,9 +183,8 @@ define([
                     }
                 }.bind(this));
             }
-            return (typeof options.test === 'function') ? 
-                options.test(render.bind(this),  this.makeURL, contributionsURL, membershipURL, this.contributeCampaignCode, this.membershipCampaignCode, this.pageviewId) 
-                : render.apply(this,component);
+
+            return (typeof options.test === 'function') ? options.test(render) : render.apply(this);
         };
 
         this.registerListener('impression', 'impressionOnInsert', test.insertEvent, options);
@@ -195,13 +195,21 @@ define([
         return campaignCodePrefix + '_' + campaignID + '_' + id;
     }
 
-    ContributionsABTestVariant.prototype.makeURL = function(base, campaignCode, pageViewId) {
+    ContributionsABTestVariant.prototype.makeURL = function(base, campaignCode) {
         var params = [
-            'REFPVID=' + pageViewId,
+            'REFPVID=' + this.pageviewId,
             'INTCMP=' + campaignCode
         ];
 
         return base + '?' + params.filter(Boolean).join('&');
+    }
+
+    ContributionsABTestVariant.prototype.contributionsURLBuilder = function(codeModifier) {
+        return this.makeURL(contributionsBaseURL, codeModifier(this.contributeCampaignCode));
+    }
+
+    ContributionsABTestVariant.prototype.membershipURLBuilder = function(codeModifier) {
+        return this.makeURL(membershipBaseURL, codeModifier(this.contributeCampaignCode));
     }
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {
