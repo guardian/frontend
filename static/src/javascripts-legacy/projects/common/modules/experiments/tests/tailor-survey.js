@@ -14,7 +14,7 @@ define([
     'lib/fetch-json',
     'lodash/collections/forEach',
     'ophan/ng',
-    'lib/template'
+    'lodash/utilities/template'
 ], function (
     bean,
     bonzo,

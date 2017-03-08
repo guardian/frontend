@@ -7,7 +7,7 @@ define([
     'lib/detect',
     'lib/config',
     'lib/mediator',
-    'lib/template',
+    'lodash/utilities/template',
     'common/modules/identity/api',
     'common/views/svgs',
     'raw-loader!common/views/save-for-later/save-link.html',

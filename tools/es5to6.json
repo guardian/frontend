@@ -51,7 +51,6 @@
     "lib/scroller.js",
     "lib/sha1.js",
     "lib/steady-page.js",
-    "lib/storage.js",
-    "lib/template.js"
+    "lib/storage.js"
   ]
 }

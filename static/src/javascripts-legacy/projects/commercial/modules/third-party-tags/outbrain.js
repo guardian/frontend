@@ -4,7 +4,7 @@ define([
     'lib/$',
     'lib/config',
     'lib/detect',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/steady-page',
     'commercial/modules/dfp/track-ad-render',
     'commercial/modules/commercial-features',
