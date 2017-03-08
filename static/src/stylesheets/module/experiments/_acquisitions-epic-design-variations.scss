@@ -27,8 +27,8 @@
     // Unset border top as it will be set for the inline header element
     border-top: 0;
     background-color: #ffffff;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: $gs-baseline * 4;
+    margin-bottom: $gs-baseline * 4;
 }
 
 .contributions__title--epic--subtle {
