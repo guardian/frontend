@@ -14,17 +14,16 @@ define([
 
 
 
-    var bwidCookie = cookies.get('bwid') || 'REoxHzMfyQTNGGp0t9603p0w';
+    var bwidCookie = cookies.get('bwid') || '';
 
     function controlTemplate(regular) {
         var suffix = regular ? '_regular' : '_non_regular';
-
         return function(variant) {
             function appendSuffix(code) { return code + suffix; }
 
             return template(contributionsEpicEqualButtons, {
-                linkUrl1: variant.contributionsURLBuilder(appendSuffix),
-                linkUrl2: variant.membershipURLBuilder(appendSuffix),
+                linkUrl1: variant.membershipURLBuilder(appendSuffix),
+                linkUrl2: variant.contributionsURLBuilder(appendSuffix),
                 title: 'Since you’re here …',
                 p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can. So you can see why we need to ask for your help. The Guardian has only one shareholder, The Scott Trust, which keeps our independent, investigative, public-interest journalism free from commercial or political interference. Our journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
                 p2: 'If everyone who reads our reporting, who likes it, helps to pay for it, our future would be much more secure.',
@@ -37,16 +36,17 @@ define([
 
     function fairnessMildTemplate(regular) {
         var suffix = regular ? '_regular' : '_non_regular';
+        return function(variant) {
+            function appendSuffix(code) { return code + suffix; }
 
-        return function (contributionUrl, membershipUrl) {
             return template(contributionsEpicEqualButtons, {
-                linkUrl1: membershipUrl + suffix,
-                linkUrl2: contributionUrl + suffix,
+                linkUrl1: variant.membershipURLBuilder(appendSuffix),
+                linkUrl2: variant.contributionsURLBuilder(appendSuffix),
                 title: 'Since you’re here …',
                 p1: '… we have a small favour to ask. More people than ever are regularly reading the Guardian, but far fewer are paying for it.  Advertising revenues across the media are falling fast. And unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can. The Guardian‘s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
                 p2: 'If you regularly read and value our reporting, support us now and help make our future much more secure.',
                 p3: '',
-                cta1: 'Become a regular Supporter',
+                cta1: 'Become a Supporter',
                 cta2: 'Make a contribution'
             });
         }
@@ -55,15 +55,17 @@ define([
     function fairnessStrongTemplate(regular) {
         var suffix = regular ? '_regular' : '_non_regular';
 
-        return function (contributionUrl, membershipUrl) {
+        return function(variant) {
+            function appendSuffix(code) { return code + suffix; }
+
             return template(contributionsEpicEqualButtons, {
-                linkUrl1: membershipUrl + suffix,
-                linkUrl2: contributionUrl + suffix,
+                linkUrl1: variant.membershipURLBuilder(appendSuffix),
+                linkUrl2: variant.contributionsURLBuilder(appendSuffix),
                 title: 'Since you’re here …',
                 p1: '… we have a small favour to ask. More people than ever are regularly reading the Guardian, but far fewer are paying for it.  Advertising revenues across the media are falling fast. And unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can. So we think it’s fair to ask people who visit us often for their help. The Guardian‘s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
                 p2: 'If you regularly read and value our reporting, support us now and help make our future much more secure.',
                 p3: '',
-                cta1: 'Become a regular Supporter',
+                cta1: 'Become a Supporter',
                 cta2: 'Make a contribution'
             });
         }
@@ -71,16 +73,17 @@ define([
 
     function fairnessStrongAlternateHookTemplate(regular) {
         var suffix = regular ? '_regular' : '_non_regular';
+        return function(variant) {
+            function appendSuffix(code) { return code + suffix; }
 
-        return function (contributionUrl, membershipUrl) {
             return template(contributionsEpicEqualButtons, {
-                linkUrl1: membershipUrl + suffix,
-                linkUrl2: contributionUrl + suffix,
+                linkUrl1: variant.membershipURLBuilder(appendSuffix),
+                linkUrl2: variant.contributionsURLBuilder(appendSuffix),
                 title: 'Hello again …',
                 p1: '… today we have a small favour to ask. More people than ever are regularly reading the Guardian, but far fewer are paying for it.  Advertising revenues across the media are falling fast. And unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can. So we think it’s fair to ask people who visit us often for their help. The Guardian‘s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
                 p2: 'If you regularly read and value our reporting, support us now and help make our future much more secure.',
                 p3: '',
-                cta1: 'Become a regular Supporter',
+                cta1: 'Become a Supporter',
                 cta2: 'Make a contribution'
             });
         }
@@ -88,16 +91,17 @@ define([
 
     function relianceTemplate(regular) {
         var suffix = regular ? '_regular' : '_non_regular';
+        return function(variant) {
+            function appendSuffix(code) { return code + suffix; }
 
-        return function (contributionUrl, membershipUrl) {
             return template(contributionsEpicEqualButtons, {
-                linkUrl1: membershipUrl + suffix,
-                linkUrl2: contributionUrl + suffix,
+                linkUrl1: variant.membershipURLBuilder(appendSuffix),
+                linkUrl2: variant.contributionsURLBuilder(appendSuffix),
                 title: 'Since you’re here …',
                 p1: '… we have a small favour to ask. More people than ever rely on the Guardian to keep them up-to-date, but far fewer are paying for our journalism. Advertising revenues across the media are falling fast. And unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can. So you can see why we need to ask for your help. The Guardian‘s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
                 p2: 'If you depend on our reporting to stay informed, support us now and help make our future much more secure.',
                 p3: '',
-                cta1: 'Become a regular Supporter',
+                cta1: 'Become a Supporter',
                 cta2: 'Make a contribution'
             });
         }
@@ -116,8 +120,8 @@ define([
         idealOutcome: 'Establish which variant has the highest conversion rate',
 
         audienceCriteria: 'All',
-        audience: 1.0,
-        audienceOffset: 0.0,
+        audience: 0.5,
+        audienceOffset: 0,
 
 
         variants: [
@@ -152,6 +156,8 @@ define([
                         tailor.getRegularStatus(bwidCookie).then(function (regular) {
                             render(fairnessMildTemplate(regular));
                         });
+                    } else {
+                        render(fairnessMildTemplate(false));
                     }
                 },
                 insertBeforeSelector: '.submeta',
@@ -169,6 +175,8 @@ define([
                         tailor.getRegularStatus(bwidCookie).then(function (regular) {
                             render(fairnessStrongTemplate(regular));
                         });
+                    } else {
+                        render(fairnessStrongTemplate(false));
                     }
                 },
                 insertBeforeSelector: '.submeta',
@@ -186,7 +194,8 @@ define([
                         tailor.getRegularStatus(bwidCookie).then(function (regular) {
                             render(fairnessStrongAlternateHookTemplate(regular));
                         });
-
+                    } else {
+                        render(fairnessStrongAlternateHookTemplate(false));
                     }
                 },
                 insertBeforeSelector: '.submeta',
@@ -204,11 +213,13 @@ define([
                         tailor.getRegularStatus(bwidCookie).then(function (regular) {
                             render(relianceTemplate(regular));
                         });
+                    } else {
+                        render(relianceTemplate(false));
                     }
                 },
                 insertBeforeSelector: '.submeta',
                 successOnView: true
-            },
+            }
 
 
 
