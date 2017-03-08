@@ -1,9 +1,9 @@
 define([
     'fastdom',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/mediator',
-    'common/utils/user-timing',
+    'lib/config',
+    'lib/detect',
+    'lib/mediator',
+    'lib/user-timing',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/load-advert',
     'commercial/modules/dfp/performance-logging',
@@ -51,7 +51,11 @@ define([
     function onIntersect(entries, observer) {
         var advertIds = [];
 
-        entries.forEach(function (entry) {
+        entries
+        .filter(function (entry) {
+            return !('isIntersecting' in entry) || entry.isIntersecting;
+        })
+        .forEach(function (entry) {
             observer.unobserve(entry.target);
             displayAd(entry.target.id);
             advertIds.push(entry.target.id);

@@ -14,22 +14,24 @@
 define([
     'qwery',
     'fastdom',
-    'common/utils/raven',
+    'lib/raven',
     'common/modules/user-prefs',
     'common/modules/ui/images',
-    'common/utils/storage',
-    'common/utils/ajax',
-    'common/utils/mediator',
-    'common/utils/add-event-listener',
+    'lib/storage',
+    'lib/ajax',
+    'lib/mediator',
+    'common/modules/check-mediator',
+    'lib/add-event-listener',
     'common/modules/identity/api',
-    'common/utils/url',
-    'common/utils/cookies',
-    'common/utils/robust',
-    'common/utils/user-timing',
-    'common/utils/config',
+    'lib/url',
+    'lib/cookies',
+    'lib/robust',
+    'lib/user-timing',
+    'lib/config',
     'common/modules/navigation/newHeaderNavigation',
     'common/modules/analytics/google',
-    'lodash/functions/debounce'
+    'lodash/functions/debounce',
+    'ophan/ng'
 ], function (
     qwery,
     fastdom,
@@ -39,6 +41,7 @@ define([
     storage,
     ajax,
     mediator,
+    checkMediator,
     addEventListener,
     identity,
     url,
@@ -48,7 +51,8 @@ define([
     config,
     newHeaderNavigation,
     ga,
-    debounce
+    debounce,
+    ophan
 ) {
     return function () {
         userTiming.mark('standard start');
@@ -64,6 +68,13 @@ define([
             }
         };
 
+        if (config.switches.blockIas && navigator.serviceWorker) {
+            navigator.serviceWorker.ready.then(function (swreg) {
+                var sw = swreg.active;
+                sw.postMessage({ ias: window.location.hash.indexOf('noias') > -1 });
+            });
+        }
+
         // IE8 and below use attachEvent
         if (!window.addEventListener) {
             window.addEventListener = window.attachEvent;
@@ -78,52 +89,10 @@ define([
             }
         });
 
-        /*
-         *  Interactive bootstraps.
-         *
-         *  Interactives are content, we want them booting as soon (and as stable) as possible.
-         */
-
-        if (!config.tests.abWebpackBundle && /Article|LiveBlog/.test(config.page.contentType)) {
-            qwery('figure.interactive').forEach(function (el) {
-                var mainJS = el.getAttribute('data-interactive');
-                if (!mainJS) {
-                    return;
-                }
-
-                // interactives are always loaded with CURL, which is always inlined when interactives are present
-                // so this uses CURLS require
-                window.require([mainJS], function (interactive) {
-                    fastdom.defer(function () {
-                        robust.catchErrorsAndLog('interactive-bootstrap', function () {
-                            interactive.boot(el, document, config, mediator);
-                        });
-                    });
-                });
-
-                require(['ophan/ng'], function(ophan) {
-                    var a = el.querySelector('a');
-                    var href = a && a.href;
-
-                    if (href) {
-                        ophan.trackComponentAttention(href, el);
-                    }
-                });
-            });
-
-            qwery('iframe.interactive-atom-fence').forEach(function (el) {
-                var srcdoc;
-                if (!el.srcdoc) {
-                    fastdom.read(function () {
-                       srcdoc = el.getAttribute('srcdoc');
-                    });
-                    fastdom.write(function () {
-                        el.contentWindow.contents = srcdoc;
-                        el.src = 'javascript:window["contents"]';
-                    });
-                }
-            });
-        }
+        //
+        // initilaise the email/outbrain check mediator
+        //
+        checkMediator.init();
 
         //
         // Set adtest query if url param declares it.
@@ -196,9 +165,7 @@ define([
         }
         addEventListener(window, 'resize', debounce(onResize, 200), { passive: true });
 
-        require(['ophan/ng'], function(ophan) {
-            ophan.setEventEmitter(mediator);
-        });
+        ophan.setEventEmitter(mediator);
 
         //
         // Membership access
@@ -274,6 +241,8 @@ define([
          *  New Header Navigation
          */
         newHeaderNavigation();
+
+
 
         userTiming.mark('standard end');
         robust.catchErrorsAndLog('ga-user-timing-standard-end', function () {

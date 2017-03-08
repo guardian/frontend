@@ -1,3 +1,7 @@
+.advert--branded {
+    padding-bottom: 80px;
+}
+
 .adverts--capi {
     .adverts__title {
         font-size: get-font-size(headline, 3);
@@ -27,6 +31,61 @@
             & > * + :nth-child(even)::before {
                 content: none;
             }
+        }
+    }
+
+    .advert > :last-child {
+        margin-bottom: 0;
+    }
+
+    .advert-container {
+        @include mq($until: tablet) {
+
+            .advert__standfirst {
+                min-height: $gs-row-height;
+            }
+
+            &:first-child > .advert {
+                padding-bottom: $gs-baseline / 2;
+            }
+
+            &:first-child .advert__title,
+            &:first-child .advert__standfirst {
+                padding-right: 80px;
+                max-width: 520px;
+            }
+
+            &:not(:first-child) > .advert {
+                padding-right: 80px;
+                padding-bottom: 0;
+                min-height: 80px;
+            }
+
+            > .badge {
+                display: flex;
+                flex-direction: column;
+                width: 60px;
+            }
+        }
+
+        .badge {
+            padding-right: 0;
+            max-width: 100%;
+        }
+
+        .badge__link {
+            /* [1] Prevents IE11 bug where the height would go ballooney */
+            height: 100%;
+        }
+
+        .badge__label {
+            text-align: center;
+            width: 100%;
+        }
+
+        .badge__logo {
+            max-width: 100%;
+            margin-left: 0;
         }
     }
 }
@@ -208,7 +267,7 @@
             }
         }
 
-        .advert__standfirst {
+        .advert__standfirst:not(:last-child) {
             margin-bottom: $gs-baseline / 2;
         }
     }
@@ -238,6 +297,8 @@
     @include f-textSans;
     background: $paid-article-card-bg;
     border-top-color: $paid-article-brand;
+    width: 100%;
+    padding-bottom: $gs-baseline * 8;
 
     &:hover,
     &:focus {

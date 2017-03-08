@@ -1,11 +1,10 @@
 package model
 
 import campaigns.PersonalInvestmentsCampaign
-import com.gu.commercial.branding.Branding
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import common.commercial.{AdUnitMaker, EditionBranding}
+import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
@@ -113,7 +112,7 @@ object MetaData {
     opengraphPropertiesOverrides: Map[String, String] = Map(),
     isHosted: Boolean = false,
     twitterPropertiesOverrides: Map[String, String] = Map(),
-    editionBrandings: Option[Seq[EditionBranding]] = None
+    commercial: Option[CommercialProperties] = None
   ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
@@ -138,7 +137,7 @@ object MetaData {
       opengraphPropertiesOverrides = opengraphPropertiesOverrides,
       isHosted = isHosted,
       twitterPropertiesOverrides = twitterPropertiesOverrides,
-      editionBrandings = editionBrandings
+      commercial = commercial
     )
   }
 
@@ -164,7 +163,7 @@ object MetaData {
         else CacheTime.NotRecentlyUpdated
       },
       isHosted = apiContent.isHosted,
-      editionBrandings = Some(EditionBranding.fromItem(apiContent))
+      commercial = Some(CommercialProperties.fromContent(apiContent))
     )
   }
 }
@@ -198,7 +197,7 @@ final case class MetaData (
   isHosted: Boolean = false,
   twitterPropertiesOverrides: Map[String, String] = Map(),
   contentWithSlimHeader: Boolean = false,
-  editionBrandings: Option[Seq[EditionBranding]]
+  commercial: Option[CommercialProperties]
 ){
   val sectionId = section map (_.id) getOrElse ""
 
@@ -283,8 +282,6 @@ final case class MetaData (
     * This is used for Google Analytics, to be consistent with what the mobile apps do.
     */
   def normalisedContentType: String = StringUtils.remove(contentType.toLowerCase, ' ')
-
-  def branding(edition: Edition): Option[Branding] = EditionBranding.branding(editionBrandings, edition)
 }
 
 object Page {
@@ -575,7 +572,7 @@ final case class Tags(
   lazy val isClimateChangeSeries = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
   lazy val isTheMinuteArticle = tags.exists(t => t.id == "tone/minute")
   //this is for the immersive header to access this info
-  lazy val isAdvertisementFeature = tags.exists( t => t.id == "tone/advertisement-features" )
+  lazy val isPaidContent = tags.exists( t => t.id == "tone/advertisement-features" )
 
   lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
 

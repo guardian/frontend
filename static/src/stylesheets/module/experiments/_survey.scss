@@ -1,0 +1,73 @@
+.impressions-survey__heading {
+    @include content-gutter;
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline / 2;
+    background-color: #aad7e4;
+}
+
+.impressions-survey__title {
+    @include fs-bodyHeading(4);
+    display: inline-block;
+    margin-right: $gs-gutter;
+}
+
+.impressions-survey__about {
+    font-weight: normal;
+    color: inherit;
+    padding-left: $gs-gutter;
+    border-left: solid #ffffff;
+}
+
+.impressions-survey__about:hover,
+.impressions-survey__about:link,
+.impressions-survey__about:active,
+.impressions-survey__about:visited {
+    text-decoration: none;
+}
+
+.impressions-survey__body {
+    @include fs-bodyCopy(1);
+    @include content-gutter;
+    padding-top: $gs-baseline;
+    padding-bottom: $gs-baseline;
+    color: #ffffff;
+    margin-bottom: $gs-baseline;
+    background-color: $guardian-brand;
+    opacity: 1;
+    position: relative;
+}
+
+.impressions-survey__question {
+    @include fs-bodyHeading(2);
+}
+
+.fi-survey__button {
+    display: inline-block;
+    float: none;
+    margin: 0;
+}
+
+.fi-survey__label {
+    display: block;
+}
+
+.impressions-survey__thanks {
+    @include fs-bodyHeading(4);
+    color: #ffffff;
+    position: absolute;
+    top: 20%;
+    opacity: 0;
+    visibility: collapse;
+}
+
+.js-impressions-survey__fadein {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 2s ease-in .5s, opacity .5s linear;
+}
+
+.js-impressions-survey__fadeout {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s ease-in .5s, opacity .5s linear;
+}

@@ -1,8 +1,7 @@
 @import common.InlineJs
 @import conf.switches.Switches.{AsyncCss, FontSwitch}
-@import mvt.WebpackTest
 @import model.Page.getContent
-@import templates.inlineJS.blocking.js.{applyRenderConditions, config, curlConfig, enableStylesheets, loadFonts, shouldEnhance}
+@import templates.inlineJS.blocking.js.{applyRenderConditions, config, enableStylesheets, loadFonts, shouldEnhance}
 @import templates.inlineJS.blocking.polyfills.js.{classlist, details, matches, raf, setTimeout}
 
 @(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
@@ -34,11 +33,6 @@
     @InlineJs(details().body, "details.js")
 
 
-    // ************* CONFIG *************
-
-
-    @Html(curlConfig().body)
-
     // ************* RENDER-CRITICAL BLOCKING JS *************
 
 
@@ -64,20 +58,11 @@
 
     // ************* LOAD THE MAIN APP ASYNC *************
 
-    @if(conf.Configuration.assets.useHashedBundles) {
-        // Polyfill for async script
-        (function (document) {
-            var script = document.createElement('script');
-            var ref = document.getElementsByTagName('script')[0];
-            @if(WebpackTest.isParticipating) {
-                script.src = '@Static("javascripts/app-webpack.js")';
-            } else {
-                script.src = '@Static("javascripts/app.js")';
-            }
-            ref.parentNode.insertBefore(script, ref);
-        })(document);
-    } else {
-        @Html(common.Assets.js.curl);
-        require(['boot']);
-    }
+    // Polyfill for async script
+    (function (document) {
+        var script = document.createElement('script');
+        var ref = document.getElementsByTagName('script')[0];
+        script.src = '@Static("javascripts/graun.standard.js")';
+        ref.parentNode.insertBefore(script, ref);
+    })(document);
 </script>

@@ -6,14 +6,14 @@ define([
     'Promise',
     'commercial/modules/hosted/youtube',
     'commercial/modules/hosted/next-video-autoplay',
-    'common/utils/$',
-    'common/utils/defer-to-analytics',
-    'common/utils/detect',
-    'common/utils/report-error',
+    'lib/$',
+    'lib/defer-to-analytics',
+    'lib/detect',
+    'lib/report-error',
     'common/modules/video/events',
     'common/modules/video/videojs-options',
     'common/modules/media/videojs-plugins/fullscreener',
-    'text!common/views/ui/loading.html'
+    'raw-loader!common/views/ui/loading.html'
 ], function (
     Promise,
     hostedYoutube,
@@ -126,9 +126,17 @@ define([
         }
 
         // Return a promise that resolves after the async work is done.
-        Promise.resolve(require(['bootstraps/enhanced/media/main']))
+        new Promise(function(resolve){
+            require.ensure([], function (require) {
+                resolve(require('bootstraps/enhanced/media/main'));
+            }, 'media');
+        })
         .then(function () {
-            return require(['bootstraps/enhanced/media/video-player']);
+            return new Promise(function(resolve){
+                require.ensure([], function (require) {
+                    resolve(require('bootstraps/enhanced/media/video-player'));
+                }, 'video-player');
+            });
         })
         .then(function (videojs) {
             $videoEl.each(function(el){

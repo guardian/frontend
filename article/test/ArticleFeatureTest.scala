@@ -173,7 +173,7 @@ import collection.JavaConversions._
         Then("I should see the start and end date of coverage")
         val liveBlogPosting = findFirst("[itemtype='http://schema.org/LiveBlogPosting']").getElement
         liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageStartTime']")).getAttribute("content") should be("2015-07-14T11:20:37+0100")
-        liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageEndTime']")).getAttribute("content") should be("2015-07-14T11:21:25+0100")
+        liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageEndTime']")).getAttribute("content") should be("2017-02-06T14:59:12+0000")
       }
     }
 
@@ -354,8 +354,8 @@ import collection.JavaConversions._
 
         And("the placeholder has the correct data attributes")
         adPlaceholder.getAttribute("data-name") should be("top-above-nav")
-        adPlaceholder.getAttribute("data-tablet") should be("1,1|2,2|88,70|728,90|88,71|fluid")
-        adPlaceholder.getAttribute("data-desktop") should be("1,1|2,2|88,70|728,90|940,230|900,250|970,250|88,71|fluid")
+        adPlaceholder.getAttribute("data-tablet") should be("1,1|2,2|728,90|88,71|fluid")
+        adPlaceholder.getAttribute("data-desktop") should be("1,1|2,2|728,90|940,230|900,250|970,250|88,71|fluid")
 
         And("the placeholder has the correct class name")
         adPlaceholder.getAttribute("class") should include("js-ad-slot ad-slot ad-slot--top-above-nav ad-slot--top-banner-ad ad-slot--top-banner-ad-desktop")
@@ -517,7 +517,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see links to keywords")
-        $(".keyword-list a").size should be(16)
+        $(".submeta__link").size should be(7)
       }
     }
 

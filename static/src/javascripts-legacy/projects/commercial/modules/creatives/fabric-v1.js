@@ -1,14 +1,15 @@
 define([
     'qwery',
     'bonzo',
-    'common/utils/fastdom-promise',
-    'common/utils/detect',
-    'common/utils/template',
-    'common/utils/mediator',
+    'lib/fastdom-promise',
+    'lib/detect',
+    'lib/template',
+    'lib/mediator',
     'commercial/modules/creatives/add-tracking-pixel',
-    'text!commercial/views/creatives/fabric-v1.html',
-    'text!commercial/views/creatives/iframe-video.html',
-    'text!commercial/views/creatives/scrollbg.html',
+    'commercial/modules/creatives/add-viewability-tracker',
+    'raw-loader!commercial/views/creatives/fabric-v1.html',
+    'raw-loader!commercial/views/creatives/iframe-video.html',
+    'raw-loader!commercial/views/creatives/scrollbg.html',
     'lodash/objects/merge'
 ], function (
     $,
@@ -18,6 +19,7 @@ define([
     template,
     mediator,
     addTrackingPixel,
+    addViewabilityTracker,
     fabricV1Html,
     iframeVideoStr,
     scrollBgStr,
@@ -51,6 +53,7 @@ define([
         };
 
         var templateOptions = {
+            id: 'fabric-' + (Math.random() * 10000 | 0).toString(16),
             showLabel: this.params.showAdLabel !== 'hide',
             video: this.params.videoURL ? iframeVideoTpl(merge(this.params, videoPosition)) : '',
             hasContainer: 'layerTwoAnimation' in this.params,
@@ -75,7 +78,11 @@ define([
         }
 
         if (this.params.trackingPixel) {
-            addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+            addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
+        }
+
+        if (this.params.researchPixel) {
+            addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
         }
 
         return fastdom.write(function () {
@@ -97,6 +104,10 @@ define([
             this.$adSlot.addClass('ad-slot--fabric-v1 ad-slot--fabric content__mobile-full-width');
             if( this.$adSlot.parent().hasClass('top-banner-ad-container') ) {
                 this.$adSlot.parent().addClass('top-banner-ad-container--fabric');
+            }
+
+            if (this.params.viewabilityTracker) {
+                addViewabilityTracker(this.$adSlot[0], this.params.id, this.params.viewabilityTracker);
             }
 
             return true;

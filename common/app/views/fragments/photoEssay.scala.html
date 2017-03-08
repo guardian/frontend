@@ -54,7 +54,7 @@
           <div class="@if(hasMainMedia){immersive-main-media__headline-container immersive-main-media__headline-container--dark}">
               <div class="gs-container">
                 <div class="content__main-column">
-                    @fragments.meta.metaInline(page.item, page = page)
+                    @fragments.meta.metaInline(page.item)
                     <h1 class="@if(hasMainMedia){content__headline--immersive--with-main-media} content__headline content__headline--immersive content__headline--immersive-article">
                         @Html(page.item.trail.headline)
                     </h1>

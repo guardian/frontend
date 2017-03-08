@@ -1,31 +1,37 @@
 define([
-    'common/modules/commercial/commercial-features',
+    'lodash/arrays/uniq',
+    'commercial/modules/commercial-features',
     'common/modules/commercial/targeting-tool',
     'common/modules/commercial/acquisitions-view-log',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/cookies',
-    'common/utils/element-inview',
-    'common/utils/fastdom-promise',
-    'common/utils/mediator',
-    'common/utils/storage',
-    'common/utils/geolocation',
-
-], function (commercialFeatures,
-             targetingTool,
-             viewLog,
-             $,
-             config,
-             cookies,
-             ElementInView,
-             fastdom,
-             mediator,
-             storage,
-             geolocation) {
+    'lib/$',
+    'lib/config',
+    'lib/cookies',
+    'lib/element-inview',
+    'lib/fastdom-promise',
+    'lib/mediator',
+    'lib/storage',
+    'lib/geolocation',
+    'lib/template',
+    'raw-loader!common/views/contributions-epic-equal-buttons.html'
+], function (
+    uniq,
+    commercialFeatures,
+    targetingTool,
+    viewLog,
+    $,
+    config,
+    cookies,
+    ElementInView,
+    fastdom,
+    mediator,
+    storage,
+    geolocation,
+    template,
+    contributionsEpicEqualButtons
+) {
 
     var membershipURL = 'https://membership.theguardian.com/supporter';
     var contributionsURL = 'https://contribute.theguardian.com';
-
 
     var lastContributionDate = cookies.get('gu.contributions.contrib-timestamp');
 
@@ -54,6 +60,7 @@ define([
 
     function ContributionsABTest(options) {
         this.id = options.id;
+        this.epic = options.epic || true;
         this.start = options.start;
         this.expiry = options.expiry;
         this.author = options.author;
@@ -90,6 +97,7 @@ define([
             var inCompatibleLocation = options.locations ? options.locations.some(function (geo) {
                 return geo === storedGeolocation;
             }) : true;
+            var locationCheck = (typeof options.locationCheck === 'function') ? options.locationCheck(storedGeolocation) : true;
             var isImmersive = config.page.isImmersive === true;
 
             if (options.overrideCanRun) return tagsMatch && options.canRun();
@@ -99,7 +107,7 @@ define([
                 testCanRun &&
                 worksWellWithPageTemplate &&
                 commercialFeatures.canReasonablyAskForMoney &&
-                inCompatibleLocation &&
+                (inCompatibleLocation && locationCheck) &&
                 !isImmersive;
         }).bind(this);
 
@@ -112,25 +120,53 @@ define([
         return this.id + ':' + event;
     };
 
+    function controlTemplate(membershipUrl, contributionUrl) {
+        return template(contributionsEpicEqualButtons, {
+            linkUrl1: membershipUrl,
+            linkUrl2: contributionUrl,
+            title: 'Since you’re here …',
+            p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism open to all. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+            p2: 'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
+            p3: '',
+            cta1: 'Become a Supporter',
+            cta2: 'Make a contribution'
+        });
+    }
+
     function ContributionsABTestVariant(options, test) {
+        var trackingCampaignId = test.epic ? 'epic_' + test.campaignId : test.campaignId;
+
         this.campaignId = test.campaignId;
         this.id = options.id;
         this.maxViews = options.maxViews || maxViews;
         this.isUnlimited = options.isUnlimited || false;
 
-        this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, test.contributionsCampaignPrefix);
-        this.membershipURL = options.membershipURL || this.makeURL(membershipURL, test.membershipCampaignPrefix);
+        this.pageviewId = (config.ophan && config.ophan.pageViewId) || 'not_found';
+        this.contributeCampaignCode = getCampaignCode(test.contributionsCampaignPrefix, this.campaignId, this.id);
+        this.membershipCampaignCode = getCampaignCode(test.membershipCampaignPrefix, this.campaignId, this.id);
+        this.campaignCodes = uniq([this.contributeCampaignCode, this.membershipCampaignCode]);
+
+        this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, this.contributeCampaignCode);
+        this.membershipURL = options.membershipURL || this.makeURL(membershipURL, this.membershipCampaignCode);
+
+        this.template = options.template || controlTemplate;
 
         this.test = function () {
-            var component = $.create(options.template(this.contributeURL, this.membershipURL));
+            var component = $.create(this.template(this.membershipURL, this.contributeURL));
+            var onInsert = options.onInsert || noop;
+            var onView = options.onView || noop;
 
             function render() {
+                mediator.emit('register:begin', trackingCampaignId);
+
                 return fastdom.write(function () {
-                    var sibling = $(options.insertBeforeSelector);
+                    var selector = options.insertBeforeSelector || '.submeta';
+                    var sibling = $(selector);
 
                     if (sibling.length > 0) {
                         component.insertBefore(sibling);
                         mediator.emit(test.insertEvent, component);
+                        onInsert(component);
 
                         component.each(function (element) {
                             // top offset of 18 ensures view only counts when half of element is on screen
@@ -139,36 +175,33 @@ define([
                             elementInView.on('firstview', function () {
                                 viewLog.logView(test.id);
                                 mediator.emit(test.viewEvent);
+                                mediator.emit('register:end', trackingCampaignId);
+                                onView();
                             });
                         });
                     }
-                });
+                }.bind(this));
             }
 
-            return (typeof options.test === 'function') ? options.test(render) : render();
+            return (typeof options.test === 'function') ? options.test(render.bind(this)) : render.apply(this);
         };
 
         this.registerListener('impression', 'impressionOnInsert', test.insertEvent, options);
         this.registerListener('success', 'successOnView', test.viewEvent, options);
     }
 
-    function getCampaignCodeParamter(campaignCodePrefix, campaignID, id) {
-        return 'INTCMP=' + campaignCodePrefix + '_' + campaignID + '_' + id;
+    function getCampaignCode(campaignCodePrefix, campaignID, id) {
+        return campaignCodePrefix + '_' + campaignID + '_' + id;
     }
 
-    function getPageviewIdParamter() {
-        var ophan = config.ophan;
-        if(ophan && ophan.pageViewId){
-            return 'REFPVID=' + ophan.pageViewId
-        } else {
-            return 'REFPVID=not_found'
-        }
-    }
+    ContributionsABTestVariant.prototype.makeURL = function(base, campaignCode) {
+        var params = [
+            'INTCMP=' + campaignCode,
+            'REFPVID=' + this.pageviewId
+        ];
 
-    ContributionsABTestVariant.prototype.makeURL = function (base, campaignCodePrefix) {
-        var params = [getCampaignCodeParamter(campaignCodePrefix, this.campaignId, this.id), getPageviewIdParamter()];
         return base + '?' + params.filter(Boolean).join('&');
-    };
+    }
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {
         if (options[type]) this[type] = options[type];
@@ -178,6 +211,8 @@ define([
             }).bind(this);
         }
     };
+
+    function noop() {}
 
     return {
         makeABTest: function (test) {

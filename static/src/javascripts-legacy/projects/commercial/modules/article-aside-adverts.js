@@ -1,12 +1,12 @@
 define([
     'Promise',
-    'common/utils/$',
-    'common/utils/$css',
-    'common/utils/config',
-    'common/utils/mediator',
-    'common/utils/fastdom-promise',
-    'common/modules/commercial/dfp/create-slot',
-    'common/modules/commercial/commercial-features'
+    'lib/$',
+    'lib/$css',
+    'lib/config',
+    'lib/mediator',
+    'lib/fastdom-promise',
+    'commercial/modules/dfp/create-slot',
+    'commercial/modules/commercial-features'
 ], function (
     Promise,
     $,
@@ -59,7 +59,7 @@ define([
                          ? 'right-sticky' : 'right-small';
             }
 
-            $adSlot = createSlot(adType, 'mpu-banner-ad');
+            $adSlot = createSlot(adType, { classes: 'mpu-banner-ad' });
 
             return fastdom.write(function () {
                 if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {

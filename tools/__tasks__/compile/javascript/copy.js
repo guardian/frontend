@@ -6,18 +6,23 @@ const { src, vendor, target, hash, transpiled } = require('../../config').paths;
 module.exports = {
     description: 'Copy 3rd JS party libraries',
     task: () => Promise.all([
-        cpy([
-            'formstack-interactive/**/*',
-            'omniture/**/*',
-            'prebid/**/*',
-            'stripe/**/*',
-            'react/**/*',
-            'ophan/**/*',
-        ], path.resolve(target, 'javascripts', 'vendor'), {
-            cwd: path.resolve(vendor, 'javascripts'),
-            parents: true,
-            nodir: true,
-        }),
+        cpy(
+            [
+                'formstack-interactive/**/*',
+                'omniture/**/*',
+                'prebid/**/*',
+                'stripe/**/*',
+                'react/**/*',
+                'ophan/**/*',
+                'foresee/**/*',
+            ],
+            path.resolve(target, 'javascripts', 'vendor'),
+            {
+                cwd: path.resolve(vendor, 'javascripts'),
+                parents: true,
+                nodir: true,
+            }
+        ),
         cpy(['**/*'], path.resolve(hash, 'javascripts', 'vendor', 'foresee'), {
             cwd: path.resolve(vendor, 'javascripts', 'foresee'),
             parents: true,
@@ -38,7 +43,7 @@ module.exports = {
             cwd: path.resolve(src, 'javascripts'),
             parents: true,
             nodir: true,
-            ignore: '*.js',
+            ignore: '**/*.js',
         }),
     ]),
 };

@@ -1,15 +1,17 @@
 define([
     'Promise',
-    'common/utils/raven',
-    'common/utils/config',
-    'common/utils/user-timing',
-    'common/modules/analytics/beacon'
+    'lib/raven',
+    'lib/config',
+    'lib/user-timing',
+    'common/modules/analytics/beacon',
+    'ophan/ng'
 ], function (
     Promise,
     raven,
     config,
     userTiming,
-    beacon
+    beacon,
+    ophan
 ) {
 
     var performanceLog = {
@@ -21,9 +23,10 @@ define([
         };
     var primaryBaseline = 'primary';
     var secondaryBaseline = 'secondary';
+    var reportData = raven.wrap(reportTrackingData);
 
     function setListeners(googletag) {
-        googletag.pubads().addEventListener('slotRenderEnded', raven.wrap(reportTrackingData));
+        googletag.pubads().addEventListener('slotRenderEnded', reportData);
     }
 
     // moduleStart() and moduleEnd() can be used for measuring modules ad-hoc,
@@ -89,11 +92,8 @@ define([
     // multiple times in a page view, so that partial data is captured, and then topped up as adverts load in.
     function reportTrackingData() {
         if (config.tests.commercialClientLogging) {
-            require(['ophan/ng'], function (ophan) {
-                performanceLog.viewId = ophan.viewId;
-
-                beacon.postJson('/commercial-report', JSON.stringify(performanceLog));
-            });
+            performanceLog.viewId = ophan.viewId;
+            beacon.postJson('/commercial-report', JSON.stringify(performanceLog));
         }
     }
 
@@ -106,14 +106,23 @@ define([
         var stop = moduleEnd.bind(null, name);
         return function() {
             start();
-            var ret = fn.apply(null, arguments);
-            if (ret instanceof Promise) {
-                ret.then(stop, function(reason) {
+            try {
+                var ret = fn.apply(null, arguments);
+                if (ret instanceof Promise) {
+                    return ret.then(function (value) {
+                        stop();
+                        return value;
+                    }, function(reason) {
+                        stop();
+                        throw reason;
+                    });
+                } else {
                     stop();
-                    throw reason;
-                });
-            } else {
+                    return ret;
+                }
+            } catch (e) {
                 stop();
+                throw e;
             }
         };
     }
@@ -122,7 +131,7 @@ define([
         var startStop = [moduleStart.bind(null, name), moduleEnd.bind(null, name)];
         return function() {
             try {
-                fn.apply(null, startStop.concat(startStop.slice.call(arguments)));
+                return fn.apply(null, startStop.concat(startStop.slice.call(arguments)));
             } catch (e) {
                 stop();
                 throw e;
@@ -140,6 +149,6 @@ define([
         addTag: addTag,
         wrap: wrap,
         defer: defer,
-        reportTrackingData: raven.wrap(reportTrackingData)
+        reportTrackingData: reportData
     };
 });

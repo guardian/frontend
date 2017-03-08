@@ -1,17 +1,19 @@
 define([
-    'common/utils/fastdom-promise',
-    'common/utils/template',
+    'lib/fastdom-promise',
+    'lib/template',
     'common/views/svgs',
     'common/modules/ui/toggles',
     'commercial/modules/creatives/add-tracking-pixel',
-    'text!commercial/views/creatives/frame.html',
-    'text!commercial/views/creatives/gustyle-label.html'
+    'commercial/modules/creatives/add-viewability-tracker',
+    'raw-loader!commercial/views/creatives/frame.html',
+    'raw-loader!commercial/views/creatives/gustyle-label.html'
 ], function (
     fastdom,
     template,
     svgs,
     Toggles,
     addTrackingPixel,
+    addViewabilityTracker,
     frameStr,
     labelStr
 ) {
@@ -24,6 +26,7 @@ define([
     Frame.prototype.create = function () {
         this.params.externalLinkIcon = svgs('externalLink', ['gu-external-icon']);
         this.params.target = this.params.newWindow === 'yes' ? '_blank' : '_self';
+        this.params.id = 'frame-' + (Math.random() * 10000 | 0).toString(16);
 
         var frameMarkup = template(frameStr, { data: this.params });
         var labelMarkup = template(labelStr, { data: {
@@ -40,7 +43,13 @@ define([
             this.$adSlot[0].lastElementChild.insertAdjacentHTML('afterbegin', labelMarkup);
             this.$adSlot.addClass('ad-slot--frame');
             if (this.params.trackingPixel) {
-                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+                addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
+            }
+            if (this.params.researchPixel) {
+                addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
+            }
+            if (this.params.viewabilityTracker) {
+                addViewabilityTracker(this.$adSlot[0], this.params.id, this.params.viewabilityTracker);
             }
             new Toggles(this.$adSlot[0]).init();
             return true;

@@ -79,18 +79,6 @@
                     <option value="shop">Shop</option>
                     <option value="money">Money</option>
                     <option value="gardening">Gardening</option>
-                    <option value="soulmates">Soulmates</option>
-                </select>
-            </dd>
-            <dt>Gimbap style</dt>
-            <dd>
-                <select id="blended-style">
-                    <option value="normal" selected>Normal</option>
-                    <option value="reversed">Reversed</option>
-                    <option value="membership">Membership</option>
-                    <option value="masterclasses">Masterclasses</option>
-                    <option value="soulmates">Soulmates</option>
-                    <option value="jobs">Jobs</option>
                 </select>
             </dd>
         </dl>
@@ -143,7 +131,7 @@
                     });
 
                     var $palette    = $('#dfp-palette'),
-                        toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening', 'soulmates']
+                        toneClasses = ['brand', 'subscriptions', 'membership', 'live', 'jobs', 'networks', 'books', 'masterclasses', 'travel', 'shop', 'money', 'gardening']
                             .map(function (tone) {
                                 return 'adverts--tone-' + tone;
                             });
@@ -151,15 +139,6 @@
                         $('#multiple1 > .adverts, #manual1 > .adverts, .ad-slot--manual-inline > .adverts')
                             .removeClass(toneClasses.join(' '))
                             .addClass('adverts--tone-' + $palette.val());
-                    });
-
-                    var blendedStyle = document.getElementById('blended-style'),
-                        gimbap       = null,
-                        styleClasses = ['normal', 'reversed', 'membership', 'masterclasses', 'jobs', 'soulmates'].map(function (tone) { return 'gimbap-style--' + tone; });
-                    bean.on(blendedStyle, 'change', function () {
-                        gimbap = document.getElementById('gimbap').querySelector('.gimbap-wrap');
-                        styleClasses.forEach(function(c) { gimbap.classList.remove(c); });
-                        gimbap.classList.add('gimbap-style--' + blendedStyle.value);
                     });
                 });
         });
@@ -191,34 +170,6 @@
                     <div class="ad-slot ad-slot--im ad-slot--inline-event"></div>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never var his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never var his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
-                    <div class="ad-slot ad-slot--paidfor">
-
-                    </div>
-                    <script>
-                    loadCommercial(function () {
-                        require(['commercial/modules/creatives/commercial-component'])
-                            .then(function(
-                                CommercialComponent
-                            ) {
-                                new CommercialComponent(document.querySelector('.ad-slot--paidfor'), {
-                                    type: 'paidforCard',
-                                    trackingPixel: '%Trackingpixel%',
-                                    cacheBuster: '%%CACHEBUSTER%%',
-                                    //articleImage: '[%ArticleImage%]', //it will be taken from cAPI if not given here
-                                    brand: 'Unilever',
-                                    brandLogo: 'http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjnfPJbBABGAEyCHbj_OBIEKp8',
-                                    leaveTextEmpty: "Yes",
-                                    //articleHeaderText: "[%ArticleHeaderText%]", //it will be taken from cAPI if not given here
-                                    //articleText: "[%ArticleText%]", //it will be taken from cAPI if not given here, unless leaveTextEmpty is 'Yes'
-                                    articleUrl: 'p/43b2q',
-                                    linkLabel: 'linkLabel',
-                                    clickMacro: '%%CLICK_URL_ESC%%',
-                                    omnitureId: '[%OmnitureID%]',
-                                    adType: 'gu-style'
-                            }).create();
-                        });
-                    });
-                    </script>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never var his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                     <p>Nemo becomes increasingly sinister despite Aronnax's romanticised eye: he drugs his captives, refuses to explain the violent death of a crew member and alternates between sorrowful melancholia and cold fury. Ultimately it is Aronnax's transition from admiration and envy to complete fear that makes Twenty Thousand Leagues so eerie and exciting. At the climax when Nemo finally attacks a ship with Aronnax on board, the reader, Aronnax and the "archangel of hate" Nemo reach a satisfyingly simultaneous understanding. The two men watch in silence as the drowning sailors sink into an ocean crevasse like "a human antheap caught out by the invasion of the sea", and everyone finally understands that Nemo will never var his captors live. Later, when Aronnax literally crawls across the salon floor in complete darkness, desperate to avoid the sobbing Nemo who is playing his organ in the same room, my heart was pounding thrillingly hard. I've read Twenty Thousand Leagues multiple times and Nemo's madness still scares me.</p>
                 </div>
@@ -288,58 +239,6 @@
 
     <div class="fc-container__inner">
         <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10024887">
-                Merchandising: commercial component (jobs)
-            </a>
-        </h2>
-    </div>
-    <div class="fc-container fc-container--commercial">
-        <div class="js-merchandising-jobs ad-slot ad-slot--merchandising ad-slot--commercial-component"></div>
-    </div>
-    <script>
-        loadCommercial(function () {
-            require(['commercial/modules/creatives/commercial-component'])
-                .then(function(
-                    CommercialComponent
-                ) {
-                    new CommercialComponent(document.querySelector('.js-merchandising-jobs'), {
-                        type: 'jobs',
-                        jobIds: '4977372',
-                        omnitureId: '[%OmnitureID%]',
-                        clickMacro: '%%CLICK_URL_ESC%%'
-                    }).create();
-                });
-        });
-    </script>
-
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030407">
-                Merchandising: commercial component (masterclasses)
-            </a>
-        </h2>
-    </div>
-    <div class="fc-container fc-container--commercial">
-        <div class="js-merchandising-masterclasses ad-slot ad-slot--merchandising ad-slot--commercial-component"></div>
-    </div>
-    <script>
-        loadCommercial(function () {
-            require(['commercial/modules/creatives/commercial-component'])
-                .then(function(
-                    CommercialComponent
-                ) {
-                    new CommercialComponent(document.querySelector('.js-merchandising-masterclasses'), {
-                        type: 'masterclasses',
-                        ids: '',
-                        omnitureId: '[%OmnitureID%]',
-                        clickMacro: '%%CLICK_URL_ESC%%'
-                    }).create();
-                });
-        });
-    </script>
-
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
             <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030287">
                 Merchandising: commercial component (books)
             </a>
@@ -394,153 +293,6 @@
 
     <div class="fc-container__inner">
         <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030527">
-                Merchandising: commercial component (travel)
-            </a>
-        </h2>
-        <form class="js-merchandising-travel-layout">
-            <label>Layout:
-                <select>
-                    <option value="standard" selected>Standard</option>
-                    <option value="prominent">Prominent</option>
-                </select>
-            </label>
-        </form>
-    </div>
-    <div class="fc-container fc-container--commercial">
-        <div class="js-merchandising-travel ad-slot ad-slot--merchandising ad-slot--commercial-component"></div>
-    </div>
-    <script>
-        loadCommercial(function () {
-            require([
-                'bean',
-                'qwery',
-                'common/utils/$',
-                'commercial/modules/creatives/commercial-component'
-            ])
-                .then(function (
-                    bean,
-                    qwery,
-                    $,
-                    CommercialComponent
-                ) {
-                    var $merchandisingTravel = $('.js-merchandising-travel');
-
-                    bean.on(qwery('.js-merchandising-travel-layout')[0], 'change', function (event) {
-                        var commercialComponent = new CommercialComponent($merchandisingTravel[0], {
-                            type: 'travel',
-                            layout: $(event.srcElement).val(),
-                            ids: '',
-                            omnitureId: '[%OmnitureID%]',
-                            clickMacro: '%%CLICK_URL_ESC%%'
-                        });
-
-                        commercialComponent.postLoadEvents.travel = function () {
-                            $merchandisingTravel.removeClass('lazyloaded');
-                        };
-
-                        commercialComponent.create();
-                    });
-
-                    bean.fire(qwery('.js-merchandising-travel-layout select')[0], 'change');
-                });
-        });
-    </script>
-
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030887">
-                Merchandising: commercial component (soulmates) + feed
-            </a>
-        </h2>
-        <form class="js-soulmates-feed">
-            <label>Feed selection:
-                <select>
-                    <option value="mixednew" selected>Standard New</option>
-                    <option value="brighton">Brighton</option>
-                    <option value="east">East of England</option>
-                    <option value="eastmidlands">East Midlands</option>
-                    <option value="mature">Mature</option>
-                    <option value="men">Men</option>
-                    <option value="northeast">Northeast</option>
-                    <option value="northwest">Northwest</option>
-                    <option value="northwestnew">Northwest New</option>
-                    <option value="scotland">Scotland</option>
-                    <option value="south">South</option>
-                    <option value="southwest">Southwest</option>
-                    <option value="wales">Wales</option>
-                    <option value="westmidlands">West Midlands</option>
-                    <option value="women">Women</option>
-                    <option value="yorkshire">Yorkshire</option>
-                    <option value="young">Young</option>
-                </select>
-            </label>
-        </form>
-    </div>
-    <div class="fc-container fc-container--commercial">
-        <div class="js-merchandising-soulmates-feed ad-slot ad-slot--merchandising ad-slot--commercial-component"></div>
-    </div>
-    <script>
-    loadCommercial(function () {
-        require([
-            'bean',
-            'qwery',
-            'common/utils/$',
-            'commercial/modules/creatives/commercial-component'
-        ])
-            .then(function(
-                bean,
-                qwery,
-                $,
-                CommercialComponent
-            ) {
-                var $soulmatesFeed = $('.js-merchandising-soulmates-feed');
-
-                bean.on(qwery('.js-soulmates-feed select')[0], 'change', function (event) {
-                    var commercialComponent = new CommercialComponent($soulmatesFeed[0], {
-                        type: 'soulmatesGroup',
-                        omnitureId: '[%OmnitureID%]',
-                        clickMacro: '%%CLICK_URL_ESC%%',
-                        soulmatesFeedName: $(event.srcElement).val()
-                    });
-                    commercialComponent.postLoadEvents.soulmatesGroup = function () {
-                        $soulmatesFeed.removeClass('lazyloaded');
-                    };
-
-                    commercialComponent.create();
-                });
-                bean.fire(qwery('.js-soulmates-feed select')[0], 'change');
-            });
-        });
-    </script>
-
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
-            <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10030887">
-                Merchandising: commercial component (soulmates)
-            </a>
-        </h2>
-    </div>
-    <div class="fc-container fc-container--commercial">
-        <div class="js-merchandising-soulmates ad-slot ad-slot--merchandising ad-slot--commercial-component"></div>
-    </div>
-    <script>
-    loadCommercial(function () {
-        require(['commercial/modules/creatives/commercial-component'])
-            .then(function(
-                CommercialComponent
-            ) {
-                new CommercialComponent(document.querySelector('.js-merchandising-soulmates'), {
-                type: 'soulmates',
-                omnitureId: '[%OmnitureID%]',
-                clickMacro: '%%CLICK_URL_ESC%%'
-            }).create();
-        });
-    });
-    </script>
-
-    <div class="fc-container__inner">
-        <h2 class="test-page-head">
             <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10022487">Merchandising: blended component</a>
         </h2>
     </div>
@@ -553,7 +305,7 @@
                 ) {
                 new CommercialComponent(document.querySelector('.dfp-ad--merchandising-multi'), {
                     type: 'multi',
-                    components: ['soulmates', 'jobs', 'books', 'masterclasses'],
+                    components: ['jobs', 'books', 'masterclasses'],
                     slotIds: ['','','',''],
                     clickMacro: '%%CLICK_URL_ESC%%',
                     omnitureId: '[%OmnitureID%]'
@@ -698,42 +450,6 @@
             ))
         ),
         Map(
-            ("id", "multiple2"),
-            ("type", "multiple"),
-            ("creativeId", "10025847"),
-            ("args", Json.obj(
-                ("creative", "manual-multiple"),
-                ("base__url", "https://soulmates.theguardian.com"),
-                ("offerlinktext", "Offer link text"),
-                ("viewalltext", "View all text"),
-                ("offeramount", "offer-amount"),
-                ("relevance", "high"),
-                ("Toneclass", "commercial--tone-soulmates"),
-                ("offer1title", "Offer 1 Title"),
-                ("offer1linktext", "Offer 1 Link Text"),
-                ("offer1url", "http://www.theguardian.com/uk"),
-                ("offer1meta", "Offer 1 Meta"),
-                ("offer1image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer2title", "Offer 2 Title"),
-                ("offer2linktext", "Offer 2 Link Text"),
-                ("offer2url", "http://www.theguardian.com/uk"),
-                ("offer2meta", "Offer 1 Meta"),
-                ("offer2image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer3title", "Offer 3 Title"),
-                ("offer3linktext", "Offer 3 Link Text"),
-                ("offer3url", "http://www.theguardian.com/uk"),
-                ("offer3meta", "Offer 1 Meta"),
-                ("offer3image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer4title", "Offer 4 Title"),
-                ("offer4linktext", "Offer 4 Link Text"),
-                ("offer4url", "http://www.theguardian.com/uk"),
-                ("offer4meta", "Offer 1 Meta"),
-                ("offer4image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("omnitureId", "[%OmnitureID%]"),
-                ("clickMacro", "%%CLICK_URL_ESC%%")
-            ))
-        ),
-        Map(
             ("id", "multipleMembership"),
             ("type", "multiple"),
             ("creativeId", "10025847"),
@@ -786,248 +502,6 @@
                             .then(function (Template) {
                                 new Template(document.querySelector('#@component("id")'), @Html(Json.stringify(args)))
                                     .create();
-                        });
-                    });
-                }
-                case _ => { }
-            }
-        </script>
-    }
-
-    @Seq(
-        Map(
-            ("id", "gimbap"),
-            ("type", "gimbap"),
-            ("creativeId", "10025847"),
-            ("args", Json.obj(
-                ("creative", "gimbap"),
-                ("layout", "1x1x1x1"),
-                ("style", "normal"),
-                ("linksWithArrows", "yes"),
-                ("offer1tone", "members"),
-                ("offer1authorimage",""),
-                ("offer1quotes", "yes"),
-                ("offer1url", "https://memebrship.theguardian.com"),
-                ("offer1title", "If you want to keep something like this going, you have to support it"),
-                ("offer1subtitle", "Aisha Gani Support the Guardian"),
-                ("offer2tone", "masterclasses"),
-                ("offer2quotes", "no"),
-                ("offer2url", "https://memebrship.theguardian.com"),
-                ("offer2title", "Start your novel and get it published"),
-                ("offer2subtitle", "Writing & Publishing courses"),
-                ("offer3tone", "soulmates"),
-                ("offer3quotes", "yes"),
-                ("offer3url", "https://memebrship.theguardian.com"),
-                ("offer3title", "Met someone wonderful. Thank you!"),
-                ("offer3subtitle", "Kim12 quit in January. Find your soulmate"),
-                ("offer4tone", "bookshop"),
-                ("offer4quotes", "no"),
-                ("offer4url", "https://memebrship.theguardian.com"),
-                ("offer4title", "Has your job changed from what you signed up to do?"),
-                ("offer4subtitle", "How to negotiate a pay rise"),
-                ("omnitureId", "[%OmnitureID%]"),
-                ("clickMacro", "%%CLICK_URL_ESC%%")
-            ))
-        )
-    ).map { component =>
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
-                    Merchandising: manual @component("type")
-                </a>
-            </h2>
-            <form>
-                <label>Layout:
-                    <select id="gimbap-layout">
-                        <option selected>1x1x1x1</option>
-                        <option>2x1x1</option>
-                        <option>1</option>
-                    </select>
-                </label>
-            </form>
-        </div>
-        <div id="@component("id")" class="ad-slot ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
-        <script>
-            @component("args") match {
-                case args: JsObject => {
-                    loadCommercial(function () {
-                        require(['bean', 'commercial/modules/creatives/template'])
-                            .then(function (bean, Template) {
-                                var container = document.querySelector('#@component("id")');
-                                var layout = document.getElementById('gimbap-layout');
-                                layout.addEventListener('change', function (event) {
-                                    container.innerHTML = '';
-                                    new Template(container, Object.assign({}, @Html(Json.stringify(args)), { layout: layout.value })).create();
-                                });
-
-                                bean.fire(layout, 'change');
-                        });
-                    });
-                }
-                case _ => { }
-            }
-        </script>
-    }
-
-     @Seq(
-        Map(
-            ("id", "gimbap-simple-masterclasses"),
-            ("type", "gimbap simple masterclasses"),
-            ("creativeId", "10025847"),
-            ("args", Json.obj(
-                ("creative", "gimbap-simple"),
-                ("linksWithArrows", "yes"),
-                ("componenttone", "masterclasses"),
-                ("componentheadline", "masterclasses"),
-                ("componentmessage", "New masterclasses led by award-winning Guardian professionals now booking"),
-                ("offer1url", "https://memebrship.theguardian.com"),
-                ("offer1title", "Business courses"),
-                ("offer1image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer2url", "https://memebrship.theguardian.com"),
-                ("offer2title", "Hournalism courses"),
-                ("offer2image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer3url", "https://memebrship.theguardian.com"),
-                ("offer3title", "Writing courses"),
-                ("offer3image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer4url", "https://memebrship.theguardian.com"),
-                ("offer4title", "Culture courses"),
-                ("offer4image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("omnitureId", "[%OmnitureID%]"),
-                ("clickMacro", "%%CLICK_URL_ESC%%")
-            ))
-        )
-    ).map { component =>
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
-                    Merchandising: manual @component("type")
-                </a>
-            </h2>
-        </div>
-        <div id="@component("id")" class="ad-slot ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
-        <script>
-            @component("args") match {
-                case args: JsObject => {
-                    loadCommercial(function () {
-                        require(['bean', 'commercial/modules/creatives/template'])
-                            .then(function (bean, Template) {
-                                var container = document.querySelector('#@component("id")');
-                                new Template(container, Object.assign({}, @Html(Json.stringify(args)))).create();
-                        });
-                    });
-                }
-                case _ => { }
-            }
-        </script>
-    }
-
-    @Seq(
-        Map(
-            ("id", "gimbap-simple-jobs"),
-            ("type", "gimbap simple jobs"),
-            ("creativeId", "10025847"),
-            ("args", Json.obj(
-                ("creative", "gimbap-simple"),
-                ("linksWithArrows", "yes"),
-                ("componenttone", "jobs"),
-                ("componentheadline", "jobs"),
-                ("componentmessage", "New jobs led by award-winning Guardian professionals now booking"),
-                ("offer1url", "https://memebrship.theguardian.com"),
-                ("offer1title", "Business courses"),
-                ("offer1image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer2url", "https://memebrship.theguardian.com"),
-                ("offer2title", "Hournalism courses"),
-                ("offer2image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer3url", "https://memebrship.theguardian.com"),
-                ("offer3title", "Writing courses"),
-                ("offer3image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("offer4url", "https://memebrship.theguardian.com"),
-                ("offer4title", "Culture courses"),
-                ("offer4image", "http://www.catgifpage.com/gifs/247.gif"),
-                ("omnitureId", "[%OmnitureID%]"),
-                ("clickMacro", "%%CLICK_URL_ESC%%")
-            ))
-        )
-    ).map { component =>
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
-                    Merchandising: manual @component("type")
-                </a>
-            </h2>
-
-        </div>
-        <div id="@component("id")" class="ad-slot ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
-        <script>
-            @component("args") match {
-                case args: JsObject => {
-                    loadCommercial(function () {
-                        require(['bean', 'commercial/modules/creatives/template'])
-                            .then(function (bean, Template) {
-                                var container = document.querySelector('#@component("id")');
-                                new Template(container, Object.assign({}, @Html(Json.stringify(args)))).create();
-                        });
-                    });
-                }
-                case _ => { }
-            }
-        </script>
-    }
-
-    @Seq(
-        Map(
-            ("id", "gimbap-richmedia"),
-            ("type", "gimbap richmedia"),
-            ("creativeId", "10025847"),
-            ("args", Json.obj(
-                ("creative", "gimbap-richmedia"),
-                ("layout", "2x2"),
-                ("componenteffects", "yes"),
-                ("componenttone", "masterclasses"),
-                ("componentheadline", "masterclasses"),
-                ("componentmessage", "New masterclasses now booking"),
-                ("offer1url", "https://memebrship.theguardian.com"),
-                ("offer1title", "Business courses"),
-                ("offer1image", "http://www.theaureview.com/sites/default/files/nathan-fillion-firefly.jpg"),
-                ("offer1highlight", "Journalism"),
-                ("offer1title", "Writing for women magazines"),
-                ("offer1headline", "An evening class with Cosmopolitan editor-in-chief Farrah Storr"),
-                ("offer1date", ""),
-                ("offer1place", ""),
-                ("offer1price", ""),
-                ("offer1discount", ""),
-                ("offer2url", "https://memebrship.theguardian.com"),
-                ("offer2title", "Hournalism courses"),
-                ("offer2image", "http://www.theaureview.com/sites/default/files/nathan-fillion-firefly.jpg"),
-                ("offer2highlight", "Writing"),
-                ("offer2title", "Creating characters for your novel"),
-                ("offer2headline", "A writing class with Louisa Young"),
-                ("offer2date", "16 Oct 2016"),
-                ("offer2place", "Kings Place, London"),
-                ("offer2price", "99"),
-                ("offer2discount", "or save £20 with a guardian membership"),
-                ("omnitureId", "[%OmnitureID%]"),
-                ("clickMacro", "%%CLICK_URL_ESC%%")
-            ))
-        )
-    ).map { component =>
-        <div class="fc-container__inner">
-            <h2 class="test-page-head">
-                <a href="https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=@component("creativeId")">
-                    Merchandising: manual @component("type")
-                </a>
-            </h2>
-
-        </div>
-        <div id="@component("id")" class="ad-slot ad-slot--merchandising ad-slot--commercial-component ad-slot--@component("type")-manual"></div>
-        <script>
-            @component("args") match {
-                case args: JsObject => {
-                    loadCommercial(function () {
-                        require(['bean', 'commercial/modules/creatives/template'])
-                            .then(function (bean, Template) {
-                                var container = document.querySelector('#@component("id")');
-                                new Template(container, Object.assign({}, @Html(Json.stringify(args)))).create();
                         });
                     });
                 }

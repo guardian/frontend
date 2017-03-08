@@ -1,16 +1,17 @@
 define([
     'bean',
     'qwery',
-    'common/utils/mediator',
-    'common/utils/report-error',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
+    'lib/mediator',
+    'lib/report-error',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
     'common/modules/onward/history',
     'lodash/arrays/indexOf',
     'lodash/functions/throttle',
     'lodash/objects/forOwn',
-    'common/modules/video/ga-helper'
+    'common/modules/video/ga-helper',
+    'ophan/ng'
 ], function (
     bean,
     qwery,
@@ -23,7 +24,8 @@ define([
     indexOf,
     throttle,
     forOwn,
-    gaHelper
+    gaHelper,
+    ophan
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         isEmbed = !!window.guardian.isEmbed,
@@ -39,7 +41,6 @@ define([
             'content:end'
         ],
         gaTracker = config.googleAnalytics.trackers.editorial;
-
 
     /**
      *
@@ -154,18 +155,12 @@ define([
         }
 
         if (isEmbed) {
-            // this loads a hosted AMD module, which makes life hard for anything
-            // that isn't an AMD module loader e.g. webpack.
-            // however, since this is the embed page, we're already supplying curl,
-            // therefore we can build *this* for curl regardless of the loader in use.
-            // this is not ok medium/long term, but it gets us towards
-            // a finished webpack build for now...
-            window.require(['ophan/embed'], record)
+            require.ensure([], function (require) {
+                record(require('ophan/embed'));
+            }, 'ophan-embed');
         } else {
-            // this will be webpack in weback land and curl `require` in r.js land
-            require(['ophan/ng'], record)
+            record(ophan);
         }
-
     }
 
     function initOphanTracking(player, mediaId) {
@@ -283,12 +278,17 @@ define([
         events.ready();
     }
 
+    function hideCaption() {
+        $('.js-hide-on-play').hide();
+    }
+
     // These events are so that other libraries (e.g. Ophan) can hook into events without
     // needing to know about videojs
     function bindGlobalEvents(player) {
         player.on('playing', function () {
             kruxTracking(player, 'videoPlaying');
             bean.fire(document.body, 'videoPlaying');
+            hideCaption();
         });
         player.on('pause', function () {
             bean.fire(document.body, 'videoPause');

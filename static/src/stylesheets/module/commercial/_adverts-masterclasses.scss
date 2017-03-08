@@ -1,6 +1,3 @@
-.adverts--masterclasses {
-}
-
 .adverts--tone-masterclasses {
     > .adverts__header {
         background: $multimedia-main-1;
@@ -54,28 +51,6 @@
             darken($multimedia-main-2, 5%),
             $neutral-1
         );
-    }
-}
-
-.advert-blended--masterclasses {
-    .advert-blended__title {
-        padding-top: 5px;
-        padding-bottom: 9px;
-
-        > svg {
-            height: 22px;
-            width: 144px;
-        }
-    }
-
-    .advert {
-        display: block;
-    }
-
-    .advert__image-container {
-        float: right;
-        margin: 0 0 0 $gs-gutter / 2;
-        width: 50%;
     }
 }
 

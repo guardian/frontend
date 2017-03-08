@@ -2,7 +2,6 @@
 @import play.api.Mode.Dev
 @import views.support.Commercial.listSponsorLogosOnPage
 @import views.support.{Commercial, GoogleAnalyticsAccount}
-@import mvt.{WebpackTest,WebpackControl}
 
 <script id='google_analytics'>
 
@@ -37,15 +36,8 @@
 
     // Please email Dotcom Platform before changing this value
     function getExperienceValue() {
-        @if(WebpackTest.isParticipating) {
-            return 'webpack';
-        } else {
-            @if(WebpackControl.isParticipating) {
-                return 'webpack-control';
-            } else {
-                return 'curl';
-            }
-        }
+        // return 'none' if you're not testing anything
+        return 'none';
     }
 
     var identityId = null;
@@ -68,7 +60,8 @@
     @for(tracker <- Seq(GoogleAnalyticsAccount.editorialProd, GoogleAnalyticsAccount.editorialTest)) {
         ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName', {
             'sampleRate': @{ if (context.environment.mode == Dev) 100 else tracker.samplePercentage },
-            'siteSpeedSampleRate': @{ if (context.environment.mode == Dev) 100 else tracker.siteSpeedSamplePercentage }
+            'siteSpeedSampleRate': @{ if (context.environment.mode == Dev) 100 else tracker.siteSpeedSamplePercentage },
+            'userId': identityId
         });
     }
 

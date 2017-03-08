@@ -40,23 +40,22 @@ check-yarn: # PRIVATE
 
 # Watch and automatically compile/reload all JS/SCSS.
 # Uses port 3000 insead of 9000.
-watch: compile-dev
-	@npm run babel-watch & \
-		npm run sass-watch & \
-		npm run gulp-watch & \
-		npm run browser-sync
-
-
+watch: compile-watch
+	@./dev/watch.js
 
 # *********************** ASSETS ***********************
 
-# Compile all assets for production.
+# Compile all assets in production.
 compile: install
 	@./tools/task-runner/runner compile
 
-# Compile all assets for development.
+# Compile all assets in development.
 compile-dev: install
 	@./tools/task-runner/runner compile --dev
+
+# Compile all assets for watch.
+compile-watch: install # PRIVATE
+	@./tools/task-runner/runner compile/index.watch
 
 compile-javascript: install # PRIVATE
 	@./tools/task-runner/runner compile/javascript
@@ -114,3 +113,10 @@ validate-amp: install # PRIVATE
 # Take screenshots for a visual check.
 screenshots: install
 	@./tools/task-runner/runner screenshot
+
+
+
+# *********************** MISC ***********************
+
+es6: install
+	@node ./tools/es5to6.js

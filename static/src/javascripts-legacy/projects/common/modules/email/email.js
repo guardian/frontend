@@ -1,22 +1,22 @@
 define([
-    'common/utils/formInlineLabels',
+    'lib/formInlineLabels',
     'bean',
     'bonzo',
     'qwery',
     'fastdom',
     'Promise',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/fetch',
-    'common/utils/mediator',
-    'common/utils/template',
-    'common/utils/robust',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
+    'lib/fetch',
+    'lib/mediator',
+    'lib/template',
+    'lib/robust',
     'common/modules/analytics/google',
     'lodash/collections/contains',
     'common/views/svgs',
-    'text!common/views/email/submissionResponse.html',
-    'text!common/views/ui/close-button.html',
+    'raw-loader!common/views/email/submissionResponse.html',
+    'raw-loader!common/views/ui/close-button.html',
     'common/modules/identity/api',
     'common/modules/user-prefs',
     'lodash/arrays/uniq'
@@ -101,21 +101,29 @@ define([
         ui = {
             updateForm: function (thisRootEl, el, analytics, opts) {
                 var formData = $(thisRootEl).data(),
+                    formDisplayNameNormalText = (opts && opts.displayName && opts.displayName.normalText) || formData.formDisplayNameNormalText || false,
+                    formDisplayNameAccentedText = (opts && opts.displayName && opts.displayName.accentedText) || formData.formDisplayNameAccentedText || false,
                     formTitle = (opts && opts.formTitle) || formData.formTitle || false,
                     formDescription = (opts && opts.formDescription) || formData.formDescription || false,
                     formCampaignCode = (opts && opts.formCampaignCode) || formData.formCampaignCode || '',
                     formSuccessHeadline = (opts && opts.formSuccessHeadline) || formData.formSuccessHeadline,
                     formSuccessDesc = (opts && opts.formSuccessDesc) || formData.formSuccessDesc,
                     removeComforter = (opts && opts.removeComforter) || formData.removeComforter || false,
-                    formModClass = (opts && opts.formModClass) || formData.formModClass || false,
-                    formCloseButton = (opts && opts.formCloseButton) || formData.formCloseButton || false;
+                    formCloseButton = (opts && opts.formCloseButton) || formData.formCloseButton || false,
+                    formSuccessEventName = (opts && opts.formSuccessEventName) || formData.formSuccessEventName || false;
 
                 Id.getUserFromApi(function (userFromId) {
                     ui.updateFormForLoggedIn(userFromId, el);
                 });
 
                 fastdom.write(function () {
-                    if (formTitle) {
+                    if (formDisplayNameNormalText) {
+                        $('.js-email-sub__display-name-normal-text', el).text(formDisplayNameNormalText);
+
+                        if (formDisplayNameAccentedText) {
+                            $('.js-email-sub__display-name-accented-text', el).text(formDisplayNameAccentedText);
+                        }
+                    } else if (formTitle) {
                         $('.js-email-sub__heading', el).text(formTitle);
                     }
 
@@ -125,10 +133,6 @@ define([
 
                     if (removeComforter) {
                         $('.js-email-sub__small', el).remove();
-                    }
-
-                    if (formModClass) {
-                        $(el).addClass('email-sub--' + formModClass);
                     }
 
                     if (formCloseButton) {
@@ -145,6 +149,7 @@ define([
 
                 // Cache data on the form element
                 $('.js-email-sub__form', el).data('formData', {
+                    customSuccessEventName: formSuccessEventName,
                     campaignCode: formCampaignCode,
                     referrer: window.location.href,
                     customSuccessHeadline: formSuccessHeadline,
@@ -156,7 +161,7 @@ define([
                 if (userFromId && userFromId.primaryEmailAddress) {
                     fastdom.write(function () {
                         $('.js-email-sub__inline-label', el).addClass('email-sub__inline-label--is-hidden');
-                        $('.js-email-sub__submit-input', el).addClass('email-sub__submit-input--solo');
+                        $('.js-email-sub__submit-button', el).addClass('email-sub__submit-button--solo');
                         $('.js-email-sub__text-input', el).val(userFromId.primaryEmailAddress);
                     });
                 }
@@ -241,6 +246,9 @@ define([
                         state.submitting = true;
 
                         return new Promise(function () {
+                            if (formData.customSuccessEventName) {
+                                mediator.emit(formData.customSuccessEventName);
+                            }
                             googleAnalytics.trackNonClickInteraction(analyticsInfo.replace('%action%', 'subscribe clicked'));
                             return fetch(config.page.ajaxUrl + url, {
                                 method: 'post',

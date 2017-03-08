@@ -1,6 +1,5 @@
 @(item: model.ContentType, page: model.Page, showBadge: Boolean = false, showMeta: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
 
-@import common.Edition
 @import model.Badges.badgeFor
 @import views.support.Commercial.isPaidContent
 @import views.support.ContributorLinks
@@ -16,11 +15,11 @@
         <div class="gs-container">
             <div class="content__main-column u-cf">
 
-                @if(showMeta) {
-                    @fragments.meta.metaInline(item, amp, page = page)
+                @if(showMeta && !amp) {
+                    @fragments.meta.metaInline(item)
                 }
 
-                <h1 class="content__headline js-score" itemprop="headline">
+                <h1 class="content__headline" itemprop="headline">
                     @if(item.tags.isMedia) {
                         @defining(
                             item match {

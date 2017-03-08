@@ -1,6 +1,6 @@
 define([
     'bean',
-    'common/utils/mediator'
+    'lib/mediator'
 ], function (
     bean,
     mediator

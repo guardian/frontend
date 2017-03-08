@@ -142,6 +142,10 @@ object Cached extends implicits.Dates {
   }
 }
 
+object PrivateCache {
+  def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "private")
+}
+
 object NoCache {
   def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "no-cache", "Pragma" -> "no-cache")
 }

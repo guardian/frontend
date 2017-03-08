@@ -4,13 +4,13 @@ import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 
 trait FeatureSwitches {
-  val ServerSideShareCounts = Switch(
+  val ShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",
-    "If this switch is on, share counts are fetched from a more recent Facebook Graph API version, server-side",
+    "If this switch is on, share counts are fetched from the Facebook Graph API on the server",
     owners = Seq(Owner.withGithub("jfsoul")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 8),
+    safeState = On,
+    sellByDate = never,
     exposeClientSide = true
   )
 
@@ -71,7 +71,7 @@ trait FeatureSwitches {
     "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition (for web only).",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 8),
+    sellByDate = never,
     exposeClientSide = true
   )
 
@@ -384,7 +384,7 @@ trait FeatureSwitches {
     "When ON, articles specified in the badges file will have visual elements added",
     owners = Seq(Owner.withGithub("superfrank")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 2, 28),
+    sellByDate = new LocalDate(2017, 3, 28),
     exposeClientSide = false
   )
 
@@ -487,14 +487,14 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  // Owner: Joseph Smith
-  val RenderEmailConnectedStyle = Switch(
+  val AmpOphanTrackingIncludesCredentials = Switch(
     SwitchGroup.Feature,
-    "render-email-connected-style",
-    "Allows alternate email styling when passing ?format=email-connected, for testing two email design variants",
-    owners = Seq(Owner.withGithub("joelochlann")),
+    "amp-ophan-tracking-includes-credentials",
+    "allows access to id field when page viewed from google cache so that we keep tracking consistent",
+    owners = Seq(Owner.withGithub("michaelwmcnamara")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 27),
+    sellByDate = new LocalDate(2017, 3, 10),
     exposeClientSide = true
+
   )
 }

@@ -2,16 +2,16 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'common/utils/fastdom-promise',
-    'common/utils/raven',
+    'lib/fastdom-promise',
+    'lib/raven',
     'Promise',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/defer-to-analytics',
-    'common/utils/detect',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/config',
+    'lib/defer-to-analytics',
+    'lib/detect',
+    'lib/mediator',
     'common/modules/commercial/video-ad-url',
-    'common/modules/commercial/commercial-features',
+    'commercial/modules/commercial-features',
     'common/modules/component',
     'common/modules/experiments/ab',
     'common/modules/video/events',
@@ -22,12 +22,10 @@ define([
     'common/modules/video/onward-container',
     'common/modules/video/more-in-series-container',
     'common/modules/video/videojs-options',
-    // This must be the full path because we use curl config to change it based
-    // on env
     'bootstraps/enhanced/media/video-player',
-    'text!common/views/ui/loading.html',
-    'common/modules/commercial/user-features',
-    'common/utils/load-script'
+    'raw-loader!common/views/ui/loading.html',
+    'commercial/modules/user-features',
+    'lib/load-script'
 ], function (
     bean,
     bonzo,
@@ -384,7 +382,7 @@ define([
             !config.page.hasMultipleVideosInPage &&
             !config.page.hasYouTubeAtom &&
             !config.page.isFront &&
-            !config.page.isAdvertisementFeature &&
+            !config.page.isPaidContent &&
             !config.page.sponsorshipType;
 
         if (config.switches.enhancedMediaPlayer) {

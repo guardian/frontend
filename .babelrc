@@ -2,22 +2,26 @@
     "env": {
         "production": {
             "presets": [
-                "latest",
+                ["env", {
+                    "modules": false
+                }]
             ],
             "plugins": [
+                "transform-runtime",
                 "add-module-exports",
                 "transform-es2015-modules-amd",
-                "transform-runtime",
             ],
         },
         "development": {
             "presets": [
-                "latest",
+                ["env", {
+                    "modules": false
+                }]
             ],
             "plugins": [
+                "transform-runtime",
                 "add-module-exports",
                 "transform-es2015-modules-amd",
-                "transform-runtime",
             ],
         },
         "internal": {
@@ -32,6 +36,16 @@
                         ],
                     }
                 }],
+            ],
+        },
+        "karma": {
+            "presets": [
+                ["env", {
+                    "modules": "amd"
+                }]
+            ],
+            "plugins": [
+                "transform-runtime",
             ],
         },
     },

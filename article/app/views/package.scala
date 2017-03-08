@@ -3,6 +3,7 @@ package views
 import common.Edition
 import layout.ContentWidths
 import layout.ContentWidths.{Inline, LiveBlogMedia, MainMedia, Showcase}
+import model.content.MediaWrapper
 import model.{ApplicationContext, Article}
 import play.api.mvc.RequestHeader
 import views.support._
@@ -29,7 +30,7 @@ object MainCleaner {
         if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
         PictureCleaner(article, amp),
         MainFigCaptionCleaner,
-        AtomsCleaner(atoms = article.content.atoms, shouldFence = true, amp = amp, mainMedia = true)
+        AtomsCleaner(atoms = article.content.atoms, amp = amp, mediaWrapper = Some(MediaWrapper.MainMedia))
       )
   }
 }

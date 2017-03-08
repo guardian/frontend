@@ -15,6 +15,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val BlockIASSwitch = Switch(
+    SwitchGroup.Commercial,
+    "block-ias",
+    "Controls whether the Service Worker can filter out IAS calls",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val AdFreeTrialSwitch = Switch(
     SwitchGroup.Commercial,
     "ad-free-membership-trial",
@@ -201,8 +211,17 @@ trait CommercialSwitches {
     description = "Solicit feedback for ad impressions",
     owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 1),
+    sellByDate = new LocalDate(2017, 4, 4),
     exposeClientSide = true
   )
 
+  val preflightServerSideAdCallSwitch: Switch = Switch(
+    group = SwitchGroup.Commercial,
+    name = "preflight-ad-call",
+    description = "A test feature to evaluate Switch Concepts' server-to-server preflight ad call",
+    owners = Owner.group(SwitchGroup.Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
 }

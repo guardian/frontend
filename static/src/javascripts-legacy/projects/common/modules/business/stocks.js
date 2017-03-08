@@ -1,12 +1,12 @@
 define([
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/fetch-json',
-    'common/utils/report-error',
-    'common/utils/template',
+    'lib/$',
+    'lib/config',
+    'lib/fetch-json',
+    'lib/report-error',
+    'lib/template',
     'common/views/svgs',
-    'text!common/views/business/stock-value.html',
-    'text!common/views/business/stocks.html',
+    'raw-loader!common/views/business/stock-value.html',
+    'raw-loader!common/views/business/stocks.html',
     'lodash/collections/contains',
     'lodash/collections/map'
 ], function (

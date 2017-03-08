@@ -1,5 +1,5 @@
 define([
-    'react',
+    'react/addons',
     'common/views/svgs',
     './clue-input',
     './clue-preview',
@@ -12,7 +12,7 @@ define([
     'lodash/collections/map',
     'lodash/arrays/compact',
     'lodash/collections/filter',
-    'common/utils/chain'
+    'lib/chain'
 ], function (
     React,
     svgs,

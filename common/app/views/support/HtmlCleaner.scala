@@ -8,7 +8,7 @@ import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
-import model.content.{Atom, Atoms}
+import model.content.{Atom, Atoms, MediaWrapper}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
@@ -532,10 +532,14 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
     document.getElementsByTag("h2").foreach{ h2 =>
         if (isImmersive && h2.text() == "* * *") {
             h2.before("""<hr class="section-rule" />""")
-            val next = h2.nextElementSibling()
-            if (next.nodeName() == "p") {
-                next.html(setDropCap(next))
-            }
+
+            val maybeNext = Option(h2.nextElementSibling())
+            maybeNext
+              .filter(_.nodeName() == "p")
+              .foreach { el =>
+                el.html(setDropCap(el))
+              }
+
             h2.remove()
         }
     }
@@ -638,7 +642,7 @@ object MembershipEventCleaner extends HtmlCleaner {
     }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false, mainMedia: Boolean = false)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
+case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false, mediaWrapper: Option[MediaWrapper] = None)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
@@ -651,7 +655,7 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomData <- findAtom(atomId)
       } {
-        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mainMedia).toString()
+        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
         bodyElement.remove()
         atomContainer.append(html)
       }
@@ -671,13 +675,53 @@ object setSvgClasses {
   }
 }
 
-case class CommercialComponentHigh(isAdvertisementFeature: Boolean, isNetworkFront: Boolean, hasPageSkin: Boolean) extends HtmlCleaner {
+case class CommercialMPUForFronts(isNetworkFront: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+
+    def isNetworkFrontWithThrasher(element: Element, index: Int): Boolean = {
+      index == 0 && isNetworkFront && element.hasClass("fc-container--thrasher")
+    }
+
+    def hasAdjacentCommercialContainer(element: Element): Boolean = {
+      val maybeNextEl: Option[Element] = Option(element.nextElementSibling())
+      element.hasClass("fc-container--commercial") || maybeNextEl.exists(_.hasClass("fc-container--commercial"))
+    }
+
+    val sliceSlot = views.html.fragments.items.facia_cards.sliceSlot
+
+    val containers: List[Element] = document.getElementsByClass("fc-container").toList
+
+    // On mobile, we remove the first container if it is a thrasher on a Network Front
+    // and remove a container if it, or the next sibling, is a commercial container
+    // then we take every other container, up to a maximum of 10, for targeting MPU insertion
+    val containersForCommercialMPUs = containers.zipWithIndex.collect {
+      case (x, i) if !isNetworkFrontWithThrasher(x, i) && !hasAdjacentCommercialContainer(x) => x
+    }.zipWithIndex.collect {
+      case (x, i) if i % 2 == 0 => x
+    }.take(10)
+
+    for (container <- containersForCommercialMPUs) {
+      container.after(s"""<section class="fc-container__mpu--mobile">${sliceSlot(containersForCommercialMPUs.indexOf(container), isMobile = true)}</section>""")
+    }
+
+    // On desktop, a MPU slot is simply inserted when there is a slice available
+    val slices: List[Element] = document.getElementsByClass("fc-slice__item--mpu-candidate").toList
+
+    for (slice <- slices) {
+      slice.append(s"${sliceSlot(slices.indexOf(slice) + 1)}")
+    }
+
+    document
+  }
+}
+
+case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boolean, hasPageSkin: Boolean) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
 
     val containers: List[(Element, Int)] = document.getElementsByClass("fc-container").toList.zipWithIndex
 
-    val minContainers = if (isAdvertisementFeature) 1 else 2
+    val minContainers = if (isPaidContent) 1 else 2
 
     if (containers.length >= minContainers) {
 
@@ -685,7 +729,7 @@ case class CommercialComponentHigh(isAdvertisementFeature: Boolean, isNetworkFro
         if (isNetworkFront) 3 else 2
       } else 0
 
-      val adSlotHtml = views.html.fragments.commercial.commercialComponentHigh(isAdvertisementFeature, hasPageSkin)
+      val adSlotHtml = views.html.fragments.commercial.commercialComponentHigh(isPaidContent, hasPageSkin)
 
       val adSlot: Option[Element] = Jsoup.parseBodyFragment(adSlotHtml.toString).body().children().toList.headOption
 

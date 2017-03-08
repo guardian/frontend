@@ -1,15 +1,15 @@
 define([
     'fastdom',
-    'common/utils/report-error',
-    'common/utils/$',
-    'common/utils/ajax',
-    'common/utils/detect',
-    'common/utils/config',
-    'common/utils/formatters',
-    'common/utils/template',
+    'lib/report-error',
+    'lib/$',
+    'lib/ajax',
+    'lib/detect',
+    'lib/config',
+    'lib/formatters',
+    'lib/template',
     'common/views/svgs',
-    'text!common/views/content/share-count.html',
-    'text!common/views/content/share-count-immersive.html'
+    'raw-loader!common/views/content/share-count.html',
+    'raw-loader!common/views/content/share-count-immersive.html'
 ], function (
     fastdom,
     reportError,
@@ -68,9 +68,7 @@ define([
         incrementShareCount(val);
     }
 
-    var fetch = config.switches.serverShareCounts ? fetchFromServer : fetchDirect;
-
-    function fetchFromServer() {
+    function fetch() {
         ajax({
             url: config.page.ajaxUrl + '/sharecount/' + config.page.pageId + '.json',
             type: 'json',
@@ -84,25 +82,11 @@ define([
         });
     }
 
-    function fetchDirect() {
-        ajax({
-            url: 'https://graph.facebook.com/http://www.theguardian.com/' + config.page.pageId,
-            type: 'json',
-            method: 'get',
-            crossOrigin: true
-        }).then(function (resp) {
-            var count = resp.share && resp.share.share_count || 0;
-            counts.facebook = count;
-            addToShareCount(count);
-            updateTooltip();
-        });
-    }
-
     return function () {
         // asking for social counts in preview "leaks" upcoming URLs to social sites.
         // when they then crawl them they get 404s which affects later sharing.
         // don't call counts in preview
-        if ($shareCountEls.length && !config.page.isPreview) {
+        if (config.switches.serverShareCounts && $shareCountEls.length && !config.page.isPreview) {
             try {
                 fetch()
             } catch (e) {

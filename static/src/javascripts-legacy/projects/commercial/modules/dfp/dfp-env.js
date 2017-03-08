@@ -1,6 +1,6 @@
 define([
-    'common/utils/url',
-    'common/utils/config'
+    'lib/url',
+    'lib/config'
 ], function (url, config) {
     var dfpEnv = {
         /* renderStartTime: integer. Point in time when DFP kicks in */
@@ -16,7 +16,10 @@ define([
         adSlotSelector: '.js-ad-slot',
 
         /* sonobiEnabled: boolean. Set to true if sonobi real-time-bidding is enabled*/
-        sonobiEnabled: config.switches.sonobiHeaderBidding,
+        sonobiEnabled: (config.switches.sonobiHeaderBidding || url.getUrlVars()['sonobi']) && !(config.switches.preflightAdCall && !!window.esi),
+
+        /* preFlightAdCallEnabled: boolean. Set to true if real-time bidding should be performed through pre-flight ad call */
+        preFlightAdCallEnabled: config.switches.preflightAdCall && !!window.esi,
 
         /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
         lazyLoadEnabled: false,

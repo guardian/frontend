@@ -108,11 +108,6 @@
     &.u-text-hyphenate {
         max-width: 100%;
     }
-
-    .advert-blended__body & {
-        font-size: 14px;
-        line-height: 18px;
-    }
 }
 
 .advert__kicker {
@@ -127,17 +122,9 @@
     color: $paid-card-kicker;
 }
 
-.advert--branded {
-    padding-bottom: $gs-row-height + $gs-baseline * 5; //96px = $gs-row-height + height of the logo
-}
-
 .advert-container {
     display: flex;
     align-items: stretch;
-
-    > * {
-        width: 100%;
-    }
 }
 
 /* [1] Prevents IE11 bug where the image container's height would go ballooney */
@@ -160,10 +147,6 @@
         left: 0;
         right: 0;
         margin: 0;
-    }
-
-    .advert-blended__body & {
-        height: auto;
     }
 }
 

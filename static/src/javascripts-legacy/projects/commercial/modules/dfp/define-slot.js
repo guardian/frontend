@@ -1,36 +1,48 @@
 define([
-    'common/utils/url',
-    'common/utils/config',
-    'common/utils/detect',
+    'Promise',
+    'lib/url',
+    'lib/config',
+    'lib/detect',
     'lodash/arrays/uniq',
-    'lodash/arrays/flatten'
-], function (urlUtils, config, detect, uniq, flatten) {
+    'lodash/arrays/flatten',
+    'lodash/functions/once',
+    'commercial/modules/dfp/prepare-switch-tag'
+], function (Promise, urlUtils, config, detect, uniq, flatten, once, prepareSwitchTag) {
+    var adUnit = once(function () {
+        var urlVars = urlUtils.getUrlVars();
+        return urlVars['ad-unit'] ?
+            '/' + config.page.dfpAccountId + '/' + urlVars['ad-unit'] :
+            config.page.adUnit;
+    });
+
     return defineSlot;
 
     function defineSlot(adSlotNode, sizes) {
-        var slotTarget = adSlotNode.getAttribute('data-slot-target') || adSlotNode.getAttribute('data-name');
-        var adUnitOverride = urlUtils.getUrlVars()['ad-unit'];
-        // if ?ad-unit=x, use that
-        var adUnit = adUnitOverride ?
-            '/' + config.page.dfpAccountId + '/' + adUnitOverride :
-            config.page.adUnit;
+        var slotTarget = adSlotNode.getAttribute('data-name');
         var sizeOpts = getSizeOpts(sizes);
         var id = adSlotNode.id;
         var slot;
+        var slotReady;
 
         if (adSlotNode.getAttribute('data-out-of-page')) {
-            slot = window.googletag.defineOutOfPageSlot(adUnit, id).defineSizeMapping(sizeOpts.sizeMapping);
+            slot = window.googletag.defineOutOfPageSlot(adUnit(), id).defineSizeMapping(sizeOpts.sizeMapping);
+            slotReady = Promise.resolve();
         } else {
-            slot = window.googletag.defineSlot(adUnit, sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
+            slot = window.googletag.defineSlot(adUnit(), sizeOpts.size, id).defineSizeMapping(sizeOpts.sizeMapping);
+            slotReady = prepareSwitchTag.pushAdUnit(id, sizeOpts);
         }
 
-        setTargeting(adSlotNode, slot, 'data-series', 'se');
-        setTargeting(adSlotNode, slot, 'data-keywords', 'k');
+        if (slotTarget === 'im' && config.page.isbn) {
+            slot.setTargeting('isbn', config.page.isbn);
+        }
 
         slot.addService(window.googletag.pubads())
             .setTargeting('slot', slotTarget);
 
-        return slot;
+        return {
+            slot: slot,
+            slotReady: slotReady
+        };
     }
 
     function getSizeOpts(sizes) {
@@ -45,19 +57,6 @@ define([
             sizeMapping: sizeMapping,
             size: size
         };
-    }
-
-    function setTargeting(adSlotNode, slot, attribute, targetKey) {
-        var data = adSlotNode.getAttribute(attribute);
-        if (data) {
-            slot.setTargeting(targetKey, parseKeywords(data));
-        }
-    }
-
-    function parseKeywords(keywords) {
-        return (keywords || '').split(',').map(function (keyword) {
-            return keyword.substr(keyword.lastIndexOf('/') + 1);
-        });
     }
 
     /**

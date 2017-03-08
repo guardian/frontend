@@ -5,9 +5,9 @@
 define([
     'fastdom',
     'Promise',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/config',
+    'lib/mediator',
     'common/modules/lazyload',
     'common/modules/ui/toggles',
     'lodash/objects/isArray',
@@ -30,42 +30,9 @@ define([
     reduce
 ) {
     var urlBuilders = {
-        soulmates:      defaultUrlBuilder('soulmates/mixed'),
         capiSingle:     complexUrlBuilder('capi-single', false, false, true),
-        capi:           complexUrlBuilder('capi', false, false, true),
-        paidforCard:    complexUrlBuilder('paid', '', false, true),
-        books:          complexUrlBuilder('books/books', 'isbns'),
-        jobs:           complexUrlBuilder('jobs', 'jobIds', true),
-        masterclasses:  complexUrlBuilder('masterclasses', 'ids', true),
-        liveevents:     complexUrlBuilder('liveevents/event', 'id', true),
-        travel:         complexUrlBuilder('travel/offers', 'ids', true),
-        multi:          complexUrlBuilder('multi', '', true),
-        book:           bookUrlBuilder('books/book'),
-        soulmatesGroup: soulmatesGroupUrlBuilder('soulmates/')
+        capi:           complexUrlBuilder('capi', false, false, true)
     };
-
-    function defaultUrlBuilder(url) {
-        return function (params) {
-            return buildComponentUrl(url, params);
-        };
-    }
-
-    function bookUrlBuilder(url) {
-        return function (params) {
-            var isbn = config.page.isbn || params.isbn;
-            if (isbn) {
-                return buildComponentUrl(url, merge(params, { t: isbn }));
-            } else {
-                return false;
-            }
-        };
-    }
-
-    function soulmatesGroupUrlBuilder(url) {
-        return function (params) {
-            return buildComponentUrl(url + params.soulmatesFeedName, params);
-        };
-    }
 
     function complexUrlBuilder(url, withSpecificId, withKeywords, withSection) {
         return function (params) {
@@ -81,12 +48,6 @@ define([
     function createToggle(el) {
         if (el.querySelector('.popup__toggle')) {
             new Toggles(el).init();
-        }
-    }
-
-    function setFluid(el) {
-        if (el.classList.contains('ad-slot--container-inline')) {
-            el.classList.add('ad-slot--fluid');
         }
     }
 
@@ -136,7 +97,6 @@ define([
      * @param {Object=} params
      */
     function CommercialComponent(adSlot, params) {
-        if(params.type == 'book') fastdom.write(function() { $(adSlot).addClass('ad-slot--books-inline');});
         this.params = params || {};
         this.type = this.params.type;
         // remove type from params
@@ -174,11 +134,7 @@ define([
 
     CommercialComponent.prototype.postLoadEvents = {
         capi: createToggle,
-        capiSingle: createToggle,
-        paidforCard: function (el) {
-            setFluid(el);
-            createToggle(el);
-        }
+        capiSingle: createToggle
     };
 
     return CommercialComponent;

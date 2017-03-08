@@ -1,10 +1,10 @@
 define([
     'bean',
     'fastdom',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
+    'lib/mediator',
     'lodash/functions/throttle'
 ], function (
     bean,
@@ -34,10 +34,33 @@ define([
             });
 
             bean.on(document, 'click', '.js-search-toggle', function (e) {
-                searchLoader();
+                var searchToggleLink = $('.js-search-toggle');
+                var searchPopup = $('.js-search-popup');
+                var maybeDismissSearchPopup = function(e) {
+                    var el = $(e.target);
+                    var clickedPop = false;
 
+                    while (el.length && !clickedPop) {
+                        if (el.hasClass('js-search-popup')) {
+                            clickedPop = true;
+                        }
+                        el = el.parent();
+                    }
+
+                    if (!clickedPop) {
+                        e.preventDefault();
+                        searchToggleLink.removeClass('is-active');
+                        searchPopup.addClass('is-off');
+                        bean.off(document, 'click', maybeDismissSearchPopup);
+                    }
+                };
+
+                if (searchToggleLink.hasClass('is-active')) {
+                    bean.on(document, 'click', maybeDismissSearchPopup);
+                }
+
+                searchLoader();
                 // Make sure search is always in the correct state
-                self.checkResults();
                 self.focusSearchField();
                 e.preventDefault();
                 mediator.emit('modules:search');

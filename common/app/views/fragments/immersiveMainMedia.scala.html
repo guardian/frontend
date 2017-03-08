@@ -15,13 +15,13 @@
     page.item.elements.hasMainEmbed,
     page.item.fields.main.nonEmpty,
     page.item.tags.series.headOption,
-    page.item.tags.isAdvertisementFeature
-)) { case (isTheMinuteArticle, hasEmbed, hasMainMedia, optSeries, isAdFeature) =>
+    page.item.tags.isPaidContent
+)) { case (isTheMinuteArticle, hasEmbed, hasMainMedia, optSeries, isPaidContent) =>
     <div class="@RenderClasses(Map(
             "content--minute-article" -> isTheMinuteArticle,
             "content--immersive-article-without-main-media" -> !hasMainMedia,
             "immersive-main-media" -> hasMainMedia,
-            "immersive-main-media__advertisment" -> isAdFeature
+            "immersive-main-media__advertisment" -> isPaidContent
         ),
         "content", "content--immersive", "content--immersive-article", "tonal", s"tonal--${toneClass(page.item)}")
     ">
@@ -87,13 +87,13 @@
             <div class="gs-container">
                 @if(!isTheMinuteArticle) {
                     <div class="content__main-column">
-                    @fragments.meta.metaInline(page.item, page = page)
+                    @fragments.meta.metaInline(page.item)
                 }
 
                 <h1 class="@RenderClasses(Map(
                         "content__headline--minute" -> isTheMinuteArticle,
                         "content__headline--immersive--with-main-media" -> hasMainMedia,
-                        "content__headline--advertisement" -> isAdFeature
+                        "content__headline--advertisement" -> isPaidContent
                     ), "content__headline", "content__headline--immersive", "content__headline--immersive-article")
                 ">
                     @if(isTheMinuteArticle) {

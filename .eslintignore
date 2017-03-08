@@ -1,6 +1,5 @@
 # generic
 jspm_packages
-bower_components
 node_modules
 !.eslintrc.js
 
@@ -8,8 +7,9 @@ node_modules
 static/src/stylesheets
 static/transpiled
 static/vendor/javascripts
-static/src/javascripts-legacy/projects/common/utils/atob.js
-static/src/javascripts-legacy/projects/common/utils/picturefill.js
+static/src/javascripts-legacy/lib/atob.js
+static/src/javascripts-legacy/lib/picturefill.js
 
-# tests
-static/test/javascripts/components
+# tests #karma-jest
+static/test/javascripts-legacy/components
+static/test/javascripts-legacy/helpers/raw-loader.js

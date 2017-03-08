@@ -1,22 +1,51 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
-
 const webpack = require('webpack');
-const Visualizer = require('webpack-visualizer-plugin');
 
-const outputName = 'app-webpack';
+const bundlePrefix = 'graun.';
 
-module.exports = {
-    devtool: 'source-map',
-    entry: path.join(__dirname, 'static', 'src', 'javascripts', 'boot-webpack.js'),
+module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
+    devtool: env === 'dev' ? 'inline-source-map' : 'source-map',
+    entry: {
+        standard: path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts',
+            'boot.js'
+        ),
+        admin: path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts-legacy',
+            'bootstraps',
+            'admin.js'
+        ),
+        'video-embed': path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts-legacy',
+            'bootstraps',
+            'video-embed.js'
+        ),
+        'youtube-embed': path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts-legacy',
+            'bootstraps',
+            'youtube-embed.js'
+        ),
+    },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: `[chunkhash]/${outputName}.js`,
-        chunkFilename: `[chunkhash]/${outputName}.chunk-[id].js`,
+        filename: `${env === 'dev' ? '' : '[chunkhash]/'}${bundlePrefix}[name].js`,
+        chunkFilename: `${env === 'dev' ? '' : '[chunkhash]/'}${bundlePrefix}[name].js`,
     },
     resolve: {
         modules: [
-            path.join(__dirname, 'static', 'src'),
             path.join(__dirname, 'static', 'src', 'javascripts'),
             path.join(__dirname, 'static', 'src', 'javascripts-legacy'),
             path.join(__dirname, 'static', 'vendor', 'javascripts'),
@@ -28,45 +57,22 @@ module.exports = {
             facia: 'projects/facia',
             membership: 'projects/membership',
             commercial: 'projects/commercial',
-            bean: 'components/bean/bean',
-            bonzo: 'components/bonzo/bonzo',
-            domReady: 'components/domready/ready',
-            EventEmitter: 'components/eventEmitter/EventEmitter',
-            fastdom: 'components/fastdom/index',
-            fence: 'components/fence/fence',
-            lodash: 'components/lodash-amd',
-            picturefill: 'projects/common/utils/picturefill',
-            Promise: 'components/when/Promise',
-            qwery: 'components/qwery/qwery',
-            raven: 'components/raven-js/raven',
-            classnames: 'components/classnames/index',
-            reqwest: 'components/reqwest/reqwest',
+
+            // #wp-rjs weird old aliasing from requirejs
+            lodash: 'lodash-amd/compat',
+            picturefill: 'lib/picturefill',
+            Promise: 'when/es6-shim/Promise',
+            raven: 'raven-js',
+            EventEmitter: 'wolfy87-eventemitter',
+            videojs: 'video.js',
+
             stripe: 'stripe/stripe.min',
-            svgs: 'inline-svgs',
-            'ophan/ng': 'ophan/ophan.ng',
-            videojs: 'components/video.js/video',
-            'videojs-embed': 'components/videojs-embed/videojs.embed',
-            'videojs-ima': 'components/videojs-ima/videojs.ima',
-            'videojs-ads-lib': 'components/videojs-contrib-ads/videojs.ads',
-            'videojs-persistvolume': 'components/videojs-persistvolume/videojs.persistvolume',
-            'videojs-playlist': 'components/videojs-playlist-audio/videojs.playlist',
-
-            // #wp-rjs once r.js is gone, these can be unaliased and modules updated
-            react: 'react/addons',
-
-            // plugins
-            text: 'components/requirejs-text/text',
-            inlineSvg: 'projects/common/utils/inlineSvg',
+            svgs: path.join(__dirname, 'static', 'src', 'inline-svgs'),
+            'ophan/ng': 'ophan-tracker-js',
+            'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
         },
     },
     resolveLoader: {
-        alias: {
-            // #wp-rjs
-            // these are only needed while require is still present
-            // should be updated once removed to be more wepback-like
-            text: 'raw-loader',
-            inlineSvg: 'svg-loader',
-        },
         modules: [
             path.resolve(__dirname, 'tools', 'webpack-loaders'),
             'node_modules',
@@ -82,18 +88,16 @@ module.exports = {
         ],
     },
     plugins: [
-        new webpack.optimize.AggressiveMergingPlugin(),
-        new Visualizer({
-            filename: './webpack-stats.html',
-        }),
         // Makes videosjs available to all modules in the videojs chunk.
         // videojs plugins expect this object to be available globally,
         // but it's sufficient to scope it at the chunk level
         new webpack.ProvidePlugin({
             videojs: 'videojs',
         }),
+        // optional plugins passed in in production
+        ...plugins,
     ],
     externals: {
         xhr2: {},
     },
-};
+});

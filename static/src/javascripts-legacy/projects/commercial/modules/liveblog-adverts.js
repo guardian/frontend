@@ -1,12 +1,12 @@
 define([
     'bonzo',
-    'common/utils/fastdom-promise',
-    'common/utils/detect',
-    'common/utils/config',
-    'common/utils/mediator',
-    'common/modules/commercial/dfp/add-slot',
-    'common/modules/commercial/commercial-features',
-    'common/modules/commercial/dfp/create-slot',
+    'lib/fastdom-promise',
+    'lib/detect',
+    'lib/config',
+    'lib/mediator',
+    'commercial/modules/dfp/add-slot',
+    'commercial/modules/commercial-features',
+    'commercial/modules/dfp/create-slot',
     'common/modules/article/space-filler',
     'Promise'
 ], function (
@@ -70,7 +70,7 @@ define([
                 'top-above-nav' : isMobile ?
                 'inline' + slotCounter :
                 'inline' + (slotCounter + 1);
-            var $adSlot = bonzo(createSlot(slotName, 'liveblog-inline block'));
+            var $adSlot = bonzo(createSlot('inline', { name: slotName, classes: 'liveblog-inline' }));
             $adSlot.insertAfter(slots[i]);
             addSlot($adSlot);
             slotCounter += 1;

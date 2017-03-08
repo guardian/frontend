@@ -5,7 +5,7 @@
  * HUNT YOU DOWN.
  */
 define([
-    'common/utils/robust',
+    'lib/robust',
     'common/modules/identity/api'
 ], function (
     robust,

@@ -3,14 +3,14 @@ define([
     'bonzo',
     'qwery',
     'Promise',
-    'common/utils/$',
-    'common/utils/raven',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/mediator',
-    'common/utils/scroller',
-    'common/utils/fastdom-promise',
-    'common/utils/fetch-json',
+    'lib/$',
+    'lib/raven',
+    'lib/config',
+    'lib/detect',
+    'lib/mediator',
+    'lib/scroller',
+    'lib/fastdom-promise',
+    'lib/fetch-json',
     'common/modules/analytics/discussion',
     'common/modules/analytics/register',
     'common/modules/component',
@@ -355,21 +355,17 @@ Loader.prototype.getDiscussionClosed = function() {
 };
 
 Loader.prototype.renderCommentCount = function () {
-    if (window.curlConfig.paths['discussion-frontend-preact']) {
-        return discussionFrontend.load(ab, this, {
-            apiHost: config.page.discussionApiUrl,
-            avatarImagesHost: config.page.avatarImagesUrl,
-            closed: this.getDiscussionClosed(),
-            discussionId: this.getDiscussionId(),
-            element: document.getElementsByClassName('js-discussion-external-frontend')[0],
-            userFromCookie: !!Id.getUserFromCookie(),
-            profileUrl: config.page.idUrl,
-            profileClientId: config.switches.registerWithPhone ? 'comments' : '',
-            Promise: Promise
-        });
-    } else {
-        this.setState('empty');
-    }
+    return discussionFrontend.load(ab, this, {
+        apiHost: config.page.discussionApiUrl,
+        avatarImagesHost: config.page.avatarImagesUrl,
+        closed: this.getDiscussionClosed(),
+        discussionId: this.getDiscussionId(),
+        element: document.getElementsByClassName('js-discussion-external-frontend')[0],
+        userFromCookie: !!Id.getUserFromCookie(),
+        profileUrl: config.page.idUrl,
+        profileClientId: config.switches.registerWithPhone ? 'comments' : '',
+        Promise: Promise
+    });
 };
 
 Loader.prototype.getCommentIdFromHash = function() {
@@ -442,11 +438,13 @@ Loader.prototype.loadComments = function(options) {
 
     this.setState('loading');
 
+    options = options || {};
+
     // If the caller specified truncation, do not load all comments.
     if (options && options.shouldTruncate && this.comments.isAllPageSizeActive()) {
         options.pageSize = 10;
     }
-    
+
     // Closed state of comments is passed so we bust cache of comment thread when it is reopened
     options.commentsClosed = this.getDiscussionClosed();
 

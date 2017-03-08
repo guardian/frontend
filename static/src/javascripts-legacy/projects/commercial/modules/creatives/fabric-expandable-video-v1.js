@@ -1,16 +1,17 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/fastdom-promise',
-    'common/utils/$',
-    'common/utils/detect',
-    'common/utils/mediator',
-    'common/utils/storage',
-    'common/utils/template',
+    'lib/fastdom-promise',
+    'lib/$',
+    'lib/detect',
+    'lib/mediator',
+    'lib/storage',
+    'lib/template',
     'common/views/svgs',
-    'text!commercial/views/creatives/fabric-expandable-video-v1.html',
+    'raw-loader!commercial/views/creatives/fabric-expandable-video-v1.html',
     'lodash/objects/merge',
-    'commercial/modules/creatives/add-tracking-pixel'
+    'commercial/modules/creatives/add-tracking-pixel',
+    'commercial/modules/creatives/add-viewability-tracker'
 ], function (
     bean,
     bonzo,
@@ -23,7 +24,8 @@ define([
     svgs,
     fabricExpandableVideoHtml,
     merge,
-    addTrackingPixel
+    addTrackingPixel,
+    addViewabilityTracker
 ) {
     // Forked from expandable-video-v2.js
 
@@ -52,6 +54,7 @@ define([
                 '<iframe id="YTPlayer" width="100%" height="' + videoHeight + '" src="' + this.params.YoutubeVideoURL + '?showinfo=0&amp;rel=0&amp;controls=0&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable-video"></iframe>'
                 : ''
         };
+        this.params.id = 'fabric-expandable-' + (Math.random() * 10000 | 0).toString(16);
         var $fabricExpandableVideo = $.create(template(fabricExpandableVideoHtml, { data: merge(this.params, showmoreArrow, showmorePlus, videoSource) }));
         var $ad = $('.ad-exp--expand', $fabricExpandableVideo);
 
@@ -92,9 +95,15 @@ define([
             $ad.css('height', this.closedHeight);
             $('.ad-exp-collapse__slide', $fabricExpandableVideo).css('height', this.closedHeight);
             if (this.params.trackingPixel) {
-                addTrackingPixel(this.$adSlot, this.params.trackingPixel + this.params.cacheBuster);
+                addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
+            }
+            if (this.params.researchPixel) {
+                addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
             }
             $fabricExpandableVideo.appendTo(this.$adSlot);
+            if (this.params.viewabilityTracker) {
+                addViewabilityTracker(this.$adSlot[0], this.params.id, this.params.viewabilityTracker);
+            }
             this.$adSlot.addClass('ad-slot--fabric');
             if( this.$adSlot.parent().hasClass('top-banner-ad-container') ) {
                 this.$adSlot.parent().addClass('top-banner-ad-container--fabric');

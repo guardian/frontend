@@ -1,14 +1,14 @@
 define([
-    'common/utils/$',
+    'lib/$',
     'qwery',
     'bonzo',
     'bean',
     'fastdom',
-    'common/utils/config',
-    'common/utils/mediator',
-    'common/utils/template',
+    'lib/config',
+    'lib/mediator',
+    'lib/template',
     'common/views/svgs',
-    'text!common/views/save-for-later/delete-all-button.html'
+    'raw-loader!common/views/save-for-later/delete-all-button.html'
 ], function (
     $,
     qwery,

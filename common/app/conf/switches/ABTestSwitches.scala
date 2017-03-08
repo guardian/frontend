@@ -7,7 +7,7 @@ import org.joda.time.LocalDate
 trait ABTestSwitches {
 
   for ((edition, testId) <- Map(
-    Uk -> "ab-membership-engagement-banner-uk-test13",
+    Uk -> "ab-membership-engagement-banner-uk-remind-me-later",
     International -> "ab-membership-engagement-international-experiment-test12",
     Au -> "ab-au-memb-engagement-msg-copy-test8"
   )) Switch(
@@ -22,11 +22,41 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-bundles-thrasher",
-    "Test appetite for first batch of bundles",
+    "ab-membership-engagement-banner-copy-test",
+    "Test copy for the engagement banner in all countries aside from the US and Australia",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-paid-content-vs-outbrain",
+    "Displays a paid content widget instead of Outbrain",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-guardian-today-signup-messaging",
+    "Test different signup messaging for Guardian Today emails",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 28),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-membership-a3-a4-bundles-thrasher",
+    "Test A3 vs A4 bundle offers",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 2), // Thursday March 2nd
+    sellByDate = new LocalDate(2017, 3, 23), // Thursday March 23rd
     exposeClientSide = true
   )
 
@@ -36,7 +66,7 @@ trait ABTestSwitches {
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 16),
+    sellByDate = new LocalDate(2017, 3, 9),
     exposeClientSide = true
   )
 
@@ -46,7 +76,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 8),
+    sellByDate = new LocalDate(2017, 3, 9),
     exposeClientSide = true
   )
 
@@ -56,7 +86,7 @@ trait ABTestSwitches {
     "Test personalised container on fronts",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 21),
+    sellByDate = new LocalDate(2017, 4, 4),
     exposeClientSide = true
   )
 
@@ -66,7 +96,7 @@ trait ABTestSwitches {
     "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
     owners = Seq(Owner.withGithub("alexduf")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 1),
+    sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
 
@@ -76,7 +106,7 @@ trait ABTestSwitches {
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 6),
+    sellByDate = new LocalDate(2017, 5, 1),
     exposeClientSide = true
   )
 
@@ -86,7 +116,7 @@ trait ABTestSwitches {
     "Test to see if imposing a minimum-time-between-impressions for the epic has a positive effect on conversion",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 2, 24),
+    sellByDate = new LocalDate(2017, 3, 24),
     exposeClientSide = true
   )
 
@@ -97,6 +127,46 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 5, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-tailor-recommended-email",
+    "Use Tailor to target email signup form",
+    owners = Seq(Owner.withGithub("lindseydew")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-tailor-survey",
+    "Integrate Tailor with ab tests",
+    owners = Seq(Owner.withGithub("oilnam")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-sleeve-notes-new-email-variant",
+    "Assign some of the new sleeve notes subscribers to receive the new email",
+    owners = Seq(Owner.withGithub("lmath")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-sleeve-notes-legacy-email-variant",
+    "Assign some of the new sleeve notes subscribers to receive the old email",
+    owners = Seq(Owner.withGithub("lmath")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
     exposeClientSide = true
   )
 }

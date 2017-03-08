@@ -12,7 +12,9 @@ module.exports = {
         // always try and remove any old ones
         try {
             rimraf.sync(target);
-        } catch (e) { /* do nothing */ }
+        } catch (e) {
+            /* do nothing */
+        }
 
         // TC doesn't want them, but everyone else does
         if (process.env.TEAMCITY !== 'true') fs.symlinkSync(src, target);

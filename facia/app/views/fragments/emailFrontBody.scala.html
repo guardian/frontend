@@ -1,8 +1,7 @@
 @(page: model.PressedPage)(implicit request: RequestHeader)
 
 @import implicits.ItemKickerImplicits._
-@import implicits.Requests.RichRequestHeader
-@import layout.{ContentCard, FaciaCard, ItemClasses}
+@import layout.ContentCard
 @import model.EmailAddons.EmailContentType
 @import model.pressed.{ExternalLink, Feature}
 @import views.support.EmailHelpers._
@@ -18,11 +17,9 @@
                 <span class="kicker-separator">/</span>
             }
 
-            @defining(if(request.isEmailConnectedStyle) "-connected" else "") { suffix =>
-                @if(card.header.isGallery) { @icon("gallery" + suffix, isLarge) }
-                @if(card.header.isAudio) { @icon("podcast" + suffix, isLarge) }
-                @if(card.header.isVideo) { @icon("video" + suffix, isLarge) }
-            }
+            @if(card.header.isGallery) { @icon("gallery", isLarge) }
+            @if(card.header.isAudio) { @icon("podcast", isLarge) }
+            @if(card.header.isVideo) { @icon("video", isLarge) }
 
             @if(card.header.quoted) {
                 @card.cardStyle match {
@@ -34,6 +31,15 @@
         </h3>
         @if(card.header.quoted) {
             @card.bylineText.map { byline => <h4 class="byline">@byline</h4> }
+        }
+        @card.starRating.map { numberOfStars =>
+            <div class="review-stars">
+                @for(i <- 0 to 4) {
+                    @defining(if(i < numberOfStars) "golden" else "grey") { positiveOrNegative =>
+                        @icon("star-" + positiveOrNegative, isLarge)
+                    }
+                }
+            </div>
         }
     </a>
 }
@@ -63,7 +69,7 @@
                 @headlineAndTrailWithCutout(card, withImage)
             } else {
                 @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
-                    @headline(card)
+                    @headline(card, isLarge = withImage)
                     @trailText(card)
                 }
             }
@@ -112,26 +118,24 @@
     @imgForFront(page.banner, page.email.map(_.name))
 }
 
-@page.frontProperties.onPageDescription.map { description =>
-    @paddedRow {
-        <p class="introduction">@description</p>
-    }
-}
-
-@page.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty).zipWithIndex.map { case (collection, collectionIndex) =>
+@layout.CollectionEmail.fromPressedPage(page).collections.zipWithIndex.map { case (collection, collectionIndex) =>
     @paddedRow {
         <h2 class="container-title @if(collectionIndex > 0) { container-title--not-first }">
             @collection.displayName
         </h2>
     }
 
-    @collection.curatedPlusBackfillDeduplicated.take(6).zipWithIndex.map { case (pressedContent, cardIndex) =>
-        @defining(FaciaCard.fromTrail(pressedContent, collection.config, ItemClasses.showMore, showSeriesAndBlogKickers = false)) { card =>
-            @if(cardIndex == 0) {
-                @firstCard(card, isFastLayout = collection.collectionType == "fast")
-            } else {
-                @otherCard(card, isSlowLayout = collection.collectionType == "slow")
-            }
+    @collection.cards.zipWithIndex.map { case (card, cardIndex) =>
+        @if(cardIndex == 0) {
+            @firstCard(card, isFastLayout = collection.collectionType == "fast")
+        } else {
+            @otherCard(card, isSlowLayout = collection.collectionType == "slow")
         }
+    }
+}
+
+@page.frontProperties.onPageDescription.map { description =>
+    @paddedRow {
+        <p class="message">@Html(description)</p>
     }
 }

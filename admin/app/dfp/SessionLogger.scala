@@ -12,6 +12,10 @@ private[dfp] object SessionLogger extends Logging {
     logAroundSeq(typesToRead, opName = "reading", Some(stmtBuilder.toStatement))(read)
   }
 
+  def logAroundReadSingle[T](typesToRead: String)(read: => T): Option[T] = {
+    logAround(typesToRead, "reading")(read)((_: T) => 1)
+  }
+
   def logAroundCreate[T](typesToCreate: String)(create: => Seq[T]): Seq[T] = {
     logAroundSeq(typesToCreate, opName = "creating")(create)
   }

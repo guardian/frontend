@@ -1,10 +1,10 @@
 define([
     'fastdom',
-    'common/utils/formatters',
-    'common/utils/mediator',
-    'common/utils/report-error',
-    'common/utils/config',
-    'common/utils/load-script'
+    'lib/formatters',
+    'lib/mediator',
+    'lib/report-error',
+    'lib/config',
+    'lib/load-script'
 ], function(
     fastdom,
     formatters,
@@ -58,17 +58,12 @@ define([
         // - Once fixed, or a global fetch is available through a polyfill, one can
         //   modify discussion-frontend to remove `fetch` polyfill and pass, if needed,
         //   opts.net = { json: fetchJson }
-        if (config.tests && config.tests.abWebpackBundle) {
-            return loadScript(config.page.discussionFrontendUrl)
-                .then(function() {
-                    init(window.guardian.app.discussion);
-                })
-                .catch(error);
-        }
 
-        // #wp-rjs
-        // We can remove this when we go WP 100%
-        return window.require('discussion-frontend-preact', init, error);
+        return loadScript(config.page.discussionFrontendUrl)
+            .then(function() {
+                init(window.guardian.app.discussion);
+            })
+            .catch(error);
     }
 
     return {

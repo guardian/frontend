@@ -2,12 +2,12 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'common/utils/$',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/mediator',
     'common/modules/user-prefs',
-    'common/utils/template',
+    'lib/template',
     'common/views/svgs',
-    'text!facia/views/button-toggle.html'
+    'raw-loader!facia/views/button-toggle.html'
 ], function (
     bean,
     bonzo,

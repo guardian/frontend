@@ -96,7 +96,6 @@
     position: absolute;
     top: 0;
     right: 0;
-    height: 100%;
     margin-right: $gs-gutter;
     width: gs-span(4);
     padding-left: $gs-gutter;
@@ -538,16 +537,18 @@
 }
 
 .meta__numbers {
-    padding: $gs-baseline / 2 0;
+    padding-bottom: $gs-baseline / 2;
+    padding-top: $gs-baseline / 2;
     position: absolute;
     right: 0;
     top: 0;
 
     @include mq(leftCol) {
         border-top: 1px dotted $neutral-5;
-        position: static;
         height: 36px;
-        padding: $gs-baseline / 4 0;
+        padding-bottom: $gs-baseline / 4;
+        padding-top: $gs-baseline / 4;
+        position: static;
     }
 }
 
@@ -833,11 +834,6 @@
             }
         }
 
-        .brandbadge__header,
-        .brandbadge__help {
-            color: $neutral-2;
-        }
-
         .most-viewed-container--media,
         .meta__number {
             .inline-icon {
@@ -1052,9 +1048,12 @@
 }
 
 .meta__social {
-    border-top: 1px dotted $neutral-5;
     padding: 0;
     box-sizing: border-box;
+
+    @include mq(leftCol) {
+        border-top: 1px dotted $neutral-5;
+    }
 
     .meta__extras--crossword & {
         @include mq(leftCol) {

@@ -45,7 +45,7 @@
           width: 50%;
           float: left;
           margin-top: 0;
-          margin-bottom: 0;
+          margin-bottom: 2px;
 
           .inline-expand-image {
             display: none;
@@ -64,6 +64,7 @@
 
           & + p {
             clear: both;
+            padding-top: 6px;
           }
 
         }
@@ -79,6 +80,14 @@
         //important because it is important elsewhere
         .pullquote-cite {
             color: $neutral-2 !important;
+        }
+
+        &.element--halfWidth {
+          width: 48%;
+          float: left;
+          margin-right: 20px;
+          border-bottom: none;
+          margin-top: 6px;
         }
     }
 }

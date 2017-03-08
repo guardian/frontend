@@ -1,8 +1,8 @@
 define([
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/storage',
-    'common/modules/commercial/user-features',
+    'lib/config',
+    'lib/detect',
+    'lib/storage',
+    'commercial/modules/user-features',
     'Promise'
 ], function (
     config,

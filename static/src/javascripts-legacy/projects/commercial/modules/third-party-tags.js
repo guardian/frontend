@@ -3,13 +3,14 @@
  */
 define([
     'Promise',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/mediator',
-    'common/utils/fastdom-promise',
-    'common/utils/template',
-    'common/modules/commercial/commercial-features',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
+    'lib/mediator',
+    'lib/fastdom-promise',
+    'lib/template',
+    'common/modules/experiments/ab',
+    'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/audience-science-gateway',
     'commercial/modules/third-party-tags/audience-science-pql',
     'commercial/modules/third-party-tags/imr-worldwide',
@@ -20,7 +21,7 @@ define([
     'common/modules/identity/api',
     'commercial/modules/third-party-tags/outbrain',
     'commercial/modules/third-party-tags/plista',
-    'text!common/views/commercial/external-content.html'
+    'raw-loader!common/views/commercial/external-content.html'
 ], function (
     Promise,
     $,
@@ -29,6 +30,7 @@ define([
     mediator,
     fastdom,
     template,
+    ab,
     commercialFeatures,
     audienceScienceGateway,
     audienceSciencePql,
@@ -80,11 +82,18 @@ define([
         }
 
         // Outbrain/Plista needs to be loaded before first ad as it is checking for presence of high relevance component on page
-        loadExternalContentWidget();
+        if (!isLuckyBastard()) {
+            loadExternalContentWidget();
+        }
 
         loadOther();
 
         return Promise.resolve(true);
+    }
+
+    function isLuckyBastard() {
+        var testName = 'PaidContentVsOutbrain';
+        return ab.testCanBeRun(testName) && ab.getTestVariantId(testName) === 'paid-content';
     }
 
     function loadOther() {

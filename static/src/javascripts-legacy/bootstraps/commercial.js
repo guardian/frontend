@@ -1,22 +1,22 @@
 define([
     'Promise',
-    'common/utils/config',
-    'common/utils/mediator',
-    'common/utils/robust',
-    'common/utils/user-timing',
+    'lib/config',
+    'lib/mediator',
+    'lib/robust',
+    'lib/user-timing',
     'commercial/modules/high-merch',
     'commercial/modules/article-aside-adverts',
     'commercial/modules/article-body-adverts',
     'commercial/modules/close-disabled-slots',
     'commercial/modules/dfp/prepare-googletag',
     'commercial/modules/dfp/prepare-sonobi-tag',
+    'commercial/modules/dfp/prepare-switch-tag',
     'commercial/modules/dfp/fill-advert-slots',
     'commercial/modules/hosted/about',
     'commercial/modules/hosted/video',
     'commercial/modules/hosted/gallery',
     'commercial/modules/hosted/onward-journey-carousel',
     'commercial/modules/hosted/onward',
-    'commercial/modules/slice-adverts',
     'commercial/modules/liveblog-adverts',
     'commercial/modules/sticky-top-banner',
     'commercial/modules/third-party-tags',
@@ -24,7 +24,7 @@ define([
     'commercial/modules/paid-containers',
     'commercial/modules/dfp/performance-logging',
     'common/modules/analytics/google',
-    'common/modules/commercial/user-features'
+    'commercial/modules/user-features'
 ], function (
     Promise,
     config,
@@ -37,13 +37,13 @@ define([
     closeDisabledSlots,
     prepareGoogletag,
     prepareSonobiTag,
+    prepareSwitchTag,
     fillAdvertSlots,
     hostedAbout,
     hostedVideo,
     hostedGallery,
     hostedOJCarousel,
     hostedOnward,
-    sliceAdverts,
     liveblogAdverts,
     stickyTopBanner,
     thirdPartyTags,
@@ -54,19 +54,19 @@ define([
     userFeatures
 ) {
     var primaryModules = [
+        ['cm-highMerch', highMerch.init],
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
+        ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
         ['cm-prepare-googletag', prepareGoogletag.init, true],
-        ['cm-highMerch', highMerch.init],
         ['cm-articleAsideAdverts', articleAsideAdverts.init, true],
         ['cm-articleBodyAdverts', articleBodyAdverts.init, true],
-        ['cm-sliceAdverts', sliceAdverts.init, true],
         ['cm-liveblogAdverts', liveblogAdverts.init, true],
         ['cm-closeDisabledSlots', closeDisabledSlots.init]
     ];
 
     var secondaryModules = [
-        ['cm-stickyTopBanner', stickyTopBanner.init, true],
+        ['cm-stickyTopBanner', stickyTopBanner.init],
         ['cm-fill-advert-slots', fillAdvertSlots.init, true],
         ['cm-paidContainers', paidContainers.init],
         ['cm-paidforBand', paidforBand.init]
@@ -118,12 +118,12 @@ define([
     return {
         init: function () {
             if (!config.switches.commercial) {
-                return;
+                return Promise.resolve();
             }
 
             if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
-                closeDisabledSlots.init();
-                return;
+                closeDisabledSlots.init(true);
+                return Promise.resolve();
             }
 
             userTiming.mark('commercial start');
@@ -149,6 +149,10 @@ define([
                     // There are no MPUs on hosted pages, so no slot render events, and therefore no reporting would be done.
                     Promise.all(customTimingModules).then(performanceLogging.reportTrackingData);
                 }
+            })
+            .catch(function () {
+                // Just in case something goes wrong, we don't want it to
+                // prevent enhanced from loading
             });
         }
     };

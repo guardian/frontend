@@ -1,53 +1,6 @@
-.adverts--books {
-    > .adverts__header {
-        .search {
-            position: relative;
-        }
-
-        .search__input {
-            @include fs-textSans(2);
-            box-sizing: border-box;
-            border-radius: 18px;
-            background-color: rgba(#ffffff, .9);
-            border: 0;
-            width: 100%;
-            height: $gs-row-height;
-            padding: $gs-baseline/2 $gs-gutter $gs-baseline/4;
-
-            &:hover,
-            &:focus {
-                outline: none;
-            }
-            &:focus {
-                background-color: #ffffff;
-                box-shadow: 0 0 0 2px rgba(#000000, .3), inset 0 1px 2px 0 rgba(#000000, .3);
-            }
-        }
-
-        .button {
-            color: #ffffff;
-            border-color: rgba(#ffffff, .3);
-            margin-right: 0;
-
-            &:hover,
-            &:focus,
-            &:active {
-                border-color: #ffffff;
-            }
-        }
-    }
-
-}
-
 .adverts--tone-books {
     > .adverts__header {
         background: $features-main-1;
-    }
-
-    &.adverts--legacy-inline {
-        .inline-logo-bookshop__svg {
-            opacity: .8;
-        }
     }
 }
 
@@ -107,11 +60,6 @@
             null
         );
     }
-}
-
-.advert-blended--books .advert-blended__title {
-    padding-top: 5px;
-    padding-bottom: 4px;
 }
 
 .logo--tone-books {

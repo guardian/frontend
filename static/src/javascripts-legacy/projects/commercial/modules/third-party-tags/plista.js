@@ -1,15 +1,14 @@
 define([
     'Promise',
     'fastdom',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/template',
-    'common/modules/identity/api',
-    'common/modules/commercial/dfp/track-ad-render',
-    'common/modules/commercial/commercial-features',
-    'text!commercial/views/plista.html',
-    'common/utils/load-script'
+    'lib/$',
+    'lib/config',
+    'lib/detect',
+    'lib/template',
+    'commercial/modules/dfp/track-ad-render',
+    'commercial/modules/commercial-features',
+    'raw-loader!commercial/views/plista.html',
+    'lib/load-script'
 ], function (
     Promise,
     fastdom,
@@ -17,7 +16,6 @@ define([
     config,
     detect,
     template,
-    identity,
     trackAdRender,
     commercialFeatures,
     plistaStr,
@@ -33,17 +31,6 @@ define([
         return detect.adblockInUse.then(function(adblockInUse){
             return !document.getElementById('dfp-ad--merchandising-high') || adblockInUse;
         });
-    }
-
-    function identityPolicy() {
-        return !(identity.isUserLoggedIn() && config.page.commentable);
-    }
-
-    function shouldServe() {
-        return commercialFeatures.outbrain &&
-                !config.page.isFront &&
-                !config.page.isPreview &&
-                identityPolicy();
     }
 
     // a modification of the code provided by Plista; altered to be a lazy load rather than during DOM construction
@@ -81,7 +68,7 @@ define([
     };
 
     function init() {
-        if (shouldServe()) {
+        if (commercialFeatures.outbrain) {
             return loadInstantly().then(function(adBlockInUse){
                 if (adBlockInUse) {
                     module.load();

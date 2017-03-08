@@ -1,10 +1,10 @@
 define([
     'Promise',
     'lodash/functions/once',
-    'common/utils/config',
-    'common/utils/mediator',
-    'common/utils/report-error',
-    'common/utils/user-timing',
+    'lib/config',
+    'lib/mediator',
+    'lib/report-error',
+    'lib/user-timing',
     'common/modules/analytics/beacon',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/Advert',
@@ -15,8 +15,6 @@ define([
     var recordFirstAdRendered = once(function () {
         beacon.fire('/count/ad-render.gif');
     });
-
-    var allAdsAreRendered;
 
     return onSlotRender;
 
@@ -34,6 +32,7 @@ define([
             reportEmptyResponse(advert.id, event);
             emitRenderEvents(false);
         } else {
+            advert.size = event.size;
             dfpEnv.creativeIDs.push(event.creativeId);
             renderAdvert(advert, event)
             .then(emitRenderEvents);
@@ -42,7 +41,6 @@ define([
         function emitRenderEvents(isRendered) {
             Advert.stopRendering(advert, isRendered);
             mediator.emit('modules:commercial:dfp:rendered', event);
-            allAdsRendered();
         }
     }
 
@@ -62,17 +60,6 @@ define([
                 adSlot: adSlotId,
                 adKeywords: adKeywords
             }, false);
-        }
-    }
-
-    function allAdsRendered() {
-        if (!allAdsAreRendered) {
-            allAdsAreRendered = Promise.all(dfpEnv.adverts.map(function (_) { return _.whenRendered; }))
-            .then(function () {
-                userTiming.mark('All ads are rendered');
-                mediator.emit('modules:commercial:dfp:alladsrendered');
-                window.dispatchEvent(new CustomEvent('alladsrendered'));
-            });
         }
     }
 });

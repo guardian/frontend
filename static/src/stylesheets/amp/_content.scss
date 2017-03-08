@@ -14,34 +14,6 @@
     box-sizing: border-box;
 }
 
-.content__labels {
-    box-sizing: border-box;
-    padding: $gs-baseline/2 0;
-    position: relative;
-    z-index: 1; // bring-to-front fix to make it clickable
-    overflow: hidden;
-}
-
-.content__labels--not-immersive {
-    border-bottom: 1px dotted $neutral-5;
-}
-
-.content__section-label {
-    float: left;
-    padding-right: $gs-gutter/3;
-
-    &,
-    .content__series-label {
-        float: left;
-    }
-}
-
-.content__series-label__link {
-    font-size: 1rem;
-    line-height: 1.25rem;
-    color: $neutral-2;
-}
-
 .content__headline {
     font-size: 28px;
     line-height: 32px;

@@ -1,16 +1,13 @@
 define([
     'Promise',
-    'common/utils/config',
-    'common/utils/template',
-    'common/utils/fastdom-promise',
+    'lib/config',
+    'lib/template',
+    'lib/fastdom-promise',
     'common/views/svgs',
     'commercial/modules/creatives/template-preprocessor',
 
     // require templates, so they're bundled up as part of the build
-    'text!commercial/views/creatives/gimbap.html',
-    'text!commercial/views/creatives/gimbap-simple.html',
-    'text!commercial/views/creatives/gimbap-richmedia.html',
-    'text!commercial/views/creatives/manual-container.html'
+    'raw-loader!commercial/views/creatives/manual-container.html'
 ], function (
     Promise,
     config,
@@ -30,22 +27,13 @@ define([
         this.params = params;
 
         if (this.params.Toneclass) {
-            this.params.isSoulmates = params.Toneclass.indexOf('soulmates') !== -1;
             this.params.isMembership = params.Toneclass.indexOf('membership') !== -1;
             this.params.HeaderToneclass = 'commercial__header--' + this.params.Toneclass.replace('commercial--tone-', '');
         }
 
         this.params.marque36icon = svgs('marque36icon');
         this.params.marque54icon = svgs('marque54icon');
-        this.params.logosoulmates = svgs('logosoulmates');
-        this.params.logosoulmatesjoin = svgs('logosoulmatesjoin');
         this.params.logomembership = svgs('logomembershipwhite');
-        this.params.logosoulmateshorizontal = svgs('logosoulmates');
-        this.params.logomasterclasseshorizontal = svgs('logomasterclasseshorizontal');
-        this.params.logomembershorizontal = svgs('logomembershiphorizontal');
-        this.params.logojobshorizontal = svgs('logojobshorizontal');
-        this.params.logobookshophorizontal = svgs('logobookshophorizontal');
-        this.params.logojobs = svgs('logojobs');
         this.params.logomasterclasses = svgs('logomasterclasses');
         this.params.arrowRight = svgs('arrowRight', ['i-right']);
         this.params.logoguardian = svgs('logoguardian');
@@ -83,7 +71,7 @@ define([
                 this.params.classNames = ['legacy-inline', this.params.toneClass.replace('commercial--', ''), this.params.toneClass.replace('commercial--tone-', '')];
             }
 
-            require(['text!commercial/views/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
+            require(['raw-loader!commercial/views/creatives/' + this.params.creative + '.html'], function (creativeTpl) {
                 if (templatePreprocessor[this.params.creative]) {
                     templatePreprocessor[this.params.creative](this);
                 }

@@ -1,14 +1,14 @@
 define([
     'fastdom',
-    'common/utils/$',
-    'common/utils/cookies',
-    'common/utils/detect',
-    'common/utils/storage',
-    'common/utils/template',
-    'common/utils/load-css-promise',
+    'lib/$',
+    'lib/cookies',
+    'lib/detect',
+    'lib/storage',
+    'lib/template',
+    'lib/load-css-promise',
     'common/modules/user-prefs',
     'common/modules/ui/message',
-    'common/utils/config'
+    'lib/config'
 ], function (
     fastdom,
     $,

@@ -9,6 +9,9 @@
 
 "use strict";
 
+// increment number to force a refresh
+// version 1
+
 /**
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * CACHE HELPERS
@@ -64,14 +67,28 @@ var handleAssetRequest = function (event) {
     );
 };
 
+var blockIAS = false;
+var iasRX = /adsafeprotected\.com/;
+var forbidden = new Response(null, { status: 403, statusText: 'IAS Blocked' });
+
+function isIASRequest(request) {
+    return iasRX.test(request.url)
+}
+
 /**
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * EVENT LISTENERS
  */
 
+this.addEventListener('message', function (event) {
+    blockIAS = !!event.data.ias;
+});
+
 this.addEventListener('fetch', function (event) {
     if (isRequestForAsset(event.request)) {
         handleAssetRequest(event);
+    } else if (blockIAS && isIASRequest(event.request)) {
+        event.respondWith(forbidden);
     }
 });
 

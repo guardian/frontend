@@ -1,9 +1,9 @@
 define([
     'bonzo',
     'qwery',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/config',
+    'lib/mediator',
     'common/modules/analytics/register',
     'common/modules/lazyload',
     'common/modules/ui/expandable',
@@ -49,7 +49,7 @@ define([
             ],
             pageTags      = config.page.keywordIds.split(','),
             // if this is an advertisement feature, use the page's keyword (there'll only be one)
-            popularInTags = config.page.isAdvertisementFeature ? pageTags : intersection(whitelistedTags, pageTags);
+            popularInTags = config.page.isPaidContent ? pageTags : intersection(whitelistedTags, pageTags);
 
         if (popularInTags.length) {
             return '/popular-in-tag/' + popularInTags[0] + '.json';

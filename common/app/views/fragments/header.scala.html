@@ -80,7 +80,7 @@
                 </div>
             </div>
 
-            <div class="popup popup--default popup--search is-off"><div class="js-search-placeholder"></div></div>
+            <div class="popup popup--default popup--search js-search-popup is-off"><div class="js-search-placeholder"></div></div>
 
             <div class="l-header-main">
                 @if((page.metadata.sectionId == "observer" && page.metadata.isFront) || page.metadata.id == "theobserver") {
@@ -88,13 +88,13 @@
                         @if(page.metadata.hasSlimHeader) {
                             @fragments.inlineSvg("observer-logo-160", "logo")
                         } else {
-                            <span class="u-h">The Observer</span>
+                            <span class="u-h">The Observer - Back to home</span>
                             @fragments.inlineSvg("observer-logo-320", "logo")
                         }
                     </a>
                 } else {
                     <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" data-component="logo">
-                        <span class="u-h">The Guardian</span>
+                        <span class="u-h">The Guardian - Back to home</span>
                         @if(page.metadata.hasSlimHeader) {
                             @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
                             <!--[if (gt IE 8)|(IEMobile)]><!-->
