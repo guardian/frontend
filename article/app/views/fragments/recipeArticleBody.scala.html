@@ -129,7 +129,17 @@
                 @recipe.data.steps.zipWithIndex.map{case(step, i) => <li><span class="number">@{i + 1}</span>@step</li> }
             </ul>
         </div>
+
+        <div class="ad-wrapper">
+            <div class="ad-container">
+                <div id="dfp-ad--inline@{i + 1}" class="js-ad-slot ad-slot ad-slot--mpu-banner-ad ad-slot--right" data-link-name="ad slot inline@{i + 1}" data-test-id="ad-slot-inline@{i + 1}" data-name="inline@{i + 1}" data-mobile="1,1|2,2|300,250|fluid" data-desktop="1,1|2,2|300,250|fluid"></div>
+            </div>
+            <div class="ad-container--mobile">
+                <div id="dfp-ad--inline1@{i + 1}" class="js-ad-slot ad-slot ad-slot--inline ad-slot-inline1@{i + 1}" data-link-name="ad slot inline1@{i + 1}" data-test-id="ad-slot-inline1@{i + 1}" data-name="inline1@{i + 1}" data-mobile="1,1|2,2|300,250|fluid" data-desktop="1,1|2,2|300,250|fluid"></div>
+            </div>
+        </div>
     </div>
 }
+
 
 
