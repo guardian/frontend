@@ -18,7 +18,7 @@
 
     <article id="live-blog" data-test-id="live-blog"
         class="content content--liveblog tonal tonal--@toneClass(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase"
-        itemscope itemtype="@model.article.metadata.schemaType" role="main">
+        role="main">
 
         <meta itemprop="url" content="@LinkTo(article.metadata.url)">
         <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">

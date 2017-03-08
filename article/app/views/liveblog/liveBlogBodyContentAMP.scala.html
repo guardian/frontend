@@ -5,6 +5,7 @@
 @import common.Edition
 @import views.support.{AmpAd, AmpAdDataSlot}
 @import org.joda.time.DateTimeZone
+@import views.support.structuredData.LiveBlogPosting
 
 @liveBlogBlocksAMP(article: Article, timezone: DateTimeZone) = {
     @model.currentPage.currentPage.blocks.sliding(5, 5).zipWithIndex.map { case (blockGroup, index) =>
@@ -28,6 +29,11 @@
         @if(model.currentPage.currentPage.isArchivePage) {
             @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage, amp = true)
         }
+
+            <script type="application/ld+json">
+            @Html(LiveBlogPosting(model).toString())
+            </script>
+
             <amp-live-list
                 id="live-list"
                 data-poll-interval="15000"
