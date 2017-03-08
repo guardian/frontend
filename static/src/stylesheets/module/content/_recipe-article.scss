@@ -12,8 +12,13 @@ $padding-wide: 100px;
 
 .recipes__main {
     display: flex;
-    flex-wrap: nowrap;
     justify-content: space-between;
+    flex-wrap: wrap;
+
+    @include mq($from: tablet) {
+        flex-wrap: nowrap;
+    }
+
 }
 
 .recipe__article .recipe__article--headline h1,
@@ -452,18 +457,3 @@ $padding-wide: 100px;
 }
 
 
-.ad-container--mobile {
-  display: block;
-
-  @include mq($from: tablet) {
-    display: none;
-  }
-}
-
-.ad-container {
-  display: none;
-
-  @include mq($from: desktop) {
-    display: block;
-  }
-}
