@@ -25,7 +25,7 @@ $.ancestor = (el: Node | null, className: string) => {
     return $.ancestor(el.parentNode, className);
 };
 
-$.forEachElement = (selector: string, fn: Function): Array<number> => {
+$.forEachElement = (selector: string, fn: Function): Array<Element> => {
     const els = qwery(selector);
     els.forEach(fn);
     return els;
