@@ -15,6 +15,8 @@ function deferToAnalytics(afterAnalytics: () => void): void {
             afterAnalytics();
         });
     }
+
+    return 'string';
 }
 
 export default deferToAnalytics;
