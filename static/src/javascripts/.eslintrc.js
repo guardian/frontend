@@ -1,8 +1,10 @@
 module.exports = {
+    parser: 'babel-eslint',
     settings: {
         'import/resolver': 'webpack',
     },
-    plugins: ['guardian-frontend'],
+    extends: ['plugin:flowtype/recommended'],
+    plugins: ['guardian-frontend', 'flowtype'],
     rules: {
         // require-specific overrides
         'import/no-extraneous-dependencies': 'off', // necessary while we use aliases
