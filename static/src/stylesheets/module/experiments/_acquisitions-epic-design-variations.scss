@@ -26,7 +26,7 @@
 .contributions__epic--subtle {
     // Unset border top as it will be set for the inline header element
     border-top: 0;
-    background-color: white;
+    background-color: #ffffff;
     margin-top: 50px;
     margin-bottom: 50px;
 }
@@ -48,18 +48,18 @@
 // uses large title
 
 .contributions__epic--prominent {
-    background-color: #ffd964;
+    background-color: transparentize($multimedia-main-2, .5);
 }
 
 .contributions__option--button--prominent {
     color: white;
-    background-color: #005689;
+    background-color: $guardian-brand;
     &:after {
         background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="white" stroke="white" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
     }
     &:hover {
-        color: white;
-        background-color: #003557;
+        color: #ffffff;
+        background-color: $multimedia-support-3;
     }
 }
 
@@ -67,5 +67,5 @@
 // ============
 
 .contributions__paragraph--highlight {
-    background-color: rgba(255, 187, 0, 0.4);
+    background-color: transparentize($multimedia-main-2, .6);
 }
