@@ -1,6 +1,6 @@
 define([
     'common/modules/commercial/contributions-utilities',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/cookies',
     'raw-loader!common/views/contributions-epic-equal-buttons.html',
     'common/modules/tailor/tailor'
