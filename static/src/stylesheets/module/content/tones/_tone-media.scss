@@ -116,4 +116,19 @@
     .submeta__link:after {
         color: $neutral-2;
     }
+
+    &.content--paidgallery {
+        background: darken($paid-article-bg, 60%);
+
+        .tonal__standfirst,
+        .ad-slot--gallery-inline {
+            background: none;
+        }
+    }
+
+    .content__headline--paidgallery {
+        .inline-tone-fill {
+            fill: $paid-article-brand;
+        }
+    }
 }

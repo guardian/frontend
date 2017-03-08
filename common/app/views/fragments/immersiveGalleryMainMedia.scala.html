@@ -1,7 +1,7 @@
 @import layout.ContentWidths.MainMedia
 @import model.ContentPage
 @import views.support.Commercial.isPaidContent
-@import views.support.ContributorLinks
+@import views.support.{ContributorLinks, RenderClasses}
 @import views.support.TrailCssClasses.toneClass
 
 @(page: ContentPage)(implicit request: RequestHeader)
@@ -26,7 +26,10 @@
         <div class="gs-container">
             @fragments.meta.metaInline(page.item)
 
-            <h1 class="content__headline content__headline--immersive content__headline--gallery content__headline--immersive--with-main-media">
+            <h1 class="@RenderClasses(
+                Map("content__headline--paidgallery" -> isPaidContent(page)),
+                "content__headline", "content__headline--immersive", "content__headline--gallery", "content__headline--immersive--with-main-media"
+                )">
                 @fragments.inlineSvg("camera", "icon", List("inline-tone-fill", "inline-icon--media"))
                 @Html(page.item.trail.headline)
             </h1>
