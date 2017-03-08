@@ -1,3 +1,4 @@
+// @flow
 import bonzo from 'bonzo';
 import qwery from 'qwery';
 
@@ -8,13 +9,13 @@ bonzo.aug({
     },
 });
 
-function $(selector, context) {
+function $(selector: string, context: HTMLElement): bonzo {
     return bonzo(qwery(selector, context));
 }
 
-$.create = s => bonzo(bonzo.create(s));
+$.create = (s: string): bonzo => bonzo(bonzo.create(s));
 
-$.ancestor = (el, className) => {
+$.ancestor = (el: Node, className: string) => {
     if (el.nodeName.toLowerCase() === 'html') {
         return false;
     }
@@ -24,7 +25,7 @@ $.ancestor = (el, className) => {
     return $.ancestor(el.parentNode, className);
 };
 
-$.forEachElement = (selector, fn) => {
+$.forEachElement = (selector: string, fn: Function): Array<number> => {
     const els = qwery(selector);
     els.forEach(fn);
     return els;
