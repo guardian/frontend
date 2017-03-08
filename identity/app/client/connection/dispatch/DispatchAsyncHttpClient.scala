@@ -14,7 +14,7 @@ trait DispatchAsyncHttpClient extends Http {
   lazy val maxConnections: Int = 20
   lazy val maxConnectionsPerHost: Int = 20
   lazy val connectionTimeoutInMs: Int = 1000
-  lazy val requestTimeoutInMs: Int = 10000
+  lazy val requestTimeoutInMs: Int = 30000
   lazy val proxy: Option[Proxy] = None
   lazy val compressionEnabled: Boolean = true
   lazy val allowPoolingConnection: Boolean = true
