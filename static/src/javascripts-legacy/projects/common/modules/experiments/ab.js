@@ -18,7 +18,8 @@ define([
     'common/modules/experiments/tests/membership-a3-a4-bundles-thrasher',
     'common/modules/experiments/tests/tailor-survey',
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
-    'common/modules/experiments/tests/sleeve-notes-legacy-email-variant'
+    'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
+    'ophan/ng'
 ], function (reportError,
              config,
              cookies,
@@ -38,7 +39,8 @@ define([
              MembershipA3A4BundlesThrasher,
              TailorSurvey,
              SleevenotesNewEmailVariant,
-             SleevenotesLegacyEmailVariant
+             SleevenotesLegacyEmailVariant,
+             ophan
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
@@ -217,10 +219,8 @@ define([
     }
 
     function recordOphanAbEvent(data) {
-        require(['ophan/ng'], function (ophan) {
-            ophan.record({
-                abTestRegister: data
-            });
+        ophan.record({
+            abTestRegister: data
         });
     }
 

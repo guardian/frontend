@@ -2,19 +2,19 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const outputName = 'app-webpack';
+const bundlePrefix = 'graun.';
 
 module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     devtool: env === 'dev' ? 'inline-source-map' : 'source-map',
     entry: {
-        [outputName]: path.join(
+        standard: path.join(
             __dirname,
             'static',
             'src',
             'javascripts',
-            'boot-webpack.js'
+            'boot.js'
         ),
-        'admin-webpack': path.join(
+        admin: path.join(
             __dirname,
             'static',
             'src',
@@ -22,7 +22,7 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
             'bootstraps',
             'admin.js'
         ),
-        'video-embed-webpack': path.join(
+        'video-embed': path.join(
             __dirname,
             'static',
             'src',
@@ -30,7 +30,7 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
             'bootstraps',
             'video-embed.js'
         ),
-        'youtube-embed-webpack': path.join(
+        'youtube-embed': path.join(
             __dirname,
             'static',
             'src',
@@ -41,8 +41,8 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: `${env === 'dev' ? '' : '[chunkhash]/'}[name].js`,
-        chunkFilename: `${env === 'dev' ? '' : '[chunkhash]/'}${outputName}.chunk-[id].js`,
+        filename: `${env === 'dev' ? '' : '[chunkhash]/'}${bundlePrefix}[name].js`,
+        chunkFilename: `${env === 'dev' ? '' : '[chunkhash]/'}${bundlePrefix}[name].js`,
     },
     resolve: {
         modules: [
