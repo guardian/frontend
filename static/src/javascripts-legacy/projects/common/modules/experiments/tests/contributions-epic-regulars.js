@@ -220,9 +220,6 @@ define([
                 insertBeforeSelector: '.submeta',
                 successOnView: true
             }
-
-
-
         ]
     });
 });
