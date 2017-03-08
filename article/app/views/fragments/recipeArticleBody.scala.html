@@ -1,0 +1,135 @@
+@import layout.ContentWidths.MainMedia
+@import model.content.MediaAtom
+@import model.ImageMedia
+@import model.ArticleSchemas
+@import common.Localisation
+@import model.content.RecipeAtom
+
+@(articleModel: ArticlePage, recipes: Seq[model.content.RecipeAtom], maybeMainImage: Option[ImageMedia], amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
+
+@import common.LinkTo
+@import views.BodyCleaner
+
+@schemaType(page: ArticlePage) = @{ ArticleSchemas.NewsArticle }
+@bodyType(page: ArticlePage) = @{ "articleBody" }
+
+@defining(articleModel.article) { article =>
+<article id="article" data-test-id="article-root"
+        class="content content--recipes"
+        itemscope itemtype="@schemaType(articleModel)" role="main" >
+    <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
+    <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+        <meta itemprop="name" content="The Guardian">
+        @fragments.logo(amp)
+    </div>
+
+    <div class="recipes__main">
+        <div class="recipe__images-wrapper">
+            <div class="recipe__label">
+                <h2>food &amp; drink</h2>
+            </div>
+            <div class="recipe__image__wrapper recipe__image__wrapper--is-displayed">
+                @maybeMainImage.map{ image =>
+                    @fragments.image(
+                        picture = image,
+                        classes = Seq("recipe__image"),
+                        imageAltText = image.allImages.headOption.flatMap( _.altText).getOrElse(""),
+                        widths = MainMedia.immersive,
+                        isImmersiveMainMedia = true
+                    )
+                }
+            </div>
+
+            @for((recipe, i) <- recipes.zipWithIndex){
+                <div class="recipe__image__wrapper recipe recipe__@i">
+                    @RecipeAtom.picture(recipe).orElse(maybeMainImage).map { image =>
+                        @fragments.image(
+                            picture = image,
+                            classes = Seq("recipe__image"),
+                            imageAltText = "",
+                            widths = MainMedia.immersive,
+                            isImmersiveMainMedia = true
+                        )
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="recipe__article-wrapper">
+            <div class="recipe__article">
+                <div class="recipe__article--meta">
+                        @articleModel.item.content.blogOrSeriesTag.map { series =>
+                        <div class="content__series-label">
+                            <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
+                        </div>
+                        }.getOrElse {
+                            @if(articleModel.item.content.isFromTheObserver) {
+                                <div class="content__series-label">
+                                    <a class="content__series-label__link" href="http://observer.theguardian.com">The Observer</a>
+                                </div>
+                            }
+                        }
+                    <div class="recipe__article--headline">
+                        <h1>@article.fields.linkText</h1>
+                    </div>
+                </div>
+                <div class="recipe__content">
+                    @BodyCleaner(article, article.fields.body, amp = false)
+                </div>
+                <div class="recipe__article--read-more js-recipe__article--read-more">
+                    <div class="circle-button">@fragments.inlineSvg("plus", "icon", List("control__icon-wrapper, rounded-icon"))<span class="read-more__text">Read more</span></div>
+                </div>
+                @for((recipe, i) <- recipes.zipWithIndex){ @recipePage(recipe, i) }
+            </div>
+            <div class="js-recipe__article--next-recipe recipe__article--next-recipe">
+                <div class="recipe__article--next-button js-recipe__article--next-button">@fragments.inlineSvg("arrow-right", "icon")</div>
+                <div class="js-recipe__article--next-text recipe__article--next-text">
+                    <h2><span class="kicker js-kicker">Next recipe</span> <span class="js-recipe__article--next-title recipe__article--next-title"></span></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+}
+
+
+@recipePage(recipe: model.content.RecipeAtom, i: Int) = {
+    <div data-recipe-index="recipe__@i" id="@recipe.atom.id" class="js-recipe__article--structured recipe__article--structured" itemtype="http://schema.org/Recipe">
+        <div class="js-recipe__article--structured-headline recipe__article--structured-headline">
+            <h1 itemprop="name">@recipe.data.title</h1>
+        </div>
+
+        <div class="recipe__article--structured-meta">
+            <div class="structured-meta">
+                @defining(recipe.data.serves){ maybeServes =>
+                    @for(serves <- maybeServes) {
+                        <span class="rounded-icon structured-meta__circle">@serves.from</span>
+                        @if(serves.from != serves.to) {to<span class="rounded-icon structured-meta__circle">@serves.to</span> }
+                        @RecipeAtom.yieldServingType(serves)
+                    }
+                }
+                @if(RecipeAtom.totalTime(recipe)) {<span class="rounded-icon structured-meta__circle">@RecipeAtom.totalTime(recipe)</span>hours }
+            </div>
+        </div>
+
+        <div class="recipe__article--structured-ingredients">
+        @for(list <- recipe.data.ingredientsLists) {
+            <ul class="ingredients-list">
+                <li class="ingredients-title">@if(list.title) {@list.title} else {Ingredients}</li>
+                @for(ingredient <- list.ingredients) {
+                    <li itemprop="recipeIngredient">@RecipeAtom.formatIngredientValue(ingredient)</li>
+                }
+            </ul>
+        }
+        </div>
+
+        <div class="recipe__article--structured-method">
+            <ul class="method-list">
+                @recipe.data.steps.zipWithIndex.map{case(step, i) => <li><span class="number">@{i + 1}</span>@step</li> }
+            </ul>
+        </div>
+    </div>
+}
+
+

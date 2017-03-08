@@ -127,11 +127,15 @@ define([
 
         // Return a promise that resolves after the async work is done.
         new Promise(function(resolve){
-            require(['bootstraps/enhanced/media/main'], resolve);
+            require.ensure([], function (require) {
+                resolve(require('bootstraps/enhanced/media/main'));
+            }, 'media');
         })
         .then(function () {
             return new Promise(function(resolve){
-                require(['bootstraps/enhanced/media/video-player'], resolve);
+                require.ensure([], function (require) {
+                    resolve(require('bootstraps/enhanced/media/video-player'));
+                }, 'video-player');
             });
         })
         .then(function (videojs) {

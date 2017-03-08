@@ -17,6 +17,7 @@ import client.connection.util.ExecutionContexts
 
 import org.joda.time.format.ISODateTimeFormat
 import com.gu.identity.model._
+import conf.IdentityConfiguration
 import net.liftweb.json.Serialization.write
 import scala.concurrent.duration._
 import scala.language.postfixOps
@@ -30,16 +31,17 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
   val fmt = ISODateTimeFormat.dateTimeNoMillis()
 
-  val apiRoot = "http://example.com/"
   val http = mock[Http]
+  val idConfig = new IdentityConfiguration
+  val apiRoot = idConfig.id.apiRoot
   val jsonParser = new JsonBodyParser {
     implicit val formats: Formats = LiftJsonConfig.formats + new JodaJsonSerializer
 
     def extractErrorFromResponse(json: JValue, statusCode: Int) = ???
   }
-  val clientAuth = ClientAuth("clientAccessToken")
-  val clientAuthHeaders = List("X-GU-ID-Client-Access-Token" -> "Bearer clientAccessToken")
-  val api = new SynchronousIdApi(apiRoot, http, jsonParser, clientAuth)
+  val clientAuth = ClientAuth("frontend-dev-client-token")
+  val clientAuthHeaders = List("X-GU-ID-Client-Access-Token" -> "Bearer frontend-dev-client-token")
+  val api = new SynchronousIdApi(http, jsonParser, idConfig)
   val errors = List(Error("Test error", "Error description", 500))
   val trackingParameters = mock[TrackingData]
   when(trackingParameters.parameters).thenReturn(List("tracking" -> "param"))
@@ -53,17 +55,17 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "accesses the /auth endpoint" in {
         api.authBrowser(Anonymous, trackingParameters)
-        verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
+        verify(http).POST(Matchers.eq(s"$apiRoot/auth"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
       }
 
       "adds the cookie parameter to the request" in {
         api.authBrowser(Anonymous, trackingParameters)
-        verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("format", "cookies")))), Matchers.any[Parameters])
+        verify(http).POST(Matchers.eq(s"$apiRoot/auth"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("format", "cookies")))), Matchers.any[Parameters])
       }
 
       "adds the client access token parameter to the request" in {
         api.authBrowser(Anonymous, trackingParameters)
-        verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(clientAuthHeaders)))
+        verify(http).POST(Matchers.eq(s"$apiRoot/auth"), Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(clientAuthHeaders)))
       }
 
       "passes the auth header to the http lib's GET method" in {
@@ -116,17 +118,17 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "accesses the unauth endpoint" in {
         api.unauth(Anonymous, trackingParameters)
-        verify(http).POST(Matchers.eq("http://example.com/unauth"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
+        verify(http).POST(Matchers.eq(s"$apiRoot/unauth"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
       }
 
       "adds the client access token parameter to the request" in {
         api.unauth(Anonymous, trackingParameters)
-        verify(http).POST(Matchers.eq("http://example.com/unauth"), Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(Iterable(("X-GU-ID-Client-Access-Token", "Bearer clientAccessToken")))))
+        verify(http).POST(Matchers.eq(s"$apiRoot/unauth"), Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(Iterable(("X-GU-ID-Client-Access-Token", "Bearer frontend-dev-client-token")))))
       }
       "passes the auth parameters to the http lib's GET method" in {
         val auth = TestAuth(List(("testParam", "value")), Iterable.empty)
         api.unauth(auth, trackingParameters)
-        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(Iterable(("X-GU-ID-Client-Access-Token", "Bearer clientAccessToken")))))
+        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(Iterable(("X-GU-ID-Client-Access-Token", "Bearer frontend-dev-client-token")))))
       }
 
       "passes the auth header to the http lib's GET method" in {
@@ -176,7 +178,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "accesses the user endpoint with the user's id" in {
         api.user("123")
-        verify(http).GET("http://example.com/user/123", Iterable.empty, clientAuthHeaders)
+        verify(http).GET(s"$apiRoot/user/123", Iterable.empty, clientAuthHeaders)
       }
 
       "returns the user object" in {
@@ -231,7 +233,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
     "when recieving a valid response" - {
       "accesses the synced prefs endpoint with the users id" in {
           api.savedArticles(Anonymous)
-          verify(http).GET("http://example.com/syncedPrefs/me/savedArticles", Iterable.empty, clientAuthHeaders)
+          verify(http).GET(s"$apiRoot/syncedPrefs/me/savedArticles", Iterable.empty, clientAuthHeaders)
         }
 
        "returns the synced Prefs Ofbject " in {
@@ -288,7 +290,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Right(validUserResponse)))
       "accesses the get user for token with the token param" in {
         api.userForToken(token)
-        verify(http).GET(Matchers.eq("http://example.com/pwd-reset/user-for-token"), argThat(new ParamsIncludes(Iterable(("token", token)))), Matchers.argThat(new ParamsIncludes(clientAuthHeaders)))
+        verify(http).GET(Matchers.eq(s"$apiRoot/pwd-reset/user-for-token"), argThat(new ParamsIncludes(Iterable(("token", token)))), Matchers.argThat(new ParamsIncludes(clientAuthHeaders)))
       }
 
       "returns the user object" in {
@@ -332,7 +334,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "posts the request json data to the endpoint" in {
         api.resetPassword(token, newPassword)
-        verify(http).POST(Matchers.eq("http://example.com/pwd-reset/reset-pwd-for-user"), Matchers.eq(Option(requestJson)), Matchers.eq(Nil), Matchers.eq(clientAuthHeaders))
+        verify(http).POST(Matchers.eq(s"$apiRoot/pwd-reset/reset-pwd-for-user"), Matchers.eq(Option(requestJson)), Matchers.eq(Nil), Matchers.eq(clientAuthHeaders))
       }
 
       "returns a successful unit response" in {
@@ -374,7 +376,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "accesses the savedArticles endpoing" in {
         api.updateSavedArticles(Anonymous, savedArticles)
-        verify(http).POST(Matchers.eq("http://example.com/syncedPrefs/me/savedArticles"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
+        verify(http).POST(Matchers.eq(s"$apiRoot/syncedPrefs/me/savedArticles"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
       }
 
       "passes the updated articles list as json to the endpoint" in  {
@@ -417,7 +419,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "should call the correct URL" in {
         Await.result(api.passwordExists(ParamAuth), 10 seconds)
-        verify(http).GET(Matchers.eq("http://example.com/user/password-exists"), Matchers.any[Parameters], Matchers.any[Parameters])
+        verify(http).GET(Matchers.eq(s"$apiRoot/user/password-exists"), Matchers.any[Parameters], Matchers.any[Parameters])
       }
 
       "then the correct value should be returned" in {
@@ -445,12 +447,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "accesses the reset password endpoint" in {
         api.sendPasswordResetEmail(testEmail, trackingParameters)
-        verify(http).GET(Matchers.eq("http://example.com/pwd-reset/send-password-reset-email"), Matchers.anyObject(), Matchers.anyObject())
+        verify(http).GET(Matchers.eq(s"$apiRoot/pwd-reset/send-password-reset-email"), Matchers.anyObject(), Matchers.anyObject())
       }
 
       "adds the email address and type parameters" in {
         api.sendPasswordResetEmail(testEmail, trackingParameters)
-        verify(http).GET(Matchers.eq("http://example.com/pwd-reset/send-password-reset-email"), Matchers.argThat(new ParamsIncludes(Iterable(("email-address", testEmail), ("type", "reset")))), Matchers.argThat(new ParamsIncludes(clientAuthHeaders)))
+        verify(http).GET(Matchers.eq(s"$apiRoot/pwd-reset/send-password-reset-email"), Matchers.argThat(new ParamsIncludes(Iterable(("email-address", testEmail), ("type", "reset")))), Matchers.argThat(new ParamsIncludes(clientAuthHeaders)))
       }
 
       "returns an user object" in {
@@ -490,7 +492,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "accesses the user endpoint with me in place of the user id" in {
         api.me(Anonymous)
-        verify(http).GET(Matchers.eq("http://example.com/user/me"), Matchers.any[Parameters], Matchers.any[Parameters])
+        verify(http).GET(Matchers.eq(s"$apiRoot/user/me"), Matchers.any[Parameters], Matchers.any[Parameters])
       }
 
       "passes the authentication to the API" in {
@@ -549,17 +551,17 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "accesses the user endpoint" in {
         api.register(user, trackingParameters)
-        verify(http).POST(Matchers.eq("http://example.com/user"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
+        verify(http).POST(Matchers.eq(s"$apiRoot/user"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
       }
 
       "adds the client access token parameter to the request" in {
         api.register(user, trackingParameters)
-        verify(http).POST(Matchers.eq("http://example.com/user"), Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(clientAuthHeaders)))
+        verify(http).POST(Matchers.eq(s"$apiRoot/user"), Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(clientAuthHeaders)))
       }
 
       "adds the the omniture tracking data to the request" in {
         api.register(user, trackingParameters)
-        verify(http).POST(Matchers.eq("http://example.com/user"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable("tracking" -> "param"))), Matchers.any[Parameters])
+        verify(http).POST(Matchers.eq(s"$apiRoot/user"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable("tracking" -> "param"))), Matchers.any[Parameters])
       }
 
       "posts the user data to the endpoint" in {
@@ -590,7 +592,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   }
 
   "synchronous version" - {
-    val syncApi = new SynchronousIdApi(apiRoot, http, jsonParser, clientAuth)
+    val syncApi = new SynchronousIdApi(http, jsonParser, idConfig)
 
     "should use current thread testContext" in {
       syncApi.executionContext should equal(ExecutionContexts.currentThreadContext)
