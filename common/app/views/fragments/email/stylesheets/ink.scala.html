@@ -823,6 +823,15 @@ body.outlook p {
         width: 100% !important;
     }
 
+    /*
+     * Mad hack: Apple mail seems to be the only mobile client that
+     * understands the attribute notation, and on this client the email is
+     * full-bleed so we *do* want some padding on the sides
+     */
+    table[class="body"] .container {
+        width: 95% !important;
+    }
+
     table.body .row {
         width: 100% !important;
         display: block !important;
