@@ -11,6 +11,10 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
+sealed abstract class SponsorType(val className: String)
+case object PaidFor extends SponsorType("paidfor")
+case object Supported extends SponsorType("supported")
+
 class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: CapiAgent) extends Controller with ExecutionContexts with implicits.Requests with Logging {
 
   private val lookup = new Lookup(contentApiClient)
