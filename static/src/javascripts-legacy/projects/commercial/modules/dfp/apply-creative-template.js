@@ -6,7 +6,6 @@ define([
     'lib/report-error',
 
     // These need to be bundled, so that they can be fetched asynchronously in production
-    'commercial/modules/creatives/commercial-component',
     'commercial/modules/creatives/frame',
     'commercial/modules/creatives/revealer',
     'commercial/modules/creatives/fabric-v1',
