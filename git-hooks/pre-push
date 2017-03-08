@@ -32,12 +32,12 @@ conditionallyValidate() {
 
 # Validate CSS
 CSS_SRC_PATTERN="\.scss$"
-conditionallyValidate "$CSS_SRC_PATTERN" "make install" "./tools/task-runner/runner lint/sass"
+conditionallyValidate "$CSS_SRC_PATTERN" "make install" "./tools/task-runner/runner validate/sass"
 cssValidateResult=$?
 
 # Validate JS
 JS_SRC_PATTERN="\.js$"
-conditionallyValidate "$JS_SRC_PATTERN" "make install" "./tools/task-runner/runner lint/javascript"
+conditionallyValidate "$JS_SRC_PATTERN" "make install" "./tools/task-runner/runner validate/javascript"
 jsValidateResult=$?
 
 # Test JS
