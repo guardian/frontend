@@ -4,9 +4,9 @@
 @import model.Tag
 @import views.support.{RowInfo, Seq2zipWithRowInfo}
 
-@renderItem(keyword: Tag, row: RowInfo, clazz: String = "", trailingComma: Boolean = false) = {
-    <li class="inline-list__item @clazz">
-        <a class="@if(keyword.isFootballTeam){js-football-team} @if(keyword.isFootballCompetition){ js-football-competition} button button--small button--tag @tone.map("button--tone-" + _).getOrElse("button--secondary")"
+@renderItem(keyword: Tag, row: RowInfo) = {
+    <li class="submeta__link-item">
+        <a class="@if(keyword.isFootballTeam){js-football-team} @if(keyword.isFootballCompetition){ js-football-competition} submeta__link"
            href="@LinkTo(keyword.metadata.url)"
            data-link-name="keyword: @keyword.id"
            itemprop="keywords">
@@ -16,34 +16,27 @@
     </li>
 }
 
-@defining(keywords.filterNot(_.isSectionTag).take(if(keywords.filterNot(_.isSectionTag).length == (visibleKeywords + 1)){visibleKeywords + 1} else {visibleKeywords})) { shownKeywords =>
-    @defining(keywords.filterNot(_.isSectionTag).drop(if(keywords.filterNot(_.isSectionTag).length == (visibleKeywords + 1)){visibleKeywords + 1} else {visibleKeywords})) { hiddenKeywords =>
-        @if(shownKeywords.nonEmpty || allPath.nonEmpty) {
-            <ul class="keyword-list inline-list">
-                @allPath.map { path =>
-                    <li class="inline-list__item">
-                        <a href="@LinkTo(path)"
-                           data-link-name="all"
-                           class="button button--small button--tag button--secondary">All today's stories</a>
-                    </li>
-                }
+@defining(keywords.filterNot(_.isSectionTag).take(if(keywords.filterNot(_.isSectionTag).length == (visibleKeywords + 1)){visibleKeywords + 1} else {visibleKeywords})) { visibleKeywords =>
+    @if(visibleKeywords.nonEmpty || allPath.nonEmpty) {
+        <div class="submeta submeta--borderless-bottom"
+             data-link-name="keywords">
+            <span class="submeta__label">Topics</span>
 
-                @shownKeywords.zipWithRowInfo.map{ case(keyword, row) =>
-                    @renderItem(keyword, row, trailingComma = hiddenKeywords.nonEmpty)
-                }
-
-                @if(hiddenKeywords.nonEmpty) {
-
-                    <li class="inline-list__item js-more-tags more-tags modern-hidden">
-                        <button class="u-button-reset js-more-tags__link button button--small button--tag @tone.map("button--tone-" + _ + "-variant").getOrElse("button--tertiary") button--more"
-                           data-link-name="more-tags">More…</button>
-                    </li>
-
-                    @hiddenKeywords.zipWithRowInfo.map{ case(keyword, row) =>
-                        @renderItem(keyword, row, clazz = "modern-hidden modern-hidden-tag")
+            <div class="submeta__keywords">
+                <ul class="submeta__links">
+                    @allPath.map { path =>
+                        <li class="submeta__link-item">
+                            <a href="@LinkTo(path)"
+                               data-link-name="all"
+                               class="submeta__link">All today's stories</a>
+                        </li>
                     }
-                }
-            </ul>
-        }
+
+                    @visibleKeywords.zipWithRowInfo.map{ case(keyword, row) =>
+                        @renderItem(keyword, row)
+                    }
+                </ul>
+            </div>
+        </div>
     }
 }

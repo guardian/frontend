@@ -7,51 +7,51 @@
     "lib/atob.js",
     "lib/capture-perf-timings.js",
     "lib/chain.js",
-    "lib/check-dispatcher.js",
-    "lib/check-mediator.js"
+    "lib/clamp.js",
+    "lib/client-rects.js"
   ],
   "Gareth Trufitt": [
-    "lib/clamp.js",
-    "lib/client-rects.js",
     "lib/closest.js",
     "lib/config.js",
     "lib/cookies.js",
     "lib/create-store.js",
     "lib/detect.js",
     "lib/easing.js",
-    "lib/element-inview.js"
+    "lib/element-inview.js",
+    "lib/fastdom-errors.js",
+    "lib/fastdom-promise.js"
   ],
   "Simon Adcock": [
-    "lib/fastdom-errors.js",
-    "lib/fastdom-promise.js",
     "lib/fetch-json.js",
     "lib/fetch.js",
     "lib/formatters.js",
     "lib/formInlineLabels.js",
     "lib/fsm.js",
     "lib/geolocation.js",
-    "lib/load-css-promise.js"
+    "lib/load-css-promise.js",
+    "lib/load-script.js",
+    "lib/location.js"
   ],
   "GHaberis": [
-    "lib/load-script.js",
-    "lib/location.js",
     "lib/mediator.js",
     "lib/pad.js",
     "lib/page.js",
     "lib/picturefill.js",
     "lib/private-browsing.js",
     "lib/proximity-loader.js",
-    "lib/queue.js"
+    "lib/queue.js",
+    "lib/QueueAsync.js",
+    "lib/raven.js"
   ],
   "Gustav Pursche": [
-    "lib/QueueAsync.js",
-    "lib/raven.js",
     "lib/report-error.js",
     "lib/robust.js",
     "lib/scroller.js",
     "lib/sha1.js",
     "lib/steady-page.js",
     "lib/storage.js",
-    "lib/template.js"
+    "lib/template.js",
+    "lib/time.js",
+    "lib/timeout.js"
   ]
 }
