@@ -1,6 +1,6 @@
 define([
     'common/modules/commercial/contributions-utilities',
-    'lib/template',
+    'lodash/utilities/template',
     'lodash/objects/assign',
     'raw-loader!common/views/acquisitions-epic-design-variations.html'
 ], function(
