@@ -111,7 +111,7 @@ define([
             }
         }
 
-        if (this.template) {
+        if (template) {
             this.elem = bonzo.create(template)[0];
             this._prerender();
             bonzo(parent || document.body)[this.manipulationType](this.elem);
