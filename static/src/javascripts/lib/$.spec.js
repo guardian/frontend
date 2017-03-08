@@ -1,13 +1,17 @@
+// @flow
+
 import $ from './$';
 
 beforeEach(() => {
-    document.body.innerHTML = `
+    if (document.body) {
+        document.body.innerHTML = `
         <div class="grandparent" id="ancestorTarget">
             <div class="parent">
                 <div class="child">child content</div>
                 <div class="sibling"></div>
             </div>
         </div>`;
+    }
 });
 
 describe('$', () => {
@@ -38,7 +42,7 @@ describe('$', () => {
             )
         ).toBe(false);
         expect(
-            $.ancestor(document.querySelector('.child'), 'grandparent').id
-        ).toEqual('ancestorTarget');
+            $.ancestor(document.querySelector('.child'), 'grandparent')
+        ).toEqual(expect.objectContaining({ id: 'ancestorTarget' }));
     });
 });

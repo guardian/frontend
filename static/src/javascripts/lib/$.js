@@ -9,14 +9,14 @@ bonzo.aug({
     },
 });
 
-function $(selector: string, context: HTMLElement): bonzo {
+function $(selector: string, context: ?Element | ?string): bonzo {
     return bonzo(qwery(selector, context));
 }
 
 $.create = (s: string): bonzo => bonzo(bonzo.create(s));
 
-$.ancestor = (el: Node, className: string) => {
-    if (el.nodeName.toLowerCase() === 'html') {
+$.ancestor = (el: Node | null, className: string) => {
+    if (el === null || el.nodeName.toLowerCase() === 'html') {
         return false;
     }
     if (!el.parentNode || bonzo(el.parentNode).hasClass(className)) {
