@@ -17,7 +17,7 @@ define([
         this.showForSensitive = true;
 
         this.canRun = function () {
-          return detect.isBreakpoint({ min: 'desktop' });
+          return !config.page.isImmersive && detect.isBreakpoint({ min: 'desktop' });
         };
 
         this.variants = [
