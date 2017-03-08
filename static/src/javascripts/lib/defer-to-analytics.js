@@ -1,3 +1,4 @@
+// @flow
 import mediator from 'lib/mediator';
 
 let analyticsReady = false;
@@ -6,7 +7,7 @@ mediator.on('analytics:ready', () => {
     analyticsReady = true;
 });
 
-function deferToAnalytics(afterAnalytics) {
+function deferToAnalytics(afterAnalytics: () => void): void {
     if (analyticsReady) {
         afterAnalytics();
     } else {

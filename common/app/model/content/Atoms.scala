@@ -299,6 +299,50 @@ object InteractiveAtom {
 
 object RecipeAtom {
   def make(atom: AtomApiAtom): RecipeAtom = RecipeAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Recipe].recipe)
+
+  def picture(r: RecipeAtom): Option[model.ImageMedia] = {
+    r.data.images.headOption.map{ img => MediaAtom.imageMediaMake(img, "")}
+  }
+
+  def totalTime(recipe: RecipeAtom): Option[Int] = {
+    (recipe.data.time.preparation ++ recipe.data.time.cooking).map(_.toInt).reduceOption(_ + _)
+  }
+
+  def yieldServingType(serves: com.gu.contentatom.thrift.atom.recipe.Serves): String = {
+    serves.`type` match {
+      case "serves" => "servings"
+      case "makes" => s"${serves.unit}"
+      case "quantity" => "portions"
+    }
+  }
+
+  def formatIngredientValue(ingredient: com.gu.contentatom.thrift.atom.recipe.Ingredient): String = {
+    val q = ingredient.quantity
+      .map(formatQuantity)
+      .orElse(ingredient.quantityRange.map(range => s"${formatQuantity(range.from)}-${formatQuantity(range.to)}" ))
+      .getOrElse("")
+    s"""${q} ${formatUnit(ingredient.unit.getOrElse(""))} ${ingredient.item}"""
+  }
+
+  private def formatUnit(unit: String): String = {
+    unit match {
+      case "dsp" => "dessert spoon"
+      case "tsp" => "teaspoon"
+      case "tbsp" => "tablespoon"
+      case _ => unit
+    }
+  }
+
+  private def formatQuantity(q: Double): String = {
+    q match {
+      case qty if qty == qty.toInt => qty.toInt.toString
+      case 0.75 => "¾"
+      case 0.5 => "½"
+      case 0.25 => "¼"
+      case 0.125 => "⅛"
+      case _ => q.toString
+    }
+  }
 }
 
 object ReviewAtom {
