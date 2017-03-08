@@ -131,7 +131,7 @@ define([
                 !config.page.isFront &&
                 (config.page.contentId.indexOf("email-sign-up") === -1) &&
                 config.switches.emailInArticle &&
-                !clash.userIsInAClashingAbTest(clash.nonEmailClashingTests) &&
+                !clash.userIsInAClashingAbTest(clash.contributionsTests) &&
                 storage.session.isAvailable() &&
                 !userHasSeenThisSession() &&
                 !(browser === 'MSIE' && contains(['7','8','9'], version + ''));

@@ -49,8 +49,6 @@ define([
 
     var emailTests = [];
 
-    var nonEmailClashingTests = contributionsTests;
-
     var clashingTests = contributionsTests.concat(emailTests);
 
     function userIsInAClashingAbTest(tests) {
@@ -74,7 +72,7 @@ define([
 
     return {
         userIsInAClashingAbTest: userIsInAClashingAbTest,
-        nonEmailClashingTests: nonEmailClashingTests,
+        contributionsTests: contributionsTests,
         _testABClash: _testABClash // exposed for unit testing
     };
 });

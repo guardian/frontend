@@ -15,10 +15,13 @@ define([
 ) {
 
     var checksToDispatch = {
-        isUserInAClashingAbTest: function() {
-            return clash.userIsInAClashingAbTest();
+        isUserInContributionsAbTest: function() {
+            return clash.userIsInAClashingAbTest(clash.contributionsTests);
         },
-        emailCanRun: function() {
+        isUserInEmailAbTest: function() {
+            return clash.userIsInAClashingAbTest(clash.emailTests);
+        },
+        emailCanRunPreCheck: function() {
             return emailRunChecks.allEmailCanRun();
         },
         listCanRun: function() {

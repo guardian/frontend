@@ -18,33 +18,49 @@ define([
     **/
     var SOMECHECKSPASSED = Array.prototype.some;
     var EVERYCHECKPASSED = Array.prototype.every;
+
     /**
      * checkList is an array of object literals.
      * Each object in this array will be converted to a DefferedCheck and added to registeredChecks
-     * Each object contains 3 fields: id (string), canRun (boolean), dependentChecks (object)
+     * Each object contains 2 fields: id (string) and dependentChecks (object)
      * dependentChecks should contain 2 fields: passCondition (SOMECHECKSPASSED/EVERYCHECKPASSED), list (nested array of checks)
      * If object has dependentChecks then the DefferedCheck will resolve when these dependentChecks have all resolved
      *
     **/
-
     var checkList = [{
             id: 'isOutbrainNonCompliant',
             dependentChecks: {
                 passCondition: SOMECHECKSPASSED,
                 list:[{
-                    id: 'isUserInAClashingAbTest'
+                    id: 'isUserInContributionsAbTest'
                 }, {
                     id: 'canEmailBeInserted',
                     dependentChecks: {
                         passCondition: EVERYCHECKPASSED,
-                        list: [{
-                            id: 'emailCanRun'
+                        list: [{ 
+                            id: 'isUserInEmailAbTest' 
+                        }, {
+                            id: 'emailCanRunPreCheck'
                         }, {
                             id: 'listCanRun'
                         }, {
                             id: 'emailInArticleOutbrainEnabled'
                         }]
                     }
+                }]
+            }
+        }, {
+            id: 'emailCanRun',
+            dependentChecks: {
+                passCondition: EVERYCHECKPASSED,
+                list: [{ 
+                    id: 'isOutbrainNonCompliant' 
+                }, { 
+                    id: 'emailCanRunPreCheck' 
+                }, { 
+                    id: 'listCanRun' 
+                }, { 
+                    id: 'emailInArticleOutbrainEnabled' 
                 }]
             }
         }];
@@ -80,6 +96,10 @@ define([
     }    
   
     function registerCheck(check) {
+        if (registeredChecks[check.id]) {
+            return registeredChecks[check.id];
+        }
+
         var registeredCheck = registerDefferedCheck(check);
 
         registeredChecks[check.id] = registeredCheck;
