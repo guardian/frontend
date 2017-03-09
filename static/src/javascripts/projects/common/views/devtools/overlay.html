@@ -1,0 +1,17 @@
+<div>
+    Welcome to devtools
+    <ul>
+        <% tests.forEach(function(test) { %>
+            <li>
+                <div>
+                    <%= test.id %>
+                </div>
+                <% test.variants.forEach(function(variant) { %>
+                    <div>
+                        <%= variant.id %>
+                    </div>
+                <% }); %>
+            </li>
+        <% }); %>
+    </ul>
+</div>
