@@ -2,9 +2,9 @@
     <div class="devtools__controls">
         <button type="button" class="js-devtools-clear-ab">Clear all</button>
         <button type="button" class="js-devtools-reload">Reload</button>
-        <button type="button" class="js-devtools-hide">X</button>
+        <button type="button" class="js-devtools-toggle devtools__controls__toggle">X</button>
     </div>
-    <ul>
+    <ul class="devtools__tests">
         <% tests.forEach(function(test) { %>
             <li>
                 <div class="devtools__test">
@@ -16,12 +16,12 @@
                             type="radio"
                             id="<%=test.id%>-<%=variant.id%>"
                             name="<%= test.id %>"
-                            class="js-devtools-radio"
+                            class="js-devtools-radio devtools__variant__button"
                         >
                         <label
                             data-ab-test="<%= test.id %>"
                             data-ab-variant="<%= variant.id %>"
-                            class="js-devtools-force-ab"
+                            class="js-devtools-force-ab devtools__variant__label"
                             for="<%=test.id%>-<%=variant.id%>"
                         >
                             <%= variant.id %>

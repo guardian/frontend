@@ -49,8 +49,8 @@ function bindEvents() {
         window.location.reload();
     });
 
-    bean.on($('.js-devtools-hide')[0], 'click', () => {
-        $('.devtools').addClass('devtools--hidden');
+    bean.on($('.js-devtools-toggle')[0], 'click', () => {
+        $('.devtools').toggleClass('devtools--hidden');
     });
 }
 
