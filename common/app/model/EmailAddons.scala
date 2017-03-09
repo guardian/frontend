@@ -162,6 +162,18 @@ case object SleeveNotes extends FrontEmailMetadata {
   override val toneColour = Some("#ffbb00")
 }
 
+case object OutsideInAmerica extends FrontEmailMetadata {
+  val name = "Outside in America"
+  override val banner = Some("outside-in-america.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "us-news/series/outside-in-america-newsletter")
+}
+
+case object TheResistanceNow extends FrontEmailMetadata {
+  val name = "The Resistance Now"
+  override val banner = Some("the-resistance-now.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "us-news/series/the-resistance-now-newsletter")
+}
+
 
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
@@ -186,7 +198,9 @@ object EmailAddons {
     HandwrittenMediaBriefing,
     VaginaDispatches,
     KeepItInTheGround,
-    TheWeekInPatriarchy)
+    TheWeekInPatriarchy,
+    OutsideInAmerica,
+    TheResistanceNow)
   private val frontEmails = Seq(
     TheFlyer,
     CuratedMediaBriefing,
