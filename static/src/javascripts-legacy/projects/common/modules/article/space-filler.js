@@ -31,25 +31,20 @@ define([
      * @returns {Promise} - when insertion attempt completed, resolves 'true' if inserted, or 'false' if no space found
      */
     SpaceFiller.prototype.fillSpace = function (rules, writer, options) {
-        console.log("filling space");
         var write = (options && options.domWriter) || fastdom.write;
-        // console.log("write " + write);
         return queue.add(insertNextContent);
 
         function insertNextContent() {
-            console.log("insertNextContent");
             return spacefinder.findSpace(rules, options).then(onSpacesFound, onNoSpacesFound);
         }
 
         function onSpacesFound(paragraphs) {
-            console.log("spaces found");
             return write(function () {
                 return writer(paragraphs);
             });
         }
 
         function onNoSpacesFound(ex) {
-            console.log("no spaces found");
             if (ex instanceof spacefinder.SpaceError) {
                 return false;
             } else {

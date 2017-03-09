@@ -80,8 +80,6 @@ define([
 
             var newCookieValue = id + '=' + dayCanShowAgain;
 
-
-
             var currentCookieValues = cookies.get('GU_TAILOR_SURVEY');
 
             if (currentCookieValues) {
@@ -136,6 +134,7 @@ define([
             };
         }
 
+        // Rules to use when finding a space for the survey
         function getSpacefinderRules() {
             return {
                 bodySelector: '.js-article__body',
@@ -153,24 +152,18 @@ define([
             };
         }
 
-        var inArticleWriter = function (component) {
-
-            console.log("writing");
-
+        // we can write a survey into a spare space using spaceFiller
+        var inArticleWriter = function (survey, surveyId) {
             return spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
-                console.log("inserting");
-                component.insertBefore(paras[0]);
-                console.log("inserted");
-                embed.init();
-                console.log("finished init");
-                mediator.emit('data-tailor-survey:insert', component);
-                console.log("finished inserting");
-
-                return 1;
+                var componentName = 'data_tailor_survey_' + surveyId;
+                mediator.emit('register:begin', componentName);
+                bonzo(survey).insertBefore(paras[0]);
+                mediator.emit('register:end', componentName);
+                return surveyId;
             });
-
         };
 
+        // the main function to render the survey
         function renderQuickSurvey() {
 
             var bwid = cookies.get('bwid');
@@ -191,35 +184,9 @@ define([
 
                         var json = getJsonFromSurvey(surveySuggestionToShow.data.survey);
 
-                        var componentName = 'data_tailor_survey_' + json.id;
-
-                        mediator.emit('register:begin', componentName);
-
                         var survey = bonzo.create(template(tailorSurvey, json));
 
-                        // var component = bonzo.create(template(contributionsEmbed, {
-                        //     position : 'supporting',
-                        //     linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html',
-                        //     variant : 'in-article',
-                        //     intCMP : 'co_uk_cobedpos_like_article'
-                        //
-                        // }));
-                        //
-                        return inArticleWriter(survey);
-
-                        // return surveySuggestionToShow.data.survey.surveyId;
-
-                        // renders the survey, and returns the survey ID
-
-                        // return fastdomPromise.write(function () {
-                        //     var article = document.getElementsByClassName('content__article-body')[0];
-                        //     var insertionPoint = article.getElementsByTagName('p')[1];
-                        //
-                        //     bonzo(survey).insertBefore(insertionPoint);
-                        //     mediator.emit('register:end', componentName);
-                        //
-                        //     return surveySuggestionToShow.data.survey.surveyId;
-                        // });
+                        return inArticleWriter(survey, surveySuggestionToShow.data.survey.surveyId);
                     }
                 });
             }
@@ -243,6 +210,7 @@ define([
         }
 
         function handleSurveyResponse(surveyId) {
+            console.log("surveyId " + surveyId);
             var surveyQuestions = document.getElementsByClassName('fi-survey__button');
 
             forEach(surveyQuestions, function (question) {
@@ -264,8 +232,10 @@ define([
         }
 
         function recordOphanAbEvent(answer, surveyId) {
+            var componentId = 'data_tailor_survey_' + surveyId;
+            console.log("componentId: " + componentId);
             ophan.record({
-                component: 'data_tailor_survey_' + surveyId,
+                component: componentId,
                 value: answer
             });
         }
@@ -279,7 +249,8 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    Promise.all([renderQuickSurvey(), privateBrowsing]).then(function (surveyId) {
+                    Promise.all([renderQuickSurvey(), privateBrowsing]).then(function (response) {
+                        var surveyId = response[0]
                         mediator.emit('survey-added');
                         handleSurveyResponse(surveyId);
                     });
