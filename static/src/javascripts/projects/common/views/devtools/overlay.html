@@ -12,11 +12,11 @@
                             data-ab-test="<%= test.id %>"
                             data-ab-variant="<%= variant.id %>"
                             class="js-devtools-force-ab"
-                            for="<%=test.id-variant.id%>"
+                            for="<%=test.id%>-<%=variant.id%>"
                         >
                             <%= variant.id %>
                         </label>
-                        <input type="radio" id="<%=test.id-variant.id%>" name="<%= test.id %>">
+                        <input type="radio" id="<%=test.id%>-<%=variant.id%>" name="<%= test.id %>">
                     </div>
                 <% }); %>
             </li>
