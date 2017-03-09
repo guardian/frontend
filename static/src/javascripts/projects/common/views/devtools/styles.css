@@ -1,0 +1,10 @@
+.devtools {
+    background-color: #cccccc;
+    position: fixed;
+    top: 0;
+    z-index: 10000;
+}
+
+.devtools ul {
+    list-style: none;
+}

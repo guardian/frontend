@@ -4,6 +4,7 @@ import $ from 'lib/$';
 import bean from 'bean';
 import find from 'lodash/collections/find';
 import overlay from 'raw-loader!common/views/devtools/overlay.html';
+import styles from 'raw-loader!common/views/devtools/styles.css';
 import getAbTests from 'common/modules/experiments/get-ab-tests';
 
 function getSelectedAbTests() {
@@ -36,14 +37,26 @@ function selectRadios() {
     });
 }
 
-export default function showDevTools() {
-    const header = $('#bannerandheader');
+function applyCss() {
+    const el = $.create('<style type="text/css"></style>');
+
+    el.append(styles);
+    $('head').append(el);
+}
+
+function appendOverlay() {
+    const header = $('body');
     const tests = getAbTests();
     const data = {
         tests: tests.map(test => ({ id: test.id, variants: test.variants })),
     };
 
-    header.append(template(overlay, data));
+    header.prepend(template(overlay, data));
+}
+
+export default function showDevTools() {
+    appendOverlay();
     bindEvents();
     selectRadios();
+    applyCss();
 }
