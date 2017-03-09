@@ -11,6 +11,18 @@ function getSelectedAbTests() {
     return JSON.parse(storage.local.get('gu.devtools.ab')) || [];
 }
 
+function selectRadios() {
+    const abTests = getSelectedAbTests();
+
+    $('.js-devtools-radio').each(function(radio) {
+        $(radio).attr('checked', false);
+    });
+
+    abTests.forEach((test) => {
+        $(`#${test.id}-${test.variant}`).attr('checked', true);
+    });
+}
+
 function bindEvents() {
     $('.js-devtools-force-ab').each(label => {
         bean.on(label, 'click', () => {
@@ -27,13 +39,18 @@ function bindEvents() {
             storage.local.set('gu.devtools.ab', JSON.stringify(abTests));
         });
     });
-}
 
-function selectRadios() {
-    const abTests = getSelectedAbTests();
+    bean.on($('.js-devtools-clear-ab')[0], 'click', () => {
+        storage.local.set('gu.devtools.ab', JSON.stringify([]));
+        selectRadios();
+    });
 
-    abTests.forEach((test) => {
-       $(`#${test.id}-${test.variant}`).attr('checked', true);
+    bean.on($('.js-devtools-reload')[0], 'click', () => {
+        window.location.reload();
+    });
+
+    bean.on($('.js-devtools-hide')[0], 'click', () => {
+        $('.devtools').addClass('devtools--hidden');
     });
 }
 

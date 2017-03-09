@@ -10,6 +10,11 @@
     padding: 6px;
     overflow: auto;
     max-height: 100vh;
+    max-width: 100vw;
+}
+
+.devtools--hidden {
+    left: -100vw;
 }
 
 .devtools__test {
