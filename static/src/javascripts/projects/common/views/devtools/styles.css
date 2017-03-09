@@ -1,10 +1,38 @@
+.devtools, .devtools * {
+    box-sizing: border-box;
+}
+
 .devtools {
-    background-color: #cccccc;
+    background-color: #f6f6f6;
     position: fixed;
     top: 0;
     z-index: 10000;
+    padding: 6px;
+    overflow: auto;
+    max-height: 100vh;
+}
+
+.devtools__test {
+    font-weight: 700;
+    margin-top: 12px;
 }
 
 .devtools ul {
     list-style: none;
+    margin: 0;
+}
+
+.devtools input[type=radio] {
+    display: none;
+}
+
+.devtools label {
+    display: block;
+    width: 100%;
+    border-radius: 6px;
+    padding: 6px;
+}
+
+.devtools input[type=radio]:checked + label {
+    background-color: #cccccc;
 }

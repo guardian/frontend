@@ -1,13 +1,13 @@
 <div class="devtools">
-    Welcome to devtools
     <ul>
         <% tests.forEach(function(test) { %>
             <li>
-                <div>
+                <div class="devtools__test">
                     <%= test.id %>
                 </div>
                 <% test.variants.forEach(function(variant) { %>
-                    <div>
+                    <div class="devtools__variant">
+                        <input type="radio" id="<%=test.id%>-<%=variant.id%>" name="<%= test.id %>">
                         <label
                             data-ab-test="<%= test.id %>"
                             data-ab-variant="<%= variant.id %>"
@@ -16,7 +16,6 @@
                         >
                             <%= variant.id %>
                         </label>
-                        <input type="radio" id="<%=test.id%>-<%=variant.id%>" name="<%= test.id %>">
                     </div>
                 <% }); %>
             </li>
