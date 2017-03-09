@@ -210,7 +210,6 @@ define([
         }
 
         function handleSurveyResponse(surveyId) {
-            console.log("surveyId " + surveyId);
             var surveyQuestions = document.getElementsByClassName('fi-survey__button');
 
             forEach(surveyQuestions, function (question) {
@@ -233,7 +232,6 @@ define([
 
         function recordOphanAbEvent(answer, surveyId) {
             var componentId = 'data_tailor_survey_' + surveyId;
-            console.log("componentId: " + componentId);
             ophan.record({
                 component: componentId,
                 value: answer
