@@ -332,11 +332,12 @@ define([
 
     function getForcedIntoTests() {
         var tokens;
+        var devtoolsAbTests = JSON.parse(store.local.get('gu.devtools.ab')) || [];
 
         if (/^#ab/.test(window.location.hash)) {
             tokens = window.location.hash.replace('#ab-', '').split(',');
 
-            return tokens.map(function(token) {
+            return tokens.map(function (token) {
                 var abParam = token.split('=');
 
                 return {
@@ -346,9 +347,8 @@ define([
             });
         }
 
-        return [];
+        return devtoolsAbTests;
     }
-
     var ab = {
 
         addTest: function (test) {

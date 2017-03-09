@@ -8,7 +8,13 @@
                 </div>
                 <% test.variants.forEach(function(variant) { %>
                     <div>
-                        <%= variant.id %>
+                        <label
+                            data-ab-test="<%= test.id %>"
+                            data-ab-variant="<%= variant.id %>"
+                            class="js-devtools-force-ab"
+                        >
+                            <%= variant.id %>
+                        </label>
                     </div>
                 <% }); %>
             </li>
