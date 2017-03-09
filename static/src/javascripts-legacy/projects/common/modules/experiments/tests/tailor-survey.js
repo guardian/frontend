@@ -14,7 +14,8 @@ define([
     'lib/fetch-json',
     'lodash/collections/forEach',
     'ophan/ng',
-    'lodash/utilities/template'
+    'lodash/utilities/template',
+    'common/modules/article/space-filler'
 ], function (
     bean,
     bonzo,
@@ -31,7 +32,8 @@ define([
     fetchJson,
     forEach,
     ophan,
-    template
+    template,
+    spaceFiller
 ) {
     return function () {
         this.id = 'TailorSurvey';
@@ -134,6 +136,41 @@ define([
             };
         }
 
+        function getSpacefinderRules() {
+            return {
+                bodySelector: '.js-article__body',
+                slotSelector: ' > p',
+                minAbove: 0,
+                minBelow: 0,
+                clearContentMeta: 50,
+                selectors: {
+                    ' .element-rich-link': {minAbove: 0, minBelow: 0},
+                    ' .player': {minAbove: 0, minBelow: 0},
+                    ' > h2': {minAbove: 0, minBelow: 0},
+                    ' > *:not(p):not(h2):not(blockquote)': {minAbove: 0, minBelow: 0},
+                    ' .ad-slot': {minAbove: 0, minBelow: 0}
+                }
+            };
+        }
+
+        var inArticleWriter = function (component) {
+
+            console.log("writing");
+
+            return spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
+                console.log("inserting");
+                component.insertBefore(paras[0]);
+                console.log("inserted");
+                embed.init();
+                console.log("finished init");
+                mediator.emit('data-tailor-survey:insert', component);
+                console.log("finished inserting");
+
+                return 1;
+            });
+
+        };
+
         function renderQuickSurvey() {
 
             var bwid = cookies.get('bwid');
@@ -158,17 +195,31 @@ define([
 
                         mediator.emit('register:begin', componentName);
 
+                        var survey = bonzo.create(template(tailorSurvey, json));
+
+                        // var component = bonzo.create(template(contributionsEmbed, {
+                        //     position : 'supporting',
+                        //     linkHref : 'https://interactive.guim.co.uk/contributions-embeds/embed/embed.html',
+                        //     variant : 'in-article',
+                        //     intCMP : 'co_uk_cobedpos_like_article'
+                        //
+                        // }));
+                        //
+                        return inArticleWriter(survey);
+
+                        // return surveySuggestionToShow.data.survey.surveyId;
+
                         // renders the survey, and returns the survey ID
 
-                        return fastdomPromise.write(function () {
-                            var article = document.getElementsByClassName('content__article-body')[0];
-                            var insertionPoint = article.getElementsByTagName('p')[1];
-                            var survey = bonzo.create(template(tailorSurvey, json));
-                            bonzo(survey).insertBefore(insertionPoint);
-                            mediator.emit('register:end', componentName);
-
-                            return surveySuggestionToShow.data.survey.surveyId;
-                        });
+                        // return fastdomPromise.write(function () {
+                        //     var article = document.getElementsByClassName('content__article-body')[0];
+                        //     var insertionPoint = article.getElementsByTagName('p')[1];
+                        //
+                        //     bonzo(survey).insertBefore(insertionPoint);
+                        //     mediator.emit('register:end', componentName);
+                        //
+                        //     return surveySuggestionToShow.data.survey.surveyId;
+                        // });
                     }
                 });
             }
@@ -214,7 +265,7 @@ define([
 
         function recordOphanAbEvent(answer, surveyId) {
             ophan.record({
-                component: 'tailor-survey-' + surveyId,
+                component: 'data_tailor_survey_' + surveyId,
                 value: answer
             });
         }
