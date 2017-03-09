@@ -60,35 +60,37 @@
     .advert > :last-child {
         margin-bottom: 0;
     }
+}
 
-    .paidfor-container {
-        @include mq($until: tablet) {
+.paidfor-container {
+    margin: 0 $gs-gutter / 2;
 
-            .advert__standfirst {
-                min-height: $gs-row-height;
-            }
+    @include mq($until: tablet) {
 
-            &:first-child > .advert {
-                padding-bottom: $gs-baseline / 2;
-            }
+        .advert__standfirst {
+            min-height: $gs-row-height;
+        }
 
-            &:first-child .advert__title,
-            &:first-child .advert__standfirst {
-                padding-right: 80px;
-                max-width: 520px;
-            }
+        &:first-child > .advert {
+            padding-bottom: $gs-baseline / 2;
+        }
 
-            &:not(:first-child) > .advert {
-                padding-right: 80px;
-                padding-bottom: 0;
-                min-height: 80px;
-            }
+        &:first-child .advert__title,
+        &:first-child .advert__standfirst {
+            padding-right: 80px;
+            max-width: 520px;
+        }
 
-            .badge {
-                display: flex;
-                flex-direction: column;
-                width: 60px;
-            }
+        &:not(:first-child) > .advert {
+            padding-right: 80px;
+            padding-bottom: 0;
+            min-height: 80px;
+        }
+
+        .badge {
+            display: flex;
+            flex-direction: column;
+            width: 60px;
         }
     }
 }
@@ -120,6 +122,7 @@
 
 .adverts--tone-paidfor {
     background-color: $neutral-6;
+    position: relative;
 
     .adverts__header {
         background: $paidfor-background;
@@ -242,19 +245,20 @@
     .advert__title,
     .advert__meta,
     .advert__standfirst {
-        padding-left: $gs-gutter / 4;
-        padding-right: $gs-gutter / 4;
+        padding: 0 ($gs-gutter / 4) 0;
     }
 
-    > .advert__meta {
+    .advert__meta {
         margin-top: auto;
         margin-bottom: $gs-baseline / 4;
     }
 
     .advert__title {
-        margin-bottom: .5em;
+      @include f-headlineSans;
+      font-weight: 400;
+      margin-bottom: .5em;
 
-        > .inline-icon svg {
+        .inline-icon {
             width: 1.1em;
             height: .75em;
             margin-right: .3em;
@@ -312,9 +316,6 @@
     }
 
     .advert__title {
-        @include f-headlineSans;
-        font-weight: 400;
-
         .inline-icon {
             fill: $paid-article-icon;
         }
