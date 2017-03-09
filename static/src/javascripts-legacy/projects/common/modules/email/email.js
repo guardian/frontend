@@ -10,7 +10,7 @@ define([
     'lib/detect',
     'lib/fetch',
     'lib/mediator',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/robust',
     'common/modules/analytics/google',
     'lodash/collections/contains',
@@ -117,16 +117,14 @@ define([
                 });
 
                 fastdom.write(function () {
-                    if (formTitle) {
-                        $('.js-email-sub__heading', el).text(formTitle);
-                    }
-
                     if (formDisplayNameNormalText) {
                         $('.js-email-sub__display-name-normal-text', el).text(formDisplayNameNormalText);
-                    }
 
-                    if (formDisplayNameAccentedText) {
-                        $('.js-email-sub__display-name-accented-text', el).text(formDisplayNameAccentedText);
+                        if (formDisplayNameAccentedText) {
+                            $('.js-email-sub__display-name-accented-text', el).text(formDisplayNameAccentedText);
+                        }
+                    } else if (formTitle) {
+                        $('.js-email-sub__heading', el).text(formTitle);
                     }
 
                     if (formDescription) {

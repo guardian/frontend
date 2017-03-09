@@ -4,7 +4,7 @@ define([
     'lib/$',
     'lib/detect',
     'lib/mediator',
-    'lib/template',
+    'lodash/utilities/template',
     'raw-loader!commercial/views/creatives/scrollable-mpu-v2.html',
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker'

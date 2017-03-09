@@ -4,14 +4,14 @@ define([
     'lib/$',
     'lib/config',
     'lib/detect',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/steady-page',
     'commercial/modules/dfp/track-ad-render',
     'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/outbrain-codes',
     'raw-loader!commercial/views/outbrain.html',
     'lib/load-script',
-    'lib/check-mediator',
+    'common/modules/check-mediator',
     'ophan/ng'
 ], function (
     Promise,

@@ -1,3 +1,48 @@
+$mobile-max-container-width: gs-span(8);
+@include mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
+
+.ad-slot--frame {
+    width: auto;
+    border-top: #fedd79 1px solid;
+
+    @include mq(containerWidestMobile) {
+        margin-left: auto;
+        margin-right: auto;
+        width: 275px;
+    }
+
+    @include mq(tablet) {
+        width: auto;
+        margin-right: $gs-gutter / 2;
+        margin-left: $gs-gutter / 2;
+    }
+
+    @include mq(desktop) {
+        max-width: 300px;
+        margin-left: $gs-gutter / 2;
+        margin-right: $gs-gutter / 2;
+    }
+
+    // Article styles: Right slot width is exactly the size of the banner so we don't want any margin
+    &.ad-slot--right {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    // Gallery & Liveblog sections styles
+    &.ad-slot--liveblog-inline {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    &.ad-slot--gallery-inline {
+        margin-left: 0;
+    }
+}
+
 .frame {
     position: relative;
 }
@@ -136,7 +181,7 @@
 
     .frame__content--middle {
         top: 50%;
-        transform: translate(0, -50%);
+        transform: translate(0,50%);
     }
 
     .frame__content--left {
@@ -153,6 +198,6 @@
     }
 
     .frame__content--middle.frame__content--center {
-        transform: translate(-50%, -50%);
+        transform: translate(-50%,50%);
     }
 }

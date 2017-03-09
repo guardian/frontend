@@ -10,7 +10,7 @@ define([
     'lib/cookies',
     'lib/detect',
     'lib/mediator',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/url',
     'lib/robust',
     'lib/storage',
@@ -30,7 +30,6 @@ define([
     'common/modules/navigation/search',
     'common/modules/navigation/membership',
     'common/modules/onward/history',
-    'common/modules/onward/more-tags',
     'common/modules/onward/tech-feedback',
     'common/modules/ui/accessibility-prefs',
     'common/modules/ui/clickstream',
@@ -83,7 +82,6 @@ define([
     Search,
     membership,
     history,
-    MoreTags,
     techFeedback,
     accessibilityPrefs,
     Clickstream,
@@ -234,10 +232,6 @@ define([
                 register.initialise();
             },
 
-            showMoreTagsLink: function () {
-                new MoreTags().init();
-            },
-
             initDiscussion: function () {
                 if (config.switches.discussion) {
                     CommentCount.init();
@@ -360,7 +354,6 @@ define([
                 ['c-history-nav', modules.showHistoryInMegaNav],
                 ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
-                ['c-tag-links', modules.showMoreTagsLink],
                 ['c-smart-banner', customSmartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
                 ['c-cookies', modules.cleanupCookies],

@@ -195,8 +195,8 @@ object Commercial {
       cardLink(cardContent, adClasses, sizeClass = Some("advert--large"), useCardBranding)
     }
 
-    def advertContainer(otherClasses: Option[Seq[String]]): String =
-      "advert-container " + otherClasses.map(_.mkString(" ")).getOrElse("")
+    def paidForContainer(otherClasses: Option[Seq[String]]): String =
+      "paidfor-container " + otherClasses.map(_.mkString(" ")).getOrElse("")
   }
 
   object TrackingCodeBuilder extends implicits.Requests {

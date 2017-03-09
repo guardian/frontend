@@ -1,0 +1,110 @@
+@(
+    page: model.Page,
+    idRequest: services.IdentityRequest,
+    idUrlBuilder: services.IdentityUrlBuilder,
+    accountDeletionForm: Form[(String)],
+    errors: List[client.Error]
+)(implicit
+    request: RequestHeader,
+    messages: play.api.i18n.Messages,
+    context: model.ApplicationContext)
+
+@import form.IdFormHelpers._
+@import views.html.fragments.form.inputField
+@import views.html.fragments.registrationFooter
+@import client.Error
+@import form.Input
+
+@main(page, projectName = Option("identity")){
+}{
+    <div class="identity-wrapper monocolumn-wrapper">
+        <h1 class="identity-title">Are you sure you want to delete your account?</h1>
+
+        <div class="identity-section">
+            <p class="identity-section__text">
+                Please read the following paragraphs carefully to understand how account
+                deletion affects any Guardian products you may have. If at any point require further clarification please
+                email our <a href="mailto:userhelp@@theguardian.com" data-link-name="Email Userhelp">Userhelp</a> who will
+                be happy to help.
+            </p>
+        </div>
+
+        <div class="identity-section">
+            <h4><a href="https://www.theguardian.com/community-faqs">Comments</a></h4>
+            <p class="identity-section__text">
+                Deleting your account will anonymise the username under which you posted your coments, however it will not
+                automatically delete all your comments. If you wish for your comments to be deleted please contact the
+                <a href="mailto:moderation@@theguardian.com">Moderation Team</a>.
+            </p>
+
+            <h4><a href="https://membership.theguardian.com/help">Membership</a></h4>
+            <p class="identity-section__text">
+                Deleting your account does not cancel paid Membership. If you would like to cancel your membership
+                please <a href="https://membership.theguardian.com/tier/cancel">click here.</a>
+            </p>
+
+            <h4><a href="https://www.theguardian.com/subscriber-direct/subscription-frequently-asked-questions">Digital/Paper Subscriptions</a></h4>
+            <p class="identity-section__text">
+                Deleting your account does not cancel paid Subscriptions. If you would like to cancel your subscription,
+                please email the <a href="mailto:subscriptions@@theguardian.com">Subscriptions Team.</a>
+            </p>
+
+            <h4><a href="https://www.theguardian.com/info/2013/aug/12/1">Guardian in-app purchases via App Stores</a></h4>
+            <p class="identity-section__text">
+                Deleting your account does not cancel Guardian in-app purchases made through Google, Apple or Amazon
+                app stores. For further queries please contact respective App Store.
+            </p>
+
+            <h4><a href="https://jobs.theguardian.com/article/faq">Guardian Jobs</a></h4>
+            <p class="identity-section__text">
+                Deleting your account does not delete your Jobs account. If you would like to delete your Jobs account,
+                please <a href="https://jobs.theguardian.com/deletemyaccount">click here.</a>
+            </p>
+
+            <h4><a href="https://witness.theguardian.com/faq">Guardian Witness</a></h4>
+            <p class="identity-section__text">
+                Deleting your account will not delete your Witness contributions. If you would like to delete your
+                contributions please email the <a href="mailto:witness@@theguardian.com">Witness Team.</a>
+            </p>
+
+            <h4><a href="https://www.theguardian.com/help/problems-with-your-email-subscriptions">Email Subscriptions</a></h4>
+            <p class="identity-section__text">
+                Deleting your account will unsubscribe you from all mailing lists.
+            </p>
+
+            <h4><a href="https://www.theguardian.com/help/insideguardian/2015/jul/21/introducing-save-for-later">Saved for Later Articles</a></h4>
+            <p class="identity-section__text">
+                Deleting your account will delete your Saved Articles links.
+            </p>
+        </div>
+
+        <form class="form" novalidate action="@idUrlBuilder.buildUrl("/delete", idRequest)" role="main" method="post">
+            @views.html.helper.CSRF.formField
+            <fieldset class="fieldset">
+
+                <div class="fieldset__heading">
+                    <h2 class="form__heading">Confirm account deletion</h2>
+                    <div class="form__note">Please re-enter password to confirm the you have understood the conditions and would like to proceed with account deletion.</div>
+                </div>
+
+                <div class="fieldset__fields">
+                    <ul class="u-unstyled">
+
+                        @inputField(Password(accountDeletionForm("password"), '_label -> "Password", 'autofocus -> true, 'class -> "js-register-password js-password-strength",
+                            (Symbol("data-test-id"), "account-deletion-password"), 'required -> true))
+
+                        <li>
+                            <button type="submit" class="submit-input delete-input-warn" data-link-name="Delete Account" data-test-id="delete-account">Delete your account</button>
+                        </li>
+                    </ul>
+                </div>
+            </fieldset>
+        </form>
+
+        @if(accountDeletionForm.globalError.isDefined) {
+            <div class="form__error">@accountDeletionForm.globalErrors.map(_.message).mkString(", ")</div>
+        }
+
+        @registrationFooter(idRequest, idUrlBuilder)
+    </div>
+}

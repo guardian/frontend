@@ -1,7 +1,7 @@
 define([
     'fastdom',
     'lib/$',
-    'lib/template',
+    'lodash/utilities/template',
     'raw-loader!common/views/commercial/adblock-sticky-message.html',
     'raw-loader!common/views/commercial/adblock-sticky-message-coin.html'
 ], function (
