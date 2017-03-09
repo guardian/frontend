@@ -330,6 +330,25 @@ define([
         };
     }
 
+    function getForcedIntoTests() {
+        var tokens;
+
+        if (/^#ab/.test(window.location.hash)) {
+            tokens = window.location.hash.replace('#ab-', '').split(',');
+
+            return tokens.map(function(token) {
+                var abParam = token.split('=');
+
+                return {
+                    id: abParam[0],
+                    variant: abParam[1]
+                };
+            });
+        }
+
+        return [];
+    }
+
     var ab = {
 
         addTest: function (test) {
@@ -369,17 +388,12 @@ define([
         },
 
         segmentUser: function () {
-            var tokens,
-                forceUserIntoTest = /^#ab/.test(window.location.hash);
-            if (forceUserIntoTest) {
-                tokens = window.location.hash.replace('#ab-', '').split(',');
-                tokens.forEach(function (token) {
-                    var abParam, test, variant;
-                    abParam = token.split('=');
-                    test = abParam[0];
-                    variant = abParam[1];
-                    ab.forceSegment(test, variant);
-                    ab.forceVariantCompleteFunctions(test, variant);
+            var forcedIntoTests = getForcedIntoTests();
+
+            if (forcedIntoTests.length) {
+                forcedIntoTests.forEach(function (test) {
+                    ab.forceSegment(test.id, test.variant);
+                    ab.forceVariantCompleteFunctions(test.id, test.variant);
                 });
             } else {
                 ab.segment();
