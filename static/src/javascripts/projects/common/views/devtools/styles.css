@@ -19,6 +19,16 @@
     left: -90vw;
 }
 
+@media (min-width: 768px) {
+    .devtools {
+        width: 500px;
+    }
+
+    .devtools--hidden {
+        left: -440px;
+    }
+}
+
 .devtools__test {
     font-weight: 700;
     margin-top: 12px;

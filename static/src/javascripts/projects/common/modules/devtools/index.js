@@ -50,6 +50,13 @@ function bindEvents() {
     });
 
     bean.on($('.js-devtools-toggle')[0], 'click', () => {
+        const toggleButton = $('.js-devtools-toggle');
+
+        if (toggleButton.text() === 'X') {
+            toggleButton.text('>');
+        } else {
+            toggleButton.text('X');
+        }
         $('.devtools').toggleClass('devtools--hidden');
     });
 }
