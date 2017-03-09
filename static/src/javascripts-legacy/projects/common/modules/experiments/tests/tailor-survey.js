@@ -134,38 +134,22 @@ define([
             };
         }
 
-        // Rules to use when finding a space for the survey -  copied from default spacefinder rules
+        // Rules to use when finding a space for the survey
         function getSpacefinderRules() {
-            return { // these are written for adverts
+            return {
                 bodySelector: '.js-article__body',
                 slotSelector: ' > p',
-                absoluteMinAbove: 0, // minimum from slot to top of page
-                minAbove: 250, // minimum from para to top of article
-                minBelow: 300, // minimum from (top of) para to bottom of article
-                clearContentMeta: 50, // vertical px to clear the content meta element (byline etc) by. 0 to ignore
-                selectors: { // custom rules using selectors. format:
-                    //'.selector': {
-                    //   minAbove: <min px above para to bottom of els matching selector>,
-                    //   minBelow: <min px below (top of) para to top of els matching selector> }
-                    ' > h2': {minAbove: 0, minBelow: 250}, // hug h2s
-                    ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250} // require spacing for all other elements
-                },
-
-                // filter:(slot:Element, index:Integer, slots:Collection<Element>) -> Boolean
-                // will run each slot through this fn to check if it must be counted in
-                filter: null,
-
-                // startAt:Element
-                // will remove slots before this one
-                startAt: null,
-
-                // stopAt:Element
-                // will remove slots from this one on
-                stopAt: null,
-
-                // fromBotton:Boolean
-                // will reverse the order of slots (this is useful for lazy loaded content)
-                fromBottom: false
+                minAbove: 0,
+                minBelow: 0,
+                clearContentMeta: 50,
+                selectors: {
+                    ' .element-rich-link': {minAbove: 250, minBelow: 250},
+                    ' .player': {minAbove: 0, minBelow: 0},
+                    ' > h1': {minAbove: 0, minBelow: 0},
+                    ' > h2': {minAbove: 0, minBelow: 0},
+                    ' > *:not(p):not(h2):not(blockquote)': {minAbove: 0, minBelow: 0},
+                    ' .ad-slot': {minAbove: 0, minBelow: 0}
+                }
             };
         }
 
