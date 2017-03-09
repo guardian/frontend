@@ -190,11 +190,11 @@ define([
             }
         });
 
-        // if (window.location.hash.substr('devtools')) {
+        if (window.location.hash.includes('devtools')) {
             require.ensure([], function(require) {
                 bootstrapContext('devtools', require('bootstraps/enhanced/devtools'));
             }, 'devtools');
-        // }
+        }
 
         // initialise email/outbrain check dispatcher
         bootstrapContext('checkDispatcher', checkDispatcher);
