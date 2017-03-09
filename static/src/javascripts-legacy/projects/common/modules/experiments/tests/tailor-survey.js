@@ -143,8 +143,9 @@ define([
                 minBelow: 0,
                 clearContentMeta: 50,
                 selectors: {
-                    ' .element-rich-link': {minAbove: 0, minBelow: 0},
+                    ' .element-rich-link': {minAbove: 10, minBelow: 10},
                     ' .player': {minAbove: 0, minBelow: 0},
+                    ' > h1': {minAbove: 0, minBelow: 0},
                     ' > h2': {minAbove: 0, minBelow: 0},
                     ' > *:not(p):not(h2):not(blockquote)': {minAbove: 0, minBelow: 0},
                     ' .ad-slot': {minAbove: 0, minBelow: 0}
