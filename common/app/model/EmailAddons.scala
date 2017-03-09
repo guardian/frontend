@@ -139,6 +139,18 @@ case object TheWeekInPatriarchy extends ArticleEmailMetadata {
   def test(c: ContentPage) = c.item.tags.series.exists(_.id == "world/series/the-week-in-patriarchy")
 }
 
+case object OutsideInAmerica extends ArticleEmailMetadata {
+  val name = "Outside in America"
+  override val banner = Some("outside-in-america.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "us-news/series/outside-in-america-newsletter")
+}
+
+case object TheResistanceNow extends ArticleEmailMetadata {
+  val name = "The Resistance Now"
+  override val banner = Some("the-resistance-now.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "us-news/series/the-resistance-now-newsletter")
+}
+
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
   override val banner = Some("the-flyer.png")
@@ -161,19 +173,6 @@ case object SleeveNotes extends FrontEmailMetadata {
   override val banner = Some("sleeve-notes.png")
   override val toneColour = Some("#ffbb00")
 }
-
-case object OutsideInAmerica extends FrontEmailMetadata {
-  val name = "Outside in America"
-  override val banner = Some("outside-in-america.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "us-news/series/outside-in-america-newsletter")
-}
-
-case object TheResistanceNow extends FrontEmailMetadata {
-  val name = "The Resistance Now"
-  override val banner = Some("the-resistance-now.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "us-news/series/the-resistance-now-newsletter")
-}
-
 
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
