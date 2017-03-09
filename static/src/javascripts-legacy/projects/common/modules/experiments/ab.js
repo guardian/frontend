@@ -331,8 +331,8 @@ define([
     }
 
     function getForcedIntoTests() {
-        var tokens;
         var devtoolsAbTests = JSON.parse(store.local.get('gu.devtools.ab')) || [];
+        var tokens;
 
         if (/^#ab/.test(window.location.hash)) {
             tokens = window.location.hash.replace('#ab-', '').split(',');
