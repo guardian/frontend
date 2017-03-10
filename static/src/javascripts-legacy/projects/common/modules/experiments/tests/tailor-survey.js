@@ -135,8 +135,8 @@ define([
         }
 
         // Rules to use when finding a space for the survey
-        function getSpacefinderRules() {
-            return {
+        var spacefinderRules =
+             {
                 bodySelector: '.js-article__body',
                 slotSelector: ' > p',
                 minAbove: 0,
@@ -151,11 +151,11 @@ define([
                     ' .ad-slot': {minAbove: 0, minBelow: 0}
                 }
             };
-        }
+
 
         // we can write a survey into a spare space using spaceFiller
         var inArticleWriter = function (survey, surveyId) {
-            return spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
+            return spaceFiller.fillSpace(spacefinderRules, function (paras) {
                 var componentName = 'data_tailor_survey_' + surveyId;
                 mediator.emit('register:begin', componentName);
                 bonzo(survey).insertBefore(paras[0]);
