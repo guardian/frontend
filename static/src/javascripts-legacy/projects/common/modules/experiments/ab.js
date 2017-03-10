@@ -18,6 +18,7 @@ define([
     'common/modules/experiments/tests/tailor-survey',
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
+    'common/modules/experiments/tests/increase-inline-ads',
     'ophan/ng'
 ], function (reportError,
              config,
@@ -38,6 +39,7 @@ define([
              TailorSurvey,
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
+             IncreaseInlineAds,
              ophan
     ) {
     var TESTS = compact([
@@ -50,7 +52,8 @@ define([
         new MembershipA3A4BundlesThrasher(),
         new TailorSurvey(),
         SleevenotesNewEmailVariant,
-        SleevenotesLegacyEmailVariant
+        SleevenotesLegacyEmailVariant,
+        new IncreaseInlineAds()
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';
