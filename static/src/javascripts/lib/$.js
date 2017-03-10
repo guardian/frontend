@@ -15,6 +15,7 @@ function $(selector: string, context: ?Element | ?string): bonzo {
 
 $.create = (s: string): bonzo => bonzo(bonzo.create(s));
 
+// #? duplicated in lib/closest.js?
 $.ancestor = (el: Node | null, className: string) => {
     if (el === null || el.nodeName.toLowerCase() === 'html') {
         return false;
@@ -25,6 +26,7 @@ $.ancestor = (el: Node | null, className: string) => {
     return $.ancestor(el.parentNode, className);
 };
 
+// #? does this offer any value?
 $.forEachElement = (selector: string, fn: Function): Array<Element> => {
     const els = qwery(selector);
     els.forEach(fn);
