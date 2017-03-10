@@ -149,4 +149,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-paid-commenting-internal",
+    "Paid commenting test",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 30),
+    exposeClientSide = true
+  )
 }

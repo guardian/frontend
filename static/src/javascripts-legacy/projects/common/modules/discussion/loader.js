@@ -338,11 +338,14 @@ Loader.prototype.commentPosted = function () {
 };
 
 Loader.prototype.renderCommentBox = function(elem) {
+    var testVariant = ab.getTestVariantId('PaidCommentingInternal');
+    var isPaidCommenting = (testVariant && testVariant !== 'notintest') || false;
     return new CommentBox({
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated,
         newCommenter: !this.user.privateFields.hasCommented,
-        shouldRenderMainAvatar: false
+        shouldRenderMainAvatar: false,
+        paymentRequired: isPaidCommenting
     }).render(elem).on('post:success', this.commentPosted.bind(this));
 };
 
