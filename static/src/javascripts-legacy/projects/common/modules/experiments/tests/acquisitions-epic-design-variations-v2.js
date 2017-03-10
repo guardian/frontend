@@ -69,14 +69,14 @@ define([
     // =================
 
     return contributionUtilities.makeABTest({
-        id: 'AcquisitionsEpicDesignVariations',
-        campaignId: 'kr1_epic_design_variations',
+        id: 'AcquisitionsEpicDesignVariationsV2',
+        campaignId: 'kr1_epic_design_variations_v2',
 
-        start: '2017-03-07',
-        expiry: '2017-03-17',
+        start: '2017-03-10',
+        expiry: '2017-03-24',
 
-        author: 'Guy Dawson',
-        description: 'Test 5 new design variants to the Epic',
+        author: 'Jonathan Rankin',
+        description: 'Test a combination of the 2 best variants from the last design test',
         successMeasure: 'Conversion rate',
         idealOutcome: 'Find a variant which has a higher conversion rate than the control',
 
@@ -85,31 +85,18 @@ define([
         audienceOffset: 0.5,
 
         variants: [
-            buildVariant('control'),
-
-            buildVariant('extra_paragraph', {
-                p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism open to all. So you can see why we need to ask for your help.',
-                p2: 'The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-                p3: 'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.'
+            buildVariant('control', {
+                p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And ',
+                p1Highlight: 'unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism open to all',
+                p1PostHighlight: '. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+                p2: 'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
+                p1HighlightClass: 'contributions__paragraph--highlight'
             }),
 
-            buildVariant('large_hook', {
-                epicTitleClass: 'contributions__title--epic--large'
-            }),
-
-            buildVariant('subtle', {
+            buildVariant('subtle_highlight', {
                 epicClass: 'contributions__epic--subtle',
                 epicTitleClass: 'contributions__title--epic--subtle',
-                p1Class: 'contributions__paragraph--subtle'
-            }),
-
-            buildVariant('prominent', {
-                epicClass: 'contributions__epic--prominent',
-                epicTitleClass: 'contributions__title--epic--large',
-                buttonClass: 'contributions__option--button--prominent'
-            }),
-
-            buildVariant('highlight', {
+                p1Class: 'contributions__paragraph--subtle',
                 p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And ',
                 p1Highlight: 'unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism open to all',
                 p1PostHighlight: '. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
