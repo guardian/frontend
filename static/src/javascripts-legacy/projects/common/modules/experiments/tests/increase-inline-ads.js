@@ -4,8 +4,8 @@ define([
 ], function (config, detect) {
     return function () {
         this.id = 'IncreaseInlineAds';
-        this.start = '2017-03-07';
-        this.expiry = '2017-03-22';
+        this.start = '2017-03-10';
+        this.expiry = '2017-03-24';
         this.author = 'Regis Kuckaertz';
         this.description = 'Displays more inline ads in articles on desktop';
         this.audience = .05;
