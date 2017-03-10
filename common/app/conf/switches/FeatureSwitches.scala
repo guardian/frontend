@@ -487,14 +487,15 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+
   // Owner: Joseph Smith
-  val RenderEmailConnectedStyle = Switch(
+  val AmpOphanTrackingIncludesCredentials = Switch(
     SwitchGroup.Feature,
-    "render-email-connected-style",
-    "Allows alternate email styling when passing ?format=email-connected, for testing two email design variants",
-    owners = Seq(Owner.withGithub("joelochlann")),
+    "amp-ophan-tracking-includes-credentials",
+    "allows access to id field when page viewed from google cache so that we keep tracking consistent",
+    owners = Seq(Owner.withGithub("michaelwmcnamara")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 2),
+    sellByDate = new LocalDate(2017, 3, 15),
     exposeClientSide = true
   )
 

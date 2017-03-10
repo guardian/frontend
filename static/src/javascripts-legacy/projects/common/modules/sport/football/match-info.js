@@ -1,6 +1,6 @@
 define([
-    'common/utils/$',
-    'common/utils/ajax'
+    'lib/$',
+    'lib/ajax'
 ], function (
     $,
     ajax

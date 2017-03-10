@@ -1,7 +1,7 @@
 define([
     'Promise',
     'qwery',
-    'common/utils/sha1',
+    'lib/sha1',
     'common/modules/identity/api',
     'commercial/modules/commercial-features',
     'commercial/modules/dfp/dfp-env',

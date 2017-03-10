@@ -16,7 +16,7 @@ module.exports = {
             ],
             {
                 env: {
-                    BABEL_ENV: 'production',
+                    BABEL_ENV: 'karma',
                 },
             }
         ),

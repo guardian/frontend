@@ -1,6 +1,6 @@
 define([
-    'common/utils/closest',
-    'common/utils/fastdom-promise',
+    'lib/closest',
+    'lib/fastdom-promise',
     'commercial/modules/messenger'
 ], function (closest, fastdom, messenger) {
     messenger.register('type', function(specs, ret, iframe) {

@@ -1,6 +1,6 @@
 define([
-    'common/utils/$',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/mediator',
     'helpers/fixtures',
     'Promise',
     'fastdom',
@@ -30,7 +30,7 @@ define([
 
         beforeEach(function (done) {
             injector.mock('common/modules/analytics/interaction-tracking', interactionTracking);
-            injector.mock('common/utils/load-css-promise', Promise.resolve());
+            injector.mock('lib/load-css-promise', Promise.resolve());
             injector.mock('commercial/modules/dfp/performance-logging', {moduleStart: noop, moduleEnd: noop});
 
             injector.require([

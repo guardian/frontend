@@ -1,5 +1,28 @@
 .advert--branded {
-    padding-bottom: 80px;
+    padding-bottom: $gs-baseline * 8;
+}
+
+// general BASIC styles for all the branded badges
+.paidfor-container {
+    .badge--branded {
+        padding-right: 0;
+        max-width: 100%;
+    }
+
+    .badge__link {
+        /* [1] Prevents IE11 bug where the height would go ballooney */
+        height: 100%;
+    }
+
+    .badge__label {
+        text-align: center;
+        width: 100%;
+    }
+
+    .badge__logo {
+        max-width: 100%;
+        margin-left: 0;
+    }
 }
 
 .adverts--capi {
@@ -38,8 +61,13 @@
         margin-bottom: 0;
     }
 
-    .advert-container {
+    .paidfor-container {
         @include mq($until: tablet) {
+
+            .advert__standfirst {
+                min-height: $gs-row-height;
+            }
+
             &:first-child > .advert {
                 padding-bottom: $gs-baseline / 2;
             }
@@ -56,14 +84,10 @@
                 min-height: 80px;
             }
 
-            > .badge {
+            .badge {
                 display: flex;
                 flex-direction: column;
                 width: 60px;
-            }
-
-            .badge__logo {
-                max-width: 100%;
             }
         }
     }
@@ -97,8 +121,12 @@
 .adverts--tone-paidfor {
     background-color: $neutral-6;
 
-    > .adverts__header {
+    .adverts__header {
         background: $paidfor-background;
+    }
+
+    .inline-icon {
+      fill: $paid-article-brand;
     }
 
     .adverts__title {
@@ -276,6 +304,7 @@
     @include f-textSans;
     background: $paid-article-card-bg;
     border-top-color: $paid-article-brand;
+    width: 100%;
 
     &:hover,
     &:focus {
@@ -286,7 +315,7 @@
         @include f-headlineSans;
         font-weight: 400;
 
-        > .inline-icon svg {
+        .inline-icon {
             fill: $paid-article-icon;
         }
     }

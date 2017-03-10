@@ -1,8 +1,8 @@
 define([
     'bonzo',
     'bean',
-    'common/utils/$',
-    'common/utils/url',
+    'lib/$',
+    'lib/url',
     'common/modules/component',
     'common/modules/discussion/api'
 ], function (

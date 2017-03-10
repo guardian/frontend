@@ -1,9 +1,9 @@
 define([
     'fastdom',
-    'common/utils/$',
-    'common/utils/ajax',
-    'common/utils/config',
-    'common/utils/detect',
+    'lib/$',
+    'lib/ajax',
+    'lib/config',
+    'lib/detect',
     'common/modules/article/space-filler'
 ], function (
     fastdom,

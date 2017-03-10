@@ -3,10 +3,10 @@ define([
     'common/modules/atoms/youtube-player',
     'common/modules/atoms/youtube-tracking',
     'common/modules/component',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/closest',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
+    'lib/closest',
     'lodash/functions/debounce'
 ], function (
     fastdom,

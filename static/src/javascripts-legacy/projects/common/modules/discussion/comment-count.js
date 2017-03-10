@@ -2,11 +2,11 @@ define([
     'bonzo',
     'fastdom',
     'qwery',
-    'common/utils/$',
-    'common/utils/ajax',
-    'common/utils/formatters',
-    'common/utils/mediator',
-    'common/utils/template',
+    'lib/$',
+    'lib/ajax',
+    'lib/formatters',
+    'lib/mediator',
+    'lodash/utilities/template',
     'common/views/svgs',
     'raw-loader!common/views/discussion/comment-count.html',
     'raw-loader!common/views/discussion/comment-count--content.html',
@@ -16,7 +16,7 @@ define([
     'lodash/collections/sortBy',
     'lodash/arrays/uniq',
     'lodash/objects/keys',
-    'common/utils/chain'
+    'lib/chain'
 ], function (
     bonzo,
     fastdom,

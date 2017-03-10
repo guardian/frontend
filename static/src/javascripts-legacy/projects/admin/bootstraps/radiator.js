@@ -1,6 +1,6 @@
 /*global google*/
 define([
-    'common/utils/fetch-json',
+    'lib/fetch-json',
     'lodash/collections/groupBy',
     'lodash/arrays/flatten',
     'lodash/collections/pluck',

@@ -26,7 +26,7 @@ define([
 
         var injector = new Injector();
 
-        injector.mock('common/utils/detect', {
+        injector.mock('lib/detect', {
             getViewport: function () {
                 return {
                     width: width,

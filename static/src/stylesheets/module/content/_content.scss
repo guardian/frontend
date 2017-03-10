@@ -96,7 +96,6 @@
     position: absolute;
     top: 0;
     right: 0;
-    height: 100%;
     margin-right: $gs-gutter;
     width: gs-span(4);
     padding-left: $gs-gutter;
@@ -854,7 +853,6 @@
         .meta__numbers .sharecount__heading,
         .meta__numbers .commentcount2__heading,
         .content__dateline,
-        .submeta__head,
         .content__series-label__link {
             color: $neutral-2-contrasted;
         }

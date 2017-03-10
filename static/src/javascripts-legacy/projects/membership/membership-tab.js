@@ -1,8 +1,8 @@
 define([
     'bean',
-    'common/utils/$',
-    'common/utils/ajax',
-    'common/utils/config',
+    'lib/$',
+    'lib/ajax',
+    'lib/config',
     'membership/formatters',
     'membership/stripe'
 ], function (bean, $, ajax, config,  formatters, stripe) {

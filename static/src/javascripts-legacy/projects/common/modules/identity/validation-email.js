@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/mediator',
+    'lib/mediator',
     'common/modules/identity/api'
 ], function (
     bean,

@@ -2,13 +2,13 @@ define([
     'bonzo',
     'qwery',
     'bean',
-    'common/utils/fastdom-promise',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/storage',
-    'common/utils/ajax',
-    'common/utils/template',
-    'common/utils/robust',
+    'lib/fastdom-promise',
+    'lib/$',
+    'lib/config',
+    'lib/storage',
+    'lib/ajax',
+    'lodash/utilities/template',
+    'lib/robust',
     'common/views/svgs',
     'common/modules/user-prefs',
     'common/modules/analytics/google',
@@ -18,7 +18,8 @@ define([
     'lodash/collections/some',
     'lodash/arrays/uniq',
     'lodash/arrays/without',
-    'lodash/objects/isEmpty'
+    'lodash/objects/isEmpty',
+    'ophan/ng'
 ], function (
     bonzo,
     qwery,
@@ -39,7 +40,8 @@ define([
     some,
     uniq,
     without,
-    isEmpty
+    isEmpty,
+    ophan
 ) {
     var modules = {
 
@@ -70,9 +72,7 @@ define([
 
         trackFollowButtonAttention: function (followElement) {
             if (followElement) {
-                require(['ophan/ng'], function (ophan) {
-                    ophan.trackComponentAttention('web-notifications--follow-button', followElement);
-                });
+                ophan.trackComponentAttention('web-notifications--follow-button', followElement);
             }
         },
 

@@ -1,7 +1,7 @@
 define([
-    'common/utils/config',
-    'common/utils/fetch-json',
-    'common/utils/fastdom-promise',
+    'lib/config',
+    'lib/fetch-json',
+    'lib/fastdom-promise',
     'Promise'
 ], function (config, fetchJson, fastdom, Promise) {
 

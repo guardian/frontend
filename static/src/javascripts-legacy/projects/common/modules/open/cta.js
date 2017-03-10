@@ -1,6 +1,6 @@
 define([
-    'common/utils/$',
-    'common/utils/clamp',
+    'lib/$',
+    'lib/clamp',
     'common/modules/component'
 ], function (
     $,

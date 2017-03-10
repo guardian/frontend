@@ -1,11 +1,11 @@
 define([
     'commercial/modules/commercial-features',
     'common/modules/commercial/contributions-utilities',
-    'common/utils/ajax',
-    'common/utils/config',
-    'common/utils/cookies',
-    'common/utils/storage',
-    'common/utils/template',
+    'lib/ajax',
+    'lib/config',
+    'lib/cookies',
+    'lib/storage',
+    'lodash/utilities/template',
     'raw-loader!common/views/contributions-epic-equal-buttons.html',
 ], function (
             commercialFeatures,
@@ -60,10 +60,10 @@ define([
 
             {
                 id: 'alwaysAsk',
-                template: function (membershipUrl, contributionUrl) {
+                template: function (variant) {
                     return template(contributionsEpicEqualButtons, {
-                        linkUrl1: membershipUrl,
-                        linkUrl2: contributionUrl,
+                        linkUrl1: variant.membershipURL,
+                        linkUrl2: variant.contributeURL,
                         title: 'Since you’re here…',
                         p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
                         p2: 'If everyone who reads our reporting, who likes it, helps to pay for it, our future would be much more secure.',

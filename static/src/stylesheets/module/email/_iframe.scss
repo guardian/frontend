@@ -7,11 +7,11 @@ body {
 * IFRAME MODS
 */
 .email-sub__text-input,
-.email-sub__submit-input {
+.email-sub__submit-button {
     border-radius: 1000px;
 }
 
-.email-sub__submit-input {
+.email-sub__submit-button {
     // Duplicate some required styles so we don't have to include pasteUp buttons in email.css
     border-width: 1px;
     border-style: solid;
@@ -39,42 +39,71 @@ body {
 
 }
 
-.email-sub__form--article {
-    .email-sub__submit-input {
-        padding: 0 calc(#{$gs-gutter} + #{$rounded-adjustment}) 0 $gs-gutter;
-    }
-}
-
 // When we are in an iframe, our widths are based on the iframe so we need to set
 // our media queries explicitly to match what the element width is (hey there, element queries)
 
+@mixin separate-input {
+    border: thin solid;
+    border-radius: 1000px;
+    float: left;
+    width: 70%;
+}
+
+@mixin separate-button {
+    border: thin solid;
+    border-radius: 1000px;
+    width: 25%;
+    margin: 0 0 0 3%;
+}
+
+@mixin separate-input-and-button {
+    .email-sub__text-input {
+        @include separate-input;
+    }
+
+    .email-sub__submit-button {
+        @include separate-button;
+    }
+}
+
+@mixin pill-style-input {
+    border-right: 0;
+    border-radius: 1000px 0 0 1000px;
+    float: left;
+    width: 62%;
+}
+
+@mixin pill-style-button {
+    border-radius: 0 1000px 1000px 0;
+    border-left-width: 0px;
+    float: left;
+    margin-right: 0;
+    width: 38%;
+}
+
+@mixin pill-style-input-and-button {
+    .email-sub__text-input {
+        @include pill-style-input;
+    }
+
+    .email-sub__submit-button {
+        @include pill-style-button;
+    }
+}
+
 @include mq($from: 184px) {
     .email-sub__form--footer,
-    .email-sub__form--article,
     .email-sub__form--plain,
     .email-sub__form--plaindark,
     .email-sub__form--plaintone {
-        // Rounded inline input
-        .email-sub__text-input {
-            border-right: 0;
-            border-radius: 1000px 0 0 1000px;
-            float: left;
-            width: 62%;
-        }
-
-        .email-sub__submit-input {
-            border-radius: 0 1000px 1000px 0;
-            border-left-width: 0px;
-            float: left;
-            margin-right: 0;
-            width: 38%;
-        }
+        @include pill-style-input-and-button;
 
         // Solo submit button - for logged in users where we remove the input
         // because we know the email address already
-        .email-sub__submit-input--solo {
+        .email-sub__submit-button--solo {
             border-radius: 1000px;
             border-left-width: 1px;
+            margin-left: 0;
         }
 
         .email-sub__small--mark {
@@ -83,15 +112,11 @@ body {
         }
     }
 
-    .email-sub--article.email-sub__form--has-mark .email-sub__text-input {
-        margin-bottom: $gs-baseline;
-    }
-
     .email-sub__form--footer,
     .email-sub__form--plain,
     .email-sub__form--plaindark,
     .email-sub__form--plaintone {
-        .email-sub__submit-input {
+        .email-sub__submit-button {
             padding-left: $gs-gutter / 2;
         }
     }
@@ -109,7 +134,7 @@ body {
             border-radius: 1000px;
         }
 
-        .email-sub__submit-input {
+        .email-sub__submit-button {
             margin-right: 0;
             width: 100%;
         }
@@ -119,43 +144,10 @@ body {
 
 // Above Phablet
 @include mq($from: 606px) {
-    .email-sub__form--article {
-        .email-sub__form-wrapper {
-            line-height: 3;
-        }
-
-        .email-sub__inline-label {
-            width: gs-span(4);
-        }
-
-        .email-sub__submit-input {
-            width: auto;
-        }
-
-        .email-sub__small {
-            display: inline-block;
-            margin-left: $gs-gutter;
-            width: gs-span(3);
-        }
-
-        .email-sub__small--is-hidden {
-            display: none;
-        }
-    }
-
     .email-sub--plaintone {
-        .email-sub__text-input {
-            border: thin solid;
-            border-radius: 1000px;
-            float: left;
-            width: 70%;
-        }
-
-        .email-sub__submit-input {
-            border: thin solid;
-            border-radius: 1000px;
-            width: 25%;
-            margin: 0 0 0 3%;
+        @include separate-input-and-button;
+        .email-sub__submit-button--solo {
+            margin-left: 0;
         }
    }
 }
@@ -170,5 +162,119 @@ body {
     .email-sub__label,
     .email-sub__small {
         display: none;
+    }
+}
+
+
+/**
+ * IN-ARTICLE STYLES
+ * These are always inside an iframe, but the iframe is full-width so
+ * we can use media queries designed for the parent.
+ */
+
+@mixin right-padding-to-match-article-content {
+    @include mq(phablet) {
+        padding-right: gs-span(1) + $gs-gutter;
+    }
+
+    @include mq(desktop) {
+        padding-right: gs-span(4) + $gs-gutter;
+    }
+}
+
+.email-sub--article {
+    @include mq($until: tablet) {
+        padding: $gs-gutter / 2;
+    }
+
+    .email-sub__heading {
+        @include fs-header(4);
+        color: #ffffff;
+        padding-right: 40px; // Avoid close icon
+        hyphens: none; // Allow invisible line breaks in "one-word" names, e.g. theguardiantoday
+    }
+
+    .email-sub__description {
+        background-color: transparent;
+        border-top: 0 none;
+        min-height: 20px; // Min-height required to avoid some of the layout thrashing from loading in an iframe
+        padding-bottom: $gs-baseline * 2;
+
+        @include right-padding-to-match-article-content;
+    }
+}
+
+.email-sub__form--article {
+    @include right-padding-to-match-article-content;
+
+    @include pill-style-input-and-button;
+
+    @include mq(phablet) {
+        @include separate-input-and-button;
+    }
+
+    .email-sub__submit-button--solo {
+        @include separate-button;
+        width: 33%;
+        margin-left: 0;
+    }
+
+    .email-sub__text-input {
+        margin-bottom: $gs-baseline;
+        @include mq(mobile) {
+            border: none;
+        }
+    }
+
+    .email-sub__submit-button {
+        @include mq(mobile) {
+            border: none;
+        }
+    }
+}
+
+@each $tone-class, $tone-colour-title, $tone-colour-accent, $tone-colour-text, $tone-colour-button-text, $tone-colour-background in $article-tones {
+    .email-sub--article.email-sub--tone-#{$tone-class} {
+        background-color: $tone-colour-background;
+        border-color: $tone-colour-accent;
+
+        .email-sub__close-icon svg {
+            fill: $tone-colour-accent;
+
+            &:hover,
+            &:focus {
+                cursor: pointer;
+                fill: darken($tone-colour-accent, 10%);
+            }
+        }
+
+        .email-sub__display-name-accented-text {
+            color: $tone-colour-accent;
+        }
+
+        .email-sub__heading {
+            line-height: $gs-baseline * 2;
+            color: $tone-colour-title;
+        }
+
+        .email-sub__description {
+            color: $tone-colour-text;
+        }
+
+        .email-sub__submit-button {
+            color: $tone-colour-button-text;
+            background-color: $tone-colour-accent;
+            border-color: $tone-colour-accent;
+
+            &:hover,
+            &:focus {
+                border-color: darken($tone-colour-accent, 10%);
+                background-color: darken($tone-colour-accent, 10%);
+            }
+        }
+
+        .submit-input__icon svg {
+            fill: $tone-colour-button-text;
+        }
     }
 }

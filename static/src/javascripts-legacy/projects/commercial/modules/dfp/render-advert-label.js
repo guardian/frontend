@@ -1,10 +1,10 @@
 define([
     'Promise',
-    'common/utils/fastdom-promise',
-    'common/utils/template',
+    'lib/fastdom-promise',
+    'lodash/utilities/template',
     'common/views/svgs',
     'raw-loader!commercial/views/ad-feedback-popup.html',
-    'common/utils/config'
+    'lib/config'
 ], function (
     Promise,
     fastdom,

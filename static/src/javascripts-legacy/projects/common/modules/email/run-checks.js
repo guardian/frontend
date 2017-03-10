@@ -1,10 +1,10 @@
 define([
-    'common/utils/$',
-    'common/utils/page',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/storage',
-    'common/utils/robust',
+    'lib/$',
+    'lib/page',
+    'lib/config',
+    'lib/detect',
+    'lib/storage',
+    'lib/robust',
     'lodash/collections/some',
     'lodash/collections/every',
     'lodash/collections/map',
@@ -125,10 +125,11 @@ define([
     function allEmailCanRun() {
         var browser = detect.getUserAgent.browser,
             version = detect.getUserAgent.version;
-            
+
         return !config.page.shouldHideAdverts &&
                 !config.page.isSensitive &&
                 !config.page.isFront &&
+                (config.page.contentId.indexOf("email-sign-up") === -1) &&
                 config.switches.emailInArticle &&
                 !clash.userIsInAClashingAbTest(clash.nonEmailClashingTests) &&
                 storage.session.isAvailable() &&

@@ -1,7 +1,7 @@
 define([
     'bonzo',
-    'common/utils/config',
-    'common/utils/mediator',
+    'lib/config',
+    'lib/mediator',
     'fastdom',
     'lodash/objects/defaults'
 ], function (

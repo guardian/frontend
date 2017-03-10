@@ -8,6 +8,8 @@
 @import views.support.Seq2zipWithRowInfo
 
 <div class="submeta">
+    <span class="submeta__label">Topics</span>
+
     <div class="submeta__section-labels">
         @if(ArticleBadgesSwitch.isSwitchedOn) {
             @badgeFor(content).map { badge =>
