@@ -13,8 +13,6 @@ define([
     userFeatures
 ) {
     return function () {
-        var self = this;
-
         this.id = 'PaidCommentingInternal';
         this.start = '2017-03-02';
         this.expiry = '2017-03-30'; // Thursday 30th March
