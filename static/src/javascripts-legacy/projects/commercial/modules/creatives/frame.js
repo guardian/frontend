@@ -1,6 +1,6 @@
 define([
     'lib/fastdom-promise',
-    'lib/template',
+    'lodash/utilities/template',
     'common/views/svgs',
     'common/modules/ui/toggles',
     'commercial/modules/creatives/add-tracking-pixel',

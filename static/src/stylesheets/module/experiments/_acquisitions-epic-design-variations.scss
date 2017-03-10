@@ -1,0 +1,71 @@
+@import "svg";
+
+// Classes used by multiple variants
+// =================================
+
+.contributions__title--epic--large {
+    @include font-size(36px);
+    @include mq(tablet) {
+        @include font-size(38px);
+    }
+}
+
+// 1. extra_paragraph variant
+// ==========================
+
+// copy changes only
+
+// 2. large hook variant
+// =====================
+
+// uses large title
+
+// 3. subtle variant
+// =================
+
+.contributions__epic--subtle {
+    // Unset border top as it will be set for the inline header element
+    border-top: 0;
+    background-color: #ffffff;
+    margin-top: $gs-baseline * 4;
+    margin-bottom: $gs-baseline * 4;
+}
+
+.contributions__title--epic--subtle {
+    display: inline;
+    border-top: 1px solid $multimedia-main-2;
+    @include fs-header(3);
+    padding-top: $gs-baseline / 3;
+}
+
+.contributions__paragraph--subtle {
+    margin-top: 0;
+}
+
+// 4. prominent variant
+// ====================
+
+// uses large title
+
+.contributions__epic--prominent {
+    background-color: transparentize($multimedia-main-2, .5);
+}
+
+.contributions__option--button--prominent {
+    color: white;
+    background-color: $guardian-brand;
+    &:after {
+        background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="white" stroke="white" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
+    }
+    &:hover {
+        color: #ffffff;
+        background-color: $multimedia-support-3;
+    }
+}
+
+// 5. highlight
+// ============
+
+.contributions__paragraph--highlight {
+    background-color: transparentize($multimedia-main-2, .6);
+}

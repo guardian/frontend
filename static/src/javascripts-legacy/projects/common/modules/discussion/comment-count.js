@@ -6,7 +6,7 @@ define([
     'lib/ajax',
     'lib/formatters',
     'lib/mediator',
-    'lib/template',
+    'lodash/utilities/template',
     'common/views/svgs',
     'raw-loader!common/views/discussion/comment-count.html',
     'raw-loader!common/views/discussion/comment-count--content.html',

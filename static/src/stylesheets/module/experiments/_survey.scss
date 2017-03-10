@@ -9,6 +9,8 @@
     @include fs-bodyHeading(4);
     display: inline-block;
     margin-right: $gs-gutter;
+    color: $neutral-1;
+    font-style: normal;
 }
 
 .impressions-survey__about {
@@ -39,6 +41,7 @@
 
 .impressions-survey__question {
     @include fs-bodyHeading(2);
+    font-style: normal;
 }
 
 .fi-survey__button {
@@ -49,6 +52,8 @@
 
 .fi-survey__label {
     display: block;
+    font-style: normal;
+    color: #ffffff;
 }
 
 .impressions-survey__thanks {
@@ -58,6 +63,7 @@
     top: 20%;
     opacity: 0;
     visibility: collapse;
+    font-style: normal;
 }
 
 .js-impressions-survey__fadein {

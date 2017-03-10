@@ -21,7 +21,7 @@ define([
     'lib/detect',
     'lib/fetch-json',
     'lib/mediator',
-    'lib/template',
+    'lodash/utilities/template',
     'common/modules/user-prefs',
     'facia/modules/onwards/search-tool',
     'lodash/collections/contains'

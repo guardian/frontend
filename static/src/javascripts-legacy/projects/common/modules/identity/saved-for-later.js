@@ -6,7 +6,7 @@ define([
     'fastdom',
     'lib/config',
     'lib/mediator',
-    'lib/template',
+    'lodash/utilities/template',
     'common/views/svgs',
     'raw-loader!common/views/save-for-later/delete-all-button.html'
 ], function (

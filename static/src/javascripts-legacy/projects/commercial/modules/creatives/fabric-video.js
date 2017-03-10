@@ -4,7 +4,7 @@ define([
     'lib/add-event-listener',
     'lib/fastdom-promise',
     'lib/detect',
-    'lib/template',
+    'lodash/utilities/template',
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker',
     'raw-loader!commercial/views/creatives/fabric-video.html'
