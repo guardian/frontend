@@ -30,9 +30,10 @@
 }
 
 .devtools__test {
+    font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif
     font-weight: 700;
-    margin-top: 12px;
-    border-bottom: 1px solid #cccccc;
+    margin-top: 18px;
+    border-bottom: 1px solid #005689;
 }
 
 .devtools__tests {
@@ -65,23 +66,27 @@
     font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
     font-size: 14px;
     color: #ffffff;
-    background-color: rgba(120, 0, 104, .5);
+    background-color: rgba(0, 86, 137, .5);
     border: 0;
     border-radius: 6px;
     height: 35px;
-    margin: 0 12px;
+    margin: 0 6px;
+}
+
+.devtools__controls button:first-of-type {
+    margin-left: 36px;
 }
 
 .devtools__controls button:hover,
 .devtools__controls button:active {
-    background-color: #7d0068;
+    background-color: #005689;
 }
 
 .devtools__controls .devtools__controls__toggle {
     float: right;
     width: 35px;
     border-radius: 35px;
-    background-color: #7d0068;
+    background-color: #005689;
     margin: 0;
 }
 
