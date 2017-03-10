@@ -32,6 +32,7 @@
 .devtools__test {
     font-weight: 700;
     margin-top: 12px;
+    border-bottom: 1px solid #cccccc;
 }
 
 .devtools__tests {
@@ -50,10 +51,46 @@
     padding: 6px;
 }
 
+.devtools__variant__label:hover,
+.devtools__variant__label:active {
+    background-color: #dfdfdf;
+    cursor: pointer;
+}
+
 .devtools__variant__button:checked + .devtools__variant__label {
     background-color: #cccccc;
 }
 
-.devtools__controls__toggle {
-    float: right;
+.devtools__controls button {
+    font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: rgba(120, 0, 104, .5);
+    border: 0;
+    border-radius: 6px;
+    height: 35px;
+    margin: 0 12px;
 }
+
+.devtools__controls button:hover,
+.devtools__controls button:active {
+    background-color: #7d0068;
+}
+
+.devtools__controls .devtools__controls__toggle {
+    float: right;
+    width: 35px;
+    border-radius: 35px;
+    background-color: #7d0068;
+    margin: 0;
+}
+
+.devtools__controls h1 {
+    display: inline;
+}
+
+.devtools__controls h1,
+.devtools__controls button {
+    vertical-align: middle;
+}
+
