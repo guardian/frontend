@@ -14,11 +14,11 @@ function getSelectedAbTests() {
 function selectRadios() {
     const abTests = getSelectedAbTests();
 
-    $('.js-devtools-radio').each(function(radio) {
+    $('.js-devtools-radio').each(radio => {
         $(radio).attr('checked', false);
     });
 
-    abTests.forEach((test) => {
+    abTests.forEach(test => {
         $(`#${test.id}-${test.variant}`).attr('checked', true);
     });
 }
@@ -34,7 +34,7 @@ function bindEvents() {
             if (existingVariantForThisTest) {
                 existingVariantForThisTest.variant = variantId;
             } else {
-                abTests.push({id: testId, variant: variantId});
+                abTests.push({ id: testId, variant: variantId });
             }
             storage.local.set('gu.devtools.ab', JSON.stringify(abTests));
         });
