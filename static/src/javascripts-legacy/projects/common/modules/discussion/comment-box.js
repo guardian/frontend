@@ -103,7 +103,8 @@ CommentBox.prototype.defaultOptions = {
     state: 'top-level',
     replyTo: null,
     priorToVerificationDate: new Date(1392719401337), // Tue Feb 18 2014 10:30:01 GMT
-    paymentRequired: false
+    paymentRequired: false,
+    testVariant: null
 };
 
 /**
@@ -444,6 +445,7 @@ CommentBox.prototype.setExpanded = function() {
     this.setState('expanded');
     if (this.options.paymentRequired) {
         this.setState('expanded-payment-required');
+        this.getElem('payment-cta-button__content').href = guardian.config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_A_PDCOM_' + this.options.testVariant.toUpperCase();
         this.on('click', this.getClass('payment-cta-cancel-button'), this.clearPaymentRequired);
     }
 };

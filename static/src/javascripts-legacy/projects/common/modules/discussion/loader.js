@@ -345,7 +345,8 @@ Loader.prototype.renderCommentBox = function(elem) {
         premod: this.user.privateFields.isPremoderated,
         newCommenter: !this.user.privateFields.hasCommented,
         shouldRenderMainAvatar: false,
-        paymentRequired: isPaidCommenting
+        paymentRequired: isPaidCommenting,
+        testVariant: testVariant
     }).render(elem).on('post:success', this.commentPosted.bind(this));
 };
 
