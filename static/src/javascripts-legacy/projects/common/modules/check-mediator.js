@@ -58,15 +58,25 @@ define([
                 list: [{ 
                     id: 'isUserInEmailAbTestAndCanEmailBeAdded'
                 }, {
-                    id: 'isOutbrainBlockedByAds',
+                    id: 'isOutbrainMerchandiseCompliant',
                     dependentChecks: {
                         passCondition: EVERYCHECKPASSED,
                         list: [{
-                            id: 'isHighResAdLoaded'
+                            id: 'hasHighPriorityAdLoaded'
                         }, {
-                            id: 'isLowResAdLoaded'
+                            id: 'hasLowPriorityAdNotLoaded'
                         }]
                     }
+                }]
+            }
+        }, {
+            id: 'isOutbrainBlockedByAds',
+            dependentChecks: {
+                passCondition: EVERYCHECKPASSED,
+                list: [{
+                    id: 'hasHighPriorityAdLoaded'
+                }, {
+                    id: 'hasLowPriorityAdLoaded'
                 }]
             }
         }];

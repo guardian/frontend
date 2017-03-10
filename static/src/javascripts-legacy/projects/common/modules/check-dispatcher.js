@@ -16,19 +16,18 @@ define([
     trackAdRender
 ) {
 
-    var isUserInContributionsAbTest = false;
-
     var checksToDispatch = {
         isUserInContributionsAbTest: function() {
-            return isUserInContributionsAbTest;
+            return false;
             // return clash.userIsInAClashingAbTest(clash.contributionsTests);
         },
         isUserNotInContributionsAbTest: function() {
-            return !isUserInContributionsAbTest;
-            // return !clash.userIsInAClashingAbTest(clash.contributionsTests);
+            return checkMediator.waitForCheck('isUserInContributionsAbTest').then(function (userInContributionsAbTest) {
+                return !userInContributionsAbTest;
+            });
         },
         isUserInEmailAbTest: function() {
-            return false;
+            return true;
             // return clash.userIsInAClashingAbTest(clash.emailTests);
         },
         emailCanRunPreCheck: function() {
@@ -43,18 +42,29 @@ define([
             return true;
             // return config.switches.emailInArticleOutbrain;
         },
-        isHighResAdLoaded: function() {
-            return true;
-            // return trackAdRender('dfp-ad--merchandising-high').then(function(isHighResAdLoaded) {
-            //     return isHighResAdLoaded;
+        hasHighPriorityAdLoaded: function() {
+            return false;
+            // return trackAdRender('dfp-ad--merchandising-high').then(function(highPriorityAdLoaded) {
+            //     return highPriorityAdLoaded;
             // });
         },
-        isLowResAdLoaded: function() {
-            return true;
-            // return trackAdRender('dfp-ad--merchandising').then(function(isLowResAdLoaded) {
-            //     console.log('isLowResAdLoaded ---->', isLowResAdLoaded);
-            //     return isLowResAdLoaded;
+        hasLowPriorityAdLoaded: function() {
+            return false;
+            // return checkMediator.waitForCheck('hasHighPriorityAdLoaded').then(function (highPriorityAdLoaded) {
+            //     if (highPriorityAdLoaded) {
+            //         return trackAdRender('dfp-ad--merchandising').then(function(lowPriorityAdLoaded) {
+            //             console.log('lowPriorityAdLoaded ---->', lowPriorityAdLoaded);
+            //             return lowPriorityAdLoaded;
+            //         });
+            //     } else {
+            //         return true;
+            //     }
             // });
+        },
+        hasLowPriorityAdNotLoaded: function() {
+            return checkMediator.waitForCheck('hasLowPriorityAdLoaded').then(function (lowPriorityAdLoaded) {
+                return !lowPriorityAdLoaded;
+            });
         }
     };
 
