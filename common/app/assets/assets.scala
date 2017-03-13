@@ -90,7 +90,7 @@ object css {
       case "football" => "head.football"
       case "index" => "head.index"
       case "rich-links" => "head.rich-links"
-      case "email" => "head.email"
+      case "email-signup" => "head.email-signup"
       case "commercial" => "head.commercial"
       case "survey" => "head.survey"
       case "signup" => "head.signup"
