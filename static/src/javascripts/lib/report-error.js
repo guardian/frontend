@@ -7,10 +7,10 @@
 // user data.
 import raven from 'lib/raven';
 
-function reportError(err, tags, shouldThrow) {
+function reportError(err, tags, shouldThrow = true) {
     raven.captureException(err, { tags });
 
-    if (shouldThrow || shouldThrow === undefined) {
+    if (shouldThrow === true) {
         // Flag to ensure it is not reported to Sentry again via global handlers
         const error = err;
         error.reported = true;
