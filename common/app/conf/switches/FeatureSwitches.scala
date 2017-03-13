@@ -504,7 +504,7 @@ trait FeatureSwitches {
     "changes design of articles with strucutred recipe data",
     owners = Seq(Owner.withGithub("tsop14"), Owner.withGithub("blongden73")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 12, 1),
+    sellByDate = new LocalDate(2017, 4, 4),
     exposeClientSide = true
 
   )
