@@ -1,5 +1,5 @@
-@(model: PageWithStoryPackage)(implicit request: RequestHeader)
+@(page: PageWithStoryPackage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@mainEmail(model) {
-    @fragments.emailArticleBody(model)
+@mainEmail(page) {
+    @fragments.emailArticleBody(page)
 }

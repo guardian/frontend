@@ -1,6 +1,7 @@
-@(page: model.Page)(body: Html)(implicit request: RequestHeader)
+@(page: model.Page)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.{LinkTo, CanonicalLink}
+@import play.api.Mode.Dev
 @import implicits.Requests.RichRequestHeader
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -27,18 +28,15 @@
         </style>
         <![endif]-->
 
-        @fragments.email.stylesheets.ink()
-
-        @fragments.email.stylesheets.main()
-        @fragments.email.stylesheets.footer()
-
-        @if(page.metadata.isFront) {
-            @fragments.email.stylesheets.frontFonts()
-            @fragments.email.stylesheets.front(page)
-            @fragments.email.stylesheets.tones(page)
-        } else {
-            @fragments.email.stylesheets.articleFonts()
-        }
+        <style>
+            @if(page.metadata.isFront) {
+                @fragments.email.stylesheets.frontFonts()
+                @Html(common.Assets.css.emailFront)
+            } else {
+                @fragments.email.stylesheets.articleFonts()
+                @Html(common.Assets.css.emailArticle)
+            }
+        </style>
     </head>
 
     <body>
