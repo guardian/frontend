@@ -488,15 +488,4 @@ trait FeatureSwitches {
   )
 
 
-  // Owner: Joseph Smith
-  val AmpOphanTrackingIncludesCredentials = Switch(
-    SwitchGroup.Feature,
-    "amp-ophan-tracking-includes-credentials",
-    "allows access to id field when page viewed from google cache so that we keep tracking consistent",
-    owners = Seq(Owner.withGithub("michaelwmcnamara")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 15),
-    exposeClientSide = true
-  )
-
 }
