@@ -2,6 +2,7 @@
 @import views.support.{ImgSrc, GoogleStructuredData}
 @import org.joda.time.DateTime
 @import model.Tag
+@import model.content.RecipeAtom
 
 @(recipe: model.content.RecipeAtom, contributors: Seq[Tag])(implicit request: RequestHeader)
 
@@ -30,8 +31,8 @@
      *@
       @recipe.data.time.preparation.map {minutes => "prepTime": "PT@{minutes}M",}
       @recipe.data.time.cooking.map {minutes => "cookTime": "PT@{minutes}M",}
-      @totalTime(recipe).map { minutes => "totalTime": "PT@{minutes}M",}
-      @recipe.data.serves.map { serves => "recipeYield": "@yieldValue(serves)",}
+      @RecipeAtom.totalTime(recipe).map { minutes => "totalTime": "PT@{minutes}M",}
+      @recipe.data.serves.map { serves => "recipeYield": "@RecipeAtom.formatServingValue(serves)",}
      @*
      TODO - We do not have nutrition in the model yet
      "nutrition": {
@@ -41,54 +42,13 @@
        "fatContent": "20.2 g"
      },
      *@
-     "recipeIngredient": @Html(Json.stringify(Json.toJson(ingredientValues(recipe.data.ingredientsLists.flatMap(_.ingredients))))),
+     "recipeIngredient": @Html(Json.stringify(Json.toJson(RecipeAtom.formatIngredientValues(recipe.data.ingredientsLists.flatMap(_.ingredients))))),
      "recipeInstructions": @Html(Json.stringify(Json.toJson(recipe.data.steps.zipWithIndex.map { case(step,index) => s"$index. $step" })))
     }
 </script>
-
-@totalTime(recipe: model.content.RecipeAtom) = @{
-    (recipe.data.time.preparation ++ recipe.data.time.cooking).map(_.toInt).reduceOption(_ + _)
-}
 
 @imgValue(image: com.gu.contentatom.thrift.Image) = @{
     val media =  model.content.MediaAtom.imageMediaMake(image, "")
     ImgSrc.findLargestSrc(media, GoogleStructuredData).getOrElse("")
 }
 
-@yieldValue(serves: com.gu.contentatom.thrift.atom.recipe.Serves) = @{
-    serves.`type` match {
-        case "serves" => if (serves.from == serves.to) s"${serves.from} servings" else s"from ${serves.from} to ${serves.to} servings"
-        case "makes" => if (serves.from == serves.to) s"${serves.from} ${serves.unit}" else s"from ${serves.from} to ${serves.to} ${serves.unit}"
-        case "quantity" => if(serves.from == serves.to) s"${serves.from} portions" else s"from ${serves.from} to ${serves.to} portions"
-    }
-}
-
-@ingredientValues(ingredients: Seq[com.gu.contentatom.thrift.atom.recipe.Ingredient]) = @{
-    ingredients.map { ingredient =>
-        val q = ingredient.quantity
-          .map(formatQuantity)
-          .orElse(ingredient.quantityRange.map(range => s"${formatQuantity(range.from)}-${formatQuantity(range.to)}" ))
-          .getOrElse("")
-        s"""${q} ${formatUnit(ingredient.unit.getOrElse(""))} ${ingredient.item}"""
-    }
-}
-
-@formatUnit(unit: String) = @{
-        unit match {
-            case "dsp" => "dessert spoon"
-            case "tsp" => "teaspoon"
-            case "tbsp" => "tablespoon"
-            case _ => unit
-        }
-}
-
-@formatQuantity(q: Double) = @{
-    q match {
-        case qty if qty == qty.toInt => qty.toInt.toString
-        case 0.75 => "3/4"
-        case 0.5 => "1/2"
-        case 0.25 => "1/4"
-        case 0.125 => "1/8"
-        case _ => q.toString
-    }
-}
