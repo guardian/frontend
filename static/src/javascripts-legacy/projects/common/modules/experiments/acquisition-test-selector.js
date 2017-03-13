@@ -10,7 +10,7 @@ define([
     'common/modules/experiments/tests/acquisitions-epic-design-variations'
 ], function (
     segmentUtil,
-    canRunChecks,
+    testCanRunChecks,
     viewLog,
     brexit,
     alwaysAsk,
@@ -43,7 +43,7 @@ define([
                     viewLog.viewsInPreviousDays(variant.maxViews.minDaysBetweenViews) === 0) ||
                     variant.isUnlimited);
 
-                return forced || (canRunChecks.testCanBeRun(t) && segmentUtil.isInTest(t) && hasNotReachedRateLimit);
+                return forced || (testCanRunChecks.testCanBeRun(t) && segmentUtil.isInTest(t) && hasNotReachedRateLimit);
             });
 
             return eligibleTests[0] && new eligibleTests[0]();
