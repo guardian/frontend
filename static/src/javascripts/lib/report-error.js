@@ -7,7 +7,11 @@
 // user data.
 import raven from 'lib/raven';
 
-function reportError(err, tags, shouldThrow = true) {
+function reportError(
+    err: Error,
+    tags: Object,
+    shouldThrow: Boolean = true
+): void {
     raven.captureException(err, { tags });
 
     if (shouldThrow === true) {
