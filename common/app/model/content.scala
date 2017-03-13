@@ -82,7 +82,7 @@ final case class Content(
   lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
-  lazy val isRecipeArticle: Boolean = atoms.fold(false)(a => a.recipes.nonEmpty)
+  lazy val isRecipeArticle: Boolean = atoms.fold(false)(a => a.recipes.nonEmpty) && ArticleWithStructuredRecipe.isSwitchedOn
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -445,7 +445,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
-      contentWithSlimHeader = (content.isImmersive && content.tags.isArticle) || (content.isRecipeArticle && false)
+      contentWithSlimHeader = (content.isImmersive && content.tags.isArticle) || content.isRecipeArticle
     )
   }
 
