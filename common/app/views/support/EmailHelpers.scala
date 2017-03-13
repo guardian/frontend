@@ -7,47 +7,67 @@ import play.twirl.api.Html
 import play.api.mvc._
 
 object EmailHelpers {
-  def columnWidth(width: Int): String = {
-    Seq("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve").lift(width - 1).getOrElse("")
+  // TODO: implicit conversions so I don't have to call render all over the place??
+  case class Container(rows: Row*) {
+    def render: Html = Html {
+      s"""<table align="center" class="container">
+         |  <tbody>
+         |    <tr>
+         |      <td>
+         |        ${rows.map(_.render).mkString}
+         |      </td>
+         |    </tr>
+         |  </tbody>
+         |</table>""".stripMargin
+    }
   }
 
-  def row(inner: Html): Html = Html {
-    s"""<table class="row">
-          <tr>$inner</tr>
-        </table>"""
+  case class Row(columns: Column*) {
+    def render: Html = {
+      val cols = columns.zipWithIndex.map { case (col, i) =>
+        col.render(i == 0, i == columns.length - 1)
+      }
+
+      Html {
+        s"""<table class="row">
+           |  <tbody>
+           |    <tr>
+           |      ${cols.mkString}
+           |    </tr>
+           |  </tbody>
+           |</table>""".stripMargin
+      }
+    }
   }
 
-  def column(width: Int, innerClasses: Seq[String] = Seq(), last: Boolean = false, style: Option[String] = None)(inner: Html): Html = Html {
-    s"""<td class="wrapper ${if (last || width == 12) "last" else ""}" ${style.map(css => s"""style="$css"""").getOrElse("")}>
-      <table class="${columnWidth(width)} columns">
-        <tr>
-          <td ${if (innerClasses.nonEmpty) s"""class="${innerClasses.mkString(" ")}" """ else ""}>$inner</td>
-          <td class="expander"></td>
-        </tr>
-      </table>
-    </td>"""
+  case class Column(smallWidth: Int, largeWidth: Int, classes: Seq[String] = Seq())(inner: Html) {
+    def render(first: Boolean = false, last: Boolean = false): Html = Html {
+      s"""<th class="${if (first) {"first"} else {""}} ${if (last) {"last"} else {""}} small-${smallWidth} large-${largeWidth} columns">
+         |  <table>
+         |    <tr>
+         |      <th class="${classes.mkString(" ")}">$inner</th>
+         |      <th class="expander"></th>
+         |    </tr>
+         |  </table>
+         |</th>""".stripMargin
+    }
   }
 
-  def columnWithSubColumns(width: Int, innerClasses: Seq[String] = Seq(), last: Boolean = false, style: Option[String] = None)(inner: Html): Html = Html {
-    s"""<td class="wrapper ${if (last || width == 12) "last" else ""}" ${style.map(css => s"""style="$css"""").getOrElse("")}>
-      <table class="${columnWidth(width)} columns">
-        <tr>
-          $inner
-          <td class="expander"></td>
-        </tr>
-      </table>
-    </td>"""
-  }
+  def fullRow(inner: Html): Html = Row(
+    Column(smallWidth = 12, largeWidth = 12)(inner)
+  ).render
 
-  def subColumn(width: Int, classes: Seq[String] = Seq(), last: Boolean = false)(inner: Html): Html = Html {
-    s"""<td class="${columnWidth(width)} sub-columns ${if (last || width == 12) "last" else ""} ${classes.mkString(" ")}">$inner</td>"""
-  }
+  def fullRow(classes: Seq[String] = Seq.empty)(inner: Html): Html = Row(
+    Column(smallWidth = 12, largeWidth = 12, classes)(inner)
+  ).render
 
-  def fullRow(inner: Html): Html = row(column(12)(inner))
-  def fullRow(classes: Seq[String] = Seq.empty)(inner: Html): Html = row(column(12, classes)(inner))
-  def fullRowWithSubColumns(classes: Seq[String] = Seq.empty)(inner: Html): Html = row(columnWithSubColumns(12, classes)(inner))
-  def paddedRow(inner: Html): Html = row(column(12, Seq("panel"))(inner))
-  def paddedRow(classes: Seq[String] = Seq.empty)(inner: Html): Html = row(column(12, classes ++ Seq("panel"))(inner))
+  def paddedRow(inner: Html): Html = Row(
+    Column(smallWidth = 12, largeWidth = 12, Seq("panel"))(inner)
+  ).render
+
+  def paddedRow(classes: Seq[String] = Seq.empty)(inner: Html): Html = Row(
+    Column(smallWidth = 12, largeWidth = 12, classes ++ Seq("panel"))(inner)
+  ).render
 
   def imageUrlFromCard(contentCard: ContentCard): Option[String] = {
     for {

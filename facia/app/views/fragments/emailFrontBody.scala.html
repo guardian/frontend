@@ -82,15 +82,15 @@
 @faciaCardWithoutTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
     @paddedRow(Seq(toneClassFromStyle(card.cardStyle))) {
         <div class="facia-card">
-            @if(withImage && imgFromCard(card).isDefined) {
-                @fullRowWithSubColumns() {
-                    @subColumn(5, Seq("facia-card__text"), last = true) { @imgFromCard(card, 5) }
-                    @subColumn(7, Seq("facia-card__text")) { @headline(card) }
-                }
-            } else {
+            @imgFromCard(card, 5).filter(i => withImage).fold {
                 @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
                     @headline(card, largeHeadline)
                 }
+            } { img =>
+                @Row(
+                    Column(smallWidth = 5, largeWidth = 5, Seq("facia-card__text"))(img),
+                    Column(smallWidth = 7, largeWidth = 7, Seq("facia-card__text"))(headline(card))
+                ).render
             }
         </div>
     }
