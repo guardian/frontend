@@ -1,6 +1,5 @@
 {
   "sndrs": [
-    "lib/$.js",
     "lib/$css.js",
     "lib/add-event-listener.js",
     "lib/ajax.js",
@@ -49,8 +48,8 @@
     "lib/sha1.js",
     "lib/steady-page.js",
     "lib/storage.js",
-    "lib/template.js",
     "lib/time.js",
-    "lib/timeout.js"
+    "lib/timeout.js",
+    "lib/url.js"
   ]
 }

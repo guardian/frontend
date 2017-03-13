@@ -10,7 +10,7 @@ define([
     'lib/cookies',
     'lib/detect',
     'lib/mediator',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/url',
     'lib/robust',
     'lib/storage',

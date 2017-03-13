@@ -32,8 +32,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-paid-content-vs-outbrain",
-    "Displays a paid content widget instead of Outbrain",
+    "ab-increase-inline-ads",
+    "Displays more inline ads in articles on desktop",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 10),
@@ -42,11 +42,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-guardian-today-signup-messaging",
-    "Test different signup messaging for Guardian Today emails",
-    owners = Seq(Owner.withGithub("davidfurey")),
+    "ab-paid-content-vs-outbrain",
+    "Displays a paid content widget instead of Outbrain",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 28),
+    sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
 
@@ -66,7 +66,7 @@ trait ABTestSwitches {
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 9),
+    sellByDate = new LocalDate(2017, 4, 12),
     exposeClientSide = true
   )
 
@@ -76,7 +76,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 9),
+    sellByDate = new LocalDate(2017, 4, 12),
     exposeClientSide = true
   )
 
@@ -124,6 +124,16 @@ trait ABTestSwitches {
     ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-regulars",
+    "Test messages aimed at our regular readers",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 5, 1),

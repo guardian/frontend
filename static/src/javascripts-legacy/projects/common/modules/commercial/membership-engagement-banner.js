@@ -3,7 +3,7 @@ define([
         'lib/$',
         'lib/config',
         'lib/storage',
-        'lib/template',
+        'lodash/utilities/template',
         'common/modules/ui/message',
         'raw-loader!common/views/membership-message.html',
         'commercial/modules/commercial-features',

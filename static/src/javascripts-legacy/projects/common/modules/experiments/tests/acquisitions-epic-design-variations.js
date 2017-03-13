@@ -1,6 +1,6 @@
 define([
     'common/modules/commercial/contributions-utilities',
-    'lib/template',
+    'lodash/utilities/template',
     'lodash/objects/assign',
     'raw-loader!common/views/acquisitions-epic-design-variations.html'
 ], function(
@@ -46,19 +46,20 @@ define([
     // =======================
 
     // Common variant properties.
-    var maxViews = {};
-    var successOnView = true;
-
     var defaultVariantArgs = {
-        maxViews: maxViews,
-        successOnView: successOnView
+        maxViews: {
+            days: 30,
+            count: 4,
+            minDaysBetweenViews: 0
+        },
+        successOnView: true
     };
 
     function buildVariant(variantId, templateArgs) {
         var args = { id: variantId };
         if (variantId !== 'control') {
-            args.template = function(membershipUrl, contributionUrl) {
-                return buildHtml(membershipUrl, contributionUrl, templateArgs)
+            args.template = function(variant) {
+                return buildHtml(variant.membershipURL, variant.contributeURL, templateArgs)
             }
         }
         return assign({}, defaultVariantArgs, args)

@@ -8,7 +8,7 @@ define([
     'lib/detect',
     'lib/mediator',
     'lib/fastdom-promise',
-    'lib/template',
+    'lodash/utilities/template',
     'common/modules/experiments/ab',
     'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/audience-science-gateway',

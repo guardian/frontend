@@ -5,7 +5,7 @@ define([
     'lib/$',
     'lib/mediator',
     'common/modules/user-prefs',
-    'lib/template',
+    'lodash/utilities/template',
     'common/views/svgs',
     'raw-loader!facia/views/button-toggle.html'
 ], function (

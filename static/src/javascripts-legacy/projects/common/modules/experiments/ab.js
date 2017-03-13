@@ -12,13 +12,13 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/tests/paid-content-vs-outbrain',
-    'common/modules/experiments/tests/guardian-today-messaging',
     'common/modules/experiments/acquisition-test-selector',
     'common/modules/experiments/tests/tailor-recommended-email',
     'common/modules/experiments/tests/membership-a3-a4-bundles-thrasher',
     'common/modules/experiments/tests/tailor-survey',
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
+    'common/modules/experiments/tests/increase-inline-ads',
     'ophan/ng'
 ], function (reportError,
              config,
@@ -33,13 +33,13 @@ define([
              RecommendedForYou,
              MembershipEngagementBannerTests,
              PaidContentVsOutbrain,
-             GuardianTodayMessaging,
              acquisitionTestSelector,
              TailorRecommendedEmail,
              MembershipA3A4BundlesThrasher,
              TailorSurvey,
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
+             IncreaseInlineAds,
              ophan
     ) {
     var TESTS = compact([
@@ -47,13 +47,13 @@ define([
         new OpinionEmailVariants(),
         new RecommendedForYou(),
         new PaidContentVsOutbrain,
-        new GuardianTodayMessaging(),
         acquisitionTestSelector.getTest(),
         new TailorRecommendedEmail(),
         new MembershipA3A4BundlesThrasher(),
         new TailorSurvey(),
         SleevenotesNewEmailVariant,
-        SleevenotesLegacyEmailVariant
+        SleevenotesLegacyEmailVariant,
+        new IncreaseInlineAds()
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';
