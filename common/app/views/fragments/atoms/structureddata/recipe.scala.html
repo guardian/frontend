@@ -43,7 +43,7 @@
      },
      *@
      "recipeIngredient": @Html(Json.stringify(Json.toJson(RecipeAtom.formatIngredientValues(recipe.data.ingredientsLists.flatMap(_.ingredients))))),
-     "recipeInstructions": @Html(Json.stringify(Json.toJson(recipe.data.steps.zipWithIndex.map { case(step,index) => s"$index. $step" })))
+     "recipeInstructions": @Html(Json.stringify(Json.toJson(recipe.data.steps.zipWithIndex.map { case(step,index) => s"${index +1}. $step" })))
     }
 </script>
 
