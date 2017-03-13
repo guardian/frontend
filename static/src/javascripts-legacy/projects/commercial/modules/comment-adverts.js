@@ -1,10 +1,10 @@
 define([
     'Promise',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/mediator',
-    'common/utils/fastdom-idle',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
+    'lib/mediator',
+    'lib/fastdom-promise',
     'common/modules/identity/api',
     'common/modules/experiments/ab',
     'commercial/modules/dfp/add-slot',
@@ -17,7 +17,7 @@ define([
     config,
     detect,
     mediator,
-    idleFastdom,
+    fastdom,
     identityApi,
     ab,
     addSlot,
@@ -26,8 +26,7 @@ define([
     defaults
 ) {
     return function (options) {
-        var adType,
-            opts = defaults(
+        var opts = defaults(
                 options || {},
                 {
                     adSlotContainerSelector: '.js-discussion__ad-slot',
@@ -35,8 +34,7 @@ define([
                 }
             ),
             $adSlotContainer,
-            $commentMainColumn,
-            $adSlot;
+            $commentMainColumn;
 
         $adSlotContainer = $(opts.adSlotContainerSelector);
         $commentMainColumn = $(opts.commentMainColumn, '.js-comments');
@@ -46,25 +44,28 @@ define([
         }
 
         mediator.once('modules:comments:renderComments:rendered', function () {
-            idleFastdom.read(function () {
+            fastdom.read(function () {
+                return $commentMainColumn.dim().height;
+            })
+            .then(function (mainColHeight) {
                 //if comments container is lower than 280px
-                if ($commentMainColumn.dim().height < 280) {
-                    return false;
+                if (mainColHeight < 280) {
+                    return;
                 }
 
-                idleFastdom.write(function () {
+                var adSlot = createSlot('comments', { classes: 'mpu-banner-ad' });
+
+                fastdom.write(function () {
                     $commentMainColumn.addClass('discussion__ad-wrapper');
 
                     if (!config.page.isLiveBlog && !config.page.isMinuteArticle) {
                         $commentMainColumn.addClass('discussion__ad-wrapper-wider');
                     }
 
-                    adType = 'comments';
-
-                    $adSlot = $(createSlot(adType, 'mpu-banner-ad'));
-                    $adSlotContainer.append($adSlot);
-                    addSlot($adSlot);
-                });
+                    $adSlotContainer.append(adSlot);
+                    return adSlot;
+                })
+                .then(addSlot);
             });
         });
     };

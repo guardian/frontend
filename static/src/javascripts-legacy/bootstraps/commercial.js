@@ -1,9 +1,9 @@
 define([
     'Promise',
-    'common/utils/config',
-    'common/utils/mediator',
-    'common/utils/robust',
-    'common/utils/user-timing',
+    'lib/config',
+    'lib/mediator',
+    'lib/robust',
+    'lib/user-timing',
     'commercial/modules/high-merch',
     'commercial/modules/article-aside-adverts',
     'commercial/modules/article-body-adverts',
@@ -118,12 +118,12 @@ define([
     return {
         init: function () {
             if (!config.switches.commercial) {
-                return;
+                return Promise.resolve();
             }
 
             if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
                 closeDisabledSlots.init(true);
-                return;
+                return Promise.resolve();
             }
 
             userTiming.mark('commercial start');
@@ -149,6 +149,10 @@ define([
                     // There are no MPUs on hosted pages, so no slot render events, and therefore no reporting would be done.
                     Promise.all(customTimingModules).then(performanceLogging.reportTrackingData);
                 }
+            })
+            .catch(function () {
+                // Just in case something goes wrong, we don't want it to
+                // prevent enhanced from loading
             });
         }
     };

@@ -1,7 +1,7 @@
 define([
     'react/addons',
-    'common/utils/$',
-    'common/utils/config',
+    'lib/$',
+    'lib/config',
     'common/modules/onward/history',
     'lodash/collections/reduce',
     'lodash/objects/isEmpty'

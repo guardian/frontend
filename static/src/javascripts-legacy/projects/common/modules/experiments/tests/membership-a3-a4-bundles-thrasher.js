@@ -1,8 +1,8 @@
 define([
     'bean',
     'qwery',
-    'common/utils/config',
-    'common/utils/detect',
+    'lib/config',
+    'lib/detect',
     'commercial/modules/user-features'
 
 ], function (

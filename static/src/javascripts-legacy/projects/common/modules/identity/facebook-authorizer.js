@@ -1,7 +1,7 @@
 /*global FB:false*/
 define([
-    'common/utils/load-script',
-    'common/utils/config'
+    'lib/load-script',
+    'lib/config'
 ], function (
     loadScript,
     config

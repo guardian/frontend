@@ -1,9 +1,9 @@
 define([
     'bean',
     'fastdom',
-    'common/utils/$',
-    'common/utils/fetch',
-    'common/utils/config',
+    'lib/$',
+    'lib/fetch',
+    'lib/config',
     'common/modules/identity/api'
 ], function (
     bean,

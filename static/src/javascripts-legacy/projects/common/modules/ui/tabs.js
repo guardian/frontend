@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'lib/$',
     'bean',
     'bonzo'
 ], function (

@@ -1,10 +1,10 @@
 define([
     'qwery',
     'bonzo',
-    'common/utils/add-event-listener',
-    'common/utils/fastdom-promise',
-    'common/utils/detect',
-    'common/utils/template',
+    'lib/add-event-listener',
+    'lib/fastdom-promise',
+    'lib/detect',
+    'lodash/utilities/template',
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker',
     'raw-loader!commercial/views/creatives/fabric-video.html'

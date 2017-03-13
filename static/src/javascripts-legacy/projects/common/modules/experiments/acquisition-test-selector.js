@@ -5,7 +5,8 @@ define([
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/contributions-epic-ask-four-stagger',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
-    'common/modules/experiments/tests/contributions-epic-urgency'
+    'common/modules/experiments/tests/contributions-epic-regulars',
+    'common/modules/experiments/tests/acquisitions-epic-design-variations'
 ], function (
     segmentUtil,
     viewLog,
@@ -13,12 +14,20 @@ define([
     alwaysAsk,
     askFourStagger,
     askFourEarning,
-    urgency
+    regulars,
+    acquisitionsEpicDesignVariations
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */
-    var tests = [alwaysAsk, urgency, askFourEarning, brexit, askFourStagger];
+    var tests = [
+        alwaysAsk,
+		regulars,
+        acquisitionsEpicDesignVariations,
+        askFourEarning,
+        brexit,
+        askFourStagger
+    ];
 
     return {
         getTest: function() {

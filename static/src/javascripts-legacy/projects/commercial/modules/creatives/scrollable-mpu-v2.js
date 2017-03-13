@@ -1,10 +1,10 @@
 define([
     'Promise',
     'fastdom',
-    'common/utils/$',
-    'common/utils/detect',
-    'common/utils/mediator',
-    'common/utils/template',
+    'lib/$',
+    'lib/detect',
+    'lib/mediator',
+    'lodash/utilities/template',
     'raw-loader!commercial/views/creatives/scrollable-mpu-v2.html',
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker'

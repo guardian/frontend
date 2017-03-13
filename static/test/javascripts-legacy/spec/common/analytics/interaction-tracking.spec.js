@@ -16,7 +16,7 @@ define([
                     trackSponsorLogoLinkClick: sinon.spy()
                 })
                 .require([
-                    'common/utils/mediator',
+                    'lib/mediator',
                     'common/modules/analytics/google',
                     'common/modules/analytics/interaction-tracking'
                 ], function () {

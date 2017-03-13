@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'lib/$',
     'helpers/injector'
 ], function (
     $,
@@ -12,7 +12,7 @@ define([
             krux, config;
 
         beforeEach(function (done) {
-            injector.require(['commercial/modules/third-party-tags/krux', 'common/utils/config'], function () {
+            injector.require(['commercial/modules/third-party-tags/krux', 'lib/config'], function () {
                 krux = arguments[0];
                 config = arguments[1];
 

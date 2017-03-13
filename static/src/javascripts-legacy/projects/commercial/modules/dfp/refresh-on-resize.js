@@ -1,6 +1,6 @@
 define([
-    'common/utils/detect',
-    'common/utils/mediator',
+    'lib/detect',
+    'lib/mediator',
     'commercial/modules/dfp/dfp-env',
     'commercial/modules/dfp/breakpoint-name-to-attribute'
 ], function (detect, mediator, dfpEnv, breakpointNameToAttribute) {
@@ -24,7 +24,10 @@ define([
     // TODO: reset advert flags
     function refresh(currentBreakpoint, previousBreakpoint) {
         // only refresh if the slot needs to
-        window.googletag.pubads().refresh(dfpEnv.advertsToRefresh.filter(shouldRefresh).map(function (_) { return _.slot; }));
+        var advertsToRefresh = dfpEnv.advertsToRefresh.filter(shouldRefresh);
+        if (advertsToRefresh.length) {
+            window.googletag.pubads().refresh(advertsToRefresh.map(function (_) { return _.slot; }));
+        }
 
         function shouldRefresh(advert) {
             // get the slot breakpoints

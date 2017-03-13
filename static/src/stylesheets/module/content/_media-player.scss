@@ -826,8 +826,10 @@ $ima-controls-height: 70px;
     max-width: gs-span(7);
     cursor: initial;
 
-    .vjs-has-ended & {
-        display: block;
+    &--has-items {
+        .vjs-has-ended & {
+            display: block;
+        }
     }
 
     .vjs-fullscreen & {
@@ -895,8 +897,10 @@ $ima-controls-height: 70px;
     }
 
     @include mq(mobileLandscape) {
-        .gu-video-embed .vjs-has-ended & {
-            display: block;
+        &--has-items {
+            .gu-video-embed .vjs-has-ended & {
+                display: block;
+            }
         }
     }
 }

@@ -14,23 +14,24 @@
 define([
     'qwery',
     'fastdom',
-    'common/utils/raven',
+    'lib/raven',
     'common/modules/user-prefs',
     'common/modules/ui/images',
-    'common/utils/storage',
-    'common/utils/ajax',
-    'common/utils/mediator',
-    'common/utils/check-mediator',
-    'common/utils/add-event-listener',
+    'lib/storage',
+    'lib/ajax',
+    'lib/mediator',
+    'common/modules/check-mediator',
+    'lib/add-event-listener',
     'common/modules/identity/api',
-    'common/utils/url',
-    'common/utils/cookies',
-    'common/utils/robust',
-    'common/utils/user-timing',
-    'common/utils/config',
+    'lib/url',
+    'lib/cookies',
+    'lib/robust',
+    'lib/user-timing',
+    'lib/config',
     'common/modules/navigation/newHeaderNavigation',
     'common/modules/analytics/google',
-    'lodash/functions/debounce'
+    'lodash/functions/debounce',
+    'ophan/ng'
 ], function (
     qwery,
     fastdom,
@@ -50,7 +51,8 @@ define([
     config,
     newHeaderNavigation,
     ga,
-    debounce
+    debounce,
+    ophan
 ) {
     return function () {
         userTiming.mark('standard start');
@@ -163,9 +165,7 @@ define([
         }
         addEventListener(window, 'resize', debounce(onResize, 200), { passive: true });
 
-        require(['ophan/ng'], function(ophan) {
-            ophan.setEventEmitter(mediator);
-        });
+        ophan.setEventEmitter(mediator);
 
         //
         // Membership access

@@ -1,7 +1,7 @@
 define([
-    'common/utils/config',
-    'common/utils/fetch-json',
-    'common/utils/report-error'
+    'lib/config',
+    'lib/fetch-json',
+    'lib/report-error'
 ], function (
     config,
     fetchJson,

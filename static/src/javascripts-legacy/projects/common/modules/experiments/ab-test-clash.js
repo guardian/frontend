@@ -21,14 +21,14 @@ define([
         name: 'ContributionsEpicAskFourEarning',
         variants: ['control']
     };
-    var ContributionsEpicUrgency = {
-        name: 'ContributionsEpicUrgency',
-        variants: ['control', 'paywall_tweak', 'values_tweak', 'values_full']
-    };
 
-    var GuardianTodaySignupMessaging = {
-        name: 'GuardianTodaySignupMessaging',
-        variants: ['message-a', 'message-b', 'message-c']
+    var ContributionsEpicRegulars = {
+        name: 'ContributionsEpicRegulars',
+        variants: ['control', 'fairness_mild', 'fairness_strong', 'fairness_strong_alternate_hook', 'reliance']
+	};
+    var AcquisitionsEpicDesignVariations = {
+        name: 'AcquisitionsDesignVariations',
+        variants: ['control', 'extra_paragraph', 'large_hook', 'subtle', 'prominent', 'highlight']
     };
 
     var contributionsTests = [
@@ -36,12 +36,11 @@ define([
         ContributionsEpicBrexit,
         ContributionsEpicAskFourStagger,
         ContributionsEpicAskFourEarning,
-        ContributionsEpicUrgency
+        ContributionsEpicRegulars,
+        AcquisitionsEpicDesignVariations
     ];
 
-    var emailTests = [
-        GuardianTodaySignupMessaging
-    ];
+    var emailTests = [];
 
     var nonEmailClashingTests = contributionsTests;
 

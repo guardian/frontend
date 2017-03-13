@@ -2,10 +2,10 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'common/utils/$',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/mediator',
     'common/modules/user-prefs',
-    'common/utils/template',
+    'lodash/utilities/template',
     'common/views/svgs',
     'raw-loader!facia/views/button-toggle.html'
 ], function (

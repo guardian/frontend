@@ -1,6 +1,6 @@
 define([
-    'common/utils/$',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/mediator',
     'bonzo'
 ], function (
     $,

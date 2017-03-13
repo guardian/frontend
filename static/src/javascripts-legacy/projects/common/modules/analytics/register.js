@@ -6,11 +6,13 @@
  *  run analytics over (eg. ab tests, enhancement).
  */
 define([
-    'common/utils/mediator',
-    'lodash/collections/where'
+    'lib/mediator',
+    'lodash/collections/where',
+    'ophan/ng'
 ], function (
     mediator,
-    where
+    where,
+    ophan
 ) {
     var register = [],
         startTime = Date.now();
@@ -39,10 +41,8 @@ define([
     }
 
     function sendEvent() {
-        require(['ophan/ng'], function (ophan) {
-            ophan.record({
-                register: register
-            });
+        ophan.record({
+            register: register
         });
     }
 

@@ -2,8 +2,8 @@ define([
     'bonzo',
     'qwery',
     'bean',
-    'common/utils/$',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/mediator',
     'common/modules/gallery/lightbox',
     'fixtures/content/gallery-lightbox'
 ], function (

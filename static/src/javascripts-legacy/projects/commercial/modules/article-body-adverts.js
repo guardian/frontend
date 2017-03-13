@@ -1,9 +1,10 @@
 define([
     'Promise',
     'qwery',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/fastdom-promise',
+    'lib/config',
+    'lib/detect',
+    'lib/fastdom-promise',
+    'common/modules/experiments/ab',
     'common/modules/article/space-filler',
     'commercial/modules/ad-sizes',
     'commercial/modules/dfp/add-slot',
@@ -16,6 +17,7 @@ define([
     config,
     detect,
     fastdom,
+    ab,
     spaceFiller,
     adSizes,
     addSlot,
@@ -29,6 +31,8 @@ define([
     var bodyAds;
     var replaceTopSlot;
     var getSlotName;
+    var getSlotType;
+    var isOffsetingAds = ab.testCanBeRun('IncreaseInlineAds') && ab.getTestVariantId('IncreaseInlineAds') === 'yes';
 
     function init(start, stop) {
         start();
@@ -41,6 +45,7 @@ define([
         bodyAds = 0;
         replaceTopSlot = detect.isBreakpoint({max : 'phablet'});
         getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;
+        getSlotType = replaceTopSlot ? getSlotTypeForMobile : getSlotTypeForDesktop;
 
         if (config.page.hasInlineMerchandise) {
             var im = addInlineMerchAd();
@@ -68,13 +73,19 @@ define([
     };
 
     function getSlotNameForMobile() {
-        bodyAds += 1;
         return bodyAds === 1 ? 'top-above-nav' : 'inline' + (bodyAds - 1);
     }
 
     function getSlotNameForDesktop() {
-        bodyAds += 1;
         return 'inline' + bodyAds;
+    }
+
+    function getSlotTypeForMobile() {
+        return bodyAds === 1 ? 'top-above-nav' : 'inline';
+    }
+
+    function getSlotTypeForDesktop() {
+        return 'inline';
     }
 
     function getRules() {
@@ -99,6 +110,14 @@ define([
         };
     }
 
+    function getAltRules() {
+        var altRules = getRules();
+        altRules.selectors = {
+            ' .ad-slot': { minAbove: 500, minBelow: 500 }
+        };
+        return altRules;
+    }
+
     function getInlineMerchRules() {
         var inlineMerchRules = getRules();
         inlineMerchRules.minAbove = 300;
@@ -108,7 +127,7 @@ define([
     }
 
     function getLongArticleRules() {
-        var longArticleRules = getRules();
+        var longArticleRules = isOffsetingAds ? getAltRules() : getRules();
         longArticleRules.selectors[' .ad-slot'].minAbove =
         longArticleRules.selectors[' .ad-slot'].minBelow = detect.getViewport().height;
         return longArticleRules;
@@ -125,7 +144,7 @@ define([
     }
 
     function addInlineAds() {
-        return addArticleAds(2, getRules())
+        return addArticleAds(2, isOffsetingAds ? getAltRules() : getRules())
         .then(function (countAdded) {
             if (countAdded === 2) {
                 return addArticleAds(8, getLongArticleRules())
@@ -155,7 +174,14 @@ define([
             var slots = paras
             .slice(0, Math.min(paras.length, count))
             .map(function (para) {
-                return insertAdAtPara(para, getSlotName(), 'inline');
+                bodyAds += 1;
+                return insertAdAtPara(
+                    para,
+                    getSlotName(),
+                    getSlotType(),
+                    'inline' + (isOffsetingAds && bodyAds > 1 ? ' offset-right' : ''),
+                    isOffsetingAds && bodyAds > 1 ? { desktop: [adSizes.halfPage] } : null
+                );
             });
 
             return Promise.all(slots)
@@ -165,8 +191,8 @@ define([
         }
     }
 
-    function insertAdAtPara(para, name, type) {
-        var ad = createSlot(name, type);
+    function insertAdAtPara(para, name, type, classes, sizes) {
+        var ad = createSlot(type, { name: name, classes: classes, sizes: sizes });
 
         return fastdom.write(function () {
             para.parentNode.insertBefore(ad, para);
@@ -174,7 +200,9 @@ define([
     }
 
     function addSlots(totalCount) {
-        qwery('.ad-slot--inline').forEach(addSlot);
+        qwery('.ad-slot--inline').forEach(function (slot) {
+            addSlot(slot);
+        });
         return totalCount;
     }
 });

@@ -1,8 +1,8 @@
 define([
-    'common/utils/cookies',
-    'common/utils/config',
-    'common/utils/fetch-json',
-    'common/utils/storage',
+    'lib/cookies',
+    'lib/config',
+    'lib/fetch-json',
+    'lib/storage',
     'common/modules/identity/api'
 ], function (
     cookies,

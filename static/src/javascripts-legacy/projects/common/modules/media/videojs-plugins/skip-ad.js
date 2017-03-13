@@ -1,8 +1,8 @@
 define([
     'qwery',
     'bean',
-    'common/utils/$',
-    'common/utils/template',
+    'lib/$',
+    'lodash/utilities/template',
     'raw-loader!common/views/ui/video-ads-skip-overlay.html'
 ], function(
     qwery,

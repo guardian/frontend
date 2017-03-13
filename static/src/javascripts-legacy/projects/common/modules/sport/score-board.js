@@ -1,8 +1,8 @@
 define([
     'bonzo',
-    'common/utils/detect',
-    'common/utils/$',
-    'common/utils/template',
+    'lib/detect',
+    'lib/$',
+    'lodash/utilities/template',
     'common/modules/component',
     'raw-loader!common/views/sport/score-container.html'
 ], function (
