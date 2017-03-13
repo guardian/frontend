@@ -14,7 +14,8 @@ define([
     'lib/fetch-json',
     'lodash/collections/forEach',
     'ophan/ng',
-    'lodash/utilities/template'
+    'lodash/utilities/template',
+    'common/modules/article/space-filler'
 ], function (
     bean,
     bonzo,
@@ -31,7 +32,8 @@ define([
     fetchJson,
     forEach,
     ophan,
-    template
+    template,
+    spaceFiller
 ) {
     return function () {
         this.id = 'TailorSurvey';
@@ -77,8 +79,6 @@ define([
             var dayCanShowAgain = data.dayCanShowAgain;
 
             var newCookieValue = id + '=' + dayCanShowAgain;
-
-
 
             var currentCookieValues = cookies.get('GU_TAILOR_SURVEY');
 
@@ -134,6 +134,37 @@ define([
             };
         }
 
+        // Rules to use when finding a space for the survey
+        var spacefinderRules =
+             {
+                bodySelector: '.js-article__body',
+                slotSelector: ' > p',
+                minAbove: 0,
+                minBelow: 0,
+                clearContentMeta: 50,
+                selectors: {
+                    ' .element-rich-link': {minAbove: 250, minBelow: 250},
+                    ' .player': {minAbove: 0, minBelow: 0},
+                    ' > h1': {minAbove: 0, minBelow: 0},
+                    ' > h2': {minAbove: 0, minBelow: 0},
+                    ' > *:not(p):not(h2):not(blockquote)': {minAbove: 0, minBelow: 0},
+                    ' .ad-slot': {minAbove: 0, minBelow: 0}
+                }
+            };
+
+
+        // we can write a survey into a spare space using spaceFiller
+        var inArticleWriter = function (survey, surveyId) {
+            return spaceFiller.fillSpace(spacefinderRules, function (paras) {
+                var componentName = 'data_tailor_survey_' + surveyId;
+                mediator.emit('register:begin', componentName);
+                bonzo(survey).insertBefore(paras[0]);
+                mediator.emit('register:end', componentName);
+                return surveyId;
+            });
+        };
+
+        // the main function to render the survey
         function renderQuickSurvey() {
 
             var bwid = cookies.get('bwid');
@@ -154,21 +185,9 @@ define([
 
                         var json = getJsonFromSurvey(surveySuggestionToShow.data.survey);
 
-                        var componentName = 'data_tailor_survey_' + json.id;
+                        var survey = bonzo.create(template(tailorSurvey, json));
 
-                        mediator.emit('register:begin', componentName);
-
-                        // renders the survey, and returns the survey ID
-
-                        return fastdomPromise.write(function () {
-                            var article = document.getElementsByClassName('content__article-body')[0];
-                            var insertionPoint = article.getElementsByTagName('p')[1];
-                            var survey = bonzo.create(template(tailorSurvey, json));
-                            bonzo(survey).insertBefore(insertionPoint);
-                            mediator.emit('register:end', componentName);
-
-                            return surveySuggestionToShow.data.survey.surveyId;
-                        });
+                        return inArticleWriter(survey, surveySuggestionToShow.data.survey.surveyId);
                     }
                 });
             }
@@ -213,8 +232,9 @@ define([
         }
 
         function recordOphanAbEvent(answer, surveyId) {
+            var componentId = 'data_tailor_survey_' + surveyId;
             ophan.record({
-                component: 'tailor-survey-' + surveyId,
+                component: componentId,
                 value: answer
             });
         }
@@ -228,7 +248,8 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    Promise.all([renderQuickSurvey(), privateBrowsing]).then(function (surveyId) {
+                    Promise.all([renderQuickSurvey(), privateBrowsing]).then(function (response) {
+                        var surveyId = response[0]
                         mediator.emit('survey-added');
                         handleSurveyResponse(surveyId);
                     });
