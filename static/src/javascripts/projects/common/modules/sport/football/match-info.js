@@ -9,15 +9,10 @@ class MatchInfo {
     constructor(match, whosCalling) {
         const urlBase = '/football/api/match-nav';
         const pageSlug = encodeURIComponent(whosCalling);
-        let matchSlug = match.id;
+        const matchSlug = [match.date].concat(match.teams).join('/');
+        const endpoint = match.id || matchSlug;
 
-        if (match.id) {
-            matchSlug = match.id;
-        } else {
-            matchSlug = [match.date].concat(match.teams).join('/');
-        }
-
-        this.endpoint = `${urlBase}/${matchSlug}.json?page=${pageSlug}`;
+        this.endpoint = `${urlBase}/${endpoint}.json?page=${pageSlug}`;
     }
 
     /**
