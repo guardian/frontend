@@ -222,11 +222,6 @@ Congratulations, you are now set up to edit frontend code!  See the [Optional st
 ###NVM
 Some packages (imagemin) are not working with newest Node.js. So if you want to run multiple Node.js versions on your system you may want to use [nvm](https://github.com/creationix/nvm)
 
-###Memcached
-
-Memcached `sudo apt-get install memcached` -
-(most of the time you do not want to use it as caching makes local development harder)
-
 ###Nginx
 
 If you are working on Identity or Discussion, Nginx must be installed and

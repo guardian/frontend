@@ -8,7 +8,7 @@ define([
     'lib/fetch-json',
     'lib/mediator',
     'lib/report-error',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/fastdom-promise',
     'common/modules/article/space-filler',
     'common/modules/ui/images',

@@ -1,7 +1,7 @@
 define([
     'Promise',
     'lib/fastdom-promise',
-    'lib/template',
+    'lodash/utilities/template',
     'common/views/svgs',
     'raw-loader!commercial/views/ad-feedback-popup.html',
     'lib/config'

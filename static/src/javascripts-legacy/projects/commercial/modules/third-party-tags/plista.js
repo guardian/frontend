@@ -4,7 +4,7 @@ define([
     'lib/$',
     'lib/config',
     'lib/detect',
-    'lib/template',
+    'lodash/utilities/template',
     'commercial/modules/dfp/track-ad-render',
     'commercial/modules/commercial-features',
     'raw-loader!commercial/views/plista.html',

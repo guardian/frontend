@@ -1,0 +1,428 @@
+
+$grey:#dbdbdb;
+$grey-two:#f6f6f6;
+$grey-three:#767676;
+$purple:#B72166;
+
+$padding-wide: 100px;
+
+
+.recipe__article .recipe__article--headline h1,
+ .recipe__article .recipe__article--structured-headline h1 {
+    font-family: $f-serif-headline;
+    font-weight: 200;
+    font-size: 38px;
+    line-height: 38px;
+
+
+    @include mq($from: tablet) {
+        font-size: 48px;
+        line-height: 48px;
+    }
+}
+
+.recipe__article h2 {
+    font-family: $f-serif-headline;
+    font-weight: 900;
+    line-height: 28px;
+}
+
+.circle-button {
+    font-family: $f-serif-headline;
+    font-weight: 900;
+    line-height: 30px;
+
+    .inline-icon {
+        fill: $grey;
+        width: 30px;
+        height: 30px;
+        border: 1px solid $grey;
+        margin-right: 10px;
+    }
+
+    .inline-icon__svg{
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 5px;
+        fill: black;
+        display: block;
+    }
+}
+
+.recipe__images-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    top: 0;
+    width: 100%;
+
+    @include mq($from: tablet){
+        width: 40%;
+        position: fixed;
+        height: 100vh;
+        min-height: 600px;
+    }
+}
+
+.recipe__image__wrapper {
+    flex: 1 0 100%;
+    position: relative;
+}
+
+.recipe__image__wrapper.recipe {
+    display: none;
+
+    @include mq($from: tablet) {
+       display: block;
+    }
+}
+
+.recipe__image__wrapper--is-displayed {
+    order: -1;
+}
+
+.recipe__image {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+.recipe__label {
+    position: absolute;
+    z-index: 300;
+    background-color: #B72166;
+    height: 90px;
+    width: 160px;
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 70px;
+    color: white;
+    left: 1px;
+    top: 0;
+    line-height: initial;
+
+    @include mq($from: tablet) {
+        top: 5px;
+        left: 20px;
+    }
+}
+
+.recipe__article {
+    padding: 0 12px;
+    padding-bottom: 44px;
+
+}
+
+.recipe__article-wrapper {
+    @include mq($from: tablet){
+        width: 60%;
+        float: right;
+    }
+
+    @include mq($from: wide) {
+        width: 55%;
+    }
+}
+
+.recipe__article--headline, .recipe__article--content {
+    @include mq($from: tablet){
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.recipe__article--contributor {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    float: left;
+    margin-right: 12px;
+
+    @include mq($from: tablet){
+        margin-left: -90px;
+        position: fixed;
+    }
+}
+
+.recipe__article--headline {
+    margin-top: 6px;
+    margin-bottom: 24px;
+    color: $purple;
+
+    @include mq($from: tablet){
+        margin-top: 20px;
+    }
+
+    @include mq($from: wide) {
+        h1{
+            padding-right: $padding-wide;
+        }
+    }
+}
+
+.recipe__content {
+    padding-top: 6px;
+    border-top: 1px solid $grey;
+
+    p {
+        font-size: 18px;
+
+        @include mq($from: tablet) {
+            padding-right: 50px;
+        }
+
+        @include mq($from: wide) {
+            padding-right: $padding-wide;
+        }
+    }
+}
+
+.recipe__content > *:nth-child(n+3) {
+   display: none;
+}
+
+.recipe__content.js-visible > *:nth-child(n+3) {
+    display: block;
+}
+
+.recipe__article--read-more.js-x-sign {
+    svg {
+       transform: rotate(45deg);
+    }
+}
+
+.recipe__article--meta {
+    padding-top: 10px;
+}
+
+.recipe__article--meta .content__series-label {
+    float: none;
+}
+
+.recipe__content figure.element,
+.recipe__content aside.element {
+    margin-left: 0;
+
+    h1 {
+        font-size: 14px;
+    }
+}
+
+.recipe__article--next-recipe {
+    opacity: 0;
+    position: fixed;
+    bottom: 0px;
+    transition: opacity 0.5s ease-in-out;
+
+    @include mq($from: tablet) {
+        color: $grey-three;
+    }
+    .kicker {
+        color: $purple;
+
+        &:after {
+            content: '/';
+            color: rgba(51,51,51,0.2);
+        }
+    }
+    &.visible {
+        opacity: 1;
+    }
+}
+.recipe__article--next-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    float: left;
+    border: 1px solid lighten(#333, 50%);
+    margin-left: 12px;
+    margin-right: 12px;
+    z-index: 200;
+    position: relative;
+    margin-bottom: 6px;
+    transition: transform 0.5s ease-in-out;
+    transform: rotate(90deg);
+
+    @include mq($from: tablet) {
+        width: 60px;
+        height: 60px;
+        float: left;
+        border: 1px solid $grey;
+        margin-left: -72px;
+    }
+
+    .inline-icon {
+        fill: black;
+    }
+
+    svg {
+        margin-left: auto;
+        margin-right: auto;
+        @include mq($from: tablet) {
+            width: 60px;
+            height: 60px;
+        }
+    }
+
+    &.top {
+        transform: rotate(270deg);
+    }
+}
+
+.recipe__article--next-text {
+    position: inherit;
+    bottom: 0px;
+    padding-left: 15%;
+    padding-right: 4%;
+    background-color: $grey;
+    padding-bottom: 6px;
+    padding-top: 6px;
+    transform: translateY(100%);
+    transition: transform 0.5s ease-in-out;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 40px;
+
+    &.visible{
+        transform: translateY(0%);
+    }
+
+    h2 {
+        font-size: 18px;
+        line-height: 18px;
+    }
+    @include mq($from: tablet) {
+        background-color: #fff;
+        padding-left: 1%;
+        padding-bottom: 14px;
+        h2 {
+            font-size: 22px;
+            line-height: 24px;
+        }
+    }
+}
+
+.recipe__article--structured {
+    margin-top: 36px;
+    border-top: 4px solid $grey;
+    padding-top: 8px;
+
+    @include mq($from: tablet) {
+        margin-top: 50px;
+    }
+    .structured-meta {
+        font-family: $f-serif-headline;
+        font-size: 16px;
+        font-weight: 900;
+    }
+
+    .structured-meta__circle {
+        border: 1px solid $purple;
+        width: 30px;
+        height: 27px;
+        margin-right: 6px;
+        text-align: center;
+        padding-top: 3px;
+        color: $purple;
+
+        &:nth-child(2) {
+            margin-left: 12px;
+        }
+    }
+}
+
+.recipe__article--structured-image {
+    img {
+        width: 100%;
+        margin-top: -8px;
+    }
+    margin-bottom: 12px;
+}
+
+.recipe__article--structured-headline {
+    margin-bottom: 24px;
+
+    @include mq($from: wide){
+        h1 {
+            padding-right: $padding-wide;
+        }
+    }
+}
+
+.recipe__article--structured-meta {
+    margin-bottom: 8px;
+}
+
+.recipe__article--structured-ingredients {
+    margin-bottom: 24px;
+    margin-top: 18px;
+
+    @include mq($from: tablet){
+        -webkit-columns:2;
+        padding-right: 50px;
+    }
+
+    @include mq($from: wide) {
+        padding-right: $padding-wide;
+    }
+
+    ul {
+        -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-top: -6px !important;
+    }
+}
+
+.ingredients-list, .method-list {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+.ingredients-list {
+    li:not(.ingredients-title) {
+        font-family: $f-sans-serif-text;
+        font-size: 14px;
+        border-top: 1px solid $grey;
+        margin-bottom: 6px;
+    }
+}
+
+.ingredients-title {
+    border-top: 4px solid $purple;
+    font-family: $f-serif-headline;
+    font-weight: 900;
+    color: $purple;
+    margin-bottom: 12px;
+}
+
+.method-list {
+    margin-bottom: 24px;
+
+    @include mq($from: tablet) {
+        padding-right: 50px;
+    }
+
+    @include mq($from: wide) {
+        padding-right: $padding-wide;
+    }
+
+    li {
+        border-top: 1px solid $grey;
+        margin-bottom: 24px;
+    }
+    .number {
+        font-size: 48px;
+        font-family: $f-serif-headline;
+        font-weight: 200;
+        float: left;
+        line-height:0px;
+        margin-top: 26px;
+        margin-right: 12px;
+        color: $purple;
+    }
+}

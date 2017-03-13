@@ -1,0 +1,23 @@
+@(page: model.Page, isAutoDeletion: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@main(page, projectName = Option("identity")){
+}{
+    <div class="identity-wrapper monocolumn-wrapper">
+        @if(isAutoDeletion) {
+            <h1 class="identity-title">Your account has been successfully deleted.</h1>
+
+            <div class="identity-section">
+                Momentarily you will be signed out and redirected to the main Guardian home page.
+            </div>
+
+            <script>setTimeout(function () { window.location.href = "https://profile.theguardian.com/signout"; }, 7000);</script>
+        } else {
+            <h1 class="identity-title">Your account deletion request has been successfully submitted.</h1>
+
+            <div class="identity-section">
+                Our User Help agents are processing your request and will send you a confirmation email as soon as they have fully deleted your account.
+                Meanwhile you may continue to use your account. If you require further clarification please email our <a href="mailto:userhelp@@theguardian.com" data-link-name="Email Userhelp">Userhelp</a> who will be happy to help.
+            </div>
+        }
+    </div>
+}

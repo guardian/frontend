@@ -6,7 +6,7 @@ define([
     'lib/$',
     'lib/storage',
     'lib/config',
-    'lib/template',
+    'lodash/utilities/template',
     'common/views/svg',
     'common/modules/onward/history',
     'lib/ajax',
@@ -40,12 +40,12 @@ define([
     return function () {
         this.id = 'RecommendedForYouRecommendations';
         this.start = '2017-01-17';
-        this.expiry = '2017-03-08';
+        this.expiry = '2017-04-05';
         this.author = 'David Furey';
         this.description = 'Add an extra container above Opinion on the home front with recommended content based on ' +
             'each users history.  Users in the test group are prompted to opt-in.  Recommendations are only fetched' +
             'if the user opts-in.';
-        this.audience = 0.02;
+        this.audience = 0.05;
         this.audienceOffset = 0.2;
         this.successMeasure = 'Visit frequency';
         this.audienceCriteria = 'All users';

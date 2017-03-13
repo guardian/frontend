@@ -2,7 +2,7 @@ define([
     'qwery',
     'bean',
     'lib/$',
-    'lib/template',
+    'lodash/utilities/template',
     'raw-loader!common/views/ui/video-ads-skip-overlay.html'
 ], function(
     qwery,

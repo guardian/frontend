@@ -10,7 +10,7 @@ define([
     'lib/detect',
     'lib/fetch',
     'lib/mediator',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/robust',
     'common/modules/analytics/google',
     'lodash/collections/contains',
@@ -117,16 +117,14 @@ define([
                 });
 
                 fastdom.write(function () {
-                    if (formTitle) {
-                        $('.js-email-sub__heading', el).text(formTitle);
-                    }
-
                     if (formDisplayNameNormalText) {
                         $('.js-email-sub__display-name-normal-text', el).text(formDisplayNameNormalText);
-                    }
 
-                    if (formDisplayNameAccentedText) {
-                        $('.js-email-sub__display-name-accented-text', el).text(formDisplayNameAccentedText);
+                        if (formDisplayNameAccentedText) {
+                            $('.js-email-sub__display-name-accented-text', el).text(formDisplayNameAccentedText);
+                        }
+                    } else if (formTitle) {
+                        $('.js-email-sub__heading', el).text(formTitle);
                     }
 
                     if (formDescription) {
@@ -163,7 +161,7 @@ define([
                 if (userFromId && userFromId.primaryEmailAddress) {
                     fastdom.write(function () {
                         $('.js-email-sub__inline-label', el).addClass('email-sub__inline-label--is-hidden');
-                        $('.js-email-sub__submit-input', el).addClass('email-sub__submit-input--solo');
+                        $('.js-email-sub__submit-button', el).addClass('email-sub__submit-button--solo');
                         $('.js-email-sub__text-input', el).val(userFromId.primaryEmailAddress);
                     });
                 }
