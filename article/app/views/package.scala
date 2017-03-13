@@ -64,6 +64,8 @@ object BodyCleaner {
       ExploreVideos(article.isExplore),
       PhotoEssayImages(article.isPhotoEssay),
       PhotoEssayQuotes(article.isPhotoEssay),
+      PhotoEssayHalfWidth(article.isPhotoEssay),
+      PhotoEssayShareIcons(article.isPhotoEssay),
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
       MinuteCleaner(article)

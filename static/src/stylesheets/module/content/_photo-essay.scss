@@ -1,8 +1,9 @@
 .content--article {
-    .element-image--photo-esssay {
+    .element-image--photo-essay {
         padding-bottom: 0;
-        margin-bottom: 0.5rem;
+        margin-bottom: $gs-baseline;
 
+        //importants here to overide previously set !important
         &.fig--no-caption.fig--has-shares {
             padding-bottom: 0px !important;
         }
@@ -16,11 +17,11 @@
         }
         .article__fullscreen {
             background-color: transparent;
-            border:1px solid rgba($neutral-6,0.5);
+            border: 1px solid rgba($neutral-6,0.5);
         }
 
         &:hover .article__fullscreen {
-            background-color: white;
+            background-color: #ffffff;
             border: none;
         }
 
@@ -36,43 +37,43 @@
         }
 
         &.element--supporting {
-          .caption {
-              max-width: 100%;
-          }
+            .caption {
+                max-width: 100%;
+            }
         }
 
         &.element--halfWidth {
-          width: 50%;
-          float: left;
-          margin-top: 0;
-          margin-bottom: 2px;
+            width: 49%;
+            float: left;
+            margin-top: 0;
+            margin-bottom: 2%;
 
-          .inline-expand-image {
-            display: none;
-          }
+            .inline-expand-image {
+                display: none;
+            }
 
-          &:before{
-            content: '';
-            display: block;
-            width: 2px;
-            top: 0px;
-            bottom: 0px;
-            z-index: 300;
-            position: absolute;
-            background-color: white;
-          }
+            &:before {
+                content: '';
+                display: block;
+                width: 2px;
+                top: 0;
+                bottom: 0;
+                z-index: 300;
+                position: absolute;
+                background-color: #ffffff;
+            }
 
-          & + p {
-            clear: both;
-            padding-top: 6px;
-          }
-
+            & + p {
+                clear: both;
+                padding-top: $gs-baseline / 2;
+            }
         }
-
+        &.element--halfWidth.half-width-odd {
+            margin-right: 2%;
+        }
     }
 
-
-    .element-pullquote--photoEssay {
+    .element-pullquote--photo-essay {
         .pullquote-paragraph {
             color: $news-main-1;
         }
@@ -85,9 +86,9 @@
         &.element--halfWidth {
             width: 48%;
             float: left;
-            margin-right: 20px;
+            margin-right: $gs-gutter;
             border-bottom: none;
-            margin-top: 6px;
+            margin-top: $gs-baseline / 2;
         }
     }
 }

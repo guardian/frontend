@@ -79,8 +79,8 @@ final case class Content(
     metadata.contentType.toLowerCase == "gallery" && !metadata.commercial.exists(_.isPaidContent)
   }
   lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore || isPhotoEssay
   lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
   lazy val isRecipeArticle: Boolean = atoms.fold(false)(a => a.recipes.nonEmpty)

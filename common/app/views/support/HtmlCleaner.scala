@@ -446,7 +446,7 @@ case class PhotoEssayImages(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isPhotoEssay) {
       document.getElementsByTag("figure").filter(_.hasClass("element-image"))foreach{ images =>
-        images.addClass("element-image--photo-esssay")
+        images.addClass("element-image--photo-essay")
       }
     }
     document
@@ -457,12 +457,37 @@ case class PhotoEssayQuotes(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isPhotoEssay) {
       document.getElementsByClass("element-pullquote").foreach{ quotes =>
-        quotes.addClass("element-pullquote--photoEssay")
+        quotes.addClass("element-pullquote--photo-essay")
       }
     }
     document
   }
 }
+
+case class PhotoEssayHalfWidth(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isPhotoEssay) {
+      document.getElementsByTag("figure").filter(_.hasClass("element--halfWidth")).zipWithIndex.foreach{ case(halfWidthImage, index) =>
+        if(index % 2 == 0) {
+          halfWidthImage.addClass("half-width-odd")
+        }
+      }
+    }
+    document
+  }
+}
+
+case class PhotoEssayShareIcons(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isPhotoEssay) {
+      document.getElementsByClass("block-share").foreach{ share =>
+        share.addClass("is-hidden")
+      }
+    }
+    document
+  }
+}
+
 
 case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
