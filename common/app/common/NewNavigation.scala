@@ -499,7 +499,10 @@ object NewNavigation {
       val isTagPage = (page.metadata.isFront || frontLikePages.contains(page.metadata.id)) && tagPages.contains(page.metadata.id)
       val isArticleInTagPageSection = commonKeywords.nonEmpty
 
-      if (isTagPage) {
+      // opinion pieces should always clearly be opinion pieces, regardless of other keywords
+      if (page.metadata.sectionId == "commentisfree") {
+        page.metadata.sectionId
+      } else if (isTagPage) {
         page.metadata.id
       } else if (isArticleInTagPageSection) {
         commonKeywords.head
