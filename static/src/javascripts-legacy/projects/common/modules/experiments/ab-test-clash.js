@@ -26,9 +26,9 @@ define([
         name: 'ContributionsEpicRegulars',
         variants: ['control', 'fairness_mild', 'fairness_strong', 'fairness_strong_alternate_hook', 'reliance']
 	};
-    var AcquisitionsEpicDesignVariations = {
-        name: 'AcquisitionsDesignVariations',
-        variants: ['control', 'extra_paragraph', 'large_hook', 'subtle', 'prominent', 'highlight']
+    var AcquisitionsEpicDesignVariationsV2 = {
+        name: 'AcquisitionsDesignVariationsV2',
+        variants: ['control','subtle_highlight']
     };
 
     var contributionsTests = [
@@ -37,7 +37,7 @@ define([
         ContributionsEpicAskFourStagger,
         ContributionsEpicAskFourEarning,
         ContributionsEpicRegulars,
-        AcquisitionsEpicDesignVariations
+        AcquisitionsEpicDesignVariationsV2
     ];
 
     var emailTests = [];

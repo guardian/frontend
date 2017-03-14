@@ -182,9 +182,9 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-design-variations",
+    "ab-acquisitions-epic-design-variations-v2",
     "Test design variations to the Epic",
-    owners = Seq(Owner.withGithub("Mullefa")),
+    owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 3, 17),
     exposeClientSide = true
