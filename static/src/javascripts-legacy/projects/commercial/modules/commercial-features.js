@@ -5,7 +5,8 @@ define([
     'lib/robust',
     'commercial/modules/user-features',
     'common/modules/identity/api',
-    'common/modules/user-prefs'
+    'common/modules/user-prefs',
+    'lib/cookies'
 ], function (
     location,
     config,
@@ -13,7 +14,8 @@ define([
     robust,
     userFeatures,
     identityApi,
-    userPrefs
+    userPrefs,
+    cookies
 ) {
     // Having a constructor means we can easily re-instantiate the object in a test
     function CommercialFeatures() {
@@ -52,6 +54,8 @@ define([
 
         var supportsSticky = document.documentElement.classList.contains('has-sticky');
 
+        var newRecipeDesign = config.page.showNewRecipeDesign && cookies.get("X-GU-ab-new-recipe-design");
+
         // Feature switches
 
         this.dfpAdvertising =
@@ -69,14 +73,25 @@ define([
             isArticle &&
             !isLiveBlog &&
             !isHosted &&
-            !config.page.newRecipeDesign;
+            !newRecipeDesign &&
+            switches.commercial;
 
         this.articleAsideAdverts =
             this.dfpAdvertising &&
             !isMinuteArticle &&
             !isMatchReport &&
             !!(isArticle || isLiveBlog) &&
-            !config.page.newRecipeDesign;
+            !newRecipeDesign &&
+            switches.commercial;
+
+        this.sliceAdverts =
+            this.dfpAdvertising &&
+            config.page.isFront &&
+            switches.commercial;
+
+        this.popularContentMPU =
+            this.dfpAdvertising &&
+            !isMinuteArticle;
 
         this.videoPreRolls =
             this.dfpAdvertising;
@@ -87,7 +102,8 @@ define([
             !isHosted &&
             !isInteractive &&
             !config.page.isFront &&
-            !config.page.newRecipeDesign;
+            !newRecipeDesign &&
+            switches.commercial;
 
         this.thirdPartyTags =
             externalAdvertising &&

@@ -218,7 +218,7 @@ final case class Content(
     ("isExplore", JsBoolean(isExplore)),
     ("isPaidContent", JsBoolean(isPaidContent)),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson))),
-    ("newRecipeDesign", JsBoolean(showNewRecipeDesign))
+    ("showNewRecipeDesign", JsBoolean(showNewRecipeDesign))
 
   )
 
