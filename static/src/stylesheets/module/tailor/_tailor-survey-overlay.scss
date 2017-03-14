@@ -16,7 +16,7 @@
 }
 
 .tailor-survey-overlay .tailor-survey-container {
-	width: 360px;
+	width: 380px;
 	height: 300px;
 	position: absolute;
 	margin: auto;
@@ -35,13 +35,19 @@
 	}
 
 	.tailor-survey-container-header {
-		height: 40px;
+		height: 42px;
 		width: 100%;
 		background-color: $news-support-1;
 		color: $neutral-1;
-		line-height: 40px;
+		line-height: 42px;
 		padding-left: 8px;
 		box-sizing: border-box;
+
+		.inline-marque-36 {
+			position: absolute;
+			top: 3px;
+			right: 8px;
+		}
 	}
 
 	h1,
@@ -67,13 +73,9 @@
 		border: 0;
 		border-radius: 20px;
 	    padding: 4px 8px 2px 12px;
-	    display: inline-block;
 	    margin-top: 12px;
 	    margin-left: 8px;
-	    // position: absolute;
-	    // bottom: 8px;
-	    // left: 8px;
-	    text-decoration: none;
+	    height: 42px;
 
 	    .inline-chevron-right {
 	    	fill: $guardian-brand;
@@ -84,6 +86,42 @@
 			height: 18px;
 			width: 9px;
 			margin-bottom: -4px;
+	    }
+
+	    &:hover {
+	    	background-color: #4bc6df;
+	    }
+
+	    &:focus {
+	    	outline:0;
+	    }
+	}
+
+	.tailor-survey-close-button {
+		border: 1px solid $neutral-6;
+		background-color: $guardian-brand;
+		height: 42px;
+		width: 42px;
+		border-radius: 21px;
+		position: absolute;
+		right: 8px;
+		bottom: 8px;
+	    padding-top: 9px;
+
+		.inline-cross svg {
+	    	fill: $neutral-6;
+	    }
+
+	    &:hover {
+	    	border-color: #fff;
+
+			.inline-cross svg {
+				fill: #fff;
+			}
+	    }
+
+	    &:focus {
+	    	outline:0;
 	    }
 	}
 }

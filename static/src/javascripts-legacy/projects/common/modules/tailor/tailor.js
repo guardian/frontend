@@ -10,8 +10,14 @@ define([
         });
     }
 
-    function getSurvey(browserId) {
-        return fetchJson('https://tailor.guardianapis.com/suggestions?browserId=' + browserId, {
+    function getSurvey(browserId, edition, forceShow) {
+        var path = 'https://tailor.guardianapis.com/orangeSurvey?browserId=' + browserId + '&edition=' + edition;
+
+        if (forceShow) {
+            path += '&forceShow=true';
+        }
+
+        return fetchJson(path, {
             method: 'get'
         })
     }
