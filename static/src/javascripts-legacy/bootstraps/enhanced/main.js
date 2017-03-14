@@ -194,7 +194,9 @@ define([
         checkDispatcher.init();
 
         // initialise tailor overlay survey
-        tailorSurveyOverlay.init();
+        if (config.switches.tailorSurveyOverlay) {
+            tailorSurveyOverlay.init();
+        }
 
         // Mark the end of synchronous execution.
         userTiming.mark('App End');
