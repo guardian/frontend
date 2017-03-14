@@ -217,7 +217,9 @@ final case class Content(
     ("isImmersive", JsBoolean(isImmersive)),
     ("isExplore", JsBoolean(isExplore)),
     ("isPaidContent", JsBoolean(isPaidContent)),
-    ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
+    ("campaigns", JsArray(campaigns.map(Campaign.toJson))),
+    ("newRecipeDesign", JsBoolean(isRecipeArticle))
+
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
