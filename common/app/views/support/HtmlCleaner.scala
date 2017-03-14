@@ -175,6 +175,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       case classes if classes.contains(Showcase.className) => Showcase
       case classes if classes.contains(Thumbnail.className) => Thumbnail
       case classes if classes.contains(Immersive.className) => Immersive
+      case classes if classes.contains(Halfwidth.className) => Halfwidth
       case _ => Inline
     }
   }
@@ -435,6 +436,57 @@ case class ExploreVideos(isExplore: Boolean) extends HtmlCleaner{
             elementVideoCaption.addClass("caption-explore")
             elementVideoCaption.prepend(videoCaptionSvg)
           }
+      }
+    }
+    document
+  }
+}
+
+case class PhotoEssayImages(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isPhotoEssay) {
+      document.getElementsByTag("figure").filter(_.hasClass("element-image"))foreach{ images =>
+        images.addClass("element-image--photo-essay")
+      }
+      document.getElementsByClass("block-share--article").foreach{ shares =>
+        shares.remove()
+      }
+    }
+    document
+  }
+}
+
+case class PhotoEssayQuotes(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isPhotoEssay) {
+      document.getElementsByClass("element-pullquote").foreach{ quotes =>
+        quotes.addClass("element-pullquote--photo-essay")
+      }
+    }
+    document
+  }
+}
+
+case class PhotoEssayHalfWidth(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isPhotoEssay) {
+      document.getElementsByTag("figure").filter(_.hasClass("element--halfWidth")).zipWithIndex.foreach{ case(halfWidthImage, index) =>
+        if(index % 2 == 0) {
+          halfWidthImage.addClass("half-width-odd")
+        }
+      }
+    }
+    document
+  }
+}
+
+case class PhotoEssayBlockQuote(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isPhotoEssay) {
+      document.getElementsByTag("blockquote").foreach{ blockquotes =>
+        if(!blockquotes.children().is(".pullquote-paragraph")){
+          blockquotes.addClass("photo-essay-block-quote")
+        }
       }
     }
     document

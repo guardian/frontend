@@ -1,20 +1,16 @@
 define([
     'lib/raven',
     'lib/fastdom-promise',
-    'lib/QueueAsync',
     'Promise',
     'common/modules/article/spacefinder'
 ], function (
     raven,
     fastdom,
-    QueueAsync,
     Promise,
     spacefinder
 ) {
-    var queue;
-
     function SpaceFiller() {
-        queue = new QueueAsync(onError);
+        this.queue = Promise.resolve();
     }
 
     /**
@@ -32,7 +28,7 @@ define([
      */
     SpaceFiller.prototype.fillSpace = function (rules, writer, options) {
         var write = (options && options.domWriter) || fastdom.write;
-        return queue.add(insertNextContent);
+        return this.queue = this.queue.then(insertNextContent).catch(onError);
 
         function insertNextContent() {
             return spacefinder.findSpace(rules, options).then(onSpacesFound, onNoSpacesFound);

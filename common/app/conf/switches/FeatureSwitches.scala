@@ -486,15 +486,16 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2017, 4, 5),
     exposeClientSide = true
   )
-
-  val AmpOphanTrackingIncludesCredentials = Switch(
+  
+  val ArticleWithStructuredRecipe = Switch(
     SwitchGroup.Feature,
-    "amp-ophan-tracking-includes-credentials",
-    "allows access to id field when page viewed from google cache so that we keep tracking consistent",
-    owners = Seq(Owner.withGithub("michaelwmcnamara")),
+    "is-article-with-structured-recipe-data",
+    "changes design of articles with strucutred recipe data",
+    owners = Seq(Owner.withGithub("tsop14"), Owner.withGithub("blongden73")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 10),
+    sellByDate = new LocalDate(2017, 4, 4),
     exposeClientSide = true
 
   )
+
 }
