@@ -69,3 +69,29 @@
 .contributions__paragraph--highlight {
     background-color: transparentize($multimedia-main-2, .6);
 }
+
+.contributions__epic--paypal {
+    background-repeat: no-repeat;
+    background-size: 110px;
+    background-position: 85% 92.5%;
+
+    @include mq(phablet) {
+        background-position-y: 94.5%;
+    }
+
+    .contributions__amount-field {
+        flex-direction: column;
+
+        @include mq(phablet) {
+            flex-direction: row;
+        }
+    }
+
+    .contributions__contribute--epic-member-top {
+        margin-bottom: $gs-baseline / 2;
+
+        @include mq(phablet) {
+            margin-bottom: 0;
+        }
+    }
+}
