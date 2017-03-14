@@ -25,11 +25,11 @@ define([
     var EDITION_CONFIG = {
         default: {
             copy: 'Take part in a survey for the Guardian and win Amazon vouchers',
-            url: 'http://sunesis.equinoa.com/1703/BLU/cgi-bin/ciwweb.pl?hid_studyname=BLU&v=c&id='
+            url: 'http://sunesis.equinoa.com/1703/BLU/cgi-bin/ciwweb.pl?hid_studyname=BLU&v=c'
         },
         AU: {
             copy: 'We would like you to take part in a short Guardian survey',
-            url: 'http://sunesis.equinoa.com/1703/BLUau/cgi-bin/ciwweb.pl?hid_studyname=BLUau&v=c&id='
+            url: 'http://sunesis.equinoa.com/1703/BLUau/cgi-bin/ciwweb.pl?hid_studyname=BLUau&v=c'
         }
     };
 
@@ -68,8 +68,12 @@ define([
         var closeButton = surveyOverlay.querySelector('.tailor-survey-close-button');
         var surveyURL = getEditionConfigProp('url');
 
+        if (config.ophan && config.ophan.pageViewId) {
+            surveyURL += '&id=' + config.ophan.pageViewId;
+        }
+
         proceedButton.addEventListener('click', function () {
-            window.location = surveyURL;
+            window.location = surveyURL; 
         });
 
         closeButton.addEventListener('click', function () {
