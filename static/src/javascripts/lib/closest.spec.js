@@ -1,8 +1,14 @@
 // @flow
 
-import { _closestPoly } from './closest';
+import closest from './closest';
 
-beforeEach(() => {
+const closestProto = Element.prototype.closest;
+let nestedChild;
+
+beforeAll(() => {
+    // Remove the closest method from Element so we test the polyfill
+    delete Element.prototype.closest;
+
     if (document.body) {
         document.body.innerHTML = `
         <div class="greatgrandparent">
@@ -15,32 +21,40 @@ beforeEach(() => {
             </div>
         </div>`;
     }
+
+    nestedChild = document.querySelector('.child');
+});
+
+afterAll(() => {
+    // Flow moans that I'm assigning something to a prototype
+    // $FlowFixMe
+    Element.prototype.closest = closestProto;
 });
 
 describe('closest', () => {
+    test("Element.prototype.closest doesn't exist", () => {
+        expect('closest' in Element.prototype).toBe(false);
+    });
+
     test('Finds the parent element when selector exists', () => {
-        const nestedChild = document.querySelector('.child');
-        expect(_closestPoly(nestedChild, '.parent')).toEqual(
+        expect(closest(nestedChild, '.parent')).toEqual(
             document.querySelector('.parent')
         );
     });
 
     test('Finds the grandparent element when selector exists', () => {
-        const nestedChild = document.querySelector('.child');
-        expect(_closestPoly(nestedChild, '.grandparent')).toEqual(
+        expect(closest(nestedChild, '.grandparent')).toEqual(
             document.querySelector('.grandparent')
         );
     });
 
     test('Finds the first element when multiple selectors exist', () => {
-        const nestedChild = document.querySelector('.child');
-        expect(_closestPoly(nestedChild, '.greatgrandparent')).toEqual(
+        expect(closest(nestedChild, '.greatgrandparent')).toEqual(
             document.querySelector('.findthisone')
         );
     });
 
     test('Returns null if there is no element with the selector', () => {
-        const nestedChild = document.querySelector('.child');
-        expect(_closestPoly(nestedChild, '.nonelement')).toEqual(null);
+        expect(closest(nestedChild, '.nonelement')).toEqual(null);
     });
 });
