@@ -445,7 +445,9 @@ CommentBox.prototype.setExpanded = function() {
     this.setState('expanded');
     if (this.options.paymentRequired) {
         this.setState('expanded-payment-required');
-        this.getElem('payment-cta-button__content').href = config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_A_PDCOM_' + this.options.testVariant.toUpperCase();
+        var payLinkUrl = config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_A_PDCOM_' + this.options.testVariant.toUpperCase();
+        payLinkUrl = payLinkUrl + '&returnUrl=' + encodeURIComponent(document.location.href + '#comments');
+        this.getElem('payment-cta-button__content').href = payLinkUrl;
         this.on('click', this.getClass('payment-cta-cancel-button'), this.clearPaymentRequired);
     }
 };
