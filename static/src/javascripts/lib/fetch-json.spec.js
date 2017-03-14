@@ -1,58 +1,68 @@
+import Chance from 'chance';
+import fakeConfig from 'lib/config';
+import fetchSpy from 'lib/fetch';
 import fetchJson from 'lib/fetch-json';
+
+const chance = new Chance();
 
 jest.mock('lib/config', () => ({
     page: {
-        ajaxUrl: 'foo'
-    }
+        ajaxUrl: 'foo',
+    },
 }));
 
-describe('Fetch JSON util', function () {
-    beforeEach(function () {
-        this.xhr = sinon.useFakeXMLHttpRequest();
-        var requests = this.requests = [];
-        this.xhr.onCreate = function (xhr) {
-            requests.push(xhr);
-        };
+jest.mock('lib/fetch', () => jest.fn());
+
+describe('Fetch JSON util', () => {
+    beforeEach(() => {
     });
-    afterEach(function () {
-        this.xhr.restore();
+    afterEach(() => {
     });
 
-    it('returns a promise which rejects on network errors', function (done) {
+    it('returns a promise which rejects on network errors', done => {
+        const error = new Error(chance.string());
+        fetchSpy.mockReturnValueOnce(Promise.reject(error));
+
         fetchJson('error-path')
-            .then(done.fail)
-            .catch(function (ex) {
-                expect(ex instanceof Error).toBe(true, 'rejects an error');
-                expect(ex.message).toMatch(/fetch error/i);
+            .catch(ex => {
+                expect(ex).toBe(error, 'rejects an error');
             })
             .then(done)
             .catch(done.fail);
-
-        this.requests[0].respond(0, {}, 'invalid');
     });
 
-    it('returns a promise which rejects invalid json responses', function (done) {
+    it('returns a promise which rejects invalid json responses', done => {
+        fetchSpy.mockReturnValueOnce(Promise.resolve({
+            text() {
+                return Promise.resolve(chance.string())
+            }
+        }));
+
         fetchJson('404-error-response')
-            .catch(function (ex) {
+            .catch(ex => {
                 expect(ex instanceof Error).toBe(true, 'rejects an error');
-                expect(ex.message).toMatch(/json/i);
+                expect(ex.message).toMatch(/JSON/i);
             })
             .then(done)
             .catch(done.fail);
-
-        this.requests[0].respond(200, {}, 'Plain text');
     });
 
-    it('resolves a correct response in json', function (done) {
+    it('resolves a correct response in json', done => {
+        const jsonData = {
+            [chance.string()]: chance.string()
+        };
+
+        fetchSpy.mockReturnValueOnce(Promise.resolve({
+            text() {
+                return Promise.resolve(JSON.stringify(jsonData))
+            }
+        }));
+
         fetchJson('correct-json')
-            .then(function (response) {
-                expect(response).toEqual({
-                    json: true
-                });
+            .then(response => {
+                expect(response).toEqual(jsonData);
             })
             .then(done)
             .catch(done.fail);
-
-        this.requests[0].respond(200, {}, '{"json":true}');
     });
 });
