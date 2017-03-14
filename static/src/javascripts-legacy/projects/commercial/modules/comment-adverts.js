@@ -27,7 +27,7 @@ define([
         }
 
         mediator.once('modules:comments:renderComments:rendered', function () {
-            var $commentMainColumn = $('.content__main-column', '.js-comments');
+            var $commentMainColumn = $('.js-comments .content__main-column');
 
             fastdom.read(function () {
                 return $commentMainColumn.dim().height;
