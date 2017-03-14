@@ -11,7 +11,7 @@
 import raven from 'lib/raven';
 
 function reportError(
-    err: Error,
+    err: Object,
     tags: Object,
     shouldThrow: ?boolean = true
 ): void {
