@@ -1,7 +1,6 @@
 define([
     'Promise',
     'lib/config',
-    'lib/mediator',
     'lib/robust',
     'lib/user-timing',
     'lib/report-error',
@@ -29,7 +28,6 @@ define([
 ], function (
     Promise,
     config,
-    mediator,
     robust,
     userTiming,
     reportError,
@@ -131,7 +129,6 @@ define([
 
         return loadModules(commercialModules, performanceLogging.primaryBaseline)
         .then(function () {
-            mediator.emit('page:commercial:ready');
             userTiming.mark('commercial end');
             robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
                 ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
