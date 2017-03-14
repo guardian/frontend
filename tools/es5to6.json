@@ -21,7 +21,6 @@
     "lib/fastdom-promise.js"
   ],
   "Simon Adcock": [
-    "lib/fetch-json.js",
     "lib/fetch.js",
     "lib/formatters.js",
     "lib/formInlineLabels.js",
