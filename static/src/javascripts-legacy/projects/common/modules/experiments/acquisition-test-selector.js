@@ -1,5 +1,6 @@
 define([
     'common/modules/experiments/segment-util',
+    'common/modules/experiments/test-can-run-checks',
     'common/modules/commercial/acquisitions-view-log',
     'common/modules/experiments/tests/contributions-epic-brexit',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
@@ -9,6 +10,7 @@ define([
     'common/modules/experiments/tests/acquisitions-epic-design-variations'
 ], function (
     segmentUtil,
+    testCanRunChecks,
     viewLog,
     brexit,
     alwaysAsk,
@@ -41,7 +43,7 @@ define([
                     viewLog.viewsInPreviousDays(variant.maxViews.minDaysBetweenViews) === 0) ||
                     variant.isUnlimited);
 
-                return forced || (t.canRun() && segmentUtil.isInTest(t) && hasNotReachedRateLimit);
+                return forced || (testCanRunChecks.testCanBeRun(t) && segmentUtil.isInTest(t) && hasNotReachedRateLimit);
             });
 
             return eligibleTests[0] && new eligibleTests[0]();
