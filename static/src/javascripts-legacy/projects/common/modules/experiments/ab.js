@@ -6,7 +6,6 @@ define([
     'lib/storage',
     'lodash/arrays/compact',
     'lodash/utilities/noop',
-    'ophan/ng',
     'common/modules/experiments/segment-util',
     'common/modules/experiments/test-can-run-checks',
     'common/modules/experiments/acquisition-test-selector',
