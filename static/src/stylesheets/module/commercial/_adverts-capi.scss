@@ -374,3 +374,19 @@
         display: none;
     }
 }
+
+.adverts--within-unbranded {
+    .advert--capi {
+        border-color: $paid-article-brand;
+    }
+    .advert__title {
+        @include fs-headline(3, true);
+        .inline-icon {
+            margin: 0;
+        }
+    }
+    .advert__standfirst {
+        display: none;
+    }
+}
+
