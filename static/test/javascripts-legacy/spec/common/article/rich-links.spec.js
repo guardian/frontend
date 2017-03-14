@@ -4,7 +4,7 @@ define([
     'helpers/fixtures',
 
     'lib/$',
-    'lib/template',
+    'lodash/utilities/template',
 
     'raw-loader!common/views/content/richLinkTag.html'
 ], function (

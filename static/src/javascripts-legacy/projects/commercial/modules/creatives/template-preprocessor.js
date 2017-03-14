@@ -1,5 +1,5 @@
 define([
-    'lib/template',
+    'lodash/utilities/template',
     'lodash/utilities/identity',
     'raw-loader!commercial/views/creatives/manual-card.html',
     'raw-loader!commercial/views/creatives/manual-card-large.html',

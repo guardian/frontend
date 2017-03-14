@@ -50,8 +50,6 @@ define([
             ga.trackPerformance('Javascript Load', 'enhancedStart', 'Enhanced start parse time');
         });
 
-        bootstrapContext('common', common);
-
         //
         // A/B tests
         //
@@ -65,6 +63,8 @@ define([
 
             ab.trackEvent();
         });
+
+        bootstrapContext('common', common);
 
         // geolocation
         robust.catchErrorsAndLog('geolocation', geolocation.init);

@@ -3,27 +3,37 @@
         "production": {
             "presets": [
                 ["env", {
-                    "modules": false
+                    "modules": "amd"
                 }]
             ],
             "plugins": [
-                "transform-runtime",
-                "transform-flow-strip-types",
-                "add-module-exports",
-                "transform-es2015-modules-amd"
+                "babel-plugin-transform-runtime",
+                "babel-plugin-transform-flow-strip-types",
+                "babel-plugin-add-module-exports",
             ],
         },
         "development": {
             "presets": [
                 ["env", {
-                    "modules": false
+                    "modules": "amd"
                 }]
             ],
             "plugins": [
-                "transform-runtime",
-                "transform-flow-strip-types",
-                "add-module-exports",
-                "transform-es2015-modules-amd"
+                "babel-plugin-transform-runtime",
+                "babel-plugin-transform-flow-strip-types",
+                "babel-plugin-add-module-exports",
+            ],
+        },
+        "test": {
+            "presets": [
+                ["env", {
+                    "targets": {
+                        "node": "current"
+                    }
+                }]
+            ],
+            "plugins": [
+                "babel-plugin-transform-flow-strip-types",
             ],
         },
         "internal": {
@@ -47,8 +57,9 @@
                 }]
             ],
             "plugins": [
-                "transform-runtime",
-                "transform-flow-strip-types"
+                "babel-plugin-transform-runtime",
+                "babel-plugin-transform-flow-strip-types",
+                "babel-plugin-add-module-exports",
             ],
         },
     },

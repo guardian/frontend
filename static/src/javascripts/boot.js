@@ -77,5 +77,21 @@ domready(() => {
             },
             'commercial'
         );
+    } else if (window.guardian.isEnhanced) {
+        userTiming.mark('enhanced request');
+        require.ensure(
+            [],
+            require => {
+                userTiming.mark('enhanced boot');
+                require('bootstraps/enhanced/main')();
+
+                if (document.readyState === 'complete') {
+                    capturePerfTimings();
+                } else {
+                    window.addEventListener('load', capturePerfTimings);
+                }
+            },
+            'enhanced-no-commercial'
+        );
     }
 });
