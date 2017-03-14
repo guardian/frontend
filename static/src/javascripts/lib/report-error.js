@@ -13,7 +13,7 @@ import raven from 'lib/raven';
 function reportError(
     err: Error,
     tags: Object,
-    shouldThrow: Boolean = true
+    shouldThrow: ?boolean = true
 ): void {
     raven.captureException(err, { tags });
 
