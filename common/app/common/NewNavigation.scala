@@ -289,7 +289,7 @@ object NewNavigation {
       SectionsLink("australia-news/indigenous-australians", indigenousAustralia, News),
 
       SectionsLink("commentisfree", opinion, Opinion),
-      SectionsLink("cartoons", cartoons, Opinion),
+      SectionsLink("type/cartoon", cartoons, Opinion),
       SectionsLink("index/contributors", columnists, Opinion),
       SectionsLink("commentisfree/series/comment-is-free-weekly", inMyOpinion, Opinion),
       SectionsLink("profile/editorial", theGuardianView, Opinion),
@@ -490,7 +490,8 @@ object NewNavigation {
       "football/tables",
       "football/competitions",
       "football/results",
-      "football/fixtures"
+      "football/fixtures",
+      "type/cartoon"
     )
 
     def getSectionOrTagId(page: Page) = {
