@@ -1,7 +1,8 @@
+// @flow
+
 import Chance from 'chance';
-import fakeConfig from 'lib/config';
 import fetchSpy from 'lib/fetch';
-import fetchJson from 'lib/fetch-json';
+import fetchJson from './fetch-json';
 
 const chance = new Chance();
 
@@ -14,11 +15,6 @@ jest.mock('lib/config', () => ({
 jest.mock('lib/fetch', () => jest.fn());
 
 describe('Fetch JSON util', () => {
-    beforeEach(() => {
-    });
-    afterEach(() => {
-    });
-
     it('returns a promise which rejects on network errors', done => {
         const error = new Error(chance.string());
         fetchSpy.mockReturnValueOnce(Promise.reject(error));
@@ -32,11 +28,13 @@ describe('Fetch JSON util', () => {
     });
 
     it('returns a promise which rejects invalid json responses', done => {
-        fetchSpy.mockReturnValueOnce(Promise.resolve({
-            text() {
-                return Promise.resolve(chance.string())
-            }
-        }));
+        fetchSpy.mockReturnValueOnce(
+            Promise.resolve({
+                text() {
+                    return Promise.resolve(chance.string());
+                },
+            })
+        );
 
         fetchJson('404-error-response')
             .catch(ex => {
@@ -49,14 +47,16 @@ describe('Fetch JSON util', () => {
 
     it('resolves a correct response in json', done => {
         const jsonData = {
-            [chance.string()]: chance.string()
+            [chance.string()]: chance.string(),
         };
 
-        fetchSpy.mockReturnValueOnce(Promise.resolve({
-            text() {
-                return Promise.resolve(JSON.stringify(jsonData))
-            }
-        }));
+        fetchSpy.mockReturnValueOnce(
+            Promise.resolve({
+                text() {
+                    return Promise.resolve(JSON.stringify(jsonData));
+                },
+            })
+        );
 
         fetchJson('correct-json')
             .then(response => {
