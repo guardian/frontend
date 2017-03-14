@@ -191,11 +191,11 @@ define([
         });
 
         // initialise email/outbrain check dispatcher
-        checkDispatcher.init();
+        bootstrapContext('checkDispatcher', checkDispatcher);
 
         // initialise tailor overlay survey
         if (config.switches.tailorSurveyOverlay) {
-            tailorSurveyOverlay.init();
+            bootstrapContext('tailorSurveyOverlay', tailorSurveyOverlay);
         }
 
         // Mark the end of synchronous execution.

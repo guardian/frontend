@@ -49,6 +49,11 @@ define([
 
             return fastdomPromise.write(function () {
                 var surveyOverlay = document.createElement('div');
+                var surveyURL = getEditionConfigProp('url');
+
+                if (config.ophan && config.ophan.pageViewId) {
+                    surveyURL += '&id=' + config.ophan.pageViewId;
+                }
 
                 surveyOverlay.classList.add(COMPONENT_NAME);
                 surveyOverlay.dataset.component = COMPONENT_NAME;
@@ -57,29 +62,24 @@ define([
                     headerCopy: getEditionConfigProp('copy'),
                     chevronRight: svgs('chevronRight'),
                     cross: svgs('crossIcon'),
-                    marque36icon: svgs('marque36icon')
+                    marque36icon: svgs('marque36icon'),
+                    surveyURL: surveyURL
                 });
 
                 document.body.appendChild(surveyOverlay);
 
-                setupButtonClickEvents(surveyOverlay);
+                setupCloseButtonClickEvent(surveyOverlay);
+
+                mediator.emit('register:end', COMPONENT_NAME);
+                
+                cookies.add('GU_TAILOR_SURVEY_OVERLAY', 1, 100); // do not show this survey to the user for the next 100 days
             });
         }
     }
 
-    function setupButtonClickEvents(surveyOverlay) {
-        var proceedButton = surveyOverlay.querySelector('.tailor-survey-proceed-button');
-        var closeButton = surveyOverlay.querySelector('.tailor-survey-close-button');
-        var surveyURL = getEditionConfigProp('url');
-
-        if (config.ophan && config.ophan.pageViewId) {
-            surveyURL += '&id=' + config.ophan.pageViewId;
-        }
-
-        proceedButton.addEventListener('click', function () {
-            window.location = surveyURL; 
-        });
-
+    function setupCloseButtonClickEvent(surveyOverlay) {
+        var closeButton = surveyOverlay.querySelector('.tailor-survey-overlay__close-button');
+        
         closeButton.addEventListener('click', function () {
            surveyOverlay.parentNode.removeChild(surveyOverlay); 
         });
@@ -93,19 +93,13 @@ define([
         }
     }
 
-    function onSurveyAdded() {
-        mediator.emit('register:end', COMPONENT_NAME);
-        cookies.add('GU_TAILOR_SURVEY_OVERLAY', 1, 100); // do not show this survey to the user for the next 100 days
-    }
-
     function init() {
         var bwid = cookies.get('bwid');
         var forceShow = storage.local.get('gu.tailorSurvey.forceShow') || false;
 
         if (bwid && shouldCallTailor(forceShow)) {
             tailor.getSurvey(bwid, config.page.edition, forceShow)
-                .then(handleResponse)
-                .then(onSurveyAdded);
+                .then(handleResponse);
         }
     }
 

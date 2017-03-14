@@ -1,21 +1,21 @@
 .tailor-survey-overlay,
-.tailor-survey-background {
+.tailor-survey-overlay__background {
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
-	z-index: 1050;
+	z-index: $zindex-overlay;
 	position: fixed;
 	display: block;
 }
 
-.tailor-survey-overlay .tailor-survey-background {
+.tailor-survey-overlay__background {
 	background: #000000;
 	opacity: .5;
 	z-index: 1;
 }
 
-.tailor-survey-overlay .tailor-survey-container {
+.tailor-survey-overlay__container {
 	width: 380px;
 	height: 300px;
 	position: absolute;
@@ -27,14 +27,13 @@
 	background-color: $guardian-brand;
 	z-index: 2;
 
-	.tailor-survey-container-header,
-	.tailor-survey-proceed-button {
-		font-family: $f-sans-serif-text;
+	.tailor-survey-overlay__header,
+	.tailor-survey-overlay__proceed-button {
+		@include fs-textSans(6);
 		font-weight: 900;
-		font-size: 18px;
 	}
 
-	.tailor-survey-container-header {
+	.tailor-survey-overlay__header {
 		height: 42px;
 		width: 100%;
 		background-color: $news-support-1;
@@ -50,32 +49,31 @@
 		}
 	}
 
-	h1,
-	p {
+	.tailor-survey-overlay__heading,
+	.tailor-survey-overlay__copy {
+		@include fs-headline(3);
 		color: $neutral-6;
-		font-size: 22px;
-		line-height: 25px;
 		margin: 12px 8px;
-		font-family: $f-serif-headline;
 	}
 
-	h1 {
+	.tailor-survey-overlay__heading {
 		font-weight: 900;
 	}
 
-	p {
+	.tailor-survey-overlay__copy {
 		font-weight: 100;
 	}
 
-	.tailor-survey-proceed-button {
+	.tailor-survey-overlay__proceed-button {
 		color: $guardian-brand;
 		background-color: $news-support-1;
 		border: 0;
-		border-radius: 20px;
-	    padding: 4px 8px 2px 12px;
+	    padding: 12px;
 	    margin-top: 12px;
 	    margin-left: 8px;
-	    height: 42px;
+		display: inline-block;
+		border-radius: 21px;
+		text-decoration: none;
 
 	    .inline-chevron-right {
 	    	fill: $guardian-brand;
@@ -88,16 +86,14 @@
 			margin-bottom: -4px;
 	    }
 
+	    &:focus,
 	    &:hover {
 	    	background-color: #4bc6df;
-	    }
-
-	    &:focus {
-	    	outline:0;
+	    	outline: 0;
 	    }
 	}
 
-	.tailor-survey-close-button {
+	.tailor-survey-overlay__close-button {
 		border: 1px solid $neutral-6;
 		background-color: $guardian-brand;
 		height: 42px;
@@ -112,16 +108,14 @@
 	    	fill: $neutral-6;
 	    }
 
+	    &:focus,
 	    &:hover {
 	    	border-color: #ffffff;
+	    	outline: 0;
 
 			.inline-cross svg {
 				fill: #ffffff;
 			}
-	    }
-
-	    &:focus {
-	    	outline:0;
 	    }
 	}
 }
