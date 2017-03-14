@@ -8,7 +8,7 @@ define([
     'common/modules/tailor/tailor',
     'raw-loader!common/views/tailor-survey-overlay.html',
     'common/views/svgs',
-    'ophan/ng'
+    'lib/mediator'
 ], function(
     fastdomPromise,
     config,
@@ -19,7 +19,7 @@ define([
     tailor,
     tailorSurveyOverlayTemplate,
     svgs,
-    ophan
+    mediator
 ) {
 
     var EDITION_CONFIG = {
@@ -33,6 +33,8 @@ define([
         }
     };
 
+    var COMPONENT_NAME = 'tailor-survey-overlay';
+
     function shouldCallTailor(forceShow) {
         return  !config.page.shouldHideAdverts &&
                 !config.page.isSensitive &&
@@ -43,11 +45,13 @@ define([
 
     function handleResponse(showSurvey) {
         if (showSurvey) {
+            mediator.emit('register:begin', COMPONENT_NAME);
+
             return fastdomPromise.write(function () {
                 var surveyOverlay = document.createElement('div');
 
-                surveyOverlay.classList.add('tailor-survey-overlay');
-                surveyOverlay.dataset.component = 'tailor-survey-overlay';
+                surveyOverlay.classList.add(COMPONENT_NAME);
+                surveyOverlay.dataset.component = COMPONENT_NAME;
 
                 surveyOverlay.innerHTML = template(tailorSurveyOverlayTemplate, {
                     headerCopy: getEditionConfigProp('copy'),
@@ -90,11 +94,7 @@ define([
     }
 
     function onSurveyAdded() {
-        ophan.record({
-            component: 'tailor-survey-overlay',
-            value: 'impression'
-        });
-
+        mediator.emit('register:end', COMPONENT_NAME);
         cookies.add('GU_TAILOR_SURVEY_OVERLAY', 1, 100); // do not show this survey to the user for the next 100 days
     }
 
