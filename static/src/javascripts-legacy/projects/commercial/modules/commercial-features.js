@@ -93,8 +93,7 @@ define([
             !isMinuteArticle;
 
         this.videoPreRolls =
-            externalAdvertising &&
-            !sensitiveContent &&
+            this.dfpAdvertising &&
             switches.commercial;
 
         this.highMerch =
@@ -110,8 +109,7 @@ define([
             !isIdentityPage;
 
         this.outbrain =
-            externalAdvertising &&
-            !sensitiveContent &&
+            this.dfpAdvertising &&
             switches.outbrain &&
             isArticle &&
             !config.page.isPreview &&
