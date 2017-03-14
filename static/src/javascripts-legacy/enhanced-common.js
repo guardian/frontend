@@ -11,7 +11,7 @@ define([
     'lib/mediator',
     'lib/robust',
     'lib/storage',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/url',
     'lib/fastdom-errors',
 

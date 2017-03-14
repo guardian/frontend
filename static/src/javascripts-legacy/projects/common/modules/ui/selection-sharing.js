@@ -6,7 +6,7 @@ define([
     'lib/config',
     'lib/detect',
     'lib/mediator',
-    'lib/template',
+    'lodash/utilities/template',
     'raw-loader!common/views/ui/selection-sharing.html',
     'common/views/svgs',
     'lodash/functions/debounce',

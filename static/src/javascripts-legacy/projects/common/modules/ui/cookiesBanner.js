@@ -4,7 +4,7 @@ define([
     'lib/cookies',
     'lib/detect',
     'lib/storage',
-    'lib/template',
+    'lodash/utilities/template',
     'common/modules/user-prefs',
     'common/modules/ui/message',
     'lib/mediator'

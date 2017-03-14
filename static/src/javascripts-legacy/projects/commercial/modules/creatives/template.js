@@ -1,7 +1,7 @@
 define([
     'Promise',
     'lib/config',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/fastdom-promise',
     'common/views/svgs',
     'commercial/modules/creatives/template-preprocessor',

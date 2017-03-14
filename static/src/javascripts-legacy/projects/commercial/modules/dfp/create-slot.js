@@ -9,20 +9,19 @@ define([
 ) {
     var inlineDefinition = {
         sizeMappings: {
-            mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.fluid),
-            desktop: compile(adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.video, adSizes.video2, adSizes.fluid)
+            mobile: [adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.fluid],
+            desktop: [adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.video, adSizes.video2, adSizes.fluid]
         }
     };
 
     var rightMappings = {
-        mobile: compile(
+        mobile: [
             adSizes.outOfPage,
             adSizes.empty,
             adSizes.mpu,
             adSizes.halfPage,
-            config.page.edition === 'US' ? adSizes.portrait : null,
             adSizes.fluid
-        )
+        ].concat(config.page.edition === 'US' ? adSizes.portrait : [])
     };
 
     var adSlotDefinitions = {
@@ -36,14 +35,14 @@ define([
         'right-small': {
             name: 'right',
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.fluid)
+                mobile: [adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.fluid]
             }
         },
         im: {
             label: false,
             refresh: false,
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.inlineMerchandising, adSizes.fluid)
+                mobile: [adSizes.outOfPage, adSizes.empty, adSizes.inlineMerchandising, adSizes.fluid]
             }
         },
         'high-merch': {
@@ -51,7 +50,7 @@ define([
             refresh: false,
             name: 'merchandising-high',
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.merchandisingHigh, adSizes.fluid)
+                mobile: [adSizes.outOfPage, adSizes.empty, adSizes.merchandisingHigh, adSizes.fluid]
             }
         },
         'high-merch-lucky': {
@@ -59,7 +58,7 @@ define([
             refresh: false,
             name: 'merchandising-high-lucky',
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.fluid)
+                mobile: [adSizes.outOfPage, adSizes.empty, adSizes.fluid]
             }
         },
         'high-merch-paid': {
@@ -67,7 +66,7 @@ define([
             refresh: false,
             name: 'merchandising-high',
             sizeMappings: {
-                mobile: compile(adSizes.outOfPage, adSizes.empty, adSizes.merchandisingHighAdFeature, adSizes.fluid)
+                mobile: [adSizes.outOfPage, adSizes.empty, adSizes.merchandisingHighAdFeature, adSizes.fluid]
             }
         },
         inline: inlineDefinition,
@@ -75,26 +74,16 @@ define([
         comments: inlineDefinition,
         'top-above-nav': {
             sizeMappings: {
-                mobile: compile(
+                mobile: [
                     adSizes.outOfPage,
                     adSizes.empty,
                     adSizes.mpu,
                     adSizes.fabric,
                     adSizes.fluid
-                )
+                ]
             }
         }
     };
-
-    function compile(size1) {
-        var result = size1;
-        for (var i = 1; i < arguments.length; i++) {
-            if (arguments[i]) {
-                result += '|' + arguments[i];
-            }
-        }
-        return result;
-    }
 
     function createAdSlotElement(name, attrs, classes) {
         var adSlot = document.createElement('div');
@@ -108,7 +97,7 @@ define([
 
     return function (type, options) {
         var attributes = {};
-        var slotName, definition, classes;
+        var slotName, definition, classes, sizes;
 
         options    = options || {};
         definition = adSlotDefinitions[type];
@@ -116,8 +105,23 @@ define([
         classes    = options.classes ?
             options.classes.split(' ').map(function(cn) { return 'ad-slot--' + cn; }) :
             [];
+        sizes      = assign({}, definition.sizeMappings);
 
-        assign(attributes, definition.sizeMappings);
+        if (options.sizes) {
+            Object.keys(options.sizes).forEach(function (size) {
+                if (sizes[size]) {
+                    sizes[size] = sizes[size].concat(options.sizes[size]);
+                } else {
+                    sizes[size] = options.sizes[size];
+                }
+            });
+        }
+
+        Object.keys(sizes).forEach(function (size) {
+            sizes[size] = sizes[size].join('|');
+        });
+
+        assign(attributes, sizes);
 
         if (definition.label === false) {
             attributes.label = 'false';

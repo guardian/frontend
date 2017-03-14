@@ -42,24 +42,10 @@
 
 
                     @mainVideo.videos.caption.map { caption =>
-                        @if(mvt.ABNewNavVariantSeven.isParticipating) {
-                            <div class="js-hide-on-play">
-                                <input type="checkbox" id="show-caption" class="mobile-only u-h">
-
-                                <label class="mobile-only reveal-caption reveal-caption--video" for="show-caption">
-                                    @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon"))
-                                </label>
-
-                                <figcaption data-link-name="Video caption link" class="caption caption--main caption--video" itemprop="description">
-                                    @Html(caption)
-                                </figcaption>
-                            </div>
-                        } else {
-                            <figcaption data-link-name="Video caption link" class="caption caption--main caption--video" itemprop="description">
-                                @fragments.inlineSvg("information", "icon", List("rounded-icon", "centered-icon"))
-                                @Html(caption)
-                            </figcaption>
-                        }
+                        <figcaption data-link-name="Video caption link" class="caption caption--main caption--video" itemprop="description">
+                            @fragments.inlineSvg("information", "icon", List("rounded-icon", "centered-icon"))
+                            @Html(caption)
+                        </figcaption>
                     }
 
                 </figure>

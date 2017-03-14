@@ -2,7 +2,7 @@ define([
     'bonzo',
     'lib/detect',
     'lib/$',
-    'lib/template',
+    'lodash/utilities/template',
     'common/modules/component',
     'raw-loader!common/views/sport/score-container.html'
 ], function (
