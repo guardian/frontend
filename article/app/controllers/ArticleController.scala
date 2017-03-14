@@ -127,7 +127,7 @@ class ArticleController(contentApiClient: ContentApiClient)(implicit context: Ap
           val maybeMainImage: Option[ImageMedia] = article.article.content.elements.mainPicture.map{ _.images}
           views.html.recipeArticle(article, recipeAtoms, maybeMainImage)
         }
-        else views.html.article(article)
+        else views.html.article(article, recipePageNotInTest = article.article.showNewRecipeDesign)
       }
 
       val jsonResponse = () => views.html.fragments.articleBody(article)
