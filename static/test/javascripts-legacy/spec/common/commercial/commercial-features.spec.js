@@ -140,19 +140,6 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
             });
         });
 
-        describe('Popular content MPUs', function () {
-            it('Runs by default', function () {
-                features = new CommercialFeatures;
-                expect(features.popularContentMPU).toBe(true);
-            });
-
-            it('Does not run on minute articles', function () {
-                config.page.isMinuteArticle = true;
-                features = new CommercialFeatures;
-                expect(features.popularContentMPU).toBe(false);
-            });
-        });
-
         describe('Video prerolls', function () {
             it('Runs by default', function () {
                 features = new CommercialFeatures;

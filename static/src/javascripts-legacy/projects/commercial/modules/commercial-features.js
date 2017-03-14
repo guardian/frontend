@@ -83,10 +83,6 @@ define([
             !!(isArticle || isLiveBlog) &&
             switches.commercial;
 
-        this.popularContentMPU =
-            this.dfpAdvertising &&
-            !isMinuteArticle;
-
         this.videoPreRolls =
             this.dfpAdvertising &&
             switches.commercial;
