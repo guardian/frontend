@@ -477,17 +477,18 @@ case class PhotoEssayHalfWidth(isPhotoEssay: Boolean) extends HtmlCleaner {
   }
 }
 
-case class PhotoEssayShareIcons(isPhotoEssay: Boolean) extends HtmlCleaner {
+case class PhotoEssayBlockQuote(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isPhotoEssay) {
-      document.getElementsByClass("block-share").foreach{ share =>
-        share.addClass("is-hidden")
+      document.getElementsByTag("blockquote").foreach{ blockquotes =>
+        if(!blockquotes.children().is(".pullquote-paragraph")){
+          blockquotes.addClass("photo-essay-block-quote")
+        }
       }
     }
     document
   }
 }
-
 
 case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
