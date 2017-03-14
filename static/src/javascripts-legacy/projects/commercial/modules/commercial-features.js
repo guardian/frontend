@@ -83,11 +83,6 @@ define([
             !!(isArticle || isLiveBlog) &&
             switches.commercial;
 
-        this.sliceAdverts =
-            this.dfpAdvertising &&
-            config.page.isFront &&
-            switches.commercial;
-
         this.popularContentMPU =
             this.dfpAdvertising &&
             !isMinuteArticle;
