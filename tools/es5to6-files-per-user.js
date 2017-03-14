@@ -1,4 +1,3 @@
-
 const path = require('path');
 const glob = require('glob');
 const { writeFileSync } = require('fs');
