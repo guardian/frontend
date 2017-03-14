@@ -29,9 +29,10 @@ define([
                 return setRecommended(target);
             })
             .catch(function (ex) {
-                unsetClicked(target);
-                reportError(ex, {
-                    feature: 'comments-recommend'
+                return unsetClicked(target).then(function() {
+                    reportError(ex, {
+                        feature: 'comments-recommend'
+                    });
                 });
             });
         }
