@@ -36,8 +36,6 @@ define([
 
         var isInteractive = config.page.contentType === 'Interactive';
 
-        var isGallery = config.page.contentType == 'Gallery';
-
         var isLiveBlog = config.page.isLiveBlog;
 
         var isHosted = config.page.isHosted;
@@ -57,6 +55,7 @@ define([
         // Feature switches
 
         this.dfpAdvertising =
+            switches.commercial &&
             externalAdvertising &&
             !sensitiveContent;
 
@@ -64,36 +63,28 @@ define([
             !config.page.disableStickyTopBanner &&
             !supportsSticky;
 
-        this.galleryAdverts =
-            this.dfpAdvertising &&
-            isGallery;
-
         this.articleBodyAdverts =
             this.dfpAdvertising &&
             !isMinuteArticle &&
             isArticle &&
             !isLiveBlog &&
-            !isHosted &&
-            switches.commercial;
+            !isHosted;
 
         this.articleAsideAdverts =
             this.dfpAdvertising &&
             !isMinuteArticle &&
             !isMatchReport &&
-            !!(isArticle || isLiveBlog) &&
-            switches.commercial;
+            !!(isArticle || isLiveBlog);
 
         this.videoPreRolls =
-            this.dfpAdvertising &&
-            switches.commercial;
+            this.dfpAdvertising;
 
         this.highMerch =
             this.dfpAdvertising &&
             !isMinuteArticle &&
             !isHosted &&
             !isInteractive &&
-            !config.page.isFront &&
-            switches.commercial;
+            !config.page.isFront;
 
         this.thirdPartyTags =
             externalAdvertising &&
@@ -109,7 +100,6 @@ define([
 
         this.commentAdverts =
             this.dfpAdvertising &&
-            switches.commercial &&
             !isMinuteArticle &&
             config.switches.discussion &&
             config.page.commentable &&
@@ -118,8 +108,7 @@ define([
 
         this.liveblogAdverts =
             isLiveBlog &&
-            this.dfpAdvertising &&
-            switches.commercial;
+            this.dfpAdvertising;
 
         this.paidforBand =
             config.page.isPaidContent &&
