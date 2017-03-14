@@ -1,26 +1,22 @@
-define([
-    'lib/config',
-    'lib/fetch'
-], function (
-    config,
-    fetch
-) {
-    function json (input, init) {
-        if (!input.match('^(https?:)?//')) {
-            input = (config.page.ajaxUrl || '') + input;
-            init = init || {};
-            init.mode = 'cors';
-        }
+import config from 'lib/config';
+import fetch from 'lib/fetch';
 
-        return fetch(input, init)
-        .then(function (resp) {
+function json(input, init) {
+    if (!input.match('^(https?:)?//')) {
+        input = (config.page.ajaxUrl || '') + input;
+        init = init || {};
+        init.mode = 'cors';
+    }
+
+    return fetch(input, init)
+        .then(function(resp) {
             if (resp.ok) {
                 return resp.json();
             } else {
                 if (!resp.status) {
                     // IE9 uses XDomainRequest which doesn't set the response status thus failing
                     // even when the response was actually valid
-                    return resp.text().then(function (responseText) {
+                    return resp.text().then(function(responseText) {
                         try {
                             return JSON.parse(responseText);
                         } catch (ex) {
@@ -32,7 +28,6 @@ define([
                 }
             }
         });
-    }
+}
 
-    return json;
-});
+export default json;
