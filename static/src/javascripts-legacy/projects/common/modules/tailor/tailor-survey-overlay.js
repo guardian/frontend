@@ -3,7 +3,7 @@ define([
     'lib/config',
     'lib/detect',
     'lib/cookies',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/storage',
     'common/modules/tailor/tailor',
     'raw-loader!common/views/tailor-survey-overlay.html',
