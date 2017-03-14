@@ -448,6 +448,9 @@ case class PhotoEssayImages(isPhotoEssay: Boolean) extends HtmlCleaner {
       document.getElementsByTag("figure").filter(_.hasClass("element-image"))foreach{ images =>
         images.addClass("element-image--photo-essay")
       }
+      document.getElementsByClass("block-share--article").foreach{ shares =>
+        shares.remove()
+      }
     }
     document
   }
