@@ -6,7 +6,7 @@ define([
     'lib/$',
     'lib/storage',
     'lib/config',
-    'lib/template',
+    'lodash/utilities/template',
     'common/views/svg',
     'common/modules/onward/history',
     'lib/ajax',

@@ -6,7 +6,7 @@ define([
     'fastdom',
     'lib/$',
     'lib/config',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/storage',
     'lib/url',
     'raw-loader!common/views/history/tag.html',

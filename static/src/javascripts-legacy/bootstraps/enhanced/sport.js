@@ -1,7 +1,7 @@
 define([
     'bean',
     'lib/$',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/config',
     'lib/detect',
     'lib/page',

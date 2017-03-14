@@ -1,4 +1,4 @@
-// Fix a bug Internet Explorer 8 where text in password fields		
+// Fix a bug Internet Explorer 8 where text in password fields
 // would become invisible when `font-family` references a webfont.
 [type=password] {
     font-family: sans-serif !important;
@@ -245,4 +245,12 @@
     margin-left: -$gs-gutter;
     margin-top: 2px;
     width: 13px;
+}
+
+.delete-input-warn {
+    background: #b20a0a;
+    &:hover,
+    &:focus {
+        background: darken(#b20a0a, 5%);
+    }
 }

@@ -10,7 +10,7 @@ set +x
 echo "##teamcity[progressStart 'asset validation and tests']"
 set -x
 
-./tools/task-runner/runner lint test --teamcity
+./tools/task-runner/runner validate test --teamcity
 
 set +x
 echo "##teamcity[progressFinish 'asset validation and tests']"
