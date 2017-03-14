@@ -101,12 +101,22 @@ define([
      */
     Component.prototype.render = function (parent) {
         this.checkAttached();
-        var template = bonzo.create((this.template) ? this.template : document.getElementById('tmpl-' + this.templateName).innerHTML)[0],
-            container = parent || document.body;
+        var template = this.template;
 
-        this.elem = template;
-        this._prerender();
-        bonzo(container)[this.manipulationType](this.elem);
+        if (!template && this.templateName) {
+            var templateEl = document.getElementById('tmpl-' + this.templateName);
+
+            if (templateEl) {
+                template = templateEl.innerHTML;
+            }
+        }
+
+        if (template) {
+            this.elem = bonzo.create(template)[0];
+            this._prerender();
+            bonzo(parent || document.body)[this.manipulationType](this.elem);
+        }
+
         this._ready();
         return this;
     };

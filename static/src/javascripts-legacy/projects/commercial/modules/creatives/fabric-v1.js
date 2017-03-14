@@ -3,7 +3,7 @@ define([
     'bonzo',
     'lib/fastdom-promise',
     'lib/detect',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/mediator',
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker',

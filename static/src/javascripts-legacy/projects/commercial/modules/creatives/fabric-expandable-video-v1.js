@@ -6,7 +6,7 @@ define([
     'lib/detect',
     'lib/mediator',
     'lib/storage',
-    'lib/template',
+    'lodash/utilities/template',
     'common/views/svgs',
     'raw-loader!commercial/views/creatives/fabric-expandable-video-v1.html',
     'lodash/objects/merge',

@@ -6,7 +6,7 @@ define([
     'lib/detect',
     'lib/fetch',
     'lib/mediator',
-    'lib/template',
+    'lodash/utilities/template',
     'lodash/collections/toArray',
     'lib/proximity-loader',
     'lib/report-error',

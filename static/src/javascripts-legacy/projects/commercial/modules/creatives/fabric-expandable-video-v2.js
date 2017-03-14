@@ -3,7 +3,7 @@ define([
     'lib/fastdom-promise',
     'lib/$',
     'lodash/objects/assign',
-    'lib/template',
+    'lodash/utilities/template',
     'common/views/svgs',
     'raw-loader!commercial/views/creatives/fabric-expandable-video-v2.html',
     'raw-loader!commercial/views/creatives/fabric-expandable-video-v2-cta.html',

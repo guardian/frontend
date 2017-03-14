@@ -10,7 +10,7 @@ define([
     'lib/detect',
     'lib/fetch',
     'lib/mediator',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/robust',
     'common/modules/analytics/google',
     'lodash/collections/contains',

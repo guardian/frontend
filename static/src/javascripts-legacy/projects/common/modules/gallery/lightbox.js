@@ -7,7 +7,7 @@ define([
     'lib/detect',
     'lib/fsm',
     'lib/mediator',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/url',
     'common/modules/component',
     'common/modules/ui/images',
