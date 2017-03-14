@@ -9,14 +9,14 @@ function json(input, init) {
     }
 
     return fetch(input, init)
-        .then(function(resp) {
+        .then(resp => {
             if (resp.ok) {
                 return resp.json();
             } else {
                 if (!resp.status) {
                     // IE9 uses XDomainRequest which doesn't set the response status thus failing
                     // even when the response was actually valid
-                    return resp.text().then(function(responseText) {
+                    return resp.text().then(responseText => {
                         try {
                             return JSON.parse(responseText);
                         } catch (ex) {
