@@ -8,6 +8,7 @@
     "babel-runtime": "^6.20.0",
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
+    "chance": "^1.0.6",
     "classnames": "~2.2.0",
     "curl": "cujojs/curl#0.8.9",
     "domready": "^1.0.8",
