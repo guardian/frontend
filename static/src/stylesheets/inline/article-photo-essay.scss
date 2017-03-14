@@ -1,3 +1,6 @@
+@import '../_vars';
+@import '../_mixins';
+
 .content--article {
     a.u-underline.in-body-link--immersive {
       color: $news-main-1;

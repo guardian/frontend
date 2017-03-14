@@ -56,6 +56,7 @@ object css {
   def head(projectOverride: Option[String])(implicit context: ApplicationContext) = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
   def inlineStoryPackage(implicit context: ApplicationContext) = inline("story-package")
   def inlineExplore(implicit context: ApplicationContext) = inline("article-explore")
+  def inlinePhotoEssay(implicit context: ApplicationContext) = inline("article-photo-essay")
   def amp(implicit context: ApplicationContext) = inline("head.amp")
   def hostedAmp(implicit context: ApplicationContext) = inline("head.hosted-amp")
   def liveblogAmp(implicit context: ApplicationContext) = inline("head.amp-liveblog")

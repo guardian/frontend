@@ -10,6 +10,9 @@
     page.item.fields.main.nonEmpty,
     page.item.elements.hasMainVideo
 )) { case (hasEmbed, hasMainMedia, hasVideo) =>
+  <style>
+    @Html(common.Assets.css.inlinePhotoEssay)
+  </style>
 
     <div class="content--photo-essay @RenderClasses(Map(
             "immersive-main-media" -> hasMainMedia,
