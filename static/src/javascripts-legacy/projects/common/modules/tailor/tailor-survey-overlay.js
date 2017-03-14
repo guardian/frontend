@@ -106,7 +106,7 @@ define([
             tailor.getSurvey(bwid, config.page.edition, forceShow)
                 .then(handleResponse)
                 .then(onSurveyAdded);
-        };
+        }
     }
 
     return {
