@@ -1,0 +1,27 @@
+@(storyquestions: model.content.StoryQuestionsAtom)(implicit request: RequestHeader)
+
+<div class="submeta">
+<span class="submeta__label">Questions</span>
+<span class="js-storyquestion-atom-id" style="display: none" id="@storyquestions.id"></span>
+
+<p><strong>Finished this article but want to know more? Let us know what questions you want answered.</strong></p>
+
+<div class="submeta__section-labels">
+    <strong>@storyquestions.data.title</strong>
+</div>
+
+@for(questions <- storyquestions.data.editorialQuestions) {
+    @for(qs <- questions) {
+        <p>
+            @if(questions.size > 1) { <h3>@qs.questionSetTitle</h3> }
+            @for(question <- qs.questions) {
+                <p>
+                    <span id="js-question-text-@question.questionId">@question.questionText</span>
+                    <a href="#" id="@question.questionId" class="js-question-upvote-link">upvote</a>
+                    <span id="js-question-thankyou-@question.questionId" class="submeta__label" style="display: none">Thanks, we've registered your vote.</span>
+                </p>
+            }
+        </p>
+    }
+}
+</div>
