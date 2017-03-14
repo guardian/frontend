@@ -1,33 +1,37 @@
+// @flow
 import config from 'lib/config';
 import fetch from 'lib/fetch';
 
-function json(input, init) {
+function json(input: string, init: any = {}) {
+    const options = Object.assign({}, init);
+    let path = input;
+
     if (!input.match('^(https?:)?//')) {
-        input = (config.page.ajaxUrl || '') + input;
-        init = init || {};
-        init.mode = 'cors';
+        path = (config.page.ajaxUrl || '') + path;
+        options.mode = 'cors';
     }
 
-    return fetch(input, init)
-        .then(resp => {
-            if (resp.ok) {
-                return resp.json();
-            } else {
-                if (!resp.status) {
-                    // IE9 uses XDomainRequest which doesn't set the response status thus failing
-                    // even when the response was actually valid
-                    return resp.text().then(responseText => {
-                        try {
-                            return JSON.parse(responseText);
-                        } catch (ex) {
-                            throw new Error('Fetch error while requesting ' + input + ': Invalid JSON response');
-                        }
-                    });
-                } else {
-                    throw new Error('Fetch error while requesting ' + input + ': ' + resp.statusText);
+    return fetch(path, options).then(resp => {
+        if (resp.ok) {
+            return resp.json();
+        }
+        if (!resp.status) {
+            // IE9 uses XDomainRequest which doesn't set the response status thus failing
+            // even when the response was actually valid
+            return resp.text().then(responseText => {
+                try {
+                    return JSON.parse(responseText);
+                } catch (ex) {
+                    throw new Error(
+                        `Fetch error while requesting ${path}: Invalid JSON response`
+                    );
                 }
-            }
-        });
+            });
+        }
+        throw new Error(
+            `Fetch error while requesting ${path}: ${resp.statusText}`
+        );
+    });
 }
 
 export default json;
