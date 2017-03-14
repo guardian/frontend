@@ -358,9 +358,9 @@ object NewNavigation {
       }
     }
 
-    def getTopLevelSection(sectionName: String) = {
+    def getTopLevelSection(id: String) = {
       val sectionList = sectionLinks.filter { item =>
-        item.pageId == sectionName
+        item.pageId == id
       }
 
       if (sectionList.isEmpty) {
