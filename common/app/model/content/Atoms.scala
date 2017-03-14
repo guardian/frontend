@@ -380,3 +380,7 @@ object ReviewAtom {
 object StoryQuestionsAtom {
   def make(atom: AtomApiAtom): StoryQuestionsAtom = StoryQuestionsAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Storyquestions].storyquestions)
 }
+
+object StoryQuestionsAtom {
+  def make(atom: AtomApiAtom): StoryQuestionsAtom = StoryQuestionsAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Storyquestions].storyquestions)
+}
