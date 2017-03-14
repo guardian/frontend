@@ -1,6 +1,5 @@
 define([
     'bean',
-    'bonzo',
     'Promise',
     'lib/fastdom-promise',
     'lib/report-error',
@@ -17,7 +16,6 @@ define([
     'commercial/modules/creatives/template'
 ], function (
     bean,
-    bonzo,
     Promise,
     fastdom,
     reportError
@@ -102,7 +100,7 @@ define([
         function renderCreative(config) {
             return new Promise(function(resolve) {
                 require(['commercial/modules/creatives/' + config.name], function (Creative) {
-                    resolve(new Creative(bonzo(adSlot), config.params, config.opts).create());
+                    resolve(new Creative(adSlot, config.params, config.opts).create());
                 });
             });
         }
