@@ -5,7 +5,7 @@ import bean from 'bean';
 import find from 'lodash/collections/find';
 import overlay from 'raw-loader!common/views/devtools/overlay.html';
 import styles from 'raw-loader!common/views/devtools/styles.css';
-import { TESTS } from 'common/modules/experiments/ab';
+import { TESTS as tests } from 'common/modules/experiments/ab';
 
 function getSelectedAbTests() {
     return JSON.parse(storage.local.get('gu.devtools.ab')) || [];
@@ -69,12 +69,11 @@ function applyCss() {
 }
 
 function appendOverlay() {
-    const header = $('body');
     const data = {
-        tests: TESTS.map(test => ({ id: test.id, variants: test.variants })),
+        tests: tests.map(test => ({ id: test.id, variants: test.variants })),
     };
 
-    header.prepend(template(overlay, data));
+    $('body').prepend(template(overlay, data));
 }
 
 export default function showDevTools() {
