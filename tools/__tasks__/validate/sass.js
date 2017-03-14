@@ -1,4 +1,9 @@
+const execa = require('execa');
+
 module.exports = {
     description: 'Lint Sass',
-    task: 'sass-lint --no-exit --verbose',
+    task: ctx =>
+        execa('sass-lint', ['--verbose', '--no-exit']).stdout.pipe(
+            process.stdout
+        ),
 };
