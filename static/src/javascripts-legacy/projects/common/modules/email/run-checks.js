@@ -129,6 +129,7 @@ define([
         return !config.page.shouldHideAdverts &&
                 !config.page.isSensitive &&
                 !config.page.isFront &&
+                (config.page.contentId.indexOf("email-sign-up") === -1) &&
                 config.switches.emailInArticle &&
                 !clash.userIsInAClashingAbTest(clash.nonEmailClashingTests) &&
                 storage.session.isAvailable() &&

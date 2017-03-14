@@ -9,27 +9,27 @@ define([
 ], function (mediator, dfpEnv, Advert, queueAdvert, loadAdvert, enableLazyLoad, performanceLogging) {
     return addSlot;
 
-    function addSlot(adSlot) {
+    function addSlot(adSlot, forceDisplay) {
         adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
 
         if (dfpEnv.firstAdDisplayed && !(adSlot.id in dfpEnv.advertIds)) { // dynamically add ad slot
             // this is horrible, but if we do this before the initial ads have loaded things go awry
             if (dfpEnv.firstAdRendered) {
-                displayAd(adSlot);
+                displayAd(adSlot, forceDisplay);
             } else {
                 mediator.once('modules:commercial:dfp:rendered', function () {
-                    displayAd(adSlot);
+                    displayAd(adSlot, forceDisplay);
                 });
             }
         }
     }
 
-    function displayAd(adSlot) {
+    function displayAd(adSlot, forceDisplay) {
         var advert = Advert(adSlot);
 
         dfpEnv.adverts.push(advert);
         queueAdvert(advert);
-        if (dfpEnv.shouldLazyLoad()) {
+        if (dfpEnv.shouldLazyLoad() && !forceDisplay) {
             performanceLogging.updateAdvertMetric(advert, 'loadingMethod', 'add-slot-lazy');
             enableLazyLoad(advert);
         } else {

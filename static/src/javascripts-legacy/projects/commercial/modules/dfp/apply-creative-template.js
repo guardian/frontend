@@ -7,7 +7,6 @@ define([
 
     // These need to be bundled, so that they can be fetched asynchronously in production
     'commercial/modules/creatives/commercial-component',
-    'commercial/modules/creatives/gu-style-comcontent',
     'commercial/modules/creatives/frame',
     'commercial/modules/creatives/revealer',
     'commercial/modules/creatives/fabric-v1',
@@ -15,7 +14,6 @@ define([
     'commercial/modules/creatives/fabric-expandable-video-v1',
     'commercial/modules/creatives/fabric-expandable-video-v2',
     'commercial/modules/creatives/fabric-video',
-    'commercial/modules/creatives/hosted-thrasher-multi',
     'commercial/modules/creatives/scrollable-mpu-v2',
     'commercial/modules/creatives/template'
 ], function (

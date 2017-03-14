@@ -1,21 +1,19 @@
 .submeta {
+    border-top: 1px dotted $neutral-5;
     font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    margin-top: $gs-baseline;
+    padding-top: $gs-baseline / 2;
 }
 
-.submeta__section-labels {
-    min-height: $gs-row-height;
-    font-size: 16px;
-    border-top: 1px dotted $neutral-5;
-    padding-top: $gs-baseline / 2;
+.submeta--borderless-bottom .submeta__keywords {
+    border-bottom: none;
+}
 
-
-    &:before {
-        content: 'More';
-        font-size: 12px;
-        color: $neutral-2;
-        display: block;
-        margin-bottom: -($gs-baseline / 4);
-    }
+.submeta__label {
+    @include fs-textSans(1);
+    color: $neutral-2;
+    display: block;
+    margin-bottom: -($gs-baseline / 4);
 }
 
 .submeta__keywords {

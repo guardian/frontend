@@ -4,7 +4,7 @@ define([
     'lib/config',
     'lib/geolocation',
     'lib/storage',
-    'lib/template',
+    'lodash/utilities/template',
     'commercial/modules/commercial-features',
     'commercial/modules/user-features',
     'lib/mediator'
@@ -172,7 +172,7 @@ define([
     var CopyTest = function() {
         this.id = 'MembershipEngagementBannerCopyTest';
         this.start = '2017-02-27';
-        this.expiry = '2017-03-13';
+        this.expiry = '2017-03-17';
         this.author = 'Guy Dawson';
         this.description = 'Test different copy for the engagement banner.';
         this.audience = 0.5;
@@ -226,7 +226,7 @@ define([
     };
 
     return [
-        new EditionTest('UK', 'MembershipEngagementBannerUkRemindMeLater', '2017-02-02', '2017-03-06', 'remind_me_later')
+        new EditionTest('UK', 'MembershipEngagementBannerUkRemindMeLater', '2017-02-02', '2017-03-20', 'remind_me_later')
             .addMembershipVariant('control', {})
             .addMembershipVariant('remind_me', {showRemindMe : true}),
 

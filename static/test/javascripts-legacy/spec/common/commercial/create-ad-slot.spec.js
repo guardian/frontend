@@ -1,6 +1,7 @@
 define([
     'bonzo',
     'helpers/injector',
+    'commercial/modules/ad-sizes',
     'raw-loader!fixtures/commercial/ad-slots/im.html',
     'raw-loader!fixtures/commercial/ad-slots/inline1.html',
     'raw-loader!fixtures/commercial/ad-slots/right.html',
@@ -8,6 +9,7 @@ define([
 ], function (
     bonzo,
     Injector,
+    adSizes,
     imHtml,
     inline1Html,
     rightHtml,
@@ -36,38 +38,44 @@ define([
 
         [
             {
-                name: 'right',
-                type: 'mpu-banner-ad',
+                type: 'right',
+                classes: 'mpu-banner-ad',
                 html: rightHtml
             },
             {
-                name: 'right-small',
-                type: 'mpu-banner-ad',
+                type: 'right-small',
+                classes: 'mpu-banner-ad',
                 html: rightSmallHtml
             },
             {
-                name: 'im',
                 type: 'im',
                 html: imHtml
             },
             {
-                name: 'inline1',
                 type: 'inline',
+                classes: 'inline',
+                name: 'inline1',
                 html: inline1Html
             }
         ].forEach(function (expectation) {
-            it('should create "' + expectation.name + '" ad slot', function () {
-                var adSlot = createSlot(expectation.name, expectation.type);
+            it('should create "' + expectation.type + '" ad slot', function () {
+                var adSlot = createSlot(expectation.type, { name: expectation.name, classes: expectation.classes });
 
                 expect(adSlot.outerHTML).toBe(expectation.html.replace(/\n/g, '').replace(/\s+/g, ' '));
             });
         });
 
         it('should create "inline1" ad slot for inline-extra slots', function () {
-                var adSlot = createSlot('inline-extra', 'inline');
+            var adSlot = createSlot('inline', { classes: 'inline-extra' });
 
-                expect(bonzo(adSlot).hasClass('ad-slot--inline-extra')).toBeTruthy();
-            });
+            expect(bonzo(adSlot).hasClass('ad-slot--inline-extra')).toBeTruthy();
+        });
+
+        it('should create "inline1" ad slot with additional size', function () {
+            var adSlot = createSlot('inline', { sizes: { desktop: [ adSizes.leaderboard ]} });
+
+            expect(bonzo(adSlot).attr('data-desktop').indexOf(adSizes.leaderboard.toString())).toBeTruthy();
+        });
 
     });
 });

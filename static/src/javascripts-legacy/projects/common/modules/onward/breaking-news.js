@@ -9,7 +9,7 @@ define([
     'lib/fetch-json',
     'lib/report-error',
     'lib/storage',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/mediator',
     'common/modules/ui/relativedates',
     'common/views/svgs',

@@ -1,0 +1,53 @@
+.paidfor-brand {
+    @include f-textSans;
+    color: #767676;
+    text-align: right;
+    font-size: get-font-size(textSans, 2);
+
+    img {
+        vertical-align: middle;
+    }
+}
+
+.paidfor-logo {
+    max-height: $gs-baseline * 5;
+}
+
+.paidfor-band {
+    background: $paidfor-background;
+    width: 100%;
+
+    position: sticky;
+    top: 0;
+    z-index: $zindex-sticky;
+
+    .has-super-sticky-banner & {
+        position: static;
+    }
+
+    .paidfor-meta,
+    .paidfor-meta__label,
+    .paidfor-label {
+        display: flex;
+    }
+
+    .paidfor-meta__label {
+        align-items: center;
+    }
+
+    .paidfor-meta__label,
+    .paidfor-meta__more > .popup__toggle {
+        padding: $gs-baseline / 3 $gs-gutter / 2;
+    }
+
+    .paidfor-meta__label {
+        padding-left: 0;
+    }
+}
+
+.paidfor-band__inner {
+    @include content-gutter();
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+}

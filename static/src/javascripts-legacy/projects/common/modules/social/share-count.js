@@ -6,7 +6,7 @@ define([
     'lib/detect',
     'lib/config',
     'lib/formatters',
-    'lib/template',
+    'lodash/utilities/template',
     'common/views/svgs',
     'raw-loader!common/views/content/share-count.html',
     'raw-loader!common/views/content/share-count-immersive.html'

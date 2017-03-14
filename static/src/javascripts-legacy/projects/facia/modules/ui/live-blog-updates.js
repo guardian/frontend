@@ -8,7 +8,7 @@ define([
     'lib/fetch-json',
     'lib/mediator',
     'lib/storage',
-    'lib/template',
+    'lodash/utilities/template',
     'raw-loader!facia/views/liveblog-block.html',
     'lodash/arrays/compact',
     'lodash/objects/isUndefined',

@@ -189,6 +189,12 @@
         }
     }
 
+    &.tonal--tone-media {
+      .submeta__section-labels .submeta__link {
+          color: $guardian-brand;
+      }
+    }
+
     .badge--alt {
         border-color: $neutral-2;
     }

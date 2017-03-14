@@ -1,0 +1,34 @@
+[ignore]
+.*/node_modules/fbjs/.*
+
+[include]
+
+[libs]
+flow-libdefs-guardian/
+
+
+[options]
+module.name_mapper='^admin' -> 'projects/admin'
+module.name_mapper='^common' -> 'projects/common'
+module.name_mapper='^facia' -> 'projects/facia'
+module.name_mapper='^membership' -> 'projects/membership'
+module.name_mapper='^commercial' -> 'projects/commercial'
+module.name_mapper='^lodash(.*)$' -> 'lodash-amd/compat$1'
+module.name_mapper='^picturefill' -> 'projects/common/utils/picturefill'
+module.name_mapper='^Promise' -> 'when/es6-shim/Promise'
+module.name_mapper='^raven' -> 'raven-js'
+module.name_mapper='^EventEmitter' -> 'wolfy87-eventemitter'
+module.name_mapper='^videojs' -> 'video.js'
+module.name_mapper='^stripe' -> 'stripe/stripe.min'
+module.name_mapper='^svgs' -> '<PROJECT_ROOT>/static/src/inline-svgs'
+module.name_mapper='^ophan/ng' -> 'ophan-tracker-js'
+module.name_mapper='^ophan/embed' -> 'ophan-tracker-js/build/ophan.embed'
+
+module.file_ext=.js
+
+module.system.node.resolve_dirname=static/src/javascripts-legacy
+module.system.node.resolve_dirname=static/vendor/javascripts
+module.system.node.resolve_dirname=node_modules
+
+
+

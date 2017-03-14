@@ -230,7 +230,7 @@ object EmailNewsletters {
     listId = 39,
     aliases = List(3834, 3835),
     tone = Some("review"),
-    signupPage = Some("/music/2016/aug/18/sign-up-to-sleeve-notes")
+    signupPage = Some("/info/ng-interactive/2017/mar/06/sign-up-for-the-sleeve-notes-email")
   )
 
   val closeUp = EmailNewsletter(

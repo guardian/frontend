@@ -3,7 +3,7 @@ define([
     'lib/config',
     'lib/detect',
     'lib/storage',
-    'lib/template',
+    'lodash/utilities/template',
     'lib/mediator',
     'common/modules/commercial/adblock-messages',
     'common/modules/commercial/adblock-banner-config',
