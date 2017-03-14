@@ -99,7 +99,7 @@ define([
     }
 
     function init() {
-        var bwid = cookies.get('bwid') || 'Qb6TGfeA6wRVyIkMkm7z9hMg';
+        var bwid = cookies.get('bwid');
         var forceShow = storage.local.get('gu.tailorSurvey.forceShow') || false;
 
         if (bwid && shouldCallTailor(forceShow)) {
