@@ -69,8 +69,6 @@ define([
         ['cm-paidforBand', paidforBand.init]
     ];
 
-    var customTimingModules = [];
-
     if (config.page.isHosted) {
         commercialModules.push(
             ['cm-hostedAbout', hostedAbout.init],
@@ -101,15 +99,13 @@ define([
                     performanceLogging.defer(moduleName, moduleInit) :
                     performanceLogging.wrap(moduleName, moduleInit);
                 var result = wrapped();
-                customTimingModules.push(result);
                 modulePromises.push(result);
             });
         });
 
         return Promise.all(modulePromises)
-        .then(function(moduleLoadResult){
+        .then(function(){
             performanceLogging.addEndTimeBaseline(baseline);
-            return moduleLoadResult;
         });
     }
 
@@ -133,11 +129,7 @@ define([
             robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
                 ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
             });
-            if (config.page.isHosted) {
-                // Wait for all custom timing async work to finish before manually reporting the perf data.
-                // There are no MPUs on hosted pages, so no slot render events, and therefore no reporting would be done.
-                Promise.all(customTimingModules).then(performanceLogging.reportTrackingData);
-            }
+            performanceLogging.reportTrackingData();
         })
         .catch(function (err) {
             // Just in case something goes wrong, we don't want it to
