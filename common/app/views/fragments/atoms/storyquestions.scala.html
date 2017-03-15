@@ -13,7 +13,7 @@
                   <h3>@qs.questionSetTitle</h3>
                 </div>
                 @for(question <- qs.questions) {
-                    <p class="user__quesions-text--wrapper">
+                    <div class="user__quesions-text--wrapper">
                         <span id="js-question-text-@question.questionId" class="user__question-text">
                           <span class="user__questions-text--inner">
                             @question.questionText
@@ -26,7 +26,7 @@
                         <span id="js-question-thankyou-@question.questionId" class="user__question-response submeta__label is-hidden">
                           Thanks, we've registered your vote.
                         </span>
-                    </p>
+                    </div>
                 }
             </p>
         }
