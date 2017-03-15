@@ -46,7 +46,6 @@ define([
             return checkMediator.waitForCheck('hasHighPriorityAdLoaded').then(function (highPriorityAdLoaded) {
                 if (highPriorityAdLoaded) {
                     return trackAdRender('dfp-ad--merchandising').then(function(lowPriorityAdLoaded) {
-                        console.log('lowPriorityAdLoaded ---->', lowPriorityAdLoaded);
                         return lowPriorityAdLoaded;
                     });
                 } else {

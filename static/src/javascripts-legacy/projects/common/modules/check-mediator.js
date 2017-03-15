@@ -159,10 +159,15 @@ define([
         registeredChecks[check.id] = registeredCheck;
     }
 
+    function _testClean() {
+        registeredChecks = {};
+    }
+
     return {
         init: init,
         resolveCheck: resolveCheck,
         waitForCheck: waitForCheck,
-        _testRegisterCheck: _testRegisterCheck // exposed for unit testing
+        _testRegisterCheck: _testRegisterCheck, // exposed for unit testing
+        _testClean: _testClean // exposed for unit testing
     };
 });

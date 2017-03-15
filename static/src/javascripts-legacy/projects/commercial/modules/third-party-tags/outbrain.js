@@ -6,7 +6,6 @@ define([
     'lib/detect',
     'lodash/utilities/template',
     'lib/steady-page',
-    'commercial/modules/dfp/track-ad-render',
     'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/outbrain-codes',
     'raw-loader!commercial/views/outbrain.html',
@@ -21,7 +20,6 @@ define([
     detect,
     template,
     steadyPage,
-    trackAdRender,
     commercialFeatures,
     getCode,
     outbrainStr,
@@ -116,11 +114,12 @@ define([
                 if (shouldLoadInstantly) {
                     return checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
                         outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
-                        return Promise.resolve(true);
                     });
                 } else {
-                    checkMediator.waitForCheck('isOutbrainBlockedByAds').then(function(outbrainBlockedByAds) {
+                    // if a high priority ad and low priority ad on page block outbrain
+                    return checkMediator.waitForCheck('isOutbrainBlockedByAds').then(function(outbrainBlockedByAds) {
                         if (!outbrainBlockedByAds) {
+                            // if only a high priority ad on page then outbrain is merchandise compliant
                             checkMediator.waitForCheck('isOutbrainMerchandiseCompliant').then(function (outbrainMerchandiseCompliant) {
                                 if (outbrainMerchandiseCompliant) {
                                     module.load('merchandising');
