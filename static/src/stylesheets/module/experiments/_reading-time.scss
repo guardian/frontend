@@ -1,0 +1,141 @@
+#reading-time.fc-container--thrasher {
+    background: $guardian-brand-dark;
+    .fc-item {
+        background: $guardian-brand;
+    }
+}
+
+.reading-time__time-selection {
+    @include button-colour(
+            $news-main-1, // fill
+            #ffffff, // text
+            $news-main-2 //border
+    );
+    @include button-hover-colour(
+            darken($news-main-1, 5%),
+            $news-main-2
+    );
+
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+.reading-time__wrapper {
+    position: relative;
+    @include mq(desktop) {
+        width: 100%;
+    }
+    .text-selection-block {
+        .cta {
+            line-height: 1.3em;
+            font-weight: bold;
+            vertical-align: top;
+            padding-top: 5px;
+        }
+
+        .cta, .selections {
+            width: 45%;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            vertical-align: top;
+            position: relative;
+            top: 1px;
+            line-height: 30px;
+            width: 20px;
+            height: 20px;
+            border-radius: 100%;
+            border: 1px solid #ececec;
+            svg {
+                height: 100%;
+                width: 100%;
+                display: block;
+                path {
+                    fill: #ececec;
+                }
+            }
+            @include button-hover-colour(
+                    darken($news-main-1, 5%),
+                    $neutral-8
+            );
+        }
+
+        .selections {
+            padding-top: 10px;
+
+            .clock {
+                svg {
+                    @include mq(mobileLandscape) {
+                        transform-origin: left;
+                        transform: scale(0.5);
+                    }
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+
+    .reading-time {
+        color: $neutral-8;
+        max-width: 620px;
+        margin: 0 auto;
+
+        @include mq(mobileLandscape) {
+            padding: 0 10px;
+        }
+        @include mq(tablet) {
+            padding: 0 20px;
+            max-width: none;
+        }
+        @include mq(leftCol) {
+            margin-left: 160px;
+        }
+        @include mq(wide) {
+            margin-left: 240px;
+        }
+        &__title {
+            display: inline-block;
+            padding-top: 2px;
+            color: #4BC6DF;
+            float: none;
+            width: auto;
+            @include mq(leftCol) {
+                position: absolute;
+                top: 0;
+                left: 20px;
+            }
+        }
+        &__roundel {
+            float: right;
+            margin-top: 5px;
+            svg {
+                @include mq(mobileLandscape) {
+                    transform-origin: top right;
+                    transform: scale(0.65);
+                }
+            }
+            @include mq(leftCol) {
+                margin-top: 1px;
+            }
+        }
+        &__main {
+            display: block;
+            font-size: 24px;
+            line-height: 26px;
+            font-weight: 600;
+            padding-top: 1px;
+            padding-bottom: 18px;
+            margin-top: -3px;
+            @include mq(tablet) {
+                font-size: 26px;
+                line-height: 28px;
+            }
+            @include mq(leftCol) {
+                margin-top: 3px;
+            }
+        }
+
+    }
+}
