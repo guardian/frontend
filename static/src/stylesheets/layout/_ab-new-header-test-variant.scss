@@ -562,6 +562,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     font-size: 15px;
     line-height: 18px;
     text-transform: none;
+    margin-top: $gs-baseline * 2;
     padding: $gs-baseline $gs-gutter $gs-baseline * 2 $navigation-horizontal-padding;
     background-color: rgba(0, 0, 0, .2);
 
