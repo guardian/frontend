@@ -1,24 +1,26 @@
-@(storyquestions: model.content.StoryQuestionsAtom)(implicit request: RequestHeader)
+@(storyquestions: model.content.StoryQuestionsAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
-<div class="submeta user__question">
-<span class="js-storyquestion-atom-id" style="display: none" id="@storyquestions.id"></span>
+@if(!isAmp) {
+    <div class="submeta user__question">
+    <span class="js-storyquestion-atom-id" style="display: none" id="@storyquestions.id"></span>
 
-<h1 class="user__question-title">Finished this article but want to know more? <span class="user__question-title--secondary">Let us know what questions you want answered.</span></h1>
+    <h1 class="user__question-title">Finished this article but want to know more? <span class="user__question-title--secondary">Let us know what questions you want answered.</span></h1>
 
-@for(questions <- storyquestions.data.editorialQuestions) {
-    @for(qs <- questions) {
-        <p>
-            <div class="user__question-section">
-              <h3>@qs.questionSetTitle</h3>
-            </div>
-            @for(question <- qs.questions) {
-                <p class="user__questions-text--wrapper">
-                    <span id="js-question-text-@question.questionId" class="user__question-text"><span>@question.questionText</span></span>
-                    <a href="#" id="@question.questionId" class="user__question-upvote js-ask-question-link">Ask this <span class="tick">@fragments.inlineSvg("tick", "icon")</span></a>
-                    <span id="js-question-thankyou-@question.questionId" class="user__question-response submeta__label" style="display: none">Thanks, we've registered your vote.</span>
-                </p>
-            }
-        </p>
+    @for(questions <- storyquestions.data.editorialQuestions) {
+        @for(qs <- questions) {
+            <p>
+                <div class="user__question-section">
+                  <h3>@qs.questionSetTitle</h3>
+                </div>
+                @for(question <- qs.questions) {
+                    <p class="user__questions-text--wrapper">
+                        <span id="js-question-text-@question.questionId" class="user__question-text"><span>@question.questionText</span></span>
+                        <a href="#" id="@question.questionId" class="user__question-upvote js-ask-question-link">Ask this <span class="tick">@fragments.inlineSvg("tick", "icon")</span></a>
+                        <span id="js-question-thankyou-@question.questionId" class="user__question-response submeta__label" style="display: none">Thanks, we've registered your vote.</span>
+                    </p>
+                }
+            </p>
+        }
     }
+    </div>   
 }
-</div>
