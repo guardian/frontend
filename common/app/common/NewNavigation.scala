@@ -282,6 +282,7 @@ object NewNavigation {
       SectionsLink("international", headlines, MostPopular),
       SectionsLink("uk-news", ukNews,News),
       SectionsLink("world", world, News),
+      SectionsLink("world/europe-news", europe, News),
       SectionsLink("politics", politics, News),
       SectionsLink("environment", environment, News),
       SectionsLink("business", business, News),
