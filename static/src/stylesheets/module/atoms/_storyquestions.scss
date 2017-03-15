@@ -3,24 +3,21 @@
     overflow: auto;
 }
 .user__question-title {
+    @include f-headline;
     font-weight: 900;
     font-size: 22px;
     line-height: 24px;
     color: $news-main-1;
-    font-family: $f-serif-headline;
 
     @include mq($from: tablet) {
         font-size: 26px;
         line-height: 28px;
     }
-
-    span {
-        display: block;
-    }
 }
 
 .user__question-title--secondary {
     color: $neutral-1;
+    display: block;
 }
 
 .user__questions-text--wrapper {
@@ -30,18 +27,16 @@
     &:hover {
         .user__question-text {
             color: #ffffff;
-
-            span {
-                background-color: $news-main-1;
-            }
         }
-        .tick {
+        .inline-tick {
             background-color: $news-main-1;
-
-            svg {
-                path {
-                    fill: #ffffff;
-                }
+        }
+        .user__questions-text--inner {
+            background-color: $news-main-1;
+        }
+        .inline-tick__svg {
+            path {
+                fill: #ffffff;
             }
         }
     }
@@ -53,14 +48,14 @@
 
     h3 {
         color: $neutral-2;
-        font-family: $f-sans-serif-text;
+        @include f-textSans;
         font-weight: 200;
         font-size: 12px;
     }
 }
 
 .user__question-text {
-    font-family: $f-serif-headline;
+    @include f-headline;
     font-weight: 900;
     display: block;
     max-width: 68%;
@@ -108,7 +103,7 @@
 .user__question-upvote {
     right: 0px;
     color: $news-main-1;
-    font-family: $f-sans-serif-text;
+    @include f-textSans;
     font-weight: 900;
     border-top: 1px solid $neutral-6;
     padding-top: $gs-baseline / 2;
@@ -119,21 +114,24 @@
         text-decoration: none;
     }
 
-    .tick {
+    .inline-tick {
         border-radius: 50%;
-        height: 30px;
-        width: 30px;
+        height: 12px;
+        width: 12px;
         border: 1px solid $news-main-1;
         padding: 3px;
         margin-left: $gs-baseline;
+        display: block;
+        float: right;
     }
 
-    svg {
-        width: 14px;
+    .inline-tick__svg {
+        width: 12px;
         height: 9px;
+        margin-bottom: $gs-baseline / 4;
 
         path {
-          fill: $news-main-1;
+            fill: $news-main-1;
         }
     }
 }
