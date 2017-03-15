@@ -186,7 +186,7 @@ trait ABTestSwitches {
     "Test more design variations to the Epic",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 17),
+    sellByDate = new LocalDate(2017, 4, 20),
     exposeClientSide = true
   )
 

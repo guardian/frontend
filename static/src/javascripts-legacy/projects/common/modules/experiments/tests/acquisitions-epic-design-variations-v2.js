@@ -83,7 +83,7 @@ define([
         campaignId: 'kr1_epic_design_variations_v2',
 
         start: '2017-03-07',
-        expiry: '2017-03-17',
+        expiry: '2017-04-20',
 
         author: 'Sam Desborough',
         description: 'Test 5 new design variants to the Epic',
