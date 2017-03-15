@@ -1,0 +1,139 @@
+.user__question {
+    padding-bottom: $gs-baseline;
+    overflow: auto;
+}
+.user__question-title {
+    font-weight: 900;
+    font-size: 22px;
+    line-height: 24px;
+    color: $news-main-1;
+    font-family: $f-serif-headline;
+
+    @include mq($from: tablet) {
+        font-size: 26px;
+        line-height: 28px;
+    }
+
+    span {
+        display: block;
+    }
+}
+
+.user__question-title--secondary {
+    color: $neutral-1;
+}
+
+.user__quesions-text--wrapper {
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+        .user__question-text {
+            color: #ffffff;
+
+            span {
+                background-color: $news-main-1;
+            }
+        }
+        .tick {
+            background-color: $news-main-1;
+
+            svg {
+                path {
+                    fill: #ffffff;
+                }
+            }
+        }
+    }
+}
+
+.user__question-section {
+    border-top: 1px dotted $neutral-6;
+    margin-top: $gs-baseline * 2;
+
+    h3 {
+        color: $neutral-2;
+        font-family: $f-sans-serif-text;
+        font-weight: 200;
+        font-size: 12px;
+    }
+}
+
+.user__question-text {
+    font-family: $f-serif-headline;
+    font-weight: 900;
+    display: block;
+    max-width: 68%;
+    font-size: 18px;
+    float: left;
+    color: $news-main-1;
+    padding-left: $gs-baseline / 4;
+    position: relative;
+
+    @include mq($from: tablet) {
+        max-width: 80%;
+        font-size: 20px;
+    }
+
+    span {
+        background-color: $neutral-6;
+        padding: $gs-baseline / 2 $gs-baseline / 2 $gs-baseline / 2 0;
+        transition: 0.2s background-color ease-in-out;
+        position: relative;
+
+        &:before {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: $gs-baseline / 4;
+            content: '';
+            display: block;
+            left: -$gs-baseline / 4;
+            background-color: inherit;
+        }
+    }
+}
+
+.user__question-response {
+    clear: both;
+    margin-top: $gs-baseline;
+
+    @include mq($from: tablet) {
+        float: right;
+        clear: none;
+        margin-top: 0;
+    }
+}
+
+.user__question-upvote {
+    right: 0px;
+    color: $news-main-1;
+    font-family: $f-sans-serif-text;
+    font-weight: 900;
+    border-top: 1px solid $neutral-6;
+    padding-top: $gs-baseline / 2;
+    font-size: 14px;
+    float: right;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    .tick {
+        border-radius: 50%;
+        height: 30px;
+        width: 30px;
+        border: 1px solid $news-main-1;
+        padding: 3px;
+        margin-left: $gs-baseline;
+    }
+
+    svg {
+        width: 14px;
+        height: 9px;
+
+        path {
+          fill: $news-main-1;
+        }
+    }
+}
