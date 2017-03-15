@@ -69,6 +69,12 @@ define([
         return assign({}, defaultVariantArgs, args)
     }
 
+    // this is to prevent the tests failing, as the dummy config object used by tests won't include this property
+    var paypalImage = (function() {
+        try { return config.images.acquisitions.paypal; }
+        catch (e) { return ''; }
+    })();
+
     // Building the test
     // =================
 
@@ -118,10 +124,8 @@ define([
 
             buildVariant('paypal', {
                 epicClass: 'contributions__epic--paypal',
-                customStyle: 'background-image: url(\'' + config.images.acquisitions.paypal + '\')'
-            }),
-
-
+                customStyle: 'background-image: url(\'' + paypalImage + '\')'
+            })
         ]
     })
 });
