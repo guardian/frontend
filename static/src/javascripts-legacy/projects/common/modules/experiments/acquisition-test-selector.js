@@ -7,8 +7,8 @@ define([
     'common/modules/experiments/tests/contributions-epic-ask-four-stagger',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
     'common/modules/experiments/tests/contributions-epic-regulars',
-    'common/modules/experiments/tests/acquisitions-epic-design-variations',
-    'common/modules/experiments/tests/acquisitions-epic-article-50-trigger'
+    'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
+    'common/modules/experiments/tests/acquisitions-epic-design-variations-v2'
 ], function (
     segmentUtil,
     testCanRunChecks,
@@ -18,8 +18,8 @@ define([
     askFourStagger,
     askFourEarning,
     regulars,
-    acquisitionsEpicDesignVariations,
-    acquisitionsEpicArticle50Trigger
+    acquisitionsEpicArticle50Trigger,
+    acquisitionsEpicDesignVariationsV2
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
@@ -27,7 +27,7 @@ define([
     var tests = [
         alwaysAsk,
 		regulars,
-        acquisitionsEpicDesignVariations,
+        acquisitionsEpicDesignVariationsV2,
         askFourEarning,
         acquisitionsEpicArticle50Trigger,
         brexit,
