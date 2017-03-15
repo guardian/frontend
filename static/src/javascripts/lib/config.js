@@ -1,6 +1,9 @@
 // @flow
 
 import pad from 'lib/pad';
+
+// This should be the only module accessing the window config object directly
+// because this is the one that gets imported to all other modules
 // eslint-disable-next-line guardian-frontend/global-config
 const config = window.guardian.config;
 
