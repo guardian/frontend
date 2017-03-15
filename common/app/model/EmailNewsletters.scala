@@ -262,6 +262,7 @@ object EmailNewsletters {
     description = "A weekly email from the books team with our pick of the latest news, views and reviews, delivered to your inbox.",
     frequency = "Every Thursday",
     listId = 3039,
+    aliases = List(3866, 3867),
     tone = Some("feature"),
     signupPage = Some("/books/2015/feb/03/sign-up-to-our-bookmarks-email")
   )

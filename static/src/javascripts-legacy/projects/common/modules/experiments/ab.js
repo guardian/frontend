@@ -19,6 +19,7 @@ define([
     'common/modules/experiments/tests/tailor-survey',
     'common/modules/experiments/tests/the-long-read-email-variants',
     'common/modules/experiments/tests/fashion-statement-email-variants',
+    'common/modules/experiments/tests/bookmarks-email-variants',
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
@@ -43,6 +44,7 @@ define([
              TailorSurvey,
              TheLongReadEmailVariants,
              FashionStatementEmailVariants,
+             BookmarksEmailVariants,
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
              IncreaseInlineAds,
@@ -59,6 +61,7 @@ define([
         new TailorSurvey(),
         TheLongReadEmailVariants,
         FashionStatementEmailVariants,
+        BookmarksEmailVariants,
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
         new IncreaseInlineAds()
