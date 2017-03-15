@@ -10,7 +10,7 @@ define([
     'common/views/svg',
     'raw-loader!common/views/experiments/reading-time.html',
     'svg-loader!svgs/icon/marque-36.svg',
-    'svg-loader!svgs/icon/clock.svg',
+    'svg-loader!svgs/icon/clock.svg'
 ], function (
     bean,
     fastdom,
@@ -23,7 +23,7 @@ define([
     svg,
     readingTimeTemplate,
     guardianLogo,
-    clock,
+    clock
 ) {
     return function () {
         this.id = 'ReadingTime';
@@ -60,7 +60,6 @@ define([
             {
                 id: 'control',
                 test: function () {},
-                success: function(complete) {}
             }
         ];
 
