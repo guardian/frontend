@@ -376,17 +376,42 @@
 }
 
 .adverts--within-unbranded {
-    .advert--capi {
-        border-color: $paid-article-brand;
-    }
-    .advert__title {
-        @include fs-headline(3, true);
-        .inline-icon {
-            margin: 0;
+    .fc-item__container {
+        background-color: $paid-article-card-bg;
+        &:hover,
+        &.u-faux-block-link--hover {
+            background: darken($paid-article-subheader, 7%);
         }
     }
-    .advert__standfirst {
-        display: none;
+    .fc-item__container:before {
+        background-color: $paid-article-brand;
     }
+    .inline-icon__svg {
+        fill: $paid-article-brand;
+    }
+    .fc-item__title {
+        @include f-headlineSans;
+    }
+    @include mq(tablet) {
+        .fc-item__content {
+            padding-bottom: $gs-baseline * 8;
+        }
+    }
+
+    @include mq($until: tablet) {
+        .fc-item__content {
+            padding-right: $gs-gutter * 5;
+        }
+        .badge {
+            display: flex;
+            flex-direction: column;
+            width: $gs-gutter * 3;
+        }
+    }
+    .badge__logo {
+        max-width: 100%;
+        margin-left: 0;
+    }
+
 }
 
