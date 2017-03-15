@@ -68,7 +68,7 @@ $padding-wide: 100px;
     top: 0;
     width: 100%;
 
-    @include mq($from: tablet){
+    @include mq($from: tablet) {
         flex-basis: 40%;
         position: sticky;
         height: 100vh;
@@ -442,17 +442,15 @@ $padding-wide: 100px;
 }
 
 .ad-wrapper {
-  background-color: $grey-two;
-  margin-left: -20px;
-  margin-top: 20px;
-  padding-top: 6px;
-  padding-bottom: 6px;
+    background-color: $grey-two;
+    margin-left: -20px;
+    margin-top: 20px;
+    padding-top: 6px;
+    padding-bottom: 6px;
 
-  .ad-container{
-    margin-left: auto;
-    margin-right: auto;
-    width: max-content;
-  }
+    .ad-container {
+        margin-left: auto;
+        margin-right: auto;
+        width: max-content;
+    }
 }
-
-
