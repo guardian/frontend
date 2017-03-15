@@ -1,9 +1,9 @@
 define([
     'Promise',
     'lib/config',
-    'lib/mediator',
     'lib/robust',
     'lib/user-timing',
+    'lib/report-error',
     'commercial/modules/high-merch',
     'commercial/modules/article-aside-adverts',
     'commercial/modules/article-body-adverts',
@@ -28,9 +28,9 @@ define([
 ], function (
     Promise,
     config,
-    mediator,
     robust,
     userTiming,
+    reportError,
     highMerch,
     articleAsideAdverts,
     articleBodyAdverts,
@@ -53,7 +53,7 @@ define([
     ga,
     userFeatures
 ) {
-    var primaryModules = [
+    var commercialModules = [
         ['cm-highMerch', highMerch.init],
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
@@ -62,25 +62,21 @@ define([
         ['cm-articleAsideAdverts', articleAsideAdverts.init, true],
         ['cm-articleBodyAdverts', articleBodyAdverts.init, true],
         ['cm-liveblogAdverts', liveblogAdverts.init, true],
-        ['cm-closeDisabledSlots', closeDisabledSlots.init]
-    ];
-
-    var secondaryModules = [
+        ['cm-closeDisabledSlots', closeDisabledSlots.init],
         ['cm-stickyTopBanner', stickyTopBanner.init],
         ['cm-fill-advert-slots', fillAdvertSlots.init, true],
         ['cm-paidContainers', paidContainers.init],
         ['cm-paidforBand', paidforBand.init]
     ];
 
-    var customTimingModules = [];
-
     if (config.page.isHosted) {
-        secondaryModules.push(
+        commercialModules.push(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init, true],
             ['cm-hostedGallery', hostedGallery.init, true],
             ['cm-hostedOnward', hostedOnward.init, true],
-            ['cm-hostedOJCarousel', hostedOJCarousel.init]);
+            ['cm-hostedOJCarousel', hostedOJCarousel.init]
+        );
     }
 
     function loadModules(modules, baseline) {
@@ -103,58 +99,45 @@ define([
                     performanceLogging.defer(moduleName, moduleInit) :
                     performanceLogging.wrap(moduleName, moduleInit);
                 var result = wrapped();
-                customTimingModules.push(result);
                 modulePromises.push(result);
             });
         });
 
         return Promise.all(modulePromises)
-        .then(function(moduleLoadResult){
+        .then(function(){
             performanceLogging.addEndTimeBaseline(baseline);
-            return moduleLoadResult;
         });
     }
 
-    return {
-        init: function () {
-            if (!config.switches.commercial) {
-                return Promise.resolve();
-            }
-
-            if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
-                closeDisabledSlots.init(true);
-                return Promise.resolve();
-            }
-
-            userTiming.mark('commercial start');
-            robust.catchErrorsAndLog('ga-user-timing-commercial-start', function () {
-                ga.trackPerformance('Javascript Load', 'commercialStart', 'Commercial start parse time');
-            });
-
-            // Stub the command queue
-            window.googletag = { cmd: [] };
-
-            return loadModules(primaryModules, performanceLogging.primaryBaseline)
-            .then(function () {
-                return loadModules(secondaryModules, performanceLogging.secondaryBaseline);
-            })
-            .then(function () {
-                mediator.emit('page:commercial:ready');
-                userTiming.mark('commercial end');
-                robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
-                    ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
-                });
-                if (config.page.isHosted) {
-                    // Wait for all custom timing async work to finish before manually reporting the perf data.
-                    // There are no MPUs on hosted pages, so no slot render events, and therefore no reporting would be done.
-                    Promise.all(customTimingModules).then(performanceLogging.reportTrackingData);
-                }
-            })
-            .catch(function () {
-                // Just in case something goes wrong, we don't want it to
-                // prevent enhanced from loading
-            });
+    return function () {
+        if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
+            closeDisabledSlots.init(true);
+            return Promise.resolve();
         }
-    };
+
+        userTiming.mark('commercial start');
+        robust.catchErrorsAndLog('ga-user-timing-commercial-start', function () {
+            ga.trackPerformance('Javascript Load', 'commercialStart', 'Commercial start parse time');
+        });
+
+        // Stub the command queue
+        window.googletag = { cmd: [] };
+
+        return loadModules(commercialModules, performanceLogging.primaryBaseline)
+        .then(function () {
+            userTiming.mark('commercial end');
+            robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
+                ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
+            });
+            performanceLogging.reportTrackingData();
+        })
+        .catch(function (err) {
+            // Just in case something goes wrong, we don't want it to
+            // prevent enhanced from loading
+            reportError(err, {
+                feature: 'commercial'
+            });
+        });
+    }
 
 });

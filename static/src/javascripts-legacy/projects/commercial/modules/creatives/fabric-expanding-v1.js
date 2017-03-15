@@ -33,8 +33,8 @@ define([
 ) {
     // Forked from expandable-v3.js
 
-    var FabricExpandingV1 = function ($adSlot, params) {
-        this.$adSlot      = $adSlot;
+    var FabricExpandingV1 = function (adSlot, params) {
+        this.adSlot       = adSlot;
         this.params       = params;
         this.isClosed     = true;
         this.initialExpandCounter = false;
@@ -50,23 +50,20 @@ define([
     FabricExpandingV1.prototype.updateBgPosition = function () {
         var that = this;
 
-        var scrollY = window.pageYOffset;
         var viewportHeight = bonzo.viewport().height;
-        var adSlotTop = this.$adSlot.offset().top;
+        var adSlotTop = this.adSlot.getBoundingClientRect().top;
 
         var adHeight = (this.isClosed) ? this.closedHeight : this.openedHeight;
-        var inViewB = ((scrollY + viewportHeight) > adSlotTop);
-        var inViewT = ((scrollY - (adHeight * 2)) < adSlotTop + 20);
-        var topCusp = (inViewT &&
-        ((scrollY + (viewportHeight * 0.4) - adHeight) > adSlotTop)) ?
+        var inViewB = viewportHeight > adSlotTop;
+        var inViewT = -adHeight * 2 < adSlotTop + 20;
+        var topCusp = inViewT && (viewportHeight * 0.4 - adHeight > adSlotTop) ?
             'true' : 'false';
-        var bottomCusp = (inViewB &&
-        (scrollY + (viewportHeight * 0.5)) < adSlotTop) ?
+        var bottomCusp = inViewB && (viewportHeight * 0.5 < adSlotTop) ?
             'true' : 'false';
         var bottomScroll = (bottomCusp === 'true') ?
-        50 - ((scrollY + (viewportHeight * 0.5) - adSlotTop) * -0.2) : 50;
+        50 - ((viewportHeight * 0.5 - adSlotTop) * -0.2) : 50;
         var topScroll = (topCusp === 'true') ?
-            ((scrollY + (viewportHeight * 0.4) - adSlotTop - adHeight) * 0.2) : 0;
+            ((viewportHeight * 0.4 - adSlotTop - adHeight) * 0.2) : 0;
 
         var scrollAmount;
 
@@ -74,28 +71,28 @@ define([
             case 'split':
                 scrollAmount = bottomScroll + topScroll;
                 fastdom.write(function () {
-                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).css({
+                    $('.ad-exp--expand-scrolling-bg', that.adSlot).css({
                         'background-repeat': 'no-repeat',
                         'background-position': '50%' + scrollAmount + '%'
                     });
                 });
                 break;
             case 'fixed':
-                scrollAmount = (scrollY - adSlotTop);
+                scrollAmount = -adSlotTop;
                 fastdom.write(function () {
-                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).css('background-position', '50%' + (scrollAmount  + 'px'));
+                    $('.ad-exp--expand-scrolling-bg', that.adSlot).css('background-position', '50%' + (scrollAmount  + 'px'));
                 });
                 break;
             case 'fixed matching fluid250':
                 fastdom.write(function () {
-                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).addClass('ad-exp--expand-scrolling-bg-fixed');
+                    $('.ad-exp--expand-scrolling-bg', that.adSlot).addClass('ad-exp--expand-scrolling-bg-fixed');
                 });
                 break;
             case 'parallax':
-                scrollAmount = Math.ceil((scrollY - adSlotTop) * 0.3 * -1) + 20;
+                scrollAmount = Math.ceil(adSlotTop * 0.3) + 20;
                 fastdom.write(function () {
-                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).addClass('ad-exp--expand-scrolling-bg-parallax');
-                    $('.ad-exp--expand-scrolling-bg', that.$adSlot).css('background-position', '50%' + (scrollAmount + '%'));
+                    $('.ad-exp--expand-scrolling-bg', that.adSlot).addClass('ad-exp--expand-scrolling-bg-parallax');
+                    $('.ad-exp--expand-scrolling-bg', that.adSlot).css('background-position', '50%' + (scrollAmount + '%'));
                 });
                 break;
             case 'none' :
@@ -105,8 +102,8 @@ define([
 
     FabricExpandingV1.prototype.listener = function () {
         var that = this;
-        if (!this.initialExpandCounter && (window.pageYOffset + bonzo.viewport().height) > that.$adSlot.offset().top + this.openedHeight) {
-            var itemId = $('.ad-slot__content', that.$adSlot).attr('id'),
+        if (!this.initialExpandCounter && bonzo.viewport().height > that.adSlot.getBoundingClientRect().top + this.openedHeight) {
+            var itemId = $('.ad-slot__content', that.adSlot).attr('id'),
                 itemIdArray = itemId.split('/');
 
             if (!storage.local.get('gu.commercial.expandable.' + itemIdArray[1])) {
@@ -164,7 +161,7 @@ define([
         delay = delay || 0;
 
         var videoSelector = detect.isBreakpoint({min: 'tablet'}) ? '.js-fabric-video--desktop' : '.js-fabric-video--mobile';
-        var video = $(videoSelector, this.$adSlot);
+        var video = $(videoSelector, this.adSlot);
         var videoSrc = video.attr('src');
 
         window.setTimeout(function () {
@@ -198,7 +195,7 @@ define([
 
         mediator.on('window:throttledScroll', this.listener);
 
-        bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
+        bean.on(this.adSlot, 'click', '.ad-exp__open', function () {
             if (!this.isClosed && hasVideo) {
                 // wait 1000ms for close animation to finish
                 this.stopVideo(1000);
@@ -237,16 +234,16 @@ define([
                 addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
             }
 
-            $fabricExpandingV1.appendTo(this.$adSlot);
+            $fabricExpandingV1.appendTo(this.adSlot);
 
             if (this.params.viewabilityTracker) {
-                addViewabilityTracker(this.$adSlot[0], this.params.id, this.params.viewabilityTracker);
+                addViewabilityTracker(this.adSlot, this.params.id, this.params.viewabilityTracker);
             }
 
-            this.$adSlot.addClass('ad-slot--fabric');
+            this.adSlot.classList.add('ad-slot--fabric');
 
-            if( this.$adSlot.parent().hasClass('top-banner-ad-container') ) {
-                this.$adSlot.parent().addClass('top-banner-ad-container--fabric');
+            if( this.adSlot.parentNode.classList.contains('top-banner-ad-container') ) {
+                this.adSlot.parentNode.classList.add('top-banner-ad-container--fabric');
             }
             return true;
         }, this);

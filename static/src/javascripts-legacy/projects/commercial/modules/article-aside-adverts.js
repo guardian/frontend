@@ -23,13 +23,12 @@ define([
     var mainColumnSelector = '.js-content-main-column';
     var rhColumnSelector = '.js-secondary-column';
     var adSlotContainerSelector = '.js-ad-slot-container';
-    var componentsContainerSelector = '.js-components-container';
 
     function init(start, stop) {
         start();
 
         var $col        = $(rhColumnSelector);
-        var $mainCol, $componentsContainer, $adSlotContainer;
+        var $mainCol, $adSlotContainer;
 
         // are article aside ads disabled, or secondary column hidden?
         if (!(commercialFeatures.articleAsideAdverts && $col.length && $css($col, 'display') !== 'none')) {
@@ -38,7 +37,6 @@ define([
         }
 
         $mainCol = $(mainColumnSelector);
-        $componentsContainer = $(componentsContainerSelector, $col[0]);
         $adSlotContainer = $(adSlotContainerSelector);
 
         fastdom.read(function () {
@@ -61,12 +59,7 @@ define([
             $adSlot = createSlot(adType, { classes: 'mpu-banner-ad' });
 
             return fastdom.write(function () {
-                if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {
-                    $componentsContainer.addClass('u-h');
-                }
-
                 $adSlotContainer.append($adSlot);
-
                 return $adSlotContainer;
             });
         })
