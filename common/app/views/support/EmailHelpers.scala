@@ -53,21 +53,50 @@ object EmailHelpers {
     }
   }
 
+  case class Callout(classes: Seq[String], rows: Row*) {
+    def render: Html = Html {
+      s"""<table class="callout">
+         |    <tr>
+         |      <th class="callout-inner ${classes.mkString(" ")}">
+         |        ${rows.map(_.render).mkString}
+         |      </th>
+         |    </tr>
+         |</table>""".stripMargin
+    }
+  }
+
+  case class FaciaCard(classes: Seq[String], rows: Row*) {
+    def render: Html = Html {
+      s"""<table class="fc-item">
+         |    <tr>
+         |      <th class="fc-item__inner ${classes.mkString(" ")}">
+         |        ${rows.map(_.render).mkString}
+         |      </th>
+         |    </tr>
+         |</table>""".stripMargin
+    }
+  }
+
+  def faciaCardFullRow(classes: Seq[String] = Nil)(inner: Html): Html = FaciaCard(classes, Row(
+    Column(smallWidth = 12, largeWidth = 12)(inner)
+  )).render
+
+
   def fullRow(inner: Html): Html = Row(
     Column(smallWidth = 12, largeWidth = 12)(inner)
   ).render
 
-  def fullRow(classes: Seq[String] = Seq.empty)(inner: Html): Html = Row(
+  def fullRow(classes: Seq[String] = Nil)(inner: Html): Html = Row(
     Column(smallWidth = 12, largeWidth = 12, classes)(inner)
   ).render
 
-  def paddedRow(inner: Html): Html = Row(
-    Column(smallWidth = 12, largeWidth = 12, Seq("panel"))(inner)
-  ).render
+  def paddedRow(inner: Html): Html = Callout(Nil, Row(
+    Column(smallWidth = 12, largeWidth = 12)(inner)
+  )).render
 
-  def paddedRow(classes: Seq[String] = Seq.empty)(inner: Html): Html = Row(
-    Column(smallWidth = 12, largeWidth = 12, classes ++ Seq("panel"))(inner)
-  ).render
+  def paddedRow(classes: Seq[String] = Nil)(inner: Html): Html = Callout(classes, Row(
+    Column(smallWidth = 12, largeWidth = 12)(inner)
+  )).render
 
   def imageUrlFromCard(contentCard: ContentCard): Option[String] = {
     for {

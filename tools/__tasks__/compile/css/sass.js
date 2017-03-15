@@ -24,6 +24,12 @@ module.exports = {
             description: 'Inline',
             task: () => compile('inline/*.scss'),
         },
+        {
+            description: 'Email',
+            task: () => compile('head.email*.scss', {
+                remify: false
+            }),
+        },
     ],
     concurrent: true,
 };

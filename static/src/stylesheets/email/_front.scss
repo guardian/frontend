@@ -30,13 +30,13 @@ $dark-gray: #8a8a8a;
 $black: #0a0a0a;
 $white: #fefefe;
 $pre-color: #ff6908;
-$global-width: 580px;
+$global-width: 500px; // changed
 $global-width-small: 95%;
-$global-gutter: 16px;
+$global-gutter: 0; //changed
 $body-background: #ffffff; // changed
 $container-background: #ffffff; // changed
-$global-padding: 16px;
-$global-margin: 16px;
+$global-padding: 0; // changed
+$global-margin: 10px; // changed
 $global-radius: 3px;
 $global-rounded: 500px;
 $global-breakpoint: $global-width + $global-gutter;
@@ -123,9 +123,9 @@ $button-rounded: $global-rounded;
 
 $callout-background: $white;
 $callout-background-fade: 85%;
-$callout-padding: 10px;
+$callout-padding: 0; // changed
 $callout-margin-bottom: $global-margin;
-$callout-border: 1px solid darken($callout-background, 20%);
+$callout-border: none; // changed
 $callout-border-secondary: 1px solid darken($secondary-color, 20%);
 $callout-border-success: 1px solid darken($success-color, 20%);
 $callout-border-warning: 1px solid darken($warning-color, 20%);
@@ -152,7 +152,101 @@ $thumbnail-radius: $global-radius;
 
 
 @import 'foundation-emails/foundation-emails';
+@import '_common';
+@import '_tones';
 
-.full-width {
+table.fc-item {
+    width: 100%; // I added this. It makes cards full-width in Chrome. Effect in mail clients?
+    margin-bottom: $callout-margin-bottom;
+    Margin-bottom: $callout-margin-bottom;
+}
+
+.fc-item__inner {
     width: 100%;
+    border: $callout-border;
+    padding: $callout-padding;
+    background: $callout-background;
+}
+
+.message {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 18px;
+    background: #f6f6f6;
+    padding: 6px 10px 6px 10px;
+}
+.container-title {
+    font-family: "Guardian Egyptian Web Header", "Guardian Egyptian Web Headline", Georgia, serif;
+    font-size: 26px;
+    margin-bottom: 12px;
+    margin-top: 26px;
+    color: #333333;
+    padding-top: 4px;
+}
+.facia-link {
+    text-decoration: none;
+}
+.headline,
+.trail-text {
+    margin-top: 6px;
+}
+.headline,
+.byline {
+    font-family: "Guardian Egyptian Web Headline", Georgia, serif;
+    font-size: 16px;
+    line-height: 20px;
+    color: inherit;
+}
+.headline, .byline, .trail-text {
+    padding: 0 10px;
+}
+
+.review-stars {
+    margin-top: 6px;
+}
+
+.trail-text {
+    font-family: Georgia, serif;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.fc-item--large .headline,
+.fc-item--large .byline {
+    font-size: 22px;
+    line-height: 26px;
+}
+
+.kicker-separator {
+    font-weight: normal;
+}
+
+.headline .icon {
+    height: 0.8em;
+}
+
+// TODO make loop
+.the-flyer {
+    .container-title.has-top-border {
+        border-top: 3px solid #ffbdc6;
+    }
+    .tone-external .fc-item {
+        border-top: 1px solid #ffbdc6;
+    }
+}
+.opinion {
+    .container-title.has-top-border {
+        border-top: 3px solid #e6711b;
+    }
+    .tone-external .fc-item {
+        border-top: 1px solid #e6711b;
+    }
+}
+.sleeve-notes {
+    .container-title.has-top-border {
+        border-top: 3px solid #ffbb00;
+    }
+    .tone-external .fc-item {
+        border-top: 1px solid #ffbb00;
+    }
 }
