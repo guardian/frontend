@@ -47,7 +47,7 @@ export default Object.assign(
         referenceOfType,
         webPublicationDateAsUrlPart,
         dateFromSlug,
-        isMedia: ['Video', 'Audio'].some(config.page.contentType),
+        isMedia: ['Video', 'Audio'].indexOf(config.page.contentType) > -1,
     },
     config
 );
