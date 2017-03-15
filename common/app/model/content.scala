@@ -13,6 +13,7 @@ import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, MediaAssetPlatform, MediaAtom, Quiz}
 import model.pressed._
+import mvt.ABNewRecipeDesign
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
@@ -84,7 +85,8 @@ final case class Content(
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
   lazy val hasRecipeAtom: Boolean = atoms.fold(false)(a => a.recipes.nonEmpty)
-  lazy val showNewRecipeDesign: Boolean = ArticleWithStructuredRecipe.isSwitchedOn && hasRecipeAtom
+  lazy val showNewRecipeDesign: Boolean =  hasRecipeAtom && ABNewRecipeDesign.switch.isSwitchedOn
+
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
       case (Some(t), Some(b)) => tags.contributors.length == 1 && t.name == b
