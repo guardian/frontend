@@ -26,9 +26,15 @@ define([
         name: 'ContributionsEpicRegulars',
         variants: ['control', 'fairness_mild', 'fairness_strong', 'fairness_strong_alternate_hook', 'reliance']
 	};
+
     var AcquisitionsEpicDesignVariations = {
         name: 'AcquisitionsDesignVariations',
         variants: ['control', 'extra_paragraph', 'large_hook', 'subtle', 'prominent', 'highlight']
+    };
+
+    var AcquisitionsEpicArticle50Trigger = {
+        name: 'AcquisitionsEpicArticle50Trigger',
+        variants: ['control']
     };
 
     var contributionsTests = [
@@ -37,7 +43,8 @@ define([
         ContributionsEpicAskFourStagger,
         ContributionsEpicAskFourEarning,
         ContributionsEpicRegulars,
-        AcquisitionsEpicDesignVariations
+        AcquisitionsEpicDesignVariations,
+        AcquisitionsEpicArticle50Trigger
     ];
 
     var emailTests = [];

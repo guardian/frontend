@@ -25,10 +25,24 @@ define([
         })
     }
 
+    function getSurvey(browserId, edition, forceShow) {
+        var path = 'https://tailor.guardianapis.com/orangeSurvey?browserId=' + browserId + '&edition=' + edition;
+
+        if (forceShow) {
+            path += '&forceShow=true';
+        }
+
+        return fetchJson(path, {
+            method: 'get'
+        })
+    }
+
+
     return {
         getEmail: getEmail,
         getSuggestions: getSuggestions,
-        getRegularStatus: getRegularStatus
+        getRegularStatus: getRegularStatus,
+        getSurvey: getSurvey
     };
 
 });

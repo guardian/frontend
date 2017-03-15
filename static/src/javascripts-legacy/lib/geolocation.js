@@ -135,10 +135,16 @@ define([
         return 'INT';
     }
 
+    function isInEurope() {
+        var countryCode = getSync();
+        return europeCountryCodes.indexOf(countryCode) > -1 || countryCode === 'GB'
+    }
+
     return {
         get: get,
         getSupporterPaymentRegion: getSupporterPaymentRegion,
         getSync: getSync,
+        isInEurope: isInEurope,
         init: init
     };
 });

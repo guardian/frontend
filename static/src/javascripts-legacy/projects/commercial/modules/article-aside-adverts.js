@@ -18,7 +18,6 @@ define([
     commercialFeatures
 ) {
     var minArticleHeight = 1300;
-    var minFootballArticleHeight = 2200;
     var minImmersiveArticleHeight = 600;
 
     var mainColumnSelector = '.js-content-main-column';
@@ -52,9 +51,9 @@ define([
                         'right' :
                         'right-small';
             } else {
-                adType = (config.page.section !== 'football' && mainColHeight >= minArticleHeight) ||
-                         (config.page.section === 'football' && mainColHeight >= minFootballArticleHeight)
-                         ? 'right-sticky' : 'right-small';
+                adType = mainColHeight >= minArticleHeight ?
+                    'right-sticky' :
+                    'right-small';
             }
 
             $adSlot = createSlot(adType, { classes: 'mpu-banner-ad' });

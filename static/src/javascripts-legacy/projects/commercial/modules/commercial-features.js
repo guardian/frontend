@@ -68,13 +68,15 @@ define([
             !isMinuteArticle &&
             isArticle &&
             !isLiveBlog &&
-            !isHosted;
+            !isHosted &&
+            !config.page.newRecipeDesign;
 
         this.articleAsideAdverts =
             this.dfpAdvertising &&
             !isMinuteArticle &&
             !isMatchReport &&
-            !!(isArticle || isLiveBlog);
+            !!(isArticle || isLiveBlog) &&
+            !config.page.newRecipeDesign;
 
         this.videoPreRolls =
             this.dfpAdvertising;
@@ -84,7 +86,8 @@ define([
             !isMinuteArticle &&
             !isHosted &&
             !isInteractive &&
-            !config.page.isFront;
+            !config.page.isFront &&
+            !config.page.newRecipeDesign;
 
         this.thirdPartyTags =
             externalAdvertising &&

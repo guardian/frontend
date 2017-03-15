@@ -189,4 +189,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 3, 17),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-article-50-trigger",
+    "Display the Epic on Article 50 articles for readers in Europe",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
 }
