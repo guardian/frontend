@@ -68,7 +68,7 @@ object ABNewRecipeDesign extends TestDefinition(
   sellByDate = new LocalDate(2017, 4, 3)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-recipe-design").contains("true")
+    request.headers.get("X-GU-ab-new-recipe-design").contains("variant")
   }
 }
 
