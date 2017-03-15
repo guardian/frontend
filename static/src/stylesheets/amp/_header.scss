@@ -138,9 +138,9 @@ $veggie-burger-medium: 52px;
 }
 
 .header__nav__link {
+    @include trailing-slash-link;
     font-size: 16px;
     line-height: $gs-baseline * 2.5;
-    @include trailing-slash-link;
     color: #ffffff;
     cursor: pointer;
 

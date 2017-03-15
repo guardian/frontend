@@ -186,9 +186,8 @@ $gutter-large: 55px;
 
 .new-header__nav__link {
     @include fs-textSans(5);
-    line-height: $gs-baseline * 2.5;
-
     @include trailing-slash-link;
+    line-height: $gs-baseline * 2.5;
 
     // Override a from _lists.scss
     color: $news-support-1;
