@@ -1,4 +1,4 @@
-@import "svg";
+@import 'svg';
 
 // Classes used by multiple variants
 // =================================
@@ -32,9 +32,9 @@
 }
 
 .contributions__title--epic--subtle {
+    @include fs-header(3);
     display: inline;
     border-top: 1px solid $multimedia-main-2;
-    @include fs-header(3);
     padding-top: $gs-baseline / 3;
 }
 
@@ -52,11 +52,13 @@
 }
 
 .contributions__option--button--prominent {
-    color: white;
+    color: #ffffff;
     background-color: $guardian-brand;
+
     &:after {
         background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="white" stroke="white" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
     }
+
     &:hover {
         color: #ffffff;
         background-color: $multimedia-support-3;
@@ -67,5 +69,34 @@
 // ============
 
 .contributions__paragraph--highlight {
-    background-color: transparentize($multimedia-main-2, .6);
+    background-color: #ffe399;
+    padding: 4px 2px;
+    margin-left: -2px;
+    margin-right: -2px;
+}
+
+.contributions__epic--paypal {
+    background-repeat: no-repeat;
+    background-size: 110px;
+    background-position: 85% 92.5%;
+
+    @include mq(phablet) {
+        background-position-y: 94.5%;
+    }
+
+    .contributions__amount-field {
+        flex-direction: column;
+
+        @include mq(phablet) {
+            flex-direction: row;
+        }
+    }
+
+    .contributions__contribute--epic-member-top {
+        margin-bottom: $gs-baseline / 2;
+
+        @include mq(phablet) {
+            margin-bottom: 0;
+        }
+    }
 }

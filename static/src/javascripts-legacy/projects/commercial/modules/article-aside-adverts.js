@@ -56,9 +56,6 @@ define([
             adSlot = createSlot(adType, { classes: 'mpu-banner-ad' });
 
             return fastdom.write(function () {
-                if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {
-                    $('.js-components-container', $col[0]).addClass('u-h');
-                }
                 $adSlotContainer.append(adSlot);
                 return adSlot;
             });

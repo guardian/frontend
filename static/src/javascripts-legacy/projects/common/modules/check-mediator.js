@@ -18,36 +18,70 @@ define([
     **/
     var SOMECHECKSPASSED = Array.prototype.some;
     var EVERYCHECKPASSED = Array.prototype.every;
+
     /**
      * checkList is an array of object literals.
      * Each object in this array will be converted to a DefferedCheck and added to registeredChecks
-     * Each object contains 3 fields: id (string), canRun (boolean), dependentChecks (object)
-     * dependentChecks should contain 2 fields: passCondition (SOMECHECKSPASSED/EVERYCHECKPASSED), list (nested array of checks)
+     * Each object can contain these 3 fields: 
+        * id (required, string)
+        * passCondition (optional, SOMECHECKSPASSED/EVERYCHECKPASSED)
+        * dependentChecks (optional, nested array of checks)
      * If object has dependentChecks then the DefferedCheck will resolve when these dependentChecks have all resolved
      *
     **/
-
-    var checkList = [{
-            id: 'isOutbrainNonCompliant',
-            dependentChecks: {
-                passCondition: SOMECHECKSPASSED,
-                list:[{
-                    id: 'isUserInAClashingAbTest'
-                }, {
-                    id: 'canEmailBeInserted',
-                    dependentChecks: {
-                        passCondition: EVERYCHECKPASSED,
-                        list: [{
-                            id: 'emailCanRun'
-                        }, {
-                            id: 'listCanRun'
-                        }, {
-                            id: 'emailInArticleOutbrainEnabled'
-                        }]
-                    }
-                }]
-            }
-        }];
+    var checks = [{
+        id: 'isOutbrainBlockedByAds',
+        passCondition: EVERYCHECKPASSED,
+        dependentChecks: [{
+            id: 'hasHighPriorityAdLoaded'
+        }, {
+            id: 'hasLowPriorityAdLoaded'
+        }]
+    }, {
+        id: 'isOutbrainMerchandiseCompliant',
+        passCondition: EVERYCHECKPASSED,
+        dependentChecks: [{
+            id: 'hasHighPriorityAdLoaded'
+        }, {
+            id: 'hasLowPriorityAdNotLoaded'
+        }]
+    }, {
+        id: 'isUserInEmailAbTestAndCanEmailBeAdded',
+        passCondition: EVERYCHECKPASSED,
+        dependentChecks: [{
+            id: 'isUserNotInContributionsAbTest'
+        }, {
+            id: 'isUserInEmailAbTest'
+        }, {
+            id: 'emailCanRunPreCheck'
+        }, {
+            id: 'listCanRun'
+        }, {
+            id: 'emailInArticleOutbrainEnabled'
+        }]
+    }, {
+        id: 'isOutbrainNonCompliant',
+        passCondition: SOMECHECKSPASSED,
+        dependentChecks: [{
+            id: 'isUserInContributionsAbTest'
+        }, {
+            id: 'isUserInEmailAbTestAndCanEmailBeAdded'
+        }]
+    }, {
+        id: 'emailCanRun',
+        passCondition: SOMECHECKSPASSED,
+        dependentChecks: [{
+            id: 'isUserInEmailAbTestAndCanEmailBeAdded'
+        }, {
+            id: 'isOutbrainMerchandiseCompliantOrBlockedByAds',
+            passCondition: SOMECHECKSPASSED,
+            dependentChecks: [{
+                id: 'isOutbrainMerchandiseCompliant'
+            }, {
+                id: 'isOutbrainBlockedByAds'
+            }]
+        }]
+    }];
 
     function DeferredCheck(dependentCheckPromises, dependentChecksPassCondition) {
         this.complete = new Promise(function(resolve, reject) {
@@ -69,29 +103,33 @@ define([
 
     function registerDefferedCheck(check) {
         if (check.dependentChecks) {
-          return new DeferredCheck(map(check.dependentChecks.list, registerDependentCheck), check.dependentChecks.passCondition);
+            return new DeferredCheck(map(check.dependentChecks, registerDependentCheck), check.passCondition);
         }
 
         return new DeferredCheck();
     }
 
     function registerDependentCheck(dependentCheck) {
+        if (registeredChecks[dependentCheck.id]) {
+            return registeredChecks[dependentCheck.id].complete;
+        }
+
         return registerCheck(dependentCheck).complete;
-    }    
+    }
   
     function registerCheck(check) {
-        var registeredCheck = registerDefferedCheck(check);
+        if (!registeredChecks[check.id]) {
+            registeredChecks[check.id] = registerDefferedCheck(check);
+        }
 
-        registeredChecks[check.id] = registeredCheck;
-
-        return registeredCheck;
+        return registeredChecks[check.id];
     }
 
     /**
      * public
     **/
     function init() {
-        checkList.forEach(registerCheck);
+        checks.forEach(registerCheck);
     }
     
     function resolveCheck(id) {
@@ -121,10 +159,15 @@ define([
         registeredChecks[check.id] = registeredCheck;
     }
 
+    function _testClean() {
+        registeredChecks = {};
+    }
+
     return {
         init: init,
         resolveCheck: resolveCheck,
         waitForCheck: waitForCheck,
-        _testRegisterCheck: _testRegisterCheck // exposed for unit testing
+        _testRegisterCheck: _testRegisterCheck, // exposed for unit testing
+        _testClean: _testClean // exposed for unit testing
     };
 });

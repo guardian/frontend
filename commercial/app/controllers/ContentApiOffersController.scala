@@ -19,18 +19,6 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
   private val lookup = new Lookup(contentApiClient)
 
-  private val sponsorTypeToClassRefactor = Map(
-    "sponsored" -> Supported,
-    "advertisement-feature" -> PaidFor,
-    "foundation-supported" -> Supported
-  )
-
-  private val sponsorTypeToLabel = Map(
-    "sponsored" -> "Supported by",
-    "advertisement-feature" -> "Paid for by",
-    "foundation-supported" -> "Supported by"
-  )
-
   private def retrieveContent()(implicit request: Request[AnyContent]): Future[List[ContentType]]  = {
 
     val optKeyword = request.getParameter("k")
@@ -60,64 +48,6 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     futureContents.map(_.toList)
   }
 
-
-  private def renderItems(format: Format, isMulti: Boolean) = Action.async { implicit request =>
-
-    retrieveContent().map(_.toList) map {
-      case Nil => NoCache(format.nilResult.result)
-      case contents => Cached(componentMaxAge) {
-
-        val edition = Edition(request)
-        val optSection = request.getParameter("s")
-        val optLogo = request.getParameter("l")
-        val optCapiTitle = request.getParameter("ct")
-        val optCapiLink = request.getParameter("cl")
-        val optCapiAbout = request.getParameter("cal")
-        val optCapiButtonText = request.getParameter("clt")
-        val optCapiReadMoreUrl = request.getParameter("rmd")
-        val optCapiReadMoreText = request.getParameter("rmt")
-        val optCapiPaidContent = request.getParameter("af")
-        val optClickMacro = request.getParameter("clickMacro")
-        val optOmnitureId = request.getParameter("omnitureId")
-        val omnitureId = optOmnitureId orElse optCapiTitle getOrElse ""
-        val optSponsorTypeRefactor = optCapiPaidContent flatMap (feature => sponsorTypeToClassRefactor.get(feature))
-        val optSponsorLabel = optCapiPaidContent flatMap (feature => sponsorTypeToLabel.get(feature))
-
-        if (isMulti) {
-          format.result(views.html.contentapi.items(
-            contents map (PaidCard.fromContentItem(_, edition, optClickMacro, withDescription = false)),
-            optSection,
-            optLogo,
-            optCapiTitle,
-            optCapiLink,
-            optCapiAbout,
-            optClickMacro,
-            omnitureId,
-            optCapiPaidContent,
-            optSponsorTypeRefactor,
-            optSponsorLabel)
-          )
-        } else {
-          format.result(views.html.contentapi.item(
-            PaidCard.fromContentItem(contents.head, edition, optClickMacro, withDescription = true),
-            optSection,
-            optLogo,
-            optCapiTitle,
-            optCapiLink,
-            optCapiAbout,
-            optCapiButtonText,
-            optCapiReadMoreUrl,
-            optCapiReadMoreText,
-            optSponsorTypeRefactor,
-            optSponsorLabel,
-            optClickMacro,
-            omnitureId
-          ))
-        }
-      }
-    }
-  }
-
   private def renderNative(isMulti: Boolean) = Action.async { implicit request =>
 
     retrieveContent().map {
@@ -134,10 +64,4 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
   def nativeJson = renderNative(isMulti = false)
   def nativeJsonMulti = renderNative(isMulti = true)
-
-  def itemsHtml = renderItems(htmlFormat, isMulti = true)
-  def itemsJson = renderItems(jsonFormat, isMulti = true)
-
-  def itemHtml = renderItems(htmlFormat, isMulti = false)
-  def itemJson = renderItems(jsonFormat, isMulti = false)
 }
