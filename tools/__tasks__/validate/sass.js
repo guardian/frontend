@@ -2,8 +2,13 @@ const execa = require('execa');
 
 module.exports = {
     description: 'Lint Sass',
-    task: () =>
-        execa('sass-lint', ['--verbose', '--no-exit']).stdout.pipe(
-            process.stdout
-        ),
+    task: ctx => execa('sass-lint', ['--verbose', '--no-exit']).then(res => {
+        if (!res.stdout) {
+            return ctx;
+        }
+
+        const error = new Error('sass-lint failed');
+        error.stdout = res.stdout;
+        throw error;
+    }),
 };
