@@ -182,6 +182,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-fashion-statement-email-variants",
+    "Assign users to variants of fashion statement email",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-design-variations-v2",
     "Test more design variations to the Epic",
     owners = Seq(Owner.withGithub("desbo")),

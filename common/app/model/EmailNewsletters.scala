@@ -319,6 +319,7 @@ object EmailNewsletters {
     description = "The Guardian sorts the wheat from the chaff to deliver the latest news, views and shoes from the style frontline.",
     frequency = "Every Monday",
     listId = 105,
+    aliases = List(3862, 3863),
     tone = Some("feature"),
     signupPage = Some("/fashion/2016/aug/18/sign-up-for-the-guardians-fashion-email")
   )

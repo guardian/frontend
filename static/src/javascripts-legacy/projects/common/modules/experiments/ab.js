@@ -18,6 +18,7 @@ define([
     'common/modules/experiments/tests/membership-a3-a4-bundles-thrasher',
     'common/modules/experiments/tests/tailor-survey',
     'common/modules/experiments/tests/the-long-read-email-variants',
+    'common/modules/experiments/tests/fashion-statement-email-variants',
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
@@ -41,6 +42,7 @@ define([
              MembershipA3A4BundlesThrasher,
              TailorSurvey,
              TheLongReadEmailVariants,
+             FashionStatementEmailVariants,
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
              IncreaseInlineAds,
@@ -56,6 +58,7 @@ define([
         new MembershipA3A4BundlesThrasher(),
         new TailorSurvey(),
         TheLongReadEmailVariants,
+        FashionStatementEmailVariants,
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
         new IncreaseInlineAds()
