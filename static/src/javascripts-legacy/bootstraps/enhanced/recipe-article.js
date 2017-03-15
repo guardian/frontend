@@ -12,7 +12,8 @@ define([
 
 function init() {
     var recipe = $('.recipe__article--structured');
-    var firstRecipe = $('.js-recipe__article--structured .js-recipe__article--structured-headline h1');
+    var firstRecipe = $('.js-recipe__article--structured');
+    var firstRecipeHeadline = $('.js-recipe__article--structured .js-recipe__article--structured-headline h1');
     var nextWrapper = $('.js-recipe__article--next-recipe');
     var nextRecipeTitle = $('.js-recipe__article--next-title');
     var nextRecipeText = $('.js-recipe__article--next-text');
@@ -24,14 +25,15 @@ function init() {
 
     function setKicker() {
         var nextRecipe = getNextRecipe();
+        var nextRecipeHeadline = getNextRecipeHeadline();
 
         if (nextRecipe && nextRecipe.length > 0) {
             nextButton.removeClass('top');
-            nextRecipeTitle.html(nextRecipe.html());
+            nextRecipeTitle.html(nextRecipeHeadline.html());
             nextRecipeKicker.html('Next recipe ');
         } else {
             nextButton.addClass('top');
-            nextRecipeTitle.html(firstRecipe.html());
+            nextRecipeTitle.html(firstRecipeHeadline.html());
             nextRecipeKicker.html('First recipe ');
         }
     }
@@ -46,8 +48,12 @@ function init() {
         }
     }
 
-    function getNextRecipe() {
+    function getNextRecipeHeadline() {
         return $('.js-recipe__article--structured.inview + .js-recipe__article--structured .js-recipe__article--structured-headline h1');
+    }
+
+    function getNextRecipe() {
+        return $('.js-recipe__article--structured.inview + .js-recipe__article--structured');
     }
 
     function getIntOfFocalRecipe() {
@@ -73,6 +79,12 @@ function init() {
         setKicker();
     }
 
+    function scrollToNextRecipe(){
+        var nextRecipe = getNextRecipe();
+        var destination = nextRecipe.length > 0 ? nextRecipe : firstRecipe;
+        scroller.scrollToElement(destination[0]);
+    }
+
     bean.on(readMoreButton[0], 'click', function() {
 
         $('.recipe__content').toggleClass('js-visible');
@@ -89,10 +101,10 @@ function init() {
         readMoreButton.toggleClass('js-x-sign');
     });
 
-    bean.on(nextButton[0], 'click', function() {
-        var nextRecipe = getNextRecipe();
-        var destination = nextRecipe.length > 0 ? nextRecipe : firstRecipe;
-        scroller.scrollToElement(destination[0]);
+    nextButton.each(function(elem) {
+      bean.on(elem, 'click', function() {
+          scrollToNextRecipe();
+      });
     });
 
     window.addEventListener('scroll', debounce(function() {

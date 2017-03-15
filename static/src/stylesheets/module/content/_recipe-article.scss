@@ -14,7 +14,7 @@ $padding-wide: 100px;
     justify-content: space-between;
     flex-wrap: wrap;
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         flex-wrap: nowrap;
     }
 
@@ -27,7 +27,7 @@ $padding-wide: 100px;
     line-height: 38px;
 
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         font-size: 48px;
         line-height: 48px;
     }
@@ -67,9 +67,11 @@ $padding-wide: 100px;
     height: 50vh;
     top: 0;
     width: 100%;
+    position: relative;
+    overflow: hidden;
 
-    @include mq($from: tablet) {
-        flex-basis: 40%;
+    @include mq($from: desktop) {
+        flex-basis: 50%;
         position: sticky;
         height: 100vh;
         min-height: 600px;
@@ -84,7 +86,7 @@ $padding-wide: 100px;
 .recipe__image__wrapper.recipe {
     display: none;
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         display: block;
     }
 }
@@ -103,22 +105,25 @@ $padding-wide: 100px;
 }
 
 .recipe__label {
+    @include f-headline;
     position: absolute;
     z-index: 300;
     background-color: $purple;
-    height: 90px;
-    width: 160px;
+    height: 85px;
+    width: 140px;
     border-radius: 50%;
     text-align: center;
-    padding-top: 70px;
+    padding-top: 55px;
     color: #ffffff;
     left: 1px;
-    top: 0;
+    bottom: -$gs-gutter*2;
     line-height: initial;
+    font-weight: 900;
 
-    @include mq($from: tablet) {
-        top: 5px;
+    @include mq($from: desktop) {
+        top: -$gs-gutter*2;
         left: 20px;
+        bottom: auto;
     }
 }
 
@@ -128,9 +133,77 @@ $padding-wide: 100px;
 
 }
 
+.recipe__gutter-wrapper {
+    display: none;
+
+    @include mq($from: desktop) {
+        display: flex;
+        flex-basis: 5%;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        border-right: 1px solid $grey;
+    }
+}
+
+.recipe__article--byline-image {
+    position: absolute;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: $grey;
+    overflow: hidden;
+    left: .5vw;
+    top: $gs-baseline;
+}
+
+.recipe__article--byline-image .byline-img .byline-img__img {
+   width: 150%;
+   height: auto;
+   margin-left: -25%;
+   filter: grayscale(100%);
+}
+
+.recipe__article--next-button {
+    position: absolute;
+    bottom: $gs-gutter / 4;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid lighten($neutral-1, 50%);
+    z-index: 200;
+    transition: transform .5s ease-in-out;
+    transform: rotate(90deg);
+    left: .5vw;
+
+    @include mq($from: desktop) {
+        width: 50px;
+        height: 50px;
+        border: 1px solid $grey;
+
+    }
+
+    .inline-icon {
+        fill: #000000;
+    }
+
+    svg {
+        margin-left: auto;
+        margin-right: auto;
+        @include mq($from: desktop) {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    &.top {
+        transform: rotate(270deg);
+    }
+}
+
 .recipe__article-wrapper {
-    @include mq($from: tablet) {
-        flex-basis: 60%;
+    @include mq($from: desktop) {
+        flex-basis: 45%;
         float: right;
     }
 
@@ -140,7 +213,7 @@ $padding-wide: 100px;
 }
 
 .recipe__article--headline, .recipe__article--content {
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         margin-left: auto;
         margin-right: auto;
     }
@@ -153,7 +226,7 @@ $padding-wide: 100px;
     float: left;
     margin-right: 12px;
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         margin-left: -90px;
         position: fixed;
     }
@@ -164,7 +237,7 @@ $padding-wide: 100px;
     margin-bottom: 24px;
     color: $purple;
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         margin-top: 20px;
     }
 
@@ -182,7 +255,7 @@ $padding-wide: 100px;
     p {
         font-size: 18px;
 
-        @include mq($from: tablet) {
+        @include mq($from: desktop) {
             padding-right: 50px;
         }
 
@@ -217,10 +290,6 @@ $padding-wide: 100px;
 .recipe__content figure.element,
 .recipe__content aside.element {
     margin-left: 0;
-
-    h1 {
-        font-size: 14px;
-    }
 }
 
 .recipe__article--next-recipe {
@@ -230,7 +299,7 @@ $padding-wide: 100px;
     transition: opacity .5s ease-in-out;
     z-index: 1050;
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         color: $grey-three;
     }
     .kicker {
@@ -243,45 +312,6 @@ $padding-wide: 100px;
     }
     &.visible {
         opacity: 1;
-    }
-}
-.recipe__article--next-button {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    float: left;
-    border: 1px solid lighten($neutral-1, 50%);
-    margin-left: 12px;
-    margin-right: 12px;
-    z-index: 200;
-    position: relative;
-    margin-bottom: 6px;
-    transition: transform .5s ease-in-out;
-    transform: rotate(90deg);
-
-    @include mq($from: tablet) {
-        width: 60px;
-        height: 60px;
-        float: left;
-        border: 1px solid $grey;
-        margin-left: -72px;
-    }
-
-    .inline-icon {
-        fill: #000000;
-    }
-
-    svg {
-        margin-left: auto;
-        margin-right: auto;
-        @include mq($from: tablet) {
-            width: 60px;
-            height: 60px;
-        }
-    }
-
-    &.top {
-        transform: rotate(270deg);
     }
 }
 
@@ -308,7 +338,7 @@ $padding-wide: 100px;
         line-height: 18px;
     }
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         background-color: #ffffff;
         padding-left: 1%;
         padding-bottom: 14px;
@@ -325,7 +355,7 @@ $padding-wide: 100px;
     border-top: 4px solid $grey;
     padding-top: 8px;
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         margin-top: 50px;
     }
     .structured-meta {
@@ -375,20 +405,23 @@ $padding-wide: 100px;
     margin-bottom: 24px;
     margin-top: 18px;
 
-    @include mq($from: tablet) {
-        columns: 2;
+    @include mq($from: desktop) {
         padding-right: 50px;
+        display: flex;
+        flex-wrap: wrap;
     }
 
     @include mq($from: wide) {
         padding-right: $padding-wide;
     }
 
-    ul {
-        page-break-inside: avoid;
-        break-inside: avoid;
-        margin-top: -6px !important;
+}
+
+.ingredients-list {
+    &:nth-child(odd) {
+        padding-right: 1%;
     }
+    flex: 0 49%;
 }
 
 .ingredients-list, .method-list {
@@ -398,7 +431,8 @@ $padding-wide: 100px;
 }
 
 .ingredients-list {
-    li:not(.ingredients-title) {
+    margin-bottom: $gs-baseline;
+    li:not(.recipe__article--list-title) {
         font-family: $f-sans-serif-text;
         font-size: 14px;
         border-top: 1px solid $grey;
@@ -406,18 +440,35 @@ $padding-wide: 100px;
     }
 }
 
-.ingredients-title {
-    border-top: 4px solid $purple;
+.recipe__article--structured-byline, .recipe__article--list-title {
     font-family: $f-serif-headline;
     font-weight: 900;
     color: $purple;
     margin-bottom: 12px;
 }
 
+.recipe__article--list-title {
+    .ingredients-list & {
+      &:before {
+          width: 100%;
+      }
+    }
+
+    &:before {
+        display: block;
+        content: '';
+        height: 4px;
+        background-color: $purple;
+        @include mq($from: desktop) {
+            width: 50%;
+        }
+    }
+}
+
 .method-list {
     margin-bottom: 24px;
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         padding-right: 50px;
     }
 
@@ -425,7 +476,8 @@ $padding-wide: 100px;
         padding-right: $padding-wide;
     }
 
-    li {
+    li:not(.recipe__article--list-title) {
+        font-family: $f-sans-serif-text;
         border-top: 1px solid $grey;
         margin-bottom: 24px;
     }
@@ -443,7 +495,6 @@ $padding-wide: 100px;
 
 .ad-wrapper {
     background-color: $grey-two;
-    margin-left: -20px;
     margin-top: 20px;
     padding-top: 6px;
     padding-bottom: 6px;
