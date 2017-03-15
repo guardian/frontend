@@ -39,6 +39,9 @@ function dateFromSlug(): ?string {
     return s ? s[0] : null;
 }
 
+const isMedia: boolean = ['Video', 'Audio'].indexOf(config.page.contentType) >
+    -1;
+
 export default Object.assign(
     {
         hasTone,
@@ -47,7 +50,7 @@ export default Object.assign(
         referenceOfType,
         webPublicationDateAsUrlPart,
         dateFromSlug,
-        isMedia: ['Video', 'Audio'].indexOf(config.page.contentType) > -1,
+        isMedia,
     },
     config
 );
