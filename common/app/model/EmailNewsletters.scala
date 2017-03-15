@@ -217,6 +217,7 @@ object EmailNewsletters {
     description = "Bringing you the latest Long Read features and podcasts, delivered to your inbox.",
     frequency = "Every Saturday",
     listId = 3322,
+    aliases = List(3868, 3869),
     tone = Some("feature"),
     signupPage = Some("/news/2015/jul/20/sign-up-to-the-long-read-email")
   )
