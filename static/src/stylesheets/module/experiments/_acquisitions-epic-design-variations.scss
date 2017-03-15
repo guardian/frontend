@@ -1,4 +1,4 @@
-@import "svg";
+@import 'svg';
 
 // Classes used by multiple variants
 // =================================
@@ -32,9 +32,9 @@
 }
 
 .contributions__title--epic--subtle {
+    @include fs-header(3);
     display: inline;
     border-top: 1px solid $multimedia-main-2;
-    @include fs-header(3);
     padding-top: $gs-baseline / 3;
 }
 
@@ -52,11 +52,13 @@
 }
 
 .contributions__option--button--prominent {
-    color: white;
+    color: #ffffff;
     background-color: $guardian-brand;
+
     &:after {
         background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="white" stroke="white" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
     }
+
     &:hover {
         color: #ffffff;
         background-color: $multimedia-support-3;
