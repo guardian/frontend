@@ -51,4 +51,10 @@ describe('Config', () => {
     it('should return the expected dateFromSlug', () => {
         expect(config.dateFromSlug()).toBe('2017/mar/14');
     });
+
+    it('should have all properties from prevConfig in new config', () => {
+        expect(
+            Object.keys(prevConfig).every(key => key in config)
+        ).toBeTruthy();
+    });
 });
