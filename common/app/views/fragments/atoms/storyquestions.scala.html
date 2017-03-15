@@ -5,6 +5,7 @@
     <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
 
     <h1 class="user__question-title">Finished this article but want to know more? <span class="user__question-title--secondary">Let us know what questions you want answered.</span></h1>
+
     @for(questions <- storyquestions.data.editorialQuestions) {
         @for(qs <- questions) {
             <p>
