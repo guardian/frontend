@@ -12,9 +12,9 @@
               <h3>@qs.questionSetTitle</h3>
             </div>
             @for(question <- qs.questions) {
-                <p class="user__quesions-text--wrapper">
+                <p class="user__questions-text--wrapper">
                     <span id="js-question-text-@question.questionId" class="user__question-text"><span>@question.questionText</span></span>
-                    <a href="#" id="@question.questionId" class="user__question-upvote js-question-upvote-link">Ask this <span class="tick">@fragments.inlineSvg("tick", "icon")</span></a>
+                    <a href="#" id="@question.questionId" class="user__question-upvote js-ask-question-link">Ask this <span class="tick">@fragments.inlineSvg("tick", "icon")</span></a>
                     <span id="js-question-thankyou-@question.questionId" class="user__question-response submeta__label" style="display: none">Thanks, we've registered your vote.</span>
                 </p>
             }
