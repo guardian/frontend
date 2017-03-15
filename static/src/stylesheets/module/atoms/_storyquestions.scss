@@ -47,8 +47,8 @@
     margin-top: $gs-baseline * 2;
 
     h3 {
-        color: $neutral-2;
         @include f-textSans;
+        color: $neutral-2;
         font-weight: 200;
         font-size: 12px;
     }
@@ -73,7 +73,7 @@
     span {
         background-color: $neutral-6;
         padding: $gs-baseline / 2 $gs-baseline / 2 $gs-baseline / 2 0;
-        transition: 0.2s background-color ease-in-out;
+        transition: .2s background-color ease-in-out;
         position: relative;
 
         &:before {
@@ -101,9 +101,9 @@
 }
 
 .user__question-upvote {
+    @include f-textSans;
     right: 0px;
     color: $news-main-1;
-    @include f-textSans;
     font-weight: 900;
     border-top: 1px solid $neutral-6;
     padding-top: $gs-baseline / 2;
