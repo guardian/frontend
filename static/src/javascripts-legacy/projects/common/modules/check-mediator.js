@@ -22,64 +22,66 @@ define([
     /**
      * checkList is an array of object literals.
      * Each object in this array will be converted to a DefferedCheck and added to registeredChecks
-     * Each object contains 2 fields: id (string) and dependentChecks (object)
-     * dependentChecks should contain 2 fields: passCondition (SOMECHECKSPASSED/EVERYCHECKPASSED), list (nested array of checks)
+     * Each object can contain these 3 fields: 
+        * id (required, string)
+        * passCondition (optional, SOMECHECKSPASSED/EVERYCHECKPASSED)
+        * dependentChecks (optional, nested array of checks)
      * If object has dependentChecks then the DefferedCheck will resolve when these dependentChecks have all resolved
      *
     **/
-    var checkList = [{
-            id: 'isOutbrainNonCompliant',
-            dependentChecks: {
-                passCondition: SOMECHECKSPASSED,
-                list:[{
-                    id: 'isUserInContributionsAbTest'
-                }, {
-                    id: 'isUserInEmailAbTestAndCanEmailBeAdded',
-                    dependentChecks: {
-                        passCondition: EVERYCHECKPASSED,
-                        list: [{
-                            id: 'isUserNotInContributionsAbTest'
-                        }, { 
-                            id: 'isUserInEmailAbTest' 
-                        }, {
-                            id: 'emailCanRunPreCheck'
-                        }, {
-                            id: 'listCanRun'
-                        }, {
-                            id: 'emailInArticleOutbrainEnabled'
-                        }]
-                    }
-                }]
-            }
+    var checks = [{
+        id: 'isOutbrainBlockedByAds',
+        passCondition: EVERYCHECKPASSED,
+        dependentChecks: [{
+            id: 'hasHighPriorityAdLoaded'
         }, {
-            id: 'emailCanRun',
-            dependentChecks: {
-                passCondition: SOMECHECKSPASSED,
-                list: [{ 
-                    id: 'isUserInEmailAbTestAndCanEmailBeAdded'
-                }, {
-                    id: 'isOutbrainMerchandiseCompliant',
-                    dependentChecks: {
-                        passCondition: EVERYCHECKPASSED,
-                        list: [{
-                            id: 'hasHighPriorityAdLoaded'
-                        }, {
-                            id: 'hasLowPriorityAdNotLoaded'
-                        }]
-                    }
-                }]
-            }
+            id: 'hasLowPriorityAdLoaded'
+        }]
+    }, {
+        id: 'isOutbrainMerchandiseCompliant',
+        passCondition: EVERYCHECKPASSED,
+        dependentChecks: [{
+            id: 'hasHighPriorityAdLoaded'
         }, {
-            id: 'isOutbrainBlockedByAds',
-            dependentChecks: {
-                passCondition: EVERYCHECKPASSED,
-                list: [{
-                    id: 'hasHighPriorityAdLoaded'
-                }, {
-                    id: 'hasLowPriorityAdLoaded'
-                }]
-            }
-        }];
+            id: 'hasLowPriorityAdNotLoaded'
+        }]
+    }, {
+        id: 'isUserInEmailAbTestAndCanEmailBeAdded',
+        passCondition: EVERYCHECKPASSED,
+        dependentChecks: [{
+            id: 'isUserNotInContributionsAbTest'
+        }, {
+            id: 'isUserInEmailAbTest'
+        }, {
+            id: 'emailCanRunPreCheck'
+        }, {
+            id: 'listCanRun'
+        }, {
+            id: 'emailInArticleOutbrainEnabled'
+        }]
+    }, {
+        id: 'isOutbrainNonCompliant',
+        passCondition: SOMECHECKSPASSED,
+        dependentChecks: [{
+            id: 'isUserInContributionsAbTest'
+        }, {
+            id: 'isUserInEmailAbTestAndCanEmailBeAdded'
+        }]
+    }, {
+        id: 'emailCanRun',
+        passCondition: SOMECHECKSPASSED,
+        dependentChecks: [{
+            id: 'isUserInEmailAbTestAndCanEmailBeAdded'
+        }, {
+            id: 'isOutbrainMerchandiseCompliantOrBlockedByAds',
+            passCondition: SOMECHECKSPASSED,
+            dependentChecks: [{
+                id: 'isOutbrainMerchandiseCompliant'
+            }, {
+                id: 'isOutbrainBlockedByAds'
+            }]
+        }]
+    }];
 
     function DeferredCheck(dependentCheckPromises, dependentChecksPassCondition) {
         this.complete = new Promise(function(resolve, reject) {
@@ -101,33 +103,33 @@ define([
 
     function registerDefferedCheck(check) {
         if (check.dependentChecks) {
-          return new DeferredCheck(map(check.dependentChecks.list, registerDependentCheck), check.dependentChecks.passCondition);
+            return new DeferredCheck(map(check.dependentChecks, registerDependentCheck), check.passCondition);
         }
 
         return new DeferredCheck();
     }
 
     function registerDependentCheck(dependentCheck) {
-        return registerCheck(dependentCheck).complete;
-    }    
-  
-    function registerCheck(check) {
-        if (registeredChecks[check.id]) {
-            return registeredChecks[check.id];
+        if (registeredChecks[dependentCheck.id]) {
+            return registeredChecks[dependentCheck.id].complete;
         }
 
-        var registeredCheck = registerDefferedCheck(check);
+        return registerCheck(dependentCheck).complete;
+    }
+  
+    function registerCheck(check) {
+        if (!registeredChecks[check.id]) {
+            registeredChecks[check.id] = registerDefferedCheck(check);
+        }
 
-        registeredChecks[check.id] = registeredCheck;
-
-        return registeredCheck;
+        return registeredChecks[check.id];
     }
 
     /**
      * public
     **/
     function init() {
-        checkList.forEach(registerCheck);
+        checks.forEach(registerCheck);
     }
     
     function resolveCheck(id) {

@@ -120,15 +120,12 @@ define([
                     });
                 } else {
                     checkMediator.waitForCheck('isOutbrainBlockedByAds').then(function(outbrainBlockedByAds) {
-                        console.log('outbrainBlockedByAds ---->', outbrainBlockedByAds);
                         if (!outbrainBlockedByAds) {
                             checkMediator.waitForCheck('isOutbrainMerchandiseCompliant').then(function (outbrainMerchandiseCompliant) {
-                                console.log('outbrainMerchandiseCompliant ---->', outbrainMerchandiseCompliant);
                                 if (outbrainMerchandiseCompliant) {
                                     module.load('merchandising');
                                 } else {
                                     checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
-                                        console.log('outbrainIsNonCompliant ---->', outbrainIsNonCompliant);
                                         outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
                                     });
                                 }
