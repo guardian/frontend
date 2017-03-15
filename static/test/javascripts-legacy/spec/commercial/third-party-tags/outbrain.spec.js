@@ -29,7 +29,7 @@ define([
         checkMediator,
         injector = new Injector();
 
-    fdescribe('Outbrain', function () {
+    describe('Outbrain', function () {
         var loadScript = jasmine.createSpy('loadScript');
         beforeEach(function (done) {
             injector.mock('lib/load-script', loadScript);
