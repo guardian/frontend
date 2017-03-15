@@ -15,8 +15,8 @@ define([
         var atomId = $('.js-storyquestion-atom-id').attr('id');
 
         if (question && atomId) {
-            $('#' + questionId).hide();
-            $('#js-question-thankyou-' + questionId).toggle();
+            $('#' + questionId).addClass('is-hidden');
+            $('#js-question-thankyou-' + questionId).removeClass('is-hidden');
 
             ophan.record({
                 atomId: atomId,

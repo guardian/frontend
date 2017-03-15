@@ -2,7 +2,7 @@
 
 @if(!isAmp) {
     <div class="submeta user__question">
-    <span class="js-storyquestion-atom-id" style="display: none" id="@storyquestions.id"></span>
+    <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
 
     <h1 class="user__question-title">Finished this article but want to know more? <span class="user__question-title--secondary">Let us know what questions you want answered.</span></h1>
 
@@ -16,7 +16,7 @@
                     <p class="user__questions-text--wrapper">
                         <span id="js-question-text-@question.questionId" class="user__question-text"><span>@question.questionText</span></span>
                         <a href="#" id="@question.questionId" class="user__question-upvote js-ask-question-link">Ask this <span class="tick">@fragments.inlineSvg("tick", "icon")</span></a>
-                        <span id="js-question-thankyou-@question.questionId" class="user__question-response submeta__label" style="display: none">Thanks, we've registered your vote.</span>
+                        <span id="js-question-thankyou-@question.questionId" class="user__question-response submeta__label is-hidden">Thanks, we've registered your vote.</span>
                     </p>
                 }
             </p>
