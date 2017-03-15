@@ -5,7 +5,6 @@
 @import views.html.hosted._
 @import views.support.FBPixel
 @import model.hosted.HostedArticleQuotes.prepareQuotes
-@import conf.switches.Switches.AmpOphanTrackingIncludesCredentials
 
 <!doctype html>
 <html AMP>
@@ -28,12 +27,8 @@
     <body>
 
         <amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
-        @if(AmpOphanTrackingIncludesCredentials.isSwitchedOn){
-            <amp-analytics config="https://ophan.theguardian.com/amp.json" @if(context.environment.mode != Mode.Dev) { data-credentials="include" }></amp-analytics>
-        } else {
-            <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
-        }
-        
+        <amp-analytics config="https://ophan.theguardian.com/amp.json" @if(context.environment.mode != Mode.Dev) { data-credentials="include" }></amp-analytics>
+
         @fragments.amp.hostedGoogleAnalytics(page)
         <amp-analytics id="comscore" type="comscore">
             <script type="application/json">{ "vars": { "c2": "6035250" } }</script>

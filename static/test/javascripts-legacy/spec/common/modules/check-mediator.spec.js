@@ -8,38 +8,32 @@ define([
         var EVERYCHECKPASSED = Array.prototype.every;
 
         var checkList = [{
-                id: 'check-1'
+            id: 'check-1'
+        }, {
+            id: "check-2",
+            passCondition: EVERYCHECKPASSED,
+            dependentChecks: [{
+                id: "check-3"
             }, {
-                id: "check-2",
-                dependentChecks: {
-                    passCondition: EVERYCHECKPASSED,
-                    list: [{
-                        id: "check-3"
-                    }, {
-                        id: "check-4"
-                    }]
-                }
+                id: "check-4"
+            }]
+        }, {
+            id: "check-5",
+            passCondition: EVERYCHECKPASSED,
+            dependentChecks: [{
+                id: "check-6"
             }, {
-                id: "check-5",
-                dependentChecks: {
-                    passCondition: EVERYCHECKPASSED,
-                    list: [{
-                        id: "check-6"
-                    }, {
-                        id: "check-7"
-                    }]
-                }
+                id: "check-7"
+            }]
+        }, {
+            id: "check-8",
+            passCondition: SOMECHECKSPASSED,
+            dependentChecks: [{
+                id: "check-9"
             }, {
-                id: "check-8",
-                dependentChecks: {
-                    passCondition: SOMECHECKSPASSED,
-                    list: [{
-                        id: "check-9"
-                    }, {
-                        id: "check-10"
-                    }]
-                }
-            }];
+                id: "check-10"
+            }]
+        }];
 
         beforeAll(function () {
             checkList.forEach(checkMediator._testRegisterCheck);

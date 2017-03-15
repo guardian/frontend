@@ -22,7 +22,6 @@ define([
             baselines: []
         };
     var primaryBaseline = 'primary';
-    var secondaryBaseline = 'secondary';
     var reportData = raven.wrap(reportTrackingData);
 
     function setListeners(googletag) {
@@ -145,7 +144,6 @@ define([
         addStartTimeBaseline : addStartTimeBaseline,
         addEndTimeBaseline : addEndTimeBaseline,
         primaryBaseline : primaryBaseline,
-        secondaryBaseline: secondaryBaseline,
         addTag: addTag,
         wrap: wrap,
         defer: defer,

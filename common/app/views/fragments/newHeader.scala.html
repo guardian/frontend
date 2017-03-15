@@ -4,48 +4,50 @@
 @import common.{LinkTo, NewNavigation, Edition}
 
 <header class="new-header" role="banner">
-    @defining(
-        NewNavigation.SectionLinks.getTopLevelSection(page.metadata.sectionId)
-    ) { case (currentTopLevelSection) =>
-        <div class="new-header__inner gs-container">
-            <a href="@LinkTo{/}" class="new-header__logo-wrapper" tabindex="0" data-link-name="nav2 : logo">
-                <h1 class="u-h">The Guardian</h1>
-                @fragments.inlineSvg("guardian-logo-160", "logo", List("new-header__logo"))
-            </a>
-
-            @defining(
-                Edition(request).id.toLowerCase()
-            ) { editionId =>
-                <a class="header__supporter-cta"
-                    data-link-name="nav2 : supporter-cta"
-                    data-edition=@{editionId}
-                    href="@{Configuration.id.membershipUrl}/@{editionId}/supporter?INTCMP=mem_@{editionId}_web_newheader_trapezoid">
-
-                    Become a <span>Supporter</span>
+    @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
+        @defining(
+            NewNavigation.SectionLinks.getTopLevelSection(id)
+        ) { case (currentTopLevelSection) =>
+            <div class="new-header__inner gs-container">
+                <a href="@LinkTo{/}" class="new-header__logo-wrapper" tabindex="0" data-link-name="nav2 : logo">
+                    <h1 class="u-h">The Guardian</h1>
+                    @fragments.inlineSvg("guardian-logo-160", "logo", List("new-header__logo"))
                 </a>
-            }
 
-            <nav class="new-header__nav" data-component="nav2">
-                @NewNavigation.PrimaryLinks.map { link =>
-                    <a class="new-header__nav__link @if(link.title == currentTopLevelSection) {section-indicator}"
-                        href="@LinkTo(link.url)"
-                        data-link-name="nav2 : primary : @link.title">
-                            @link.title
+                @defining(
+                    Edition(request).id.toLowerCase()
+                ) { editionId =>
+                    <a class="header__supporter-cta"
+                        data-link-name="nav2 : supporter-cta"
+                        data-edition="@{editionId}"
+                        href="@{Configuration.id.membershipUrl}/@{editionId}/supporter?INTCMP=mem_@{editionId}_web_newheader_trapezoid">
+
+                        Become a <span>Supporter</span>
                     </a>
                 }
-                <label for="main-menu-toggle"
-                    class="new-header__nav__menu-button js-change-link"
-                    tabindex="0"
-                    data-link-name="nav2 : veggie-burger : show">
-                        <span class="new-header__veggie-burger-icon"></span>
-                        <span class="u-h">Menu</span>
-                </label>
-                <input type="checkbox" id="main-menu-toggle" class="new-header__nav__button js-enhance-checkbox" aria-controls="main-menu">
 
-                @fragments.nav.newHeaderMenu()
-            </nav>
-        </div>
+                <nav class="new-header__nav" data-component="nav2">
+                    @NewNavigation.PrimaryLinks.map { link =>
+                        <a class="new-header__nav__link @if(link.title == currentTopLevelSection) {section-indicator}"
+                            href="@LinkTo(link.url)"
+                            data-link-name="nav2 : primary : @link.title">
+                                @link.title
+                        </a>
+                    }
+                    <label for="main-menu-toggle"
+                        class="new-header__nav__menu-button js-change-link"
+                        tabindex="0"
+                        data-link-name="nav2 : veggie-burger : show">
+                            <span class="new-header__veggie-burger-icon"></span>
+                            <span class="u-h">Menu</span>
+                    </label>
+                    <input type="checkbox" id="main-menu-toggle" class="new-header__nav__button js-enhance-checkbox" aria-controls="main-menu">
 
-        @fragments.nav.subSectionNav(page)
+                    @fragments.nav.newHeaderMenu()
+                </nav>
+            </div>
+
+            @fragments.nav.subSectionNav(page)
+        }
     }
 </header>

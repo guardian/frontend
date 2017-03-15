@@ -11,7 +11,6 @@ define([
     'lodash/collections/contains',
     'common/modules/user-prefs',
     'common/modules/identity/api',
-    'common/modules/experiments/ab-test-clash',
     'Promise'
 ], function (
     $,
@@ -26,7 +25,6 @@ define([
     contains,
     userPrefs,
     Id,
-    clash,
     Promise
 ) {
 
@@ -131,7 +129,6 @@ define([
                 !config.page.isFront &&
                 (config.page.contentId.indexOf("email-sign-up") === -1) &&
                 config.switches.emailInArticle &&
-                !clash.userIsInAClashingAbTest(clash.nonEmailClashingTests) &&
                 storage.session.isAvailable() &&
                 !userHasSeenThisSession() &&
                 !(browser === 'MSIE' && contains(['7','8','9'], version + ''));

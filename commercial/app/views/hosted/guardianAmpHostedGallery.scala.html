@@ -8,7 +8,6 @@
 @import views.html.hosted._
 @import conf.Configuration
 @import views.support.FBPixel
-@import conf.switches.Switches.AmpOphanTrackingIncludesCredentials
 
 <!doctype html>
 <html AMP>
@@ -39,12 +38,8 @@
         }/count/pv.gif"></amp-pixel>
 
         <amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
-        @if(AmpOphanTrackingIncludesCredentials.isSwitchedOn){
-            <amp-analytics config="https://ophan.theguardian.com/amp.json" @if(context.environment.mode != Mode.Dev) { data-credentials="include" }></amp-analytics>
-        } else {
-            <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
-        }
 
+        <amp-analytics config="https://ophan.theguardian.com/amp.json" @if(context.environment.mode != Mode.Dev) { data-credentials="include" }></amp-analytics>
         @fragments.amp.hostedGoogleAnalytics(page)
 
         <amp-analytics id="comscore" type="comscore">

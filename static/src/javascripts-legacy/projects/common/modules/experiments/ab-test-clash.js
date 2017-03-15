@@ -13,10 +13,6 @@ define([
         name: 'ContributionsEpicBrexit',
         variants: ['control']
     };
-    var ContributionsEpicAskFourStagger = {
-        name: 'ContributionsEpicAskFourStagger',
-        variants: ['control', 'stagger_one_day', 'stagger_three_days']
-    };
     var ContributionsEpicAskFourEarning = {
         name: 'ContributionsEpicAskFourEarning',
         variants: ['control']
@@ -26,23 +22,27 @@ define([
         name: 'ContributionsEpicRegulars',
         variants: ['control', 'fairness_mild', 'fairness_strong', 'fairness_strong_alternate_hook', 'reliance']
 	};
-    var AcquisitionsEpicDesignVariations = {
+
+    var AcquisitionsEpicDesignVariationsV2 = {
         name: 'AcquisitionsDesignVariations',
-        variants: ['control', 'extra_paragraph', 'large_hook', 'subtle', 'prominent', 'highlight']
+        variants: ['control', 'highlight_subtle', 'highlight_perspective', 'highlight_secure', 'highlight_hard', 'paypal']
+    };
+
+    var AcquisitionsEpicArticle50Trigger = {
+        name: 'AcquisitionsEpicArticle50Trigger',
+        variants: ['control']
     };
 
     var contributionsTests = [
         ContributionsEpicAlwaysAskStrategy,
         ContributionsEpicBrexit,
-        ContributionsEpicAskFourStagger,
         ContributionsEpicAskFourEarning,
         ContributionsEpicRegulars,
-        AcquisitionsEpicDesignVariations
+        AcquisitionsEpicDesignVariationsV2,
+        AcquisitionsEpicArticle50Trigger
     ];
 
     var emailTests = [];
-
-    var nonEmailClashingTests = contributionsTests;
 
     var clashingTests = contributionsTests.concat(emailTests);
 
@@ -67,7 +67,8 @@ define([
 
     return {
         userIsInAClashingAbTest: userIsInAClashingAbTest,
-        nonEmailClashingTests: nonEmailClashingTests,
+        contributionsTests: contributionsTests,
+        emailTests: emailTests,
         _testABClash: _testABClash // exposed for unit testing
     };
 });

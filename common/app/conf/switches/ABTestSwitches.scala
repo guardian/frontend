@@ -112,16 +112,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-ask-four-stagger",
-    "Test to see if imposing a minimum-time-between-impressions for the epic has a positive effect on conversion",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -182,11 +172,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-design-variations",
-    "Test design variations to the Epic",
+    "ab-acquisitions-epic-design-variations-v2",
+    "Test more design variations to the Epic",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 20),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-article-50-trigger",
+    "Display the Epic on Article 50 articles for readers in Europe",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 17),
+    sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
 }

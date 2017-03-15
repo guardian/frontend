@@ -18,19 +18,17 @@ define([
     commercialFeatures
 ) {
     var minArticleHeight = 1300;
-    var minFootballArticleHeight = 2200;
     var minImmersiveArticleHeight = 600;
 
     var mainColumnSelector = '.js-content-main-column';
     var rhColumnSelector = '.js-secondary-column';
     var adSlotContainerSelector = '.js-ad-slot-container';
-    var componentsContainerSelector = '.js-components-container';
 
     function init(start, stop) {
         start();
 
         var $col        = $(rhColumnSelector);
-        var $mainCol, $componentsContainer, $adSlotContainer;
+        var $mainCol, $adSlotContainer;
 
         // are article aside ads disabled, or secondary column hidden?
         if (!(commercialFeatures.articleAsideAdverts && $col.length && $css($col, 'display') !== 'none')) {
@@ -39,7 +37,6 @@ define([
         }
 
         $mainCol = $(mainColumnSelector);
-        $componentsContainer = $(componentsContainerSelector, $col[0]);
         $adSlotContainer = $(adSlotContainerSelector);
 
         fastdom.read(function () {
@@ -54,20 +51,15 @@ define([
                         'right' :
                         'right-small';
             } else {
-                adType = (config.page.section !== 'football' && mainColHeight >= minArticleHeight) ||
-                         (config.page.section === 'football' && mainColHeight >= minFootballArticleHeight)
-                         ? 'right-sticky' : 'right-small';
+                adType = mainColHeight >= minArticleHeight ?
+                    'right-sticky' :
+                    'right-small';
             }
 
             $adSlot = createSlot(adType, { classes: 'mpu-banner-ad' });
 
             return fastdom.write(function () {
-                if (config.page.contentType === 'Article' && config.page.sponsorshipType === 'advertisement-features') {
-                    $componentsContainer.addClass('u-h');
-                }
-
                 $adSlotContainer.append($adSlot);
-
                 return $adSlotContainer;
             });
         })

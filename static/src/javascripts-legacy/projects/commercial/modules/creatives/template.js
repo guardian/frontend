@@ -23,7 +23,7 @@ define([
      * * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10028127
      */
     var Template = function (adSlot, params) {
-        this.adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
+        this.adSlot = adSlot;
         this.params = params;
 
         if (this.params.Toneclass) {
