@@ -10,7 +10,8 @@
 }
 
 .submeta__label {
-    @include fs-textSans(1);
+    font-size: 12px;
+    line-height: 16px;
     color: $neutral-2;
     display: block;
     margin-bottom: -($gs-baseline / 4);
@@ -52,7 +53,8 @@
     }
 
     .submeta__section-labels & {
-        @include fs-textSans(5);
+        font-size: 16px;
+        line-height: 22px;
     }
 }
 

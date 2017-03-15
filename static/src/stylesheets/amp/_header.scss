@@ -52,8 +52,6 @@ $veggie-burger-medium: 52px;
 }
 
 .header__nav {
-    font-size: 16px;
-    line-height: $gs-baseline * 2.5;
     width: 100%;
     overflow: hidden;
 
@@ -63,17 +61,7 @@ $veggie-burger-medium: 52px;
         margin-right: $gutter-small + $veggie-burger-small + $gs-gutter / 3;
     }
 
-    @include mq($from: mobile, $until: mobileLandscape) {
-        font-size: 5.1vw;
-    }
-
-    @include mq($from: mobileMedium, $until: mobileLandscape) {
-        line-height: $gs-baseline * 3;
-    }
-
     @include mq(mobileLandscape) {
-        font-size: 24px;
-        line-height: $gs-baseline * 3.5;
         margin-left: 0;
     }
 }
@@ -140,34 +128,50 @@ $veggie-burger-medium: 52px;
     }
 }
 
+.header__nav__primary-links {
+    font-size: 0;
+    margin: 0;
+}
+
+.header__nav__link-item {
+    @include trailing-slash-item;
+}
+
 .header__nav__link {
-    // Override a from _lists.scss
+    font-size: 16px;
+    line-height: $gs-baseline * 2.5;
+    @include trailing-slash-link;
     color: #ffffff;
-    position: relative;
-    padding-left: .3em;
-    padding-right: .35em;
-    float: left;
     cursor: pointer;
+
+    @include mq($from: mobile, $until: mobileLandscape) {
+        font-size: 5.1vw;
+    }
+
+    @include mq($from: mobileMedium, $until: mobileLandscape) {
+        line-height: $gs-baseline * 3;
+    }
+
+    @include mq(mobileLandscape) {
+        font-size: 24px;
+        line-height: $gs-baseline * 3.5;
+    }
 
     &:focus,
     &:hover {
         text-decoration: none;
     }
 
-    &:first-child {
-        padding-left: 0;
-    }
-
-    &:before {
-        position: absolute;
-        pointer-events: none;
-        content: '/';
-        //optically aligns slashes
-        left: -.19em;
+    &:after {
+        @include trailing-slash;
         color: $news-main-2;
     }
 
-    &:first-of-type:before {
+    .header__nav__link-item:first-child & {
+        padding-left: 0;
+    }
+
+    .header__nav__link-item:last-of-type &:after {
         content: none;
     }
 }
