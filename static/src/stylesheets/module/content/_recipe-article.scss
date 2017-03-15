@@ -5,6 +5,20 @@ $purple: #b72166;
 
 $padding-wide: 100px;
 
+.content--recipes {
+    padding-bottom: 0;
+}
+
+.recipes__main {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    @include mq($from: tablet) {
+        flex-wrap: nowrap;
+    }
+
+}
 .recipe__article .recipe__article--headline h1,
 .recipe__article .recipe__article--structured-headline h1 {
     font-family: $f-serif-headline;
@@ -54,9 +68,9 @@ $padding-wide: 100px;
     top: 0;
     width: 100%;
 
-    @include mq($from: tablet) {
-        width: 40%;
-        position: fixed;
+    @include mq($from: tablet){
+        flex-basis: 40%;
+        position: sticky;
         height: 100vh;
         min-height: 600px;
     }
@@ -116,12 +130,12 @@ $padding-wide: 100px;
 
 .recipe__article-wrapper {
     @include mq($from: tablet) {
-        width: 60%;
+        flex-basis: 60%;
         float: right;
     }
 
     @include mq($from: wide) {
-        width: 55%;
+        flex-basis: 55%;
     }
 }
 
@@ -214,6 +228,7 @@ $padding-wide: 100px;
     position: fixed;
     bottom: 0px;
     transition: opacity .5s ease-in-out;
+    z-index: 1050;
 
     @include mq($from: tablet) {
         color: $grey-three;
@@ -425,3 +440,19 @@ $padding-wide: 100px;
         color: $purple;
     }
 }
+
+.ad-wrapper {
+  background-color: $grey-two;
+  margin-left: -20px;
+  margin-top: 20px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+
+  .ad-container{
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+  }
+}
+
+
