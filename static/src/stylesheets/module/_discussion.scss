@@ -1584,6 +1584,7 @@ $comment-recommend-button-size: 19px;
     }
     .d-comment-box__payment-cta {
         display: block;
+        height: 100px;
     }
     >h2 {
         @include fs-headline(4);
@@ -1595,6 +1596,14 @@ $comment-recommend-button-size: 19px;
             @include fs-textSans(1);
             line-height: 18px;
             color: $neutral-2;
+        }
+    }
+    .d-comment-box__payment-cta {
+        >.button {
+            margin-top: 10px;
+        }
+        p {
+            color: $neutral-1;
         }
     }
     .d-comment-box__payment-cta-button {

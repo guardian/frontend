@@ -339,7 +339,8 @@ Loader.prototype.commentPosted = function () {
 
 Loader.prototype.renderCommentBox = function(elem) {
     var testVariant = ab.getTestVariantId('PaidCommentingInternal');
-    var isPaidCommenting = (testVariant && testVariant !== 'notintest') || false;
+    var hasPaidCommentingCookie = document.cookie.indexOf('GU_PDCOMCTA') !== -1;
+    var isPaidCommenting = (testVariant && testVariant !== 'notintest' && !hasPaidCommentingCookie) || false;
     return new CommentBox({
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated,
