@@ -8,7 +8,7 @@ define([
     'common/modules/experiments/tests/acquisitions-epic-content-tailoring-football',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
-    'common/modules/experiments/tests/contributions-epic-regulars',
+    'common/modules/experiments/tests/contributions-epic-regulars-v2',
     'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
     'common/modules/experiments/tests/acquisitions-epic-design-variations-v2'
 ], function (
@@ -21,7 +21,7 @@ define([
     contentTailoringFootball,
     alwaysAsk,
     askFourEarning,
-    regulars,
+    regularsV2,
     acquisitionsEpicArticle50Trigger,
     acquisitionsEpicDesignVariationsV2
 ) {
@@ -30,10 +30,10 @@ define([
      */
     var tests = [
         alwaysAsk,
+		regularsV2,
         contentTailoringEnvironment,
         contentTailoringCif,
         contentTailoringFootball,
-        regulars,
         acquisitionsEpicDesignVariationsV2,
         askFourEarning,
         acquisitionsEpicArticle50Trigger,

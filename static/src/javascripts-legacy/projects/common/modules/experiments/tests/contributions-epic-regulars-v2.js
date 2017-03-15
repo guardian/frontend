@@ -35,25 +35,6 @@ define([
         }
     }
 
-    function fairnessMildTemplate(regular) {
-        var suffix = regular ? '_regular' : '_non_regular';
-        return function(variant) {
-            function appendSuffix(code) { return code + suffix; }
-
-            return template(contributionsEpicEqualButtons, {
-                linkUrl1: variant.membershipURLBuilder(appendSuffix),
-                linkUrl2: variant.contributionsURLBuilder(appendSuffix),
-                componentName: variant.componentName,
-                title: 'Since you’re here …',
-                p1: '… we have a small favour to ask. More people than ever are regularly reading the Guardian, but far fewer are paying for it.  Advertising revenues across the media are falling fast. And unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-                p2: 'If you regularly read and value our reporting, support us now and help make our future much more secure.',
-                p3: '',
-                cta1: 'Become a Supporter',
-                cta2: 'Make a contribution'
-            });
-        }
-    }
-
     function fairnessStrongTemplate(regular) {
         var suffix = regular ? '_regular' : '_non_regular';
 
@@ -93,28 +74,9 @@ define([
         }
     }
 
-    function relianceTemplate(regular) {
-        var suffix = regular ? '_regular' : '_non_regular';
-        return function(variant) {
-            function appendSuffix(code) { return code + suffix; }
-
-            return template(contributionsEpicEqualButtons, {
-                linkUrl1: variant.membershipURLBuilder(appendSuffix),
-                linkUrl2: variant.contributionsURLBuilder(appendSuffix),
-                componentName: variant.componentName,
-                title: 'Since you’re here …',
-                p1: '… we have a small favour to ask. More people than ever rely on the Guardian to keep them up-to-date, but far fewer are paying for our journalism. Advertising revenues across the media are falling fast. And unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-                p2: 'If you depend on our reporting to stay informed, support us now and help make our future much more secure.',
-                p3: '',
-                cta1: 'Become a Supporter',
-                cta2: 'Make a contribution'
-            });
-        }
-    }
-
     return contributionsUtilities.makeABTest({
-        id: 'ContributionsEpicRegulars',
-        campaignId: 'kr1_epic_regulars',
+        id: 'ContributionsEpicRegularsV2',
+        campaignId: 'kr1_epic_regulars_v2',
 
         start: '2017-03-07',
         expiry: '2017-03-21',
@@ -125,7 +87,7 @@ define([
         idealOutcome: 'Establish which variant has the highest conversion rate',
 
         audienceCriteria: 'All',
-        audience: 0.5,
+        audience: 1,
         audienceOffset: 0,
 
 
@@ -150,25 +112,6 @@ define([
                 successOnView: true
             },
             {
-                id: 'fairness_mild',
-                maxViews: {
-                    days: 30,
-                    count: 4,
-                    minDaysBetweenViews: 0
-                },
-                test: function(render) {
-                    if (bwidCookie) {
-                        tailor.getRegularStatus(bwidCookie).then(function (regular) {
-                            render(fairnessMildTemplate(regular));
-                        });
-                    } else {
-                        render(fairnessMildTemplate(false));
-                    }
-                },
-                insertBeforeSelector: '.submeta',
-                successOnView: true
-            },
-            {
                 id: 'fairness_strong',
                 maxViews: {
                     days: 30,
@@ -178,10 +121,14 @@ define([
                 test: function(render) {
                     if (bwidCookie) {
                         tailor.getRegularStatus(bwidCookie).then(function (regular) {
-                            render(fairnessStrongTemplate(regular));
+                            if(regular) {
+                                render(fairnessStrongTemplate(true));
+                            } else {
+                                render(controlTemplate(false));
+                            }
                         });
                     } else {
-                        render(fairnessStrongTemplate(false));
+                        render(controlTemplate(false));
                     }
                 },
                 insertBeforeSelector: '.submeta',
@@ -197,29 +144,14 @@ define([
                 test: function(render) {
                     if (bwidCookie) {
                         tailor.getRegularStatus(bwidCookie).then(function (regular) {
-                            render(fairnessStrongAlternateHookTemplate(regular));
+                            if(regular) {
+                                render(fairnessStrongAlternateHookTemplate(true));
+                            } else {
+                                render(controlTemplate(false));
+                            }
                         });
                     } else {
-                        render(fairnessStrongAlternateHookTemplate(false));
-                    }
-                },
-                insertBeforeSelector: '.submeta',
-                successOnView: true
-            },
-            {
-                id: 'reliance',
-                maxViews: {
-                    days: 30,
-                    count: 4,
-                    minDaysBetweenViews: 0
-                },
-                test: function(render) {
-                    if (bwidCookie) {
-                        tailor.getRegularStatus(bwidCookie).then(function (regular) {
-                            render(relianceTemplate(regular));
-                        });
-                    } else {
-                        render(relianceTemplate(false));
+                        render(controlTemplate(false));
                     }
                 },
                 insertBeforeSelector: '.submeta',
