@@ -153,6 +153,7 @@ object NavLinks {
     "money/savings",
     "money/debt",
     "money/work-and-careers",
+    "cartoons/archive",
     "type/cartoon",
     "profile/editorial",
     "index/contributors",

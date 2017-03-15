@@ -495,7 +495,17 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 4),
     exposeClientSide = true
+  )
 
+  // Owner: George Haberis
+  val TailorSurveyOverlay = Switch(
+    SwitchGroup.Feature,
+    "tailor-survey-overlay",
+    "When ON, will show the Tailor survey overlay message",
+    owners = Seq(Owner.withGithub("GHaberis")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
   )
 
 }
