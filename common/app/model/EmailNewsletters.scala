@@ -251,6 +251,7 @@ object EmailNewsletters {
     description = "Our film editors recap the top headlines each weekday and deliver them straight to your inbox in time for your evening commute.",
     frequency = "Every weekday",
     listId = 1950,
+    aliases = List(3864, 3865),
     tone = Some("feature"),
     signupPage = Some("/info/2016/feb/12/film-today-email-sign-up")
   )

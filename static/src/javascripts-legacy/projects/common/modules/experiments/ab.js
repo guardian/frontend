@@ -20,6 +20,7 @@ define([
     'common/modules/experiments/tests/the-long-read-email-variants',
     'common/modules/experiments/tests/fashion-statement-email-variants',
     'common/modules/experiments/tests/bookmarks-email-variants',
+    'common/modules/experiments/tests/film-today-email-variants',
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
@@ -45,6 +46,7 @@ define([
              TheLongReadEmailVariants,
              FashionStatementEmailVariants,
              BookmarksEmailVariants,
+             FilmTodayEmailVariants,
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
              IncreaseInlineAds,
@@ -62,6 +64,7 @@ define([
         TheLongReadEmailVariants,
         FashionStatementEmailVariants,
         BookmarksEmailVariants,
+        FilmTodayEmailVariants,
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
         new IncreaseInlineAds()
