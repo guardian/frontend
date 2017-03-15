@@ -1,6 +1,6 @@
 define([
     'qwery',
-    'common/utils/fastdom-promise'
+    'lib/fastdom-promise'
 ], function (
     qwery,
     fastdom

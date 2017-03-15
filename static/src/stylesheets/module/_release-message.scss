@@ -721,7 +721,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 
 .site-message--membership-secondary.bright-blue {
-    background: red;
+    background: #ff0000;
 }
 
 /*
@@ -986,7 +986,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     @include clearfix;
     @include circular;
     padding-left: $gs-gutter;
-    color: black;
+    color: #000000;
     @include mq($from: mobile) {
         font-size: 12px;
         line-height: 24px;
@@ -1055,7 +1055,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     .membership__remind-me-form__thanks-message {
         margin-top: $gs-baseline;
         margin-bottom: $gs-baseline;
-        position:relative;
+        position: relative;
         display: block;
 
         @include mq($from: desktop) {
@@ -1070,4 +1070,3 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         }
     }
 }
-

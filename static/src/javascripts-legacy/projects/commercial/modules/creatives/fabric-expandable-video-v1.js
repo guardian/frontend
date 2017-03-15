@@ -1,12 +1,12 @@
 define([
     'bean',
     'bonzo',
-    'common/utils/fastdom-promise',
-    'common/utils/$',
-    'common/utils/detect',
-    'common/utils/mediator',
-    'common/utils/storage',
-    'common/utils/template',
+    'lib/fastdom-promise',
+    'lib/$',
+    'lib/detect',
+    'lib/mediator',
+    'lib/storage',
+    'lodash/utilities/template',
     'common/views/svgs',
     'raw-loader!commercial/views/creatives/fabric-expandable-video-v1.html',
     'lodash/objects/merge',
@@ -29,8 +29,8 @@ define([
 ) {
     // Forked from expandable-video-v2.js
 
-    var FabricExpandableVideoV1 = function ($adSlot, params) {
-        this.$adSlot      = $adSlot;
+    var FabricExpandableVideoV1 = function (adSlot, params) {
+        this.adSlot       = adSlot;
         this.params       = params;
         this.isClosed     = true;
         this.closedHeight = 250;
@@ -58,7 +58,7 @@ define([
         var $fabricExpandableVideo = $.create(template(fabricExpandableVideoHtml, { data: merge(this.params, showmoreArrow, showmorePlus, videoSource) }));
         var $ad = $('.ad-exp--expand', $fabricExpandableVideo);
 
-        bean.on(this.$adSlot[0], 'click', '.ad-exp__open', function () {
+        bean.on(this.adSlot, 'click', '.ad-exp__open', function () {
             fastdom.write(function () {
                 var videoSrc = $('#YTPlayer').attr('src');
                 var videoSrcAutoplay = videoSrc;
@@ -78,7 +78,7 @@ define([
                     'height',
                     this.isClosed ? this.openedHeight : this.closedHeight
                 );
-                $('.slide-video, .slide-video .ad-exp__layer', $(this.$adSlot[0]))
+                $('.slide-video, .slide-video .ad-exp__layer', this.adSlot)
                     .css('height', this.isClosed ? this.openedHeight : this.closedHeight)
                     .toggleClass('slide-video__expand');
 
@@ -100,13 +100,13 @@ define([
             if (this.params.researchPixel) {
                 addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
             }
-            $fabricExpandableVideo.appendTo(this.$adSlot);
+            $fabricExpandableVideo.appendTo(this.adSlot);
             if (this.params.viewabilityTracker) {
-                addViewabilityTracker(this.$adSlot[0], this.params.id, this.params.viewabilityTracker);
+                addViewabilityTracker(this.adSlot, this.params.id, this.params.viewabilityTracker);
             }
-            this.$adSlot.addClass('ad-slot--fabric');
-            if( this.$adSlot.parent().hasClass('top-banner-ad-container') ) {
-                this.$adSlot.parent().addClass('top-banner-ad-container--fabric');
+            this.adSlot.classList.add('ad-slot--fabric');
+            if( this.adSlot.parentNode.classList.contains('top-banner-ad-container') ) {
+                this.adSlot.parentNode.classList.add('top-banner-ad-container--fabric');
             }
             return true;
         }, this);

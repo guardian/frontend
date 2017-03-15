@@ -3,17 +3,17 @@ define([
     // We add this to enhanced/main, and subtract enhanced/main from other enhanced bootstraps to reduce module redundancy.
 
     // utilities
-    'common/utils/$',
-    'common/utils/ajax',
-    'common/utils/config',
-    'common/utils/cookies',
-    'common/utils/detect',
-    'common/utils/mediator',
-    'common/utils/robust',
-    'common/utils/storage',
-    'common/utils/template',
-    'common/utils/url',
-    'common/utils/fastdom-errors',
+    'lib/$',
+    'lib/ajax',
+    'lib/config',
+    'lib/cookies',
+    'lib/detect',
+    'lib/mediator',
+    'lib/robust',
+    'lib/storage',
+    'lodash/utilities/template',
+    'lib/url',
+    'lib/fastdom-errors',
 
     // shared modules
     'common/modules/analytics/beacon',

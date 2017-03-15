@@ -1,8 +1,8 @@
 define([
-    'common/utils/location',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/robust',
+    'lib/location',
+    'lib/config',
+    'lib/detect',
+    'lib/robust',
     'commercial/modules/user-features',
     'common/modules/identity/api',
     'common/modules/user-prefs'
@@ -36,8 +36,6 @@ define([
 
         var isInteractive = config.page.contentType === 'Interactive';
 
-        var isGallery = config.page.contentType == 'Gallery';
-
         var isLiveBlog = config.page.isLiveBlog;
 
         var isHosted = config.page.isHosted;
@@ -57,6 +55,7 @@ define([
         // Feature switches
 
         this.dfpAdvertising =
+            switches.commercial &&
             externalAdvertising &&
             !sensitiveContent;
 
@@ -64,38 +63,23 @@ define([
             !config.page.disableStickyTopBanner &&
             !supportsSticky;
 
-        this.galleryAdverts =
-            this.dfpAdvertising &&
-            isGallery;
-
         this.articleBodyAdverts =
             this.dfpAdvertising &&
             !isMinuteArticle &&
             isArticle &&
             !isLiveBlog &&
             !isHosted &&
-            switches.commercial;
+            !config.page.newRecipeDesign;
 
         this.articleAsideAdverts =
             this.dfpAdvertising &&
             !isMinuteArticle &&
             !isMatchReport &&
             !!(isArticle || isLiveBlog) &&
-            switches.commercial;
-
-        this.sliceAdverts =
-            this.dfpAdvertising &&
-            config.page.isFront &&
-            switches.commercial;
-
-        this.popularContentMPU =
-            this.dfpAdvertising &&
-            !isMinuteArticle;
+            !config.page.newRecipeDesign;
 
         this.videoPreRolls =
-            externalAdvertising &&
-            !sensitiveContent &&
-            switches.commercial;
+            this.dfpAdvertising;
 
         this.highMerch =
             this.dfpAdvertising &&
@@ -103,15 +87,14 @@ define([
             !isHosted &&
             !isInteractive &&
             !config.page.isFront &&
-            switches.commercial;
+            !config.page.newRecipeDesign;
 
         this.thirdPartyTags =
             externalAdvertising &&
             !isIdentityPage;
 
         this.outbrain =
-            externalAdvertising &&
-            !sensitiveContent &&
+            this.dfpAdvertising &&
             switches.outbrain &&
             isArticle &&
             !config.page.isPreview &&
@@ -120,7 +103,6 @@ define([
 
         this.commentAdverts =
             this.dfpAdvertising &&
-            switches.commercial &&
             !isMinuteArticle &&
             config.switches.discussion &&
             config.page.commentable &&
@@ -129,8 +111,7 @@ define([
 
         this.liveblogAdverts =
             isLiveBlog &&
-            this.dfpAdvertising &&
-            switches.commercial;
+            this.dfpAdvertising;
 
         this.paidforBand =
             config.page.isPaidContent &&

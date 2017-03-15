@@ -17,81 +17,82 @@ const files = glob.sync('**/*.js', {
 const filesPerHuman = (filesToCheck, humans) =>
     Math.max(filesToCheck.length / humans.length);
 
-const commercial = [
-    'Francis Carr',
-    'JonNorman',
-    'Regis Kuckaertz',
-    'rich-nguyen',
-    'Kate Whalen',
-    'ScottPainterGNM',
-    'Lydia Shepherd',
-];
-const commercialModules = files.filter(_ => _.includes('commercial'));
-const commercialFilesPerHuman = filesPerHuman(commercialModules, commercial);
+// const commercial = [
+//     'Francis Carr',
+//     'Jon Norman',
+//     'Regis Kuckaertz',
+//     'rich-nguyen',
+//     'Kate Whalen',
+//     'ScottPainterGNM',
+//     'Lydia Shepherd',
+// ];
+// const commercialModules = files.filter(_ => _.includes('commercial'));
+// const commercialFilesPerHuman = filesPerHuman(commercialModules, commercial);
 
 const platform = [
     'sndrs',
-    'gtrufitt',
+    'Gareth Trufitt',
     'Simon Adcock',
-    'NataliaLKB',
+    // 'NataliaLKB',
     'GHaberis',
-    'stephanfowler',
+    // 'stephanfowler',
+    'Gustav Pursche',
 ];
-const platformModules = files.filter(_ => _.includes('projects/common/utils'));
+const platformModules = files.filter(_ => _.includes('lib'));
 const platformFilesPerHuman = filesPerHuman(platformModules, platform);
 
-const misc = [
-    'Sam Desborough',
-    'Akash A',
-    'dominickendrick',
-    'davidfurey',
-    'jranks123',
-    'ShaunYearStrong',
-    'jfsoul',
-    'Gustav Pursche',
-    'Joseph Smith',
-    'Calum Campbell',
-];
-const miscModules = files.filter(
-    _ => !_.includes('commercial') && !_.includes('projects/common/utils')
-);
+// const misc = [
+//     'Sam Desborough',
+//     'Akash A',
+//     'dominickendrick',
+//     'davidfurey',
+//     'jranks123',
+//     'ShaunYearStrong',
+//     'jfsoul',
+//     'Gustav Pursche',
+//     'Joseph Smith',
+//     'Calum Campbell',
+// ];
+// const miscModules = files.filter(
+//     _ => !_.includes('commercial') && !_.includes('projects/common/utils')
+// );
 
-const totalFilesEach = filesPerHuman(files, [
-    ...commercial,
-    ...platform,
-    ...misc,
-]);
+// const totalFilesEach = filesPerHuman(files, [
+//     ...commercial,
+//     ...platform,
+//     ...misc,
+// ]);
 
 const list = Object.assign(
-    commercial.reduce(
-        (l, human) => Object.assign(l, {
-            [human]: [
-                ...commercialModules.splice(0, commercialFilesPerHuman),
-                ...miscModules.splice(
-                    0,
-                    totalFilesEach - commercialFilesPerHuman
-                ),
-            ],
-        }),
-        {}
-    ),
+    // commercial.reduce(
+    //     (l, human) => Object.assign(l, {
+    //         [human]: [
+    //             ...commercialModules.splice(0, commercialFilesPerHuman),
+    //             ...miscModules.splice(
+    //                 0,
+    //                 totalFilesEach - commercialFilesPerHuman
+    //             ),
+    //         ],
+    //     }),
+    //     {}
+    // ),
     platform.reduce(
         (l, human) => Object.assign(l, {
             [human]: [
                 ...platformModules.splice(0, platformFilesPerHuman),
-                ...miscModules.splice(
-                    0,
-                    totalFilesEach - platformFilesPerHuman
-                ),
+                // ...miscModules.splice(
+                //     0,
+                //     totalFilesEach - platformFilesPerHuman
+                // ),
             ],
         }),
         {}
-    ),
-    misc.reduce(
-        (l, human) => Object.assign(l, {
-            [human]: miscModules.splice(0, totalFilesEach),
-        }),
-        {}
     )
+    // misc.reduce(
+    //     (l, human) => Object.assign(l, {
+    //         [human]: miscModules.splice(0, totalFilesEach),
+    //     }),
+    //     {}
+    // )
 );
 writeFileSync('./tools/es5to6.json', JSON.stringify(list, null, 2));

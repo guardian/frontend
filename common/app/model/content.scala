@@ -79,9 +79,11 @@ final case class Content(
     metadata.contentType.toLowerCase == "gallery" && !metadata.commercial.exists(_.isPaidContent)
   }
   lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore
+  lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
+  lazy val isRecipeArticle: Boolean = atoms.fold(false)(a => a.recipes.nonEmpty) && ArticleWithStructuredRecipe.isSwitchedOn
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -215,7 +217,9 @@ final case class Content(
     ("isImmersive", JsBoolean(isImmersive)),
     ("isExplore", JsBoolean(isExplore)),
     ("isPaidContent", JsBoolean(isPaidContent)),
-    ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
+    ("campaigns", JsArray(campaigns.map(Campaign.toJson))),
+    ("newRecipeDesign", JsBoolean(isRecipeArticle))
+
   )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
@@ -422,6 +426,7 @@ object Article {
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),
       ("isHosted", JsBoolean(false)),
+      ("isPhotoEssay", JsBoolean(content.isPhotoEssay)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
       "videoDuration" -> videoDuration
     ) ++ bookReviewIsbn ++ AtomProperties(content.atoms)
@@ -444,7 +449,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
-      contentWithSlimHeader = content.isImmersive && content.tags.isArticle
+      contentWithSlimHeader = (content.isImmersive && content.tags.isArticle) || content.isRecipeArticle
     )
   }
 
@@ -486,7 +491,9 @@ final case class Article (
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
   val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
+  var isPhotoEssay : Boolean = content.isPhotoEssay
   val isExplore: Boolean = content.isExplore
+  val isRecipeArticle: Boolean = content.isRecipeArticle
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 

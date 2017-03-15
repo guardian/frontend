@@ -5,8 +5,14 @@ define([
     return loadAdvert;
 
     function loadAdvert(advert) {
-        Advert.startLoading(advert);
-        window.googletag.display(advert.id);
-        dfpEnv.firstAdDisplayed = true;
+        advert.whenSlotReady
+            .catch(function(){
+                // The display needs to be called, even in the event of an error.
+            })
+            .then(function() {
+                Advert.startLoading(advert);
+                window.googletag.display(advert.id);
+                dfpEnv.firstAdDisplayed = true;
+            });
     }
 });

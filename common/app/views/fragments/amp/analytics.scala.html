@@ -3,7 +3,6 @@
 
 @import conf.Configuration
 @import views.support.FBPixel
-@import conf.switches.Switches.AmpOphanTrackingIncludesCredentials
 
 @*
 Baseline pageview confidence pixel.
@@ -14,11 +13,7 @@ are used to generate the confidence graphs on the frontend dashboard.
 
 <amp-pixel src="//www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1"></amp-pixel>
 
-@if(AmpOphanTrackingIncludesCredentials.isSwitchedOn){
-    <amp-analytics config="https://ophan.theguardian.com/amp.json" @if(context.environment.mode != Mode.Dev) { data-credentials="include" }></amp-analytics>
-} else {
-    <amp-analytics config="https://ophan.theguardian.com/amp.json"></amp-analytics>
-}
+<amp-analytics config="https://ophan.theguardian.com/amp.json" @if(context.environment.mode != Mode.Dev) { data-credentials="include" }></amp-analytics>
 
 @fragments.amp.googleAnalytics(content)
 

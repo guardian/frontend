@@ -15,7 +15,7 @@ define([
             html = '<b>most viewed</b>',
             server,
             injector = new Injector(),
-            Popular, config, mediator, detect, commercialFeatures;
+            Popular, config, mediator, detect;
 
         beforeEach(function (done) {
             injector.mock({
@@ -26,19 +26,16 @@ define([
             });
             injector.require([
                 'common/modules/onward/popular',
-                'commercial/modules/commercial-features',
-                'common/utils/config',
-                'common/utils/mediator',
-                'common/utils/detect'
+                'lib/config',
+                'lib/mediator',
+                'lib/detect'
             ], function () {
                 Popular = arguments[0];
-                commercialFeatures = arguments[1];
-                config = arguments[2];
-                mediator = arguments[3];
-                detect = arguments[4];
+                config = arguments[1];
+                mediator = arguments[2];
+                detect = arguments[3];
 
                 config.page.section = 'football';
-                commercialFeatures.popularContentMPU = true;
 
                 // set up fake server
                 server = sinon.fakeServer.create();

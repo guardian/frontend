@@ -1,15 +1,17 @@
 define([
     'Promise',
-    'common/utils/raven',
-    'common/utils/config',
-    'common/utils/user-timing',
-    'common/modules/analytics/beacon'
+    'lib/raven',
+    'lib/config',
+    'lib/user-timing',
+    'common/modules/analytics/beacon',
+    'ophan/ng'
 ], function (
     Promise,
     raven,
     config,
     userTiming,
-    beacon
+    beacon,
+    ophan
 ) {
 
     var performanceLog = {
@@ -20,7 +22,6 @@ define([
             baselines: []
         };
     var primaryBaseline = 'primary';
-    var secondaryBaseline = 'secondary';
     var reportData = raven.wrap(reportTrackingData);
 
     function setListeners(googletag) {
@@ -90,11 +91,8 @@ define([
     // multiple times in a page view, so that partial data is captured, and then topped up as adverts load in.
     function reportTrackingData() {
         if (config.tests.commercialClientLogging) {
-            require(['ophan/ng'], function (ophan) {
-                performanceLog.viewId = ophan.viewId;
-
-                beacon.postJson('/commercial-report', JSON.stringify(performanceLog));
-            });
+            performanceLog.viewId = ophan.viewId;
+            beacon.postJson('/commercial-report', JSON.stringify(performanceLog));
         }
     }
 
@@ -146,7 +144,6 @@ define([
         addStartTimeBaseline : addStartTimeBaseline,
         addEndTimeBaseline : addEndTimeBaseline,
         primaryBaseline : primaryBaseline,
-        secondaryBaseline: secondaryBaseline,
         addTag: addTag,
         wrap: wrap,
         defer: defer,

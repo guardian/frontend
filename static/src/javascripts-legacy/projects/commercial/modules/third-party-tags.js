@@ -3,12 +3,12 @@
  */
 define([
     'Promise',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/mediator',
-    'common/utils/fastdom-promise',
-    'common/utils/template',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
+    'lib/mediator',
+    'lib/fastdom-promise',
+    'lodash/utilities/template',
     'common/modules/experiments/ab',
     'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/audience-science-gateway',

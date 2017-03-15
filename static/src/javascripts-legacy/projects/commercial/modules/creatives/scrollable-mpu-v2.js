@@ -1,14 +1,13 @@
 define([
     'Promise',
     'fastdom',
-    'common/utils/$',
-    'common/utils/detect',
-    'common/utils/mediator',
-    'common/utils/template',
+    'lib/$',
+    'lib/detect',
+    'lib/mediator',
+    'lodash/utilities/template',
     'raw-loader!commercial/views/creatives/scrollable-mpu-v2.html',
     'commercial/modules/creatives/add-tracking-pixel',
-    'commercial/modules/creatives/add-viewability-tracker',
-    'lodash/functions/bindAll'
+    'commercial/modules/creatives/add-viewability-tracker'
 ], function (
     Promise,
     fastdom,
@@ -18,59 +17,55 @@ define([
     template,
     scrollableMpuTpl,
     addTrackingPixel,
-    addViewabilityTracker,
-    bindAll
+    addViewabilityTracker
 ) {
 
     /**
      * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026567
      */
-    var ScrollableMpu = function ($adSlot, params) {
-        this.$adSlot = $adSlot;
-        this.params  = params;
-        bindAll(this, 'updateBgPosition');
+    var ScrollableMpu = function (adSlot, params) {
+        this.adSlot = adSlot;
+        this.params = params;
     };
 
     /**
      * TODO: rather blunt instrument this, due to the fact *most* mobile devices don't have a fixed
      * background-attachment - need to make this more granular
      */
-    ScrollableMpu.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
+    var hasScrollEnabled = !detect.isAndroid();
 
-    ScrollableMpu.prototype.updateBgPosition = function () {
-        var that = this;
+    function updateBgFluid250() {
+        fastdom.write(function () {
+            this.$scrollableImage.addClass('creative--scrollable-mpu-image-fixed');
+        }, this);
+    }
 
-        switch (this.params.backgroundImagePType) {
-            case 'fixed matching fluid250':
-                fastdom.write(function () {
-                    $('.creative--scrollable-mpu-image', $(that.$adSlot)).addClass('creative--scrollable-mpu-image-fixed');
-                });
-                break;
-            case 'parallax':
-                this.scrollAmount = Math.ceil((window.pageYOffset - this.$adSlot.offset().top) * 0.3 * -1) + 20;
-                this.scrollAmountP = this.scrollAmount + '%';
-                fastdom.write(function () {
-                    $('.creative--scrollable-mpu-image', $(that.$adSlot)).addClass('creative--scrollable-mpu-image-parallax').css('background-position', '50%' + that.scrollAmountP);
-                });
-                break;
-            default:
-                var position = window.pageYOffset - this.$scrollableMpu.offset().top;
-                fastdom.write(function () {
-                    $('.creative--scrollable-mpu-image', $(that.$adSlot)).css('background-position', '100% ' + position + 'px');
-                });
-        }
-    };
+    function updateBgParallax() {
+        var scrollAmount = Math.ceil(this.adSlot.getBoundingClientRect().top * 0.3) + 20;
+        fastdom.write(function () {
+            this.$scrollableImage
+            .addClass('creative--scrollable-mpu-image-parallax')
+            .css('background-position', '50% ' + scrollAmount + '%');
+        }, this);
+    }
+
+    function updateBg() {
+        var position = -this.$scrollableMpu[0].getBoundingClientRect().top;
+        fastdom.write(function () {
+            this.$scrollableImage.css('background-position', '100% ' + position + 'px');
+        }, this);
+    }
 
     ScrollableMpu.prototype.create = function () {
         var templateOptions = {
             id:               'scrollable-mpu-' + (Math.random() * 10000 | 0).toString(16),
             clickMacro:       this.params.clickMacro,
             destination:      this.params.destination,
-            layer1Image:      ScrollableMpu.hasScrollEnabled ? this.params.layer1Image : this.params.mobileImage,
-            backgroundImage:       ScrollableMpu.hasScrollEnabled && this.params.backgroundImage ?
+            layer1Image:      hasScrollEnabled ? this.params.layer1Image : this.params.mobileImage,
+            backgroundImage:  hasScrollEnabled && this.params.backgroundImage ?
                 '<div class="creative--scrollable-mpu-image" style="background-image: url(' + this.params.backgroundImage + ');"></div>' : ''
         };
-        this.$scrollableMpu = $.create(template(scrollableMpuTpl, templateOptions)).appendTo(this.$adSlot);
+        this.$scrollableMpu = $.create(template(scrollableMpuTpl, templateOptions)).appendTo(this.adSlot);
 
         if (this.params.trackingPixel) {
             addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster)
@@ -81,16 +76,25 @@ define([
         }
 
         if (this.params.viewabilityTracker) {
-            addViewabilityTracker(this.$adSlot[0], this.params.id, this.params.viewabilityTracker);
+            addViewabilityTracker(this.adSlot, this.params.id, this.params.viewabilityTracker);
         }
 
-        if (ScrollableMpu.hasScrollEnabled) {
-            // update bg position
-            fastdom.read(this.updateBgPosition);
+        if (hasScrollEnabled) {
+            var updateFn =
+                this.params.backgroundImagePType === 'fixed matching fluid250' ?
+                    updateBgFluid250.bind(this) :
+                this.params.backgroundImagePType === 'parallax' ?
+                    updateBgParallax.bind(this) :
+                    updateBg.bind(this);
 
-            mediator.on('window:throttledScroll', this.updateBgPosition);
+            this.$scrollableImage = $('.creative--scrollable-mpu-image', this.adSlot);
+
+            // update bg position
+            fastdom.read(updateFn);
+
+            mediator.on('window:throttledScroll', updateFn);
             // to be safe, also update on window resize
-            mediator.on('window:throttledResize', this.updateBgPosition);
+            mediator.on('window:throttledResize', updateFn);
         }
 
         return Promise.resolve(true);

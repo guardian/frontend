@@ -1,6 +1,6 @@
 define([
     'qwery',
-    'common/utils/$',
+    'lib/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
@@ -31,7 +31,7 @@ define([
         beforeEach(function (done) {
 
             injector.mock('common/modules/ui/expandable', expandableSpy);
-            injector.require(['common/modules/onward/related', 'common/utils/config'], function () {
+            injector.require(['common/modules/onward/related', 'lib/config'], function () {
                 Related = arguments[0];
                 config = arguments[1];
 

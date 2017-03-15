@@ -1,8 +1,8 @@
 define([
-    'common/utils/assign',
-    'common/utils/fastdom-promise',
-    'common/utils/report-error',
-    'common/utils/url',
+    'lodash/objects/assign',
+    'lib/fastdom-promise',
+    'lib/report-error',
+    'lib/url',
     'Promise'
 ], function (
     assign,
@@ -29,9 +29,10 @@ define([
                 return setRecommended(target);
             })
             .catch(function (ex) {
-                unsetClicked(target);
-                reportError(ex, {
-                    feature: 'comments-recommend'
+                return unsetClicked(target).then(function() {
+                    reportError(ex, {
+                        feature: 'comments-recommend'
+                    });
                 });
             });
         }

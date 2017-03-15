@@ -5,10 +5,10 @@ define([
     'bonzo',
     'qwery',
     'fastdom',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/detect',
-    'common/utils/mediator',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
+    'lib/mediator',
     'lodash/functions/debounce'
 ], function (
     bean,

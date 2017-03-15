@@ -1,22 +1,34 @@
 define([
     'common/modules/experiments/segment-util',
+    'common/modules/experiments/test-can-run-checks',
     'common/modules/commercial/acquisitions-view-log',
     'common/modules/experiments/tests/contributions-epic-brexit',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
-    'common/modules/experiments/tests/contributions-epic-ask-four-stagger',
-    'common/modules/experiments/tests/contributions-epic-ask-four-earning'
+    'common/modules/experiments/tests/contributions-epic-ask-four-earning',
+    'common/modules/experiments/tests/contributions-epic-regulars',
+    'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
+    'common/modules/experiments/tests/acquisitions-epic-design-variations-v2'
 ], function (
     segmentUtil,
+    testCanRunChecks,
     viewLog,
     brexit,
     alwaysAsk,
-    askFourStagger,
-    askFourEarning
+    askFourEarning,
+    regulars,
+    acquisitionsEpicArticle50Trigger,
+    acquisitionsEpicDesignVariationsV2
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */
-    var tests = [alwaysAsk, askFourEarning, brexit, askFourStagger];
+    var tests = [
+        alwaysAsk,
+		regulars,
+        acquisitionsEpicDesignVariationsV2,
+        askFourEarning,
+        acquisitionsEpicArticle50Trigger,
+        brexit];
 
     return {
         getTest: function() {
@@ -30,7 +42,7 @@ define([
                     viewLog.viewsInPreviousDays(variant.maxViews.minDaysBetweenViews) === 0) ||
                     variant.isUnlimited);
 
-                return forced || (t.canRun() && segmentUtil.isInTest(t) && hasNotReachedRateLimit);
+                return forced || (testCanRunChecks.testCanBeRun(t) && segmentUtil.isInTest(t) && hasNotReachedRateLimit);
             });
 
             return eligibleTests[0] && new eligibleTests[0]();

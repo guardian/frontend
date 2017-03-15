@@ -1,5 +1,5 @@
 define([
-    'common/utils/config',
+    'lib/config',
 ], function(
     config
 ) {

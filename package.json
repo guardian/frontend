@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "JSON2": "^0.1.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-runtime": "^6.20.0",
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
@@ -39,10 +40,13 @@
     "aws-sdk": "~2.0.0-rc4",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
+    "babel-eslint": "^7.1.1",
+    "babel-jest": "^19.0.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
     "babel-plugin-transform-es2015-modules-amd": "^6.18.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-env": "^1.1.4",
     "browser-sync": "^2.8.2",
@@ -59,6 +63,8 @@
     "eslint-config-airbnb": "13.0.0",
     "eslint-config-prettier": "^1.4.1",
     "eslint-import-resolver-webpack": "^0.8.0",
+    "eslint-plugin-flow-header": "https://github.com/eirikurn/eslint-plugin-flow-header",
+    "eslint-plugin-flowtype": "^2.30.0",
     "eslint-plugin-guardian-frontend": "file:tools/eslint-plugin-guardian-frontend",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jasmine": "^1.8.1",
@@ -68,12 +74,16 @@
     "esprima": "1.2.2",
     "execa": "^0.5.0",
     "figures": "^2.0.0",
+    "flow-bin": "^0.40.0",
+    "flow-typed": "^2.0.0",
     "git-user-name": "^1.2.0",
     "glob": "^7",
+    "global": "^4.3.1",
     "gzip-size": "^3.0.0",
     "hasha": "^2.2.0",
     "jasmine-core": "^2.3.2",
-    "jest": "^18.1.0",
+    "jest": "^19.0.2",
+    "jest-teamcity-reporter": "^0.4.0",
     "karma": "^1.3.0",
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.0.2",
@@ -109,8 +119,8 @@
     "requirejs": "^2.3.2",
     "rimraf": "^2.5.4",
     "sass-graph": "^2.1.2",
-    "sass-lint": "^1.9.1",
-    "sass-mq": "~3.0.0",
+    "sass-lint": "~1.10.2",
+    "sass-mq": "~3.3.2",
     "semver": "^5.3.0",
     "simple-git": "^1.66.0",
     "sorted-object": "^1.0.0",
@@ -126,10 +136,43 @@
   "optionalDependencies": {
     "fsevents": "*"
   },
+  "jest": {
+    "roots": [
+      "<rootDir>/static/src/javascripts",
+      "<rootDir>/tools"
+    ],
+    "moduleDirectories": [
+      "<rootDir>/static/src/javascripts",
+      "<rootDir>/static/src/javascripts-legacy",
+      "<rootDir>/static/vendor/javascripts",
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "admin": "projects/admin",
+      "common": "projects/common",
+      "facia": "projects/facia",
+      "membership": "projects/membership",
+      "commercial": "projects/commercial",
+      "^lodash(.*)$": "lodash-amd/compat$1",
+      "picturefill": "projects/common/utils/picturefill",
+      "Promise": "when/es6-shim/Promise",
+      "raven": "raven-js",
+      "EventEmitter": "wolfy87-eventemitter",
+      "videojs": "video.js",
+      "stripe": "stripe/stripe.min",
+      "svgs": "<rootDir>/static/src/inline-svgs",
+      "ophan/ng": "ophan-tracker-js",
+      "ophan/embed": "ophan-tracker-js/build/ophan.embed"
+    },
+    "testResultsProcessor": "jest-teamcity-reporter",
+    "setupTestFrameworkScriptFile": "<rootDir>/jestSetup.js"
+  },
   "scripts": {
     "postinstall": "./tools/task-runner/runner githooks --verbose",
     "amdtoes6": "amdtoes6 --beautify",
     "lebab": "lebab --transform arrow,let,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,class,default-param --replace",
-    "eslint-fix": "eslint --color --fix"
+    "eslint-fix": "eslint --color --fix",
+    "flow": "flow",
+    "test": "jest"
   }
 }

@@ -1,6 +1,6 @@
 define([
     'bean',
-    'common/utils/mediator',
+    'lib/mediator',
     'common/modules/experiments/ab',
     'lodash/objects/merge',
     'lodash/collections/map'

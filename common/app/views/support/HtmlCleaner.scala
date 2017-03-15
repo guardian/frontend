@@ -8,7 +8,7 @@ import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
-import model.content.{Atom, Atoms}
+import model.content.{Atom, Atoms, MediaWrapper}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
@@ -175,6 +175,7 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
       case classes if classes.contains(Showcase.className) => Showcase
       case classes if classes.contains(Thumbnail.className) => Thumbnail
       case classes if classes.contains(Immersive.className) => Immersive
+      case classes if classes.contains(Halfwidth.className) => Halfwidth
       case _ => Inline
     }
   }
@@ -441,6 +442,57 @@ case class ExploreVideos(isExplore: Boolean) extends HtmlCleaner{
   }
 }
 
+case class PhotoEssayImages(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isPhotoEssay) {
+      document.getElementsByTag("figure").filter(_.hasClass("element-image"))foreach{ images =>
+        images.addClass("element-image--photo-essay")
+      }
+      document.getElementsByClass("block-share--article").foreach{ shares =>
+        shares.remove()
+      }
+    }
+    document
+  }
+}
+
+case class PhotoEssayQuotes(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isPhotoEssay) {
+      document.getElementsByClass("element-pullquote").foreach{ quotes =>
+        quotes.addClass("element-pullquote--photo-essay")
+      }
+    }
+    document
+  }
+}
+
+case class PhotoEssayHalfWidth(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isPhotoEssay) {
+      document.getElementsByTag("figure").filter(_.hasClass("element--halfWidth")).zipWithIndex.foreach{ case(halfWidthImage, index) =>
+        if(index % 2 == 0) {
+          halfWidthImage.addClass("half-width-odd")
+        }
+      }
+    }
+    document
+  }
+}
+
+case class PhotoEssayBlockQuote(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isPhotoEssay) {
+      document.getElementsByTag("blockquote").foreach{ blockquotes =>
+        if(!blockquotes.children().is(".pullquote-paragraph")){
+          blockquotes.addClass("photo-essay-block-quote")
+        }
+      }
+    }
+    document
+  }
+}
+
 case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isImmersive) {
@@ -601,7 +653,7 @@ object MembershipEventCleaner extends HtmlCleaner {
     }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false, mainMedia: Boolean = false, immersiveMainMedia: Boolean = false)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
+case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false, mediaWrapper: Option[MediaWrapper] = None)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
@@ -614,7 +666,7 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomData <- findAtom(atomId)
       } {
-        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mainMedia, immersiveMainMedia).toString()
+        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
         bodyElement.remove()
         atomContainer.append(html)
       }

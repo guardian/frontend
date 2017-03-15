@@ -486,26 +486,26 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2017, 4, 5),
     exposeClientSide = true
   )
-
-  // Owner: Joseph Smith
-  val RenderEmailConnectedStyle = Switch(
+  
+  val ArticleWithStructuredRecipe = Switch(
     SwitchGroup.Feature,
-    "render-email-connected-style",
-    "Allows alternate email styling when passing ?format=email-connected, for testing two email design variants",
-    owners = Seq(Owner.withGithub("joelochlann")),
+    "is-article-with-structured-recipe-data",
+    "changes design of articles with strucutred recipe data",
+    owners = Seq(Owner.withGithub("tsop14"), Owner.withGithub("blongden73")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 1),
+    sellByDate = new LocalDate(2017, 4, 4),
     exposeClientSide = true
   )
 
-  val AmpOphanTrackingIncludesCredentials = Switch(
+  // Owner: George Haberis
+  val TailorSurveyOverlay = Switch(
     SwitchGroup.Feature,
-    "amp-ophan-tracking-includes-credentials",
-    "allows access to id field when page viewed from google cache so that we keep tracking consistent",
-    owners = Seq(Owner.withGithub("michaelwmcnamara")),
+    "tailor-survey-overlay",
+    "When ON, will show the Tailor survey overlay message",
+    owners = Seq(Owner.withGithub("GHaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 10),
+    sellByDate = never,
     exposeClientSide = true
-
   )
+
 }

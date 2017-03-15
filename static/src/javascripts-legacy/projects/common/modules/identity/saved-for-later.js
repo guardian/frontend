@@ -1,12 +1,12 @@
 define([
-    'common/utils/$',
+    'lib/$',
     'qwery',
     'bonzo',
     'bean',
     'fastdom',
-    'common/utils/config',
-    'common/utils/mediator',
-    'common/utils/template',
+    'lib/config',
+    'lib/mediator',
+    'lodash/utilities/template',
     'common/views/svgs',
     'raw-loader!common/views/save-for-later/delete-all-button.html'
 ], function (

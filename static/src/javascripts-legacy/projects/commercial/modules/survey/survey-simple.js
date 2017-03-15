@@ -1,8 +1,8 @@
 define([
     'bean',
     'fastdom',
-    'common/utils/$',
-    'common/utils/template',
+    'lib/$',
+    'lodash/utilities/template',
     'common/modules/user-prefs',
     'common/views/svgs',
     'raw-loader!commercial/views/survey/survey-simple.html',

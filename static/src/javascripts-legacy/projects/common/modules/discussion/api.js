@@ -1,7 +1,7 @@
 define([
     'common/modules/user-prefs',
-    'common/utils/ajax',
-    'common/utils/config'
+    'lib/ajax',
+    'lib/config'
 ], function (
     prefs,
     ajax,

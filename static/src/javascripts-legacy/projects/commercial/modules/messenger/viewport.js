@@ -1,6 +1,6 @@
 define([
-    'common/utils/detect',
-    'common/utils/fastdom-promise',
+    'lib/detect',
+    'lib/fastdom-promise',
     'commercial/modules/messenger'
 ], function (detect, fastdom, messenger) {
     var w = window;

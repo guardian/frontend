@@ -3,7 +3,7 @@ define([
     'bonzo',
     'qwery',
     'Promise',
-    'common/utils/$',
+    'lib/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
@@ -63,7 +63,7 @@ define([
                 return Promise.resolve();
             });
 
-            injector.mock('common/utils/load-script', function () {
+            injector.mock('lib/load-script', function () {
                 return Promise.resolve();
             });
 
@@ -72,10 +72,10 @@ define([
                 'commercial/modules/dfp/fill-advert-slots',
                 'commercial/modules/dfp/get-adverts',
                 'commercial/modules/dfp/get-creative-ids',
-                'common/utils/config',
+                'lib/config',
                 'commercial/modules/dfp/performance-logging',
                 'commercial/modules/commercial-features',
-                'common/utils/detect',
+                'lib/detect',
                 'commercial/modules/close-disabled-slots',
                 'commercial/modules/dfp/dfp-env'
             ], function () {

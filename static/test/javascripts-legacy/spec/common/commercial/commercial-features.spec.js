@@ -8,10 +8,10 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
         beforeEach(function (done) {
             injector.require([
                 'commercial/modules/commercial-features',
-                'common/utils/config',
-                'common/utils/location',
+                'lib/config',
+                'lib/location',
                 'common/modules/user-prefs',
-                'common/utils/detect',
+                'lib/detect',
                 'commercial/modules/user-features',
                 'common/modules/identity/api'
             ], function () {
@@ -137,33 +137,6 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 config.page.isLiveBlog = false;
                 features = new CommercialFeatures;
                 expect(features.articleAsideAdverts).toBe(false);
-            });
-        });
-
-        describe('Slice adverts', function () {
-            it('Runs by default on fronts', function () {
-                config.page.isFront = true;
-                features = new CommercialFeatures;
-                expect(features.sliceAdverts).toBe(true);
-            });
-
-            it('Does not run on minute articles', function () {
-                config.page.isMinuteArticle = true;
-                features = new CommercialFeatures;
-                expect(features.sliceAdverts).toBe(false);
-            });
-        });
-
-        describe('Popular content MPUs', function () {
-            it('Runs by default', function () {
-                features = new CommercialFeatures;
-                expect(features.popularContentMPU).toBe(true);
-            });
-
-            it('Does not run on minute articles', function () {
-                config.page.isMinuteArticle = true;
-                features = new CommercialFeatures;
-                expect(features.popularContentMPU).toBe(false);
             });
         });
 

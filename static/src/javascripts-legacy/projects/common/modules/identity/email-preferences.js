@@ -6,7 +6,7 @@ define([
     'bean',
     'reqwest',
     'fastdom',
-    'common/utils/$'
+    'lib/$'
 ], function (
     bean,
     reqwest,
@@ -148,23 +148,13 @@ define([
             var value = buttons[i].value;
             var unsubscribeMatches = value.match(/unsubscribe-(.*)/);
             if (unsubscribeMatches) {
-                buttonString += 'removeEmailSubscriptions[]=' + encodeURIComponent(unsubscribeMatches[1]) + '&';
+                var listIds = unsubscribeMatches[1].split(",");
+                for (var j = 0; j < listIds.length; j++) {
+                    buttonString += 'removeEmailSubscriptions[]=' + encodeURIComponent(listIds[j]) + '&';
+                }
             } else {
                 buttonString += 'addEmailSubscriptions[]=' + encodeURIComponent(value) + '&';
             }
-            // hacks to deal with the various email variants and AB tests running on email listIDs
-            // delete once the lists have been consolidated in ExactTarget!
-            if (value === 'unsubscribe-2211') {
-                buttonString += 'removeEmailSubscriptions[]=3806&'; // the flyer cards listId
-                buttonString += 'removeEmailSubscriptions[]=3807&'; // the flyer connected listId
-            } else if (value === 'unsubscribe-2313') { // legacy opinion listId
-                buttonString += 'removeEmailSubscriptions[]=3811&'; // new opinion listId
-                buttonString += 'removeEmailSubscriptions[]=3814&'; // control group listId
-            } else if (value === 'unsubscribe-3811') { // new opinion listId
-                buttonString += 'removeEmailSubscriptions[]=2313&'; // legacy opinion listId
-                buttonString += 'removeEmailSubscriptions[]=3814&'; // control group listId
-            }
-            // end of hacks
         }
         return 'csrfToken=' + encodeURIComponent(csrfToken) + '&' +
         buttonString + 'htmlPreference=' + encodeURIComponent(htmlPreference);

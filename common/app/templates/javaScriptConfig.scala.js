@@ -18,6 +18,9 @@
                 "ab-icon": "@Static("images/commercial/ab-icon.png")",
                 "abp-icon": "@Static("images/commercial/abp-icon.png")",
                 "abp-whitelist-instruction-chrome": "@Static("images/commercial/ad-block-instructions-chrome.png")"
+            },
+            "acquisitions": {
+                "paypal": "@Static("images/acquisitions/paypal.png")"
             }
         },
         "stylesheets": {

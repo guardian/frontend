@@ -2,9 +2,9 @@ define([
     'bonzo',
     'qwery',
     'fastdom',
-    'common/utils/fetch',
-    'common/utils/config',
-    'common/utils/detect'
+    'lib/fetch',
+    'lib/config',
+    'lib/detect'
 ], function (
     bonzo,
     qwery,

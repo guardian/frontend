@@ -1,10 +1,10 @@
 /*eslint no-console: 0*/
 define([
     'helpers/injector',
-    'common/utils/$',
-    'common/utils/config',
-    'common/utils/fetch-json',
-    'common/utils/storage',
+    'lib/$',
+    'lib/config',
+    'lib/fetch-json',
+    'lib/storage',
     'lodash/objects/defaults',
     'Promise'
 ], function (
@@ -42,8 +42,8 @@ define([
         function mockBreakingNewsWith(collections) {
             return new Promise(function (resolve, reject) {
                 injector.mock({
-                    'common/utils/storage': storage,
-                    'common/utils/fetch-json': fetchJson
+                    'lib/storage': storage,
+                    'lib/fetch-json': fetchJson
                 }).require(['common/modules/onward/breaking-news'], function (breakingNews) {
                     breakingNews.DEFAULT_DELAY = 100;
                     server = sinon.fakeServer.create();
@@ -247,7 +247,7 @@ define([
 
             beforeEach(function (done) {
                 injector.require([
-                    'common/utils/mediator'
+                    'lib/mediator'
                 ], function () {
                     mediator = arguments[0];
                     done();

@@ -1,6 +1,6 @@
 define([
     'Promise',
-    'common/utils/user-timing',
+    'lib/user-timing',
     'commercial/modules/dfp/performance-logging'
 ], function (Promise, userTiming, performanceLogging) {
     Advert.startLoading = startLoading;
@@ -25,6 +25,7 @@ define([
             whenLoadedResolver: null,
             whenRendered: null,
             whenRenderedResolver: null,
+            whenSlotReady: null,
             timings: {
                 createTime: null,
                 startLoading: null,

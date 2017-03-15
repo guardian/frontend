@@ -1,1 +1,0 @@
-require(['ophan/ng'], function () {});

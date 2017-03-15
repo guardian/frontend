@@ -7,10 +7,16 @@ module.exports = {
     task: () =>
         execa(
             'babel',
-            [`${src}/javascripts`, '--out-dir', `${transpiled}/javascripts`],
+            [
+                `${src}/javascripts`,
+                '--out-dir',
+                `${transpiled}/javascripts`,
+                '--ignore',
+                '**/*.spec.js',
+            ],
             {
                 env: {
-                    BABEL_ENV: 'production',
+                    BABEL_ENV: 'karma',
                 },
             }
         ),
