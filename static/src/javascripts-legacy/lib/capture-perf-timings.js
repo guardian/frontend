@@ -3,7 +3,15 @@ define([
     'lib/user-timing'
 ], function (ophan, userTiming) {
     return function captureTiming() {
+        var supportsPerformance = 'performance' in window;
+
+        if (!supportsPerformance) {
+            return;
+        }
+
+        var supportsNavigation = 'navigation' in window.performance;
         var timing = window.performance && window.performance.timing;
+
         if (!timing) {
             return;
         }
@@ -22,8 +30,8 @@ define([
             lastByte: timing.responseEnd - timing.responseStart,
             domContentLoadedEvent: timing.domContentLoadedEventStart - timing.responseEnd,
             loadEvent: timing.loadEventStart - timing.domContentLoadedEventStart,
-            navType: window.performance.navigation.type,
-            redirectCount: window.performance.navigation.redirectCount,
+            navType:  supportsNavigation ? window.performance.navigation.type : undefined,
+            redirectCount: supportsNavigation ? window.performance.navigation.redirectCount : undefined,
             assetsPerformance: marks.map(function (mark) {
                 return {
                     name: mark,
