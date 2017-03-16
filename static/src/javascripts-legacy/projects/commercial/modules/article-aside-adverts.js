@@ -25,7 +25,7 @@ define([
     function init(start, stop) {
         start();
 
-        var $col        = $(rhColumnSelector);
+        var $col = $(rhColumnSelector);
         var $mainCol, $adSlot;
 
         // are article aside ads disabled, or secondary column hidden?

@@ -58,8 +58,7 @@ $gutter-large: 55px;
 }
 
 .new-header__nav {
-    @include fs-textSans(5);
-    line-height: $gs-baseline * 2.5;
+    font-size: 0;
     width: 100%;
     overflow: hidden;
 
@@ -69,17 +68,7 @@ $gutter-large: 55px;
         margin-right: $gutter-small + $veggie-burger-small + $gs-gutter / 3;
     }
 
-    @include mq($from: mobile, $until: mobileLandscape) {
-        font-size: 5.1vw;
-    }
-
-    @include mq($from: mobileMedium, $until: mobileLandscape) {
-        line-height: $gs-baseline * 3;
-    }
-
     @include mq(mobileLandscape) {
-        font-size: 24px;
-        line-height: $gs-baseline * 3.5;
         margin-left: $gs-gutter / 2;
     }
 }
@@ -187,28 +176,49 @@ $gutter-large: 55px;
     }
 }
 
-.new-header__nav__link {
-    @include nav-links;
+.new-header__nav-primary-links {
+    margin: 0;
+}
+
+.new-header__nav-link-item {
+    @include trailing-slash-item;
+}
+
+.new-header__nav-link {
+    @include fs-textSans(5);
+    @include trailing-slash-link;
+    line-height: $gs-baseline * 2.5;
+
     // Override a from _lists.scss
     color: $news-support-1;
     cursor: pointer;
+
+    @include mq($from: mobile, $until: mobileLandscape) {
+        font-size: 16px;
+        font-size: 5.1vw;
+    }
+
+    @include mq($from: mobileMedium, $until: mobileLandscape) {
+        line-height: $gs-baseline * 3;
+    }
+
+    @include mq(mobileLandscape) {
+        font-size: 24px;
+        line-height: $gs-baseline * 3.5;
+    }
 
     &:focus,
     &:hover {
         text-decoration: none;
     }
 
-    &:first-child {
+    .new-header__nav-link-item:first-child & {
         padding-left: $gs-gutter / 2;
     }
 
     &:after {
         @include trailing-slash;
         color: $news-main-2;
-    }
-
-    &:last-of-type:after {
-        content: none;
     }
 }
 
@@ -552,6 +562,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     font-size: 15px;
     line-height: 18px;
     text-transform: none;
+    margin-top: $gs-baseline * 2;
     padding: $gs-baseline $gs-gutter $gs-baseline * 2 $navigation-horizontal-padding;
     background-color: rgba(0, 0, 0, .2);
 
@@ -641,11 +652,11 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
  * Tertiary Nav
  ****************/
 .tertiary-navigation {
+    font-size: 0;
     background-color: #747a81;
     padding-top: $gs-baseline / 3;
     padding-left: $gs-gutter / 2;
-    // Spacer that prevents links flowing beneath the veggie burger
-    padding-right: $gutter-medium + $veggie-burger-medium;
+    padding-right: $gs-gutter / 2;
     margin-left: -4px;
     border-bottom: $gs-baseline / 3 solid #747a81;
     max-height: $gs-baseline * 3.4;
@@ -653,30 +664,45 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     z-index: 1;
     position: relative;
 
-    @include mq($from: mobile, $until: mobileLandscape) {
-        max-height: $gs-baseline * 3.5;
-        max-height: 13vw;
-        margin-left: -.3em;
+    // Spacer to prevent text from sitting directly beneath the veggie burger
+    &:before {
+        content: '';
+        float: right;
+        width: $gutter-small + $veggie-burger-small - ($gs-gutter / 2);
+        height: 1px;
     }
 
-    @include mq($from: mobileLandscape) {
-        max-height: $gs-baseline * 4.8;
+    @include mq(mobile) {
+        max-height: $gs-baseline * 3.5;
+        max-height: 13vw;
+    }
+
+    @include mq(mobileMedium) {
+        &:before {
+            width: $gutter-medium + $veggie-burger-medium - ($gs-gutter / 2);
+        }
+    }
+
+    @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
         margin-left: -5px;
-        padding-right: $gutter-large + $veggie-burger-medium;
+
+        &:before {
+            width: $gutter-large + $veggie-burger-medium - ($gs-gutter / 2);
+        }
     }
+}
+
+.tertiary-navigation__link-item {
+    @include trailing-slash-item;
 }
 
 .tertiary-navigation__link {
     @include fs-textSans(5);
-    @include nav-links
+    @include trailing-slash-link;
+
     color: $neutral-4;
     line-height: 1.3em;
-
-    &:hover,
-    &:focus {
-        text-decoration: none;
-    }
 
     @include mq($from: mobile, $until: mobileLandscape) {
         font-size: 16px;
@@ -685,15 +711,17 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
     @include mq(mobileLandscape) {
         font-size: 22px;
+        max-height: $gs-baseline * 4.8;
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
     }
 
     &:after {
         @include trailing-slash;
         color: rgba(255, 255, 255, .3);
-    }
-
-    &:last-of-type:after {
-        content: none;
     }
 }
 
