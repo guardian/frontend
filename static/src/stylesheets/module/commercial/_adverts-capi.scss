@@ -177,18 +177,12 @@
     }
 
     .button {
-        @include button-colour(
-            $paid-article-brand,
-            null
-        );
+        @include button-colour($paid-article-brand, null);
 
         &:hover,
         &:focus,
         &:active {
-            @include button-colour(
-                darken($paid-article-brand, 5%),
-                null
-            );
+            @include button-colour(darken($paid-article-brand, 5%), null);
         }
     }
 }
@@ -245,7 +239,7 @@
     .advert__title,
     .advert__meta,
     .advert__standfirst {
-        padding: 0 ($gs-gutter / 4) 0;
+        padding: 0 ($gs-gutter / 4);
     }
 
     .advert__meta {
@@ -254,9 +248,9 @@
     }
 
     .advert__title {
-      @include f-headlineSans;
-      font-weight: 400;
-      margin-bottom: .5em;
+        @include f-headlineSans;
+        font-weight: 400;
+        margin-bottom: .5em;
 
         .inline-icon {
             width: 1.1em;
@@ -320,7 +314,6 @@
             fill: $paid-article-icon;
         }
     }
-
 
     .adverts--legacy-single & {
         background: none;
