@@ -41,16 +41,6 @@
     </head>
 
     <body>
-        <style>
-        @if(page.metadata.isFront) {
-            @fragments.email.stylesheets.frontFonts()
-            @Html(common.Assets.css.emailFront)
-        } else {
-            @fragments.email.stylesheets.articleFonts()
-            @Html(common.Assets.css.emailArticle)
-        }
-        </style>
-
         @* TODO: preheader *@
         @fragments.email.ampScript(page)
 
