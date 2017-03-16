@@ -52,7 +52,7 @@ define([
 
         var supportsSticky = document.documentElement.classList.contains('has-sticky');
 
-        var newRecipeDesign = config.page.showNewRecipeDesign && (config.tests.abNewRecipeDesign != undefined && config.tests.abNewRecipeDesign === true);
+        var newRecipeDesign = config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
 
         // Feature switches
 
@@ -71,25 +71,14 @@ define([
             isArticle &&
             !isLiveBlog &&
             !isHosted &&
-            !newRecipeDesign &&
-            switches.commercial;
+            !newRecipeDesign;
 
         this.articleAsideAdverts =
             this.dfpAdvertising &&
             !isMinuteArticle &&
             !isMatchReport &&
             !!(isArticle || isLiveBlog) &&
-            !newRecipeDesign &&
-            switches.commercial;
-
-        this.sliceAdverts =
-            this.dfpAdvertising &&
-            config.page.isFront &&
-            switches.commercial;
-
-        this.popularContentMPU =
-            this.dfpAdvertising &&
-            !isMinuteArticle;
+            !newRecipeDesign;
 
         this.videoPreRolls =
             this.dfpAdvertising;
@@ -100,8 +89,7 @@ define([
             !isHosted &&
             !isInteractive &&
             !config.page.isFront &&
-            !newRecipeDesign &&
-            switches.commercial;
+            !newRecipeDesign;
 
         this.thirdPartyTags =
             externalAdvertising &&

@@ -178,7 +178,7 @@ define([
 
         if (config.page.showNewRecipeDesign === true) {
             //below is for during testing
-            if (config.tests.abNewRecipeDesign != undefined && config.tests.abNewRecipeDesign === true) {
+            if (config.tests.abNewRecipeDesign) {
                 require(['bootstraps/enhanced/recipe-article'], function (recipes) {
                     bootstrapContext('recipes', recipes);
                 });
