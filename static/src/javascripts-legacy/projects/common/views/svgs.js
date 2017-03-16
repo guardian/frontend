@@ -13,8 +13,6 @@ define([
     'svg-loader!svgs/icon/arrow-down.svg',
     'svg-loader!svgs/icon/cross.svg',
     'svg-loader!svgs/icon/quote.svg',
-    'svg-loader!svgs/logo/logo-guardian.svg',
-    'svg-loader!svgs/commercial/logo-masterclasses.svg',
     'svg-loader!svgs/commercial/paid-content.svg',
     'svg-loader!svgs/icon/close-central.svg',
     'svg-loader!svgs/icon/arrow-white-right.svg',
@@ -37,7 +35,6 @@ define([
     'svg-loader!svgs/icon/notification-off.svg',
     'svg-loader!svgs/icon/notification-on.svg',
     'svg-loader!svgs/logo/glabs-logo-small.svg',
-    'svg-loader!svgs/logo/membership-logo.svg',
     'svg-loader!svgs/commercial/logo-membership.svg',
     'svg-loader!svgs/commercial/adblock-coins.svg',
     'svg-loader!svgs/notifications-explainer-desktop.svg',
@@ -57,8 +54,6 @@ define([
     arrowdownicon,
     crossIcon,
     quoteIcon,
-    logoguardian,
-    logomasterclasses,
     paidContent,
     closeCentralIcon,
     arrowWhiteRight,
@@ -81,7 +76,6 @@ define([
     notificationsOff,
     notificationsOn,
     glabsLogoSmall,
-    membershipLogoWhite,
     membershipLogo,
     adblockCoins,
     notificationsExplainerDesktop,
@@ -102,8 +96,6 @@ define([
         arrowdownicon: arrowdownicon,
         crossIcon: crossIcon,
         quoteIcon: quoteIcon,
-        logoguardian: logoguardian,
-        logomasterclasses: logomasterclasses,
         paidContent: paidContent,
         closeCentralIcon: closeCentralIcon,
         arrowWhiteRight: arrowWhiteRight,
@@ -132,8 +124,7 @@ define([
         notificationsExplainerDesktop: notificationsExplainerDesktop,
         notificationsExplainerMobile: notificationsExplainerMobile,
         star: star,
-        chevronRight: chevronRight,
-        logomembershipwhite: membershipLogoWhite
+        chevronRight: chevronRight
     };
 
     return function (name, classes, title) {
