@@ -6,13 +6,15 @@
 
 @(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
+@if(!mvt.PolyfillIO.isParticipating) {
 <!--[if lt IE 9]>
     <script src="@Static("javascripts/html5.js")"></script>
 <![endif]-->
+}
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
-
+    @if(!mvt.PolyfillIO.isParticipating) {
     // ************* POLYFILLS *************
     // Mostly handled by es5 shim above. Those which aren't are polyfilled ASAP.
 
@@ -22,12 +24,13 @@
 
     // Pollyfill requestAnimationFrame
     @InlineJs(raf().body, "raf.js")
+        // Polyfill Element.matches
+
+        @InlineJs(matches().body, "matches.js")
+    }
 
     // Polyfill classList
     @InlineJs(classlist().body, "classlist.js")
-
-    // Polyfill Element.matches
-    @InlineJs(matches().body, "matches.js")
 
     // Polyfill details
     @InlineJs(details().body, "details.js")
@@ -60,6 +63,13 @@
 
     // Polyfill for async script
     (function (document) {
+        @if(mvt.PolyfillIO.isParticipating) {
+            var polyfillScript = document.createElement('script');
+            var polyfillRef = document.getElementsByTagName('script')[0];
+            polyfillScript.src = 'https://polyfill.guim.co.uk/v2/polyfill.min.js?features=es6,Element.prototype.closest,Element.prototype.matches,requestAnimationFrame';
+            polyfillRef.parentNode.insertBefore(polyfillScript, polyfillRef);
+        }
+
         var script = document.createElement('script');
         var ref = document.getElementsByTagName('script')[0];
         script.src = '@Static("javascripts/graun.standard.js")';
