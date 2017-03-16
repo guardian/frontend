@@ -3,7 +3,7 @@
 const webpack = require('webpack');
 const Visualizer = require('webpack-visualizer-plugin');
 
-const { config } = require('./webpack.config.common.js');
+const config = require('./webpack.config.js');
 
 config.plugins = [
     new webpack.optimize.AggressiveMergingPlugin(),

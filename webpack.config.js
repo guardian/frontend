@@ -6,7 +6,7 @@ const bundlePrefix = 'graun.';
 
 module.exports.bundlePrefix = bundlePrefix;
 
-module.exports.config = {
+module.exports = {
     devtool: 'source-map',
     entry: {
         standard: path.join(

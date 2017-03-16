@@ -1,69 +1,85 @@
 {
+    "plugins": [
+        "babel-plugin-transform-flow-strip-types"
+    ],
     "env": {
         "production": {
             "presets": [
-                ["env", {
-                    "modules": "amd"
-                }]
+                [
+                    "babel-preset-env",
+                    {
+                        "modules": "amd"
+                    }
+                ]
             ],
             "plugins": [
-                "babel-plugin-transform-runtime",
-                "babel-plugin-transform-flow-strip-types",
-                "babel-plugin-add-module-exports",
-            ],
+                [
+                    "babel-plugin-transform-runtime",
+                    {
+                        "polyfill": false
+                    }
+                ],
+                "babel-plugin-add-module-exports"
+            ]
         },
         "development": {
             "presets": [
-                ["env", {
-                    "modules": "amd"
-                }]
+                [
+                    "babel-preset-env",
+                    {
+                        "modules": "amd"
+                    }
+                ]
             ],
             "plugins": [
-                "babel-plugin-transform-runtime",
-                "babel-plugin-transform-flow-strip-types",
-                "babel-plugin-add-module-exports",
-            ],
+                "babel-plugin-add-module-exports"
+            ]
         },
         "test": {
             "presets": [
-                ["env", {
-                    "targets": {
-                        "node": "current"
+                [
+                    "babel-preset-env",
+                    {
+                        "targets": {
+                            "node": "current"
+                        }
                     }
-                }]
-            ],
-            "plugins": [
-                "babel-plugin-transform-flow-strip-types",
-            ],
+                ]
+            ]
         },
         "internal": {
             "presets": [
-                ["env", {
-                    "targets": {
-                        "browsers": [
-                            "last 2 Chrome versions",
-                            "last 1 Safari version",
-                            "last 2 Firefox versions",
-                            "last 2 Edge versions",
-                        ],
+                [
+                    "babel-preset-env",
+                    {
+                        "targets": {
+                            "browsers": [
+                                "last 2 Chrome versions",
+                                "last 1 Safari version",
+                                "last 2 Firefox versions",
+                                "last 2 Edge versions"
+                            ]
+                        }
                     }
-                }],
-            ],
+                ]
+            ]
         },
         "karma": {
             "presets": [
-                ["env", {
-                    "modules": "amd"
-                }]
+                [
+                    "babel-preset-env",
+                    {
+                        "modules": "amd"
+                    }
+                ]
             ],
             "plugins": [
                 "babel-plugin-transform-runtime",
-                "babel-plugin-transform-flow-strip-types",
-                "babel-plugin-add-module-exports",
-            ],
-        },
+                "babel-plugin-add-module-exports"
+            ]
+        }
     },
     "ignore": [
-        "eslintrc.js",
-    ],
+        "eslintrc.js"
+    ]
 }

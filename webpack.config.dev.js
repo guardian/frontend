@@ -1,4 +1,6 @@
-const { config, bundlePrefix } = require('./webpack.config.common.js');
+const config = require('./webpack.config.js');
+
+const { bundlePrefix } = config;
 
 config.devtool = 'inline-source-map';
 config.output.filename = `${bundlePrefix}[name].js`;
