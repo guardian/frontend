@@ -12,8 +12,7 @@ define([
     'commercial/modules/creatives/fabric-expandable-video-v1',
     'commercial/modules/creatives/fabric-expandable-video-v2',
     'commercial/modules/creatives/fabric-video',
-    'commercial/modules/creatives/scrollable-mpu-v2',
-    'commercial/modules/creatives/template'
+    'commercial/modules/creatives/scrollable-mpu-v2'
 ], function (
     bean,
     Promise,
