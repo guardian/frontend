@@ -3,18 +3,15 @@ define([
     'lib/user-timing'
 ], function (ophan, userTiming) {
     return function captureTiming() {
-        var supportsPerformance = 'performance' in window;
+        var supportsPerformanceProperties = 'performance' in window &&
+                                            'navigation' in window.performance &&
+                                            'timing' in window.performance;
 
-        if (!supportsPerformance) {
+        if (!supportsPerformanceProperties) {
             return;
         }
 
-        var supportsNavigation = 'navigation' in window.performance;
         var timing = window.performance && window.performance.timing;
-
-        if (!timing) {
-            return;
-        }
 
         var marks = [
             'standard boot',
@@ -30,8 +27,8 @@ define([
             lastByte: timing.responseEnd - timing.responseStart,
             domContentLoadedEvent: timing.domContentLoadedEventStart - timing.responseEnd,
             loadEvent: timing.loadEventStart - timing.domContentLoadedEventStart,
-            navType:  supportsNavigation ? window.performance.navigation.type : undefined,
-            redirectCount: supportsNavigation ? window.performance.navigation.redirectCount : undefined,
+            navType:  window.performance.navigation.type,
+            redirectCount: window.performance.navigation.redirectCount,
             assetsPerformance: marks.map(function (mark) {
                 return {
                     name: mark,
