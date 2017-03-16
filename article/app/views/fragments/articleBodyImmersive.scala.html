@@ -4,6 +4,7 @@
 @import views.BodyCleaner
 @import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
+@import views.support.Commercial.shouldShowAds
 
 @defining(model.article) { article =>
   @defining(isPaidContent(model)) { isPaidContent =>
@@ -48,6 +49,17 @@
 
                     <div class="content__secondary-column js-secondary-column" aria-hidden="true">
                         <div class="ad-slot-container js-ad-slot-container"></div>
+                        @defining(shouldShowAds(model)) { shouldShowAds =>
+                            @if(shouldShowAds) {
+                                    @fragments.commercial.adSlot(
+                                        "right",
+                                        Seq("mpu-banner-ad"),
+                                        Map("mobile" -> Seq("1,1", "2,2", "300,250", "300,600", "300,1050", "fluid")),
+                                        optId = None,
+                                        optClassNames = None
+                                        ){ }
+                            }
+                        }
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@
 @import views.support.Commercial.isPaidContent
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
+@import views.support.Commercial.shouldShowAds
 
 @schemaType(page: ArticlePage) = @{page.article.metadata.schemaType}
 
@@ -104,10 +105,20 @@
                     </div>
 
                     <div class="content__secondary-column js-secondary-column" aria-hidden="true">
-                        <div class="ad-slot-container js-ad-slot-container"></div>
-                        @if(!isPaidContent){
-                            <div class="js-components-container"></div>
-                        }
+                        <div class="ad-slot-container">
+                            @defining(shouldShowAds(model)) { shouldShowAds =>
+                                @if(shouldShowAds) {
+                                        @fragments.commercial.adSlot(
+                                            "right",
+                                            Seq("mpu-banner-ad"),
+                                            Map("mobile" -> Seq("1,1", "2,2", "300,250", "300,600", "fluid")),
+                                            optId = None,
+                                            optClassNames = Some("js-sticky-mpu")
+                                            ){ }
+                                }
+                            }
+                        </div>
+                        <div class="js-components-container"></div>
                     </div>
                 </div>
             </div>

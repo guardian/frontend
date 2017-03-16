@@ -5,7 +5,6 @@ define([
     'lib/config',
     'lib/mediator',
     'lib/fastdom-promise',
-    'commercial/modules/dfp/create-slot',
     'commercial/modules/commercial-features'
 ], function (
     Promise,
@@ -14,7 +13,6 @@ define([
     config,
     mediator,
     fastdom,
-    createSlot,
     commercialFeatures
 ) {
     var minArticleHeight = 1300;
@@ -22,13 +20,13 @@ define([
 
     var mainColumnSelector = '.js-content-main-column';
     var rhColumnSelector = '.js-secondary-column';
-    var adSlotContainerSelector = '.js-ad-slot-container';
+    var adSlotSelector = '.js-ad-slot';
 
     function init(start, stop) {
         start();
 
         var $col        = $(rhColumnSelector);
-        var $mainCol, $adSlotContainer;
+        var $mainCol, $adSlot;
 
         // are article aside ads disabled, or secondary column hidden?
         if (!(commercialFeatures.articleAsideAdverts && $col.length && $css($col, 'display') !== 'none')) {
@@ -37,35 +35,27 @@ define([
         }
 
         $mainCol = $(mainColumnSelector);
-        $adSlotContainer = $(adSlotContainerSelector);
+        $adSlot = $(adSlotSelector, $col);
 
         fastdom.read(function () {
             return $mainCol.dim().height;
         })
         .then(function (mainColHeight) {
-            var $adSlot, adType;
 
+            // switch to 'right-small' MPU for short articles
+            if ($adSlot.length &&
+              (config.page.isImmersive && mainColHeight < minImmersiveArticleHeight) ||
+            (!config.page.isImmersive && mainColHeight < minArticleHeight)) {
 
-            if (config.page.isImmersive) {
-                adType = mainColHeight >= minImmersiveArticleHeight ?
-                        'right' :
-                        'right-small';
-            } else {
-                adType = mainColHeight >= minArticleHeight ?
-                    'right-sticky' :
-                    'right-small';
+              return fastdom.write(function () {
+                  $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
+                  $adSlot[0].setAttribute('data-mobile', '1,1|2,2|300,250|fluid')
+              });
             }
-
-            $adSlot = createSlot(adType, { classes: 'mpu-banner-ad' });
-
-            return fastdom.write(function () {
-                $adSlotContainer.append($adSlot);
-                return $adSlotContainer;
-            });
         })
-        .then(function ($adSlotContainer) {
+        .then(function ($adSlot) {
             stop();
-            mediator.emit('page:commercial:right', $adSlotContainer);
+            mediator.emit('page:commercial:right', $adSlot);
         });
 
         return Promise.resolve(true);
