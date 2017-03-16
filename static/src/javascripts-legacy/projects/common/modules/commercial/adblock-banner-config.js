@@ -1,10 +1,8 @@
 define([
     'lib/config',
     'lodash/objects/merge',
-    'lodash/collections/filter',
-    'lodash/collections/map',
     'common/views/svgs'
-], function (config, merge, filter, map, svgs) {
+], function (config, merge, svgs) {
 
     //this is used in all banners
     var cursor = svgs('cursor');
@@ -103,14 +101,14 @@ define([
                 return typeof banner.editions[edition] !== 'undefined';
             },
             mergeVariantConfigurations = function (banner) {
-                return map(banner.variants, function (variant) {
+                return banner.variants.map(function (variant) {
                     return merge({
                         edition: edition,
                         template: banner.template
                     }, banner.defaults, variant, banner.editions[edition] || {});
                 });
             };
-            return map(filter(this.banners, editionFilter), mergeVariantConfigurations);
+            return this.banners.filter(editionFilter).map(mergeVariantConfigurations);
         }
     };
 });
