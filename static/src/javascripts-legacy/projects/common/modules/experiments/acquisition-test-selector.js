@@ -30,10 +30,10 @@ define([
      */
     var tests = [
         alwaysAsk,
-		regulars,
         contentTailoringEnvironment,
         contentTailoringCif,
         contentTailoringFootball,
+        regulars,
         acquisitionsEpicDesignVariationsV2,
         askFourEarning,
         acquisitionsEpicArticle50Trigger,
