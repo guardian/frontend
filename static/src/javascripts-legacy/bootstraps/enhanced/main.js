@@ -190,7 +190,7 @@ define([
             }
         });
 
-        if (window.location.hash.includes('devtools')) {
+        if (window.location.hash.indexOf('devtools') !== -1) {
             require.ensure([], function(require) {
                 bootstrapContext('devtools', require('bootstraps/enhanced/devtools'));
             }, 'devtools');
