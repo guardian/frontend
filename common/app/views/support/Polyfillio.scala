@@ -10,6 +10,6 @@ object Polyfillio {
     it's loaded as the fallback in the event this URL fails
   */
   val url: String = "https://polyfill.guim.co.uk/v2/polyfill.min.js?" +
-    "features=es6,es7,default|gated" +
+    "features=es6,es7,default-3.6|gated" +
     "&callback=polyfilled"
 }
