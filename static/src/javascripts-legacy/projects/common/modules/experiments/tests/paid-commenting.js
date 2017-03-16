@@ -1,8 +1,8 @@
 define([
     'bean',
     'qwery',
-    'common/utils/config',
-    'common/utils/detect',
+    'lib/config',
+    'lib/detect',
     'commercial/modules/user-features'
 
 ], function (
@@ -33,7 +33,7 @@ define([
 
         this.completeFunc = function(complete) {
             // fire on paid comment's [buy now -->] button click
-            bean.on(qwery('.paid-comment-intercept .link-button')[0], 'click', complete);
+            bean.on(qwery('.d-comment-box__payment-cta-button__content')[0], 'click', complete);
         };
 
         this.variants = [
