@@ -25,12 +25,12 @@
         // Pollyfill requestAnimationFrame
         @InlineJs(raf().body, "raf.js")
 
-        // Polyfill classList
-        @InlineJs(classlist().body, "classlist.js")
-
         // Polyfill Element.matches
         @InlineJs(matches().body, "matches.js")
     }
+
+    // Polyfill classList
+    @InlineJs(classlist().body, "classlist.js")
 
     // Polyfill details
     @InlineJs(details().body, "details.js")
@@ -66,7 +66,7 @@
         @if(mvt.PolyfillIO.isParticipating) {
             var polyfillScript = document.createElement('script');
             var polyfillRef = document.getElementsByTagName('script')[0];
-            polyfillScript.src = 'https://polyfill.guim.co.uk/v2/polyfill.min.js?features=es6,Element.prototype.closest,Element.prototype.matches,Element.prototype.classList,requestAnimationFrame';
+            polyfillScript.src = 'https://polyfill.guim.co.uk/v2/polyfill.min.js?features=es6,Element.prototype.closest,Element.prototype.matches,requestAnimationFrame';
             polyfillRef.parentNode.insertBefore(polyfillScript, polyfillRef);
         }
 
