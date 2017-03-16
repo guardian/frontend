@@ -5,8 +5,7 @@ define([
     'lib/robust',
     'commercial/modules/user-features',
     'common/modules/identity/api',
-    'common/modules/user-prefs',
-    'lib/cookies'
+    'common/modules/user-prefs'
 ], function (
     location,
     config,
@@ -14,8 +13,7 @@ define([
     robust,
     userFeatures,
     identityApi,
-    userPrefs,
-    cookies
+    userPrefs
 ) {
     // Having a constructor means we can easily re-instantiate the object in a test
     function CommercialFeatures() {
@@ -54,7 +52,7 @@ define([
 
         var supportsSticky = document.documentElement.classList.contains('has-sticky');
 
-        var newRecipeDesign = config.page.showNewRecipeDesign && cookies.get("X-GU-ab-new-recipe-design");
+        var newRecipeDesign = config.page.showNewRecipeDesign && (config.tests.abNewRecipeDesign != undefined && config.tests.abNewRecipeDesign === true);
 
         // Feature switches
 
