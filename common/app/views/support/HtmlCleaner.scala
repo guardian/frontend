@@ -93,6 +93,16 @@ case object R2VideoCleaner extends HtmlCleaner {
 
 }
 
+case class RecipeBodyImage(isRecipeArticle: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isRecipeArticle) {
+      document.getElementsByClass("element-image") foreach(_.remove())
+      document.getElementsByTag("aside").filter(_.hasClass("element-pullquote")) foreach( _.remove())
+    }
+    document
+  }
+}
+
 case class PictureCleaner(article: Article, amp: Boolean)(implicit request: RequestHeader) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {

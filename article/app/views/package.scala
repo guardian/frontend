@@ -69,7 +69,8 @@ object BodyCleaner {
       PhotoEssayCaptions(article.isPhotoEssay),
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
-      MinuteCleaner(article)
+      MinuteCleaner(article),
+      RecipeBodyImage(article.isRecipeArticle)
     ) ++
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
       ListIf(amp)(AmpEmbedCleaner(article)) ++
