@@ -8,10 +8,10 @@ import pad from 'lib/pad';
 const config = window.guardian.config;
 
 const hasTone = (name: string): boolean =>
-    (config.page.tones || '').indexOf(name) > -1;
+    (config.page.tones || '').includes(name);
 
 const hasSeries = (name: string): boolean =>
-    (config.page.series || '').indexOf(name) > -1;
+    (config.page.series || '').includes(name);
 
 const referencesOfType = (name: string): Array<string> =>
     (config.page.references || [])
@@ -37,8 +37,7 @@ const dateFromSlug = (): ?string => {
     return s ? s[0] : null;
 };
 
-const isMedia: boolean = ['Video', 'Audio'].indexOf(config.page.contentType) >
-    -1;
+const isMedia: boolean = ['Video', 'Audio'].includes(config.page.contentType);
 
 export default Object.assign(
     {
