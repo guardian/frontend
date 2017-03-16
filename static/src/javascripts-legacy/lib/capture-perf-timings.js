@@ -27,7 +27,7 @@ define([
             lastByte: timing.responseEnd - timing.responseStart,
             domContentLoadedEvent: timing.domContentLoadedEventStart - timing.responseEnd,
             loadEvent: timing.loadEventStart - timing.domContentLoadedEventStart,
-            navType:  window.performance.navigation.type,
+            navType: window.performance.navigation.type,
             redirectCount: window.performance.navigation.redirectCount,
             assetsPerformance: marks.map(function (mark) {
                 return {
