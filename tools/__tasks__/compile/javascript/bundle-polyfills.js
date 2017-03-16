@@ -16,11 +16,7 @@ module.exports = {
     task: () => {
         mkdirp.sync(dest);
         return readFileP(
-            path.resolve(
-                vendor,
-                'javascripts',
-                'polyfillio.es6.es7.default.IE9.js'
-            ),
+            path.resolve(vendor, 'javascripts', 'polyfillio.response.js'),
             'utf8'
         )
             .then(src => uglify.minify(src, { fromString: true }).code)

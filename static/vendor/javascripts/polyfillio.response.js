@@ -3167,3 +3167,5 @@ Array.prototype.includes = function includes(searchElement /*, fromIndex*/ ) {'u
 };
 })
 .call('object' === typeof window && window || 'object' === typeof self && self || 'object' === typeof global && global || {});
+
+typeof polyfilled==='function' && polyfilled();

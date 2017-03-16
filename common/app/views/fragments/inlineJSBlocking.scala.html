@@ -3,6 +3,7 @@
 @import model.Page.getContent
 @import templates.inlineJS.blocking.js.{applyRenderConditions, config, enableStylesheets, loadFonts, shouldEnhance}
 @import templates.inlineJS.blocking.polyfills.js.{classlist, details, matches, raf, setTimeout}
+@import views.support.Polyfillio
 
 @(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -61,12 +62,19 @@
 
     // ************* LOAD THE MAIN APP ASYNC *************
 
+    function polyfilled() {
+        try {
+            window.guardian.polyfilled = true;
+            window.guardian.onPolyfilled();
+        } catch (e) {};
+    }
+
     // Polyfill for async script
     (function (document) {
         @if(mvt.PolyfillIO.isParticipating) {
             var polyfillScript = document.createElement('script');
             var polyfillRef = document.getElementsByTagName('script')[0];
-            polyfillScript.src = 'https://polyfill.guim.co.uk/v2/polyfill.min.js?features=es6,Element.prototype.closest,Element.prototype.matches,requestAnimationFrame';
+            polyfillScript.src = '@Polyfillio.url';
             polyfillRef.parentNode.insertBefore(polyfillScript, polyfillRef);
         }
 
