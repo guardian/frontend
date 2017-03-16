@@ -2,6 +2,7 @@
 @import com.gu.contententity.thrift.entity.restaurant.Restaurant
 @import model.Tag
 @import conf.Configuration
+@import model.content.ReviewAtom
 
 @(review: model.content.ReviewAtom, entity: Restaurant, contributors: Seq[Tag])(implicit request: RequestHeader)
 <script type="application/ld+json">
@@ -26,7 +27,7 @@
     "priceRange": "£££",
     @for(address <- entity.address) { @fragments.atoms.structureddata.restaurant.address(address) }
     @for(geoLocation <- entity.geolocation) { "geo" : @fragments.atoms.structureddata.restaurant.geo(geoLocation), }
-    "image": ""
+    @review.data.images.flatMap(ReviewAtom.getLargestImageUrl).map { img => "image": "@img" }
   },
   "reviewRating": {
     "@@type": "Rating",
