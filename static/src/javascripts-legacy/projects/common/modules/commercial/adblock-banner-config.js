@@ -1,9 +1,10 @@
 define([
+    'lib/config',
     'lodash/objects/merge',
     'lodash/collections/filter',
     'lodash/collections/map',
     'common/views/svgs'
-], function (merge, filter, map, svgs) {
+], function (config, merge, filter, map, svgs) {
 
     //this is used in all banners
     var cursor = svgs('cursor');
@@ -82,12 +83,12 @@ define([
                 UK: {
                     monthlyCost: '£5',
                     dailyCost: '16p',
-                    adblockCoins: svgs('adblockCoinsUk')
+                    adblockCoins: svgs('adblockCoinsUk').replace('%%URL%%', config.images.membership['adblock-coins'])
                 },
                 INT: {
                     monthlyCost: '$6.99',
                     dailyCost: '22¢',
-                    adblockCoins: svgs('adblockCoinsUs')
+                    adblockCoins: svgs('adblockCoinsUs').replace('%%URL%%', config.images.membership['adblock-coins-us'])
                 }
             }
         }
