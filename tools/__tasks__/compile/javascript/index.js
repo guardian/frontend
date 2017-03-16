@@ -6,5 +6,6 @@ module.exports = {
         require('./copy'),
         require('./webpack'),
         require('./bundle-shims'),
+        require('./bundle-polyfills'),
     ],
 };

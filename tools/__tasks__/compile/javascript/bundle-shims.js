@@ -17,7 +17,6 @@ module.exports = {
         mkdirp.sync(dest);
         return Promise.all(
             [
-                require.resolve('es5-shim'),
                 require.resolve('html5shiv'),
                 path.resolve(
                     path.dirname(require.resolve('JSON2')),
@@ -27,6 +26,6 @@ module.exports = {
         )
             .then(srcs => srcs.join(';'))
             .then(src => uglify.minify(src, { fromString: true }).code)
-            .then(src => writeFileP(path.resolve(dest, 'es5-html5.js'), src));
+            .then(src => writeFileP(path.resolve(dest, 'html5.js'), src));
     },
 };
