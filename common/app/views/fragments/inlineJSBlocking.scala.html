@@ -6,13 +6,15 @@
 
 @(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
+@if(!mvt.PolyfillIO.isParticipating) {
+    <!--[if lt IE 9]>
+        <script src="@Static("javascripts/es5-html5.js")"></script>
+    <![endif]-->
+}
+
 @* NOTE the order of these includes is important  *@
 <script id="gu">
     @if(!mvt.PolyfillIO.isParticipating) {
-        <!--[if lt IE 9]>
-            <script src="@Static("javascripts/es5-html5.js")"></script>
-        <![endif]-->
-
         // ************* POLYFILLS *************
         // Mostly handled by es5 shim above. Those which aren't are polyfilled ASAP.
 
@@ -61,12 +63,12 @@
 
     // Polyfill for async script
     (function (document) {
-        @if(mvt.PolyfillIO.isParticipating) {
-            var polyfillScript = document.createElement('script');
-            var polyfillRef = document.getElementsByTagName('script')[0];
-            polyfillScript.src = 'https://polyfill.guim.co.uk/v2/polyfill.min.js?features=es6,Element.prototype.closest,Element.prototype.matches,Element.prototype.classList,requestAnimationFrame';
-            polyfillRef.parentNode.insertBefore(polyfillScript, polyfillRef);
-        }
+        @if(mvt.PolyfillIO.isParticipating) {}
+        var polyfillScript = document.createElement('script');
+        var polyfillRef = document.getElementsByTagName('script')[0];
+        polyfillScript.type = 'application/javascript';
+        polyfillScript.src = 'https://cdn.rawgit.com/gustavpursche/b5087d8dabab6c61c6dcf3469dc00d75/raw/316246e2546a54d20ee796b49d83a6e3f64a10e5/settimeout.js';
+        polyfillRef.parentNode.insertBefore(polyfillScript, polyfillRef);
 
         var script = document.createElement('script');
         var ref = document.getElementsByTagName('script')[0];
