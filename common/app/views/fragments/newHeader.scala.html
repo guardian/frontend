@@ -27,10 +27,10 @@
                 }
 
                 <nav class="new-header__nav" data-component="nav2">
-                    <ul class="new-header__nav__primary-links">
+                    <ul class="new-header__nav-primary-links">
                         @NewNavigation.PrimaryLinks.map { link =>
-                            <li class="new-header__nav__link-item">
-                                <a class="new-header__nav__link @if(link.title == currentTopLevelSection) {section-indicator}"
+                            <li class="new-header__nav-link-item">
+                                <a class="new-header__nav-link @if(link.title == currentTopLevelSection) {section-indicator}"
                                     href="@LinkTo(link.url)"
                                     data-link-name="nav2 : primary : @link.title">
                                         @link.title

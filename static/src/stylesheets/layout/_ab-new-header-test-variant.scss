@@ -176,15 +176,15 @@ $gutter-large: 55px;
     }
 }
 
-.new-header__nav__primary-links {
+.new-header__nav-primary-links {
     margin: 0;
 }
 
-.new-header__nav__link-item {
+.new-header__nav-link-item {
     @include trailing-slash-item;
 }
 
-.new-header__nav__link {
+.new-header__nav-link {
     @include fs-textSans(5);
     @include trailing-slash-link;
     line-height: $gs-baseline * 2.5;
@@ -212,7 +212,7 @@ $gutter-large: 55px;
         text-decoration: none;
     }
 
-    .new-header__nav__link-item:first-child & {
+    .new-header__nav-link-item:first-child & {
         padding-left: $gs-gutter / 2;
     }
 
