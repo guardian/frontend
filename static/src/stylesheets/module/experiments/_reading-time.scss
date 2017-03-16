@@ -1,4 +1,4 @@
-#reading-time.fc-container--thrasher {
+  .fc-container--thrasher {
     background: $guardian-brand-dark;
     .fc-item {
         background: $guardian-brand;
@@ -15,30 +15,32 @@
             darken($news-main-1, 5%),
             $news-main-2
     );
-
     font-weight: normal;
     margin-bottom: 5px;
 }
 .reading-time__wrapper {
     position: relative;
-    @include mq(desktop) {
-        width: 100%;
-    }
+
+    width: 100%;
+
     .text-selection-block {
-        .cta {
+        .js-feedback-text-reading-time__cta {
             line-height: 1.3em;
             font-weight: bold;
             vertical-align: top;
             padding-top: 5px;
         }
 
-        .cta, .selections {
-            width: 45%;
+        .js-feedback-text-reading-time__cta, .reading-time__selections {
+            @include mq(tablet) {
+                width: 45%;
+            }
+            width: 90%;
             display: inline-block;
             padding-bottom: 15px;
         }
 
-        .btn {
+        .reading-time__arrow {
             display: inline-block;
             vertical-align: top;
             position: relative;
@@ -62,15 +64,12 @@
             );
         }
 
-        .selections {
+        .reading-time__selections {
             padding-top: 10px;
 
-            .clock {
+            .reading-time__clock {
                 svg {
-                    @include mq(mobileLandscape) {
-                        transform-origin: left;
-                        transform: scale(0.5);
-                    }
+                    width: 15%;
                     vertical-align: middle;
                 }
             }
@@ -109,15 +108,9 @@
         }
         &__roundel {
             float: right;
-            margin-top: 5px;
+            margin-top: -5px;
             svg {
-                @include mq(mobileLandscape) {
-                    transform-origin: top right;
-                    transform: scale(0.65);
-                }
-            }
-            @include mq(leftCol) {
-                margin-top: 1px;
+                width: 60%;
             }
         }
         &__main {
