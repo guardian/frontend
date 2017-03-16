@@ -34,16 +34,17 @@ define([
     };
 
     // Merges submitted and default template arguments.
-    function buildTemplateArguments(membershipUrl, contributionUrl, args) {
+    function buildTemplateArguments(variant, args) {
         return assign({}, defaultTemplateArgument, args, {
-            membershipUrl: membershipUrl,
-            contributionUrl: contributionUrl
+            membershipUrl: variant.membershipUrl,
+            contributionUrl: variant.contributionUrl,
+            componentName: variant.componentName
         });
     }
 
 
-    function buildHtml(membershipUrl, contributionUrl, args) {
-        return template(acquisitionEpicDesignVariations, buildTemplateArguments(membershipUrl, contributionUrl, args));
+    function buildHtml(variant, args) {
+        return template(acquisitionEpicDesignVariations, buildTemplateArguments(variant, args));
     }
 
     // Building a test variant
@@ -63,7 +64,7 @@ define([
         var args = { id: variantId };
         if (variantId !== 'control') {
             args.template = function(variant) {
-                return buildHtml(variant.membershipURL, variant.contributeURL, templateArgs)
+                return buildHtml(variant, templateArgs)
             }
         }
         return assign({}, defaultVariantArgs, args)
