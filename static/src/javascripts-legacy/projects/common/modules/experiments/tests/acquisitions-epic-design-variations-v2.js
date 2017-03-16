@@ -36,8 +36,8 @@ define([
     // Merges submitted and default template arguments.
     function buildTemplateArguments(variant, args) {
         return assign({}, defaultTemplateArgument, args, {
-            membershipUrl: variant.membershipUrl,
-            contributionUrl: variant.contributionUrl,
+            membershipUrl: variant.membershipURL,
+            contributionUrl: variant.contributeURL,
             componentName: variant.componentName
         });
     }
