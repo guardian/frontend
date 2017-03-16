@@ -10,14 +10,14 @@
 }
 
 .submeta__label {
-    @include fs-textSans(1);
+    font-size: 12px;
+    line-height: 16px;
     color: $neutral-2;
     display: block;
     margin-bottom: -($gs-baseline / 4);
 }
 
 .submeta__keywords {
-    font-size: 15px;
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline;
     border-bottom: 1px dotted $neutral-5;
@@ -25,32 +25,36 @@
 }
 
 .submeta__links {
+    font-size: 0;
     list-style: none;
     overflow: hidden;
     margin-bottom: 0;
-    margin-left: -.3em;
+    margin-left: -$gs-gutter / 4;
     margin-top: 0;
 }
 
 .submeta__link-item {
-    @include nav-links;
+    @include trailing-slash-item;
+}
+
+.submeta__link {
+    @include trailing-slash-link;
+    font-weight: 500;
+    line-height: 22px;
 
     &:after {
         @include trailing-slash;
         color: $neutral-5;
     }
 
-    &:last-of-type:after {
-        content: none;
-    }
-}
-
-.submeta__link {
-    font-weight: 500;
-    line-height: 22px;
-
     .submeta__keywords & {
+        font-size: 15px;
         color: $neutral-2;
+    }
+
+    .submeta__section-labels & {
+        font-size: 16px;
+        line-height: 22px;
     }
 }
 
