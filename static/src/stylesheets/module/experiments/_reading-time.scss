@@ -17,10 +17,10 @@
     );
     font-weight: normal;
     margin-bottom: 5px;
+    width: gs-span(1.5);
 }
 .reading-time__wrapper {
     position: relative;
-
     width: 100%;
 
     .text-selection-block {
@@ -32,7 +32,7 @@
         }
 
         .js-feedback-text-reading-time__cta, .reading-time__selections {
-            @include mq(tablet) {
+            @include mq(desktop) {
                 width: 45%;
             }
             width: 90%;
@@ -69,6 +69,8 @@
 
             .reading-time__clock {
                 svg {
+                    margin-left: -2px;
+                    margin-right: 5px;
                     width: 15%;
                     vertical-align: middle;
                 }
