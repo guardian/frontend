@@ -36,7 +36,7 @@ class OptInController extends Controller {
     }))
   }
 //cookies should correspond with those checked by fastly-edge-cache
-  val polyfillIO = OptInFeature("polyfill_io")
-  val youtubePosterOverride = OptInFeature("you_tube_poster_override_opt_in")
   val headerSeven = OptInFeature("new_header_seven_opt_in")
+  val youtubePosterOverride = OptInFeature("you_tube_poster_override_opt_in")
+  val polyfillIO = OptInFeature("polyfill_io")
 }
