@@ -3,7 +3,9 @@ import config from 'lib/config';
 import fetch from 'lib/fetch';
 
 function json(input: string, init: any = {}) {
-    const options = Object.assign({}, init);
+    // #? we should use Object.assign for this assignment, but this currently breaks
+    // Karma tests that depend on fetch-json.js and have not been stubbed
+    const options = init;
     let path = input;
 
     if (!input.match('^(https?:)?//')) {
