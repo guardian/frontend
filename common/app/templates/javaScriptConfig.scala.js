@@ -21,7 +21,7 @@
             },
             "membership": {
                 "adblock-coins": "@Static("images/membership/adblock-coins.png")",
-                "adblock-coins-us": "@Static("images/membership/adblock-coins-us.png")",
+                "adblock-coins-us": "@Static("images/membership/adblock-coins-us.png")"
             },
             "acquisitions": {
                 "paypal": "@Static("images/acquisitions/paypal.png")"
