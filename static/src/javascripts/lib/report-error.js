@@ -10,8 +10,12 @@
 
 import raven from 'lib/raven';
 
+type ReportedError = Error & {
+    reported?: boolean,
+};
+
 function reportError(
-    err: Object,
+    err: ReportedError,
     tags: Object,
     shouldThrow: ?boolean = true
 ): void {
