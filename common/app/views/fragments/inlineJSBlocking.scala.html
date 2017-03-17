@@ -14,7 +14,6 @@
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
-    @if(!mvt.PolyfillIO.isParticipating) {
     // ************* POLYFILLS *************
     // Mostly handled by es5 shim above. Those which aren't are polyfilled ASAP.
 
@@ -30,7 +29,6 @@
 
 
     // ************* RENDER-CRITICAL BLOCKING JS *************
-
 
     // determine whether to run enhanced JS
     @InlineJs(shouldEnhance(page.metadata).body, "shouldEnhance.js")
