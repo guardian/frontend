@@ -1,8 +1,7 @@
 @import common.InlineJs
 @import conf.switches.Switches.{AsyncCss, FontSwitch}
 @import model.Page.getContent
-@import templates.inlineJS.blocking.js.{applyRenderConditions, config, enableStylesheets, loadFonts, shouldEnhance}
-@import views.support.Polyfillio
+@import templates.inlineJS.blocking.js.{applyRenderConditions, config, enableStylesheets, loadFonts, shouldEnhance, loadApp}
 @import templates.inlineJS.blocking.polyfills.js.{details, raf, setTimeout}
 
 @(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
@@ -55,47 +54,6 @@
 
     // ************* LOAD THE MAIN APP ASYNC *************
 
-    // Polyfill for async script
-    (function (document, window) {
-        function polyfilled() {
-            try {
-                window.guardian.loadPolyfillioFallback;
-                window.guardian.polyfilled = true;
-                window.guardian.onPolyfilled();
-            } catch (e) {};
-        }
+    @InlineJs(loadApp().body, "loadApp.js")
 
-        function loadFallback () {
-            var polyfillioLoader = document.getElementById('polyfillio-loader');
-            polyfillioLoader.parentNode.removeChild(polyfillioLoader);
-
-            var script = document.createElement('script');
-            var ref = document.getElementById('graun.standard');
-            script.src = '@Static("javascripts/vendor/polyfillio.fallback.js")';
-            ref.parentNode.insertBefore(script, ref);
-        }
-
-        function cancelFallback() {
-            window.clearTimeout(window.guardian.loadPolyfillioFallback);
-        }
-
-        var polyfillScript = document.createElement('script');
-        var polyfillRef = document.getElementsByTagName('script')[0];
-        polyfillScript.id = "polyfillio-loader";
-        polyfillScript.src = '@Polyfillio.url';
-        polyfillScript.onerror = function () {
-            cancelFallback();
-            loadFallback();
-        };
-        polyfillScript.onload = cancelFallback;
-        polyfillRef.parentNode.insertBefore(polyfillScript, polyfillRef);
-
-        window.guardian.loadPolyfillioFallback = window.setTimeout(loadFallback, 5000);
-
-        var script = document.createElement('script');
-        var ref = document.getElementsByTagName('script')[0];
-        script.id = "graun.standard";
-        script.src = '@Static("javascripts/graun.standard.js")';
-        ref.parentNode.insertBefore(script, ref);
-    })(document, window);
 </script>
