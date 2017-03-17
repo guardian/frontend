@@ -13,6 +13,7 @@ import cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, MediaAssetPlatform, MediaAtom, Quiz}
 import model.pressed._
+import mvt.ABNewRecipeDesign
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
@@ -83,7 +84,8 @@ final case class Content(
   lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
-  lazy val isRecipeArticle: Boolean = atoms.fold(false)(a => a.recipes.nonEmpty) && ArticleWithStructuredRecipe.isSwitchedOn
+  lazy val hasRecipeAtom: Boolean = atoms.fold(false)(a => a.recipes.nonEmpty)
+  lazy val showNewRecipeDesign: Boolean =  hasRecipeAtom && ABNewRecipeDesign.switch.isSwitchedOn
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -218,7 +220,7 @@ final case class Content(
     ("isExplore", JsBoolean(isExplore)),
     ("isPaidContent", JsBoolean(isPaidContent)),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson))),
-    ("newRecipeDesign", JsBoolean(isRecipeArticle))
+    ("showNewRecipeDesign", JsBoolean(showNewRecipeDesign))
 
   )
 
@@ -449,7 +451,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
-      contentWithSlimHeader = (content.isImmersive && content.tags.isArticle) || content.isRecipeArticle
+      contentWithSlimHeader = (content.isImmersive && content.tags.isArticle) || content.showNewRecipeDesign
     )
   }
 
@@ -493,7 +495,7 @@ final case class Article (
   val isImmersive: Boolean = content.isImmersive
   var isPhotoEssay : Boolean = content.isPhotoEssay
   val isExplore: Boolean = content.isExplore
-  val isRecipeArticle: Boolean = content.isRecipeArticle
+  val showNewRecipeDesign: Boolean = content.showNewRecipeDesign
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 

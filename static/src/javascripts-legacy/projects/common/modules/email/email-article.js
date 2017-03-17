@@ -283,22 +283,25 @@ define([
 
     return {
         init: function () {
-            checkMediator.waitForCheck('emailCanRun').then(function (canEmailRun) {
-                if (canEmailRun) {
-                    emailRunChecks.getUserEmailSubscriptions().then(function () {
-                        if (ab.isParticipating({id: 'TailorRecommendedEmail'})) {
-                            switch (ab.getTestVariantId('TailorRecommendedEmail')) {
-                                case 'tailor-recommended': tailorInTest(); break;
-                                case 'control': tailorControl(); break;
-                                case 'tailor-random': tailorRandom(); break;
-                                default: addListToPage(find(listConfigs, emailRunChecks.listCanRun)); break;
-                            }
-                        } else {
-                            addListToPage(find(listConfigs, emailRunChecks.listCanRun));
-
+            checkMediator.waitForCheck('emailCanRun').then(function (emailCanRun) {
+                if (emailCanRun) {
+                    checkMediator.waitForCheck('emailCanRunPostCheck').then(function (emailCanRunPostCheck) {
+                        if (emailCanRunPostCheck) {
+                            emailRunChecks.getUserEmailSubscriptions().then(function () {
+                                if (ab.isParticipating({id: 'TailorRecommendedEmail'})) {
+                                    switch (ab.getTestVariantId('TailorRecommendedEmail')) {
+                                        case 'tailor-recommended': tailorInTest(); break;
+                                        case 'control': tailorControl(); break;
+                                        case 'tailor-random': tailorRandom(); break;
+                                        default: addListToPage(find(listConfigs, emailRunChecks.listCanRun)); break;
+                                    }
+                                } else {
+                                    addListToPage(find(listConfigs, emailRunChecks.listCanRun));
+                                }
+                            }).catch(function (error) {
+                                robust.log('c-email', error);
+                            });
                         }
-                    }).catch(function (error) {
-                        robust.log('c-email', error);
                     });
                 }
             }).catch(function (error) {
