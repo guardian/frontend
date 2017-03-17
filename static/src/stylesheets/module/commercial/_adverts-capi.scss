@@ -406,5 +406,22 @@
         margin-left: 0;
     }
 
+    .badge--no-image {
+        display: none;
+    }
+
+    &.without-sponsor-logo {
+        @include mq(tablet) {
+            .fc-item__content {
+                padding-bottom: $gs-baseline * 3;
+            }
+        }
+        .badge--no-image {
+            display: block;
+            + .badge {
+                display: none;
+            }
+        }
+    }
 }
 

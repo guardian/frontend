@@ -1,7 +1,17 @@
+@import com.gu.commercial.branding.Branding
 @(item: layout.PaidCard, omnitureId :String, containerIndex: Int, index: Int)(implicit request: RequestHeader)
 
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.commercial.cardLogo
+
+@badgeNoImage(branding: Branding) = {
+    <div class="badge badge--branded badge--no-image">
+        <div class="badge__label">
+            Paid for by @branding.sponsorName
+        </div>
+    </div>
+
+}
 
 <div class="fc-item fc-item--has-image js-fc-item fc-item--list-media-mobile fc-item--standard-tablet adverts--within-unbranded">
     <div class="fc-item__container">
@@ -17,6 +27,8 @@
                 </div>
             </div>
         </div>
+
+        @item.branding.map(badgeNoImage)
 
         @item.branding.map(branding =>
             cardLogo(branding, isStandardSizeCard = true)
