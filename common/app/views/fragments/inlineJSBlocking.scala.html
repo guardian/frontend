@@ -14,17 +14,17 @@
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
+    // ************* POLYFILLS *************
+    // Mostly handled by es5 shim above. Those which aren't are polyfilled ASAP.
+
+    // It's faster to pass arguments in setTimeout than to use an anon function, but IE <10 can't do that.
+    // Used by RAF polyfill.
+    @Html(setTimeout().body)
+
+    // Pollyfill requestAnimationFrame
+    @InlineJs(raf().body, "raf.js")
+
     @if(!mvt.PolyfillIO.isParticipating) {
-        // ************* POLYFILLS *************
-        // Mostly handled by es5 shim above. Those which aren't are polyfilled ASAP.
-
-        // It's faster to pass arguments in setTimeout than to use an anon function, but IE <10 can't do that.
-        // Used by RAF polyfill.
-        @Html(setTimeout().body)
-
-        // Pollyfill requestAnimationFrame
-        @InlineJs(raf().body, "raf.js")
-
         // Polyfill Element.matches
         @InlineJs(matches().body, "matches.js")
     }
@@ -66,7 +66,7 @@
         @if(mvt.PolyfillIO.isParticipating) {
             var polyfillScript = document.createElement('script');
             var polyfillRef = document.getElementsByTagName('script')[0];
-            polyfillScript.src = 'https://polyfill.guim.co.uk/v2/polyfill.min.js?features=es6,Element.prototype.closest,Element.prototype.matches,requestAnimationFrame';
+            polyfillScript.src = 'https://polyfill.guim.co.uk/v2/polyfill.min.js?features=es6,Element.prototype.closest,Element.prototype.matches';
             polyfillRef.parentNode.insertBefore(polyfillScript, polyfillRef);
         }
 
