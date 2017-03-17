@@ -263,6 +263,8 @@
 }
 
 .content__head--byline-pic {
+    overflow: hidden;
+
     .byline-img {
         float: right;
         height: $gs-baseline * 12.5;

@@ -181,7 +181,7 @@ $mobile-max-container-width: gs-span(8);
 
     .frame__content--middle {
         top: 50%;
-        transform: translate(0,50%);
+        transform: translate(0, 50%);
     }
 
     .frame__content--left {
@@ -198,6 +198,6 @@ $mobile-max-container-width: gs-span(8);
     }
 
     .frame__content--middle.frame__content--center {
-        transform: translate(-50%,50%);
+        transform: translate(-50%, 50%);
     }
 }

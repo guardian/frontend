@@ -487,14 +487,15 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val AmpOphanTrackingIncludesCredentials = Switch(
+  // Owner: George Haberis
+  val TailorSurveyOverlay = Switch(
     SwitchGroup.Feature,
-    "amp-ophan-tracking-includes-credentials",
-    "allows access to id field when page viewed from google cache so that we keep tracking consistent",
-    owners = Seq(Owner.withGithub("michaelwmcnamara")),
+    "tailor-survey-overlay",
+    "When ON, will show the Tailor survey overlay message",
+    owners = Seq(Owner.withGithub("GHaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 15),
+    sellByDate = never,
     exposeClientSide = true
-
   )
+
 }

@@ -140,33 +140,6 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
             });
         });
 
-        describe('Slice adverts', function () {
-            it('Runs by default on fronts', function () {
-                config.page.isFront = true;
-                features = new CommercialFeatures;
-                expect(features.sliceAdverts).toBe(true);
-            });
-
-            it('Does not run on minute articles', function () {
-                config.page.isMinuteArticle = true;
-                features = new CommercialFeatures;
-                expect(features.sliceAdverts).toBe(false);
-            });
-        });
-
-        describe('Popular content MPUs', function () {
-            it('Runs by default', function () {
-                features = new CommercialFeatures;
-                expect(features.popularContentMPU).toBe(true);
-            });
-
-            it('Does not run on minute articles', function () {
-                config.page.isMinuteArticle = true;
-                features = new CommercialFeatures;
-                expect(features.popularContentMPU).toBe(false);
-            });
-        });
-
         describe('Video prerolls', function () {
             it('Runs by default', function () {
                 features = new CommercialFeatures;

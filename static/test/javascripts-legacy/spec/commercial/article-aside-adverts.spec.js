@@ -62,31 +62,31 @@ define([
         it('should return the ad slot container on init', function (done) {
             articleAsideAdverts.init(noop, noop);
             mediator.once('page:commercial:right', function (adSlot) {
-                expect(adSlot[0]).toBe(qwery('.js-ad-slot-container', $fixturesContainer)[0]);
+                expect(adSlot.parentNode).toBe(qwery('.js-ad-slot-container', $fixturesContainer)[0]);
                 done();
             });
         });
 
         it('should append ad slot', function (done) {
             articleAsideAdverts.init(noop, noop);
-            mediator.once('page:commercial:right', function () {
-                expect(qwery('.js-ad-slot-container > .ad-slot', $fixturesContainer).length).toBe(1);
+            mediator.once('page:commercial:right', function (adSlot) {
+                expect(adSlot).not.toBeNull();
                 done();
             });
         });
 
         it('should have the correct ad name', function (done) {
             articleAsideAdverts.init(noop, noop);
-            mediator.once('page:commercial:right', function () {
-                expect($('.ad-slot', $fixturesContainer).data('name')).toBe('right');
+            mediator.once('page:commercial:right', function (adSlot) {
+                expect(adSlot.getAttribute('data-name')).toBe('right');
                 done();
             });
         });
 
         it('should have the correct size mappings', function (done) {
             articleAsideAdverts.init(noop, noop);
-            mediator.once('page:commercial:right', function () {
-                expect($('.ad-slot', $fixturesContainer).data('mobile')).toBe('1,1|2,2|300,250|fluid');
+            mediator.once('page:commercial:right', function (adSlot) {
+                expect(adSlot.getAttribute('data-mobile')).toBe('1,1|2,2|300,250|fluid');
                 done();
             });
         });

@@ -1,4 +1,4 @@
-@(page: model.Page)(implicit request: RequestHeader)
+@(page: model.Page, showNormalHeader: Boolean = false)(implicit request: RequestHeader)
 @import common.editions._
 @import common.{Edition, LinkTo, SubscribeLink}
 @import conf.Configuration
@@ -7,8 +7,9 @@
 @if(mvt.ABNewNavVariantSeven.isParticipating) {
     @fragments.newHeader(page)
 }
+
 <header id="header"
-        class="l-header u-cf @if(page.metadata.hasSlimHeader) {l-header--is-slim l-header--no-navigation} js-header @if(mvt.ABNewNavVariantSeven.isParticipating) {hide-on-mobile}"
+        class="l-header u-cf @if(page.metadata.hasSlimHeader && !showNormalHeader) {l-header--is-slim l-header--no-navigation} js-header @if(mvt.ABNewNavVariantSeven.isParticipating) {hide-on-mobile}"
         role="banner"
         data-link-name="global navigation: header">
     <div class="js-navigation-header navigation-container navigation-container--collapsed">
@@ -110,12 +111,6 @@
                             <!--[if (lt IE 9)&(!IEMobile)]>
                                 <span class="inline-logo inline-guardian-logo-320"></span>
                             <![endif]-->
-                        }
-                        @if(Edition(request) == Uk) {
-                            @* This is an object because of this: https://github.com/guardian/frontend/pull/12345#discussion_r57301347 *@
-                        <object class="logo-tagline hide-on-mobile hide-on-slim-header">
-                            <a class="logo-tagline__link" href="/culture/2016/mar/22/the-guardian-named-website-of-the-year-at-press-awards" data-link-name="website of the year">website of the year</a>
-                        </object>
                         }
                     </a>
                 }

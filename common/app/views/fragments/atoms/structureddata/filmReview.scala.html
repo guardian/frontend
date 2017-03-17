@@ -3,6 +3,7 @@
 @import play.api.libs.json.Json
 @import play.api.libs.json.JsArray
 @import model.Tag
+@import model.content.ReviewAtom
 @import conf.Configuration
 
 @(review: model.content.ReviewAtom, entity: Film, contributors: Seq[Tag])(implicit request: RequestHeader)
@@ -29,7 +30,7 @@
     @review.atom.contentChangeDetails.created.map { created => "dateCreated": "@{new DateTime(created.date).toString("yyyy-MM-dd'T'HH:mm:ssZ")}",}
     "director" : @Html(people(entity.directors.map(_.fullName))),
     "actor" : @Html(people(entity.actors.map(_.fullName))),
-    "image": ""
+    @review.data.images.flatMap(ReviewAtom.getLargestImageUrl).map { img => "image": "@img" }
   },
   "reviewRating": {
     "@@type": "Rating",

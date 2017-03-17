@@ -21,7 +21,7 @@ object ABNewNavVariantSeven extends TestDefinition(
   name = "ab-new-nav-variant-seven",
   description = "users in this test will see the new header seventh variant",
   owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2017, 3, 16)
+  sellByDate = new LocalDate(2017, 3, 23)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header").contains("variantseven")
@@ -32,7 +32,7 @@ object ABNewNavControl extends TestDefinition(
   name = "ab-new-nav-control",
   description = "control for the new header test",
   owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2017, 3, 16)
+  sellByDate = new LocalDate(2017, 3, 23)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-header").contains("control")
@@ -61,6 +61,17 @@ object YouTubePosterOverride extends TestDefinition(
   }
 }
 
+object ABNewRecipeDesign extends TestDefinition(
+  name = "ab-new-recipe-design",
+  description = "Users in the test will see the new design on articles with structured recipes",
+  owners = Seq(Owner.withGithub("tsop14")),
+  sellByDate = new LocalDate(2017, 4, 3)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-new-recipe-design").contains("variant")
+  }
+}
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -77,7 +88,8 @@ object ActiveTests extends ServerSideABTests {
     ABNewNavVariantSeven,
     ABNewNavControl,
     CommercialClientLoggingVariant,
-    YouTubePosterOverride
+    YouTubePosterOverride,
+    ABNewRecipeDesign
   )
 }
 
