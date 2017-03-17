@@ -165,7 +165,7 @@
       "ophan/embed": "ophan-tracker-js/build/ophan.embed"
     },
     "testResultsProcessor": "jest-teamcity-reporter",
-    "setupTestFrameworkScriptFile": "<rootDir>/jestSetup.js"
+    "setupTestFrameworkScriptFile": "<rootDir>/dev/jest.setupTestFrameworkScriptFile.js"
   },
   "scripts": {
     "postinstall": "./tools/task-runner/runner githooks --verbose",
