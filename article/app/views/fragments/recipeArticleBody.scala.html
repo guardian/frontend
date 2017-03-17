@@ -107,15 +107,17 @@
 
 @recipePage(recipe: model.content.RecipeAtom, i: Int) = {
     <div data-recipe-index="recipe__@i" id="@recipe.atom.id" class="js-recipe__article--structured recipe__article--structured" itemtype="http://schema.org/Recipe">
+        <div class="recipe__article--structured-image mobile-only">
         @RecipeAtom.picture(recipe).orElse(maybeMainImage).map { image =>
             @fragments.image(
                 picture = image,
-                classes = Seq("recipe__image-inline, mobile-only"),
+                classes = Seq("recipe__image-inline mobile-only"),
                 imageAltText = "",
                 widths = MainMedia.inline,
                 isImmersiveMainMedia = true
             )
         }
+        </div>
         @for(credit <- recipe.data.credits){<h2 class="recipe__article--structured-byline">@recipe.data.credits</h2>}
         <div class="js-recipe__article--structured-headline recipe__article--structured-headline">
             <h1 itemprop="name">@recipe.data.title</h1>
@@ -158,6 +160,3 @@
         </div>
     </div>
 }
-
-
-

@@ -1,7 +1,6 @@
 $grey: #dbdbdb;
 $grey-two: #f6f6f6;
 $grey-three: #767676;
-$purple: #b72166;
 
 $padding-wide: 100px;
 
@@ -23,7 +22,7 @@ $padding-wide: 100px;
 .recipe__article .recipe__article--structured-headline h1 {
     font-family: $f-serif-headline;
     font-weight: 200;
-    font-size: 38px;
+    font-size: 36px;
     line-height: 38px;
 
 
@@ -108,15 +107,15 @@ $padding-wide: 100px;
     @include f-headline;
     position: absolute;
     z-index: 300;
-    background-color: $purple;
-    height: 85px;
-    width: 140px;
+    background-color: $features-main-2;
+    height: 65px;
+    width: 110px;
     border-radius: 50%;
     text-align: center;
-    padding-top: 55px;
+    padding-top: 45px;
     color: #ffffff;
-    left: 1px;
-    bottom: -$gs-gutter*2;
+    left: -$gs-gutter / 4;
+    bottom: -$gs-gutter * 1.6;
     line-height: initial;
     font-weight: 900;
 
@@ -174,7 +173,7 @@ $padding-wide: 100px;
     z-index: 200;
     transition: transform .5s ease-in-out;
     transform: rotate(90deg);
-    left: .5vw;
+    left:$gs-gutter / 2;
 
     @include mq($from: desktop) {
         width: 50px;
@@ -235,7 +234,7 @@ $padding-wide: 100px;
 .recipe__article--headline {
     margin-top: 6px;
     margin-bottom: 24px;
-    color: $purple;
+    color: $neutral-1;
 
     @include mq($from: desktop) {
         margin-top: 20px;
@@ -287,6 +286,12 @@ $padding-wide: 100px;
     float: none;
 }
 
+.recipe__article--meta .content__series-label .content__series-label__link {
+    color: $features-main-2;
+    font-weight: 900;
+    font-size: 18px;
+}
+
 .recipe__content figure.element,
 .recipe__content aside.element {
     margin-left: 0;
@@ -303,7 +308,7 @@ $padding-wide: 100px;
         color: $grey-three;
     }
     .kicker {
-        color: $purple;
+        color: $features-main-2;
 
         &:after {
             content: '/';
@@ -318,9 +323,9 @@ $padding-wide: 100px;
 .recipe__article--next-text {
     position: inherit;
     bottom: 0px;
-    padding-left: 15%;
+    padding-left: $gs-gutter * 3;
     padding-right: 4%;
-    background-color: $grey;
+    background-color:$neutral-6;
     padding-bottom: 6px;
     padding-top: 6px;
     transform: translateY(100%);
@@ -334,7 +339,8 @@ $padding-wide: 100px;
     }
 
     h2 {
-        font-size: 18px;
+        @include fs-headline(2);
+        font-weight: 900;
         line-height: 18px;
     }
 
@@ -365,13 +371,13 @@ $padding-wide: 100px;
     }
 
     .structured-meta__circle {
-        border: 1px solid $purple;
+        border: 1px solid $features-main-2;
         width: 30px;
         height: 27px;
         margin-right: 6px;
         text-align: center;
         padding-top: 3px;
-        color: $purple;
+        color: $features-main-2;
 
         &:nth-child(2) {
             margin-left: 12px;
@@ -381,10 +387,13 @@ $padding-wide: 100px;
 
 .recipe__article--structured-image {
     img {
+        object-fit: cover;
+        height: 100%;
         width: 100%;
-        margin-top: -8px;
     }
-    margin-bottom: 12px;
+    margin-top: -$gs-baseline / 1.5;
+    height: 220px;
+    overflow: hidden;
 }
 
 .recipe__article--structured-headline {
@@ -441,10 +450,15 @@ $padding-wide: 100px;
 }
 
 .recipe__article--structured-byline, .recipe__article--list-title {
-    font-family: $f-serif-headline;
+    @include fs-headline(3)
+    font-size: 18px;
     font-weight: 900;
-    color: $purple;
-    margin-bottom: 12px;
+    color: $features-main-2;
+    margin-bottom: $gs-baseline;
+}
+
+.recipe__article--structured-byline {
+  margin-bottom: $gs-baseline / 4;
 }
 
 .recipe__article--list-title {
@@ -458,7 +472,7 @@ $padding-wide: 100px;
         display: block;
         content: '';
         height: 4px;
-        background-color: $purple;
+        background-color: $features-main-2;
         @include mq($from: desktop) {
             width: 50%;
         }
@@ -489,7 +503,7 @@ $padding-wide: 100px;
         line-height: 0px;
         margin-top: 26px;
         margin-right: 12px;
-        color: $purple;
+        color: $features-main-2;
     }
 }
 
