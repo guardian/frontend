@@ -62,25 +62,47 @@
 
     // ************* LOAD THE MAIN APP ASYNC *************
 
-    function polyfilled() {
-        try {
-            window.guardian.polyfilled = true;
-            window.guardian.onPolyfilled();
-        } catch (e) {};
-    }
-
     // Polyfill for async script
-    (function (document) {
-        @if(mvt.PolyfillIO.isParticipating) {
-            var polyfillScript = document.createElement('script');
-            var polyfillRef = document.getElementsByTagName('script')[0];
-            polyfillScript.src = '@Polyfillio.url';
-            polyfillRef.parentNode.insertBefore(polyfillScript, polyfillRef);
+    (function (document, window) {
+        function polyfilled() {
+            try {
+                window.guardian.loadPolyfillioFallback;
+                window.guardian.polyfilled = true;
+                window.guardian.onPolyfilled();
+            } catch (e) {};
         }
+
+        function loadFallback () {
+            var polyfillioLoader = document.getElementById('polyfillio-loader');
+            polyfillioLoader.parentNode.removeChild(polyfillioLoader);
+
+            var script = document.createElement('script');
+            var ref = document.getElementById('graun.standard');
+            script.src = '@Static("javascripts/vendor/polyfillio.fallback.js")';
+            ref.parentNode.insertBefore(script, ref);
+        }
+
+        function cancelFallback() {
+            window.clearTimeout(window.guardian.loadPolyfillioFallback);
+        }
+
+        var polyfillScript = document.createElement('script');
+        var polyfillRef = document.getElementsByTagName('script')[0];
+        polyfillScript.id = "polyfillio-loader";
+        polyfillScript.src = '@Polyfillio.url';
+        polyfillScript.onerror = function () {
+            cancelFallback();
+            loadFallback();
+        };
+        polyfillScript.onload = cancelFallback;
+        polyfillRef.parentNode.insertBefore(polyfillScript, polyfillRef);
+
+        window.guardian.loadPolyfillioFallback = window.setTimeout(loadFallback, 1);
 
         var script = document.createElement('script');
         var ref = document.getElementsByTagName('script')[0];
+        script.id = "graun.standard";
         script.src = '@Static("javascripts/graun.standard.js")';
         ref.parentNode.insertBefore(script, ref);
-    })(document);
+    })(document, window);
 </script>
