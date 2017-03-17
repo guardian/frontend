@@ -112,8 +112,8 @@ define([
             // if there is no merch component, load the outbrain widget right away
             return loadInstantly().then(function(shouldLoadInstantly) {
                 if (shouldLoadInstantly) {
-                    return checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
-                        outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
+                    return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(function (userInNonCompliantAbTest) {
+                        userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();
                     });
                 } else {
                     // if a high priority ad and low priority ad on page block outbrain
@@ -124,8 +124,8 @@ define([
                                 if (outbrainMerchandiseCompliant) {
                                     module.load('merchandising');
                                 } else {
-                                    checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
-                                        outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
+                                    checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(function (userInNonCompliantAbTest) {
+                                        userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();
                                     });
                                 }
                             });
