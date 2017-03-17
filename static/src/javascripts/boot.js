@@ -20,6 +20,7 @@ import capturePerfTimings from 'lib/capture-perf-timings';
 // eslint-disable-next-line camelcase,no-undef
 __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
+// kick of the app
 function go() {
     domready(() => {
         // 1. boot standard, always
@@ -99,6 +100,7 @@ function go() {
     });
 }
 
+// make sure we've patched the env before running the app
 if (window.guardian.polyfilled) {
     go();
 } else {
