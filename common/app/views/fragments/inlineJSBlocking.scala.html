@@ -2,8 +2,8 @@
 @import conf.switches.Switches.{AsyncCss, FontSwitch}
 @import model.Page.getContent
 @import templates.inlineJS.blocking.js.{applyRenderConditions, config, enableStylesheets, loadFonts, shouldEnhance}
-@import templates.inlineJS.blocking.polyfills.js.{classlist, details, matches, raf, setTimeout}
 @import views.support.Polyfillio
+@import templates.inlineJS.blocking.polyfills.js.{details, raf, setTimeout}
 
 @(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -25,13 +25,6 @@
 
     // Pollyfill requestAnimationFrame
     @InlineJs(raf().body, "raf.js")
-        // Polyfill Element.matches
-
-        @InlineJs(matches().body, "matches.js")
-    }
-
-    // Polyfill classList
-    @InlineJs(classlist().body, "classlist.js")
 
     // Polyfill details
     @InlineJs(details().body, "details.js")
