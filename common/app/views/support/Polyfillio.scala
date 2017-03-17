@@ -3,7 +3,7 @@ package views.support
 object Polyfillio {
   /*
     when changing these options, be sure to update
-    static/vendor/javascripts/polyfillio.response.js
+    static/vendor/javascripts/polyfillio.fallback.js
     with the non-minifed version of the reponse, as
     requested by IE9 – or whatever is your baseline now ;)
 

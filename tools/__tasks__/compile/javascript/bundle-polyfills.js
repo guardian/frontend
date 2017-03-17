@@ -9,17 +9,18 @@ const writeFileP = pify(fs.writeFile);
 
 const { target, vendor } = require('../../config').paths;
 
-const dest = path.resolve(target, 'javascripts');
+const dest = path.resolve(target, 'javascripts', 'vendor');
 
 module.exports = {
     description: 'Bundle polyfill.io fallback',
     task: () => {
         mkdirp.sync(dest);
         return readFileP(
-            path.resolve(vendor, 'javascripts', 'polyfillio.response.js'),
+            path.resolve(vendor, 'javascripts', 'polyfillio.fallback.js'),
             'utf8'
         )
             .then(src => uglify.minify(src, { fromString: true }).code)
-            .then(src => writeFileP(path.resolve(dest, 'polyfills.js'), src));
+            .then(src =>
+                writeFileP(path.resolve(dest, 'polyfillio.fallback.js'), src));
     },
 };
