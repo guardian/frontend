@@ -5,81 +5,62 @@
     "env": {
         "production": {
             "presets": [
-                [
-                    "babel-preset-env",
-                    {
-                        "modules": "amd"
-                    }
-                ]
+                ["babel-preset-env", {
+                    "modules": "amd"
+                }]
             ],
             "plugins": [
-                [
-                    "babel-plugin-transform-runtime",
-                    {
-                        "polyfill": false
-                    }
-                ],
-                "babel-plugin-add-module-exports"
-            ]
+                ["babel-plugin-transform-runtime", {
+                    "polyfill": false
+                }],
+                "babel-plugin-add-module-exports",
+            ],
         },
         "development": {
             "presets": [
-                [
-                    "babel-preset-env",
-                    {
-                        "modules": "amd"
-                    }
-                ]
+                ["babel-preset-env", {
+                    "modules": "amd"
+                }]
             ],
             "plugins": [
-                "babel-plugin-add-module-exports"
-            ]
+                "babel-plugin-add-module-exports",
+            ],
         },
         "test": {
             "presets": [
-                [
-                    "babel-preset-env",
-                    {
-                        "targets": {
-                            "node": "current"
-                        }
+                ["babel-preset-env", {
+                    "targets": {
+                        "node": "current"
                     }
-                ]
-            ]
+                }]
+            ],
         },
         "internal": {
             "presets": [
-                [
-                    "babel-preset-env",
-                    {
-                        "targets": {
-                            "browsers": [
-                                "last 2 Chrome versions",
-                                "last 1 Safari version",
-                                "last 2 Firefox versions",
-                                "last 2 Edge versions"
-                            ]
-                        }
+                ["babel-preset-env", {
+                    "targets": {
+                        "browsers": [
+                            "last 2 Chrome versions",
+                            "last 1 Safari version",
+                            "last 2 Firefox versions",
+                            "last 2 Edge versions",
+                        ],
                     }
-                ]
-            ]
+                }],
+            ],
         },
         "karma": {
             "presets": [
-                [
-                    "babel-preset-env",
-                    {
-                        "modules": "amd"
-                    }
-                ]
+                ["babel-preset-env", {
+                    "modules": "amd"
+                }]
             ],
             "plugins": [
-                "babel-plugin-transform-runtime",
-                "babel-plugin-add-module-exports"
-            ]
-        }
+                "babel-plugin-add-module-exports",
+            ],
+        },
     },
     "ignore": [
-        "eslintrc.js"
-    ]
+        "eslintrc.js",
+    ],
 }
