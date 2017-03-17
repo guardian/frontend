@@ -13,10 +13,6 @@ define([
         name: 'ContributionsEpicBrexit',
         variants: ['control']
     };
-    var ContributionsEpicAskFourStagger = {
-        name: 'ContributionsEpicAskFourStagger',
-        variants: ['control', 'stagger_one_day', 'stagger_three_days']
-    };
     var ContributionsEpicAskFourEarning = {
         name: 'ContributionsEpicAskFourEarning',
         variants: ['control']
@@ -27,9 +23,9 @@ define([
         variants: ['control', 'fairness_mild', 'fairness_strong', 'fairness_strong_alternate_hook', 'reliance']
 	};
 
-    var AcquisitionsEpicDesignVariations = {
-        name: 'AcquisitionsDesignVariations',
-        variants: ['control', 'extra_paragraph', 'large_hook', 'subtle', 'prominent', 'highlight']
+    var AcquisitionsEpicDesignVariationsV2 = {
+        name: 'AcquisitionsEpicDesignVariationsV2',
+        variants: ['control', 'highlight_subtle', 'highlight_perspective', 'highlight_secure', 'highlight_hard', 'paypal']
     };
 
     var AcquisitionsEpicArticle50Trigger = {
@@ -37,19 +33,34 @@ define([
         variants: ['control']
     };
 
+    var AcquisitionsContentTailoringEnvironment = {
+        name: 'AcquisitionsEpicContentTailoringEnvironment',
+        variants: ['control', 'impact', 'reference']
+    };
+
+    var AcquisitionsContentTailoringCif = {
+        name: 'AcquisitionsEpicContentTailoringCif',
+        variants: ['control', 'impact', 'reference']
+    };
+
+    var AcquisitionsContentTailoringFootball = {
+        name: 'AcquisitionsEpicContentTailoringFootball',
+        variants: ['control', 'impact', 'reference']
+    };
+
     var contributionsTests = [
         ContributionsEpicAlwaysAskStrategy,
         ContributionsEpicBrexit,
-        ContributionsEpicAskFourStagger,
         ContributionsEpicAskFourEarning,
         ContributionsEpicRegulars,
-        AcquisitionsEpicDesignVariations,
-        AcquisitionsEpicArticle50Trigger
+        AcquisitionsEpicDesignVariationsV2,
+        AcquisitionsEpicArticle50Trigger,
+        AcquisitionsContentTailoringEnvironment,
+        AcquisitionsContentTailoringCif,
+        AcquisitionsContentTailoringFootball
     ];
 
     var emailTests = [];
-
-    var nonEmailClashingTests = contributionsTests;
 
     var clashingTests = contributionsTests.concat(emailTests);
 
@@ -74,7 +85,8 @@ define([
 
     return {
         userIsInAClashingAbTest: userIsInAClashingAbTest,
-        nonEmailClashingTests: nonEmailClashingTests,
+        contributionsTests: contributionsTests,
+        emailTests: emailTests,
         _testABClash: _testABClash // exposed for unit testing
     };
 });

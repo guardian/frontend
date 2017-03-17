@@ -486,16 +486,6 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2017, 4, 5),
     exposeClientSide = true
   )
-  
-  val ArticleWithStructuredRecipe = Switch(
-    SwitchGroup.Feature,
-    "is-article-with-structured-recipe-data",
-    "changes design of articles with strucutred recipe data",
-    owners = Seq(Owner.withGithub("tsop14"), Owner.withGithub("blongden73")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 4),
-    exposeClientSide = true
-  )
 
   // Owner: George Haberis
   val TailorSurveyOverlay = Switch(

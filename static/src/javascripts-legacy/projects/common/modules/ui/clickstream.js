@@ -1,15 +1,11 @@
 define([
     'bean',
     'lib/mediator',
-    'common/modules/experiments/ab',
-    'lodash/objects/merge',
-    'lodash/collections/map'
+    'lodash/objects/merge'
 ], function (
     bean,
     mediator,
-    ab,
-    merge,
-    map
+    merge
 ) {
 
     var Clickstream = function (opts) {
@@ -101,25 +97,13 @@ define([
         // delegate, emit the derived tag
         if (opts.addListener !== false) {
             bean.add(document.body, 'click', function (event) {
-                var applicableTests,
-                    clickSpec = {
-                        el: event.target,
-                        tag: []
-                    };
+                var clickSpec = {
+                    el: event.target,
+                    tag: []
+                };
 
                 clickSpec.target = event.target;
-
                 clickSpec = getClickSpec(clickSpec);
-
-                // prefix ab tests to the click spec
-                applicableTests = ab.getActiveTestsEventIsApplicableTo(clickSpec);
-                if (applicableTests !== undefined && applicableTests.length > 0) {
-                    clickSpec.tag = map(applicableTests, function (test) {
-                        var variant = ab.getTestVariantId(test);
-                        return 'AB,' + test + ',' + variant + ',' + clickSpec.tag;
-                    }).join(',');
-                }
-
                 mediator.emit('module:clickstream:click', clickSpec);
             });
         }

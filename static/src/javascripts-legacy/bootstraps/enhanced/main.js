@@ -176,10 +176,13 @@ define([
             }, 'accessibility');
         }
 
-        if (config.page.nonKeywordTagIds && contains(config.page.nonKeywordTagIds.split(','), 'tone/recipes')) {
-            require(['bootstraps/enhanced/recipe-article'], function (recipes) {
-                bootstrapContext('recipes', recipes);
-            });
+        if (config.page.showNewRecipeDesign === true) {
+            //below is for during testing
+            if (config.tests.abNewRecipeDesign) {
+                require(['bootstraps/enhanced/recipe-article'], function (recipes) {
+                    bootstrapContext('recipes', recipes);
+                });
+            }
         }
 
         fastdom.read(function() {
