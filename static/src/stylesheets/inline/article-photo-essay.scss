@@ -117,7 +117,7 @@
                 background-color: #ffffff;
             }
 
-            & + p {
+            & + p, & + blockquote, & + .element-pullquote {
                 clear: both;
                 padding-top: $gs-baseline / 2;
             }
