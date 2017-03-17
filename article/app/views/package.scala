@@ -53,7 +53,7 @@ object BodyCleaner {
       R2VideoCleaner,
       PictureCleaner(article, amp),
       AtomsCleaner(atoms = article.content.atoms, shouldFence = true, amp = amp),
-      DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
+      DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive, article.isRecipeArticle),
       ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
       RichLinkCleaner(amp),
