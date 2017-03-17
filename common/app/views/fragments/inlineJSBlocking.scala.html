@@ -97,7 +97,7 @@
         polyfillScript.onload = cancelFallback;
         polyfillRef.parentNode.insertBefore(polyfillScript, polyfillRef);
 
-        window.guardian.loadPolyfillioFallback = window.setTimeout(loadFallback, 1);
+        window.guardian.loadPolyfillioFallback = window.setTimeout(loadFallback, 5000);
 
         var script = document.createElement('script');
         var ref = document.getElementsByTagName('script')[0];
