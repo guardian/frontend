@@ -24,11 +24,7 @@ http://developers.theguardian.com/join-the-team.html
 @fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
 
 <link rel="prefetch" href="@Static("javascripts/graun.standard.js")">
-
-@if(mvt.PolyfillIO.isParticipating) {
-    <link rel="prefetch"
-          href="@Polyfillio.url">
-}
+<link rel="prefetch" href="@Polyfillio.url">
 
 @*
 Protect against ReferenceErrors in IE:

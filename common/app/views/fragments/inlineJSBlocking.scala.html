@@ -6,16 +6,14 @@
 
 @(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@if(!mvt.PolyfillIO.isParticipating) {
 <!--[if lt IE 9]>
     <script src="@Static("javascripts/html5.js")"></script>
 <![endif]-->
-}
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
     // ************* POLYFILLS *************
-    // Mostly handled by es5 shim above. Those which aren't are polyfilled ASAP.
+    // Mostly handled by polyfill.io below. These are needed for inline JS though, so cannot rely on pf.io
 
     // It's faster to pass arguments in setTimeout than to use an anon function, but IE <10 can't do that.
     // Used by RAF polyfill.
