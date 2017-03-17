@@ -5,6 +5,7 @@
 
 [libs]
 flow-libdefs-guardian/
+dev/flow-typed
 
 
 [options]
