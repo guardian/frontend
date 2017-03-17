@@ -1,14 +1,33 @@
 define([
-    'common/modules/commercial/adblock-banner-config',
-    'common/modules/adblock-banner'
-], function (adblockBannerConfig, AdblockBanner) {
+    'helpers/injector'
+], function (Injector) {
 
     describe('Adblock banner', function () {
 
-        var ukBanners;
-        beforeEach(function () {
-            document.innerHtml = '<div class="top-banner-ad-container--desktop"></div>';
-            ukBanners = adblockBannerConfig.getBanners('UK');
+        var injector = new Injector();
+        var adblockBannerConfig, AdblockBanner, ukBanners;
+
+        beforeEach(function (done) {
+            injector.mock('lib/config', {
+                images: {
+                    membership: {
+                        'adblock-coins': '',
+                        'adblock-coins-us': ''
+                    }
+                }
+            });
+
+            injector.require([
+                'common/modules/adblock-banner',
+                'common/modules/commercial/adblock-banner-config'
+            ], function ($1, $2) {
+                AdblockBanner = $1;
+                adblockBannerConfig = $2;
+                document.innerHtml = '<div class="top-banner-ad-container--desktop"></div>';
+                ukBanners = adblockBannerConfig.getBanners('UK');
+                done();
+            },
+            done.fail);
         });
 
         it('should be able to render every type of banner', function () {
