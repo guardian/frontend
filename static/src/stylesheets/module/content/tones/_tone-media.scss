@@ -124,6 +124,30 @@
         .ad-slot--gallery-inline {
             background: none;
         }
+
+        .l-side-margins--gallery .meta__extras {
+            border: none;
+        }
+
+        .gallery__divider,
+        .ad-slot--dark .ad-slot__label {
+            border-top-color: $neutral-6;
+        }
+
+        .gallery__meta-container::before,
+        .gallery::before {
+            content: none;
+        }
+
+        .gallery__img-container {
+            padding-bottom: 0;
+        }
+
+        .gallery__item + .gallery__item:not(.gallery__item--advert) .gallery__img-container {
+            padding-top: 1.25rem;
+            margin-top: 1.25rem;
+            border-top: 1px solid $neutral-6;
+        }
     }
 
     .content__headline--paidgallery {
