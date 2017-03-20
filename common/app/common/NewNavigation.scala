@@ -289,7 +289,8 @@ object NewNavigation {
       SectionsLink("australia-news/indigenous-australians", indigenousAustralia, News),
 
       SectionsLink("commentisfree", opinion, Opinion),
-      SectionsLink("cartoons", cartoons, Opinion),
+      SectionsLink("cartoons/archive", cartoons, Opinion),
+      SectionsLink("type/cartoon", cartoons, Opinion),
       SectionsLink("index/contributors", columnists, Opinion),
       SectionsLink("commentisfree/series/comment-is-free-weekly", inMyOpinion, Opinion),
       SectionsLink("profile/editorial", theGuardianView, Opinion),
@@ -358,9 +359,9 @@ object NewNavigation {
       }
     }
 
-    def getTopLevelSection(sectionName: String) = {
+    def getTopLevelSection(id: String) = {
       val sectionList = sectionLinks.filter { item =>
-        item.pageId == sectionName
+        item.pageId == id
       }
 
       if (sectionList.isEmpty) {
@@ -490,7 +491,9 @@ object NewNavigation {
       "football/tables",
       "football/competitions",
       "football/results",
-      "football/fixtures"
+      "football/fixtures",
+      "type/cartoon",
+      "cartoons/archive"
     )
 
     def getSectionOrTagId(page: Page) = {
@@ -499,7 +502,10 @@ object NewNavigation {
       val isTagPage = (page.metadata.isFront || frontLikePages.contains(page.metadata.id)) && tagPages.contains(page.metadata.id)
       val isArticleInTagPageSection = commonKeywords.nonEmpty
 
-      if (isTagPage) {
+      // opinion pieces should always clearly be opinion pieces, regardless of other keywords
+      if (page.metadata.sectionId == "commentisfree") {
+        page.metadata.sectionId
+      } else if (isTagPage) {
         page.metadata.id
       } else if (isArticleInTagPageSection) {
         commonKeywords.head

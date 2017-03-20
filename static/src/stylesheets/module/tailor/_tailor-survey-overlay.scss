@@ -1,0 +1,121 @@
+.tailor-survey-overlay,
+.tailor-survey-overlay__background {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: $zindex-overlay;
+    position: fixed;
+    display: block;
+}
+
+.tailor-survey-overlay__background {
+    background: #000000;
+    opacity: .5;
+    z-index: 1;
+}
+
+.tailor-survey-overlay__container {
+    width: 380px;
+    height: 300px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: $guardian-brand;
+    z-index: 2;
+
+    .tailor-survey-overlay__header,
+    .tailor-survey-overlay__proceed-button {
+        @include fs-textSans(6);
+        font-weight: 900;
+    }
+
+    .tailor-survey-overlay__header {
+        height: 42px;
+        width: 100%;
+        background-color: $news-support-1;
+        color: $neutral-1;
+        line-height: 42px;
+        padding-left: 8px;
+        box-sizing: border-box;
+
+        .inline-marque-36 {
+            position: absolute;
+            top: 3px;
+            right: 8px;
+        }
+    }
+
+    .tailor-survey-overlay__heading,
+    .tailor-survey-overlay__copy {
+        @include fs-headline(3);
+        color: $neutral-6;
+        margin: 12px 8px;
+    }
+
+    .tailor-survey-overlay__heading {
+        font-weight: 900;
+    }
+
+    .tailor-survey-overlay__copy {
+        font-weight: 100;
+    }
+
+    .tailor-survey-overlay__proceed-button {
+        color: $guardian-brand;
+        background-color: $news-support-1;
+        border: 0;
+        padding: 12px;
+        margin-top: 12px;
+        margin-left: 8px;
+        display: inline-block;
+        border-radius: 21px;
+        text-decoration: none;
+
+        .inline-chevron-right {
+            fill: $guardian-brand;
+            margin-left: 12px;
+        }
+
+        .inline-chevron-right svg {
+            height: 18px;
+            width: 9px;
+            margin-bottom: -4px;
+        }
+
+        &:focus,
+        &:hover {
+            background-color: #4bc6df;
+            outline: 0;
+        }
+    }
+
+    .tailor-survey-overlay__close-button {
+        border: 1px solid $neutral-6;
+        background-color: $guardian-brand;
+        height: 42px;
+        width: 42px;
+        border-radius: 21px;
+        position: absolute;
+        right: 8px;
+        bottom: 8px;
+        padding-top: 9px;
+
+        .inline-cross svg {
+            fill: $neutral-6;
+        }
+
+        &:focus,
+        &:hover {
+            border-color: #ffffff;
+            outline: 0;
+
+            .inline-cross svg {
+                fill: #ffffff;
+            }
+        }
+    }
+}

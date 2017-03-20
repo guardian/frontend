@@ -213,31 +213,6 @@ define([
 
         describe('Analytics', function () {
 
-            it('should tell me if an event is applicable to a test that I belong to', function () {
-                ab.addTest(test.one);
-                ab.segment();
-
-                expect(ab.isEventApplicableToAnActiveTest('most popular | The Guardian | trail | 1 | text')).toBeTruthy();
-
-            });
-
-            it('should tell me if an event is applicable to a test with multiple event strings that I belong to', function () {
-                ab.addTest(test.one);
-                ab.segment();
-
-                expect(ab.isEventApplicableToAnActiveTest('most popular | Section | trail | 1 | text')).toBeTruthy();
-            });
-
-            it('should return a list of test names that are relevant to the event', function () {
-                ab.addTest(test.one);
-                ab.addTest(test.two);
-                ab.segment();
-                var event = {};
-                event.tag = 'most popular | The Guardian | trail | 1 | text';
-
-                expect(ab.getActiveTestsEventIsApplicableTo(event)).toEqual(['DummyTest', 'DummyTest2']);
-            });
-
             it('should return the variant of a test that current user is participating in', function () {
                 mvtCookie.overwriteMvtCookie(2);
 

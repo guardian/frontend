@@ -6,7 +6,6 @@ define([
     'lib/detect',
     'lodash/utilities/template',
     'lib/steady-page',
-    'commercial/modules/dfp/track-ad-render',
     'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/outbrain-codes',
     'raw-loader!commercial/views/outbrain.html',
@@ -21,7 +20,6 @@ define([
     detect,
     template,
     steadyPage,
-    trackAdRender,
     commercialFeatures,
     getCode,
     outbrainStr,
@@ -114,31 +112,22 @@ define([
             // if there is no merch component, load the outbrain widget right away
             return loadInstantly().then(function(shouldLoadInstantly) {
                 if (shouldLoadInstantly) {
-                    return checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
-                        outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
-                        return Promise.resolve(true);
+                    return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(function (userInNonCompliantAbTest) {
+                        userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();
                     });
                 } else {
-                    return trackAdRender('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
-                        // if the high-priority merch component has loaded, we wait until
-                        // the low-priority one has loaded to decide if an outbrain widget is loaded
-                        // if it hasn't loaded, the outbrain widget is loaded at its default
-                        // location right away
-                        return Promise.all([
-                            isHiResLoaded,
-                            isHiResLoaded ? trackAdRender('dfp-ad--merchandising') : true
-                        ]);
-                    }).then(function (args) {
-                        var isHiResLoaded = args[0];
-                        var isLoResLoaded = args[1];
-
-                        if (isHiResLoaded) {
-                            if (!isLoResLoaded) {
-                                module.load('merchandising');
-                            }
-                        } else {
-                            checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
-                                outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
+                    // if a high priority ad and low priority ad on page block outbrain
+                    return checkMediator.waitForCheck('isOutbrainBlockedByAds').then(function(outbrainBlockedByAds) {
+                        if (!outbrainBlockedByAds) {
+                            // if only a high priority ad on page then outbrain is merchandise compliant
+                            checkMediator.waitForCheck('isOutbrainMerchandiseCompliant').then(function (outbrainMerchandiseCompliant) {
+                                if (outbrainMerchandiseCompliant) {
+                                    module.load('merchandising');
+                                } else {
+                                    checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(function (userInNonCompliantAbTest) {
+                                        userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();
+                                    });
+                                }
                             });
                         }
                     });
