@@ -81,8 +81,8 @@ class ArticleController(contentApiClient: ContentApiClient)(implicit context: Ap
         liveBlog.blocks.toSeq.flatMap { blocks =>
         blocks.requestedBodyBlocks.get(Canonical.firstPage).toSeq.flatMap { bodyBlocks: Seq[BodyBlock] =>
           bodyBlocks.collect {
-            case BodyBlock(id, html, _, title, _, _, _, publishedAt, _, updatedAt, _, _) if html.trim.nonEmpty =>
-              TextBlock(id, title, publishedAt, updatedAt, html)
+            case BodyBlock(id, html, summary, title, _, _, _, publishedAt, _, updatedAt, _, _) if html.trim.nonEmpty =>
+              TextBlock(id, title, publishedAt, updatedAt, summary)
           }
         }
       }.take(number)
@@ -166,7 +166,7 @@ class ArticleController(contentApiClient: ContentApiClient)(implicit context: Ap
       lastUpdate.map(ParseBlockId.fromBlockId) match {
         case Some(ParsedBlockId(id)) => renderWithRange(SinceBlockId(id))
         case Some(InvalidFormat) => Future.successful(Cached(10)(WithoutRevalidationResult(NotFound))) // page param there but couldn't extract a block id
-        case None => if (rendered.contains(false)) mapModel(path) { model => blockText(model, 6) } else renderWithRange(Canonical) // no page param
+        case None => if (rendered.contains(false)) mapModel(path, Some(Canonical)) { model => blockText(model, 6) } else renderWithRange(Canonical) // no page param
       }
     }
   }

@@ -132,16 +132,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-tailor-recommended-email",
-    "Use Tailor to target email signup form",
-    owners = Seq(Owner.withGithub("lindseydew")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-tailor-survey",
     "Integrate Tailor with ab tests",
     owners = Seq(Owner.withGithub("oilnam")),
@@ -165,6 +155,46 @@ trait ABTestSwitches {
     "ab-sleeve-notes-legacy-email-variant",
     "Assign some of the new sleeve notes subscribers to receive the old email",
     owners = Seq(Owner.withGithub("lmath")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-the-long-read-email-variants",
+    "Assign users to variants of long read email",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-fashion-statement-email-variants",
+    "Assign users to variants of fashion statement email",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-bookmarks-email-variants",
+    "Assign users to variants of bookmarks email",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-film-today-email-variants",
+    "Assign users to variants of film today email",
+    owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 3, 31),
     exposeClientSide = true
