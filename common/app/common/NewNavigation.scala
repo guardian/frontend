@@ -114,38 +114,51 @@ object NewNavigation {
     )
 
     val au = NavLinkLists(
-      List(opinion,
-        NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
-        NavLink("Katharine Murphy", "/profile/katharine-murphy"),
-        NavLink("Kristina Keneally", "/profile/kristina-keneally")
+      List(
+        opinion,
+        theGuardianView,
+        columnists,
+        cartoons,
+        inMyOpinion
       ),
       List(
+        NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
+        NavLink("Katharine Murphy", "/profile/katharine-murphy"),
+        NavLink("Kristina Keneally", "/profile/kristina-keneally"),
         NavLink("Richard Ackland", "/profile/richard-ackland"),
         NavLink("Van Badham", "/profile/van-badham"),
         NavLink("Lenore Taylor", "/profile/lenore-taylor"),
         NavLink("Jason Wilson", "/profile/wilson-jason"),
-        NavLink("Brigid Delaney", "/profile/brigiddelaney"),
-        columnists
+        NavLink("Brigid Delaney", "/profile/brigiddelaney")
       )
     )
 
     val us = NavLinkLists(
       List(
         opinion,
-        NavLink("Jill Abramson", "/profile/jill-abramson"),
-        NavLink("Jessica Valenti", "/commentisfree/series/jessica-valenti-column"),
-        NavLink( "Steven W Thrasher", "/profile/steven-w-thrasher")
+        theGuardianView,
+        columnists,
+        cartoons,
+        inMyOpinion
       ),
       List(
+        NavLink("Jill Abramson", "/profile/jill-abramson"),
+        NavLink("Jessica Valenti", "/commentisfree/series/jessica-valenti-column"),
+        NavLink( "Steven W Thrasher", "/profile/steven-w-thrasher"),
         NavLink("Trevor Timm", "/profile/trevor-timm"),
         NavLink("Rebecca Carroll", "/commentisfree/series/rebecca-carroll-column"),
-        NavLink("Chelsea E Manning", "/profile/chelsea-e-manning"),
-        columnists
+        NavLink("Chelsea E Manning", "/profile/chelsea-e-manning")
       )
     )
 
     val int = NavLinkLists(
-      List(opinion, columnists, theGuardianView, cartoons)
+      List(
+          opinion,
+          theGuardianView,
+          columnists,
+          cartoons,
+          inMyOpinion
+        )
     )
   }
 
@@ -196,19 +209,19 @@ object NewNavigation {
 
     val uk = NavLinkLists(
       List(lifestyle, fashion, food, recipes, travel, loveAndSex, family),
-      List(home, health, women, tech)
+      List(home, health, tech)
     )
     val au = NavLinkLists(
       List(lifestyle, fashion, food, loveAndSex, health),
-      List(family, women, travel, home)
+      List(family, travel, home)
     )
     val us = NavLinkLists(
       List(lifestyle, fashion, food, recipes, loveAndSex, home),
-      List(health, women, family, travel, tech)
+      List(health, family, travel, tech)
     )
     val int = NavLinkLists(
       List(lifestyle, fashion, food, recipes, loveAndSex, health),
-      List(home, women, family, travel, tech)
+      List(home, family, travel, tech)
     )
   }
 
@@ -333,7 +346,6 @@ object NewNavigation {
       SectionsLink("society", society, Life),
       SectionsLink("lifeandstyle/food-and-drink", food, Life),
       SectionsLink("tone/recipes", recipes, Life),
-      SectionsLink("lifeandstyle/women", women, Life),
       SectionsLink("lifeandstyle/health-and-wellbeing", health, Life),
       SectionsLink("lifeandstyle/family", family, Life),
       SectionsLink("lifeandstyle/home-and-garden", home, Life),
