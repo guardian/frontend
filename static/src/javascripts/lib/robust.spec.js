@@ -8,7 +8,7 @@ describe('robust', () => {
     }
 
     function throwError() {
-        return null.toString();
+        throw new Error('Something broke.');
     }
 
     test('catchErrorsAndLog', () => {
@@ -19,5 +19,12 @@ describe('robust', () => {
         expect(() => {
             robust.catchErrorsAndLog('test', throwError);
         }).toThrowError();
+    });
+
+    test('catchErrorsAndLog - custom reporter', () => {
+        robust.catchErrorsAndLog('test', throwError, (err, meta) => {
+            expect(err.message).toBe('Something broke.');
+            expect(meta.module).toBe('test');
+        });
     });
 });
