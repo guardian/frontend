@@ -65,7 +65,7 @@ define([
             }));
             registerTimeSelectionHandlers($readingTimeSelection, completeFunction);
 
-            return fastdom.write(function() {
+            fastdom.write(function() {
                 $readingTimeSelection.insertBefore($sectionBelowReadingTime);
             });
         }
@@ -83,13 +83,15 @@ define([
         }
 
         function ctaReplacer(suggestion, completeFunction) {
-            return function () {
-                $('.js-feedback-text-reading-time__cta').html(suggestion);
-                $('.reading-time__selections').empty();
+            return function() {
+                fastdom.write(function () {
+                    $('.js-feedback-text-reading-time__cta').html(suggestion);
+                    $('.reading-time__selections').empty();
 
-                if (completeFunction) {
-                    completeFunction();
-                }
+                    if (completeFunction) {
+                        completeFunction();
+                    }
+                });
             }
         }
     }

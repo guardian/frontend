@@ -58,7 +58,6 @@ define([
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
         new IncreaseInlineAds(),
-        SleevenotesLegacyEmailVariant,
         new ReadingTime()
     ].concat(MembershipEngagementBannerTests));
 

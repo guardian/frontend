@@ -17,7 +17,6 @@
     );
     font-weight: normal;
     margin-bottom: $gs-baseline;
-    width: gs-span(1.5);
     text-align: left;
 }
 .reading-time__wrapper {
@@ -29,10 +28,6 @@
             line-height: 1.3em;
             font-weight: bold;
             vertical-align: top;
-
-            @include mq(leftCol) {
-                margin-top: 4px;
-            }
         }
 
         .js-feedback-text-reading-time__cta, .reading-time__selections {
