@@ -1,6 +1,6 @@
-@(model: ArticlePage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
+@(model: ArticlePage, recipePageNotInTest: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
-@main(model){
+@main(model, showNormalHeader = recipePageNotInTest){
 }{
     @fragments.articleBody(model)
 }

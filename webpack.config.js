@@ -74,7 +74,7 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     },
     resolveLoader: {
         modules: [
-            path.resolve(__dirname, 'tools', 'webpack-loaders'),
+            path.resolve(__dirname, 'dev', 'webpack-loaders'),
             'node_modules',
         ],
     },

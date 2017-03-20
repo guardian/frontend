@@ -16,13 +16,17 @@
         </a>
 
         <nav class="header__nav">
-            @NewNavigation.PrimaryLinks.map { link =>
-                <a class="header__nav__link"
-                    href="@LinkTo(link.url)"
-                    data-link-name="amp : nav : @link.title">
-                        @link.title
-                </a>
-            }
+            <ul class="header__nav-primary-links">
+                @NewNavigation.PrimaryLinks.map { link =>
+                    <li class="header__nav-link-item">
+                        <a class="header__nav-link"
+                            href="@LinkTo(link.url)"
+                            data-link-name="amp : nav : @link.title">
+                                @link.title
+                        </a>
+                    </li>
+                }
+            </ul>
 
             <button class="header__nav__menu-button" on='tap:sidebar1.toggle'
                 data-link-name="amp : nav : toggle-veggie-burger">

@@ -58,6 +58,14 @@ define([
         }
     }
 
+    function controlTemplate(variant) {
+        return template(acquisitionsEpicControlTemplate, {
+            membershipUrl: variant.membershipURL,
+            contributionUrl: variant.contributeURL,
+            componentName: variant.componentName
+        });
+    }
+
     function ContributionsABTest(options) {
         this.id = options.id;
         this.epic = options.epic || true;
@@ -120,13 +128,6 @@ define([
         return this.id + ':' + event;
     };
 
-    function controlTemplate(variant) {
-        return template(acquisitionsEpicControlTemplate, {
-            membershipUrl: variant.membershipURL,
-            contributionUrl: variant.contributeURL
-        });
-    }
-
     function ContributionsABTestVariant(options, test) {
         var trackingCampaignId = test.epic ? 'epic_' + test.campaignId : test.campaignId;
 
@@ -142,6 +143,8 @@ define([
 
         this.contributeURL = options.contributeURL || this.makeURL(contributionsBaseURL, this.contributeCampaignCode);
         this.membershipURL = options.membershipURL || this.makeURL(membershipBaseURL, this.membershipCampaignCode);
+
+        this.componentName = 'mem_acquisition_' + trackingCampaignId + '_' + this.id;
 
         this.template = options.template || controlTemplate;
 

@@ -19,7 +19,7 @@ define([
     var defaultTemplateArgument = {
         // copy
         p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And ' +
-            '<span class="contributions__paragraph--highlight">unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism open to all</span>' +
+            '<span class="contributions__paragraph--highlight">unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can</span>' +
             '. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
         p2: 'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
         p3: '',
@@ -34,16 +34,17 @@ define([
     };
 
     // Merges submitted and default template arguments.
-    function buildTemplateArguments(membershipUrl, contributionUrl, args) {
+    function buildTemplateArguments(variant, args) {
         return assign({}, defaultTemplateArgument, args, {
-            membershipUrl: membershipUrl,
-            contributionUrl: contributionUrl
+            membershipUrl: variant.membershipURL,
+            contributionUrl: variant.contributeURL,
+            componentName: variant.componentName
         });
     }
 
 
-    function buildHtml(membershipUrl, contributionUrl, args) {
-        return template(acquisitionEpicDesignVariations, buildTemplateArguments(membershipUrl, contributionUrl, args));
+    function buildHtml(variant, args) {
+        return template(acquisitionEpicDesignVariations, buildTemplateArguments(variant, args));
     }
 
     // Building a test variant
@@ -61,9 +62,9 @@ define([
 
     function buildVariant(variantId, templateArgs) {
         var args = { id: variantId };
-        if (variantId !== 'control') {
+        if (templateArgs) {
             args.template = function(variant) {
-                return buildHtml(variant.membershipURL, variant.contributeURL, templateArgs)
+                return buildHtml(variant, templateArgs)
             }
         }
         return assign({}, defaultVariantArgs, args)
@@ -103,24 +104,11 @@ define([
                 p1Class: 'contributions__paragraph--subtle'
             }),
 
-            buildVariant('highlight_perspective', {
-                p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And ' +
-                    'unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism open to all' +
-                    '. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. <span class="contributions__paragraph--highlight">But we do it because we believe our perspective matters – because it might well be your perspective, too.</span>'
-            }),
+            buildVariant('highlight_perspective_dead'),
 
-            buildVariant('highlight_secure', {
-                p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And ' +
-                    'unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism open to all' +
-                    '. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce.',
-                p2: '<span class="contributions__paragraph--highlight">If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.</span>'
-            }),
+            buildVariant('highlight_secure_dead'),
 
-            buildVariant('highlight_hard', {
-                p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And ' +
-                    'unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism open to all' +
-                    '. So you can see why we need to ask for your help. <span class="contributions__paragraph--highlight">The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce.</span> But we do it because we believe our perspective matters – because it might well be your perspective, too.'
-            }),
+            buildVariant('highlight_hard_dead'), 
 
             buildVariant('paypal', {
                 epicClass: 'contributions__epic--paypal',
