@@ -184,10 +184,6 @@ table.fc-item {
     text-decoration: none;
 }
 .headline,
-.trail-text {
-    margin-top: 6px;
-}
-.headline,
 .byline {
     font-family: "Guardian Egyptian Web Headline", Georgia, serif;
     font-size: 16px;
@@ -195,7 +191,8 @@ table.fc-item {
     color: inherit;
 }
 .headline, .byline, .trail-text {
-    padding: 0 10px;
+    padding: 0;
+    margin: 6px 10px 10px 10px;
 }
 
 .review-stars {
