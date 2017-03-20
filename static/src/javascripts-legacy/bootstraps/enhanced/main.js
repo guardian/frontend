@@ -13,8 +13,7 @@ define([
     './sport',
     'common/modules/analytics/google',
     'lib/geolocation',
-    'common/modules/check-dispatcher',
-    'lodash/collections/contains'
+    'common/modules/check-dispatcher'
 ], function (
     fastdom,
     bean,
@@ -30,8 +29,7 @@ define([
     sport,
     ga,
     geolocation,
-    checkDispatcher,
-    contains
+    checkDispatcher
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
