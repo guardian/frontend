@@ -50,6 +50,7 @@ object NavLinks {
   val savings = NavLink("savings", "/money/savings", "money/savings")
   val borrowing = NavLink("borrowing", "/money/debt", "money/debt")
   val careers = NavLink("careers", "/money/work-and-careers", "money/work-and-careers")
+  val obituaries = NavLink("obituaries", "/tone/obituaries")
 
   /* OPINION */
   val opinion = NavLink("opinion", "/commentisfree", longTitle = "opinion home", iconName = "home", uniqueSection = "commentisfree")
