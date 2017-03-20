@@ -14,8 +14,7 @@ define([
     'common/modules/analytics/google',
     'lib/geolocation',
     'common/modules/check-dispatcher',
-    'lodash/collections/contains',
-    'common/modules/tailor/tailor-survey-overlay'
+    'lodash/collections/contains'
 ], function (
     fastdom,
     bean,
@@ -32,8 +31,7 @@ define([
     ga,
     geolocation,
     checkDispatcher,
-    contains,
-    tailorSurveyOverlay
+    contains
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -195,11 +193,6 @@ define([
 
         // initialise email/outbrain check dispatcher
         bootstrapContext('checkDispatcher', checkDispatcher);
-
-        // initialise tailor overlay survey
-        if (config.switches.tailorSurveyOverlay) {
-            bootstrapContext('tailorSurveyOverlay', tailorSurveyOverlay);
-        }
 
         // Mark the end of synchronous execution.
         userTiming.mark('App End');
