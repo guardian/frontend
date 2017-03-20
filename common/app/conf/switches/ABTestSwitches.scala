@@ -26,7 +26,7 @@ trait ABTestSwitches {
     "Test copy for the engagement banner in all countries aside from the US and Australia",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 17),
+    sellByDate = new LocalDate(2017, 3, 24),
     exposeClientSide = true
   )
 
