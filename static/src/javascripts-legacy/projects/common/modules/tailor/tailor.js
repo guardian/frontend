@@ -53,16 +53,19 @@ define([
     function fetchData(type, queryParams) {
         var tailorData = storage.local.get('gu.tailor.' + type);
 
+        // if data in local storage return this
         if (tailorData) {
             return Promise.resolve(tailorData);
         }
 
+        // if no browserId return empty object
         if (!browserId) {
             return Promise.resolve({});
         }
 
         var url = getURL(type, queryParams);
 
+        // if type doesn't have a valid end point url return empty object
         if (!url) {
             return Promise.resolve({});
         }
