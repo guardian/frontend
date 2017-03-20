@@ -172,7 +172,7 @@ define([
     var CopyTest = function() {
         this.id = 'MembershipEngagementBannerCopyTest';
         this.start = '2017-02-27';
-        this.expiry = '2017-03-17';
+        this.expiry = '2017-03-24';
         this.author = 'Guy Dawson';
         this.description = 'Test different copy for the engagement banner.';
         this.audience = 0.5;
