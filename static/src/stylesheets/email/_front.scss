@@ -173,7 +173,10 @@ table.fc-item {
     padding: 6px 10px 6px 10px;
 }
 .container-title {
-    font-family: "Guardian Egyptian Web Header", "Guardian Egyptian Web Headline", Georgia, serif;
+    // !important is used here just to ensure this style gets inlined *after* others.
+    // T-Online client doesn't parse any styles which occurs after this one! It seems
+    // it doesn't like the quotes, or the webfont, or something.
+    font-family: "Guardian Egyptian Web Header", "Guardian Egyptian Web Headline", Georgia, serif !important;
     font-size: 26px;
     margin-bottom: 12px;
     margin-top: 26px;
@@ -183,16 +186,23 @@ table.fc-item {
 .facia-link {
     text-decoration: none;
 }
+.headline, .byline, .trail-text {
+    font-weight: normal;
+    padding: 0;
+    margin: 6px 10px 10px 10px;
+}
 .headline,
 .byline {
-    font-family: "Guardian Egyptian Web Headline", Georgia, serif;
+    // !important is used here just to ensure this style gets inlined *after* others.
+    // T-Online client doesn't parse any styles which occurs after this one! It seems
+    // it doesn't like the quotes, or the webfont, or something.
+    font-family: "Guardian Egyptian Web Headline", Georgia, serif !important;
     font-size: 16px;
     line-height: 20px;
     color: inherit;
 }
-.headline, .byline, .trail-text {
-    padding: 0;
-    margin: 6px 10px 10px 10px;
+p {
+    font-weight: normal;
 }
 
 .review-stars {
