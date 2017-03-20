@@ -132,16 +132,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-tailor-recommended-email",
-    "Use Tailor to target email signup form",
-    owners = Seq(Owner.withGithub("lindseydew")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-tailor-survey",
     "Integrate Tailor with ab tests",
     owners = Seq(Owner.withGithub("oilnam")),
