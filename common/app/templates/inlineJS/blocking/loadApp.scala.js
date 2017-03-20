@@ -1,6 +1,6 @@
 @()(implicit request: RequestHeader)
 @import conf.Static
-@import views.support.Polyfillio
+@import conf.Configuration
 
 // the app is bundled without any polyfills. babel transpiles the syntax
 // to es5 but we do provide any polyfills for missing methods.
@@ -58,7 +58,7 @@ function guardianPolyfilled() {
 
     // load polyfills from polyfill.io
     var polyfillScript = document.createElement('script');
-    polyfillScript.src = '@Polyfillio.url';
+    polyfillScript.src = "@common.Assets.js.polyfillioUrl";
     polyfillScript.onerror = function () { // if something goes wrong...
         // 1. ignore this script
         disableScript(polyfillScript);
