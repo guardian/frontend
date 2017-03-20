@@ -1,9 +1,8 @@
 define([
+    'lib/config',
     'lodash/objects/merge',
-    'lodash/collections/filter',
-    'lodash/collections/map',
     'common/views/svgs'
-], function (merge, filter, map, svgs) {
+], function (config, merge, svgs) {
 
     //this is used in all banners
     var cursor = svgs('cursor');
@@ -82,12 +81,12 @@ define([
                 UK: {
                     monthlyCost: '£5',
                     dailyCost: '16p',
-                    adblockCoins: svgs('adblockCoinsUk')
+                    adblockCoins: svgs('adblockCoinsUk').replace('%%URL%%', config.images.membership['adblock-coins'])
                 },
                 INT: {
                     monthlyCost: '$6.99',
                     dailyCost: '22¢',
-                    adblockCoins: svgs('adblockCoinsUs')
+                    adblockCoins: svgs('adblockCoinsUs').replace('%%URL%%', config.images.membership['adblock-coins-us'])
                 }
             }
         }
@@ -102,14 +101,14 @@ define([
                 return typeof banner.editions[edition] !== 'undefined';
             },
             mergeVariantConfigurations = function (banner) {
-                return map(banner.variants, function (variant) {
+                return banner.variants.map(function (variant) {
                     return merge({
                         edition: edition,
                         template: banner.template
                     }, banner.defaults, variant, banner.editions[edition] || {});
                 });
             };
-            return map(filter(this.banners, editionFilter), mergeVariantConfigurations);
+            return this.banners.filter(editionFilter).map(mergeVariantConfigurations);
         }
     };
 });

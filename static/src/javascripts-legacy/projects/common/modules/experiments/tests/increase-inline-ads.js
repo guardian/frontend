@@ -24,6 +24,10 @@ define([
             {
                 id: 'yes',
                 test: function () {}
+            },
+            {
+                id: 'no',
+                test: function () {}
             }
         ];
     };
