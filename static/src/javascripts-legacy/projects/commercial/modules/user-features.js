@@ -61,6 +61,24 @@ define([
         }
     };
 
+    /**
+     * Does our _existing_ data say the user is a paying member?
+     * This data may be stale; we do not wait for userFeatures.refresh()
+     * @returns {boolean}
+     */
+    UserFeatures.prototype.isPayingMember = function () {
+        // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
+        return identity.isUserLoggedIn()
+            && (cookies.get(PAYING_MEMBER_COOKIE) !== 'false');
+    };
+
+    UserFeatures.prototype.isAdFreeUser = function () {
+        if (cookies.get(AD_FREE_USER_COOKIE) === null) {
+            this.refresh();
+        }
+        return cookies.get(AD_FREE_USER_COOKIE) === 'true';
+    };
+
     function requestNewData() {
         fetchJson(config.page.userAttributesApiUrl + '/me/features', {
             mode: 'cors',
@@ -84,24 +102,6 @@ define([
         cookies.remove(PAYING_MEMBER_COOKIE);
         cookies.remove(AD_FREE_USER_COOKIE);
     }
-
-    /**
-     * Does our _existing_ data say the user is a paying member?
-     * This data may be stale; we do not wait for userFeatures.refresh()
-     * @returns {boolean}
-     */
-    UserFeatures.prototype.isPayingMember = function () {
-        // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
-        return identity.isUserLoggedIn()
-            && (cookies.get(PAYING_MEMBER_COOKIE) !== 'false');
-    };
-
-    UserFeatures.prototype.isAdFreeUser = function () {
-        if (cookies.get(AD_FREE_USER_COOKIE) === null) {
-            this.refresh();
-        }
-        return cookies.get(AD_FREE_USER_COOKIE) === 'true';
-    };
 
     return new UserFeatures();
 });
