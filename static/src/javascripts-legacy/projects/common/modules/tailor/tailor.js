@@ -58,13 +58,13 @@ define([
         }
 
         if (!browserId) {
-            return {};
+            return Promise.resolve({});
         }
 
         var url = getURL(type, queryParams);
 
         if (!url) {
-            return {};
+            return Promise.resolve({});
         }
 
         return fetchJson(url, {
