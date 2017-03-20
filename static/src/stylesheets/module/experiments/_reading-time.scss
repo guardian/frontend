@@ -7,17 +7,18 @@
 
 .reading-time__time-selection {
     @include button-colour(
-            $news-main-1, // fill
-            #ffffff, // text
-            $news-main-2 //border
+        $news-main-1, // fill
+        #ffffff, // text
+        $news-main-2 //border
     );
     @include button-hover-colour(
-            darken($news-main-1, 5%),
-            $news-main-2
+        darken($news-main-1, 5%),
+        $news-main-2
     );
     font-weight: normal;
     margin-bottom: $gs-baseline;
     width: gs-span(1.5);
+    text-align: left;
 }
 .reading-time__wrapper {
     position: relative;
@@ -43,6 +44,19 @@
             padding-bottom: 15px;
         }
 
+        .reading-time__selections {
+            .reading-time__clock {
+                text-align: left;
+                svg {
+                    width: 12px;
+                    height: auto;
+                    margin-right: 4px;
+                    vertical-align: middle;
+                }
+
+            }
+        }
+
         .reading-time__arrow {
             display: inline-block;
             vertical-align: top;
@@ -62,22 +76,9 @@
                 }
             }
             @include button-hover-colour(
-                    darken($news-main-1, 5%),
-                    $neutral-8
+                darken($news-main-1, 5%),
+                $neutral-8
             );
-        }
-
-        .reading-time__selections {
-            padding-top: 10px;
-
-            .reading-time__clock {
-                svg {
-                    margin-left: -$gs-baseline/2;
-                    margin-right: 5px;
-                    width: 15%;
-                    vertical-align: middle;
-                }
-            }
         }
     }
 
@@ -102,7 +103,7 @@
         &__title {
             display: inline-block;
             padding-top: 3px;
-            color: #4BC6DF;
+            color: #4bc6df;
             float: none;
             width: auto;
             @include mq(leftCol) {
@@ -114,9 +115,10 @@
         &__roundel {
             float: right;
             margin-top: 5px;
+            text-align: right;
             svg {
-                transform-origin: top right;
-                transform: scale(0.7);
+                width: 28px;
+                height: auto;
             }
             @include mq(leftCol) {
                 margin-top: 1px;
