@@ -89,7 +89,8 @@ object ActiveTests extends ServerSideABTests {
     ABNewNavControl,
     CommercialClientLoggingVariant,
     YouTubePosterOverride,
-    ABNewRecipeDesign
+    ABNewRecipeDesign,
+    PolyfillIO
   )
 }
 
