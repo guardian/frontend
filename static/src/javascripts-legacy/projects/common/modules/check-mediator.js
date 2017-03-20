@@ -46,40 +46,50 @@ define([
             id: 'hasLowPriorityAdNotLoaded'
         }]
     }, {
-        id: 'isUserInEmailAbTestAndCanEmailBeAdded',
+        id: 'isOutbrainMerchandiseCompliantOrBlockedByAds',
+        passCondition: SOMECHECKSPASSED,
+        dependentChecks: [{
+            id: 'isOutbrainMerchandiseCompliant'
+        }, {
+            id: 'isOutbrainBlockedByAds'
+        }]
+    }, {
+        id: 'emailCanRun',
         passCondition: EVERYCHECKPASSED,
         dependentChecks: [{
-            id: 'isUserNotInContributionsAbTest'
-        }, {
-            id: 'isUserInEmailAbTest'
-        }, {
             id: 'emailCanRunPreCheck'
         }, {
             id: 'listCanRun'
         }, {
             id: 'emailInArticleOutbrainEnabled'
+        }, {
+            id: 'isUserNotInContributionsAbTest'
         }]
     }, {
-        id: 'isOutbrainNonCompliant',
+        id: 'isUserInEmailAbTestAndEmailCanRun',
+        passCondition: EVERYCHECKPASSED,
+        dependentChecks: [{
+            id: 'isUserInEmailAbTest'
+        }, {
+            id: 'emailCanRun'
+        }]
+    }, {
+        id: 'isUserInNonCompliantAbTest',
         passCondition: SOMECHECKSPASSED,
         dependentChecks: [{
             id: 'isUserInContributionsAbTest'
         }, {
-            id: 'isUserInEmailAbTestAndCanEmailBeAdded'
+            id: 'isUserInEmailAbTestAndEmailCanRun'
         }]
     }, {
-        id: 'emailCanRun',
+        id: 'emailCanRunPostCheck',
         passCondition: SOMECHECKSPASSED,
         dependentChecks: [{
-            id: 'isUserInEmailAbTestAndCanEmailBeAdded'
+            id: 'isUserInEmailAbTest'
         }, {
-            id: 'isOutbrainMerchandiseCompliantOrBlockedByAds',
-            passCondition: SOMECHECKSPASSED,
-            dependentChecks: [{
-                id: 'isOutbrainMerchandiseCompliant'
-            }, {
-                id: 'isOutbrainBlockedByAds'
-            }]
+            id: 'isOutbrainMerchandiseCompliantOrBlockedByAds'
+        }, {
+            id: 'thirdPartyTagsDisabled'
         }]
     }];
 

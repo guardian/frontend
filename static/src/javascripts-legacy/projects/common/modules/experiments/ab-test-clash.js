@@ -24,7 +24,7 @@ define([
 	};
 
     var AcquisitionsEpicDesignVariationsV2 = {
-        name: 'AcquisitionsDesignVariations',
+        name: 'AcquisitionsEpicDesignVariationsV2',
         variants: ['control', 'highlight_subtle', 'highlight_perspective', 'highlight_secure', 'highlight_hard', 'paypal']
     };
 
