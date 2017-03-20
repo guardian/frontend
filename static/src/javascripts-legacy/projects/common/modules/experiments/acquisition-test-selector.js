@@ -10,6 +10,7 @@ define([
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
     'common/modules/experiments/tests/contributions-epic-regulars-v2',
     'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
+    'common/modules/experiments/tests/acquisitions-epic-design-variations-v2',
     'common/modules/experiments/tests/contributions-epic-laundromat'
 ], function (
     segmentUtil,

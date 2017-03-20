@@ -63,7 +63,8 @@ define([
         AcquisitionsEpicArticle50Trigger,
         AcquisitionsContentTailoringEnvironment,
         AcquisitionsContentTailoringCif,
-        AcquisitionsContentTailoringFootball
+        AcquisitionsContentTailoringFootball,
+        ContributionsEpicLaundromat
     ];
 
     var emailTests = [];
