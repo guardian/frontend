@@ -1,8 +1,4 @@
-define([
-    'Promise'
-], function (
-    Promise
-) {
+define([], function () {
     /**
      * Make a Promise fail if it didn't resolve quickly enough
      */

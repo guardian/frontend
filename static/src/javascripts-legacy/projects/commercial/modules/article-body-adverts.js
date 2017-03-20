@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'qwery',
     'lib/config',
     'lib/detect',
@@ -12,7 +11,6 @@ define([
     'commercial/modules/dfp/create-slot',
     'commercial/modules/commercial-features'
 ], function (
-    Promise,
     qwery,
     config,
     detect,

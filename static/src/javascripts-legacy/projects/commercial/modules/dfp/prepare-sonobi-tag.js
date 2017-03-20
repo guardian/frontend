@@ -1,12 +1,10 @@
 define([
-    'Promise',
     'lib/config',
     'lib/load-script',
     'commercial/modules/commercial-features',
     'commercial/modules/build-page-targeting',
     'commercial/modules/dfp/dfp-env'
 ], function(
-    Promise,
     config,
     loadScript,
     commercialFeatures,

@@ -1,14 +1,12 @@
 define([
     'fastdom',
     'qwery',
-    'Promise',
     'lib/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
     fastdom,
     qwery,
-    Promise,
     $,
     fixtures,
     Injector

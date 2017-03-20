@@ -9,7 +9,6 @@ define([
         var spaceFiller,
             spaceFinder,
             raven,
-            Promise,
             rules = {},
             spacefinderResult,
             writeError = new Error('Mock writer exception');
@@ -19,12 +18,10 @@ define([
             injector.require([
                 'common/modules/article/space-filler',
                 'common/modules/article/spacefinder',
-                'Promise',
                 'lib/raven'
             ], function () {
                 spaceFiller = arguments[0];
                 spaceFinder = arguments[1];
-                Promise = arguments[2];
                 raven = arguments[3];
 
                 spyOn(raven, 'captureException');

@@ -3,7 +3,6 @@
  Description: Shows popular trails for a given country.
  */
 define([
-    'Promise',
     'qwery',
     'common/modules/component',
     'common/modules/experiments/ab',
@@ -11,7 +10,6 @@ define([
     'lib/mediator',
     'lodash/functions/once'
 ], function (
-    Promise,
     qwery,
     Component,
     ab,

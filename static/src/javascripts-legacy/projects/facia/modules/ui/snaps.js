@@ -13,8 +13,7 @@ define([
     'common/modules/ui/relativedates',
     'facia/modules/ui/football-snaps',
     'lodash/functions/once',
-    'lodash/collections/find',
-    'Promise'
+    'lodash/collections/find'
 ], function (
     bean,
     bonzo,
@@ -30,8 +29,7 @@ define([
     relativeDates,
     FootballSnaps,
     once,
-    find,
-    Promise
+    find
 ) {
     var clientProcessedTypes = ['document', 'fragment', 'json.html'],
         snapIframes = [],

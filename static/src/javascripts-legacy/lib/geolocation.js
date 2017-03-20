@@ -1,10 +1,8 @@
 define([
-    'Promise',
     'lib/fetch-json',
     'lib/config',
     'lib/storage'
 ], function (
-    Promise,
     fetch,
     config,
     storage

@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'lib/config',
     'lib/robust',
     'lib/user-timing',
@@ -26,7 +25,6 @@ define([
     'common/modules/analytics/google',
     'commercial/modules/user-features'
 ], function (
-    Promise,
     config,
     robust,
     userTiming,

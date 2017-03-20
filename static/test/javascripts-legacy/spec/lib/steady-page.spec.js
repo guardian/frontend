@@ -3,7 +3,6 @@ define([
     'lib/$',
     'lib/steady-page',
     'helpers/fixtures',
-    'Promise',
     'helpers/injector',
     'lib/fastdom-promise'
 ], function (
@@ -11,7 +10,6 @@ define([
     $,
     steadyPage,
     fixtures,
-    Promise,
     Injector,
     fastdom
 ) {

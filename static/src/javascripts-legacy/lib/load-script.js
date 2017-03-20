@@ -1,7 +1,6 @@
 define([
-    'Promise',
     'lodash/objects/assign'
-], function (Promise, assign) {
+], function (assign) {
     return loadScript;
 
     function loadScript(src, props) {

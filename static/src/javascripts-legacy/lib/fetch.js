@@ -1,9 +1,7 @@
 define([
-    'reqwest',
-    'Promise'
+    'reqwest'
 ], function (
-    reqwest,
-    Promise
+    reqwest
 ) {
     /**
      * Provide a minimal function equivalent to fetch. I don't dare calling it a

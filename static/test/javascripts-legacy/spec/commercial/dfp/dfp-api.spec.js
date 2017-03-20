@@ -2,7 +2,6 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'Promise',
     'lib/$',
     'helpers/fixtures',
     'helpers/injector'
@@ -10,7 +9,6 @@ define([
     bean,
     bonzo,
     qwery,
-    Promise,
     $,
     fixtures,
     Injector

@@ -1,8 +1,7 @@
 define([
-    'Promise',
     'lib/user-timing',
     'commercial/modules/dfp/performance-logging'
-], function (Promise, userTiming, performanceLogging) {
+], function (userTiming, performanceLogging) {
     Advert.startLoading = startLoading;
     Advert.stopLoading = stopLoading;
     Advert.startRendering = startRendering;

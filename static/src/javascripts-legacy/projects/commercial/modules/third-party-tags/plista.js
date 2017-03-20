@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'fastdom',
     'lib/$',
     'lib/config',
@@ -10,7 +9,6 @@ define([
     'raw-loader!commercial/views/plista.html',
     'lib/load-script'
 ], function (
-    Promise,
     fastdom,
     $,
     config,

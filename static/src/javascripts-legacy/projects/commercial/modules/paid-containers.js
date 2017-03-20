@@ -1,9 +1,8 @@
 define([
-    'Promise',
     'qwery',
     'bean',
     'fastdom'
-], function (Promise, qwery, bean, fastdom) {
+], function (qwery, bean, fastdom) {
 
     return {
         init: init

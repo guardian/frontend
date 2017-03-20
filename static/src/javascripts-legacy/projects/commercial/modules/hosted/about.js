@@ -1,10 +1,8 @@
 define([
-    'Promise',
     'bean',
     'lib/$',
     'commercial/modules/survey/survey-simple'
 ], function (
-    Promise,
     bean,
     $,
     SurveySimple

@@ -1,7 +1,6 @@
 define([
     'bean',
     'fastdom',
-    'Promise',
     'qwery',
     'lib/$',
     'lib/storage',
@@ -20,7 +19,6 @@ define([
 ], function (
     bean,
     fastdom,
-    Promise,
     qwery,
     $,
     storage,

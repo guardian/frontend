@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'lib/$',
     'lib/config',
     'lib/detect',
@@ -9,7 +8,6 @@ define([
     'commercial/modules/commercial-features',
     'commercial/modules/dfp/create-slot'
 ], function (
-    Promise,
     $,
     config,
     detect,

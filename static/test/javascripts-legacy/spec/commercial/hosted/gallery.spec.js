@@ -2,7 +2,6 @@ define([
     'lib/$',
     'lib/mediator',
     'helpers/fixtures',
-    'Promise',
     'fastdom',
     'raw-loader!fixtures/commercial/hosted/gallery.html',
     'helpers/injector'
@@ -10,7 +9,6 @@ define([
     $,
     mediator,
     fixtures,
-    Promise,
     fastdom,
     galleryHtml,
     Injector

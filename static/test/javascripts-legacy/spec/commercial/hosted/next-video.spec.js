@@ -1,11 +1,9 @@
 define([
     'lib/$',
-    'Promise',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
     $,
-    Promise,
     fixtures,
     Injector
 ) {

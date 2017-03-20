@@ -6,7 +6,6 @@ define([
     'common/modules/user-prefs',
     'helpers/fixtures',
     'helpers/injector',
-    'Promise',
     'common/modules/ui/message'
 ], function (
     bonzo,
@@ -16,7 +15,6 @@ define([
     userPrefs,
     fixtures,
     Injector,
-    Promise,
     Message
 ) {
     var commercialFeatures, membershipMessages, mediator,

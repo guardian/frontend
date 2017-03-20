@@ -1,9 +1,7 @@
 define([
-    'fastdom',
-    'Promise'
+    'fastdom'
 ], function (
-    fastdom,
-    Promise
+    fastdom
 ) {
     function promisify(fdaction) {
         return function (fn, ctx) {

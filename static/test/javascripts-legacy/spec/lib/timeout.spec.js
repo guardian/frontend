@@ -1,8 +1,6 @@
 define([
-    'Promise',
     'lib/timeout'
 ], function (
-    Promise,
     timeout
 ) {
     function wait (time) {

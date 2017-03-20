@@ -7,8 +7,7 @@ define([
     'commercial/modules/dfp/add-slot',
     'commercial/modules/commercial-features',
     'commercial/modules/dfp/create-slot',
-    'common/modules/article/space-filler',
-    'Promise'
+    'common/modules/article/space-filler'
 ], function (
     bonzo,
     fastdom,
@@ -18,8 +17,7 @@ define([
     addSlot,
     commercialFeatures,
     createSlot,
-    spaceFiller,
-    Promise
+    spaceFiller
 ) {
     var INTERVAL = 5;      // number of posts between ads
     var OFFSET = 1.5;      // ratio of the screen height from which ads are loaded

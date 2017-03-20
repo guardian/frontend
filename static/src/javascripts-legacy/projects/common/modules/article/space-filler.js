@@ -1,12 +1,10 @@
 define([
     'lib/raven',
     'lib/fastdom-promise',
-    'Promise',
     'common/modules/article/spacefinder'
 ], function (
     raven,
     fastdom,
-    Promise,
     spacefinder
 ) {
     function SpaceFiller() {

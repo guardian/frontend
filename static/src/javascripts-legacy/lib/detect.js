@@ -7,12 +7,10 @@
 
 define([
     'lib/mediator',
-    'lodash/functions/memoize',
-    'Promise'
+    'lodash/functions/memoize'
 ], function (
     mediator,
-    memoize,
-    Promise
+    memoize
 ) {
 
     var supportsPushState,

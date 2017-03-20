@@ -1,4 +1,4 @@
-define(['Promise'], function (Promise) {
+define([], function () {
     return new Promise(function (resolve) {
         if (window.guardian.css.loaded) {
             // CSS has loaded, go

@@ -9,7 +9,6 @@ var includeNodeModules = [
     'fastdom',
     'fence',
     'lodash-amd',
-    'when',
     'qwery',
     'reqwest',
     'video.js',

@@ -1,8 +1,4 @@
-define([
-    'Promise'
-], function (
-    Promise
-) {
+define([], function () {
     var browserCheck = new Promise(function (resolve) {
         var db;
         var on = function () {
