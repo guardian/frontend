@@ -17,11 +17,11 @@ type ReportedError = Error & {
 function reportError(
     err: ReportedError,
     tags: Object,
-    shouldThrow: ?boolean = true
+    shouldThrow?: boolean = true
 ): void {
     raven.captureException(err, { tags });
 
-    if (shouldThrow === true) {
+    if (shouldThrow) {
         // Flag to ensure it is not reported to Sentry again via global handlers
         const error = err;
         error.reported = true;
