@@ -22,8 +22,11 @@ http://developers.theguardian.com/join-the-team.html
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
 @fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
 
-@if(!(context.environment.mode == Dev)) {
-    <link rel="prefetch" href="@Static("javascripts/graun.standard.js")">
+<link rel="prefetch" href="@Static("javascripts/graun.standard.js")">
+
+@if(mvt.PolyfillIO.isParticipating) {
+    <link rel="prefetch"
+          href="https://polyfill.guim.co.uk/v2/polyfill.min.js?features=es6,Element.prototype.closest,Element.prototype.matches">
 }
 
 @*
