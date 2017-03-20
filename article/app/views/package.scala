@@ -66,6 +66,7 @@ object BodyCleaner {
       PhotoEssayQuotes(article.isPhotoEssay),
       PhotoEssayHalfWidth(article.isPhotoEssay),
       PhotoEssayBlockQuote(article.isPhotoEssay),
+      PhotoEssayCaptions(article.isPhotoEssay),
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
       MinuteCleaner(article)
