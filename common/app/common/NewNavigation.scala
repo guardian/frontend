@@ -209,19 +209,19 @@ object NewNavigation {
 
     val uk = NavLinkLists(
       List(lifestyle, fashion, food, recipes, travel, loveAndSex, family),
-      List(home, health, tech, money)
+      List(home, health, women, money)
     )
     val au = NavLinkLists(
       List(lifestyle, fashion, food, loveAndSex, health),
-      List(family, travel, home, tech, money)
+      List(family, women, travel, home, money)
     )
     val us = NavLinkLists(
       List(lifestyle, fashion, food, recipes, loveAndSex, home),
-      List(health, family, travel, tech, money)
+      List(health, women, family, travel, money)
     )
     val int = NavLinkLists(
       List(lifestyle, fashion, food, recipes, loveAndSex, health),
-      List(home, family, travel, tech, money)
+      List(home, women, family, travel, money)
     )
   }
 
@@ -314,7 +314,6 @@ object NewNavigation {
       SectionsLink("sport/rugby-union", rugbyUnion, Sport),
       SectionsLink("sport/cricket", cricket, Sport),
       SectionsLink("sport/tennis", tennis, Sport),
-      SectionsLink("sport/cycling", cycling, Sport),
       SectionsLink("sport/golf", golf, Sport),
       SectionsLink("sport/us-sport", usSports, Sport),
       SectionsLink("sport/horse-racing", racing, Sport),
