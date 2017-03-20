@@ -19,12 +19,18 @@ function catchErrors(fn: Function): ?Error {
     return error;
 }
 
-function log(name: string, error: Error): void {
+function log(name: string, error: Error, customReporter?: Function): void {
+    let reporter = reportError;
+
+    if (customReporter) {
+        reporter = customReporter;
+    }
+
     if (window.console && window.console.warn) {
         window.console.warn('Caught error.', error.stack);
     }
 
-    reportError(error, { module: name }, false);
+    reporter(error, { module: name }, false);
 }
 
 function catchErrorsAndLog(name: string, fn: Function, reporter?: Function) {
