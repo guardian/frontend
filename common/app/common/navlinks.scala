@@ -102,7 +102,6 @@ object NavLinks {
   var family = NavLink("family", "/lifeandstyle/family", "lifeandstyle/family")
   var home = NavLink("home & garden", "/lifeandstyle/home-and-garden", "lifeandstyle/home-and-garden")
   var health = NavLink("health & fitness", "/lifeandstyle/health-and-wellbeing", "lifeandstyle/health-and-wellbeing")
-  var women = NavLink("women", "/lifeandstyle/women", "lifeandstyle/women")
   var recipes = NavLink("recipes", "/tone/recipes", "tone/recipes")
   val travelUk = NavLink("UK", "/travel/uk", "travel/uk")
   val travelEurope = NavLink("europe", "/travel/europe", "travel/europe")
