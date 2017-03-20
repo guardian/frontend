@@ -309,7 +309,6 @@ object NewNavigation {
       SectionsLink("commentisfree/series/comment-is-free-weekly", inMyOpinion, Opinion),
       SectionsLink("profile/editorial", theGuardianView, Opinion),
 
-
       SectionsLink("sport", sport, Sport),
       SectionsLink("football", football, Sport),
       SectionsLink("sport/rugby-union", rugbyUnion, Sport),
@@ -518,11 +517,11 @@ object NewNavigation {
       if (page.metadata.sectionId == "commentisfree") {
         page.metadata.sectionId
       } else if (isTagPage) {
-        page.metadata.id
+        simplifySectionId(page.metadata.id)
       } else if (isArticleInTagPageSection) {
-        commonKeywords.head
+        simplifySectionId(commonKeywords.head)
       } else {
-        page.metadata.sectionId
+        simplifySectionId(page.metadata.sectionId)
       }
     }
 
@@ -568,10 +567,8 @@ object NewNavigation {
       sectionMap.getOrElse(sectionId, sectionId)
     }
 
-    def getSubSectionNavLinks(sectionId: String, edition: Edition, isFront: Boolean) = {
-      if (isFront || frontLikePages.contains(sectionId)) {
-
-        val id = simplifySectionId(sectionId)
+    def getSubSectionNavLinks(id: String, edition: Edition, isFront: Boolean) = {
+      if (isFront || frontLikePages.contains(id)) {
 
         if (isEditionalistedSubSection(id)) {
           val subNav = editionalisedSubSectionLinks.filter(_.pageId == id).head.parentSection
@@ -581,13 +578,13 @@ object NewNavigation {
           val subSectionList = subSectionLinks.filter(_.pageId == id)
 
           if (subSectionList.isEmpty) {
-            NewNavigation.SectionLinks.getSectionLinks(sectionId, edition)
+            NewNavigation.SectionLinks.getSectionLinks(id, edition)
           } else {
             subSectionList.head.parentSection.mostPopular
           }
         }
       } else {
-        NewNavigation.SectionLinks.getSectionLinks(sectionId, edition)
+        NewNavigation.SectionLinks.getSectionLinks(id, edition)
       }
     }
   }
