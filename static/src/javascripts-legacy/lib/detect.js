@@ -6,11 +6,9 @@
 /*global DocumentTouch: true */
 
 define([
-    'lib/mediator',
-    'lodash/functions/memoize'
+    'lib/mediator'
 ], function (
-    mediator,
-    memoize
+    mediator
 ) {
 
     var supportsPushState,
