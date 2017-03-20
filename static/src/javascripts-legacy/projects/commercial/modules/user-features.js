@@ -32,33 +32,6 @@ define([
         } else if (userHasDataAfterSignout()) {
             this._deleteOldData();
         }
-
-        function userNeedsNewFeatureData() {
-            return featuresDataIsMissing() || featuresDataIsOld();
-
-            function featuresDataIsMissing() {
-                return !cookies.get(USER_FEATURES_EXPIRY_COOKIE)
-                    || !cookies.get(PAYING_MEMBER_COOKIE)
-                    || !cookies.get(AD_FREE_USER_COOKIE);
-            }
-
-            function featuresDataIsOld() {
-                var featuresExpiryCookie = cookies.get(USER_FEATURES_EXPIRY_COOKIE);
-                var featuresExpiryTime = parseInt(featuresExpiryCookie, 10);
-                var timeNow = new Date().getTime();
-                return timeNow >= featuresExpiryTime;
-            }
-        }
-
-        function userHasDataAfterSignout() {
-            return !identity.isUserLoggedIn() && userHasData();
-
-            function userHasData() {
-                return cookies.get(USER_FEATURES_EXPIRY_COOKIE)
-                    || cookies.get(PAYING_MEMBER_COOKIE)
-                    || cookies.get(AD_FREE_USER_COOKIE);
-            }
-        }
     };
 
     /**
@@ -78,6 +51,33 @@ define([
         }
         return cookies.get(AD_FREE_USER_COOKIE) === 'true';
     };
+
+    function userNeedsNewFeatureData() {
+        return featuresDataIsMissing() || featuresDataIsOld();
+    }
+
+    function featuresDataIsMissing() {
+        return !cookies.get(USER_FEATURES_EXPIRY_COOKIE)
+            || !cookies.get(PAYING_MEMBER_COOKIE)
+            || !cookies.get(AD_FREE_USER_COOKIE);
+    }
+
+    function featuresDataIsOld() {
+        var featuresExpiryCookie = cookies.get(USER_FEATURES_EXPIRY_COOKIE);
+        var featuresExpiryTime = parseInt(featuresExpiryCookie, 10);
+        var timeNow = new Date().getTime();
+        return timeNow >= featuresExpiryTime;
+    }
+
+    function userHasDataAfterSignout() {
+        return !identity.isUserLoggedIn() && userHasData();
+    }
+
+    function userHasData() {
+        return cookies.get(USER_FEATURES_EXPIRY_COOKIE)
+            || cookies.get(PAYING_MEMBER_COOKIE)
+            || cookies.get(AD_FREE_USER_COOKIE);
+    }
 
     function requestNewData() {
         fetchJson(config.page.userAttributesApiUrl + '/me/features', {
