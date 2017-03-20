@@ -78,9 +78,9 @@ define([
     }
 
     function handleResponse(type, data) {
-        var day = 1000 * 60 * 60 * 24;
+        var hour = 1000 * 60 * 60;
 
-        storage.local.set('gu.tailor.' + type, data, { expires: Date.now() + day });
+        storage.local.set('gu.tailor.' + type, data, { expires: Date.now() + hour });
 
         return Promise.resolve(data);
     }
