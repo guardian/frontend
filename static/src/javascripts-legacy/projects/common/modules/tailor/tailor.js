@@ -3,13 +3,15 @@ define([
     'lib/fetch-json',
     'lib/cookies',
     'lib/storage',
-    'lib/report-error'
+    'lib/report-error',
+    'lib/config'
 ], function(
     Promise,
     fetchJson,
     cookies,
     storage,
-    reportError
+    reportError,
+    config
 ) {
 
     var URLS = {
@@ -58,8 +60,8 @@ define([
             return Promise.resolve(tailorData);
         }
 
-        // if no browserId return empty object
-        if (!browserId) {
+        // if no browserId or use tailor switch is off then return an empty object
+        if (!browserId || !config.switches.useTailorEndpoints) {
             return Promise.resolve({});
         }
 
