@@ -12,8 +12,6 @@ define([
     tailor
 ) {
 
-
-
     var bwidCookie = cookies.get('bwid') || '';
 
     function controlTemplate(regular) {
@@ -74,6 +72,30 @@ define([
         }
     }
 
+    function isRegular() {
+        return tailor.fetchData('suggestions').then(function (suggestions) {
+            try {
+                return suggestions.userDataForClient.regular;
+            } catch (e) {
+                return false;
+            }
+        });
+    }
+
+    function renderTemplate(render, template) {
+        if (bwidCookie) {
+            isRegular().then(function (regular) {
+                if (regular) {
+                    render(template(true));
+                } else {
+                    render(controlTemplate(false));
+                }
+            });
+        } else {
+            render(controlTemplate(false));
+        }
+    }
+
     return contributionsUtilities.makeABTest({
         id: 'ContributionsEpicRegularsV2',
         campaignId: 'kr1_epic_regulars_v2',
@@ -100,13 +122,7 @@ define([
                     minDaysBetweenViews: 0
                 },
                 test: function(render) {
-                    if (bwidCookie) {
-                        tailor.getRegularStatus(bwidCookie).then(function (regular) {
-                            render(controlTemplate(regular));
-                        });
-                    } else {
-                        render(controlTemplate(false));
-                    }
+                    renderTemplate(render, controlTemplate);
                 },
                 insertBeforeSelector: '.submeta',
                 successOnView: true
@@ -119,17 +135,7 @@ define([
                     minDaysBetweenViews: 0
                 },
                 test: function(render) {
-                    if (bwidCookie) {
-                        tailor.getRegularStatus(bwidCookie).then(function (regular) {
-                            if(regular) {
-                                render(fairnessStrongTemplate(true));
-                            } else {
-                                render(controlTemplate(false));
-                            }
-                        });
-                    } else {
-                        render(controlTemplate(false));
-                    }
+                    renderTemplate(render, fairnessStrongTemplate);
                 },
                 insertBeforeSelector: '.submeta',
                 successOnView: true
@@ -142,17 +148,7 @@ define([
                     minDaysBetweenViews: 0
                 },
                 test: function(render) {
-                    if (bwidCookie) {
-                        tailor.getRegularStatus(bwidCookie).then(function (regular) {
-                            if(regular) {
-                                render(fairnessStrongAlternateHookTemplate(true));
-                            } else {
-                                render(controlTemplate(false));
-                            }
-                        });
-                    } else {
-                        render(controlTemplate(false));
-                    }
+                    renderTemplate(render, fairnessStrongAlternateHookTemplate);
                 },
                 insertBeforeSelector: '.submeta',
                 successOnView: true

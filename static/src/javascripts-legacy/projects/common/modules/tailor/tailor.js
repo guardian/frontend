@@ -1,9 +1,11 @@
 define([
+    'Promise',
     'lib/fetch-json',
     'lib/cookies',
     'lib/storage',
     'lib/report-error'
 ], function(
+    Promise,
     fetchJson,
     cookies,
     storage,
@@ -11,12 +13,10 @@ define([
 ) {
 
     var URLS = {
-        email: 'https://tailor.guardianapis.com/email',
-        suggestions: 'https://tailor.guardianapis.com/suggestions?browserId=',
-        survey: 'https://tailor.guardianapis.com/orangeSurvey?browserId='
+        suggestions: 'https://tailor.guardianapis.com/suggestions?browserId='
     };
 
-    var browserId = cookies.get('bwid') || 'Qb6TGfeA6wRVyIkMkm7z9hMg'; // DELETE DUMMY 
+    var browserId = cookies.get('bwid');
 
     function getURL(type, queryParams) {
         var baseURL = URLS[type];
@@ -44,6 +44,12 @@ define([
         return baseURL;
     }
 
+    /**
+     * type (required) is a string which should match a key in the URLS object
+     * queryParams (optional) is an object literal, each key/value will be query string parameter
+     * eg. {foo:'bar', hello:'world'} translates to ?foo=bar&hello=world
+     *
+    **/
     function fetchData(type, queryParams) {
         var tailorData = storage.local.get('gu.tailor.' + type);
 
@@ -61,11 +67,11 @@ define([
             return {};
         }
 
-        fetchJson(url, {
-            method: 'get'
-        })
-        .then(handleResponse.bind(null, type))
-        .catch(handleError.bind(null, url))
+        return fetchJson(url, {
+                    method: 'get'
+                })
+                .then(handleResponse.bind(null, type))
+                .catch(handleError.bind(null, type))
     }
 
     function handleResponse(type, data) {
@@ -76,50 +82,14 @@ define([
         return Promise.resolve(data);
     }
 
-    function handleError(url, error) {
+    function handleError(type, error) {
         reportError(error, {
             feature: 'tailor',
-            url: url
+            type: type
         });
     }
-
-    // function getEmail(browserId) {
-    //     return fetchJson('https://tailor.guardianapis.com/email/' + browserId +'?emailIds=39,3322,3039,1950,38,3698', {
-    //         method: 'get'
-    //     });
-    // }
-
-    // function getSuggestions(browserId) {
-    //     return fetchJson('https://tailor.guardianapis.com/suggestions?browserId=' + browserId, {
-    //         method: 'get'
-    //     });
-    // }
-
-    // function getRegularStatus(browserID) {
-    //     return getSuggestions(browserID).then(function(res) {
-    //         try {
-    //             return res.userDataForClient.regular;
-    //         } catch (e) {
-    //             return false
-    //         }
-    //     })
-    // }
-
-    // function getSurvey(browserId, edition, forceShow) {
-    //     var path = 'https://tailor.guardianapis.com/orangeSurvey?browserId=' + browserId + '&edition=' + edition;
-
-    //     if (forceShow) {
-    //         path += '&forceShow=true';
-    //     }
-
-    //     return fetchJson(path, {
-    //         method: 'get'
-    //     })
-    // }
-
 
     return {
         fetchData: fetchData
     };
-
 });
