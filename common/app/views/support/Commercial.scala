@@ -20,6 +20,13 @@ object Commercial {
     case _ => true
   }
 
+  def optionalSlotSizes(page: Page)(implicit request: RequestHeader): Seq[String] = {
+    Edition.edition.id match {
+      case "US" => Seq("300,1050")
+      case _ => Seq()
+    }
+  }
+
   def glabsLink (request: RequestHeader): String = {
     val glabsUrlSuffix = Edition(request).id match {
       case "AU" => "-australia"

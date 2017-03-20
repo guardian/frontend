@@ -2,10 +2,9 @@
 
 @import common.LinkTo
 @import views.BodyCleaner
-@import views.support.Commercial.isPaidContent
+@import views.support.Commercial.{isPaidContent, optionalSlotSizes, shouldShowAds}
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
-@import views.support.Commercial.shouldShowAds
 
 @schemaType(page: ArticlePage) = @{page.article.metadata.schemaType}
 
@@ -111,7 +110,7 @@
                                         @fragments.commercial.adSlot(
                                             "right",
                                             Seq("mpu-banner-ad"),
-                                            Map("mobile" -> Seq("1,1", "2,2", "300,250", "300,600", "fluid")),
+                                            Map("mobile" -> (Seq("1,1", "2,2", "300,250", "300,600", "fluid") ++ optionalSlotSizes(model))),
                                             optId = None,
                                             optClassNames = Some("js-sticky-mpu")
                                             ){ }

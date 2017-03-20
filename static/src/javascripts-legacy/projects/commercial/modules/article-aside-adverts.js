@@ -22,6 +22,10 @@ define([
     var rhColumnSelector = '.js-secondary-column';
     var adSlotSelector = '.js-ad-slot';
 
+    function minContentHeight() {
+      return config.page.isImmersive ? minImmersiveArticleHeight : minArticleHeight;
+    }
+
     function init(start, stop) {
         start();
 
@@ -42,16 +46,14 @@ define([
         })
         .then(function (mainColHeight) {
 
-            // switch to 'right-small' MPU for short articles
-            if ($adSlot.length &&
-              (config.page.isImmersive && mainColHeight < minImmersiveArticleHeight) ||
-            (!config.page.isImmersive && mainColHeight < minArticleHeight)) {
-
+            // Should switch to 'right-small' MPU for short articles
+            if ($adSlot.length && mainColHeight < minContentHeight()) {
               return fastdom.write(function () {
                   $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
                   $adSlot[0].setAttribute('data-mobile', '1,1|2,2|300,250|fluid')
               });
             }
+            return $adSlot;
         })
         .then(function ($adSlot) {
             stop();
