@@ -192,9 +192,10 @@ define([
                 .forEach(function (test) {
                     var variantId = getTestVariantId(test.id);
                     var variant = getVariant(test, variantId);
+                    var campaingCodes = (variant && variant.campaignCodes) ? variant.campaignCodes : undefined;
 
                     if (variantId && segmentUtil.isInTest(test)) {
-                        log[test.id] = abData(variantId, 'false', variant.campaignCodes);
+                        log[test.id] = abData(variantId, 'false', campaingCodes);
                     }
                 });
 
