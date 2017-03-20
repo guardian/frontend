@@ -20,7 +20,7 @@ import capturePerfTimings from 'lib/capture-perf-timings';
 // eslint-disable-next-line camelcase,no-undef
 __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
-// kick of the app
+// kick off the app
 function go() {
     domready(() => {
         // 1. boot standard, always
