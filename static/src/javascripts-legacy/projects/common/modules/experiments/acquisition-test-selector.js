@@ -8,7 +8,8 @@ define([
     'common/modules/experiments/tests/contributions-epic-regulars-v2',
     'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
     'common/modules/experiments/tests/acquisitions-epic-design-variations-v3',
-    'common/modules/experiments/tests/contributions-epic-laundromat'
+    'common/modules/experiments/tests/contributions-epic-laundromat',
+    'common/modules/experiments/tests/acquisitions-epic-vs-epic-and-engagement-banner'
 ], function (
     segmentUtil,
     testCanRunChecks,
@@ -19,7 +20,8 @@ define([
     regularsV2,
     acquisitionsEpicArticle50Trigger,
     acquisitionsEpicDesignVariationsV3,
-    laundromat
+    laundromat,
+    acquisitionsEpicVsEpicAndEngagementBanner
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
@@ -29,12 +31,36 @@ define([
         laundromat,
 		regularsV2,
         acquisitionsEpicDesignVariationsV3,
+        acquisitionsEpicVsEpicAndEngagementBanner,
         askFourEarning,
         acquisitionsEpicArticle50Trigger,
         brexit
     ];
 
+    var epicEngagementBannerTests = tests.filter(function(test) {
+        return test.isEngagementBannerTest;
+    });
+
+    function getVariantIds(testInstance) {
+        return testInstance.variants.map(function(variant) {
+            return variant.id
+        })
+    }
+
+    var abTestClashData = tests.map(function(test) {
+        var testInstance = new test();
+        return {
+            name: testInstance.id,
+            variants: getVariantIds(testInstance)
+        }
+    });
+
     return {
+
+        epicEngagementBannerTests: epicEngagementBannerTests,
+
+        abTestClashData: abTestClashData,
+
         getTest: function() {
             var eligibleTests = tests.filter(function (test) {
                 var t = new test();

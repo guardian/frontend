@@ -1,0 +1,54 @@
+define([
+    'commercial/modules/commercial-features',
+    'common/modules/commercial/contributions-utilities'
+], function (
+    commercialFeatures,
+    contributionsUtilities
+) {
+
+    var buildVariant = contributionsUtilities.variantBuilderFactory({
+        maxViews: {
+            days: 30,
+            count: 4,
+            minDaysBetweenViews: 0
+        },
+        canEpicBeDisplayed: contributionsUtilities.defaultCanEpicBeDisplayed
+    });
+
+    return contributionsUtilities.makeABTest({
+        id: 'AcquisitionsEpicVsEpicAndEngagementBanner',
+        campaignId: 'epic_vs_epic_and_engagement_banner',
+
+        start: '2017-03-17', // TODO
+        expiry: '2017-04-10', // TODO
+
+        author: 'Guy Dawson',
+        description: 'Epic and engagement banner vs the epic only',
+        successMeasure: 'Supporter equivalents',
+        idealOutcome: 'We are able to establish clearly how the engagement banner and epic interact',
+
+        audienceCriteria: 'All',
+        audience: 1,       // TODO
+        audienceOffset: 0, // TODO
+
+        isEngagementBannerTest: true,
+
+        overrideCanRun: true,
+        canRun: function() {
+            return commercialFeatures.canReasonablyAskForMoney
+        },
+
+        variants: [
+
+            buildVariant('control', {
+                engagementBannerParams: {
+                    campaignCode: 'eg' //  TODO
+                }
+            }),
+
+            buildVariant('no_engagement_banner', {
+                blockEngagementBanner: true
+            })
+        ]
+    });
+});

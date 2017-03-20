@@ -239,4 +239,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 5, 3),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-vs-epic-and-engagement-banner",
+    "Test displaying the Epic only vs the Epic and Engagement Banner",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
 }
