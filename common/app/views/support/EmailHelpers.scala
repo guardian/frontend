@@ -22,14 +22,14 @@ object EmailHelpers {
     }
   }
 
-  case class Row(columns: Column*) {
+  case class Row(classes: Seq[String], columns: Column*) {
     def render: Html = {
       val cols = columns.zipWithIndex.map { case (col, i) =>
         col.render(i == 0, i == columns.length - 1)
       }
 
       Html {
-        s"""<table class="row">
+        s"""<table class="row ${classes.mkString(" ")}">
            |  <tbody>
            |    <tr>
            |      ${cols.mkString}
@@ -69,7 +69,7 @@ object EmailHelpers {
     def render: Html = Html {
       s"""<table class="fc-item">
          |    <tr>
-         |      <th class="fc-item__inner ${classes.mkString(" ")}">
+         |      <th class="fc-item__padding ${classes.mkString(" ")}">
          |        ${rows.map(_.render).mkString}
          |      </th>
          |    </tr>
@@ -77,24 +77,23 @@ object EmailHelpers {
     }
   }
 
-  def faciaCardFullRow(classes: Seq[String] = Nil)(inner: Html): Html = FaciaCard(classes, Row(
+  def faciaCardFullRow(classes: Seq[String] = Nil)(inner: Html): Html = FaciaCard(Seq(), Row(classes,
     Column(smallWidth = 12, largeWidth = 12)(inner)
   )).render
 
-
-  def fullRow(inner: Html): Html = Row(
+  def fullRow(inner: Html): Html = Row(Seq(),
     Column(smallWidth = 12, largeWidth = 12)(inner)
   ).render
 
-  def fullRow(classes: Seq[String] = Nil)(inner: Html): Html = Row(
+  def fullRow(classes: Seq[String] = Nil)(inner: Html): Html = Row(Seq(),
     Column(smallWidth = 12, largeWidth = 12, classes)(inner)
   ).render
 
-  def paddedRow(inner: Html): Html = Callout(Nil, Row(
+  def paddedRow(inner: Html): Html = Callout(Nil, Row(Seq(),
     Column(smallWidth = 12, largeWidth = 12)(inner)
   )).render
 
-  def paddedRow(classes: Seq[String] = Nil)(inner: Html): Html = Callout(classes, Row(
+  def paddedRow(classes: Seq[String] = Nil)(inner: Html): Html = Callout(classes, Row(Seq(),
     Column(smallWidth = 12, largeWidth = 12)(inner)
   )).render
 

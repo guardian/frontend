@@ -1,4 +1,4 @@
-.tone-news.fc-item__inner {
+.tone-news {
     border-top: 1px solid #4bc6df;
     background-color: #f6f6f6;
 }
@@ -17,7 +17,7 @@
 }
 
 
-.tone-feature.fc-item__inner {
+.tone-feature {
     border-top: 1px solid pink;
     background-color: #951c55;
 }
@@ -36,7 +36,7 @@
 }
 
 
-.tone-media.fc-item__inner {
+.tone-media {
     border-top: 1px solid #ffbb00;
     background-color: #333;
 }
@@ -55,7 +55,7 @@
 }
 
 
-.tone-review.fc-item__inner {
+.tone-review {
     border-top: 1px solid pink;
     background-color: #7d7569;
 }
@@ -74,7 +74,7 @@
 }
 
 
-.tone-editorial.fc-item__inner {
+.tone-editorial {
     border-top: 1px solid #aad8f1;
     background-color: #005689;
 }
@@ -96,7 +96,7 @@
 .tone-external {
     padding-bottom: 0 !important;
 }
-.tone-external.fc-item__inner {
+.tone-external {
     // TODO: get to be page tone colour
     border-top: 1px solid black;
     background-color: #f6f6f6;
@@ -120,7 +120,7 @@
 }
 
 
-.tone-live.fc-item__inner {
+.tone-live {
     border-top: 1px solid #fdadba;
     background-color: #b51800;
 }
@@ -139,7 +139,7 @@
 }
 
 
-.tone-analysis.fc-item__inner {
+.tone-analysis {
     border-top: 1px solid #4bc6df;
     background-color: #f6f6f6;
 }
@@ -158,7 +158,7 @@
 }
 
 
-.tone-special-report.fc-item__inner {
+.tone-special-report {
     border-top: 1px solid #fce800;
     background-color: #63717a;
 }
@@ -177,7 +177,7 @@
 }
 
 
-.tone-comment.fc-item__inner {
+.tone-comment {
     border-top: 1px solid #e6711b;
     background-color: #e3e3de;
 }
@@ -196,7 +196,7 @@
 }
 
 
-.tone-dead.fc-item__inner {
+.tone-dead {
     border-top: 1px solid pink;
     background-color: #f6f6f6;
 }

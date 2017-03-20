@@ -79,7 +79,7 @@
             @headline(card, largeHeadline)
         }
     } { img =>
-        @FaciaCard(Seq(toneClassFromStyle(card.cardStyle)), Row(
+        @FaciaCard(Seq(), Row(Seq(toneClassFromStyle(card.cardStyle)),
             Column(smallWidth = 5, largeWidth = 5)(img),
             Column(smallWidth = 7, largeWidth = 7)(headline(card))
         )).render

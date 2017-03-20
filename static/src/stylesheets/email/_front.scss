@@ -158,15 +158,11 @@ $thumbnail-radius: $global-radius;
 
 table.fc-item {
     width: 100%; // I added this. It makes cards full-width in Chrome. Effect in mail clients?
-    margin-bottom: $callout-margin-bottom;
-    Margin-bottom: $callout-margin-bottom;
 }
 
-.fc-item__inner {
+.fc-item__padding {
     width: 100%;
-    border: $callout-border;
-    padding: $callout-padding;
-    background: $callout-background;
+    padding-bottom: $callout-margin-bottom;
 }
 
 .message {
