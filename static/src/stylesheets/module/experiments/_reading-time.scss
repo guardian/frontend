@@ -1,4 +1,4 @@
-  .fc-container--thrasher {
+.fc-container--thrasher {
     background: $guardian-brand-dark;
     .fc-item {
         background: $guardian-brand;
@@ -16,7 +16,7 @@
             $news-main-2
     );
     font-weight: normal;
-    margin-bottom: 5px;
+    margin-bottom: $gs-baseline;
     width: gs-span(1.5);
 }
 .reading-time__wrapper {
@@ -28,7 +28,10 @@
             line-height: 1.3em;
             font-weight: bold;
             vertical-align: top;
-            padding-top: 5px;
+
+            @include mq(leftCol) {
+                margin-top: 4px;
+            }
         }
 
         .js-feedback-text-reading-time__cta, .reading-time__selections {
@@ -69,7 +72,7 @@
 
             .reading-time__clock {
                 svg {
-                    margin-left: -2px;
+                    margin-left: -$gs-baseline/2;
                     margin-right: 5px;
                     width: 15%;
                     vertical-align: middle;
@@ -81,7 +84,6 @@
     .reading-time {
         color: $neutral-8;
         max-width: 620px;
-        margin: 0 auto;
 
         @include mq(mobileLandscape) {
             padding: 0 10px;
@@ -92,13 +94,14 @@
         }
         @include mq(leftCol) {
             margin-left: 160px;
+            margin-top: 3px;
         }
         @include mq(wide) {
             margin-left: 240px;
         }
         &__title {
             display: inline-block;
-            padding-top: 2px;
+            padding-top: 3px;
             color: #4BC6DF;
             float: none;
             width: auto;
@@ -110,25 +113,13 @@
         }
         &__roundel {
             float: right;
-            margin-top: -5px;
+            margin-top: 5px;
             svg {
-                width: 60%;
-            }
-        }
-        &__main {
-            display: block;
-            font-size: 24px;
-            line-height: 26px;
-            font-weight: 600;
-            padding-top: 1px;
-            padding-bottom: 18px;
-            margin-top: -3px;
-            @include mq(tablet) {
-                font-size: 26px;
-                line-height: 28px;
+                transform-origin: top right;
+                transform: scale(0.7);
             }
             @include mq(leftCol) {
-                margin-top: 3px;
+                margin-top: 1px;
             }
         }
 
