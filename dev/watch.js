@@ -75,8 +75,7 @@ const copyFiles = require('../tools/__tasks__/compile/conf/copy');
 // and only compile what we need to. anything matching this regex, we can just ignore in dev.
 const ignoredSassRegEx = /^(_|ie9|old-ie)/;
 
-chokidar.watch(`${sassDir}/**/*.scss`)
-    .on('change', changedFile => {
+chokidar.watch(`${sassDir}/**/*.scss`).on('change', changedFile => {
     // see what top-level files need to be recompiled
     const filesToCompile = [];
 

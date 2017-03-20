@@ -27,7 +27,7 @@ module.exports = {
         {
             description: 'Email',
             task: () => compile('head.email*.scss', {
-                remify: false
+                remify: false,
             }),
         },
     ],
