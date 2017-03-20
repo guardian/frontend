@@ -411,25 +411,6 @@ define([
             getActiveTests().filter(defersImpression).forEach(registerCompleteEvent(false));
         },
 
-        isEventApplicableToAnActiveTest: function (event) {
-            return Object.keys(getParticipations()).some(function (id) {
-                var listOfEventStrings = getTest(id).events;
-                return listOfEventStrings.some(function (ev) {
-                    return event.indexOf(ev) === 0;
-                });
-            });
-        },
-
-        getActiveTestsEventIsApplicableTo: function (event) {
-            var eventTag = event.tag;
-            return eventTag && getActiveTests().filter(function (test) {
-                    var testEvents = test.events;
-                    return testEvents && testEvents.some(function (testEvent) {
-                            return eventTag.indexOf(testEvent) === 0;
-                        });
-                }).map(getId);
-        },
-
         getAbLoggableObject: getAbLoggableObject,
         getParticipations: getParticipations,
         isParticipating: isParticipating,

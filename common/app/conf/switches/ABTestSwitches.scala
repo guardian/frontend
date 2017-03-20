@@ -26,7 +26,7 @@ trait ABTestSwitches {
     "Test copy for the engagement banner in all countries aside from the US and Australia",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 17),
+    sellByDate = new LocalDate(2017, 3, 24),
     exposeClientSide = true
   )
 
@@ -216,7 +216,7 @@ trait ABTestSwitches {
     "Test more design variations to the Epic",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 17),
+    sellByDate = new LocalDate(2017, 4, 20),
     exposeClientSide = true
   )
 
@@ -225,6 +225,36 @@ trait ABTestSwitches {
     "ab-acquisitions-epic-article-50-trigger",
     "Display the Epic on Article 50 articles for readers in Europe",
     owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-content-tailoring-environment",
+    "This targets articles in the environment section in order to test specific messages",
+    owners = Seq(Owner.withGithub("alexduf")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-content-tailoring-cif",
+    "This targets articles in the comment is free section in order to test specific messages",
+    owners = Seq(Owner.withGithub("alexduf")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-content-tailoring-football",
+    "This targets articles in the football section in order to test specific messages",
+    owners = Seq(Owner.withGithub("alexduf")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true

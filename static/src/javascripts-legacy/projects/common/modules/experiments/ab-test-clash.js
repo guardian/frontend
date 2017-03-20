@@ -24,7 +24,7 @@ define([
 	};
 
     var AcquisitionsEpicDesignVariationsV2 = {
-        name: 'AcquisitionsDesignVariations',
+        name: 'AcquisitionsEpicDesignVariationsV2',
         variants: ['control', 'highlight_subtle', 'highlight_perspective', 'highlight_secure', 'highlight_hard', 'paypal']
     };
 
@@ -33,18 +33,34 @@ define([
         variants: ['control']
     };
 
+    var AcquisitionsContentTailoringEnvironment = {
+        name: 'AcquisitionsEpicContentTailoringEnvironment',
+        variants: ['control', 'impact', 'reference']
+    };
+
+    var AcquisitionsContentTailoringCif = {
+        name: 'AcquisitionsEpicContentTailoringCif',
+        variants: ['control', 'impact', 'reference']
+    };
+
+    var AcquisitionsContentTailoringFootball = {
+        name: 'AcquisitionsEpicContentTailoringFootball',
+        variants: ['control', 'impact', 'reference']
+    };
+
     var contributionsTests = [
         ContributionsEpicAlwaysAskStrategy,
         ContributionsEpicBrexit,
         ContributionsEpicAskFourEarning,
         ContributionsEpicRegulars,
         AcquisitionsEpicDesignVariationsV2,
-        AcquisitionsEpicArticle50Trigger
+        AcquisitionsEpicArticle50Trigger,
+        AcquisitionsContentTailoringEnvironment,
+        AcquisitionsContentTailoringCif,
+        AcquisitionsContentTailoringFootball
     ];
 
     var emailTests = [];
-
-    var nonEmailClashingTests = contributionsTests;
 
     var clashingTests = contributionsTests.concat(emailTests);
 
@@ -69,7 +85,8 @@ define([
 
     return {
         userIsInAClashingAbTest: userIsInAClashingAbTest,
-        nonEmailClashingTests: nonEmailClashingTests,
+        contributionsTests: contributionsTests,
+        emailTests: emailTests,
         _testABClash: _testABClash // exposed for unit testing
     };
 });

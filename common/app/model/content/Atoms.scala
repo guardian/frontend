@@ -9,6 +9,8 @@ import org.joda.time.{DateTime, DateTimeZone, Duration}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 import enumeratum._
+import model.content.MediaAssetPlatform.findValues
+import views.support.{GoogleStructuredData, ImgSrc}
 
 final case class Atoms(
   quizzes: Seq[Quiz],
@@ -355,4 +357,12 @@ object RecipeAtom {
 
 object ReviewAtom {
   def make(atom: AtomApiAtom): ReviewAtom = ReviewAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Review].review)
+
+  def getLargestImageUrl(images: Seq[com.gu.contentatom.thrift.Image]): Option[String] = {
+    for {
+      image <- images.headOption
+      media = model.content.MediaAtom.imageMediaMake(image, "")
+      url <- ImgSrc.findLargestSrc(media, GoogleStructuredData)
+    } yield url
+  }
 }

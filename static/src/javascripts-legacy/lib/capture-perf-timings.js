@@ -3,10 +3,15 @@ define([
     'lib/user-timing'
 ], function (ophan, userTiming) {
     return function captureTiming() {
-        var timing = window.performance && window.performance.timing;
-        if (!timing) {
+        var supportsPerformanceProperties = 'performance' in window &&
+                                            'navigation' in window.performance &&
+                                            'timing' in window.performance;
+
+        if (!supportsPerformanceProperties) {
             return;
         }
+
+        var timing = window.performance && window.performance.timing;
 
         var marks = [
             'standard boot',
