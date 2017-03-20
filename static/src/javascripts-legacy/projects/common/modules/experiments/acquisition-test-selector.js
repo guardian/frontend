@@ -10,7 +10,7 @@ define([
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
     'common/modules/experiments/tests/contributions-epic-regulars-v2',
     'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
-    'common/modules/experiments/tests/acquisitions-epic-design-variations-v2'
+    'common/modules/experiments/tests/contributions-epic-laundromat'
 ], function (
     segmentUtil,
     testCanRunChecks,
@@ -23,13 +23,15 @@ define([
     askFourEarning,
     regularsV2,
     acquisitionsEpicArticle50Trigger,
-    acquisitionsEpicDesignVariationsV2
+    acquisitionsEpicDesignVariationsV2,
+    laundromat
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */
     var tests = [
         alwaysAsk,
+        laundromat,
 		regularsV2,
         contentTailoringEnvironment,
         contentTailoringCif,

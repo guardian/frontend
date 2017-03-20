@@ -33,6 +33,12 @@ define([
         variants: ['control']
     };
 
+    var ContributionsEpicLaundromat = {
+        name: 'ContributionsEpicLaundromat',
+        variants: ['control']
+    };
+
+
     var AcquisitionsContentTailoringEnvironment = {
         name: 'AcquisitionsEpicContentTailoringEnvironment',
         variants: ['control', 'impact', 'reference']

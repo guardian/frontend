@@ -220,6 +220,18 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-laundromat",
+    "Display the Epic on Laundromat articles",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
+
   Switch(
     ABTests,
     "ab-acquisitions-epic-content-tailoring-environment",
