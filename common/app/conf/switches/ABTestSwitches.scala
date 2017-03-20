@@ -122,7 +122,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-regulars",
+    "ab-contributions-epic-regulars-v2",
     "Test messages aimed at our regular readers",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
