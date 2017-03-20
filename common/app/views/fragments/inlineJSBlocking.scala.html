@@ -64,7 +64,7 @@
         @if(mvt.PolyfillIO.isParticipating) {
             var polyfillScript = document.createElement('script');
             var polyfillRef = document.getElementsByTagName('script')[0];
-            polyfillScript.src = 'https://assets.guim.co.uk/polyfill-io/v2/polyfill.min.js?features=es6,Element.prototype.closest,Element.prototype.matches';
+            polyfillScript.src = 'https://assets.guim.co.uk/polyfill.io/v2/polyfill.min.js?features=es6,Element.prototype.closest,Element.prototype.matches';
             polyfillRef.parentNode.insertBefore(polyfillScript, polyfillRef);
         }
 
