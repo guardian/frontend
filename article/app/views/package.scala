@@ -62,6 +62,10 @@ object BodyCleaner {
       PullquoteCleaner,
       CmpParamCleaner,
       ExploreVideos(article.isExplore),
+      PhotoEssayImages(article.isPhotoEssay),
+      PhotoEssayQuotes(article.isPhotoEssay),
+      PhotoEssayHalfWidth(article.isPhotoEssay),
+      PhotoEssayBlockQuote(article.isPhotoEssay),
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
       MinuteCleaner(article)

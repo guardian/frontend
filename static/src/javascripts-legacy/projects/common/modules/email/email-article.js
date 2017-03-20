@@ -6,7 +6,7 @@ define([
     'common/modules/email/email',
     'lib/config',
     'raw-loader!common/views/email/iframe.html',
-    'lib/template',
+    'lodash/utilities/template',
     'common/modules/article/space-filler',
     'lib/robust',
     'common/modules/email/run-checks',
@@ -18,8 +18,7 @@ define([
     'common/modules/tailor/tailor',
     'lib/cookies',
     'lib/mediator',
-    'common/modules/check-mediator',
-    'ophan/ng'
+    'common/modules/check-mediator'
 ], function (
     $,
     bean,
@@ -40,8 +39,7 @@ define([
     tailor,
     cookies,
     mediator,
-    checkMediator,
-    ophan
+    checkMediator
 ) {
     var insertBottomOfArticle = function ($iframeEl) {
             $iframeEl.prependTo('.content-footer');
@@ -188,29 +186,12 @@ define([
                 }()),
                 listName: 'theGuardianToday',
                 campaignCode: 'guardian_today_article_bottom',
-                insertEventName: 'GuardianTodaySignupMessaging:insert',
-                successEventName: 'GuardianTodaySignupMessaging:signup',
-                trackingCode: 'GuardianTodaySignupMessaging-' + ab.getTestVariantId('GuardianTodaySignupMessaging'),
                 displayName: {
                     normalText: 'theguardian',
                     accentedText: 'today'
                 },
-                headline: (function () {
-                    switch (ab.getTestVariantId('GuardianTodaySignupMessaging')) {
-                        case 'message-a': return 'Get a headstart on the day';
-                        case 'message-b': return 'Cut through the noise';
-                        case 'message-c': return 'The headlines, the analysis, the debate';
-                        default: return 'Want stories like this in your inbox?';
-                    }
-                }()),
-                description: (function () {
-                    switch (ab.getTestVariantId('GuardianTodaySignupMessaging')) {
-                        case 'message-a': return 'The top headlines, candid commentary and the best features to keep you up to speed and spark debate. The Guardian Today daily email will get you asking bigger questions and make sure you don’t miss a thing.';
-                        case 'message-b': return 'Get straight to the heart of the day’s breaking news in double-quick time with the Guardian Today. We’ll email you the stories you need to read, and bundle them up with the best of sport, culture, lifestyle and more.';
-                        case 'message-c': return 'Get the whole picture from a source you trust, emailed to you every morning. The biggest stories examined, and diverse, independent views - the Guardian Today delivers the best of our journalism.';
-                        default: return 'Sign up to The Guardian Today daily email and get the biggest headlines each morning.';
-                    }
-                }()),
+                headline: 'The headlines, the analysis, the debate',
+                description: 'Get the whole picture from a source you trust, emailed to you every morning. The biggest stories examined, and diverse, independent views - the Guardian Today delivers the best of our journalism.',
                 successHeadline: 'Thank you for signing up to the Guardian Today',
                 successDescription: 'We will send you our picks of the most important headlines tomorrow morning.',
                 insertMethod: insertBottomOfArticle
@@ -235,7 +216,7 @@ define([
         addListToPage = function (listConfig, successEventName) {
 
             if (listConfig) {
-                listConfig.successEventName = successEventName || listConfig.successEventName || "";
+                listConfig.successEventName = successEventName || "";
                 var iframe = bonzo.create(template(iframeTemplate, listConfig))[0],
                     $iframeEl = $(iframe),
                     onEmailAdded = function () {
@@ -247,16 +228,9 @@ define([
                     email.init(iframe);
                 });
 
-                if (listConfig.insertEventName) {
-                    mediator.emit(listConfig.insertEventName);
-                }
-
                 if (listConfig.insertMethod) {
                     fastdom.write(function () {
                         listConfig.insertMethod($iframeEl);
-                        if (listConfig.trackingCode) {
-                            ophan.trackComponentAttention(listConfig.trackingCode, $iframeEl[0]);
-                        }
                         googleAnalytics.trackNonClickInteraction('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
                         onEmailAdded();
                     });
@@ -309,22 +283,25 @@ define([
 
     return {
         init: function () {
-            checkMediator.waitForCheck('emailCanRun').then(function (canEmailRun) {
-                if (canEmailRun) {
-                    emailRunChecks.getUserEmailSubscriptions().then(function () {
-                        if (ab.isParticipating({id: 'TailorRecommendedEmail'})) {
-                            switch (ab.getTestVariantId('TailorRecommendedEmail')) {
-                                case 'tailor-recommended': tailorInTest(); break;
-                                case 'control': tailorControl(); break;
-                                case 'tailor-random': tailorRandom(); break;
-                                default: addListToPage(find(listConfigs, emailRunChecks.listCanRun)); break;
-                            }
-                        } else {
-                            addListToPage(find(listConfigs, emailRunChecks.listCanRun));
-
+            checkMediator.waitForCheck('emailCanRun').then(function (emailCanRun) {
+                if (emailCanRun) {
+                    checkMediator.waitForCheck('emailCanRunPostCheck').then(function (emailCanRunPostCheck) {
+                        if (emailCanRunPostCheck) {
+                            emailRunChecks.getUserEmailSubscriptions().then(function () {
+                                if (ab.isParticipating({id: 'TailorRecommendedEmail'})) {
+                                    switch (ab.getTestVariantId('TailorRecommendedEmail')) {
+                                        case 'tailor-recommended': tailorInTest(); break;
+                                        case 'control': tailorControl(); break;
+                                        case 'tailor-random': tailorRandom(); break;
+                                        default: addListToPage(find(listConfigs, emailRunChecks.listCanRun)); break;
+                                    }
+                                } else {
+                                    addListToPage(find(listConfigs, emailRunChecks.listCanRun));
+                                }
+                            }).catch(function (error) {
+                                robust.log('c-email', error);
+                            });
                         }
-                    }).catch(function (error) {
-                        robust.log('c-email', error);
                     });
                 }
             }).catch(function (error) {

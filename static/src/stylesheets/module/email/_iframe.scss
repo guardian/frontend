@@ -191,15 +191,15 @@ body {
         @include fs-header(4);
         color: #ffffff;
         padding-right: 40px; // Avoid close icon
+        hyphens: none; // Allow invisible line breaks in "one-word" names, e.g. theguardiantoday
     }
 
     .email-sub__description {
+        @include right-padding-to-match-article-content;
         background-color: transparent;
         border-top: 0 none;
         min-height: 20px; // Min-height required to avoid some of the layout thrashing from loading in an iframe
         padding-bottom: $gs-baseline * 2;
-
-        @include right-padding-to-match-article-content;
     }
 }
 
@@ -220,14 +220,15 @@ body {
 
     .email-sub__text-input {
         margin-bottom: $gs-baseline;
+
         @include mq(mobile) {
-            border: none;
+            border: 0;
         }
     }
 
     .email-sub__submit-button {
         @include mq(mobile) {
-            border: none;
+            border: 0;
         }
     }
 }
@@ -252,6 +253,7 @@ body {
         }
 
         .email-sub__heading {
+            line-height: $gs-baseline * 2;
             color: $tone-colour-title;
         }
 

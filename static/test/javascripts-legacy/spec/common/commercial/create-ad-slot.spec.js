@@ -1,6 +1,7 @@
 define([
     'bonzo',
     'helpers/injector',
+    'commercial/modules/ad-sizes',
     'raw-loader!fixtures/commercial/ad-slots/im.html',
     'raw-loader!fixtures/commercial/ad-slots/inline1.html',
     'raw-loader!fixtures/commercial/ad-slots/right.html',
@@ -8,6 +9,7 @@ define([
 ], function (
     bonzo,
     Injector,
+    adSizes,
     imHtml,
     inline1Html,
     rightHtml,
@@ -67,6 +69,12 @@ define([
             var adSlot = createSlot('inline', { classes: 'inline-extra' });
 
             expect(bonzo(adSlot).hasClass('ad-slot--inline-extra')).toBeTruthy();
+        });
+
+        it('should create "inline1" ad slot with additional size', function () {
+            var adSlot = createSlot('inline', { sizes: { desktop: [ adSizes.leaderboard ]} });
+
+            expect(bonzo(adSlot).attr('data-desktop').indexOf(adSizes.leaderboard.toString())).toBeTruthy();
         });
 
     });

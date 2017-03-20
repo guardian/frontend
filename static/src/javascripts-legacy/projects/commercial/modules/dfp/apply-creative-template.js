@@ -1,12 +1,10 @@
 define([
     'bean',
-    'bonzo',
     'Promise',
     'lib/fastdom-promise',
     'lib/report-error',
 
     // These need to be bundled, so that they can be fetched asynchronously in production
-    'commercial/modules/creatives/commercial-component',
     'commercial/modules/creatives/frame',
     'commercial/modules/creatives/revealer',
     'commercial/modules/creatives/fabric-v1',
@@ -18,7 +16,6 @@ define([
     'commercial/modules/creatives/template'
 ], function (
     bean,
-    bonzo,
     Promise,
     fastdom,
     reportError
@@ -103,7 +100,7 @@ define([
         function renderCreative(config) {
             return new Promise(function(resolve) {
                 require(['commercial/modules/creatives/' + config.name], function (Creative) {
-                    resolve(new Creative(bonzo(adSlot), config.params, config.opts).create());
+                    resolve(new Creative(adSlot, config.params, config.opts).create());
                 });
             });
         }

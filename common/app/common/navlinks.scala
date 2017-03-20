@@ -154,6 +154,7 @@ object NavLinks {
     "money/debt",
     "money/work-and-careers",
     "cartoons/archive",
+    "type/cartoon",
     "profile/editorial",
     "index/contributors",
     "commentisfree/series/comment-is-free-weekly",

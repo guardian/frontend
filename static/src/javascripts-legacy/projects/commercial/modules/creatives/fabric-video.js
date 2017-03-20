@@ -4,7 +4,7 @@ define([
     'lib/add-event-listener',
     'lib/fastdom-promise',
     'lib/detect',
-    'lib/template',
+    'lodash/utilities/template',
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker',
     'raw-loader!commercial/views/creatives/fabric-video.html'
@@ -18,7 +18,6 @@ define([
         var isSmallScreen = detect.isBreakpoint({ max: 'phablet' });
         var hasVideo, video, layer2, inView;
 
-        adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
         fabricVideoTpl || (fabricVideoTpl = template(fabricVideoStr));
 
         hasVideo = !(detect.isIOS() || detect.isAndroid() || isSmallScreen);

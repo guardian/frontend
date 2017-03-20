@@ -10,6 +10,7 @@ import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 import enumeratum._
 import model.content.MediaAssetPlatform.findValues
+import views.support.{GoogleStructuredData, ImgSrc}
 
 final case class Atoms(
   quizzes: Seq[Quiz],
@@ -311,9 +312,18 @@ object RecipeAtom {
   def yieldServingType(serves: com.gu.contentatom.thrift.atom.recipe.Serves): String = {
     serves.`type` match {
       case "serves" => "servings"
-      case "makes" => s"${serves.unit}"
+      case "makes" => s"${serves.unit.getOrElse("")}"
       case "quantity" => "portions"
     }
+  }
+
+  def formatServingValue(serves: com.gu.contentatom.thrift.atom.recipe.Serves): String = {
+    val portions = if (serves.from != serves.to) s"from ${serves.from} to ${serves.to} " else s"${serves.from} "
+    portions ++ yieldServingType(serves)
+  }
+
+  def formatIngredientValues(ingredients: Seq[com.gu.contentatom.thrift.atom.recipe.Ingredient]): Seq[String] = {
+    ingredients.map(formatIngredientValue)
   }
 
   def formatIngredientValue(ingredient: com.gu.contentatom.thrift.atom.recipe.Ingredient): String = {
@@ -347,4 +357,12 @@ object RecipeAtom {
 
 object ReviewAtom {
   def make(atom: AtomApiAtom): ReviewAtom = ReviewAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Review].review)
+
+  def getLargestImageUrl(images: Seq[com.gu.contentatom.thrift.Image]): Option[String] = {
+    for {
+      image <- images.headOption
+      media = model.content.MediaAtom.imageMediaMake(image, "")
+      url <- ImgSrc.findLargestSrc(media, GoogleStructuredData)
+    } yield url
+  }
 }

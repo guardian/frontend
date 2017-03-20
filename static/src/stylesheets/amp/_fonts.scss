@@ -65,7 +65,7 @@
 .guardian-text-sans-loaded {
     .hosted-page,
     .hosted__header,
-    .header__nav__link,
+    .header__nav-link,
     .caption,
     .content__dateline,
     .ad-slot--paid-for-badge__header,
@@ -84,7 +84,8 @@
     .d2-body,
     .meta__contact-header,
     .back-to-top__text,
-    .submeta2 {
+    .submeta__label,
+    .submeta__link {
         font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
     }
 }

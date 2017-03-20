@@ -7,18 +7,19 @@ define([
     'lodash/arrays/compact',
     'lodash/utilities/noop',
     'common/modules/experiments/segment-util',
+    'common/modules/experiments/test-can-run-checks',
+    'common/modules/experiments/acquisition-test-selector',
     'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/opinion-email-variants',
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/tests/paid-content-vs-outbrain',
-    'common/modules/experiments/tests/guardian-today-messaging',
-    'common/modules/experiments/acquisition-test-selector',
     'common/modules/experiments/tests/tailor-recommended-email',
     'common/modules/experiments/tests/membership-a3-a4-bundles-thrasher',
     'common/modules/experiments/tests/tailor-survey',
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
+    'common/modules/experiments/tests/increase-inline-ads',
     'common/modules/experiments/tests/reading-time',
     'ophan/ng'
 ], function (reportError,
@@ -29,18 +30,19 @@ define([
              compact,
              noop,
              segmentUtil,
+             testCanRunChecks,
+             acquisitionTestSelector,
              EditorialEmailVariants,
              OpinionEmailVariants,
              RecommendedForYou,
              MembershipEngagementBannerTests,
              PaidContentVsOutbrain,
-             GuardianTodayMessaging,
-             acquisitionTestSelector,
              TailorRecommendedEmail,
              MembershipA3A4BundlesThrasher,
              TailorSurvey,
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
+             IncreaseInlineAds,
              ReadingTime,
              ophan
     ) {
@@ -49,12 +51,13 @@ define([
         new OpinionEmailVariants(),
         new RecommendedForYou(),
         new PaidContentVsOutbrain,
-        new GuardianTodayMessaging(),
         acquisitionTestSelector.getTest(),
         new TailorRecommendedEmail(),
         new MembershipA3A4BundlesThrasher(),
         new TailorSurvey(),
         SleevenotesNewEmailVariant,
+        SleevenotesLegacyEmailVariant,
+        new IncreaseInlineAds(),
         SleevenotesLegacyEmailVariant,
         new ReadingTime()
     ].concat(MembershipEngagementBannerTests));
@@ -109,16 +112,9 @@ define([
         });
     }
 
-    function isExpired(testExpiry) {
-      // new Date(test.expiry) sets the expiry time to 00:00:00
-      // Using SetHours allows a test to run until the END of the expiry day
-      var startOfToday = new Date().setHours(0,0,0,0);
-      return startOfToday > new Date(testExpiry);
-    }
-
     function getActiveTests() {
         return TESTS.filter(function (test) {
-            if (isExpired(test.expiry)) {
+            if (testCanRunChecks.isExpired(test.expiry)) {
                 removeParticipation(test);
                 return false;
             }
@@ -128,16 +124,8 @@ define([
 
     function getExpiredTests() {
         return TESTS.filter(function (test) {
-            return isExpired(test.expiry);
+            return testCanRunChecks.isExpired(test.expiry);
         });
-    }
-
-    function testCanBeRun(test) {
-        var expired = isExpired(test.expiry),
-            isSensitive = config.page.isSensitive;
-
-        return ((isSensitive ? test.showForSensitive : true)
-            && isTestSwitchedOn(test)) && !expired && test.canRun();
     }
 
     function getId(test) {
@@ -155,7 +143,7 @@ define([
 
         Object.keys(participations)
             .map(getTest)
-            .filter(testCanBeRun)
+            .filter(testCanRunChecks.testCanBeRun)
             .forEach(function (test) {
                 tag.push('AB | ' + test.id + ' | ' + participations[test.id].variant);
             });
@@ -195,7 +183,7 @@ define([
             getActiveTests()
                 .filter(not(defersImpression))
                 .filter(isParticipating)
-                .filter(testCanBeRun)
+                .filter(testCanRunChecks.testCanBeRun)
                 .forEach(function (test) {
                     var variantId = getTestVariantId(test.id);
                     var variant = getVariant(test, variantId);
@@ -248,7 +236,7 @@ define([
 
     // Finds variant in specific tests and runs it
     function run(test) {
-        if (isParticipating(test) && testCanBeRun(test)) {
+        if (isParticipating(test) && testCanRunChecks.testCanBeRun(test)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
             var variant = getVariant(test, variantId);
@@ -262,7 +250,7 @@ define([
 
     function allocateUserToTest(test) {
         // Only allocate the user if the test is valid and they're not already participating.
-        if (testCanBeRun(test) && !isParticipating(test)) {
+        if (testCanRunChecks.testCanBeRun(test) && !isParticipating(test)) {
             addParticipation(test, segmentUtil.variantIdFor(test));
         }
     }
@@ -308,10 +296,6 @@ define([
         });
     }
 
-    function isTestSwitchedOn(test) {
-        return config.switches['ab' + test.id];
-    }
-
     function getTestVariantId(testId) {
         var participation = getParticipations()[testId];
         return participation && participation.variant;
@@ -328,7 +312,7 @@ define([
 
     function shouldRunTest(id, variant) {
         var test = getTest(id);
-        return test && isParticipating(test) && getTestVariantId(id) === variant && testCanBeRun(test);
+        return test && isParticipating(test) && getTestVariantId(id) === variant && testCanRunChecks.testCanBeRun(test);
     }
 
     function getVariant(test, variantId) {
@@ -419,25 +403,6 @@ define([
             getActiveTests().filter(defersImpression).forEach(registerCompleteEvent(false));
         },
 
-        isEventApplicableToAnActiveTest: function (event) {
-            return Object.keys(getParticipations()).some(function (id) {
-                var listOfEventStrings = getTest(id).events;
-                return listOfEventStrings.some(function (ev) {
-                    return event.indexOf(ev) === 0;
-                });
-            });
-        },
-
-        getActiveTestsEventIsApplicableTo: function (event) {
-            var eventTag = event.tag;
-            return eventTag && getActiveTests().filter(function (test) {
-                    var testEvents = test.events;
-                    return testEvents && testEvents.some(function (testEvent) {
-                            return eventTag.indexOf(testEvent) === 0;
-                        });
-                }).map(getId);
-        },
-
         getAbLoggableObject: getAbLoggableObject,
         getParticipations: getParticipations,
         isParticipating: isParticipating,
@@ -460,10 +425,10 @@ define([
         testCanBeRun: function (test) {
             if (typeof test === 'string') {
                 test = getTest(test);
-                return test && testCanBeRun(test);
+                return test && testCanRunChecks.testCanBeRun(test);
             }
 
-            return test.id && test.expiry && testCanBeRun(test);
+            return test.id && test.expiry && testCanRunChecks.testCanBeRun(test);
         },
 
         /**

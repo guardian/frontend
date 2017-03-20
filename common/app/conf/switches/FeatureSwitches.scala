@@ -21,7 +21,7 @@ trait FeatureSwitches {
     "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 17),
+    sellByDate = new LocalDate(2017, 4, 3),
     exposeClientSide = true
   )
 
@@ -487,14 +487,15 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val AmpOphanTrackingIncludesCredentials = Switch(
+  // Owner: George Haberis
+  val TailorSurveyOverlay = Switch(
     SwitchGroup.Feature,
-    "amp-ophan-tracking-includes-credentials",
-    "allows access to id field when page viewed from google cache so that we keep tracking consistent",
-    owners = Seq(Owner.withGithub("michaelwmcnamara")),
+    "tailor-survey-overlay",
+    "When ON, will show the Tailor survey overlay message",
+    owners = Seq(Owner.withGithub("GHaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 10),
+    sellByDate = never,
     exposeClientSide = true
-
   )
+
 }

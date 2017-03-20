@@ -6,7 +6,7 @@ define([
     'lib/$',
     'lib/storage',
     'lib/config',
-    'lib/template',
+    'lodash/utilities/template',
     'common/views/svg',
     'raw-loader!common/views/experiments/reading-time.html',
     'svg-loader!svgs/icon/marque-36.svg',

@@ -11,8 +11,8 @@ define([
     'lib/mediator',
     'lib/storage',
     'lib/geolocation',
-    'lib/template',
-    'raw-loader!common/views/contributions-epic-equal-buttons.html'
+    'lodash/utilities/template',
+    'raw-loader!common/views/acquisitions-epic-control.html'
 ], function (
     uniq,
     commercialFeatures,
@@ -27,11 +27,11 @@ define([
     storage,
     geolocation,
     template,
-    contributionsEpicEqualButtons
+    acquisitionsEpicControlTemplate
 ) {
 
-    var membershipURL = 'https://membership.theguardian.com/supporter';
-    var contributionsURL = 'https://contribute.theguardian.com';
+    var membershipBaseURL = 'https://membership.theguardian.com/supporter';
+    var contributionsBaseURL = 'https://contribute.theguardian.com';
 
     var lastContributionDate = cookies.get('gu.contributions.contrib-timestamp');
 
@@ -56,6 +56,14 @@ define([
         } catch(e) {
             return Infinity;
         }
+    }
+
+    function controlTemplate(variant) {
+        return template(acquisitionsEpicControlTemplate, {
+            membershipUrl: variant.membershipURL,
+            contributionUrl: variant.contributeURL,
+            componentName: variant.componentName
+        });
     }
 
     function ContributionsABTest(options) {
@@ -120,19 +128,6 @@ define([
         return this.id + ':' + event;
     };
 
-    function controlTemplate(membershipUrl, contributionUrl) {
-        return template(contributionsEpicEqualButtons, {
-            linkUrl1: membershipUrl,
-            linkUrl2: contributionUrl,
-            title: 'Since you’re here …',
-            p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And unlike some other news organisations, we haven’t put up a paywall – we want to keep our journalism open to all. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-            p2: 'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
-            p3: '',
-            cta1: 'Become a Supporter',
-            cta2: 'Make a contribution'
-        });
-    }
-
     function ContributionsABTestVariant(options, test) {
         var trackingCampaignId = test.epic ? 'epic_' + test.campaignId : test.campaignId;
 
@@ -146,19 +141,22 @@ define([
         this.membershipCampaignCode = getCampaignCode(test.membershipCampaignPrefix, this.campaignId, this.id);
         this.campaignCodes = uniq([this.contributeCampaignCode, this.membershipCampaignCode]);
 
-        this.contributeURL = options.contributeURL || this.makeURL(contributionsURL, this.contributeCampaignCode);
-        this.membershipURL = options.membershipURL || this.makeURL(membershipURL, this.membershipCampaignCode);
+        this.contributeURL = options.contributeURL || this.makeURL(contributionsBaseURL, this.contributeCampaignCode);
+        this.membershipURL = options.membershipURL || this.makeURL(membershipBaseURL, this.membershipCampaignCode);
+
+        this.componentName = 'mem_acquisition_' + trackingCampaignId + '_' + this.id;
 
         this.template = options.template || controlTemplate;
 
         this.test = function () {
-            var component = $.create(this.template(this.membershipURL, this.contributeURL));
             var onInsert = options.onInsert || noop;
             var onView = options.onView || noop;
 
-            function render() {
-                mediator.emit('register:begin', trackingCampaignId);
+            function render(templateFn) {
+                var template = templateFn || this.template;
+                var component = $.create(template(this));
 
+                mediator.emit('register:begin', trackingCampaignId);
                 return fastdom.write(function () {
                     var selector = options.insertBeforeSelector || '.submeta';
                     var sibling = $(selector);
@@ -196,11 +194,19 @@ define([
 
     ContributionsABTestVariant.prototype.makeURL = function(base, campaignCode) {
         var params = [
-            'INTCMP=' + campaignCode,
-            'REFPVID=' + this.pageviewId
+            'REFPVID=' + this.pageviewId,
+            'INTCMP=' + campaignCode
         ];
 
         return base + '?' + params.filter(Boolean).join('&');
+    }
+
+    ContributionsABTestVariant.prototype.contributionsURLBuilder = function(codeModifier) {
+        return this.makeURL(contributionsBaseURL, codeModifier(this.contributeCampaignCode));
+    }
+
+    ContributionsABTestVariant.prototype.membershipURLBuilder = function(codeModifier) {
+        return this.makeURL(membershipBaseURL, codeModifier(this.contributeCampaignCode));
     }
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {

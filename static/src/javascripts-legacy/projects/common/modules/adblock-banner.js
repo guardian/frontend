@@ -1,7 +1,7 @@
 define([
     'fastdom',
     'lib/$',
-    'lib/template',
+    'lodash/utilities/template',
     'raw-loader!common/views/commercial/adblock-sticky-message.html',
     'raw-loader!common/views/commercial/adblock-sticky-message-coin.html'
 ], function (
@@ -33,7 +33,7 @@ define([
         var bannerTmpl = this.renderTemplate();
 
         fastdom.write(function () {
-            $('.top-banner-ad-container--desktop').after(bannerTmpl);
+            $('.js-top-banner').after(bannerTmpl);
         });
     };
 

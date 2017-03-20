@@ -46,7 +46,7 @@ domready(() => {
             require => {
                 raven.context({ tags: { feature: 'commercial' } }, () => {
                     userTiming.mark('commercial boot');
-                    require('bootstraps/commercial').init().then(() => {
+                    require('bootstraps/commercial')().then(() => {
                         // 3. finally, try enhanced
                         // this is defined here so that webpack's code-splitting algo
                         // excludes all the modules bundled in the commercial chunk from this one
@@ -76,6 +76,22 @@ domready(() => {
                 });
             },
             'commercial'
+        );
+    } else if (window.guardian.isEnhanced) {
+        userTiming.mark('enhanced request');
+        require.ensure(
+            [],
+            require => {
+                userTiming.mark('enhanced boot');
+                require('bootstraps/enhanced/main')();
+
+                if (document.readyState === 'complete') {
+                    capturePerfTimings();
+                } else {
+                    window.addEventListener('load', capturePerfTimings);
+                }
+            },
+            'enhanced-no-commercial'
         );
     }
 });

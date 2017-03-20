@@ -7,7 +7,7 @@ define([
     'lib/$',
     'lib/config',
     'lib/defer-to-analytics',
-    'lib/template',
+    'lodash/utilities/template',
     'common/modules/component',
     'common/modules/video/events',
     'common/modules/media/videojs-plugins/fullscreener',

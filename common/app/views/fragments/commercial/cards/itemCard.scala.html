@@ -14,7 +14,7 @@
   minimiseOnMobile: Boolean = false,
   useCardBranding: Boolean)(implicit request: RequestHeader)
 
-<div class="@CssClassBuilder.advertContainer(optClassNames)">
+<div class="@CssClassBuilder.paidForContainer(optClassNames)">
     <a href="@item.targetUrl"
         data-link-name="@omnitureId"
         class="@CssClassBuilder.linkFromStandardCard(item, optAdvertClassNames, useCardBranding)"

@@ -1,6 +1,6 @@
 define([
     'lib/fastdom-promise',
-    'lib/template',
+    'lodash/utilities/template',
     'common/views/svgs',
     'common/modules/ui/toggles',
     'commercial/modules/creatives/add-tracking-pixel',
@@ -18,9 +18,9 @@ define([
     labelStr
 ) {
 
-    var Frame = function ($adSlot, params) {
-        this.$adSlot = $adSlot;
-        this.params  = params;
+    var Frame = function (adSlot, params) {
+        this.adSlot = adSlot;
+        this.params = params;
     };
 
     Frame.prototype.create = function () {
@@ -36,12 +36,12 @@ define([
             infoLinkText: 'Learn more about how advertising supports the Guardian.',
             infoLinkUrl: 'https://www.theguardian.com/advertising-on-the-guardian',
             icon: svgs('arrowicon', ['gu-comlabel__icon']),
-            dataAttr: this.$adSlot[0].id
+            dataAttr: this.adSlot.id
         }});
         return fastdom.write(function () {
-            this.$adSlot[0].insertAdjacentHTML('beforeend', frameMarkup);
-            this.$adSlot[0].lastElementChild.insertAdjacentHTML('afterbegin', labelMarkup);
-            this.$adSlot.addClass('ad-slot--frame');
+            this.adSlot.insertAdjacentHTML('beforeend', frameMarkup);
+            this.adSlot.lastElementChild.insertAdjacentHTML('afterbegin', labelMarkup);
+            this.adSlot.classList.add('ad-slot--frame');
             if (this.params.trackingPixel) {
                 addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
             }
@@ -49,9 +49,9 @@ define([
                 addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
             }
             if (this.params.viewabilityTracker) {
-                addViewabilityTracker(this.$adSlot[0], this.params.id, this.params.viewabilityTracker);
+                addViewabilityTracker(this.adSlot, this.params.id, this.params.viewabilityTracker);
             }
-            new Toggles(this.$adSlot[0]).init();
+            new Toggles(this.adSlot).init();
             return true;
         }, this);
     };

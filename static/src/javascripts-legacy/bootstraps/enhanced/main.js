@@ -14,7 +14,8 @@ define([
     'common/modules/analytics/google',
     'lib/geolocation',
     'common/modules/check-dispatcher',
-    'lodash/collections/contains'
+    'lodash/collections/contains',
+    'common/modules/tailor/tailor-survey-overlay'
 ], function (
     fastdom,
     bean,
@@ -31,7 +32,8 @@ define([
     ga,
     geolocation,
     checkDispatcher,
-    contains
+    contains,
+    tailorSurveyOverlay
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -48,8 +50,6 @@ define([
             ga.trackPerformance('Javascript Load', 'enhancedStart', 'Enhanced start parse time');
         });
 
-        bootstrapContext('common', common);
-
         //
         // A/B tests
         //
@@ -63,6 +63,8 @@ define([
 
             ab.trackEvent();
         });
+
+        bootstrapContext('common', common);
 
         // geolocation
         robust.catchErrorsAndLog('geolocation', geolocation.init);
@@ -174,10 +176,13 @@ define([
             }, 'accessibility');
         }
 
-        if (config.page.nonKeywordTagIds && contains(config.page.nonKeywordTagIds.split(','), 'tone/recipes')) {
-            require(['bootstraps/enhanced/recipe-article'], function (recipes) {
-                bootstrapContext('recipes', recipes);
-            });
+        if (config.page.showNewRecipeDesign === true) {
+            //below is for during testing
+            if (config.tests.abNewRecipeDesign) {
+                require(['bootstraps/enhanced/recipe-article'], function (recipes) {
+                    bootstrapContext('recipes', recipes);
+                });
+            }
         }
 
         fastdom.read(function() {
@@ -189,7 +194,12 @@ define([
         });
 
         // initialise email/outbrain check dispatcher
-        checkDispatcher.init();
+        bootstrapContext('checkDispatcher', checkDispatcher);
+
+        // initialise tailor overlay survey
+        if (config.switches.tailorSurveyOverlay) {
+            bootstrapContext('tailorSurveyOverlay', tailorSurveyOverlay);
+        }
 
         // Mark the end of synchronous execution.
         userTiming.mark('App End');

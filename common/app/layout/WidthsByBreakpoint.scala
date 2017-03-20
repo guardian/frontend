@@ -108,6 +108,8 @@ object ContentWidths {
   object Showcase   extends ContentHinting (Some("element--showcase"))
   object Thumbnail  extends ContentHinting (Some("element--thumbnail"))
   object Immersive  extends ContentHinting (Some("element--immersive"))
+  object Halfwidth  extends ContentHinting (Some("element--halfWidth"))
+
 
   sealed trait ContentRelation {
     def inline: WidthsByBreakpoint
@@ -115,6 +117,7 @@ object ContentWidths {
     def showcase: WidthsByBreakpoint = unused
     def thumbnail: WidthsByBreakpoint = unused
     def immersive: WidthsByBreakpoint = unused
+    def halfwidth: WidthsByBreakpoint = unused
   }
 
   object BodyMedia extends ContentRelation {
@@ -142,6 +145,7 @@ object ContentWidths {
       tablet =          Some(140.px)) // desktop, leftCol and wide are also 140px
 
     override val immersive = BodyMedia.inline
+    override val halfwidth = BodyMedia.inline
   }
 
   object MainMedia extends ContentRelation {
@@ -195,6 +199,7 @@ object ContentWidths {
     override val inline = BodyMedia.inline
     override val supporting = BodyMedia.supporting
     override val thumbnail = BodyMedia.thumbnail
+    override val halfwidth = BodyMedia.inline
 
     override val immersive = WidthsByBreakpoint(
       mobile =          Some(465.px),
@@ -277,6 +282,8 @@ object ContentWidths {
       case Showcase => relation.showcase
       case Thumbnail => relation.thumbnail
       case Immersive => relation.immersive
+      case Halfwidth => relation.halfwidth
+
       case _ => unused
     }
   }

@@ -3,7 +3,7 @@ define([
     'lib/config',
     'lib/fetch-json',
     'lib/report-error',
-    'lib/template',
+    'lodash/utilities/template',
     'common/views/svgs',
     'raw-loader!common/views/business/stock-value.html',
     'raw-loader!common/views/business/stocks.html',
