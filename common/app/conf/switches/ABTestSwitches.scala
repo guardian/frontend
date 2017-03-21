@@ -268,7 +268,7 @@ trait ABTestSwitches {
     "Test demand for getting suggested content based on how much time a reader has",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 4, 4),
     exposeClientSide = true
   )
 }
