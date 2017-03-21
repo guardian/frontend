@@ -6,7 +6,6 @@ define([
     'lib/detect',
     'lodash/utilities/template',
     'lib/steady-page',
-    'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/outbrain-codes',
     'raw-loader!commercial/views/outbrain.html',
     'lib/load-script',
@@ -20,7 +19,6 @@ define([
     detect,
     template,
     steadyPage,
-    commercialFeatures,
     getCode,
     outbrainStr,
     loadScript,
@@ -110,7 +108,7 @@ define([
     }
 
     function init() {
-        checkMediator.waitForCheck('isOutbrainDisabled').then(function (outbrainDisabled) {
+        return checkMediator.waitForCheck('isOutbrainDisabled').then(function (outbrainDisabled) {
             if (!outbrainDisabled) {
                 // if there is no merch component, load the outbrain widget right away
                 return loadInstantly().then(function(shouldLoadInstantly) {
@@ -123,11 +121,11 @@ define([
                         return checkMediator.waitForCheck('isOutbrainBlockedByAds').then(function(outbrainBlockedByAds) {
                             if (!outbrainBlockedByAds) {
                                 // if only a high priority merch component on page then outbrain is merchandise compliant
-                                checkMediator.waitForCheck('isOutbrainMerchandiseCompliant').then(function (outbrainMerchandiseCompliant) {
+                                return checkMediator.waitForCheck('isOutbrainMerchandiseCompliant').then(function (outbrainMerchandiseCompliant) {
                                     if (outbrainMerchandiseCompliant) {
                                         module.load('merchandising');
                                     } else {
-                                        checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(function (userInNonCompliantAbTest) {
+                                        return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(function (userInNonCompliantAbTest) {
                                             userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();
                                         });
                                     }
@@ -138,8 +136,6 @@ define([
                 });
             }
         });
-
-        return Promise.resolve(true);
     }
 
     return module;
