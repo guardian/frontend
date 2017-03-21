@@ -2,9 +2,8 @@
 
 @import common.LinkTo
 @import views.BodyCleaner
-@import views.support.Commercial.isPaidContent
+@import views.support.Commercial.{isPaidContent, optionalSlotSizes, shouldShowAds}
 @import views.support.TrailCssClasses.toneClass
-@import views.support.Commercial.shouldShowAds
 
 @defining(model.article) { article =>
   @defining(isPaidContent(model)) { isPaidContent =>
@@ -51,13 +50,13 @@
                         <div class="ad-slot-container js-ad-slot-container"></div>
                         @defining(shouldShowAds(model)) { shouldShowAds =>
                             @if(shouldShowAds) {
-                                    @fragments.commercial.adSlot(
-                                        "right",
-                                        Seq("mpu-banner-ad"),
-                                        Map("mobile" -> Seq("1,1", "2,2", "300,250", "300,600", "300,1050", "fluid")),
-                                        optId = None,
-                                        optClassNames = None
-                                        ){ }
+                                @fragments.commercial.adSlot(
+                                    "right",
+                                    Seq("mpu-banner-ad"),
+                                    Map("mobile" -> (Seq("1,1", "2,2", "300,250", "300,600", "fluid") ++ optionalSlotSizes(model))),
+                                    optId = None,
+                                    optClassNames = Some("js-sticky-mpu")
+                                    ){ }
                             }
                         }
                     </div>
