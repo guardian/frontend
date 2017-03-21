@@ -4,14 +4,13 @@ define([
     Promise
 ) {
     var browserCheck = new Promise(function (resolve) {
-        var db;
         var on = function () {
             resolve(true);
         };
         var off = function () {
              resolve(false);
         };
-        var tryLocalStorage = function () {
+        var tryLocalStorage = function() {
             try {
                 localStorage.length ? off() : (localStorage.x = 1, localStorage.removeItem('x'), off());
             } catch (e) {
@@ -19,22 +18,38 @@ define([
             }
         };
 
+        var tryIndexedDB = function() {
+            var db;
+
+            try {
+                db = indexedDB.open('test');
+                db.onerror = on;
+                db.onsuccess = off;
+            } catch(err) {
+                on();
+            }
+        };
+
         // Blink
-        window.webkitRequestFileSystem ?
-            window.webkitRequestFileSystem(window.TEMPORARY, 1, off, on)
+        if (window.webkitRequestFileSystem) {
+            window.webkitRequestFileSystem(window.TEMPORARY, 1, off, on);
 
         // Firefox
-        : 'MozAppearance' in document.documentElement.style ?
-            (db = indexedDB.open('test'), db.onerror = on, db.onsuccess = off)
+        } else if ('MozAppearance' in document.documentElement.style) {
+            tryIndexedDB();
 
         // Safari
-        : /constructor/i.test(window.HTMLElement) ? tryLocalStorage()
+        } else if (/constructor/i.test(window.HTMLElement)) {
+            tryLocalStorage();
 
         // IE10+ and edge
-        : !window.indexedDB && (window.PointerEvent || window.MSPointerEvent) ? on()
+        } else if (!window.indexedDB && (window.PointerEvent || window.MSPointerEvent)) {
+            on();
 
         // Rest
-        : off();
+        } else {
+            off();
+        }
     });
 
     return browserCheck;
