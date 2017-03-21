@@ -1,4 +1,4 @@
-var documentObject;
+let documentObject;
 
 function getShortDomain() {
     // Trim subdomains for prod (www.theguardian), code (m.code.dev-theguardian) and dev (dev.theguardian, m.thegulocal)
@@ -6,7 +6,7 @@ function getShortDomain() {
 }
 
 function cleanUp(names) {
-    names.forEach(function(name) {
+    names.forEach(name => {
         remove(name);
     });
 }
@@ -23,7 +23,7 @@ function remove(name, currentDomainOnly) {
 
 function add(name, value, daysToLive) {
 
-    var expires = new Date();
+    const expires = new Date();
 
     if (daysToLive) {
         expires.setDate(expires.getDate() + daysToLive);
@@ -37,13 +37,13 @@ function add(name, value, daysToLive) {
 }
 
 function getDomainAttribute() {
-    var shortDomain = getShortDomain();
+    const shortDomain = getShortDomain();
     return (shortDomain === 'localhost') ? '' : (' domain=' + shortDomain + ';');
 }
 
 function addForMinutes(name, value, minutesToLive) {
     if (minutesToLive) {
-        var expires = new Date();
+        const expires = new Date();
         expires.setMinutes(expires.getMinutes() + minutesToLive);
         getDocument().cookie =
             name + '=' + value + '; path=/; expires=' + expires.toUTCString() + ';' + getDomainAttribute();
@@ -57,11 +57,9 @@ function addSessionCookie(name, value) {
 }
 
 function getCookieValues(name) {
-    var cookieVals = [],
-        nameEq = name + '=',
-        cookies = getDocument().cookie.split(';');
+    const cookieVals = [], nameEq = name + '=', cookies = getDocument().cookie.split(';');
 
-    cookies.forEach(function(cookie) {
+    cookies.forEach(cookie => {
         while (cookie.charAt(0) === ' ') {
             cookie = cookie.substring(1, cookie.length);
         }
@@ -75,7 +73,7 @@ function getCookieValues(name) {
 }
 
 function get(name) {
-    var cookieVal = getCookieValues(name);
+    const cookieVal = getCookieValues(name);
 
     if (cookieVal.length > 0) {
         return cookieVal[0];
@@ -93,13 +91,13 @@ function getDocument() {
 }
 
 export default {
-    cleanUp: cleanUp,
-    add: add,
-    addSessionCookie: addSessionCookie,
-    addForMinutes: addForMinutes,
-    remove: remove,
-    get: get,
+    cleanUp,
+    add,
+    addSessionCookie,
+    addForMinutes,
+    remove,
+    get,
     test: {
-        setDocument: setDocument
+        setDocument
     }
 };
