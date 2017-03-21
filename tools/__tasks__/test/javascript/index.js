@@ -35,15 +35,8 @@ module.exports = {
             description: 'Run tests',
             task: [
                 {
-                    description: 'Main app',
-                    task: () => exec('jest', ['static/src/javascripts']),
-                },
-                {
-                    description: 'Test eslint rules',
-                    task: () =>
-                        exec('jest', [
-                            'tools/eslint-plugin-guardian-frontend/__tests__/*',
-                        ]),
+                    description: 'JS tests',
+                    task: () => exec('jest'),
                 },
                 ...legacyTests,
             ],
