@@ -84,8 +84,8 @@
         <div class="facia-card">
             @if(withImage && imgFromCard(card).isDefined) {
                 @fullRowWithSubColumns() {
-                    @subColumn(5, Seq("facia-card__text"), last = true) { @imgFromCard(card, 5) }
                     @subColumn(7, Seq("facia-card__text")) { @headline(card) }
+                    @subColumn(5, Seq("facia-card__text"), last = true) { @imgFromCard(card, 5) }
                 }
             } else {
                 @fullRow(Seq("facia-card__text", "facia-card__text--last")) {

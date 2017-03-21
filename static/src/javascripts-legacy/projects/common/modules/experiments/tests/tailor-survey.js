@@ -2,14 +2,12 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'Promise',
     'lodash/functions/debounce',
     'lib/config',
     'lib/cookies',
     'lib/storage',
     'lib/mediator',
     'lib/fastdom-promise',
-    'lib/private-browsing',
     'raw-loader!common/views/experiments/tailor-survey.html',
     'lib/fetch-json',
     'lodash/collections/forEach',
@@ -20,14 +18,12 @@ define([
     bean,
     bonzo,
     fastdom,
-    Promise,
     debounce,
     config,
     cookies,
     storage,
     mediator,
     fastdomPromise,
-    privateBrowsing,
     tailorSurvey,
     fetchJson,
     forEach,
@@ -248,7 +244,7 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    Promise.all([renderQuickSurvey(), privateBrowsing]).then(function (response) {
+                    renderQuickSurvey().then(function (response) {
                         var surveyId = response[0]
                         mediator.emit('survey-added');
                         handleSurveyResponse(surveyId);
