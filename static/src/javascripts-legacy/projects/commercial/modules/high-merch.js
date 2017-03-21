@@ -30,12 +30,6 @@ define([
 
             if (commercialFeatures.outbrain && isLuckyBastard()) {
                 trackAdRender('dfp-ad--merchandising-high')
-                .then(function (isHiResLoaded) {
-                    return Promise.all([
-                        isHiResLoaded,
-                        isHiResLoaded ? trackAdRender('dfp-ad--merchandising') : true
-                    ]);
-                })
                 .then(insertAlternativeSlot);
             }
 
@@ -45,17 +39,14 @@ define([
                 }
             });
         } else if (commercialFeatures.outbrain && isLuckyBastard()) {
-            insertAlternativeSlot(false, false);
+            insertAlternativeSlot(false);
         }
 
         return Promise.resolve();
     }
 
-    function insertAlternativeSlot(args) {
-        var isHiResLoaded = args[0];
-        var isLoResLoaded = args[1];
-
-        if (isHiResLoaded && isLoResLoaded) {
+    function insertAlternativeSlot(isHiResLoaded) {
+        if (isHiResLoaded) {
             return;
         }
 
