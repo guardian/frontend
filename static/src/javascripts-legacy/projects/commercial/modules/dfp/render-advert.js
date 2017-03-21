@@ -1,7 +1,6 @@
 define([
     'bonzo',
     'qwery',
-    'Promise',
     'lib/raven',
     'lib/fastdom-promise',
     'lib/closest',
@@ -17,7 +16,6 @@ define([
 ], function (
     bonzo,
     qwery,
-    Promise,
     raven,
     fastdom,
     closest,

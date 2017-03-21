@@ -1,7 +1,6 @@
 define([
     'fastdom',
     'qwery',
-    'Promise',
     'lib/$',
     'lib/config',
     'lib/detect',
@@ -18,7 +17,6 @@ define([
 ], function (
     fastdom,
     qwery,
-    Promise,
     $,
     config,
     detect,

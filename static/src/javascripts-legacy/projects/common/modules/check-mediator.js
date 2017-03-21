@@ -1,8 +1,6 @@
 define([
-    'Promise',
     'lodash/collections/map'
     ], function (
-    Promise,
     map
 ) {
 
@@ -22,7 +20,7 @@ define([
     /**
      * checkList is an array of object literals.
      * Each object in this array will be converted to a DefferedCheck and added to registeredChecks
-     * Each object can contain these 3 fields: 
+     * Each object can contain these 3 fields:
         * id (required, string)
         * passCondition (optional, SOMECHECKSPASSED/EVERYCHECKPASSED)
         * dependentChecks (optional, nested array of checks)
@@ -126,7 +124,7 @@ define([
 
         return registerCheck(dependentCheck).complete;
     }
-  
+
     function registerCheck(check) {
         if (!registeredChecks[check.id]) {
             registeredChecks[check.id] = registerDefferedCheck(check);
@@ -141,10 +139,10 @@ define([
     function init() {
         checks.forEach(registerCheck);
     }
-    
+
     function resolveCheck(id) {
         var argsArray = Array.prototype.slice.call(arguments, 1);
-        
+
         if (registeredChecks[id]) {
             return registeredChecks[id].resolve.apply(null, argsArray);
         }

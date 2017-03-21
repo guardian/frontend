@@ -1,6 +1,5 @@
 define([
     'bean',
-    'Promise',
     'lib/fastdom-promise',
     'lib/report-error',
 
@@ -16,7 +15,6 @@ define([
     'commercial/modules/creatives/template'
 ], function (
     bean,
-    Promise,
     fastdom,
     reportError
 ) {

@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'lib/config',
     'lodash/utilities/template',
     'lib/fastdom-promise',
@@ -9,7 +8,6 @@ define([
     // require templates, so they're bundled up as part of the build
     'raw-loader!commercial/views/creatives/manual-container.html'
 ], function (
-    Promise,
     config,
     template,
     fastdom,

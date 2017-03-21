@@ -2,13 +2,11 @@ define([
     'bean',
     'qwery',
     'fastdom',
-    'Promise',
     'lib/$'
 ], function (
     bean,
     qwery,
     fastdom,
-    Promise,
     $
 ) {
 

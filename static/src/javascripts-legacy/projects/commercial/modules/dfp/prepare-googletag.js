@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'qwery',
     'bonzo',
     'lib/raven',
@@ -23,7 +22,6 @@ define([
     'commercial/modules/messenger/click',
     'commercial/modules/messenger/background'
 ], function (
-    Promise,
     qwery,
     bonzo,
     raven,

@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'qwery',
     'lib/sha1',
     'common/modules/identity/api',
@@ -11,7 +10,7 @@ define([
     'commercial/modules/dfp/display-ads',
     'commercial/modules/dfp/refresh-on-resize',
     'commercial/modules/dfp/prepare-switch-tag'
-], function (Promise, qwery, sha1, identity, commercialFeatures, dfpEnv, Advert, queueAdvert, displayLazyAds, displayAds, refreshOnResize, prepareSwitchTag) {
+], function (qwery, sha1, identity, commercialFeatures, dfpEnv, Advert, queueAdvert, displayLazyAds, displayAds, refreshOnResize, prepareSwitchTag) {
 
     function init(start, stop) {
         if (commercialFeatures.dfpAdvertising) {

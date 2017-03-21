@@ -6,8 +6,7 @@ define([
     'lib/cookies',
     'lib/mediator',
     'lib/storage',
-    'common/modules/asyncCallMerger',
-    'Promise'
+    'common/modules/asyncCallMerger'
 ], function (
     ajax,
     utilAtob,
@@ -15,8 +14,7 @@ define([
     cookies,
     mediator,
     storage,
-    asyncCallMerger,
-    Promise
+    asyncCallMerger
 ) {
 
     /**

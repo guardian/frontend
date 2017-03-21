@@ -1,11 +1,9 @@
 define([
     'lib/ajax',
-    'lib/config',
-    'Promise'
+    'lib/config'
 ], function (
     ajax,
-    config,
-    Promise
+    config
 ) {
     function isGeoBlocked(el) {
         var source = el.currentSrc;

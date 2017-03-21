@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'lib/config',
     'lib/load-script',
     'lib/report-error',
@@ -9,7 +8,6 @@ define([
     'commercial/modules/dfp/dfp-env',
     'lodash/arrays/uniq'
 ], function(
-    Promise,
     config,
     loadScript,
     reportError,

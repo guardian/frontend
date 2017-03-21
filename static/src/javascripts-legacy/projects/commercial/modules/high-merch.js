@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'lib/config',
     'lib/fastdom-promise',
     'common/modules/experiments/ab',
@@ -9,7 +8,7 @@ define([
     'commercial/modules/dfp/track-ad-render',
     'commercial/modules/dfp/get-advert-by-id',
     'commercial/modules/commercial-features'
-], function (Promise, config, fastdom, ab, dfpEnv, addSlot, createSlot, trackAdRender, getAdvertById, commercialFeatures) {
+], function (config, fastdom, ab, dfpEnv, addSlot, createSlot, trackAdRender, getAdvertById, commercialFeatures) {
     return {
         init: init
     };

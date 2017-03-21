@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'bean',
     'bonzo',
     'fastdom',
@@ -13,7 +12,7 @@ define([
     'lodash/functions/throttle',
     'common/modules/analytics/interaction-tracking',
     'lib/load-css-promise'
-], function (Promise,
+], function (
              bean,
              bonzo,
              fastdom,

@@ -2,14 +2,12 @@ define([
     'lodash/objects/assign',
     'lib/fastdom-promise',
     'lib/report-error',
-    'lib/url',
-    'Promise'
+    'lib/url'
 ], function (
     assign,
     fastdom,
     reportError,
-    urlUtil,
-    Promise
+    urlUtil
 ) {
     var RECOMMENDATION_CLASS = 'js-recommend-comment';
     var TOOLTIP_CLASS = 'js-rec-tooltip';
