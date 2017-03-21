@@ -89,7 +89,7 @@ define([
         }, {
             id: 'isOutbrainMerchandiseCompliantOrBlockedByAds'
         }, {
-            id: 'thirdPartyTagsDisabled'
+            id: 'isOutbrainDisabled'
         }]
     }];
 

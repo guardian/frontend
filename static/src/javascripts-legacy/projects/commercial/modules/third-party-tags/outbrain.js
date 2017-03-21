@@ -71,7 +71,9 @@ define([
             section: config.page.section,
             breakpoint: breakpoint
         });
+
         widgetHtml = build(widgetCodes, breakpoint);
+        
         if ($container.length) {
             return steadyPage.insert($container[0], function() {
                 if (slot === 'merchandising') {
@@ -99,7 +101,7 @@ define([
      from DFP. AdBlock is blocking DFP calls so we are not getting any response and thus
      not loading Outbrain. As Outbrain is being partially loaded behind the adblock we can
      make the call instantly when we detect adBlock in use.
-     */
+    */
     function loadInstantly() {
         return detect.adblockInUse.then(function(adblockInUse){
             return !document.getElementById('dfp-ad--merchandising-high') ||
@@ -108,32 +110,34 @@ define([
     }
 
     function init() {
-        if (commercialFeatures.outbrain) {
-            // if there is no merch component, load the outbrain widget right away
-            return loadInstantly().then(function(shouldLoadInstantly) {
-                if (shouldLoadInstantly) {
-                    return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(function (userInNonCompliantAbTest) {
-                        userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();
-                    });
-                } else {
-                    // if a high priority ad and low priority ad on page block outbrain
-                    return checkMediator.waitForCheck('isOutbrainBlockedByAds').then(function(outbrainBlockedByAds) {
-                        if (!outbrainBlockedByAds) {
-                            // if only a high priority ad on page then outbrain is merchandise compliant
-                            checkMediator.waitForCheck('isOutbrainMerchandiseCompliant').then(function (outbrainMerchandiseCompliant) {
-                                if (outbrainMerchandiseCompliant) {
-                                    module.load('merchandising');
-                                } else {
-                                    checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(function (userInNonCompliantAbTest) {
-                                        userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-        }
+        checkMediator.waitForCheck('isOutbrainDisabled').then(function (outbrainDisabled) {
+            if (!outbrainDisabled) {
+                // if there is no merch component, load the outbrain widget right away
+                return loadInstantly().then(function(shouldLoadInstantly) {
+                    if (shouldLoadInstantly) {
+                        return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(function (userInNonCompliantAbTest) {
+                            userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();
+                        });
+                    } else {
+                        // if a high priority merch component and low priority merch component on page block outbrain
+                        return checkMediator.waitForCheck('isOutbrainBlockedByAds').then(function(outbrainBlockedByAds) {
+                            if (!outbrainBlockedByAds) {
+                                // if only a high priority merch component on page then outbrain is merchandise compliant
+                                checkMediator.waitForCheck('isOutbrainMerchandiseCompliant').then(function (outbrainMerchandiseCompliant) {
+                                    if (outbrainMerchandiseCompliant) {
+                                        module.load('merchandising');
+                                    } else {
+                                        checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(function (userInNonCompliantAbTest) {
+                                            userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
 
         return Promise.resolve(true);
     }
