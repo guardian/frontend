@@ -261,4 +261,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-reading-time",
+    "Test demand for getting suggested content based on how much time a reader has",
+    owners = Seq(Owner.withGithub("lmath")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
 }
