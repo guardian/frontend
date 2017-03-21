@@ -78,11 +78,14 @@
                             }
                         }
                     <div class="recipe__article--headline">
-                        <h1>@article.fields.linkText</h1>
+                        <h1>@article.trail.headline</h1>
                     </div>
                     @if(articleModel.item.tags.contributors.length > 1) {
-                        <p>by @ContributorLinks(articleModel.item.trail.byline.get, articleModel.item.tags.contributors)</p>
+                        <p class="recipe__article--byline">by @ContributorLinks(articleModel.item.trail.byline.get, articleModel.item.tags.contributors)</p>
                     }
+                </div>
+                <div class="recipe__standfirst">
+                  @fragments.standfirst(articleModel.item)
                 </div>
                 <div class="recipe__content">
                     @BodyCleaner(article, article.fields.body, amp)
@@ -93,7 +96,7 @@
                 @for((recipe, i) <- recipes.zipWithIndex){ @recipePage(recipe, i) }
             </div>
             <div class="js-recipe__article--next-recipe recipe__article--next-recipe">
-                <div class="recipe__article--next-button js-recipe__article--next-button js-recipe__article--next-recipe mobile-only">@fragments.inlineSvg("arrow-right", "icon")</div>
+                <div class="recipe__article--next-button js-recipe__article--next-button js-recipe__article--next-recipe hide-on-desktop">@fragments.inlineSvg("arrow-right", "icon")</div>
                 <div class="js-recipe__article--next-text recipe__article--next-text">
                     <h2><span class="kicker js-kicker">Next recipe</span> <span class="js-recipe__article--next-title recipe__article--next-title"></span></h2>
                 </div>
