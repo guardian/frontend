@@ -42,12 +42,19 @@ function catchErrorsAndLog(name: string, fn: Function, reporter?: Function) {
 }
 
 function catchErrorsAndLogAll(modules: Array<any>) {
-    modules.forEach(pair => catchErrorsAndLog(pair[0], pair[1]));
+    modules.forEach(pair => {
+        const [name, fn] = pair;
+        catchErrorsAndLog(name, fn);
+    });
 }
 
 function makeBlocks(codeBlocks: Array<any>) {
-    return codeBlocks.map(record =>
-        catchErrorsAndLog.bind(this, record[0], record[1]));
+    return codeBlocks.map(record => {
+        const [name, fn] = record;
+        catchErrorsAndLog.bind(this, name, fn);
+
+        return undefined;
+    });
 }
 
 export default { catchErrorsAndLog, catchErrorsAndLogAll, makeBlocks, log };
