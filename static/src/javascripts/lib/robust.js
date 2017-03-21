@@ -42,17 +42,11 @@ function catchErrorsAndLog(name: string, fn: Function, reporter?: Function) {
 }
 
 function catchErrorsAndLogAll(modules: Array<any>) {
-    modules.forEach(pair => {
+    return modules.map(pair => {
         const [name, fn] = pair;
         catchErrorsAndLog(name, fn);
+        return undefined;
     });
 }
 
-function makeBlocks(codeBlocks: Array<any>) {
-    codeBlocks.forEach(record => {
-        const [name, fn] = record;
-        catchErrorsAndLog.bind(this, name, fn);
-    });
-}
-
-export default { catchErrorsAndLog, catchErrorsAndLogAll, makeBlocks, log };
+export default { catchErrorsAndLog, catchErrorsAndLogAll, log };

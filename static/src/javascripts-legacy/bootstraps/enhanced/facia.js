@@ -100,7 +100,7 @@ define([
         },
 
         ready = function () {
-            forEach(robust.makeBlocks([
+            forEach(robust.catchErrorsAndLogAll([
                 ['f-accessibility', accessibility.shouldHideFlashingElements],
                 ['f-snaps', modules.showSnaps],
                 ['f-show-more', modules.showContainerShowMore],
