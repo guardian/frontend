@@ -79,8 +79,8 @@
         }
 
         .section-title {
-            background-color: rgba(0, 0, 0, 1);
-            background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+            background-color: rgb(0, 0, 0);
+            background: linear-gradient(transparent, rgb(0, 0, 0));
 
             &:before {
                 background-color: $news-main-2;
@@ -119,6 +119,7 @@
                 background-color: #ffffff;
             }
 
+            // Makes sure that elements which come after the block of images are no longer floating
             & + p, & + blockquote, & + .element-pullquote {
                 clear: both;
                 padding-top: $gs-baseline / 2;
@@ -161,27 +162,29 @@
     @include mq($until: mobileLandscape) {
         margin-top: -$gs-baseline / 2;
     }
+
+    & > li {
+        @include fs-textSans(3);
+        color: $guardian-brand;
+        font-size: 12px;
+        width: 100%;
+        margin-right: 1%;
+        line-height: 14px;
+        padding-top: $gs-baseline / 2;
+        border-top: 1px solid $guardian-brand;
+
+        &::before {
+            display: none !important;
+        }
+
+        @include mq($until: mobileLandscape) {
+            width: 98%;
+        }
+    }
 }
 
-.from-content-api ul > li {
-    @include fs-textSans(3);
-    color: #005689;
-    font-size: 12px;
-    width: 100%;
-    float: left;
-    margin-right: 1%;
-    line-height: 14px;
-    padding-top: $gs-baseline / 2;
-    border-top: 1px solid #005689;
-
-    &::before {
-        display: none !important;
-    }
-
-    @include mq($until: mobileLandscape) {
-        width: 98%;
-    }
-}
+//changes the style of the list item when it comes directly after an immersive or showcase element.
+//Pulls the list item into the leftColumn on wide.
 
 .element--immersive + ul, .element--showcase + ul {
     width: 150px;
