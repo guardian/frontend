@@ -32,7 +32,14 @@ define([
         container.appendChild(createSlot(config.page.isPaidContent ? 'high-merch-paid' : 'high-merch'));
 
         if (commercialFeatures.outbrain && isLuckyBastard()) {
-            insertAlternativeSlot();
+            trackAdRender('dfp-ad--merchandising-high')
+            .then(function (isHiResLoaded) {
+                return Promise.all([
+                    isHiResLoaded,
+                    isHiResLoaded ? trackAdRender('dfp-ad--merchandising') : true
+                ]);
+            })
+            .then(insertAlternativeSlot);
         }
 
         return fastdom.write(function () {
@@ -42,45 +49,32 @@ define([
         });
     }
 
-    function insertAlternativeSlot() {
-        trackAdRender('dfp-ad--merchandising-high')
-        .then(function (isHiResLoaded) {
-            return Promise.all([
-                isHiResLoaded,
-                isHiResLoaded ? trackAdRender('dfp-ad--merchandising') : true
-            ]);
-        })
-        .then(function (args) {
-            var isHiResLoaded = args[0];
-            var isLoResLoaded = args[1];
+    function insertAlternativeSlot(args) {
+        var isHiResLoaded = args[0];
+        var isLoResLoaded = args[1];
 
-            if (!isHiResLoaded || !isLoResLoaded) {
-                var container = document.querySelector(isHiResLoaded ?
-                    '.js-container--commercial' :
-                    !(config.page.seriesId || config.page.blogIds) ?
-                    '.js-related, .js-outbrain-anchor' :
-                    '.js-outbrain-anchor'
-                );
-                return [
-                    createSlot('high-merch-lucky'),
-                    container
-                ];
-            }
-        })
-        .then(function (args) {
-            if (args) {
-                fastdom.write(function () {
-                    args[1].parentNode.insertBefore(args[0], args[1].nextSibling);
-                })
-                .then(function () {
-                    addSlot(args[0], true);
+        if (isHiResLoaded && isLoResLoaded) {
+            return;
+        }
 
-                    // Horrible but temporary hack. addSlot queue the ad for display,
-                    // i.e. it adds in onto the advertsToLoad stack
-                    var advert = getAdvertById(args[0].id);
-                    dfpEnv.advertsToLoad.splice(dfpEnv.advertsToLoad.indexOf(advert));
-                });
-            }
+        var container = document.querySelector(isHiResLoaded ?
+            '.js-container--commercial' :
+            !(config.page.seriesId || config.page.blogIds) ?
+            '.js-related, .js-outbrain-anchor' :
+            '.js-outbrain-anchor'
+        );
+        var slot = createSlot('high-merch-lucky');
+
+        fastdom.write(function () {
+            container.parentNode.insertBefore(slot, container.nextSibling);
+        })
+        .then(function () {
+            addSlot(slot, true);
+
+            // Horrible but temporary hack. addSlot queue the ad for display,
+            // i.e. it adds in onto the advertsToLoad stack
+            var advert = getAdvertById(slot.id);
+            dfpEnv.advertsToLoad.splice(dfpEnv.advertsToLoad.indexOf(advert));
         });
     }
 });
