@@ -401,6 +401,9 @@
             width: $gs-gutter * 3;
         }
     }
+    .badge {
+        pointer-events: none;
+    }
     .badge__logo {
         max-width: 100%;
         margin-left: 0;
