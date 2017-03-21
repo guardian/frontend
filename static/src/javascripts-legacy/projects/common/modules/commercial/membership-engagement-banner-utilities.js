@@ -10,6 +10,9 @@ define([
         return array[storage.local.get('gu.alreadyVisited') % array.length];
     }
 
+    var MEMBERSHIP = 'membership';
+    var CONTRIBUTIONS = 'contributions';
+
     var baseParams = {
         minArticles: 3,
         colourStrategy: function() {
@@ -19,12 +22,14 @@ define([
 
     var membershipParams = assign({}, baseParams, {
         buttonCaption: 'Become a Supporter',
-        linkUrl: 'https://membership.theguardian.com/supporter'
+        linkUrl: 'https://membership.theguardian.com/supporter',
+        offering: MEMBERSHIP
     });
 
     var contributionParams = assign({}, baseParams, {
         buttonCaption: 'Make a Contribution',
-        linkUrl: 'https://contribute.theguardian.com/'
+        linkUrl: 'https://contribute.theguardian.com/',
+        offering: CONTRIBUTIONS
     });
 
     var defaultParamsLookup = {
@@ -52,7 +57,13 @@ define([
 
     var defaultParams = defaultParamsLookup[config.page.edition];
 
+    var offerings = {
+        membership: MEMBERSHIP,
+        contributions: CONTRIBUTIONS
+    };
+
     return {
-        defaultParams: defaultParams
+        defaultParams: defaultParams,
+        offerings: offerings
     }
 });

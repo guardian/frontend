@@ -164,6 +164,9 @@ define([
 
         this.template = options.template || controlTemplate;
 
+        this.blockEngagementBanner = options.blockEngagementBanner || false;
+        this.engagementBannerParams = options.engagementBannerParams || {};
+
         this.test = function () {
 
             var displayEpic = (typeof options.canEpicBeDisplayed === 'function') ?
@@ -200,7 +203,7 @@ define([
                                 viewLog.logView(test.id);
                                 mediator.emit(test.viewEvent);
                                 mediator.emit('register:end', trackingCampaignId);
-                                onView();
+                                onView(this);
                             });
                         });
                     }

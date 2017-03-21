@@ -19,7 +19,8 @@ define([
         'lib/fetch',
         'common/modules/experiments/segment-util',
         'common/modules/experiments/acquisition-test-selector',
-        'common/modules/commercial/membership-engagement-banner-utilities'
+        'common/modules/commercial/membership-engagement-banner-utilities',
+        'ophan/ng'
     ], function (bean,
                  $,
                  config,
@@ -40,7 +41,8 @@ define([
                  fetch,
                  segmentUtil,
                  acquisitionTestSelector,
-                 membershipEngagementBannerUtils) {
+                 membershipEngagementBannerUtils,
+                 ophan) {
 
 
         // change messageCode to force redisplay of the message to users who already closed it.
@@ -60,16 +62,31 @@ define([
 
         var DO_NOT_RENDER_ENGAGEMENT_BANNER = 'do no render engagement banner';
 
-        function getUserVariant() {
-
+        function getUserTest() {
             var engagementBannerTests = MembershipEngagementBannerTests
                 .concat(acquisitionTestSelector.epicEngagementBannerTests);
 
-            var engagementBannerTest = find(engagementBannerTests, function(test) {
+            return find(engagementBannerTests, function(test) {
                 return ab.testCanBeRun(test) && segmentUtil.isInTest(test)
             });
+        }
 
-            return engagementBannerTest ? segmentUtil.variantFor(engagementBannerTest) : undefined;
+        function getUserVariant(test) {
+            return test ? segmentUtil.variantFor(test) : undefined;
+        }
+
+        function buildCampaignCode(offering, campaignId, variantId) {
+            var prefix = '';
+            var offerings = membershipEngagementBannerUtils.offerings;
+
+            if (offering === offerings.membership) {
+                prefix = 'mem_banner_';
+            }
+            else if (offering === offerings.contributions) {
+                prefix = 'cont_banner_';
+            }
+
+            return prefix + campaignId + '_' + variantId;
         }
 
         /*
@@ -97,19 +114,28 @@ define([
          *
          */
         function deriveBannerParams() {
-            var userVariant = getUserVariant();
+            var defaultParams = membershipEngagementBannerUtils.defaultParams;
+            var userTest = getUserTest();
+            var userVariant = getUserVariant(userTest);
             var userVariantParams = {};
 
             if (userVariant) {
+
                 if (userVariant.blockEngagementBanner) {
                     return DO_NOT_RENDER_ENGAGEMENT_BANNER;
                 }
+
                 if (userVariant.engagementBannerParams) {
                     userVariantParams = userVariant.engagementBannerParams;
+
+                    if (!userVariantParams.campaignCode) {
+                        var offering = userVariantParams.offering || defaultParams.offering;
+                        userVariantParams.campaignCode = buildCampaignCode(offering, userTest.campaignId, userVariant.id);
+                    }
                 }
             }
 
-            return assign({}, membershipEngagementBannerUtils.defaultParams, userVariantParams);
+            return assign({}, defaultParams, userVariantParams);
         }
 
         function showBanner(params) {
@@ -143,7 +169,17 @@ define([
 
             if (messageShown) {
 
-                // TODO: fire interaction event
+                if (params.interactionOnMessageShown) {
+                    var component = params.interactionOnMessageShown.component;
+                    var value = params.interactionOnMessageShown.value;
+
+                    if (component && value) {
+                        ophan.record({
+                            component: component,
+                            value: value
+                        });
+                    }
+                }
 
                 mediator.emit('membership-message:display');
 

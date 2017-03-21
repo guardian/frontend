@@ -1,25 +1,46 @@
 define([
     'commercial/modules/commercial-features',
-    'common/modules/commercial/contributions-utilities'
+    'common/modules/commercial/contributions-utilities',
+    'ophan/ng'
 ], function (
     commercialFeatures,
-    contributionsUtilities
+    contributionsUtilities,
+    ophan
 ) {
 
+    var baseCampaignId = 'epic_vs_epic_and_eb';
+
+    function buildInteractionEvent(channel, variant) {
+        return {
+            component: channel,
+            value: baseCampaignId + '_' + variant
+        }
+    }
+
+    function buildCampaignId(channel) {
+        return baseCampaignId + '_channel_' + channel;
+    }
+
     var buildVariant = contributionsUtilities.variantBuilderFactory({
+
         maxViews: {
             days: 30,
             count: 4,
             minDaysBetweenViews: 0
         },
-        canEpicBeDisplayed: contributionsUtilities.defaultCanEpicBeDisplayed
+
+        canEpicBeDisplayed: contributionsUtilities.defaultCanEpicBeDisplayed,
+
+        onView: function(variantConfig) {
+            ophan.record(buildInteractionEvent('epic', variantConfig.id))
+        }
     });
 
     return contributionsUtilities.makeABTest({
         id: 'AcquisitionsEpicVsEpicAndEngagementBanner',
-        campaignId: 'epic_vs_epic_and_engagement_banner',
+        campaignId: buildCampaignId('epic'),
 
-        start: '2017-03-17', // TODO
+        start: '2017-03-20', // TODO
         expiry: '2017-04-10', // TODO
 
         author: 'Guy Dawson',
@@ -42,7 +63,7 @@ define([
 
             buildVariant('control', {
                 engagementBannerParams: {
-                    campaignCode: 'eg' //  TODO
+                    interactionOnMessageShown: buildInteractionEvent('engagement-banner', 'control')
                 }
             }),
 

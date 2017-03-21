@@ -9,7 +9,8 @@ define([
     'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
     'common/modules/experiments/tests/acquisitions-epic-design-variations-v3',
     'common/modules/experiments/tests/contributions-epic-laundromat',
-    'common/modules/experiments/tests/acquisitions-epic-vs-epic-and-engagement-banner'
+    'common/modules/experiments/tests/acquisitions-epic-vs-epic-and-engagement-banner',
+    'lodash/collections/reduce'
 ], function (
     segmentUtil,
     testCanRunChecks,
@@ -21,7 +22,8 @@ define([
     acquisitionsEpicArticle50Trigger,
     acquisitionsEpicDesignVariationsV3,
     laundromat,
-    acquisitionsEpicVsEpicAndEngagementBanner
+    acquisitionsEpicVsEpicAndEngagementBanner,
+    reduce
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
@@ -37,9 +39,13 @@ define([
         brexit
     ];
 
-    var epicEngagementBannerTests = tests.filter(function(test) {
-        return test.isEngagementBannerTest;
-    });
+    var epicEngagementBannerTests = reduce(tests, function(out, test) {
+        var testInstance = new test();
+        if (testInstance.isEngagementBannerTest) {
+            out.push(testInstance)
+        }
+        return out;
+    }, []);
 
     function getVariantIds(testInstance) {
         return testInstance.variants.map(function(variant) {
