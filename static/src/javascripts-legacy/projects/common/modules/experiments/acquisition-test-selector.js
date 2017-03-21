@@ -1,4 +1,5 @@
 define([
+    'lodash/collections/reduce',
     'common/modules/experiments/segment-util',
     'common/modules/experiments/test-can-run-checks',
     'common/modules/commercial/acquisitions-view-log',
@@ -9,9 +10,9 @@ define([
     'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
     'common/modules/experiments/tests/acquisitions-epic-design-variations-v3',
     'common/modules/experiments/tests/contributions-epic-laundromat',
-    'common/modules/experiments/tests/acquisitions-epic-vs-epic-and-engagement-banner',
-    'lodash/collections/reduce'
+    'common/modules/experiments/tests/acquisitions-epic-vs-epic-and-engagement-banner'
 ], function (
+    reduce,
     segmentUtil,
     testCanRunChecks,
     viewLog,
@@ -22,8 +23,7 @@ define([
     acquisitionsEpicArticle50Trigger,
     acquisitionsEpicDesignVariationsV3,
     laundromat,
-    acquisitionsEpicVsEpicAndEngagementBanner,
-    reduce
+    acquisitionsEpicVsEpicAndEngagementBanner
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)

@@ -19,7 +19,7 @@ define([
         'lib/fetch',
         'common/modules/experiments/segment-util',
         'common/modules/experiments/acquisition-test-selector',
-        'common/modules/commercial/membership-engagement-banner-utilities',
+        'common/modules/commercial/membership-engagement-banner-parameters',
         'ophan/ng'
     ], function (bean,
                  $,
@@ -90,6 +90,22 @@ define([
             return prefix + campaignId + '_' + variantId;
         }
 
+        function getUserVariantParams(userVariant, campaignId, defaultOffering) {
+
+            if (userVariant && userVariant.engagementBannerParams) {
+                var userVariantParams = userVariant.engagementBannerParams;
+
+                if (!userVariantParams.campaignCode) {
+                    var offering = userVariantParams.offering || defaultOffering;
+                    userVariantParams.campaignCode = buildCampaignCode(offering, campaignId, userVariant.id);
+                }
+
+                return userVariantParams;
+            } else {
+                return {};
+            }
+        }
+
         /*
          * Params for the banner are overlaid in this order, earliest taking precedence:
          *
@@ -117,26 +133,29 @@ define([
         function deriveBannerParams() {
             var defaultParams = membershipEngagementBannerUtils.defaultParams;
             var userTest = getUserTest();
+            var campaignId = userTest ? userTest.campaignId : undefined;
             var userVariant = getUserVariant(userTest);
-            var userVariantParams = {};
 
-            if (userVariant) {
-
-                if (userVariant.blockEngagementBanner) {
-                    return DO_NOT_RENDER_ENGAGEMENT_BANNER;
-                }
-
-                if (userVariant.engagementBannerParams) {
-                    userVariantParams = userVariant.engagementBannerParams;
-
-                    if (!userVariantParams.campaignCode) {
-                        var offering = userVariantParams.offering || defaultParams.offering;
-                        userVariantParams.campaignCode = buildCampaignCode(offering, userTest.campaignId, userVariant.id);
-                    }
-                }
+            if (userVariant && userVariant.blockEngagementBanner) {
+                return DO_NOT_RENDER_ENGAGEMENT_BANNER;
             }
 
-            return assign({}, defaultParams, userVariantParams);
+            return assign({}, defaultParams, getUserVariantParams(userVariant, campaignId, defaultParams.offering));
+        }
+
+        // Used to send an interaction if the engagement banner is shown.
+        function recordInteraction(interaction) {
+            if (interaction) {
+                var component = interaction.component;
+                var value = interaction.value;
+
+                if (component && value) {
+                    ophan.record({
+                        component: component,
+                        value: value
+                    })
+                }
+            }
         }
 
         function showBanner(params) {
@@ -170,17 +189,7 @@ define([
 
             if (messageShown) {
 
-                if (params.interactionOnMessageShown) {
-                    var component = params.interactionOnMessageShown.component;
-                    var value = params.interactionOnMessageShown.value;
-
-                    if (component && value) {
-                        ophan.record({
-                            component: component,
-                            value: value
-                        });
-                    }
-                }
+                recordInteraction(params.interactionOnMessageShown);
 
                 mediator.emit('membership-message:display');
 
