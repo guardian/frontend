@@ -79,11 +79,12 @@ define([
             var prefix = '';
             var offerings = membershipEngagementBannerUtils.offerings;
 
+            // mem and cont chosen to be consistent with default campaign code prefixes.
             if (offering === offerings.membership) {
-                prefix = 'mem_banner_';
+                prefix = 'mem_';
             }
             else if (offering === offerings.contributions) {
-                prefix = 'cont_banner_';
+                prefix = 'cont_';
             }
 
             return prefix + campaignId + '_' + variantId;

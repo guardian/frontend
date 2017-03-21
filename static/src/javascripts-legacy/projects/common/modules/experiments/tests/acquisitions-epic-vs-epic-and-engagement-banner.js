@@ -8,17 +8,13 @@ define([
     ophan
 ) {
 
-    var baseCampaignId = 'epic_vs_epic_and_eb';
+    var campaignId = 'epic_vs_epic_and_eb';
 
     function buildInteractionEvent(channel, variant) {
         return {
             component: channel,
-            value: baseCampaignId + '_' + variant
+            value: campaignId + '_' + variant
         }
-    }
-
-    function buildCampaignId(channel) {
-        return baseCampaignId + '_channel_' + channel;
     }
 
     var buildVariant = contributionsUtilities.variantBuilderFactory({
@@ -38,7 +34,7 @@ define([
 
     return contributionsUtilities.makeABTest({
         id: 'AcquisitionsEpicVsEpicAndEngagementBanner',
-        campaignId: buildCampaignId('epic'),
+        campaignId: campaignId,
 
         start: '2017-03-20', // TODO
         expiry: '2017-04-10', // TODO
