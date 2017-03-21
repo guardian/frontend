@@ -19,6 +19,10 @@
                 "abp-icon": "@Static("images/commercial/abp-icon.png")",
                 "abp-whitelist-instruction-chrome": "@Static("images/commercial/ad-block-instructions-chrome.png")"
             },
+            "membership": {
+                "adblock-coins": "@Static("images/membership/adblock-coins.png")",
+                "adblock-coins-us": "@Static("images/membership/adblock-coins-us.png")"
+            },
             "acquisitions": {
                 "paypal": "@Static("images/acquisitions/paypal.png")"
             }

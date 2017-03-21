@@ -1,7 +1,7 @@
 @(card: layout.FaciaCardAndIndex, containerIndex: Int, isRow: Boolean = true, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader)
 @import layout.{ContentCard, HtmlBlob, PaidCard}
-@import views.html.fragments.commercial
 @import views.html.fragments.items.facia_cards.contentCard
+@import views.html.fragments.items.facia_cards.paidContentCard
 @import views.support.Commercial.TrackingCodeBuilder.mkInteractionTrackingCode
 @import views.support.{GetClasses, RenderClasses}
 
@@ -22,11 +22,11 @@
         }
 
         case paidCard: PaidCard => {
-            @commercial.cards.itemCard(
+            @paidContentCard(
                 item = paidCard,
                 omnitureId = mkInteractionTrackingCode(containerIndex, index, paidCard),
-                optClassNames = Some(Seq("adverts--tone-paidfor")),
-                useCardBranding = true
+                containerIndex,
+                index
             )
         }
 

@@ -8,9 +8,10 @@ define([
     'common/modules/experiments/tests/acquisitions-epic-content-tailoring-football',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
-    'common/modules/experiments/tests/contributions-epic-regulars',
+    'common/modules/experiments/tests/contributions-epic-regulars-v2',
     'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
-    'common/modules/experiments/tests/acquisitions-epic-design-variations-v2'
+    'common/modules/experiments/tests/acquisitions-epic-design-variations-v2',
+    'common/modules/experiments/tests/contributions-epic-laundromat'
 ], function (
     segmentUtil,
     testCanRunChecks,
@@ -21,19 +22,21 @@ define([
     contentTailoringFootball,
     alwaysAsk,
     askFourEarning,
-    regulars,
+    regularsV2,
     acquisitionsEpicArticle50Trigger,
-    acquisitionsEpicDesignVariationsV2
+    acquisitionsEpicDesignVariationsV2,
+    laundromat
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */
     var tests = [
         alwaysAsk,
+        laundromat,
+		regularsV2,
         contentTailoringEnvironment,
         contentTailoringCif,
         contentTailoringFootball,
-        regulars,
         acquisitionsEpicDesignVariationsV2,
         askFourEarning,
         acquisitionsEpicArticle50Trigger,

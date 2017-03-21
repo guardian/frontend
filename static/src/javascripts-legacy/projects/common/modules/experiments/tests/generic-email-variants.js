@@ -34,14 +34,14 @@ define([
         var CANONICAL_LIST_ID = props.canonicalListId;
 
         this.canRun = function () {
-            return config.page.contentId === SIGNUP_URL || config.page.pageId === '/email-newsletters';
+            return (SIGNUP_URL && (config.page.contentId === SIGNUP_URL)) || config.page.pageId === '/email-newsletters';
         };
 
         this.variants = props.testIds.map(function(variant) {
             return {
                 id: variant.variantId,
                 test: function () {
-                    if (config.page.contentId === SIGNUP_URL) {
+                    if (SIGNUP_URL && config.page.contentId === SIGNUP_URL) {
                         enhanceWebView(variant.listId);
                     } else {
                         updateNewslettersPage(variant.listId);
