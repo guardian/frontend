@@ -446,7 +446,8 @@ CommentBox.prototype.setExpanded = function() {
     if (this.options.paymentRequired) {
         this.setState('expanded-payment-required');
         var payLinkUrl = config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_A_PDCOM_' + this.options.testVariant.toUpperCase();
-        payLinkUrl = payLinkUrl + '&returnUrl=' + encodeURIComponent(document.location.href.indexOf('#') > 0 ? document.location.href : document.location.href + '#comments');
+        var returnAnchor = '#' + (this.options.replyTo ? 'comment-' + this.options.replyTo.commentId : "comments");
+        payLinkUrl = payLinkUrl + '&returnUrl=' + encodeURIComponent(document.location.href.indexOf('#') > 0 ? document.location.href : document.location.href + returnAnchor);
         this.getElem('payment-cta-button__content').href = payLinkUrl;
         this.on('click', this.getClass('payment-cta-cancel-button'), this.clearPaymentRequired);
     }
