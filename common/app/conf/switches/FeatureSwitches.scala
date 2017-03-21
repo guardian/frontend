@@ -21,7 +21,7 @@ trait FeatureSwitches {
     "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 17),
+    sellByDate = new LocalDate(2017, 4, 3),
     exposeClientSide = true
   )
 
@@ -484,27 +484,6 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("janua")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 5),
-    exposeClientSide = true
-  )
-  
-  val ArticleWithStructuredRecipe = Switch(
-    SwitchGroup.Feature,
-    "is-article-with-structured-recipe-data",
-    "changes design of articles with strucutred recipe data",
-    owners = Seq(Owner.withGithub("tsop14"), Owner.withGithub("blongden73")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 4),
-    exposeClientSide = true
-  )
-
-  // Owner: George Haberis
-  val TailorSurveyOverlay = Switch(
-    SwitchGroup.Feature,
-    "tailor-survey-overlay",
-    "When ON, will show the Tailor survey overlay message",
-    owners = Seq(Owner.withGithub("GHaberis")),
-    safeState = Off,
-    sellByDate = never,
     exposeClientSide = true
   )
 

@@ -247,19 +247,30 @@
     }
 }
 
-// Nav Mixins
+// Trailing slash mixins
+// Please note the container of the trailing-slash-items must contain font-size: 0;
+// to ensure there's no missalignment between inline-block items
+@mixin trailing-slash-item {
+    display: inline-block;
 
-@mixin nav-links {
+    &:last-of-type > a:after {
+        content: '';
+    }
+}
+
+@mixin trailing-slash-link {
     position: relative;
+    display: block;
     padding-left: .3em;
     padding-right: .35em;
-    float: left;
 }
 
 @mixin trailing-slash {
+    content: '/';
+    font-size: 1em;
     position: absolute;
     pointer-events: none;
-    content: '/';
+
     //optically aligns slashes
     top: 0;
     right: -.19em;

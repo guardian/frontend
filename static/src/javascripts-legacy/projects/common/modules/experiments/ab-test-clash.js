@@ -18,13 +18,13 @@ define([
         variants: ['control']
     };
 
-    var ContributionsEpicRegulars = {
-        name: 'ContributionsEpicRegulars',
-        variants: ['control', 'fairness_mild', 'fairness_strong', 'fairness_strong_alternate_hook', 'reliance']
+    var ContributionsEpicRegularsV2 = {
+        name: 'ContributionsEpicRegularsV2',
+        variants: ['control', 'fairness_strong', 'fairness_strong_alternate_hook']
 	};
 
     var AcquisitionsEpicDesignVariationsV2 = {
-        name: 'AcquisitionsDesignVariations',
+        name: 'AcquisitionsEpicDesignVariationsV2',
         variants: ['control', 'highlight_subtle', 'highlight_perspective', 'highlight_secure', 'highlight_hard', 'paypal']
     };
 
@@ -33,13 +33,38 @@ define([
         variants: ['control']
     };
 
+    var ContributionsEpicLaundromat = {
+        name: 'ContributionsEpicLaundromat',
+        variants: ['control']
+    };
+
+
+    var AcquisitionsContentTailoringEnvironment = {
+        name: 'AcquisitionsEpicContentTailoringEnvironment',
+        variants: ['control', 'impact', 'reference']
+    };
+
+    var AcquisitionsContentTailoringCif = {
+        name: 'AcquisitionsEpicContentTailoringCif',
+        variants: ['control', 'impact', 'reference']
+    };
+
+    var AcquisitionsContentTailoringFootball = {
+        name: 'AcquisitionsEpicContentTailoringFootball',
+        variants: ['control', 'impact', 'reference']
+    };
+
     var contributionsTests = [
         ContributionsEpicAlwaysAskStrategy,
         ContributionsEpicBrexit,
         ContributionsEpicAskFourEarning,
-        ContributionsEpicRegulars,
+        ContributionsEpicRegularsV2,
         AcquisitionsEpicDesignVariationsV2,
-        AcquisitionsEpicArticle50Trigger
+        AcquisitionsEpicArticle50Trigger,
+        AcquisitionsContentTailoringEnvironment,
+        AcquisitionsContentTailoringCif,
+        AcquisitionsContentTailoringFootball,
+        ContributionsEpicLaundromat
     ];
 
     var emailTests = [];

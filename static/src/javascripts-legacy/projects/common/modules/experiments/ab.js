@@ -14,12 +14,16 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/tests/paid-content-vs-outbrain',
-    'common/modules/experiments/tests/tailor-recommended-email',
     'common/modules/experiments/tests/membership-a3-a4-bundles-thrasher',
     'common/modules/experiments/tests/tailor-survey',
+    'common/modules/experiments/tests/the-long-read-email-variants',
+    'common/modules/experiments/tests/fashion-statement-email-variants',
+    'common/modules/experiments/tests/bookmarks-email-variants',
+    'common/modules/experiments/tests/film-today-email-variants',
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
+    'common/modules/experiments/tests/reading-time',
     'ophan/ng',
     'common/modules/experiments/tests/paid-commenting'
 ], function (reportError,
@@ -37,12 +41,16 @@ define([
              RecommendedForYou,
              MembershipEngagementBannerTests,
              PaidContentVsOutbrain,
-             TailorRecommendedEmail,
              MembershipA3A4BundlesThrasher,
              TailorSurvey,
+             TheLongReadEmailVariants,
+             FashionStatementEmailVariants,
+             BookmarksEmailVariants,
+             FilmTodayEmailVariants,
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
              IncreaseInlineAds,
+             ReadingTime,
              ophan,
              PaidCommenting
     ) {
@@ -52,12 +60,16 @@ define([
         new RecommendedForYou(),
         new PaidContentVsOutbrain,
         acquisitionTestSelector.getTest(),
-        new TailorRecommendedEmail(),
         new MembershipA3A4BundlesThrasher(),
         new TailorSurvey(),
+        TheLongReadEmailVariants,
+        FashionStatementEmailVariants,
+        BookmarksEmailVariants,
+        FilmTodayEmailVariants,
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
         new IncreaseInlineAds(),
+        new ReadingTime(),
         new PaidCommenting()
     ].concat(MembershipEngagementBannerTests));
 
@@ -186,9 +198,10 @@ define([
                 .forEach(function (test) {
                     var variantId = getTestVariantId(test.id);
                     var variant = getVariant(test, variantId);
+                    var campaingCodes = (variant && variant.campaignCodes) ? variant.campaignCodes : undefined;
 
                     if (variantId && segmentUtil.isInTest(test)) {
-                        log[test.id] = abData(variantId, 'false', variant.campaignCodes);
+                        log[test.id] = abData(variantId, 'false', campaingCodes);
                     }
                 });
 
@@ -400,25 +413,6 @@ define([
 
         registerImpressionEvents: function () {
             getActiveTests().filter(defersImpression).forEach(registerCompleteEvent(false));
-        },
-
-        isEventApplicableToAnActiveTest: function (event) {
-            return Object.keys(getParticipations()).some(function (id) {
-                var listOfEventStrings = getTest(id).events;
-                return listOfEventStrings.some(function (ev) {
-                    return event.indexOf(ev) === 0;
-                });
-            });
-        },
-
-        getActiveTestsEventIsApplicableTo: function (event) {
-            var eventTag = event.tag;
-            return eventTag && getActiveTests().filter(function (test) {
-                    var testEvents = test.events;
-                    return testEvents && testEvents.some(function (testEvent) {
-                            return eventTag.indexOf(testEvent) === 0;
-                        });
-                }).map(getId);
         },
 
         getAbLoggableObject: getAbLoggableObject,

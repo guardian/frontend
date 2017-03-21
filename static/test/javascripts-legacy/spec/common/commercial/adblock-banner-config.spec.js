@@ -1,8 +1,10 @@
 define([
-    'common/modules/commercial/adblock-banner-config'
-], function (adblockBannerConfig) {
+    'helpers/injector'
+], function (Injector) {
 
     describe('Adblock configuration rules', function () {
+
+        var injector = new Injector();
 
         var testConfig = [
             {
@@ -29,13 +31,30 @@ define([
         ],
         ukBanners,
         usBanners,
-        intBanners;
+        intBanners,
+        adblockBannerConfig;
 
-        beforeEach(function () {
-            adblockBannerConfig.banners = testConfig;
-            ukBanners = adblockBannerConfig.getBanners('UK');
-            usBanners = adblockBannerConfig.getBanners('US');
-            intBanners = adblockBannerConfig.getBanners('INT');
+        beforeEach(function (done) {
+            injector.mock('lib/config', {
+                images: {
+                    membership: {
+                        'adblock-coins': '',
+                        'adblock-coins-us': ''
+                    }
+                }
+            });
+
+            injector.require([
+                'common/modules/commercial/adblock-banner-config'
+            ], function($1) {
+                adblockBannerConfig = $1;
+                adblockBannerConfig.banners = testConfig;
+                ukBanners = adblockBannerConfig.getBanners('UK');
+                usBanners = adblockBannerConfig.getBanners('US');
+                intBanners = adblockBannerConfig.getBanners('INT');
+                done();
+            },
+            done.fail);
         });
 
         it('should return no banners given no locale', function () {

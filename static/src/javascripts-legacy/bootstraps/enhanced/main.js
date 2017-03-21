@@ -13,9 +13,7 @@ define([
     './sport',
     'common/modules/analytics/google',
     'lib/geolocation',
-    'common/modules/check-dispatcher',
-    'lodash/collections/contains',
-    'common/modules/tailor/tailor-survey-overlay'
+    'common/modules/check-dispatcher'
 ], function (
     fastdom,
     bean,
@@ -31,9 +29,7 @@ define([
     sport,
     ga,
     geolocation,
-    checkDispatcher,
-    contains,
-    tailorSurveyOverlay
+    checkDispatcher
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -176,10 +172,13 @@ define([
             }, 'accessibility');
         }
 
-        if (config.page.nonKeywordTagIds && contains(config.page.nonKeywordTagIds.split(','), 'tone/recipes')) {
-            require(['bootstraps/enhanced/recipe-article'], function (recipes) {
-                bootstrapContext('recipes', recipes);
-            });
+        if (config.page.showNewRecipeDesign === true) {
+            //below is for during testing
+            if (config.tests.abNewRecipeDesign) {
+                require(['bootstraps/enhanced/recipe-article'], function (recipes) {
+                    bootstrapContext('recipes', recipes);
+                });
+            }
         }
 
         fastdom.read(function() {
@@ -192,11 +191,6 @@ define([
 
         // initialise email/outbrain check dispatcher
         bootstrapContext('checkDispatcher', checkDispatcher);
-
-        // initialise tailor overlay survey
-        if (config.switches.tailorSurveyOverlay) {
-            bootstrapContext('tailorSurveyOverlay', tailorSurveyOverlay);
-        }
 
         // Mark the end of synchronous execution.
         userTiming.mark('App End');

@@ -217,6 +217,7 @@ object EmailNewsletters {
     description = "Bringing you the latest Long Read features and podcasts, delivered to your inbox.",
     frequency = "Every Saturday",
     listId = 3322,
+    aliases = List(3868, 3869),
     tone = Some("feature"),
     signupPage = Some("/news/2015/jul/20/sign-up-to-the-long-read-email")
   )
@@ -250,6 +251,7 @@ object EmailNewsletters {
     description = "Our film editors recap the top headlines each weekday and deliver them straight to your inbox in time for your evening commute.",
     frequency = "Every weekday",
     listId = 1950,
+    aliases = List(3864, 3865),
     tone = Some("feature"),
     signupPage = Some("/info/2016/feb/12/film-today-email-sign-up")
   )
@@ -261,6 +263,7 @@ object EmailNewsletters {
     description = "A weekly email from the books team with our pick of the latest news, views and reviews, delivered to your inbox.",
     frequency = "Every Thursday",
     listId = 3039,
+    aliases = List(3866, 3867),
     tone = Some("feature"),
     signupPage = Some("/books/2015/feb/03/sign-up-to-our-bookmarks-email")
   )
@@ -318,6 +321,7 @@ object EmailNewsletters {
     description = "The Guardian sorts the wheat from the chaff to deliver the latest news, views and shoes from the style frontline.",
     frequency = "Every Monday",
     listId = 105,
+    aliases = List(3862, 3863),
     tone = Some("feature"),
     signupPage = Some("/fashion/2016/aug/18/sign-up-for-the-guardians-fashion-email")
   )

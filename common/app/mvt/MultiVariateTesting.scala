@@ -61,6 +61,28 @@ object YouTubePosterOverride extends TestDefinition(
   }
 }
 
+object ABNewRecipeDesign extends TestDefinition(
+  name = "ab-new-recipe-design",
+  description = "Users in the test will see the new design on articles with structured recipes",
+  owners = Seq(Owner.withGithub("tsop14")),
+  sellByDate = new LocalDate(2017, 4, 3)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-new-recipe-design").contains("variant")
+  }
+}
+
+object PolyfillIO extends TestDefinition(
+  name = "polyfill-io",
+  description = "Users in the test will use polyfill.io to polyfill their browser capabilities",
+  owners = Seq(Owner.withGithub("gustavpursche"), Owner.withGithub("gtrufitt")),
+  sellByDate = new LocalDate(2017, 3, 29)
+  ) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-polyfill-io").contains("true")
+  }
+}
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -77,7 +99,9 @@ object ActiveTests extends ServerSideABTests {
     ABNewNavVariantSeven,
     ABNewNavControl,
     CommercialClientLoggingVariant,
-    YouTubePosterOverride
+    YouTubePosterOverride,
+    ABNewRecipeDesign,
+    PolyfillIO
   )
 }
 

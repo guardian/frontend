@@ -65,7 +65,7 @@
     "eslint-import-resolver-webpack": "^0.8.0",
     "eslint-plugin-flow-header": "https://github.com/eirikurn/eslint-plugin-flow-header",
     "eslint-plugin-flowtype": "^2.30.0",
-    "eslint-plugin-guardian-frontend": "file:tools/eslint-plugin-guardian-frontend",
+    "eslint-plugin-guardian-frontend": "file:dev/eslint-plugin-guardian-frontend",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jasmine": "^1.8.1",
     "eslint-plugin-jsx-a11y": "2.2.3",
@@ -139,6 +139,7 @@
   "jest": {
     "roots": [
       "<rootDir>/static/src/javascripts",
+      "<rootDir>/dev",
       "<rootDir>/tools"
     ],
     "moduleDirectories": [
@@ -165,7 +166,7 @@
       "ophan/embed": "ophan-tracker-js/build/ophan.embed"
     },
     "testResultsProcessor": "jest-teamcity-reporter",
-    "setupTestFrameworkScriptFile": "<rootDir>/jestSetup.js"
+    "setupTestFrameworkScriptFile": "<rootDir>/dev/jest.setupTestFrameworkScriptFile.js"
   },
   "scripts": {
     "postinstall": "./tools/task-runner/runner githooks --verbose",
