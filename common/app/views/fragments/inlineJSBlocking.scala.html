@@ -61,16 +61,16 @@
 
     // Polyfill for async script
     (function (document) {
+        var script = document.createElement('script');
+        var ref = document.getElementsByTagName('script')[0];
+        script.src = '@Static("javascripts/graun.standard.js")';
+        ref.parentNode.insertBefore(script, ref);
+
         @if(mvt.PolyfillIO.isParticipating) {
             var polyfillScript = document.createElement('script');
             var polyfillRef = document.getElementsByTagName('script')[0];
             polyfillScript.src = 'https://assets.guim.co.uk/polyfill.io/v2/polyfill.min.js?features=es6,Element.prototype.closest,Element.prototype.matches';
             polyfillRef.parentNode.insertBefore(polyfillScript, polyfillRef);
         }
-
-        var script = document.createElement('script');
-        var ref = document.getElementsByTagName('script')[0];
-        script.src = '@Static("javascripts/graun.standard.js")';
-        ref.parentNode.insertBefore(script, ref);
     })(document);
 </script>
