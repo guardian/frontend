@@ -168,7 +168,7 @@ $grey: #dbdbdb;
 }
 
 .recipe__article--byline a {
-  color: $features-main-2;
+    color: $features-main-2;
 }
 
 .recipe__article--next-button {
@@ -191,7 +191,7 @@ $grey: #dbdbdb;
         right: 0;
     }
 
-    @include mq($from: leftCol){
+    @include mq($from: leftCol) {
         width: calc(#{$gs-gutter / 2 - 1} * 5);
         height: calc(#{$gs-gutter / 2 - 1} * 5);
     }
@@ -263,18 +263,18 @@ $grey: #dbdbdb;
 }
 
 .recipe__content a, .recipe__standfirst a {
-  color: $features-main-2;
+    color: $features-main-2;
 
-  &:hover {
-    border-bottom: 1px solid $features-main-2;
-  }
+    &:hover {
+        border-bottom: 1px solid $features-main-2;
+    }
 }
 
-.recipe__content{
+.recipe__content {
     display: none;
 }
 
-.recipe__content.js-visible{
+.recipe__content.js-visible {
     display: block;
 }
 
@@ -383,7 +383,7 @@ $grey: #dbdbdb;
         color: $features-main-2;
 
         &:nth-child(2) {
-            margin-left: calc(#{$gs-gutter / 5)} * 2);
+            margin-left: calc(#{$gs-gutter / 5} * 2);
         }
     }
 }
@@ -467,8 +467,8 @@ $grey: #dbdbdb;
     margin-top: $gs-baseline / 2;
 
     @include mq($from: desktop) {
-      margin-top: 0;
-      margin-bottom: $gs-baseline;
+        margin-top: 0;
+        margin-bottom: $gs-baseline;
     }
 }
 
@@ -508,8 +508,8 @@ $grey: #dbdbdb;
         margin-bottom: $gs-baseline * 2;
     }
     .number {
-        font-size: 48px;
         @include f-headline;
+        font-size: 48px;
         font-weight: 200;
         float: left;
         line-height: 0;
