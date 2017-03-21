@@ -127,6 +127,16 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  val PolyfillIO = Switch(
+    SwitchGroup.Performance,
+    "polyfill.io",
+    "If this switch is on we will attempt to load polyfills from polyfill.io. If it is off, only our (full, larger) fullback will be loaded.",
+    owners = Seq(Owner.withGithub("sndrs")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val ShowAllArticleEmbedsSwitch = Switch(
     SwitchGroup.Performance,
     "show-all-embeds",

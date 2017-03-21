@@ -1,6 +1,7 @@
 @()(implicit request: RequestHeader)
 @import conf.Static
 @import conf.Configuration
+@import conf.switches.Switches.{PolyfillIO}
 
 // the app is bundled without any polyfills. babel transpiles the syntax
 // to es5 but we do provide any polyfills for missing methods.
@@ -27,7 +28,7 @@ function guardianPolyfilled() {
 // Load the app and try to patch the env with polyfill.io
 (function (document, window) {
     var ref = document.getElementsByTagName('script')[0];
-    var fallbackScript;
+    var polyfillScript, fallbackScript;
 
     // because we're potentially setting up a race condition (polyfill.io and fallback)
     // we need a way to stop one of the scripts evaling if they both get requested
@@ -49,6 +50,34 @@ function guardianPolyfilled() {
         ref.parentNode.insertBefore(fallbackScript, appScript);
     }
 
+    // load polyfills from polyfill.io
+    function loadPolyfillIO () {
+        polyfillScript = document.createElement('script');
+        polyfillScript.src = "@common.Assets.js.polyfillioUrl";
+        polyfillScript.onerror = function () { // if something goes wrong...
+            // 1. ignore this script
+            disableScript(polyfillScript);
+            // 2. try to cancel the timeout that would have loaded the fallback eventually
+            window.clearTimeout(window.guardian.loadPolyfillioFallback);
+            // 3. manually load the fallback
+            loadFallback();
+        };
+        polyfillScript.onload = function () { // once we get polyfills from polyfill.io...
+            // 1. try to cancel the timeout that would have loaded the fallback eventually
+            window.clearTimeout(window.guardian.loadPolyfillioFallback);
+            // 2. disable the fallback script
+            // why? it's possible this script took too long to arrive and the fallback
+            // was triggered, but then this actually arrived *before* the fallback did.
+            // in that case, we might as well use this instead of waiting, but we don't
+            // want to patch again with the fallback when *it* arrives.
+            disableScript(fallbackScript);
+        };
+        appScript.parentNode.insertBefore(polyfillScript, appScript);
+
+        // give pollyfill.io 3 seconds to arrive before we trigger the fallback
+        window.guardian.loadPolyfillioFallback = window.setTimeout(loadFallback, 3000);
+    }
+
     // the app will probably take longest to load, so let's
     // get it loading ASAP. it won't do anything till the polyfills
     // have run anyway
@@ -56,29 +85,9 @@ function guardianPolyfilled() {
     appScript.src = '@Static("javascripts/graun.standard.js")';
     ref.parentNode.insertBefore(appScript, ref);
 
-    // load polyfills from polyfill.io
-    var polyfillScript = document.createElement('script');
-    polyfillScript.src = "@common.Assets.js.polyfillioUrl";
-    polyfillScript.onerror = function () { // if something goes wrong...
-        // 1. ignore this script
-        disableScript(polyfillScript);
-        // 2. try to cancel the timeout that would have loaded the fallback eventually
-        window.clearTimeout(window.guardian.loadPolyfillioFallback);
-        // 3. manually load the fallback
+    @if(PolyfillIO.isSwitchedOn) {
+        loadPolyfillIO()
+    } else {
         loadFallback();
-    };
-    polyfillScript.onload = function () { // once we get polyfills from polyfill.io...
-        // 1. try to cancel the timeout that would have loaded the fallback eventually
-        window.clearTimeout(window.guardian.loadPolyfillioFallback);
-        // 2. disable the fallback script
-        // why? it's possible this script took too long to arrive and the fallback
-        // was triggered, but then this actually arrived *before* the fallback did.
-        // in that case, we might as well use this instead of waiting, but we don't
-        // want to patch again with the fallback when *it* arrives.
-        disableScript(fallbackScript);
-    };
-    appScript.parentNode.insertBefore(polyfillScript, appScript);
-
-    // give pollyfill.io 3 seconds to arrive before we trigger the fallback
-    window.guardian.loadPolyfillioFallback = window.setTimeout(loadFallback, 3000);
+    }
 })(document, window);
