@@ -1,9 +1,13 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
+const webpackMerge = require('webpack-merge');
+
 const config = require('./webpack.config.js');
 
-const { bundlePrefix } = config;
-
-config.devtool = 'inline-source-map';
-config.output.filename = `${bundlePrefix}[name].js`;
-config.output.chunkFilename = `${bundlePrefix}[name].js`;
-
-module.exports = config;
+module.exports = webpackMerge.smart(config, {
+    devtool: 'inline-source-map',
+    output: {
+        filename: `graun.[name].js`,
+        chunkFilename: `graun.[name].js`,
+    },
+});

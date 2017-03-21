@@ -2,12 +2,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const bundlePrefix = 'graun.';
-
-module.exports.bundlePrefix = bundlePrefix;
-
 module.exports = {
-    devtool: 'source-map',
     entry: {
         standard: path.join(
             __dirname,
@@ -43,8 +38,6 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: `[chunkhash]/${bundlePrefix}[name].js`,
-        chunkFilename: `[chunkhash]/${bundlePrefix}[name].js`,
     },
     resolve: {
         modules: [

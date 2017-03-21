@@ -128,6 +128,7 @@
     "svgo": "^0.7.1",
     "uglify-js": "^2.7.4",
     "webpack": "~2.2.0",
+    "webpack-merge": "^4.1.0",
     "webpack-visualizer-plugin": "^0.1.10",
     "yargs": "^6.0.0"
   },
