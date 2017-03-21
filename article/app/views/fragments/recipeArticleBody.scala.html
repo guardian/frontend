@@ -28,7 +28,7 @@
             <a href="https://www.theguardian.com/tone/recipes?CMP=recipe-article">
                 <div class="recipe__label"><h2>recipes</h2></div>
             </a>
-            <div class="recipe__image__wrapper recipe__image__wrapper--is-displayed">
+            <div class="js-recipe__image__wrapper recipe__image__wrapper recipe__image__wrapper--is-displayed">
                 @maybeMainImage.map{ image =>
                     @fragments.image(
                         picture = image,
@@ -54,7 +54,7 @@
                 </div>
             }
         </div>
-        <div class="recipe__gutter-wrapper">
+        <div class="js-recipe__gutter-wrapper recipe__gutter-wrapper">
             @defining(articleModel.item.content.tags) { tags =>
                 @if(tags.hasLargeContributorImage && tags.contributors.length == 1) {
                     <a href=@LinkTo{/@tags.contributors.map(_.id)}><div class="recipe__article--byline-image">@fragments.meta.bylineImage(tags)</div></a>
@@ -103,7 +103,6 @@
 </article>
 
 }
-
 
 @recipePage(recipe: model.content.RecipeAtom, i: Int) = {
     <div data-recipe-index="recipe__@i" id="@recipe.atom.id" class="js-recipe__article--structured recipe__article--structured" itemtype="http://schema.org/Recipe">

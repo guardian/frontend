@@ -2,12 +2,16 @@ define([
     'lib/$',
     'lib/scroller',
     'bean',
-    'lodash/functions/debounce'
+    'lodash/functions/debounce',
+    'common/modules/ui/sticky',
+    'lib/detect'
 ], function (
     $,
     scroller,
     bean,
-    debounce
+    debounce,
+    Sticky,
+    detect
 ) {
 
 function init() {
@@ -22,6 +26,8 @@ function init() {
     var readMoreButton = $('.js-recipe__article--read-more');
     var readMoreButtonText = $('.read-more__text');
     var displayClass = 'recipe__image__wrapper--is-displayed';
+    var stickyGutter = $('.js-recipe__gutter-wrapper');
+    var stickyImages = $('.js-recipe__image__wrapper');
 
     function setKicker() {
         var nextRecipe = getNextRecipe();
@@ -121,6 +127,11 @@ function init() {
         nextRecipeText.addClass('visible');
         resetAssets(focalRecipeInt);
         if (focalRecipeInt < 0) { nextButton.removeClass('top'); }
+
+        if(detect.isBreakpoint({ min: 'desktop' })) {
+          new Sticky(stickyGutter[0]).init();
+          new Sticky(stickyImages[0]).init();
+        }
     }
 
     initalise();
