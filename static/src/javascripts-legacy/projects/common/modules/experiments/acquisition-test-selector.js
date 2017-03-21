@@ -47,17 +47,20 @@ define([
         return out;
     }, []);
 
-    function getVariantIds(testInstance) {
-        return testInstance.variants.map(function(variant) {
-            return variant.id
-        })
+    function nonOutbrainCompliantVariantIds(testInstance) {
+        return reduce(testInstance.variants, function(out, variant) {
+            if (!variant.isOutbrainCompliant) {
+                out.push(variant.id)
+            }
+            return out;
+        }, [])
     }
 
     var abTestClashData = tests.map(function(test) {
         var testInstance = new test();
         return {
             name: testInstance.id,
-            variants: getVariantIds(testInstance)
+            variants: nonOutbrainCompliantVariantIds(testInstance)
         }
     });
 

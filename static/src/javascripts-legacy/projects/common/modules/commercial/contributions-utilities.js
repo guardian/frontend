@@ -167,6 +167,8 @@ define([
         this.blockEngagementBanner = options.blockEngagementBanner || false;
         this.engagementBannerParams = options.engagementBannerParams || {};
 
+        this.isOutbrainCompliant = options.isOutbrainCompliant || false;
+
         this.test = function () {
 
             var displayEpic = (typeof options.canEpicBeDisplayed === 'function') ?
