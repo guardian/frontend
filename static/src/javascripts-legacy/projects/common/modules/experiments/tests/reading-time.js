@@ -28,11 +28,11 @@ define([
     return function () {
         this.id = 'ReadingTime';
         this.start = '2017-03-15';
-        this.expiry = '2017-03-31'; //to be set to run for a week when audience > 0 change is merged
+        this.expiry = '2017-04-04';
         this.author = 'Leigh-Anne Mathieson';
         this.description = 'Add a thrasher to the home front that gives users an option to indicate how much time they'
             + ' have to read, to determine demand for suggesting content based on the amount of time they have.';
-        this.audience = 0; // to be 0.029
+        this.audience = 0.029; // 1.45% of users on the home front will see reading time thrasher
         this.audienceOffset = 0; //just needs to not clash with recommended for you, which is offset 0.2
         this.successMeasure = 'Number of clicks';
         this.audienceCriteria = 'All users';
