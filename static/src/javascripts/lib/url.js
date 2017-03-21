@@ -5,13 +5,13 @@ import detect from 'lib/detect';
 const supportsPushState = detect.hasPushStateSupport();
 
 // returns "foo=bar&fizz=buzz" (eg. no ? symbol)
-function getCurrentQueryString() {
+function getCurrentQueryString(): string {
     return window.location.search.replace(/^\?/, '');
 }
 
 // returns a map of querystrings
 // eg ?foo=bar&fizz=buzz returns {foo: 'bar', fizz: 'buzz'}
-function getUrlVars(options = {}) {
+function getUrlVars(options?: Object = {}): Array<any> {
     return (options.query || getCurrentQueryString())
         .split('&')
         .filter(Boolean)
@@ -23,7 +23,7 @@ function getUrlVars(options = {}) {
         });
 }
 
-function updateQueryString(params, historyFn) {
+function updateQueryString(params: Object, historyFn: Function) {
     const querystringChanged = getCurrentQueryString() !== params.querystring;
 
     if (params.querystring && querystringChanged && supportsPushState) {
@@ -37,20 +37,20 @@ function updateQueryString(params, historyFn) {
 
 // this will replace anything after the root/domain of the URL
 // and add an item to the browser history.
-// params object requires a "querystring" property
+// params Object requires a "querystring" property
 // and optionally takes a "state" and "title" property too
-function pushQueryString(params) {
+function pushQueryString(params: Object) {
     return updateQueryString(params, history.pushState.bind(history));
 }
 
 // equivalent to pushQueryString but uses history.replaceState to
 // overwrite history rather than history.pushState
-function replaceQueryString(params) {
+function replaceQueryString(params: Object) {
     return updateQueryString(params, history.replaceState.bind(history));
 }
 
-// take an object, construct into a query, e.g. {page: 1, pageSize: 10} => page=1&pageSize=10
-function constructQuery(query) {
+// take an Object, construct into a query, e.g. {page: 1, pageSize: 10} => page=1&pageSize=10
+function constructQuery(query: Object): string {
     return Object.keys(query)
         .map(param => {
             const value = query[param];
@@ -60,13 +60,18 @@ function constructQuery(query) {
         .join('&');
 }
 
-function getPath(url) {
-    const a = document.createElement('a');
+function getPath(url: string): string {
+    const a: HTMLAnchorElement = document.createElement('a');
     a.href = url;
     return a.pathname;
 }
 
-function pushUrl(state, title, url, replace) {
+function pushUrl(
+    state: string,
+    title: string,
+    url: string,
+    replace: string
+): void {
     if (supportsPushState) {
         window.history[replace ? 'replaceState' : 'pushState'](
             state,
@@ -76,7 +81,7 @@ function pushUrl(state, title, url, replace) {
     }
 }
 
-function back() {
+function back(): void {
     if (supportsPushState) {
         window.history.back();
     }
