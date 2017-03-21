@@ -50,6 +50,7 @@ object NavLinks {
   val savings = NavLink("savings", "/money/savings", "money/savings")
   val borrowing = NavLink("borrowing", "/money/debt", "money/debt")
   val careers = NavLink("careers", "/money/work-and-careers", "money/work-and-careers")
+  val obituaries = NavLink("obituaries", "/tone/obituaries")
 
   /* OPINION */
   val opinion = NavLink("opinion", "/commentisfree", longTitle = "opinion home", iconName = "home", uniqueSection = "commentisfree")
@@ -67,7 +68,6 @@ object NavLinks {
   var formulaOne = NavLink("F1", "/sport/formulaone", "sport/formulaone")
   var tennis = NavLink("tennis", "/sport/tennis", "sport/tennis")
   var golf = NavLink("golf", "/sport/golf", "sport/golf")
-  var cycling = NavLink("cycling", "/sport/cycling", "sport/cycling")
   var boxing = NavLink("boxing", "/sport/boxing", "sport/boxing")
   var usSports = NavLink("US sports", "/sport/us-sport", "sport/us-sport")
   val racing = NavLink("racing", "/sport/horse-racing", "sport/horse-racing")

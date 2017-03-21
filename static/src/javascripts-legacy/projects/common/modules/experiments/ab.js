@@ -23,6 +23,7 @@ define([
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
+    'common/modules/experiments/tests/reading-time',
     'ophan/ng'
 ], function (reportError,
              config,
@@ -48,6 +49,7 @@ define([
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
              IncreaseInlineAds,
+             ReadingTime,
              ophan
     ) {
     var TESTS = compact([
@@ -64,7 +66,8 @@ define([
         FilmTodayEmailVariants,
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
-        new IncreaseInlineAds()
+        new IncreaseInlineAds(),
+        new ReadingTime()
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';
@@ -192,9 +195,10 @@ define([
                 .forEach(function (test) {
                     var variantId = getTestVariantId(test.id);
                     var variant = getVariant(test, variantId);
+                    var campaingCodes = (variant && variant.campaignCodes) ? variant.campaignCodes : undefined;
 
                     if (variantId && segmentUtil.isInTest(test)) {
-                        log[test.id] = abData(variantId, 'false', variant.campaignCodes);
+                        log[test.id] = abData(variantId, 'false', campaingCodes);
                     }
                 });
 
