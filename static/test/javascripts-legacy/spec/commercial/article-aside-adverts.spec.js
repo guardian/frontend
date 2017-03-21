@@ -24,18 +24,7 @@ define([
 
     describe('Article Aside Adverts', function () {
 
-        var fixturesConfig = {
-                id: 'article-aside-adverts',
-                fixtures: [
-                    '<div class="content__secondary-column js-secondary-column">' +
-                    '<div class="js-ad-slot-container"></div>' +
-                    '</div>'
-                ]
-            },
-            $fixturesContainer;
-
         beforeEach(function (done) {
-            $fixturesContainer = fixtures.render(fixturesConfig);
 
             injector.require([
                 'commercial/modules/article-aside-adverts',
@@ -51,52 +40,31 @@ define([
             });
         });
 
-        afterEach(function () {
-            fixtures.clean(fixturesConfig.id);
-        });
-
         it('should exist', function () {
             expect(articleAsideAdverts).toBeDefined();
         });
 
-        it('should return the ad slot container on init', function (done) {
+        it('should have the correct size mappings and classes', function () {
             articleAsideAdverts.init(noop, noop);
             mediator.once('page:commercial:right', function (adSlot) {
-                expect(adSlot.parentNode).toBe(qwery('.js-ad-slot-container', $fixturesContainer)[0]);
-                done();
+                expect(adSlot.classList.contains('js-sticky-mpu').toBe(true));
+                expect(adSlot.getAttribute('data-mobile')).toBe('1,1|2,2|300,250|300,600|fluid');
             });
         });
 
-        it('should append ad slot', function (done) {
+        it('should mutate the ad slot in short articles', function () {
             articleAsideAdverts.init(noop, noop);
             mediator.once('page:commercial:right', function (adSlot) {
-                expect(adSlot).not.toBeNull();
-                done();
+                expect(adSlot.classList.contains('js-sticky-mpu').toBe(false));
+                expect(adSlot.getAttribute('data-mobile').toBe('1,1|2,2|300,250|fluid'));
             });
         });
 
-        it('should have the correct ad name', function (done) {
-            articleAsideAdverts.init(noop, noop);
-            mediator.once('page:commercial:right', function (adSlot) {
-                expect(adSlot.getAttribute('data-name')).toBe('right');
-                done();
-            });
-        });
-
-        it('should have the correct size mappings', function (done) {
-            articleAsideAdverts.init(noop, noop);
-            mediator.once('page:commercial:right', function (adSlot) {
-                expect(adSlot.getAttribute('data-mobile')).toBe('1,1|2,2|300,250|fluid');
-                done();
-            });
-        });
-
-        it('should not display ad slot if disabled in commercial-feature-switches', function (done) {
+        it('should not do anything if disabled in commercial-feature-switches', function (done) {
             commercialFeatures.articleAsideAdverts = false;
 
             articleAsideAdverts.init(noop, noop).then(function (returned) {
                 expect(returned).toBe(false);
-                expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
                 done();
             });
         });

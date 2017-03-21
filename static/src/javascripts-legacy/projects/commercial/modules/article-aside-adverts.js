@@ -41,26 +41,29 @@ define([
         $mainCol = $(mainColumnSelector);
         $adSlot = $(adSlotSelector, $col);
 
-        fastdom.read(function () {
+        if (!$adSlot.length) {
+            stop();
+            return Promise.resolve(false);
+        }
+
+        return fastdom.read(function () {
             return $mainCol.dim().height;
         })
         .then(function (mainColHeight) {
 
             // Should switch to 'right-small' MPU for short articles
-            if ($adSlot.length && mainColHeight < minContentHeight()) {
-              return fastdom.write(function () {
+            if (mainColHeight < minContentHeight()) {
+              fastdom.write(function () {
                   $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
                   $adSlot[0].setAttribute('data-mobile', '1,1|2,2|300,250|fluid')
               });
             }
-            return $adSlot;
+            return $adSlot[0];
         })
-        .then(function ($adSlot) {
+        .then(function (adSlot) {
             stop();
-            mediator.emit('page:commercial:right', $adSlot);
+            mediator.emit('page:commercial:right', adSlot);
         });
-
-        return Promise.resolve(true);
     }
 
     return {
