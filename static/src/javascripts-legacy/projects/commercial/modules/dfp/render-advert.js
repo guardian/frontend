@@ -106,7 +106,7 @@ define([
             return fastdom.write(function () {
                 bonzo(advert.node).addClass('u-h');
                 // if in a slice, add the 'no mpu' class
-                if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
+                if ($parent.hasClass('fc-slice__item--mpu-candidate')) {
                     $parent.addClass('fc-slice__item--no-mpu');
                 }
             });

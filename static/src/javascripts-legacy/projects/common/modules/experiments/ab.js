@@ -23,6 +23,7 @@ define([
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
+    'common/modules/experiments/tests/reading-time',
     'ophan/ng'
 ], function (reportError,
              config,
@@ -48,6 +49,7 @@ define([
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
              IncreaseInlineAds,
+             ReadingTime,
              ophan
     ) {
     var TESTS = compact([
@@ -64,7 +66,8 @@ define([
         FilmTodayEmailVariants,
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
-        new IncreaseInlineAds()
+        new IncreaseInlineAds(),
+        new ReadingTime()
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';
