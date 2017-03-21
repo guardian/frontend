@@ -49,11 +49,9 @@ function catchErrorsAndLogAll(modules: Array<any>) {
 }
 
 function makeBlocks(codeBlocks: Array<any>) {
-    return codeBlocks.map(record => {
+    codeBlocks.forEach(record => {
         const [name, fn] = record;
         catchErrorsAndLog.bind(this, name, fn);
-
-        return undefined;
     });
 }
 
