@@ -18,9 +18,9 @@ define([
         variants: ['control']
     };
 
-    var ContributionsEpicRegulars = {
-        name: 'ContributionsEpicRegulars',
-        variants: ['control', 'fairness_mild', 'fairness_strong', 'fairness_strong_alternate_hook', 'reliance']
+    var ContributionsEpicRegularsV2 = {
+        name: 'ContributionsEpicRegularsV2',
+        variants: ['control', 'fairness_strong', 'fairness_strong_alternate_hook']
 	};
 
     var AcquisitionsEpicDesignVariationsV2 = {
@@ -32,6 +32,12 @@ define([
         name: 'AcquisitionsEpicArticle50Trigger',
         variants: ['control']
     };
+
+    var ContributionsEpicLaundromat = {
+        name: 'ContributionsEpicLaundromat',
+        variants: ['control']
+    };
+
 
     var AcquisitionsContentTailoringEnvironment = {
         name: 'AcquisitionsEpicContentTailoringEnvironment',
@@ -52,12 +58,13 @@ define([
         ContributionsEpicAlwaysAskStrategy,
         ContributionsEpicBrexit,
         ContributionsEpicAskFourEarning,
-        ContributionsEpicRegulars,
+        ContributionsEpicRegularsV2,
         AcquisitionsEpicDesignVariationsV2,
         AcquisitionsEpicArticle50Trigger,
         AcquisitionsContentTailoringEnvironment,
         AcquisitionsContentTailoringCif,
-        AcquisitionsContentTailoringFootball
+        AcquisitionsContentTailoringFootball,
+        ContributionsEpicLaundromat
     ];
 
     var emailTests = [];

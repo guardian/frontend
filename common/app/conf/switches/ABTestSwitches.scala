@@ -122,7 +122,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-regulars",
+    "ab-contributions-epic-regulars-v2",
     "Test messages aimed at our regular readers",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
@@ -220,6 +220,18 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-laundromat",
+    "Display the Epic on Laundromat articles",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
+
   Switch(
     ABTests,
     "ab-acquisitions-epic-content-tailoring-environment",
@@ -247,6 +259,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("alexduf")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-reading-time",
+    "Test demand for getting suggested content based on how much time a reader has",
+    owners = Seq(Owner.withGithub("lmath")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 4),
     exposeClientSide = true
   )
 }

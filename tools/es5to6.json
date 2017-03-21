@@ -36,7 +36,6 @@
     "lib/pad.js",
     "lib/page.js",
     "lib/picturefill.js",
-    "lib/private-browsing.js",
     "lib/proximity-loader.js",
     "lib/queue.js",
     "lib/QueueAsync.js",
