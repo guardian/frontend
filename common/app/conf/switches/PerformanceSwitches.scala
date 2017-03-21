@@ -132,7 +132,7 @@ trait PerformanceSwitches {
     "polyfill-io",
     "If this switch is on we will attempt to load polyfills from polyfill.io. If it is off, only our (full, larger) fullback will be loaded.",
     owners = Seq(Owner.withGithub("sndrs")),
-    safeState = Off,
+    safeState = On,
     sellByDate = never,
     exposeClientSide = false
   )
