@@ -403,9 +403,7 @@
     }
     .badge {
         pointer-events: none;
-        @include mq($until: desktop) {
-            right: 0;
-        }
+        right: 0;
     }
     .badge__label {
         text-align: center;
