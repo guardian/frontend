@@ -98,6 +98,7 @@ case class RecipeBodyImage(isRecipeArticle: Boolean) extends HtmlCleaner {
     if(isRecipeArticle) {
       document.getElementsByClass("element-image") foreach(_.remove())
       document.getElementsByTag("aside").filter(_.hasClass("element-pullquote")) foreach( _.remove())
+      document.getElementsByClass("element-rich-link").foreach( _.remove())
     }
     document
   }

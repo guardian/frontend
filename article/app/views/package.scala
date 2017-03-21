@@ -53,7 +53,7 @@ object BodyCleaner {
       R2VideoCleaner,
       PictureCleaner(article, amp),
       AtomsCleaner(atoms = article.content.atoms, shouldFence = true, amp = amp),
-      DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive, article.isRecipeArticle),
+      DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive, article.showNewRecipeDesign),
       ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
       RichLinkCleaner(amp),
@@ -70,7 +70,7 @@ object BodyCleaner {
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
       MinuteCleaner(article),
-      RecipeBodyImage(article.isRecipeArticle)
+      RecipeBodyImage(article.showNewRecipeDesign)
     ) ++
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
       ListIf(amp)(AmpEmbedCleaner(article)) ++
