@@ -150,6 +150,12 @@ case object TheResistanceNow extends ArticleEmailMetadata {
   def test(c: ContentPage) = c.item.tags.series.exists(_.id == "us-news/series/the-resistance-now-newsletter")
 }
 
+case object NewEmail extends ArticleEmailMetadata {
+  val name = "The Resistance Now"
+  override val banner = Some("fancy-banner.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "this-series")
+}
+
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
   override val banner = Some("the-flyer.png")

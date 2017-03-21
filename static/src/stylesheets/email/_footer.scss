@@ -4,33 +4,29 @@
     background-position: bottom right;
     padding: 25px 0;
     margin-top: 36px;
-}
-
-.email__links, .disclaimer p {
     font-family: Helvetica, Arial, sans-serif;
     text-align: center;
 }
 
-.email__links {
+.email-links {
     color: #ffffff;
     font-size: 12px;
     font-weight: lighter;
     line-height: 14px;
-}
 
-.email__link,
-.email__link:visited,
-.email__link:hover,
-.email__link:active {
-    text-decoration: none;
-    color: #ffffff;
+    & a {
+        &,
+        &:visited,
+        &:hover,
+        &:active {
+            text-decoration: none;
+            color: #ffffff;
+        }
+    }
 }
 
 .disclaimer {
     padding-top: 25px;
-}
-
-.disclaimer p {
     color: #dfdfdf;
     font-size: 10px;
     line-height: 14px;
