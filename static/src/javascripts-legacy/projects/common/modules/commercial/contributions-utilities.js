@@ -197,8 +197,6 @@ define([
                             // top offset of 18 ensures view only counts when half of element is on screen
                             var elementInView = ElementInView(element, window, { top: 18 });
 
-                            // TODO: send interaction
-
                             elementInView.on('firstview', function () {
                                 viewLog.logView(test.id);
                                 mediator.emit(test.viewEvent);
