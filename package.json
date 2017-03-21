@@ -138,6 +138,7 @@
   "jest": {
     "roots": [
       "<rootDir>/static/src/javascripts",
+      "<rootDir>/dev",
       "<rootDir>/tools"
     ],
     "moduleDirectories": [

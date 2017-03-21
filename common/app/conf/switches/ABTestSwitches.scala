@@ -122,7 +122,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-regulars",
+    "ab-contributions-epic-regulars-v2",
     "Test messages aimed at our regular readers",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
@@ -219,6 +219,18 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
+
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-laundromat",
+    "Display the Epic on Laundromat articles",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
 
   Switch(
     ABTests,
