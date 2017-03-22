@@ -44,10 +44,8 @@ define([
         },
         hasHighPriorityAdLoaded: function() {
             // if thirdPartyTags false no external ads are loaded
-            if (commercialFeatures.thirdPartyTags) {
-                return trackAdRender('dfp-ad--merchandising-high').then(function(highPriorityAdLoaded) {
-                    return highPriorityAdLoaded;
-                });
+            if (commercialFeatures.thirdPartyTags && commercialFeatures.highMerch) {
+                return trackAdRender('dfp-ad--merchandising-high');
             } else {
                 return false;
             }
@@ -57,9 +55,7 @@ define([
             if (commercialFeatures.thirdPartyTags) {
                 return checkMediator.waitForCheck('hasHighPriorityAdLoaded').then(function (highPriorityAdLoaded) {
                     if (highPriorityAdLoaded) {
-                        return trackAdRender('dfp-ad--merchandising').then(function(lowPriorityAdLoaded) {
-                            return lowPriorityAdLoaded;
-                        });
+                        return trackAdRender('dfp-ad--merchandising');
                     } else {    
                         return true;
                     }

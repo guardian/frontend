@@ -100,44 +100,57 @@ define([
      not loading Outbrain. As Outbrain is being partially loaded behind the adblock we can
      make the call instantly when we detect adBlock in use.
     */
-    function loadInstantly() {
+    function canLoadInstantly() {
         return detect.adblockInUse.then(function(adblockInUse){
             return !document.getElementById('dfp-ad--merchandising-high') ||
                 adblockInUse;
         });
     }
 
+    function onIsOutbrainDisabled(outbrainDisabled) {
+        if (outbrainDisabled) {
+            return Promise.resolve();
+        } else {
+            return canLoadInstantly().then(onCanLoadInstantly);
+        }
+    }
+
+    function onCanLoadInstantly(loadInstantly) {
+        if (loadInstantly) {
+            return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(onIsUserInNonCompliantAbTest); 
+        } else {
+            return checkMediator.waitForCheck('isOutbrainBlockedByAds').then(onIsOutbrainBlockedByAds);
+        }   
+    }
+
+    function onIsUserInNonCompliantAbTest(userInNonCompliantAbTest) {
+        userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();
+        return Promise.resolve();
+    }
+
+    function onIsOutbrainBlockedByAds(outbrainBlockedByAds) {
+        if (outbrainBlockedByAds) {
+            return Promise.resolve();
+        } else {
+            return checkMediator.waitForCheck('isOutbrainMerchandiseCompliant').then(onIsOutbrainMerchandiseCompliant);
+        }
+    }
+
+    function onIsOutbrainMerchandiseCompliant(outbrainMerchandiseCompliant) {
+        if (outbrainMerchandiseCompliant) {
+            module.load('merchandising');
+            return Promise.resolve();
+        } else {
+            return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(onIsUserInNonCompliantAbTest); 
+        }
+    }
+
+    function outbrainChecks() { 
+        return checkMediator.waitForCheck('isOutbrainDisabled').then(onIsOutbrainDisabled);
+    }
+
     function init() {
-        return checkMediator.waitForCheck('isOutbrainDisabled').then(function (outbrainDisabled) {
-            if (!outbrainDisabled) {
-                // if there is no merch component, load the outbrain widget right away
-                return loadInstantly().then(function(shouldLoadInstantly) {
-                    if (shouldLoadInstantly) {
-                        return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(function (userInNonCompliantAbTest) {
-                            userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();
-                        });
-                    } else {
-                        // if a high priority merch component and low priority merch component on page block outbrain
-                        return checkMediator.waitForCheck('isOutbrainBlockedByAds').then(function(outbrainBlockedByAds) {
-                            if (!outbrainBlockedByAds) {
-                                // if only a high priority merch component on page then outbrain is merchandise compliant
-                                return checkMediator.waitForCheck('isOutbrainMerchandiseCompliant').then(function (outbrainMerchandiseCompliant) {
-                                    if (outbrainMerchandiseCompliant) {
-                                        module.load('merchandising');
-                                    } else {
-                                        return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(function (userInNonCompliantAbTest) {
-                                            userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();
-                                        });
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-            }
-        }).then(function () {
-            return Promise.resolve(true);
-        });
+        return outbrainChecks();
     }
 
     return module;
