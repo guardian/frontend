@@ -35,13 +35,13 @@
             @card.bylineText.map { byline => <h4 class="byline">@byline</h4> }
         }
         @card.starRating.map { numberOfStars =>
-            <div class="review-stars">
+            <p class="review-stars">
                 @for(i <- 0 to 4) {
                     @defining(if(i < numberOfStars) "golden" else "grey") { positiveOrNegative =>
                         @icon("star-" + positiveOrNegative, isLarge)
                     }
                 }
-            </div>
+            </p>
         }
     </a>
 }

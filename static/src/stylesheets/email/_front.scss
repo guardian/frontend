@@ -186,7 +186,7 @@ table.fc-item {
 .facia-link {
     text-decoration: none;
 }
-.headline, .byline, .trail-text {
+.headline, .byline, .trail-text, .review-stars {
     font-weight: normal;
     padding: 0;
     margin: 6px 10px 10px 10px;
@@ -203,10 +203,6 @@ table.fc-item {
 }
 p {
     font-weight: normal;
-}
-
-.review-stars {
-    margin-top: 6px;
 }
 
 .trail-text {
