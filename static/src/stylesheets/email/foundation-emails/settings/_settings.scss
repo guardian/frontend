@@ -1,6 +1,3 @@
-@import '../_vars';
-
-
 //  Foundation for Emails Settings
 //  ------------------------------
 //
@@ -30,13 +27,13 @@ $dark-gray: #8a8a8a;
 $black: #0a0a0a;
 $white: #fefefe;
 $pre-color: #ff6908;
-$global-width: 500px; // changed
+$global-width: 580px;
 $global-width-small: 95%;
-$global-gutter: 0; //changed
-$body-background: #ffffff; // changed
-$container-background: #ffffff; // changed
-$global-padding: 0; // changed
-$global-margin: 10px; // changed
+$global-gutter: 16px;
+$body-background: $light-gray;
+$container-background: $white;
+$global-padding: 16px;
+$global-margin: 16px;
 $global-radius: 3px;
 $global-rounded: 500px;
 $global-breakpoint: $global-width + $global-gutter;
@@ -57,7 +54,7 @@ $block-grid-gutter: $global-gutter;
 // 4. Typography
 // -------------
 
-$global-font-color: #333333;
+$global-font-color: $black;
 $body-font-family: Helvetica, Arial, sans-serif;
 $global-font-weight: normal;
 $header-color: inherit;
@@ -98,16 +95,16 @@ $stat-font-size: 40px;
 // ---------
 
 $button-padding: (
-    tiny: 4px 8px 4px 8px,
-    small: 5px 10px 5px 10px,
-    default: 8px 16px 8px 16px,
-    large: 10px 20px 10px 20px,
+  tiny: 4px 8px 4px 8px,
+  small: 5px 10px 5px 10px,
+  default: 8px 16px 8px 16px,
+  large: 10px 20px 10px 20px,
 );
 $button-font-size: (
-    tiny: 10px,
-    small: 12px,
-    default: 16px,
-    large: 20px,
+  tiny: 10px,
+  small: 12px,
+  default: 16px,
+  large: 20px,
 );
 $button-color: $white;
 $button-color-alt: $medium-gray;
@@ -123,9 +120,9 @@ $button-rounded: $global-rounded;
 
 $callout-background: $white;
 $callout-background-fade: 85%;
-$callout-padding: 0; // changed
+$callout-padding: 10px;
 $callout-margin-bottom: $global-margin;
-$callout-border: none; // changed
+$callout-border: 1px solid darken($callout-background, 20%);
 $callout-border-secondary: 1px solid darken($secondary-color, 20%);
 $callout-border-success: 1px solid darken($success-color, 20%);
 $callout-border-warning: 1px solid darken($warning-color, 20%);
@@ -148,109 +145,3 @@ $thumbnail-shadow-hover: 0 0 6px 1px rgba($primary-color, 0.5);
 $thumbnail-transition: box-shadow 200ms ease-out;
 $thumbnail-radius: $global-radius;
 
-
-
-
-@import 'foundation-emails/foundation-emails';
-@import '_common';
-@import '_footer';
-@import '_tones';
-
-table.fc-item {
-    width: 100%; // I added this. It makes cards full-width in Chrome. Effect in mail clients?
-}
-
-.fc-item__padding {
-    width: 100%;
-    padding-bottom: $callout-margin-bottom;
-}
-
-.message {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 18px;
-    background: #f6f6f6;
-    padding: 6px 10px 6px 10px;
-}
-.container-title {
-    // !important is used here just to ensure this style gets inlined *after* others.
-    // T-Online client doesn't parse any styles which occurs after this one! It seems
-    // it doesn't like the quotes, or the webfont, or something.
-    font-family: "Guardian Egyptian Web Header", "Guardian Egyptian Web Headline", Georgia, serif !important;
-    font-size: 26px;
-    margin-bottom: 12px;
-    margin-top: 26px;
-    color: #333333;
-    padding-top: 4px;
-}
-.facia-link {
-    text-decoration: none;
-}
-.headline, .byline, .trail-text {
-    font-weight: normal;
-    padding: 0;
-    margin: 6px 10px 10px 10px;
-}
-.headline,
-.byline {
-    // !important is used here just to ensure this style gets inlined *after* others.
-    // T-Online client doesn't parse any styles which occurs after this one! It seems
-    // it doesn't like the quotes, or the webfont, or something.
-    font-family: "Guardian Egyptian Web Headline", Georgia, serif !important;
-    font-size: 16px;
-    line-height: 20px;
-    color: inherit;
-}
-p {
-    font-weight: normal;
-}
-
-.review-stars {
-    margin-top: 6px;
-}
-
-.trail-text {
-    font-family: Georgia, serif;
-    font-size: 14px;
-    line-height: 18px;
-}
-
-.fc-item--large .headline,
-.fc-item--large .byline {
-    font-size: 22px;
-    line-height: 26px;
-}
-
-.kicker-separator {
-    font-weight: normal;
-}
-
-.headline .icon {
-    height: 0.8em;
-}
-
-// TODO make loop
-.the-flyer {
-    .container-title.has-top-border {
-        border-top: 3px solid #ffbdc6;
-    }
-    .tone-external .fc-item {
-        border-top: 1px solid #ffbdc6;
-    }
-}
-.opinion {
-    .container-title.has-top-border {
-        border-top: 3px solid #e6711b;
-    }
-    .tone-external .fc-item {
-        border-top: 1px solid #e6711b;
-    }
-}
-.sleeve-notes {
-    .container-title.has-top-border {
-        border-top: 3px solid #ffbb00;
-    }
-    .tone-external .fc-item {
-        border-top: 1px solid #ffbb00;
-    }
-}

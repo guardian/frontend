@@ -152,7 +152,7 @@ $thumbnail-radius: $global-radius;
 
 
 
-@import 'foundation-emails/scss/foundation-emails';
+@import 'foundation-emails/foundation-emails';
 @import '_common';
 
 td.wrapper {
@@ -162,13 +162,6 @@ td.wrapper {
 table.columns td,
 table.column td {
     padding: 0;
-}
-
-hr {
-    background: white;
-    height: 0px;
-    border: 1px dashed #dcdcdc;
-    margin: 20px 0 -4px 0;
 }
 
 h1, h2, h3, h4, h5, h6, p, blockquote {
@@ -219,6 +212,14 @@ a {
 
 th {
     hyphens: none;
+}
+
+hr {
+    background: white;
+    height: 0px;
+    border: 1px dashed #dcdcdc;
+    margin-top: 20px;
+    margin-bottom: -4px;
 }
 
 hr.rule--compact {
