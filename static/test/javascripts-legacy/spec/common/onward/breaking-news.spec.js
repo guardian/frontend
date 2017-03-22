@@ -3,7 +3,6 @@ define([
     'helpers/injector',
     'lib/$',
     'lib/config',
-    'lib/fetch-json',
     'lib/storage',
     'lodash/objects/defaults',
     'Promise'
@@ -11,16 +10,14 @@ define([
     Injector,
     $,
     config,
-    fetchJson,
     storage,
     defaults,
     Promise
 ) {
     describe('Breaking news', function () {
         var injector = new Injector(),
-            breakingNewsURL = '/news-alert/alerts',
             knownAlertIDsStorageKey = 'gu.breaking-news.hidden',
-            server;
+            fetchJson;
 
         function alertThatIs(type, options) {
             options = defaults(options || {}, {
@@ -40,19 +37,19 @@ define([
         }
 
         function mockBreakingNewsWith(collections) {
+            fetchJson.and.callFake(function() {
+                return Promise.resolve({
+                        webTitle: 'Breaking News',
+                        collections: collections
+                    });
+                });
+
             return new Promise(function (resolve, reject) {
                 injector.mock({
                     'lib/storage': storage,
                     'lib/fetch-json': fetchJson
                 }).require(['common/modules/onward/breaking-news'], function (breakingNews) {
                     breakingNews.DEFAULT_DELAY = 100;
-                    server = sinon.fakeServer.create();
-                    server.respondImmediately = true;
-                    server.autoRespond = true;
-                    server.respondWith(breakingNewsURL, [200, {'Content-Type': 'application/json'}, JSON.stringify({
-                        webTitle: 'Breaking News',
-                        collections: collections
-                    })]);
                     Promise.resolve().then(function () {
                         return breakingNews();
                     }).then(function(result) {
@@ -60,9 +57,7 @@ define([
                         setTimeout(function () {
                             resolve(result);
                         }, 30);
-                    }).catch(reject).then(function () {
-                        server.restore();
-                    });
+                    }).catch(reject);
                 }, function (e) {
                     console.log(e);
                 });
@@ -70,7 +65,7 @@ define([
         }
 
         beforeAll(function () {
-            fetchJson = jasmine.createSpy().and.callFake(fetchJson);
+            fetchJson = jasmine.createSpy('fetch-json');
             config.page.edition = 'UK';
         });
 
