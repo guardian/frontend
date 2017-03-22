@@ -2,13 +2,13 @@
 import config from 'lib/config';
 import fetch from 'lib/fetch';
 
-function json(input: string, init: Object = {}) {
+function json(input: string | Request, init: RequestOptions = {}) {
     // #? we should use Object.assign for this assignment, but this currently breaks
     // Karma tests that depend on fetch-json.js and have not been stubbed
     const options = init;
-    let path = input;
+    let path = typeof input === 'string' ? input : input.url;
 
-    if (!input.match('^(https?:)?//')) {
+    if (!path.match('^(https?:)?//')) {
         path = (config.page.ajaxUrl || '') + path;
         options.mode = 'cors';
     }
