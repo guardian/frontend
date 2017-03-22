@@ -238,9 +238,12 @@ hr.rule--compact {
 }
 
 blockquote {
-    background: transparent no-repeat top left;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: top left;
     font-size: 16px;
     padding-top: 24px;
+    margin: 10px 40px;
 }
 
 .panel.author {

@@ -2,6 +2,8 @@
 
 @import common.{LinkTo, CanonicalLink}
 @import model.EmailAddons.EmailContentType
+@import views.support.EmailHelpers.Images.quote
+@import views.support.EmailHelpers.Images.footerG
 @import play.api.Mode.Dev
 @import implicits.Requests.RichRequestHeader
 
@@ -36,6 +38,16 @@
             } else {
                 @fragments.email.stylesheets.articleFonts()
                 @Html(common.Assets.css.emailArticle)
+
+                @* This uses Scala code to get the path to the asset, so can't be done in Sass *@
+                blockquote {
+                   background-image: url(@quote);
+                }
+            }
+
+            @* This uses Scala code to get the path to the asset, so can't be done in Sass *@
+            .footer {
+                background-image:url(@footerG);
             }
         </style>
     </head>
