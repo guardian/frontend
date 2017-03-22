@@ -14,7 +14,6 @@ module.exports = {
         const config = require('../../../../webpack.config.js')({
             env: 'production',
             plugins: [
-                new webpack.optimize.AggressiveMergingPlugin(),
                 new Visualizer({
                     filename: './webpack-stats.html',
                 }),
