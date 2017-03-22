@@ -41,10 +41,7 @@ table.fc-item {
     padding: 6px 10px 6px 10px;
 }
 .container-title {
-    // !important is used here just to ensure this style gets inlined after others.
-    // T-Online client doesn't parse any styles which occur after this one. It seems
-    // it doesn't like the quotes, or the webfont, or something.
-    font-family: "Guardian Egyptian Web Header", "Guardian Egyptian Web Headline", Georgia, serif !important;
+    font-family: 'Guardian Egyptian Web Header', 'Guardian Egyptian Web Headline', Georgia, serif;
     font-size: 26px;
     margin-bottom: 12px;
     margin-top: 26px;
@@ -61,10 +58,7 @@ table.fc-item {
 }
 .headline,
 .byline {
-    // !important is used here just to ensure this style gets inlined after others.
-    // T-Online client doesn't parse any styles which occurs after this one. It seems
-    // it doesn't like the quotes, or the webfont, or something.
-    font-family: "Guardian Egyptian Web Headline", Georgia, serif !important;
+    font-family: 'Guardian Egyptian Web Headline', Georgia, serif;
     font-size: 16px;
     line-height: 20px;
     color: inherit;
@@ -79,7 +73,7 @@ th {
     line-height: 18px;
 }
 
-.fc-item--large .byline {
+.fc-item--large {
     .headline, .byline {
         font-size: 22px;
         line-height: 26px;
