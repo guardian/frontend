@@ -73,7 +73,7 @@ $h4-font-size: 24px;
 $h5-font-size: 20px;
 $h6-font-size: 18px;
 $header-margin-bottom: 0; // changed
-$paragraph-margin-bottom: 10px;
+$paragraph-margin-bottom: 10px; // changed?
 $small-font-size: 80%;
 $small-font-color: $medium-gray;
 $lead-font-size: $global-font-size * 1.25;
@@ -171,7 +171,7 @@ hr {
     margin: 20px 0 -4px 0;
 }
 
-h1, h2, h3, h4, h5, h6, p, a, blockquote {
+h1, h2, h3, h4, h5, h6, p, blockquote {
     font-family: "Guardian Egyptian Text", Georgia, serif;
     color: #333333;
 }
@@ -206,18 +206,16 @@ a, h2 a {
 
 a:visited, a:active,
 h2 a:visited, h2 a:active {
-    color: #005689;
+    color: #005689 !important;
 }
 
 a:hover, h2 a:hover {
-    color: #94b1ca;
+    color: #94b1ca !important;
 }
 
 a {
     text-decoration: underline;
 }
-
-
 
 th {
     hyphens: none;
@@ -234,8 +232,8 @@ hr.rule--compact {
 
 .author a:hover .contact,
 .author a:hover svg {
-    fill: #94b1ca;
-    color: #94b1ca;
+    fill: #94b1ca !important;
+    color: #94b1ca !important;
 }
 
 blockquote {

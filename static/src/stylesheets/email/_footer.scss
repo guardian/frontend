@@ -19,12 +19,12 @@
         &:visited,
         &:hover,
         &:active {
-            font-family: Helvetica, Arial, sans-serif;
-            color: #ffffff;
-            font-size: 12px;
-            font-weight: lighter;
-            line-height: 14px;
-            text-decoration: none;
+            font-family: Helvetica, Arial, sans-serif !important;
+            color: #ffffff !important;
+            font-size: 12px !important;
+            font-weight: lighter !important;
+            line-height: 14px !important;
+            text-decoration: none !important;
         }
     }
 }
@@ -34,5 +34,5 @@
     color: #dfdfdf;
     font-size: 10px;
     line-height: 14px;
-    margin: 10px 12px 0 12px;
+    margin: 20px 12px 0 12px;
 }
