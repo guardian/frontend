@@ -2,6 +2,10 @@
 
 import url from './url';
 
+jest.mock('lib/detect', () => ({
+    hasPushStateSupport: () => true,
+}));
+
 describe('url', () => {
     test('getUrlVars() - should get url vars', () => {
         const origWindowSearch = window.location.search;
@@ -43,5 +47,28 @@ describe('url', () => {
             const [vars, expected] = dataProvider;
             expect(url.constructQuery(vars)).toEqual(expected);
         });
+    });
+
+    test('getPath() - should return a path', () => {
+        const HOST = 'http://host.com';
+        const QUERIES = [
+            [`${HOST}/foo/bar/baz`, '/foo/bar/baz'],
+            [`${HOST}/foo?foo=bar`, '/foo'],
+            [`${HOST}/foo#foo`, '/foo'],
+        ];
+
+        QUERIES.forEach(dataProvider => {
+            const [query, expected] = dataProvider;
+            expect(url.getPath(query)).toEqual(expected);
+        });
+    });
+
+    test('back() - should go one page back in history', () => {
+        const origBack = window.history.back;
+        window.history.back = jest.fn();
+
+        expect(window.history.back).toHaveBeenCalled();
+
+        window.history.back = origBack;
     });
 });
