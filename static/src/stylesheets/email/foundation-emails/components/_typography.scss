@@ -160,8 +160,7 @@ h5,
 h6,
 p,
 td,
-th,
-a {
+th {
   color: $global-font-color;
   font-family: $body-font-family;
   font-weight: $global-font-weight;
@@ -299,7 +298,7 @@ pre {
 // Horizontal rule
 table.hr {
   width: 100%;
-  
+
   th {
     height: 0;
     max-width: $hr-width;
