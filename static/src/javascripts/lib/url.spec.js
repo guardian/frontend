@@ -12,6 +12,7 @@ describe('url', () => {
     test('getUrlVars() - should get url vars', () => {
         const origWindowSearch = window.location.search;
         const QUERIES = [
+            ['foo', { foo: true }],
             ['foo=bar', { foo: 'bar' }],
             ['foo=bar&boo=far', { foo: 'bar', boo: 'far' }],
             ['foo=bar&boo=far&', { foo: 'bar', boo: 'far' }],
@@ -23,6 +24,18 @@ describe('url', () => {
         QUERIES.forEach(dataProvider => {
             const [query, expected] = dataProvider;
             expect(url.getUrlVars({ query })).toEqual(expected);
+        });
+
+        // get the query from window.location.search
+        QUERIES.forEach(dataProvider => {
+            const [query, expected] = dataProvider;
+
+            Object.defineProperty(window.location, 'search', {
+                writable: true,
+                value: `?${query}`,
+            });
+
+            expect(url.getUrlVars()).toEqual(expected);
         });
 
         window.location.search = origWindowSearch;
