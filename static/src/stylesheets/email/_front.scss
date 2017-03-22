@@ -69,9 +69,6 @@ table.fc-item {
     line-height: 20px;
     color: inherit;
 }
-p {
-    font-weight: normal;
-}
 th {
     hyphens: none;
 }
@@ -82,10 +79,11 @@ th {
     line-height: 18px;
 }
 
-.fc-item--large .headline,
 .fc-item--large .byline {
-    font-size: 22px;
-    line-height: 26px;
+    .headline, .byline {
+        font-size: 22px;
+        line-height: 26px;
+    }
 }
 
 .kicker-separator {
@@ -96,28 +94,19 @@ th {
     height: 0.8em;
 }
 
-// TODO make loop
-.the-flyer {
-    .container-title.has-top-border {
-        border-top: 3px solid #ffbdc6;
-    }
-    .tone-external .fc-item {
-        border-top: 1px solid #ffbdc6;
-    }
-}
-.opinion {
-    .container-title.has-top-border {
-        border-top: 3px solid #e6711b;
-    }
-    .tone-external .fc-item {
-        border-top: 1px solid #e6711b;
-    }
-}
-.sleeve-notes {
-    .container-title.has-top-border {
-        border-top: 3px solid #ffbb00;
-    }
-    .tone-external .fc-item {
-        border-top: 1px solid #ffbb00;
+$email-tones: (
+    the-flyer: #ffbdc6,
+    opinion: #e6711b,
+    sleeve-notes: #ffbb00
+);
+
+@each $email, $tone-color in $email-tones {
+    .#{$email} {
+        .container-title.has-top-border {
+            border-top: 3px solid $tone-color;
+        }
+        .tone-external {
+            border-top: 1px solid $tone-color;
+        }
     }
 }
