@@ -15,6 +15,8 @@ define([
     // Building the Epic component using the template acquisitions-epic-design-variations.html
     // =======================================================================================
 
+    var EMPTY = '';
+
     // Default arguments for the template.
     var defaultTemplateArgument = {
         // copy
@@ -22,15 +24,17 @@ define([
             '<span class="contributions__paragraph--highlight">unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can</span>' +
             '. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
         p2: 'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
-        p3: '',
-
-        customStyle: '',
+        p3: EMPTY,
 
         // element classes
-        epicClass: '' ,
-        epicTitleClass: '',
-        p1Class: '',
-        buttonClass: ''
+        epicClass: EMPTY ,
+        epicTitleClass: EMPTY,
+        p1Class: EMPTY,
+        buttonClass: EMPTY,
+        paypalAndCreditCardImageClass: EMPTY,
+
+        // images
+        paypalAndCreditCardImageSrc: EMPTY
     };
 
     // Merges submitted and default template arguments.
@@ -71,8 +75,8 @@ define([
     }
 
     // this is to prevent the tests failing, as the dummy config object used by tests won't include this property
-    var paypalImage = (function() {
-        try { return config.images.acquisitions.paypal; }
+    var paypalAndCreditCardImage = (function() {
+        try { return config.images.acquisitions.paypalAndCreditCard; }
         catch (e) { return ''; }
     })();
 
@@ -80,40 +84,38 @@ define([
     // =================
 
     return contributionUtilities.makeABTest({
-        id: 'AcquisitionsEpicDesignVariationsV2',
-        campaignId: 'kr1_epic_design_variations_v2',
+        id: 'AcquisitionsEpicDesignVariationsV3',
+        campaignId: 'kr1_epic_design_variations_v3',
 
-        start: '2017-03-07',
-        expiry: '2017-04-20',
+        start: '2017-03-22',
+        expiry: '2017-04-30',
 
-        author: 'Sam Desborough',
-        description: 'Test 5 new design variants to the Epic',
+        author: 'Guy Dawson',
+        description: 'Test 4 new design variants to the Epic',
         successMeasure: 'Conversion rate',
         idealOutcome: 'Find a variant which has a higher conversion rate than the control',
 
         audienceCriteria: 'All',
-        audience: 0.5,
+        audience: 0.4,
         audienceOffset: 0.5,
 
         variants: [
             buildVariant('control'),
 
-            buildVariant('highlight_subtle', {
-                epicClass: 'contributions__epic--subtle',
-                epicTitleClass: 'contributions__title--epic--subtle',
-                p1Class: 'contributions__paragraph--subtle'
+            buildVariant('bigger_buttons', {
+                epicClass: 'contributions__epic--button-bigger',
+                buttonClass: 'contributions__button--bigger'
             }),
 
-            buildVariant('highlight_perspective_dead'),
+            buildVariant('colour_change', {
+                epicClass: 'contributions__epic--colour-change',
+                buttonClass: 'contributions__button--colour-change'
+            }),
 
-            buildVariant('highlight_secure_dead'),
-
-            buildVariant('highlight_hard_dead'), 
-
-            buildVariant('paypal', {
-                epicClass: 'contributions__epic--paypal',
-                customStyle: 'background-image: url(\'' + paypalImage + '\')'
+            buildVariant('paypal_and_credit_card', {
+                paypalAndCreditCardImageSrc: paypalAndCreditCardImage,
+                paypalAndCreditCardImageClass: 'contributions__image--paypal-and-credit-card'
             })
         ]
-    })
+    });
 });

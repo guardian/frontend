@@ -7,7 +7,7 @@ define([
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
     'common/modules/experiments/tests/contributions-epic-regulars-v2',
     'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
-    'common/modules/experiments/tests/acquisitions-epic-design-variations-v2',
+    'common/modules/experiments/tests/acquisitions-epic-design-variations-v3',
     'common/modules/experiments/tests/contributions-epic-laundromat'
 ], function (
     segmentUtil,
@@ -18,7 +18,7 @@ define([
     askFourEarning,
     regularsV2,
     acquisitionsEpicArticle50Trigger,
-    acquisitionsEpicDesignVariationsV2,
+    acquisitionsEpicDesignVariationsV3,
     laundromat
 ) {
     /**
@@ -28,10 +28,11 @@ define([
         alwaysAsk,
         laundromat,
 		regularsV2,
-        acquisitionsEpicDesignVariationsV2,
+        acquisitionsEpicDesignVariationsV3,
         askFourEarning,
         acquisitionsEpicArticle50Trigger,
-        brexit];
+        brexit
+    ];
 
     return {
         getTest: function() {
