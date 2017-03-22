@@ -1,0 +1,17 @@
+@(
+    shouldShowAds: Boolean,
+    optionalSlotSizes: Seq[String],
+    optClassNames: Option[String] = None
+
+)
+@import conf.switches.Switches.CommercialSwitch
+
+@if(CommercialSwitch.isSwitchedOn && shouldShowAds) {
+  @fragments.commercial.adSlot(
+      "right",
+      Seq("mpu-banner-ad"),
+      Map("mobile" -> (Seq("1,1", "2,2", "300,250", "300,600", "fluid") ++ optionalSlotSizes)),
+      optId = None,
+      optClassNames = optClassNames
+      ){ }
+}

@@ -52,17 +52,9 @@
                     </div>
                     <div class="content__secondary-column js-secondary-column" aria-hidden="true">
                       <div class="ad-slot-container">
-                          @defining(shouldShowAds(model)) { shouldShowAds =>
-                              @if(shouldShowAds) {
-                                  @fragments.commercial.adSlot(
-                                      "right",
-                                      Seq("mpu-banner-ad"),
-                                      Map("mobile" -> (Seq("1,1", "2,2", "300,250", "300,600", "fluid") ++ optionalSlotSizes(model))),
-                                      optId = None,
-                                      optClassNames = Some("js-sticky-mpu")
-                                      ){ }
-                              }
-                          }
+
+                          @fragments.articleAsideSlot(shouldShowAds(model), optionalSlotSizes(model), Some("js-sticky-mpu"))
+
                       </div>
                     </div>
                 </div>
