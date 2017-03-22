@@ -6,6 +6,9 @@ const Observable = require('any-observable');
 const webpack = require('webpack');
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 const Visualizer = require('webpack-visualizer-plugin');
+const BundleAnalyzerPlugin = require(
+    'webpack-bundle-analyzer'
+).BundleAnalyzerPlugin;
 const chalk = require('chalk');
 
 module.exports = {
@@ -21,6 +24,11 @@ module.exports = {
                 }),
                 new Visualizer({
                     filename: './webpack-stats.html',
+                }),
+                new BundleAnalyzerPlugin({
+                    reportFilename: './bundle-analyzer-report.html',
+                    analyzerMode: 'static',
+                    openAnalyzer: false,
                 }),
                 new webpack.DefinePlugin({
                     'process.env.NODE_ENV': JSON.stringify('production'),
