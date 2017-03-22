@@ -10,8 +10,6 @@ define([
     return addSlot;
 
     function addSlot(adSlot, forceDisplay) {
-        adSlot = adSlot instanceof HTMLElement ? adSlot : adSlot[0];
-
         if (dfpEnv.firstAdDisplayed && !(adSlot.id in dfpEnv.advertIds)) { // dynamically add ad slot
             // this is horrible, but if we do this before the initial ads have loaded things go awry
             if (dfpEnv.firstAdRendered) {
