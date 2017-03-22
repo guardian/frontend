@@ -128,7 +128,7 @@
         background: $paidfor-background;
     }
 
-    .inline-icon {
+    .inline-icon__svg {
         fill: $paid-article-brand;
     }
 
@@ -156,7 +156,7 @@
         background: $paidfor-background;
         border-color: $paidfor-background;
 
-        .inline-icon {
+        .inline-icon__svg {
             fill: $neutral-2;
         }
 
@@ -252,7 +252,7 @@
         font-weight: 400;
         margin-bottom: .5em;
 
-        .inline-icon {
+        .inline-icon__svg {
             width: 1.1em;
             height: .75em;
             margin-right: .3em;
@@ -310,7 +310,7 @@
     }
 
     .advert__title {
-        .inline-icon {
+        .inline-icon__svg {
             fill: $paid-article-icon;
         }
     }
@@ -351,7 +351,7 @@
         }
 
         .advert__title {
-            > .inline-icon svg {
+            > .inline-icon .inline-icon__svg {
                 fill: $multimedia-main-2;
             }
         }
@@ -401,6 +401,14 @@
             width: $gs-gutter * 3;
         }
     }
+    .badge {
+        pointer-events: none;
+        right: 0;
+    }
+    .badge__label {
+        text-align: center;
+        width: 100%;
+    }
     .badge__logo {
         max-width: 100%;
         margin-left: 0;
@@ -408,6 +416,12 @@
 
     .badge--no-image {
         display: none;
+    }
+
+    .inline-icon__svg {
+        width: 1.1em;
+        height: .75em;
+        margin-right: .3em;
     }
 
     &.without-sponsor-logo {

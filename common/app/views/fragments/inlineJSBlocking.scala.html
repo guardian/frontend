@@ -12,7 +12,6 @@
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
-
     // ************* POLYFILLS *************
     // Mostly handled by es5 shim above. Those which aren't are polyfilled ASAP.
 
@@ -23,11 +22,13 @@
     // Pollyfill requestAnimationFrame
     @InlineJs(raf().body, "raf.js")
 
+    @if(!mvt.PolyfillIO.isParticipating) {
+        // Polyfill Element.matches
+        @InlineJs(matches().body, "matches.js")
+    }
+
     // Polyfill classList
     @InlineJs(classlist().body, "classlist.js")
-
-    // Polyfill Element.matches
-    @InlineJs(matches().body, "matches.js")
 
     // Polyfill details
     @InlineJs(details().body, "details.js")
@@ -60,6 +61,13 @@
 
     // Polyfill for async script
     (function (document) {
+        @if(mvt.PolyfillIO.isParticipating) {
+            var polyfillScript = document.createElement('script');
+            var polyfillRef = document.getElementsByTagName('script')[0];
+            polyfillScript.src = 'https://assets.guim.co.uk/polyfill.io/v2/polyfill.min.js?features=es6,Element.prototype.closest,Element.prototype.matches';
+            polyfillRef.parentNode.insertBefore(polyfillScript, polyfillRef);
+        }
+
         var script = document.createElement('script');
         var ref = document.getElementsByTagName('script')[0];
         script.src = '@Static("javascripts/graun.standard.js")';

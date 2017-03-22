@@ -32,6 +32,7 @@ class OptInController extends Controller {
       case "headerseven" => headerSeven.opt(choice)
       case "youtubeposter" => youtubePosterOverride.opt(choice)
       case "newrecipedesign" => newRecipeDesignOverride.opt(choice)
+      case "polyfill-io" => polyfillIO.opt(choice)
       case _ => NotFound
     }))
   }
@@ -39,4 +40,5 @@ class OptInController extends Controller {
   val headerSeven = OptInFeature("new_header_seven_opt_in")
   val youtubePosterOverride = OptInFeature("you_tube_poster_override_opt_in")
   val newRecipeDesignOverride = OptInFeature("new_recipe_design_opt_in")
+  val polyfillIO = OptInFeature("polyfill_io")
 }
