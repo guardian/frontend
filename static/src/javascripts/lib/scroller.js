@@ -17,13 +17,13 @@ import fastdom from 'fastdom';
 function scrollTo(
     offset: number,
     duration: number,
-    easeFn: string,
+    easeFn: ?string | ?Function = 'easeOutQuad',
     container?: HTMLElement
 ): void {
     const $container = bonzo(container || document.body);
     const from = $container.scrollTop();
     const distance = offset - from;
-    const ease = easing.create(easeFn || 'easeOutQuad', duration);
+    const ease = easing.create(easeFn, duration);
     const scrollFn = () => {
         fastdom.write(() => $container.scrollTop(from + ease() * distance));
     };
@@ -38,7 +38,11 @@ function scrollTo(
     );
 }
 
-function scrollToElement(element, duration, easeFn) {
+function scrollToElement(
+    element: HTMLElement,
+    duration: number,
+    easeFn?: string | Function
+): void {
     const top = bonzo(element).offset().top;
     scrollTo(top, duration, easeFn);
 }
