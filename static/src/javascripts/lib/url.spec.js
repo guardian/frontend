@@ -78,4 +78,39 @@ describe('url', () => {
 
         window.history.back = origBack;
     });
+
+    test('pushUrl() - should either replace or push the new state', () => {
+        const origReplace = window.history.replaceState;
+        const origPush = window.history.pushState;
+        const state = { foo: 'bar' };
+        const title = 'new-state-title';
+        const path = '/foo/bar';
+
+        window.history.replaceState = jest.fn();
+        window.history.pushState = jest.fn();
+
+        // push
+        url.pushUrl(state, title, path);
+        expect(window.history.pushState).toHaveBeenCalledWith(
+            state,
+            title,
+            path
+        );
+        expect(window.history.replaceState).not.toHaveBeenCalled();
+
+        // replace
+        window.history.replaceState.mockClear();
+        window.history.pushState.mockClear();
+
+        url.pushUrl(state, title, path, true);
+        expect(window.history.pushState).not.toHaveBeenCalled();
+        expect(window.history.replaceState).toHaveBeenCalledWith(
+            state,
+            title,
+            path
+        );
+
+        window.history.replaceState = origReplace;
+        window.history.pushState = origPush;
+    });
 });

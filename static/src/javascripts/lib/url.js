@@ -70,10 +70,10 @@ function getPath(url: string): string {
 }
 
 function pushUrl(
-    state: string,
+    state: Object,
     title: string,
     url: string,
-    replace: string
+    replace?: boolean = false
 ): void {
     if (supportsPushState) {
         window.history[replace ? 'replaceState' : 'pushState'](
