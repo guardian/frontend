@@ -32,7 +32,7 @@
             @RemoveOuterParaHtml(card.header.headline)
         </h3>
         @if(card.header.quoted) {
-            @card.bylineText.map { byline => <h3 class="byline">@byline</h3> }
+            @card.bylineText.map { byline => <h4 class="byline">@byline</h4> }
         }
         @card.starRating.map { numberOfStars =>
             <p class="review-stars">
@@ -49,7 +49,7 @@
 @trailText(card: ContentCard) = {
     @card.trailText.map { trailText =>
         <a @Html(card.header.url.hrefWithRel) class="facia-link">
-            <h3 class="trail-text">@Html(trailText)</h3>
+            <h4 class="trail-text">@Html(trailText)</h4>
         </a>
     }
 }
