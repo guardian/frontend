@@ -1,6 +1,5 @@
 // @flow
 
-import detect from 'lib/detect';
 import url from './url';
 
 jest.mock('lib/detect', () => ({
