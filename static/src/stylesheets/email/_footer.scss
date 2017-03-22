@@ -19,6 +19,8 @@
         &:visited,
         &:hover,
         &:active {
+            // Pseudo-selectors can't be inlined so we need important here
+            // so override those styles which have been inlined
             font-family: Helvetica, Arial, sans-serif !important;
             color: #ffffff !important;
             font-size: 12px !important;

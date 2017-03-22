@@ -40,6 +40,7 @@ table.fc-item {
     background: #f6f6f6;
     padding: 6px 10px 6px 10px;
 }
+
 .container-title {
     font-family: 'Guardian Egyptian Web Header', 'Guardian Egyptian Web Headline', Georgia, serif;
     font-size: 26px;
@@ -48,14 +49,20 @@ table.fc-item {
     color: #333333;
     padding-top: 4px;
 }
+
 .facia-link {
     text-decoration: none;
 }
-.headline, .byline, .trail-text, .review-stars {
+
+.headline,
+.byline,
+.trail-text,
+.review-stars {
     font-weight: normal;
     padding: 0;
     margin: 6px 10px 10px 10px;
 }
+
 .headline,
 .byline {
     font-family: 'Guardian Egyptian Web Headline', Georgia, serif;
@@ -63,6 +70,7 @@ table.fc-item {
     line-height: 20px;
     color: inherit;
 }
+
 th {
     hyphens: none;
 }
@@ -74,7 +82,8 @@ th {
 }
 
 .fc-item--large {
-    .headline, .byline {
+    .headline,
+    .byline {
         font-size: 22px;
         line-height: 26px;
     }

@@ -22,9 +22,11 @@ td.wrapper {
     padding: 0;
 }
 
-table.columns td,
-table.column td {
-    padding: 0;
+table.columns,
+table.column {
+    td {
+        padding: 0;
+    }
 }
 
 h1, h2, h3, h4, h5, h6, p, blockquote {
@@ -56,21 +58,28 @@ p {
     line-height: 24px;
 }
 
-a, h2 a {
-    color: #005689;
-}
-
-a:visited, a:active,
-h2 a:visited, h2 a:active {
-    color: #005689 !important;
-}
-
-a:hover, h2 a:hover {
-    color: #94b1ca !important;
-}
-
 a {
     text-decoration: underline;
+
+    &,
+    h2 & {
+        color: #005689;
+    }
+
+    &:visited,
+    &:active {
+        &,
+        h2 & {
+            color: #005689 !important;
+        }
+    }
+
+    &:hover {
+        &,
+        h2 & {
+            color: #94b1ca !important;
+        }
+    }
 }
 
 th {
@@ -92,12 +101,14 @@ hr.rule--compact {
 .author a {
     text-decoration: none;
     color: #005689;
-}
 
-.author a:hover .contact,
-.author a:hover svg {
-    fill: #94b1ca !important;
-    color: #94b1ca !important;
+    &:hover {
+        .contact,
+        svg {
+            fill: #94b1ca !important;
+            color: #94b1ca !important;
+        }
+    }
 }
 
 blockquote {
