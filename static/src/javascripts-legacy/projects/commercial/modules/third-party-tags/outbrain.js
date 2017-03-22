@@ -109,9 +109,7 @@ define([
 
     function init() {
         return checkMediator.waitForCheck('isOutbrainDisabled').then(function (outbrainDisabled) {
-            if (outbrainDisabled) {
-                return Promise.resolve();
-            } else {
+            if (!outbrainDisabled) {
                 // if there is no merch component, load the outbrain widget right away
                 return loadInstantly().then(function(shouldLoadInstantly) {
                     if (shouldLoadInstantly) {
@@ -121,14 +119,11 @@ define([
                     } else {
                         // if a high priority merch component and low priority merch component on page block outbrain
                         return checkMediator.waitForCheck('isOutbrainBlockedByAds').then(function(outbrainBlockedByAds) {
-                            if (outbrainBlockedByAds) {
-                                return Promise.resolve();
-                            } else {
+                            if (!outbrainBlockedByAds) {
                                 // if only a high priority merch component on page then outbrain is merchandise compliant
                                 return checkMediator.waitForCheck('isOutbrainMerchandiseCompliant').then(function (outbrainMerchandiseCompliant) {
                                     if (outbrainMerchandiseCompliant) {
                                         module.load('merchandising');
-                                        return Promise.resolve();
                                     } else {
                                         return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(function (userInNonCompliantAbTest) {
                                             userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();
@@ -140,6 +135,8 @@ define([
                     }
                 });
             }
+        }).then(function () {
+            return Promise.resolve(true);
         });
     }
 
