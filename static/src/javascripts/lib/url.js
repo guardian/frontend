@@ -11,7 +11,7 @@ function getCurrentQueryString(): string {
 
 // returns a map of querystrings
 // eg ?foo=bar&fizz=buzz returns {foo: 'bar', fizz: 'buzz'}
-function getUrlVars(options?: Object = {}): Array<any> {
+function getUrlVars(options?: Object = {}): Object {
     return (options.query || getCurrentQueryString())
         .split('&')
         .filter(Boolean)
