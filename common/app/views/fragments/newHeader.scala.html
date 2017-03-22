@@ -2,6 +2,7 @@
 
 @import conf.Configuration
 @import common.{LinkTo, NewNavigation, Edition}
+@import views.support.RenderClasses
 
 <header class="new-header" role="banner">
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
@@ -30,7 +31,9 @@
                     <ul class="new-header__nav-primary-links">
                         @NewNavigation.PrimaryLinks.map { link =>
                             <li class="new-header__nav-link-item">
-                                <a class="new-header__nav-link @if(link.title == currentTopLevelSection) {section-indicator}"
+                                <a class="@RenderClasses(Map(
+                                    "new-header__nav-link" -> true,
+                                    "section-indicator" -> ((link.title == currentTopLevelSection) && !page.metadata.hasSlimHeader)))"
                                     href="@LinkTo(link.url)"
                                     data-link-name="nav2 : primary : @link.title">
                                         @link.title
@@ -50,8 +53,9 @@
                     @fragments.nav.newHeaderMenu()
                 </nav>
             </div>
-
-            @fragments.nav.subSectionNav(page)
+            @if(!page.metadata.hasSlimHeader) {
+                @fragments.nav.subSectionNav(page)
+            }
         }
     }
 </header>
