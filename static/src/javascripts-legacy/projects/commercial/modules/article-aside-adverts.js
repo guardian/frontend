@@ -55,7 +55,7 @@ define([
             if (mainColHeight < minContentHeight()) {
               fastdom.write(function () {
                   $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
-                  $adSlot[0].setAttribute('data-mobile', '1,1|2,2|300,250|fluid')
+                  $adSlot[0].setAttribute('data-mobile', '1,1|2,2|300,250|fluid');
               });
             }
             return $adSlot[0];
