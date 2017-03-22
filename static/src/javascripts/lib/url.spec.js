@@ -113,4 +113,47 @@ describe('url', () => {
         window.history.replaceState = origReplace;
         window.history.pushState = origPush;
     });
+
+    test('pushQueryString(), replaceQueryString()', () => {
+        ['pushState', 'replaceState'].forEach(method => {
+            const origWindowSearch = window.location.search;
+            const origMethod = window.history[method];
+            const urlMethod = method === 'pushState'
+                ? 'pushQueryString'
+                : 'replaceQueryString';
+            const title = 'new-state-title';
+            const querystring = '/foo/bar';
+            const state = { foo: 'bar' };
+
+            window.history[method] = jest.fn();
+            window.title = title;
+
+            url[urlMethod]({ state, querystring, title });
+            expect(window.history[method]).toHaveBeenCalledWith(
+                state,
+                title,
+                querystring
+            );
+
+            window.history[method].mockClear();
+            url[urlMethod]({ querystring });
+            expect(window.history[method]).toHaveBeenCalledWith(
+                {},
+                title,
+                querystring
+            );
+
+            Object.defineProperty(window.location, 'search', {
+                writable: true,
+                value: `?${querystring}`,
+            });
+
+            window.history[method].mockClear();
+            url[urlMethod]({ querystring });
+            expect(window.history[method]).not.toHaveBeenCalled();
+
+            window.history[method] = origMethod;
+            window.location.search = origWindowSearch;
+        });
+    });
 });
