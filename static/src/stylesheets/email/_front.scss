@@ -160,9 +160,17 @@ table.fc-item {
     width: 100%; // I added this. It makes cards full-width in Chrome. Effect in mail clients?
 }
 
-.fc-item__padding {
+// External margins between cards
+// The only reliable mechanism for margins in Outlook is
+// padding applied to table cells.
+.fc-item__margin {
     width: 100%;
     padding-bottom: $callout-margin-bottom;
+}
+
+// Internal padding on cards
+.fc-item__padding {
+    padding-bottom: 18px;
 }
 
 .message {
@@ -173,8 +181,8 @@ table.fc-item {
     padding: 6px 10px 6px 10px;
 }
 .container-title {
-    // !important is used here just to ensure this style gets inlined *after* others.
-    // T-Online client doesn't parse any styles which occurs after this one! It seems
+    // !important is used here just to ensure this style gets inlined after others.
+    // T-Online client doesn't parse any styles which occur after this one. It seems
     // it doesn't like the quotes, or the webfont, or something.
     font-family: "Guardian Egyptian Web Header", "Guardian Egyptian Web Headline", Georgia, serif !important;
     font-size: 26px;
@@ -193,8 +201,8 @@ table.fc-item {
 }
 .headline,
 .byline {
-    // !important is used here just to ensure this style gets inlined *after* others.
-    // T-Online client doesn't parse any styles which occurs after this one! It seems
+    // !important is used here just to ensure this style gets inlined after others.
+    // T-Online client doesn't parse any styles which occurs after this one. It seems
     // it doesn't like the quotes, or the webfont, or something.
     font-family: "Guardian Egyptian Web Headline", Georgia, serif !important;
     font-size: 16px;
@@ -204,6 +212,10 @@ table.fc-item {
 p {
     font-weight: normal;
 }
+th {
+    hyphens: none;
+}
+
 
 .trail-text {
     font-family: Georgia, serif;

@@ -69,7 +69,7 @@ object EmailHelpers {
     def render: Html = Html {
       s"""<table class="fc-item">
          |    <tr>
-         |      <th class="fc-item__padding ${classes.mkString(" ")}">
+         |      <th class="fc-item__margin ${classes.mkString(" ")}">
          |        ${rows.map(_.render).mkString}
          |      </th>
          |    </tr>
@@ -78,7 +78,7 @@ object EmailHelpers {
   }
 
   def faciaCardFullRow(classes: Seq[String] = Nil)(inner: Html): Html = FaciaCard(Seq(), Row(classes,
-    Column(smallWidth = 12, largeWidth = 12)(inner)
+    Column(smallWidth = 12, largeWidth = 12, Seq("fc-item__padding"))(inner)
   )).render
 
   def fullRow(inner: Html): Html = Row(Seq(),
