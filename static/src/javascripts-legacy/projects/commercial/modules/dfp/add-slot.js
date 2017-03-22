@@ -10,16 +10,11 @@ define([
     return addSlot;
 
     function addSlot(adSlot, forceDisplay) {
-        if (dfpEnv.firstAdDisplayed && !(adSlot.id in dfpEnv.advertIds)) { // dynamically add ad slot
-            // this is horrible, but if we do this before the initial ads have loaded things go awry
-            if (dfpEnv.firstAdRendered) {
+        window.googletag.cmd.push(function () {
+            if (!(adSlot.id in dfpEnv.advertIds)) { // dynamically add ad slot
                 displayAd(adSlot, forceDisplay);
-            } else {
-                mediator.once('modules:commercial:dfp:rendered', function () {
-                    displayAd(adSlot, forceDisplay);
-                });
             }
-        }
+        });
     }
 
     function displayAd(adSlot, forceDisplay) {

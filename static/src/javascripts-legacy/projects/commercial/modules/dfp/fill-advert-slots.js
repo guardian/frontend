@@ -37,11 +37,16 @@ define([
 
     function createAdverts() {
         // Get all ad slots
-        dfpEnv.adverts = qwery(dfpEnv.adSlotSelector).map(Advert);
-        dfpEnv.advertIds = dfpEnv.adverts.reduce(function (result, advert, index) {
-            result[advert.id] = index;
-            return result;
-        }, {})
+        var adverts = qwery(dfpEnv.adSlotSelector)
+        .filter(function (adSlot) {
+            return !(adSlot.id in dfpEnv.advertIds);
+        })
+        .map(Advert);
+        var currentLength = dfpEnv.adverts.length;
+        dfpEnv.adverts = dfpEnv.adverts.concat(adverts);
+        adverts.forEach(function (advert, index) {
+            dfpEnv.advertIds[advert.id] = currentLength + index;
+        });
     }
 
     /**
