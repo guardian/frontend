@@ -24,7 +24,8 @@ define([
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
     'common/modules/experiments/tests/reading-time',
-    'ophan/ng'
+    'ophan/ng',
+    'common/modules/experiments/tests/paid-commenting'
 ], function (reportError,
              config,
              cookies,
@@ -50,7 +51,8 @@ define([
              SleevenotesLegacyEmailVariant,
              IncreaseInlineAds,
              ReadingTime,
-             ophan
+             ophan,
+             PaidCommenting
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
@@ -67,7 +69,8 @@ define([
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
         new IncreaseInlineAds(),
-        new ReadingTime()
+        new ReadingTime(),
+        new PaidCommenting()
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';

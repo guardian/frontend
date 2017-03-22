@@ -2,7 +2,6 @@ define([
     'bonzo',
     'lib/ajax',
     'lib/config',
-    'lib/time',
     'common/modules/identity/api',
     'common/modules/identity/facebook-authorizer',
     'common/modules/navigation/profile',
@@ -13,7 +12,6 @@ function (
     bonzo,
     ajax,
     config,
-    time,
     id,
     FacebookAuthorizer,
     Profile,
@@ -42,12 +40,12 @@ function (
                 });
 
                 authorizer.onNotLoggedIn.then(function () {
-                    var today = time.currentDate();
+                    var today = new Date();
                     id.setNextFbCheckTime(today.setDate(today.getDate() + 1));
                 });
 
                 authorizer.onNotAuthorized.then(function () {
-                    var today = time.currentDate();
+                    var today = new Date();
                     id.setNextFbCheckTime(today.setMonth(today.getMonth() + 1));
                 });
             }

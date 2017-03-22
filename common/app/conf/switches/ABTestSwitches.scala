@@ -231,37 +231,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-content-tailoring-environment",
-    "This targets articles in the environment section in order to test specific messages",
-    owners = Seq(Owner.withGithub("alexduf")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-content-tailoring-cif",
-    "This targets articles in the comment is free section in order to test specific messages",
-    owners = Seq(Owner.withGithub("alexduf")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-content-tailoring-football",
-    "This targets articles in the football section in order to test specific messages",
-    owners = Seq(Owner.withGithub("alexduf")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
-    exposeClientSide = true
-  )
-
   Switch(
     ABTests,
     "ab-reading-time",
@@ -269,6 +238,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 4),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-paid-commenting-internal",
+    "Paid commenting test",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 30),
     exposeClientSide = true
   )
 }
