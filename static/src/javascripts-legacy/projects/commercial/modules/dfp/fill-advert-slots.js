@@ -38,6 +38,10 @@ define([
     function createAdverts() {
         // Get all ad slots
         dfpEnv.adverts = qwery(dfpEnv.adSlotSelector).map(Advert);
+        dfpEnv.advertIds = dfpEnv.adverts.reduce(function (result, advert, index) {
+            result[advert.id] = index;
+            return result;
+        }, {})
     }
 
     /**

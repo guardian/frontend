@@ -27,9 +27,9 @@ define([
     function displayAd(adSlot, forceDisplay) {
         var advert = Advert(adSlot);
 
-        dfpEnv.adverts.push(advert);
-        queueAdvert(advert);
+        dfpEnv.advertIds[advert.id] = dfpEnv.adverts.push(advert) - 1;
         if (dfpEnv.shouldLazyLoad() && !forceDisplay) {
+            queueAdvert(advert);
             performanceLogging.updateAdvertMetric(advert, 'loadingMethod', 'add-slot-lazy');
             enableLazyLoad(advert);
         } else {

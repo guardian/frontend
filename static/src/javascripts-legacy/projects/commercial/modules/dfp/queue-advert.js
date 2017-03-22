@@ -10,7 +10,6 @@ define([
         if (advert.node.getAttribute('data-refresh') !== 'false') {
             dfpEnv.advertsToRefresh.push(advert);
         }
-        dfpEnv.advertIds[advert.id] = index === undefined ? dfpEnv.adverts.length - 1 : index;
     }
 
 });
