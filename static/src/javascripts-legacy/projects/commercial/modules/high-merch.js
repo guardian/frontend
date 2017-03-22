@@ -50,8 +50,7 @@ define([
             return;
         }
 
-        var container = document.querySelector(isHiResLoaded ?
-            '.js-container--commercial' :
+        var container = document.querySelector(
             !(config.page.seriesId || config.page.blogIds) ?
             '.js-related, .js-outbrain-anchor' :
             '.js-outbrain-anchor'
