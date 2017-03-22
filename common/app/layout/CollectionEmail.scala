@@ -63,7 +63,7 @@ case class CollectionEmail(id: String, contentCollections: List[EmailContentCont
       val (start, end) = contentCollections.splitAt(3)
       List(
         start,
-        marquee.get(id).toList,
+        mpu.get(id).toList,
         end,
         safeRtb.get(id).toList
       ).flatten

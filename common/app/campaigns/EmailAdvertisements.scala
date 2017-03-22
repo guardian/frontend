@@ -1,13 +1,13 @@
 package campaigns
 
-import layout.{LiveIntentMarquee, LiveIntentSafeRTB}
+import layout.{LiveIntentMPU, LiveIntentSafeRTB}
 
 object EmailAdvertisements {
 
   val guardianTodayUs = "email/us/daily"
 
-  val marquee = Map(
-    guardianTodayUs -> LiveIntentMarquee(
+  val mpu = Map(
+    guardianTodayUs -> LiveIntentMPU(
       newsletterId = guardianTodayUs.replace("/", "-"),
       ids = ("226945", "226946", "226947", "226948", "226949")
     )
