@@ -9,11 +9,9 @@ define([
     'commercial/modules/creatives/revealer',
     'commercial/modules/creatives/fabric-v1',
     'commercial/modules/creatives/fabric-expanding-v1',
-    'commercial/modules/creatives/fabric-expandable-video-v1',
     'commercial/modules/creatives/fabric-expandable-video-v2',
     'commercial/modules/creatives/fabric-video',
-    'commercial/modules/creatives/scrollable-mpu-v2',
-    'commercial/modules/creatives/template'
+    'commercial/modules/creatives/scrollable-mpu-v2'
 ], function (
     bean,
     Promise,

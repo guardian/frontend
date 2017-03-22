@@ -38,22 +38,6 @@ define([
         variants: ['control']
     };
 
-
-    var AcquisitionsContentTailoringEnvironment = {
-        name: 'AcquisitionsEpicContentTailoringEnvironment',
-        variants: ['control', 'impact', 'reference']
-    };
-
-    var AcquisitionsContentTailoringCif = {
-        name: 'AcquisitionsEpicContentTailoringCif',
-        variants: ['control', 'impact', 'reference']
-    };
-
-    var AcquisitionsContentTailoringFootball = {
-        name: 'AcquisitionsEpicContentTailoringFootball',
-        variants: ['control', 'impact', 'reference']
-    };
-
     var contributionsTests = [
         ContributionsEpicAlwaysAskStrategy,
         ContributionsEpicBrexit,
@@ -61,9 +45,6 @@ define([
         ContributionsEpicRegularsV2,
         AcquisitionsEpicDesignVariationsV2,
         AcquisitionsEpicArticle50Trigger,
-        AcquisitionsContentTailoringEnvironment,
-        AcquisitionsContentTailoringCif,
-        AcquisitionsContentTailoringFootball,
         ContributionsEpicLaundromat
     ];
 
