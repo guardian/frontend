@@ -4,8 +4,11 @@ define([
     'lib/$',
     'lodash/utilities/template',
     'common/modules/user-prefs',
-    'common/views/svgs',
     'raw-loader!commercial/views/survey/survey-simple.html',
+    'svg-loader!svgs/icon/arrow-white-right.svg',
+    'svg-loader!svgs/icon/marque-36.svg',
+    'svg-loader!svgs/icon/cross.svg',
+    'svg-loader!svgs/commercial/paid-content.svg',
     'lodash/arrays/uniq'
 ], function (
     bean,
@@ -13,8 +16,11 @@ define([
     $,
     template,
     userPrefs,
-    svgs,
     surveySimpleTemplate,
+    arrowWhiteRight,
+    marque36icon,
+    crossIcon,
+    paidContent,
     uniq
 ) {
     var surveySimple = function (config) {
@@ -29,10 +35,10 @@ define([
                 paragraph2: this.config.paragraph2,
                 paragraph3: this.config.paragraph3,
                 showCloseBtn: this.config.showCloseBtn,
-                arrowWhiteRight: svgs('arrowWhiteRight'),
-                marque36icon: svgs('marque36icon'),
-                crossIcon: svgs('crossIcon'),
-                paidContent: svgs('paidContent')
+                arrowWhiteRight: arrowWhiteRight.markup,
+                marque36icon: marque36icon.markup,
+                crossIcon: crossIcon.markup,
+                paidContent: paidContent.markup
             });
     };
 
