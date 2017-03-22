@@ -34,7 +34,7 @@ describe('Cookies', () => {
     });
 
     afterEach(() => {
-        cookies.test.setDocument(null);
+        cookies.test.setDocument(document);
     });
 
     it('should be able the clean a list of cookies', () => {
@@ -47,17 +47,23 @@ describe('Cookies', () => {
         const c = mockDocument.cookie;
 
         expect(c).toMatch(
-            'cookie-1-name=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=.theguardian.com'
+            new RegExp(
+                'cookie-1-name=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=.theguardian.com'
+            )
         );
         expect(c).toMatch(
-            'cookie-2-name=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=.theguardian.com'
+            new RegExp(
+                'cookie-2-name=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=.theguardian.com'
+            )
         );
     });
 
     it('should be able to set a cookie', () => {
         cookies.add('cookie-1-name', 'cookie-1-value');
         expect(mockDocument.cookie).toMatch(
-            'cookie-1-name=cookie-1-value; path=/; expires=Mon, 01 Jun 1970 00:00:00 GMT; domain=.theguardian.com'
+            new RegExp(
+                'cookie-1-name=cookie-1-value; path=/; expires=Mon, 01 Jun 1970 00:00:00 GMT; domain=.theguardian.com'
+            )
         );
     });
 
@@ -109,7 +115,7 @@ describe('Cookies read', () => {
     });
 
     afterEach(() => {
-        cookies.test.setDocument(null);
+        cookies.test.setDocument(document);
     });
 
     it('should be able to get a cookie', () => {
@@ -123,5 +129,5 @@ describe('Cookies read', () => {
 
 afterAll(() => {
     global.Date = OriginalDate;
-    expect(new Date()).not.toMatch('Thu Jan 01 1970');
+    expect(new Date()).not.toMatch(new RegExp('Thu Jan 01 1970'));
 });
