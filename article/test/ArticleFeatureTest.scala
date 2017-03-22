@@ -250,6 +250,17 @@ import collection.JavaConversions._
           adSlotRight.getId() should be("dfp-ad--right")
           adSlotRight.getAttribute("data-mobile") should be("1,1|2,2|300,250|300,600|fluid|300,1050")
       }
+
+      Given("I am on an immersive article, entitled 'Health insurance woes helped elect Trump, but his cure may be more painful'")
+      goTo("/us-news/2017/mar/21/pennsylvania-healthcare-donald-trump-supporters") { browser =>
+        import browser._
+
+        val adSlotRight = $(".ad-slot--right")
+
+        Then("The article-aside MPU should not be sticky")
+          adSlotRight.getId() should be("dfp-ad--right")
+          adSlotRight.getAttribute("class") should not include("js-sticky-mpu")
+      }
     }
 
     scenario("In body pictures", ArticleComponents) {
