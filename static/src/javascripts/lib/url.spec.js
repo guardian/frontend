@@ -1,16 +1,18 @@
 // @flow
 
+import detect from 'lib/detect';
 import url from './url';
 
 jest.mock('lib/detect', () => ({
-    hasPushStateSupport: () => true,
+    hasPushStateSupport() {
+        return true;
+    },
 }));
 
 describe('url', () => {
     test('getUrlVars() - should get url vars', () => {
         const origWindowSearch = window.location.search;
         const QUERIES = [
-            ['foo', { foo: true }],
             ['foo=bar', { foo: 'bar' }],
             ['foo=bar&boo=far', { foo: 'bar', boo: 'far' }],
             ['foo=bar&boo=far&', { foo: 'bar', boo: 'far' }],
@@ -24,21 +26,13 @@ describe('url', () => {
             expect(url.getUrlVars({ query })).toEqual(expected);
         });
 
-        // set query on window.location.search
-        QUERIES.forEach(dataProvider => {
-            const [query, expected] = dataProvider;
-
-            window.location.search = `?${query}`;
-            expect(url.getUrlVars()).toEqual(expected);
-        });
-
         window.location.search = origWindowSearch;
     });
 
     test('constructQuery() - should be able to construct query', () => {
         [
-            [{ foo: true }, 'foo'],
-            [{ foo: 'bar', bar: true }, 'foo=bar&bar'],
+            [{ foo: true }, 'foo=true'],
+            [{ foo: 'bar', bar: true }, 'foo=bar&bar=true'],
             [{ foo: 'bar' }, 'foo=bar'],
             [{ foo: 'bar', boo: 'far' }, 'foo=bar&boo=far'],
             [{ foo: ['bar1', 'bar2'], boo: 'far' }, 'foo=bar1,bar2&boo=far'],
@@ -67,6 +61,7 @@ describe('url', () => {
         const origBack = window.history.back;
         window.history.back = jest.fn();
 
+        url.back();
         expect(window.history.back).toHaveBeenCalled();
 
         window.history.back = origBack;

@@ -16,11 +16,14 @@ function getUrlVars(options?: Object = {}): Array<any> {
         .split('&')
         .filter(Boolean)
         .map(query => query.includes('=') ? query.split('=') : [query, true])
-        .reduce((acc, input) => {
-            const result = acc;
-            result[input[0]] = input[1];
-            return result;
-        });
+        .reduce(
+            (acc, input) => {
+                const result = acc;
+                result[input[0]] = input[1];
+                return result;
+            },
+            {}
+        );
 }
 
 function updateQueryString(params: Object, historyFn: Function) {
