@@ -1,3 +1,4 @@
+// @flow
 // Mini Redux
 const createStore = (reducer, initialState) => {
     // We re-assign this over time
@@ -19,13 +20,13 @@ const createStore = (reducer, initialState) => {
     const getState = () => state;
 
     dispatch({
-        type: 'INIT'
+        type: 'INIT',
     });
 
     return {
         dispatch,
         subscribe,
-        getState
+        getState,
     };
 };
 
