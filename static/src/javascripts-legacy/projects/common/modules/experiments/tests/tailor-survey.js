@@ -39,8 +39,8 @@ define([
         this.expiry = '2017-04-28';
         this.author = 'Manlio & Mahana';
         this.description = 'Testing Tailor surveys';
-        this.audience = 0.25;
-        this.audienceOffset = 0.7;
+        this.audience = 1;
+        this.audienceOffset = 0;
         this.successMeasure = 'We can show a survey on Frontend as decided by Tailor';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = 'Tailor survey';

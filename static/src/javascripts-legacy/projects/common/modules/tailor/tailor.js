@@ -32,7 +32,7 @@ define([
         if (queryParams) {
             var queryParamList = Object.keys(queryParams);
 
-            baseURL += '?';
+            baseURL += '&';
 
             queryParamList.forEach(function (queryParam, i) {
                 baseURL += queryParam + '=' + queryParams[queryParam];
