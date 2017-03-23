@@ -1,3 +1,5 @@
+@import model.Article
+@import model.liveblog.ParseBlockId
 @(page: model.Page, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.{AnalyticsHost, _}
@@ -102,6 +104,20 @@
     @content.tags.contributors.map { contributor =>
         <meta name="author" content="@contributor.name" />
     }
+}
+
+@Page.getContentPage(page).map(_.item).map {
+    case (a: Article) => {
+        @if(a.isLiveBlog) {
+            <script type="application/ld+json">
+                @Html(views.support.structuredData.LiveBlogPosting(
+                    a,
+                    model.liveblog.LiveBlogHelpers.blocksForLiveBlogRequest(a, request.getParameter("page"))
+                ).toString())
+            </script>
+        }
+    }
+    case _ => {}
 }
 
 @page.metadata.description.map { description =>

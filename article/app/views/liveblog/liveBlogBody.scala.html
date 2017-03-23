@@ -1,7 +1,9 @@
 @import _root_.liveblog.KeyEventData
 @import model.Badges.badgeFor
-@import _root_.liveblog.Canonical
+@import model.liveblog.Canonical
+@import model.liveblog.SinceBlockId
 
+@import model.liveblog.LiveBlogPage
 @(model: LiveBlogPage, amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.{Edition, LinkTo}
@@ -10,7 +12,6 @@
 @import views.html.fragments.items.facia_cards.item
 @import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
-@import _root_.liveblog.SinceBlockId
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
 <div class="js-notifications-blocked"></div>

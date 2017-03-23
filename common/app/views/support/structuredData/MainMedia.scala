@@ -1,18 +1,18 @@
 package views.support.structuredData
 
-import controllers.LiveBlogPage
+import model.Article
 import play.api.libs.json.{JsObject, Json}
 import play.api.mvc.RequestHeader
 
 object MainMedia {
 
-  def apply(blog: LiveBlogPage)(implicit request: RequestHeader): Option[JsObject] = {
+  def apply(blog: Article)(implicit request: RequestHeader): Option[JsObject] = {
 
-    if(blog.article.elements.hasMainVideo) {
+    if(blog.elements.hasMainVideo) {
 
       // if we have a main video, grab an associatedMedia from it
 
-      blog.article.elements.mainVideo.map { video =>
+      blog.elements.mainVideo.map { video =>
         Json.obj(
           "associatedMedia" -> Video(blog, video)
         )
@@ -22,7 +22,7 @@ object MainMedia {
 
       // if we have a main picture, grab associatedMedia and image from it
 
-      blog.article.elements.mainPicture.map { picture =>
+      blog.elements.mainPicture.map { picture =>
 
         Json.obj(
           "associatedMedia" -> Image(picture),

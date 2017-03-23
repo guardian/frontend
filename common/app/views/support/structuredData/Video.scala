@@ -1,25 +1,24 @@
 package views.support.structuredData
 
-import controllers.LiveBlogPage
-import model.{EndSlateComponents, VideoElement, VideoPlayer}
+import model.{Article, EndSlateComponents, VideoElement, VideoPlayer}
 import play.api.libs.json.{JsValue, Json}
 import play.twirl.api.Html
 import views.support.Video640
 
 object Video {
 
-  def apply(blog: LiveBlogPage, video: VideoElement): JsValue = {
+  def apply(blog: Article, video: VideoElement): JsValue = {
 
     val player = VideoPlayer(
       video,
       Video640,
-      blog.article.trail.headline,
+      blog.trail.headline,
       autoPlay = false,
       showControlsAtStart = true,
-      endSlatePath = EndSlateComponents.fromContent(blog.article.content).toUriPath,
+      endSlatePath = EndSlateComponents.fromContent(blog.content).toUriPath,
       overrideIsRatioHd = None,
-      embedPath = blog.article.content.mainVideoCanonicalPath,
-      path = blog.article.content.mainVideoCanonicalPath
+      embedPath = blog.content.mainVideoCanonicalPath,
+      path = blog.content.mainVideoCanonicalPath
     )
 
     Json.obj(
@@ -27,7 +26,7 @@ object Video {
         "@type" -> "VideoObject",
         "name" -> player.title,
         "image" -> player.poster,
-        "uploadDate" -> blog.article.trail.webPublicationDate,
+        "uploadDate" -> blog.trail.webPublicationDate,
         "thumbnail" -> player.poster,
         "thumbnailUrl" -> player.poster,
         "description" -> Html(video.videos.caption.getOrElse("")).toString()

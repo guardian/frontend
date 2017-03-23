@@ -1,5 +1,7 @@
 @import model.Article
 
+@import model.liveblog.LiveBlogPage
+@import model.liveblog.LatestBlock
 @(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.Edition
@@ -30,17 +32,13 @@
             @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage, amp = true)
         }
 
-            <script type="application/ld+json">
-            @Html(LiveBlogPosting(model).toString())
-            </script>
-
             <amp-live-list
                 id="live-list"
                 data-poll-interval="15000"
                 data-max-items-per-page="20"
                 @if(model.currentPage.currentPage.pageNumber != 1) {disabled}
                 class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="block-@{
-                _root_.liveblog.LatestBlock(article.blocks)
+                LatestBlock(article.blocks)
             }" data-test-id="live-blog-blocks"
             itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
                 <button update on="tap:live-list.update" class="toast__space-reserver">

@@ -1,7 +1,7 @@
 package views.support.structuredData
 
 import common.LinkTo
-import controllers.LiveBlogPage
+import model.Article
 import model.liveblog.BodyBlock
 import org.joda.time.DateTime
 import play.api.libs.json.{JsValue, Json}
@@ -12,11 +12,11 @@ object BlogPosting {
 
   def zulu(date: DateTime)(implicit request: RequestHeader): String = Format(date, "yyyy-MM-dd'T'HH:mm:ssZ")
 
-  def apply(blog: LiveBlogPage, block: BodyBlock)(implicit request: RequestHeader): JsValue = {
+  def apply(blog: Article, block: BodyBlock)(implicit request: RequestHeader): JsValue = {
 
     def blockDate(block: BodyBlock) = block.publishedDate match {
       case Some(date) => zulu(date)
-      case None => zulu(blog.article.trail.webPublicationDate)
+      case None => zulu(blog.trail.webPublicationDate)
     }
 
     def blockBody(block: BodyBlock): String = {
@@ -27,10 +27,10 @@ object BlogPosting {
       }
     }
 
-    def blockAuthor(blog: LiveBlogPage, block: BodyBlock): JsValue = {
+    def blockAuthor(blog: Article, block: BodyBlock): JsValue = {
 
       val name = block.contributors.headOption match {
-        case Some(id) => blog.article.tags.tags.find(_.id == s"profile/$id").map{ contributorTag =>
+        case Some(id) => blog.tags.tags.find(_.id == s"profile/$id").map{ contributorTag =>
           contributorTag.name
         }
         case None => None
@@ -45,10 +45,10 @@ object BlogPosting {
 
     Json.obj(
       "@type" -> "BlogPosting",
-      "headline" -> block.title.getOrElse[String](blog.article.trail.headline),
+      "headline" -> block.title.getOrElse[String](blog.trail.headline),
       "author" -> blockAuthor(blog, block),
       "publisher" -> Organisation(),
-      "url" -> LinkTo{blog.article.metadata.id+"?page=with:block-"+block.id+"#block-"+block.id},
+      "url" -> LinkTo{blog.metadata.id+"?page=with:block-"+block.id+"#block-"+block.id},
       "datePublished" -> blockDate(block),
       "articleBody" -> blockBody(block)
     )
