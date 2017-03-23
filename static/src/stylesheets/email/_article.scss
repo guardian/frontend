@@ -17,6 +17,7 @@ $callout-border: none;
 
 @import 'foundation-emails/foundation-emails';
 @import '_common';
+@import '_footer';
 
 td.wrapper {
     padding: 0;
@@ -137,5 +138,3 @@ blockquote {
 .text--brand {
     color: #005689;
 }
-
-@import '_footer';
