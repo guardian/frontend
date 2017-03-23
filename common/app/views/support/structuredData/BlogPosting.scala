@@ -38,7 +38,7 @@ object BlogPosting {
 
       name match {
         case Some(thing) => Json.obj("@type" -> "Person", "name" -> thing)
-        case None => Organisation()
+        case None => Json.obj("@id" -> "https://www.theguardian.com#publisher")
       }
 
     }
@@ -47,7 +47,7 @@ object BlogPosting {
       "@type" -> "BlogPosting",
       "headline" -> block.title.getOrElse[String](blog.trail.headline),
       "author" -> blockAuthor(blog, block),
-      "publisher" -> Organisation(),
+      "publisher" -> Json.obj("@id" -> "https://www.theguardian.com#publisher"),
       "url" -> LinkTo{blog.metadata.id+"?page=with:block-"+block.id+"#block-"+block.id},
       "datePublished" -> blockDate(block),
       "articleBody" -> blockBody(block)

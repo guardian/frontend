@@ -6,6 +6,8 @@ object Organisation {
 
   def apply(): JsValue = Json.obj(
     "@type" -> "Organization",
+    "@id" -> "https://www.theguardian.com#publisher",
+    "@context" -> "http://schema.org",
     "name" -> "The Guardian",
     "logo" -> Json.obj(
       "@type" -> "ImageObject",

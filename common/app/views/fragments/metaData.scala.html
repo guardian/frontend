@@ -106,6 +106,10 @@
     }
 }
 
+<script type="application/ld+json">
+    @Html(views.support.structuredData.Organisation().toString())
+</script>
+
 @Page.getContentPage(page).map(_.item).map {
     case (a: Article) => {
         @if(a.isLiveBlog) {
