@@ -7,7 +7,6 @@ import play.twirl.api.Html
 import play.api.mvc._
 
 object EmailHelpers {
-  // TODO: implicit conversions so I don't have to call render all over the place??
   case class Container(rows: Row*) {
     def render: Html = Html {
       s"""<table align="center" class="container">
