@@ -2,6 +2,7 @@ define([
     'bean',
     'bonzo',
     'fastdom',
+    'Promise',
     'lodash/functions/debounce',
     'lib/config',
     'lib/cookies',
@@ -18,6 +19,7 @@ define([
     bean,
     bonzo,
     fastdom,
+    Promise,
     debounce,
     config,
     cookies,
@@ -177,6 +179,8 @@ define([
                     var survey = bonzo.create(template(tailorSurvey, json));
 
                     return inArticleWriter(survey, surveySuggestionToShow.data.survey.surveyId);
+                } else {
+                    Promise.resolve();
                 }
             });
         }
@@ -236,10 +240,11 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    renderQuickSurvey().then(function (response) {
-                        var surveyId = response[0]
-                        mediator.emit('survey-added');
-                        handleSurveyResponse(surveyId);
+                    renderQuickSurvey().then(function (surveyId) {
+                        if (surveyId) {
+                            mediator.emit('survey-added');
+                            handleSurveyResponse(surveyId);
+                        }
                     });
                 },
                 impression: function (track) {
