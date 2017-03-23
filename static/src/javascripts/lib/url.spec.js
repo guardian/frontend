@@ -21,15 +21,12 @@ describe('url', () => {
         ];
 
         // pass in the query
-        QUERIES.forEach(dataProvider => {
-            const [query, expected] = dataProvider;
+        QUERIES.forEach(([query, expected]) => {
             expect(url.getUrlVars(query)).toEqual(expected);
         });
 
         // get the query from window.location.search
-        QUERIES.forEach(dataProvider => {
-            const [query, expected] = dataProvider;
-
+        QUERIES.forEach(([query, expected]) => {
             Object.defineProperty(window.location, 'search', {
                 writable: true,
                 value: `?${query}`,
@@ -49,8 +46,7 @@ describe('url', () => {
             [{ foo: 'bar', boo: 'far' }, 'foo=bar&boo=far'],
             [{ foo: ['bar1', 'bar2'], boo: 'far' }, 'foo=bar1,bar2&boo=far'],
             [{}, ''],
-        ].forEach(dataProvider => {
-            const [vars, expected] = dataProvider;
+        ].forEach(([vars, expected]) => {
             expect(url.constructQuery(vars)).toEqual(expected);
         });
     });
@@ -63,8 +59,7 @@ describe('url', () => {
             [`${HOST}/foo#foo`, '/foo'],
         ];
 
-        QUERIES.forEach(dataProvider => {
-            const [query, expected] = dataProvider;
+        QUERIES.forEach(([query, expected]) => {
             expect(url.getPath(query)).toEqual(expected);
         });
     });
