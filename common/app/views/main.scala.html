@@ -1,11 +1,11 @@
-@(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page, projectName: Option[String] = None, showNormalHeader: Boolean = false)(head: Html)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.{Edition, Navigation, commercial}
-@import conf.switches.Switches.{BreakingNewsSwitch}
+@import conf.switches.Switches.{BreakingNewsSwitch, NewHeader}
 @import model.Page.getContent
 @import views.support.{Commercial, RenderClasses}
 @import play.api.Mode.Dev
 
-@headerAndTopAds(showAdverts: Boolean, edition: Edition, content: Option[model.ContentType]) = {
+@headerAndTopAds(showAdverts: Boolean, edition: Edition, content: Option[model.ContentType], showNormalHeader: Boolean = false) = {
   @if(!page.metadata.shouldHideHeaderAndTopAds) {
     @defining(showAdverts && !content.exists(_.tags.isTheMinuteArticle)) { showTopSlot =>
       @if(content.exists(_.tags.hasSuperStickyBanner)) {
@@ -18,7 +18,7 @@
               @if(showTopSlot) {
                 @fragments.commercial.topBanner(page.metadata)
               }
-              @fragments.header(page)
+              @fragments.header(page, showNormalHeader)
           </div>
       }
       <div id="maincontent" tabindex="0"></div>
@@ -42,7 +42,7 @@
             ("has-localnav", navigation.filter(_.links.nonEmpty).nonEmpty),
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
             ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
-            ("has-new-header", mvt.ABNewNavVariantSeven.isParticipating),
+            ("has-new-header", NewHeader.isSwitchedOn),
             ("has-super-sticky-banner", content.exists(_.tags.hasSuperStickyBanner)),
             ("is-immersive", content.exists(_.content.isImmersive)),
             ("is-immersive-interactive", content.exists(content => content.tags.isInteractive && content.content.isImmersive))))"
@@ -93,7 +93,7 @@
             }
             case _: commercial.hosted.HostedPage => {}
             case _ => {
-                @headerAndTopAds(showAdverts, edition, content)
+                @headerAndTopAds(showAdverts, edition, content, showNormalHeader)
             }
         }
 

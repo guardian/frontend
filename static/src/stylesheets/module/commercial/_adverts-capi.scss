@@ -60,35 +60,37 @@
     .advert > :last-child {
         margin-bottom: 0;
     }
+}
 
-    .paidfor-container {
-        @include mq($until: tablet) {
+.paidfor-container {
+    margin: 0 $gs-gutter / 2;
 
-            .advert__standfirst {
-                min-height: $gs-row-height;
-            }
+    @include mq($until: tablet) {
 
-            &:first-child > .advert {
-                padding-bottom: $gs-baseline / 2;
-            }
+        .advert__standfirst {
+            min-height: $gs-row-height;
+        }
 
-            &:first-child .advert__title,
-            &:first-child .advert__standfirst {
-                padding-right: 80px;
-                max-width: 520px;
-            }
+        &:first-child > .advert {
+            padding-bottom: $gs-baseline / 2;
+        }
 
-            &:not(:first-child) > .advert {
-                padding-right: 80px;
-                padding-bottom: 0;
-                min-height: 80px;
-            }
+        &:first-child .advert__title,
+        &:first-child .advert__standfirst {
+            padding-right: 80px;
+            max-width: 520px;
+        }
 
-            .badge {
-                display: flex;
-                flex-direction: column;
-                width: 60px;
-            }
+        &:not(:first-child) > .advert {
+            padding-right: 80px;
+            padding-bottom: 0;
+            min-height: 80px;
+        }
+
+        .badge {
+            display: flex;
+            flex-direction: column;
+            width: 60px;
         }
     }
 }
@@ -120,13 +122,14 @@
 
 .adverts--tone-paidfor {
     background-color: $neutral-6;
+    position: relative;
 
     .adverts__header {
         background: $paidfor-background;
     }
 
-    .inline-icon {
-      fill: $paid-article-brand;
+    .inline-icon__svg {
+        fill: $paid-article-brand;
     }
 
     .adverts__title {
@@ -153,7 +156,7 @@
         background: $paidfor-background;
         border-color: $paidfor-background;
 
-        .inline-icon {
+        .inline-icon__svg {
             fill: $neutral-2;
         }
 
@@ -174,18 +177,12 @@
     }
 
     .button {
-        @include button-colour(
-            $paid-article-brand,
-            null
-        );
+        @include button-colour($paid-article-brand, null);
 
         &:hover,
         &:focus,
         &:active {
-            @include button-colour(
-                darken($paid-article-brand, 5%),
-                null
-            );
+            @include button-colour(darken($paid-article-brand, 5%), null);
         }
     }
 }
@@ -242,19 +239,20 @@
     .advert__title,
     .advert__meta,
     .advert__standfirst {
-        padding-left: $gs-gutter / 4;
-        padding-right: $gs-gutter / 4;
+        padding: 0 ($gs-gutter / 4);
     }
 
-    > .advert__meta {
+    .advert__meta {
         margin-top: auto;
         margin-bottom: $gs-baseline / 4;
     }
 
     .advert__title {
+        @include f-headlineSans;
+        font-weight: 400;
         margin-bottom: .5em;
 
-        > .inline-icon svg {
+        .inline-icon__svg {
             width: 1.1em;
             height: .75em;
             margin-right: .3em;
@@ -312,14 +310,10 @@
     }
 
     .advert__title {
-        @include f-headlineSans;
-        font-weight: 400;
-
-        .inline-icon {
+        .inline-icon__svg {
             fill: $paid-article-icon;
         }
     }
-
 
     .adverts--legacy-single & {
         background: none;
@@ -357,7 +351,7 @@
         }
 
         .advert__title {
-            > .inline-icon svg {
+            > .inline-icon .inline-icon__svg {
                 fill: $multimedia-main-2;
             }
         }
@@ -373,3 +367,81 @@
         display: none;
     }
 }
+
+.adverts--within-unbranded {
+    .fc-item__container {
+        background-color: $paid-article-card-bg;
+        &:hover,
+        &.u-faux-block-link--hover {
+            background: darken($paid-article-subheader, 7%);
+        }
+    }
+    .fc-item__container:before {
+        background-color: $paid-article-brand;
+    }
+    .inline-icon__svg {
+        fill: $paid-article-brand;
+    }
+    .fc-item__title {
+        @include f-headlineSans;
+    }
+
+    .fc-item__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1;
+        @include mq(mobileLandscape, tablet) {
+            flex-direction: row;
+        }
+    }
+
+    .badge {
+        display: flex;
+        align-self: flex-end;
+        justify-content: flex-end;
+        pointer-events: none;
+        flex-shrink: 0;
+        padding-left: $gs-gutter;
+        @include mq(mobileLandscape) {
+            flex-direction: column;
+        }
+    }
+    .badge__label {
+        text-align: center;
+        align-self: center;
+    }
+    .badge__link {
+        @include mq($until: mobileLandscape) {
+            margin-left: $gs-gutter;
+        }
+        @include mq($until: tablet) {
+            width: $gs-gutter * 3;
+        }
+    }
+    .badge__logo {
+        max-width: 100%;
+        margin-left: 0;
+    }
+
+    .badge--no-image {
+        display: none;
+    }
+
+    .inline-icon__svg {
+        width: 1.1em;
+        height: .75em;
+        margin-right: .3em;
+    }
+
+    &.without-sponsor-logo {
+        .badge--no-image {
+            display: block;
+            margin-bottom: $gs-baseline/2;
+            + .badge {
+                display: none;
+            }
+        }
+    }
+}
+

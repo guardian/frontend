@@ -37,7 +37,16 @@ define([
 
     function createAdverts() {
         // Get all ad slots
-        dfpEnv.adverts = qwery(dfpEnv.adSlotSelector).map(Advert);
+        var adverts = qwery(dfpEnv.adSlotSelector)
+        .filter(function (adSlot) {
+            return !(adSlot.id in dfpEnv.advertIds);
+        })
+        .map(Advert);
+        var currentLength = dfpEnv.adverts.length;
+        dfpEnv.adverts = dfpEnv.adverts.concat(adverts);
+        adverts.forEach(function (advert, index) {
+            dfpEnv.advertIds[advert.id] = currentLength + index;
+        });
     }
 
     /**

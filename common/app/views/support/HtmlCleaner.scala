@@ -467,6 +467,17 @@ case class PhotoEssayQuotes(isPhotoEssay: Boolean) extends HtmlCleaner {
   }
 }
 
+case class PhotoEssayCaptions(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isPhotoEssay) {
+      document.getElementsByClass("caption--img").foreach{ captions =>
+        captions.remove()
+      }
+    }
+    document
+  }
+}
+
 case class PhotoEssayHalfWidth(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isPhotoEssay) {

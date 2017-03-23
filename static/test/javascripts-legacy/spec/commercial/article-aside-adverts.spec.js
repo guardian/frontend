@@ -1,13 +1,11 @@
 
 define([
-    'fastdom',
     'qwery',
     'lib/$',
     'lib/mediator',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
-    fastdom,
     qwery,
     $,
     mediator,
@@ -47,6 +45,50 @@ define([
                 // Reset dependencies
                 commercialFeatures.articleAsideAdverts = true;
 
+                var pubAds = {
+                    listeners: [],
+                    addEventListener: sinon.spy(function (eventName, callback) { this.listeners[eventName] = callback; }),
+                    setTargeting: sinon.spy(),
+                    enableSingleRequest: sinon.spy(),
+                    collapseEmptyDivs: sinon.spy(),
+                    refresh: sinon.spy()
+                },
+                sizeMapping = {
+                    sizes: [],
+                    addSize: sinon.spy(function (width, sizes) {
+                        this.sizes.unshift([width, sizes]);
+                    }),
+                    build: sinon.spy(function () {
+                        var tmp = this.sizes;
+                        this.sizes = [];
+                        return tmp;
+                    })
+                };
+
+                window.googletag = {
+                    cmd: {
+                        push: function() {
+                            var args = Array.prototype.slice.call(arguments);
+                            args.forEach(function(command) {
+                                command();
+                            });
+                        }
+                    },
+                    pubads: function () {
+                        return pubAds;
+                    },
+                    sizeMapping: function () {
+                        return sizeMapping;
+                    },
+                    defineSlot: sinon.spy(function () { return window.googletag; }),
+                    defineOutOfPageSlot: sinon.spy(function () { return window.googletag; }),
+                    addService: sinon.spy(function () { return window.googletag; }),
+                    defineSizeMapping: sinon.spy(function () { return window.googletag; }),
+                    setTargeting: sinon.spy(function () { return window.googletag; }),
+                    enableServices: sinon.spy(),
+                    display: sinon.spy()
+                };
+
                 done();
             });
         });
@@ -62,31 +104,31 @@ define([
         it('should return the ad slot container on init', function (done) {
             articleAsideAdverts.init(noop, noop);
             mediator.once('page:commercial:right', function (adSlot) {
-                expect(adSlot[0]).toBe(qwery('.js-ad-slot-container', $fixturesContainer)[0]);
+                expect(adSlot.parentNode).toBe(qwery('.js-ad-slot-container', $fixturesContainer)[0]);
                 done();
             });
         });
 
         it('should append ad slot', function (done) {
             articleAsideAdverts.init(noop, noop);
-            mediator.once('page:commercial:right', function () {
-                expect(qwery('.js-ad-slot-container > .ad-slot', $fixturesContainer).length).toBe(1);
+            mediator.once('page:commercial:right', function (adSlot) {
+                expect(adSlot).not.toBeNull();
                 done();
             });
         });
 
         it('should have the correct ad name', function (done) {
             articleAsideAdverts.init(noop, noop);
-            mediator.once('page:commercial:right', function () {
-                expect($('.ad-slot', $fixturesContainer).data('name')).toBe('right');
+            mediator.once('page:commercial:right', function (adSlot) {
+                expect(adSlot.getAttribute('data-name')).toBe('right');
                 done();
             });
         });
 
         it('should have the correct size mappings', function (done) {
             articleAsideAdverts.init(noop, noop);
-            mediator.once('page:commercial:right', function () {
-                expect($('.ad-slot', $fixturesContainer).data('mobile')).toBe('1,1|2,2|300,250|fluid');
+            mediator.once('page:commercial:right', function (adSlot) {
+                expect(adSlot.getAttribute('data-mobile')).toBe('1,1|2,2|300,250|fluid');
                 done();
             });
         });

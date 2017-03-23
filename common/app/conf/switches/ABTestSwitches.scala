@@ -22,16 +22,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-engagement-banner-copy-test",
-    "Test copy for the engagement banner in all countries aside from the US and Australia",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 17),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-increase-inline-ads",
     "Displays more inline ads in articles on desktop",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
@@ -47,16 +37,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-membership-a3-a4-bundles-thrasher",
-    "Test A3 vs A4 bundle offers",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 23), // Thursday March 23rd
     exposeClientSide = true
   )
 
@@ -112,16 +92,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-ask-four-stagger",
-    "Test to see if imposing a minimum-time-between-impressions for the epic has a positive effect on conversion",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -132,21 +102,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-regulars",
+    "ab-contributions-epic-regulars-v2",
     "Test messages aimed at our regular readers",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 5, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-tailor-recommended-email",
-    "Use Tailor to target email signup form",
-    owners = Seq(Owner.withGithub("lindseydew")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
     exposeClientSide = true
   )
 
@@ -182,11 +142,51 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-design-variations",
-    "Test design variations to the Epic",
-    owners = Seq(Owner.withGithub("Mullefa")),
+    "ab-the-long-read-email-variants",
+    "Assign users to variants of long read email",
+    owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 17),
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-fashion-statement-email-variants",
+    "Assign users to variants of fashion statement email",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-bookmarks-email-variants",
+    "Assign users to variants of bookmarks email",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-film-today-email-variants",
+    "Assign users to variants of film today email",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-design-variations-v2",
+    "Test more design variations to the Epic",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 20),
     exposeClientSide = true
   )
 
@@ -197,6 +197,47 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
+
+  Switch(
+    ABTests,
+    "ab-contributions-epic-laundromat",
+    "Display the Epic on Laundromat articles",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-reading-time",
+    "Test demand for getting suggested content based on how much time a reader has",
+    owners = Seq(Owner.withGithub("lmath")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 4),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-paid-commenting-internal",
+    "Paid commenting test",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-paid-card-logo",
+    "Trialling paid cards in editorial containers",
+    owners = Seq(Owner.withGithub("lps88")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 3),
     exposeClientSide = true
   )
 }

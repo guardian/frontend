@@ -16,7 +16,8 @@ define([
         'lodash/objects/defaults',
         'lodash/collections/find',
         'common/views/svgs',
-        'lib/fetch'
+        'lib/fetch',
+        'common/modules/experiments/segment-util'
     ], function (bean,
                  $,
                  config,
@@ -34,7 +35,8 @@ define([
                  defaults,
                  find,
                  svgs,
-                 fetch) {
+                 fetch,
+                 segmentUtil) {
 
 
         // change messageCode to force redisplay of the message to users who already closed it.
@@ -125,17 +127,10 @@ define([
             var paramsByOfferingForUserEdition = editionParams[config.page.edition];
 
             var engagementBannerTest = find(MembershipEngagementBannerTests, function(test) {
-                return ab.testCanBeRun(test)
+                return ab.testCanBeRun(test) && segmentUtil.isInTest(test)
             });
 
-            var userVariant = engagementBannerTest ? find(engagementBannerTest.variants, function(variant) {
-                return variant.id == ab.getTestVariantId(engagementBannerTest.id);
-            }) : undefined;
-
-            // If we have found a copy test variant, then defer building the banner params to the variant.
-            if (engagementBannerTest && engagementBannerTest.id === 'MembershipEngagementBannerCopyTest' && userVariant) {
-                return userVariant.deriveBannerParams()
-            }
+            var userVariant = engagementBannerTest ? segmentUtil.variantFor(engagementBannerTest) : undefined;
 
             // offering = 'membership' or 'contributions'
             var offering = Object.keys(userVariant?userVariant.params:paramsByOfferingForUserEdition)[0];

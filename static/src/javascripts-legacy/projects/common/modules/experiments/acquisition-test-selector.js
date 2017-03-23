@@ -4,35 +4,34 @@ define([
     'common/modules/commercial/acquisitions-view-log',
     'common/modules/experiments/tests/contributions-epic-brexit',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
-    'common/modules/experiments/tests/contributions-epic-ask-four-stagger',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
-    'common/modules/experiments/tests/contributions-epic-regulars',
-    'common/modules/experiments/tests/acquisitions-epic-design-variations',
-    'common/modules/experiments/tests/acquisitions-epic-article-50-trigger'
+    'common/modules/experiments/tests/contributions-epic-regulars-v2',
+    'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
+    'common/modules/experiments/tests/acquisitions-epic-design-variations-v2',
+    'common/modules/experiments/tests/contributions-epic-laundromat'
 ], function (
     segmentUtil,
     testCanRunChecks,
     viewLog,
     brexit,
     alwaysAsk,
-    askFourStagger,
     askFourEarning,
-    regulars,
-    acquisitionsEpicDesignVariations,
-    acquisitionsEpicArticle50Trigger
+    regularsV2,
+    acquisitionsEpicArticle50Trigger,
+    acquisitionsEpicDesignVariationsV2,
+    laundromat
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */
     var tests = [
         alwaysAsk,
-		regulars,
-        acquisitionsEpicDesignVariations,
+        laundromat,
+		regularsV2,
+        acquisitionsEpicDesignVariationsV2,
         askFourEarning,
         acquisitionsEpicArticle50Trigger,
-        brexit,
-        askFourStagger
-    ];
+        brexit];
 
     return {
         getTest: function() {

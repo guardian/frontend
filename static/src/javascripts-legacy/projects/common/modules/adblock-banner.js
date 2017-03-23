@@ -33,7 +33,7 @@ define([
         var bannerTmpl = this.renderTemplate();
 
         fastdom.write(function () {
-            $('.top-banner-ad-container--desktop').after(bannerTmpl);
+            $('.js-top-banner').after(bannerTmpl);
         });
     };
 

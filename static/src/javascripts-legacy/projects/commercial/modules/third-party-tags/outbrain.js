@@ -6,8 +6,6 @@ define([
     'lib/detect',
     'lodash/utilities/template',
     'lib/steady-page',
-    'commercial/modules/dfp/track-ad-render',
-    'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/outbrain-codes',
     'raw-loader!commercial/views/outbrain.html',
     'lib/load-script',
@@ -21,8 +19,6 @@ define([
     detect,
     template,
     steadyPage,
-    trackAdRender,
-    commercialFeatures,
     getCode,
     outbrainStr,
     loadScript,
@@ -73,7 +69,9 @@ define([
             section: config.page.section,
             breakpoint: breakpoint
         });
+
         widgetHtml = build(widgetCodes, breakpoint);
+        
         if ($container.length) {
             return steadyPage.insert($container[0], function() {
                 if (slot === 'merchandising') {
@@ -82,17 +80,17 @@ define([
                 $container.append(widgetHtml);
                 $outbrain.css('display', 'block');
             }).then(function () {
-                module.tracking(widgetCodes.code || widgetCodes.image);
+                module.tracking({
+                    widgetId: widgetCodes.code || widgetCodes.image
+                });
                 loadScript(outbrainUrl);
             });
         }
     }
 
-    function tracking(widgetCode) {
+    function tracking(trackingObj) {
         ophan.record({
-            outbrain: {
-                widgetId: widgetCode
-            }
+            outbrain: trackingObj
         });
     }
 
@@ -101,52 +99,70 @@ define([
      from DFP. AdBlock is blocking DFP calls so we are not getting any response and thus
      not loading Outbrain. As Outbrain is being partially loaded behind the adblock we can
      make the call instantly when we detect adBlock in use.
-     */
-    function loadInstantly() {
+    */
+    function canLoadInstantly() {
         return detect.adblockInUse.then(function(adblockInUse){
             return !document.getElementById('dfp-ad--merchandising-high') ||
                 adblockInUse;
         });
     }
 
-    function init() {
-        if (commercialFeatures.outbrain) {
-            // if there is no merch component, load the outbrain widget right away
-            return loadInstantly().then(function(shouldLoadInstantly) {
-                if (shouldLoadInstantly) {
-                    return checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
-                        outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
-                        return Promise.resolve(true);
-                    });
-                } else {
-                    return trackAdRender('dfp-ad--merchandising-high').then(function (isHiResLoaded) {
-                        // if the high-priority merch component has loaded, we wait until
-                        // the low-priority one has loaded to decide if an outbrain widget is loaded
-                        // if it hasn't loaded, the outbrain widget is loaded at its default
-                        // location right away
-                        return Promise.all([
-                            isHiResLoaded,
-                            isHiResLoaded ? trackAdRender('dfp-ad--merchandising') : true
-                        ]);
-                    }).then(function (args) {
-                        var isHiResLoaded = args[0];
-                        var isLoResLoaded = args[1];
-
-                        if (isHiResLoaded) {
-                            if (!isLoResLoaded) {
-                                module.load('merchandising');
-                            }
-                        } else {
-                            checkMediator.waitForCheck('isOutbrainNonCompliant').then(function (outbrainIsNonCompliant) {
-                                outbrainIsNonCompliant ? module.load('nonCompliant') : module.load();
-                            });
-                        }
-                    });
-                }
+    function onIsOutbrainDisabled(outbrainDisabled) {
+        if (outbrainDisabled) {
+            module.tracking({
+                state: 'outbrainDisabled'
             });
+            return Promise.resolve();
+        } else {
+            return canLoadInstantly().then(onCanLoadInstantly);
         }
+    }
 
-        return Promise.resolve(true);
+    function onCanLoadInstantly(loadInstantly) {
+        if (loadInstantly) {
+            return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(onIsUserInNonCompliantAbTest); 
+        } else {
+            return checkMediator.waitForCheck('isOutbrainBlockedByAds').then(onIsOutbrainBlockedByAds);
+        }   
+    }
+
+    function onIsUserInNonCompliantAbTest(userInNonCompliantAbTest) {
+        userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();        
+        module.tracking({
+            state: userInNonCompliantAbTest ? 'userInNonCompliantAbTest' : 'compliant'
+        });
+        return Promise.resolve();
+    }
+
+    function onIsOutbrainBlockedByAds(outbrainBlockedByAds) {
+        if (outbrainBlockedByAds) {
+            module.tracking({
+                state: 'outbrainBlockedByAds'
+            });
+            return Promise.resolve();
+        } else {
+            return checkMediator.waitForCheck('isOutbrainMerchandiseCompliant').then(onIsOutbrainMerchandiseCompliant);
+        }
+    }
+
+    function onIsOutbrainMerchandiseCompliant(outbrainMerchandiseCompliant) {
+        if (outbrainMerchandiseCompliant) {
+            module.load('merchandising');
+            module.tracking({
+                state: 'outbrainMerchandiseCompliant'
+            });
+            return Promise.resolve();
+        } else {
+            return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(onIsUserInNonCompliantAbTest); 
+        }
+    }
+
+    function outbrainChecks() { 
+        return checkMediator.waitForCheck('isOutbrainDisabled').then(onIsOutbrainDisabled);
+    }
+
+    function init() {
+        return outbrainChecks();
     }
 
     return module;

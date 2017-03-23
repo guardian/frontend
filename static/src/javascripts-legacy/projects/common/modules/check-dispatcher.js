@@ -4,21 +4,36 @@ define([
     'common/modules/check-mediator',
     'common/modules/email/run-checks',
     'common/modules/email/email-article',
-    'common/modules/experiments/ab-test-clash'
+    'common/modules/experiments/ab-test-clash',
+    'commercial/modules/dfp/track-ad-render',
+    'commercial/modules/commercial-features'
 ], function(
     find,
     config,
     checkMediator,
     emailRunChecks,
     emailArticle,
-    clash
+    clash,
+    trackAdRender,
+    commercialFeatures
 ) {
 
     var checksToDispatch = {
-        isUserInAClashingAbTest: function() {
-            return clash.userIsInAClashingAbTest();
+        isOutbrainDisabled: function () {
+            return !commercialFeatures.outbrain;
         },
-        emailCanRun: function() {
+        isUserInContributionsAbTest: function() {
+            return clash.userIsInAClashingAbTest(clash.contributionsTests);
+        },
+        isUserNotInContributionsAbTest: function() {            
+            return checkMediator.waitForCheck('isUserInContributionsAbTest').then(function (userInContributionsAbTest) {
+                return !userInContributionsAbTest;
+            });
+        },
+        isUserInEmailAbTest: function() {
+            return clash.userIsInAClashingAbTest(clash.emailTests);
+        },
+        emailCanRunPreCheck: function() {
             return emailRunChecks.allEmailCanRun();
         },
         listCanRun: function() {
@@ -26,6 +41,33 @@ define([
         },
         emailInArticleOutbrainEnabled: function() {
             return config.switches.emailInArticleOutbrain;
+        },
+        hasHighPriorityAdLoaded: function() {
+            // if thirdPartyTags false no external ads are loaded
+            if (commercialFeatures.thirdPartyTags && commercialFeatures.highMerch) {
+                return trackAdRender('dfp-ad--merchandising-high');
+            } else {
+                return false;
+            }
+        },
+        hasLowPriorityAdLoaded: function() {
+            // if thirdPartyTags false no external ads are loaded
+            if (commercialFeatures.thirdPartyTags) {
+                return checkMediator.waitForCheck('hasHighPriorityAdLoaded').then(function (highPriorityAdLoaded) {
+                    if (highPriorityAdLoaded) {
+                        return trackAdRender('dfp-ad--merchandising');
+                    } else {    
+                        return true;
+                    }
+                });
+            } else {
+                return false;
+            }
+        },
+        hasLowPriorityAdNotLoaded: function() {
+            return checkMediator.waitForCheck('hasLowPriorityAdLoaded').then(function (lowPriorityAdLoaded) {
+                return !lowPriorityAdLoaded;
+            });
         }
     };
 

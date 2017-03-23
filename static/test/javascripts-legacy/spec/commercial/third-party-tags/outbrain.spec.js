@@ -1,4 +1,3 @@
-define('ophan/ng', [], function () { return { record: function () {} }; });
 define([
     'fastdom',
     'helpers/injector',
@@ -20,37 +19,35 @@ define([
                 '<div class="js-outbrain"><div class="js-outbrain-container"></div></div>'
             ]
         },
-        ads = {
-           'dfp-ad--merchandising-high': true,
-           'dfp-ad--merchandising': false
-        },
         $fixtureContainer,
         config,
         detect,
         sut, // System under test
         getSection,
-        commercialFeatures,
+        checkMediator,
         injector = new Injector();
 
     describe('Outbrain', function () {
         var loadScript = jasmine.createSpy('loadScript');
         beforeEach(function (done) {
-            injector.mock('commercial/modules/dfp/track-ad-render', function(id) {
-                return Promise.resolve(ads[id]);
-            });
             injector.mock('lib/load-script', loadScript);
+            injector.mock('ophan/ng', { record: function () {} });
+
             injector.require([
                 'commercial/modules/third-party-tags/outbrain',
                 'commercial/modules/third-party-tags/outbrain-sections',
                 'lib/config',
                 'lib/detect',
-                'commercial/modules/commercial-features'
+                'common/modules/check-mediator'
             ], function () {
                 sut      = arguments[0];
                 getSection = arguments[1];
                 config   = arguments[2];
                 detect   = arguments[3];
-                commercialFeatures = arguments[4];
+                checkMediator = arguments[4];
+
+                // init checkMediator so we can resolve checks in tests
+                checkMediator.init();
 
                 config.switches.outbrain = true;
                 config.switches.emailInArticleOutbrain = false;
@@ -58,9 +55,8 @@ define([
                     section: 'uk-news',
                     commentable: true
                 };
-                detect.adblockInUse = Promise.resolve(false);
 
-                commercialFeatures.outbrain = true;
+                detect.adblockInUse = Promise.resolve(false);
 
                 $fixtureContainer = fixtures.render(fixturesConfig);
                 done();
@@ -69,6 +65,7 @@ define([
 
         afterEach(function () {
             fixtures.clean(fixturesConfig.id);
+             checkMediator._testClean();
         });
 
         it('should exist', function () {
@@ -78,40 +75,113 @@ define([
         describe('Init', function () {
             beforeEach(function () {
                 spyOn(sut, 'load');
+                spyOn(sut, 'tracking');
             });
 
-            it('should start outbrain component', function (done) {
+            it('should not load if outbrain disabled', function (done) {
+                detect.adblockInUse = Promise.resolve(true);
+                // isOutbrainDisabled check
+                checkMediator.resolveCheck('isOutbrainDisabled', true);
+                // isUserInNonCompliantAbTest checks
+                checkMediator.resolveCheck('isUserInContributionsAbTest', true);
+                checkMediator.resolveCheck('isUserNotInContributionsAbTest', false);
+                checkMediator.resolveCheck('isUserInEmailAbTest', false);
+                checkMediator.resolveCheck('emailCanRunPreCheck', false);
+                checkMediator.resolveCheck('listCanRun', false);
+                checkMediator.resolveCheck('emailInArticleOutbrainEnabled', false);
+
                 sut.init().then(function () {
-                    expect(sut.load).toHaveBeenCalled();
+                    expect(sut.load).not.toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalledWith({
+                        state: 'outbrainDisabled'
+                    });    
                     done();
                 });
             });
 
             it('should load instantly when ad block is in use', function (done) {
-                detect.adblockInUse = Promise.resolve(false);
+                detect.adblockInUse = Promise.resolve(true);
+                // isOutbrainDisabled check
+                checkMediator.resolveCheck('isOutbrainDisabled', false);
+                // isUserInNonCompliantAbTest checks
+                checkMediator.resolveCheck('isUserInContributionsAbTest', true);
+                checkMediator.resolveCheck('isUserInEmailAbTest', false);
+                checkMediator.resolveCheck('emailCanRunPreCheck', false);
+                checkMediator.resolveCheck('listCanRun', false);
+                checkMediator.resolveCheck('emailInArticleOutbrainEnabled', false);
+                checkMediator.resolveCheck('isUserNotInContributionsAbTest', false);
 
                 sut.init().then(function () {
                     expect(sut.load).toHaveBeenCalled();
+                    expect(sut.load).toHaveBeenCalledWith('nonCompliant');
+                    expect(sut.tracking).toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalledWith({
+                        state: 'userInNonCompliantAbTest'
+                    });
                     done();
                 });
             });
 
             it('should load in the low-priority merch component', function (done) {
-                ads['dfp-ad--merchandising-high'] = true;
-                ads['dfp-ad--merchandising'] = false;
+                // isOutbrainDisabled check
+                checkMediator.resolveCheck('isOutbrainDisabled', false);
+                // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
+                checkMediator.resolveCheck('hasHighPriorityAdLoaded', true);
+                checkMediator.resolveCheck('hasLowPriorityAdLoaded', false);
+                checkMediator.resolveCheck('hasLowPriorityAdNotLoaded', true);
 
                 sut.init().then(function () {
+                    expect(sut.load).toHaveBeenCalled();
                     expect(sut.load).toHaveBeenCalledWith('merchandising');
+                    expect(sut.tracking).toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalledWith({
+                        state: 'outbrainMerchandiseCompliant'
+                    });
                     done();
                 });
             });
 
             it('should not load if both merch components are loaded', function (done) {
-                ads['dfp-ad--merchandising-high'] = true;
-                ads['dfp-ad--merchandising'] = true;
+                // isOutbrainDisabled check
+                checkMediator.resolveCheck('isOutbrainDisabled', false);
+                // isOutbrainBlockedByAds checks
+                checkMediator.resolveCheck('hasHighPriorityAdLoaded', true);
+                checkMediator.resolveCheck('hasLowPriorityAdLoaded', true);
 
                 sut.init().then(function () {
+                    expect(sut.load).not.toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalledWith({
+                        state: 'outbrainBlockedByAds'
+                    });
+                    done();
+                });
+            });
+
+            it('should load a compliant component', function (done) {
+                // isOutbrainDisabled check
+                checkMediator.resolveCheck('isOutbrainDisabled', false);
+                // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
+                checkMediator.resolveCheck('hasHighPriorityAdLoaded', false);
+                checkMediator.resolveCheck('hasLowPriorityAdLoaded', false);
+                checkMediator.resolveCheck('hasLowPriorityAdNotLoaded', true);
+                // isUserInNonCompliantAbTest checks
+                checkMediator.resolveCheck('isUserInContributionsAbTest', false);
+                checkMediator.resolveCheck('isUserNotInContributionsAbTest', false);
+                checkMediator.resolveCheck('isUserInEmailAbTest', false);
+                checkMediator.resolveCheck('emailCanRunPreCheck', false);
+                checkMediator.resolveCheck('listCanRun', false);
+                checkMediator.resolveCheck('emailInArticleOutbrainEnabled', false);
+
+                sut.init().then(function () {
+                    expect(sut.load).toHaveBeenCalled();
+                    expect(sut.load).not.toHaveBeenCalledWith('nonCompliant');
                     expect(sut.load).not.toHaveBeenCalledWith('merchandising');
+                    expect(sut.tracking).toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalledWith({
+                        state: 'compliant'
+                    });
                     done();
                 });
             });
@@ -138,15 +208,6 @@ define([
         });
 
         describe('Load', function () {
-            var requireStub;
-            beforeEach(function () {
-                requireStub = sinon.stub(window, 'require');
-            });
-
-            afterEach(function () {
-                requireStub.restore();
-            });
-
             it('should create two containers for desktop with correct IDs for slot 1', function (done) {
                 detect.getBreakpoint = function () {
                     return 'desktop';
@@ -280,9 +341,6 @@ define([
 
         describe('Tracking', function () {
             it('should call tracking method', function (done) {
-                // We don't care about the require for this test, so stub it
-                sinon.stub(window, 'require');
-
                 detect.getBreakpoint = function () {
                     return 'wide';
                 };
@@ -291,7 +349,9 @@ define([
                 spyOn(sut, 'tracking');
 
                 sut.load().then(function () {
-                    expect(sut.tracking).toHaveBeenCalledWith('AR_13');
+                    expect(sut.tracking).toHaveBeenCalledWith({
+                        widgetId: 'AR_13'
+                    });
                     done();
                 });
             });

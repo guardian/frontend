@@ -7,7 +7,6 @@ define(function () {
     var startDate = new Date().getTime();
 
     function mark(label) {
-
         if (perf && 'mark' in perf) {
             perf.mark(label);
         } else {
@@ -17,7 +16,7 @@ define(function () {
 
     // Returns the ms time when the mark was made.
     function getTiming(label) {
-        if (perf) {
+        if (perf && 'getEntriesByName' in perf) {
             var performanceMark = perf.getEntriesByName(label, 'mark')[0];
             if (performanceMark && 'startTime' in performanceMark) {
                 return performanceMark.startTime;

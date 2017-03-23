@@ -29,10 +29,6 @@
         padding: 0 calc(50% - 650px);
     }
 
-    .inline-commercial {
-        display: block;
-    }
-
     .button {
         transition: border-color .1s, background-color .1s;
     }
@@ -81,20 +77,9 @@
             padding: $gs-baseline $gs-gutter;
             width: 240px;
         }
-
-        .adverts__ctas {
-            margin-left: (-1 * $gs-gutter / 2);
-            margin-right: (-1 * $gs-gutter / 2);
-        }
     }
 
     > .adverts__header {
-        .inline-logo-guardian {
-            @include mq(leftCol) {
-                display: none;
-            }
-        }
-
         @include mq($until: mobileLandscape) {
             padding: $gs-baseline / 2 $gs-gutter / 2;
         }
@@ -129,19 +114,6 @@
 
         @include mq($until: leftCol) {
             align-items: center;
-
-            .inline-marque-54 {
-                margin-right: $gs-gutter / 2;
-            }
-
-            .inline-marque-54 > svg {
-                width: 36px;
-                height: 36px;
-            }
-
-            .inline-logo-guardian {
-                margin-right: $gs-gutter / 4;
-            }
         }
 
         @include mq(leftCol) {
@@ -150,27 +122,6 @@
             /* http://alistapart.com/article/axiomatic-css-and-lobotomized-owls */
             > * + * {
                 margin-top: $gs-baseline / 2;
-            }
-        }
-
-        svg {
-            display: block;
-            fill: #ffffff;
-            max-width: 100%;
-        }
-    }
-
-    .adverts__ctas {
-        @include mq($until: tablet) {
-            margin-top: $gs-baseline / 3;
-        }
-
-        .button--tertiary {
-            border-color: rgba(255, 255, 255, .3);
-
-            &:hover,
-            &:focus {
-                border-color: rgba(255, 255, 255, 1);
             }
         }
     }
@@ -342,64 +293,6 @@
     }
 }
 
-.adverts--legacy-inline {
-    padding: 0;
-    background: #eaeaea;
-
-    > .adverts__header {
-        @include mq($until: mobileLandscape) {
-            padding: $gs-baseline / 2 $gs-gutter / 4;
-        }
-
-        padding: $gs-baseline / 2 $gs-gutter / 2;
-    }
-
-    .adverts__logo {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        color: #ffffff;
-        fill: #ffffff;
-
-        > .inline-icon {
-            margin-bottom: $gs-baseline / 2;
-        }
-
-        > .inline-logo > svg {
-            height: auto;
-            max-width: 100%;
-        }
-    }
-
-    .adverts__title {
-        @include fs-header(1);
-    }
-
-    .advert > :not(.advert__image-container) {
-        @include mq($until: mobileLandscape) {
-            margin-left: $gs-gutter / 4;
-            margin-right: $gs-gutter / 4;
-        }
-
-        margin-left: $gs-gutter / 2;
-        margin-right: $gs-gutter / 2;
-    }
-
-    .advert__image-container {
-        height: auto;
-    }
-
-    .advert__image {
-        width: 100%;
-    }
-
-    .has-no-flex & {
-        .adverts__logo > * {
-            display: block;
-        }
-    }
-}
-
 .adverts__header {
     display: flex;
     flex-direction: column;
@@ -422,23 +315,8 @@
     @include fs-headline(4, true);
 }
 
-.adverts__ctas,
 .adverts__stamp {
     margin-top: auto;
-}
-
-.adverts__ctas {
-    display: flex;
-    flex-direction: column;
-
-    /* http://alistapart.com/article/axiomatic-css-and-lobotomized-owls */
-    > * + * {
-        margin-top: $gs-baseline / 2;
-    }
-}
-
-.adverts__ctas + .adverts__stamp {
-    margin-top: 0;
 }
 
 .adverts__body {
@@ -620,54 +498,4 @@
     }
 }
 
-.adverts--framed {
-    @include mq(tablet) {
-        &::before,
-        &::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: calc(50% - 370px);
-            background: rgba(51, 51, 51, .06);
-        }
-
-        &::before { left: 0; }
-        &::after { right: 0; }
-    }
-
-    @include mq(desktop) {
-        &::before,
-        &::after {
-            width: calc(50% - 490px);
-        }
-    }
-
-    @include mq(leftCol) {
-        &::before,
-        &::after {
-            width: calc(50% - 570px);
-        }
-    }
-
-    @include mq(wide) {
-        &::before,
-        &::after {
-            width: calc(50% - 650px);
-        }
-    }
-}
-
-@import '_adverts-books';
-@import '_adverts-masterclasses';
-@import '_adverts-jobs';
 @import '_adverts-capi';
-@import '_adverts-brand';
-@import '_adverts-membership';
-@import '_adverts-travel';
-@import '_adverts-subscriptions';
-@import '_adverts-live';
-@import '_adverts-networks';
-@import '_adverts-shop';
-@import '_adverts-money';
-@import '_adverts-gardening';

@@ -1,14 +1,14 @@
-@(page: model.Page)(implicit request: RequestHeader)
-@import common.editions._
+@(page: model.Page, showNormalHeader: Boolean = false)(implicit request: RequestHeader)
 @import common.{Edition, LinkTo, SubscribeLink}
 @import conf.Configuration
 @import conf.switches.Switches._
 
-@if(mvt.ABNewNavVariantSeven.isParticipating) {
+@if(NewHeader.isSwitchedOn) {
     @fragments.newHeader(page)
 }
+
 <header id="header"
-        class="l-header u-cf @if(page.metadata.hasSlimHeader) {l-header--is-slim l-header--no-navigation} js-header @if(mvt.ABNewNavVariantSeven.isParticipating) {hide-on-mobile}"
+        class="l-header u-cf @if(page.metadata.hasSlimHeader && !showNormalHeader) {l-header--is-slim l-header--no-navigation} js-header @if(NewHeader.isSwitchedOn) {hide-on-mobile}"
         role="banner"
         data-link-name="global navigation: header">
     <div class="js-navigation-header navigation-container navigation-container--collapsed">

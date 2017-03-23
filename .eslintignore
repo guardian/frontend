@@ -1,6 +1,7 @@
 # generic
 jspm_packages
 node_modules
+flow-typed*
 !.eslintrc.js
 
 # main app
