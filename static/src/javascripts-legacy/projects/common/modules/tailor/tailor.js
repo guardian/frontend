@@ -30,16 +30,8 @@ define([
         baseURL += browserId;
 
         if (queryParams) {
-            var queryParamList = Object.keys(queryParams);
-
-            baseURL += '&';
-
-            queryParamList.forEach(function (queryParam, i) {
-                baseURL += queryParam + '=' + queryParams[queryParam];
-
-                if (i < (queryParamList.length - 1)) {
-                    baseURL += '&';
-                }
+            Object.keys(queryParams).forEach(function (key) {
+                baseURL += '&' + key + '=' + queryParams[key];
             });
         }
 
