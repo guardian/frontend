@@ -71,7 +71,6 @@ object InlineStyles {
     * If any <style> tag can't be parsed, it'll be left in the head without modification.
     */
   def apply(html: Html): Html = {
-//    html
     val document = Jsoup.parse(html.body)
     val (inline, head) = styles(document)
 
