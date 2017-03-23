@@ -80,17 +80,17 @@ define([
                 $container.append(widgetHtml);
                 $outbrain.css('display', 'block');
             }).then(function () {
-                module.tracking(widgetCodes.code || widgetCodes.image);
+                module.tracking({
+                    widgetId: widgetCodes.code || widgetCodes.image
+                });
                 loadScript(outbrainUrl);
             });
         }
     }
 
-    function tracking(widgetCode) {
+    function tracking(trackingObj) {
         ophan.record({
-            outbrain: {
-                widgetId: widgetCode
-            }
+            outbrain: trackingObj
         });
     }
 
@@ -109,6 +109,9 @@ define([
 
     function onIsOutbrainDisabled(outbrainDisabled) {
         if (outbrainDisabled) {
+            module.tracking({
+                state: 'outbrainDisabled'
+            });
             return Promise.resolve();
         } else {
             return canLoadInstantly().then(onCanLoadInstantly);
@@ -124,12 +127,18 @@ define([
     }
 
     function onIsUserInNonCompliantAbTest(userInNonCompliantAbTest) {
-        userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();
+        userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();        
+        module.tracking({
+            state: userInNonCompliantAbTest ? 'userInNonCompliantAbTest' : 'compliant'
+        });
         return Promise.resolve();
     }
 
     function onIsOutbrainBlockedByAds(outbrainBlockedByAds) {
         if (outbrainBlockedByAds) {
+            module.tracking({
+                state: 'outbrainBlockedByAds'
+            });
             return Promise.resolve();
         } else {
             return checkMediator.waitForCheck('isOutbrainMerchandiseCompliant').then(onIsOutbrainMerchandiseCompliant);
@@ -139,6 +148,9 @@ define([
     function onIsOutbrainMerchandiseCompliant(outbrainMerchandiseCompliant) {
         if (outbrainMerchandiseCompliant) {
             module.load('merchandising');
+            module.tracking({
+                state: 'outbrainMerchandiseCompliant'
+            });
             return Promise.resolve();
         } else {
             return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(onIsUserInNonCompliantAbTest); 

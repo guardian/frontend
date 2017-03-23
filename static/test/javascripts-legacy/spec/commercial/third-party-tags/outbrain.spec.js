@@ -75,6 +75,7 @@ define([
         describe('Init', function () {
             beforeEach(function () {
                 spyOn(sut, 'load');
+                spyOn(sut, 'tracking');
             });
 
             it('should not load if outbrain disabled', function (done) {
@@ -91,6 +92,10 @@ define([
 
                 sut.init().then(function () {
                     expect(sut.load).not.toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalledWith({
+                        state: 'outbrainDisabled'
+                    });    
                     done();
                 });
             });
@@ -110,6 +115,10 @@ define([
                 sut.init().then(function () {
                     expect(sut.load).toHaveBeenCalled();
                     expect(sut.load).toHaveBeenCalledWith('nonCompliant');
+                    expect(sut.tracking).toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalledWith({
+                        state: 'userInNonCompliantAbTest'
+                    });
                     done();
                 });
             });
@@ -125,6 +134,10 @@ define([
                 sut.init().then(function () {
                     expect(sut.load).toHaveBeenCalled();
                     expect(sut.load).toHaveBeenCalledWith('merchandising');
+                    expect(sut.tracking).toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalledWith({
+                        state: 'outbrainMerchandiseCompliant'
+                    });
                     done();
                 });
             });
@@ -138,6 +151,10 @@ define([
 
                 sut.init().then(function () {
                     expect(sut.load).not.toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalledWith({
+                        state: 'outbrainBlockedByAds'
+                    });
                     done();
                 });
             });
@@ -161,6 +178,10 @@ define([
                     expect(sut.load).toHaveBeenCalled();
                     expect(sut.load).not.toHaveBeenCalledWith('nonCompliant');
                     expect(sut.load).not.toHaveBeenCalledWith('merchandising');
+                    expect(sut.tracking).toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalledWith({
+                        state: 'compliant'
+                    });
                     done();
                 });
             });
@@ -340,7 +361,9 @@ define([
                 spyOn(sut, 'tracking');
 
                 sut.load().then(function () {
-                    expect(sut.tracking).toHaveBeenCalledWith('AR_13');
+                    expect(sut.tracking).toHaveBeenCalledWith({
+                        widgetId: 'AR_13'
+                    });
                     done();
                 });
             });
