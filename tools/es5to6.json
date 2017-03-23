@@ -10,10 +10,6 @@
     "lib/client-rects.js"
   ],
   "Gareth Trufitt": [
-    "lib/closest.js",
-    "lib/config.js",
-    "lib/cookies.js",
-    "lib/create-store.js",
     "lib/detect.js",
     "lib/easing.js",
     "lib/element-inview.js",
