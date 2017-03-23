@@ -2,6 +2,9 @@ package model.liveblog
 
 import scala.util.parsing.combinator.RegexParsers
 
+// This utility class provides functions to parse out a block-id from a given
+// get request parameter, or from a block param
+
 object ParseBlockId extends RegexParsers {
 
   sealed trait ParseResult { def toOption: Option[String] }
@@ -13,6 +16,8 @@ object ParseBlockId extends RegexParsers {
   private def id: Parser[String] = "[a-zA-Z0-9]+".r
   private def blockId = block ~> id
 
+  // get Id from page parameter
+
   def fromPageParam(input: String): ParseResult = {
     def expr: Parser[String] = withParser ~> blockId
 
@@ -22,10 +27,13 @@ object ParseBlockId extends RegexParsers {
     }
   }
 
+  // get Id from block id string
+
   def fromBlockId(input: String): ParseResult = {
     parse(blockId, input) match {
       case Success(matched, _) => ParsedBlockId(matched)
       case _ => InvalidFormat
     }
   }
+
 }

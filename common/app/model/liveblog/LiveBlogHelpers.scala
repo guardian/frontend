@@ -7,6 +7,8 @@ import model.{Article, CacheTime, StoryPackages}
 
 object LiveBlogHelpers {
 
+  // Get a Seq[BodyBlock] given an article and the "page" request parameter on live-blog pages.
+
   def blocksForLiveBlogRequest(article: Article, param: Option[String]): Seq[BodyBlock] = {
 
     def modelWithRange(range: BlockRange) =
@@ -23,6 +25,8 @@ object LiveBlogHelpers {
     }
 
   }
+
+  // Given a BlockRange and an article, return a combined LiveBlogCurrentPage instance
 
   def createLiveBlogModel(liveBlog: Article, range: BlockRange): Option[LiveBlogCurrentPage] = {
 

@@ -5,6 +5,8 @@ case class LiveBlogCurrentPage(
   pagination: Option[Pagination]
 )
 
+// Extends normal Pages due to the need for pagination and since-last-seen logic on
+
 object LiveBlogCurrentPage {
 
   def apply(pageSize: Int, blocks: Blocks, range: BlockRange): Option[LiveBlogCurrentPage] = {
