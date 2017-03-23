@@ -52,16 +52,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-a3-a4-bundles-thrasher",
-    "Test A3 vs A4 bundle offers",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 23), // Thursday March 23rd
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-editorial-email-variants",
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
