@@ -3,7 +3,6 @@ define([
     'lib/$',
     'lib/mediator',
     'bonzo',
-    'bean',
     'fastdom',
     'common/modules/user-prefs',
     'qwery'
@@ -12,7 +11,6 @@ define([
     $,
     mediator,
     bonzo,
-    bean,
     fastdom,
     userPrefs,
     qwery

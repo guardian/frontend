@@ -1,5 +1,4 @@
 define([
-    'bean',
     'bonzo',
     'qwery',
     'videojs',
@@ -17,7 +16,6 @@ define([
     'lodash/functions/debounce',
     'common/modules/video/videojs-options'
 ], function (
-    bean,
     bonzo,
     qwery,
     videojs,
