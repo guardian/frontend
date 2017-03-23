@@ -18,7 +18,7 @@
 // to context matching).
 
 .brand-bar__item {
-    @include fs-bodyHeading(1);
+    @include fs-textSans(3);
     user-select: none;
     float: left;
     color: $c-guardian-services-action;

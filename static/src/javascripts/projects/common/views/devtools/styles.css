@@ -1,0 +1,101 @@
+.devtools, .devtools * {
+    box-sizing: border-box;
+}
+
+.devtools {
+    background-color: #f6f6f6;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    padding: 6px;
+    overflow: auto;
+    max-height: 100vh;
+    max-width: 100vw;
+    transition: 250ms left;
+}
+
+.devtools--hidden {
+    left: -90vw;
+}
+
+@media (min-width: 768px) {
+    .devtools {
+        width: 500px;
+    }
+
+    .devtools--hidden {
+        left: -440px;
+    }
+}
+
+.devtools__test {
+    font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif
+    font-weight: 700;
+    margin-top: 18px;
+    border-bottom: 1px solid #005689;
+}
+
+.devtools__tests {
+    list-style: none;
+    margin: 0;
+}
+
+.devtools__variant__button {
+    display: none;
+}
+
+.devtools__variant__label {
+    display: block;
+    width: 100%;
+    border-radius: 6px;
+    padding: 6px;
+}
+
+.devtools__variant__label:hover,
+.devtools__variant__label:active {
+    background-color: #dfdfdf;
+    cursor: pointer;
+}
+
+.devtools__variant__button:checked + .devtools__variant__label {
+    background-color: #cccccc;
+}
+
+.devtools__controls button {
+    font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: rgba(0, 86, 137, .5);
+    border: 0;
+    border-radius: 6px;
+    height: 35px;
+    margin: 0 6px;
+}
+
+.devtools__controls button:first-of-type {
+    margin-left: 36px;
+}
+
+.devtools__controls button:hover,
+.devtools__controls button:active {
+    background-color: #005689;
+}
+
+.devtools__controls .devtools__controls__toggle {
+    float: right;
+    width: 35px;
+    border-radius: 35px;
+    background-color: #005689;
+    margin: 0;
+}
+
+.devtools__controls h1 {
+    display: inline;
+}
+
+.devtools__controls h1,
+.devtools__controls button {
+    vertical-align: middle;
+}
+

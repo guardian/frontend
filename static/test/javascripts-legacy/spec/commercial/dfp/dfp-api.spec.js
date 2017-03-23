@@ -46,8 +46,6 @@ define([
             dfp, dfpEnv, config, detect, commercialFeatures, closeDisabledSlots;
 
         function reset() {
-            dfpEnv.firstAdDisplayed = false;
-            dfpEnv.firstAdRendered = false;
             dfpEnv.advertIds = {};
             dfpEnv.adverts = [];
             dfpEnv.advertsToRefresh = [];
