@@ -4,7 +4,6 @@
 .content--article {
     a.u-underline.in-body-link--immersive {
         color: $news-main-1;
-        font-family: $f-sans-serif-text;
 
         &:hover {
             border-bottom: 1px solid $news-main-2;
@@ -80,6 +79,9 @@
         }
 
         .section-title {
+            background-color: rgb(0, 0, 0);
+            background: linear-gradient(transparent, rgb(0, 0, 0));
+
             &:before {
                 background-color: $news-main-2;
                 display: block;
@@ -117,7 +119,8 @@
                 background-color: #ffffff;
             }
 
-            & + p {
+            // Makes sure that elements which come after the block of images are no longer floating
+            & + p, & + blockquote, & + .element-pullquote {
                 clear: both;
                 padding-top: $gs-baseline / 2;
             }
@@ -150,5 +153,57 @@
                 fill: $news-main-2;
             }
         }
+    }
+}
+.from-content-api ul {
+    display: inline-block;
+    width: 98%;
+    margin-top: 0;
+    @include mq($until: mobileLandscape) {
+        margin-top: -$gs-baseline / 2;
+    }
+
+    & > li {
+        @include fs-textSans(3);
+        color: $guardian-brand;
+        font-size: 12px;
+        width: 100%;
+        margin-right: 1%;
+        line-height: 14px;
+        padding-top: $gs-baseline / 2;
+        border-top: 1px solid $guardian-brand;
+
+        &::before {
+            display: none !important;
+        }
+
+        @include mq($until: mobileLandscape) {
+            width: 98%;
+        }
+    }
+}
+
+//changes the style of the list item when it comes directly after an immersive or showcase element.
+//Pulls the list item into the leftColumn on wide.
+
+.element--immersive + ul, .element--showcase + ul {
+    width: 150px;
+    margin-left: -170px;
+    float: left;
+
+    & > li {
+        width: 100%;
+    }
+
+    @include mq($until: leftCol) {
+        width: 98%;
+        margin-left: 0;
+        float: none;
+    }
+
+    @include mq($until: mobileLandscape) {
+        width: 98%;
+        float: none;
+        margin-left: 0;
     }
 }

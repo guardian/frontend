@@ -175,9 +175,9 @@ define([
         if (config.page.showNewRecipeDesign === true) {
             //below is for during testing
             if (config.tests.abNewRecipeDesign) {
-                require(['bootstraps/enhanced/recipe-article'], function (recipes) {
-                    bootstrapContext('recipes', recipes);
-                });
+                require.ensure([], function (require) {
+                    bootstrapContext('recipes', require('bootstraps/enhanced/recipe-article'));
+                }, 'recipes');
             }
         }
 
@@ -188,6 +188,12 @@ define([
                 }, 'youtube');
             }
         });
+
+        if (window.location.hash.indexOf('devtools') !== -1) {
+            require.ensure([], function(require) {
+                bootstrapContext('devtools', require('bootstraps/enhanced/devtools'));
+            }, 'devtools');
+        }
 
         // initialise email/outbrain check dispatcher
         bootstrapContext('checkDispatcher', checkDispatcher);

@@ -13,7 +13,11 @@ module.exports = webpackMerge.smart(config, {
     },
     devtool: 'source-map',
     plugins: [
-        new webpack.optimize.AggressiveMergingPlugin(),
+        new webpack.optimize.AggressiveMergingPlugin({
+            // delicate number: stops enhanced-no-commercial and enhanced
+            // being merged into one
+            minSizeReduce: 1.6,
+        }),
         new Visualizer({
             filename: './webpack-stats.html',
         }),

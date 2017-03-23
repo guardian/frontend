@@ -22,16 +22,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-engagement-banner-copy-test",
-    "Test copy for the engagement banner in all countries aside from the US and Australia",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-increase-inline-ads",
     "Displays more inline ads in articles on desktop",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
@@ -47,16 +37,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-membership-a3-a4-bundles-thrasher",
-    "Test A3 vs A4 bundle offers",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 23), // Thursday March 23rd
     exposeClientSide = true
   )
 
@@ -231,44 +211,23 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-content-tailoring-environment",
-    "This targets articles in the environment section in order to test specific messages",
-    owners = Seq(Owner.withGithub("alexduf")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-content-tailoring-cif",
-    "This targets articles in the comment is free section in order to test specific messages",
-    owners = Seq(Owner.withGithub("alexduf")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-content-tailoring-football",
-    "This targets articles in the football section in order to test specific messages",
-    owners = Seq(Owner.withGithub("alexduf")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
-    exposeClientSide = true
-  )
-
   Switch(
     ABTests,
     "ab-reading-time",
     "Test demand for getting suggested content based on how much time a reader has",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 4, 4),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-paid-commenting-internal",
+    "Paid commenting test",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 3, 30),
     exposeClientSide = true
   )
 }

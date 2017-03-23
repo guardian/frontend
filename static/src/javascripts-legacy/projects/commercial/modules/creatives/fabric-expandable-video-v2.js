@@ -4,9 +4,10 @@ define([
     'lib/$',
     'lodash/objects/assign',
     'lodash/utilities/template',
-    'common/views/svgs',
     'raw-loader!commercial/views/creatives/fabric-expandable-video-v2.html',
     'raw-loader!commercial/views/creatives/fabric-expandable-video-v2-cta.html',
+    'svg-loader!svgs/icon/arrow-down.svg',
+    'svg-loader!svgs/icon/close-central.svg',
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker'
 ], function (
@@ -15,9 +16,10 @@ define([
     $,
     assign,
     template,
-    svgs,
     fabricExpandableVideoHtml,
     fabricExpandableCtaHtml,
+    arrowDown,
+    closeCentral,
     addTrackingPixel,
     addViewabilityTracker
 ) {
@@ -40,10 +42,10 @@ define([
                 desktopCTA: params.ctaDesktopImage ? ctaTpl({ media: 'hide-until-tablet', link: params.link, image: params.ctaDesktopImage, position: params.ctaDesktopPosition }): '',
                 mobileCTA: params.ctaMobileImage ? ctaTpl({ media: 'mobile-only', link: params.link, image: params.ctaMobileImage, position: params.ctaMobilePosition }): '',
                 showArrow: (params.showMoreType === 'arrow-only' || params.showMoreType === 'plus-and-arrow') ?
-                    '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>'
+                    '<button class="ad-exp__open-chevron ad-exp__open">' + arrowDown.markup + '</button>'
                     : '',
                 showPlus: params.showMoreType === 'plus-only' || params.showMoreType === 'plus-and-arrow' ?
-                    '<button class="ad-exp__close-button ad-exp__open ad-exp__open--' + plusIconPosition + '">' + svgs('closeCentralIcon') + '</button>'
+                    '<button class="ad-exp__close-button ad-exp__open ad-exp__open--' + plusIconPosition + '">' + closeCentral.markup + '</button>'
                     : '',
                 videoEmbed: (params.YoutubeVideoURL !== '') ?
                     '<iframe id="YTPlayer" width="100%" height="' + videoHeight + '" src="' + params.YoutubeVideoURL + '?showinfo=0&amp;rel=0&amp;controls=0&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable-video"></iframe>'

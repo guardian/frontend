@@ -401,6 +401,14 @@
             width: $gs-gutter * 3;
         }
     }
+    .badge {
+        pointer-events: none;
+        right: 0;
+    }
+    .badge__label {
+        text-align: center;
+        width: 100%;
+    }
     .badge__logo {
         max-width: 100%;
         margin-left: 0;
@@ -408,6 +416,12 @@
 
     .badge--no-image {
         display: none;
+    }
+
+    .inline-icon__svg {
+        width: 1.1em;
+        height: .75em;
+        margin-right: .3em;
     }
 
     &.without-sponsor-logo {

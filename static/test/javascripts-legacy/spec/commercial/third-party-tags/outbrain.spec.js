@@ -1,4 +1,3 @@
-define('ophan/ng', [], function () { return { record: function () {} }; });
 define([
     'fastdom',
     'helpers/injector',
@@ -33,7 +32,8 @@ define([
         var loadScript = jasmine.createSpy('loadScript');
         beforeEach(function (done) {
             injector.mock('lib/load-script', loadScript);
-            
+            injector.mock('ophan/ng', { record: function () {} });
+
             injector.require([
                 'commercial/modules/third-party-tags/outbrain',
                 'commercial/modules/third-party-tags/outbrain-sections',
@@ -165,15 +165,6 @@ define([
         });
 
         describe('Load', function () {
-            var requireStub;
-            beforeEach(function () {
-                requireStub = sinon.stub(window, 'require');
-            });
-
-            afterEach(function () {
-                requireStub.restore();
-            });
-
             it('should create two containers for desktop with correct IDs for slot 1', function (done) {
                 detect.getBreakpoint = function () {
                     return 'desktop';
@@ -307,9 +298,6 @@ define([
 
         describe('Tracking', function () {
             it('should call tracking method', function (done) {
-                // We don't care about the require for this test, so stub it
-                sinon.stub(window, 'require');
-
                 detect.getBreakpoint = function () {
                     return 'wide';
                 };
