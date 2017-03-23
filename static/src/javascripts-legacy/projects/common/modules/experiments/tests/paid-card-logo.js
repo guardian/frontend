@@ -11,7 +11,7 @@ define([
 ) {
     return function () {
         this.id = 'PaidCardLogo';
-        this.start = '2017-03-22';
+        this.start = '2017-03-29';
         this.expiry = '2017-03-31';
         this.author = 'Lydia Shepherd';
         this.description = 'Paid cards in editorial containers - trial with and without logo';
