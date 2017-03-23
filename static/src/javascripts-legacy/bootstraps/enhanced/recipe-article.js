@@ -16,15 +16,18 @@ define([
 
 function init() {
     var recipe = $('.recipe__article--structured');
+    var article = $('.js-recipe__content');
+    var articleNoJS = $('.js-recipe__content--no-js');
     var firstRecipe = $('.js-recipe__article--structured');
     var firstRecipeHeadline = $('.js-recipe__article--structured .js-recipe__article--structured-headline h1');
     var nextWrapper = $('.js-recipe__article--next-recipe');
+    var readMoreNoJS = $('.js-read-more--no-js');
+    var readMoreWrapper = $('.js-read-more--wrapper');
     var nextRecipeTitle = $('.js-recipe__article--next-title');
     var nextRecipeText = $('.js-recipe__article--next-text');
     var nextRecipeKicker = $('.js-kicker');
     var nextButton = $('.js-recipe__article--next-button');
-    var readMoreButton = $('.js-recipe__article--read-more');
-    var readMoreButtonText = $('.read-more__text');
+    var readMoreButton;
     var displayClass = 'recipe__image__wrapper--is-displayed';
     var stickyGutter = $('.js-recipe__gutter-wrapper');
     var stickyImages = $('.js-recipe__image__wrapper');
@@ -91,19 +94,8 @@ function init() {
         scroller.scrollToElement(destination[0]);
     }
 
-    bean.on(readMoreButton[0], 'click', function() {
-
-        $('.recipe__content').toggleClass('js-visible');
-
-        if (readMoreButtonText.text() === 'Read more') {
-            readMoreButtonText.text('Hide')
-            setKicker();
-            nextButton.removeClass('top');
-        } else {
-            readMoreButtonText.text('Read more')
-            scroller.scrollToElement(firstRecipe[0]);
-        }
-
+    bean.on(readMoreWrapper[0], 'click', function() {
+        article.toggleClass('js-visible');
         readMoreButton.toggleClass('js-x-sign');
     });
 
@@ -132,6 +124,11 @@ function init() {
           new Sticky(stickyGutter[0]).init();
           new Sticky(stickyImages[0]).init();
         }
+
+        readMoreWrapper.html(readMoreNoJS.html());
+        readMoreButton = $('.js-recipe__article--read-more');
+        article.html(articleNoJS.html());
+        articleNoJS.remove();
     }
 
     initalise();

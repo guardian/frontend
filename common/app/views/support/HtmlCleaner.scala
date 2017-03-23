@@ -544,7 +544,7 @@ case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
   }
 }
 
-case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: Boolean) extends HtmlCleaner {
+case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: Boolean = false) extends HtmlCleaner {
   private def setDropCap(p: Element): String = {
     p.html.replaceFirst(
       "^([\"'“‘]*[a-zA-Z])(.{199,})",

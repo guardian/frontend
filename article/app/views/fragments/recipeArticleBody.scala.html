@@ -25,7 +25,7 @@
 
     <div class="recipes__main">
         <div class="recipe__images-wrapper">
-            <a href="https://www.theguardian.com/tone/recipes?CMP=recipe-article">
+            <a href=@LinkTo("/tone/recipes?CMP=recipearticle")>
                 <div class="recipe__label"><h2>recipes</h2></div>
             </a>
             <div class="js-recipe__image__wrapper recipe__image__wrapper recipe__image__wrapper--is-displayed">
@@ -87,16 +87,23 @@
                 <div class="recipe__standfirst">
                   @fragments.standfirst(articleModel.item)
                 </div>
-                <div class="recipe__content">
+                <div class="recipe__content js-recipe__content">
+                </div>
+                <div class="js-read-more--wrapper">
+                    <a href="#recipe__content" class="js-read-more--no-js">
+                        <div class="recipe__article--read-more js-recipe__article--read-more">
+                        @fragments.inlineSvg("plus", "icon", List("control__icon-wrapper, rounded-icon, circle-button"))
+                        </div>
+                    </a>
+                </div>
+
+                @for((recipe, i) <- recipes.zipWithIndex){ @recipePage(recipe, i) }
+                <div id="recipe__content" class="recipe__content--no-js js-recipe__content--no-js">
                     @BodyCleaner(article, article.fields.body, amp)
                 </div>
-                <div class="recipe__article--read-more js-recipe__article--read-more">
-                    <div class="circle-button">@fragments.inlineSvg("plus", "icon", List("control__icon-wrapper, rounded-icon"))<span class="read-more__text">Read more</span></div>
-                </div>
-                @for((recipe, i) <- recipes.zipWithIndex){ @recipePage(recipe, i) }
             </div>
             <div class="js-recipe__article--next-recipe recipe__article--next-recipe">
-                <div class="recipe__article--next-button js-recipe__article--next-button js-recipe__article--next-recipe hide-on-desktop">@fragments.inlineSvg("arrow-right", "icon")</div>
+                <div class="recipe__article--next-button js-recipe__article--next-button hide-on-desktop">@fragments.inlineSvg("arrow-right", "icon")</div>
                 <div class="js-recipe__article--next-text recipe__article--next-text">
                     <h2><span class="kicker js-kicker">Next recipe</span> <span class="js-recipe__article--next-title recipe__article--next-title"></span></h2>
                 </div>
