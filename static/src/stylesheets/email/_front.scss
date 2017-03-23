@@ -38,7 +38,7 @@ table.fc-item {
     font-size: 14px;
     line-height: 18px;
     background: #f6f6f6;
-    padding: 6px 10px 6px 10px;
+    padding: 6px 10px;
 }
 
 .container-title {
@@ -60,7 +60,7 @@ table.fc-item {
 .review-stars {
     font-weight: normal;
     padding: 0;
-    margin: 6px 10px 10px 10px;
+    margin: 6px 10px 10px;
 }
 
 .headline,
@@ -94,7 +94,7 @@ th {
 }
 
 .headline .icon {
-    height: 0.8em;
+    height: .8em;
 }
 
 $email-tones: (
