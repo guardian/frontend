@@ -57,7 +57,6 @@
                 }]
             ],
             "plugins": [
-                "babel-plugin-transform-runtime",
                 "babel-plugin-transform-flow-strip-types",
                 "babel-plugin-add-module-exports",
             ],

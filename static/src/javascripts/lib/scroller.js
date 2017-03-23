@@ -16,7 +16,7 @@ import fastdom from 'fastdom';
 
 function scrollTo(
     offset: number,
-    duration: number,
+    duration: number = 0,
     easeFn: ?string | ?Function = 'easeOutQuad',
     container?: HTMLElement
 ): void {
@@ -39,8 +39,8 @@ function scrollTo(
 }
 
 function scrollToElement(
-    element: HTMLElement,
-    duration: number,
+    element: HTMLElement | String,
+    duration?: number = 0,
     easeFn?: string | Function
 ): void {
     const top = bonzo(element).offset().top;
