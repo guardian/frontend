@@ -9,15 +9,15 @@
    https://gist.github.com/gre/1650294
 */
 
-function easeIn(power) {
+function easeIn(power: number): Function {
     return t => t ** power;
 }
 
-function easeOut(power) {
+function easeOut(power: number): Function {
     return t => 1 - Math.abs((t - 1) ** power);
 }
 
-function easeInOut(power) {
+function easeInOut(power: number): Function {
     return t =>
         t < 0.5
             ? easeIn(power)(t * 2) / 2
