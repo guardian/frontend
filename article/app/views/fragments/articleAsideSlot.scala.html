@@ -1,7 +1,7 @@
 @(
     shouldShowAds: Boolean,
     optionalSlotSizes: Seq[String],
-    optClassNames: Option[String] = None
+    isSticky: Boolean = true
 
 )
 @import conf.switches.Switches.CommercialSwitch
@@ -11,7 +11,6 @@
       "right",
       Seq("mpu-banner-ad"),
       Map("mobile" -> (Seq("1,1", "2,2", "300,250", "300,600", "fluid") ++ optionalSlotSizes)),
-      optId = None,
-      optClassNames = optClassNames
+      optClassNames = if (isSticky) Some("js-sticky-mpu") else None
       ){ }
 }
