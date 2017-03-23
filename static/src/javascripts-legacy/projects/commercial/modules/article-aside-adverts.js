@@ -37,7 +37,7 @@ define([
         $mainCol = $('.js-content-main-column');
         $adSlot = $('.js-ad-slot', $col);
 
-        if (!$adSlot.length) {
+        if (!$adSlot.length || !$mainCol.length) {
             stop();
             return Promise.resolve(false);
         }
@@ -51,9 +51,11 @@ define([
             if (mainColHeight < minContentHeight()) {
               return fastdom.write(function () {
                   $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
-                  $adSlot.data('mobile', '1,1|2,2|300,250|fluid');
+                  $adSlot[0].setAttribute('data-mobile', '1,1|2,2|300,250|fluid');
+                  return $adSlot[0];
               });
             }
+            return $adSlot[0];
         })
         .then(function (adSlot) {
             stop();
