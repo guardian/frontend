@@ -1,5 +1,4 @@
 define([
-    'bean',
     'bonzo',
     'qwery',
     'Promise',
@@ -7,7 +6,6 @@ define([
     'helpers/fixtures',
     'helpers/injector'
 ], function (
-    bean,
     bonzo,
     qwery,
     Promise,

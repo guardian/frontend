@@ -1,13 +1,11 @@
 
 define([
-    'fastdom',
     'qwery',
     'lib/$',
     'lib/mediator',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
-    fastdom,
     qwery,
     $,
     mediator,
