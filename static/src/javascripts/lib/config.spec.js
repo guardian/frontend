@@ -7,7 +7,7 @@ Object.assign(window.guardian.config, {
         tones: 'foo',
         series: 'bar',
         references: [{ baz: 'one' }, { baz: 'two' }],
-        webPublicationDate: '2013-12-20T17:07:00.000Z',
+        webPublicationDate: '2013-03-20T17:07:00.000Z',
         pageId: 'politics/2017/mar/14/ukip-donor-arron-banks-says-he-has-quit-party-to-set-up-ukip-20',
     },
 });
@@ -45,7 +45,7 @@ describe('Config', () => {
     });
 
     it('should have "webPublicationDateAsUrlPart" property', () => {
-        expect(config.webPublicationDateAsUrlPart()).toBe('2013/12/20');
+        expect(config.webPublicationDateAsUrlPart()).toBe('2013/03/20');
     });
 
     it('should return the expected dateFromSlug', () => {

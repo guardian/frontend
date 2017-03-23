@@ -1,7 +1,5 @@
 // @flow
 
-import pad from 'lib/pad';
-
 // This should be the only module accessing the window config object directly
 // because this is the one that gets imported to all other modules
 // eslint-disable-next-line guardian-frontend/global-config
@@ -25,7 +23,12 @@ const referenceOfType = (name: string): string => referencesOfType(name)[0];
 const webPublicationDateAsUrlPart = (): ?string => {
     if (config.page.webPublicationDate) {
         const pubDate = new Date(config.page.webPublicationDate);
-        return `${pubDate.getFullYear()}/${pad(pubDate.getMonth() + 1, 2)}/${pad(pubDate.getDate(), 2)}`;
+        return `${pubDate.getFullYear()}/${(pubDate.getMonth() + 1)
+            .toString()
+            .padStart(
+                2,
+                '0'
+            )}/${pubDate.getDate().toString().padStart(2, '0')}`;
     }
 
     return null;
