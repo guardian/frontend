@@ -1,6 +1,9 @@
 // @flow
 
+import Chance from 'chance';
 import timeout from 'lib/timeout';
+
+const chance = new Chance();
 
 function wait(time) {
     return new Promise(resolve => {
@@ -12,10 +15,13 @@ describe('timeout', () => {
     test(
         "resolves with the promised value if the timeout doesn't fire",
         done => {
-            timeout(10, Promise.resolve(12))
+            const time = chance.integer({ min: 0, max: 10 });
+            const value = chance.integer();
+
+            timeout(time, Promise.resolve(value))
                 .then(result => {
-                    expect(result).toBe(12);
-                    return wait(10);
+                    expect(result).toBe(value);
+                    return wait(time);
                 })
                 .then(done)
                 .catch(done.fail);
@@ -25,11 +31,14 @@ describe('timeout', () => {
     test(
         "rejects with the promised error if the timeout doesn't fire",
         done => {
-            timeout(10, Promise.reject(new Error('too bad')))
+            const time = chance.integer({ min: 0, max: 10 });
+            const message = chance.sentence();
+
+            timeout(time, Promise.reject(new Error(message)))
                 .then(done.fail)
                 .catch(error => {
-                    expect(error.message).toBe('too bad');
-                    return wait(10);
+                    expect(error.message).toBe(message);
+                    return wait(time);
                 })
                 .then(done)
                 .catch(done.fail);
@@ -37,22 +46,27 @@ describe('timeout', () => {
     );
 
     test('rejects with timeout if promise never returns', done => {
-        timeout(10, new Promise(() => {}))
+        const time = chance.integer({ min: 0, max: 10 });
+
+        timeout(time, new Promise(() => {}))
             .then(done.fail)
             .catch(error => {
                 expect(error.message).toMatch(/timeout/i);
-                return wait(10);
+                return wait(time);
             })
             .then(done)
             .catch(done.fail);
     });
 
     test('rejects with timeout if promise resolves too late', done => {
-        timeout(10, wait(40))
+        const time = chance.integer({ min: 0, max: 10 });
+        const waitTime = chance.integer({ min: 0, max: 50 });
+
+        timeout(time, wait(waitTime))
             .then(done.fail)
             .catch(error => {
                 expect(error.message).toMatch(/timeout/i);
-                return wait(40);
+                return wait(waitTime);
             })
             .then(done)
             .catch(done.fail);
