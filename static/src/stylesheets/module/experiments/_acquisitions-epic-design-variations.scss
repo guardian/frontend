@@ -20,6 +20,16 @@
     padding-top: 0.75em;
     padding-bottom: 0.75em;
     width: 200px;
+
+    &:after {
+        position: relative;
+        left: -6px;
+        top: 2px;
+
+        background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="$neutral-1" stroke="$neutral-1" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
+        background-size: 40px;
+        background-position-y: -5px;
+    }
 }
 
 // Colour change
