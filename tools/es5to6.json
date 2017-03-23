@@ -15,7 +15,6 @@
     "lib/cookies.js",
     "lib/create-store.js",
     "lib/detect.js",
-    "lib/easing.js",
     "lib/element-inview.js",
     "lib/fastdom-errors.js",
     "lib/fastdom-promise.js"
