@@ -39,7 +39,7 @@ function scrollTo(
 }
 
 function scrollToElement(
-    element: HTMLElement | String,
+    element: HTMLElement | string,
     duration?: number = 0,
     easeFn?: string | Function
 ): void {

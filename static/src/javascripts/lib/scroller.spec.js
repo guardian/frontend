@@ -26,10 +26,10 @@ describe('scroller', () => {
 
     test('scrollToElement()', () => {
         const body = bonzo(document.body);
-        const spacer = '<div style="height: 100px; width: 100%;"></div>';
-        const target = '<div id="scroll-target"></div>';
+        const spacer: string = '<div style="height: 100px; width: 100%;"></div>';
+        const target: string = '<div id="scroll-target"></div>';
 
-        document.body.innerHTML = `${spacer}${target}`;
+        body.innerHTML = `${spacer} ${target}`;
 
         scroller.scrollToElement('#scroll-target');
         expect(body.scrollTop()).toBe(100);
