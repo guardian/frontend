@@ -11,11 +11,11 @@ function getCurrentQueryString(): string {
 
 // returns a map of querystrings
 // eg ?foo=bar&fizz=buzz returns {foo: 'bar', fizz: 'buzz'}
-function getUrlVars(options?: Object = {}): Object {
-    return (options.query || getCurrentQueryString())
+function getUrlVars(query?: string): Object {
+    return (query || getCurrentQueryString())
         .split('&')
         .filter(Boolean)
-        .map(query => query.includes('=') ? query.split('=') : [query, true])
+        .map(param => param.includes('=') ? param.split('=') : [param, true])
         .reduce(
             (acc, input) => {
                 const result = acc;

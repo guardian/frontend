@@ -23,7 +23,7 @@ describe('url', () => {
         // pass in the query
         QUERIES.forEach(dataProvider => {
             const [query, expected] = dataProvider;
-            expect(url.getUrlVars({ query })).toEqual(expected);
+            expect(url.getUrlVars(query)).toEqual(expected);
         });
 
         // get the query from window.location.search
