@@ -17,6 +17,7 @@ process.on('uncaughtException', handleError);
 const remainingModules = require('./es5to6.json');
 
 const userModules = remainingModules[gitUser()];
+
 if (!userModules || !userModules.length) {
     console.log(chalk.green('⭐️  You have no more modules to convert! ⭐️'));
     process.exit();
@@ -25,7 +26,7 @@ if (!userModules || !userModules.length) {
 git
     .status((err, status) => {
         if (
-            status.current !== 'master' ||
+            status.current !== 'gp-es6-conversion-simplify' ||
             status.files.length > 0 ||
             status.ahead !== 0 ||
             status.behind !== 0
@@ -47,20 +48,22 @@ git
             'javascripts-legacy',
             moduleId
         );
+
         const es6Module = path.join('static', 'src', 'javascripts', moduleId);
         const es6Name = moduleId.split(path.sep).join('_').replace('.js', '');
+        const responsibilityFile = path.resolve('./es5to6.json');
         const branchName = `es6-${es6Name}`;
 
         const steps = {
-            'Create a branch for the conversion': `git checkout -b "${branchName}" || git checkout -b "${branchName}-${unique}"`,
-            'Move the legacy module to the new location': `mkdir -p ${path.dirname(es6Module)}; mv ${es5Module} $_; node ./tools/es5to6-remove-module.js ${moduleId}`,
-            'Commit the move': `git add .; git commit -m "move ${moduleId} from legacy to standard JS"`,
-            'Convert module to ES6': `npm run -s amdtoes6 -- -d ${path.dirname(es6Module)} -o ${path.dirname(es6Module)} -g **/${path.basename(es6Module)} `,
-            'Commit the module tranform': `git add .; git commit -m "transform ${moduleId} to ES6 module"`,
+            'Create a branch for the conversion': `git checkout -b "${branchName}" master || git checkout -b "${branchName}-${unique}" master`,
+            'Move the legacy module to the new location': `mkdir -p ${es6Module}; mv ${es5Module} $_; node ./tools/es5to6-remove-module.js ${moduleId}`,
+            'Commit the move': `git add ${es6Module} ${es5Module} ${responsibilityFile}; git commit -m "move ${moduleId} from legacy to standard JS"`,
+            'Convert module to ES6': `npm run -s amdtoes6 -- -d ${es6Module} -o ${es6Module} -g **/${path.basename(es6Module)} `,
+            'Commit the module tranform': `git add ${es6Module}; git commit -m "transform ${moduleId} to ES6 module"`,
             'Convert contents to ES6': `npm run -s lebab -- ${es6Module}`,
-            'Commit the content tranform': `git add .; git commit -m "transform ${moduleId} content to ES6"`,
+            'Commit the content tranform': `git add ${es6Module}; git commit -m "transform ${moduleId} content to ES6"`,
             'Fix lint errors': `npm run -s eslint-fix -- ${es6Module}`,
-            'Commit any lint fixes': `git add .; git commit -m "fix lint errors with ${moduleId} after transform to ES6"`,
+            'Commit any lint fixes': `git commit ${es6Module} -m "fix lint errors with ${moduleId} after transform to ES6"`,
         };
 
         Object.keys(steps)
@@ -99,7 +102,7 @@ If you get stuck, feel free to ping us in https://theguardian.slack.com/messages
             .then(() => {
                 console.log(
                     chalk.blue(
-                        `\n💫  Module is now es6! Double check the code, then create a PR.`
+                        `\n💫  Module is now ES6! Double check the code, then create a PR.`
                     )
                 );
                 console.log(chalk.dim(`New location: ${es6Module}\n`));
