@@ -230,4 +230,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 3, 30),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-paid-card-logo",
+    "Trialling paid cards in editorial containers",
+    owners = Seq(Owner.withGithub("lps88")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 3),
+    exposeClientSide = true
+  )
 }
