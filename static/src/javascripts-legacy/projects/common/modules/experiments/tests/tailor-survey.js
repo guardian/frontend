@@ -122,12 +122,13 @@ define([
                 minBelow: 0,
                 clearContentMeta: 50,
                 selectors: {
-                    ' .element-rich-link': {minAbove: 250, minBelow: 250},
+                    ' .element-rich-link': {minAbove: 100, minBelow: 100},
+                    ' .element-image': {minAbove: 50, minBelow: 50},
                     ' .player': {minAbove: 0, minBelow: 0},
                     ' > h1': {minAbove: 0, minBelow: 0},
                     ' > h2': {minAbove: 0, minBelow: 0},
                     ' > *:not(p):not(h2):not(blockquote)': {minAbove: 0, minBelow: 0},
-                    ' .ad-slot': {minAbove: 0, minBelow: 0}
+                    ' .ad-slot': {minAbove: 100, minBelow: 100}
                 }
             };
 
