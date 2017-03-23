@@ -1,35 +1,33 @@
 // @flow
 let documentObject = document;
 
-function setDocument(d: Object): void {
+const setDocument = (d: Object): void => {
     documentObject = d;
-}
+};
 
-function getDocument(): Document {
-    return documentObject;
-}
+const getDocument = (): Document => documentObject;
 
-function getShortDomain(): string {
+const getShortDomain = (): string => {
     // Trim subdomains for prod (www.theguardian), code (m.code.dev-theguardian) and dev (dev.theguardian, m.thegulocal)
     const domain = getDocument().domain || '';
     return domain.replace(/^(www|m\.code|dev|m)\./, '.');
-}
+};
 
-function getDomainAttribute(): string {
+const getDomainAttribute = (): string => {
     const shortDomain = getShortDomain();
     return shortDomain === 'localhost' ? '' : ` domain=${shortDomain};`;
-}
+};
 
-function remove(name: string, currentDomainOnly: boolean = false): void {
+const remove = (name: string, currentDomainOnly: boolean = false): void => {
     // Remove cookie, implicitly using the document's domain.
     getDocument().cookie = `${name}=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
     if (!currentDomainOnly) {
         // also remove from the short domain
         getDocument().cookie = `${name}=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=${getShortDomain()};`;
     }
-}
+};
 
-function add(name: string, value: string, daysToLive: ?number): void {
+const add = (name: string, value: string, daysToLive: ?number): void => {
     const expires = new Date();
 
     if (daysToLive) {
@@ -40,19 +38,19 @@ function add(name: string, value: string, daysToLive: ?number): void {
     }
 
     getDocument().cookie = `${name}=${value}; path=/; expires=${expires.toUTCString()};${getDomainAttribute()}`;
-}
+};
 
-function cleanUp(names: [string]): void {
+const cleanUp = (names: [string]): void => {
     names.forEach(name => {
         remove(name);
     });
-}
+};
 
-function addForMinutes(
+const addForMinutes = (
     name: string,
     value: string,
     minutesToLive: number
-): void {
+): void => {
     if (minutesToLive) {
         const expires = new Date();
         expires.setMinutes(expires.getMinutes() + minutesToLive);
@@ -60,13 +58,13 @@ function addForMinutes(
     } else {
         add(name, value);
     }
-}
+};
 
-function addSessionCookie(name: string, value: string): void {
+const addSessionCookie = (name: string, value: string): void => {
     getDocument().cookie = `${name}=${value}; path=/;${getDomainAttribute()}`;
-}
+};
 
-function getCookieValues(name: string): [?string] {
+const getCookieValues = (name: string): [?string] => {
     const cookieVals = [];
     const nameEq = `${name}=`;
     const cookies = getDocument().cookie.split(';');
@@ -84,16 +82,16 @@ function getCookieValues(name: string): [?string] {
     });
 
     return cookieVals;
-}
+};
 
-function get(name: string): ?string {
+const get = (name: string): ?string => {
     const cookieVal = getCookieValues(name);
 
     if (cookieVal.length > 0) {
         return cookieVal[0];
     }
     return null;
-}
+};
 
 export default {
     cleanUp,
