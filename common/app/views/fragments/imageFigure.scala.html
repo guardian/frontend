@@ -1,6 +1,7 @@
 @import layout.ContentWidths.MainMedia
 @import model.ImageAsset
 @import views.support.{ImgSrc, Item700}
+@import conf.switches.Switches.NewHeader
 
 @(
     picture: model.ImageMedia,
@@ -107,7 +108,7 @@
 @caption(picture: model.ImageMedia, imageOption: Option[ImageAsset], isMain: Boolean) = {
     @imageOption.map { img =>
         @if(img.showCaption) {
-            @if(isMain && mvt.ABNewNavVariantSeven.isParticipating) {
+            @if(isMain && NewHeader.isSwitchedOn) {
 
                 <input type="checkbox" id="show-caption" class="mobile-only u-h">
 
