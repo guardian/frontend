@@ -132,11 +132,6 @@ define([
 
             var userVariant = engagementBannerTest ? segmentUtil.variantFor(engagementBannerTest) : undefined;
 
-            // If we have found a copy test variant, then defer building the banner params to the variant.
-            if (engagementBannerTest && engagementBannerTest.id === 'MembershipEngagementBannerCopyTest' && userVariant) {
-                return userVariant.deriveBannerParams()
-            }
-
             // offering = 'membership' or 'contributions'
             var offering = Object.keys(userVariant?userVariant.params:paramsByOfferingForUserEdition)[0];
 

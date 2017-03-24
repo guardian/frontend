@@ -89,7 +89,7 @@ define([
         }, {
             id: 'isOutbrainMerchandiseCompliantOrBlockedByAds'
         }, {
-            id: 'thirdPartyTagsDisabled'
+            id: 'isOutbrainDisabled'
         }]
     }];
 
@@ -101,7 +101,6 @@ define([
 
         if (dependentCheckPromises) {
             Promise.all(dependentCheckPromises).then(function(results) {
-
                 var hasPassed = function(result) {
                     return result;
                 };

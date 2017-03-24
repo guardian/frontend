@@ -70,9 +70,9 @@ define([
                 'top-above-nav' : isMobile ?
                 'inline' + slotCounter :
                 'inline' + (slotCounter + 1);
-            var $adSlot = bonzo(createSlot('inline', { name: slotName, classes: 'liveblog-inline' }));
-            $adSlot.insertAfter(slots[i]);
-            addSlot($adSlot);
+            var adSlot = createSlot('inline', { name: slotName, classes: 'liveblog-inline' });
+            slots[i].parentNode.insertBefore(adSlot, slots[i].nextSibling);
+            addSlot(adSlot);
             slotCounter += 1;
         }
     }
