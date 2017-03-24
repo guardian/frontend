@@ -7,7 +7,7 @@
 
 import reportError from 'lib/report-error';
 
-function catchErrors(fn: Function): ?Error {
+const catchErrors = (fn: Function): ?Error => {
     let error;
 
     try {
@@ -17,30 +17,37 @@ function catchErrors(fn: Function): ?Error {
     }
 
     return error;
-}
+};
 
-function log(name: string, error: Error, reporter?: Function = reportError): void {
+const log = (
+    name: string,
+    error: Error,
+    reporter?: Function = reportError
+): void => {
     if (window.console && window.console.warn) {
         window.console.warn('Caught error.', error.stack);
     }
 
     reporter(error, { module: name }, false);
-}
+};
 
-function catchErrorsAndLog(name: string, fn: Function, reporter?: Function) {
+const catchErrorsAndLog = (
+    name: string,
+    fn: Function,
+    reporter?: Function
+): void => {
     const error = catchErrors(fn);
 
     if (error) {
         log(name, error, reporter);
     }
-}
+};
 
-function catchErrorsAndLogAll(modules: Array<any>) {
-    return modules.map(pair => {
+const catchErrorsAndLogAll = (modules: Array<any>): Array<any> =>
+    modules.map(pair => {
         const [name, fn] = pair;
         catchErrorsAndLog(name, fn);
         return undefined;
     });
-}
 
 export default { catchErrorsAndLog, catchErrorsAndLogAll, log };
