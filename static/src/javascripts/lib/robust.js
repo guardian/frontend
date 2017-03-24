@@ -20,7 +20,7 @@ const catchErrors = (fn: Function): ?Error => {
 };
 
 const log = (
-    name: string,
+    module: string,
     error: Error,
     reporter?: Function = reportError
 ): void => {
@@ -28,7 +28,7 @@ const log = (
         window.console.warn('Caught error.', error.stack);
     }
 
-    reporter(error, { module: name }, false);
+    reporter(error, { module }, false);
 };
 
 const catchErrorsAndLog = (
