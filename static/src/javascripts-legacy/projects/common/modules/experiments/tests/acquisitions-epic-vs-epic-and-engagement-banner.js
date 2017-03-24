@@ -36,8 +36,8 @@ define([
         id: 'AcquisitionsEpicVsEpicAndEngagementBanner',
         campaignId: campaignId,
 
-        start: '2017-03-20', // TODO
-        expiry: '2017-04-10', // TODO
+        start: '2017-03-24',
+        expiry: '2017-04-10',
 
         author: 'Guy Dawson',
         description: 'Epic and engagement banner vs the epic only',
@@ -45,8 +45,8 @@ define([
         idealOutcome: 'We are able to establish clearly how the engagement banner and epic interact',
 
         audienceCriteria: 'All',
-        audience: 1,       // TODO
-        audienceOffset: 0, // TODO
+        audience: 0.1,
+        audienceOffset: 0.9,
 
         isEngagementBannerTest: true,
 
