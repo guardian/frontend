@@ -16,12 +16,12 @@
 .recipe__article .recipe__article--structured-headline h1 {
     @include f-headline;
     font-weight: 200;
-    font-size: 36px;
-    line-height: 38px;
+    font-size: 28px;
+    line-height: 32px;
 
     @include mq($from: desktop) {
-        font-size: 48px;
-        line-height: 48px;
+        font-size: 36px;
+        line-height: 40px;
     }
 }
 
@@ -307,7 +307,7 @@
 }
 
 .recipe__article--meta {
-    padding-top: $gs-gutter / 2;
+    padding-top: $gs-baseline / 4;
 }
 
 .recipe__article--meta .content__series-label {
@@ -382,7 +382,7 @@
 
 .recipe__article--structured {
     margin-top: $gs-baseline * 3;
-    border-top: 4px solid $neutral-3;
+    border-top: 1px solid $neutral-3;
     padding-top: $gs-baseline / 2;
 
     .structured-meta {
