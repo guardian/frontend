@@ -60,7 +60,7 @@ describe('timeout', () => {
 
     test('rejects with timeout if promise resolves too late', done => {
         const time = chance.integer({ min: 0, max: 10 });
-        const waitTime = chance.integer({ min: 0, max: 50 });
+        const waitTime = chance.integer({ min: 11, max: 25 });
 
         timeout(time, wait(waitTime))
             .then(done.fail)
