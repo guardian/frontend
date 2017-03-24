@@ -1,6 +1,6 @@
 // @flow
 // Mini Redux
-const createStore = (reducer, initialState) => {
+const createStore = (reducer: Function, initialState: Object) => {
     // We re-assign this over time
     let state = initialState;
     const subscribers = [];
@@ -10,11 +10,11 @@ const createStore = (reducer, initialState) => {
             fn();
         });
     };
-    const dispatch = action => {
+    const dispatch = (action: { type: string }) => {
         state = reducer(state, action);
         notify();
     };
-    const subscribe = fn => {
+    const subscribe = (fn: Function) => {
         subscribers.push(fn);
     };
     const getState = () => state;
