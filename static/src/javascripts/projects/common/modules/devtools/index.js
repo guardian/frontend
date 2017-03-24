@@ -1,3 +1,4 @@
+// @flow
 import template from 'lodash/utilities/template';
 import storage from 'lib/storage';
 import $ from 'lib/$';
