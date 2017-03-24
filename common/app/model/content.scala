@@ -307,6 +307,8 @@ final case class Content(
 
   val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
   val media: Seq[MediaAtom] = atoms.map(_.media).getOrElse(Nil)
+
+  val nonCompliantOutbrainAmp = (hasStoryPackage && tags.series.nonEmpty) || (tags.series.length > 1)
 }
 
 object Content {
