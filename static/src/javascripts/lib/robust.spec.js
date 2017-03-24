@@ -39,7 +39,7 @@ describe('robust', () => {
     test('catchErrorsAndLog() - default reporter', () => {
         reportError.mockClear();
         robust.catchErrorsAndLog('test', noError);
-        expect(reportError).not.toHaveBeenCalledWith();
+        expect(reportError).not.toHaveBeenCalled();
 
         reportError.mockClear();
         robust.catchErrorsAndLog('test', throwError);
