@@ -49,7 +49,7 @@ describe('robust', () => {
     test('catchErrorsAndLog() - custom reporter', () => {
         const mockedCallback = jest.fn();
         robust.catchErrorsAndLog('test', noError, mockedCallback);
-        expect(mockedCallback).not.toHaveBeenCalledWith();
+        expect(mockedCallback).not.toHaveBeenCalled();
 
         robust.catchErrorsAndLog('test', throwError, (err, meta) => {
             expect(err.message).toBe(ERROR.message);
