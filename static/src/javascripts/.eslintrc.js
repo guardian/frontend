@@ -1,10 +1,11 @@
+// @flow
 module.exports = {
     parser: 'babel-eslint',
     settings: {
         'import/resolver': 'webpack',
     },
     extends: ['plugin:flowtype/recommended'],
-    plugins: ['guardian-frontend', 'flowtype'],
+    plugins: ['guardian-frontend', 'flowtype', 'flow-header'],
     rules: {
         // require-specific overrides
         'import/no-extraneous-dependencies': 'off', // necessary while we use aliases
@@ -54,6 +55,8 @@ module.exports = {
                 patterns: ['!lodash/*'],
             },
         ],
+
+        'flow-header/flow-header': 2,
 
         // our own rules for frontend
         // live in tools/eslint-plugin-guardian-frontend

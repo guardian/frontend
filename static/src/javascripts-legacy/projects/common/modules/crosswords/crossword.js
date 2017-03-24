@@ -1,7 +1,6 @@
 define([
     'react/addons',
     'bonzo',
-    'bean',
     'fastdom',
     'lib/$',
     'lib/mediator',
@@ -27,7 +26,6 @@ define([
 ], function (
     React,
     bonzo,
-    bean,
     fastdom,
     $,
     mediator,

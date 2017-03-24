@@ -1,5 +1,4 @@
 define([
-    'bean',
     'bonzo',
     'qwery',
     'Promise',
@@ -7,7 +6,6 @@ define([
     'helpers/fixtures',
     'helpers/injector'
 ], function (
-    bean,
     bonzo,
     qwery,
     Promise,
@@ -46,8 +44,6 @@ define([
             dfp, dfpEnv, config, detect, commercialFeatures, closeDisabledSlots;
 
         function reset() {
-            dfpEnv.firstAdDisplayed = false;
-            dfpEnv.firstAdRendered = false;
             dfpEnv.advertIds = {};
             dfpEnv.adverts = [];
             dfpEnv.advertsToRefresh = [];

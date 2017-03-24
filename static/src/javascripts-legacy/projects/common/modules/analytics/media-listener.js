@@ -1,8 +1,6 @@
 define([
-    'bean',
     'lib/mediator'
 ], function (
-    bean,
     mediator
 ) {
     return function () {

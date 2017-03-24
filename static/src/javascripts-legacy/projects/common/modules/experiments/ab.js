@@ -14,7 +14,6 @@ define([
     'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/tests/paid-content-vs-outbrain',
-    'common/modules/experiments/tests/membership-a3-a4-bundles-thrasher',
     'common/modules/experiments/tests/tailor-survey',
     'common/modules/experiments/tests/the-long-read-email-variants',
     'common/modules/experiments/tests/fashion-statement-email-variants',
@@ -24,6 +23,7 @@ define([
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
     'common/modules/experiments/tests/reading-time',
+    'common/modules/experiments/tests/paid-card-logo',
     'ophan/ng',
     'common/modules/experiments/tests/paid-commenting'
 ], function (reportError,
@@ -41,7 +41,6 @@ define([
              RecommendedForYou,
              MembershipEngagementBannerTests,
              PaidContentVsOutbrain,
-             MembershipA3A4BundlesThrasher,
              TailorSurvey,
              TheLongReadEmailVariants,
              FashionStatementEmailVariants,
@@ -51,6 +50,7 @@ define([
              SleevenotesLegacyEmailVariant,
              IncreaseInlineAds,
              ReadingTime,
+             PaidCardLogo,
              ophan,
              PaidCommenting
     ) {
@@ -60,7 +60,6 @@ define([
         new RecommendedForYou(),
         new PaidContentVsOutbrain,
         acquisitionTestSelector.getTest(),
-        new MembershipA3A4BundlesThrasher(),
         new TailorSurvey(),
         TheLongReadEmailVariants,
         FashionStatementEmailVariants,
@@ -70,6 +69,7 @@ define([
         SleevenotesLegacyEmailVariant,
         new IncreaseInlineAds(),
         new ReadingTime(),
+        new PaidCardLogo(),
         new PaidCommenting()
     ].concat(MembershipEngagementBannerTests));
 
@@ -178,7 +178,7 @@ define([
         var data = {
             'variantName': variantName,
             'complete': complete
-        }
+        };
 
         if (campaignCodes) {
             data.campaignCodes = campaignCodes;
@@ -345,6 +345,25 @@ define([
         };
     }
 
+    function getForcedIntoTests() {
+        var devtoolsAbTests = JSON.parse(store.local.get('gu.devtools.ab')) || [];
+        var tokens;
+
+        if (/^#ab/.test(window.location.hash)) {
+            tokens = window.location.hash.replace('#ab-', '').split(',');
+
+            return tokens.map(function (token) {
+                var abParam = token.split('=');
+
+                return {
+                    id: abParam[0],
+                    variant: abParam[1]
+                };
+            });
+        }
+
+        return devtoolsAbTests;
+    }
     var ab = {
 
         addTest: function (test) {
@@ -384,17 +403,12 @@ define([
         },
 
         segmentUser: function () {
-            var tokens,
-                forceUserIntoTest = /^#ab/.test(window.location.hash);
-            if (forceUserIntoTest) {
-                tokens = window.location.hash.replace('#ab-', '').split(',');
-                tokens.forEach(function (token) {
-                    var abParam, test, variant;
-                    abParam = token.split('=');
-                    test = abParam[0];
-                    variant = abParam[1];
-                    ab.forceSegment(test, variant);
-                    ab.forceVariantCompleteFunctions(test, variant);
+            var forcedIntoTests = getForcedIntoTests();
+
+            if (forcedIntoTests.length) {
+                forcedIntoTests.forEach(function (test) {
+                    ab.forceSegment(test.id, test.variant);
+                    ab.forceVariantCompleteFunctions(test.id, test.variant);
                 });
             } else {
                 ab.segment();

@@ -45,6 +45,50 @@ define([
                 // Reset dependencies
                 commercialFeatures.articleAsideAdverts = true;
 
+                var pubAds = {
+                    listeners: [],
+                    addEventListener: sinon.spy(function (eventName, callback) { this.listeners[eventName] = callback; }),
+                    setTargeting: sinon.spy(),
+                    enableSingleRequest: sinon.spy(),
+                    collapseEmptyDivs: sinon.spy(),
+                    refresh: sinon.spy()
+                },
+                sizeMapping = {
+                    sizes: [],
+                    addSize: sinon.spy(function (width, sizes) {
+                        this.sizes.unshift([width, sizes]);
+                    }),
+                    build: sinon.spy(function () {
+                        var tmp = this.sizes;
+                        this.sizes = [];
+                        return tmp;
+                    })
+                };
+
+                window.googletag = {
+                    cmd: {
+                        push: function() {
+                            var args = Array.prototype.slice.call(arguments);
+                            args.forEach(function(command) {
+                                command();
+                            });
+                        }
+                    },
+                    pubads: function () {
+                        return pubAds;
+                    },
+                    sizeMapping: function () {
+                        return sizeMapping;
+                    },
+                    defineSlot: sinon.spy(function () { return window.googletag; }),
+                    defineOutOfPageSlot: sinon.spy(function () { return window.googletag; }),
+                    addService: sinon.spy(function () { return window.googletag; }),
+                    defineSizeMapping: sinon.spy(function () { return window.googletag; }),
+                    setTargeting: sinon.spy(function () { return window.googletag; }),
+                    enableServices: sinon.spy(),
+                    display: sinon.spy()
+                };
+
                 done();
             });
         });

@@ -1,5 +1,4 @@
 define([
-    'bean',
     'bonzo',
     'qwery',
     'Promise',
@@ -8,7 +7,6 @@ define([
     'lib/url',
     'lodash/arrays/range'
 ], function (
-    bean,
     bonzo,
     qwery,
     Promise,

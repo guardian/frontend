@@ -23,9 +23,9 @@ define([
         variants: ['control', 'fairness_strong', 'fairness_strong_alternate_hook']
 	};
 
-    var AcquisitionsEpicDesignVariationsV2 = {
-        name: 'AcquisitionsEpicDesignVariationsV2',
-        variants: ['control', 'highlight_subtle', 'highlight_perspective', 'highlight_secure', 'highlight_hard', 'paypal']
+    var AcquisitionsEpicDesignVariationsV3 = {
+        name: 'AcquisitionsEpicDesignVariationsV3',
+        variants: ['control', 'bigger_buttons', 'colour_change', 'paypal_and_credit_card']
     };
 
     var AcquisitionsEpicArticle50Trigger = {
@@ -43,7 +43,7 @@ define([
         ContributionsEpicBrexit,
         ContributionsEpicAskFourEarning,
         ContributionsEpicRegularsV2,
-        AcquisitionsEpicDesignVariationsV2,
+        AcquisitionsEpicDesignVariationsV3,
         AcquisitionsEpicArticle50Trigger,
         ContributionsEpicLaundromat
     ];
