@@ -11,6 +11,7 @@ define([
     'lib/mediator',
     'lib/storage',
     'lib/geolocation',
+    'lodash/objects/assign',
     'lodash/utilities/template',
     'raw-loader!common/views/acquisitions-epic-control.html'
 ], function (
@@ -26,6 +27,7 @@ define([
     mediator,
     storage,
     geolocation,
+    assign,
     template,
     acquisitionsEpicControlTemplate
 ) {
@@ -66,6 +68,33 @@ define([
         });
     }
 
+    function doTagsMatch(options) {
+        return options.useTargetingTool ? targetingTool.isAbTestTargeted(options) : true;
+    }
+
+    function defaultCanEpicBeDisplayed(testConfig) {
+        var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 90;
+
+        var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle;
+
+        var storedGeolocation = geolocation.getSync();
+        var inCompatibleLocation = testConfig.locations ? testConfig.locations.some(function (geo) {
+            return geo === storedGeolocation;
+        }) : true;
+        var locationCheck = (typeof testConfig.locationCheck === 'function') ? testConfig.locationCheck(storedGeolocation) : true;
+
+        var isImmersive = config.page.isImmersive === true;
+
+        var tagsMatch = doTagsMatch(testConfig);
+
+        return enoughTimeSinceLastContribution &&
+            worksWellWithPageTemplate &&
+            inCompatibleLocation &&
+            locationCheck &&
+            !isImmersive &&
+            tagsMatch
+    }
+
     function ContributionsABTest(options) {
         this.id = options.id;
         this.epic = options.epic || true;
@@ -85,38 +114,25 @@ define([
         this.contributionsCampaignPrefix = options.contributionsCampaignPrefix || 'co_global';
         this.insertEvent = this.makeEvent('insert');
         this.viewEvent = this.makeEvent('view');
+        this.isEngagementBannerTest = options.isEngagementBannerTest || false;
 
         /**
          * Provides a default `canRun` function with typical rules (see function below) for Contributions messages.
          * If your test provides its own `canRun` option, it will be included in the check.
          *
          * You can alternatively use the `overrideCanRun` option, which, if true, will only use the `canRun`
-         * option provided and ignore the rules here (except for the targeting tool tags check, whcih will still be
+         * option provided and ignore the rules here (except for the targeting tool tags check, which will still be
          * honoured if `useTargetingTool` is provided alongside `overrideCanRun`.
          *
          * @type {Function}
          */
         this.canRun = (function () {
+            if (options.overrideCanRun) {
+                return doTagsMatch(options) && options.canRun();
+            }
+
             var testCanRun = (typeof options.canRun === 'function') ? options.canRun() : true;
-            var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 90;
-            var tagsMatch = options.useTargetingTool ? targetingTool.isAbTestTargeted(this) : true;
-            var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle;
-            var storedGeolocation = geolocation.getSync();
-            var inCompatibleLocation = options.locations ? options.locations.some(function (geo) {
-                return geo === storedGeolocation;
-            }) : true;
-            var locationCheck = (typeof options.locationCheck === 'function') ? options.locationCheck(storedGeolocation) : true;
-            var isImmersive = config.page.isImmersive === true;
-
-            if (options.overrideCanRun) return tagsMatch && options.canRun();
-
-            return enoughTimeSinceLastContribution &&
-                tagsMatch &&
-                testCanRun &&
-                worksWellWithPageTemplate &&
-                commercialFeatures.canReasonablyAskForMoney &&
-                (inCompatibleLocation && locationCheck) &&
-                !isImmersive;
+            return testCanRun && defaultCanEpicBeDisplayed(options)
         }).bind(this);
 
         this.variants = options.variants.map(function (variant) {
@@ -148,7 +164,20 @@ define([
 
         this.template = options.template || controlTemplate;
 
+        this.blockEngagementBanner = options.blockEngagementBanner || false;
+        this.engagementBannerParams = options.engagementBannerParams || {};
+
+        this.isOutbrainCompliant = options.isOutbrainCompliant || false;
+
         this.test = function () {
+
+            var displayEpic = (typeof options.canEpicBeDisplayed === 'function') ?
+                options.canEpicBeDisplayed(test) : true;
+
+            if (!displayEpic) {
+                return;
+            }
+
             var onInsert = options.onInsert || noop;
             var onView = options.onView || noop;
 
@@ -174,7 +203,7 @@ define([
                                 viewLog.logView(test.id);
                                 mediator.emit(test.viewEvent);
                                 mediator.emit('register:end', trackingCampaignId);
-                                onView();
+                                onView(this);
                             });
                         });
                     }
@@ -199,15 +228,15 @@ define([
         ];
 
         return base + '?' + params.filter(Boolean).join('&');
-    }
+    };
 
     ContributionsABTestVariant.prototype.contributionsURLBuilder = function(codeModifier) {
         return this.makeURL(contributionsBaseURL, codeModifier(this.contributeCampaignCode));
-    }
+    };
 
     ContributionsABTestVariant.prototype.membershipURLBuilder = function(codeModifier) {
         return this.makeURL(membershipBaseURL, codeModifier(this.contributeCampaignCode));
-    }
+    };
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {
         if (options[type]) this[type] = options[type];
@@ -220,12 +249,23 @@ define([
 
     function noop() {}
 
+    // Utility function to build variants with common properties.
+    function variantBuilderFactory(commonVariantProps) {
+        return function(id, variantProps) {
+            return assign({}, commonVariantProps, {id: id}, variantProps)
+        }
+    }
+
     return {
+        defaultCanEpicBeDisplayed: defaultCanEpicBeDisplayed,
+
         makeABTest: function (test) {
             // this is so it can be instantiated with `new` later
             return function () {
                 return new ContributionsABTest(test);
             };
-        }
+        },
+
+        variantBuilderFactory: variantBuilderFactory
     };
 });
