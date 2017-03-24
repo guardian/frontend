@@ -5,11 +5,9 @@ import timeout from 'lib/timeout';
 
 const chance = new Chance();
 
-function wait(time) {
-    return new Promise(resolve => {
-        setTimeout(resolve, time);
-    });
-}
+const wait = time => new Promise(resolve => {
+    setTimeout(resolve, time);
+});
 
 describe('timeout', () => {
     test(
