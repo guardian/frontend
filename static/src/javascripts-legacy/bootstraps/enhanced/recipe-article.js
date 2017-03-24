@@ -99,7 +99,7 @@ function init() {
         readMoreButton.toggleClass('js-x-sign');
     });
 
-    nextButton.each(function(elem) {
+    nextWrapper.each(function(elem) {
       bean.on(elem, 'click', function() {
           scrollToNextRecipe();
       });
