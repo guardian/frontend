@@ -40,12 +40,13 @@ define([
 
     /**
      * type (required) is a string which should match a key in the URLS object
-     * queryParams (optional) is an object literal, each key/value will be query string parameter
+     * bypassStorage a boolean, if true don't retrieve data from local storage
+     * queryParams an object literal, each key/value will be query string parameter
      * eg. {foo:'bar', hello:'world'} translates to ?foo=bar&hello=world
      *
     **/
-    function fetchData(type, queryParams) {
-        var tailorData = storage.local.get('gu.tailor.' + type);
+    function fetchData(type, bypassStorage, queryParams) {
+        var tailorData = bypassStorage ? null : storage.local.get('gu.tailor.' + type);
 
         // if data in local storage return this
         if (tailorData) {
