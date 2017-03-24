@@ -88,12 +88,17 @@
 }
 
 .recipe__image {
-    object-fit: cover;
     position: absolute;
     top: 0;
-    width: 100%;
     height: 100%;
 
+}
+
+@supports (object-fit: cover) {
+    .recipe__image {
+        object-fit: cover;
+        width: 100%;
+    }
 }
 
 .recipe__label {
@@ -406,12 +411,21 @@
     }
 }
 
+
+
 .recipe__article--structured-image {
+
+    @supports (object-fit: cover) {
+        img {
+            object-fit: cover;
+            height: 100%;
+        }
+    }
+
     img {
-        object-fit: cover;
-        height: 100%;
         width: 100%;
     }
+
     margin-top: -$gs-baseline / 1.5;
     height: 220px;
     overflow: hidden;
