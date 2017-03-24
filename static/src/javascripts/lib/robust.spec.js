@@ -1,9 +1,9 @@
 // @flow
 
-import reportError from 'lib/report-error';
 import robust from './robust';
 
-jest.mock('lib/report-error', () => jest.fn());
+const reportErrorMock = jest.fn();
+jest.mock('lib/report-error', () => reportErrorMock);
 
 describe('robust', () => {
     const ERROR = new Error('Something broke.');
@@ -37,13 +37,13 @@ describe('robust', () => {
     });
 
     test('catchErrorsAndLog() - default reporter', () => {
-        reportError.mockClear();
+        reportErrorMock.mockClear();
         robust.catchErrorsAndLog('test', noError);
-        expect(reportError).not.toHaveBeenCalled();
+        expect(reportErrorMock).not.toHaveBeenCalled();
 
-        reportError.mockClear();
+        reportErrorMock.mockClear();
         robust.catchErrorsAndLog('test', throwError);
-        expect(reportError).toHaveBeenCalledWith(ERROR, META, false);
+        expect(reportErrorMock).toHaveBeenCalledWith(ERROR, META, false);
     });
 
     test('catchErrorsAndLog() - custom reporter', () => {
