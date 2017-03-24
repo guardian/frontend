@@ -25,7 +25,6 @@ define([
 
     var AcquisitionsEpicDesignVariationsV3 = {
         name: 'AcquisitionsEpicDesignVariationsV3',
-        // TODO
         variants: ['control', 'bigger_buttons', 'colour_change', 'paypal_and_credit_card']
     };
 

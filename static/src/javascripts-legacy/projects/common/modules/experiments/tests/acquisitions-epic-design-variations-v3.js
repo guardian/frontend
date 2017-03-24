@@ -87,8 +87,8 @@ define([
         id: 'AcquisitionsEpicDesignVariationsV3',
         campaignId: 'kr1_epic_design_variations_v3',
 
-        start: '2017-03-22',
-        expiry: '2017-04-30',
+        start: '2017-03-24',
+        expiry: '2017-04-04',
 
         author: 'Guy Dawson',
         description: 'Test 4 new design variants to the Epic',
