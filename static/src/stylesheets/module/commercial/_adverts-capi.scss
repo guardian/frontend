@@ -385,29 +385,39 @@
     .fc-item__title {
         @include f-headlineSans;
     }
-    @include mq(tablet) {
-        .fc-item__content {
-            padding-bottom: $gs-baseline * 8;
+
+    .fc-item__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1;
+        @include mq(mobileLandscape, tablet) {
+            flex-direction: row;
         }
     }
 
-    @include mq($until: tablet) {
-        .fc-item__content {
-            padding-right: $gs-gutter * 5;
-        }
-        .badge {
-            display: flex;
-            flex-direction: column;
-            width: $gs-gutter * 3;
-        }
-    }
     .badge {
+        display: flex;
+        align-self: flex-end;
+        justify-content: flex-end;
         pointer-events: none;
-        right: 0;
+        flex-shrink: 0;
+        padding-left: $gs-gutter;
+        @include mq(mobileLandscape) {
+            flex-direction: column;
+        }
     }
     .badge__label {
         text-align: center;
-        width: 100%;
+        align-self: center;
+    }
+    .badge__link {
+        @include mq($until: mobileLandscape) {
+            margin-left: $gs-gutter;
+        }
+        @include mq($until: tablet) {
+            width: $gs-gutter * 3;
+        }
     }
     .badge__logo {
         max-width: 100%;
@@ -425,13 +435,9 @@
     }
 
     &.without-sponsor-logo {
-        @include mq(tablet) {
-            .fc-item__content {
-                padding-bottom: $gs-baseline * 3;
-            }
-        }
         .badge--no-image {
             display: block;
+            margin-bottom: $gs-baseline/2;
             + .badge {
                 display: none;
             }

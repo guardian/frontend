@@ -1,6 +1,5 @@
 define([
     'bean',
-    'fastdom',
     'lib/$',
     'lib/config',
     'lib/detect',
@@ -13,7 +12,6 @@ define([
     'lib/cookies'
 ], function (
     bean,
-    fastdom,
     $,
     config,
     detect,
