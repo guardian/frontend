@@ -1,15 +1,11 @@
 
 define([
-    'fastdom',
     'qwery',
-    'lib/$',
     'lib/mediator',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
-    fastdom,
     qwery,
-    $,
     mediator,
     fixtures,
     Injector
@@ -27,7 +23,7 @@ define([
         var fixturesConfig = {
             id: 'article-aside-adverts',
             fixtures: [
-                '<div class="js-content-main-column"></div>' +
+                '<div class="js-content-main-column" style="height:90000px;min-height:90000px;max-height:90000px;"></div>' +
                 '<div class="content__secondary-column js-secondary-column">' +
                 '<div class="js-ad-slot-container">' +
                 '<div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|300,250|300,600|fluid">' +
@@ -63,17 +59,19 @@ define([
             done();
         });
 
-        it('should have the correct size mappings and classes', function () {
-             // this is not currently passing due to $mainCol.dim()height returning 0...
-            articleAsideAdverts.init(noop, noop);
+        it('should have the correct size mappings and classes', function (done) {
+            articleAsideAdverts.init(noop, noop).then(done);
             mediator.once('page:commercial:right', function (adSlot) {
                 expect(adSlot.classList).toContain('js-sticky-mpu');
                 expect(adSlot.getAttribute('data-mobile')).toBe('1,1|2,2|300,250|300,600|fluid');
             });
         });
 
-        it('should mutate the ad slot in short articles', function () {
-            articleAsideAdverts.init(noop, noop);
+        it('should mutate the ad slot in short articles', function (done) {
+
+            document.querySelector('.js-content-main-column').setAttribute("style", "height:10px; min-height:10px; max-height:10px; overflow:hidden;");
+
+            articleAsideAdverts.init(noop, noop).then(done);
             mediator.once('page:commercial:right', function (adSlot) {
                 expect(adSlot.classList).not.toContain('js-sticky-mpu');
                 expect(adSlot.getAttribute('data-mobile')).toBe('1,1|2,2|300,250|fluid');
