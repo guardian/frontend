@@ -1,6 +1,5 @@
 define([
     'fastdom',
-    'bean',
     'qwery',
     'lib/raven',
     'lib/$',
@@ -13,12 +12,9 @@ define([
     './sport',
     'common/modules/analytics/google',
     'lib/geolocation',
-    'common/modules/check-dispatcher',
-    'lodash/collections/contains',
-    'common/modules/tailor/tailor-survey-overlay'
+    'common/modules/check-dispatcher'
 ], function (
     fastdom,
-    bean,
     qwery,
     raven,
     $,
@@ -31,9 +27,7 @@ define([
     sport,
     ga,
     geolocation,
-    checkDispatcher,
-    contains,
-    tailorSurveyOverlay
+    checkDispatcher
 ) {
     return function () {
         var bootstrapContext = function (featureName, bootstrap) {
@@ -179,9 +173,9 @@ define([
         if (config.page.showNewRecipeDesign === true) {
             //below is for during testing
             if (config.tests.abNewRecipeDesign) {
-                require(['bootstraps/enhanced/recipe-article'], function (recipes) {
-                    bootstrapContext('recipes', recipes);
-                });
+                require.ensure([], function (require) {
+                    bootstrapContext('recipes', require('bootstraps/enhanced/recipe-article'));
+                }, 'recipes');
             }
         }
 
@@ -193,13 +187,14 @@ define([
             }
         });
 
+        if (window.location.hash.indexOf('devtools') !== -1) {
+            require.ensure([], function(require) {
+                bootstrapContext('devtools', require('bootstraps/enhanced/devtools'));
+            }, 'devtools');
+        }
+
         // initialise email/outbrain check dispatcher
         bootstrapContext('checkDispatcher', checkDispatcher);
-
-        // initialise tailor overlay survey
-        if (config.switches.tailorSurveyOverlay) {
-            bootstrapContext('tailorSurveyOverlay', tailorSurveyOverlay);
-        }
 
         // Mark the end of synchronous execution.
         userTiming.mark('App End');

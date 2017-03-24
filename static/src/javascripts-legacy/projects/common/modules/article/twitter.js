@@ -1,7 +1,6 @@
 /*global twttr:false */
 
 define([
-    'bean',
     'bonzo',
     'qwery',
     'fastdom',
@@ -11,7 +10,6 @@ define([
     'lib/mediator',
     'lodash/functions/debounce'
 ], function (
-    bean,
     bonzo,
     qwery,
     fastdom,

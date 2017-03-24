@@ -18,8 +18,8 @@ object NewNavigation {
     val editionId = edition.id.toLowerCase()
 
     NavLinkLists(List(
-      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/${editionId}/supporter?INTCMP=mem_${editionId}_web_newheader", iconName= "marque-36"),
-      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/${editionId}?INTCMP=NGW_NEWHEADER_${editionId}_GU_SUBSCRIBE", iconName= "device")
+      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/${editionId}/supporter?INTCMP=mem_${editionId}_web_newheader"),
+      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/${editionId}?INTCMP=NGW_NEWHEADER_${editionId}_GU_SUBSCRIBE")
     ))
   }
 
@@ -75,19 +75,19 @@ object NewNavigation {
 
     val uk = NavLinkLists(
       List(headlines, ukNews, world, business, environment, tech, politics),
-      List(science, money, globalDevelopment, cities)
+      List(science, globalDevelopment, cities, obituaries)
     )
     val au = NavLinkLists(
       List(headlines, australiaNews, world, auPolitics, auImmigration),
-      List(indigenousAustralia, economy, tech, environment, media)
+      List(indigenousAustralia, economy, tech, environment, media, obituaries)
     )
     val us = NavLinkLists(
       List(headlines, usNews, world, science, usPolitics, business),
-      List(environment, money, tech)
+      List(environment, money, tech, obituaries)
     )
     val int = NavLinkLists(
       List(headlines, world, ukNews, science, cities, globalDevelopment),
-      List(tech, business, environment)
+      List(tech, business, environment, obituaries)
     )
   }
 
@@ -114,38 +114,51 @@ object NewNavigation {
     )
 
     val au = NavLinkLists(
-      List(opinion,
-        NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
-        NavLink("Katharine Murphy", "/profile/katharine-murphy"),
-        NavLink("Kristina Keneally", "/profile/kristina-keneally")
+      List(
+        opinion,
+        theGuardianView,
+        columnists,
+        cartoons,
+        inMyOpinion
       ),
       List(
+        NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
+        NavLink("Katharine Murphy", "/profile/katharine-murphy"),
+        NavLink("Kristina Keneally", "/profile/kristina-keneally"),
         NavLink("Richard Ackland", "/profile/richard-ackland"),
         NavLink("Van Badham", "/profile/van-badham"),
         NavLink("Lenore Taylor", "/profile/lenore-taylor"),
         NavLink("Jason Wilson", "/profile/wilson-jason"),
-        NavLink("Brigid Delaney", "/profile/brigiddelaney"),
-        columnists
+        NavLink("Brigid Delaney", "/profile/brigiddelaney")
       )
     )
 
     val us = NavLinkLists(
       List(
         opinion,
-        NavLink("Jill Abramson", "/profile/jill-abramson"),
-        NavLink("Jessica Valenti", "/commentisfree/series/jessica-valenti-column"),
-        NavLink( "Steven W Thrasher", "/profile/steven-w-thrasher")
+        theGuardianView,
+        columnists,
+        cartoons,
+        inMyOpinion
       ),
       List(
+        NavLink("Jill Abramson", "/profile/jill-abramson"),
+        NavLink("Jessica Valenti", "/commentisfree/series/jessica-valenti-column"),
+        NavLink( "Steven W Thrasher", "/profile/steven-w-thrasher"),
         NavLink("Trevor Timm", "/profile/trevor-timm"),
         NavLink("Rebecca Carroll", "/commentisfree/series/rebecca-carroll-column"),
-        NavLink("Chelsea E Manning", "/profile/chelsea-e-manning"),
-        columnists
+        NavLink("Chelsea E Manning", "/profile/chelsea-e-manning")
       )
     )
 
     val int = NavLinkLists(
-      List(opinion, columnists, theGuardianView, cartoons)
+      List(
+          opinion,
+          theGuardianView,
+          columnists,
+          cartoons,
+          inMyOpinion
+        )
     )
   }
 
@@ -153,12 +166,12 @@ object NewNavigation {
     val name = "sport"
 
     val uk = NavLinkLists(
-      List(sport, football, rugbyUnion, cricket, tennis, cycling, formulaOne),
+      List(sport, football, rugbyUnion, cricket, tennis, formulaOne),
       List(boxing, rugbyLeague, racing, usSports, golf)
     )
     val au = NavLinkLists(
       List(sport, football, rugbyUnion, cricket, AFL, tennis),
-      List(cycling, aLeague, NRL, australiaSport)
+      List(aLeague, NRL, australiaSport)
     )
     val us = NavLinkLists(
       List(sport, soccer, NFL, tennis, MLB, MLS),
@@ -166,7 +179,7 @@ object NewNavigation {
     )
     val int = NavLinkLists(
       List(sport, football, rugbyUnion, cricket, tennis, formulaOne),
-      List(cycling, golf, boxing, usSports)
+      List(golf, boxing, usSports)
     )
   }
 
@@ -196,19 +209,19 @@ object NewNavigation {
 
     val uk = NavLinkLists(
       List(lifestyle, fashion, food, recipes, travel, loveAndSex, family),
-      List(home, health, women, tech)
+      List(home, health, women, money)
     )
     val au = NavLinkLists(
       List(lifestyle, fashion, food, loveAndSex, health),
-      List(family, women, travel, home)
+      List(family, women, travel, home, money)
     )
     val us = NavLinkLists(
       List(lifestyle, fashion, food, recipes, loveAndSex, home),
-      List(health, women, family, travel, tech)
+      List(health, women, family, travel, money)
     )
     val int = NavLinkLists(
       List(lifestyle, fashion, food, recipes, loveAndSex, health),
-      List(home, women, family, travel, tech)
+      List(home, women, family, travel, money)
     )
   }
 
@@ -269,6 +282,7 @@ object NewNavigation {
       SectionsLink("international", headlines, MostPopular),
       SectionsLink("uk-news", ukNews,News),
       SectionsLink("world", world, News),
+      SectionsLink("world/europe-news", europe, News),
       SectionsLink("politics", politics, News),
       SectionsLink("environment", environment, News),
       SectionsLink("business", business, News),
@@ -295,13 +309,11 @@ object NewNavigation {
       SectionsLink("commentisfree/series/comment-is-free-weekly", inMyOpinion, Opinion),
       SectionsLink("profile/editorial", theGuardianView, Opinion),
 
-
       SectionsLink("sport", sport, Sport),
       SectionsLink("football", football, Sport),
       SectionsLink("sport/rugby-union", rugbyUnion, Sport),
       SectionsLink("sport/cricket", cricket, Sport),
       SectionsLink("sport/tennis", tennis, Sport),
-      SectionsLink("sport/cycling", cycling, Sport),
       SectionsLink("sport/golf", golf, Sport),
       SectionsLink("sport/us-sport", usSports, Sport),
       SectionsLink("sport/horse-racing", racing, Sport),
@@ -498,7 +510,7 @@ object NewNavigation {
 
     def getSectionOrTagId(page: Page) = {
       val tags = Navigation.getTagsFromPage(page)
-      val commonKeywords = tagPages.intersect(tags.keywordIds)
+      val commonKeywords = tags.keywordIds.intersect(tagPages).sortWith(tags.keywordIds.indexOf(_) < tags.keywordIds.indexOf(_))
       val isTagPage = (page.metadata.isFront || frontLikePages.contains(page.metadata.id)) && tagPages.contains(page.metadata.id)
       val isArticleInTagPageSection = commonKeywords.nonEmpty
 
@@ -506,11 +518,11 @@ object NewNavigation {
       if (page.metadata.sectionId == "commentisfree") {
         page.metadata.sectionId
       } else if (isTagPage) {
-        page.metadata.id
+        simplifySectionId(page.metadata.id)
       } else if (isArticleInTagPageSection) {
-        commonKeywords.head
+        simplifySectionId(commonKeywords.head)
       } else {
-        page.metadata.sectionId
+        simplifySectionId(page.metadata.sectionId)
       }
     }
 
@@ -556,10 +568,8 @@ object NewNavigation {
       sectionMap.getOrElse(sectionId, sectionId)
     }
 
-    def getSubSectionNavLinks(sectionId: String, edition: Edition, isFront: Boolean) = {
-      if (isFront || frontLikePages.contains(sectionId)) {
-
-        val id = simplifySectionId(sectionId)
+    def getSubSectionNavLinks(id: String, edition: Edition, isFront: Boolean) = {
+      if (isFront || frontLikePages.contains(id)) {
 
         if (isEditionalistedSubSection(id)) {
           val subNav = editionalisedSubSectionLinks.filter(_.pageId == id).head.parentSection
@@ -569,13 +579,13 @@ object NewNavigation {
           val subSectionList = subSectionLinks.filter(_.pageId == id)
 
           if (subSectionList.isEmpty) {
-            NewNavigation.SectionLinks.getSectionLinks(sectionId, edition)
+            NewNavigation.SectionLinks.getSectionLinks(id, edition)
           } else {
             subSectionList.head.parentSection.mostPopular
           }
         }
       } else {
-        NewNavigation.SectionLinks.getSectionLinks(sectionId, edition)
+        NewNavigation.SectionLinks.getSectionLinks(id, edition)
       }
     }
   }

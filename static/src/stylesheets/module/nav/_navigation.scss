@@ -90,9 +90,9 @@ $c-navigation-expandable-background: $neutral-1;
 .local-navigation,
 .global-navigation,
 .signposting {
-    @include fs-headline(2);
+    @include fs-textSans(5);
     line-height: $navigation-height;
-    font-weight: 500;
+    font-weight: 600;
 
     // Restore opentype kerning settings in WebKit / Blink
     -webkit-font-feature-settings: 'kern' 1;
@@ -637,7 +637,8 @@ $c-navigation-expandable-background: $neutral-1;
 
 // TODO: Move
 .navigation-toggle {
-    @include fs-header(1);
+    @include fs-textSans(5);
+    font-weight: 600;
     z-index: 4; /* ensure it is higher than .top-navigation__action */
     position: absolute;
     right: 0;

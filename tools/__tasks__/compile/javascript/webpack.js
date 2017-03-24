@@ -6,6 +6,9 @@ const Observable = require('any-observable');
 const webpack = require('webpack');
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 const Visualizer = require('webpack-visualizer-plugin');
+const BundleAnalyzerPlugin = require(
+    'webpack-bundle-analyzer'
+).BundleAnalyzerPlugin;
 const chalk = require('chalk');
 
 module.exports = {
@@ -14,9 +17,18 @@ module.exports = {
         const config = require('../../../../webpack.config.js')({
             env: 'production',
             plugins: [
-                new webpack.optimize.AggressiveMergingPlugin(),
+                new webpack.optimize.AggressiveMergingPlugin({
+                    // delicate number: stops enhanced-no-commercial and enhanced
+                    // being merged into one
+                    minSizeReduce: 1.6,
+                }),
                 new Visualizer({
                     filename: './webpack-stats.html',
+                }),
+                new BundleAnalyzerPlugin({
+                    reportFilename: './bundle-analyzer-report.html',
+                    analyzerMode: 'static',
+                    openAnalyzer: false,
                 }),
                 new webpack.DefinePlugin({
                     'process.env.NODE_ENV': JSON.stringify('production'),

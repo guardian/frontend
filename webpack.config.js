@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const bundlePrefix = 'graun.';
 
 module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
-    devtool: env === 'dev' ? 'inline-source-map' : 'source-map',
+    devtool: 'source-map',
     entry: {
         standard: path.join(
             __dirname,
@@ -74,7 +74,7 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     },
     resolveLoader: {
         modules: [
-            path.resolve(__dirname, 'tools', 'webpack-loaders'),
+            path.resolve(__dirname, 'dev', 'webpack-loaders'),
             'node_modules',
         ],
     },

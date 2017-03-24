@@ -3,41 +3,36 @@ define([
     'common/modules/experiments/test-can-run-checks',
     'common/modules/commercial/acquisitions-view-log',
     'common/modules/experiments/tests/contributions-epic-brexit',
-    'common/modules/experiments/tests/acquisitions-epic-content-tailoring-environment',
-    'common/modules/experiments/tests/acquisitions-epic-content-tailoring-cif',
-    'common/modules/experiments/tests/acquisitions-epic-content-tailoring-football',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
-    'common/modules/experiments/tests/contributions-epic-regulars',
+    'common/modules/experiments/tests/contributions-epic-regulars-v2',
     'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
-    'common/modules/experiments/tests/acquisitions-epic-design-variations-v2'
+    'common/modules/experiments/tests/acquisitions-epic-design-variations-v3',
+    'common/modules/experiments/tests/contributions-epic-laundromat'
 ], function (
     segmentUtil,
     testCanRunChecks,
     viewLog,
     brexit,
-    contentTailoringEnvironment,
-    contentTailoringCif,
-    contentTailoringFootball,
     alwaysAsk,
     askFourEarning,
-    regulars,
+    regularsV2,
     acquisitionsEpicArticle50Trigger,
-    acquisitionsEpicDesignVariationsV2
+    acquisitionsEpicDesignVariationsV3,
+    laundromat
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */
     var tests = [
         alwaysAsk,
-        contentTailoringEnvironment,
-        contentTailoringCif,
-        contentTailoringFootball,
-        regulars,
-        acquisitionsEpicDesignVariationsV2,
+        laundromat,
+		regularsV2,
+        acquisitionsEpicDesignVariationsV3,
         askFourEarning,
         acquisitionsEpicArticle50Trigger,
-        brexit];
+        brexit
+    ];
 
     return {
         getTest: function() {

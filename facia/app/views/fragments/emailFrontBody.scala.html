@@ -80,8 +80,8 @@
         }
     } { img =>
         @FaciaCard(Seq(), Row(Seq(toneClassFromStyle(card.cardStyle)),
-            Column(smallWidth = 5, largeWidth = 5)(img),
-            Column(smallWidth = 7, largeWidth = 7)(headline(card))
+            Column(smallWidth = 7, largeWidth = 7)(headline(card)),
+            Column(smallWidth = 5, largeWidth = 5)(img)
         )).render
     }
 }
