@@ -5,7 +5,8 @@ define([
     'lib/element-inview',
     'bootstraps/enhanced/media/video-player',
     'lodash/objects/assign',
-    'lib/create-store'
+    'lib/create-store',
+    'common/modules/atoms/youtube'
 ], function (
     bean,
     fastdom,
@@ -13,17 +14,30 @@ define([
     ElementInview,
     videojs,
     assign,
-    createStore
-) {
+    createStore,
+    youtube
+)
+{
+
+
+
+    function updateYouTubeVideo(currentItem){
+        var youTubeAtom = currentItem.querySelector('.youtube-media-atom');
+        if(youTubeAtom) {
+         return youtube.onVideoContainerNavigation(youTubeAtom.dataset.uniqueAtomId);
+        }
+    }
 
     var reducers = {
         NEXT: function next(previousState) {
             var position = previousState.position >= previousState.length ? previousState.position : previousState.position + 1;
+            updateYouTubeVideo(document.querySelector('.js-video-playlist-item-'+ (position-1)));
             return assign({}, previousState, getPositionState(position, previousState.length));
         },
 
         PREV: function prev(previousState) {
             var position = previousState.position <= 0 ? 0 : previousState.position - 1;
+            updateYouTubeVideo(document.querySelector('.js-video-playlist-item-'+ (position+1)));
             return assign({}, previousState, getPositionState(position, previousState.length));
         },
 
