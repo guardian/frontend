@@ -22,16 +22,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-engagement-banner-copy-test",
-    "Test copy for the engagement banner in all countries aside from the US and Australia",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-increase-inline-ads",
     "Displays more inline ads in articles on desktop",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
@@ -47,16 +37,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-membership-a3-a4-bundles-thrasher",
-    "Test A3 vs A4 bundle offers",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 23), // Thursday March 23rd
     exposeClientSide = true
   )
 
@@ -248,6 +228,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 3, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-paid-card-logo",
+    "Trialling paid cards in editorial containers",
+    owners = Seq(Owner.withGithub("lps88")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 3),
     exposeClientSide = true
   )
 }

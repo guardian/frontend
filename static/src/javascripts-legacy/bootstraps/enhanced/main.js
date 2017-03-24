@@ -1,6 +1,5 @@
 define([
     'fastdom',
-    'bean',
     'qwery',
     'lib/raven',
     'lib/$',
@@ -16,7 +15,6 @@ define([
     'common/modules/check-dispatcher'
 ], function (
     fastdom,
-    bean,
     qwery,
     raven,
     $,
@@ -188,6 +186,12 @@ define([
                 }, 'youtube');
             }
         });
+
+        if (window.location.hash.indexOf('devtools') !== -1) {
+            require.ensure([], function(require) {
+                bootstrapContext('devtools', require('bootstraps/enhanced/devtools'));
+            }, 'devtools');
+        }
 
         // initialise email/outbrain check dispatcher
         bootstrapContext('checkDispatcher', checkDispatcher);

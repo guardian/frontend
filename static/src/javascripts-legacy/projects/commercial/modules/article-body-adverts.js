@@ -154,8 +154,7 @@ define([
             } else {
                 return countAdded;
             }
-        })
-        .then(addSlots);
+        });
     }
 
     function waitForMerch(countAdded) {
@@ -196,13 +195,9 @@ define([
 
         return fastdom.write(function () {
             para.parentNode.insertBefore(ad, para);
+        })
+        .then(function () {
+            addSlot(ad);
         });
-    }
-
-    function addSlots(totalCount) {
-        qwery('.ad-slot--inline').forEach(function (slot) {
-            addSlot(slot);
-        });
-        return totalCount;
     }
 });
