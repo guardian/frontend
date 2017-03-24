@@ -30,10 +30,8 @@
             @defining(s"https://www.youtube.com/embed${
                 media.assets.head.id
                 .addParams(List(
-                "modestbranding" -> 1,
                 "enablejsapi" -> 1,
                 "rel" -> 0,
-                "showinfo" -> 1,
                 "origin" -> (if(mediaWrapper.contains(EmbedPage)) Some(Media.externalEmbedHost) else if(!host.isEmpty) Some(host) else None)
                 )).toString
                 }") { embedUri: String  =>
