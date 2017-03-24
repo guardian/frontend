@@ -75,7 +75,7 @@ function init() {
 
     function isFocalRecipe(i) {
         var position = recipe[i].getBoundingClientRect();
-        var middleOfView = window.innerHeight / 2;
+        var middleOfView = window.innerHeight / 3;
 
         return position.top <= middleOfView && position.bottom > middleOfView;
     }
