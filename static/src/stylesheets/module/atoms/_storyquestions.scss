@@ -91,6 +91,7 @@
 .user__question-response {
     clear: both;
     margin-top: $gs-baseline;
+    margin-bottom: $gs-baseline;
 
     @include mq($from: tablet) {
         float: right;
