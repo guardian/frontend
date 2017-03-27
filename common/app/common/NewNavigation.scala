@@ -238,6 +238,7 @@ object NewNavigation {
       apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
       podcasts,
       video,
+      pictures,
       todaysPaper,
       observer,
       crosswords
@@ -249,6 +250,7 @@ object NewNavigation {
       apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
       podcasts,
       video,
+      pictures,
       crosswords
     ))
 
@@ -257,6 +259,7 @@ object NewNavigation {
       apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
       podcasts,
       video,
+      pictures,
       crosswords
     ))
 
@@ -266,6 +269,7 @@ object NewNavigation {
       apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
       podcasts,
       video,
+      pictures,
       todaysPaper,
       observer,
       crosswords
