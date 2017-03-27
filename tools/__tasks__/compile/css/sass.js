@@ -24,7 +24,8 @@ module.exports = {
         },
         {
             description: 'Modern',
-            task: () => compile('!(_|ie9|old-ie|*email-article|*email-front)*.scss'),
+            task: () =>
+                compile('!(_|ie9|old-ie|*email-article|*email-front)*.scss'),
         },
         {
             description: 'Inline',
