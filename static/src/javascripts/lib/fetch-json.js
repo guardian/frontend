@@ -2,7 +2,7 @@
 import config from 'lib/config';
 import fetch from 'lib/fetch';
 
-function json(input: string | Request, init: RequestOptions = {}) {
+const json = (input: string | Request, init: RequestOptions = {}) => {
     // #? we should use Object.assign for this assignment, but this currently breaks
     // Karma tests that depend on fetch-json.js and have not been stubbed
     const options = init;
@@ -34,6 +34,6 @@ function json(input: string | Request, init: RequestOptions = {}) {
             `Fetch error while requesting ${path}: ${resp.statusText}`
         );
     });
-}
+};
 
 export default json;

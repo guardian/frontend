@@ -1,44 +1,46 @@
 {
+    "plugins": [
+        "babel-plugin-transform-flow-strip-types"
+    ],
     "env": {
         "production": {
             "presets": [
-                ["env", {
+                ["babel-preset-env", {
                     "modules": "amd"
                 }]
             ],
             "plugins": [
-                "babel-plugin-transform-runtime",
-                "babel-plugin-transform-flow-strip-types",
+                ["babel-plugin-transform-runtime", {
+                    "polyfill": false
+                }],
                 "babel-plugin-add-module-exports",
             ],
         },
         "development": {
             "presets": [
-                ["env", {
+                ["babel-preset-env", {
                     "modules": "amd"
                 }]
             ],
             "plugins": [
-                "babel-plugin-transform-runtime",
-                "babel-plugin-transform-flow-strip-types",
+                ["babel-plugin-transform-runtime", {
+                    "polyfill": false
+                }],
                 "babel-plugin-add-module-exports",
             ],
         },
         "test": {
             "presets": [
-                ["env", {
+                ["babel-preset-env", {
                     "targets": {
                         "node": "current"
                     }
                 }]
             ],
-            "plugins": [
-                "babel-plugin-transform-flow-strip-types",
-            ],
         },
         "internal": {
             "presets": [
-                ["env", {
+                ["babel-preset-env", {
                     "targets": {
                         "browsers": [
                             "last 2 Chrome versions",
@@ -52,12 +54,11 @@
         },
         "karma": {
             "presets": [
-                ["env", {
+                ["babel-preset-env", {
                     "modules": "amd"
                 }]
             ],
             "plugins": [
-                "babel-plugin-transform-flow-strip-types",
                 "babel-plugin-add-module-exports",
             ],
         },

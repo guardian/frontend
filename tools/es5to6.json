@@ -43,7 +43,6 @@
     "lib/scroller.js",
     "lib/steady-page.js",
     "lib/storage.js",
-    "lib/timeout.js",
     "lib/url.js"
   ]
 }
