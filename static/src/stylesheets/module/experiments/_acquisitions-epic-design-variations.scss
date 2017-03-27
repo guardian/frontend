@@ -1,57 +1,41 @@
 @import 'svg';
 
-// Classes used by multiple variants
-// =================================
+.contributions__paragraph--highlight {
+    background-color: #ffe399;
+    padding: 4px 2px;
+    margin-left: -2px;
+    margin-right: -2px;
+}
 
-.contributions__title--epic--large {
-    @include font-size(36px);
-    @include mq(tablet) {
-        @include font-size(38px);
+// Bigger buttons
+// ==============
+
+
+.contributions__epic--button-bigger {
+    padding-bottom: ($gs-baseline * 1.5);
+}
+
+.contributions__button--bigger {
+    font-size: 18px;
+    padding-top: .75em;
+    padding-bottom: .75em;
+    width: 200px;
+
+    &:after {
+        position: relative;
+        left: -6px;
+        top: 2px;
+
+        background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="$neutral-1" stroke="$neutral-1" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
+        background-size: 40px;
+        background-position-y: -5px;
     }
 }
 
-// 1. extra_paragraph variant
-// ==========================
+// Colour change
+// =============
 
-// copy changes only
-
-// 2. large hook variant
-// =====================
-
-// uses large title
-
-// 3. subtle variant
-// =================
-
-.contributions__epic--subtle {
-    // Unset border top as it will be set for the inline header element
-    border-top: 0;
-    background-color: #ffffff;
-    margin-top: $gs-baseline * 4;
-    margin-bottom: $gs-baseline * 4;
-}
-
-.contributions__title--epic--subtle {
-    @include fs-header(3);
-    display: inline;
-    border-top: 1px solid $multimedia-main-2;
-    padding-top: $gs-baseline / 3;
-}
-
-.contributions__paragraph--subtle {
-    margin-top: 0;
-}
-
-// 4. prominent variant
-// ====================
-
-// uses large title
-
-.contributions__epic--prominent {
-    background-color: transparentize($multimedia-main-2, .5);
-}
-
-.contributions__option--button--prominent {
+.contributions__button--colour-change {
     color: #ffffff;
     background-color: $guardian-brand;
 
@@ -65,38 +49,17 @@
     }
 }
 
-// 5. highlight
-// ============
-
-.contributions__paragraph--highlight {
-    background-color: #ffe399;
-    padding: 4px 2px;
-    margin-left: -2px;
-    margin-right: -2px;
+.contributions__epic--colour-change {
+    border-top: 1px solid $news-support-1;
+    padding-top: $gs-baseline / 3;
 }
 
-.contributions__epic--paypal {
-    background-repeat: no-repeat;
-    background-size: 110px;
-    background-position: 85% 92.5%;
+// Paypal and credit card
+// ======================
 
-    @include mq(phablet) {
-        background-position-y: 94.5%;
-    }
-
-    .contributions__amount-field {
-        flex-direction: column;
-
-        @include mq(phablet) {
-            flex-direction: row;
-        }
-    }
-
-    .contributions__contribute--epic-member-top {
-        margin-bottom: $gs-baseline / 2;
-
-        @include mq(phablet) {
-            margin-bottom: 0;
-        }
-    }
+.contributions__image--paypal-and-credit-card {
+    padding-left: ($gs-baseline / 6);
+    padding-top: $gs-gutter;
+    width: ($gs-column-width * 4.5);
+    height:  ($gs-column-width * .45);
 }

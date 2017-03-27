@@ -39,8 +39,8 @@ define([
         this.expiry = '2017-04-28';
         this.author = 'Manlio & Mahana';
         this.description = 'Testing Tailor surveys';
-        this.audience = 0.25;
-        this.audienceOffset = 0.7;
+        this.audience = 1;
+        this.audienceOffset = 0;
         this.successMeasure = 'We can show a survey on Frontend as decided by Tailor';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = 'Tailor survey';
@@ -122,12 +122,13 @@ define([
                 minBelow: 0,
                 clearContentMeta: 50,
                 selectors: {
-                    ' .element-rich-link': {minAbove: 250, minBelow: 250},
+                    ' .element-rich-link': {minAbove: 100, minBelow: 100},
+                    ' .element-image': {minAbove: 50, minBelow: 50},
                     ' .player': {minAbove: 0, minBelow: 0},
                     ' > h1': {minAbove: 0, minBelow: 0},
                     ' > h2': {minAbove: 0, minBelow: 0},
                     ' > *:not(p):not(h2):not(blockquote)': {minAbove: 0, minBelow: 0},
-                    ' .ad-slot': {minAbove: 0, minBelow: 0}
+                    ' .ad-slot': {minAbove: 100, minBelow: 100}
                 }
             };
 

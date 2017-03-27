@@ -5,7 +5,7 @@
 @import views.html.fragments.commercial.cardLogo
 
 @badgeNoImage(branding: Branding) = {
-    <div class="badge badge--branded badge--no-image">
+    <div class="badge badge--no-image">
         <div class="badge__label">
             Paid for by @branding.sponsorName
         </div>
@@ -26,13 +26,13 @@
                     @item.headline
                 </div>
             </div>
+
+            @item.branding.map(badgeNoImage)
+
+            @item.branding.map(branding =>
+                cardLogo(branding, isStandardSizeCard = false)
+            )
         </div>
-
-        @item.branding.map(badgeNoImage)
-
-        @item.branding.map(branding =>
-            cardLogo(branding, isStandardSizeCard = true)
-        )
 
         <a href="@item.targetUrl" class="u-faux-block-link__overlay js-headline-text" data-link-name="Labs paid card | @omnitureId" tabindex="-1"></a>
     </div>

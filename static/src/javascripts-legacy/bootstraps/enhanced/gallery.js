@@ -1,5 +1,4 @@
 define([
-    'bean',
     'bonzo',
     'qwery',
     'lib/$',
@@ -9,7 +8,6 @@ define([
     'bootstraps/enhanced/trail',
     'lodash/functions/debounce'
 ], function (
-    bean,
     bonzo,
     qwery,
     $,
