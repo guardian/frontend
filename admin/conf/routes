@@ -106,7 +106,7 @@ GET         /metrics/memory                                                     
 GET         /metrics/assets                                                                         controllers.admin.MetricsController.renderAssets()
 GET         /metrics/googlebot/404                                                                  controllers.admin.MetricsController.renderGooglebot404s()
 GET         /metrics/afg                                                                            controllers.admin.MetricsController.renderAfg()
-
+GET         /metrics/webpack-bundles                                                                controllers.admin.MetricsController.renderBundles()
 # Radiator
 GET         /radiator                                                                               controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/commit/*hash                                                                  controllers.admin.RadiatorController.commitDetail(hash)
