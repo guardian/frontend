@@ -211,7 +211,7 @@ define([
             pt2: pageTargeting.edition,
             pt3: pageTargeting.ct,
             pt4: pageTargeting.p,
-            pt5: pageTargeting.k.toString(), // makes it comma seperated
+            pt5: pageTargeting.k ? pageTargeting.k.toString() : '', // makes it comma seperated
             pt6: pageTargeting.su,
             pt7: pageTargeting.bp,
             pt8: pageTargeting.x,
