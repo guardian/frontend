@@ -36,3 +36,70 @@
 .social-icon--email {
     @include social-icon($social-email);
 }
+
+.social-icon--edit {
+    background-color: #005689;
+    &:hover {
+        background-color: darken(#005689, 10%);
+    }
+    svg {
+        height: 40%;
+        width: 40%;
+    }
+}
+
+
+.social-icon--edit-validate {
+    background-color: green;
+    &:hover {
+        background-color: darken(green, 10%);
+    }
+    svg {
+        height: 40%;
+        width: 40%;
+    }
+}
+
+.social-icon--edit-cancel {
+    background-color: red;
+    &:hover {
+        background-color: darken(red, 10%);
+    }
+    svg {
+        height: 40%;
+        width: 40%;
+    }
+}
+
+.social-icon--wrong {
+    background-color: #005689;
+    &:hover {
+        background-color: darken(#005689, 10%);
+    }
+    svg {
+        height: 40%;
+        width: 40%;
+    }
+}
+
+.social-icon--comment {
+    background-color: #005689;
+    &:hover {
+        background-color: darken(#005689, 10%);
+    }
+    svg {
+        height: 40%;
+        width: 40%;
+    }
+}
+
+.social-icon--explore {
+    background-color: #005689;
+    &:hover {
+        background-color: darken(#005689, 10%);
+    }
+    svg {
+        height: 40%;
+        width: 40%;
+    }
+}

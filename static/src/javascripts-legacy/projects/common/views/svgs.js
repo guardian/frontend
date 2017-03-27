@@ -21,6 +21,7 @@ define([
     'svg-loader!svgs/icon/arrow-right.svg',
     'svg-loader!svgs/icon/bookmark.svg',
     'svg-loader!svgs/icon/dropdown-mask.svg',
+    'svg-loader!svgs/icon/comment-16.svg',
     'svg-loader!svgs/icon/comment-anchor.svg',
     'svg-loader!svgs/icon/reply.svg',
     'svg-loader!svgs/icon/expand-image.svg',
@@ -45,6 +46,8 @@ define([
     'svg-loader!svgs/commercial/adblock-coins-us.svg',
     'svg-loader!svgs/icon/star.svg',
     'svg-loader!svgs/icon/chevron-right.svg',
+    'svg-loader!svgs/icon/information.svg',
+    'svg-loader!svgs/icon/search-36.svg',
     'common/views/svg'
 ], function (
     commentCount16icon,
@@ -65,6 +68,7 @@ define([
     arrowRight,
     bookmark,
     dropdownMask,
+    comment16icon,
     commentAnchor,
     reply,
     expandImage,
@@ -89,6 +93,8 @@ define([
     adblockCoinsUS,
     star,
     chevronRight,
+    informationIcon,
+    searchIcon,
     svg
 ) {
     var svgs = {
@@ -110,6 +116,7 @@ define([
         arrowRight: arrowRight,
         bookmark: bookmark,
         dropdownMask: dropdownMask,
+        comment16icon: comment16icon,
         commentAnchor: commentAnchor,
         reply: reply,
         expandImage: expandImage,
@@ -133,7 +140,9 @@ define([
         notificationsExplainerMobile: notificationsExplainerMobile,
         star: star,
         chevronRight: chevronRight,
-        logomembershipwhite: membershipLogoWhite
+        logomembershipwhite: membershipLogoWhite,
+        informationIcon: informationIcon,
+        searchIcon: searchIcon
     };
 
     return function (name, classes, title) {
