@@ -20,7 +20,7 @@ import capturePerfTimings from 'lib/capture-perf-timings';
 __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
 // kick off the app
-function go() {
+const go = () => {
     domready(() => {
         // 1. boot standard, always
         userTiming.mark('standard boot');
@@ -97,7 +97,7 @@ function go() {
             );
         }
     });
-}
+};
 
 // make sure we've patched the env before running the app
 if (window.guardian.polyfilled) {
