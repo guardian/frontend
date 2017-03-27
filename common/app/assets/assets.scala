@@ -119,6 +119,7 @@ object css {
 
 object js {
   val curl: String = Get(LoadFromClasspath("assets/curl.js").map(RelativePathEscaper.escapeLeadingDotPaths))
+  val polyfillioUrl: String = Get(LoadFromClasspath("assets/polyfill.io").map(RelativePathEscaper.escapeLeadingDotPaths)).trim
 }
 
 object Get {
