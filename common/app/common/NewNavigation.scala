@@ -191,7 +191,7 @@ object NewNavigation {
       List(classical)
     )
     val au = NavLinkLists(
-      List(culture, film, music, books, tvAndRadio, artAndDesign, stage),
+      List(culture, filmAu, music, books, tvAndRadioAu, artAndDesign, stage),
       List(games, classical)
     )
     val us = NavLinkLists(
@@ -212,8 +212,8 @@ object NewNavigation {
       List(home, health, women, money)
     )
     val au = NavLinkLists(
-      List(lifestyle, travel, food, loveAndSex, fashion, health),
-      List(family, women, home, money)
+      List(lifestyle, travelAu, foodAu, relationshipsAu, fashionAu, healthAu),
+      List(loveAndSex, family, women, home, money)
     )
     val us = NavLinkLists(
       List(lifestyle, fashion, food, recipes, loveAndSex, home),
