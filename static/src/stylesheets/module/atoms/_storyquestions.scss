@@ -3,15 +3,13 @@
     overflow: auto;
 }
 .user__question-title {
-    @include f-headline;
+    @include fs-headline(3);
     font-weight: 900;
-    font-size: 22px;
-    line-height: 24px;
     color: $news-main-1;
 
     @include mq($from: tablet) {
-        font-size: 26px;
-        line-height: 28px;
+        @include fs-headline(4);
+        font-weight: 900;
     }
 }
 
@@ -47,30 +45,31 @@
     margin-top: $gs-baseline * 2;
 
     h3 {
-        @include f-textSans;
+        @include fs-textSans(2);
         color: $neutral-2;
         font-weight: 200;
-        font-size: 12px;
     }
 }
 
 .user__question-text {
-    @include f-headline;
+    @include fs-headline(2);
     font-weight: 900;
     display: block;
     max-width: 68%;
-    font-size: 18px;
+    // font-size: 18px;
     float: left;
     color: $news-main-1;
     padding-left: $gs-baseline / 4;
     position: relative;
+    margin-bottom: $gs-baseline;
 
     @include mq($from: tablet) {
+        @include fs-headline(3);
         max-width: 80%;
-        font-size: 20px;
+        font-weight: 900;
     }
 
-    span {
+    .user__questions-text--inner {
         background-color: $neutral-6;
         padding: $gs-baseline / 2 $gs-baseline / 2 $gs-baseline / 2 0;
         transition: .2s background-color ease-in-out;
@@ -101,14 +100,17 @@
 }
 
 .user__question-upvote {
-    @include f-textSans;
+    @include fs-textSans(3);
     right: 0px;
     color: $news-main-1;
     font-weight: 900;
+    border: 0;
+    padding: 0;
     border-top: 1px solid $neutral-6;
-    padding-top: $gs-baseline / 2;
-    font-size: 14px;
+    padding-top: $gs-baseline / 3;
     float: right;
+    background-color: #ffffff;
+    outline: 0;
 
     &:hover {
         text-decoration: none;
