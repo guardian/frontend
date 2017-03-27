@@ -23,7 +23,7 @@ define([
     function getURL(type, queryParams) {
         var baseURL = URLS[type];
 
-        if (!baseURL) {
+        if (!browserId || !baseURL) {
             return '';
         }
 
@@ -46,44 +46,45 @@ define([
      *
     **/
     function fetchData(type, bypassStorage, queryParams) {
-        var tailorData = bypassStorage ? null : storage.local.get('gu.tailor.' + type);
+        var url = getURL(type, queryParams);
 
-        // if data in local storage return this
-        if (tailorData) {
-            return Promise.resolve(tailorData);
-        }
-
-        // if no browserId or use tailor switch is off then return an empty object
-        if (!browserId || !config.switches.useTailorEndpoints) {
+        // if no valid url end point return empty object
+        if (!url) {
             return Promise.resolve({});
         }
 
-        var url = getURL(type, queryParams);
+        var tailorData = bypassStorage ? null : storage.local.get('gu.tailor');
 
-        // if type doesn't have a valid end point url return empty object
-        if (!url) {
+        // if data in local storage return this
+        if (tailorData && tailorData[url]) {
+            return Promise.resolve(tailorData[url]);
+        }
+
+        // if use tailor switch is off then return an empty object
+        if (!config.switches.useTailorEndpoints) {
             return Promise.resolve({});
         }
 
         return fetchJson(url, {
                     method: 'get'
                 })
-                .then(handleResponse.bind(null, type))
-                .catch(handleError.bind(null, type))
+                .then(handleResponse.bind(null, url))
+                .catch(handleError.bind(null, url))
     }
 
-    function handleResponse(type, data) {
+    function handleResponse(url, data) {
+        var tailorData = storage.local.get('gu.tailor') || {};
         var hour = 1000 * 60 * 60;
 
-        storage.local.set('gu.tailor.' + type, data, { expires: Date.now() + hour });
+        tailorData[url] = data;
 
-        return Promise.resolve(data);
+        storage.local.set('gu.tailor', tailorData, {expires: Date.now() + hour});
     }
 
-    function handleError(type, error) {
+    function handleError(url, error) {
         reportError(error, {
             feature: 'tailor',
-            type: type
+            url: url
         });
     }
 
