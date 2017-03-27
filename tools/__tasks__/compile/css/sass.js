@@ -17,18 +17,18 @@ module.exports = {
             }),
         },
         {
-            description: 'Email',
-            task: () => compile('email.*.scss', {
-                remify: false,
-            }),
-        },
-        {
             description: 'Modern',
-            task: () => compile('!(_|ie9|old-ie|email)*.scss'),
+            task: () => compile('!(_|ie9|old-ie)*.scss'),
         },
         {
             description: 'Inline',
             task: () => compile('inline/*.scss'),
+        },
+        {
+            description: 'Email',
+            task: () => compile('head.email*.scss', {
+                remify: false,
+            }),
         },
     ],
     concurrent: true,

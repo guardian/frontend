@@ -60,8 +60,8 @@ object css {
   def amp(implicit context: ApplicationContext) = inline("head.amp")
   def hostedAmp(implicit context: ApplicationContext) = inline("head.hosted-amp")
   def liveblogAmp(implicit context: ApplicationContext) = inline("head.amp-liveblog")
-  def emailArticle(implicit context: ApplicationContext) = inline("email.head.article")
-  def emailFront(implicit context: ApplicationContext) = inline("email.head.front")
+  def emailArticle(implicit context: ApplicationContext) = inline("head.email-article")
+  def emailFront(implicit context: ApplicationContext) = inline("head.email-front")
 
   def projectCss(projectOverride: Option[String])(implicit context: ApplicationContext) = project(projectOverride.getOrElse(context.applicationIdentity.name))
   def headOldIE(projectOverride: Option[String])(implicit context: ApplicationContext) = cssOldIE(projectOverride.getOrElse(context.applicationIdentity.name))
