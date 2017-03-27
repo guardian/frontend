@@ -17,8 +17,15 @@ module.exports = {
             }),
         },
         {
+            description: 'Email',
+            task: () => compile('head.email-{article,front}.scss', {
+                remify: false,
+            }),
+        },
+        {
             description: 'Modern',
-            task: () => compile('!(_|ie9|old-ie)*.scss'),
+            task: () =>
+                compile('!(_|ie9|old-ie|*email-article|*email-front)*.scss'),
         },
         {
             description: 'Inline',
