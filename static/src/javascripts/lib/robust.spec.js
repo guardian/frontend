@@ -2,8 +2,9 @@
 
 import robust from './robust';
 
-const reportErrorMock = jest.fn();
-jest.mock('lib/report-error', () => reportErrorMock);
+// #? Refactor this into a test utility with lots of magic?
+jest.mock('lib/report-error', () => jest.fn());
+const reportErrorMock: any = require('lib/report-error');
 
 describe('robust', () => {
     const ERROR = new Error('Something broke.');
