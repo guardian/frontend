@@ -28,7 +28,7 @@ define([
     };
 
     Frame.prototype.create = function () {
-        this.params.externalLinkIcon = svg(externalLink.markup, ['gu-external-icon']);
+        this.params.externalLinkIcon = svg(externalLink.markup, ['frame__external-link-icon']);
         this.params.target = this.params.newWindow === 'yes' ? '_blank' : '_self';
         this.params.id = 'frame-' + (Math.random() * 10000 | 0).toString(16);
 
