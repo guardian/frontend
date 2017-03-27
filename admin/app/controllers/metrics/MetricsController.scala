@@ -61,8 +61,12 @@ class MetricsController(wsClient: WSClient)(implicit context: ApplicationContext
     }
   }
 
-  def renderBundles() = Action { implicit request =>
+  def renderBundleVisualization() = Action { implicit request =>
     NoCache(SeeOther(Static("javascripts/webpack-stats.html")))
+  }
+
+  def renderBundleAnalyzer() = Action { implicit request =>
+    NoCache(SeeOther(Static("javascripts/bundle-analyzer-report.html")))
   }
 
   private def toPercentage(graph: AwsLineChart) = graph.dataset.map(_.values)
