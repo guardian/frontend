@@ -23,6 +23,7 @@ define([
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
     'common/modules/experiments/tests/reading-time',
+    'common/modules/experiments/tests/paid-card-logo',
     'ophan/ng',
     'common/modules/experiments/tests/paid-commenting'
 ], function (reportError,
@@ -49,6 +50,7 @@ define([
              SleevenotesLegacyEmailVariant,
              IncreaseInlineAds,
              ReadingTime,
+             PaidCardLogo,
              ophan,
              PaidCommenting
     ) {
@@ -67,6 +69,7 @@ define([
         SleevenotesLegacyEmailVariant,
         new IncreaseInlineAds(),
         new ReadingTime(),
+        new PaidCardLogo(),
         new PaidCommenting()
     ].concat(MembershipEngagementBannerTests));
 

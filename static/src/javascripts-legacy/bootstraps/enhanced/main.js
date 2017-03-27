@@ -1,6 +1,5 @@
 define([
     'fastdom',
-    'bean',
     'qwery',
     'lib/raven',
     'lib/$',
@@ -16,7 +15,6 @@ define([
     'common/modules/check-dispatcher'
 ], function (
     fastdom,
-    bean,
     qwery,
     raven,
     $,

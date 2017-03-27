@@ -3,7 +3,7 @@ const promiseRetry = require('promise-retry');
 const once = require('lodash/once');
 const megalog = require('megalog');
 
-function fetch(options) {
+const fetch = options => {
     const onError = once(error => {
         if (options.host === exports.hosts.dev) {
             try {
@@ -49,7 +49,7 @@ function fetch(options) {
             retries: 2,
         }
     ).catch(onError);
-}
+};
 
 exports.get = opts => {
     const options = Object.assign(

@@ -1,3 +1,4 @@
+// @flow
 import template from 'lodash/utilities/template';
 import storage from 'lib/storage';
 import $ from 'lib/$';
@@ -7,11 +8,10 @@ import overlay from 'raw-loader!common/views/devtools/overlay.html';
 import styles from 'raw-loader!common/views/devtools/styles.css';
 import { TESTS as tests } from 'common/modules/experiments/ab';
 
-function getSelectedAbTests() {
-    return JSON.parse(storage.local.get('gu.devtools.ab')) || [];
-}
+const getSelectedAbTests = () =>
+    JSON.parse(storage.local.get('gu.devtools.ab')) || [];
 
-function selectRadios() {
+const selectRadios = () => {
     const abTests = getSelectedAbTests();
 
     $('.js-devtools-radio').each(radio => {
@@ -21,9 +21,9 @@ function selectRadios() {
     abTests.forEach(test => {
         $(`#${test.id}-${test.variant}`).attr('checked', true);
     });
-}
+};
 
-function bindEvents() {
+const bindEvents = () => {
     $('.js-devtools-force-ab').each(label => {
         bean.on(label, 'click', () => {
             const testId = label.getAttribute('data-ab-test');
@@ -59,22 +59,22 @@ function bindEvents() {
         }
         $('.devtools').toggleClass('devtools--hidden');
     });
-}
+};
 
-function applyCss() {
+const applyCss = () => {
     const el = $.create('<style type="text/css"></style>');
 
     el.append(styles);
     $('head').append(el);
-}
+};
 
-function appendOverlay() {
+const appendOverlay = () => {
     const data = {
         tests: tests.map(test => ({ id: test.id, variants: test.variants })),
     };
 
     $('body').prepend(template(overlay, data));
-}
+};
 
 export default function showDevTools() {
     appendOverlay();
