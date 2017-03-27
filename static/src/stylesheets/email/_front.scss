@@ -121,6 +121,14 @@ $email-tones: (
     sleeve-notes: #ffbb00
 );
 
+// Defaults
+.container-title.has-top-border {
+    border-top: 3px solid #46bcdf;
+}
+.tone-external {
+    border-top: 1px solid #46bcdf;
+}
+
 @each $email, $tone-color in $email-tones {
     .#{$email} {
         .container-title.has-top-border {
