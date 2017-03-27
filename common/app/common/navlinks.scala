@@ -86,9 +86,7 @@ object NavLinks {
   /* ARTS */
   val culture = NavLink("arts", "/culture", "culture", longTitle = "culture home", iconName = "home")
   val film = NavLink("film", "/film", "film")
-  val filmAu = NavLink("film", "/au/film", "au/film")
   val tvAndRadio = NavLink("tv & radio", "/tv-and-radio", "tv-and-radio")
-  val tvAndRadioAu = NavLink("tv & radio", "/au/tv-and-radio", "au/tv-and-radio")
   val music = NavLink("music", "/music", "music")
   val games = NavLink("games", "/technology/games", "technology/games")
   val books = NavLink("books", "/books", "books")
@@ -114,7 +112,6 @@ object NavLinks {
   val travelUk = NavLink("UK", "/travel/uk", "travel/uk")
   val travelEurope = NavLink("europe", "/travel/europe", "travel/europe")
   val travelUs = NavLink("US", "/travel/usa", "travel/usa")
-  val travelAu = NavLink("travel", "/au/travel", "au/travel")
   val skiing = NavLink("skiing", "/travel/skiing", "travel/skiing")
   val travelAustralasia = NavLink("australasia", "/travel/australasia", "travel/australasia")
   val travelAsia = NavLink("asia", "/travel/asia", "travel/asia")
@@ -194,6 +191,10 @@ object NavLinks {
     "lifeandstyle/family",
     "lifeandstyle/home-and-garden",
     "lifeandstyle/love-and-sex",
+    "au/lifeandstyle/fashion",
+    "au/lifeandstyle/food-and-drink",
+    "au/lifeandstyle/relationships",
+    "au/lifeandstyle/health-and-wellbeing",
     "travel/uk",
     "travel/europe",
     "travel/usa",

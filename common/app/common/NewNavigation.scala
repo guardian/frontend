@@ -191,7 +191,7 @@ object NewNavigation {
       List(classical)
     )
     val au = NavLinkLists(
-      List(culture, filmAu, music, books, tvAndRadioAu, artAndDesign, stage),
+      List(culture, film, music, books, tvAndRadio, artAndDesign, stage),
       List(games, classical)
     )
     val us = NavLinkLists(
@@ -212,7 +212,7 @@ object NewNavigation {
       List(home, health, women, money)
     )
     val au = NavLinkLists(
-      List(lifestyle, travelAu, foodAu, relationshipsAu, fashionAu, healthAu),
+      List(lifestyle, travel, foodAu, relationshipsAu, fashionAu, healthAu),
       List(loveAndSex, family, women, home, money)
     )
     val us = NavLinkLists(
@@ -352,8 +352,11 @@ object NewNavigation {
       SectionsLink("lifeandstyle/women", women, Life),
       SectionsLink("lifeandstyle/health-and-wellbeing", health, Life),
       SectionsLink("lifeandstyle/family", family, Life),
-      SectionsLink("lifeandstyle/home-and-garden", home, Life),
-      SectionsLink("lifeandstyle/love-and-sex", loveAndSex, Life)
+      SectionsLink("lifeandstyle/love-and-sex", loveAndSex, Life),
+      SectionsLink("au/lifeandstyle/fashion", fashionAu, Life),
+      SectionsLink("au/lifeandstyle/food-and-drink", foodAu, Life),
+      SectionsLink("au/lifeandstyle/relationships", relationshipsAu, Life),
+      SectionsLink("au/lifeandstyle/health-and-wellbeing", healthAu, Life)
     )
 
     def getSectionLinks(sectionName: String, edition: Edition) = {
