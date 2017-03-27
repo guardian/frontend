@@ -1,0 +1,38 @@
+@(index: services.IndexPage)(implicit request: RequestHeader, context: model.ApplicationContext)
+@import common.{Edition, PagePaths}
+@import model.FrontProperties.empty
+@import services.IndexPage
+@import views.html.fragments.containers.facia_cards.{structuredDataContainer, containerScaffold}
+@import views.html.fragments.pagination
+
+@if(index.page.metadata.id == "help/accessibility-help") {
+    @containerScaffold("Preferences", "accesibility preferences") {
+        <div id="js-accessibility-preferences">Loading&hellip;</div>
+    }
+}
+
+<div class="l-side-margins">
+    <div class="u-cf index-page" data-link-name="Front | @request.path" role="main">
+
+        @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
+            @containers.map { containerDefinition =>
+                @structuredDataContainer(containerDefinition, empty)
+            }
+        }
+
+        @index.page.metadata.pagination.map { paginationInstance =>
+            <div class="fc-container__pagination">
+                @pagination(index.page.metadata.webTitle, paginationInstance, PagePaths.fromId(index.idWithoutEdition))
+            </div>
+        }
+
+        <div class="fc-container fc-container--commercial">@fragments.commercial.commercialComponent()</div>
+
+        @defining(IndexPage.makeLinkedData(index)) { linkedData =>
+            <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
+                @Html(model.meta.LinkedData.toJson(linkedData))
+            </script>
+        }
+
+    </div>
+</div>
