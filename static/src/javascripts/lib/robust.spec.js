@@ -9,13 +9,11 @@ describe('robust', () => {
     const ERROR = new Error('Something broke.');
     const META = { module: 'test' };
 
-    function noError() {
-        return true;
-    }
+    const noError = () => true;
 
-    function throwError() {
+    const throwError = () => {
         throw ERROR;
-    }
+    };
 
     test('catchErrorsAndLog()', () => {
         // mock window.console.warn, to check whether it was called
