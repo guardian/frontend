@@ -361,7 +361,7 @@
 .recipe__article--meta .content__series-label {
     float: none;
     line-height: 20px;
-    margin-bottom: 2px;
+    margin-bottom: $gs-gutter / 10;
 }
 
 .recipe__article--meta .content__series-label .content__series-label__link {
