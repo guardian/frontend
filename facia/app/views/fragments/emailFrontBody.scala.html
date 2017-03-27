@@ -11,9 +11,17 @@
 @import views.support.TrailCssClasses.toneClassFromStyle
 
 
+@fcItem(classes: Seq[String])(contents: Html) = {
+    <table class="fc-item"><tr><td class="fc-item__margin"><table class="fc-item__inner @classes.mkString(" ")">@contents</table></td></tr></table>
+}
+
+@row(classes: Seq[String])(contents: Html) = {
+    <tr><td @if(classes.nonEmpty) { class="@classes.mkString(" ")" }>@contents</td></tr>
+}
+
 @headline(card: ContentCard, isLarge: Boolean = false) = {
-    <a @Html(card.header.url.hrefWithRel) class="facia-link">
-        <h3 class="headline">
+    @row(Seq("headline")) {
+        <a @Html(card.header.url.hrefWithRel) class="facia-link">
             @card.header.kicker.map { kicker =>
                 <span class="fc-item__kicker">@Html(kicker.kickerHtml)</span>
                 <span class="kicker-separator">/</span>
@@ -30,27 +38,27 @@
                 }
             }
             @RemoveOuterParaHtml(card.header.headline)
-        </h3>
-        @if(card.header.quoted) {
-            @card.bylineText.map { byline => <h4 class="byline">@byline</h4> }
-        }
-        @card.starRating.map { numberOfStars =>
-            <p class="review-stars">
-                @for(i <- 0 to 4) {
-                    @defining(if(i < numberOfStars) "golden" else "grey") { positiveOrNegative =>
-                        @icon("star-" + positiveOrNegative, isLarge)
-                    }
+        </a>
+    }
+    @if(card.header.quoted) {
+        @card.bylineText.map { byline => @row(Seq("byline")){@byline} }
+    }
+    @card.starRating.map { numberOfStars =>
+        @row(Seq("review-stars")) {
+            @for(i <- 0 to 4) {
+                @defining(if(i < numberOfStars) "golden" else "grey") { positiveOrNegative =>
+                    @icon("star-" + positiveOrNegative, isLarge)
                 }
-            </p>
+            }
         }
-    </a>
+    }
 }
 
 @trailText(card: ContentCard) = {
     @card.trailText.map { trailText =>
-        <a @Html(card.header.url.hrefWithRel) class="facia-link">
-            <h4 class="trail-text">@Html(trailText)</h4>
-        </a>
+        @row(Seq("trail-text")) {
+            <a @Html(card.header.url.hrefWithRel) class="facia-link">@Html(trailText)</a>
+        }
     }
 }
 
@@ -59,10 +67,11 @@
     @trailText(card)
 }
 
+
 @faciaCardWithTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
-    @faciaCardFullRow(Seq(toneClassFromStyle(card.cardStyle)) ++ (if (withImage) Seq("fc-item--large") else Seq())) {
+    @fcItem(Seq(toneClassFromStyle(card.cardStyle)) ++ (if (withImage) Seq("fc-item--large") else Seq())) {
         @if(withImage) {
-            @imgFromCard(card)
+            @row(Seq()){@imgFromCard(card)}
         }
         @if(card.header.quoted) {
             @headlineAndTrailWithCutout(card, withImage)
@@ -75,10 +84,11 @@
 
 @faciaCardWithoutTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
     @imgFromCard(card, 5).filter(i => withImage).fold {
-        @faciaCardFullRow(Seq(toneClassFromStyle(card.cardStyle))) {
+        @fcItem(Seq(toneClassFromStyle(card.cardStyle))) {
             @headline(card, largeHeadline)
         }
     } { img =>
+        @* TODO: change to new style! *@
         @FaciaCard(Seq(), Row(Seq(toneClassFromStyle(card.cardStyle)),
             Column(smallWidth = 7, largeWidth = 7)(headline(card)),
             Column(smallWidth = 5, largeWidth = 5)(img)

@@ -12,7 +12,27 @@ $callout-padding: 0;
 $callout-border: none;
 
 
-@import 'foundation-emails/foundation-emails';
+.body {
+    background: $body-background;
+    height: 100%;
+    width: 100%;
+}
+
+.container {
+    background: $container-background;
+    width: $global-width;
+    margin: 0 auto;
+    text-align: inherit;
+}
+
+// table
+.fc-item__inner {
+    padding: 0;
+    width: 100%;
+    position: relative;
+}
+
+
 @import '_common';
 @import '_footer';
 @import '_tones';
@@ -43,7 +63,7 @@ table.fc-item {
 // The only reliable mechanism for margins in Outlook is padding applied to table cells.
 .fc-item__margin {
     width: 100%;
-    padding-bottom: $callout-margin-bottom;
+    padding-bottom: $global-margin;
 }
 
 // Internal padding on cards
@@ -77,8 +97,7 @@ table.fc-item {
 .trail-text,
 .review-stars {
     font-weight: normal;
-    padding: 0;
-    margin: 6px 10px 10px;
+    padding: 6px 10px 10px;
 }
 
 .headline,
