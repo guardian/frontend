@@ -9,20 +9,16 @@
    https://gist.github.com/gre/1650294
 */
 
-function easeIn(power: number): Function {
-    return t => t ** power;
-}
+const easeIn = (power: number): Function => t => t ** power;
 
-function easeOut(power: number): Function {
-    return t => 1 - Math.abs((t - 1) ** power);
-}
+const easeOut = (power: number): Function =>
+    t => 1 - Math.abs((t - 1) ** power);
 
-function easeInOut(power: number): Function {
-    return t =>
+const easeInOut = (power: number): Function =>
+    t =>
         t < 0.5
             ? easeIn(power)(t * 2) / 2
             : easeOut(power)(t * 2 - 1) / 2 + 0.5;
-}
 
 const functions = {
     // no easing, no acceleration
@@ -65,7 +61,7 @@ const functions = {
     easeInOutQuint: easeInOut(5),
 };
 
-function create(type: string, duration: number): Function {
+const create = (type: string, duration: number): Function => {
     const startTime = new Date();
     const ease = functions[type];
 
@@ -73,7 +69,7 @@ function create(type: string, duration: number): Function {
         const elapsed = new Date() - startTime;
         return ease(Math.min(1, elapsed / duration));
     };
-}
+};
 
 export default {
     functions,
