@@ -25,15 +25,15 @@
 }
 
 .recipe__article .recipe__article--structured-headline h1 {
-  @include f-headline;
-  font-size: 24px;
-  line-height: 28px;
-  font-weight: 900;
+    @include f-headline;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 900;
 
-  @include mq($from: tablet){
-    font-size: 28px;
-    line-height: 32px;
-  }
+    @include mq($from: tablet) {
+        font-size: 28px;
+        line-height: 32px;
+    }
 }
 
 
@@ -54,7 +54,7 @@
     margin-right: $gs-baseline / 2;
 
     &:hover {
-      border: 1px solid $neutral-2;
+        border: 1px solid $neutral-2;
     }
 }
 
@@ -269,30 +269,30 @@
 }
 
 .recipe__article--social {
-  position: relative;
-  height: calc(#{$gs-gutter} / 2 * 4.5);
-  width: 148px;
-  float: left;
+    position: relative;
+    height: calc(#{$gs-gutter} / 2 * 4.5);
+    width: 148px;
+    float: left;
 
-  .social {
-    height: $gs-baseline * 3;
-  }
-
-  .inline-share-facebook, .inline-share-twitter, .inline-share-email {
-    background-color: transparent;
-    border: 1px solid $neutral-3;
-
-    svg {
-      path {
-        fill: $neutral-2;
-      }
+    .social {
+        height: $gs-baseline * 3;
     }
 
-    &:hover {
-      background-color: transparent;
-      border: 1px solid $neutral-2;
+    .inline-share-facebook, .inline-share-twitter, .inline-share-email {
+        background-color: transparent;
+        border: 1px solid $neutral-3;
+
+        svg {
+            path {
+                fill: $neutral-2;
+            }
+        }
+
+        &:hover {
+            background-color: transparent;
+            border: 1px solid $neutral-2;
+        }
     }
-  }
 }
 
 .recipe__content, .recipe__standfirst {
@@ -540,7 +540,7 @@
 }
 
 .recipe__article--list-title {
-  margin-bottom: $gs-baseline * 1.5;
+    margin-bottom: $gs-baseline * 1.5;
 }
 
 .recipe__article--structured-byline {
