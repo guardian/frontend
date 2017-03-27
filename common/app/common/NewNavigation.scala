@@ -528,11 +528,6 @@ object NewNavigation {
 
     def simplifySectionId(sectionId: String) = {
       val sectionMap = Map(
-        "football/live" -> "football",
-        "football/tables" -> "football",
-        "football/competitions" -> "football",
-        "football/results" -> "football",
-        "football/fixtures" -> "football",
         "money/property" -> "money",
         "money/pensions" -> "money",
         "money/savings" -> "money",
@@ -568,6 +563,18 @@ object NewNavigation {
       sectionMap.getOrElse(sectionId, sectionId)
     }
 
+    def simplifyFootball(sectionId: String) = {
+      val sectionMap = Map(
+        "football/live" -> "football",
+        "football/tables" -> "football",
+        "football/competitions" -> "football",
+        "football/results" -> "football",
+        "football/fixtures" -> "football"
+      )
+
+      sectionMap.getOrElse(sectionId, sectionId)
+    }
+
     def getSubSectionNavLinks(id: String, edition: Edition, isFront: Boolean) = {
       if (isFront || frontLikePages.contains(id)) {
 
@@ -576,7 +583,7 @@ object NewNavigation {
 
           subNav.getEditionalisedSubSectionLinks(edition).mostPopular
         } else {
-          val subSectionList = subSectionLinks.filter(_.pageId == id)
+          val subSectionList = subSectionLinks.filter(_.pageId == simplifyFootball(id))
 
           if (subSectionList.isEmpty) {
             NewNavigation.SectionLinks.getSectionLinks(id, edition)
