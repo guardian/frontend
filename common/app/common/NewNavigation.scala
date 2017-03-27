@@ -65,7 +65,7 @@ object NewNavigation {
     val name = "news"
 
     val uk = NavLinkLists(List(headlines, ukNews, world, business, environment, tech, football))
-    val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, auImmigration, football))
+    val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, environment, economy, football))
     val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, science, soccer))
     val int = NavLinkLists(List(headlines, world, ukNews, science, cities, globalDevelopment, football))
   }
@@ -78,8 +78,8 @@ object NewNavigation {
       List(science, globalDevelopment, cities, obituaries)
     )
     val au = NavLinkLists(
-      List(headlines, australiaNews, world, auPolitics, auImmigration),
-      List(indigenousAustralia, economy, tech, environment, media, obituaries)
+      List(headlines, australiaNews, world, auPolitics, environment, economy),
+      List(indigenousAustralia, tech, environment, media, obituaries)
     )
     val us = NavLinkLists(
       List(headlines, usNews, world, science, usPolitics, business),
@@ -116,10 +116,10 @@ object NewNavigation {
     val au = NavLinkLists(
       List(
         opinion,
-        theGuardianView,
         columnists,
         cartoons,
-        inMyOpinion
+        indigenousAustralia,
+        theGuardianView
       ),
       List(
         NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
@@ -170,8 +170,8 @@ object NewNavigation {
       List(boxing, rugbyLeague, racing, usSports, golf)
     )
     val au = NavLinkLists(
-      List(sport, football, rugbyUnion, cricket, AFL, tennis),
-      List(aLeague, NRL, australiaSport)
+      List(sport, football, cricket, AFL, NRL, tennis, rugbyUnion),
+      List(aLeague, australiaSport)
     )
     val us = NavLinkLists(
       List(sport, soccer, NFL, tennis, MLB, MLS),
@@ -187,16 +187,16 @@ object NewNavigation {
     val name = "arts"
 
     val uk = NavLinkLists(
-      List(culture, tvAndRadio, music, film, books, games, artAndDesign),
-      List(stage, classical)
+      List(culture, tvAndRadio, music, film, stage, books, games, artAndDesign),
+      List(classical)
     )
     val au = NavLinkLists(
-      List(culture, books, music, artAndDesign, film, games),
-      List(stage, classical)
+      List(culture, film, music, books, tvAndRadio, artAndDesign, stage),
+      List(games, classical)
     )
     val us = NavLinkLists(
-      List(culture, books, music, artAndDesign, tvAndRadio, stage),
-      List(classical, film, games)
+      List(culture, film, books, music, artAndDesign, tvAndRadio, stage),
+      List(classical, games)
     )
     val int = NavLinkLists(
       List(culture, books, music, tvAndRadio, artAndDesign, film),
@@ -212,8 +212,8 @@ object NewNavigation {
       List(home, health, women, money)
     )
     val au = NavLinkLists(
-      List(lifestyle, fashion, food, loveAndSex, health),
-      List(family, women, travel, home, money)
+      List(lifestyle, travel, food, loveAndSex, fashion, health),
+      List(family, women, home, money)
     )
     val us = NavLinkLists(
       List(lifestyle, fashion, food, recipes, loveAndSex, home),
