@@ -1,5 +1,6 @@
 define([
     'lodash/arrays/uniq',
+    'common/modules/experiments/ab',
     'commercial/modules/commercial-features',
     'common/modules/commercial/targeting-tool',
     'common/modules/commercial/acquisitions-view-log',
@@ -15,6 +16,7 @@ define([
     'raw-loader!common/views/acquisitions-epic-control.html'
 ], function (
     uniq,
+    ab,
     commercialFeatures,
     targetingTool,
     viewLog,
@@ -30,6 +32,15 @@ define([
     acquisitionsEpicControlTemplate
 ) {
 
+    /*
+    I want to do this...
+    var routeToBundlePage = ab.testCanBeRun('BundlesLandingPage') && ab.getTestVariantId('BundlesLandingPage') === 'intest';
+    and not this... */
+    var routeToBundlePage = storage.local.get('gu.ab.participations') &&
+        storage.local.get('gu.ab.participations')['BundlesLandingPage'] &&
+        storage.local.get('gu.ab.participations')['BundlesLandingPage'].variant === 'intest';
+
+    var bundleBaseURL = 'https://membership.theguardian.com/bundle';
     var membershipBaseURL = 'https://membership.theguardian.com/supporter';
     var contributionsBaseURL = 'https://contribute.theguardian.com';
 
@@ -60,8 +71,8 @@ define([
 
     function controlTemplate(variant) {
         return template(acquisitionsEpicControlTemplate, {
-            membershipUrl: variant.membershipURL,
-            contributionUrl: variant.contributeURL,
+            membershipUrl: routeToBundlePage ? bundleBaseURL : variant.membershipURL,
+            contributionUrl: routeToBundlePage ? bundleBaseURL : variant.contributeURL,
             componentName: variant.componentName
         });
     }
@@ -141,8 +152,8 @@ define([
         this.membershipCampaignCode = getCampaignCode(test.membershipCampaignPrefix, this.campaignId, this.id);
         this.campaignCodes = uniq([this.contributeCampaignCode, this.membershipCampaignCode]);
 
-        this.contributeURL = options.contributeURL || this.makeURL(contributionsBaseURL, this.contributeCampaignCode);
-        this.membershipURL = options.membershipURL || this.makeURL(membershipBaseURL, this.membershipCampaignCode);
+        this.contributeURL = routeToBundlePage ? this.makeURL(bundleBaseURL, this.contributeCampaignCode) : (options.contributeURL || this.makeURL(contributionsBaseURL, this.contributeCampaignCode));
+        this.membershipURL = routeToBundlePage ? this.makeURL(bundleBaseURL, this.membershipCampaignCode) : (options.membershipURL || this.makeURL(membershipBaseURL, this.membershipCampaignCode));
 
         this.componentName = 'mem_acquisition_' + trackingCampaignId + '_' + this.id;
 

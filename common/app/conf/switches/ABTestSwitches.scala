@@ -230,4 +230,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 3, 30),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-bundles-landing-page",
+    "Send some traffic to new bundle landing page",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 6),
+    exposeClientSide = true
+  )
 }
