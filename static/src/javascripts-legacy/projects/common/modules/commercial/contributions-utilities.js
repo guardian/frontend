@@ -87,7 +87,10 @@ define([
 
         var tagsMatch = doTagsMatch(testConfig);
 
+        var canReasonablyAskForMoney = commercialFeatures.canReasonablyAskForMoney;
+
         return enoughTimeSinceLastContribution &&
+            canReasonablyAskForMoney &&
             worksWellWithPageTemplate &&
             inCompatibleLocation &&
             locationCheck &&
