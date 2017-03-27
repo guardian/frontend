@@ -1,6 +1,10 @@
 // @flow
 
+import Chance from 'chance';
 import easing from 'lib/easing';
+
+const chance = new Chance();
+jest.useRealTimers();
 
 const TESTS = {
     linear: [[2, 0], [3, -1], [4, -2]],
@@ -19,6 +23,7 @@ const TESTS = {
 };
 
 describe('easing', () => {
+    // test easing methods
     Object.keys(TESTS).forEach(name => {
         const values = TESTS[name];
 
@@ -27,5 +32,21 @@ describe('easing', () => {
                 expect(easing.functions[name](actual)).toBe(expected);
             });
         });
+    });
+
+    test('create()', () => {
+        const OriginalDate = global.Date;
+        const ELAPSED = chance.integer({ min: 0, max: 80 });
+        const DURATION = chance.integer({ min: ELAPSED, max: 300 });
+        const ELAPSED_DATE = `1970-01-01T00:00:00.0${ELAPSED}Z`;
+        global.Date = jest.fn(() => new OriginalDate(0));
+
+        const ease = easing.create('linear', DURATION);
+        expect(ease()).toBe(0);
+
+        global.Date = jest.fn(() => new OriginalDate(ELAPSED_DATE));
+        expect(ease()).toBe(ELAPSED / DURATION);
+
+        global.Date = OriginalDate;
     });
 });
