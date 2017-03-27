@@ -24,6 +24,7 @@ define([
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
     'common/modules/experiments/tests/reading-time',
+    'common/modules/experiments/tests/email-demand-tests',
     'ophan/ng'
 ], function (reportError,
              config,
@@ -50,6 +51,7 @@ define([
              SleevenotesLegacyEmailVariant,
              IncreaseInlineAds,
              ReadingTime,
+             EmailDemandTests,
              ophan
     ) {
     var TESTS = compact([
@@ -67,7 +69,8 @@ define([
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
         new IncreaseInlineAds(),
-        new ReadingTime()
+        new ReadingTime(),
+        new EmailDemandTests()
     ].concat(MembershipEngagementBannerTests));
 
     var participationsKey = 'gu.ab.participations';
