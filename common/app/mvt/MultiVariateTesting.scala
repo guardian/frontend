@@ -16,29 +16,6 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-
-object ABNewNavVariantSeven extends TestDefinition(
-  name = "ab-new-nav-variant-seven",
-  description = "users in this test will see the new header seventh variant",
-  owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2017, 3, 23)
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header").contains("variantseven")
-  }
-}
-
-object ABNewNavControl extends TestDefinition(
-  name = "ab-new-nav-control",
-  description = "control for the new header test",
-  owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2017, 3, 23)
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header").contains("control")
-  }
-}
-
 object CommercialClientLoggingVariant extends TestDefinition(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
@@ -72,6 +49,17 @@ object ABNewRecipeDesign extends TestDefinition(
   }
 }
 
+object PolyfillIO extends TestDefinition(
+  name = "polyfill-io",
+  description = "Users in the test will use polyfill.io to polyfill their browser capabilities",
+  owners = Seq(Owner.withGithub("gustavpursche"), Owner.withGithub("gtrufitt")),
+  sellByDate = new LocalDate(2017, 3, 29)
+  ) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-polyfill-io").contains("true")
+  }
+}
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -85,11 +73,10 @@ trait ServerSideABTests {
 
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
-    ABNewNavVariantSeven,
-    ABNewNavControl,
     CommercialClientLoggingVariant,
     YouTubePosterOverride,
-    ABNewRecipeDesign
+    ABNewRecipeDesign,
+    PolyfillIO
   )
 }
 

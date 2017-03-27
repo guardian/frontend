@@ -2,7 +2,7 @@ const fs = require('fs');
 
 const takeWhile = require('lodash.takewhile');
 
-function notify(message, userOptions = {}, type = 'log') {
+const notify = (message, userOptions = {}, type = 'log') => {
     // Set the default text colour for info to black as white was hard to see
     const options = type === 'info'
         ? Object.assign(
@@ -22,7 +22,7 @@ function notify(message, userOptions = {}, type = 'log') {
             `${(options.heading ? `\n${options.heading}:\n\n` : '') + message}\n\n(hint: you probably want to run \`make install\`)\n`
         );
     }
-}
+};
 
 switch (process.argv[2]) {
     case 'describeMakefile': {

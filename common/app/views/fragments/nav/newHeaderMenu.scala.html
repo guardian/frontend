@@ -83,7 +83,6 @@
                         data-edition=@{edition.id.toLowerCase}>
 
                         <a href="@item.url" data-link-name="nav2 : @item.title">
-                            @fragments.inlineSvg(item.iconName, "icon", List("main-menu__icon"))
                             @item.title
                         </a>
                     </li>
@@ -133,7 +132,7 @@
 
         <div class="new-header-feedback">
             @fragments.inlineSvg("information-circle", "icon", List("main-menu__icon", "main-menu__icon--information"))
-            This navigation is new. We'd appreciate your feedback. <a href="https://goo.gl/forms/yZQtbFVli8ABMYJF2">Share your thoughts here.</a>
+            This navigation is new. We'd appreciate your feedback. <a href="https://goo.gl/forms/yZQtbFVli8ABMYJF2" data-link-name="nav2: survey">Share your thoughts here.</a>
         </div>
     </div>
 </div>

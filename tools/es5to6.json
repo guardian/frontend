@@ -1,6 +1,5 @@
 {
   "sndrs": [
-    "lib/$css.js",
     "lib/add-event-listener.js",
     "lib/ajax.js",
     "lib/atob.js",
@@ -20,7 +19,6 @@
     "lib/fastdom-promise.js"
   ],
   "Simon Adcock": [
-    "lib/fetch-json.js",
     "lib/fetch.js",
     "lib/formatters.js",
     "lib/formInlineLabels.js",
@@ -35,21 +33,16 @@
     "lib/pad.js",
     "lib/page.js",
     "lib/picturefill.js",
-    "lib/private-browsing.js",
     "lib/proximity-loader.js",
     "lib/queue.js",
     "lib/QueueAsync.js",
     "lib/raven.js"
   ],
   "Gustav Pursche": [
-    "lib/report-error.js",
     "lib/robust.js",
     "lib/scroller.js",
-    "lib/sha1.js",
     "lib/steady-page.js",
     "lib/storage.js",
-    "lib/time.js",
-    "lib/timeout.js",
     "lib/url.js"
   ]
 }

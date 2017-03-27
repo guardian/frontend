@@ -3,8 +3,8 @@ define([
 ], function (config) {
     return function () {
         this.id = 'PaidContentVsOutbrain';
-        this.start = '2017-02-22';
-        this.expiry = '2017-03-22';
+        this.start = '2017-02-25';
+        this.expiry = '2017-03-27';
         this.author = 'Regis Kuckaertz';
         this.description = 'Measure the revenue generated (or lost) by replacing the Outbrain widget with a paid content widget';
         this.audience = .05;

@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "JSON2": "^0.1.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-runtime": "^6.20.0",
     "bean": "~1.0.14",
@@ -11,10 +10,8 @@
     "classnames": "~2.2.0",
     "curl": "cujojs/curl#0.8.9",
     "domready": "^1.0.8",
-    "es5-shim": "^4.5.9",
     "fastdom": "0.8.5",
     "fence": "guardian/fence.git#~0.2.11",
-    "html5shiv": "^3.7.3",
     "lodash-amd": "~2.4.1",
     "ophan-tracker-js": "^1.3.6",
     "qwery": "3.4.2",
@@ -53,6 +50,7 @@
     "bs-fullscreen-message": "^1.1.0",
     "btoa": "1.1.2",
     "chalk": "^1.1.3",
+    "chance": "^1.0.6",
     "check-dependencies": "^0.11.0",
     "chokidar": "^1.6.1",
     "cp-file": "^4.1.0",
@@ -65,7 +63,7 @@
     "eslint-import-resolver-webpack": "^0.8.0",
     "eslint-plugin-flow-header": "https://github.com/eirikurn/eslint-plugin-flow-header",
     "eslint-plugin-flowtype": "^2.30.0",
-    "eslint-plugin-guardian-frontend": "file:tools/eslint-plugin-guardian-frontend",
+    "eslint-plugin-guardian-frontend": "file:dev/eslint-plugin-guardian-frontend",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jasmine": "^1.8.1",
     "eslint-plugin-jsx-a11y": "2.2.3",
@@ -115,6 +113,7 @@
     "prettier": "^0.20.0",
     "prettysize": "^0.0.3",
     "raw-loader": "^0.5.1",
+    "request": "^2.81.0",
     "requireindex": "^1.1.0",
     "requirejs": "^2.3.2",
     "rimraf": "^2.5.4",
@@ -130,6 +129,8 @@
     "svgo": "^0.7.1",
     "uglify-js": "^2.7.4",
     "webpack": "~2.2.0",
+    "webpack-bundle-analyzer": "^2.3.1",
+    "webpack-merge": "^4.1.0",
     "webpack-visualizer-plugin": "^0.1.10",
     "yargs": "^6.0.0"
   },
@@ -139,6 +140,7 @@
   "jest": {
     "roots": [
       "<rootDir>/static/src/javascripts",
+      "<rootDir>/dev",
       "<rootDir>/tools"
     ],
     "moduleDirectories": [
@@ -165,7 +167,7 @@
       "ophan/embed": "ophan-tracker-js/build/ophan.embed"
     },
     "testResultsProcessor": "jest-teamcity-reporter",
-    "setupTestFrameworkScriptFile": "<rootDir>/jestSetup.js"
+    "setupTestFrameworkScriptFile": "<rootDir>/dev/jest.setupTestFrameworkScriptFile.js"
   },
   "scripts": {
     "postinstall": "./tools/task-runner/runner githooks --verbose",

@@ -1,7 +1,8 @@
 @(page: model.Page, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import model.Page.getContent
 @import play.api.Mode.Dev
-@import conf.switches.Switches.preflightServerSideAdCallSwitch
+@import conf.switches.Switches.{preflightServerSideAdCallSwitch, PolyfillIO}
+@import conf.Configuration
 
 <meta charset="utf-8" />
 <!--
@@ -22,8 +23,11 @@ http://developers.theguardian.com/join-the-team.html
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
 @fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
 
-@if(!(context.environment.mode == Dev)) {
-    <link rel="prefetch" href="@Static("javascripts/graun.standard.js")">
+<link rel="prefetch" href="@Static("javascripts/graun.standard.js")">
+@if(PolyfillIO.isSwitchedOn) {
+    <link rel="prefetch" href="@common.Assets.js.polyfillioUrl">
+} else {
+    <link rel="prefetch" href="@Static("javascripts/vendor/polyfillio.fallback.js")">
 }
 
 @*
