@@ -1,7 +1,6 @@
 define([
     'Promise',
     'lib/$',
-    'lib/$css',
     'lib/config',
     'lib/mediator',
     'lib/fastdom-promise',
@@ -11,7 +10,6 @@ define([
 ], function (
     Promise,
     $,
-    $css,
     config,
     mediator,
     fastdom,
@@ -29,7 +27,7 @@ define([
         var $mainCol;
 
         // are article aside ads disabled, or secondary column hidden?
-        if (!(commercialFeatures.articleAsideAdverts && $col.length && $css($col, 'display') !== 'none')) {
+        if (!(commercialFeatures.articleAsideAdverts && $col.length && $col.css('display') !== 'none')) {
             stop();
             return Promise.resolve(false);
         }

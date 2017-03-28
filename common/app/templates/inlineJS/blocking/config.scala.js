@@ -21,6 +21,7 @@ window.guardian = {
     css: {
         loaded: false
     },
+    polyfilled: false,
     adBlockers: {
         active: undefined,
         onDetect: []

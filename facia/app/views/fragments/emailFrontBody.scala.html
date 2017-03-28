@@ -36,13 +36,13 @@
             @card.bylineText.map { byline => <h4 class="byline">@byline</h4> }
         }
         @card.starRating.map { numberOfStars =>
-            <div class="review-stars">
+            <p class="review-stars">
                 @for(i <- 0 to 4) {
                     @defining(if(i < numberOfStars) "golden" else "grey") { positiveOrNegative =>
                         @icon("star-" + positiveOrNegative, isLarge)
                     }
                 }
-            </div>
+            </p>
         }
     </a>
 }
@@ -56,44 +56,34 @@
 }
 
 @headlineAndTrailWithCutout(card: ContentCard, withImage: Boolean) = {
-    @fullRow(Seq("facia-card__text")) {
-        @headline(card, isLarge = withImage)
-    }
-    @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
-        @trailText(card)
-    }
+    @headline(card, isLarge = withImage)
+    @trailText(card)
 }
 
 @faciaCardWithTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
-    @paddedRow(Seq(toneClassFromStyle(card.cardStyle))) {
-        <div class="facia-card @if(withImage){facia-card--large}">
-            @if(withImage) { @imgFromCard(card) }
-            @if(card.header.quoted) {
-                @headlineAndTrailWithCutout(card, withImage)
-            } else {
-                @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
-                    @headline(card, isLarge = largeHeadline)
-                    @trailText(card)
-                }
-            }
-        </div>
+    @faciaCardFullRow(Seq(toneClassFromStyle(card.cardStyle)) ++ (if (withImage) Seq("fc-item--large") else Seq())) {
+        @if(withImage) {
+            @imgFromCard(card)
+        }
+        @if(card.header.quoted) {
+            @headlineAndTrailWithCutout(card, withImage)
+        } else {
+            @headline(card, isLarge = largeHeadline)
+            @trailText(card)
+        }
     }
 }
 
 @faciaCardWithoutTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
-    @paddedRow(Seq(toneClassFromStyle(card.cardStyle))) {
-        <div class="facia-card">
-            @if(withImage && imgFromCard(card).isDefined) {
-                @fullRowWithSubColumns() {
-                    @subColumn(7, Seq("facia-card__text")) { @headline(card) }
-                    @subColumn(5, Seq("facia-card__text"), last = true) { @imgFromCard(card, 5) }
-                }
-            } else {
-                @fullRow(Seq("facia-card__text", "facia-card__text--last")) {
-                    @headline(card, largeHeadline)
-                }
-            }
-        </div>
+    @imgFromCard(card, 5).filter(i => withImage).fold {
+        @faciaCardFullRow(Seq(toneClassFromStyle(card.cardStyle))) {
+            @headline(card, largeHeadline)
+        }
+    } { img =>
+        @FaciaCard(Seq(), Row(Seq(toneClassFromStyle(card.cardStyle)),
+            Column(smallWidth = 7, largeWidth = 7)(headline(card)),
+            Column(smallWidth = 5, largeWidth = 5)(img)
+        )).render
     }
 }
 
@@ -129,8 +119,8 @@
 }
 
 @renderContentContainer(collection: EmailContentContainer, collectionIndex: Int) = {
-    @paddedRow {
-        <h2 class="container-title @if(collectionIndex > 0) { container-title--not-first }">
+    @fullRow {
+        <h2 class="container-title @if(collectionIndex > 0) { has-top-border }">
             @collection.displayName
         </h2>
     }
@@ -231,7 +221,7 @@
 }
 
 @page.frontProperties.onPageDescription.map { description =>
-    @paddedRow {
+    @fullRow {
         <p class="message">@Html(description)</p>
     }
 }

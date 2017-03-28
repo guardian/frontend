@@ -1,4 +1,5 @@
 define([
+    'lodash/collections/reduce',
     'common/modules/experiments/segment-util',
     'common/modules/experiments/test-can-run-checks',
     'common/modules/commercial/acquisitions-view-log',
@@ -7,9 +8,11 @@ define([
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
     'common/modules/experiments/tests/contributions-epic-regulars-v2',
     'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
-    'common/modules/experiments/tests/acquisitions-epic-design-variations-v2',
-    'common/modules/experiments/tests/contributions-epic-laundromat'
+    'common/modules/experiments/tests/acquisitions-epic-design-variations-v3',
+    'common/modules/experiments/tests/contributions-epic-laundromat',
+    'common/modules/experiments/tests/acquisitions-epic-vs-epic-and-engagement-banner'
 ], function (
+    reduce,
     segmentUtil,
     testCanRunChecks,
     viewLog,
@@ -18,8 +21,9 @@ define([
     askFourEarning,
     regularsV2,
     acquisitionsEpicArticle50Trigger,
-    acquisitionsEpicDesignVariationsV2,
-    laundromat
+    acquisitionsEpicDesignVariationsV3,
+    laundromat,
+    acquisitionsEpicVsEpicAndEngagementBanner
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
@@ -28,12 +32,44 @@ define([
         alwaysAsk,
         laundromat,
 		regularsV2,
-        acquisitionsEpicDesignVariationsV2,
+        acquisitionsEpicDesignVariationsV3,
+        acquisitionsEpicVsEpicAndEngagementBanner,
         askFourEarning,
         acquisitionsEpicArticle50Trigger,
-        brexit];
+        brexit
+    ];
+
+    var epicEngagementBannerTests = reduce(tests, function(out, test) {
+        var testInstance = new test();
+        if (testInstance.isEngagementBannerTest) {
+            out.push(testInstance)
+        }
+        return out;
+    }, []);
+
+    function nonOutbrainCompliantVariantIds(testInstance) {
+        return reduce(testInstance.variants, function(out, variant) {
+            if (!variant.isOutbrainCompliant) {
+                out.push(variant.id)
+            }
+            return out;
+        }, [])
+    }
+
+    var abTestClashData = tests.map(function(test) {
+        var testInstance = new test();
+        return {
+            name: testInstance.id,
+            variants: nonOutbrainCompliantVariantIds(testInstance)
+        }
+    });
 
     return {
+
+        epicEngagementBannerTests: epicEngagementBannerTests,
+
+        abTestClashData: abTestClashData,
+
         getTest: function() {
             var eligibleTests = tests.filter(function (test) {
                 var t = new test();

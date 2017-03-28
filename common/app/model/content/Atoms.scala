@@ -331,7 +331,8 @@ object RecipeAtom {
       .map(formatQuantity)
       .orElse(ingredient.quantityRange.map(range => s"${formatQuantity(range.from)}-${formatQuantity(range.to)}" ))
       .getOrElse("")
-    s"""${q} ${formatUnit(ingredient.unit.getOrElse(""))} ${ingredient.item}"""
+    val comment = ingredient.comment.fold("")(c => s", $c")
+    s"""${q} ${formatUnit(ingredient.unit.getOrElse(""))} ${ingredient.item}${comment}"""
   }
 
   private def formatUnit(unit: String): String = {

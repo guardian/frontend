@@ -345,6 +345,7 @@ object NewNavigation {
       SectionsLink("society", society, Life),
       SectionsLink("lifeandstyle/food-and-drink", food, Life),
       SectionsLink("tone/recipes", recipes, Life),
+      SectionsLink("lifeandstyle/women", women, Life),
       SectionsLink("lifeandstyle/health-and-wellbeing", health, Life),
       SectionsLink("lifeandstyle/family", family, Life),
       SectionsLink("lifeandstyle/home-and-garden", home, Life),
@@ -391,8 +392,8 @@ object NewNavigation {
     )
 
     val worldSubNav = NavLinkLists(
-      List(world, europe, usNews, americas, asia, australiaNews),
-      List(africa, middleEast, cities, globalDevelopment)
+      List(world, europe, usNews, americas, asia, australiaNews, middleEast),
+      List(africa, cities, globalDevelopment)
     )
 
     val moneySubNav = NavLinkLists(List(money, property, pensions, savings, borrowing, careers))

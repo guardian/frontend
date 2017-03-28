@@ -206,6 +206,19 @@ define([
         });
 
         // third-parties wish to access our page targeting, before the googletag script is loaded.
+        page.appNexusPageTargeting = url.constructQuery({
+            pt1: pageTargeting.url,
+            pt2: pageTargeting.edition,
+            pt3: pageTargeting.ct,
+            pt4: pageTargeting.p,
+            pt5: pageTargeting.k ? pageTargeting.k.toString() : '', // makes it comma seperated
+            pt6: pageTargeting.su,
+            pt7: pageTargeting.bp,
+            pt8: pageTargeting.x,
+            pt9: [pageTargeting.gdncrm, pageTargeting.pv, pageTargeting.co, pageTargeting.tn, pageTargeting.slot].join("|")
+        });
+
+        // This can be removed once we get sign-off from third parties who prefer to use appNexusPageTargeting.
         page.pageAdTargeting = pageTargeting;
 
         return pageTargeting;
