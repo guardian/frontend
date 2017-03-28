@@ -97,8 +97,8 @@ define([
             range,
             rect,
             top,
-            twitterMessage,
-            editHref,
+            //twitterMessage,
+            //editHref,
             disagreeHref;
 
         if (selection && selection.rangeCount > 0 && selection.toString()) {
@@ -114,7 +114,7 @@ define([
             // explainers http://internal.content.guardianapis.com/atoms?types=explainer&page-size=200&q=brexit&searchFields=data.title
             // question and answers 
 
-            twitterMessage = range.toString();
+            //twitterMessage = range.toString();
 
 
             if (!isValidSelection(range)) {
