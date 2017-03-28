@@ -44,7 +44,6 @@ define([
         var atomId = $(el).data('media-id');
         var duration = $(el).data('duration');
         var $currentTime = $('.js-youtube-current-time');
-        var posterImageSrc = posterImage ? posterImage.style.backgroundImage : null;
         var playTimer;
 
         tracking.init(atomId);
