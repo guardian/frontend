@@ -79,6 +79,8 @@ define([
         tailorData[url] = data;
 
         storage.local.set('gu.tailor', tailorData, {expires: Date.now() + hour});
+
+        return Promise.resolve(data);
     }
 
     function handleError(url, error) {
