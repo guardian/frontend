@@ -89,5 +89,19 @@ describe('storage', () => {
                 expect(engine.get(key)).toEqual(data);
             });
         });
+
+        test(`${storageType} - getRaw()`, () => {
+            IO.forEach(({ key, expected }) => {
+                expect(engine.getRaw(key)).toBe(expected);
+            });
+        });
+
+        test(`${storageType} - remove()`, () => {
+            IO.forEach(({ key }) => {
+                engine.storage.removeItem.mockClear();
+                engine.remove(key);
+                expect(engine.storage.removeItem).toHaveBeenCalledWith(key);
+            });
+        });
     });
 });

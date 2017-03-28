@@ -42,7 +42,7 @@ class Storage {
 
         // try and parse the data
         try {
-            data = JSON.parse(this.storage.getItem(key));
+            data = JSON.parse(this.getRaw(key));
             if (data === null) {
                 return null;
             }
