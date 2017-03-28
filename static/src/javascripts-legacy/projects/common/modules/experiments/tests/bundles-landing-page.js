@@ -1,18 +1,24 @@
 define([
     'bean',
+    'fastdom',
     'qwery',
     'lib/config',
     'lib/detect',
-    'commercial/modules/user-features'
+    'lib/mediator',
+    'lib/$'
 
 ], function (
     bean,
+    fastdom,
     qwery,
     config,
     detect,
-    userFeatures
+    mediator,
+    $
 ) {
     return function () {
+        var self = this;
+
         this.id = 'BundlesLandingPage';
         this.start = '2017-03-24';
         this.expiry = '2017-04-06'; // Thursday 6th April
@@ -28,19 +34,56 @@ define([
         this.hypothesis = 'People want recurring contributions, and the landing page serves all options';
 
         this.canRun = function () {
-            return !userFeatures.isPayingMember();
+            return config.page.edition.toUpperCase() === 'UK';
         };
 
         this.completeFunc = function(complete) {
-            // fire on Epic's [Become... ->] or [Make... ->] button click
-            bean.on(qwery('.contributions__option-button')[0], 'click', complete);
-            bean.on(qwery('.contributions__option-button')[1], 'click', complete);
+            // fire on Epic's [Make a monthly payment ->] or [Make a one-off payment ->] button clicks
+            bean.on(qwery('.support__rewritten'), 'click', complete);
+        };
+
+        this.rewriteCtaButtons = function() {
+            var buttons = document.querySelectorAll('.contributions__epic .contributions__option-button'),
+                btnContrib = null,
+                btnSupport = null,
+                supportHref = null;
+
+            for (var i = 0; i < buttons.length; i++) {
+                var href = buttons[i].getAttribute('href'),
+                    hrefParts = href.split('?');
+
+                if (href.indexOf('membership.theguardian.com') > -1) {
+                    btnSupport = $('#' + buttons[i].id);
+                    supportHref = config.page.supportUrl + '?' + hrefParts[1];
+                } else {
+                    btnContrib = $('#' + buttons[i].id);
+                }
+            }
+
+            if (btnContrib) {
+                fastdom.write(function() {
+                    btnContrib.text('Make a one-off payment');
+                    btnContrib.addClass('support__rewritten');
+                });
+            }
+
+            if (btnSupport && supportHref) {
+                fastdom.write(function() {
+                    btnSupport.attr('href', supportHref);
+                    btnSupport.addClass('support__rewritten');
+                    btnSupport.text('Make a monthly payment');
+                });
+
+            }
+
         };
 
         this.variants = [
             {
                 id: 'intest',
-                test: function(){},
+                test: function() {
+                    mediator.on('epic:inpage', self.rewriteCtaButtons);
+                },
                 success: this.completeFunc
             }
         ];
