@@ -514,7 +514,7 @@ trait FeatureSwitches {
     "When ON, email styles will be stripped from the <head> and inlined into HTML style attributes",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 4, 28),
+    sellByDate = never,
     exposeClientSide = false
   )
 
