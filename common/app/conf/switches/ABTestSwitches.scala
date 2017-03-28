@@ -116,7 +116,7 @@ trait ABTestSwitches {
     "Assign some of the new sleeve notes subscribers to receive the new email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
 
@@ -126,7 +126,7 @@ trait ABTestSwitches {
     "Assign some of the new sleeve notes subscribers to receive the old email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
 
