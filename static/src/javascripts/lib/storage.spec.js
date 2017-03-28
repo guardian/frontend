@@ -43,7 +43,8 @@ describe('storage', () => {
     ['session', 'local'].forEach(storageType => {
         const engine = storages[storageType];
 
-        beforeEach(() => {
+        beforeAll(() => {
+            // jsdom doesn't support localStorage/ sessionStorage
             window[`${storageType}Storage`] = {
                 getItem: jest.fn(key => IO.find(item => item.key === key).expected),
                 setItem: jest.fn(),
@@ -51,6 +52,9 @@ describe('storage', () => {
             };
 
             engine.storage = window[`${storageType}Storage`];
+        });
+
+        beforeEach(() => {
             engine.available = true;
         });
 
@@ -88,6 +92,40 @@ describe('storage', () => {
             IO.forEach(({ key, data }) => {
                 expect(engine.get(key)).toEqual(data);
             });
+        });
+
+        test(`${storageType} - get() with expired item`, () => {
+            IO
+                .filter(item => item.options && item.options.expires)
+                .forEach(expired => {
+                    const {key} = expired;
+                    const OriginalDate = global.Date;
+
+                    global.Date = jest.fn(dateString => new OriginalDate(dateString || '2100-01-02'));
+
+                    expect(engine.get(key)).toEqual(null);
+                    expect(engine.storage.removeItem).toHaveBeenCalledWith(key);
+                    engine.storage.removeItem.mockClear();
+
+                    global.Date = OriginalDate;
+                });
+        });
+
+        test(`${storageType} - get() with non-expired item`, () => {
+            IO
+                .filter(item => item.options && item.options.expires)
+                .forEach(expired => {
+                    const {key, data} = expired;
+                    const OriginalDate = global.Date;
+
+                    global.Date = jest.fn(dateString => new OriginalDate(dateString || '2099-01-01'));
+
+                    expect(engine.get(key)).toEqual(data);
+                    expect(engine.storage.removeItem).not.toHaveBeenCalled();
+                    engine.storage.removeItem.mockClear();
+
+                    global.Date = OriginalDate;
+                });
         });
 
         test(`${storageType} - getRaw()`, () => {
