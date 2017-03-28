@@ -44,13 +44,13 @@ describe('storage', () => {
         const engine = storages[storageType];
 
         beforeEach(() => {
-            window.localStorage = window.sessionStorage = {
+            window[`${storageType}Storage`] = {
                 getItem: jest.fn(key => IO.find(item => item.key === key).expected),
                 setItem: jest.fn(),
                 removeItem: jest.fn(),
             };
 
-            engine.setWindow(window);
+            engine.storage = window[`${storageType}Storage`];
             engine.available = true;
         });
 

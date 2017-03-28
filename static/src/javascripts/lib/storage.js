@@ -9,10 +9,6 @@ class Storage {
         this.available = undefined;
     }
 
-    setWindow(win) {
-        this.storage = win[this.type];
-    }
-
     isAvailable() {
         const key = 'local-storage-module-test';
 
