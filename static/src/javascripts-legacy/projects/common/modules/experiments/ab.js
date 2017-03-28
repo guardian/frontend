@@ -112,32 +112,6 @@ define([
         });
     }
 
-    function makeOmnitureTag() {
-        var participations = abUtils.getParticipations(),
-            tag = [];
-
-        Object.keys(participations)
-            .map(getTest)
-            .filter(testCanRunChecks.testCanBeRun)
-            .forEach(function (test) {
-                tag.push('AB | ' + test.id + ' | ' + participations[test.id].variant);
-            });
-
-        Object.keys(config.tests)
-            .filter(function (k) {
-                return k.toLowerCase().indexOf('cm') === 0;
-            })
-            .forEach(function (k) {
-                tag.push('AB | ' + k + ' | variant');
-            });
-
-        getServerSideTests().forEach(function (testName) {
-            tag.push('AB | ' + testName + ' | inTest');
-        });
-
-        return tag.join(',');
-    }
-
     function abData(variantName, complete, campaignCodes) {
         var data = {
             'variantName': variantName,
@@ -381,7 +355,6 @@ define([
         getParticipations: abUtils.getParticipations,
         isParticipating: abUtils.isParticipating,
         getTest: getTest,
-        makeOmnitureTag: makeOmnitureTag,
         trackEvent: trackEvent,
         getExpiredTests: getExpiredTests,
         getActiveTests: getActiveTests,
