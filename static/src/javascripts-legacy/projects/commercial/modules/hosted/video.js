@@ -125,6 +125,8 @@ define([
             return Promise.resolve();
         }
 
+        var posterImage = document.querySelector('.hosted__youtube-poster-image');
+
         // Return a promise that resolves after the async work is done.
         new Promise(function(resolve){
             require.ensure([], function (require) {
@@ -143,7 +145,9 @@ define([
                 setupVideo(el, videojs);
             });
 
-            $youtubeIframe.each(hostedYoutube.init);
+            $youtubeIframe.each(function (el) {
+                hostedYoutube.init(el, posterImage);
+            });
         })
         .then(stop, stop);
 

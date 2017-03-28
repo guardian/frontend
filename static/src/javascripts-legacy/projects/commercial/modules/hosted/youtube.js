@@ -40,10 +40,11 @@ define([
         });
     }
 
-    function init(el) {
+    function init(el, posterImage) {
         var atomId = $(el).data('media-id');
         var duration = $(el).data('duration');
         var $currentTime = $('.js-youtube-current-time');
+        var posterImageSrc = posterImage ? posterImage.style.backgroundImage : null;
         var playTimer;
 
         tracking.init(atomId);
@@ -77,6 +78,14 @@ define([
                     }, 1000);
                 } else {
                     clearTimeout(playTimer);
+                }
+
+                if (posterImage) {
+                    if (event.data === -1 || event.data === window.YT.PlayerState.PLAYING) {
+                        posterImage.style.backgroundImage = null;
+                    } else if (event.data === window.YT.PlayerState.PAUSED) {
+                        posterImage.style.backgroundImage = posterImageSrc;
+                    }
                 }
             },
             onPlayerReady: function (event) {
