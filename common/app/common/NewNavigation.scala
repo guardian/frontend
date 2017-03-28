@@ -118,7 +118,7 @@ object NewNavigation {
         opinion,
         columnists,
         cartoons,
-        indigenousAustralia,
+        indigenousAustraliaOpinion,
         theGuardianView
       ),
       List(
