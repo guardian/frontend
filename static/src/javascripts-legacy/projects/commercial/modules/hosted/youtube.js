@@ -83,8 +83,6 @@ define([
                 if (posterImage) {
                     if (event.data === -1 || event.data === window.YT.PlayerState.PLAYING) {
                         posterImage.style.backgroundImage = null;
-                    } else if (event.data === window.YT.PlayerState.PAUSED) {
-                        posterImage.style.backgroundImage = posterImageSrc;
                     }
                 }
             },
