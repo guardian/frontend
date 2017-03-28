@@ -106,13 +106,10 @@ define([
         });
     }
 
-    function getId(test) {
-        return test.id;
-    }
-
     function getTest(id) {
-        var testIndex = TESTS.map(getId).indexOf(id);
-        return testIndex !== -1 ? TESTS[testIndex] : '';
+        return TESTS.find(function (test) {
+            return test.id === id;
+        });
     }
 
     function makeOmnitureTag() {
