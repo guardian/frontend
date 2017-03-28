@@ -4,7 +4,6 @@
 
 class Storage {
     constructor(type: string) {
-        this.type = type;
         this.storage = window[type];
         this.available = undefined;
     }
