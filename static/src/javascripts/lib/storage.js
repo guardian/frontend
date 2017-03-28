@@ -40,7 +40,14 @@ class Storage {
 
         // try and parse the data
         try {
-            data = JSON.parse(this.getRaw(key));
+            const value = this.getRaw(key);
+
+            if (value === null || value === undefined) {
+                return null;
+            }
+
+            data = JSON.parse(value);
+
             if (data === null) {
                 return null;
             }
@@ -72,7 +79,7 @@ class Storage {
         );
     }
 
-    getRaw(key: string): any {
+    getRaw(key: string): ?string {
         if (this.isAvailable()) {
             return this.storage.getItem(key);
         }
