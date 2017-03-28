@@ -82,6 +82,7 @@ define([
         getTestVariantId: getTestVariantId,
         getVariant: getVariant,
         setTestVariant: setTestVariant,
-        isInVariant: isInVariant
+        isInVariant: isInVariant,
+        testCanBeRun: testCanRunChecks.testCanBeRun
     };
 });
