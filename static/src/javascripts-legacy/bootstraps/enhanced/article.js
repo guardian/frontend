@@ -1,7 +1,6 @@
 /*eslint-disable no-new*/
 define([
     'qwery',
-    'bean',
     'lib/$',
     'lib/config',
     'lib/detect',
@@ -18,7 +17,6 @@ define([
     'ophan/ng'
 ], function (
     qwery,
-    bean,
     $,
     config,
     detect,

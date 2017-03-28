@@ -5,11 +5,8 @@ define([
     'Promise',
     'lib/$',
     'lib/config',
-    'lib/detect',
-    'lib/mediator',
     'lib/fastdom-promise',
     'lodash/utilities/template',
-    'common/modules/experiments/ab',
     'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/audience-science-gateway',
     'commercial/modules/third-party-tags/audience-science-pql',
@@ -18,7 +15,6 @@ define([
     'commercial/modules/third-party-tags/remarketing',
     'commercial/modules/third-party-tags/tourism-australia',
     'commercial/modules/third-party-tags/krux',
-    'common/modules/identity/api',
     'commercial/modules/third-party-tags/outbrain',
     'commercial/modules/third-party-tags/plista',
     'raw-loader!common/views/commercial/external-content.html'
@@ -26,11 +22,8 @@ define([
     Promise,
     $,
     config,
-    detect,
-    mediator,
     fastdom,
     template,
-    ab,
     commercialFeatures,
     audienceScienceGateway,
     audienceSciencePql,
@@ -39,7 +32,6 @@ define([
     remarketing,
     tourismAustralia,
     krux,
-    identity,
     outbrain,
     plista,
     externalContentContainerStr
@@ -82,18 +74,11 @@ define([
         }
 
         // Outbrain/Plista needs to be loaded before first ad as it is checking for presence of high relevance component on page
-        if (!isLuckyBastard()) {
-            loadExternalContentWidget();
-        }
+        loadExternalContentWidget();
 
         loadOther();
 
         return Promise.resolve(true);
-    }
-
-    function isLuckyBastard() {
-        var testName = 'PaidContentVsOutbrain';
-        return ab.testCanBeRun(testName) && ab.getTestVariantId(testName) === 'paid-content';
     }
 
     function loadOther() {

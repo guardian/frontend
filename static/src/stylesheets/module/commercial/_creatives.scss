@@ -48,32 +48,6 @@
     }
 }
 
-.creative--jobs {
-    .creative__inner {
-        border-color: $news-support-2;
-    }
-    .creative__marque-title {
-        color: $news-support-2;
-    }
-    .creative__marque {
-        color: $news-support-2;
-        fill: $news-support-2;
-    }
-}
-
-.creative--membership {
-    .creative__inner {
-        border-color: $news-accent;
-    }
-    .creative__marque-title {
-        color: $news-accent;
-    }
-    .creative__marque {
-        color: $news-accent;
-        fill: $news-accent;
-    }
-}
-
 .creative--expandable {
     margin-bottom: $gs-baseline;
 
@@ -236,11 +210,6 @@
         border-top: 0;
         padding-top: 0;
     }
-    .ad-slot__label--wrapper {
-        @include mq($until: tablet) {
-            width: auto;
-        }
-    }
     .ad-slot__label {
         text-align: left;
     }
@@ -250,17 +219,6 @@
         overflow: hidden;
         transition: height 1s;
     }
-    .ad-exp--expand .facia-container__inner {
-        height: 100%;
-        position: relative;
-
-        @include mq($until: tablet) {
-            width: 100%;
-            margin-left: 0;
-            margin-right: 0;
-        }
-    }
-
     .ad-exp__close-button {
         position: absolute;
         top: 34px;

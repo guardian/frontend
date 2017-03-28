@@ -149,6 +149,11 @@ $mobile-max-container-width: gs-span(8);
     color: #ffffff;
 }
 
+.frame__external-link-icon svg {
+    width: 20px;
+    height: 10px;
+}
+
 .has-no-flex {
     .frame__logo,
     .frame__content,

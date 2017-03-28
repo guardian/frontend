@@ -13,11 +13,14 @@ define([
         'lib/fastdom-promise',
         'common/modules/experiments/ab',
         'common/modules/experiments/tests/membership-engagement-banner-tests',
-        'lodash/objects/defaults',
+        'lodash/objects/assign',
         'lodash/collections/find',
         'common/views/svgs',
         'lib/fetch',
-        'common/modules/experiments/segment-util'
+        'common/modules/experiments/segment-util',
+        'common/modules/experiments/acquisition-test-selector',
+        'common/modules/commercial/membership-engagement-banner-parameters',
+        'ophan/ng'
     ], function (bean,
                  $,
                  config,
@@ -32,11 +35,14 @@ define([
                  fastdom,
                  ab,
                  MembershipEngagementBannerTests,
-                 defaults,
+                 assign,
                  find,
                  svgs,
                  fetch,
-                 segmentUtil) {
+                 segmentUtil,
+                 acquisitionTestSelector,
+                 membershipEngagementBannerUtils,
+                 ophan) {
 
 
         // change messageCode to force redisplay of the message to users who already closed it.
@@ -54,50 +60,51 @@ define([
         var LIST_ID = 3813;
         var EMAIL_PATH = '/email';
 
-        var baseParams = {
-            minArticles: 3,
-            colourStrategy: function() {
-                return 'membership-prominent ' + selectSequentiallyFrom(['yellow', 'purple', 'bright-blue', 'dark-blue']);
-            }
-        };
+        var DO_NOT_RENDER_ENGAGEMENT_BANNER = 'do no render engagement banner';
 
-        var offeringParams = {
-            membership: {
-                buttonCaption: 'Become a Supporter',
-                linkUrl: 'https://membership.theguardian.com/supporter'
-            },
-            contributions: {
-                buttonCaption: 'Make a Contribution',
-                linkUrl: 'https://contribute.theguardian.com/'
-            }
-        };
+        function getUserTest() {
+            var engagementBannerTests = MembershipEngagementBannerTests
+                .concat(acquisitionTestSelector.epicEngagementBannerTests);
 
-        var editionParams = {
-            UK: {
-                membership: {
-                    messageText: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for £5 a month.',
-                    campaignCode: "mem_uk_banner"
-                }
-            },
-            US: {
-                contributions: {
-                    messageText: 'If you use it, if you like it, then why not pay for it? It’s only fair.',
-                    campaignCode: "cont_us_banner"
-                }
-            },
-            AU: {
-                membership: {
-                    messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia member for just $10 a month.',
-                    campaignCode: "mem_au_banner"
-                }
-            },
-            INT: {
-                membership: {
-                    messageText: 'For less than the price of a coffee a week, you could help secure the Guardian\'s future. Support our journalism for $7 / €5 a month.',
-                    campaignCode: "mem_int_banner"
-                }
+            return find(engagementBannerTests, function(test) {
+                return ab.testCanBeRun(test) && segmentUtil.isInTest(test)
+            });
+        }
+
+        function getUserVariant(test) {
+            return test ? segmentUtil.variantFor(test) : undefined;
+        }
+
+        function buildCampaignCode(offering, campaignId, variantId) {
+            var prefix = '';
+            var offerings = membershipEngagementBannerUtils.offerings;
+
+            // mem and cont chosen to be consistent with default campaign code prefixes.
+            if (offering === offerings.membership) {
+                prefix = 'mem_';
             }
-        };
+            else if (offering === offerings.contributions) {
+                prefix = 'cont_';
+            }
+
+            return prefix + campaignId + '_' + variantId;
+        }
+
+        function getUserVariantParams(userVariant, campaignId, defaultOffering) {
+
+            if (userVariant && userVariant.engagementBannerParams) {
+                var userVariantParams = userVariant.engagementBannerParams;
+
+                if (!userVariantParams.campaignCode) {
+                    var offering = userVariantParams.offering || defaultOffering;
+                    userVariantParams.campaignCode = buildCampaignCode(offering, campaignId, userVariant.id);
+                }
+
+                return userVariantParams;
+            } else {
+                return {};
+            }
+        }
 
         /*
          * Params for the banner are overlaid in this order, earliest taking precedence:
@@ -124,37 +131,39 @@ define([
          *
          */
         function deriveBannerParams() {
-            var paramsByOfferingForUserEdition = editionParams[config.page.edition];
+            var defaultParams = membershipEngagementBannerUtils.defaultParams;
+            var userTest = getUserTest();
+            var campaignId = userTest ? userTest.campaignId : undefined;
+            var userVariant = getUserVariant(userTest);
 
-            var engagementBannerTest = find(MembershipEngagementBannerTests, function(test) {
-                return ab.testCanBeRun(test) && segmentUtil.isInTest(test)
-            });
-
-            var userVariant = engagementBannerTest ? segmentUtil.variantFor(engagementBannerTest) : undefined;
-
-            // If we have found a copy test variant, then defer building the banner params to the variant.
-            if (engagementBannerTest && engagementBannerTest.id === 'MembershipEngagementBannerCopyTest' && userVariant) {
-                return userVariant.deriveBannerParams()
+            if (userVariant && userVariant.blockEngagementBanner) {
+                return DO_NOT_RENDER_ENGAGEMENT_BANNER;
             }
 
-            // offering = 'membership' or 'contributions'
-            var offering = Object.keys(userVariant?userVariant.params:paramsByOfferingForUserEdition)[0];
-
-            var bannerParamsSources =
-                [baseParams, offeringParams[offering], paramsByOfferingForUserEdition[offering]];
-
-            if (userVariant) {
-                bannerParamsSources.push(userVariant.params[offering]);
-            }
-
-            bannerParamsSources.push({}); // Will be mutated by 'defaults': https://lodash.com/docs/4.17.2#defaults
-
-            var mergedParams = defaults.apply(this, bannerParamsSources.reverse());
-            return mergedParams;
+            return assign({}, defaultParams, getUserVariantParams(userVariant, campaignId, defaultParams.offering));
         }
 
+        // Used to send an interaction if the engagement banner is shown.
+        function recordInteraction(interaction) {
+            if (interaction) {
+                var component = interaction.component;
+                var value = interaction.value;
+
+                if (component && value) {
+                    ophan.record({
+                        component: component,
+                        value: value
+                    })
+                }
+            }
+        }
 
         function showBanner(params) {
+
+            if (params === DO_NOT_RENDER_ENGAGEMENT_BANNER) {
+                return;
+            }
+
             var colourClass = params.colourStrategy();
 
             var messageText = Array.isArray(params.messageText)?selectSequentiallyFrom(params.messageText):params.messageText;
@@ -179,6 +188,9 @@ define([
                 }).show(renderedBanner);
 
             if (messageShown) {
+
+                recordInteraction(params.interactionOnMessageShown);
+
                 mediator.emit('membership-message:display');
 
                 if(params.showRemindMe) {

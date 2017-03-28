@@ -1,10 +1,8 @@
 define([
-    'bean',
     'bonzo',
     'lib/$',
     'helpers/injector'
 ], function (
-    bean,
     bonzo,
     $,
     Injector
@@ -305,4 +303,3 @@ define([
         });
     });
 });
-

@@ -83,7 +83,7 @@ final case class Content(
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
   lazy val hasRecipeAtom: Boolean = atoms.fold(false)(a => a.recipes.nonEmpty)
-  lazy val showNewRecipeDesign: Boolean =  hasRecipeAtom && ABNewRecipeDesign.switch.isSwitchedOn
+  lazy val showNewRecipeDesign: Boolean = hasRecipeAtom && ABNewRecipeDesign.switch.isSwitchedOn
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -305,6 +305,8 @@ final case class Content(
 
   val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
   val media: Seq[MediaAtom] = atoms.map(_.media).getOrElse(Nil)
+
+  val nonCompliantOutbrainAmp = (hasStoryPackage && tags.series.nonEmpty) || (tags.series.length > 1)
 }
 
 object Content {

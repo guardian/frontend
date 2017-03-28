@@ -9,13 +9,12 @@ define([
     'lib/storage',
     'lib/mediator',
     'lib/fastdom-promise',
-    'lib/private-browsing',
     'raw-loader!common/views/experiments/tailor-survey.html',
-    'lib/fetch-json',
     'lodash/collections/forEach',
     'ophan/ng',
     'lodash/utilities/template',
-    'common/modules/article/space-filler'
+    'common/modules/article/space-filler',
+    'common/modules/tailor/tailor'
 ], function (
     bean,
     bonzo,
@@ -27,13 +26,12 @@ define([
     storage,
     mediator,
     fastdomPromise,
-    privateBrowsing,
     tailorSurvey,
-    fetchJson,
     forEach,
     ophan,
     template,
-    spaceFiller
+    spaceFiller,
+    tailor
 ) {
     return function () {
         this.id = 'TailorSurvey';
@@ -41,35 +39,16 @@ define([
         this.expiry = '2017-04-28';
         this.author = 'Manlio & Mahana';
         this.description = 'Testing Tailor surveys';
-        this.audience = 0.01;
-        this.audienceOffset = 0.7;
+        this.audience = 1;
+        this.audienceOffset = 0;
         this.successMeasure = 'We can show a survey on Frontend as decided by Tailor';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = 'Tailor survey';
         this.idealOutcome = '';
-
         this.canRun = function () {
             return !(config.page.isAdvertisementFeature) &&
                 config.page.contentType === 'Article'
         };
-        function callTailor(bwid, surveysNotShowAgain) {
-            // If we want to force tailor to show a particular survey we can set an attribute in local storage to have
-            // key = 'surveyToShow', and value = the survey id. Tailor will then override other logic for display, and
-            // look for a survey with this ID to return. This is useful as we can easily see how a particular survey
-            // would be rendered, without actually putting it live. If this parameter is empty or not specified, tailor
-            // behaves as usual.
-            var surveyToShow = localStorage.getItem('surveyToShow');
-
-            var endpoint = 'https://tailor.guardianapis.com/suggestions'+
-                '?browserId=' + bwid +
-                '&edition=' + config.page.edition +
-                '&surveyToShow=' + surveyToShow +
-                '&surveysNotToShow=' + surveysNotShowAgain;
-            return fetchJson(endpoint, {
-                type: 'json',
-                method: 'get'
-            });
-        }
 
         // Every time we show a survey to a user, we cannot show it again to that suer for a specified number of days.
         // We store 'surveyId=dayShowAgain' in the cookie, and pass any surveys that cannot currently be shown in the
@@ -143,12 +122,13 @@ define([
                 minBelow: 0,
                 clearContentMeta: 50,
                 selectors: {
-                    ' .element-rich-link': {minAbove: 250, minBelow: 250},
+                    ' .element-rich-link': {minAbove: 100, minBelow: 100},
+                    ' .element-image': {minAbove: 50, minBelow: 50},
                     ' .player': {minAbove: 0, minBelow: 0},
                     ' > h1': {minAbove: 0, minBelow: 0},
                     ' > h2': {minAbove: 0, minBelow: 0},
                     ' > *:not(p):not(h2):not(blockquote)': {minAbove: 0, minBelow: 0},
-                    ' .ad-slot': {minAbove: 0, minBelow: 0}
+                    ' .ad-slot': {minAbove: 100, minBelow: 100}
                 }
             };
 
@@ -165,32 +145,45 @@ define([
         };
 
         // the main function to render the survey
-        function renderQuickSurvey() {
+        function renderQuickSurvey() {    
+            var queryParams = {
+                edition: config.page.edition,
+            };
 
-            var bwid = cookies.get('bwid');
+            // If we want to force tailor to show a particular survey we can set an attribute in local storage to have
+            // key = 'surveyToShow', and value = the survey id. Tailor will then override other logic for display, and
+            // look for a survey with this ID to return. This is useful as we can easily see how a particular survey
+            // would be rendered, without actually putting it live. If this parameter is empty or not specified, tailor
+            // behaves as usual.
+            var surveyToShow = localStorage.getItem('surveyToShow');
 
-            // we only call tailor if the user has a browser ID defined
-            if (bwid) {
-                // get the list of surveys that can't be shown as they have been shown recently
-                var ids = getSurveyIdsNotToShow();
-
-                return callTailor(bwid, ids).then(function (response) {
-
-                    // get the survey to show
-                    var surveySuggestionToShow = getSurveySuggestionToShow(response);
-
-                    if(surveySuggestionToShow) {
-
-                        storeSurveyShowedInCookie(surveySuggestionToShow.data);
-
-                        var json = getJsonFromSurvey(surveySuggestionToShow.data.survey);
-
-                        var survey = bonzo.create(template(tailorSurvey, json));
-
-                        return inArticleWriter(survey, surveySuggestionToShow.data.survey.surveyId);
-                    }
-                });
+            if (surveyToShow) {
+                queryParams.surveyToShow = surveyToShow;
             }
+
+            // get the list of surveys that can't be shown as they have been shown recently
+            var surveysNotToShow = getSurveyIdsNotToShow();
+
+            if (surveysNotToShow) {
+                queryParams.surveysNotToShow = surveysNotToShow;
+            }
+
+            return tailor.fetchData('suggestions', queryParams).then(function (suggestions) {
+                // get the survey to show
+                var surveySuggestionToShow = getSurveySuggestionToShow(suggestions);
+
+                if (surveySuggestionToShow) {
+                    storeSurveyShowedInCookie(surveySuggestionToShow.data);
+
+                    var json = getJsonFromSurvey(surveySuggestionToShow.data.survey);
+
+                    var survey = bonzo.create(template(tailorSurvey, json));
+
+                    return inArticleWriter(survey, surveySuggestionToShow.data.survey.surveyId);
+                } else {
+                    Promise.resolve();
+                }
+            });
         }
 
         function disableRadioButtons(buttonClassName) {
@@ -248,10 +241,11 @@ define([
             {
                 id: 'variant',
                 test: function () {
-                    Promise.all([renderQuickSurvey(), privateBrowsing]).then(function (response) {
-                        var surveyId = response[0]
-                        mediator.emit('survey-added');
-                        handleSurveyResponse(surveyId);
+                    renderQuickSurvey().then(function (surveyId) {
+                        if (surveyId) {
+                            mediator.emit('survey-added');
+                            handleSurveyResponse(surveyId);
+                        }
                     });
                 },
                 impression: function (track) {

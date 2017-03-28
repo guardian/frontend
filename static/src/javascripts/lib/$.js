@@ -9,9 +9,8 @@ bonzo.aug({
     },
 });
 
-function $(selector: string, context: ?Element | ?string): bonzo {
-    return bonzo(qwery(selector, context));
-}
+const $ = (selector: string, context: ?Element | ?string): bonzo =>
+    bonzo(qwery(selector, context));
 
 $.create = (s: string): bonzo => bonzo(bonzo.create(s));
 

@@ -76,12 +76,12 @@ $c-guardian-services-action: #ffffff;
     }
 
     @include mq(tablet) {
-        margin-top: $gs-baseline * .5;
+        margin-top: -$gs-baseline / 2;
         margin-bottom: $gs-baseline * .5;
 
         svg {
-            width: 320px;
-            height: 60px;
+            width: 360px;
+            height: 68px;
         }
     }
 

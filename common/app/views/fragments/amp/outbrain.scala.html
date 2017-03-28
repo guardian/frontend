@@ -1,15 +1,14 @@
-@(page: model.Page)
+@(page: model.Page, nonCompliant: Boolean)
 @import conf.switches.Switches.OutbrainSwitch
 @import views.support.URLEncode
 
 @if(OutbrainSwitch.isSwitchedOn) {
     @defining(page.metadata.webUrl) { htmlUrl =>
-        <amp-iframe height=175
+        <amp-iframe height=456
         sandbox="allow-scripts allow-same-origin allow-popups"
         layout="fixed-height"
         frameborder="0"
-        resizable
-        src="https://widgets.outbrain.com/hub/amp.html#widgetIds=AMP_1&amp;htmlURL=@URLEncode(htmlUrl)&amp;ampURL=@URLEncode(s"$htmlUrl?amp")"
+        src="https://widgets.outbrain.com/hub/amp.html#widgetIds=@if(nonCompliant){AMP_2}else{AMP_1}&amp;htmlURL=@URLEncode(htmlUrl)&amp;ampURL=@URLEncode(s"$htmlUrl?amp")"
         class="fc-container__outbrain">
             <div overflow class="cta cta--medium cta--show-more">
                 @fragments.inlineSvg("plus", "icon")
