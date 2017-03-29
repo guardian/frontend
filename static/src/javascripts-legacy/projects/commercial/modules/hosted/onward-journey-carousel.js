@@ -1,11 +1,9 @@
 define([
-    'bean',
     'qwery',
     'fastdom',
     'Promise',
     'lib/$'
 ], function (
-    bean,
     qwery,
     fastdom,
     Promise,
@@ -54,13 +52,13 @@ define([
         if (this.$carousel.length) {
             var that = this;
             this.$nextItem.each(function(el){
-                bean.on(el, 'click', that.moveCarouselBy.bind(that, 1));
+                el.addEventListener('click', that.moveCarouselBy.bind(that, 1));
             });
             this.$prevItem.each(function(el){
-                bean.on(el, 'click', that.moveCarouselBy.bind(that, -1));
+                el.addEventListener('click', that.moveCarouselBy.bind(that, -1));
             });
             this.$dots.each(function(el, i){
-                bean.on(el, 'click', that.moveCarouselTo.bind(that, i % that.pageCount));
+                el.addEventListener('click', that.moveCarouselTo.bind(that, i % that.pageCount));
             });
         }
 
