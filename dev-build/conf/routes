@@ -418,7 +418,6 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>     
 
 # Applications
 
-GET            /sdata/recipes/$filterType<cuisine|dietary|celebration|category>/:filterValue                                     controllers.StructuredDataIndexController.render(filterType, filterValue)
 GET            /$path<international>                                                                                             controllers.FaciaController.renderFront(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                              controllers.IndexController.renderTrailsJson(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                                   controllers.IndexController.renderTrails(path)
