@@ -2,7 +2,7 @@
 
 - [Security checks](#security)
 - [Obtain AWS credentials](#obtain-aws-credentials)
-- [Local test server setup](#local-test-server-setup)
+- [Local dev server setup](#local-dev-server-setup)
 - [Running the app](#running-the-app)
 - [IDE Setup](#ide-setup)
 - [Optional steps](#optional-steps)
@@ -28,7 +28,7 @@ Follow [this link](https://www.google.co.uk) and enter the relevant search strin
 3. Submit a PR
 4. You may need to `pip install awscli` and add `/Library/Frameworks/Python.framework/Versions/Current/bin` to your `$PATH` to run the commands Janus gives you.
 
-# Local Test Server setup
+# Local dev server setup
 
 You can either set up the frontend through a [local install](#local-machine) on your machine or using [Docker](#docker). 
 Before checking out the repository you may need to add your guardian email address to your github account and [add an 
