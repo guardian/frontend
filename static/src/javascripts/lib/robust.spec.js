@@ -45,17 +45,6 @@ describe('robust', () => {
         expect(reportErrorMock).toHaveBeenCalledWith(ERROR, META, false);
     });
 
-    test('catchErrorsAndLog() - custom reporter', () => {
-        const mockedCallback = jest.fn();
-        robust.catchErrorsAndLog('test', noError, mockedCallback);
-        expect(mockedCallback).not.toHaveBeenCalled();
-
-        robust.catchErrorsAndLog('test', throwError, (err, meta) => {
-            expect(err.message).toBe(ERROR.message);
-            expect(meta.module).toBe('test');
-        });
-    });
-
     test('context()', () => {
         const runner = jest.fn();
 

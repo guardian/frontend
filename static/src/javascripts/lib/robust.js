@@ -19,27 +19,19 @@ const catchErrors = (fn: Function): ?Error => {
     return error;
 };
 
-const log = (
-    module: string,
-    error: Error,
-    reporter?: Function = reportError
-): void => {
+const log = (module: string, error: Error): void => {
     if (window.console && window.console.warn) {
         window.console.warn('Caught error.', error.stack);
     }
 
-    reporter(error, { module }, false);
+    reportError(error, { module }, false);
 };
 
-const catchErrorsAndLog = (
-    name: string,
-    fn: Function,
-    reporter?: Function
-): void => {
+const catchErrorsAndLog = (name: string, fn: Function): void => {
     const error = catchErrors(fn);
 
     if (error) {
-        log(name, error, reporter);
+        log(name, error);
     }
 };
 
