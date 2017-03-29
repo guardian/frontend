@@ -14,7 +14,10 @@ define([
             controls,
             doNotReset = ['popup--search'],
             readyClass = 'js-toggle-ready',
-            isSignedIn = document.querySelector('.js-profile-nav').classList.contains('is-signed-in'),
+            isSignedIn = (function () {
+                var nav = document.querySelector('.js-profile-nav');
+                return nav && nav.classList.contains('is-signed-in');
+            }());
             component  = parent || document.body;
 
         this.init = function () {
@@ -68,12 +71,16 @@ define([
 
     Toggles.prototype.open = function (c) {
         c.classList.add('is-active');
-        c.toggleTarget.classList.remove('is-off');
+        if (c.toggleTarget) {
+            c.toggleTarget.classList.remove('is-off');
+        }
     };
 
     Toggles.prototype.close = function (c) {
         c.classList.remove('is-active');
-        c.toggleTarget.classList.add('is-off');
+        if (c.toggleTarget) {
+            c.toggleTarget.classList.add('is-off');
+        }
     };
 
     return Toggles;
