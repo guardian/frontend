@@ -1,5 +1,4 @@
 define([
-    'bean',
     'fastdom',
     'lib/$',
     'lodash/utilities/template',
@@ -11,7 +10,6 @@ define([
     'svg-loader!svgs/commercial/paid-content.svg',
     'lodash/arrays/uniq'
 ], function (
-    bean,
     fastdom,
     $,
     template,
@@ -48,7 +46,8 @@ define([
                 $(document.body).append(this.bannerTmpl);
 
                 if (this.config.showCloseBtn) {
-                    bean.on(document, 'click', $('.js-survey-close'), this.handleClick.bind(this));
+                    var closeBtn = document.querySelector('.js-survey-close');
+                    closeBtn.addEventListener('click', this.handleClick.bind(this));
                 }
             }.bind(this));
         }
