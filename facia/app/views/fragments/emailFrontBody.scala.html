@@ -88,11 +88,12 @@
             @headline(card, largeHeadline)
         }
     } { img =>
-        @* TODO: change to new style! *@
-        @FaciaCard(Seq(), Row(Seq(toneClassFromStyle(card.cardStyle)),
-            Column(smallWidth = 7, largeWidth = 7)(headline(card)),
-            Column(smallWidth = 5, largeWidth = 5)(img)
-        )).render
+        @fcItem(Seq(toneClassFromStyle(card.cardStyle))) {
+            <tr valign="top">
+                <td class="left-col"><table>@headline(card)</table></td>
+                <td class="right-col">@img</td>
+            </tr>
+        }
     }
 }
 
