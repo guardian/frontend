@@ -3,13 +3,17 @@ define([
     'helpers/injector',
     'commercial/modules/ad-sizes',
     'raw-loader!fixtures/commercial/ad-slots/im.html',
-    'raw-loader!fixtures/commercial/ad-slots/inline1.html'
+    'raw-loader!fixtures/commercial/ad-slots/inline1.html',
+    'raw-loader!fixtures/commercial/ad-slots/right.html',
+    'raw-loader!fixtures/commercial/ad-slots/right-small.html'
 ], function (
     bonzo,
     Injector,
     adSizes,
     imHtml,
-    inline1Html
+    inline1Html,
+    rightHtml,
+    rightSmallHtml
 ) {
     describe('Create Ad Slot', function () {
 
@@ -33,6 +37,16 @@ define([
         });
 
         [
+            {
+                type: 'right',
+                classes: 'mpu-banner-ad',
+                html: rightHtml
+            },
+            {
+                type: 'right-small',
+                classes: 'mpu-banner-ad',
+                html: rightSmallHtml
+            },
             {
                 type: 'im',
                 html: imHtml
