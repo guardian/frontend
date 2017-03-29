@@ -28,9 +28,11 @@ Follow [this link](https://www.google.co.uk) and enter the relevant search strin
 You can either set up the frontend through a [local install](#local-machine) on your machine or using [Docker](#docker). Before checking out the repository you may need to add your guardian email address to your github account and [add an SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/). Before pushing changes you may need to [create an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Make sure your dev manager has added you to the necessary teams, in case you have need write access.
 
 ## Local machine
+
 You need a Mac or Linux PC (Ubuntu).
 
 ### Automatic
+
 1. Check out the repository:
 
     ```
@@ -40,13 +42,16 @@ You need a Mac or Linux PC (Ubuntu).
 
 2. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *frontend* and *CMS fronts* (you will need access to Janus)
 
-3. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](docs/01-start-here/04-troubleshooting.md#npm-eacces)*
+3. Make sure you have the latest version of Java
 
-1. [Setup local Nginx](https://github.com/guardian/frontend/blob/master/nginx/README.md) to be able to access via `https://m.thegulocal.com`
+4. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](docs/01-start-here/04-troubleshooting.md#npm-eacces)*
 
-4. All being well, you should be able to [run the app](#run-the-app) (make sure you have the latest version of java)
+5. [Setup local Nginx](https://github.com/guardian/frontend/blob/master/nginx/README.md) to be able to access via `https://m.thegulocal.com`
+
+6. All being well, you should be able to [run the app](#run-the-app)
 
 ### Manual
+
 Install each of the things listed below:
 
 #### Configuration
@@ -66,7 +71,7 @@ This is needed on Mac only:
 ```bash
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
-### A JDK
+#### A JDK
 
 Ubuntu: Java 8 is required, but only OpenJDK 7 is available in the official Ubuntu repo. Install Java 8 as below.
 
