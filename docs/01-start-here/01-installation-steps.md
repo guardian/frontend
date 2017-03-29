@@ -46,9 +46,7 @@ You need a Mac or Linux PC (Ubuntu).
 
 4. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](docs/01-start-here/04-troubleshooting.md#npm-eacces)*
 
-5. [Setup local Nginx](https://github.com/guardian/frontend/blob/master/nginx/README.md) to be able to access via `https://m.thegulocal.com`
-
-6. All being well, you should be able to [run the app](#run-the-app)
+5. All being well, you should be able to [run the app](#run-the-app)
 
 ### Manual
 
@@ -219,3 +217,4 @@ Congratulations, you are now set up to edit frontend code!  See the [Optional st
 If you are working on Identity or Discussion, Nginx must be installed and
 configured to correctly serve the application, please refer to
 [`/nginx/README.md`](https://github.com/guardian/frontend/blob/master/nginx/README.md) in this project.
+This will allow you to access frontend via `https://m.thegulocal.com`
