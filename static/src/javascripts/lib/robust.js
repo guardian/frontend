@@ -44,6 +44,6 @@ const catchErrorsAndLog = (
 };
 
 const catchErrorsAndLogAll = (modules: Array<any>): Array<any> =>
-    modules.map(([name, fn]) => catchErrorsAndLog.bind(this, name, fn));
+    modules.forEach(([name, fn]) => catchErrorsAndLog(name, fn));
 
 export default { catchErrorsAndLog, catchErrorsAndLogAll, log };
