@@ -20,6 +20,11 @@ object Commercial {
     case _ => true
   }
 
+  def articleAsideOptionalSizes(implicit request: RequestHeader) = Edition(request).id match {
+    case "US" => Seq("300,1050")
+    case _   => Seq.empty
+  }
+
   def glabsLink (request: RequestHeader): String = {
     val glabsUrlSuffix = Edition(request).id match {
       case "AU" => "-australia"
