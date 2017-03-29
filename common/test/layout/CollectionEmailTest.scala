@@ -21,8 +21,8 @@ class CollectionEmailTest extends FlatSpec with Matchers with OptionValues {
     )
 
     val result = CollectionEmail.fromPressedPage(pressedPage)
-    result.collections(1).cards.map(_.header.url) should not contain EditionalisedLink("/99")
-    result.collections(2).cards.map(_.header.url) should contain noneOf(EditionalisedLink("/99"), EditionalisedLink("/88"))
+    result.contentCollections(1).cards.map(_.header.url) should not contain EditionalisedLink("/99")
+    result.contentCollections(2).cards.map(_.header.url) should contain noneOf(EditionalisedLink("/99"), EditionalisedLink("/88"))
   }
 
   it should "default to 6 items per collection" in {
@@ -36,7 +36,7 @@ class CollectionEmailTest extends FlatSpec with Matchers with OptionValues {
     )
 
     val result = CollectionEmail.fromPressedPage(pressedPage)
-    result.collections.headOption.map(_.cards.length) shouldEqual Some(6)
+    result.contentCollections.headOption.map(_.cards.length) shouldEqual Some(6)
   }
 
   it should "respect the maxItemsToDisplay property if set" in {
@@ -50,7 +50,7 @@ class CollectionEmailTest extends FlatSpec with Matchers with OptionValues {
     )
 
     val result = CollectionEmail.fromPressedPage(pressedPage)
-    result.collections.headOption.map(_.cards.length) shouldEqual Some(8)
+    result.contentCollections.headOption.map(_.cards.length) shouldEqual Some(8)
   }
 
   it should "exclude empty containers" in {
@@ -64,7 +64,7 @@ class CollectionEmailTest extends FlatSpec with Matchers with OptionValues {
 
     val result = CollectionEmail.fromPressedPage(pressedPage)
     result.collections.length shouldEqual 2
-    result.collections.map(_.displayName) shouldEqual List("Test Collection 1", "Test Collection 3")
+    result.contentCollections.map(_.displayName) shouldEqual List("Test Collection 1", "Test Collection 3")
   }
 
   private def mkContent(id: Int): PressedContent = mkPressedContent(id)
