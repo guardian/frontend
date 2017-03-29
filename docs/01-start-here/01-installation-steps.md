@@ -8,6 +8,7 @@
 - [Optional steps](#optional-steps)
 
 # Security checks
+
 All development laptops must be encrypted. If you are not 100% sure, please ask for help.
 
 ## Check your Mac
@@ -30,7 +31,7 @@ Follow [this link](https://www.google.co.uk) and enter the relevant search strin
 
 # Local dev server setup
 
-You can either set up the frontend through a [local install](#local-machine) on your machine or using [Docker](#docker). 
+You can either set up the frontend through a [local install](#automatic) on your machine or using [Docker](#docker). 
 Before checking out the repository you may need to add your guardian email address to your github account and [add an 
 SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/). Before pushing changes you may 
 need to [create an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/).
