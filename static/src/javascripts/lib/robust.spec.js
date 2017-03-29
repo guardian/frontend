@@ -56,7 +56,7 @@ describe('robust', () => {
         });
     });
 
-    test('catchErrorsAndLogAll()', () => {
+    test('context()', () => {
         const runner = jest.fn();
 
         const MODULES = [
@@ -65,7 +65,7 @@ describe('robust', () => {
             ['test-3', runner],
         ];
 
-        robust.catchErrorsAndLogAll(MODULES);
+        robust.context(MODULES);
         expect(runner).toHaveBeenCalledTimes(MODULES.length);
     });
 });

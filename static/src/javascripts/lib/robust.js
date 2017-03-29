@@ -43,7 +43,7 @@ const catchErrorsAndLog = (
     }
 };
 
-const catchErrorsAndLogAll = (modules: Array<any>): void =>
+const context = (modules: Array<any>): void =>
     modules.forEach(([name, fn]) => catchErrorsAndLog(name, fn));
 
-export default { catchErrorsAndLog, catchErrorsAndLogAll, log };
+export default { catchErrorsAndLog, context, log };
