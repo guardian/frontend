@@ -40,28 +40,35 @@ define([
 
 
         userTiming.mark('App Begin');
-        robust.catchErrorsAndLog('ga-user-timing-enhanced-start', function () {
-            ga.trackPerformance('Javascript Load', 'enhancedStart', 'Enhanced start parse time');
-        });
 
-        //
-        // A/B tests
-        //
+        robust.context([
+            ['ga-user-timing-enhanced-start', function () {
+                ga.trackPerformance('Javascript Load', 'enhancedStart', 'Enhanced start parse time');
+            }],
 
-        robust.catchErrorsAndLog('ab-tests', function () {
-            ab.segmentUser();
+            //
+            // A/B tests
+            //
 
-            robust.catchErrorsAndLog('ab-tests-run', ab.run);
-            robust.catchErrorsAndLog('ab-tests-registerImpressionEvents', ab.registerImpressionEvents);
-            robust.catchErrorsAndLog('ab-tests-registerCompleteEvents', ab.registerCompleteEvents);
+            ['ab-tests', function () {
+                ab.segmentUser();
 
-            ab.trackEvent();
-        });
+                robust.context([
+                    ['ab-tests-run', ab.run],
+                    ['ab-tests-registerImpressionEvents', ab.registerImpressionEvents],
+                    ['ab-tests-registerCompleteEvents', ab.registerCompleteEvents],
+                ]);
+
+                ab.trackEvent();
+            }]
+        ]);
 
         bootstrapContext('common', common);
 
         // geolocation
-        robust.catchErrorsAndLog('geolocation', geolocation.init);
+        robust.context([
+            ['geolocation', geolocation.init],
+        ]);
 
         // Front
         if (config.page.isFront) {
@@ -198,8 +205,10 @@ define([
 
         // Mark the end of synchronous execution.
         userTiming.mark('App End');
-        robust.catchErrorsAndLog('ga-user-timing-enhanced-end', function () {
-            ga.trackPerformance('Javascript Load', 'enhancedEnd', 'Enhanced end parse time');
-        });
+        robust.context([
+            ['ga-user-timing-enhanced-end', function () {
+                ga.trackPerformance('Javascript Load', 'enhancedEnd', 'Enhanced end parse time');
+            }],
+        ]);
     };
 });

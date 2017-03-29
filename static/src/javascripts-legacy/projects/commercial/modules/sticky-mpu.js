@@ -1,6 +1,5 @@
 define([
     'lib/config',
-    'lib/closest',
     'lib/mediator',
     'lib/fastdom-promise',
     'common/modules/ui/sticky',
@@ -8,7 +7,6 @@ define([
     'Promise'
 ], function (
     config,
-    closest,
     mediator,
     fastdom,
     Sticky,
