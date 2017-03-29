@@ -17,7 +17,7 @@ define([
             isSignedIn = (function () {
                 var nav = document.querySelector('.js-profile-nav');
                 return nav && nav.classList.contains('is-signed-in');
-            }());
+            }()),
             component  = parent || document.body;
 
         this.init = function () {
