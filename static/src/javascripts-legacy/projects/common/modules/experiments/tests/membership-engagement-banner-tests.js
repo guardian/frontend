@@ -57,7 +57,7 @@ define([
     EditionTest.prototype.addMessageVariant = function (variantId, variantParams) {
         this.variants.push({
             id: variantId,
-            params: variantParams,
+            engagementBannerParams: variantParams,
             /*  We don't want to run any 'code' in this test, we just want a variant to be selected. All message display
              * is performed in membership-engagement-banner.js, modifying the banner using the data in variantParams.
              */
@@ -69,8 +69,7 @@ define([
 
     EditionTest.prototype.addMembershipVariant = function (variantId, variantParams) {
         variantParams.campaignCode = this.campaignPrefix + variantId;
-
-        return this.addMessageVariant(variantId, {membership: variantParams});
+        return this.addMessageVariant(variantId, variantParams);
     };
 
     EditionTest.prototype.addContributionsVariant = function (variantId, variantParams) {

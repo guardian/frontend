@@ -5,7 +5,7 @@
 @(item: ContentType)(implicit request: RequestHeader)
 
 <div class="@RenderClasses(Map(
-    "content__standfirst--gallery" -> item.content.isImmersiveGallery,
+    "content__standfirst--gallery" -> item.content.isGallery,
     "content__standfirst--immersive-article" -> (item.content.isImmersive && item.tags.isArticle),
     "content__standfirst--explore" -> (item.content.isExplore && item.tags.isArticle),
     "content__standfirst--advertisement" -> (item.content.isImmersive && item.tags.isPaidContent),

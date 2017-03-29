@@ -11,7 +11,7 @@
 }
 
 @iconModifier() = @{
-    if (item.content.isImmersiveGallery) List("social-icon-media") else Nil
+    if (item.content.isGallery) List("social-icon-media") else Nil
 }
 
 @ageNotice() = @{
@@ -46,7 +46,7 @@
         </div>
     }
 
-    @if(!item.content.isImmersiveGallery && !item.content.isExplore) {
+    @if(!item.content.isGallery && !item.content.isExplore) {
         @if(!item.content.hasTonalHeaderByline) {
             @byline()
         }

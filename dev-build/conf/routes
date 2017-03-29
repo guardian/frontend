@@ -36,9 +36,9 @@ GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
-# Email paths
-GET            /email/form/$emailType<article|footer|plain|plaindark|plaintone>/:listId                                                    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
-GET            /email/:result                                                                                                    controllers.EmailSignupController.subscriptionResult(result: String)
+# Email signup paths
+GET            /email/form/$emailType<article|footer|plain|plaindark|plaintone>/:listId                                          controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET            /email/$result<success|invalid|error>                                                                             controllers.EmailSignupController.subscriptionResult(result: String)
 POST           /email                                                                                                            controllers.EmailSignupController.submit()
 OPTIONS        /email                                                                                                            controllers.EmailSignupController.options()
 
@@ -218,6 +218,8 @@ GET            /metrics/errors/5xx                                              
 GET            /metrics/memory                                                                                                   controllers.admin.MetricsController.renderMemory()
 GET            /metrics/assets                                                                                                   controllers.admin.MetricsController.renderAssets()
 GET            /metrics/afg                                                                                                      controllers.admin.MetricsController.renderAfg()
+GET            /metrics/webpack-bundle-visualization                                                                             controllers.admin.MetricsController.renderBundleVisualization()
+GET            /metrics/webpack-bundle-analyzer                                                                                  controllers.admin.MetricsController.renderBundleAnalyzer()
 GET            /deduped                                                                                                          controllers.admin.WhatIsDeduped.index()
 GET            /deduped/*path                                                                                                    controllers.admin.WhatIsDeduped.dedupedFor(path)
 GET            /radiator                                                                                                         controllers.admin.RadiatorController.renderRadiator()
@@ -386,6 +388,7 @@ GET            /                                                                
 GET            /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>           controllers.FaciaController.renderFrontPressSpecial(path)
 GET            /rss                                                                                                              controllers.FaciaController.renderRootFrontRss()
 GET            /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>                       controllers.FaciaController.renderFrontPress(path)
+GET            /$path<email/.*>                                                                                                  controllers.FaciaController.renderFrontPress(path)
 GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonLite(path)
 GET            /*path/deduped.json                                                                                               controllers.DedupedController.getDedupedForPath(path)
 GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)

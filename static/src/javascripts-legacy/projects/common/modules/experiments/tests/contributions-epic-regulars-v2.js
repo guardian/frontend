@@ -73,7 +73,7 @@ define([
     }
 
     function isRegular() {
-        return tailor.fetchData('suggestions').then(function (suggestions) {
+        return tailor.fetchData('suggestions', false).then(function (suggestions) {
             try {
                 return suggestions.userDataForClient.regular;
             } catch (e) {

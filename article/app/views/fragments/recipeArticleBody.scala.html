@@ -89,14 +89,18 @@
                 </div>
                 <div class="recipe__content js-recipe__content">
                 </div>
-                <div class="js-read-more--wrapper">
-                    <a href="#recipe__content" class="js-read-more--no-js">
-                        <div class="recipe__article--read-more js-recipe__article--read-more">
-                        @fragments.inlineSvg("plus", "icon", List("control__icon-wrapper, rounded-icon, circle-button"))
-                        </div>
-                    </a>
+                <div class="recipe__article--buttons">
+                  <div class="js-read-more--wrapper" data-link-name="read-more-recipe">
+                      <a href="#recipe__content" class="js-read-more--no-js" data-link-name="read-more-recipe-no-js">
+                          <div class="recipe__article--read-more js-recipe__article--read-more">
+                          @fragments.inlineSvg("plus", "icon", List("control__icon-wrapper, rounded-icon, circle-button"))
+                          </div>
+                      </a>
+                  </div>
+                  <div class="recipe__article--social">
+                    @fragments.social(articleModel.item.sharelinks.pageShares, "top")
+                  </div>
                 </div>
-
                 @for((recipe, i) <- recipes.zipWithIndex){ @recipePage(recipe, i) }
                 <div id="recipe__content" class="recipe__content--no-js js-recipe__content--no-js">
                     @BodyCleaner(article, article.fields.body, amp)
@@ -141,7 +145,7 @@
                         @RecipeAtom.yieldServingType(serves)
                     }
                 }
-                @if(RecipeAtom.totalTime(recipe)) {<span class="rounded-icon structured-meta__circle">@RecipeAtom.totalTime(recipe)</span>hours }
+                @if(RecipeAtom.totalTime(recipe)) {<span class="rounded-icon structured-meta__circle">@RecipeAtom.totalTime(recipe)</span>mins }
             </div>
         </div>
 

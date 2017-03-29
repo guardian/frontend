@@ -1,7 +1,7 @@
 const path = require('path');
 const cpy = require('cpy');
 
-const { conf, target, hash } = require('../../config').paths;
+const { conf, target, hash, src } = require('../../config').paths;
 
 module.exports = {
     description: 'Copy assets',
@@ -23,6 +23,9 @@ module.exports = {
         ),
         cpy(['**/assets.map'], path.resolve(conf), {
             cwd: path.resolve(hash, 'assets'),
+        }),
+        cpy(['polyfill.io'], path.resolve(conf), {
+            cwd: path.resolve(src, 'javascripts'),
         }),
     ]),
 };
