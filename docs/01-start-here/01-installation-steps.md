@@ -30,8 +30,6 @@ You can either set up the frontend through a [local install](#local-machine) on 
 ## Local machine
 You need a Mac or Linux PC (Ubuntu).
 
-**Note:** If using Homebrew to install nvm, it may throw up a message about nvm support; the instructions in this message may be necessary to make nvm work correctly.
-
 ### Automatic
 1. Check out the repository:
 
