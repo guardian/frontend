@@ -1,7 +1,7 @@
 # **Quick start guide**
 
-1. [Ensure your disk is encrypted] (#security)
-2. [Obtain AWS credentials] (#obtain-aws-credentials)
+1. [Ensure your disk is encrypted](#security)
+2. [Obtain AWS credentials](#obtain-aws-credentials)
 3. [Local Test Server setup](#local-test-server-setup)
 4. [IDE Setup](#ide-setup)
 5. [Optional steps](#optional-steps)
