@@ -1,6 +1,5 @@
 define([
     'qwery',
-    'bonzo',
     'lib/add-event-listener',
     'lib/fastdom-promise',
     'lib/detect',
@@ -8,7 +7,7 @@ define([
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker',
     'raw-loader!commercial/views/creatives/fabric-video.html'
-], function (qwery, bonzo, addEventListener, fastdom, detect, template, addTrackingPixel, addViewabilityTracker, fabricVideoStr) {
+], function (qwery, addEventListener, fastdom, detect, template, addTrackingPixel, addViewabilityTracker, fabricVideoStr) {
     var fabricVideoTpl;
 
     return FabricVideo;
