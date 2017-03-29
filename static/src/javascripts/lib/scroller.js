@@ -18,9 +18,9 @@ const scrollTo = (
     offset: number,
     duration: number = 0,
     easeFn?: string = 'easeOutQuad',
-    container?: HTMLElement
+    container: ?HTMLElement = document.body
 ): void => {
-    const $container = bonzo(container || document.body);
+    const $container = bonzo(container);
     const from = $container.scrollTop();
     const distance = offset - from;
     const ease = easing.create(easeFn, duration);
