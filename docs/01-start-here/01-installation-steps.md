@@ -36,11 +36,9 @@ SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-
 need to [create an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/).
 Make sure your dev manager has added you to the necessary teams, in case you have need write access.
 
-## Local machine
-
 You need a Mac or Linux PC (Ubuntu).
 
-### Automatic
+## Automatic
 
 1. Check out the repository:
 
@@ -57,11 +55,10 @@ You need a Mac or Linux PC (Ubuntu).
 
 5. All being well, you should be able to [run the app](#run-the-app)
 
-### Manual
+Manual
+------
 
-Install each of the things listed below:
-
-#### Configuration
+### Configuration
 
 You need one file on your machine:
 
@@ -72,7 +69,7 @@ You need one file on your machine:
 region = eu-west-1
 ```
 
-#### [Homebrew](http://brew.sh/)
+### [Homebrew](http://brew.sh/)
 
 This is needed on Mac only:
 
@@ -80,7 +77,7 @@ This is needed on Mac only:
 $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-#### A JDK
+### A JDK
 
 Ubuntu: Java 8 is required, but only OpenJDK 7 is available in the official Ubuntu repo. Install Java 8 as below.
 
@@ -94,7 +91,7 @@ $ sudo apt-get -y install oracle-java8-installer
 
 Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
-#### [Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
+### [Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
 The frontend uses an `.nvmrc` which specifies Node 6.x as a requirement. If you use 
 [NVM](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can 
@@ -125,7 +122,7 @@ Mac:
 $ brew install node@6
 ```
 
-#### Xcode (if on a Mac, one of the Node modules requires it)
+### Xcode (if on a Mac, one of the Node modules requires it)
 
 This is needed on Mac only:
 https://itunes.apple.com/gb/app/xcode/id497799835
@@ -140,7 +137,7 @@ $ echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bash_profile
 Quit Terminal, relaunch it and check that `git --version` outputs `2.1.3` or newer.
 
 
-#### Client side code
+### Client side code
 
 Install additional dependencies:
 
