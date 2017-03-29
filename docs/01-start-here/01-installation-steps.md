@@ -165,11 +165,12 @@ This also can take a while the first time.
 
 Now check that you are up and running by hitting the following URLs:
 
-* [http://localhost:9000/media](http://localhost:9000/media)
-* [http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson](http://localhost:9000/media/2012/dec/05/newspaper-editors-sign-up-leveson)
-* [http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery](http://localhost:9000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery)
+* [http://localhost:3000/media](http://localhost:3000/media)
+* [http://localhost:3000/media/2012/dec/05/newspaper-editors-sign-up-leveson](http://localhost:3000/media/2012/dec/05/newspaper-editors-sign-up-leveson)
+* [http://localhost:3000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery](http://localhost:3000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery)
 
-If you have [setup local Nginx](https://github.com/guardian/frontend/blob/master/nginx/README.md) then try hitting [https://m.thegulocal.com](https://m.thegulocal.com)
+If you have [setup local Nginx](https://github.com/guardian/frontend/blob/master/nginx/README.md) then try hitting 
+[https://m.thegulocal.com](https://m.thegulocal.com)
 
 Congratulations, you have a local instance running!  Now continue on to set up your IDE.
 
