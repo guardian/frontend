@@ -49,7 +49,7 @@ You need a Mac or Linux PC (Ubuntu).
 
 2. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *frontend* and *CMS fronts* (you will need access to Janus)
 
-3. Make sure you have the latest version of Java
+3. Make sure you have the [latest version of Java](#jdk)
 
 4. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](04-troubleshooting.md#npm-eacces)*
 
@@ -77,7 +77,7 @@ This is needed on Mac only:
 $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-### A JDK
+### JDK
 
 Ubuntu: Java 8 is required, but only OpenJDK 7 is available in the official Ubuntu repo. Install Java 8 as below.
 
