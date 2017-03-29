@@ -1,11 +1,13 @@
 
 define([
     'qwery',
+    'lib/$',
     'lib/mediator',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
     qwery,
+    $,
     mediator,
     fixtures,
     Injector
@@ -21,16 +23,14 @@ define([
     describe('Article Aside Adverts', function () {
 
         var fixturesConfig = {
-            id: 'article-aside-adverts',
-            fixtures: [
-                '<div class="js-content-main-column" style="height:90000px;min-height:90000px;max-height:90000px;"></div>' +
-                '<div class="content__secondary-column js-secondary-column">' +
-                '<div class="js-ad-slot-container">' +
-                '<div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|300,250|300,600|fluid">' +
-                '</div></div></div>'
-            ]
-        },
-        $fixturesContainer;
+                id: 'article-aside-adverts',
+                fixtures: [
+                    '<div class="content__secondary-column js-secondary-column">' +
+                    '<div class="js-ad-slot-container"></div>' +
+                    '</div>'
+                ]
+            },
+            $fixturesContainer;
 
         beforeEach(function (done) {
             $fixturesContainer = fixtures.render(fixturesConfig);
@@ -97,36 +97,48 @@ define([
             fixtures.clean(fixturesConfig.id);
         });
 
-        it('should exist', function (done) {
+        it('should exist', function () {
             expect(articleAsideAdverts).toBeDefined();
-            expect(qwery('.ad-slot', $fixturesContainer).length).toBe(1);
-            done();
         });
 
-        it('should have the correct size mappings and classes', function (done) {
-            articleAsideAdverts.init(noop, noop).then(done);
+        it('should return the ad slot container on init', function (done) {
+            articleAsideAdverts.init(noop, noop);
             mediator.once('page:commercial:right', function (adSlot) {
-                expect(adSlot.classList).toContain('js-sticky-mpu');
-                expect(adSlot.getAttribute('data-mobile')).toBe('1,1|2,2|300,250|300,600|fluid');
+                expect(adSlot.parentNode).toBe(qwery('.js-ad-slot-container', $fixturesContainer)[0]);
+                done();
             });
         });
 
-        it('should mutate the ad slot in short articles', function (done) {
-
-            document.querySelector('.js-content-main-column').setAttribute("style", "height:10px; min-height:10px; max-height:10px; overflow:hidden;");
-
-            articleAsideAdverts.init(noop, noop).then(done);
+        it('should append ad slot', function (done) {
+            articleAsideAdverts.init(noop, noop);
             mediator.once('page:commercial:right', function (adSlot) {
-                expect(adSlot.classList).not.toContain('js-sticky-mpu');
+                expect(adSlot).not.toBeNull();
+                done();
+            });
+        });
+
+        it('should have the correct ad name', function (done) {
+            articleAsideAdverts.init(noop, noop);
+            mediator.once('page:commercial:right', function (adSlot) {
+                expect(adSlot.getAttribute('data-name')).toBe('right');
+                done();
+            });
+        });
+
+        it('should have the correct size mappings', function (done) {
+            articleAsideAdverts.init(noop, noop);
+            mediator.once('page:commercial:right', function (adSlot) {
                 expect(adSlot.getAttribute('data-mobile')).toBe('1,1|2,2|300,250|fluid');
+                done();
             });
         });
 
-        it('should not do anything if disabled in commercial-feature-switches', function (done) {
+        it('should not display ad slot if disabled in commercial-feature-switches', function (done) {
             commercialFeatures.articleAsideAdverts = false;
 
             articleAsideAdverts.init(noop, noop).then(function (returned) {
                 expect(returned).toBe(false);
+                expect(qwery('.ad-slot', $fixturesContainer).length).toBe(0);
                 done();
             });
         });
