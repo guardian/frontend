@@ -1,13 +1,13 @@
 # **Quick start guide**
 
-1. [Ensure your disk is encrypted](#security)
-2. [Obtain AWS credentials](#obtain-aws-credentials)
-3. [Local Test Server setup](#local-test-server-setup)
-4. [Run the app](#run-the-app)
-5. [IDE Setup](#ide-setup)
-6. [Optional steps](#optional-steps)
+- [Security checks](#security)
+- [Obtain AWS credentials](#obtain-aws-credentials)
+- [Local test server setup](#local-test-server-setup)
+- [Running the app](#running-the-app)
+- [IDE Setup](#ide-setup)
+- [Optional steps](#optional-steps)
 
-# Security
+# Security checks
 All development laptops must be encrypted. If you are not 100% sure, please ask for help.
 
 ## Check your Mac
@@ -53,7 +53,7 @@ You need a Mac or Linux PC (Ubuntu).
 
 4. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](04-troubleshooting.md#npm-eacces)*
 
-5. All being well, you should be able to [run the app](#run-the-app)
+5. All being well, you should be able to [run the app](#running-the-app)
 
 Manual
 ------
@@ -147,8 +147,8 @@ $ make install
 
 The frontend application should now be ready to run.
 
-Run the app
-===========
+Running the app
+===============
 Compile the client side assets: 
 
 ```bash
