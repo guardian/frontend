@@ -1,0 +1,141 @@
+@import '../_vars';
+
+// Overriding the settings.scss from foundation-emails
+$global-width: 500px;
+$global-gutter: 0;
+$body-background: #ffffff;
+$container-background: #ffffff;
+$global-padding: 0;
+$global-margin: 10px;
+$global-font-color: #333333;
+$callout-padding: 0;
+$callout-border: none;
+
+
+@import 'foundation-emails/foundation-emails';
+@import '_common';
+@import '_footer';
+@import '_tones';
+
+@font-face {
+    font-family: 'Guardian Egyptian Web Header';
+    src: url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.eot');
+    src: url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.eot?#iefix') format('embedded-opentype'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.woff2') format('woff2'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.woff') format('woff'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.ttf') format('truetype'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.svg#GuardianEgyptianWeb-Bold') format('svg');
+    font-weight: 900;
+    font-style: normal;
+    font-stretch: normal;
+}
+
+@font-face {
+    font-family: 'Guardian Egyptian Web Headline';
+    src: url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.eot');
+    src: url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.eot?#iefix') format('embedded-opentype'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff2') format('woff2'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff') format('woff'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.ttf') format('truetype'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.svg#GuardianEgyptianWeb-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+}
+
+table.fc-item {
+    width: 100%;
+}
+
+// External margins between cards
+// The only reliable mechanism for margins in Outlook is padding applied to table cells.
+.fc-item__margin {
+    width: 100%;
+    padding-bottom: $callout-margin-bottom;
+}
+
+// Internal padding on cards
+.fc-item__padding {
+    padding-bottom: 18px;
+}
+
+.message {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 18px;
+    background: #f6f6f6;
+    padding: 6px 10px;
+}
+
+.container-title {
+    font-family: 'Guardian Egyptian Web Header', 'Guardian Egyptian Web Headline', Georgia, serif;
+    font-size: 26px;
+    margin-bottom: 12px;
+    margin-top: 26px;
+    color: #333333;
+    padding-top: 4px;
+}
+
+.facia-link {
+    text-decoration: none;
+}
+
+.headline,
+.byline,
+.trail-text,
+.review-stars {
+    font-weight: normal;
+    padding: 0;
+    margin: 6px 10px 10px;
+}
+
+.headline,
+.byline {
+    font-family: 'Guardian Egyptian Web Headline', Georgia, serif;
+    font-size: 16px;
+    line-height: 20px;
+    color: inherit;
+}
+
+th {
+    hyphens: none;
+}
+
+.trail-text {
+    font-family: Georgia, serif;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.fc-item--large {
+    .headline,
+    .byline {
+        font-size: 22px;
+        line-height: 26px;
+    }
+}
+
+.kicker-separator {
+    font-weight: normal;
+}
+
+.headline .icon {
+    height: .8em;
+}
+
+$email-tones: (
+    the-flyer: #ffbdc6,
+    opinion: #e6711b,
+    sleeve-notes: #ffbb00
+);
+
+// Defaults
+.container-title.has-top-border {
+    border-top: 3px solid #46bcdf;
+}
+.tone-external {
+    border-top: 1px solid #46bcdf;
+}
+
+@each $email, $tone-color in $email-tones {
+    .#{$email} {
+        .container-title.has-top-border {
+            border-top: 3px solid $tone-color;
+        }
+        .tone-external {
+            border-top: 1px solid $tone-color;
+        }
+    }
+}

@@ -104,7 +104,7 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    background-size: 0;
+    background-size: cover;
 }
 
 .hosted__youtube-play-button {
@@ -134,10 +134,14 @@
     pointer-events: none;
 }
 
-.youtube__video-ended,
-.hosted__youtube-video:not(.youtube__video-started) {
+.youtube__video-buffering,
+.youtube__video-playing,
+.youtube__video-paused {
     ~ .hosted__youtube-poster-image {
-        background-size: cover;
+        // HACK! "hide" the poster image (with a 0 height) when video is playing
+        // but position static for hosted__youtube-play-button's absolute positioning to work
+        height: 0;
+        position: static;
     }
 }
 

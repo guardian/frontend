@@ -65,7 +65,7 @@ object NewNavigation {
     val name = "news"
 
     val uk = NavLinkLists(List(headlines, ukNews, world, business, environment, tech, football))
-    val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, auImmigration, football))
+    val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, environment, economy, football))
     val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, science, soccer))
     val int = NavLinkLists(List(headlines, world, ukNews, science, cities, globalDevelopment, football))
   }
@@ -78,8 +78,8 @@ object NewNavigation {
       List(science, globalDevelopment, cities, obituaries)
     )
     val au = NavLinkLists(
-      List(headlines, australiaNews, world, auPolitics, auImmigration),
-      List(indigenousAustralia, economy, tech, environment, media, obituaries)
+      List(headlines, australiaNews, world, auPolitics, environment, economy),
+      List(indigenousAustralia, tech, environment, media, obituaries)
     )
     val us = NavLinkLists(
       List(headlines, usNews, world, science, usPolitics, business),
@@ -116,10 +116,10 @@ object NewNavigation {
     val au = NavLinkLists(
       List(
         opinion,
-        theGuardianView,
         columnists,
         cartoons,
-        inMyOpinion
+        indigenousAustraliaOpinion,
+        theGuardianView
       ),
       List(
         NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
@@ -170,8 +170,8 @@ object NewNavigation {
       List(boxing, rugbyLeague, racing, usSports, golf)
     )
     val au = NavLinkLists(
-      List(sport, football, rugbyUnion, cricket, AFL, tennis),
-      List(aLeague, NRL, australiaSport)
+      List(sport, football, cricket, AFL, NRL, tennis, rugbyUnion),
+      List(aLeague, australiaSport)
     )
     val us = NavLinkLists(
       List(sport, soccer, NFL, tennis, MLB, MLS),
@@ -187,16 +187,16 @@ object NewNavigation {
     val name = "arts"
 
     val uk = NavLinkLists(
-      List(culture, tvAndRadio, music, film, books, games, artAndDesign),
-      List(stage, classical)
+      List(culture, tvAndRadio, music, film, stage, books, games, artAndDesign),
+      List(classical)
     )
     val au = NavLinkLists(
-      List(culture, books, music, artAndDesign, film, games),
-      List(stage, classical)
+      List(culture, film, music, books, tvAndRadio, artAndDesign, stage),
+      List(games, classical)
     )
     val us = NavLinkLists(
-      List(culture, books, music, artAndDesign, tvAndRadio, stage),
-      List(classical, film, games)
+      List(culture, film, books, music, artAndDesign, tvAndRadio, stage),
+      List(classical, games)
     )
     val int = NavLinkLists(
       List(culture, books, music, tvAndRadio, artAndDesign, film),
@@ -212,8 +212,8 @@ object NewNavigation {
       List(home, health, women, money)
     )
     val au = NavLinkLists(
-      List(lifestyle, fashion, food, loveAndSex, health),
-      List(family, women, travel, home, money)
+      List(lifestyle, travel, foodAu, relationshipsAu, fashionAu, healthAu),
+      List(loveAndSex, family, women, home, money)
     )
     val us = NavLinkLists(
       List(lifestyle, fashion, food, recipes, loveAndSex, home),
@@ -238,6 +238,7 @@ object NewNavigation {
       apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
       podcasts,
       video,
+      pictures,
       todaysPaper,
       observer,
       crosswords
@@ -249,6 +250,7 @@ object NewNavigation {
       apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
       podcasts,
       video,
+      pictures,
       crosswords
     ))
 
@@ -257,6 +259,7 @@ object NewNavigation {
       apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
       podcasts,
       video,
+      pictures,
       crosswords
     ))
 
@@ -266,6 +269,7 @@ object NewNavigation {
       apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
       podcasts,
       video,
+      pictures,
       todaysPaper,
       observer,
       crosswords
@@ -348,8 +352,11 @@ object NewNavigation {
       SectionsLink("lifeandstyle/women", women, Life),
       SectionsLink("lifeandstyle/health-and-wellbeing", health, Life),
       SectionsLink("lifeandstyle/family", family, Life),
-      SectionsLink("lifeandstyle/home-and-garden", home, Life),
-      SectionsLink("lifeandstyle/love-and-sex", loveAndSex, Life)
+      SectionsLink("lifeandstyle/love-and-sex", loveAndSex, Life),
+      SectionsLink("au/lifeandstyle/fashion", fashionAu, Life),
+      SectionsLink("au/lifeandstyle/food-and-drink", foodAu, Life),
+      SectionsLink("au/lifeandstyle/relationships", relationshipsAu, Life),
+      SectionsLink("au/lifeandstyle/health-and-wellbeing", healthAu, Life)
     )
 
     def getSectionLinks(sectionName: String, edition: Edition) = {
@@ -392,8 +399,8 @@ object NewNavigation {
     )
 
     val worldSubNav = NavLinkLists(
-      List(world, europe, usNews, americas, asia, australiaNews),
-      List(africa, middleEast, cities, globalDevelopment)
+      List(world, europe, usNews, americas, asia, australiaNews, middleEast),
+      List(africa, cities, globalDevelopment)
     )
 
     val moneySubNav = NavLinkLists(List(money, property, pensions, savings, borrowing, careers))
@@ -528,11 +535,6 @@ object NewNavigation {
 
     def simplifySectionId(sectionId: String) = {
       val sectionMap = Map(
-        "football/live" -> "football",
-        "football/tables" -> "football",
-        "football/competitions" -> "football",
-        "football/results" -> "football",
-        "football/fixtures" -> "football",
         "money/property" -> "money",
         "money/pensions" -> "money",
         "money/savings" -> "money",
@@ -568,6 +570,18 @@ object NewNavigation {
       sectionMap.getOrElse(sectionId, sectionId)
     }
 
+    def simplifyFootball(sectionId: String) = {
+      val sectionMap = Map(
+        "football/live" -> "football",
+        "football/tables" -> "football",
+        "football/competitions" -> "football",
+        "football/results" -> "football",
+        "football/fixtures" -> "football"
+      )
+
+      sectionMap.getOrElse(sectionId, sectionId)
+    }
+
     def getSubSectionNavLinks(id: String, edition: Edition, isFront: Boolean) = {
       if (isFront || frontLikePages.contains(id)) {
 
@@ -576,7 +590,7 @@ object NewNavigation {
 
           subNav.getEditionalisedSubSectionLinks(edition).mostPopular
         } else {
-          val subSectionList = subSectionLinks.filter(_.pageId == id)
+          val subSectionList = subSectionLinks.filter(_.pageId == simplifyFootball(id))
 
           if (subSectionList.isEmpty) {
             NewNavigation.SectionLinks.getSectionLinks(id, edition)

@@ -75,7 +75,7 @@ function init() {
 
     function isFocalRecipe(i) {
         var position = recipe[i].getBoundingClientRect();
-        var middleOfView = window.innerHeight / 2;
+        var middleOfView = window.innerHeight / 3;
 
         return position.top <= middleOfView && position.bottom > middleOfView;
     }
@@ -99,7 +99,7 @@ function init() {
         readMoreButton.toggleClass('js-x-sign');
     });
 
-    nextButton.each(function(elem) {
+    nextWrapper.each(function(elem) {
       bean.on(elem, 'click', function() {
           scrollToNextRecipe();
       });
