@@ -1,4 +1,5 @@
 define([
+    'Promise',
     'lib/fastdom-promise',
     'lib/$',
     'lodash/utilities/template',
@@ -10,6 +11,7 @@ define([
     'svg-loader!svgs/commercial/paid-content.svg',
     'lodash/arrays/uniq'
 ], function (
+    Promise,
     fastdom,
     $,
     template,
