@@ -37,7 +37,6 @@
     "lib/raven.js"
   ],
   "Gustav Pursche": [
-    "lib/robust.js",
     "lib/steady-page.js",
     "lib/storage.js",
     "lib/url.js"
