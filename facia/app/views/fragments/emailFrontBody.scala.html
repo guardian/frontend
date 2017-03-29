@@ -71,7 +71,7 @@
 @faciaCardWithTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
     @fcItem(Seq(toneClassFromStyle(card.cardStyle)) ++ (if (withImage) Seq("fc-item--large") else Seq())) {
         @if(withImage) {
-            @row(Seq()){@imgFromCard(card)}
+            @row(Seq("no-pad")){@imgFromCard(card)}
         }
         @if(card.header.quoted) {
             @headlineAndTrailWithCutout(card, withImage)
@@ -91,7 +91,7 @@
         @fcItem(Seq(toneClassFromStyle(card.cardStyle))) {
             <tr valign="top">
                 <td class="left-col"><table>@headline(card)</table></td>
-                <td class="right-col">@img</td>
+                <td class="right-col no-pad">@img</td>
             </tr>
         }
     }

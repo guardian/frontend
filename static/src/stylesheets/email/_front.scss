@@ -11,18 +11,29 @@ $global-font-color: #333333;
 $callout-padding: 0;
 $callout-border: none;
 
-
+// table
 .body {
     background: $body-background;
     height: 100%;
     width: 100%;
 }
 
+// table
 .container {
     background: $container-background;
     width: $global-width;
     margin: 0 auto;
     text-align: inherit;
+}
+
+// table
+.fc-item {
+
+}
+
+// td
+.fc-item__margin {
+
 }
 
 // table
@@ -32,7 +43,7 @@ $callout-border: none;
     position: relative;
 }
 
-
+@import '_normalise';
 @import '_common';
 @import '_footer';
 @import '_tones';
@@ -98,6 +109,10 @@ table.fc-item {
 
 .right-col {
     width: 40%;
+}
+
+.no-pad {
+    padding: 0;
 }
 
 .headline,
