@@ -25,7 +25,11 @@ Follow [this link](https://www.google.co.uk) and enter the relevant search strin
 
 # Local Test Server setup
 
-You can either set up the frontend through a [local install](#local-machine) on your machine or using [Docker](#docker). Before checking out the repository you may need to add your guardian email address to your github account and [add an SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/). Before pushing changes you may need to [create an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). Make sure your dev manager has added you to the necessary teams, in case you have need write access.
+You can either set up the frontend through a [local install](#local-machine) on your machine or using [Docker](#docker). 
+Before checking out the repository you may need to add your guardian email address to your github account and [add an 
+SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/). Before pushing changes you may 
+need to [create an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/).
+Make sure your dev manager has added you to the necessary teams, in case you have need write access.
 
 ## Local machine
 
@@ -36,8 +40,8 @@ You need a Mac or Linux PC (Ubuntu).
 1. Check out the repository:
 
     ```
-    git clone git@github.com:guardian/frontend.git
-    cd frontend
+    $ git clone git@github.com:guardian/frontend.git
+    $ cd frontend
     ```
 
 2. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *frontend* and *CMS fronts* (you will need access to Janus)
@@ -54,9 +58,9 @@ Install each of the things listed below:
 
 #### Configuration
 
-You need one file on your machine.
+You need one file on your machine:
 
-* `~/.aws/config`
+ `~/.aws/config`
 
 ```
 [profile frontend]
@@ -85,7 +89,9 @@ Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javas
 
 #### [Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
-The frontend uses an `.nvmrc` which specifies Node 6.x as a requirement. If you use [NVM](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can just `nvm use` (or `nvm install` if you don't have 6 installed yet).
+The frontend uses an `.nvmrc` which specifies Node 6.x as a requirement. If you use 
+[NVM](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can 
+just `nvm use` (or `nvm install` if you don't have 6 installed yet).
 
 To install nvm:
 
@@ -93,7 +99,9 @@ To install nvm:
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
 ```
 
-You may find it useful to add [this script](https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb) to your `.bash_profile` – or wherever else is appropriate for your setup – to automatically switch Node versions if an `.nvmrc` is present.
+You may find it useful to add [this script](https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb) to your 
+`.bash_profile` – or wherever else is appropriate for your setup – to automatically switch Node versions if an `.nvmrc` 
+is present.
 
 If you just want to use your system Node, you'll need to install v6:
 
