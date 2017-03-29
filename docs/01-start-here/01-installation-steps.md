@@ -140,13 +140,15 @@ $ echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bash_profile
 Quit Terminal, relaunch it and check that `git --version` outputs `2.1.3` or newer.
 
 
-#### The frontend code
+#### Client side code
 
 Install additional dependencies:
 
 ```bash
 $ make install
 ```
+
+The frontend application should now be ready to run.
 
 # Run the app
 
