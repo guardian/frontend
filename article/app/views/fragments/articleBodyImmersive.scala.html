@@ -2,7 +2,7 @@
 
 @import common.LinkTo
 @import views.BodyCleaner
-@import views.support.Commercial.isPaidContent
+@import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
 @import views.support.TrailCssClasses.toneClass
 
 @defining(model.article) { article =>
@@ -47,7 +47,9 @@
                     </div>
 
                     <div class="content__secondary-column js-secondary-column" aria-hidden="true">
-                        <div class="ad-slot-container js-ad-slot-container"></div>
+
+                        @fragments.articleAsideSlot(shouldShowAds(model), articleAsideOptionalSizes, false)
+
                     </div>
                 </div>
             </div>

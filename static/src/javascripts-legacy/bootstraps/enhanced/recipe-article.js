@@ -2,36 +2,47 @@ define([
     'lib/$',
     'lib/scroller',
     'bean',
-    'lodash/functions/debounce'
+    'lodash/functions/debounce',
+    'common/modules/ui/sticky',
+    'lib/detect'
 ], function (
     $,
     scroller,
     bean,
-    debounce
+    debounce,
+    Sticky,
+    detect
 ) {
 
 function init() {
     var recipe = $('.recipe__article--structured');
-    var firstRecipe = $('.js-recipe__article--structured .js-recipe__article--structured-headline h1');
+    var article = $('.js-recipe__content');
+    var articleNoJS = $('.js-recipe__content--no-js');
+    var firstRecipe = $('.js-recipe__article--structured');
+    var firstRecipeHeadline = $('.js-recipe__article--structured .js-recipe__article--structured-headline h1');
     var nextWrapper = $('.js-recipe__article--next-recipe');
+    var readMoreNoJS = $('.js-read-more--no-js');
+    var readMoreWrapper = $('.js-read-more--wrapper');
     var nextRecipeTitle = $('.js-recipe__article--next-title');
     var nextRecipeText = $('.js-recipe__article--next-text');
     var nextRecipeKicker = $('.js-kicker');
     var nextButton = $('.js-recipe__article--next-button');
-    var readMoreButton = $('.js-recipe__article--read-more');
-    var readMoreButtonText = $('.read-more__text');
+    var readMoreButton;
     var displayClass = 'recipe__image__wrapper--is-displayed';
+    var stickyGutter = $('.js-recipe__gutter-wrapper');
+    var stickyImages = $('.js-recipe__image__wrapper');
 
     function setKicker() {
         var nextRecipe = getNextRecipe();
+        var nextRecipeHeadline = getNextRecipeHeadline();
 
         if (nextRecipe && nextRecipe.length > 0) {
             nextButton.removeClass('top');
-            nextRecipeTitle.html(nextRecipe.html());
+            nextRecipeTitle.html(nextRecipeHeadline.html());
             nextRecipeKicker.html('Next recipe ');
         } else {
             nextButton.addClass('top');
-            nextRecipeTitle.html(firstRecipe.html());
+            nextRecipeTitle.html(firstRecipeHeadline.html());
             nextRecipeKicker.html('First recipe ');
         }
     }
@@ -46,8 +57,12 @@ function init() {
         }
     }
 
-    function getNextRecipe() {
+    function getNextRecipeHeadline() {
         return $('.js-recipe__article--structured.inview + .js-recipe__article--structured .js-recipe__article--structured-headline h1');
+    }
+
+    function getNextRecipe() {
+        return $('.js-recipe__article--structured.inview + .js-recipe__article--structured');
     }
 
     function getIntOfFocalRecipe() {
@@ -60,7 +75,7 @@ function init() {
 
     function isFocalRecipe(i) {
         var position = recipe[i].getBoundingClientRect();
-        var middleOfView = window.innerHeight / 2;
+        var middleOfView = window.innerHeight / 3;
 
         return position.top <= middleOfView && position.bottom > middleOfView;
     }
@@ -73,26 +88,21 @@ function init() {
         setKicker();
     }
 
-    bean.on(readMoreButton[0], 'click', function() {
-
-        $('.recipe__content').toggleClass('js-visible');
-
-        if (readMoreButtonText.text() === 'Read more') {
-            readMoreButtonText.text('Hide')
-            setKicker();
-            nextButton.removeClass('top');
-        } else {
-            readMoreButtonText.text('Read more')
-            scroller.scrollToElement(firstRecipe[0]);
-        }
-
-        readMoreButton.toggleClass('js-x-sign');
-    });
-
-    bean.on(nextButton[0], 'click', function() {
+    function scrollToNextRecipe(){
         var nextRecipe = getNextRecipe();
         var destination = nextRecipe.length > 0 ? nextRecipe : firstRecipe;
         scroller.scrollToElement(destination[0]);
+    }
+
+    bean.on(readMoreWrapper[0], 'click', function() {
+        article.toggleClass('js-visible');
+        readMoreButton.toggleClass('js-x-sign');
+    });
+
+    nextWrapper.each(function(elem) {
+      bean.on(elem, 'click', function() {
+          scrollToNextRecipe();
+      });
     });
 
     window.addEventListener('scroll', debounce(function() {
@@ -109,6 +119,16 @@ function init() {
         nextRecipeText.addClass('visible');
         resetAssets(focalRecipeInt);
         if (focalRecipeInt < 0) { nextButton.removeClass('top'); }
+
+        if(detect.isBreakpoint({ min: 'desktop' })) {
+          new Sticky(stickyGutter[0]).init();
+          new Sticky(stickyImages[0]).init();
+        }
+
+        readMoreWrapper.html(readMoreNoJS.html());
+        readMoreButton = $('.js-recipe__article--read-more');
+        article.html(articleNoJS.html());
+        articleNoJS.remove();
     }
 
     initalise();

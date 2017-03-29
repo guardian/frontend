@@ -1,15 +1,24 @@
 package layout
 
+import conf.switches.Switches
 import model.PressedPage
 import model.facia.PressedCollection
 import model.pressed.{CollectionConfig, PressedContent}
+import campaigns.EmailAdvertisements._
 
 import PartialFunction.condOpt
 
-object EmailContainer {
+sealed trait EmailContainer
 
-  def fromPressedCollections(pressedCollections: List[PressedCollection]): List[EmailContainer] = {
-    val (_, reversedContainers) = pressedCollections.foldLeft((List.empty[EditionalisedLink], List.empty[EmailContainer])) {
+case class LiveIntentMarquee(newsletterId: String, ids: (String, String, String, String, String)) extends EmailContainer
+case class LiveIntentMPU(newsletterId: String, ids: (String, String, String, String, String)) extends EmailContainer
+case class LiveIntentSafeRTB(newsletterId: String, ids: List[String]) extends EmailContainer
+case class EmailContentContainer(displayName: String, cards: List[ContentCard], config: CollectionConfig, collectionType: String) extends EmailContainer
+
+object EmailContentContainer {
+
+  def fromPressedCollections(pressedCollections: List[PressedCollection]): List[EmailContentContainer] = {
+    val (_, reversedContainers) = pressedCollections.foldLeft((List.empty[EditionalisedLink], List.empty[EmailContentContainer])) {
       case ((alreadySeen, emailContainers), pressedCollection) =>
         val cards = collectionCardsDeduplicated(pressedCollection, alreadySeen)
         val emailContainer = fromCollectionAndCards(pressedCollection, cards)
@@ -29,7 +38,7 @@ object EmailContainer {
   }
 
   private def fromCollectionAndCards(collection: PressedCollection, cards: List[ContentCard]) =
-    EmailContainer(
+    EmailContentContainer(
       displayName = collection.displayName,
       cards = cards,
       config = collection.config,
@@ -43,11 +52,21 @@ object EmailContainer {
   }
 }
 
-case class EmailContainer(displayName: String, cards: List[ContentCard], config: CollectionConfig, collectionType: String)
-
 object CollectionEmail {
   def fromPressedPage(pressedPage: PressedPage) =
-    CollectionEmail(EmailContainer.fromPressedCollections(pressedPage.collections))
+    CollectionEmail(pressedPage.id, EmailContentContainer.fromPressedCollections(pressedPage.collections))
 }
 
-case class CollectionEmail(collections: List[EmailContainer])
+case class CollectionEmail(id: String, contentCollections: List[EmailContentContainer]) {
+  def collections: List[EmailContainer] = {
+    if (Switches.guTodayEmailAds.isSwitchedOn) {
+      val (start, end) = contentCollections.splitAt(3)
+      List(
+        start,
+        mpu.get(id).toList,
+        end,
+        safeRtb.get(id).toList
+      ).flatten
+    } else contentCollections
+  }
+}

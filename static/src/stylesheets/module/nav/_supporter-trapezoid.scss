@@ -51,3 +51,8 @@
         left: $gs-gutter/2;
     }
 }
+
+// Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
+x:-o-prefocus, .header__supporter-cta {
+    display: none;
+}

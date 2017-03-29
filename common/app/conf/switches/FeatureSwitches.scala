@@ -384,7 +384,7 @@ trait FeatureSwitches {
     "When ON, articles specified in the badges file will have visual elements added",
     owners = Seq(Owner.withGithub("superfrank")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 3, 28),
+    sellByDate = new LocalDate(2017, 8, 31),
     exposeClientSide = false
   )
 
@@ -485,6 +485,48 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 5),
     exposeClientSide = true
+  )
+
+  // Owner: David Furey
+  val guTodayEmailAds = Switch(
+    SwitchGroup.Feature,
+    "guardian-today-email-ads",
+    "When ON, the Guardian Today US Email will contain Live Intent advertisements",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 6, 6),
+    exposeClientSide = false
+  )
+
+  // Owner: George Haberis / Lindsey Dew
+  val UseTailorEndpoints = Switch(
+    SwitchGroup.Feature,
+    "use-tailor-endpoints",
+    "When ON will request data from tailor end points",
+    owners= Seq(Owner.withGithub("GHaberis")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val NewHeader = Switch(
+    SwitchGroup.Feature,
+    "new-header",
+    "New header switch, just in case anything is really wrong with it",
+    owners = Seq(Owner.withGithub("natalialkb")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 4, 12),
+    exposeClientSide = false
+  )
+
+  val InlineEmailStyles = Switch(
+    SwitchGroup.Feature,
+    "inline-email-styles",
+    "When ON, email styles will be stripped from the <head> and inlined into HTML style attributes",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
   )
 
 }

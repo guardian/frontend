@@ -1,7 +1,6 @@
 /*eslint-disable no-new*/
 /* TODO - fix module constructors */
 define([
-    'fastdom',
     'bean',
     'bonzo',
     'qwery',
@@ -53,7 +52,6 @@ define([
     'lodash/collections/forEach',
     'ophan/ng'
 ], function (
-    fastdom,
     bean,
     bonzo,
     qwery,
@@ -328,8 +326,7 @@ define([
         };
     return {
         init: function () {
-            forEach(robust.makeBlocks([
-
+            robust.context([
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],
 
@@ -370,10 +367,7 @@ define([
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
                 ['c-membership',membership]
-
-            ]), function (fn) {
-                fn();
-            });
+            ]);
         }
     };
 });

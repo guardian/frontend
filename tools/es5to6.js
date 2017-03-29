@@ -6,10 +6,10 @@ const chalk = require('chalk');
 const execa = require('execa');
 const megalog = require('megalog');
 
-function handleError(error) {
+const handleError = error => {
     console.log(chalk.red(error.stack));
     process.exit(1);
-}
+};
 
 process.on('unhandledRejection', handleError);
 process.on('uncaughtException', handleError);
