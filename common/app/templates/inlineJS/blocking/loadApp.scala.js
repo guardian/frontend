@@ -1,7 +1,6 @@
 @()(implicit request: RequestHeader)
 @import conf.Static
 @import conf.Configuration
-@import conf.switches.Switches.{PolyfillIO}
 
 // the app is bundled without any polyfills. babel transpiles the syntax
 // to es5 but we do not provide any polyfills for missing methods.
@@ -86,9 +85,5 @@ function guardianPolyfilled() {
     appScript.src = '@Static("javascripts/graun.standard.js")';
     ref.parentNode.insertBefore(appScript, ref);
 
-    @if(PolyfillIO.isSwitchedOn) {
-        loadPolyfillIO()
-    } else {
-        loadFallback();
-    }
+    loadPolyfillIO();
 })(document, window);
