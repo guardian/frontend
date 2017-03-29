@@ -15,17 +15,16 @@ define([
             showCloseBtn: true
         });
 
-        survey.attach();
+        return survey.attach()
+        .then(function () {
+            var aboutBtn = document.querySelector('.js-hosted-about');
+            var overlay = document.querySelector('.js-survey-overlay');
 
-        var aboutBtn = document.querySelector('.js-hosted-about');
-        var overlay = document.querySelector('.js-survey-overlay');
-
-        aboutBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            overlay.classList.remove('u-h');
+            aboutBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                overlay.classList.remove('u-h');
+            });
         });
-
-        return Promise.resolve();
     }
 
     return {

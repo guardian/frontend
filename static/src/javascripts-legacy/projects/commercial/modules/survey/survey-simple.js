@@ -1,5 +1,5 @@
 define([
-    'fastdom',
+    'lib/fastdom-promise',
     'lib/$',
     'lodash/utilities/template',
     'common/modules/user-prefs',
@@ -42,7 +42,7 @@ define([
 
     surveySimple.prototype.attach = function () {
         if (!this.hasSeen()) {
-            fastdom.write(function () {
+            return fastdom.write(function () {
                 $(document.body).append(this.bannerTmpl);
 
                 if (this.config.showCloseBtn) {
@@ -50,6 +50,8 @@ define([
                     closeBtn.addEventListener('click', this.handleClick.bind(this));
                 }
             }.bind(this));
+        } else {
+            return Promise.resolve();
         }
     };
 
