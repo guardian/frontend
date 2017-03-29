@@ -48,7 +48,7 @@ You need a Mac or Linux PC (Ubuntu).
 
 3. Make sure you have the latest version of Java
 
-4. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](docs/01-start-here/04-troubleshooting.md#npm-eacces)*
+4. Run ```./setup.sh``` to install dependencies and compile assets. *[EACCES error?](04-troubleshooting.md#npm-eacces)*
 
 5. All being well, you should be able to [run the app](#run-the-app)
 
