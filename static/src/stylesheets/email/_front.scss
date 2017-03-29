@@ -11,38 +11,6 @@ $global-font-color: #333333;
 $callout-padding: 0;
 $callout-border: none;
 
-// table
-.body {
-    background: $body-background;
-    height: 100%;
-    width: 100%;
-}
-
-// table
-.container {
-    background: $container-background;
-    width: $global-width;
-    margin: 0 auto;
-    text-align: inherit;
-}
-
-// table
-.fc-item {
-
-}
-
-// td
-.fc-item__margin {
-
-}
-
-// table
-.fc-item__inner {
-    padding: 0;
-    width: 100%;
-    position: relative;
-}
-
 @import '_normalise';
 @import '_common';
 @import '_footer';
@@ -66,20 +34,48 @@ $callout-border: none;
     font-stretch: normal;
 }
 
-table.fc-item {
+// table
+.body {
+    background: $body-background;
+    height: 100%;
     width: 100%;
+}
+
+// table
+.container {
+    background: $container-background;
+    width: $global-width;
+    margin: 0 auto;
+    text-align: inherit;
+}
+
+// table
+.fc,
+.row,
+.ct,
+.ct__inner {
+    width: 100%;
+}
+
+.fc,
+.row,
+.ct {
+    text-align: left;
 }
 
 // External margins between cards
 // The only reliable mechanism for margins in Outlook is padding applied to table cells.
-.fc-item__margin {
+// td
+.fc__margin {
     width: 100%;
     padding-bottom: $global-margin;
 }
 
-// Internal padding on cards
-.fc-item__padding {
-    padding-bottom: 18px;
+// table
+.fc__inner {
+    padding: 0;
+    width: 100%;
+    position: relative;
 }
 
 .message {
@@ -90,16 +86,21 @@ table.fc-item {
     padding: 6px 10px;
 }
 
-.container-title {
-    font-family: 'Guardian Egyptian Web Header', 'Guardian Egyptian Web Headline', Georgia, serif;
-    font-size: 26px;
-    margin-bottom: 12px;
-    margin-top: 26px;
-    color: #333333;
-    padding-top: 4px;
+.ct__margin {
+    padding: 26px 0 12px;
 }
 
-.facia-link {
+.ct__inner {
+    font-family: 'Guardian Egyptian Web Header', 'Guardian Egyptian Web Headline', Georgia, serif;
+    font-size: 26px;
+    color: #333333;
+}
+
+.ct__padding {
+    padding: 4px 0 0;
+}
+
+.fc-link {
     text-decoration: none;
 }
 
@@ -141,7 +142,7 @@ th {
     line-height: 18px;
 }
 
-.fc-item--large {
+.fc--large {
     .headline,
     .byline {
         font-size: 22px;
@@ -164,7 +165,7 @@ $email-tones: (
 );
 
 // Defaults
-.container-title.has-top-border {
+.ct__inner.has-top-border {
     border-top: 3px solid #46bcdf;
 }
 .tone-external {
@@ -173,7 +174,7 @@ $email-tones: (
 
 @each $email, $tone-color in $email-tones {
     .#{$email} {
-        .container-title.has-top-border {
+        .ct__inner.has-top-border {
             border-top: 3px solid $tone-color;
         }
         .tone-external {

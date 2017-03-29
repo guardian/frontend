@@ -10,9 +10,16 @@
 @import views.support.RemoveOuterParaHtml
 @import views.support.TrailCssClasses.toneClassFromStyle
 
+@containerTitle(classes: Seq[String])(contents: Html) = {
+    <table class="ct"><tr><td class="ct__margin"><table class="ct__inner @classes.mkString(" ")"><tr><td class="ct__padding">@contents</td></tr></table></td></tr></table>
+}
 
-@fcItem(classes: Seq[String])(contents: Html) = {
-    <table class="fc-item"><tr><td class="fc-item__margin"><table class="fc-item__inner @classes.mkString(" ")">@contents</table></td></tr></table>
+@fullRow(classes: Seq[String])(contents: Html) = {
+    <table class="row"><tr><td @if(classes.nonEmpty) { class="@classes.mkString(" ")" }>@contents</td></tr></table>
+}
+
+@faciaCard(classes: Seq[String])(contents: Html) = {
+    <table class="fc"><tr><td class="fc__margin"><table class="fc__inner @classes.mkString(" ")">@contents</table></td></tr></table>
 }
 
 @row(classes: Seq[String])(contents: Html) = {
@@ -21,9 +28,9 @@
 
 @headline(card: ContentCard, isLarge: Boolean = false) = {
     @row(Seq("headline")) {
-        <a @Html(card.header.url.hrefWithRel) class="facia-link">
+        <a @Html(card.header.url.hrefWithRel) class="fc-link">
             @card.header.kicker.map { kicker =>
-                <span class="fc-item__kicker">@Html(kicker.kickerHtml)</span>
+                <span class="fc__kicker">@Html(kicker.kickerHtml)</span>
                 <span class="kicker-separator">/</span>
             }
 
@@ -57,7 +64,7 @@
 @trailText(card: ContentCard) = {
     @card.trailText.map { trailText =>
         @row(Seq("trail-text")) {
-            <a @Html(card.header.url.hrefWithRel) class="facia-link">@Html(trailText)</a>
+            <a @Html(card.header.url.hrefWithRel) class="fc-link">@Html(trailText)</a>
         }
     }
 }
@@ -69,7 +76,7 @@
 
 
 @faciaCardWithTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
-    @fcItem(Seq(toneClassFromStyle(card.cardStyle)) ++ (if (withImage) Seq("fc-item--large") else Seq())) {
+    @faciaCard(Seq(toneClassFromStyle(card.cardStyle)) ++ (if (withImage) Seq("fc--large") else Seq())) {
         @if(withImage) {
             @row(Seq("no-pad")){@imgFromCard(card)}
         }
@@ -84,11 +91,11 @@
 
 @faciaCardWithoutTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
     @imgFromCard(card, 5).filter(i => withImage).fold {
-        @fcItem(Seq(toneClassFromStyle(card.cardStyle))) {
+        @faciaCard(Seq(toneClassFromStyle(card.cardStyle))) {
             @headline(card, largeHeadline)
         }
     } { img =>
-        @fcItem(Seq(toneClassFromStyle(card.cardStyle))) {
+        @faciaCard(Seq(toneClassFromStyle(card.cardStyle))) {
             <tr valign="top">
                 <td class="left-col"><table>@headline(card)</table></td>
                 <td class="right-col no-pad">@img</td>
@@ -124,15 +131,13 @@
     }
 }
 
-@fullRow {
+@fullRow(Seq()) {
     @imgForFront(page.banner, page.email.map(_.name))
 }
 
 @layout.CollectionEmail.fromPressedPage(page).collections.zipWithIndex.map { case (collection, collectionIndex) =>
-    @fullRow {
-        <h2 class="container-title @if(collectionIndex > 0) { has-top-border }">
-            @collection.displayName
-        </h2>
+    @containerTitle(if(collectionIndex > 0) Seq("has-top-border") else Seq()) {
+        @collection.displayName
     }
 
     @collection.cards.zipWithIndex.map { case (card, cardIndex) =>
@@ -145,7 +150,7 @@
 }
 
 @page.frontProperties.onPageDescription.map { description =>
-    @fullRow {
-        <p class="message">@Html(description)</p>
+    @fullRow(Seq("message")) {
+        @Html(description)
     }
 }

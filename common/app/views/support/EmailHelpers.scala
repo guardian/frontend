@@ -128,7 +128,7 @@ object EmailHelpers {
 
   def imgFromCard(card: ContentCard, colWidth: Int = 12)(implicit requestHeader: RequestHeader): Option[Html] = imageUrlFromCard(card).map { url => Html {
       val width = ((colWidth.toDouble / 12.toDouble) * FrontEmailImage.knownWidth).toInt
-      s"""<a class="facia-link" ${card.header.url.hrefWithRel}>${img(width)(url, Some(card.header.headline))}</a>"""
+      s"""<a class="fc-link" ${card.header.url.hrefWithRel}>${img(width)(url, Some(card.header.headline))}</a>"""
     }
   }
 
