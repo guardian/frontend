@@ -46,9 +46,11 @@ define([
     }
 
     function getVariant(test, variantId) {
-        return test.variants.find(function (variant) {
-            return variant.id === variantId;
+        var variantIds = test.variants.map(function (variant) {
+            return variant.id;
         });
+        var index = variantIds.indexOf(variantId);
+        return index > -1 ? test.variants[index] : null;
     }
 
     function setTestVariant(testId, variant) {

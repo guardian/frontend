@@ -107,9 +107,11 @@ define([
     }
 
     function getTest(id) {
-        return TESTS.find(function (test) {
-            return test.id === id;
+        var testIds = TESTS.map(function (test) {
+            return test.id;
         });
+        var index = testIds.indexOf(id);
+        return index > -1 ? TESTS[index] : null;
     }
 
     function abData(variantName, complete, campaignCodes) {
