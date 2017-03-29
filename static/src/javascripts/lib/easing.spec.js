@@ -36,15 +36,16 @@ describe('easing', () => {
 
     test('create()', () => {
         const OriginalDate = global.Date;
-        const ELAPSED = chance.integer({ min: 0, max: 80 });
+        const ELAPSED = chance.integer({ min: 0, max: 100 });
         const DURATION = chance.integer({ min: ELAPSED, max: 300 });
-        const ELAPSED_DATE = `1970-01-01T00:00:00.0${ELAPSED}Z`;
         global.Date = jest.fn(() => new OriginalDate(0));
 
         const ease = easing.create('linear', DURATION);
         expect(ease()).toBe(0);
 
-        global.Date = jest.fn(() => new OriginalDate(ELAPSED_DATE));
+        global.Date = jest.fn(
+            () => new OriginalDate((1970, 1, 1, 0, 0, 0, ELAPSED))
+        );
         expect(ease()).toBe(ELAPSED / DURATION);
 
         global.Date = OriginalDate;
