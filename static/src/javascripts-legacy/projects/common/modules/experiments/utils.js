@@ -72,7 +72,7 @@ define([
     function isInVariant(test, variant) {
         return getParticipations()[test.name] &&
             getParticipations()[test.name].variant === variant &&
-            testCanRunChecks.testCanBeRun(testName);
+            testCanRunChecks.testCanBeRun(test.name);
     }
 
     return {
