@@ -9,7 +9,6 @@
     "lib/client-rects.js"
   ],
   "Gareth Trufitt": [
-    "lib/closest.js",
     "lib/config.js",
     "lib/cookies.js",
     "lib/create-store.js",
