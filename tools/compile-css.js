@@ -57,7 +57,7 @@ const getFiles = sassGlob => glob.sync(path.resolve(sassDir, sassGlob));
 
 module.exports = (
     sassGlob,
-    { remify = true, browsers = BROWSERS_LIST } = {}
+    { remify = false, browsers = BROWSERS_LIST } = {}
 ) => {
     if (typeof sassGlob !== 'string') {
         return Promise.reject('No glob provided.');
