@@ -6,7 +6,6 @@ define([
     'Promise',
     'qwery',
     'common/modules/component',
-    'common/modules/experiments/ab',
     'lib/config',
     'lib/mediator',
     'lodash/functions/once'
@@ -14,7 +13,6 @@ define([
     Promise,
     qwery,
     Component,
-    ab,
     config,
     mediator,
     once
