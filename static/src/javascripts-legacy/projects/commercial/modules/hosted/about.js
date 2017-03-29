@@ -1,12 +1,8 @@
 define([
     'Promise',
-    'bean',
-    'lib/$',
     'commercial/modules/survey/survey-simple'
 ], function (
     Promise,
-    bean,
-    $,
     SurveySimple
 ) {
     function init() {
@@ -21,9 +17,12 @@ define([
 
         survey.attach();
 
-        bean.on(document, 'click', $('.js-hosted-about'), function (e) {
+        var aboutBtn = document.querySelector('.js-hosted-about');
+        var overlay = document.querySelector('.js-survey-overlay');
+
+        aboutBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            $('.js-survey-overlay').removeClass('u-h');
+            overlay.classList.remove('u-h');
         });
 
         return Promise.resolve();
