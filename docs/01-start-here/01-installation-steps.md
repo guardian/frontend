@@ -174,28 +174,28 @@ If you have [setup local Nginx](https://github.com/guardian/frontend/blob/master
 
 Congratulations, you have a local instance running!  Now continue on to set up your IDE.
 
-## IDE setup
+# IDE setup
 
-### EditorConfig plugin
+## EditorConfig plugin
 
 Install to your IDE from http://editorconfig.org/#download
 
-### IntelliJ metadata
+## IntelliJ metadata
 To create project files for use in IntelliJ, you need to make sure you install the Scala plugin from Preferences->Plugins. It supports SBT and Play.
 Then load IntelliJ, then click Import project and import the directory as an SBT project. Default settings are fine, except you need to make sure you choose JDK 1.8 (under JVM - Custom) otherwise it won't import correctly - You can find the location by pasting `/usr/libexec/java_home` into your terminal.
 
 Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other things to do.
 
-## Optional steps
+# Optional steps
 
-### Nginx
+## Nginx
 
 If you are working on Identity or Discussion, Nginx must be installed and
 configured to correctly serve the application, please refer to
 [`/nginx/README.md`](https://github.com/guardian/frontend/blob/master/nginx/README.md) in this project.
 This will allow you to access frontend via `https://m.thegulocal.com`
 
-### Docker
+## Docker
 
 Warning: Docker for Mac is suffering performance issues for directories mounted via osxfs, making the Guardian frontend setup on Mac painfully slow. We'll recommand that Mac users follow the instructions above to install and run frontend on their local machine.
 
@@ -218,7 +218,7 @@ Prerequisites:
 - *The `dev` container will be deleted when exited*
 - *Node packages are bound to your machine architecture, so you cannot switch between MacOS and Docker(Linux) in the same local git repo. To avoid this problem, you can run `make reinstall` which will install the correct node binaries for your system*
 
-#### Removing containers
+### Removing containers
 
 Containers can be thrown away very easily. To do so:
 - `docker ps -a` to get the ID of the container you want to remove
