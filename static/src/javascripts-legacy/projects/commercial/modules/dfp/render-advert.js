@@ -208,7 +208,7 @@ define([
 
         if (adSlotContent.length) {
             fastdom.write(function () {
-                adSlotContent.classList.add('ad-slot__content');
+                adSlotContent[0].classList.add('ad-slot__content');
             });
         }
     }
