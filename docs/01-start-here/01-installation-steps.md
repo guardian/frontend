@@ -150,8 +150,8 @@ $ make install
 
 The frontend application should now be ready to run.
 
-# Run the app
-
+Run the app
+===========
 Compile the client side assets: 
 
 ```bash
