@@ -65,7 +65,9 @@ describe('robust', () => {
             ['test-3', runner],
         ];
 
-        robust.catchErrorsAndLogAll(MODULES);
-        expect(runner).toHaveBeenCalledTimes(MODULES.length);
+        const wrappedModules = robust.catchErrorsAndLogAll(MODULES);
+        expect(runner).toHaveBeenCalledTimes(0);
+        expect(wrappedModules.length).toBe(MODULES.length);
+        wrappedModules.forEach(mod => expect(typeof mod).toBe('function'));
     });
 });
