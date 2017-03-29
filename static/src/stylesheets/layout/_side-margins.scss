@@ -79,3 +79,9 @@
         }
     }
 }
+.l-side-margins--paidgallery {
+    &:before,
+    &:after {
+        content: none;
+    }
+}

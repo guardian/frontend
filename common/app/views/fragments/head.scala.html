@@ -23,12 +23,13 @@ http://developers.theguardian.com/join-the-team.html
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
 @fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
 
-<link rel="prefetch" href="@Static("javascripts/graun.standard.js")">
+<link rel="preload" as="script" href="@Static("javascripts/graun.standard.js")">
 @if(PolyfillIO.isSwitchedOn) {
-    <link rel="prefetch" href="@common.Assets.js.polyfillioUrl">
+    <link rel="preload" as="script" href="@common.Assets.js.polyfillioUrl">
 } else {
-    <link rel="prefetch" href="@Static("javascripts/vendor/polyfillio.fallback.js")">
+    <link rel="preload" as="script" href="@Static("javascripts/vendor/polyfillio.fallback.js")">
 }
+<link rel="preload" as="script" href="@Static("javascripts/graun.commercial.js")">
 
 @*
 Protect against ReferenceErrors in IE:

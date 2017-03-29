@@ -46,6 +46,12 @@
     }
 }
 
+.content__labels--paidgallery {
+    .content__section-label__link {
+        color: $paid-article-brand;
+    }
+}
+
 .gallery__fullscreen,
 .article__fullscreen {
     position: absolute;

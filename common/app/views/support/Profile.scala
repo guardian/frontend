@@ -19,7 +19,7 @@ sealed trait ElementProfile {
   def compression: Int
   def isPng: Boolean
   def autoFormat: Boolean
-  
+
   def elementFor(image: ImageMedia): Option[ImageAsset] = {
     val sortedCrops = image.imageCrops.sortBy(-_.width)
     width.flatMap{ desiredWidth =>
@@ -150,6 +150,13 @@ object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) {
 object FrontEmailImage extends Profile(width = Some(500), autoFormat = false) {
   override val qualityparam = "q=40"
   val knownWidth = width.get
+}
+
+object SmallFrontEmailImage {
+  def apply(customWidth: Int) = new SmallFrontEmailImage(customWidth)
+}
+class SmallFrontEmailImage(customWidth: Int) extends Profile(Some(customWidth), autoFormat = false) {
+  override val qualityparam = "q=40"
 }
 
 // The imager/images.js base image.
