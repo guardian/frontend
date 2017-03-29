@@ -206,9 +206,9 @@ Prerequisites:
 1. Clone repository
     - `git clone git@github.com:guardian/frontend.git && cd frontend`
 2. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *frontend* and *CMS fronts* (you will need access to Janus)
-4. Run the container (dev service). The first time you do so the container image would be pulled from the EC2 Container Registry
+3. Run the container (dev service). The first time you do so the container image would be pulled from the EC2 Container Registry
     - ./dev.sh
-5. Build and run the app within the container
+4. Build and run the app within the container
     - `make reinstall compile && ./sbt`
     - See [Run the app section](#run-the-app) for more info
 
