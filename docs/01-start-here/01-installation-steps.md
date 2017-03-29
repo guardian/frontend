@@ -123,13 +123,6 @@ Quit Terminal, relaunch it and check that `git --version` outputs `2.1.3` or new
 
 
 #### The frontend code
-Note: Remember to see [Troubleshooting](#troubleshooting) below if you have any issues.
-
-```
-git clone git@github.com:guardian/frontend.git
-
-cd frontend
-```
 
 Install additional dependencies:
 ```
