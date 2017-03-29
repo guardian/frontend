@@ -39,7 +39,7 @@ You need a Mac or Linux PC (Ubuntu).
 
 1. Check out the repository:
 
-    ```
+    ```bash
     $ git clone git@github.com:guardian/frontend.git
     $ cd frontend
     ```
@@ -71,18 +71,18 @@ region = eu-west-1
 
 This is needed on Mac only:
 ```bash
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 #### A JDK
 
 Ubuntu: Java 8 is required, but only OpenJDK 7 is available in the official Ubuntu repo. Install Java 8 as below.
 
 ```bash
-sudo apt-get purge openjdk*
-sudo add-apt-repository -y ppa:webupd8team/java
-sudo apt-get update
-echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
-sudo apt-get -y install oracle-java8-installer
+$ sudo apt-get purge openjdk*
+$ sudo add-apt-repository -y ppa:webupd8team/java
+$ sudo apt-get update
+$ echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+$ sudo apt-get -y install oracle-java8-installer
 ```
 
 Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
@@ -95,8 +95,8 @@ just `nvm use` (or `nvm install` if you don't have 6 installed yet).
 
 To install nvm:
 
-```
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
+```bash
+$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
 ```
 
 You may find it useful to add [this script](https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb) to your 
@@ -107,12 +107,12 @@ If you just want to use your system Node, you'll need to install v6:
 
 Ubuntu:
 ```bash
-curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
-sudo apt-get install -y nodejs
+$ curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
+$ sudo apt-get install -y nodejs
 ```
 Mac:
 ```bash
-brew install node@6
+$ brew install node@6
 ```
 
 #### Xcode (if on a Mac, one of the Node modules requires it)
@@ -121,46 +121,59 @@ This is needed on Mac only:
 https://itunes.apple.com/gb/app/xcode/id497799835
 
 Xcode installs an old version of git `1.9.3`. If you need a newer version, you can run
+
+```bash
+$ brew install git
+$ echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bash_profile
 ```
-brew install git
-echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bash_profile
-```
+
 Quit Terminal, relaunch it and check that `git --version` outputs `2.1.3` or newer.
 
 
 #### The frontend code
 
 Install additional dependencies:
-```
-make install
+
+```bash
+$ make install
 ```
 
 ## Run the app
 
 Compile the client side assets: 
+
+```bash
+$ make watch
 ```
-make watch
-```
+
 As a convenience, this command will also watch for changes to client side code and 
 automatically inject changes into the browser without requiring a browser refresh.
 
 In another console, run the supplied bash script [sbt]. The dot and slash are important in this command.
+
+```bash
+$ ./sbt
 ```
-./sbt
-```
+
 Wait for SBT to be up and running. This may take 15 mins or so to start the first time - you'll know
 it's done when you get a prompt. If it is your first time, compile the project.
+
 ```
 compile
 ```
+
 Switch project by typing
+
 ```
 project dev-build
 ```
+
 Then run the project locally by typing
+
 ```
 run
 ```
+
 This also can take a while the first time.
 
 Now check that you are up and running by hitting the following URLs:
