@@ -3,21 +3,26 @@
 1. [Ensure your disk is encrypted](#security)
 2. [Obtain AWS credentials](#obtain-aws-credentials)
 3. [Local Test Server setup](#local-test-server-setup)
-4. [IDE Setup](#ide-setup)
-5. [Optional steps](#optional-steps)
+4. [Run the app](#run-the-app)
+5. [IDE Setup](#ide-setup)
+6. [Optional steps](#optional-steps)
 
 # Security
 All development laptops must be encrypted. If you are not 100% sure, please ask for help.
-###Check your Mac:
+
+## Check your Mac
+
 - Choose Apple menu > System Preferences
 - Security & Privacy.
 - Click the FileVault tab.
 - ensure that FileVault is enabled for your disk
 
-### Checking Linux (including desktop machines):
+## Checking Linux (including desktop machines)
+
 Follow [this link](https://www.google.co.uk) and enter the relevant search string for your system.
 
 # Obtain AWS credentials
+
 1. Fork [Janus](https://github.com/guardian/janus) and follow the readme (**Note:** you will need permission to access the Janus repo to do this, and 2FA set up on your Google account)
 2. Make your change and push to a new branch (you can review the closed PRs for help)
 3. Submit a PR
@@ -70,9 +75,11 @@ region = eu-west-1
 #### [Homebrew](http://brew.sh/)
 
 This is needed on Mac only:
+
 ```bash
 $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
+
 #### A JDK
 
 Ubuntu: Java 8 is required, but only OpenJDK 7 is available in the official Ubuntu repo. Install Java 8 as below.
@@ -106,11 +113,14 @@ is present.
 If you just want to use your system Node, you'll need to install v6:
 
 Ubuntu:
+
 ```bash
 $ curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
 $ sudo apt-get install -y nodejs
 ```
+
 Mac:
+
 ```bash
 $ brew install node@6
 ```
@@ -138,7 +148,7 @@ Install additional dependencies:
 $ make install
 ```
 
-## Run the app
+# Run the app
 
 Compile the client side assets: 
 
