@@ -1,0 +1,3 @@
+@(classes: Seq[String])(contents: Html)
+
+<table class="row"><tr><td @if(classes.nonEmpty) { class="@classes.mkString(" ")" }>@contents</td></tr></table>

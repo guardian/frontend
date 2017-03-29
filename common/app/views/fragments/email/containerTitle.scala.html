@@ -1,0 +1,3 @@
+@(classes: Seq[String])(contents: Html)
+
+<table class="ct"><tr><td class="ct__margin"><table class="ct__inner @classes.mkString(" ")"><tr><td class="ct__padding">@contents</td></tr></table></td></tr></table>
