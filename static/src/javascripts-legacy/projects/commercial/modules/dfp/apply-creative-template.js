@@ -1,5 +1,4 @@
 define([
-    'bean',
     'Promise',
     'lib/fastdom-promise',
     'lib/report-error',
@@ -13,7 +12,6 @@ define([
     'commercial/modules/creatives/fabric-video',
     'commercial/modules/creatives/scrollable-mpu-v2'
 ], function (
-    bean,
     Promise,
     fastdom,
     reportError
@@ -39,7 +37,7 @@ define([
             }
             // On IE, wait for the frame to load before interacting with it
             else if (contentFrame.readyState && contentFrame.readyState !== 'complete') {
-                bean.on(contentFrame, 'readystatechange', function (e) {
+                contentFrame.addEventListener('readystatechange', function onRSC(e) {
                     var updatedIFrame = e.srcElement;
 
                     if (
@@ -49,7 +47,7 @@ define([
                     updatedIFrame.readyState === 'complete'
                     /*eslint-enable valid-typeof*/
                     ) {
-                        bean.off(updatedIFrame, 'readystatechange');
+                        updatedIFrame.removeEventListener('readystatechange', onRSC);
                         resolve(contentFrame);
                     }
                 });
