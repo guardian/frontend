@@ -168,7 +168,7 @@ define([
                 queryParams.surveysNotToShow = surveysNotToShow;
             }
 
-            return tailor.fetchData('suggestions', queryParams).then(function (suggestions) {
+            return tailor.fetchData('suggestions', true, queryParams).then(function (suggestions) {
                 // get the survey to show
                 var surveySuggestionToShow = getSurveySuggestionToShow(suggestions);
 

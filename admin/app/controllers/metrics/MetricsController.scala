@@ -6,7 +6,7 @@ import play.api.mvc.Controller
 import play.api.mvc.Action
 import tools._
 import model.{ApplicationContext, NoCache}
-import conf.Configuration
+import conf.{Static, Configuration}
 import scala.concurrent.Future
 
 class MetricsController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
@@ -59,6 +59,14 @@ class MetricsController(wsClient: WSClient)(implicit context: ApplicationContext
     wsClient.url("https://s3-eu-west-1.amazonaws.com/aws-frontend-metrics/frequency/index.html").get() map { response =>
       NoCache(Ok(views.html.afg(response.body)))
     }
+  }
+
+  def renderBundleVisualization() = Action { implicit request =>
+    NoCache(SeeOther(Static("javascripts/webpack-stats.html")))
+  }
+
+  def renderBundleAnalyzer() = Action { implicit request =>
+    NoCache(SeeOther(Static("javascripts/bundle-analyzer-report.html")))
   }
 
   private def toPercentage(graph: AwsLineChart) = graph.dataset.map(_.values)

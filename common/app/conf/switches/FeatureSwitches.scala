@@ -384,7 +384,7 @@ trait FeatureSwitches {
     "When ON, articles specified in the badges file will have visual elements added",
     owners = Seq(Owner.withGithub("superfrank")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 3, 28),
+    sellByDate = new LocalDate(2017, 8, 31),
     exposeClientSide = false
   )
 
@@ -507,4 +507,15 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2017, 4, 12),
     exposeClientSide = false
   )
+
+  val InlineEmailStyles = Switch(
+    SwitchGroup.Feature,
+    "inline-email-styles",
+    "When ON, email styles will be stripped from the <head> and inlined into HTML style attributes",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
 }
