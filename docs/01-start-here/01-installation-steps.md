@@ -129,11 +129,6 @@ Install additional dependencies:
 make install
 ```
 
-After this, you can compile the assets:
-```
-make compile
-```
-
 ## Docker
 
 Warning: Docker for Mac is suffering performance issues for directories mounted via osxfs, making the Guardian frontend setup on Mac painfully slow. We'll recommand that Mac users follow the instructions above to install and run frontend on their local machine.
@@ -167,6 +162,14 @@ Containers can be thrown away very easily. To do so:
 
 
 ## Run the app
+
+Compile the client side assets: 
+```
+make watch
+```
+As a convenience, this command will also watch for changes to client side code and 
+automatically inject changes into the browser without requiring a browser refresh.
+
 In another console, run the supplied bash script [sbt]. The dot and slash are important in this command.
 ```
 ./sbt
@@ -197,10 +200,6 @@ If you have [setup local Nginx](https://github.com/guardian/frontend/blob/master
 Congratulations, you have a local instance running!  Now continue on to set up your IDE.
 
 ## IDE setup
-You need a copy of the source code from above. If not, run this command:
-```
-git clone git@github.com:guardian/frontend.git
-```
 
 ### EditorConfig plugin
 
@@ -215,10 +214,7 @@ Congratulations, you are now set up to edit frontend code!  See the [Optional st
 
 ## Optional steps
 
-###NVM
-Some packages (imagemin) are not working with newest Node.js. So if you want to run multiple Node.js versions on your system you may want to use [nvm](https://github.com/creationix/nvm)
-
-###Nginx
+### Nginx
 
 If you are working on Identity or Discussion, Nginx must be installed and
 configured to correctly serve the application, please refer to
