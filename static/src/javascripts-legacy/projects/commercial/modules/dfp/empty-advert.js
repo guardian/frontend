@@ -6,7 +6,7 @@ define([
     function emptyAdvert(advert) {
         fastdom.write(function () {
             window.googletag.destroySlots([advert.slot]);
-            advert.node.parentNode.removeChild(advert.node);
+            advert.node.remove();
             advert.node = advert.slot = null;
         });
     }

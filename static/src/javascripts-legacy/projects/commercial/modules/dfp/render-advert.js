@@ -120,7 +120,7 @@ define([
         // remove geo most popular
         geoMostPopular.whenRendered.then(function (geoMostPopular) {
             return fastdom.write(function () {
-                geoMostPopular.elem.parentNode.removeChild(geoMostPopular.elem);
+                geoMostPopular.elem.remove();
                 geoMostPopular.elem = null;
             });
         });
