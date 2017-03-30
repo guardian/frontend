@@ -33,7 +33,7 @@ define([
         audienceCriteria: 'UK edition readers',
         audience: 0.2,
         audienceOffset: 0.5,
-        showForSensitive: true,
+        showForSensitive: false,
         useTargetingTool: false,
 
         overrideCanRun: false,

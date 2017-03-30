@@ -20,13 +20,14 @@ define([
     viewLog,
     brexit,
     alwaysAsk,
+    epicToSupportLandingPage,
     askFourEarning,
     regularsV2,
     acquisitionsEpicArticle50Trigger,
     acquisitionsEpicDesignVariationsV3,
     laundromat,
-    acquisitionsEpicVsEpicAndEngagementBanner,
-    epicToSupportLandingPage
+    acquisitionsEpicVsEpicAndEngagementBanner
+
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
@@ -37,10 +38,10 @@ define([
 		regularsV2,
         acquisitionsEpicDesignVariationsV3,
         acquisitionsEpicVsEpicAndEngagementBanner,
+        epicToSupportLandingPage,
         askFourEarning,
         acquisitionsEpicArticle50Trigger,
-        brexit,
-        epicToSupportLandingPage
+        brexit
     ];
 
     var epicEngagementBannerTests = reduce(tests, function(out, test) {
