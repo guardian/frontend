@@ -23,7 +23,7 @@ module.exports = function (config) {
     return {
         // root of project
         basePath: './../../../../',
-        frameworks: ['jasmine', 'requirejs', 'phantomjs-shim'],
+        frameworks: ['jasmine', 'requirejs'],
 
         files: [
             { pattern: 'static/test/javascripts-legacy/components/sinonjs/sinon.js', included: true },
