@@ -529,4 +529,14 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val YouTubePosterOverride = Switch(
+    SwitchGroup.Feature,
+    "youtube-poster-override",
+    "When ON show trail image on YouTube atom playable content cards instead of the poster image",
+    owners = Seq(Owner.withGithub("gidsg")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
 }
