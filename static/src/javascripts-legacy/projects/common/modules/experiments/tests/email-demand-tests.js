@@ -10,7 +10,7 @@ define([
     'lib/page',
     'lib/storage',
     'common/modules/check-mediator',
-    'raw-loader!common/views/experiments/email-demand-test.html',
+    'raw-loader!common/views/experiments/email-demand-test.html'
 ], function (
     $,
     bean,
@@ -60,7 +60,7 @@ define([
             cities: {
                 listName: 'cities',
                 displayName: {
-                    normalText: 'cities',
+                    normalText: 'cities'
                 },
                 headline: "Want more stories from Guardian Cities?",
                 description: "Sign up for our new email and get  in-depth journalism exploring cities and urban life all " +
