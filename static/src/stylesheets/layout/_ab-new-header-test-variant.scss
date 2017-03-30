@@ -556,33 +556,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     height: 18px;
 }
 
-// Feedback prompt
-.new-header-feedback {
-    color: $news-support-1;
-    font-size: 15px;
-    line-height: 18px;
-    text-transform: none;
-    margin-top: $gs-baseline * 2;
-    padding: $gs-baseline $gs-gutter $gs-baseline * 2 $navigation-horizontal-padding;
-    background-color: rgba(0, 0, 0, .2);
-
-    .main-menu__icon__svg {
-        width: 1.3em;
-        height: 1.3em;
-    }
-
-    a {
-        color: #ffffff;
-        border-bottom: 1px solid rgba(255, 255, 255, .3);
-
-        &:hover,
-        &:focus {
-            text-decoration: none;
-            border-color: #ffffff;
-        }
-    }
-}
-
 .navigation-group__item--user-account {
     .user-account__signed-in {
         display: none;
