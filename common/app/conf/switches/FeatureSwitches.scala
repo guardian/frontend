@@ -534,7 +534,7 @@ trait FeatureSwitches {
     "youtube-poster-override",
     "When ON show trail image on YouTube atom playable content cards instead of the poster image",
     owners = Seq(Owner.withGithub("gidsg")),
-    safeState = On,
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = false
   )
