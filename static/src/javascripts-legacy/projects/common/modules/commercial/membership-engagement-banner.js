@@ -47,7 +47,7 @@ define([
 
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
-        var messageCode = 'engagement-banner-2017-01-11';
+        var messageCode = 'engagement-banner-2017-03-30';
 
         //Remind me form selectors
         var SECONDARY_BUTTON = '.secondary';
