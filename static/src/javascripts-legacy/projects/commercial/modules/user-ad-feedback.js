@@ -1,12 +1,10 @@
 define([
-    'bonzo',
     'qwery',
     'fastdom',
     'lib/fetch',
     'lib/config',
     'lib/detect'
 ], function (
-    bonzo,
     qwery,
     fastdom,
     fetch,
@@ -44,7 +42,10 @@ define([
 
     function onComplete(adSlotId) {    // we're complete - update the UI
         fastdom.write(function() {
-            bonzo(qwery('#' + adSlotId + '>.ad-slot__label')).addClass('feedback-submitted');
+            var label = document.querySelector('#' + adSlotId + '>.ad-slot__label');
+            if (label) {
+                label.classList.add('feedback-submitted');
+            }
         });
     }
 
