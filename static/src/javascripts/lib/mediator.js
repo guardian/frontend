@@ -2,7 +2,7 @@
 
 import EventEmitter from 'EventEmitter';
 
-const { app = {} } = window.guardian;
+const app = window.guardian.app = window.guardian.app || {};
 
 if (!app.mediator) {
     const mediator = new EventEmitter();
