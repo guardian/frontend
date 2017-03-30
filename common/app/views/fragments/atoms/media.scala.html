@@ -1,6 +1,6 @@
 @import model.content.MediaAssetPlatform
 @import model.content.MediaWrapper
-@(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean, displayEndSlate: Boolean = false, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader, context: model.ApplicationContext)
+@(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean, displayEndSlate: Boolean = false, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader)
 
 @{
     media match {
