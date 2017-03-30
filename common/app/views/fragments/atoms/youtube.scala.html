@@ -8,10 +8,11 @@
 @import model.ImageMedia
 @import model.content.MediaWrapper._
 @import model.content.MediaWrapper
+@import conf.switches.Switches.YouTubePosterOverride
 @(media: model.content.MediaAtom, displayCaption: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None, mediaWrapper: Option[MediaWrapper] = None)(implicit request: RequestHeader)
 
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
-@defining(playable && !posterImageOverride.exists(_ => mvt.YouTubePosterOverride.isParticipating)){sixteenByNine: Boolean =>
+@defining(playable && !posterImageOverride.exists(_ => YouTubePosterOverride.isSwitchedOn)){sixteenByNine: Boolean =>
 
 
     <div data-media-atom-id="@media.id" class="@RenderClasses(Map(
@@ -41,7 +42,7 @@
                 </iframe>
                 }
             }
-        @defining(posterImageOverride.filter(_ => !playable || mvt.YouTubePosterOverride.isParticipating) orElse media.posterImage) { bestPosterImage =>
+        @defining(posterImageOverride.filter(_ => !playable || YouTubePosterOverride.isSwitchedOn) orElse media.posterImage) { bestPosterImage =>
             @bestPosterImage.map { image =>
                 <div class="@RenderClasses(Map("youtube-media-atom__overlay" -> true, "vjs-big-play-button" -> !expired))" style="background-image: url(@Video700.bestFor(image))">
 
