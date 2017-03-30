@@ -116,7 +116,7 @@ object NewNavigation {
     val au = NavLinkLists(
       List(
         opinion,
-        columnists,
+        auColumnists,
         cartoons,
         indigenousAustraliaOpinion,
         theGuardianView
@@ -309,6 +309,7 @@ object NewNavigation {
       SectionsLink("commentisfree", opinion, Opinion),
       SectionsLink("cartoons/archive", cartoons, Opinion),
       SectionsLink("type/cartoon", cartoons, Opinion),
+      SectionsLink("au/index/contributors", auColumnists, Opinion),
       SectionsLink("index/contributors", columnists, Opinion),
       SectionsLink("commentisfree/series/comment-is-free-weekly", inMyOpinion, Opinion),
       SectionsLink("profile/editorial", theGuardianView, Opinion),
