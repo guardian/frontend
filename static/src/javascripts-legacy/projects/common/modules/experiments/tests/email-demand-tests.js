@@ -26,6 +26,7 @@ define([
     emailDemandTemplate
 ) {
     return function () {
+        this.completeFunction = null;
         this.id = 'EmailDemandTests';
         this.start = '2017-03-27';
         this.expiry = '2017-04-21';
@@ -47,6 +48,7 @@ define([
                     normalText: 'food',
                     accentedText: 'weekly'
                 },
+                tone: 'feature',
                 headline: "What's for dinner?",
                 description: "Sign-up for our new weekly food email and you’ll get recipes, restaurant reviews the best" +
                 " of all things culinary. Whether you’re a full-on foodie or a budding gastronaut, we’ve something to sate your appetite",
@@ -87,7 +89,8 @@ define([
         };
 
         this.canRun = function () {
-            checkMediator.waitForCheck('emailCanRun').then(function (emailCanRun) {
+            return true;
+            checkMediator.waitForCheck('emailCanRunPostCheck').then(function (emailCanRun) {
                     return emailCanRun && (whichTestToRun());
             }).catch(function (error) {
                 robust.log('check-mediator', error);
@@ -97,41 +100,49 @@ define([
         this.variants = [
             {
                 id: 'show-demand-tests',
-                success: insertEmailDemandSection()
+                test: function () {
+                    insertEmailDemandSection();
+                },
+                success: function (fn) {
+                    this.completeFunction = fn;
+                }
             }
         ];
 
         function whichTestToRun() {
-            if(listConfigs.food.canRun()) return listConfigs.food.listName;
-            else if(listConfigs.business.canRun()) return listConfigs.business.listName;
-            else if (listConfigs.cities.canRun()) return listConfigs.cities.listName;
-
-            else return null;
+            for (var key in listConfigs) {
+                if (listConfigs[key].canRun()) {
+                    return listConfigs[key];
+                }
+            }
+            return null;
         }
 
         function insertEmailDemandSection() {
-            var name = whichTestToRun();
-            var listConfig = listConfigs[name];
+            var listConfig = whichTestToRun();
 
-            var $demandTestSection = $.create(template(emailDemandTemplate, {
-                listName: listConfig.listName,
-                headline: listConfig.headline,
-                description: listConfig.description,
-                normalText: listConfig.displayName.normalText,
-                accentedText: listConfig.displayName.accentedText,
-                linkOnClick: listConfig.linkOnClick
-            }));
+            if (listConfig) {
+                var $demandTestSection = $.create(template(emailDemandTemplate, {
+                    listName: listConfig.listName,
+                    headline: listConfig.headline,
+                    description: listConfig.description,
+                    normalText: listConfig.displayName.normalText,
+                    accentedText: listConfig.displayName.accentedText,
+                    linkOnClick: listConfig.linkOnClick
+                }));
 
-            fastdom.write(function () {
-                $demandTestSection.insertBefore(sectionBelowEmailSignup);
-                emailRunChecks.setEmailShown(listConfig.listName);
-                storage.session.set('email-sign-up-seen', 'true');
+                fastdom.write(function () {
+                    $demandTestSection.insertBefore(sectionBelowEmailSignup);
+                    emailRunChecks.setEmailShown(listConfig.listName);
+                    storage.session.set('email-sign-up-seen', 'true');
 
-                //TODO: can I move this to the template???
-                var link = '<a href="' + listConfig.linkOnClick + '" class="email-sub__submit-button--solo js-email-demand-link js-email-sub__submit-button button button--tertiary button--large button--tone-news" > Sign up </a>'; //email-sub__submit-button
-                $('.js-button-email-demand').append(link);
-            });
-
+                    bean.on($('.js-email-sub__submit-button', $demandTestSection)[0], 'click', function () {
+                        if (this.completeFunction) {
+                            this.completeFunction();
+                        }
+                    });
+                });
+            }
         }
 
     }
