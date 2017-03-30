@@ -137,6 +137,10 @@ $callout-border: none;
     padding: 0;
 }
 
+.fc__pad {
+    padding-bottom: 26px;
+}
+
 .headline,
 .byline,
 .trail-text,
@@ -178,7 +182,7 @@ $callout-border: none;
 }
 
 .headline .icon {
-    height: .8em;
+    height: .7em;
 }
 
 $email-tones: (

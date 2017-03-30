@@ -29,7 +29,8 @@
 }
 *@
 
-@headline(card: ContentCard, isLarge: Boolean = false) = {
+@headline(card: ContentCard, isLarge: Boolean = false, isLast: Boolean) = {
+
     @row(Seq("headline")) {
         <a @Html(card.header.url.hrefWithRel) class="fc-link">
             @card.header.kicker.map { kicker =>
@@ -62,6 +63,9 @@
             }
         }
     }
+    @if(isLast) {
+        @row(Seq("fc__pad")) { }
+    }
 }
 
 @trailText(card: ContentCard) = {
@@ -73,7 +77,7 @@
 }
 
 @headlineAndTrailWithCutout(card: ContentCard, withImage: Boolean) = {
-    @headline(card, isLarge = withImage)
+    @headline(card, isLarge = withImage, isLast = false)
     @trailText(card)
 }
 
@@ -86,7 +90,7 @@
         @if(card.header.quoted) {
             @headlineAndTrailWithCutout(card, withImage)
         } else {
-            @headline(card, isLarge = largeHeadline)
+            @headline(card, isLarge = largeHeadline, isLast = false)
             @trailText(card)
         }
     }
@@ -95,12 +99,12 @@
 @faciaCardWithoutTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
     @imgFromCard(card, 5).filter(i => withImage).fold {
         @faciaCard(Seq(toneClassFromStyle(card.cardStyle))) {
-            @headline(card, largeHeadline)
+            @headline(card, largeHeadline, isLast = true)
         }
     } { img =>
         @faciaCard(Seq(toneClassFromStyle(card.cardStyle))) {
             <tr valign="top">
-                <td class="left-col"><table>@headline(card)</table></td>
+                <td class="left-col"><table>@headline(card, isLast = true)</table></td>
                 <td class="right-col no-pad">@img</td>
             </tr>
         }
