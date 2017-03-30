@@ -447,7 +447,7 @@ object ReviewThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.revi
 
 object StoryquestionsThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.storyquestions.StoryQuestionsAtom] {
   def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
-  def writes(review: com.gu.contentatom.thrift.atom.storyquestions.StoryQuestionsAtom) = JsObject(Seq.empty)
+  def writes(storyquestions: com.gu.contentatom.thrift.atom.storyquestions.StoryQuestionsAtom) = JsObject(Seq.empty)
 }
 
 object CardStyleFormat extends Format[CardStyle] {
