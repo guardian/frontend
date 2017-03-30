@@ -1,6 +1,6 @@
 @import model.content.MediaWrapper
 @import layout.ContentWidths.MainMedia
-@(mediaWrapper: Option[MediaWrapper], amp: Boolean, picture: model.ImageMedia, caption: String)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(mediaWrapper: Option[MediaWrapper], amp: Boolean, picture: model.ImageMedia, caption: String)(implicit request: RequestHeader)
 
     @defining(
         if(mediaWrapper.contains(MediaWrapper.MainMedia)) {
