@@ -1,6 +1,6 @@
 // @flow
 
-/* eslint consistent-return: 0, no-plusplus: 0 */
+/* eslint consistent-return: 0 */
 
 class Storage {
     storage: any;
@@ -8,7 +8,7 @@ class Storage {
 
     constructor(type: string) {
         this.storage = window[type];
-        this.available = undefined;
+        this.available = this.isAvailable();
     }
 
     isAvailable(): ?boolean {
@@ -32,7 +32,7 @@ class Storage {
     }
 
     get(key: string): any {
-        if (!this.isAvailable()) {
+        if (!this.available) {
             return;
         }
 
@@ -66,7 +66,7 @@ class Storage {
     }
 
     set(key: string, value: any, options: Object = {}): any {
-        if (!this.isAvailable()) {
+        if (!this.available) {
             return;
         }
 
@@ -80,13 +80,13 @@ class Storage {
     }
 
     getRaw(key: string): ?string {
-        if (this.isAvailable()) {
+        if (this.available) {
             return this.storage.getItem(key);
         }
     }
 
     remove(key: string): any {
-        if (this.isAvailable()) {
+        if (this.available) {
             return this.storage.removeItem(key);
         }
     }

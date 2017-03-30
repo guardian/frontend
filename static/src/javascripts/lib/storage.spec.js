@@ -66,6 +66,7 @@ describe('storage', () => {
         test(`${storageType} - isAvailable()`, () => {
             engine.available = undefined;
             expect(engine.isAvailable()).toBe(true);
+            expect(engine.available).toBe(true);
             expect(engine.storage.setItem).toHaveBeenCalledWith(
                 'local-storage-module-test',
                 'graun'
@@ -83,6 +84,12 @@ describe('storage', () => {
             expect(engine.isAvailable()).toBe(false);
 
             engine.storage.setItem = origSet;
+        });
+
+        test(`${storageType} - isAvailable() cache`, () => {
+            // not available, if setItem fails
+            engine.available = false;
+            expect(engine.isAvailable()).toBe(false);
         });
 
         test(`${storageType} - set()`, () => {
