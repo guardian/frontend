@@ -1,3 +1,14 @@
-@(classes: Seq[String])(contents: Html)
+@(classes: Seq[String])(cellContents: Html)
 
-<table class="ct"><tr><td class="ct__margin"><table class="ct__inner @classes.mkString(" ")"><tr><td class="ct__padding">@contents</td></tr></table></td></tr></table>
+@* This template populates a table cell so it can accept arbitrary markup including further tables *@
+<table class="ct">
+    <tr>
+        <td class="ct__margin">
+            <table class="ct__inner @classes.mkString(" ")">
+                <tr>
+                    <td class="ct__padding">@cellContents</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

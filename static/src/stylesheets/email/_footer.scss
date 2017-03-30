@@ -1,19 +1,28 @@
-.footer {
+// td
+.ft__margin {
+    padding-top: 36px;
+}
+
+// table
+.ft__inner {
     background-color: #484848;
     background-repeat: no-repeat;
     background-position: bottom right;
-    padding: 35px 0;
-    margin-top: 36px;
-    text-align: center;
 }
 
-.email-links {
+// td
+.ft__padding {
+    padding: 35px 0;
+}
+
+.ft__links {
     font-family: Helvetica, Arial, sans-serif;
     color: #ffffff;
     font-size: 12px;
     font-weight: lighter;
     line-height: 14px;
     text-decoration: none;
+    text-align: center;
     a {
         &,
         &:visited,
@@ -31,10 +40,11 @@
     }
 }
 
-.disclaimer {
+.ft__disclaimer {
     font-family: Helvetica, Arial, sans-serif;
     color: #dfdfdf;
     font-size: 10px;
     line-height: 14px;
-    margin: 20px 12px 0;
+    padding: 20px 12px 0;
+    text-align: center;
 }
