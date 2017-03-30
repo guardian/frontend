@@ -50,7 +50,7 @@ define([
                 },
                 tone: 'feature',
                 headline: "What's for dinner?",
-                description: "Sign-up for our new weekly food email and you’ll get recipes, restaurant reviews the best" +
+                description: "Sign-up for our new weekly food email and you’ll get recipes, restaurant reviews and the best" +
                 " of all things culinary. Whether you’re a full-on foodie or a budding gastronaut, we’ve something to sate your appetite",
                 linkOnClick: "https://docs.google.com/forms/d/e/1FAIpQLSeGAacgwIRrUFxKPRSUG-imlqEwUKgVYFhOnJP4__avevZEHw/viewform?usp=sf_link",
                 canRun: function () {
