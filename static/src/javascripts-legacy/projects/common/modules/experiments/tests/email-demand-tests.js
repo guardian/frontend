@@ -93,12 +93,7 @@ define([
         };
 
         this.canRun = function () {
-            return true;
-            checkMediator.waitForCheck('emailCanRunPostCheck').then(function (emailCanRun) {
-                    return emailCanRun && (whichTestToRun());
-            }).catch(function (error) {
-                robust.log('check-mediator', error);
-            });
+            return whichTestToRun() !== null;
         };
 
         this.variants = [
