@@ -30,7 +30,7 @@ function init() {
     var readMoreButton;
     var displayClass = 'recipe__image__wrapper--is-displayed';
     var stickyGutter = $('.js-recipe__gutter-wrapper');
-    var stickyImages = $('.js-recipe__image__wrapper');
+    var stickyImages = $('.js-recipes__images-wrapper');
 
     function setKicker() {
         var nextRecipe = getNextRecipe();
