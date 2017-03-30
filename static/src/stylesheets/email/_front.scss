@@ -76,6 +76,7 @@ $callout-border: none;
     padding: 0;
     width: 100%;
     position: relative;
+    min-height: 56px;
 }
 
 .message {
@@ -136,6 +137,7 @@ $callout-border: none;
     font-family: Georgia, serif;
     font-size: 14px;
     line-height: 18px;
+    padding: 0 10px 26px;
 }
 
 .fc--large {
