@@ -198,9 +198,31 @@ object ContentTypeFormat {
   implicit val genericThriftAtomFormat = GenericThriftAtomFormat
   implicit val recipeThriftAtomFormat = RecipeThriftAtomFormat
   implicit val reviewThriftAtomFormat = ReviewThriftAtomFormat
+  implicit val storyquestionsThriftAtomFormat = StoryquestionsThriftAtomFormat
   implicit val recipeAtomFormat = Json.format[RecipeAtom]
   implicit val reviewAtomFormat = Json.format[ReviewAtom]
-  implicit val atomsFormat = Json.format[Atoms]
+  implicit val storyquestionsAtomFormat = Json.format[StoryQuestionsAtom]
+
+
+  implicit val atomsWrite = Json.writes[Atoms]
+
+  /* Everytime you add a new atom above you will need to add a line for that atom below.
+   *
+   * We default to an Empty array if we can't find the field in the pressed fronts json. This prevents
+   * json serialisation errors at runtime and means that fronts do not have to be repressed simply for adding a new
+   * atom here when the fronts will never need to use them.
+   *
+   * */
+  implicit val reads: Reads[Atoms] = (
+    (__ \ "quizzes").read[Seq[Quiz]].orElse(Reads.pure(Nil)) and
+      (__ \ "media").read[Seq[MediaAtom]].orElse(Reads.pure(Nil)) and
+      (__ \ "interactives").read[Seq[InteractiveAtom]].orElse(Reads.pure(Nil)) and
+      (__ \ "recipes").read[Seq[RecipeAtom]].orElse(Reads.pure(Nil)) and
+      (__ \ "reviews").read[Seq[ReviewAtom]].orElse(Reads.pure(Nil)) and
+      (__ \ "storyquestions").read[Seq[StoryQuestionsAtom]].orElse(Reads.pure(Nil))
+    )(Atoms.apply _)
+
+
   implicit val blockAttributesFormat = Json.format[BlockAttributes]
   implicit val bodyBlockFormat = Json.format[BodyBlock]
   implicit val blocksFormat = Json.format[Blocks]
@@ -421,6 +443,11 @@ object RecipeThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.reci
 object ReviewThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.review.ReviewAtom] {
   def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
   def writes(review: com.gu.contentatom.thrift.atom.review.ReviewAtom) = JsObject(Seq.empty)
+}
+
+object StoryquestionsThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.storyquestions.StoryQuestionsAtom] {
+  def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
+  def writes(storyquestions: com.gu.contentatom.thrift.atom.storyquestions.StoryQuestionsAtom) = JsObject(Seq.empty)
 }
 
 object CardStyleFormat extends Format[CardStyle] {

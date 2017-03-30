@@ -1,13 +1,14 @@
 @import model.content.MediaWrapper
 @(model: _root_.model.content.Atom, shouldFence: Boolean, amp: Boolean, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 @import _root_.model.ShareLinkMeta
-@import _root_.model.content.{InteractiveAtom, MediaAtom, Quiz}
+@import _root_.model.content.{InteractiveAtom, MediaAtom, Quiz, StoryQuestionsAtom}
 
 @{
     model match {
         case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None, showResults = false, ShareLinkMeta(Nil, Nil))
         case media: MediaAtom => views.html.fragments.atoms.media(media = media, amp = amp, displayCaption = true, displayEndSlate = mediaWrapper.contains(MediaWrapper.MainMedia), mediaWrapper = mediaWrapper)
         case interactive: InteractiveAtom => views.html.fragments.atoms.interactive(interactive, shouldFence)
+        case storyquestions: StoryQuestionsAtom => views.html.fragments.atoms.storyquestions(storyquestions, isAmp = amp)
         case _ =>
     }
 }
