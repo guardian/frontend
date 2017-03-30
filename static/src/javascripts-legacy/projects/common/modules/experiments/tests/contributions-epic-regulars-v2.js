@@ -73,7 +73,7 @@ define([
     }
 
     function isRegular() {
-        return tailor.fetchData('suggestions').then(function (suggestions) {
+        return tailor.fetchData('suggestions', false).then(function (suggestions) {
             try {
                 return suggestions.userDataForClient.regular;
             } catch (e) {
@@ -101,7 +101,7 @@ define([
         campaignId: 'kr1_epic_regulars_v2',
 
         start: '2017-03-07',
-        expiry: '2017-03-21',
+        expiry: '2017-05-01',
 
         author: 'Jonathan Rankin',
         description: 'Test messages aimed at our regular readers',

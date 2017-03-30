@@ -8,7 +8,7 @@ define([
     'commercial/modules/third-party-tags/krux',
     'common/modules/identity/api',
     'commercial/modules/user-ad-targeting',
-    'common/modules/experiments/ab',
+    'common/modules/experiments/utils',
     'lodash/arrays/compact',
     'lodash/arrays/uniq',
     'lodash/functions/once',
@@ -23,7 +23,7 @@ define([
     krux,
     identity,
     userAdTargeting,
-    ab,
+    abUtils,
     compact,
     uniq,
     once,
@@ -80,7 +80,7 @@ define([
 
     function abParam() {
         var cmRegex = /^(cm|commercial)/;
-        var abParticipations = ab.getParticipations();
+        var abParticipations = abUtils.getParticipations();
         var abParams = [];
 
         Object.keys(abParticipations).forEach(function (testKey) {

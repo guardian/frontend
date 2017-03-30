@@ -32,16 +32,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-paid-content-vs-outbrain",
-    "Displays a paid content widget instead of Outbrain",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-editorial-email-variants",
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
@@ -126,7 +116,7 @@ trait ABTestSwitches {
     "Assign some of the new sleeve notes subscribers to receive the new email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
 
@@ -136,7 +126,7 @@ trait ABTestSwitches {
     "Assign some of the new sleeve notes subscribers to receive the old email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
 
@@ -146,7 +136,7 @@ trait ABTestSwitches {
     "Assign users to variants of long read email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 5, 30),
     exposeClientSide = true
   )
 
@@ -156,7 +146,7 @@ trait ABTestSwitches {
     "Assign users to variants of fashion statement email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 5, 30),
     exposeClientSide = true
   )
 
@@ -166,7 +156,7 @@ trait ABTestSwitches {
     "Assign users to variants of bookmarks email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 5, 30),
     exposeClientSide = true
   )
 
@@ -176,7 +166,7 @@ trait ABTestSwitches {
     "Assign users to variants of film today email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 5, 30),
     exposeClientSide = true
   )
 
@@ -226,7 +216,7 @@ trait ABTestSwitches {
     "Paid commenting test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 30),
+    sellByDate = new LocalDate(2017, 4, 27),
     exposeClientSide = true
   )
 

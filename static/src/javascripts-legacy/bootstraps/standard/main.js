@@ -56,9 +56,11 @@ define([
 ) {
     return function () {
         userTiming.mark('standard start');
-        robust.catchErrorsAndLog('ga-user-timing-standard-start', function () {
-            ga.trackPerformance('Javascript Load', 'standardStart', 'Standard start parse time');
-        });
+        robust.context([
+            ['ga-user-timing-standard-start', function () {
+                ga.trackPerformance('Javascript Load', 'standardStart', 'Standard start parse time');
+            }],
+        ]);
 
         var oldOnError = window.onerror;
         window.onerror = function (message, filename, lineno, colno, error) {
@@ -242,11 +244,11 @@ define([
          */
         newHeaderNavigation();
 
-
-
         userTiming.mark('standard end');
-        robust.catchErrorsAndLog('ga-user-timing-standard-end', function () {
-            ga.trackPerformance('Javascript Load', 'standardEnd', 'Standard end parse time');
-        });
+        robust.context([
+            ['ga-user-timing-standard-end', function () {
+                ga.trackPerformance('Javascript Load', 'standardEnd', 'Standard end parse time');
+            }],
+        ]);
     };
 });

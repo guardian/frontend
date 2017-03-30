@@ -1,11 +1,16 @@
 @import layout.ContentWidths.MainMedia
 @import model.ContentPage
-@import views.support.ContributorLinks
+@import views.support.Commercial.isPaidContent
+@import views.support.{ContributorLinks, RenderClasses}
 @import views.support.TrailCssClasses.toneClass
 
 @(page: ContentPage)(implicit request: RequestHeader)
 
 <div class="content content--immersive tonal tonal--@toneClass(page.item) immersive-main-media">
+
+    @if(isPaidContent(page)) {
+        @fragments.guBand()
+    }
 
     @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
         @fragments.image(
@@ -21,7 +26,10 @@
         <div class="gs-container">
             @fragments.meta.metaInline(page.item)
 
-            <h1 class="content__headline content__headline--immersive content__headline--gallery content__headline--immersive--with-main-media">
+            <h1 class="@RenderClasses(
+                Map("content__headline--paidgallery" -> isPaidContent(page)),
+                "content__headline", "content__headline--immersive", "content__headline--gallery", "content__headline--immersive--with-main-media"
+                )">
                 @fragments.inlineSvg("camera", "icon", List("inline-tone-fill", "inline-icon--media"))
                 @Html(page.item.trail.headline)
             </h1>

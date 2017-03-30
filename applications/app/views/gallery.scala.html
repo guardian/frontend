@@ -1,9 +1,5 @@
 @(page: model.GalleryPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @main(page){ }{
-    @if(page.gallery.content.isImmersiveGallery) {
-        @fragments.galleryBody(page)
-    } else {
-        @fragments.paidAdvertisementGalleryBody(page)
-    }
+    @fragments.galleryBody(page)
 }

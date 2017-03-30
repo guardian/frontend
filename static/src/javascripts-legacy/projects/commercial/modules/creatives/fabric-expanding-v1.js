@@ -1,6 +1,5 @@
 define([
     'bean',
-    'bonzo',
     'lib/fastdom-promise',
     'lib/$',
     'lib/detect',
@@ -17,7 +16,6 @@ define([
     'commercial/modules/creatives/add-viewability-tracker'
 ], function (
     bean,
-    bonzo,
     fastdom,
     $,
     detect,
@@ -52,7 +50,7 @@ define([
     FabricExpandingV1.prototype.updateBgPosition = function () {
         var that = this;
 
-        var viewportHeight = bonzo.viewport().height;
+        var viewportHeight = detect.getViewport().height;
         var adSlotTop = this.adSlot.getBoundingClientRect().top;
 
         var adHeight = (this.isClosed) ? this.closedHeight : this.openedHeight;
@@ -104,7 +102,7 @@ define([
 
     FabricExpandingV1.prototype.listener = function () {
         var that = this;
-        if (!this.initialExpandCounter && bonzo.viewport().height > that.adSlot.getBoundingClientRect().top + this.openedHeight) {
+        if (!this.initialExpandCounter && detect.getViewport().height > that.adSlot.getBoundingClientRect().top + this.openedHeight) {
             var itemId = $('.ad-slot__content', that.adSlot).attr('id'),
                 itemIdArray = itemId.split('/');
 
