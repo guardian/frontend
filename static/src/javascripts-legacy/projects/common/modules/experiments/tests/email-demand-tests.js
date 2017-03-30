@@ -25,6 +25,8 @@ define([
     checkMediator,
     emailDemandTemplate
 ) {
+    var minimumTrailingParagraphs = 5;
+
     return function () {
         this.completeFunction = null;
         this.id = 'EmailDemandTests';
@@ -110,12 +112,19 @@ define([
         ];
 
         function whichTestToRun() {
-            for (var key in listConfigs) {
-                if (listConfigs[key].canRun()) {
-                    return listConfigs[key];
+            if (validArticleStructure()) {
+                for (var key in listConfigs) {
+                    if (listConfigs[key].canRun()) {
+                        return listConfigs[key];
+                    }
                 }
             }
             return null;
+        }
+
+        function validArticleStructure() {
+            var lastFiveElements = [].slice.call($(articleBody)[0].children, -minimumTrailingParagraphs);
+            return lastFiveElements.length == minimumTrailingParagraphs && lastFiveElements.every(function (elm) { return elm.nodeName && elm.nodeName === 'P'; });
         }
 
         function insertEmailDemandSection() {
