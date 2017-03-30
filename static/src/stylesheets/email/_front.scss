@@ -3,6 +3,8 @@
 // Overriding the settings.scss from foundation-emails
 $global-width: 500px;
 $global-gutter: 0;
+$global-breakpoint: $global-width + $global-gutter;
+$global-width-small: 95%;
 $body-background: #ffffff;
 $container-background: #ffffff;
 $global-padding: 0;
@@ -15,6 +17,7 @@ $callout-border: none;
 @import '_common';
 @import '_footer';
 @import '_tones';
+@import '_media-query';
 
 // We don't want these vendor-specific rules to be inlined because they will
 // inflate the email size for no benefit in some clients. These @-rules

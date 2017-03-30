@@ -1,0 +1,22 @@
+// Foundation for Emails by ZURB
+// zurb.com/ink/
+// Licensed under MIT Open Source
+
+////
+/// @group media-query
+////
+
+@media only screen and (max-width: #{$global-breakpoint}) {
+  //.body img {
+  //  width: auto;
+  //}
+
+  .body .center-element {
+    min-width: 0 !important;
+  }
+
+  .body .container {
+    width: $global-width-small !important;
+  }
+}
+
