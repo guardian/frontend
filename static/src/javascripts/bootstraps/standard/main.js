@@ -73,6 +73,27 @@ const handleMembershipAccess = (): void => {
         window.location.href = `${membershipUrl}/membership-content?referringContent=${contentId}&membershipAccess=${membershipAccess}`;
     };
 
+    const updateDOM = (resp: Object): void => {
+        const requireClass = 'has-membership-access-requirement';
+        const requiresPaidTier = !membershipAccess.includes(
+            'paid-members-only'
+        );
+        // Check the users access matches the content
+        const canViewContent = requiresPaidTier
+            ? !!resp.tier && resp.isPaidTier
+            : !!resp.tier;
+
+        if (canViewContent) {
+            const { body } = document;
+
+            if (body) {
+                fastdom.write(() => body.classList.remove(requireClass));
+            }
+        } else {
+            redirect();
+        }
+    };
+
     if (identity.isUserLoggedIn()) {
         ajax({
             url: `${membershipUrl}/user/me`,
@@ -80,29 +101,8 @@ const handleMembershipAccess = (): void => {
             crossOrigin: true,
             withCredentials: true,
         })
-            .then(resp => {
-                const requireClass = 'has-membership-access-requirement';
-                const requiresPaidTier = !membershipAccess.includes(
-                    'paid-members-only'
-                );
-                // Check the users access matches the content
-                const canViewContent = requiresPaidTier
-                    ? !!resp.tier && resp.isPaidTier
-                    : !!resp.tier;
-
-                if (canViewContent) {
-                    const body = document.body;
-
-                    fastdom.write(() => {
-                        if (body) {
-                            body.classList.remove(requireClass);
-                        }
-                    });
-                } else {
-                    redirect();
-                }
-            })
-            .catch(() => redirect());
+            .then(updateDOM)
+            .catch(redirect);
     } else {
         redirect();
     }
@@ -111,7 +111,7 @@ const handleMembershipAccess = (): void => {
 const addScrollHandler = (): void => {
     let scrollRunning: boolean = false;
 
-    const onScroll = () => {
+    const onScroll = (): void => {
         if (!scrollRunning) {
             scrollRunning = true;
             fastdom.read(() => {
@@ -121,6 +121,7 @@ const addScrollHandler = (): void => {
         }
     };
 
+    // #? is still still needed?
     addEventListener(
         window,
         'scroll',
@@ -136,7 +137,7 @@ const addScrollHandler = (): void => {
 const addResizeHandler = (): void => {
     // Adds a global window:throttledResize event to mediator, which debounces events
     // until the user has stopped resizing the window for a reasonable amount of time.
-    const onResize = evt => {
+    const onResize = (evt): void => {
         mediator.emitEvent('window:throttledResize', [evt]);
     };
 
