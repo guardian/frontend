@@ -202,7 +202,27 @@ object ContentTypeFormat {
   implicit val recipeAtomFormat = Json.format[RecipeAtom]
   implicit val reviewAtomFormat = Json.format[ReviewAtom]
   implicit val storyquestionsAtomFormat = Json.format[StoryQuestionsAtom]
-  implicit val atomsFormat = Json.format[Atoms]
+
+
+  implicit val atomsWrite = Json.writes[Atoms]
+
+  /* Everytime you add a new atom above you will need to add a line for that atom below.
+   *
+   * We default to an Empty array if we can't find the field in the pressed fronts json. This prevents
+   * json serialisation errors at runtime and means that fronts do not have to be repressed simply for adding a new
+   * atom here when the fronts will never need to use them.
+   *
+   * */
+  implicit val reads: Reads[Atoms] = (
+    (__ \ "quizzes").read[Seq[Quiz]].orElse(Reads.pure(Nil)) and
+      (__ \ "media").read[Seq[MediaAtom]].orElse(Reads.pure(Nil)) and
+      (__ \ "interactives").read[Seq[InteractiveAtom]].orElse(Reads.pure(Nil)) and
+      (__ \ "recipes").read[Seq[RecipeAtom]].orElse(Reads.pure(Nil)) and
+      (__ \ "reviews").read[Seq[ReviewAtom]].orElse(Reads.pure(Nil)) and
+      (__ \ "storyquestions").read[Seq[StoryQuestionsAtom]].orElse(Reads.pure(Nil))
+    )(Atoms.apply _)
+
+
   implicit val blockAttributesFormat = Json.format[BlockAttributes]
   implicit val bodyBlockFormat = Json.format[BodyBlock]
   implicit val blocksFormat = Json.format[Blocks]
