@@ -139,7 +139,7 @@
 }
 
 @layout.CollectionEmail.fromPressedPage(page).collections.zipWithIndex.map { case (collection, collectionIndex) =>
-    @containerTitle(if(collectionIndex > 0) Seq("has-top-border") else Seq()) {
+    @containerTitle(if(collectionIndex > 0) Seq("ct--not-top") else Seq()) {
         @collection.displayName
     }
 

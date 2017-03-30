@@ -87,8 +87,13 @@ $callout-border: none;
     padding: 6px 10px;
 }
 
+
 .ct__margin {
-    padding: 26px 0 12px;
+    padding: 13px 0 12px;
+
+    .ct--not-top & {
+        padding: 26px 0 12px;
+    }
 }
 
 .ct__inner {
@@ -163,17 +168,22 @@ $email-tones: (
 );
 
 // Defaults
-.ct__inner.has-top-border {
-    border-top: 3px solid #46bcdf;
+.ct--not-top {
+    .ct__inner {
+        border-top: 3px solid #46bcdf;
+    }
 }
+
 .tone-external {
     border-top: 1px solid #46bcdf;
 }
 
 @each $email, $tone-color in $email-tones {
     .#{$email} {
-        .ct__inner.has-top-border {
-            border-top: 3px solid $tone-color;
+        .ct--not-top {
+            .ct__inner {
+                border-top: 3px solid $tone-color;
+            }
         }
         .tone-external {
             border-top: 1px solid $tone-color;
