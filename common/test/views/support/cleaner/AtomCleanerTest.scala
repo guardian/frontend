@@ -21,7 +21,7 @@ class AtomCleanerTest extends FlatSpec
   val asset: Asset = Asset(
     AssetType.Image,
     Some("image/jpeg"),
-    Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"),
+    Some("https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"),
     None
   )
   val imageAsset: ImageAsset = ImageAsset.make(asset, 1)
