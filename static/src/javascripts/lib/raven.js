@@ -4,7 +4,7 @@ import raven from 'raven';
 import config from 'lib/config';
 import detect from 'lib/detect';
 
-const { app = {} } = window.guardian;
+const app = window.guardian.app = window.guardian.app || {};
 const { sentryPublicApiKey, sentryHost } = config.page;
 const sentryUrl = `https://${sentryPublicApiKey}@${sentryHost}`;
 let adblockBeingUsed = false;
