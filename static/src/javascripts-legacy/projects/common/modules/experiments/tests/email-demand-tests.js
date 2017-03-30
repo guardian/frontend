@@ -41,7 +41,7 @@ define([
         this.dataLinkNames = '';
         this.idealOutcome = 'People will demonstrate their interest in food, business and/or cities emails';
 
-        var sectionBelowEmailSignup = '.content-footer';
+        var articleBody = '.js-article__body';
 
         var listConfigs = {
             food: {
@@ -66,6 +66,7 @@ define([
                 displayName: {
                     normalText: 'cities'
                 },
+                tone: 'news',
                 headline: "Want more stories from Guardian Cities?",
                 description: "Sign up for our new email and get  in-depth journalism exploring cities and urban life all " +
                 "over the world – from gentrification and climate change to cycling and urban history",
@@ -80,6 +81,7 @@ define([
                     normalText: 'business',
                     accentedText: 'today'
                 },
+                tone: 'news',
                 headline: "Business updates, direct to your inbox",
                 description: "Sign up to our daily email for an at-a-glance guide to the biggest stories, smartest " +
                 "analysis and hottest topics in the world of business and economics",
@@ -137,11 +139,13 @@ define([
                     description: listConfig.description,
                     normalText: listConfig.displayName.normalText,
                     accentedText: listConfig.displayName.accentedText,
-                    linkOnClick: listConfig.linkOnClick
+                    linkOnClick: listConfig.linkOnClick,
+                    toneClass: "email-demand--tone-" + listConfig.tone
                 }));
 
                 fastdom.write(function () {
-                    $demandTestSection.insertBefore(sectionBelowEmailSignup);
+                    var elements = $(articleBody)[0].children;
+                    $demandTestSection.insertAfter(elements[elements.length - minimumTrailingParagraphs]);
                     emailRunChecks.setEmailShown(listConfig.listName);
                     storage.session.set('email-sign-up-seen', 'true');
 
