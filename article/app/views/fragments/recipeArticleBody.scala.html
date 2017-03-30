@@ -3,6 +3,7 @@
 @import model.ArticleSchemas
 @import model.content.RecipeAtom
 @import common.LinkTo
+@import views.support.Commercial.isPaidContent
 @import views.BodyCleaner
 @import views.support.ContributorLinks
 
@@ -115,7 +116,7 @@
         </div>
     </div>
 </article>
-
+@fragments.contentFooter(articleModel.article, articleModel.related, isPaidContent = false)
 }
 
 @recipePage(recipe: model.content.RecipeAtom, i: Int) = {
