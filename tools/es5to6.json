@@ -9,6 +9,7 @@
     "lib/client-rects.js"
   ],
   "Gareth Trufitt": [
+    "lib/config.js",
     "lib/cookies.js",
     "lib/create-store.js",
     "lib/detect.js",
@@ -37,7 +38,6 @@
     "lib/raven.js"
   ],
   "Gustav Pursche": [
-    "lib/robust.js",
     "lib/steady-page.js",
     "lib/storage.js",
     "lib/url.js"
