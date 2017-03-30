@@ -65,7 +65,7 @@ define([
 
         afterEach(function () {
             fixtures.clean(fixturesConfig.id);
-             checkMediator._testClean();
+             checkMediator.test.testClean();
         });
 
         it('should exist', function () {
@@ -95,7 +95,7 @@ define([
                     expect(sut.tracking).toHaveBeenCalled();
                     expect(sut.tracking).toHaveBeenCalledWith({
                         state: 'outbrainDisabled'
-                    });    
+                    });
                     done();
                 });
             });
