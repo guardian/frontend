@@ -3,6 +3,11 @@ $headerHeight: 58px;
 $footerHeight: 46px;
 $approxGalleryWidth: calc(167vh - #{5/3 * ($headerHeight + $footerHeight)});
 
+$tabletHeight: #{map-get($mq-breakpoints, tablet) * 3/5 + $headerHeight + $footerHeight};
+$desktopHeight: #{map-get($mq-breakpoints, desktop) * 3/5 + $headerHeight + $footerHeight};
+$leftColHeight: #{map-get($mq-breakpoints, leftCol) * 3/5 + $headerHeight + $footerHeight};
+$wideHeight: #{map-get($mq-breakpoints, wide) * 3/5 + $headerHeight + $footerHeight};
+
 
 .hosted-gallery__scroll-container {
     overflow-x: hidden;
@@ -314,7 +319,7 @@ $approxGalleryWidth: calc(167vh - #{5/3 * ($headerHeight + $footerHeight)});
     transition: opacity 300ms ease;
     background: linear-gradient(to top, rgba(51, 51, 51, .7) 0%, rgba(51, 51, 51, .5) 50%, transparent 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColor=0, endColorstr='#B4333333');
-    @include mq($until: tablet) {
+    @include mq($until: tablet, $and: '(max-height: #{$tabletHeight})') {
         padding: 20px 70px 10px 20px;
     }
 }
@@ -324,11 +329,11 @@ $approxGalleryWidth: calc(167vh - #{5/3 * ($headerHeight + $footerHeight)});
     margin-bottom: 5px;
     font-size: 26px;
     line-height: 28px;
-    @include mq(tablet) {
+    @include mq(tablet, $and: '(min-height: #{$tabletHeight})') {
         font-size: 30px;
         line-height: 32px;
     }
-    @include mq(desktop) {
+    @include mq(desktop, $and: '(min-height: #{$desktopHeight})') {
         font-size: 36px;
         line-height: 36px;
     }
@@ -698,4 +703,28 @@ $progressColor: #ffffff;
     .hosted-gallery__cta {
         padding-bottom: 20px;
     }
+}
+
+.content__main-column--hosted {
+    max-width: gs-span(8);
+    margin: auto;
+    position: relative;
+
+    @include mq(tablet, desktop, $and: '(min-height: #{$tabletHeight})') {
+        max-width: gs-span(9);
+    }
+
+    @include mq(desktop, $and: '(min-height: #{$desktopHeight})') {
+        margin-left: 0;
+        margin-right: $right-column + $gs-gutter;
+    }
+
+    @include mq(leftCol, $and: '(min-height: #{$leftColHeight})') {
+        margin-left: $left-column + $gs-gutter;
+    }
+
+    @include mq(wide, $and: '(min-height: #{$wideHeight})') {
+        margin-left: $left-column-wide + $gs-gutter;
+    }
+
 }
