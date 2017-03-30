@@ -25,20 +25,20 @@ aside .email-demand--article {
         }
 
         .email-demand__heading {
-            font-family: "Guardian Egyptian Web","Guardian Text Egyptian Web",Georgia,serif;
+            font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
             line-height: $gs-baseline * 2;
             color: $tone-colour-title;
         }
 
         .email-demand__description {
             color: $tone-colour-text;
-            padding: 0 0 20px 0;
+            padding: 0 0 20px;
         }
 
         .email-demand__sub_heading {
             font-weight: bold;
             color: $tone-colour-text;
-            padding: 3px 0 10px 0;
+            padding: 3px 0 10px;
         }
 
         .email-demand__submit-button--solo {
