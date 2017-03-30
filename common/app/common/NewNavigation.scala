@@ -583,23 +583,18 @@ object NewNavigation {
     }
 
     def getSubSectionNavLinks(id: String, edition: Edition, isFront: Boolean) = {
-      if (isFront || frontLikePages.contains(id)) {
+      if (isEditionalistedSubSection(id)) {
+        val subNav = editionalisedSubSectionLinks.filter(_.pageId == id).head.parentSection
 
-        if (isEditionalistedSubSection(id)) {
-          val subNav = editionalisedSubSectionLinks.filter(_.pageId == id).head.parentSection
-
-          subNav.getEditionalisedSubSectionLinks(edition).mostPopular
-        } else {
-          val subSectionList = subSectionLinks.filter(_.pageId == simplifyFootball(id))
-
-          if (subSectionList.isEmpty) {
-            NewNavigation.SectionLinks.getSectionLinks(id, edition)
-          } else {
-            subSectionList.head.parentSection.mostPopular
-          }
-        }
+        subNav.getEditionalisedSubSectionLinks(edition).mostPopular
       } else {
-        NewNavigation.SectionLinks.getSectionLinks(id, edition)
+        val subSectionList = subSectionLinks.filter(_.pageId == simplifyFootball(id))
+
+        if (subSectionList.isEmpty) {
+          NewNavigation.SectionLinks.getSectionLinks(id, edition)
+        } else {
+          subSectionList.head.parentSection.mostPopular
+        }
       }
     }
   }
