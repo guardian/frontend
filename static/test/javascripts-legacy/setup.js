@@ -41,3 +41,10 @@ window.guardian = {
         onDetect: []
     }
 };
+
+// This is here so that we can polyfill the already converted ES6 stuff without breaking karma tests.
+// I've simply pasted in the url because it's temp until karma no longer exists and unlikely to change before then.
+var ref = document.getElementsByTagName('script')[0];
+var appScript = document.createElement('script');
+appScript.src = 'https://assets.guim.co.uk/polyfill.io/v2/polyfill.min.js?rum=0&features=es6,es7,default-3.6&flags=gated&callback=guardianPolyfilled';
+ref.parentNode.insertBefore(appScript, ref);
