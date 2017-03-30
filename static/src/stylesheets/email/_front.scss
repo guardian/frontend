@@ -127,7 +127,7 @@ $callout-border: none;
 .trail-text,
 .review-stars {
     font-weight: normal;
-    padding: 6px 10px 10px;
+    padding: 6px 10px 0;
 }
 
 .headline,
@@ -138,11 +138,16 @@ $callout-border: none;
     color: inherit;
 }
 
+.byline,
+.review-stars {
+    padding: 0 10px 10px;
+}
+
 .trail-text {
     font-family: Georgia, serif;
     font-size: 14px;
     line-height: 18px;
-    padding: 0 10px 26px;
+    padding: 10px 10px 26px;
 }
 
 .fc--large {
