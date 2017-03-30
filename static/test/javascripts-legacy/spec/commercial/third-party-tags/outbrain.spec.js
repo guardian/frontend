@@ -89,13 +89,14 @@ define([
                 checkMediator.resolveCheck('emailCanRunPreCheck', false);
                 checkMediator.resolveCheck('listCanRun', false);
                 checkMediator.resolveCheck('emailInArticleOutbrainEnabled', false);
+                checkMediator.resolveCheck('isStoryQuestionsOnPage', false);
 
                 sut.init().then(function () {
                     expect(sut.load).not.toHaveBeenCalled();
                     expect(sut.tracking).toHaveBeenCalled();
                     expect(sut.tracking).toHaveBeenCalledWith({
                         state: 'outbrainDisabled'
-                    });    
+                    });
                     done();
                 });
             });
@@ -111,13 +112,14 @@ define([
                 checkMediator.resolveCheck('listCanRun', false);
                 checkMediator.resolveCheck('emailInArticleOutbrainEnabled', false);
                 checkMediator.resolveCheck('isUserNotInContributionsAbTest', false);
+                checkMediator.resolveCheck('isStoryQuestionsOnPage', false);
 
                 sut.init().then(function () {
                     expect(sut.load).toHaveBeenCalled();
                     expect(sut.load).toHaveBeenCalledWith('nonCompliant');
                     expect(sut.tracking).toHaveBeenCalled();
                     expect(sut.tracking).toHaveBeenCalledWith({
-                        state: 'userInNonCompliantAbTest'
+                        state: 'nonCompliant'
                     });
                     done();
                 });
@@ -173,6 +175,7 @@ define([
                 checkMediator.resolveCheck('emailCanRunPreCheck', false);
                 checkMediator.resolveCheck('listCanRun', false);
                 checkMediator.resolveCheck('emailInArticleOutbrainEnabled', false);
+                checkMediator.resolveCheck('isStoryQuestionsOnPage', false);
 
                 sut.init().then(function () {
                     expect(sut.load).toHaveBeenCalled();
@@ -181,6 +184,33 @@ define([
                     expect(sut.tracking).toHaveBeenCalled();
                     expect(sut.tracking).toHaveBeenCalledWith({
                         state: 'compliant'
+                    });
+                    done();
+                });
+            });
+
+            it('should not load a compliant component if story questions are on page', function (done) {
+                // isOutbrainDisabled check
+                checkMediator.resolveCheck('isOutbrainDisabled', false);
+                // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
+                checkMediator.resolveCheck('hasHighPriorityAdLoaded', false);
+                checkMediator.resolveCheck('hasLowPriorityAdLoaded', false);
+                checkMediator.resolveCheck('hasLowPriorityAdNotLoaded', true);
+                // isUserInNonCompliantAbTest checks
+                checkMediator.resolveCheck('isUserInContributionsAbTest', false);
+                checkMediator.resolveCheck('isUserNotInContributionsAbTest', false);
+                checkMediator.resolveCheck('isUserInEmailAbTest', false);
+                checkMediator.resolveCheck('emailCanRunPreCheck', false);
+                checkMediator.resolveCheck('listCanRun', false);
+                checkMediator.resolveCheck('emailInArticleOutbrainEnabled', false);
+                checkMediator.resolveCheck('isStoryQuestionsOnPage', true);
+
+                sut.init().then(function () {
+                    expect(sut.load).toHaveBeenCalled();
+                    expect(sut.load).toHaveBeenCalledWith('nonCompliant');
+                    expect(sut.tracking).toHaveBeenCalled();
+                    expect(sut.tracking).toHaveBeenCalledWith({
+                        state: 'nonCompliant'
                     });
                     done();
                 });

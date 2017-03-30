@@ -25,7 +25,7 @@ define([
         isUserInContributionsAbTest: function() {
             return clash.userIsInAClashingAbTest(clash.contributionsTests);
         },
-        isUserNotInContributionsAbTest: function() {            
+        isUserNotInContributionsAbTest: function() {
             return checkMediator.waitForCheck('isUserInContributionsAbTest').then(function (userInContributionsAbTest) {
                 return !userInContributionsAbTest;
             });
@@ -56,7 +56,7 @@ define([
                 return checkMediator.waitForCheck('hasHighPriorityAdLoaded').then(function (highPriorityAdLoaded) {
                     if (highPriorityAdLoaded) {
                         return trackAdRender('dfp-ad--merchandising');
-                    } else {    
+                    } else {
                         return true;
                     }
                 });
@@ -68,6 +68,9 @@ define([
             return checkMediator.waitForCheck('hasLowPriorityAdLoaded').then(function (lowPriorityAdLoaded) {
                 return !lowPriorityAdLoaded;
             });
+        },
+        isStoryQuestionsOnPage: function() {
+            return document.querySelectorAll('.js-ask-question-link').length > 0;
         }
     };
 
