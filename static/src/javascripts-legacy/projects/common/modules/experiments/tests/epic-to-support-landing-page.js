@@ -18,16 +18,6 @@ define([
     contributionsEpicSingleButton
 ) {
 
-    function canBeDisplayed() {
-        var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
-        var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle; // may render badly on other types
-        var isSensitive = config.page.isSensitive === true;
-
-        return userHasNeverContributed &&
-            commercialFeatures.canReasonablyAskForMoney &&
-            worksWellWithPageTemplate && !isSensitive;
-    }
-
     return contributionsUtilities.makeABTest({
         id: 'EpicToSupportLandingPage',
         campaignId: 'epic_to_support_landing_page',
@@ -42,11 +32,11 @@ define([
 
         audienceCriteria: 'UK edition readers',
         audience: 0.2,
-        audienceOffset: 0,
+        audienceOffset: 0.5,
         showForSensitive: true,
         useTargetingTool: false,
 
-        overrideCanRun: true,
+        overrideCanRun: false,
         canRun: function () {
             return config.page.edition.toUpperCase() === 'UK';
         },
@@ -56,11 +46,13 @@ define([
                 id: 'intest',
                 template: function (variant) {
                     return template(contributionsEpicSingleButton, {
-                        linkUrl1: variant.makeURL(config.page.supportUrl, variant.membershipCampaignCode),
+                        linkUrl1: variant.makeURL(config.page.supportUrl + '/uk', variant.membershipCampaignCode),
                         componentName: variant.componentName,
                         title: 'Since you’re here…',
-                        p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
-                        p2: 'If everyone who reads our reporting, who likes it, helps to pay for it, our future would be much more secure.',
+                        p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And ' +
+                        '<span class="contributions__paragraph--highlight">unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can</span>' +
+                        '. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+                        p2: 'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
                         p3: '',
                         cta1: 'Support the Guardian'
                     });
@@ -68,10 +60,6 @@ define([
 
                 insertBeforeSelector: '.submeta',
 
-                test: function (render) {
-                    if (canBeDisplayed()) render();
-                },
-                isUnlimited : true,
                 successOnView: true
             }
         ]
