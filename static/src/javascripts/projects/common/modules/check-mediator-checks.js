@@ -86,7 +86,7 @@ const checks = [
         ],
     },
     {
-        id: 'isUserInNonCompliantAbTest',
+        id: 'isOutbrainNonCompliant',
         passCondition: SOMECHECKSPASSED,
         dependentChecks: [
             {
@@ -94,6 +94,9 @@ const checks = [
             },
             {
                 id: 'isUserInEmailAbTestAndEmailCanRun',
+            },
+            {
+                id: 'isStoryQuestionsOnPage',
             },
         ],
     },
@@ -109,6 +112,9 @@ const checks = [
             },
             {
                 id: 'isOutbrainDisabled',
+            },
+            {
+                id: 'isStoryQuestionsOnPage',
             },
         ],
     },
