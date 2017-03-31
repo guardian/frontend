@@ -10,7 +10,7 @@ $gutter: 10px;
 // We don't want these vendor-specific rules to be inlined because they will
 // inflate the email size for no benefit in some clients. These @-rules
 // will target WebKit and Mozilla specifically, and prevent the styles being inlined.
-@media screen and (-webkit-min-device-pixel-ratio:0) {
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
     td {
         -webkit-font-smoothing: antialiased;
     }
