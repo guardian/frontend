@@ -37,8 +37,6 @@ function init() {
 
 
     function hideNextArticle() {
-        console.log(windowHeight);
-        console.log(contentFooterTop);
         nextRecipeText[0].classList.add('visible');
         if(contentFooterTop <= windowHeight) {
             nextRecipeText[0].classList.add('is-hidden');
