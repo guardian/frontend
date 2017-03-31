@@ -1,13 +1,9 @@
 define([
     'bean',
-    'bonzo',
-    'lib/$',
     'lib/mediator',
     'lodash/collections/contains'
 ], function (
     bean,
-    bonzo,
-    $,
     mediator,
     contains
 ) {
@@ -18,19 +14,22 @@ define([
             controls,
             doNotReset = ['popup--search'],
             readyClass = 'js-toggle-ready',
-            isSignedIn = $('.js-profile-nav').hasClass('is-signed-in'),
+            isSignedIn = (function () {
+                var nav = document.querySelector('.js-profile-nav');
+                return nav && nav.classList.contains('is-signed-in');
+            }()),
             component  = parent || document.body;
 
         this.init = function () {
             controls = Array.prototype.slice.call(component.querySelectorAll('[data-toggle]'));
 
             controls.forEach(function (control) {
-                if (!bonzo(control).hasClass(readyClass)) {
+                if (!control.classList.contains(readyClass)) {
                     var target = self.getTarget(component, control);
 
                     if (target && !(!isSignedIn && control.getAttribute('data-toggle-signed-in') === 'true')) {
                         control.toggleTarget = target;
-                        bonzo(control).addClass(readyClass);
+                        control.classList.add(readyClass);
                         bean.add(control, 'click', function (e) {
                             e.preventDefault();
                             self.toggle(control, controls);
@@ -42,7 +41,7 @@ define([
 
         this.reset = function (omitEl) {
             controls.filter(function (control) {
-                return !(omitEl === control || contains(doNotReset, $(control).attr('data-toggle')));
+                return !(omitEl === control || contains(doNotReset, control.getAttribute('data-toggle')));
             }).map(self.close);
         };
 
@@ -56,7 +55,7 @@ define([
 
         controls.forEach(function (c) {
             if (c === control) {
-                self[bonzo(c).hasClass('is-active') ? 'close' : 'open'](c);
+                self[c.classList.contains('is-active') ? 'close' : 'open'](c);
             } else {
                 self.close(c);
             }
@@ -64,20 +63,24 @@ define([
     };
 
     Toggles.prototype.getTarget = function (parent, control) {
-        var targetClass = bonzo(control).data('toggle');
+        var targetClass = control.getAttribute('data-toggle');
         if (targetClass) {
             return parent.querySelector('.' + targetClass);
         }
     };
 
     Toggles.prototype.open = function (c) {
-        bonzo(c).addClass('is-active');
-        bonzo(c.toggleTarget).removeClass('is-off');
+        c.classList.add('is-active');
+        if (c.toggleTarget) {
+            c.toggleTarget.classList.remove('is-off');
+        }
     };
 
     Toggles.prototype.close = function (c) {
-        bonzo(c).removeClass('is-active');
-        bonzo(c.toggleTarget).addClass('is-off');
+        c.classList.remove('is-active');
+        if (c.toggleTarget) {
+            c.toggleTarget.classList.add('is-off');
+        }
     };
 
     return Toggles;

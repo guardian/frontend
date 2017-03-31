@@ -30,7 +30,7 @@ define([
                     'lib/detect',
                     'common/modules/identity/api',
                     'commercial/modules/user-ad-targeting',
-                    'common/modules/experiments/ab',
+                    'common/modules/experiments/utils',
                     'commercial/modules/third-party-tags/krux'],
                 function () {
                     buildPageTargeting = arguments[0];

@@ -1,6 +1,6 @@
 define([
-    'bean',
-    'fastdom',
+    'Promise',
+    'lib/fastdom-promise',
     'lib/$',
     'lodash/utilities/template',
     'common/modules/user-prefs',
@@ -11,7 +11,7 @@ define([
     'svg-loader!svgs/commercial/paid-content.svg',
     'lodash/arrays/uniq'
 ], function (
-    bean,
+    Promise,
     fastdom,
     $,
     template,
@@ -44,13 +44,16 @@ define([
 
     surveySimple.prototype.attach = function () {
         if (!this.hasSeen()) {
-            fastdom.write(function () {
+            return fastdom.write(function () {
                 $(document.body).append(this.bannerTmpl);
 
                 if (this.config.showCloseBtn) {
-                    bean.on(document, 'click', $('.js-survey-close'), this.handleClick.bind(this));
+                    var closeBtn = document.querySelector('.js-survey-close');
+                    closeBtn.addEventListener('click', this.handleClick.bind(this));
                 }
             }.bind(this));
+        } else {
+            return Promise.resolve();
         }
     };
 

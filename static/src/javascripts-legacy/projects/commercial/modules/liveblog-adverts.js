@@ -1,5 +1,4 @@
 define([
-    'bonzo',
     'lib/fastdom-promise',
     'lib/detect',
     'lib/config',
@@ -10,7 +9,6 @@ define([
     'common/modules/article/space-filler',
     'Promise'
 ], function (
-    bonzo,
     fastdom,
     detect,
     config,

@@ -15,7 +15,7 @@ define([
     return function () {
         this.id = 'PaidCommentingInternal';
         this.start = '2017-03-02';
-        this.expiry = '2017-03-30'; // Thursday 30th March
+        this.expiry = '2017-04-27'; // Thursday 27th April
         this.author = 'Justin Pinner';
         this.description = 'Test effects of paid-only commenting (404 test)';
         this.showForSensitive = true;

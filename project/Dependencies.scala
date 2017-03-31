@@ -8,7 +8,8 @@ object Dependencies {
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
   val awsVersion = "1.11.7"
-  val faciaVersion = "2.0.12"
+  val faciaVersion = "2.0.13"
+  val capiVersion = "11.12"
   val dispatchVersion = "0.11.3"
   val configurationMagicVersion = "1.2.2"
   val romeVersion = "1.0"
@@ -32,7 +33,7 @@ object Dependencies {
   val commonsLang = "commons-lang" % "commons-lang" % "2.4"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.21"
-  val contentApiClient = "com.gu" %% "content-api-client" % "11.3"
+  val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "2.20.0"
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % dispatchVersion
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % dispatchVersion % Test

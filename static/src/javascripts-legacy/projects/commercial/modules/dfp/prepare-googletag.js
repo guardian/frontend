@@ -1,7 +1,6 @@
 define([
     'Promise',
     'qwery',
-    'bonzo',
     'lib/raven',
     'lib/config',
     'lib/load-script',
@@ -25,7 +24,6 @@ define([
 ], function (
     Promise,
     qwery,
-    bonzo,
     raven,
     config,
     loadScript,

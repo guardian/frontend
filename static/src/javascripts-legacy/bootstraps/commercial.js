@@ -58,8 +58,8 @@ define([
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
         ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
-        ['cm-prepare-googletag', prepareGoogletag.init, true],
         ['cm-articleAsideAdverts', articleAsideAdverts.init, true],
+        ['cm-prepare-googletag', prepareGoogletag.init, true],
         ['cm-articleBodyAdverts', articleBodyAdverts.init, true],
         ['cm-liveblogAdverts', liveblogAdverts.init, true],
         ['cm-closeDisabledSlots', closeDisabledSlots.init],
@@ -73,7 +73,7 @@ define([
         commercialModules.push(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init, true],
-            ['cm-hostedGallery', hostedGallery.init, true],
+            ['cm-hostedGallery', hostedGallery.init],
             ['cm-hostedOnward', hostedOnward.init, true],
             ['cm-hostedOJCarousel', hostedOJCarousel.init]
         );
@@ -86,21 +86,22 @@ define([
         var modulePromises = [];
 
         modules.forEach(function (module) {
-
             var moduleName = module[0];
             var moduleInit = module[1];
             var moduleDefer = module[2];
 
-            robust.catchErrorsAndLog(moduleName, function () {
-                // These modules all have async init procedures which don't block, and return a promise purely for
-                // perf logging, to time when their async work is done. The command buffer guarantees execution order,
-                // so we don't use the returned promise to order the bootstrap's module invocations.
-                var wrapped = moduleDefer ?
-                    performanceLogging.defer(moduleName, moduleInit) :
-                    performanceLogging.wrap(moduleName, moduleInit);
-                var result = wrapped();
-                modulePromises.push(result);
-            });
+            robust.context([
+                [moduleName, function () {
+                    // These modules all have async init procedures which don't block, and return a promise purely for
+                    // perf logging, to time when their async work is done. The command buffer guarantees execution order,
+                    // so we don't use the returned promise to order the bootstrap's module invocations.
+                    var wrapped = moduleDefer ?
+                        performanceLogging.defer(moduleName, moduleInit) :
+                        performanceLogging.wrap(moduleName, moduleInit);
+                    var result = wrapped();
+                    modulePromises.push(result);
+                }],
+            ]);
         });
 
         return Promise.all(modulePromises)
@@ -116,9 +117,11 @@ define([
         }
 
         userTiming.mark('commercial start');
-        robust.catchErrorsAndLog('ga-user-timing-commercial-start', function () {
-            ga.trackPerformance('Javascript Load', 'commercialStart', 'Commercial start parse time');
-        });
+        robust.context([
+            ['ga-user-timing-commercial-start', function () {
+                ga.trackPerformance('Javascript Load', 'commercialStart', 'Commercial start parse time');
+            }],
+        ]);
 
         // Stub the command queue
         window.googletag = { cmd: [] };
@@ -126,9 +129,11 @@ define([
         return loadModules(commercialModules, performanceLogging.primaryBaseline)
         .then(function () {
             userTiming.mark('commercial end');
-            robust.catchErrorsAndLog('ga-user-timing-commercial-end', function () {
-                ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
-            });
+            robust.context([
+                ['ga-user-timing-commercial-end', function () {
+                    ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
+                }],
+            ]);
             performanceLogging.reportTrackingData();
         })
         .catch(function (err) {

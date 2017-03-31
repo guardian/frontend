@@ -136,7 +136,7 @@ trait ABTestSwitches {
     "Assign users to variants of long read email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 5, 30),
     exposeClientSide = true
   )
 
@@ -146,7 +146,7 @@ trait ABTestSwitches {
     "Assign users to variants of fashion statement email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 5, 30),
     exposeClientSide = true
   )
 
@@ -156,7 +156,7 @@ trait ABTestSwitches {
     "Assign users to variants of bookmarks email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 5, 30),
     exposeClientSide = true
   )
 
@@ -166,7 +166,7 @@ trait ABTestSwitches {
     "Assign users to variants of film today email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 5, 30),
     exposeClientSide = true
   )
 
@@ -212,11 +212,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-email-demand-tests",
+    "Test demand for food, business, and cities emails",
+    owners = Seq(Owner.withGithub("lmath")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 21),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-paid-commenting-internal",
     "Paid commenting test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 30),
+    sellByDate = new LocalDate(2017, 4, 27),
     exposeClientSide = true
   )
 

@@ -18,7 +18,9 @@ define([
         mediator.on('module:clickstream:click', function (spec) {
             // We don't want tracking errors to terminate the event emitter, as
             // this will mean other event listeners will not be called.
-            robust.catchErrorsAndLog('c-analytics', function () { trackClick(spec); });
+            robust.context([
+                ['c-analytics', function () { trackClick(spec); }],
+            ]);
         });
     }
 

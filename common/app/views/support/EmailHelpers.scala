@@ -96,10 +96,10 @@ object EmailHelpers {
     Column(smallWidth = 12, largeWidth = 12)(inner)
   )).render
 
-  def imageUrlFromCard(contentCard: ContentCard): Option[String] = {
+  def imageUrlFromCard(contentCard: ContentCard, width: Int): Option[String] = {
     for {
       InlineImage(imageMedia) <- contentCard.displayElement
-      url <- FrontEmailImage.bestFor(imageMedia)
+      url <- SmallFrontEmailImage(width).bestFor(imageMedia)
     } yield url
   }
 
@@ -126,9 +126,11 @@ object EmailHelpers {
 
   def imgForFront = img(FrontEmailImage.knownWidth) _
 
-  def imgFromCard(card: ContentCard, colWidth: Int = 12)(implicit requestHeader: RequestHeader): Option[Html] = imageUrlFromCard(card).map { url => Html {
-      val width = ((colWidth.toDouble / 12.toDouble) * FrontEmailImage.knownWidth).toInt
-      s"""<a class="fc-link" ${card.header.url.hrefWithRel}>${img(width)(url, Some(card.header.headline))}</a>"""
+  def imgFromCard(card: ContentCard, colWidth: Int = 12)(implicit requestHeader: RequestHeader): Option[Html] = {
+    val width = ((colWidth.toDouble / 12.toDouble) * FrontEmailImage.knownWidth).toInt
+    imageUrlFromCard(card, width).map { url => Html {
+        s"""<a class="fc-link" ${card.header.url.hrefWithRel}>${img(width)(url, Some(card.header.headline))}</a>"""
+      }
     }
   }
 

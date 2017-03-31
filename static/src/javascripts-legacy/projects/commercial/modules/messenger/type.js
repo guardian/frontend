@@ -1,10 +1,9 @@
 define([
-    'lib/closest',
     'lib/fastdom-promise',
     'commercial/modules/messenger'
-], function (closest, fastdom, messenger) {
+], function (fastdom, messenger) {
     messenger.register('type', function(specs, ret, iframe) {
-        return setType(specs, closest(iframe, '.js-ad-slot'));
+        return setType(specs, iframe.closest('.js-ad-slot'));
     });
 
     return setType;

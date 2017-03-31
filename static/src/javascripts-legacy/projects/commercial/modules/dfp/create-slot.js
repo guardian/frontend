@@ -14,30 +14,7 @@ define([
         }
     };
 
-    var rightMappings = {
-        mobile: [
-            adSizes.outOfPage,
-            adSizes.empty,
-            adSizes.mpu,
-            adSizes.halfPage,
-            adSizes.fluid
-        ].concat(config.page.edition === 'US' ? adSizes.portrait : [])
-    };
-
     var adSlotDefinitions = {
-        right: {
-            sizeMappings: rightMappings
-        },
-        'right-sticky': {
-            name: 'right',
-            sizeMappings: rightMappings
-        },
-        'right-small': {
-            name: 'right',
-            sizeMappings: {
-                mobile: [adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.fluid]
-            }
-        },
         im: {
             label: false,
             refresh: false,
@@ -132,10 +109,6 @@ define([
         }
 
         classes.push('ad-slot--' + slotName);
-
-        if(type === 'right-sticky') {
-            classes.push('js-sticky-mpu');
-        }
 
         return createAdSlotElement(
             slotName,

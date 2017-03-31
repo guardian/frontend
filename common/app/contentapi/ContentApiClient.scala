@@ -189,7 +189,6 @@ class ContentApiClient(httpClient: HttpClient) extends ApiQueryDefaults {
   def search = getClient.search
   def sections = getClient.sections
   def editions = getClient.editions
-  def recipes = getClient.recipes
 
   def getResponse(itemQuery: ItemQuery)(implicit context: ExecutionContext) = getClient.getResponse(itemQuery)
 
@@ -200,8 +199,6 @@ class ContentApiClient(httpClient: HttpClient) extends ApiQueryDefaults {
   def getResponse(sectionsQuery: SectionsQuery)(implicit context: ExecutionContext) = getClient.getResponse(sectionsQuery)
 
   def getResponse(editionsQuery: EditionsQuery)(implicit context: ExecutionContext) = getClient.getResponse(editionsQuery)
-
-  def getResponse(recipesQuery: RecipesQuery)(implicit context: ExecutionContext): Future[AtomsResponse] = getClient.getResponse(recipesQuery)
 }
 
 // The Admin server uses this PreviewContentApi to check the preview environment.

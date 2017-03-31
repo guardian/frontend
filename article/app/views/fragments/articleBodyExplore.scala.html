@@ -1,7 +1,7 @@
 @import common.LinkTo
 @import controllers.ArticlePage
 @import views.BodyCleaner
-@import views.support.Commercial.isPaidContent
+@import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
 @import views.support.RenderClasses
 
 @(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
@@ -51,7 +51,9 @@
                         <div class="after-article js-after-article"></div>
                     </div>
                     <div class="content__secondary-column js-secondary-column" aria-hidden="true">
-                        <div class="ad-slot-container js-ad-slot-container"></div>
+
+                        @fragments.articleAsideSlot(shouldShowAds(model), articleAsideOptionalSizes, Some("js-sticky-mpu"))
+
                     </div>
                 </div>
             </div>

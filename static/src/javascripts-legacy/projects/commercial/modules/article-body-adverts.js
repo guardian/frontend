@@ -4,7 +4,7 @@ define([
     'lib/config',
     'lib/detect',
     'lib/fastdom-promise',
-    'common/modules/experiments/ab',
+    'common/modules/experiments/utils',
     'common/modules/article/space-filler',
     'commercial/modules/ad-sizes',
     'commercial/modules/dfp/add-slot',
@@ -17,7 +17,7 @@ define([
     config,
     detect,
     fastdom,
-    ab,
+    abUtils,
     spaceFiller,
     adSizes,
     addSlot,
@@ -32,7 +32,8 @@ define([
     var replaceTopSlot;
     var getSlotName;
     var getSlotType;
-    var isOffsetingAds = ab.testCanBeRun('IncreaseInlineAds') && ab.getTestVariantId('IncreaseInlineAds') === 'yes';
+    var isOffsetingAds = abUtils.testCanBeRun('IncreaseInlineAds') &&
+        abUtils.getTestVariantId('IncreaseInlineAds') === 'yes';
 
     function init(start, stop) {
         start();
@@ -197,7 +198,7 @@ define([
             para.parentNode.insertBefore(ad, para);
         })
         .then(function () {
-            addSlot(ad);
+            addSlot(ad, name === 'im');
         });
     }
 });

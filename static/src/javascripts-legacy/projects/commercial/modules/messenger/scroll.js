@@ -1,10 +1,9 @@
 define([
     'lib/add-event-listener',
-    'lib/closest',
     'lib/detect',
     'lib/fastdom-promise',
     'commercial/modules/messenger'
-], function (addEventListener, closest, detect, fastdom, messenger) {
+], function (addEventListener, detect, fastdom, messenger) {
     // An intersection observer will allow us to efficiently send slot
     // coordinates for only those that are in the viewport.
     var w = window;

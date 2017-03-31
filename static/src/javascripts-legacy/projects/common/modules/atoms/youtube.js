@@ -6,7 +6,6 @@ define([
     'lib/$',
     'lib/config',
     'lib/detect',
-    'lib/closest',
     'lodash/functions/debounce'
 ], function (
     fastdom,
@@ -16,7 +15,6 @@ define([
     $,
     config,
     detect,
-    closest,
     debounce
 ) {
 
@@ -41,7 +39,7 @@ define([
         setProgressTracker(atomId);
         tracking.track('play', getTrackingId(atomId));
 
-        var mainMedia = closest(player.iframe, '.immersive-main-media');
+        var mainMedia = player.iframe && player.iframe.closest('.immersive-main-media') || null;
         if (mainMedia) {
             mainMedia.classList.add('atom-playing');
         }
@@ -63,7 +61,7 @@ define([
         tracking.track('end', getTrackingId(atomId));
         player.pendingTrackingCalls = [25, 50, 75];
 
-        var mainMedia = closest(player.iframe, '.immersive-main-media');
+        var mainMedia = player.iframe && player.iframe.closest('.immersive-main-media') || null;
         if (mainMedia) {
             mainMedia.classList.remove('atom-playing');
         }
@@ -117,7 +115,7 @@ define([
         }
 
         function isMainVideo() {
-            return closest(players[atomId].iframe, 'figure[data-component="main video"]');
+            return players[atomId].iframe && players[atomId].iframe.closest('figure[data-component="main video"]') || false;
         }
 
         return config.page.contentType === 'Video' &&
@@ -147,7 +145,7 @@ define([
             }
         }
 
-        if (closest(iframe, '.immersive-main-media__media')) {
+        if (iframe && iframe.closest('.immersive-main-media__media')) {
             updateImmersiveButtonPos();
             window.addEventListener('resize', debounce(updateImmersiveButtonPos.bind(null), 200));
         }

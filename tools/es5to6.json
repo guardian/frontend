@@ -9,12 +9,10 @@
     "lib/client-rects.js"
   ],
   "Gareth Trufitt": [
-    "lib/closest.js",
     "lib/config.js",
     "lib/cookies.js",
     "lib/create-store.js",
     "lib/detect.js",
-    "lib/easing.js",
     "lib/element-inview.js",
     "lib/fastdom-errors.js",
     "lib/fastdom-promise.js"
@@ -30,7 +28,6 @@
     "lib/location.js"
   ],
   "GHaberis": [
-    "lib/mediator.js",
     "lib/pad.js",
     "lib/page.js",
     "lib/picturefill.js",
@@ -40,10 +37,6 @@
     "lib/raven.js"
   ],
   "Gustav Pursche": [
-    "lib/robust.js",
-    "lib/scroller.js",
     "lib/steady-page.js",
-    "lib/storage.js",
-    "lib/url.js"
   ]
 }

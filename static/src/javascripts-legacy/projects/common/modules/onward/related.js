@@ -7,7 +7,6 @@ define([
     'common/modules/analytics/register',
     'common/modules/lazyload',
     'common/modules/ui/expandable',
-    'common/modules/experiments/ab',
     'lodash/arrays/intersection',
     'lodash/collections/map'
 ], function (
@@ -19,7 +18,6 @@ define([
     register,
     lazyload,
     Expandable,
-    ab,
     intersection,
     map
 ) {

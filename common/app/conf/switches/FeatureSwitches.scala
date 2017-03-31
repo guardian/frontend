@@ -487,6 +487,17 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  // Owner: David Furey
+  val guTodayEmailAds = Switch(
+    SwitchGroup.Feature,
+    "guardian-today-email-ads",
+    "When ON, the Guardian Today US Email will contain Live Intent advertisements",
+    owners = Seq(Owner.withGithub("davidfurey")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 6, 6),
+    exposeClientSide = false
+  )
+
   // Owner: George Haberis / Lindsey Dew
   val UseTailorEndpoints = Switch(
     SwitchGroup.Feature,
@@ -514,6 +525,16 @@ trait FeatureSwitches {
     "When ON, email styles will be stripped from the <head> and inlined into HTML style attributes",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val YouTubePosterOverride = Switch(
+    SwitchGroup.Feature,
+    "youtube-poster-override",
+    "When ON show trail image on YouTube atom playable content cards instead of the poster image",
+    owners = Seq(Owner.withGithub("gidsg")),
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = false
   )

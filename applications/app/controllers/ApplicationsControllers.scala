@@ -39,5 +39,4 @@ trait ApplicationsControllers {
   lazy val indexController = wire[IndexController]
   lazy val siteVerificationController = wire[SiteVerificationController]
   lazy val shareCountController = wire[ShareCountController]
-  lazy val structuredDataIndexController = wire[StructuredDataIndexController]
 }

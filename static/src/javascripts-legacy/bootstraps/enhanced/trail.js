@@ -114,7 +114,7 @@ define([
     }
 
     return function () {
-        robust.catchErrorsAndLogAll([
+        robust.context([
             ['c-discussion', initDiscussion],
             ['c-comments', repositionComments],
             ['c-shares', shareCount],

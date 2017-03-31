@@ -224,6 +224,45 @@ import collection.JavaConversions._
       }
     }
 
+    scenario("Article aside MPU", ArticleComponents) {
+
+      Given("I am on an article entitled '10 of the best things to do in Tallinn'")
+      And("I am on the 'UK' edition")
+      goTo("/travel/2017/mar/20/10-best-things-to-do-tallinn-estonia-museums-cafe-art-beer") { browser =>
+        import browser._
+
+        $(".ad-slot--right").length should be(1)
+        val adSlotRight = $(".ad-slot--right")
+
+        Then("The article-aside MPU should have the correct sizes")
+          adSlotRight.getId() should be("dfp-ad--right")
+          adSlotRight.getAttribute("data-mobile") should be("1,1|2,2|300,250|300,600|fluid")
+      }
+
+      Given("I am on an article entitled '10 of the best things to do in Tallinn'")
+      And("I am on the 'US' edition")
+      US("/travel/2017/mar/20/10-best-things-to-do-tallinn-estonia-museums-cafe-art-beer") { browser =>
+        import browser._
+
+        val adSlotRight = $(".ad-slot--right")
+
+        Then("The article-aside MPU should have the correct sizes")
+          adSlotRight.getId() should be("dfp-ad--right")
+          adSlotRight.getAttribute("data-mobile") should be("1,1|2,2|300,250|300,600|fluid|300,1050")
+      }
+
+      Given("I am on an immersive article, entitled 'Health insurance woes helped elect Trump, but his cure may be more painful'")
+      goTo("/us-news/2017/mar/21/pennsylvania-healthcare-donald-trump-supporters") { browser =>
+        import browser._
+
+        val adSlotRight = $(".ad-slot--right")
+
+        Then("The article-aside MPU should not be sticky")
+          adSlotRight.getId() should be("dfp-ad--right")
+          adSlotRight.getAttribute("class") should not include("js-sticky-mpu")
+      }
+    }
+
     scenario("In body pictures", ArticleComponents) {
 
       Given("I am on an article entitled 'A food revolution in Charleston, US'")
