@@ -6,7 +6,9 @@ import storage from 'lib/storage';
 
 const prefix = `gu.prefs`;
 
-const getStorage = (options): storage => {
+// #? Instead of any we could use the class object type, but we want to
+// refactor it anyway, let's keep it for now
+const getStorage = (options): any => {
     const { type = 'local' } = options;
     return storage[type];
 };
