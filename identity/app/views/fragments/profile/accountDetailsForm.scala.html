@@ -29,6 +29,10 @@
         <div class="fieldset__fields">
             <ul class="u-unstyled">
 
+                @accountDetailsForm.error("user.primaryEmailAddress").map { error =>
+                    <div class="form__error">@error.message</div>
+                }
+
                 @inputField(Input(accountDetailsForm("primaryEmailAddress"), ('_label, "Email address"),
                     Symbol("data-test-id") -> "email-address"))
 
