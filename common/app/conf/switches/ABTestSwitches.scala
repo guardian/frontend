@@ -215,7 +215,7 @@ trait ABTestSwitches {
     "ab-email-demand-tests",
     "Test demand for food, business, and cities emails",
     owners = Seq(Owner.withGithub("lmath")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2017, 4, 21),
     exposeClientSide = true
   )
