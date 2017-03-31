@@ -133,10 +133,27 @@
     line-height: initial;
     font-weight: 900;
 
+    @include mq($from: tablet) {
+        left: 15%;
+    }
+
     @include mq($from: desktop) {
         top: -$gs-gutter * 2;
-        left: 14%;
+        left: 11%;
         bottom: auto;
+    }
+
+    @include mq($from: leftCol) {
+        height: $gs-baseline * 6.3;
+        width: $gs-gutter * 7;
+        padding-top: calc((#{$gs-gutter} / 2) * 7);
+        top: -$gs-gutter * 3;
+    }
+
+    h2 {
+        @include mq($from: leftCol) {
+            font-size: 28px;
+        };
     }
 }
 
@@ -239,6 +256,9 @@
 }
 
 .recipe__article-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+
     @include mq($from: desktop) {
         flex-basis: 55%;
         float: right;
@@ -257,28 +277,18 @@
 }
 
 .recipe__article--headline {
-    margin-top: 0;
+    margin: 0;
     margin-bottom: $gs-baseline * 2;
     color: $neutral-1;
+    max-width: 642px;
 
-    @include mq($from: wide) {
-        h1 {
-            padding-right: $gs-gutter * 8;
-        }
-    }
+
 }
 
 .recipe__article--buttons {
     display: flex;
     justify-content: space-between;
-
-    @include mq($from: desktop) {
-        padding-right: calc(#{$gs-gutter} / 2 * 5);
-    }
-
-    @include mq($from: wide) {
-        padding-right: $gs-gutter * 8;
-    }
+    max-width: 642px;
 }
 
 .recipe__article--social {
@@ -316,17 +326,17 @@
     border-top: 1px solid $neutral-3;
 
     p {
-        font-size: 18px;
-        line-height: 22px;
-
-        @include mq($from: desktop) {
-            padding-right: calc(#{$gs-gutter} / 2 * 5);
-        }
-
-        @include mq($from: wide) {
-            padding-right: $gs-gutter * 8;
-        }
+        font-size: 16px;
+        line-height: 20px;
+        max-width: 642px;
     }
+    h2 {
+        font-size: 16px;
+    }
+}
+
+.recipe__standfirst {
+    margin-bottom: $gs-gutter;
 }
 
 .recipe__content a, .recipe__standfirst a {
@@ -338,11 +348,34 @@
 }
 
 .recipe__content {
-    display: none;
+    & > * {
+        display: none;
+        max-width: 642px;
+    }
+    & > *:nth-child(-n+2) {
+        display: block;
+    }
+
+    ul {
+        margin-left: 0px;
+        list-style: none;
+    }
+
+    li:before {
+        width: $gs-baseline;
+        height: $gs-baseline;
+        border-radius: 50%;
+        margin-right: $gs-gutter / 2;
+        background-color: $neutral-3;
+        display: inline-block;
+        content: '';
+    }
 }
 
 .recipe__content.js-visible, .recipe__content.recipe__content--no-js {
-    display: block;
+    & > * {
+        display: block;
+    }
 }
 
 .recipe__article--read-more {
@@ -422,9 +455,9 @@
     transform: translateY(100%);
     transition: transform .5s ease-in-out;
     box-sizing: border-box;
-    width: 100%;
     min-height: calc(#{$gs-gutter / 2} * 4);
     cursor: pointer;
+    width: 100%;
 
     &.visible {
         transform: translateY(0%);
@@ -439,6 +472,7 @@
     @include mq($from: desktop) {
         padding-left: $gs-gutter / 2;
         padding-bottom: $gs-baseline;
+        width: 50%;
 
         h2 {
             @include fs-headline(3);
@@ -448,7 +482,7 @@
 }
 
 .recipe__article--structured {
-    margin-top: $gs-baseline * 3;
+    margin-top: calc((#{$gs-gutter} / 2) * 2);
     border-top: 1px solid $neutral-3;
     padding-top: $gs-baseline / 2;
 
@@ -495,12 +529,7 @@
 
 .recipe__article--structured-headline {
     margin-bottom: $gs-baseline * 2;
-
-    @include mq($from: wide) {
-        h1 {
-            padding-right: $gs-gutter * 8;
-        }
-    }
+    max-width: 642px;
 }
 
 .recipe__article--structured-meta {
@@ -510,17 +539,12 @@
 .recipe__article--structured-ingredients {
     margin-bottom: $gs-baseline * 2;
     margin-top: $gs-baseline;
+    max-width: 642px;
 
     @include mq($from: desktop) {
-        padding-right: calc(#{gs-gutter} / 2 * 5);
         display: flex;
         flex-wrap: wrap;
     }
-
-    @include mq($from: wide) {
-        padding-right: $gs-gutter * 8;
-    }
-
 }
 
 .ingredients-list {
@@ -591,14 +615,7 @@
 
 .method-list {
     margin-bottom: $gs-baseline * 2;
-
-    @include mq($from: desktop) {
-        padding-right: calc(#{$gs-gutter / 2} * 5);
-    }
-
-    @include mq($from: wide) {
-        padding-right: $gs-gutter * 8;
-    }
+    max-width: 642px;
 
     li:not(.recipe__article--list-title) {
         font-family: $f-sans-serif-text;
