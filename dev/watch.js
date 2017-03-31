@@ -68,7 +68,6 @@ const sassGraph = require('sass-graph').parseDir(sassDir, {
     loadPaths: sassDir,
 });
 
-const copyFiles = require('../tools/__tasks__/compile/conf/copy');
 const compileSass = require('../tools/compile-css');
 
 // when we detect a change in a sass file, we look up the tree of imports
@@ -96,9 +95,6 @@ chokidar.watch(`${sassDir}/**/*.scss`).on('change', changedFile => {
             browserSync.reload(
                 filesToCompile.map(file => file.replace('scss', 'css'))
             );
-        })
-        .then(() => {
-            copyFiles.task();
         })
         .catch(e => {
             // send editing errors to console and browser
