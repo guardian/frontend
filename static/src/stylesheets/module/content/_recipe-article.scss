@@ -457,6 +457,7 @@
     box-sizing: border-box;
     min-height: calc(#{$gs-gutter / 2} * 4);
     cursor: pointer;
+    width: 100%;
 
     &.visible {
         transform: translateY(0%);
@@ -471,6 +472,7 @@
     @include mq($from: desktop) {
         padding-left: $gs-gutter / 2;
         padding-bottom: $gs-baseline;
+        width: 50%;
 
         h2 {
             @include fs-headline(3);
