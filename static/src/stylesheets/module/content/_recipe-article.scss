@@ -455,7 +455,6 @@
     transform: translateY(100%);
     transition: transform .5s ease-in-out;
     box-sizing: border-box;
-    width: 100%;
     min-height: calc(#{$gs-gutter / 2} * 4);
     cursor: pointer;
 
