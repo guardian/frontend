@@ -10,7 +10,8 @@ define([
     'lib/page',
     'lib/storage',
     'common/modules/check-mediator',
-    'raw-loader!common/views/experiments/email-demand-test.html'
+    'raw-loader!common/views/experiments/email-demand-test.html',
+    'ophan/ng'
 ], function (
     $,
     bean,
@@ -23,7 +24,8 @@ define([
     page,
     storage,
     checkMediator,
-    emailDemandTemplate
+    emailDemandTemplate,
+    ophan
 ) {
     var minimumTrailingParagraphs = 5;
 
@@ -144,6 +146,8 @@ define([
                     emailRunChecks.setEmailShown(listConfig.listName);
                     storage.session.set('email-sign-up-seen', 'true');
 
+                    ophan.trackComponentAttention('email-demand-test-' + listConfig.listName, $demandTestSection[0]);
+                    
                     bean.on($('.js-email-sub__submit-button', $demandTestSection)[0], 'click', function () {
                         if (this.completeFunction) {
                             this.completeFunction();
