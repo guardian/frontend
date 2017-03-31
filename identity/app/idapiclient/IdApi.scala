@@ -160,11 +160,11 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityC
     post(urlJoin("user", "me", "group", groupCode), Some(auth)) map extractUnit
   }
 
-  def executeAccountDeletionStepFunction(userId: String, email: String, auth: Auth) = {
-    case class DeletionBody(identityId: String, email: String)
+  def executeAccountDeletionStepFunction(userId: String, email: String, reason: Option[String], auth: Auth) = {
+    case class DeletionBody(identityId: String, email: String, reason: Option[String])
     http.POST(
         s"${conf.id.accountDeletionApiRoot}/delete",
-        Some(write(DeletionBody(userId, email))),
+        Some(write(DeletionBody(userId, email, reason))),
         headers = buildHeaders(Some(auth), extra = Seq(("x-api-key", conf.id.accountDeletionApiKey)))
     ) map extract[AccountDeletionResult](identity)
   }

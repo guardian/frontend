@@ -11,7 +11,8 @@ import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import actions.AuthenticatedActions
 import conf.IdentityConfiguration
 import play.api.data.validation.Constraints
-import play.api.data.{Form, Forms}
+import play.api.data.Form
+import play.api.data.Forms._
 import play.api.i18n.I18nSupport
 import play.api.libs.crypto.CryptoConfig
 import play.api.i18n.MessagesApi
@@ -42,7 +43,11 @@ class AccountDeletionController(
 
   val page = IdentityPage("/deletion", "Account Deletion")
 
-  val accountDeletionForm = Form(Forms.single("password" -> Forms.text.verifying(Constraints.nonEmpty)))
+  val accountDeletionForm = Form(
+    tuple(
+      "password" -> text.verifying(Constraints.nonEmpty),
+      "reason" -> optional(text)
+  ))
 
   def renderAccountDeletionForm = csrfAddToken {
     authActionWithUser.async { implicit request =>
@@ -57,13 +62,13 @@ class AccountDeletionController(
 
       boundForm.fold(
         formWithErrors => Future(SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url).flashing(formWithErrors.toFlash)),
-        password => deleteAccount(boundForm, EmailPassword(request.user.user.primaryEmailAddress, password, None), idRequestParser(request))
+        { case (password, reasonOpt) => deleteAccount(boundForm, EmailPassword(request.user.user.primaryEmailAddress, password, None), idRequestParser(request)) }
       )
     }
   }
 
   private def deleteAccount[A](
-      boundForm: Form[String],
+      boundForm: Form[(String, Option[String])],
       emailPasswdAuth: EmailPassword,
       idRequest: IdentityRequest)(implicit request: AuthenticatedActions.AuthRequest[A]): Future[Result] =
     signInService.getCookies(idApiClient.authBrowser(emailPasswdAuth, idRequest.trackingData), true).flatMap { _ match {
@@ -72,8 +77,8 @@ class AccountDeletionController(
       }
     }
 
-  private def executeAccountDeletionStepFunction[A](boundForm: Form[String])(implicit request: AuthenticatedActions.AuthRequest[A]): Future[Result] =
-    idApiClient.executeAccountDeletionStepFunction(request.user.user.id, request.user.user.primaryEmailAddress, request.user.auth).map { _ match {
+  private def executeAccountDeletionStepFunction[A](boundForm: Form[(String, Option[String])])(implicit request: AuthenticatedActions.AuthRequest[A]): Future[Result] =
+    idApiClient.executeAccountDeletionStepFunction(request.user.user.id, request.user.user.primaryEmailAddress, boundForm("reason").value, request.user.auth).map { _ match {
         case Left(error) =>
           logger.error(s"Account deletion failed for user ${request.user.user.id}: $error")
           SeeOther(routes.AccountDeletionController.renderAccountDeletionForm().url).flashing(boundForm.withGlobalError(

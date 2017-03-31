@@ -2,7 +2,7 @@
     page: model.Page,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
-    accountDeletionForm: Form[(String)],
+    accountDeletionForm: Form[(String, Option[String])],
     errors: List[client.Error]
 )(implicit
     request: RequestHeader,
@@ -11,9 +11,8 @@
 
 @import form.IdFormHelpers._
 @import views.html.fragments.form.inputField
+@import views.html.fragments.form.radioField
 @import views.html.fragments.registrationFooter
-@import client.Error
-@import form.Input
 
 @main(page, projectName = Option("identity")){
 }{
@@ -23,7 +22,7 @@
         <div class="identity-section">
             <p class="identity-section__text">
                 Please read the following paragraphs carefully to understand how account
-                deletion affects any Guardian products you may have. If at any point require further clarification please
+                deletion affects any Guardian products you may have. If at any point you require further clarification please
                 email our <a href="mailto:userhelp@@theguardian.com" data-link-name="Email Userhelp">Userhelp</a> who will
                 be happy to help.
             </p>
@@ -80,6 +79,24 @@
 
         <form class="form" novalidate action="@idUrlBuilder.buildUrl("/delete", idRequest)" role="main" method="post">
             @views.html.helper.CSRF.formField
+
+            <div class="identity-section">
+                <p class="identity-section__text">
+                    <p><b>Do you mind telling us why you wish to delete your account?</b></p>
+
+                    @radioField(accountDeletionForm("reason"), List(
+                        "accident"      -> "I have created an account by accident",
+                        "password"      -> "I accidentally entered my password as the username",
+                        "emails"        -> "I want to stop receiving emails",
+                        "trolls"        -> "I have been trolled in the comments section",
+                        "comments"      -> "I no longer want to comment",
+                        "privacy"       -> "I am concerned about my privacy on the Internet",
+                        "membership"    -> "I was asked to create an account in order to become member/subscriber",
+                        "other"         -> "Other")
+                    )(nonInputFields, messages)
+                </p>
+            </div>
+
             <fieldset class="fieldset">
 
                 <div class="fieldset__heading">
