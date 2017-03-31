@@ -4,10 +4,10 @@
 $global-width: 500px;
 $global-gutter: 0;
 $global-breakpoint: $global-width + $global-gutter;
-$global-width-small: 95%;
+$global-width-small: 100%;
 $body-background: #ffffff;
 $container-background: #ffffff;
-$global-padding: 0;
+$global-padding: 10px;
 $global-margin: 10px;
 $global-font-color: #333333;
 $callout-padding: 0;
@@ -17,7 +17,6 @@ $callout-border: none;
 @import '_common';
 @import '_footer';
 @import '_tones';
-@import '_media-query';
 
 // We don't want these vendor-specific rules to be inlined because they will
 // inflate the email size for no benefit in some clients. These @-rules
@@ -102,7 +101,7 @@ $callout-border: none;
     font-size: 14px;
     line-height: 18px;
     background: #f6f6f6;
-    padding: 6px 10px;
+    padding: 6px $global-padding;
 }
 
 
@@ -149,7 +148,7 @@ $callout-border: none;
 .trail-text,
 .review-stars {
     font-weight: normal;
-    padding: 6px 10px 0;
+    padding: 6px $global-padding 0;
 }
 
 .headline,
@@ -169,7 +168,7 @@ $callout-border: none;
     font-family: Georgia, serif;
     font-size: 14px;
     line-height: 18px;
-    padding: 10px 10px 26px;
+    padding: 10px $global-padding 26px;
 }
 
 .fc--large {
@@ -217,3 +216,5 @@ $email-tones: (
         }
     }
 }
+
+@import '_media-query';
