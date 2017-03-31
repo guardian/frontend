@@ -1,17 +1,6 @@
-@import '../_vars';
-
-// Overriding the settings.scss from foundation-emails
-$global-width: 500px;
-$global-gutter: 0;
-$global-breakpoint: $global-width + $global-gutter;
-$global-width-small: 100%;
-$body-background: #ffffff;
-$container-background: #ffffff;
-$global-padding: 10px;
-$global-margin: 10px;
-$global-font-color: #333333;
-$callout-padding: 0;
-$callout-border: none;
+$max-width: 500px;
+$small-width: 100%;
+$gutter: 10px;
 
 @import '_normalise';
 @import '_common';
@@ -53,15 +42,15 @@ $callout-border: none;
 
 // table
 .body {
-    background: $body-background;
+    background: #ffffff;
     height: 100%;
     width: 100%;
 }
 
 // table
 .container {
-    background: $container-background;
-    width: $global-width;
+    background: #ffffff;
+    width: $max-width;
     margin: 0 auto;
     text-align: inherit;
 }
@@ -85,7 +74,7 @@ $callout-border: none;
 // td
 .fc__margin {
     width: 100%;
-    padding-bottom: $global-margin;
+    padding-bottom: $gutter;
 }
 
 // table
@@ -101,7 +90,7 @@ $callout-border: none;
     font-size: 14px;
     line-height: 18px;
     background: #f6f6f6;
-    padding: 6px $global-padding;
+    padding: 6px $gutter;
 }
 
 
@@ -148,7 +137,7 @@ $callout-border: none;
 .trail-text,
 .review-stars {
     font-weight: normal;
-    padding: 6px $global-padding 0;
+    padding: 6px $gutter 0;
 }
 
 .headline,
@@ -161,14 +150,14 @@ $callout-border: none;
 
 .byline,
 .review-stars {
-    padding: 0 10px 10px;
+    padding: 0 $gutter $gutter;
 }
 
 .trail-text {
     font-family: Georgia, serif;
     font-size: 14px;
     line-height: 18px;
-    padding: 10px $global-padding 26px;
+    padding: $gutter $gutter 26px;
 }
 
 .fc--large {

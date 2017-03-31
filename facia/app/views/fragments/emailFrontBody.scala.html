@@ -11,24 +11,6 @@
 @import views.support.TrailCssClasses.toneClassFromStyle
 @import fragments.email._
 
-@*
-@containerTitle(classes: Seq[String])(contents: Html) = {
-    <table class="ct"><tr><td class="ct__margin"><table class="ct__inner @classes.mkString(" ")"><tr><td class="ct__padding">@contents</td></tr></table></td></tr></table>
-}
-
-@fullRow(classes: Seq[String])(contents: Html) = {
-    <table class="row"><tr><td @if(classes.nonEmpty) { class="@classes.mkString(" ")" }>@contents</td></tr></table>
-}
-
-@faciaCard(classes: Seq[String])(contents: Html) = {
-    <table class="fc"><tr><td class="fc__margin"><table class="fc__inner @classes.mkString(" ")">@contents</table></td></tr></table>
-}
-
-@row(classes: Seq[String])(contents: Html) = {
-    <tr><td @if(classes.nonEmpty) { class="@classes.mkString(" ")" }>@contents</td></tr>
-}
-*@
-
 @headline(card: ContentCard, isLarge: Boolean = false, isLast: Boolean) = {
 
     @row(Seq("headline")) {

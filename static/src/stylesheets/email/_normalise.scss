@@ -1,13 +1,3 @@
-// Foundation for Emails by ZURB
-// zurb.com/ink/
-// Licensed under MIT Open Source
-
-////
-/// @group normalize
-////
-
-$paragraph-margin-bottom: 10px !default;
-
 #outlook a {
   padding: 0;
 }
@@ -58,7 +48,7 @@ img {
 
 center {
   width: 100%;
-  min-width: $global-width;
+  min-width: $max-width;
 }
 
 a img {
@@ -66,26 +56,11 @@ a img {
 }
 
 p {
-  margin: 0 0 0 $paragraph-margin-bottom;
-  Margin: 0 0 0 $paragraph-margin-bottom;
+  margin: 0 0 0 10px;
+  Margin: 0 0 0 10px;
 }
 
 table {
   border-spacing: 0;
   border-collapse: collapse;
 }
-
-//td {
-//  word-wrap: break-word;
-//  -webkit-hyphens: auto;
-//  -moz-hyphens: auto;
-//  hyphens: auto;
-//  border-collapse: collapse !important;
-//}
-//
-//
-//table, tr, td {
-//  padding: 0;
-//  vertical-align: top;
-//  text-align: left;
-//}
