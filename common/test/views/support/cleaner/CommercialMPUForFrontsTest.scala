@@ -114,10 +114,10 @@ class CommercialMPUForFrontsTest extends FlatSpec with Matchers {
         </body>
       </html>.toString()
 
-  it should "insert MPUs into applicable slices, and give them unique IDs" in {
-    val result = parseTestData(frontWithThrasher)
-    val body = clean(result)
+  val result = parseTestData(frontWithThrasher)
+  val body = clean(result)
 
+  it should "insert MPUs into applicable slices, and give them unique IDs" in {
     val desktopMPUs = body.getElementsByClass("fc-slice__item--mpu-candidate")
     desktopMPUs.size should be (3)
     desktopMPUs.first.toString should include ("dfp-ad--inline1")
@@ -125,9 +125,6 @@ class CommercialMPUForFrontsTest extends FlatSpec with Matchers {
   }
 
   it should "insert MPUs for mobile view between sections, and give them unique IDs" in {
-    val result = parseTestData(frontWithThrasher)
-    val body = clean(result)
-
     val mobileMPUs = body.getElementsByClass("fc-container__mpu--mobile")
     mobileMPUs.size should be (2)
     mobileMPUs.first.toString should include ("dfp-ad--top-above-nav--mobile")
@@ -135,9 +132,6 @@ class CommercialMPUForFrontsTest extends FlatSpec with Matchers {
   }
 
   it should "not count the first container, if it is a thrasher on a Network Front, when adding mobile MPUs" in {
-    val result = parseTestData(frontWithThrasher)
-    val body = clean(result)
-
     val thrasher = body.getElementsByClass("fc-container--first").first
     thrasher.id should be ("thrasher")
 
@@ -146,9 +140,6 @@ class CommercialMPUForFrontsTest extends FlatSpec with Matchers {
   }
 
   it should "avoid inserting next to commercial containers when adding mobile MPUs" in {
-    val result = parseTestData(frontWithThrasher)
-    val body = clean(result)
-
     val commercialContainers = body.getElementsByClass("fc-container--commercial")
     commercialContainers.size should be (2)
 
