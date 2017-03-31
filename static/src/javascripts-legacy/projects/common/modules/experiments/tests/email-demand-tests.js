@@ -37,7 +37,7 @@ define([
         this.author = 'Leigh-Anne Mathieson';
         this.description = 'Show an email sign up that simply tracks clicks and links to a google form for food, business, and cities articles.';
         this.audience = 1;
-        this.audienceOffset = 0; //just needs to not clash with recommended for you, which is offset 0.2
+        this.audienceOffset = 0;
         this.successMeasure = 'Number of clicks';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
@@ -101,9 +101,7 @@ define([
         this.variants = [
             {
                 id: 'show-demand-tests',
-                test: function () {
-                    insertEmailDemandSection();
-                },
+                test: insertEmailDemandSection,
                 success: function (fn) {
                     this.completeFunction = fn;
                 }
@@ -122,8 +120,12 @@ define([
         }
 
         function validArticleStructure() {
-            var lastFiveElements = [].slice.call($(articleBody)[0].children, -minimumTrailingParagraphs);
-            return lastFiveElements.length == minimumTrailingParagraphs && lastFiveElements.every(function (elm) { return elm.nodeName && elm.nodeName === 'P'; });
+            var lastArticleElements = [].slice.call($(articleBody)[0].children, -minimumTrailingParagraphs);
+            return lastArticleElements.length === minimumTrailingParagraphs && lastArticleElements.every(isParagraph);
+        }
+
+        function isParagraph($el) {
+            return $el.nodeName && $el.nodeName === 'P';
         }
 
         function insertEmailDemandSection() {
@@ -147,11 +149,9 @@ define([
                     storage.session.set('email-sign-up-seen', 'true');
 
                     ophan.trackComponentAttention('email-demand-test-' + listConfig.listName, $demandTestSection[0]);
-                    
+
                     bean.on($('.js-email-sub__submit-button', $demandTestSection)[0], 'click', function () {
-                        if (this.completeFunction) {
-                            this.completeFunction();
-                        }
+                        this.completeFunction && this.completeFunction();
                     });
                 });
             }
