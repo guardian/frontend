@@ -60,7 +60,7 @@ define([
                 canRun: function () {
                     var tags = config.page.keywordIds.concat(config.page.nonKeywordTagIds);
 
-                    return tags.includes('lifeandstyle/food-and-drink') || tags.includes('tone/recipes');
+                    return (tags.indexOf('lifeandstyle/food-and-drink') > -1) || (tags.indexOf('tone/recipes') > -1)
                 }
             },
             cities: {
