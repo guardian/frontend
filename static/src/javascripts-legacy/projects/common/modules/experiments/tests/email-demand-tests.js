@@ -150,7 +150,7 @@ define([
 
                     ophan.trackComponentAttention('email-demand-test-' + listConfig.listName, $demandTestSection[0]);
 
-                    bean.on($('.js-email-sub__submit-button', $demandTestSection)[0], 'click', function () {
+                    bean.on($('.js-email-demand__submit-button', $demandTestSection)[0], 'click', function () {
                         this.completeFunction && this.completeFunction();
                     });
                 });
