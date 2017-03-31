@@ -29,9 +29,7 @@ const getTiming = (label: string): ?number => {
         if (perfMark && 'startTime' in perfMark) {
             return perfMark.startTime;
         }
-    }
-
-    if (label in timings) {
+    } else if (label in timings) {
         return timings[label];
     }
 
