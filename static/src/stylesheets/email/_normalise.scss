@@ -1,0 +1,62 @@
+#outlook a {
+    padding: 0;
+}
+
+body {
+    width: 100% !important;
+    min-width: 100%;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    margin: 0;
+    padding: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.ExternalClass {
+    width: 100%;
+
+    &,
+    p,
+    span,
+    font,
+    td,
+    div {
+        line-height: 100%;
+    }
+}
+
+#backgroundTable {
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+    line-height: 100% !important;
+}
+
+img {
+    outline: none;
+    text-decoration: none;
+    width: auto;
+    max-width: 100%;
+    clear: both;
+    display: block;
+}
+
+center {
+    width: 100%;
+    min-width: $max-width;
+}
+
+a img {
+    border: 0;
+}
+
+p {
+    margin: 0 0 0 10px;
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}

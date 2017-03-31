@@ -1,21 +1,26 @@
-@import '../_vars';
+$max-width: 500px;
+$small-width: 100%;
+$gutter: 10px;
 
-// Overriding the settings.scss from foundation-emails
-$global-width: 500px;
-$global-gutter: 0;
-$body-background: #ffffff;
-$container-background: #ffffff;
-$global-padding: 0;
-$global-margin: 10px;
-$global-font-color: #333333;
-$callout-padding: 0;
-$callout-border: none;
-
-
-@import 'foundation-emails/foundation-emails';
+@import '_normalise';
 @import '_common';
 @import '_footer';
 @import '_tones';
+
+// We don't want these vendor-specific rules to be inlined because they will
+// inflate the email size for no benefit in some clients. These @-rules
+// will target WebKit and Mozilla specifically, and prevent the styles being inlined.
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    td {
+        -webkit-font-smoothing: antialiased;
+    }
+}
+
+@-moz-document url-prefix() {
+    td {
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
 
 @font-face {
     font-family: 'Guardian Egyptian Web Header';
@@ -35,20 +40,49 @@ $callout-border: none;
     font-stretch: normal;
 }
 
-table.fc-item {
+// table
+.body {
+    background: #ffffff;
+    height: 100%;
     width: 100%;
+}
+
+// table
+.container {
+    background: #ffffff;
+    width: $max-width;
+    margin: 0 auto;
+    text-align: inherit;
+}
+
+// table
+.fc,
+.row,
+.ct,
+.ct__inner {
+    width: 100%;
+}
+
+.fc,
+.row,
+.ct {
+    text-align: left;
 }
 
 // External margins between cards
 // The only reliable mechanism for margins in Outlook is padding applied to table cells.
-.fc-item__margin {
+// td
+.fc__margin {
     width: 100%;
-    padding-bottom: $callout-margin-bottom;
+    padding-bottom: $gutter;
 }
 
-// Internal padding on cards
-.fc-item__padding {
-    padding-bottom: 18px;
+// table
+.fc__inner {
+    padding: 0;
+    width: 100%;
+    position: relative;
+    min-height: 56px;
 }
 
 .message {
@@ -56,20 +90,46 @@ table.fc-item {
     font-size: 14px;
     line-height: 18px;
     background: #f6f6f6;
-    padding: 6px 10px;
+    padding: 6px $gutter;
 }
 
-.container-title {
+
+.ct__margin {
+    padding: 13px 0 12px;
+
+    .ct--not-top & {
+        padding: 26px 0 12px;
+    }
+}
+
+.ct__inner {
     font-family: 'Guardian Egyptian Web Header', 'Guardian Egyptian Web Headline', Georgia, serif;
     font-size: 26px;
-    margin-bottom: 12px;
-    margin-top: 26px;
     color: #333333;
-    padding-top: 4px;
 }
 
-.facia-link {
+.ct__padding {
+    padding: 4px 0 0;
+}
+
+.fc-link {
     text-decoration: none;
+}
+
+.left-col {
+    width: 60%;
+}
+
+.right-col {
+    width: 40%;
+}
+
+.no-pad {
+    padding: 0;
+}
+
+.fc__pad {
+    padding-bottom: 26px;
 }
 
 .headline,
@@ -77,8 +137,7 @@ table.fc-item {
 .trail-text,
 .review-stars {
     font-weight: normal;
-    padding: 0;
-    margin: 6px 10px 10px;
+    padding: 6px $gutter 0;
 }
 
 .headline,
@@ -89,17 +148,19 @@ table.fc-item {
     color: inherit;
 }
 
-th {
-    hyphens: none;
+.byline,
+.review-stars {
+    padding: 0 $gutter $gutter;
 }
 
 .trail-text {
     font-family: Georgia, serif;
     font-size: 14px;
     line-height: 18px;
+    padding: $gutter $gutter 26px;
 }
 
-.fc-item--large {
+.fc--large {
     .headline,
     .byline {
         font-size: 22px;
@@ -112,7 +173,7 @@ th {
 }
 
 .headline .icon {
-    height: .8em;
+    height: .7em;
 }
 
 $email-tones: (
@@ -122,20 +183,27 @@ $email-tones: (
 );
 
 // Defaults
-.container-title.has-top-border {
-    border-top: 3px solid #46bcdf;
+.ct--not-top {
+    .ct__inner {
+        border-top: 3px solid #46bcdf;
+    }
 }
+
 .tone-external {
     border-top: 1px solid #46bcdf;
 }
 
 @each $email, $tone-color in $email-tones {
     .#{$email} {
-        .container-title.has-top-border {
-            border-top: 3px solid $tone-color;
+        .ct--not-top {
+            .ct__inner {
+                border-top: 3px solid $tone-color;
+            }
         }
         .tone-external {
             border-top: 1px solid $tone-color;
         }
     }
 }
+
+@import '_media-query';
