@@ -28,6 +28,7 @@ define([
     ophan
 ) {
     var minimumTrailingParagraphs = 5;
+    var completeFunction = null;
 
     return function () {
         this.completeFunction = null;
@@ -103,7 +104,7 @@ define([
                 id: 'show-demand-tests',
                 test: insertEmailDemandSection,
                 success: function (fn) {
-                    this.completeFunction = fn;
+                    completeFunction = fn;
                 }
             }
         ];
@@ -151,7 +152,7 @@ define([
                     ophan.trackComponentAttention('email-demand-test-' + listConfig.listName, $demandTestSection[0]);
 
                     bean.on($('.js-email-demand__submit-button', $demandTestSection)[0], 'click', function () {
-                        this.completeFunction && this.completeFunction();
+                        completeFunction && completeFunction();
                     });
                 });
             }
