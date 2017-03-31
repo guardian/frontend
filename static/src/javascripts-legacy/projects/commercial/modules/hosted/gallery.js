@@ -446,9 +446,7 @@ define([
         }
     };
 
-    function init(start, stop) {
-        start();
-
+    function init() {
         if (qwery('.js-hosted-gallery-container').length) {
             return loadCssPromise
                 .then(function () {
@@ -467,12 +465,10 @@ define([
                             gallery.loadAtIndex(parseInt(res[1], 10));
                         }
                     }
-                    stop();
 
                     return gallery;
                 });
         }
-        stop();
 
         return Promise.resolve();
     }
