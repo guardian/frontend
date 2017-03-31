@@ -46,7 +46,6 @@ object `package` {
 }
 
 class FaciaTestSuite extends Suites (
-  new CommercialMPUForFrontsTest,
   new model.FaciaPageTest,
   new controllers.front.FaciaDefaultsTest,
   new slices.DynamicFastTest,
