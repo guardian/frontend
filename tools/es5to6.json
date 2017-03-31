@@ -39,7 +39,5 @@
   ],
   "Gustav Pursche": [
     "lib/steady-page.js",
-    "lib/storage.js",
-    "lib/url.js"
   ]
 }
