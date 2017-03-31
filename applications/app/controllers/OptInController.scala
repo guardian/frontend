@@ -30,15 +30,11 @@ class OptInController extends Controller {
   def handle(feature: String, choice: String) = Action { implicit request =>
     Cached(60)(WithoutRevalidationResult(feature match {
       case "headerseven" => headerSeven.opt(choice)
-      case "youtubeposter" => youtubePosterOverride.opt(choice)
       case "newrecipedesign" => newRecipeDesignOverride.opt(choice)
-      case "polyfill-io" => polyfillIO.opt(choice)
       case _ => NotFound
     }))
   }
 //cookies should correspond with those checked by fastly-edge-cache
   val headerSeven = OptInFeature("new_header_seven_opt_in")
-  val youtubePosterOverride = OptInFeature("you_tube_poster_override_opt_in")
   val newRecipeDesignOverride = OptInFeature("new_recipe_design_opt_in")
-  val polyfillIO = OptInFeature("polyfill_io")
 }
