@@ -49,7 +49,7 @@ jest.mock('./check-mediator-checks', () => {
 
 describe('Check Mediator', () => {
     beforeAll(() => {
-       checkMediator.init();
+        checkMediator.init();
     });
 
     test('resolves a check with no dependent checks', done => {
