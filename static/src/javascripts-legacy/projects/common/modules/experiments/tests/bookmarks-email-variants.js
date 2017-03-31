@@ -6,10 +6,10 @@ define([
     return new genericEmailTest(
         {
             id: 'BookmarksEmailVariants',
-            start: '2017-03-14',
-            end: '2017-03-31',
+            start: '2017-03-31',
+            end: '2017-05-30',
             author: 'David Furey',
-            audience: 0,
+            audience: 1,
             audienceOffset: 0,
             canonicalListId: 3039,
             testIds: [
