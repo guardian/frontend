@@ -1,11 +1,10 @@
 // @flow
 import checkMediator from './check-mediator';
 
-describe('Check Mediator', () => {
-    const SOMECHECKSPASSED = Array.prototype.some;
-    const EVERYCHECKPASSED = Array.prototype.every;
+jest.mock('./check-mediator-checks', () => {
+    const { some: SOMECHECKSPASSED, every: EVERYCHECKPASSED } = Array.prototype;
 
-    const checkList = [
+    return [
         {
             id: 'check-1',
         },
@@ -46,9 +45,11 @@ describe('Check Mediator', () => {
             ],
         },
     ];
+});
 
+describe('Check Mediator', () => {
     beforeAll(() => {
-        checkList.forEach(checkMediator.test.testRegisterCheck);
+       checkMediator.init();
     });
 
     test('resolves a check with no dependent checks', done => {

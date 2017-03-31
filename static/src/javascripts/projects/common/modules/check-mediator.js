@@ -90,10 +90,6 @@ const waitForCheck = (id: string): Promise<any> => {
     return Promise.reject(`No deferred check with id ${id}`);
 };
 
-const testRegisterCheck = (check: Object): void => {
-    registeredChecks[check.id] = registerDefferedCheck(check);
-};
-
 const testClean = (): void => {
     registeredChecks = {};
 };
@@ -105,7 +101,6 @@ export default {
 
     // exposed for unit testing
     test: {
-        testRegisterCheck,
         testClean,
     },
 };
