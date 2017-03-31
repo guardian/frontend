@@ -1,12 +1,11 @@
 define([
     'lib/add-event-listener',
     'lodash/objects/assign',
-    'lib/closest',
     'lib/fastdom-promise',
     'commercial/modules/messenger'
-], function (addEventListener, assign, closest, fastdom, messenger) {
+], function (addEventListener, assign, fastdom, messenger) {
     messenger.register('background', function(specs, ret, iframe) {
-        return setBackground(specs, closest(iframe, '.js-ad-slot'));
+        return setBackground(specs, iframe.closest('.js-ad-slot'));
     });
 
     return setBackground;

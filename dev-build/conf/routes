@@ -306,7 +306,7 @@ GET            /commercial/slot/:slotName                                       
 GET            /commercial/adops/takeovers-empty-mpus                                                                            controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewList()
 GET            /commercial/adops/takeovers-empty-mpus/create                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
 POST           /commercial/adops/takeovers-empty-mpus/create                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
-POST           /commercial/adops/takeovers-empty-mpus/remove                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(takeoverStr)
+POST           /commercial/adops/takeovers-empty-mpus/remove                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(t)
 
 # Breaking News
 GET            /news-alert/alerts                                                                                                controllers.NewsAlertController.alerts()
@@ -418,7 +418,6 @@ GET            /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>     
 
 # Applications
 
-GET            /sdata/recipes/$filterType<cuisine|dietary|celebration|category>/:filterValue                                     controllers.StructuredDataIndexController.render(filterType, filterValue)
 GET            /$path<international>                                                                                             controllers.FaciaController.renderFront(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                              controllers.IndexController.renderTrailsJson(path)
 GET            /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                                   controllers.IndexController.renderTrails(path)

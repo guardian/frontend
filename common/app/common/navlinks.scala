@@ -20,7 +20,7 @@ object NavLinks {
   var auPolitics = NavLink("AU politics", "/australia-news/australian-politics", "australia-news/australian-politics", longTitle = "australian politics")
   var auImmigration = NavLink("immigration", "/australia-news/australian-immigration-and-asylum", "australia-news/australian-immigration-and-asylum")
   var indigenousAustralia = NavLink("indigenous australia", "/australia-news/indigenous-australians", "australia-news/indigenous-australians")
-  var indigenousAustraliaOpinion = NavLink("indigenous", "commentisfree/series/indigenousx", "commentisfree/series/indigenousx")
+  var indigenousAustraliaOpinion = NavLink("Indigenous", "/australia-news/indigenous-australians+tone/comment", "commentisfree/series/indigenousx")
   var usNews = NavLink("US", "/us-news", "us-news", longTitle = "US news")
   var usPolitics = NavLink("US politics", "/us-news/us-politics", "us-news/us-politics", longTitle = "US politics")
   val education = NavLink("education", "/education", "education")
@@ -56,6 +56,7 @@ object NavLinks {
   /* OPINION */
   val opinion = NavLink("opinion", "/commentisfree", longTitle = "opinion home", iconName = "home", uniqueSection = "commentisfree")
   var columnists = NavLink("columnists", "/index/contributors", "index/contributors")
+  var auColumnists = NavLink("columnists", "/au/index/contributors", "au/index/contributors")
   val theGuardianView = NavLink("the guardian view", "/profile/editorial", "profile/editorial")
   val cartoons = NavLink("cartoons", "/cartoons/archive", "cartoons/archive")
   val inMyOpinion = NavLink("opinion videos", "/commentisfree/series/comment-is-free-weekly", "commentisfree/series/comment-is-free-weekly")
@@ -162,6 +163,7 @@ object NavLinks {
     "cartoons/archive",
     "type/cartoon",
     "profile/editorial",
+    "au/index/contributors",
     "index/contributors",
     "commentisfree/series/comment-is-free-weekly",
     "sport/rugby-union",

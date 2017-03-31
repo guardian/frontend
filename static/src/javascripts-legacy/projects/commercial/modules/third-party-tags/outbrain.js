@@ -71,7 +71,7 @@ define([
         });
 
         widgetHtml = build(widgetCodes, breakpoint);
-        
+
         if ($container.length) {
             return steadyPage.insert($container[0], function() {
                 if (slot === 'merchandising') {
@@ -120,16 +120,16 @@ define([
 
     function onCanLoadInstantly(loadInstantly) {
         if (loadInstantly) {
-            return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(onIsUserInNonCompliantAbTest); 
+            return checkMediator.waitForCheck('isOutbrainNonCompliant').then(onIsOutbrainNonCompliant);
         } else {
             return checkMediator.waitForCheck('isOutbrainBlockedByAds').then(onIsOutbrainBlockedByAds);
-        }   
+        }
     }
 
-    function onIsUserInNonCompliantAbTest(userInNonCompliantAbTest) {
-        userInNonCompliantAbTest ? module.load('nonCompliant') : module.load();        
+    function onIsOutbrainNonCompliant(outbrainNonCompliant) {
+        outbrainNonCompliant ? module.load('nonCompliant') : module.load();
         module.tracking({
-            state: userInNonCompliantAbTest ? 'userInNonCompliantAbTest' : 'compliant'
+            state: outbrainNonCompliant ? 'nonCompliant' : 'compliant'
         });
         return Promise.resolve();
     }
@@ -153,11 +153,11 @@ define([
             });
             return Promise.resolve();
         } else {
-            return checkMediator.waitForCheck('isUserInNonCompliantAbTest').then(onIsUserInNonCompliantAbTest); 
+            return checkMediator.waitForCheck('isOutbrainNonCompliant').then(onIsOutbrainNonCompliant);
         }
     }
 
-    function outbrainChecks() { 
+    function outbrainChecks() {
         return checkMediator.waitForCheck('isOutbrainDisabled').then(onIsOutbrainDisabled);
     }
 

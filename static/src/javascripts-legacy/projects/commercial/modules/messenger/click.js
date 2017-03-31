@@ -1,10 +1,9 @@
 define([
-    'lib/closest',
     'common/modules/analytics/google',
     'commercial/modules/messenger'
-], function (closest, google, messenger) {
+], function (google, messenger) {
     messenger.register('click', function (linkName, ret, iframe) {
-        return sendClick(closest(iframe, '.js-ad-slot') || { id: 'unknown' }, linkName);
+        return sendClick(iframe.closest('.js-ad-slot') || { id: 'unknown' }, linkName);
     });
 
     return sendClick;
