@@ -28,7 +28,6 @@
     "lib/location.js"
   ],
   "GHaberis": [
-    "lib/mediator.js",
     "lib/pad.js",
     "lib/page.js",
     "lib/picturefill.js",
