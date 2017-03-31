@@ -8,11 +8,13 @@
 define([
     'lib/mediator',
     'lodash/functions/memoize',
-    'Promise'
+    'Promise',
+    'lib/window-performance',
 ], function (
     mediator,
     memoize,
-    Promise
+    Promise,
+    performanceAPI
 ) {
 
     var supportsPushState,
@@ -156,9 +158,8 @@ define([
     }
 
     function isReload() {
-        var perf = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-        if (!!perf && !!perf.navigation) {
-            return perf.navigation.type === perf.navigation.TYPE_RELOAD;
+        if ('navigation' in performanceAPI) {
+            return performanceAPI.navigation.type === performanceAPI.navigation.TYPE_RELOAD;
         } else {
             // We have no way of knowing if it was a reload on unsupported browsers.
             // I figure we could only possibly want to treat it as false in that case.
