@@ -10,6 +10,7 @@ import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 import enumeratum._
 import model.content.MediaAssetPlatform.findValues
+import org.joda.time.format.{DateTimeFormat, PeriodFormatter, PeriodFormatterBuilder}
 import views.support.{GoogleStructuredData, ImgSrc}
 
 final case class Atoms(
@@ -38,8 +39,29 @@ final case class MediaAtom(
   endSlatePath: Option[String],
   expired: Option[Boolean]
 ) extends Atom {
+
   def isoDuration: Option[String] = {
     duration.map(d => new Duration(Duration.standardSeconds(d)).toString)
+  }
+
+  def formattedDuration: Option[String] = {
+    val formatter = new PeriodFormatterBuilder()
+      .appendHours
+      .appendSuffix(":")
+      .appendMinutes
+      .appendSuffix(":")
+      .printZeroAlways
+      .minimumPrintedDigits(2)
+      .appendSeconds
+      .toFormatter
+
+    duration.map(d => {
+      val duration =  new Duration(Duration.standardSeconds(d))
+      duration match {
+        case lessThanOneMinute if duration.isShorterThan(new Duration(Duration.standardMinutes(1))) => "0:" + formatter.print(duration.toPeriod())
+        case _ => formatter.print(duration.toPeriod())
+      }
+    })
   }
 }
 

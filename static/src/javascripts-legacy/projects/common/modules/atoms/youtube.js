@@ -176,7 +176,7 @@ define([
         var durationElem = overlay.querySelector('.youtube-media-atom__bottom-bar__duration');
 
         if (durationElem) {
-            durationElem.innerText = getFormattedDuration(players[atomId].player.getDuration());
+           durationElem.innerText = getFormattedDuration(players[atomId].player.getDuration());
         }
     }
 

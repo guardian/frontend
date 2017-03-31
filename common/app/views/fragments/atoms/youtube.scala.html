@@ -66,12 +66,14 @@
                             }
                         }
                         @if(displayDuration) {
-                            <div class="youtube-media-atom__bottom-bar">
-                                <div class="youtube-media-atom__bottom-bar__icon">
+                            @for(duration <- media.formattedDuration) {
+                                <div class="youtube-media-atom__bottom-bar">
+                                    <div class="youtube-media-atom__bottom-bar__icon">
                                     @fragments.inlineSvg("video-icon", "icon")
+                                    </div>
+                                    <div class="youtube-media-atom__bottom-bar__duration">@duration</div>
                                 </div>
-                                <div class="youtube-media-atom__bottom-bar__duration"></div>
-                            </div>
+                            }
                         }
                     }
                 } else {
