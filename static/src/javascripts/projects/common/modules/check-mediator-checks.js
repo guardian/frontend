@@ -5,8 +5,7 @@
  * SOMECHECKSPASSED: At least one dependentCheck has returned true
  * EVERYCHECKPASSED: Every dependentCheck has returned true
 **/
-const SOMECHECKSPASSED = Array.prototype.some;
-const EVERYCHECKPASSED = Array.prototype.every;
+const { some: SOMECHECKSPASSED, every: EVERYCHECKPASSED } = Array.prototype;
 
 /**
  * checkList is an array of object literals.
