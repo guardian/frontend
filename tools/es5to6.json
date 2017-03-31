@@ -28,7 +28,6 @@
     "lib/location.js"
   ],
   "GHaberis": [
-    "lib/mediator.js",
     "lib/pad.js",
     "lib/page.js",
     "lib/picturefill.js",
@@ -39,7 +38,5 @@
   ],
   "Gustav Pursche": [
     "lib/steady-page.js",
-    "lib/storage.js",
-    "lib/url.js"
   ]
 }
