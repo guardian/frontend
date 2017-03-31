@@ -25,18 +25,19 @@
         }
 
         .email-demand__heading {
+            @include fs-header(5, true);
             font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
-            line-height: $gs-baseline * 2;
             color: $tone-colour-title;
         }
 
         .email-demand__description {
+            @include fs-bodyCopy(1, true);
             color: $tone-colour-text;
             padding: 0 0 20px;
-            font-size: 80%;
         }
 
         .email-demand__sub_heading {
+            @include fs-bodyHeading(2, true);
             font-weight: bold;
             color: $tone-colour-text;
             padding: 3px 0 10px;
