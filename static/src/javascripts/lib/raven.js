@@ -4,7 +4,6 @@ import raven from 'raven';
 import config from 'lib/config';
 import detect from 'lib/detect';
 
-const app = window.guardian.app = window.guardian.app || {};
 const { sentryPublicApiKey, sentryHost } = config.page;
 const sentryUrl = `https://${sentryPublicApiKey}@${sentryHost}`;
 let adblockBeingUsed = false;
@@ -58,19 +57,8 @@ const sentryOptions = {
     },
 };
 
-// don't init raven twice
-if (!app.raven) {
-    detect.adblockInUse.then(adblockInUse => {
-        adblockBeingUsed = adblockInUse;
-    });
+detect.adblockInUse.then(adblockInUse => {
+    adblockBeingUsed = adblockInUse;
+});
 
-    raven.config(sentryUrl, sentryOptions);
-
-    // Report uncaught exceptions
-    raven.install();
-
-    // attach raven to global Object
-    app.raven = raven;
-}
-
-export default app.raven;
+export default raven.config(sentryUrl, sentryOptions).install();
