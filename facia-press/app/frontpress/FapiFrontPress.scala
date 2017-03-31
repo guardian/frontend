@@ -7,9 +7,9 @@ import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuer
 import com.gu.facia.api.models.{Collection, Front}
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.ApiClient
-import com.gu.facia.client.models.{Breaking, ConfigJson, Special, Metadata}
+import com.gu.facia.client.models.{Breaking, ConfigJson, Metadata, Special}
 import common._
-import common.commercial.{CommercialProperties, EditionAdTargeting, EditionBranding}
+import common.commercial.CommercialProperties
 import conf.Configuration
 import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi.{CapiHttpClient, CircuitBreakingContentApiClient, ContentApiClient, QueryDefaults}
@@ -254,12 +254,10 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
         commercial = {
           val tag = itemResp flatMap (_.tag)
           val section = itemResp flatMap (_.section)
-          Some(CommercialProperties(
-            editionBrandings =
-              tag.map(EditionBranding.fromTag) orElse section.map(EditionBranding.fromSection) getOrElse Nil,
-            editionAdTargetings =
-              tag.map(EditionAdTargeting.fromTag) orElse section.map(EditionAdTargeting.fromSection) getOrElse Nil
-          ))
+          tag.map(CommercialProperties.fromTag) orElse
+            section.map(CommercialProperties.fromSection) orElse
+            CommercialProperties.forNetworkFront(path) orElse
+            Some(CommercialProperties.forFrontUnknownToCapi(path))
         }
       )
 
