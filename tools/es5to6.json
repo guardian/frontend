@@ -34,7 +34,6 @@
     "lib/proximity-loader.js",
     "lib/queue.js",
     "lib/QueueAsync.js",
-    "lib/raven.js"
   ],
   "Gustav Pursche": [
     "lib/steady-page.js",
