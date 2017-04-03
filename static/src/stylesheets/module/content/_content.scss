@@ -714,7 +714,7 @@
     .content__standfirst,
     .content__dateline,
     .caption--main {
-        color: $neutral-2-contrasted;
+        color: $neutral-1;
     }
     .content__headline,
     .content__standfirst {
@@ -742,7 +742,7 @@
     &.tonal--tone-media {
         background-color: $paid-article;
 
-        .caption {
+        .caption :not(caption--main) {
             color: $neutral-1;
         }
     }
