@@ -1,0 +1,8 @@
+@(classes: Seq[String])(cellContents: Html)
+
+@* This template populates a table cell so it can accept arbitrary markup including further tables *@
+<table class="row">
+    <tr>
+        <td @if(classes.nonEmpty) { class="@classes.mkString(" ")" }>@cellContents</td>
+    </tr>
+</table>

@@ -1,0 +1,5 @@
+@(classes: Seq[String])(contents: Html)
+
+<tr valign="top">
+    <td @if(classes.nonEmpty) { class="@classes.mkString(" ")" }>@contents</td>
+</tr>
