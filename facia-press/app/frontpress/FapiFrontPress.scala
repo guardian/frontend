@@ -251,6 +251,11 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
 
       val frontProperties: FrontProperties = ConfigAgent.fetchFrontProperties(path).copy(
         editorialType = itemResp.flatMap(_.tag).map(_.`type`.name),
+        /*
+         * We expect the capi response for a front to have exclusively either a tag or a section or neither,
+         * according to whether it is a section front, a tag page or a page unknown to capi respectively.
+         * Thus the order in which tag and section are processed is unimportant.
+         */
         commercial = {
           val tag = itemResp flatMap (_.tag)
           val section = itemResp flatMap (_.section)
