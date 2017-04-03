@@ -79,7 +79,6 @@
         position: sticky;
         height: 100vh;
         min-height: 600px;
-
         &.is-sticky {
             width: 40%
         }
@@ -262,8 +261,13 @@
         transform: rotate(270deg);
     }
 
-    &.visible, &.hide-on-desktop {
+    &.hide-on-desktop {
         opacity: 1;
+    }
+    @supports (position: sticky) {
+        &.visible {
+            opacity: 1;
+        }
     }
 }
 
