@@ -12,7 +12,6 @@ define([
     'common/modules/experiments/acquisition-test-selector',
     'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/opinion-email-variants',
-    'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/tests/tailor-survey',
     'common/modules/experiments/tests/the-long-read-email-variants',
@@ -40,7 +39,6 @@ define([
              acquisitionTestSelector,
              EditorialEmailVariants,
              OpinionEmailVariants,
-             RecommendedForYou,
              MembershipEngagementBannerTests,
              TailorSurvey,
              TheLongReadEmailVariants,
@@ -59,7 +57,6 @@ define([
     var TESTS = compact([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
-        new RecommendedForYou(),
         acquisitionTestSelector.getTest(),
         new TailorSurvey(),
         TheLongReadEmailVariants,
