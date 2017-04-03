@@ -44,20 +44,13 @@ final case class MediaAtom(
   }
 
   def formattedDuration: Option[String] = {
-
-    def stripLeadingZero(formattedString: String): String = {
-      val leadingZero = "^0".r
-      leadingZero.replaceFirstIn(formattedString, "")
-    }
-
     duration.map(d => {
       val jodaDuration = new Duration(Duration.standardSeconds(d))
       val durationMillis = jodaDuration.getMillis
-
-      jodaDuration match {
-        case lessThanOneHour if jodaDuration.isShorterThan(new Duration(Duration.standardHours(1))) => stripLeadingZero(DurationFormatUtils.formatDuration(durationMillis, "mm:ss", true))
-        case _ => stripLeadingZero(DurationFormatUtils.formatDuration(durationMillis, "HH:mm:ss", true))
-      }
+      val oneHour = new Duration(Duration.standardHours(1))
+      val durationPattern = if(jodaDuration.isShorterThan(oneHour)) "mm:ss" else "HH:mm:ss"
+      val formattedDuration = DurationFormatUtils.formatDuration(durationMillis, durationPattern, true)
+      "^0".r.replaceFirstIn(formattedDuration, "") //strip leading zero
     }
     )
   }
