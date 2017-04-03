@@ -820,9 +820,16 @@
         }
     }
 
-    .meta__social,
-    .meta__numbers {
-        border-top-color: $paid-article-header;
+    .meta__extras {
+        border-color: $paid-article-header;
+    }
+
+    .social--expanded-top {
+        background-color: $paid-article;
+
+        .inline-close {
+            background-color: $neutral-5;
+        }
     }
 
     &.tonal--tone-media {

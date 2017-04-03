@@ -760,6 +760,9 @@ $caption-button-size: 32px;
 
         .caption--main.caption--img {
             position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: rgba($multimedia-support-5, .8);
             color: #ffffff;
             display: none;
@@ -772,11 +775,6 @@ $caption-button-size: 32px;
 
             a {
                 color: #ffffff;
-            }
-
-            &.caption--img {
-                bottom: 0;
-                padding-bottom: $gs-baseline;
             }
 
             &:before {
