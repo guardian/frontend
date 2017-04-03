@@ -44,7 +44,7 @@ final case class MediaAtom(
   }
 
   def formattedDuration: Option[String] = {
-    duration.map(d => {
+    duration.map { d =>
       val jodaDuration = new Duration(Duration.standardSeconds(d))
       val durationMillis = jodaDuration.getMillis
       val oneHour = new Duration(Duration.standardHours(1))
@@ -52,7 +52,6 @@ final case class MediaAtom(
       val formattedDuration = DurationFormatUtils.formatDuration(durationMillis, durationPattern, true)
       "^0".r.replaceFirstIn(formattedDuration, "") //strip leading zero
     }
-    )
   }
 }
 
