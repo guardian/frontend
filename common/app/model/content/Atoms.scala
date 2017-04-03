@@ -4,14 +4,12 @@ import com.gu.contentapi.client.model.v1.TagType
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
 import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
+import enumeratum._
 import model.{EndSlateComponents, ImageAsset, ImageMedia}
+import org.apache.commons.lang3.time.DurationFormatUtils
 import org.joda.time.{DateTime, DateTimeZone, Duration}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
-import enumeratum._
-import model.content.MediaAssetPlatform.findValues
-import org.apache.commons.lang3.time.DurationFormatUtils
-import org.joda.time.format.{DateTimeFormat, PeriodFormatter, PeriodFormatterBuilder}
 import views.support.{GoogleStructuredData, ImgSrc}
 
 final case class Atoms(
