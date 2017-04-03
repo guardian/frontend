@@ -47,7 +47,7 @@ define([
             var top = this.opts.containInParent && parentRect.bottom <= elementRect.height ?
                 Math.floor(parentRect.bottom - elementHeight - this.opts.top) :
                 this.opts.top;
-            css = { top: top };
+            css = { top: top + 'px' };
             message = 'fixed';
         }
 
