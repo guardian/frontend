@@ -1,6 +1,7 @@
 package ophan
 
 import app.LifecycleComponent
+import com.gu.commercial.display.SurgeLookupService
 import common._
 import org.joda.time.DateTime
 import play.api.inject.ApplicationLifecycle
@@ -9,11 +10,11 @@ import services.OphanApi
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object SurgingContentAgent extends Logging with ExecutionContexts {
+object SurgingContentAgent extends SurgeLookupService with Logging with ExecutionContexts {
 
   private val agent = AkkaAgent[SurgingContent](SurgingContent())
 
-  def update(implicit ophanApi: OphanApi) {
+  def update(implicit ophanApi: OphanApi): Unit = {
     log.info("Refreshing surging content.")
     val ophanQuery = ophanApi.getSurgingContent()
     ophanQuery.map { ophanResults =>
@@ -22,34 +23,17 @@ object SurgingContentAgent extends Logging with ExecutionContexts {
     }
   }
 
-  def getSurging = agent.get()
+  def getSurging: SurgingContent = agent.get()
 
-  def getSurgingLevelsFor(id: String): Seq[Int] = SurgeUtils.levelProvider(agent.get().surges.get(id))
+  override def pageViewsPerMinute(pageId: String) = getSurging.surges.get(pageId)
 }
 
-
 case class SurgingContent(surges: Map[String, Int] = Map.empty, lastUpdated: DateTime = DateTime.now()) {
-
   lazy val sortedSurges: Seq[(String, Int)] = surges.toSeq.sortBy(_._2).reverse
 }
 
 
 object SurgeUtils {
-
-  def levelProvider(surgeLevel: Option[Int]): Seq[Int] = {
-
-    val level = surgeLevel match {
-      case Some(x) if x >= 400 => 1
-      case Some(x) if x >= 300 => 2
-      case Some(x) if x >= 200 => 3
-      case Some(x) if x >= 100 => 4
-      case Some(x) if x >= 50 => 5
-      case _ => 0
-    }
-
-    if (level == 0) Seq(0) else Seq.range(level, 6)
-  }
-
   def parse(json: JsValue) = {
     for {
       item: JsValue <- json.asOpt[JsArray].map(_.value).getOrElse(Nil)
