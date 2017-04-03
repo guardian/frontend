@@ -33,7 +33,7 @@ class AtomCleanerTest extends FlatSpec
       defaultHtml = "<iframe width=\"420\" height=\"315\"\n src=\"https://www.youtube.com/embed/nQuN9CUsdVg\" frameborder=\"0\"\n allowfullscreen=\"\">\n</iframe>",
       assets = Seq(MediaAsset(id = "nQuN9CUsdVg", version = 1L, platform = MediaAssetPlatform.Youtube, mimeType = None)),
       title = "Bird",
-      duration = None,
+      duration = Some(36),
       source = None,
       posterImage = Some(image),
       endSlatePath = Some("/video/end-slate/section/football.json?shortUrl=https://gu.com/p/6vf9z"),
@@ -89,7 +89,15 @@ class AtomCleanerTest extends FlatSpec
   "Youtube template" should "include duration" in {
     val html = views.html.fragments.atoms.media(media = youTubeAtom.map(_.media.head).get, displayCaption = false, mediaWrapper = None)(TestRequest())
     val doc = Jsoup.parse(html.toString())
-    doc.getElementsByClass("youtube-media-atom__bottom-bar__duration").asScala.headOption should be(defined)
+    doc.getElementsByClass("youtube-media-atom__bottom-bar__duration").html() should be("0:36")
+  }
+
+  "Formatted duration" should "produce the expected format" in {
+    youTubeAtom.map(_.media.head).get.copy(duration = Some(61)).formattedDuration should contain("1:01")
+    youTubeAtom.map(_.media.head).get.copy(duration = Some(70)).formattedDuration should contain("1:10")
+    youTubeAtom.map(_.media.head).get.copy(duration = Some(660)).formattedDuration should contain("11:00")
+    youTubeAtom.map(_.media.head).get.copy(duration = Some(1)).formattedDuration should contain("0:01")
+    youTubeAtom.map(_.media.head).get.copy(duration = Some(3601)).formattedDuration should contain("1:00:01")
   }
 
 

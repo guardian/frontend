@@ -65,14 +65,14 @@
                                 <div class="youtube-media-atom__play-button vjs-control-text">Play Video</div>
                             }
                         }
-                        @if(displayDuration) {
-                            <div class="youtube-media-atom__bottom-bar">
-                                <div class="youtube-media-atom__bottom-bar__icon">
+                            @for(duration <- media.formattedDuration.filter(_ => displayDuration)) {
+                                <div class="youtube-media-atom__bottom-bar">
+                                    <div class="youtube-media-atom__bottom-bar__icon">
                                     @fragments.inlineSvg("video-icon", "icon")
+                                    </div>
+                                    <div class="youtube-media-atom__bottom-bar__duration">@duration</div>
                                 </div>
-                                <div class="youtube-media-atom__bottom-bar__duration"></div>
-                            </div>
-                        }
+                            }
                     }
                 } else {
                     <div class="vjs-error-display vjs-modal-dialog">
