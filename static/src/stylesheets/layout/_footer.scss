@@ -70,11 +70,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     padding-right: $gs-gutter / 2;
     padding-left: $gs-gutter / 2;
 
-    @include mq(mobileLandscape) {
-        padding-right: $gs-gutter;
-        padding-left: $gs-gutter;
-    }
-
     //mobile,phablet,leftcol,wide need $gs-gutter divided by 2, so duplication needed//
     @include mq($from: tablet, $until: desktop) {
         padding-right: $gs-gutter / 2;
@@ -98,10 +93,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     @include f-textSans();
     list-style: none;
     margin: 0;
-
-    @include mq($until: tablet) {
-        @include columns(2, $gs-gutter);
-    }
 
     @include mq(tablet) {
         box-sizing: border-box;
@@ -155,11 +146,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         padding-right: 0;
         padding-left: 0;
         width: gs-span(3);
-    }
-
-
-    @include mq($from: mobileLandscape, $until: tablet) {
-        padding-right: 50%;
     }
 
     @include mq(leftCol) {

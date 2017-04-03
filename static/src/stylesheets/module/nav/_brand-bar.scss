@@ -2,13 +2,8 @@
     background-color: $guardian-brand;
     line-height: 0;
     box-sizing: border-box;
-    padding-left: $gs-gutter * .25;
-    padding-right: $gs-gutter * .25;
-
-    @include mq(mobileLandscape) {
-        padding-left: $gs-gutter / 2;
-        padding-right: $gs-gutter / 2;
-    }
+    padding-left: $gs-gutter / 2;
+    padding-right: $gs-gutter / 2;
 }
 
 // Items
@@ -23,8 +18,8 @@
     float: left;
     color: $c-guardian-services-action;
     height: $headerHeight;
-    padding-top: $gs-baseline /3;
-    padding-bottom: $gs-baseline /3;
+    padding-top: $gs-baseline/2;
+    padding-bottom: $gs-baseline/2;
 
     &,
     // Override breakpoint
@@ -33,20 +28,17 @@
         margin-left: $gs-baseline * .25;
     }
 
-    @include mq(mobileLandscape) {
-        padding-top: $gs-baseline/2;
-        padding-bottom: $gs-baseline/2;
-    }
-
     @include mq(tablet) {
         margin-right: $gs-gutter / 2;
         margin-left: $gs-gutter / 2;
     }
 }
+
 .brand-bar__item .brand-bar__item--split--first {
     margin-left: $gs-gutter/4;
     height: 36px; //36px = svg button size
 }
+
 .brand-bar__item--split--first::after {
     content: '\200B'; //zero width space
     border-right: 1px solid rgba(255, 255, 255, .2);
@@ -74,13 +66,11 @@
     &:hover {
         // stops controls icons staying highlighted
         // after closing a popup on mobile
-        @include mq(tablet) {
-            .control__icon-wrapper {
-                border-color: #ffffff;
-            }
-            .control__icon-wrapper--text {
-                border-color: rgba(#ffffff, .3);
-            }
+        .control__icon-wrapper {
+            border-color: #ffffff;
+        }
+        .control__icon-wrapper--text {
+            border-color: rgba(#ffffff, .3);
         }
     }
 }
@@ -110,24 +100,18 @@
         .control__info {
             // stops links staying underlined
             // after closing a popup on mobile
-            @include mq(tablet) {
-                text-decoration: underline;
-            }
+            text-decoration: underline;
         }
     }
 }
 
 .brand-bar__item--right {
     box-sizing: border-box;
-    float: left;
+    float: right;
 
-    @include mq(tablet) {
-        float: right;
-
-        .l-header--is-slim & {
-            // Unset override
-            float: left;
-        }
+    .l-header--is-slim & {
+        // Unset override
+        float: left;
     }
 }
 
@@ -165,16 +149,12 @@
     background-color: rgba($news-accent, .4);
     color: #ffffff;
     margin-left: -4px;
-    display: none;
     float: left;
     z-index: -1;
+    display: inline-block;
 
-    @include mq(tablet) {
-        display: inline-block;
-
-        // Unset breakpoint
-        .l-header--is-slim & {
-            display: none;
-        }
+    // Unset breakpoint
+    .l-header--is-slim & {
+        display: none;
     }
 }

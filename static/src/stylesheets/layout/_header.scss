@@ -14,10 +14,6 @@ $c-guardian-services-action: #ffffff;
             width: gs-span(12) + ($gs-gutter*2);
         }
     }
-
-    @include mq(mobile) {
-        background: $guardian-brand;
-    }
 }
 
 .l-header--is-slim {
@@ -25,10 +21,6 @@ $c-guardian-services-action: #ffffff;
 
     .l-header__inner {
         @include clearfix;
-
-        @include mq(tablet) {
-            background: $guardian-brand;
-        }
     }
 
     &.l-header--is-slim-ab {
@@ -71,10 +63,6 @@ $c-guardian-services-action: #ffffff;
         font-weight: bold;
     }
 
-    @include mq(mobileLandscape) {
-        margin-right: $gs-gutter;
-    }
-
     @include mq(tablet) {
         margin-top: -$gs-baseline / 2;
         margin-bottom: $gs-baseline * .5;
@@ -89,26 +77,6 @@ $c-guardian-services-action: #ffffff;
         margin-top: $gs-baseline * .75;
         margin-bottom: 0;
         float: left;
-
-        @include mq(mobileLandscape) {
-            // Reset to previous value, as the breakpoint overriding this
-            // does not apply for interactives.
-            margin-right: $gs-gutter/2;
-        }
-
-        @include mq($until: tablet) {
-            margin-top: $gs-baseline * 1.2;
-            margin-right: 0;
-
-            svg {
-                // Height / width
-                $height-to-width-ratio: 25 / 160;
-                // Magic number to fit the logo to 320px+ screens
-                $width: 134px;
-                width: $width;
-                height: $width * $height-to-width-ratio;
-            }
-        }
 
         @include mq(tablet) {
             svg {
