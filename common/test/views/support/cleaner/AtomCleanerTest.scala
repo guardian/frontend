@@ -92,6 +92,13 @@ class AtomCleanerTest extends FlatSpec
     doc.getElementsByClass("youtube-media-atom__bottom-bar__duration").html() should be("0:36")
   }
 
+  "Formatted duration" should "produce the expected format" in {
+    youTubeAtom.map(_.media.head).get.copy(duration = Some(61)).formattedDuration should contain("1:01")
+    youTubeAtom.map(_.media.head).get.copy(duration = Some(70)).formattedDuration should contain("1:10")
+    youTubeAtom.map(_.media.head).get.copy(duration = Some(1)).formattedDuration should contain("0:01")
+    youTubeAtom.map(_.media.head).get.copy(duration = Some(3601)).formattedDuration should contain("1:00:01")
+  }
+
 
 
 }

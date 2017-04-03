@@ -10,6 +10,7 @@ import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 import enumeratum._
 import model.content.MediaAssetPlatform.findValues
+import org.apache.commons.lang3.time.DurationFormatUtils
 import org.joda.time.format.{DateTimeFormat, PeriodFormatter, PeriodFormatterBuilder}
 import views.support.{GoogleStructuredData, ImgSrc}
 
@@ -45,25 +46,26 @@ final case class MediaAtom(
   }
 
   def formattedDuration: Option[String] = {
-    val formatter = new PeriodFormatterBuilder()
-      .appendHours
-      .appendSuffix(":")
-      .appendMinutes
-      .appendSuffix(":")
-      .printZeroAlways
-      .minimumPrintedDigits(2)
-      .appendSeconds
-      .toFormatter
+
+    def stripLeadingZero(formattedString: String): String = {
+      val leadingZero = "^0".r
+      leadingZero.replaceFirstIn(formattedString, "")
+    }
 
     duration.map(d => {
-      val duration =  new Duration(Duration.standardSeconds(d))
-      duration match {
-        case lessThanOneMinute if duration.isShorterThan(new Duration(Duration.standardMinutes(1))) => "0:" + formatter.print(duration.toPeriod())
-        case _ => formatter.print(duration.toPeriod())
+      val jodaDuration = new Duration(Duration.standardSeconds(d))
+      val durationMillis = jodaDuration.getMillis
+
+      jodaDuration match {
+        case lessThanOneMinute if jodaDuration.isShorterThan(new Duration(Duration.standardMinutes(1))) => DurationFormatUtils.formatDuration(durationMillis, "m:ss", true)
+        case oneMinuteToOneHour if jodaDuration.isShorterThan(new Duration(Duration.standardHours(1))) => stripLeadingZero(DurationFormatUtils.formatDuration(durationMillis, "mm:ss", true))
+        case _ => stripLeadingZero(DurationFormatUtils.formatDuration(durationMillis, "HH:mm:ss", true))
       }
-    })
+    }
+    )
   }
 }
+
 
 sealed trait MediaAssetPlatform extends EnumEntry
 
