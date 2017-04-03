@@ -18,7 +18,12 @@ jest.mock('lib/window-performance', () => ({
         });
     }),
 
-    getEntriesByName: jest.fn((name, type) => mockIO.marks.find(mark => mark.entryType === type && mark.name === name)),
+    getEntriesByName: jest.fn((name, type) => {
+        const item = mockIO.marks.find(
+            mark => mark.entryType === type && mark.name === name
+        );
+        return [item];
+    }),
 }));
 
 describe('user-timing', () => {
@@ -28,13 +33,15 @@ describe('user-timing', () => {
 
     test('mark()', () => {
         const name = chance.word();
+        mockIO.marks = [];
         timing.mark(name);
+        expect(mockIO.marks.length).toBe(1);
     });
 
     test('getTiming()', () => {
         const name = chance.word();
         timing.mark(name);
-        const timer = timing.getTiming();
-        console.log(timer);
+        const timer = timing.getTiming(name);
+        expect(timer).toBe(100);
     });
 });
