@@ -3,16 +3,16 @@
 @import common.{NewNavigation, Edition, LinkTo}
 @import views.support.RenderClasses
 
-<ul class="tertiary-navigation">
+<ul class="subnav">
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
 
         @NewNavigation.SubSectionLinks.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront).map { link =>
-            <li class="tertiary-navigation__link-item">
+            <li class="subnav__link-item">
                 <a class="@RenderClasses(Map(
-                        "tertiary-navigation__link" -> true,
-                        "tertiary-navigation__link--current-section" -> (id == link.uniqueSection)
+                        "subnav__link" -> true,
+                        "subnav__link--current-section" -> (id == link.uniqueSection)
                     ))"
-                    href="@LinkTo(link.url)" data-link-name="nav2 : tertiary : @{ if(link.longTitle.isEmpty) link.title else link.longTitle}">
+                    href="@LinkTo(link.url)" data-link-name="nav2 : subnav : @{ if(link.longTitle.isEmpty) link.title else link.longTitle}">
                         @link.title
                 </a>
             </li>
