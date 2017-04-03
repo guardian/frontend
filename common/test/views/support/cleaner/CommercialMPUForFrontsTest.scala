@@ -1,10 +1,11 @@
-package views.support
+package views.support.cleaner
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
 
 import org.apache.commons.lang.StringEscapeUtils
+import views.support.CommercialMPUForFronts
 
 class CommercialMPUForFrontsTest extends FlatSpec with Matchers {
 
@@ -23,99 +24,15 @@ class CommercialMPUForFrontsTest extends FlatSpec with Matchers {
     document
   }
 
-  val frontWithThrasher = <html>
-        <body>
-          <section id="thrasher" class="fc-container fc-container--thrasher fc-container--first">
-            <div class="fc-container__inner">
-              <div class="fc-slice-wrapper">
-                <ul class="u-unstyled l-row">
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                </ul>
-              </div>
-            </div>
-          </section>
-          <section class="fc-container">
-            <div class="fc-container__inner">
-              <div class="fc-slice-wrapper">
-                <ul class="u-unstyled l-row">
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item fc-slice__item--mpu-candidate"></li>
-                </ul>
-              </div>
-            </div>
-          </section>
-          <section class="fc-container">
-            <div class="fc-container__inner">
-              <div class="fc-slice-wrapper">
-                <ul class="u-unstyled l-row">
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item fc-slice__item--mpu-candidate"></li>
-                </ul>
-              </div>
-            </div>
-          </section>
-          <div class="fc-container fc-container--commercial">
-            <div id="dfp-ad--merchandising-high" class="ad-slot--merchandising-high">
-            </div>
-          </div>
-          <section class="fc-container">
-            <div class="fc-container__inner">
-              <div class="fc-slice-wrapper">
-                <ul class="u-unstyled l-row">
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                </ul>
-              </div>
-            </div>
-          </section>
-          <section class="fc-container">
-            <div class="fc-container__inner">
-              <div class="fc-slice-wrapper">
-                <ul class="u-unstyled l-row">
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                </ul>
-              </div>
-            </div>
-          </section>
-          <section class="fc-container">
-            <div class="fc-container__inner">
-              <div class="fc-slice-wrapper">
-                <ul class="u-unstyled l-row">
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item"></li>
-                  <li class="fc-slice__item l-row__item fc-slice__item--mpu-candidate"></li>
-                </ul>
-              </div>
-            </div>
-          </section>
-          <section class="fc-container">
-            <div class="fc-container__inner">
-              <div class="fc-slice fc-slice--popular">
-              </div>
-            </div>
-          </section>
-          <div class="fc-container fc-container--commercial">
-            <div id="dfp-ad--merchandising" class="ad-slot--merchandising ad-slot--commercial-component">
-            </div>
-          </div>
-        </body>
-      </html>.toString()
+  def getFileContent(filePath: String): String = {
+    val source = scala.io.Source.fromInputStream(getClass.getResourceAsStream(filePath))
+    try source.mkString finally source.close()
+  }
 
-  val result = parseTestData(frontWithThrasher)
-  val body = clean(result)
+  val htmlFile = getFileContent("fixtures/CommercialMPUForFronts.html")
+
+  val htmlContent = parseTestData(htmlFile)
+  val body = clean(htmlContent)
 
   it should "insert MPUs into applicable slices, and give them unique IDs" in {
     val desktopMPUs = body.getElementsByClass("fc-slice__item--mpu-candidate")
@@ -146,13 +63,7 @@ class CommercialMPUForFrontsTest extends FlatSpec with Matchers {
     commercialContainers.first.nextElementSibling.hasClass("fc-container__mpu--mobile") should be (false)
     commercialContainers.first.previousElementSibling.hasClass("fc-container__mpu--mobile") should be (false)
     commercialContainers.last.previousElementSibling.hasClass("fc-container__mpu--mobile") should be (false)
-
-    if (commercialContainers.last.nextElementSibling != null) {
-      commercialContainers.last.nextElementSibling.hasClass("fc-container__mpu--mobile") should be (false)
-    } else {
-      commercialContainers.last.nextElementSibling should be (null)
-    }
-
+    commercialContainers.last.nextElementSibling should be (null)
   }
 
 }
