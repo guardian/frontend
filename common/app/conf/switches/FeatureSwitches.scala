@@ -509,16 +509,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val NewHeader = Switch(
-    SwitchGroup.Feature,
-    "new-header",
-    "New header switch, just in case anything is really wrong with it",
-    owners = Seq(Owner.withGithub("natalialkb")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 4, 12),
-    exposeClientSide = false
-  )
-
   val InlineEmailStyles = Switch(
     SwitchGroup.Feature,
     "inline-email-styles",
