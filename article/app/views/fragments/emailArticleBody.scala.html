@@ -1,7 +1,8 @@
 @(page: PageWithStoryPackage)(implicit request: RequestHeader)
 
 @import views.support.{EmailImage, EmailVideoImage}
-@import views.support.EmailHelpers._
+@import views.support.EmailHelpers.{imgForArticle, icon}
+@import fragments.email._
 @import model.liveblog._
 @import model.EmailAddons.EmailContentType
 
