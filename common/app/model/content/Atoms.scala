@@ -57,8 +57,7 @@ final case class MediaAtom(
       val durationMillis = jodaDuration.getMillis
 
       jodaDuration match {
-        case lessThanOneMinute if jodaDuration.isShorterThan(new Duration(Duration.standardMinutes(1))) => DurationFormatUtils.formatDuration(durationMillis, "m:ss", true)
-        case oneMinuteToOneHour if jodaDuration.isShorterThan(new Duration(Duration.standardHours(1))) => stripLeadingZero(DurationFormatUtils.formatDuration(durationMillis, "mm:ss", true))
+        case lessThanOneHour if jodaDuration.isShorterThan(new Duration(Duration.standardHours(1))) => stripLeadingZero(DurationFormatUtils.formatDuration(durationMillis, "mm:ss", true))
         case _ => stripLeadingZero(DurationFormatUtils.formatDuration(durationMillis, "HH:mm:ss", true))
       }
     }
