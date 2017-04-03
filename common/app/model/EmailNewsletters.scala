@@ -259,7 +259,7 @@ object EmailNewsletters {
   val bookmarks = EmailNewsletter(
     name = "Bookmarks",
     theme = "culture",
-    teaser = "Kick back on a Sunday with our weekly email full of literary delights. Expert reviews, author interviews and top 10s, plus highlights from our columnists and community",
+    teaser = "Kick back and relax on a Sunday with our weekly email full of literary delights. Expert reviews, author interviews and top 10s, plus highlights from our columnists and community",
     description = "Join us in the world of books. Discover new books with our expert reviews, author interviews and top 10s, plus enjoy highlights from our columnists and community. Kick back on a Sunday with our weekly email full of literary delights",
     frequency = "Every Thursday",
     listId = 3039,
