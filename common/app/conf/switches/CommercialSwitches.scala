@@ -201,7 +201,7 @@ trait CommercialSwitches {
     description = "Turn on Sonobi header bidding",
     owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31), //Friday
+    sellByDate = new LocalDate(2017, 4, 28), //Friday
     exposeClientSide = true
   )
 
@@ -221,7 +221,7 @@ trait CommercialSwitches {
     description = "A test feature to evaluate Switch Concepts' server-to-server preflight ad call",
     owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 4, 28),
     exposeClientSide = true
   )
 }

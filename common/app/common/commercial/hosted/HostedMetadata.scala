@@ -33,7 +33,8 @@ object HostedMetadata {
       javascriptConfigOverrides = Map(
         "isHosted" -> JsBoolean(true),
         "toneIds" -> JsString(toneIds),
-        "tones" -> JsString(toneNames)
+        "tones" -> JsString(toneNames),
+        "shortUrl" -> JsString(item.fields.flatMap(_.shortUrl).getOrElse(""))
       ),
       opengraphPropertiesOverrides = Map(
         "og:url" -> s"${site.host}/${item.id}",

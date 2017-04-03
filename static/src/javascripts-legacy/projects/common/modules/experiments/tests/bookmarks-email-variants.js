@@ -6,10 +6,10 @@ define([
     return new genericEmailTest(
         {
             id: 'BookmarksEmailVariants',
-            start: '2017-03-14',
-            end: '2017-03-31',
+            start: '2017-03-31',
+            end: '2017-05-30',
             author: 'David Furey',
-            audience: 0,
+            audience: 1,
             audienceOffset: 0,
             signupPage: 'info/ng-interactive/2017/mar/30/sign-up-for-the-bookmarks-email',
             canonicalListId: 3039,

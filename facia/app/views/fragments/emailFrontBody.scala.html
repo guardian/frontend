@@ -7,16 +7,17 @@
 @import layout.ContentCard
 @import model.EmailAddons.EmailContentType
 @import model.pressed.{ExternalLink, Feature}
-@import views.support.EmailHelpers._
+@import views.support.EmailHelpers.{icon, imgFromCard, imgForFront}
 @import views.support.RemoveOuterParaHtml
 @import views.support.TrailCssClasses.toneClassFromStyle
+@import fragments.email._
 
+@headline(card: ContentCard, isLarge: Boolean = false, isLast: Boolean) = {
 
-@headline(card: ContentCard, isLarge: Boolean = false) = {
-    <a @Html(card.header.url.hrefWithRel) class="facia-link">
-        <h3 class="headline">
+    @row(Seq("headline")) {
+        <a @Html(card.header.url.hrefWithRel) class="fc-link">
             @card.header.kicker.map { kicker =>
-                <span class="fc-item__kicker">@Html(kicker.kickerHtml)</span>
+                <span class="fc__kicker">@Html(kicker.kickerHtml)</span>
                 <span class="kicker-separator">/</span>
             }
 
@@ -31,44 +32,48 @@
                 }
             }
             @RemoveOuterParaHtml(card.header.headline)
-        </h3>
-        @if(card.header.quoted) {
-            @card.bylineText.map { byline => <h4 class="byline">@byline</h4> }
-        }
-        @card.starRating.map { numberOfStars =>
-            <p class="review-stars">
-                @for(i <- 0 to 4) {
-                    @defining(if(i < numberOfStars) "golden" else "grey") { positiveOrNegative =>
-                        @icon("star-" + positiveOrNegative, isLarge)
-                    }
+        </a>
+    }
+    @if(card.header.quoted) {
+        @card.bylineText.map { byline => @row(Seq("byline")){@byline} }
+    }
+    @card.starRating.map { numberOfStars =>
+        @row(Seq("review-stars")) {
+            @for(i <- 0 to 4) {
+                @defining(if(i < numberOfStars) "golden" else "grey") { positiveOrNegative =>
+                    @icon("star-" + positiveOrNegative, isLarge)
                 }
-            </p>
+            }
         }
-    </a>
+    }
+    @if(isLast) {
+        @row(Seq("fc__pad")) { }
+    }
 }
 
 @trailText(card: ContentCard) = {
     @card.trailText.map { trailText =>
-        <a @Html(card.header.url.hrefWithRel) class="facia-link">
-            <h4 class="trail-text">@Html(trailText)</h4>
-        </a>
+        @row(Seq("trail-text")) {
+            <a @Html(card.header.url.hrefWithRel) class="fc-link">@Html(trailText)</a>
+        }
     }
 }
 
 @headlineAndTrailWithCutout(card: ContentCard, withImage: Boolean) = {
-    @headline(card, isLarge = withImage)
+    @headline(card, isLarge = withImage, isLast = false)
     @trailText(card)
 }
 
+
 @faciaCardWithTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
-    @faciaCardFullRow(Seq(toneClassFromStyle(card.cardStyle)) ++ (if (withImage) Seq("fc-item--large") else Seq())) {
+    @faciaCard(Seq(toneClassFromStyle(card.cardStyle)) ++ (if (withImage) Seq("fc--large") else Seq())) {
         @if(withImage) {
-            @imgFromCard(card)
+            @row(Seq("no-pad")){@imgFromCard(card)}
         }
         @if(card.header.quoted) {
             @headlineAndTrailWithCutout(card, withImage)
         } else {
-            @headline(card, isLarge = largeHeadline)
+            @headline(card, isLarge = largeHeadline, isLast = false)
             @trailText(card)
         }
     }
@@ -76,14 +81,16 @@
 
 @faciaCardWithoutTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
     @imgFromCard(card, 5).filter(i => withImage).fold {
-        @faciaCardFullRow(Seq(toneClassFromStyle(card.cardStyle))) {
-            @headline(card, largeHeadline)
+        @faciaCard(Seq(toneClassFromStyle(card.cardStyle))) {
+            @headline(card, largeHeadline, isLast = true)
         }
     } { img =>
-        @FaciaCard(Seq(), Row(Seq(toneClassFromStyle(card.cardStyle)),
-            Column(smallWidth = 7, largeWidth = 7)(headline(card)),
-            Column(smallWidth = 5, largeWidth = 5)(img)
-        )).render
+        @faciaCard(Seq(toneClassFromStyle(card.cardStyle))) {
+            <tr valign="top">
+                <td class="left-col"><table>@headline(card, isLast = true)</table></td>
+                <td class="right-col no-pad">@img</td>
+            </tr>
+        }
     }
 }
 
@@ -114,15 +121,13 @@
     }
 }
 
-@fullRow {
+@fullRow(Seq()) {
     @imgForFront(page.banner, page.email.map(_.name))
 }
 
 @renderContentContainer(collection: EmailContentContainer, collectionIndex: Int) = {
-    @fullRow {
-        <h2 class="container-title @if(collectionIndex > 0) { has-top-border }">
-            @collection.displayName
-        </h2>
+    @containerTitle(if(collectionIndex > 0) Seq("ct--not-top") else Seq()) {
+        @collection.displayName
     }
 
     @collection.cards.zipWithIndex.map { case (card, cardIndex) =>
@@ -221,7 +226,7 @@
 }
 
 @page.frontProperties.onPageDescription.map { description =>
-    @fullRow {
-        <p class="message">@Html(description)</p>
+    @fullRow(Seq("message")) {
+        @Html(description)
     }
 }

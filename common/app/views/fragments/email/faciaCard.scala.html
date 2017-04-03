@@ -1,0 +1,10 @@
+@(classes: Seq[String])(rows: Html)
+
+@* This template populates a table so it expects table rows as input *@
+<table class="fc">
+    <tr>
+        <td class="fc__margin">
+            <table class="fc__inner @classes.mkString(" ")">@rows</table>
+        </td>
+    </tr>
+</table>

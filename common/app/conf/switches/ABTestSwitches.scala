@@ -212,6 +212,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-email-demand-tests",
+    "Test demand for food, business, and cities emails",
+    owners = Seq(Owner.withGithub("lmath")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 21),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-paid-commenting-internal",
     "Paid commenting test",
     owners = Seq(Owner.withGithub("justinpinner")),
