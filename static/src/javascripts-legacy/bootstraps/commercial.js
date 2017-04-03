@@ -73,7 +73,7 @@ define([
         commercialModules.push(
             ['cm-hostedAbout', hostedAbout.init],
             ['cm-hostedVideo', hostedVideo.init, true],
-            ['cm-hostedGallery', hostedGallery.init, true],
+            ['cm-hostedGallery', hostedGallery.init],
             ['cm-hostedOnward', hostedOnward.init, true],
             ['cm-hostedOJCarousel', hostedOJCarousel.init]
         );

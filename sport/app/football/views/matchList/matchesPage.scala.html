@@ -30,7 +30,7 @@
                     <div class="football-matches__container" data-show-more-contains="football-matches">
                         @matchesList.matchesGroupedByDateAndCompetition.map { case (date, competitionMatches) =>
                             <div class="football-matches__day">
-                                <div class="date-divider">@date.toString("EEEE d MMMM yyyy")</div>
+                                <div class="date-divider">@date.toString("EEEE d MMMM yyyy") GMT</div>
                                 @competitionMatches.map { case (competition, matches) =>
                                     <div class="football-table__container">
                                         <div class="u-cf">

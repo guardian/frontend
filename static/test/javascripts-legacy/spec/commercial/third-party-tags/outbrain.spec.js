@@ -65,7 +65,7 @@ define([
 
         afterEach(function () {
             fixtures.clean(fixturesConfig.id);
-             checkMediator._testClean();
+            checkMediator.test.testClean();
         });
 
         it('should exist', function () {
