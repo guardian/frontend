@@ -127,6 +127,10 @@
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
+
+    @include mq($until: tablet) {
+        display: none;
+    }
 }
 
 .content__labels--not-immersive {
@@ -215,6 +219,10 @@
     @include fs-headline(5);
     padding-top: $gs-baseline/6;
     padding-bottom: $gs-baseline*2;
+
+    @include mq($until: tablet) {
+        padding-top: $gs-baseline / 3;
+    }
 
     @include mq(mobileLandscape) {
         @include fs-headline(7, true);
@@ -1311,5 +1319,11 @@
                 top: 44px;
             }
         }
+    }
+}
+
+.inline-expand-image {
+    @include mq($until: tablet) {
+        display: none;
     }
 }

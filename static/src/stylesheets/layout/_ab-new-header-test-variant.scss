@@ -27,14 +27,6 @@ $caption-button-size: 32px;
 }
 
 @include mq($until: tablet) {
-    .content__headline {
-        padding-top: $gs-baseline / 3;
-    }
-
-    .inline-expand-image,
-    .content__labels {
-        display: none;
-    }
 
     .reveal-caption {
         position: absolute;
@@ -88,10 +80,6 @@ $caption-button-size: 32px;
     }
 }
 
-    // Padding above headline in galleries, because kicker is hidden
-    .tonal--tone-media .content__headline--gallery {
-        padding-top: $gs-baseline / 2;
-    }
 
 
 
