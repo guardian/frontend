@@ -11,12 +11,12 @@ define([
 ) {
     return function () {
         this.id = 'PaidCardLogo';
-        this.start = '2017-03-29';
-        this.expiry = '2017-03-31';
+        this.start = '2017-04-03';
+        this.expiry = '2017-05-05';
         this.author = 'Lydia Shepherd';
         this.description = 'Paid cards in editorial containers - trial with and without logo';
         this.showForSensitive = true;
-        this.audience = 0;  // wait until we know where the test will run
+        this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = '';
         this.audienceCriteria = '';
@@ -25,7 +25,7 @@ define([
         this.hypothesis = '';
 
         this.canRun = function () {
-            return config.page.pageId === "commercial-containers" && qwery(".adverts--within-unbranded").length;
+            return config.page.pageId === "uk/lifeandstyle" && !!qwery(".adverts--within-unbranded").length;
         };
 
         this.completeFunc = function(complete) {
