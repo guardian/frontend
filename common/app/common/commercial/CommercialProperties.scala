@@ -14,6 +14,9 @@ case class CommercialProperties(
   val isFoundationFunded: Boolean = branding(defaultEdition).exists(_.isFoundationFunded)
   def isSponsored(edition: Edition): Boolean = branding(edition).exists(_.isSponsored)
 
+  // Todo: remove this helper method when server-side ad targeting implemented before 2017-04-30
+  val surgeBuckets: String = adTargeting(defaultEdition).getOrElse("su", "")
+
   def branding(edition: Edition): Option[Branding] = for {
     editionBranding <- editionBrandings.find(_.edition == edition)
     branding <- editionBranding.branding
