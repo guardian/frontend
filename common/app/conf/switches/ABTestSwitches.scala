@@ -229,4 +229,15 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-epic-to-support-landing-page",
+    "Use AB framework to divert traffic from epic to new support landing page",
+    owners = Seq(Owner.withGithub("JustinPinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 27),
+    exposeClientSide = true
+  )
+
 }
