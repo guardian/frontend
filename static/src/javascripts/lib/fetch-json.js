@@ -8,7 +8,7 @@ const json = (input: string | Request, init: RequestOptions = {}) => {
     const options = init;
     let path = typeof input === 'string' ? input : input.url;
 
-    if (!path.match('^(https?:)?//')) {
+    if (!path.startsWith('https://')) {
         path = (config.page.ajaxUrl || '') + path;
         options.mode = 'cors';
     }
