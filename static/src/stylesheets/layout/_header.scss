@@ -752,10 +752,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     }
 }
 
-.no-text-transform {
-    text-transform: none;
-}
-
 // Breathing space between header and content
 @include mq($until: tablet) {
     .weather {
