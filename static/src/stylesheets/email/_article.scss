@@ -54,24 +54,25 @@ $hr-margin: 20px 0 -4px 0;
 
 h1, h2, h3, h4, h5, h6, p, blockquote {
     font-family: 'Guardian Egyptian Text', Georgia, serif;
+    font-weight: normal;
     color: #333333;
 }
 
 h1 {
     font-size: 32px;
     line-height: 36px;
-    margin-bottom: 20px;
+    margin: 0 0 20px;
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 20px;
+    font-weight: bold;
     line-height: 28px;
     margin-bottom: 5px;
     margin-top: 20px;
 }
 
 h3 {
-    font-weight: normal;
     font-size: 18px;
     line-height: 28px;
 }
@@ -148,6 +149,7 @@ blockquote {
 }
 
 .caption {
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 12px;
     line-height: 14px;
     color: #767676;
