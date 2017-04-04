@@ -136,8 +136,6 @@ define([
         }
 
         if (overlay) {
-            showDuration(atomId, overlay);
-
             players[atomId].overlay = overlay;
 
             if (!!config.page.section && detect.isBreakpoint({ min: 'desktop' })) {
@@ -148,35 +146,6 @@ define([
         if (iframe && iframe.closest('.immersive-main-media__media')) {
             updateImmersiveButtonPos();
             window.addEventListener('resize', debounce(updateImmersiveButtonPos.bind(null), 200));
-        }
-    }
-
-    function getFormattedDuration(durationInSeconds) {
-        var times = [];
-        var hours = Math.floor(durationInSeconds / 3600);
-        var minutes = Math.floor((durationInSeconds - hours * 3600) / 60);
-        var seconds = (durationInSeconds - hours * 3600) - (minutes * 60);
-
-        if (hours) {
-            times.push(hours);
-            times.push(formatTime(minutes));
-        } else {
-            times.push(minutes);
-        }
-        times.push(formatTime(seconds));
-
-        return times.join(':');
-    }
-
-    function formatTime(time) {
-        return ('0' + time).slice(-2);
-    }
-
-    function showDuration(atomId, overlay) {
-        var durationElem = overlay.querySelector('.youtube-media-atom__bottom-bar__duration');
-
-        if (durationElem) {
-            durationElem.innerText = getFormattedDuration(players[atomId].player.getDuration());
         }
     }
 

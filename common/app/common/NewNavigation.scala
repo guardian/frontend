@@ -116,7 +116,7 @@ object NewNavigation {
     val au = NavLinkLists(
       List(
         opinion,
-        columnists,
+        auColumnists,
         cartoons,
         indigenousAustraliaOpinion,
         theGuardianView
@@ -309,6 +309,7 @@ object NewNavigation {
       SectionsLink("commentisfree", opinion, Opinion),
       SectionsLink("cartoons/archive", cartoons, Opinion),
       SectionsLink("type/cartoon", cartoons, Opinion),
+      SectionsLink("au/index/contributors", auColumnists, Opinion),
       SectionsLink("index/contributors", columnists, Opinion),
       SectionsLink("commentisfree/series/comment-is-free-weekly", inMyOpinion, Opinion),
       SectionsLink("profile/editorial", theGuardianView, Opinion),
@@ -583,23 +584,18 @@ object NewNavigation {
     }
 
     def getSubSectionNavLinks(id: String, edition: Edition, isFront: Boolean) = {
-      if (isFront || frontLikePages.contains(id)) {
+      if (isEditionalistedSubSection(id)) {
+        val subNav = editionalisedSubSectionLinks.filter(_.pageId == id).head.parentSection
 
-        if (isEditionalistedSubSection(id)) {
-          val subNav = editionalisedSubSectionLinks.filter(_.pageId == id).head.parentSection
-
-          subNav.getEditionalisedSubSectionLinks(edition).mostPopular
-        } else {
-          val subSectionList = subSectionLinks.filter(_.pageId == simplifyFootball(id))
-
-          if (subSectionList.isEmpty) {
-            NewNavigation.SectionLinks.getSectionLinks(id, edition)
-          } else {
-            subSectionList.head.parentSection.mostPopular
-          }
-        }
+        subNav.getEditionalisedSubSectionLinks(edition).mostPopular
       } else {
-        NewNavigation.SectionLinks.getSectionLinks(id, edition)
+        val subSectionList = subSectionLinks.filter(_.pageId == simplifyFootball(id))
+
+        if (subSectionList.isEmpty) {
+          NewNavigation.SectionLinks.getSectionLinks(id, edition)
+        } else {
+          subSectionList.head.parentSection.mostPopular
+        }
       }
     }
   }

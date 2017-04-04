@@ -1,6 +1,5 @@
 define([
     'lib/$',
-    'lib/mediator',
     'helpers/fixtures',
     'Promise',
     'fastdom',
@@ -8,7 +7,6 @@ define([
     'helpers/injector'
 ], function (
     $,
-    mediator,
     fixtures,
     Promise,
     fastdom,
@@ -37,11 +35,12 @@ define([
                 'commercial/modules/hosted/gallery'
             ], function (galleryModule) {
                 $fixturesContainer = fixtures.render(fixturesConfig);
-                galleryModule.init(noop, noop);
-                mediator.on('page:hosted:gallery', function(instance) {
-                    gallery = instance;
-                    done();
-                });
+                galleryModule
+                    .init(noop, noop)
+                    .then(function (galleryInstance) {
+                        gallery = galleryInstance;
+                        done();
+                    });
             });
         });
 

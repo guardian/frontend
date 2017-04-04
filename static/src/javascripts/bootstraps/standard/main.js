@@ -75,9 +75,7 @@ const handleMembershipAccess = (): void => {
 
     const updateDOM = (resp: Object): void => {
         const requireClass = 'has-membership-access-requirement';
-        const requiresPaidTier = !membershipAccess.includes(
-            'paid-members-only'
-        );
+        const requiresPaidTier = membershipAccess.includes('paid-members-only');
         // Check the users access matches the content
         const canViewContent = requiresPaidTier
             ? !!resp.tier && resp.isPaidTier

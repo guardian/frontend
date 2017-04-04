@@ -34,11 +34,9 @@ object EditionAdTargeting {
   def fromSection(section: Section): Seq[EditionAdTargeting] =
     editionTargeting(edition => adCall.pageLevelContextTargeting(section, edition.id))
 
-  def targeting(adContextTargetings: Option[Seq[EditionAdTargeting]], edition: Edition): Map[String, String] = {
-    val params = for {
-      targetings <- adContextTargetings
-      targeting <- targetings.find(_.edition == edition)
-    } yield targeting.params
-    params getOrElse Map.empty
-  }
+  def forNetworkFront(frontId: String): Seq[EditionAdTargeting] =
+    editionTargeting(edition => adCall.pageLevelContextTargeting(networkFrontPath = s"/$frontId", edition.id))
+
+  def forFrontUnknownToCapi(frontId: String): Seq[EditionAdTargeting] =
+    editionTargeting(edition => adCall.pageLevelTargetingForFrontUnknownToCapi(frontId, edition.id))
 }

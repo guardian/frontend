@@ -28,18 +28,14 @@
     "lib/location.js"
   ],
   "GHaberis": [
-    "lib/mediator.js",
     "lib/pad.js",
     "lib/page.js",
     "lib/picturefill.js",
     "lib/proximity-loader.js",
     "lib/queue.js",
     "lib/QueueAsync.js",
-    "lib/raven.js"
   ],
   "Gustav Pursche": [
     "lib/steady-page.js",
-    "lib/storage.js",
-    "lib/url.js"
   ]
 }

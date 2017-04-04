@@ -12,7 +12,6 @@ define([
     'common/modules/experiments/acquisition-test-selector',
     'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/opinion-email-variants',
-    'common/modules/experiments/tests/recommended-for-you',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/tests/tailor-survey',
     'common/modules/experiments/tests/the-long-read-email-variants',
@@ -22,7 +21,7 @@ define([
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
-    'common/modules/experiments/tests/reading-time',
+    'common/modules/experiments/tests/email-demand-tests',
     'common/modules/experiments/tests/paid-card-logo',
     'ophan/ng',
     'common/modules/experiments/tests/paid-commenting'
@@ -39,7 +38,6 @@ define([
              acquisitionTestSelector,
              EditorialEmailVariants,
              OpinionEmailVariants,
-             RecommendedForYou,
              MembershipEngagementBannerTests,
              TailorSurvey,
              TheLongReadEmailVariants,
@@ -49,7 +47,7 @@ define([
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
              IncreaseInlineAds,
-             ReadingTime,
+             EmailDemandTests,
              PaidCardLogo,
              ophan,
              PaidCommenting
@@ -57,7 +55,6 @@ define([
     var TESTS = compact([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
-        new RecommendedForYou(),
         acquisitionTestSelector.getTest(),
         new TailorSurvey(),
         TheLongReadEmailVariants,
@@ -67,7 +64,7 @@ define([
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
         new IncreaseInlineAds(),
-        new ReadingTime(),
+        new EmailDemandTests(),
         new PaidCardLogo(),
         new PaidCommenting()
     ].concat(MembershipEngagementBannerTests));

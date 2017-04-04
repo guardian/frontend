@@ -4,12 +4,12 @@ import com.gu.contentapi.client.model.v1.TagType
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
 import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
+import enumeratum._
 import model.{EndSlateComponents, ImageAsset, ImageMedia}
+import org.apache.commons.lang3.time.DurationFormatUtils
 import org.joda.time.{DateTime, DateTimeZone, Duration}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
-import enumeratum._
-import model.content.MediaAssetPlatform.findValues
 import views.support.{GoogleStructuredData, ImgSrc}
 
 final case class Atoms(
@@ -38,10 +38,22 @@ final case class MediaAtom(
   endSlatePath: Option[String],
   expired: Option[Boolean]
 ) extends Atom {
+
   def isoDuration: Option[String] = {
     duration.map(d => new Duration(Duration.standardSeconds(d)).toString)
   }
+
+  def formattedDuration: Option[String] = {
+    duration.map { d =>
+      val jodaDuration = new Duration(Duration.standardSeconds(d))
+      val oneHour = new Duration(Duration.standardHours(1))
+      val durationPattern = if(jodaDuration.isShorterThan(oneHour)) "mm:ss" else "HH:mm:ss"
+      val formattedDuration = DurationFormatUtils.formatDuration(jodaDuration.getMillis, durationPattern, true)
+      "^0".r.replaceFirstIn(formattedDuration, "") //strip leading zero
+    }
+  }
 }
+
 
 sealed trait MediaAssetPlatform extends EnumEntry
 
