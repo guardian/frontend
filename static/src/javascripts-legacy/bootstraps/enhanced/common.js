@@ -175,6 +175,8 @@ define([
                 var deprecatedKeys = [
                     'gu.subscriber',
                     'gu.contributor',
+                    'gu.cachedRecommendations',
+                    'gu.recommendationsEnabled',
                     'gu.abb3.exempt'
                 ];
                 forEach(deprecatedKeys, storage.remove);
