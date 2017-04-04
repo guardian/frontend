@@ -28,7 +28,7 @@ define([
     return function () {
         this.id = 'ReadingTime';
         this.start = '2017-03-15';
-        this.expiry = '2017-04-04';
+        this.expiry = '2017-04-11';
         this.author = 'Leigh-Anne Mathieson';
         this.description = 'Add a thrasher to the home front that gives users an option to indicate how much time they'
             + ' have to read, to determine demand for suggesting content based on the amount of time they have.';

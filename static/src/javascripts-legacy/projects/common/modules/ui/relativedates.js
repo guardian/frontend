@@ -152,14 +152,28 @@ define([
         $('.' + cls).each(function (el) {
             var datetime,
                 $el = bonzo(el),
-                timestamp = parseInt($el.attr('data-timestamp'), 10);
+                timestamp = parseInt($el.attr('data-timestamp'), 10),
+                timezone,
+                html;
 
             if (timestamp) {
                 datetime = new Date(timestamp);
-                el.innerHTML = pad(datetime.getHours()) + ':' + pad(datetime.getMinutes());
+                html = pad(datetime.getHours()) + ':' + pad(datetime.getMinutes());
+                if (el.hasAttribute('data-show-timezone')) {
+                    timezone = getLocaleTimezone(datetime);
+                    if (timezone !== 'GMT') {
+                        html += ' ' + timezone;
+                    }
+                }
+                el.innerHTML = html;
                 $el.removeClass(cls);
             }
         });
+    }
+
+    function getLocaleTimezone(datetime) {
+        // extracts timezone from datetime, eg. EST from Fri Mar 03 2017 09:57:25 GMT-0500 (EST)
+        return datetime.toString().match(/\(([^)]+)\)/)[1];
     }
 
     function replaceValidTimestamps(opts) {

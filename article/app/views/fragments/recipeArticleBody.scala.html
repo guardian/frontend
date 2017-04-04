@@ -3,6 +3,7 @@
 @import model.ArticleSchemas
 @import model.content.RecipeAtom
 @import common.LinkTo
+@import views.support.Commercial.isPaidContent
 @import views.BodyCleaner
 @import views.support.ContributorLinks
 
@@ -24,7 +25,7 @@
     </div>
 
     <div class="recipes__main">
-        <div class="recipe__images-wrapper">
+        <div class="recipe__images-wrapper js-recipes__images-wrapper">
             <a href=@LinkTo("/tone/recipes?CMP=recipearticle")>
                 <div class="recipe__label"><h2>recipes</h2></div>
             </a>
@@ -54,6 +55,7 @@
                 </div>
             }
         </div>
+        <div class="flex-filler"></div>
         <div class="js-recipe__gutter-wrapper recipe__gutter-wrapper">
             @defining(articleModel.item.content.tags) { tags =>
                 @if(tags.hasLargeContributorImage && tags.contributors.length == 1) {
@@ -115,7 +117,7 @@
         </div>
     </div>
 </article>
-
+@fragments.contentFooter(articleModel.article, articleModel.related, isPaidContent = false)
 }
 
 @recipePage(recipe: model.content.RecipeAtom, i: Int) = {

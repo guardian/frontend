@@ -211,8 +211,8 @@ object FaciaCard {
     showSeriesAndBlogKickers: Boolean
   ): FaciaCard = {
 
-    val isTestContainer = config.displayName.contains("Paid content in unbranded container")
-    if (isTestContainer && faciaContent.branding(defaultEdition).exists(_.isPaid)) {
+    val containerName: Option[String] = config.displayName
+    if ((containerName.contains("Paid content in unbranded container") || containerName.contains("lifestyle")) && faciaContent.branding(defaultEdition).exists(_.isPaid)) {
       PaidCard.fromPressedContent(faciaContent)
     } else {
 
