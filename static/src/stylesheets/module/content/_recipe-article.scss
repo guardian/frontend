@@ -74,11 +74,17 @@
     width: 100%;
     overflow: hidden;
 
+    @include mq($until: desktop) {
+        position: relative;
+    }
+
     @include mq($from: desktop) {
         flex-basis: 40%;
-        position: sticky;
         height: 100vh;
         min-height: 600px;
+        @supports (position: sticky) {
+            position: sticky;
+        }
         &.is-sticky {
             width: 40%
         }
