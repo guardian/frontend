@@ -1,21 +1,13 @@
-@import '../_vars';
+$max-width: 580px;
+$small-width: 100%;
 
-// Overriding the settings.scss from foundation-emails
-$global-width-small: 100%;
-$global-gutter: 0;
-$body-background: #eaeaea;
-$container-background: #ffffff;
-$global-padding: 0;
-$global-margin: 10px;
-$global-font-color: #333333;
+// to implement
 $hr-border: 1px dashed #dcdcdc;
 $hr-margin: 20px 0 -4px 0;
-$callout-padding: 5px 10px;
-$callout-margin-bottom: 0;
-$callout-border: none;
 
 
-@import 'foundation-emails/foundation-emails';
+
+@import '_normalise';
 @import '_common';
 @import '_footer';
 
@@ -37,15 +29,24 @@ $callout-border: none;
     font-stretch: normal;
 }
 
-td.wrapper {
-    padding: 0;
+// table
+.body {
+    background: #eaeaea;
+    height: 100%;
+    width: 100%;
 }
 
-table.columns,
-table.column {
-    td {
-        padding: 0;
-    }
+// table
+.container {
+    background: #ffffff;
+    width: $max-width;
+    margin: 0 auto;
+    text-align: inherit;
+}
+
+
+.padded {
+    padding: 5px 10px;
 }
 
 h1, h2, h3, h4, h5, h6, p, blockquote {
@@ -99,10 +100,6 @@ a {
             color: #94b1ca !important;
         }
     }
-}
-
-th {
-    hyphens: none;
 }
 
 hr {
