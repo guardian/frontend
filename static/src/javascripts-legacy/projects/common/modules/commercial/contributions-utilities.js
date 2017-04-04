@@ -194,7 +194,7 @@ define([
                     var sibling = $(selector);
 
                     if (sibling.length > 0) {
-                        component.insertBefore(sibling);
+                        component.insertBefore(sibling.first());
                         mediator.emit(test.insertEvent, component);
                         onInsert(component);
 
