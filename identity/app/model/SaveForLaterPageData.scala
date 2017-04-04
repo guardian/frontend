@@ -50,7 +50,8 @@ class SaveForLaterDataBuilder(contentApiClient: ContentApiClient, idUrlBuilder: 
         for {
           content <- Some(Content(result))
           faciaContent <- Some(FaciaContentConvert.contentToFaciaContent(result))
-          article <- articles.find( article => article.id == content.metadata.id)
+          // The `replace` is a bit of a hack -- it saves having to touch CAPI or pageId generation
+          article <- articles.find( article => article.id == content.metadata.id.replace("crosswords/", ""))
         } yield {
           SaveForLaterItem(content, faciaContent, article)
         }
