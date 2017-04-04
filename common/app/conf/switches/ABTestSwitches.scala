@@ -202,16 +202,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-reading-time",
-    "Test demand for getting suggested content based on how much time a reader has",
-    owners = Seq(Owner.withGithub("lmath")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 11),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-email-demand-tests",
     "Test demand for food, business, and cities emails",
     owners = Seq(Owner.withGithub("lmath")),
