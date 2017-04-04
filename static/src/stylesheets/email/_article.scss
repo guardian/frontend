@@ -1,6 +1,9 @@
 $max-width: 580px;
 $small-width: 100%;
 
+$body-color: #eaeaea;
+$container-color: #ffffff;
+
 @import '_normalise';
 @import '_common';
 @import '_footer';
@@ -21,21 +24,6 @@ $small-width: 100%;
     font-weight: normal;
     font-style: italic;
     font-stretch: normal;
-}
-
-// table
-.body {
-    background: #eaeaea;
-    height: 100%;
-    width: 100%;
-}
-
-// table
-.container {
-    background: #ffffff;
-    width: $max-width;
-    margin: 0 auto;
-    text-align: left;
 }
 
 .article-body {

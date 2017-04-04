@@ -2,6 +2,9 @@ $max-width: 500px;
 $small-width: 100%;
 $gutter: 10px;
 
+$body-color: #ffffff;
+$container-color: #ffffff;
+
 @import '_normalise';
 @import '_common';
 @import '_footer';
@@ -23,21 +26,6 @@ $gutter: 10px;
     font-weight: 500;
     font-style: normal;
     font-stretch: normal;
-}
-
-// table
-.body {
-    background: #ffffff;
-    height: 100%;
-    width: 100%;
-}
-
-// table
-.container {
-    background: #ffffff;
-    width: $max-width;
-    margin: 0 auto;
-    text-align: left;
 }
 
 // table
