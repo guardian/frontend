@@ -3,7 +3,6 @@ define([
     'bonzo',
     'fastdom',
     'lib/config',
-    'lib/ajax',
     'lib/mediator',
     'common/modules/identity/api',
     'lodash/objects/assign'
@@ -12,7 +11,6 @@ define([
     bonzo,
     fastdom,
     config,
-    ajax,
     mediator,
     id,
     assign
