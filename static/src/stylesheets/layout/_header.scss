@@ -158,6 +158,14 @@ $gutter-small: 29px;
 $gutter-medium: 37px;
 $gutter-large: 55px;
 
+//This variable is only used in open menu styling
+$navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
+
+@mixin sidebar-animation($percentage) {
+    transform: translateX($percentage);
+    transition: transform .4s cubic-bezier(.23, 1, .32, 1);
+}
+
 // When the menu is open this class is added to the html to prevent users from scrolling
 .nav-is-open {
     overflow: hidden;
@@ -426,8 +434,7 @@ $gutter-large: 55px;
     }
 
     .main-menu-container.off-screen & {
-        transform: translateX(-110%);
-        transition: transform .4s cubic-bezier(.23, 1, .32, 1);
+        @include sidebar-animation(-110%);
     }
 }
 
@@ -436,8 +443,7 @@ $gutter-large: 55px;
 }
 
 .main-menu-container {
-    transform: translateX(-110%);
-    transition: transform .4s cubic-bezier(.23, 1, .32, 1);
+    @include sidebar-animation(-110%);
 
     @include mq($until: mobileMedium) {
         margin-right: $gutter-small + ($veggie-burger-small / 2);
@@ -456,8 +462,7 @@ $gutter-large: 55px;
     &:checked,
     &[aria-expanded='true']  {
         & ~ .main-menu-container {
-            transform: translateX(0%);
-            transition: transform .4s cubic-bezier(.23, 1, .32, 1);
+            @include sidebar-animation(0%);
         }
     }
     &:checked,
@@ -495,9 +500,6 @@ $gutter-large: 55px;
         margin-bottom: $gs-baseline;
     }
 }
-
-//This variable is only used in open menu styling
-$navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
 .main-navigation__item__button {
     position: relative;
