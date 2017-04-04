@@ -52,20 +52,13 @@ define([
         return out;
     }, []);
 
-    function nonOutbrainCompliantVariantIds(testInstance) {
-        return reduce(testInstance.variants, function(out, variant) {
-            if (!variant.isOutbrainCompliant) {
-                out.push(variant.id)
-            }
-            return out;
-        }, [])
-    }
-
     var abTestClashData = tests.map(function(test) {
         var testInstance = new test();
         return {
             name: testInstance.id,
-            variants: nonOutbrainCompliantVariantIds(testInstance)
+            variants: testInstance.variants.filter(function (variant) {
+                return !variant.isOutbrainCompliant
+            })
         }
     });
 
