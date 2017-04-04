@@ -166,7 +166,7 @@ trait ABTestSwitches {
     "Test more design variations to the Epic",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 4),
+    sellByDate = new LocalDate(2017, 4, 6),
     exposeClientSide = true
   )
 
