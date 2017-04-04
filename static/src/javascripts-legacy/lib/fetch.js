@@ -56,11 +56,12 @@ define([
 
         return {
             url: path,
-            type: 'text',
+            type: options.type || 'text',
             method: options.method || 'GET',
             crossOrigin: isCors,
             headers: options.headers,
             data: options.body,
+            contentType: options.contentType,
             withCredentials: withCredentials
         };
     }
