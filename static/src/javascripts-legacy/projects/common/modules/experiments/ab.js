@@ -25,7 +25,8 @@ define([
     'common/modules/experiments/tests/email-demand-tests',
     'common/modules/experiments/tests/paid-card-logo',
     'ophan/ng',
-    'common/modules/experiments/tests/paid-commenting'
+    'common/modules/experiments/tests/paid-commenting',
+    'common/modules/experiments/tests/bundles-landing-page'
 ], function (reportError,
              config,
              cookies,
@@ -52,7 +53,8 @@ define([
              EmailDemandTests,
              PaidCardLogo,
              ophan,
-             PaidCommenting
+             PaidCommenting,
+             BundlesLandingPage
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
@@ -69,7 +71,8 @@ define([
         new IncreaseInlineAds(),
         new EmailDemandTests(),
         new PaidCardLogo(),
-        new PaidCommenting()
+        new PaidCommenting(),
+        new BundlesLandingPage()
     ].concat(MembershipEngagementBannerTests));
 
     function cleanParticipations() {

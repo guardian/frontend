@@ -196,6 +196,9 @@ define([
                     if (sibling.length > 0) {
                         component.insertBefore(sibling);
                         mediator.emit(test.insertEvent, component);
+                        if (test.epic) {
+                            mediator.emit('epic:inpage', component);
+                        }
                         onInsert(component);
 
                         component.each(function (element) {
