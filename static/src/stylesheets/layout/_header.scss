@@ -781,7 +781,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
         left: 49%;
         bottom: 0;
         transform: translateX(-50%);
-        border-bottom: $gs-baseline / 2 solid #747a81;
+        border-bottom: $gs-baseline / 2 solid $subnav-grey;
         border-left: $gs-baseline / 2 solid transparent;
         border-right: $gs-baseline / 2 solid transparent;
     }

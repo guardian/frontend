@@ -1,11 +1,11 @@
 .subnav {
     font-size: 0;
-    background-color: #747a81;
+    background-color: $subnav-grey;
     padding-top: $gs-baseline / 3;
     padding-left: $gs-gutter / 2;
     padding-right: $gs-gutter / 2;
     margin-left: -4px;
-    border-bottom: $gs-baseline / 3 solid #747a81;
+    border-bottom: $gs-baseline / 3 solid $subnav-grey;
     max-height: $gs-baseline * 3.4;
     overflow: hidden;
     z-index: 1;
