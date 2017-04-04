@@ -37,7 +37,7 @@ $gutter: 10px;
     background: #ffffff;
     width: $max-width;
     margin: 0 auto;
-    text-align: inherit;
+    text-align: left;
 }
 
 // table
@@ -46,12 +46,6 @@ $gutter: 10px;
 .ct,
 .ct__inner {
     width: 100%;
-}
-
-.fc,
-.row,
-.ct {
-    text-align: left;
 }
 
 // External margins between cards
