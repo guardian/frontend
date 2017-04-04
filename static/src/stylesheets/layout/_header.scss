@@ -507,7 +507,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     padding-left: $navigation-horizontal-padding;
     padding-bottom: $gs-baseline + ($gs-baseline / 3);
     cursor: pointer;
-    font-size: 1em;
 
     &:focus,
     &:hover {
@@ -650,7 +649,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 }
 
 .secondary-navigation {
-    font-size: .9em;
+    font-size: 18px;
 
     &:last-child {
         margin-bottom: $gs-baseline * 3;
