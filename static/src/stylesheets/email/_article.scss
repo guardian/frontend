@@ -1,12 +1,6 @@
 $max-width: 580px;
 $small-width: 100%;
 
-// to implement
-$hr-border: 1px dashed #dcdcdc;
-$hr-margin: 20px 0 -4px 0;
-
-
-
 @import '_normalise';
 @import '_common';
 @import '_footer';
@@ -111,8 +105,7 @@ hr {
     background: #ffffff;
     height: 0px;
     border: 1px dashed #dcdcdc;
-    margin-top: 8px;
-    margin-bottom: -4px;
+    margin: 8px 0 0;
 }
 
 hr.rule--compact {
@@ -159,3 +152,5 @@ blockquote {
 .text--brand {
     color: #005689;
 }
+
+@import '_media-query';
