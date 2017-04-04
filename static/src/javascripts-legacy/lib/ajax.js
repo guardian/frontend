@@ -1,3 +1,5 @@
+// Goodbye
+
 define([
     'reqwest',
     'lib/config',
