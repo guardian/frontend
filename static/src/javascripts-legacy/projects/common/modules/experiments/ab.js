@@ -22,7 +22,6 @@ define([
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
-    'common/modules/experiments/tests/reading-time',
     'common/modules/experiments/tests/email-demand-tests',
     'common/modules/experiments/tests/paid-card-logo',
     'ophan/ng',
@@ -50,7 +49,6 @@ define([
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
              IncreaseInlineAds,
-             ReadingTime,
              EmailDemandTests,
              PaidCardLogo,
              ophan,
@@ -69,7 +67,6 @@ define([
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
         new IncreaseInlineAds(),
-        new ReadingTime(),
         new EmailDemandTests(),
         new PaidCardLogo(),
         new PaidCommenting()
