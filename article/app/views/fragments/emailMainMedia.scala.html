@@ -7,7 +7,7 @@
 @if(!article.elements.hasMainEmbed) {
     @article.elements.mainPicture.map { picture =>
         @EmailImage.bestFor(picture.images).map { url =>
-            @row(Seq()) {
+            @row(Seq("no-pad")) {
                 <img width="580" class="full-width" src="@url" alt="@ImgSrc.getFallbackAsset(picture.images).flatMap(_.altText).getOrElse("")" />
             }
 

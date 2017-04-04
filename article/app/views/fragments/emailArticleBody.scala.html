@@ -8,7 +8,7 @@
 
 <table class="article-body">
 @defining(page.article) { article =>
-    @row(Seq()) {
+    @row(Seq("no-pad")) {
         <a href="@article.metadata.webUrl" @page.email.map { email => title="View @email.name online"}>
             @imgForArticle(page.banner, page.email.map(_.name))
         </a>
@@ -84,7 +84,7 @@
 
                     case ImageBlockElement(media, data, showCredit) => {
                         @EmailImage.bestFor(media).map { imageUrl =>
-                            @row(Seq()) {
+                            @row(Seq("no-pad")) {
                                 @if(article.isTheMinute && block.url.isDefined) {
                                     <a href="@block.url.getOrElse("#")">
                                         @imgForArticle(imageUrl, data.get("alt"))
@@ -114,7 +114,7 @@
 
                     case GuVideoBlockElement(video, media, data) => {
                         @EmailVideoImage.bestFor(media).map { imageUrl =>
-                            @row(Seq()) {
+                            @row(Seq("no-pad")) {
                                 @data.get("url").fold {
                                     @imgForArticle(imageUrl, data.get("alt"))
                                 }{ linkUrl =>
