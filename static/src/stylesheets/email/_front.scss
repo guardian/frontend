@@ -93,7 +93,7 @@ $gutter: 10px;
     padding: 6px $gutter;
 }
 
-
+// td
 .ct__margin {
     padding: 13px 0 12px;
 
@@ -102,36 +102,40 @@ $gutter: 10px;
     }
 }
 
-.ct__inner {
+// td
+.ct__padding {
     font-family: 'Guardian Egyptian Web Header', 'Guardian Egyptian Web Headline', Georgia, serif;
     font-size: 26px;
     color: #333333;
-}
-
-.ct__padding {
     padding: 4px 0 0;
 }
 
+// a
 .fc-link {
     text-decoration: none;
 }
 
+// td
 .left-col {
     width: 60%;
 }
 
+// td
 .right-col {
     width: 40%;
 }
 
+// td
 .no-pad {
     padding: 0;
 }
 
+// td
 .fc__pad {
     padding-bottom: 26px;
 }
 
+// td
 .headline,
 .byline,
 .trail-text,
@@ -140,6 +144,7 @@ $gutter: 10px;
     padding: 6px $gutter 0;
 }
 
+// td
 .headline,
 .byline {
     font-family: 'Guardian Egyptian Web Headline', Georgia, serif;
@@ -148,11 +153,13 @@ $gutter: 10px;
     color: inherit;
 }
 
+// td
 .byline,
 .review-stars {
     padding: 0 $gutter $gutter;
 }
 
+// td
 .trail-text {
     font-family: Georgia, serif;
     font-size: 14px;
@@ -161,6 +168,7 @@ $gutter: 10px;
 }
 
 .fc--large {
+    // td
     .headline,
     .byline {
         font-size: 22px;
@@ -168,10 +176,12 @@ $gutter: 10px;
     }
 }
 
+// span
 .kicker-separator {
     font-weight: normal;
 }
 
+// img
 .headline .icon {
     height: .7em;
 }
@@ -184,11 +194,13 @@ $email-tones: (
 
 // Defaults
 .ct--not-top {
+    // table
     .ct__inner {
         border-top: 3px solid #46bcdf;
     }
 }
 
+// table
 .tone-external {
     border-top: 1px solid #46bcdf;
 }
@@ -196,10 +208,12 @@ $email-tones: (
 @each $email, $tone-color in $email-tones {
     .#{$email} {
         .ct--not-top {
+            // table
             .ct__inner {
                 border-top: 3px solid $tone-color;
             }
         }
+        // table
         .tone-external {
             border-top: 1px solid $tone-color;
         }

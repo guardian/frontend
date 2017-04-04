@@ -742,7 +742,7 @@
     &.tonal--tone-media {
         background-color: $paid-article;
 
-        .caption {
+        .caption :not(caption--main) {
             color: $neutral-1;
         }
     }
