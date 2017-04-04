@@ -119,7 +119,7 @@ case class LiveBlogDate(fullDate: String, hhmm: String, ampm: String, gmt: Strin
 
 object BlockAttributes {
   def make(blockAttributes: ApiBlockAttributes) =
-    new BlockAttributes(blockAttributes.keyEvent.getOrElse(false), blockAttributes.summary.getOrElse(false), blockAttributes.membershipPlaceholder)
+    new BlockAttributes(blockAttributes.keyEvent.getOrElse(false), blockAttributes.summary.getOrElse(false), Some(MembershipPlaceholder(None)))
 }
 
 case class BlockAttributes(keyEvent: Boolean, summary: Boolean, membershipPlaceholder: Option[MembershipPlaceholder])
