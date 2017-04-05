@@ -37,7 +37,7 @@ define([
                     fetch(config.page.openModule, {
                         mode: 'cors',
                     }).then(function (resp) {
-                        var body = resp.text();
+                        var body = resp && resp.text();
 
                         if (body) {
                             fastdom.write(function () {
