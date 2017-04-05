@@ -238,16 +238,16 @@
     /* Meta
     ========================================================================== */
     .section-label--advertisement {
-      @include fs-textSans(3);
-      font-size: 20px;
-      line-height: 24px;
-      font-weight: 900;
-      margin: 0;
-      padding-top: $gs-baseline / 2;
+        @include fs-textSans(3);
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 900;
+        margin: 0;
+        padding-top: $gs-baseline / 2;
 
-      .content__section-label__link--advertisement {
-        color: $paid-article-brand;
-      }
+        .content__section-label__link--advertisement {
+            color: $paid-article-brand;
+        }
     }
 
     .content__meta-container--immersive {
