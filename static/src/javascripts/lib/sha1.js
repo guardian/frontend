@@ -1,6 +1,6 @@
 // @flow
 
-/* eslint no-bitwise: 0, no-plusplus: 0, default-case: 0, consistent-return: 0 */
+/* eslint no-bitwise: 0, no-plusplus: 0, default-case: 0 */
 
 /**
  * SHA-1 hash function reference implementation.
