@@ -32,8 +32,6 @@ const getTiming = (label: string): ?number => {
     } else if (label in timings) {
         return timings[label];
     }
-
-    return undefined;
 };
 
 export default { mark, getTiming, getCurrentTime };
