@@ -1,6 +1,6 @@
 package liveblog
 
-import controllers.ParseBlockId.{InvalidFormat, ParsedBlockId}
+import model.liveblog.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.liveblog.ParseBlockId
 import org.scalatest.{FlatSpec, Matchers}
 
