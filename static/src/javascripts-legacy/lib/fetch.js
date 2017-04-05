@@ -1,7 +1,9 @@
 define([
+    'lib/config',
     'reqwest',
     'Promise'
 ], function (
+    config,
     reqwest,
     Promise
 ) {
@@ -53,6 +55,11 @@ define([
         var withCredentials =
             (isCors && options.credentials === 'include') ||
             (!isCors && options.credentials === 'same-origin');
+
+        if (!path.match('^(https?:)?//')) {
+            path = (config.page.ajaxUrl || '') + path;
+            options.mode = 'cors';
+        }
 
         return {
             url: path,
