@@ -1,7 +1,8 @@
 @(page: model.Page, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
+
 @import model.Page.getContent
 @import conf.switches.Switches.{preflightServerSideAdCallSwitch, PolyfillIO}
-@import conf.Configuration
+@import conf.Static
 
 <meta charset="utf-8" />
 <!--

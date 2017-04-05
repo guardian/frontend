@@ -1,5 +1,6 @@
 @()(implicit context: model.ApplicationContext)
 @import conf.Static
+@import conf.Configuration
 @import conf.switches.Switches._
 @import play.api.Mode.Dev
 /*eslint quotes: [2, "single"], curly: [2, "multi-line"], strict: 0*/

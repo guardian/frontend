@@ -1,9 +1,9 @@
-@(page: model.Page, matchesList: football.model.MatchesList, filters: Map[String, Seq[CompetitionFilter]])(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page, matchesList: football.model.MatchesList, filters: Map[String, Seq[football.controllers.CompetitionFilter]])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.switches.Switches
 @import football.model._
 
-@main(page, "football"){
+@main(page, Some("football")){
 }{
 <div class="l-side-margins">
     <article id="article" class="content content--footballfixtures" itemprop="mainContentOfPage" itemtype="http://schema.org/Article" role="main">
