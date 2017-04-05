@@ -70,11 +70,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     padding-right: $gs-gutter / 2;
     padding-left: $gs-gutter / 2;
 
-    @include mq(mobileLandscape) {
-        padding-right: $gs-gutter;
-        padding-left: $gs-gutter;
-    }
-
     //mobile,phablet,leftcol,wide need $gs-gutter divided by 2, so duplication needed//
     @include mq($from: tablet, $until: desktop) {
         padding-right: $gs-gutter / 2;
@@ -98,10 +93,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     @include f-textSans();
     list-style: none;
     margin: 0;
-
-    @include mq($until: tablet) {
-        @include columns(2, $gs-gutter);
-    }
 
     @include mq(tablet) {
         box-sizing: border-box;
@@ -157,11 +148,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         width: gs-span(3);
     }
 
-
-    @include mq($from: mobileLandscape, $until: tablet) {
-        padding-right: 50%;
-    }
-
     @include mq(leftCol) {
         width: gs-span(5);
         padding-right: gs-span(1);
@@ -200,4 +186,76 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 
 .really-serious-copyright {
     margin-bottom: $gs-baseline/3;
+}
+
+/****************
+ * MOBILE FOOTER - TODO: consolidate when desktop design has been done
+ ****************/
+
+.l-footer {
+    // these two lines are needed so that the footer sits over the nav
+    position: absolute;
+    z-index: $zindex-content;
+    width: 100%;
+}
+.footer__back-to-top__container {
+    @include content-gutter();
+    background-color: $guardian-brand;
+}
+
+.footer__back-to-top {
+    @include fs-textSans(4);
+    position: relative;
+    text-align: right;
+
+    @include mq($from: mobile, $until: mobileLandscape) {
+        font-size: 14px;
+        font-size: 4.6vw;
+    }
+
+    @include mq(mobileLandscape) {
+        font-size: 20px;
+    }
+}
+
+.back-to-top__text {
+    display: inline-block;
+    color: #ffffff;
+    line-height: 30px;
+    padding-right: $gs-gutter / 2;
+
+    @include mq(mobileMedium) {
+        line-height: 40px;
+    }
+}
+
+.back-to-top__icon {
+    position: relative;
+    float: right;
+    margin-top: -($gs-baseline / 2);
+    margin-bottom: -($gs-baseline / 2);
+    border-radius: 100%;
+    background-color: $news-main-2;
+    cursor: pointer;
+    height: $veggie-burger-small;
+    min-width: $veggie-burger-small;
+
+    @include mq(mobileMedium) {
+        height: $veggie-burger-medium;
+        width: $veggie-burger-medium;
+    }
+
+    svg {
+        position: absolute;
+        top: -($gs-baseline / 2);
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
+
+        @include mq(mobileMedium) {
+            width: 30px;
+            height: 24px;
+        }
+    }
 }

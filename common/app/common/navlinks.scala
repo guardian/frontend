@@ -20,7 +20,7 @@ object NavLinks {
   var auPolitics = NavLink("AU politics", "/australia-news/australian-politics", "australia-news/australian-politics", longTitle = "australian politics")
   var auImmigration = NavLink("immigration", "/australia-news/australian-immigration-and-asylum", "australia-news/australian-immigration-and-asylum")
   var indigenousAustralia = NavLink("indigenous australia", "/australia-news/indigenous-australians", "australia-news/indigenous-australians")
-  var indigenousAustraliaOpinion = NavLink("Indigenous", "/australia-news/indigenous-australians+tone/comment", "commentisfree/series/indigenousx")
+  var indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx", "commentisfree/series/indigenousx")
   var usNews = NavLink("US", "/us-news", "us-news", longTitle = "US news")
   var usPolitics = NavLink("US politics", "/us-news/us-politics", "us-news/us-politics", longTitle = "US politics")
   val education = NavLink("education", "/education", "education")

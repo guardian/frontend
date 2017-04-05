@@ -226,7 +226,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object sonobi {
-    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12912.js")
+    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12913.js")
   }
 
   object switch {
@@ -301,6 +301,7 @@ class GuardianConfiguration extends Logging {
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
     lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
     lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("https://membership.theguardian.com")
+    lazy val supportUrl = configuration.getStringProperty("id.support.url").getOrElse("https://support.theguardian.com")
     lazy val digitalPackUrl = configuration.getStringProperty("id.digitalpack.url").getOrElse("https://subscribe.theguardian.com")
     lazy val membersDataApiUrl = configuration.getStringProperty("id.members-data-api.url").getOrElse("https://members-data-api.theguardian.com")
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
@@ -461,6 +462,7 @@ class GuardianConfiguration extends Logging {
       ("ophanEmbedJsUrl", ophan.embedJsLocation),
       ("googletagJsUrl", googletag.jsLocation),
       ("membershipUrl", id.membershipUrl),
+      ("supportUrl", id.supportUrl),
       ("stripePublicToken", id.stripePublicToken),
       ("sonobiHeaderBiddingJsUrl", sonobi.jsLocation),
       ("switchPreFlightJsUrl", switch.jsLocation)

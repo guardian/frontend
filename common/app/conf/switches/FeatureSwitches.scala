@@ -21,7 +21,7 @@ trait FeatureSwitches {
     "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 3),
+    sellByDate = new LocalDate(2017, 5, 3),
     exposeClientSide = true
   )
 
@@ -507,16 +507,6 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
-  )
-
-  val NewHeader = Switch(
-    SwitchGroup.Feature,
-    "new-header",
-    "New header switch, just in case anything is really wrong with it",
-    owners = Seq(Owner.withGithub("natalialkb")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 4, 12),
-    exposeClientSide = false
   )
 
   val InlineEmailStyles = Switch(

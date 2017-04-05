@@ -27,11 +27,10 @@ function init() {
     var nextRecipeText = $('.js-recipe__article--next-text');
     var nextRecipeKicker = $('.js-kicker');
     var nextButton = $('.js-recipe__article--next-button');
-    var readMoreButton;
-    var displayClass = 'recipe__image__wrapper--is-displayed';
-    var stickyGutter = $('.js-recipe__gutter-wrapper');
     var stickyImages = $('.js-recipes__images-wrapper');
     var contentFooter = $('.content-footer');
+    var displayClass = 'recipe__image__wrapper--is-displayed';
+    var readMoreButton;
     var contentFooterTop;
     var windowHeight = window.innerHeight;
 
@@ -133,9 +132,8 @@ function init() {
         resetAssets(focalRecipeInt);
         if (focalRecipeInt < 0) { nextButton.removeClass('top'); }
 
-        if(detect.isBreakpoint({ min: 'desktop' })) {
-          new Sticky(stickyGutter[0]).init();
-          new Sticky(stickyImages[0]).init();
+        if (detect.isBreakpoint({ min: 'desktop' })) {
+          new Sticky(stickyImages[0], {}).init();
         }
 
         readMoreWrapper.html(readMoreNoJS.html());
