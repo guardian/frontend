@@ -2,7 +2,6 @@ package common
 
 import java.io.{File, FileInputStream}
 import java.util.Map.Entry
-import java.util.{Properties => JavaProperties}
 
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
@@ -12,7 +11,6 @@ import com.typesafe.config.ConfigException
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
-import play.api.Play
 import scala.collection.JavaConversions._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}

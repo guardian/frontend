@@ -2,9 +2,7 @@ package layout
 
 import cards.{MediaList, Standard}
 import com.gu.commercial.branding.Branding
-import com.gu.contentapi.client.model.v1.{ContentType, TagType}
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.facia.api.{utils => fapiutils}
 import common.Edition.defaultEdition
 import common.{Edition, LinkTo}
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper

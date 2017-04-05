@@ -2,7 +2,7 @@ package views.support.cleaner
 
 import java.net.URLDecoder
 
-import model.{Elements, Article, VideoAsset}
+import model.{Article, VideoAsset}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpSrcCleaner, HtmlCleaner}
 
