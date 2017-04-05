@@ -1,6 +1,7 @@
 // @flow
 
 import config from 'lib/config';
+import mediator from 'lib/mediator';
 
 const trackerName = config.googleAnalytics.trackers.editorial;
 const send = `${trackerName}.send`;
@@ -107,14 +108,24 @@ const trackPerformance = (
     timingLabel: string
 ): void => {
     if (window.performance && window.performance.now && window.ga) {
+        const sendDeferredEventQueue = (): void => {
+            config.googleAnalytics.timingEvents.map(sendPerformanceEvent);
+            mediator.off('modules:ga:ready', sendDeferredEventQueue);
+        };
         const timeSincePageLoad = Math.round(window.performance.now());
-
-        sendPerformanceEvent({
+        const event = {
             timingCategory,
             timingVar,
             timeSincePageLoad,
             timingLabel,
-        });
+        };
+
+        if (window.ga) {
+            sendPerformanceEvent(event);
+        } else {
+            mediator.on('modules:ga:ready', sendDeferredEventQueue);
+            config.googleAnalytics.timingEvents.push(event);
+        }
     }
 };
 
