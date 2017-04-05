@@ -1,8 +1,9 @@
 package common.commercial
 
-import com.gu.commercial.display.{AdCall, AdCallParamKey, SurgeLookupService}
+import com.gu.commercial.display.{AdCall, AdCallParamKey}
 import com.gu.contentapi.client.model.v1.{Content, Section, Tag}
 import common.Edition
+import ophan.SurgingContentAgent
 import play.api.libs.json.Json
 
 case class EditionAdTargeting(edition: Edition, params: Map[String, String])
@@ -13,10 +14,7 @@ object EditionAdTargeting {
 
   private val adCall = new AdCall(
     platform = "ng",
-    surgeLookupService = new SurgeLookupService {
-      // to be implemented
-      def pageViewsPerMinute(pageId: String): Option[Int] = None
-    }
+    surgeLookupService = SurgingContentAgent
   )
 
   private def editionTargeting(targeting: Edition => Map[AdCallParamKey, String]): Seq[EditionAdTargeting] = {
@@ -36,11 +34,9 @@ object EditionAdTargeting {
   def fromSection(section: Section): Seq[EditionAdTargeting] =
     editionTargeting(edition => adCall.pageLevelContextTargeting(section, edition.id))
 
-  def targeting(adContextTargetings: Option[Seq[EditionAdTargeting]], edition: Edition): Map[String, String] = {
-    val params = for {
-      targetings <- adContextTargetings
-      targeting <- targetings.find(_.edition == edition)
-    } yield targeting.params
-    params getOrElse Map.empty
-  }
+  def forNetworkFront(frontId: String): Seq[EditionAdTargeting] =
+    editionTargeting(edition => adCall.pageLevelContextTargeting(networkFrontPath = s"/$frontId", edition.id))
+
+  def forFrontUnknownToCapi(frontId: String): Seq[EditionAdTargeting] =
+    editionTargeting(edition => adCall.pageLevelTargetingForFrontUnknownToCapi(frontId, edition.id))
 }

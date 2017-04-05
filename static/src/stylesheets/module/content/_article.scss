@@ -22,19 +22,14 @@
 
     @include mq(tablet) {
         max-width: gs-span(8);
+        padding-left: 0 !important;
+        padding-right: 0 !important;
     }
     @include mq(desktop) {
         max-width: none;
     }
     .content__main-column--image & {
         padding-bottom: 0;
-    }
-}
-
-@include mq(tablet) {
-    .caption--main {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
     }
 }
 

@@ -52,16 +52,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-recommended-for-you-recommendations",
-    "Test personalised container on fronts",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 4),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-brexit",
     "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
     owners = Seq(Owner.withGithub("alexduf")),
@@ -176,7 +166,7 @@ trait ABTestSwitches {
     "Test more design variations to the Epic",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 4),
+    sellByDate = new LocalDate(2017, 4, 6),
     exposeClientSide = true
   )
 
@@ -197,16 +187,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-reading-time",
-    "Test demand for getting suggested content based on how much time a reader has",
-    owners = Seq(Owner.withGithub("lmath")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 4),
     exposeClientSide = true
   )
 
@@ -249,4 +229,15 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 4, 10),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-epic-to-support-landing-page",
+    "Use AB framework to divert traffic from epic to new support landing page",
+    owners = Seq(Owner.withGithub("JustinPinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 4, 27),
+    exposeClientSide = true
+  )
+
 }

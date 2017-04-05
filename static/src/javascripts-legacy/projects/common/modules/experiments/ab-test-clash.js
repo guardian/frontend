@@ -22,7 +22,7 @@ define([
         if (clashingTests.length > 0) {
             return some(clashingTests, function (test) {
                 return some(test.variants, function (variant) {
-                    return f(test.name, variant);
+                    return f(test, variant);
                 });
             });
         }
