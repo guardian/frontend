@@ -72,17 +72,28 @@
     height: 50vh;
     top: 0;
     width: 100%;
-    position: relative;
     overflow: hidden;
+
+    @include mq($until: desktop) {
+        position: relative;
+    }
 
     @include mq($from: desktop) {
         flex-basis: 40%;
-        position: sticky;
         height: 100vh;
         min-height: 600px;
+        @supports (position: sticky) {
+            position: sticky;
+        }
+        &.is-sticky {
+            width: 40%
+        }
     }
     @include mq($from: leftCol) {
         flex-basis: 50%;
+        &.is-sticky {
+            width: 50%
+        }
     }
 }
 
@@ -162,17 +173,23 @@
     padding-bottom: $gs-gutter * 4;
 }
 
+.flex-filler {
+    flex-shrink: 0;
+    flex-grow: 4;
+}
 .recipe__gutter-wrapper {
     display: none;
 
     @include mq($from: desktop) {
         display: flex;
         flex-basis: 5%;
-        position: sticky;
+        position: relative;
         top: 0;
         height: 100vh;
         min-height: 600px;
-        border-right: 1px solid $neutral-3;
+        @supports (position: sticky) {
+            position: sticky;
+        }
     }
 }
 
@@ -250,22 +267,30 @@
         transform: rotate(270deg);
     }
 
-    &.visible, &.hide-on-desktop {
+    &.hide-on-desktop {
         opacity: 1;
+    }
+    @supports (position: sticky) {
+        &.visible {
+            opacity: 1;
+        }
     }
 }
 
 .recipe__article-wrapper {
-    margin-left: auto;
-    margin-right: auto;
+    @include mq($until: desktop) {
+        margin-left: auto;
+        margin-right: auto;
+    }
 
     @include mq($from: desktop) {
         flex-basis: 55%;
         float: right;
+        border-left: 1px solid $neutral-3;
     }
 
-    @include mq($from: wide) {
-        flex-basis: 55%;
+    @include mq($from: leftCol) {
+        flex-basis: 45%;
     }
 }
 
@@ -639,7 +664,6 @@
     margin-top: $gs-gutter * 2;
     padding-top: 0;
     padding-bottom: 0;
-    margin-left: -$gs-baseline;
 
     .ad-slot {
         margin-left: auto;

@@ -24,6 +24,10 @@
 .tonal--tone-media .content__headline--gallery {
     font-weight: 200;
     padding-top: 0;
+
+    @include mq($until: tablet) {
+        padding-top: $gs-baseline / 2;
+    }
 }
 
 .content__labels--gallery {

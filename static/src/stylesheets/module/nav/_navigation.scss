@@ -158,9 +158,6 @@ $c-navigation-expandable-background: $neutral-1;
     }
 
     .navigation-container--expanded & {
-        @include mq($until: tablet) {
-            border-right: 0;
-        }
         @include mq(tablet) {
             min-width: $global-navigation-title-width;
         }
@@ -301,15 +298,8 @@ $c-navigation-expandable-background: $neutral-1;
     @include clearfix;
     background: $c-global-navigation-background;
     clear: both;
-
-    @include mq($until: tablet) {
-        line-height: 28px;
-    }
-    @include mq(mobileLandscape, tablet) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
-    }
 }
+
 .global-navigation__section {
     display: block;
     clear: both;
@@ -321,10 +311,6 @@ $c-navigation-expandable-background: $neutral-1;
     background: $c-local-navigation-background;
     min-height: $navigation-height;
 
-    @include mq(mobileLandscape, tablet) {
-        margin-right: -$gs-gutter;
-        margin-left: -$gs-gutter;
-    }
     @include mq(tablet) {
         padding-left: $global-navigation-title-width;
     }
@@ -332,22 +318,13 @@ $c-navigation-expandable-background: $neutral-1;
         padding-left: $global-navigation-title-width-wide;
     }
 }
+
 .global-navigation__title {
     color: $c-global-navigation-title;
     background: $c-global-navigation-title-background;
     float: left;
     border-top: 1px solid $guardian-brand;
 
-    @include mq($until: tablet) {
-        line-height: $gs-baseline*2;
-        padding-bottom: $gs-baseline;
-        padding-left: $navigation-h-space-between-items;
-        padding-right: $navigation-h-space-between-items;
-    }
-    @include mq(mobileLandscape, tablet) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
-    }
     @include mq(tablet) {
         box-sizing: border-box;
         position: absolute;
@@ -369,25 +346,13 @@ $c-navigation-expandable-background: $neutral-1;
         padding-bottom: 0;
     }
 }
+
 .global-navigation__children {
     box-sizing: border-box;
     min-height: $navigation-height;
     padding-top: $gs-baseline/4;
     overflow: hidden;
 
-    @include mq($until: tablet) {
-        margin-left: -$navigation-h-space-between-items;
-        margin-right: -$navigation-h-space-between-items;
-        padding-left: $navigation-h-space-between-items;
-        padding-right: $navigation-h-space-between-items;
-        padding-bottom: $gs-baseline*.75;
-        font-size: 14px;
-        line-height: 2;
-    }
-    @include mq(mobileLandscape, tablet) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
-    }
     @include mq(tablet) {
         padding-bottom: $gs-baseline/4;
         padding-left: $navigation-h-space-between-items;
@@ -413,13 +378,7 @@ $c-navigation-expandable-background: $neutral-1;
         }
     }
 }
-@include mq($until: tablet) {
-    .global-navigation__title,
-    .global-navigation__children {
-        float: none;
-        display: block;
-    }
-}
+
 @include mq(tablet) {
     .global-navigation__action {
         float: left;
@@ -507,45 +466,11 @@ $c-navigation-expandable-background: $neutral-1;
         }
     }
     .local-navigation__item {
-        @include mq($until: tablet) {
-            font-size: 14px;
-            line-height: 28px;
-            &:last-child {
-                // Add space below the local nav (only if there is one)
-                padding-bottom: $gs-baseline;
-            }
-        }
-        @include mq(tablet) {
-            float: left;
-        }
+        float: left;
     }
     .local-navigation__action {
         display: block;
         float: left;
-    }
-}
-
-.navigation-container--expanded .local-navigation__item,
-.global-navigation__child {
-    @include mq($until: tablet) {
-        float: left;
-        width: 50%;
-        padding-right: 0;
-        box-sizing: border-box;
-
-        &:nth-child(2n+1) {
-            clear: both;
-        }
-    }
-    @include mq(mobileLandscape, tablet) {
-        width: 33.3333333333%;
-
-        &:nth-child(n) {
-            clear: none;
-        }
-        &:nth-child(3n+1) {
-            clear: both;
-        }
     }
 }
 
@@ -744,12 +669,6 @@ $c-navigation-expandable-background: $neutral-1;
         }
     }
 
-    .navigation-toggle-label {
-        @include mq($until: mobileLandscape) {
-            display: none;
-        }
-    }
-
     @include mq(navigationBreakOnTwoLevels) {
         .navigation--has-signposting .navigation__container--first {
             border-top: 0;
@@ -770,10 +689,6 @@ $c-navigation-expandable-background: $neutral-1;
 
     .burger-icon {
         margin-top: $gs-baseline * 1.5;
-
-        @include mq($until: mobileLandscape) {
-            margin: $gs-baseline * 1.5 0 0;
-        }
     }
 
 }
@@ -801,13 +716,6 @@ $burger-width: 16px;
     vertical-align: top;
     margin: 13px 6px 0 0; // We need to position burger icon to the middle and push text after
     position: relative;
-
-
-    .l-header--slim-all & {
-        @include mq($until: mobileLandscape) {
-            margin-right: 0;
-        }
-    }
 
     &:before,
     &:after {

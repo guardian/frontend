@@ -40,7 +40,7 @@ case class PressedCollection(
   def branding(edition: Edition): Option[ContainerBranding] = {
     BrandingFinder.findBranding(
       isConfiguredForBranding = config.metadata.exists(_.contains(Branded)),
-      brandings = curatedPlusBackfillDeduplicated.flatMap(_.branding(edition)).toSet
+      brandings = curatedPlusBackfillDeduplicated.map(_.branding(edition)).toSet
     )
   }
 }

@@ -12,7 +12,6 @@ import cricketPa.CricketTeams
 import model.content.MediaAtom
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
-import ophan.SurgingContentAgent
 import org.apache.commons.lang3.StringUtils
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
@@ -214,8 +213,6 @@ final case class MetaData (
     DfpAgent.omitMPUsFromContainers(id, edition)
   } else false
 
-  val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
-
   val requiresMembershipAccess: Boolean = membershipAccess.nonEmpty
 
   val hasSlimHeader: Boolean =
@@ -238,7 +235,7 @@ final case class MetaData (
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
     ("isFront", JsBoolean(isFront)),
-    ("isSurging", JsString(isSurging.mkString(","))),
+    ("isSurging", JsString(commercial.map(_.surgeBuckets).getOrElse("0"))),
     ("contentType", JsString(contentType))
   )
 

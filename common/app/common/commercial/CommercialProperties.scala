@@ -14,6 +14,9 @@ case class CommercialProperties(
   val isFoundationFunded: Boolean = branding(defaultEdition).exists(_.isFoundationFunded)
   def isSponsored(edition: Edition): Boolean = branding(edition).exists(_.isSponsored)
 
+  // Todo: remove this helper method when server-side ad targeting implemented before 2017-04-30
+  val surgeBuckets: String = adTargeting(defaultEdition).getOrElse("su", "")
+
   def branding(edition: Edition): Option[Branding] = for {
     editionBranding <- editionBrandings.find(_.edition == edition)
     branding <- editionBranding.branding
@@ -31,6 +34,8 @@ object CommercialProperties {
 
   implicit val commercialPropertiesFormat = Json.format[CommercialProperties]
 
+  val empty = CommercialProperties(editionBrandings = Nil, editionAdTargetings = Nil)
+
   def fromContent(item: Content): CommercialProperties = CommercialProperties(
     editionBrandings = EditionBranding.fromContent(item),
     editionAdTargetings = EditionAdTargeting.fromContent(item)
@@ -44,5 +49,21 @@ object CommercialProperties {
   def fromTag(tag: Tag): CommercialProperties = CommercialProperties(
     editionBrandings = EditionBranding.fromTag(tag),
     editionAdTargetings = EditionAdTargeting.fromTag(tag)
+  )
+
+  private def isNetworkFront(frontId: String): Boolean = Edition.all.map(_.networkFrontId).contains(frontId)
+
+  def forNetworkFront(frontId: String): Option[CommercialProperties] = {
+    if (isNetworkFront(frontId)) {
+      Some(CommercialProperties(
+        editionBrandings = Nil,
+        editionAdTargetings = EditionAdTargeting.forNetworkFront(frontId)
+      ))
+    } else None
+  }
+
+  def forFrontUnknownToCapi(frontId: String): CommercialProperties = CommercialProperties(
+    editionBrandings = Nil,
+    editionAdTargetings = EditionAdTargeting.forFrontUnknownToCapi(frontId)
   )
 }

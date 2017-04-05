@@ -31,9 +31,8 @@ Follow [this link](https://www.google.co.uk) and enter the relevant search strin
 
 # Local dev server setup
 
-You can either set up the frontend through a [local install](#automatic) on your machine or using [Docker](#docker). 
-Before checking out the repository you may need to add your guardian email address to your github account and [add an 
-SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/). Before pushing changes you may 
+Before checking out the repository you may need to add your guardian email address to your github account and [add an
+SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/). Before pushing changes you may
 need to [create an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/).
 Make sure your dev manager has added you to the necessary teams, in case you have need write access.
 
@@ -217,32 +216,3 @@ If you are working on Identity or Discussion, Nginx must be installed and
 configured to correctly serve the application, please refer to
 [`/nginx/README.md`](https://github.com/guardian/frontend/blob/master/nginx/README.md) in this project.
 This will allow you to access frontend via `https://m.thegulocal.com`
-
-## Docker
-
-Warning: Docker for Mac is suffering performance issues for directories mounted via osxfs, making the Guardian frontend setup on Mac painfully slow. We'll recommand that Mac users follow the instructions above to install and run frontend on their local machine.
-
-Prerequisites:
-- Docker. See [Install documentation](https://docs.docker.com/engine/installation/)
-- AWS CLI. See [documentation](https://aws.amazon.com/cli/)
-
-1. Clone repository
-    - `git clone git@github.com:guardian/frontend.git && cd frontend`
-2. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *frontend* and *CMS fronts* (you will need access to Janus)
-3. Run the container (dev service). The first time you do so the container image would be pulled from the EC2 Container Registry
-    - ./dev.sh
-4. Build and run the app within the container
-    - `make reinstall compile && ./sbt`
-    - See [Run the app section](#run-the-app) for more info
-
-
-*Notes:*
-- *Your local machine (host) `~/.gu/` and `~/.aws/` directories are exposed to the container via mounted volumes, so they have access to the properties and aws credentials files*
-- *The `dev` container will be deleted when exited*
-- *Node packages are bound to your machine architecture, so you cannot switch between MacOS and Docker(Linux) in the same local git repo. To avoid this problem, you can run `make reinstall` which will install the correct node binaries for your system*
-
-### Removing containers
-
-Containers can be thrown away very easily. To do so:
-- `docker ps -a` to get the ID of the container you want to remove
-- `docker rm ID`. Use `-f` option to force deletion when the container is still in used.

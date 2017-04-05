@@ -5,7 +5,6 @@
 @import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
-@import conf.switches.Switches.NewHeader
 
 @schemaType(page: ArticlePage) = @{page.article.metadata.schemaType}
 
@@ -36,7 +35,7 @@
                 @fragments.guBand()
             }
 
-            @if(!NewHeader.isSwitchedOn || amp) {
+            @if(amp) {
                 @fragments.headTonal(article, model, isPaidContent, amp = amp)
 
                 @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
@@ -67,7 +66,7 @@
                             @fragments.mainMedia(article, amp)
                         }
 
-                        @if(NewHeader.isSwitchedOn && !amp) {
+                        @if(!amp) {
                             <div class="mobile-only">
                                 @fragments.headTonal(article, model, isPaidContent, amp = amp)
                             </div>

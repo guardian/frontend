@@ -10,7 +10,6 @@ define([
     'bonzo',
     'lib/url',
     'lib/config',
-    'lib/ajax',
     'common/modules/avatar/api'
 ], function (
     $,
@@ -18,7 +17,6 @@ define([
     bonzo,
     url,
     config,
-    ajax,
     avatarApi
 ) {
 
