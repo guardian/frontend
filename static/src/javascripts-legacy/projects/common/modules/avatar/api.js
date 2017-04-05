@@ -1,8 +1,8 @@
 define([
-    'lib/ajax',
+    'lib/fetch-json',
     'lib/config'
 ], function (
-    ajax,
+    fetchJSON,
     config
 ) {
 
@@ -10,18 +10,16 @@ define([
     var staticUrl = config.page.avatarImagesUrl + '/user';
     var Api = {};
 
-    Api.request = function (method, path, data) {
+    Api.request = function (method, path, body) {
         var params = {
-            url: apiUrl + path,
-            type: 'json',
-            data: data || {},
-            processData : false,
+            body: body || {},
+            credentials: 'include',
             method: method,
-            crossOrigin: true,
-            withCredentials: true
+            mode: 'cors',
+            type: 'json',
         };
 
-        return ajax(params);
+        return fetchJSON(apiUrl + path, params);
     };
 
     // A user's 'active' avatar is only available to signed-in users as it

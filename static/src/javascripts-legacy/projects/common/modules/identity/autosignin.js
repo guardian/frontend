@@ -1,6 +1,6 @@
 define([
     'bonzo',
-    'lib/ajax',
+    'lib/fetch-json',
     'lib/config',
     'common/modules/identity/api',
     'common/modules/identity/facebook-authorizer',
@@ -10,7 +10,7 @@ define([
 ],
 function (
     bonzo,
-    ajax,
+    fetchJSON,
     config,
     id,
     FacebookAuthorizer,
@@ -52,24 +52,22 @@ function (
         };
 
         this.signin = function (authResponse, name) {
-            ajax({
-                url: config.page.idWebAppUrl + '/jsapi/facebook/autosignup',
-                cache: false,
-                crossOrigin: true,
+            fetchJSON(config.page.idWebAppUrl + '/jsapi/facebook/autosignup', {
+                mode: 'cors',
                 type: 'jsonp',
                 data: {
                     signedRequest: authResponse.signedRequest,
                     accessToken: authResponse.accessToken
-                },
-                success: function (response) {
-                    self.welcome(name);
-                    if (response.status === 'ok') {
-                        var profile = new Profile({
-                            url: config.page.idUrl
-                        });
-                        profile.init();
-                        new Toggles().init();
-                    }
+                }
+            }).then(function(response) {
+                self.welcome(name);
+
+                if (response.status === 'ok') {
+                    var profile = new Profile({
+                        url: config.page.idUrl
+                    });
+                    profile.init();
+                    new Toggles().init();
                 }
             });
         };

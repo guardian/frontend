@@ -1,14 +1,14 @@
 define([
     'fastdom',
     'lib/$',
-    'lib/ajax',
+    'lib/fetch',
     'lib/config',
     'lib/detect',
     'common/modules/article/space-filler'
 ], function (
     fastdom,
     $,
-    ajax,
+    fetch,
     config,
     detect,
     spaceFiller
@@ -34,10 +34,8 @@ define([
         init: function () {
             if (config.page.openModule) {
                 spaceFiller.fillSpace(getSpacefinderRules(), function (spaces) {
-                    ajax({
-                        url: config.page.openModule,
-                        crossOrigin: true,
-                        method: 'get'
+                    fetch(config.page.openModule, {
+                        mode: 'cors',
                     }).then(function (resp) {
                         if (resp.html) {
                             fastdom.write(function () {
