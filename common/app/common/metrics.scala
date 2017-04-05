@@ -105,20 +105,6 @@ object SystemMetrics extends implicits.Numbers {
 
 }
 
-object RequestMetrics {
-
-  val PanicRequestsSurgeMetric = CountMetric(
-    name = "panic-requests-surge",
-    description = "Number of requests we returned 503 because we received a sudden surge"
-  )
-
-  val HighLatencyMetric = CountMetric(
-    name = "high-latency",
-    description = "Number of requests made when the recent latency was too high"
-  )
-
-}
-
 object ContentApiMetrics {
   val HttpLatencyTimingMetric = TimingMetric(
     "content-api-call-latency",
@@ -185,11 +171,6 @@ class CloudWatchMetricsLifecycle(
     }
   }}
 
-  def applicationMetrics: List[FrontendMetric] = List(
-    RequestMetrics.PanicRequestsSurgeMetric,
-    RequestMetrics.HighLatencyMetric
-  ) ++ appMetrics.metrics
-
   def systemMetrics: List[FrontendMetric] = List(
     SystemMetrics.MaxHeapMemoryMetric,
     SystemMetrics.UsedHeapMemoryMetric,
@@ -210,7 +191,7 @@ class CloudWatchMetricsLifecycle(
     )}
 
   private def report() {
-    val allMetrics: List[FrontendMetric] = this.systemMetrics ::: this.applicationMetrics
+    val allMetrics: List[FrontendMetric] = this.systemMetrics ::: this.appMetrics.metrics
 
     CloudWatch.putMetrics(applicationMetricsNamespace, allMetrics, applicationDimension)
   }
