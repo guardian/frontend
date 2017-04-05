@@ -180,11 +180,13 @@ define([
                 if (endpoint) {
                     return fetch(notificationsEndpoint, {
                         method: 'POST',
-                        contentType: 'application/x-www-form-urlencoded',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
                         body: {
                             browserEndpoint: endpoint,
-                            notificationTopicId: config.page.pageId
-                        }
+                            notificationTopicId: config.page.pageId,
+                        },
                     });
                 }
             });
