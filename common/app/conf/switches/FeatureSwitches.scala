@@ -483,7 +483,7 @@ trait FeatureSwitches {
     "Live blog chrome notifications - prod",
     owners = Seq(Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 5),
+    sellByDate = new LocalDate(2017, 6, 30), //Friday
     exposeClientSide = true
   )
 
