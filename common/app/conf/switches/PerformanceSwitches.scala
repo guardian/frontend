@@ -5,16 +5,6 @@ import org.joda.time.LocalDate
 
 trait PerformanceSwitches {
 
-  val PanicSheddingSwitch = Switch(
-    SwitchGroup.Performance,
-    "panic-shedding",
-    "When this switch is on, the Panic Shedding system is enabled which can filter requests under high latency",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val InlineJSStandardOptimisation = Switch(
     SwitchGroup.Performance,
     "inline-standard-optimisation",
