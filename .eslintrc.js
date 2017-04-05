@@ -31,7 +31,6 @@ module.exports = {
         ],
         'no-extend-native': 'error',
         'func-style': ['error', 'expression', { allowArrowFunctions: true }],
-        'consistent-return': 0,
     },
     // don't look for eslintrcs above here
     root: true,
