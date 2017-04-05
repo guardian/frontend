@@ -94,7 +94,6 @@ const handleMembershipAccess = (): void => {
 
     if (identity.isUserLoggedIn()) {
         fetchJSON(`${membershipUrl}/user/me`, {
-            type: 'json',
             mode: 'cors',
             credentials: 'include',
         })
