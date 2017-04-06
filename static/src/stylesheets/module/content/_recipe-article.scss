@@ -348,6 +348,14 @@
 .recipe__content--feedback-text {
     @include fs-textSans(3);
     color: $neutral-2;
+    max-width: 550px;
+    border-top: 1px solid #ececec;
+    font-weight: 900;
+    padding-top: $gs-baseline / 2;
+}
+
+.recipe__content--feedback-link {
+    color: $features-main-2;
 }
 
 .recipe__content, .recipe__standfirst {
