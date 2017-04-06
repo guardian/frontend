@@ -42,7 +42,19 @@ object EditionAdTargeting {
     def stringify(params: Map[AdCallParamKey, AdCallParamValue]) = for ((k, v) <- params) yield {
       k.name -> {
         v match {
+
+          /*
+           * Ultimately in the ad targeting json this will appear as a single value,
+           * eg. "ct" : "article"
+           */
           case sv: SingleValue => Left(sv.toCleanString)
+
+          /*
+           * Ultimately in the ad targeting json this will appear as an Array value,
+           * even if it actually only holds a single value.
+           * eg. "k" : ["a"] or "k" : ["a", "b", "c"]
+           * This is to make it clear that it can have multiple values.
+           */
           case mv: MultipleValues => Right(mv.toCleanStrings)
         }
       }
