@@ -1,11 +1,18 @@
 define([
     'bean',
     'lib/$',
-    'lib/ajax',
+    'lib/fetch',
     'lib/config',
     'membership/formatters',
     'membership/stripe'
-], function (bean, $, ajax, config, formatters, stripe) {
+], function (
+    bean,
+    $,
+    fetch,
+    config,
+    formatters,
+    stripe
+) {
 
     var PACKAGE_COST = '.js-dig-package-cost',
         PAYMENT_FORM = '.js-dig-card-details',
@@ -29,16 +36,15 @@ define([
         IS_HIDDEN_CLASSNAME = 'is-hidden';
 
     function fetchUserDetails() {
-        ajax({
-
-            url: config.page.userAttributesApiUrl + '/me/mma-digitalpack',
-            crossOrigin: true,
-            withCredentials: true,
-            method: 'get'
+        fetch(config.page.userAttributesApiUrl + '/me/mma-digitalpack', {
+            mode: 'cors',
+            credentials: 'include',
         }).then(function (resp) {
-            if (resp && resp.subscription) {
+            var body = resp && resp.text();
+
+            if (body && body.subscription) {
                 hideLoader();
-                populateUserDetails(resp);
+                populateUserDetails(body);
             } else {
                 hideLoader();
                 displayDigitalPackUpSell();
