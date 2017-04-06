@@ -3,7 +3,7 @@
 
 @(page: Page, theMatch: Match, homeTeamScorers: Seq[ScoreEvent], awayTeamScorers: Seq[ScoreEvent])(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@main(page, "football") { } {
+@main(page, Some("football")) { } {
     <div class="l-side-margins">
         <article class="content">
             <header class="content__main">

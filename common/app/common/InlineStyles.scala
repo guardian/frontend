@@ -12,7 +12,7 @@ import play.twirl.api.Html
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable.ListMap
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Success}
 
 case class CSSRule(selector: String, styles: ListMap[String, String]) {
   val canInline = !selector.contains(":")

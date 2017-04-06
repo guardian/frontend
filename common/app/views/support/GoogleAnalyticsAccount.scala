@@ -1,7 +1,7 @@
 package views.support
 
 import conf.Configuration.environment
-import model.{ApplicationContext, ApplicationIdentity}
+import model.ApplicationContext
 
 object GoogleAnalyticsAccount {
 

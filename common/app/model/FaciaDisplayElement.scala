@@ -5,7 +5,6 @@ import conf.switches.Switches
 import implicits.FaciaContentFrontendHelpers._
 import layout.ItemClasses
 import model.pressed.PressedContent
-import com.gu.contentapi.client.model.{v1 => contentapi}
 import model.content.MediaAtom
 
 object FaciaDisplayElement {

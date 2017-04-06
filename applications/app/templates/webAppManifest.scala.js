@@ -1,3 +1,5 @@
+@import conf.Static
+
 @()
 {
     "name":"The Guardian",

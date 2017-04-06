@@ -1,5 +1,7 @@
 @(stylesheet: String, isCrossword: Boolean = false)
+
 @import conf.switches.Switches._
+@import conf.Static
 
 @* temporarily disable async css on crossword pages so they're usable on safari 6 and below *@
 @if(AsyncCss.isSwitchedOn && !isCrossword) {
