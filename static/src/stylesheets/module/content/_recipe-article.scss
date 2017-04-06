@@ -6,6 +6,8 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    border-bottom: 1px solid #ececec;
+    margin-bottom: $gs-gutter * 2;
 
     @include mq($from: desktop) {
         flex-wrap: nowrap;
@@ -170,7 +172,6 @@
 
 .recipe__article {
     padding: 0 $gs-gutter / 2;
-    padding-bottom: $gs-gutter * 4;
 }
 
 .flex-filler {
@@ -308,7 +309,7 @@
     margin: 0;
     margin-bottom: $gs-baseline * 2;
     color: $neutral-1;
-    max-width: 642px;
+    max-width: 550px;
 
 
 }
@@ -316,7 +317,23 @@
 .recipe__article--buttons {
     display: flex;
     justify-content: space-between;
-    max-width: 642px;
+    padding-bottom: $gs-baseline;
+
+    @include mq($from: tablet) {
+        max-width: 550px;
+    }
+
+    @include mq($until: tablet) {
+        border-bottom: 1px solid $neutral-6;
+        border-top: 1px solid $neutral-6;
+        margin-top: $gs-baseline;
+        padding-top: $gs-baseline / 2;
+    }
+
+    //removes the line height of all elements within the artcile button wrapper
+    & > * {
+      line-height: 0;
+    }
 }
 
 .recipe__article--social {
@@ -368,7 +385,7 @@
     p {
         font-size: 16px;
         line-height: 20px;
-        max-width: 642px;
+        max-width: 550px;
     }
     h2 {
         font-size: 16px;
@@ -390,7 +407,7 @@
 .recipe__content {
     & > * {
         display: none;
-        max-width: 642px;
+        max-width: 550px;
     }
     & > *:nth-child(-n+2) {
         display: block;
@@ -569,7 +586,7 @@
 
 .recipe__article--structured-headline {
     margin-bottom: $gs-baseline * 2;
-    max-width: 642px;
+    max-width: 550px;
 }
 
 .recipe__article--structured-meta {
@@ -579,7 +596,7 @@
 .recipe__article--structured-ingredients {
     margin-bottom: $gs-baseline * 2;
     margin-top: $gs-baseline;
-    max-width: 642px;
+    max-width: 550px;
 
     @include mq($from: desktop) {
         display: flex;
@@ -655,7 +672,7 @@
 
 .method-list {
     margin-bottom: $gs-baseline * 2;
-    max-width: 642px;
+    max-width: 550px;
 
     li:not(.recipe__article--list-title) {
         font-family: $f-sans-serif-text;
