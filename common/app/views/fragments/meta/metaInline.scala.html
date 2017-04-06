@@ -31,8 +31,14 @@
         </div>
     }
 
+
+
     @item.content.blogOrSeriesTag.map { series =>
-    <div class="content__series-label @if(item.content.isImmersive && item.content.tags.isArticle) { content__series-label--immersive-article } @if(item.content.isPhotoEssay) { content__series-label--photo-essay}">
+    <div class="@RenderClasses(Map(
+            "content__series-label--immersive-article" -> (item.content.isImmersive && item.content.tags.isArticle),
+            "content__series-label--photo-essay" -> item.content.isPhotoEssay
+        ), "content__series-label")
+      ">
         <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
     </div>
     }.getOrElse {
