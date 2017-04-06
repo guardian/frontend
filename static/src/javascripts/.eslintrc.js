@@ -61,5 +61,8 @@ module.exports = {
         // our own rules for frontend
         // live in tools/eslint-plugin-guardian-frontend
         'guardian-frontend/global-config': 2,
+
+        // flow should take care of our return values
+        'consistent-return': 'off',
     },
 };

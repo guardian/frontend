@@ -20,7 +20,7 @@ import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
 import images from 'common/modules/ui/images';
 import storage from 'lib/storage';
-import ajax from 'lib/ajax';
+import fetchJSON from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import checkMediator from 'common/modules/check-mediator';
 import addEventListener from 'lib/add-event-listener';
@@ -93,11 +93,9 @@ const handleMembershipAccess = (): void => {
     };
 
     if (identity.isUserLoggedIn()) {
-        ajax({
-            url: `${membershipUrl}/user/me`,
-            type: 'json',
-            crossOrigin: true,
-            withCredentials: true,
+        fetchJSON(`${membershipUrl}/user/me`, {
+            mode: 'cors',
+            credentials: 'include',
         })
             .then(updateDOM)
             .catch(redirect);

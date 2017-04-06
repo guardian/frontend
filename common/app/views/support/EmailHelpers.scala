@@ -7,95 +7,6 @@ import play.twirl.api.Html
 import play.api.mvc._
 
 object EmailHelpers {
-  case class Container(rows: Row*) {
-    def render: Html = Html {
-      s"""<table align="center" class="container">
-         |  <tbody>
-         |    <tr>
-         |      <td>
-         |        ${rows.map(_.render).mkString}
-         |      </td>
-         |    </tr>
-         |  </tbody>
-         |</table>""".stripMargin
-    }
-  }
-
-  case class Row(classes: Seq[String], columns: Column*) {
-    def render: Html = {
-      val cols = columns.zipWithIndex.map { case (col, i) =>
-        col.render(i == 0, i == columns.length - 1)
-      }
-
-      Html {
-        s"""<table class="row ${classes.mkString(" ")}">
-           |  <tbody>
-           |    <tr>
-           |      ${cols.mkString}
-           |    </tr>
-           |  </tbody>
-           |</table>""".stripMargin
-      }
-    }
-  }
-
-  case class Column(smallWidth: Int, largeWidth: Int, classes: Seq[String] = Seq())(inner: Html) {
-    def render(first: Boolean = false, last: Boolean = false): Html = Html {
-      s"""<th class="${if (first) {"first"} else {""}} ${if (last) {"last"} else {""}} small-${smallWidth} large-${largeWidth} columns">
-         |  <table>
-         |    <tr>
-         |      <th class="${classes.mkString(" ")}">$inner</th>
-         |      <th class="expander"></th>
-         |    </tr>
-         |  </table>
-         |</th>""".stripMargin
-    }
-  }
-
-  case class Callout(classes: Seq[String], rows: Row*) {
-    def render: Html = Html {
-      s"""<table class="callout">
-         |    <tr>
-         |      <th class="callout-inner ${classes.mkString(" ")}">
-         |        ${rows.map(_.render).mkString}
-         |      </th>
-         |    </tr>
-         |</table>""".stripMargin
-    }
-  }
-
-  case class FaciaCard(classes: Seq[String], rows: Row*) {
-    def render: Html = Html {
-      s"""<table class="fc-item">
-         |    <tr>
-         |      <th class="fc-item__margin ${classes.mkString(" ")}">
-         |        ${rows.map(_.render).mkString}
-         |      </th>
-         |    </tr>
-         |</table>""".stripMargin
-    }
-  }
-
-  def faciaCardFullRow(classes: Seq[String] = Nil)(inner: Html): Html = FaciaCard(Seq(), Row(classes,
-    Column(smallWidth = 12, largeWidth = 12, Seq("fc-item__padding"))(inner)
-  )).render
-
-  def fullRow(inner: Html): Html = Row(Seq(),
-    Column(smallWidth = 12, largeWidth = 12)(inner)
-  ).render
-
-  def fullRow(classes: Seq[String] = Nil)(inner: Html): Html = Row(Seq(),
-    Column(smallWidth = 12, largeWidth = 12, classes)(inner)
-  ).render
-
-  def paddedRow(inner: Html): Html = Callout(Nil, Row(Seq(),
-    Column(smallWidth = 12, largeWidth = 12)(inner)
-  )).render
-
-  def paddedRow(classes: Seq[String] = Nil)(inner: Html): Html = Callout(classes, Row(Seq(),
-    Column(smallWidth = 12, largeWidth = 12)(inner)
-  )).render
-
   def imageUrlFromCard(contentCard: ContentCard, width: Int): Option[String] = {
     for {
       InlineImage(imageMedia) <- contentCard.displayElement
@@ -133,8 +44,6 @@ object EmailHelpers {
       }
     }
   }
-
-
 
   object Images {
     val footerG = Static("images/email/grey-g.png")

@@ -1,6 +1,7 @@
 @(item: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.{Edition, StringEncodings}
 @import conf.Static
+@import conf.Configuration
 @import play.api.libs.json.Json
 @import views.support.{CamelCase, JavaScriptPage, GoogleAnalyticsAccount}
 @import conf.Configuration.environment

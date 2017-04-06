@@ -1,4 +1,4 @@
-@(comments: List[Comment], showMore: Boolean = false)(implicit request: RequestHeader)
+@(comments: List[discussion.model.Comment], showMore: Boolean = false)(implicit request: RequestHeader)
 <div class="open-cta__top-comments">
 @comments.map { comment =>
     @fragments.commentSchema(comment, showMore)

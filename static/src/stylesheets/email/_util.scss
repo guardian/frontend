@@ -1,0 +1,29 @@
+// img
+.icon {
+    display: inline;
+}
+
+// img
+.full-width {
+    width: 100%;
+}
+
+// td
+.no-pad {
+    padding: 0;
+}
+
+// table
+.body {
+    background: $body-color;
+    height: 100%;
+    width: 100%;
+}
+
+// table
+.container {
+    background: $container-color;
+    width: $max-width;
+    margin: 0 auto;
+    text-align: left;
+}

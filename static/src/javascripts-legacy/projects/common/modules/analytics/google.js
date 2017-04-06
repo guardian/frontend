@@ -1,9 +1,11 @@
 define([
     'lib/config',
-    'lib/mediator'
+    'lib/mediator',
+    'lib/window-performance',
 ], function (
     config,
-    mediator
+    mediator,
+    performanceAPI
 ) {
     var trackerName = config.googleAnalytics.trackers.editorial;
     var send = trackerName + '.send';
@@ -87,9 +89,9 @@ define([
     // Tracks into Behaviour > Site Speed > User Timings in GA
     function trackPerformance(timingCategory, timingVar, timingLabel) {
         // Feature detect Navigation Timing API support.
-        if (window.performance && window.performance.now) {
+        if ('now' in performanceAPI) {
             // Value must be an integer - grabs the number of milliseconds since page load
-            var timeSincePageLoad = Math.round(window.performance.now());
+            var timeSincePageLoad = Math.round(performanceAPI.now());
             var eventObj = {
                 timingCategory: timingCategory,
                 timingVar: timingVar,

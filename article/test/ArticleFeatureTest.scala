@@ -164,19 +164,6 @@ import collection.JavaConversions._
       }
     }
 
-    scenario("Live blogs should have a coverage start and end date", ArticleComponents) {
-
-      Given("I am on a dead live blog")
-      goTo("/books/live/2015/jul/13/go-set-a-watchman-launch-follow-it-live") { browser =>
-        import browser._
-
-        Then("I should see the start and end date of coverage")
-        val liveBlogPosting = findFirst("[itemtype='http://schema.org/LiveBlogPosting']").getElement
-        liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageStartTime']")).getAttribute("content") should be("2015-07-14T11:20:37+0100")
-        liveBlogPosting.findElement(By.cssSelector("[itemprop='coverageEndTime']")).getAttribute("content") should be("2017-02-06T14:59:12+0000")
-      }
-    }
-
     scenario("Articles should have the correct timezone for when they were published") {
 
       Given("I am on an article published on '2012-11-08'")

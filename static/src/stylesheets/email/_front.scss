@@ -2,25 +2,13 @@ $max-width: 500px;
 $small-width: 100%;
 $gutter: 10px;
 
+$body-color: #ffffff;
+$container-color: #ffffff;
+
 @import '_normalise';
-@import '_common';
+@import '_util';
 @import '_footer';
 @import '_tones';
-
-// We don't want these vendor-specific rules to be inlined because they will
-// inflate the email size for no benefit in some clients. These @-rules
-// will target WebKit and Mozilla specifically, and prevent the styles being inlined.
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-    td {
-        -webkit-font-smoothing: antialiased;
-    }
-}
-
-@-moz-document url-prefix() {
-    td {
-        -moz-osx-font-smoothing: grayscale;
-    }
-}
 
 @font-face {
     font-family: 'Guardian Egyptian Web Header';
@@ -41,32 +29,11 @@ $gutter: 10px;
 }
 
 // table
-.body {
-    background: #ffffff;
-    height: 100%;
-    width: 100%;
-}
-
-// table
-.container {
-    background: #ffffff;
-    width: $max-width;
-    margin: 0 auto;
-    text-align: inherit;
-}
-
-// table
 .fc,
 .row,
 .ct,
 .ct__inner {
     width: 100%;
-}
-
-.fc,
-.row,
-.ct {
-    text-align: left;
 }
 
 // External margins between cards
@@ -123,11 +90,6 @@ $gutter: 10px;
 // td
 .right-col {
     width: 40%;
-}
-
-// td
-.no-pad {
-    padding: 0;
 }
 
 // td

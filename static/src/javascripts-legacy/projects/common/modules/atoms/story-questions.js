@@ -10,7 +10,7 @@ define([
 
     function askQuestion(event) {
         event.preventDefault();
-        var questionId = event.target.id;
+        var questionId = event.currentTarget.querySelector('.user__question-upvote').id;
         var question = $('#js-question-text-' + questionId).text();
         var atomId = $('.js-storyquestion-atom-id').attr('id');
 

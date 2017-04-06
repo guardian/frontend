@@ -400,8 +400,8 @@ object NewNavigation {
     )
 
     val worldSubNav = NavLinkLists(
-      List(world, europe, usNews, americas, asia, australiaNews, middleEast),
-      List(africa, cities, globalDevelopment)
+      List(world, europe, usNews, americas, asia, australiaNews, middleEast, africa),
+      List(cities, globalDevelopment)
     )
 
     val moneySubNav = NavLinkLists(List(money, property, pensions, savings, borrowing, careers))
