@@ -102,7 +102,7 @@ define([
                 maxViews: {
                     days: 30,
                     count: 4,
-                    minDaysBetweenViews: 0
+                    minDaysBetweenViewws: 0
                 },
                 test: function(render) {
                     renderTemplate(render, controlTemplate);
