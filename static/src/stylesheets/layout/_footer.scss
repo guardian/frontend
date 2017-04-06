@@ -94,6 +94,10 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     list-style: none;
     margin: 0;
 
+    @include mq($until: tablet) {
+        @include columns(2, $gs-gutter);
+    }
+
     @include mq(tablet) {
         box-sizing: border-box;
         padding-left: $gs-gutter / 2;
