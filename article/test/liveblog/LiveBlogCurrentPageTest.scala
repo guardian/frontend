@@ -1,6 +1,6 @@
 package liveblog
 
-import model.liveblog.{Blocks, BlockAttributes, BodyBlock}
+import model.liveblog._
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 
