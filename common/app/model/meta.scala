@@ -529,7 +529,6 @@ final case class Tags(
   lazy val paidContent: List[Tag] = tagsOfType("PaidContent")
 
   lazy val richLink: Option[String] = tags.flatMap(_.richLinkId).headOption
-  lazy val openModule: Option[String] = tags.flatMap(_.openModuleId).headOption
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   def isNews = !(isLiveBlog || isComment || isFeature)
@@ -589,7 +588,6 @@ final case class Tags(
     ("hasSuperStickyBanner", JsBoolean(hasSuperStickyBanner)),
     ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
     ("richLink", JsString(richLink.getOrElse(""))),
-    ("openModule", JsString(openModule.getOrElse(""))),
     ("author", JsString(contributors.map(_.name).mkString(","))),
     ("authorIds", JsString(contributors.map(_.id).mkString(","))),
     ("tones", JsString(tones.map(_.name).mkString(","))),
