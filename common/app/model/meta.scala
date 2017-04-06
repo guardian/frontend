@@ -235,7 +235,6 @@ final case class MetaData (
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
     ("isFront", JsBoolean(isFront)),
-    ("isSurging", JsString(commercial.map(_.surgeBuckets).getOrElse("0"))),
     ("contentType", JsString(contentType))
   )
 

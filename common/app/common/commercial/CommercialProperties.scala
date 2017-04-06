@@ -14,15 +14,12 @@ case class CommercialProperties(
   val isFoundationFunded: Boolean = branding(defaultEdition).exists(_.isFoundationFunded)
   def isSponsored(edition: Edition): Boolean = branding(edition).exists(_.isSponsored)
 
-  // Todo: remove this helper method when server-side ad targeting implemented before 2017-04-30
-  val surgeBuckets: String = adTargeting(defaultEdition).getOrElse("su", "")
-
   def branding(edition: Edition): Option[Branding] = for {
     editionBranding <- editionBrandings.find(_.edition == edition)
     branding <- editionBranding.branding
   } yield branding
 
-  def adTargeting(edition: Edition): Map[String, String] = {
+  def adTargeting(edition: Edition): Map[String, Either[String, Set[String]]] = {
     val params = for {
       editionAdTargeting <- editionAdTargetings.find(_.edition == edition)
     } yield editionAdTargeting.params

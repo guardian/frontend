@@ -2,6 +2,7 @@ package views.support
 
 import common.Edition
 import common.Maps.RichMap
+import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
 import conf.{Configuration, DiscussionAsset}
 import model._
