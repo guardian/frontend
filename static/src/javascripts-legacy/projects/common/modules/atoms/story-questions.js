@@ -1,8 +1,12 @@
 define([
+    'lib/mediator',
+    'lib/detect',
     'lib/$',
     'bean',
     'ophan/ng'
 ], function (
+    mediator,
+    detect,
     $,
     bean,
     ophan
@@ -35,6 +39,29 @@ define([
                     bean.on(el, 'click', askQuestion);
                 });
             }
+
+            var storyQuestionsComponent = document.querySelector('.js-view-tracking-component');
+    
+            mediator.on('window:throttledScroll', function onScroll() {
+                var height = detect.getViewport().height;
+                var coords = storyQuestionsComponent.getBoundingClientRect();
+                var isStoryQuestionsInView = 0 <= coords.top && coords.bottom <= height;
+                
+                if( isStoryQuestionsInView ) {
+                    var atomId = $('.js-storyquestion-atom-id').attr('id');
+
+                    if (atomId) {
+                        ophan.record({
+                            atomId: atomId,
+                            component: atomId,
+                            value: 'question_component_in_view'
+                        });
+                    }
+
+                    mediator.off('window:throttledScroll', onScroll);
+                }
+            });
+
         }
     };
 
