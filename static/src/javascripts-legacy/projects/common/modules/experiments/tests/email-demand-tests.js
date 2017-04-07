@@ -121,8 +121,13 @@ define([
         }
 
         function validArticleStructure() {
-            var lastArticleElements = [].slice.call($(articleBody)[0].children, -minimumTrailingParagraphs);
-            return lastArticleElements.length === minimumTrailingParagraphs && lastArticleElements.every(isParagraph);
+            var $articleBody = $(articleBody);
+            if ($articleBody && $articleBody.length > 0) {
+                var lastArticleElements = [].slice.call($articleBody[0].children, -minimumTrailingParagraphs);
+                return lastArticleElements.length === minimumTrailingParagraphs && lastArticleElements.every(isParagraph);
+            } else {
+                return false;
+            }
         }
 
         function isParagraph($el) {

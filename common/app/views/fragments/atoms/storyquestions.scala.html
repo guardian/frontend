@@ -1,7 +1,7 @@
 @(storyquestions: model.content.StoryQuestionsAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
 @if(!isAmp) {
-    <div class="submeta user__question">
+    <div class="js-view-tracking-component submeta user__question">
         <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
         <h2 class="user__question-title">Finished this article but want to know more? <span class="user__question-title--secondary">Let us know what questions you want answered.</span></h2>
         @for(questions <- storyquestions.data.editorialQuestions) {
@@ -12,13 +12,13 @@
                     </div>
 
                     @for(question <- qs.questions) {
-                        <div class="user__questions-text--wrapper">
+                        <div class="user__questions-text--wrapper js-ask-question-link">
                             <span id="js-question-text-@question.questionId" class="user__question-text">
                                 <span class="user__questions-text--inner">
                                     @question.questionText
                                 </span>
                             </span>
-                            <button id="@question.questionId" class="user__question-upvote js-ask-question-link">
+                            <button id="@question.questionId" class="user__question-upvote">
                                 Ask this
                                 @fragments.inlineSvg("tick", "icon")
                             </button>
@@ -29,6 +29,6 @@
                     }
                 </p>
             }
-        </div>
+    </div>
 }
 }
