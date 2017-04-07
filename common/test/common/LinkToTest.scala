@@ -25,41 +25,45 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
 
   "LinkTo" should "leave 'other' urls unchanged" in {
     val otherUrl = "http://somewhere.com/foo/bar.html?age=7#TOP"
-    TestLinkTo(otherUrl, edition) should be (otherUrl)
+    TestLinkTo(otherUrl, Some(edition)) should be (otherUrl)
   }
 
   it should "modify the host of Guardian urls" in {
-    TestLinkTo("http://www.theguardian.com/foo/bar.html?age=7#TOP", edition) should be ("http://www.foo.com/foo/bar.html?age=7#TOP")
-  }
-
-  it should "editionalise the front url" in {
-    TestLinkTo("http://www.theguardian.com", edition) should be ("http://www.foo.com/uk")
+    TestLinkTo("http://www.theguardian.com/foo/bar.html?age=7#TOP", Some(edition)) should be ("http://www.foo.com/foo/bar.html?age=7#TOP")
   }
 
   it should "editionalise the front path" in {
-    TestLinkTo("/", edition) should be ("http://www.foo.com/uk")
+    TestLinkTo("/", Some(edition)) should be ("http://www.foo.com/uk")
+  }
+
+  it should "editionalise a editionalizable section" in {
+    TestLinkTo(s"/money", Some(edition)) should be (s"http://www.foo.com/uk/money")
+  }
+
+  it should "NOT editionalise a editionalizable section if no edition is specified" in {
+    TestLinkTo(s"/money", None) should be (s"http://www.foo.com/money")
   }
 
   it should "not modify protocol relative paths" in {
-    TestLinkTo("//www.youtube.com/embed/jLoG-fNir0c?enablejsapi=1&version=3", edition) should be ("//www.youtube.com/embed/jLoG-fNir0c?enablejsapi=1&version=3")
+    TestLinkTo("//www.youtube.com/embed/jLoG-fNir0c?enablejsapi=1&version=3", Some(edition)) should be ("//www.youtube.com/embed/jLoG-fNir0c?enablejsapi=1&version=3")
   }
 
   it should "strip leading and trailing whitespace" in {
-    TestLinkTo("  http://www.foo.com/uk   ", edition) should be ("http://www.foo.com/uk")
+    TestLinkTo("  http://www.foo.com/uk", Some(edition)) should be ("http://www.foo.com/uk")
   }
 
   it should "link to section and not the 'section tag'" in {
-    TestLinkTo("http://www.theguardian.com/books/books", edition) should be ("http://www.foo.com/books")
-    TestLinkTo("/books/books", edition) should be ("http://www.foo.com/books")
-    TestLinkTo("/books-23-f/books-23-f", edition) should be ("http://www.foo.com/books-23-f")
+    TestLinkTo("http://www.theguardian.com/books/books", Some(edition)) should be ("http://www.foo.com/books")
+    TestLinkTo("/books/books", Some(edition)) should be ("http://www.foo.com/books")
+    TestLinkTo("/books-23-f/books-23-f", Some(edition)) should be ("http://www.foo.com/books-23-f")
   }
 
   it should "generate an editionalised RSS path" in {
     // editionalised
-    TestLinkTo("/commentisfree/rss", edition) should be ("http://www.foo.com/uk/commentisfree/rss")
-    TestLinkTo("/rss", edition) should be ("http://www.foo.com/uk/rss")
+    TestLinkTo("/commentisfree/rss", Some(edition)) should be ("http://www.foo.com/uk/commentisfree/rss")
+    TestLinkTo("/rss", Some(edition)) should be ("http://www.foo.com/uk/rss")
     // not editionalised
-    TestLinkTo("/football/rss", edition) should be ("http://www.foo.com/football/rss")
+    TestLinkTo("/football/rss", Some(edition)) should be ("http://www.foo.com/football/rss")
   }
 
   it should "always write interactives as https links" in {
@@ -75,17 +79,17 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
   }
 
   it should "be https to amp" in {
-    TestAmpLinkTo("/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen", edition) should be ("https://amp.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen")
+    TestAmpLinkTo("/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen", Some(edition)) should be ("https://amp.theguardian.com/law/2015/oct/08/jeremy-corbyn-rejects-formal-privy-council-induction-by-queen")
   }
 
   it should "correctly editionalise the International front" in {
-    TheGuardianLinkTo("/", International) should be ("https://www.theguardian.com/international")
+    TheGuardianLinkTo("/", Some(International)) should be ("https://www.theguardian.com/international")
   }
 
   it should "correctly link editionalised sections" in {
     for (edition <- editions) {
       for (section <- edition.editionalisedSections) {
-        val testLink = TheGuardianLinkTo(s"http://www.theguardian.com/$section", edition)
+        val testLink = TheGuardianLinkTo(s"http://www.theguardian.com/$section", Some(edition))
         val expectedPath = if(section.isEmpty) edition.networkFrontId else s"${edition.networkFrontId}/$section"
         testLink should startWith("https://")
         testLink should endWith (s"www.theguardian.com/$expectedPath")
@@ -96,7 +100,7 @@ class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
   it should "correctly link editionalised sections to the UK version for the International edition" in {
     // Only the front page is different in the international edition, the others go to UK...
     for (section <- International.editionalisedSections.filterNot(_.isEmpty)) {
-      TheGuardianLinkTo(s"/$section", International) should endWith (s"www.theguardian.com/uk/$section")
+      TheGuardianLinkTo(s"/$section", Some(International)) should endWith (s"www.theguardian.com/uk/$section")
     }
   }
 

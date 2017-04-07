@@ -21,10 +21,10 @@ trait LinkTo extends Logging {
   private val RssPath = "^(/.+)?(/rss)".r
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
 
-  def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
-  def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
+  def apply(html: Html)(implicit request: RequestHeader): String = apply(html.toString(), Some(Edition(request)))
+  def apply(link: String)(implicit request: RequestHeader): String = apply(link, Some(Edition(request)))
 
-  def apply(url: String, edition: Edition)(implicit request: RequestHeader): String =
+  def apply(url: String, edition: Option[Edition])(implicit request: RequestHeader): String =
     processUrl(url.trim, edition).url
 
   def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = Option(apply(trail.metadata.url))
@@ -34,17 +34,18 @@ trait LinkTo extends Logging {
 
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
 
-  def processUrl(url: String, edition: Edition) = url match {
+  def processUrl(url: String, edition: Option[Edition]) = url match {
     case `url` if url.startsWith("//") => ProcessedUrl(url)
     case RssPath(path, format) => ProcessedUrl(urlFor(path, edition) + format)
     case GuardianUrl(_, path) => ProcessedUrl(urlFor(path, edition))
     case otherUrl => ProcessedUrl(otherUrl, true)
   }
 
-  private def urlFor(path: String, edition: Edition): String = {
+  private def urlFor(path: String, edition: Option[Edition]): String = {
     val pathString = Option(path).getOrElse("")
     val id = if (pathString.startsWith("/")) pathString.substring(1) else pathString
-    val editionalisedPath = Editionalise(clean(id), edition)
+    val cleanId = clean(id)
+    val editionalisedPath = edition.map(Editionalise(cleanId, _)).getOrElse(cleanId)
 
     s"$host/$editionalisedPath"
   }
@@ -138,7 +139,7 @@ trait AmpLinkTo extends LinkTo {
 
 object AmpLinkTo extends AmpLinkTo {
 
-  override def processUrl(url: String, edition: Edition) = {
+  override def processUrl(url: String, edition: Option[Edition]) = {
     val ampUrl = if (host.isEmpty) s"$url?amp=1" else url
     super.processUrl(ampUrl, edition)
   }

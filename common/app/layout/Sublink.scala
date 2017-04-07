@@ -30,7 +30,7 @@ case class EditionalisedLink(
     LinkTo(baseUrl)(requestHeader)
 
   def hrefWithRel(implicit requestHeader: RequestHeader): String =
-    processUrl(baseUrl, Edition(requestHeader)) match {
+    processUrl(baseUrl, Some(Edition(requestHeader))) match {
       case ProcessedUrl(url, true) => s"""href="$url" rel="nofollow""""
       case ProcessedUrl(url, false) => s"""href="$url""""
     }
