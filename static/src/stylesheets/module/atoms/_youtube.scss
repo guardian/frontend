@@ -39,7 +39,6 @@
         }
     }
 
-
     &--active {
         .youtube-media-atom {
             opacity: 1;
@@ -48,7 +47,6 @@
             }
         }
     }
-
 }
 
 .youtube-media-atom {
@@ -110,13 +108,11 @@
                 }
             }
         }
-	}
+    }
 
     .youtube-media-atom__overlay.vjs-big-play-button {
         pointer-events: none;
     }
-
-
 
     .youtube-media-atom__overlay {
         background-size: cover;
