@@ -23,7 +23,7 @@ define([
     function updateYouTubeVideo(currentItem){
         var youTubeAtom = currentItem.querySelector('.youtube-media-atom');
         if(youTubeAtom) {
-            return youtube.onVideoContainerNavigation(youTubeAtom.dataset.uniqueAtomId);
+            return youtube.onVideoContainerNavigation(youTubeAtom.getAttribute("data-unique-atom-id"));
         }
     }
 
