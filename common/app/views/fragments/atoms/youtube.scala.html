@@ -53,14 +53,16 @@
                         @if(f.showByline) {
                             <div class="fc-item__byline">@f.byline</div>
                         }
-                    }
+
                     </div>
                     <span class="video-overlay__duration">
                     @media.formattedDuration
                     </span>
                 </div>
+                <a href="@f.header.url.get(request)" class="video-container-overlay-link"></a>
             }
-            }
+          }
+        }
         @defining(posterImageOverride.filter(_ => !playable || YouTubePosterOverride.isSwitchedOn) orElse media.posterImage) { bestPosterImage =>
             @bestPosterImage.map { image =>
                 <div class="@RenderClasses(Map("youtube-media-atom__overlay" -> true, "vjs-big-play-button" -> !expired))" style="background-image: url(@Video700.bestFor(image))">
