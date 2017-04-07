@@ -1,17 +1,19 @@
 define([
     'bean',
-    'lib/$',
-    'lib/config',
-    'lib/detect',
+    'fastdom',
+    'common/utils/$',
+    'common/utils/config',
+    'common/utils/detect',
     'commercial/modules/dfp/get-creative-ids',
     'common/modules/experiments/ab',
     'lodash/collections/map',
     'lodash/collections/reduce',
     'lodash/objects/assign',
     'lodash/objects/keys',
-    'lib/cookies'
+    'common/utils/cookies'
 ], function (
     bean,
+    fastdom,
     $,
     config,
     detect,
@@ -23,6 +25,9 @@ define([
     keys,
     cookies
 ) {
+
+    console.log("feedbacking started")
+
     var adblockBeingUsed = false;
 
     function objToString(obj) {
@@ -52,21 +57,25 @@ define([
         };
     }
 
+    function getExtraDataInformation() {
+        return {
+            browser: window.navigator.userAgent,
+            page: window.location,
+            width: window.innerWidth,
+            adBlock: adblockBeingUsed,
+            devicePixelRatio: window.devicePixelRatio,
+            ophanId: config.ophan.pageViewId,
+            gu_u: cookies.get('GU_U'),
+            payingMember: cookies.get('gu_paying_member'),
+            abTests : summariseAbTests(ab.getParticipations())
+        };
+    }
+
     function addEmailHeaders(storedValues) {
         return function (link) {
             return function () {
                 var oldHref = link.attr('href');
-                var props = {
-                    browser: window.navigator.userAgent,
-                    page: window.location,
-                    width: window.innerWidth,
-                    adBlock: adblockBeingUsed,
-                    devicePixelRatio: window.devicePixelRatio,
-                    ophanId: config.ophan.pageViewId,
-                    gu_u: cookies.getCookie('GU_U'),
-                    payingMember: cookies.getCookie('gu_paying_member'),
-                    abTests : summariseAbTests(ab.getParticipations())
-                };
+                var props = getExtraDataInformation();
                 var body = '\r\n\r\n\r\n\r\n------------------------------\r\nAdditional technical data about your request - please do not edit:\r\n\r\n'
                     + objToString(assign(props, storedValues))
                     + '\r\n\r\n';
@@ -128,5 +137,9 @@ define([
         // Exposed for testing
         this.getValuesFromHash = getValuesFromHash;
         this.summariseAbTests = summariseAbTests;
+
+        document.getElementById("oingoboingo").innerHTML = "BLOODY WORKED";
+
+        console.log("I CAN'T STOP THIS FEELING. DEEP INSIDE MYSELF. GIRL YOU JUST DON'T REALISE");
     };
 });

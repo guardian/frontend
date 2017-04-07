@@ -25,7 +25,7 @@
                                             <fieldset class="feedback__form">
                                                 <div class="feedback__element">
                                                     <label class="" for="test">Problem</label>
-                                                    <select class="feedback__select feedback__input--wide">
+                                                    <select class="feedback__select feedback__input--wide" name="category">
                                                         <option>Choose a selection</option>
                                                         <option>I don't know how to into computer!</option>
                                                         <option>I can't even</option>
@@ -33,11 +33,11 @@
                                                 </div>
                                                 <div class="feedback__element">
                                                     <label class="" for="test">Description</label>
-                                                    <textarea class="feedback__textarea feedback__input--wide" placeholder="Help us out with a friendly message"></textarea>
+                                                    <textarea name="body" class="feedback__textarea feedback__input--wide" placeholder="Help us out with a friendly message"></textarea>
                                                 </div>
                                                 <div class="feedback__element">
                                                     <label class="" for="test">Email</label>
-                                                    <input class="feedback__input feedback__input--wide" id="test" type="email" name="test" value="" placeholder="E.g. alexsmith@@example.com">
+                                                    <input name="user" class="feedback__input feedback__input--wide" id="test" type="email" name="test" value="" placeholder="E.g. alexsmith@@example.com">
                                                 </div>
                                                 <div class="feedback__element">
                                                     <button class="button button--large button--primary" id="" type="submit">Submit Feedback</button>
@@ -45,7 +45,11 @@
                                             </fieldset>
                                         </form>
 
-                                        <small>Or email us directly <a href="mailto:userhelp@@theguardian.com">here</a></small>
+                                        <p id="oingoboingo">oingoboingo</p>
+
+                                        <small>
+                                            Or email us directly at <a data-link-name="tech feedback : mailto : userhelp" href="mailto:userhelp@@theguardian.com">userhelp@@theguardian.com</a> and someone should get back to you.
+                                        </small>
 
                                     </div>
                                 </div>
