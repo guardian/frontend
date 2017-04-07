@@ -7,6 +7,7 @@ import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpSrcCleaner, HtmlCleaner}
 
 import scala.collection.JavaConversions._
+import scala.util.matching.Regex
 
 case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
@@ -280,7 +281,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   }
 
 
-  def cleanAmpEmbed(document: Document) = {
+
+/*  def cleanAmpEmbed(document: Document) = {
     document.getElementsByClass("element-embed")
       .filter(_.getElementsByTag("iframe").nonEmpty)
       .foreach(_.getElementsByTag("iframe").foreach {
@@ -292,6 +294,113 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
           } else
             iframeElement.remove()
       })
+*/
+  sealed abstract class AmpElementEmbed(matchingUrl: String, x: (Document, Element) => Option[Element]){
+    val pattern: Regex = "".r
+    val isAMatch = pattern.findFirstIn(matchingUrl).isDefined
+    val ampTag = "amp-iframe"
+    def createInstance(doc: Document, element: Element): Option[Element] = x.apply(doc,element)
+  }
+
+  val audioBoomPattern = """^https?:\/\/audioboom\.com\/""".r
+  val instagramPattern = """^\/\/platform\.instagram\/.com\/*""".r
+  val googleMapsPattern = """^https?:\/\/www\.google\.com\/maps\/embed*""".r
+
+
+  case class GoogleMapsEmbed(document: Document, iframe: Element) extends  AmpElementEmbed(getAttrib(iframe, "src"), (d: Document, e: Element) => Some(AmpMaps.createMapElement(d, e))) {
+    override val pattern = """^https?:\/\/www\.google\.com\/maps\/embed*""".r
+  }
+  case class SoundCloudEmbed(document: Document, iframe: Element) extends AmpElementEmbed(URLDecoder.decode(getAttrib(iframe, "src"),"UTF-8"), (d: Document, e: Element) => AmpSoundcloud.getSoundCloudElement(d , e)) {
+    override val ampTag = "amp-soundcloud"
+    override val pattern = ".*api.soundcloud.com/tracks/(\\d+).*".r
+  }
+  case class AudioBoomEmbed(document: Document, iframe: Element) extends  AmpElementEmbed(getAttrib(iframe, "src"), (d: Document, e: Element) => getAudioBoomElement(d , e)) {
+    override val pattern = """^https?:\/\/audioboom\.com\/""".r
+  }
+  case class InstagramEmbed(document: Document, iframe: Element) extends  AmpElementEmbed(getHref(iframe), (d: Document, e: Element) => AmpInstagram.createInstagramElement(d, getHref(e))) {
+    override val ampTag = "amp-instagram"
+    override val pattern = """^\/\/platform\.instagram\/.com\/*""".r
+  }
+  case class YouTubeVideo(document: Document, figure: Element) extends  AmpElementEmbed(getAttrib(figure, "data-canonical-url"), (d: Document, e: Element) => getExternalVideoElement(d, e)) {
+    override val ampTag = "amp-youtube"
+    override val pattern = """^https?:\/\/www\.youtube\.com\/watch\?v=([^#&?]+).*""".r
+  }
+  case class VimeoVideo(document: Document, figure: Element) extends  AmpElementEmbed(getAttrib(figure, "data-canonical-url"), (d: Document, e: Element) => getExternalVideoElement(d, e)) {
+    override val ampTag = "amp-vimeo"
+    override val pattern = """^https?:\/\/vimeo\.com\/(\d+).*""".r
+  }
+  case class FacebookVideo(document: Document, figure: Element) extends  AmpElementEmbed(getAttrib(figure, "data-canonical-url"), (d: Document, e: Element) => getExternalVideoElement(d, e)){
+    override val ampTag = "amp-facebook"
+    override val pattern = """^https?:\/\/www\.facebook\.com\/([\w.]+)\/videos\/(\d+)\/""".r
+  }
+
+  def getAttrib(element: Element, name: String): String = {
+    if(element.hasAttr(name))
+      element.attr(name)
+    else
+      ""
+  }
+
+  def getHref(iframe: Element): String = {
+    iframe.getElementsByTag("a").map(_.attr("href")).headOption.getOrElse("")
+  }
+
+  def getAudioBoomElement(doc: Document, element: Element): Option[Element] = {
+    if(AmpAudioElements.validIframe(element))
+      Some(AmpAudioElements.createAmpIframeElement(doc, element))
+    else
+      None
+  }
+  def getInstagramElement(doc: Document, element: Element): Option[Element] = {
+    AmpInstagram.createInstagramElement(doc, getHref(element))
+  }
+
+  def getExternalVideoElement(doc: Document, element: Element): Option[Element] = {
+      val externalVideo = AmpExternalVideo.getAmpExternalVideoByUrl(element.attr("data-canonical-url"))
+      if(externalVideo.isDefined)
+        Some(AmpExternalVideo.createElement(doc, externalVideo.get.elementType, externalVideo.get.attributes))
+      else
+        None
+  }
+
+
+
+  object AmpElementEmbeds {
+
+    def getElement(doc: Document, figure: Element, iframe: Element): Option[Element] = {
+      val elementSeq = Seq(GoogleMapsEmbed(doc, iframe),
+        SoundCloudEmbed(doc, iframe),
+        AudioBoomEmbed(doc, iframe),
+        InstagramEmbed(doc, iframe),
+        YouTubeVideo(doc, figure),
+        VimeoVideo(doc, figure),
+        FacebookVideo(doc, figure))
+
+      val createdElements = for (embedType <- elementSeq if embedType.isAMatch) yield {
+        embedType.ampElementName match {
+          case "amp-youtube" => embedType.createInstance(doc, figure)
+          case "amp-vimeo" => embedType.createInstance(doc, figure)
+          case "amp-facebook" => embedType.createInstance(doc, figure)
+          case _ => embedType.createInstance(doc, iframe)
+        }
+      }
+      createdElements.headOption.getOrElse(None)
+    }
+
+    def clean(document: Document) = {
+      for {
+        embedElement <- document.getElementsByClass("element-embed")
+        iframeElement <- embedElement.getElementsByTag("iframe")
+      } yield {
+        val ampElement = getElement(document, embedElement, iframeElement)
+        if (ampElement.isDefined)
+          iframeElement.replaceWith(ampElement.get)
+        else
+          embedElement.remove()
+      }
+
+    }
+>>>>>>> Stashed changes
   }
 
 
@@ -307,7 +416,11 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     cleanAmpInteractives(document)
     cleanAmpComments(document)
     //run cleanAmpEmbed last as it has a generic action and can remove some embed types that are actioned by the other objects
+<<<<<<< Updated upstream
     cleanAmpEmbed(document)
+=======
+    AmpElementEmbeds.clean(document)
+>>>>>>> Stashed changes
 
     document
   }
