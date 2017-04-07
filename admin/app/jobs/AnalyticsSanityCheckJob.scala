@@ -2,7 +2,7 @@ package jobs
 
 import java.util.concurrent.atomic.AtomicLong
 
-import com.amazonaws.services.cloudwatch.model.StandardUnit
+import com.amazonaws.services.cloudwatch.model.{GetMetricStatisticsResult, StandardUnit}
 import common.{ExecutionContexts, Logging}
 import metrics.GaugeMetric
 import model.diagnostics.CloudWatch
@@ -38,24 +38,24 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends ExecutionContexts with
 
   def run() {
 
-    // Update rawPageViews.
-    CloudWatchStats.rawPageViews.foreach { stats =>
-      val views = stats.getDatapoints.headOption.map(_.getSum.longValue).getOrElse(0L)
-      rawPageViews.set(views)
+    val fRawPageViews: Future[GetMetricStatisticsResult] = CloudWatchStats.rawPageViews
+    val fGooglePageViews = CloudWatchStats.googleAnalyticsPageViews
+    val fOphanViews = ophanViews
+    for {
+      rawPageViewsStats <- fRawPageViews
+      googlePageViewsStats <- fGooglePageViews
+      ophanViewsCount <- fOphanViews
+    } yield {
+
+      def metricLastSum(stats: GetMetricStatisticsResult): Long = stats.getDatapoints.headOption.map(_.getSum.longValue).getOrElse(0L)
+
+      rawPageViews.set(metricLastSum(rawPageViewsStats))
+      googlePageViews.set(metricLastSum(googlePageViewsStats))
+      ophanPageViews.set(ophanViewsCount)
+
+      CloudWatch.putMetrics("Analytics", List(ophanConversionRate, googleConversionRate), List.empty)
     }
 
-    // Update googlePageViews.
-    CloudWatchStats.googleAnalyticsPageViews.foreach { stats =>
-      val views = stats.getDatapoints.headOption.map(_.getSum.longValue).getOrElse(0L)
-      googlePageViews.set(views)
-    }
-
-    // Update ophanPageViews.
-    ophanViews.foreach { views =>
-      ophanPageViews.set(views)
-    }
-
-    CloudWatch.putMetrics("Analytics", List(ophanConversionRate, googleConversionRate), List.empty)
   }
 
   private def ophanViews: Future[Long] = {
