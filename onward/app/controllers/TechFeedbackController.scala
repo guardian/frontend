@@ -15,26 +15,27 @@ class TechFeedbackController @Inject() (ws: WSClient) (implicit context: Applica
 
   def submitFeedback(path: String) = Action { implicit request =>
 
-    println("Sending an email")
+
 
     val feedbackForm = Form(
       tuple(
         "category" -> text,
         "body" -> text,
-        "user" -> text
+        "user" -> text,
+        "extra" -> text
       )
     )
 
-    val (category, body, user) = feedbackForm.bindFromRequest.get
+    val (category, body, user, extra) = feedbackForm.bindFromRequest.get
 
     println("Sending for category: " + category)
 
     ws.url("https://ubk59f9zj3.execute-api.eu-west-1.amazonaws.com/prod/FeedpipeLambda")
       .post(Json.obj(
         "category" -> category,
-        "body" -> body,
+        "body" -> java.net.URLEncoder.encode(body, "UTF-8"),
         "user" -> user,
-        "extra" -> "not yet supported"
+        "extra" -> java.net.URLEncoder.encode(extra, "UTF-8")
       ))
 
     val page = model.SimplePage(MetaData.make(
@@ -43,7 +44,12 @@ class TechFeedbackController @Inject() (ws: WSClient) (implicit context: Applica
       "Your report has been sent"
     ))
 
+    println("Feedback sent")
+    println("Extra data:")
+    println(extra)
+
     Cached(900)(RevalidatableResult.Ok(views.html.feedbackSent(page, path)))
+
   }
 
   def techFeedback(path: String) = Action { implicit request =>
