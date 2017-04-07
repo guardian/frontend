@@ -1,0 +1,35 @@
+@import common.dfp.GuCustomField
+
+@(fields: Seq[GuCustomField])(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@admin_main("Custom Fields", isAuthed = true) {
+
+<link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")" />
+
+<h1>DFP CustomFields</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Is Active</th>
+            <th>Entity Type</th>
+            <th>Visibility</th>
+        </tr>
+    </thead>
+    <tbody>
+    @for(field <- fields) {
+        <tr id="field-@field.id">
+            <td>@field.id</td>
+            <td>@field.name</td>
+            <td>@field.description</td>
+            <td>@field.isActive</td>
+            <td>@field.entityType</td>
+            <td>@field.visibility</td>
+        </tr>
+    }
+    </tbody>
+</table>
+}
