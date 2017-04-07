@@ -120,9 +120,13 @@
             }
 
             // Makes sure that elements which come after the block of images are no longer floating
-            & + p, & + blockquote, & + .element-pullquote {
+            & + p, & + blockquote, & + .element-pullquote:not(.element--halfWidth) {
                 clear: both;
                 padding-top: $gs-baseline / 2;
+            }
+            // changes the padding for a half width quote after directly after a half width image
+            & + .element-pullquote.element--halfWidth {
+                margin-top: 0;
             }
         }
         &.element--halfWidth.half-width-odd {
@@ -133,19 +137,22 @@
     .element-pullquote--photo-essay {
         .pullquote-paragraph {
             color: $news-main-1;
+            font-size: 26px;
         }
 
         //important because it is important elsewhere
         .pullquote-cite {
             color: $neutral-2 !important;
+            font-size: 26px;
         }
 
         &.element--halfWidth {
-            width: 48%;
+            width: 45%;
             float: left;
             margin-right: $gs-gutter;
             border-bottom: 0;
             margin-top: $gs-baseline / 2;
+            clear: none;
         }
 
         .inline-quote {
@@ -155,6 +162,11 @@
         }
     }
 }
+
+.content__series-label--photo-essay .content__series-label__link {
+    color: #ffffff;
+}
+
 .from-content-api ul {
     display: inline-block;
     width: 98%;
