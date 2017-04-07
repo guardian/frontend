@@ -29,6 +29,14 @@
                 display: block;
             }
         }
+        @include mq($until: desktop) {
+            iframe,
+            .vjs-big-play-button {
+                top: gs-height(3) - (get-line-height(textSans, 3) + 4px);
+                bottom: 0;
+                height: auto;
+            }
+        }
     }
 
 
