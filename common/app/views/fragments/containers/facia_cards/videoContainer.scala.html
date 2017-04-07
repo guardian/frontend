@@ -45,8 +45,10 @@
         @containerDefinition.collectionEssentials.items.filter(i => i.header.isVideo).zipWithIndex.map { case (item, index) =>
            <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first}">
                 @item.properties.maybeContent.map { content =>
-                    @content.atoms.flatMap(_.media.find(_.assets.exists(_.platform == MediaAssetPlatform.Youtube))).map { youTubeAtom =>
-                        @youtube(media = youTubeAtom, displayCaption = false, mediaWrapper = Some(VideoContainer), displayEndSlate = false, displayDuration = false, faciaHeaderProperties = Some(VideoFaciaProperties(header = FaciaCardHeader.fromTrail(item, None),showByline = item.properties.showByline, item.properties.byline)))
+                    @defining(content.atoms.flatMap(_.media.find(_.assets.exists(_.platform == MediaAssetPlatform.Youtube)))) { youTubeAtom =>
+                        @youTubeAtom.map { youTubeAtom =>
+                            @youtube(media = youTubeAtom, displayCaption = false, mediaWrapper = Some(VideoContainer), displayEndSlate = false, displayDuration = false, faciaHeaderProperties = Some(VideoFaciaProperties(header = FaciaCardHeader.fromTrail(item, None), showByline = item.properties.showByline, item.properties.byline)))
+                        }
                     }
 
 
