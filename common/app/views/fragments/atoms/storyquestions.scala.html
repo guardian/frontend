@@ -1,7 +1,7 @@
 @(storyquestions: model.content.StoryQuestionsAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
 @if(!isAmp) {
-    <div class="submeta user__question">
+    <div class="js-view-tracking-component submeta user__question">
         <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
         <h2 class="user__question-title">Finished this article but want to know more? <span class="user__question-title--secondary">Let us know what questions you want answered.</span></h2>
         @for(questions <- storyquestions.data.editorialQuestions) {
@@ -29,6 +29,6 @@
                     }
                 </p>
             }
-        </div>
+    </div>
 }
 }
