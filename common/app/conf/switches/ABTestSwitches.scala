@@ -142,7 +142,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-bookmarks-email-variants",
+    "ab-bookmarks-email-variants-2",
     "Assign users to variants of bookmarks email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
