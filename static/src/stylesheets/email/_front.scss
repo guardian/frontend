@@ -5,6 +5,7 @@ $gutter: 10px;
 $body-color: #ffffff;
 $container-color: #ffffff;
 
+@import '../_vars';
 @import '_normalise';
 @import '_util';
 @import '_footer';
@@ -52,12 +53,19 @@ $container-color: #ffffff;
     min-height: 56px;
 }
 
-.message {
+.free-text {
     font-family: Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 18px;
-    background: #f6f6f6;
-    padding: 6px $gutter;
+    padding: 6px 0;
+
+    a {
+        color: $guardian-brand;
+
+        &:hover {
+            color: lighten($guardian-brand, 10%) !important;
+        }
+    }
 }
 
 // td
