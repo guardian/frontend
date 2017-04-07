@@ -13,6 +13,11 @@ object DataMapper {
     GuAdUnit(dfpAdUnit.getId, ancestorNames :+ dfpAdUnit.getName, dfpAdUnit.getStatus.getValue)
   }
 
+  def toGuCustomField(dfpCustomField: CustomField) =
+    GuCustomField(dfpCustomField.getId, dfpCustomField.getName, dfpCustomField.getDescription,
+      dfpCustomField.getIsActive, dfpCustomField.getEntityType.getValue, dfpCustomField.getDataType.getValue,
+      dfpCustomField.getVisibility.getValue)
+
   private def toGuTargeting(session: SessionWrapper)(dfpTargeting: Targeting): GuTargeting = {
 
     def toIncludedGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {

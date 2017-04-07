@@ -4,7 +4,7 @@ import com.google.api.ads.dfp.axis.utils.v201608.StatementBuilder
 import com.google.api.ads.dfp.axis.v201608._
 import common.Logging
 import common.dfp._
-import dfp.DataMapper.{toGuAdUnit, toGuCreativeTemplate, toGuLineItem, toGuTemplateCreative, toGuAdvertiser, toGuOrder}
+import dfp.DataMapper.{toGuAdUnit, toGuCreativeTemplate, toGuCustomField, toGuLineItem, toGuTemplateCreative, toGuAdvertiser, toGuOrder}
 import org.joda.time.DateTime
 
 object DfpApi extends Logging {
@@ -34,6 +34,14 @@ object DfpApi extends Logging {
 
     withDfpSession( session => {
       session.orders(stmtBuilder).map(toGuOrder)
+    })
+  }
+
+  def getAllCustomFields: Seq[GuCustomField] = {
+    val stmtBuilder = new StatementBuilder()
+
+    withDfpSession( session => {
+      session.customFields(stmtBuilder).map(toGuCustomField)
     })
   }
 
