@@ -47,7 +47,6 @@ define([
                         blogIds:            'a/blog',
                         contentType:        'Video',
                         edition:            'US',
-                        isSurging:          true,
                         keywordIds:         'uk-news/prince-charles-letters,uk/uk,uk/prince-charles',
                         pageId:             'football/series/footballweekly',
                         publication:        'The Observer',
@@ -55,7 +54,21 @@ define([
                         source:             'ITN',
                         sponsorshipType:    'advertisement-features',
                         tones:              'News',
-                        videoDuration:      63
+                        videoDuration:      63,
+                        sharedAdTargeting:  {
+                            bl:      ['blog'],
+                            br:      'p',
+                            co:      ['gabrielle-chan'],
+                            ct:      'video',
+                            edition: 'us',
+                            k:       ['prince-charles-letters','uk/uk','prince-charles'],
+                            ob:      't',
+                            p:       'ng',
+                            se:      ['filmweekly'],
+                            su:      ['5'],
+                            tn:      ['news'],
+                            url:     '/football/series/footballweekly'
+                        }
                     };
 
                     config.ophan = {
@@ -103,7 +116,7 @@ define([
             expect(pageTargeting.edition).toBe('us');
             expect(pageTargeting.ct).toBe('video');
             expect(pageTargeting.p).toBe('ng');
-            expect(pageTargeting.su).toBe(true);
+            expect(pageTargeting.su).toEqual(['5']);
             expect(pageTargeting.bp).toBe('mobile');
             expect(pageTargeting.at).toBe('ng101');
             expect(pageTargeting.si).toEqual('t');
@@ -121,23 +134,11 @@ define([
         });
 
         it('should set correct se param', function () {
-            expect(buildPageTargeting().se).toBe('filmweekly');
-        });
-
-        it('should use pageId if no seriesId', function () {
-            config.page.seriesId = null;
-
-            expect(buildPageTargeting().se).toBe('footballweekly');
+            expect(buildPageTargeting().se).toEqual(['filmweekly']);
         });
 
         it('should set correct k param', function () {
             expect(buildPageTargeting().k).toEqual(['prince-charles-letters', 'uk/uk', 'prince-charles']);
-        });
-
-        it('should use pageId if no keywordIds', function () {
-            config.page.keywordIds = null;
-
-            expect(buildPageTargeting().k).toEqual('footballweekly');
         });
 
         it('should set correct ab param', function () {
@@ -152,29 +153,8 @@ define([
             expect(buildPageTargeting().ob).toEqual('t');
         });
 
-        it('should not set Observer flag for Guardian content', function () {
-            config.page.publication = 'The Guardian';
-            expect(buildPageTargeting().ob).toEqual(undefined);
-        });
-
-        it('should set correct branding param for sponsored content', function () {
-            config.page.sponsorshipType = 'sponsored';
-            expect(buildPageTargeting().br).toEqual('s');
-        });
-
         it('should set correct branding param for paid content', function () {
-            config.page.sponsorshipType = 'paid-content';
             expect(buildPageTargeting().br).toEqual('p');
-        });
-
-        it('should set correct branding param for foundation-funded content', function () {
-            config.page.sponsorshipType = 'foundation';
-            expect(buildPageTargeting().br).toEqual('f');
-        });
-
-        it('should not set branding param for unbranded content', function () {
-            config.page.sponsorshipType = undefined;
-            expect(buildPageTargeting().br).toEqual(undefined);
         });
 
         it('should remove empty values', function () {
@@ -188,8 +168,6 @@ define([
             };
 
             expect(buildPageTargeting()).toEqual({
-                url: '/context.html',
-                p: 'ng',
                 bp: 'mobile',
                 at: 'ng101',
                 si: 't',
