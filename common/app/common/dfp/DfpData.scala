@@ -81,6 +81,19 @@ object GeoTarget {
 
 }
 
+case class GuCustomField(id: Long,
+                         name: String,
+                         description: String,
+                         isActive: Boolean,
+                         entityType: String,
+                         dataType: String,
+                         visibility: String)
+
+object GuCustomField {
+
+  implicit val customFieldFormats: Format[GuCustomField] = Json.format[GuCustomField]
+}
+
 case class GuAdUnit(id: String, path: Seq[String], status: String) {
   val fullPath = path.mkString("/")
 
