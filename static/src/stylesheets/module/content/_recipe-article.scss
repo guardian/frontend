@@ -6,7 +6,7 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    border-bottom: 1px solid #ececec;
+    border-bottom: 1px solid $neutral-3;
     margin-bottom: $gs-gutter * 2;
 
     @include mq($from: desktop) {
@@ -369,7 +369,7 @@
     @include fs-textSans(3);
     color: $neutral-2;
     max-width: 550px;
-    border-top: 1px solid #ececec;
+    border-top: 1px solid $neutral-3;
     font-weight: 900;
     padding-top: $gs-baseline / 2;
 }
