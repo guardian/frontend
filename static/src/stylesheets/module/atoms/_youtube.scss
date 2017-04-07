@@ -87,9 +87,6 @@
             ~ .video-overlay {
                 @include hide;
             }
-        }
-
-        &.youtube__video-started:not(.youtube__video-ended) {
             ~ .youtube-media-atom__overlay {
                 @include fade-out;
                 transition-delay: 500ms;
