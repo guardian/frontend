@@ -37,10 +37,13 @@ function init() {
 
     function hideNextArticle() {
         nextRecipeText[0].classList.add('visible');
+        nextButton[1].classList.add('visible');
         if(contentFooterTop <= windowHeight) {
             nextRecipeText[0].classList.add('is-hidden');
+            nextButton[1].classList.add('is-hidden');
         }else {
             nextRecipeText[0].classList.remove('is-hidden');
+            nextButton[1].classList.remove('is-hidden');
         }
     }
 
