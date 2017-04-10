@@ -14,19 +14,35 @@ define([
 
     function askQuestion(event) {
         event.preventDefault();
-        var questionId = event.currentTarget.querySelector('.user__question-upvote').id;
-        var question = $('#js-question-text-' + questionId).text();
-        var atomId = $('.js-storyquestion-atom-id').attr('id');
+        var questionElement = event.currentTarget.querySelector('.user__question-upvote');
+        var atomIdElement = $('.js-storyquestion-atom-id');
+        
+        if (questionElement && atomIdElement) {
+            var questionId = questionElement.id;
+            var atomId = atomIdElement.attr('id');
 
-        if (question && atomId) {
-            $('#' + questionId).addClass('is-hidden');
-            $('#js-question-thankyou-' + questionId).removeClass('is-hidden');
+            var question = $('#js-question-text-' + questionId);
 
-            ophan.record({
-                atomId: atomId,
-                component: question,
-                value: 'question_asked'
-            });
+            if (question) {
+                var questionText = question.text();
+
+                if (questionText && atomId) {
+
+                    var questionElementClicked = $('#' + questionId);
+                    var thankYouMessage = $('#js-question-thankyou-' + questionId);
+
+                    if (questionElementClicked && thankYouMessage) {
+                        questionElementClicked.addClass('is-hidden');
+                        thankYouMessage.removeClass('is-hidden');
+                    }
+
+                    ophan.record({
+                        atomId: atomId,
+                        component: questionText,
+                        value: 'question_asked'
+                    });
+                }
+            }
         }
     }
 
