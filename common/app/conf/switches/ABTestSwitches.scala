@@ -173,7 +173,7 @@ trait ABTestSwitches {
   Switch(
     ABTests,
     "ab-email-demand-tests",
-    "Test demand for food, business, and cities emails",
+    "Test demand for a cities email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 21),
