@@ -74,15 +74,12 @@ describe('Cookies', () => {
         );
     });
 
-    it(
-        'should be able to set a cookie for a specific number of minutes',
-        () => {
-            cookies.addForMinutes('cookie-1-name', 'cookie-1-value', 91);
-            expect(mockDocument.cookie).toEqual(
-                'cookie-1-name=cookie-1-value; path=/; expires=Thu, 01 Jan 1970 01:31:00 GMT; domain=.theguardian.com'
-            );
-        }
-    );
+    it('should be able to set a cookie for a specific number of minutes', () => {
+        cookies.addForMinutes('cookie-1-name', 'cookie-1-value', 91);
+        expect(mockDocument.cookie).toEqual(
+            'cookie-1-name=cookie-1-value; path=/; expires=Thu, 01 Jan 1970 01:31:00 GMT; domain=.theguardian.com'
+        );
+    });
 
     it('should be able to set a session cookie', () => {
         cookies.addSessionCookie('cookie-1-name', 'cookie-1-value');
