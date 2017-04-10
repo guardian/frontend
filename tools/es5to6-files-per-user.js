@@ -33,7 +33,7 @@ const platform = [
     'sndrs',
     'Gareth Trufitt',
     'Simon Adcock',
-    'Nic Long',
+    'Nicolas Long',
     'Calum Campbell',
     'GHaberis',
     'Gustav Pursche',

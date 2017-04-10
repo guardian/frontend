@@ -17,7 +17,7 @@
     "lib/detect.js",
     "lib/element-inview.js"
   ],
-  "Nic Long": [
+  "Nicolas Long": [
     "lib/fastdom-errors.js",
     "lib/fastdom-promise.js",
     "lib/fetch.js",
