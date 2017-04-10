@@ -29,7 +29,7 @@ object ContainerModel {
 
   def fromPressedCollection(edition: Edition)(collection: PressedCollection): ContainerModel = {
 
-    val cards = collection.curatedPlusBackfillDeduplicated map PaidCard.fromPressedContent
+    val cards = collection.curatedPlusBackfillDeduplicated.map(PaidCard.fromPressedContent(_))
     val layoutName = collection.collectionType
 
     val content = {
