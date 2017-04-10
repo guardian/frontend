@@ -106,7 +106,7 @@ trait ABTestSwitches {
     "Assign some of the new sleeve notes subscribers to receive the new email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
+    sellByDate = new LocalDate(2017, 5, 19),
     exposeClientSide = true
   )
 
@@ -116,7 +116,7 @@ trait ABTestSwitches {
     "Assign some of the new sleeve notes subscribers to receive the old email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
+    sellByDate = new LocalDate(2017, 5, 19),
     exposeClientSide = true
   )
 
@@ -142,7 +142,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-bookmarks-email-variants",
+    "ab-bookmarks-email-variants-2",
     "Assign users to variants of bookmarks email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
@@ -157,16 +157,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 5, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-design-variations-v3",
-    "Test more design variations to the Epic",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 6),
     exposeClientSide = true
   )
 

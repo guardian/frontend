@@ -110,7 +110,6 @@ object FootballTestData {
         None, None, None, None, None, None, None, Seq(), None, None
       ),
       None,
-      None,
       None)
   )
 
@@ -142,5 +141,3 @@ object FootballTestData {
       LeagueStats(10, 5, 5, 0, 3, 2), LeagueStats(10, 5, 5, 0, 3, 2), 3, 30))
 
 }
-
-

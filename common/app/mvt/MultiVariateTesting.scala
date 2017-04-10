@@ -31,7 +31,7 @@ object ABNewRecipeDesign extends TestDefinition(
   name = "ab-new-recipe-design",
   description = "Users in the test will see the new design on articles with structured recipes",
   owners = Seq(Owner.withGithub("tsop14")),
-  sellByDate = new LocalDate(2017, 4, 13)
+  sellByDate = new LocalDate(2017, 5, 30)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-recipe-design").contains("variant")

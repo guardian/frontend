@@ -5,7 +5,7 @@ define([
 ) {
     return new genericEmailTest(
         {
-            id: 'BookmarksEmailVariants',
+            id: 'BookmarksEmailVariants2',
             start: '2017-03-31',
             end: '2017-05-30',
             author: 'David Furey',
