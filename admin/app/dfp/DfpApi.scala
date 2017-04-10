@@ -31,18 +31,12 @@ object DfpApi extends Logging {
 
   def getAllOrders: Seq[GuOrder] = {
     val stmtBuilder = new StatementBuilder()
-
-    withDfpSession( session => {
-      session.orders(stmtBuilder).map(toGuOrder)
-    })
+    withDfpSession(_.orders(stmtBuilder).map(toGuOrder))
   }
 
   def getAllCustomFields: Seq[GuCustomField] = {
     val stmtBuilder = new StatementBuilder()
-
-    withDfpSession( session => {
-      session.customFields(stmtBuilder).map(toGuCustomField)
-    })
+    withDfpSession(_.customFields(stmtBuilder).map(toGuCustomField))
   }
 
   def getAllAdvertisers: Seq[GuAdvertiser] = {
@@ -51,9 +45,7 @@ object DfpApi extends Logging {
                       .withBindVariableValue("type", CompanyType.ADVERTISER.toString)
                       .orderBy("id ASC")
 
-    withDfpSession( session => {
-      session.companies(stmtBuilder).map(toGuAdvertiser)
-    })
+    withDfpSession(_.companies(stmtBuilder).map(toGuAdvertiser))
   }
 
   def readCurrentLineItems: DfpLineItems = {
