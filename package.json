@@ -58,7 +58,7 @@
     "cpy": "^4.0.1",
     "cssnano": "^3.8.1",
     "cssstats": "^3.0.0",
-    "eslint": "^3.15.0",
+    "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-config-prettier": "^1.6.0",
     "eslint-import-resolver-webpack": "^0.8.0",
