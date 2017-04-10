@@ -22,16 +22,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-increase-inline-ads",
-    "Displays more inline ads in articles on desktop",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-editorial-email-variants",
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
