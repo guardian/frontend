@@ -134,7 +134,6 @@ define([
                     ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
                 }],
             ]);
-            performanceLogging.reportTrackingData();
         })
         .catch(function (err) {
             // Just in case something goes wrong, we don't want it to
