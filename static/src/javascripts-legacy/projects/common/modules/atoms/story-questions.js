@@ -41,27 +41,30 @@ define([
             }
 
             var storyQuestionsComponent = document.querySelector('.js-view-tracking-component');
-    
-            mediator.on('window:throttledScroll', function onScroll() {
-                var height = detect.getViewport().height;
-                var coords = storyQuestionsComponent.getBoundingClientRect();
-                var isStoryQuestionsInView = 0 <= coords.top && coords.bottom <= height;
-                
-                if( isStoryQuestionsInView ) {
-                    var atomId = $('.js-storyquestion-atom-id').attr('id');
+            var atomElement = $('.js-storyquestion-atom-id');
 
-                    if (atomId) {
-                        ophan.record({
-                            atomId: atomId,
-                            component: atomId,
-                            value: 'question_component_in_view'
-                        });
+            if (storyQuestionsComponent && atomElement) {
+
+                mediator.on('window:throttledScroll', function onScroll() {
+                    var height = detect.getViewport().height;
+                    var coords = storyQuestionsComponent.getBoundingClientRect();
+                    var isStoryQuestionsInView = 0 <= coords.top && coords.bottom <= height;
+
+                    if (isStoryQuestionsInView) {
+                        var atomId = atomElement.attr('id');
+
+                        if (atomId) {
+                            ophan.record({
+                                atomId: atomId,
+                                component: atomId,
+                                value: 'question_component_in_view'
+                            });
+                        }
+
+                        mediator.off('window:throttledScroll', onScroll);
                     }
-
-                    mediator.off('window:throttledScroll', onScroll);
-                }
-            });
-
+                });
+            }
         }
     };
 
