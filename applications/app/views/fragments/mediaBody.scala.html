@@ -79,7 +79,7 @@
                                                 <meta itemprop="width" content="@mv.videos.width" />
                                             }
                                             <meta itemprop="requiresSubscription" content="false" />
-                                            <meta itemprop="image" content="@Html(video.content.signedArticleImage)" />
+                                            <meta itemprop="image" content="@Html(video.content.rawOpenGraphImage)" />
 
                                             @defining(video.elements.thumbnail.map(_.images) orElse video.mediaAtom.flatMap(_.posterImage)) {bestThumbnail =>
                                                 @bestThumbnail.map { thumbnail =>
