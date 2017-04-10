@@ -10,12 +10,12 @@ import fastdom from 'fastdom';
  * should perform the add or remove class
  */
 function updateClass(type, $el, cssClass, testFunc) {
-    return function() {
+    return () => {
         // If we pass a boolean for test, then check if we should update the class
-        var updateClass = (testFunc !== undefined) ? testFunc() : true;
+        const updateClass = (testFunc !== undefined) ? testFunc() : true;
 
         if (updateClass) {
-            fastdom.write(function() {
+            fastdom.write(() => {
                 $el[(type === 'add') ? 'addClass' : 'removeClass'](cssClass);
             });
         }
@@ -23,12 +23,8 @@ function updateClass(type, $el, cssClass, testFunc) {
 }
 
 export default {
-    init: function(el, opts) {
-        var $el = $(el),
-            $input = $(opts.textInputClass, el),
-            $label = $(opts.labelClass, el),
-            hiddenLabelClass = opts.hiddenLabelClass,
-            labelEnabledClass = opts.labelEnabledClass;
+    init(el, opts) {
+        const $el = $(el), $input = $(opts.textInputClass, el), $label = $(opts.labelClass, el), hiddenLabelClass = opts.hiddenLabelClass, labelEnabledClass = opts.labelEnabledClass;
 
         // Add the js only styling class for inline label enabled
         updateClass('add', $el, labelEnabledClass)();
@@ -42,9 +38,7 @@ export default {
         // Not delegated as bean doesn't support it on focus & blur
         bean.on($input[0], {
             focus: updateClass('add', $label, hiddenLabelClass),
-            blur: updateClass('remove', $label, hiddenLabelClass, function() {
-                return $input.val() === '';
-            })
+            blur: updateClass('remove', $label, hiddenLabelClass, () => $input.val() === '')
         });
     }
 };
