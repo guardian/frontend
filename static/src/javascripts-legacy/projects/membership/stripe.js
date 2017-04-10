@@ -139,8 +139,9 @@ define([
                         stripeToken: token.id
                     },
                 }).then(function(resp) {
-                    var card = resp && resp.text();
-
+                    return resp.json();
+                }).then(function (json) {
+                    var card = json
                     display($parent, card);
                 }).catch(function() {
                     $parent.text('We have not been able to update your card details at this time.');
