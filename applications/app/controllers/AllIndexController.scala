@@ -112,7 +112,7 @@ class AllIndexController(contentApiClient: ContentApiClient, sectionsLookUp: Sec
     }
 
     result.recover{ case e: Exception =>
-      log.error(e.getMessage, e)
+      log.error(s"Cannot fetch content for path '$path'", e)
       None
     }
   }
@@ -127,7 +127,7 @@ class AllIndexController(contentApiClient: ContentApiClient, sectionsLookUp: Sec
       item.results.getOrElse(Nil).headOption.flatMap(_.webPublicationDate).map(_.toJodaDateTime.withZone(DateTimeZone.UTC))
     }
     result.recover{ case e: Exception =>
-      log.error(e.getMessage, e)
+      log.error(s"Cannot fetch content for path '$path'", e)
       None
     }
   }
