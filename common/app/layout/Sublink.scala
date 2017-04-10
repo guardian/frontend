@@ -211,7 +211,7 @@ object FaciaCard {
 
     val containerName: Option[String] = config.displayName
     if ((containerName.contains("Paid content in unbranded container") || containerName.contains("lifestyle")) && faciaContent.branding(defaultEdition).exists(_.isPaid)) {
-      PaidCard.fromPressedContent(faciaContent)
+      PaidCard.fromPressedContent(faciaContent, Some(cardTypes))
     } else {
 
       val maybeKicker = faciaContent.header.kicker orElse {
@@ -352,12 +352,15 @@ case class PaidCard(
   image: Option[ImageMedia],
   fallbackImageUrl: Option[String],
   targetUrl: String,
+  cardTypes: Option[ItemClasses] = None,
   branding: Option[Branding]
 ) extends FaciaCard
 
 object PaidCard {
 
-  def fromPressedContent(content: PressedContent): PaidCard = {
+  def fromPressedContent(content: PressedContent): PaidCard = this.fromPressedContent(content, None)
+
+  def fromPressedContent(content: PressedContent, cardTypes: Option[ItemClasses] = None): PaidCard = {
 
     val header = content.header
 
@@ -385,6 +388,7 @@ object PaidCard {
       image,
       fallbackImageUrl,
       targetUrl = header.url,
+      cardTypes = cardTypes,
       branding = content.branding(defaultEdition)
     )
   }
