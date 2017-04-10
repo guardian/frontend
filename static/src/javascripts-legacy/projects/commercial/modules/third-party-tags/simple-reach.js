@@ -4,8 +4,12 @@ define([
     config
 ) {
 
-  if (!config.page.isFront && config.switches.simpleReach &&
-    config.page.isPaidContent) {
+  var shouldRun = !config.page.isFront && config.switches.simpleReach &&
+    config.page.edition === 'US' && config.page.isPaidContent;
+
+  var simpleReachUrl = '';
+
+  if (shouldRun) {
       var authors = config.page.author.split(',');
       var channels = config.page.sectionName.split(',');
       var keywords = config.page.keywords.split(',');
@@ -21,13 +25,11 @@ define([
         ignore_errors: false
       };
 
-      var simpleReachUrl = '//d8rk54i4mohrb.cloudfront.net/js/reach.js';
+      simpleReachUrl = '//d8rk54i4mohrb.cloudfront.net/js/reach.js';
   }
 
   return {
-      shouldRun: !config.page.isFront &&
-        config.switches.simpleReach &&
-        config.page.isPaidContent,
+      shouldRun: shouldRun,
       url: simpleReachUrl
   };
 
