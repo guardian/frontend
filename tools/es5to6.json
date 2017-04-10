@@ -18,7 +18,6 @@
     "lib/element-inview.js"
   ],
   "Nicolas Long": [
-    "lib/fastdom-promise.js",
     "lib/fetch.js",
     "lib/formatters.js"
   ],
