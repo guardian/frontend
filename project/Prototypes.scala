@@ -15,11 +15,22 @@ trait Prototypes {
   val version = "1-SNAPSHOT"
 
   val frontendCompilationSettings = Seq(
+    addCompilerPlugin("org.psywerx.hairyfotr" %% "linter" % "0.1.17"),
     organization := "com.gu",
     maxErrors := 20,
     javacOptions := Seq("-g","-encoding", "utf8"),
-    scalacOptions := Seq("-unchecked", "-deprecation", "-target:jvm-1.8",
-      "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings","-Xfatal-warnings"),
+    scalacOptions := Seq(
+      "-unchecked",
+      "-deprecation",
+      "-target:jvm-1.8",
+      "-Xcheckinit",
+      "-encoding",
+      "utf8",
+      "-feature",
+      "-Yinline-warnings",
+      "-Xfatal-warnings",
+      "-P:linter:enable-only:FuncFirstThenMap"
+    ),
     doc in Compile := target.map(_ / "none").value,
     incOptions := incOptions.value.withNameHashing(true),
     scalaVersion := "2.11.8",
