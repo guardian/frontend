@@ -135,17 +135,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val FacebookAutoSigninSwitch = Switch(
-    SwitchGroup.Feature,
-    "facebook-autosignin",
-    "If this switch is on then users who have previously authorized the guardian app in facebook and who have not " +
-      "recently signed out are automatically signed in.",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val FacebookShareUseTrailPicFirstSwitch = Switch(
     SwitchGroup.Feature,
     "facebook-shareimage",
