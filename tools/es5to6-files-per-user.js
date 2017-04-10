@@ -33,10 +33,12 @@ const platform = [
     'sndrs',
     'Gareth Trufitt',
     'Simon Adcock',
-    // 'NataliaLKB',
+    'Nicolas Long',
+    'Calum Campbell',
     'GHaberis',
-    // 'stephanfowler',
     'Gustav Pursche',
+    // 'NataliaLKB',
+    // 'stephanfowler',
 ];
 const platformModules = files.filter(_ => _.includes('lib'));
 const platformFilesPerHuman = filesPerHuman(platformModules, platform);
