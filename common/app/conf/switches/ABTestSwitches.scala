@@ -46,7 +46,7 @@ trait ABTestSwitches {
     "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
     owners = Seq(Owner.withGithub("alexduf")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 15),
+    sellByDate = new LocalDate(2017, 4, 13),
     exposeClientSide = true
   )
 
@@ -156,7 +156,7 @@ trait ABTestSwitches {
     "Display the Epic on Article 50 articles for readers in Europe",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 15),
+    sellByDate = new LocalDate(2017, 4, 13),
     exposeClientSide = true
   )
 
@@ -166,7 +166,7 @@ trait ABTestSwitches {
     "Display the Epic on Laundromat articles",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 15),
+    sellByDate = new LocalDate(2017, 4, 13),
     exposeClientSide = true
   )
 
@@ -206,7 +206,7 @@ trait ABTestSwitches {
     "Test displaying the Epic only vs the Epic and Engagement Banner",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 15),
+    sellByDate = new LocalDate(2017, 4, 13),
     exposeClientSide = true
   )
 
