@@ -113,9 +113,7 @@ module.exports = {
                         );
                     })
                     .then(normalisedAssetMap => // save the asset map
-                        mkdirpp(
-                            path.resolve(hash, 'assets')
-                        ).then(() =>
+                        mkdirpp(path.resolve(hash, 'assets')).then(() =>
                             writeFile(
                                 path.resolve(hash, 'assets', 'assets.map'),
                                 JSON.stringify(normalisedAssetMap, null, 4)

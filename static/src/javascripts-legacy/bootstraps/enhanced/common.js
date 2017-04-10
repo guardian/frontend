@@ -22,7 +22,6 @@ define([
     'common/modules/commercial/donot-use-adblock',
     'commercial/modules/user-features',
     'common/modules/discussion/comment-count',
-    'common/modules/identity/autosignin',
     'common/modules/identity/cookierefresh',
     'common/modules/navigation/navigation',
     'common/modules/navigation/profile',
@@ -73,7 +72,6 @@ define([
     donotUseAdblock,
     userFeatures,
     CommentCount,
-    AutoSignin,
     CookieRefresh,
     navigation,
     Profile,
@@ -195,12 +193,6 @@ define([
                     mediator.once('modules:nav:open', function () {
                         history.showInMegaNav();
                     });
-                }
-            },
-
-            initAutoSignin: function () {
-                if (config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
-                    new AutoSignin().init();
                 }
             },
 
@@ -348,7 +340,6 @@ define([
                 ['c-dates', modules.showRelativeDates],
                 ['c-clickstream', modules.initClickstream],
                 ['c-history', modules.updateHistory],
-                ['c-sign-in', modules.initAutoSignin],
                 ['c-id-cookie-refresh', modules.idCookieRefresh],
                 ['c-history-nav', modules.showHistoryInMegaNav],
                 ['c-forsee', modules.runForseeSurvey],
@@ -368,7 +359,7 @@ define([
                 ['c-show-membership-engagement-banner', modules.membershipEngagementBanner],
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
-                ['c-membership',membership]
+                ['c-membership', membership]
             ]);
         }
     };
