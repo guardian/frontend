@@ -90,7 +90,7 @@ trait CommercialSwitches {
     "simple-reach",
     "Enable Simple Reach tracking and reporting.",
     owners = Seq(Owner.withName("commercial team")),
-    safeState = On,
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )
