@@ -61,44 +61,35 @@ describe('Check Mediator', () => {
         checkMediator.resolveCheck('check-1', true);
     });
 
-    test(
-        'resolves a check with dependent checks as true when passCondition is EVERYCHECKPASSED',
-        done => {
-            checkMediator.waitForCheck('check-2').then(result => {
-                expect(result).toBe(true);
-                done();
-            });
+    test('resolves a check with dependent checks as true when passCondition is EVERYCHECKPASSED', done => {
+        checkMediator.waitForCheck('check-2').then(result => {
+            expect(result).toBe(true);
+            done();
+        });
 
-            checkMediator.resolveCheck('check-3', true);
-            checkMediator.resolveCheck('check-4', true);
-        }
-    );
+        checkMediator.resolveCheck('check-3', true);
+        checkMediator.resolveCheck('check-4', true);
+    });
 
-    test(
-        'resolves a check with dependent checks as false when passCondition is EVERYCHECKPASSED',
-        done => {
-            checkMediator.waitForCheck('check-5').then(result => {
-                expect(result).toBe(false);
-                done();
-            });
+    test('resolves a check with dependent checks as false when passCondition is EVERYCHECKPASSED', done => {
+        checkMediator.waitForCheck('check-5').then(result => {
+            expect(result).toBe(false);
+            done();
+        });
 
-            checkMediator.resolveCheck('check-6', true);
-            checkMediator.resolveCheck('check-7', false);
-        }
-    );
+        checkMediator.resolveCheck('check-6', true);
+        checkMediator.resolveCheck('check-7', false);
+    });
 
-    test(
-        'resolves a check with dependent checks as true when passCondition is SOMECHECKSPASSED',
-        done => {
-            checkMediator.waitForCheck('check-8').then(result => {
-                expect(result).toBe(true);
-                done();
-            });
+    test('resolves a check with dependent checks as true when passCondition is SOMECHECKSPASSED', done => {
+        checkMediator.waitForCheck('check-8').then(result => {
+            expect(result).toBe(true);
+            done();
+        });
 
-            checkMediator.resolveCheck('check-9', true);
-            checkMediator.resolveCheck('check-10', false);
-        }
-    );
+        checkMediator.resolveCheck('check-9', true);
+        checkMediator.resolveCheck('check-10', false);
+    });
 
     test('rejects a check if not registered', done => {
         checkMediator.waitForCheck('check-666').catch(error => {
