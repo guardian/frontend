@@ -25,11 +25,14 @@ describe('$', () => {
         ).toEqual('<span class="test-class"></span>');
     });
 
-    test('applies a function to an array of elements described by a selector', () => {
-        $.forEachElement('.parent > *', el => el.classList.add('red'));
-        expect($('.child').hasClass('red')).toBe(true);
-        expect($('.sibling').hasClass('red')).toBe(true);
-    });
+    test(
+        'applies a function to an array of elements described by a selector',
+        () => {
+            $.forEachElement('.parent > *', el => el.classList.add('red'));
+            expect($('.child').hasClass('red')).toBe(true);
+            expect($('.sibling').hasClass('red')).toBe(true);
+        }
+    );
 
     test("can find an element's ancestor", () => {
         expect(
