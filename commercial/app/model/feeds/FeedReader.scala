@@ -33,7 +33,6 @@ class FeedReader(wsClient: WSClient) extends Logging {
       val requestHolder: WSRequest = {
         val unsignedRequestHolder: WSRequest = wsClient.url(request.url)
           .withQueryString(request.parameters.toSeq: _*)
-          .withRequestTimeout(request.timeout)
         signature.foldLeft(unsignedRequestHolder) { (soFar, calc) =>
           soFar.sign(calc)
         }
@@ -119,7 +118,6 @@ case class FeedRequest(feedName: String,
                        switch: conf.switches.Switch,
                        url: String,
                        parameters: Map[String, String] = Map.empty,
-                       timeout: Duration = 2.seconds,
                        responseEncoding: String)
 
 
