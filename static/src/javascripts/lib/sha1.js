@@ -45,7 +45,7 @@ const Sha1 = {
         // add length (in bits) into final pair of 32-bit integers (big-endian) [§5.1.1]
         // note: most significant word would be (len-1)*8 >>> 32, but since JS converts
         // bitwise-op args to 32 bits, we need to simulate this by arithmetic operators
-        M[N - 1][14] = (msg.length - 1) * 8 / 2 ** 32;
+        M[N - 1][14] = (msg.length - 1) * 8 / (2 ** 32);
         M[N - 1][14] = Math.floor(M[N - 1][14]);
         M[N - 1][15] = (msg.length - 1) * 8 & 0xffffffff;
 

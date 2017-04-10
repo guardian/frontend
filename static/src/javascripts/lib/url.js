@@ -49,14 +49,13 @@ const replaceQueryString = (params: Object) =>
     updateQueryString(params, history.replaceState.bind(history));
 
 // take an Object, construct into a query, e.g. {page: 1, pageSize: 10} => page=1&pageSize=10
-const constructQuery = (query: Object): string =>
-    Object.keys(query)
-        .map(param => {
-            const value = query[param];
-            const queryValue = Array.isArray(value) ? value.join(',') : value;
-            return `${param}=${queryValue}`;
-        })
-        .join('&');
+const constructQuery = (query: Object): string => Object.keys(query)
+    .map(param => {
+        const value = query[param];
+        const queryValue = Array.isArray(value) ? value.join(',') : value;
+        return `${param}=${queryValue}`;
+    })
+    .join('&');
 
 const getPath = (url: string): string => {
     const a: HTMLAnchorElement = document.createElement('a');

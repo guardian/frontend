@@ -20,49 +20,46 @@ const buildErrorMessage = error => {
     return msg;
 };
 
-const runValidator = (validator, options) =>
-    endpoint =>
-        fetchPage
-            .get({
-                endpoint,
-                host: isDev ? fetchPage.hosts.dev : fetchPage.hosts.amp,
-            })
-            .then(res => {
-                const result = validator.validateString(res);
-                const pass = result.status === 'PASS';
-                const message = `${result.status} for: ${endpoint}`;
+const runValidator = (validator, options) => endpoint => fetchPage
+    .get({
+        endpoint,
+        host: isDev ? fetchPage.hosts.dev : fetchPage.hosts.amp,
+    })
+    .then(res => {
+        const result = validator.validateString(res);
+        const pass = result.status === 'PASS';
+        const message = `${result.status} for: ${endpoint}`;
 
-                (pass ? console.log : console.error)(message);
-                if (options.logErrors) {
-                    result.errors.forEach(error => {
-                        (error.severity === 'ERROR'
-                            ? console.error
-                            : console.warn)(buildErrorMessage(error));
-                    });
-                }
+        (pass ? console.log : console.error)(message);
+        if (options.logErrors) {
+            result.errors.forEach(error => {
+                (error.severity === 'ERROR' ? console.error : console.warn)(
+                    buildErrorMessage(error)
+                );
+            });
+        }
 
-                return pass;
-            })
-            .catch(onError);
+        return pass;
+    })
+    .catch(onError);
 
-const maybeRunValidator = (validator, options) =>
-    endpoint => {
-        const validate = runValidator(validator, options);
-        if (!options.checkIfAmp) return validate(endpoint);
+const maybeRunValidator = (validator, options) => endpoint => {
+    const validate = runValidator(validator, options);
+    if (!options.checkIfAmp) return validate(endpoint);
 
-        return fetchPage
-            .get({
-                endpoint,
-                host: fetchPage.hosts.prod,
-            })
-            .then(body => {
-                if (body.includes('<link rel="amphtml" href="')) {
-                    return validate(endpoint);
-                }
-                return Promise.resolve(true);
-            })
-            .catch(onError);
-    };
+    return fetchPage
+        .get({
+            endpoint,
+            host: fetchPage.hosts.prod,
+        })
+        .then(body => {
+            if (body.includes('<link rel="amphtml" href="')) {
+                return validate(endpoint);
+            }
+            return Promise.resolve(true);
+        })
+        .catch(onError);
+};
 
 const checkEndpoints = (endpoints, options) =>
     validatorFilePath =>
@@ -81,19 +78,18 @@ const checkEndpoints = (endpoints, options) =>
             });
         });
 
-module.exports = opts =>
-    endpoints => {
-        const options = Object.assign(
-            {
-                checkIfAmp: false,
-                logErrors: true,
-            },
-            opts
-        );
+module.exports = opts => endpoints => {
+    const options = Object.assign(
+        {
+            checkIfAmp: false,
+            logErrors: true,
+        },
+        opts
+    );
 
-        // TODO: re-add pre-release when/if google provide us with one
-        validatorJs
-            .fetchRelease()
-            .then(checkEndpoints(endpoints, options))
-            .catch(onError);
-    };
+    // TODO: re-add pre-release when/if google provide us with one
+    validatorJs
+        .fetchRelease()
+        .then(checkEndpoints(endpoints, options))
+        .catch(onError);
+};

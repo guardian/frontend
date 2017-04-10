@@ -79,16 +79,15 @@ const list = Object.assign(
     //     {}
     // ),
     platform.reduce(
-        (l, human) =>
-            Object.assign(l, {
-                [human]: [
-                    ...platformModules.splice(0, platformFilesPerHuman),
-                    // ...miscModules.splice(
-                    //     0,
-                    //     totalFilesEach - platformFilesPerHuman
-                    // ),
-                ],
-            }),
+        (l, human) => Object.assign(l, {
+            [human]: [
+                ...platformModules.splice(0, platformFilesPerHuman),
+                // ...miscModules.splice(
+                //     0,
+                //     totalFilesEach - platformFilesPerHuman
+                // ),
+            ],
+        }),
         {}
     )
     // misc.reduce(
