@@ -13,10 +13,22 @@ object DataMapper {
     GuAdUnit(dfpAdUnit.getId, ancestorNames :+ dfpAdUnit.getName, dfpAdUnit.getStatus.getValue)
   }
 
-  def toGuCustomField(dfpCustomField: CustomField) =
+  def toGuCustomFieldOption(option: CustomFieldOption): GuCustomFieldOption =
+    GuCustomFieldOption(option.getId, option.getDisplayName)
+
+  def toGuCustomField(dfpCustomField: CustomField): GuCustomField = {
+
+    val options: List[GuCustomFieldOption] = {
+      dfpCustomField match {
+        case dropdown: DropDownCustomField => dropdown.getOptions.toList
+        case _ => Nil
+        }
+      } map toGuCustomFieldOption
+
     GuCustomField(dfpCustomField.getId, dfpCustomField.getName, dfpCustomField.getDescription,
       dfpCustomField.getIsActive, dfpCustomField.getEntityType.getValue, dfpCustomField.getDataType.getValue,
-      dfpCustomField.getVisibility.getValue)
+      dfpCustomField.getVisibility.getValue, options)
+  }
 
   private def toGuTargeting(session: SessionWrapper)(dfpTargeting: Targeting): GuTargeting = {
 

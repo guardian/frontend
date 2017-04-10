@@ -87,11 +87,16 @@ case class GuCustomField(id: Long,
                          isActive: Boolean,
                          entityType: String,
                          dataType: String,
-                         visibility: String)
+                         visibility: String,
+                         options: List[GuCustomFieldOption])
+
+case class GuCustomFieldOption(id: Long, name: String)
 
 object GuCustomField {
 
+  implicit val customFieldOptionFormats: Format[GuCustomFieldOption] = Json.format[GuCustomFieldOption]
   implicit val customFieldFormats: Format[GuCustomField] = Json.format[GuCustomField]
+
 }
 
 case class GuAdUnit(id: String, path: Seq[String], status: String) {
