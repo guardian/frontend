@@ -4260,9 +4260,9 @@ jest-snapshot@^19.0.2:
     natural-compare "^1.4.0"
     pretty-format "^19.0.0"
 
-jest-teamcity-reporter@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/jest-teamcity-reporter/-/jest-teamcity-reporter-0.4.0.tgz#c88f4300824e9e20b67b704a97db98b64076748b"
+jest-teamcity-reporter@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/jest-teamcity-reporter/-/jest-teamcity-reporter-0.6.2.tgz#a71e350cc994186d3c6fbb6c3d7895e547026365"
 
 jest-util@^19.0.2:
   version "19.0.2"
