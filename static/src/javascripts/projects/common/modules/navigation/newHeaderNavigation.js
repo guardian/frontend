@@ -10,7 +10,7 @@ const menuItems = qwery('.js-close-nav-list');
 const enhanced = {};
 
 const weShouldEnhance = (checkbox: HTMLInputElement): ?boolean =>
-    !enhanced[checkbox.id] && checkbox && !checkbox.checked;
+    checkbox && !enhanced[checkbox.id] && !checkbox.checked;
 
 const closeAllOtherPrimaryLists = (targetItem?: HTMLElement): void => {
     menuItems.forEach(item => {
@@ -88,11 +88,8 @@ const applyEnhancementsTo = (checkbox: HTMLElement): void => {
         const button = document.createElement('button');
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
-        const checkboxClasses = Array.prototype.slice.call(checkbox.classList);
 
-        checkboxClasses.forEach(c => {
-            button.classList.add(c);
-        });
+        [...checkbox.classList].forEach(c => button.classList.add(c));
 
         button.setAttribute('id', checkboxId);
 
