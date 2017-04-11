@@ -6,15 +6,8 @@ import mediator from 'lib/mediator';
 const trackerName = config.googleAnalytics.trackers.editorial;
 const send = `${trackerName}.send`;
 
-const extractLinkText = (el: ?HTMLElement): ?string => {
-    let text;
-
-    if (el && typeof el.textContent === 'string') {
-        text = el.textContent.trim();
-    }
-
-    return text;
-};
+const getTextContent = (el: HTMLElement): string =>
+    (el.textContent || '').trim();
 
 const trackNonClickInteraction = (actionName: string): void => {
     window.ga(send, 'event', 'Interaction', actionName, {
@@ -25,13 +18,13 @@ const trackNonClickInteraction = (actionName: string): void => {
 const trackSamePageLinkClick = (target: HTMLElement, tag: string): void => {
     window.ga(send, 'event', 'click', 'in page', tag, {
         nonInteraction: true, // to avoid affecting bounce rate
-        dimension13: extractLinkText(target),
+        dimension13: getTextContent(target),
     });
 };
 
 const trackExternalLinkClick = (target: HTMLElement, tag: string): void => {
     window.ga(send, 'event', 'click', 'external', tag, {
-        dimension13: extractLinkText(target),
+        dimension13: getTextContent(target),
     });
 };
 
