@@ -11,21 +11,25 @@ describe('Cookies', () => {
     let cookieValue = '';
 
     Object.defineProperty(document, 'domain', { value: 'www.theguardian.com' });
-    Object.defineProperty(document, 'cookie', {
-        get() {
-            return cookieValue.replace('|', ';').replace(/^[;|]|[;|]$/g, '');
-        },
+    Object.defineProperty(
+        document,
+        'cookie',
+        ({
+            get() {
+                return cookieValue.replace('|', ';').replace(/^[;|]|[;|]$/g, '');
+            },
 
-        set(value) {
-            const name = value.split('=')[0];
-            const newVal = cookieValue
-                .split('|')
-                .filter(cookie => cookie.split('=')[0] !== name);
+            set(value) {
+                const name = value.split('=')[0];
+                const newVal = cookieValue
+                    .split('|')
+                    .filter(cookie => cookie.split('=')[0] !== name);
 
-            newVal.push(value);
-            cookieValue = newVal.join('|');
-        },
-    });
+                newVal.push(value);
+                cookieValue = newVal.join('|');
+            },
+        }: Object)
+    );
 
     beforeEach(() => {
         cookieValue = '';
