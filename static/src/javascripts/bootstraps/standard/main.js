@@ -25,10 +25,10 @@ import mediator from 'lib/mediator';
 import checkMediator from 'common/modules/check-mediator';
 import addEventListener from 'lib/add-event-listener';
 import identity from 'common/modules/identity/api';
-import url from 'lib/url';
+import { getUrlVars } from 'lib/url';
 import cookies from 'lib/cookies';
 import { catchErrorsWithContext } from 'lib/robust';
-import userTiming from 'lib/user-timing';
+import { markTime } from 'lib/user-timing';
 import config from 'lib/config';
 import newHeaderNavigation from 'common/modules/navigation/newHeaderNavigation';
 import ga from 'common/modules/analytics/google';
@@ -36,7 +36,7 @@ import debounce from 'lodash/functions/debounce';
 import ophan from 'ophan/ng';
 
 const setAdTestCookie = (): void => {
-    const queryParams = url.getUrlVars();
+    const queryParams = getUrlVars();
 
     if (queryParams.adtest === 'clear') {
         cookies.remove('adtest');
@@ -163,7 +163,7 @@ const addErrorHandler = (): void => {
 };
 
 const init = (): void => {
-    userTiming.mark('standard start');
+    markTime('standard start');
 
     catchErrorsWithContext([
         [
@@ -239,7 +239,7 @@ const init = (): void => {
 
     showHiringMessage();
 
-    userTiming.mark('standard end');
+    markTime('standard end');
 
     catchErrorsWithContext([
         [

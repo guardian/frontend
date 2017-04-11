@@ -116,7 +116,7 @@ define([
             return Promise.resolve();
         }
 
-        userTiming.mark('commercial start');
+        userTiming.markTime('commercial start');
         robust.catchErrorsWithContext([
             ['ga-user-timing-commercial-start', function () {
                 ga.trackPerformance('Javascript Load', 'commercialStart', 'Commercial start parse time');
@@ -128,7 +128,7 @@ define([
 
         return loadModules(commercialModules, performanceLogging.primaryBaseline)
         .then(function () {
-            userTiming.mark('commercial end');
+            userTiming.markTime('commercial end');
             robust.catchErrorsWithContext([
                 ['ga-user-timing-commercial-end', function () {
                     ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');

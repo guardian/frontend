@@ -1,7 +1,7 @@
 // @flow
 
 import Chance from 'chance';
-import { mark, getTiming, getCurrentTime } from './user-timing';
+import { markTime, getMarkTime, getCurrentTime } from './user-timing';
 
 const chance = new Chance();
 const mockIO = { entries: [] };
@@ -33,17 +33,17 @@ describe('user-timing', () => {
         expect(getCurrentTime()).toBe(mockedNowValue);
     });
 
-    test('mark()', () => {
+    test('markTime()', () => {
         const name = chance.word();
         mockIO.entries = [];
-        mark(name);
+        markTime(name);
         expect(mockIO.entries.length).toBe(1);
     });
 
-    test('getTiming()', () => {
+    test('getMarkTime()', () => {
         const name = chance.word();
-        mark(name);
-        const timer = getTiming(name);
+        markTime(name);
+        const timer = getMarkTime(name);
         expect(timer).toBe(mockedNowValue);
     });
 });

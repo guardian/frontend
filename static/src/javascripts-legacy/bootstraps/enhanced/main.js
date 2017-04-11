@@ -39,7 +39,7 @@ define([
         };
 
 
-        userTiming.mark('App Begin');
+        userTiming.markTime('App Begin');
 
         robust.catchErrorsWithContext([
             ['ga-user-timing-enhanced-start', function () {
@@ -204,7 +204,7 @@ define([
         bootstrapContext('checkDispatcher', checkDispatcher);
 
         // Mark the end of synchronous execution.
-        userTiming.mark('App End');
+        userTiming.markTime('App End');
         robust.catchErrorsWithContext([
             ['ga-user-timing-enhanced-end', function () {
                 ga.trackPerformance('Javascript Load', 'enhancedEnd', 'Enhanced end parse time');
