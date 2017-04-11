@@ -50,7 +50,7 @@ define([
             // if no valid url end point, or tailor switch is off, reject
             if (!url || !config.switches.useTailorEndpoints) return reject();
 
-            var tailorData = bypassStorage ? null : storage.localStorage.get('gu.tailor');
+            var tailorData = bypassStorage ? null : storage.local.get('gu.tailor');
 
             // if data in local storage return this
             if (tailorData && tailorData[url]) {
@@ -63,12 +63,12 @@ define([
     }
 
     function handleResponse(url, data) {
-        var tailorData = storage.localStorage.get('gu.tailor') || {};
+        var tailorData = storage.local.get('gu.tailor') || {};
         var hour = 1000 * 60 * 60;
 
         tailorData[url] = data;
 
-        storage.localStorage.set('gu.tailor', tailorData, {expires: Date.now() + hour});
+        storage.local.set('gu.tailor', tailorData, {expires: Date.now() + hour});
 
         return Promise.resolve(data);
     }

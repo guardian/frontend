@@ -80,7 +80,7 @@ define([
 
         describe('user cannot dismiss alerts', function () {
             beforeEach(function () {
-                sinon.stub(storage.localStorage, 'isAvailable').returns(false);
+                sinon.stub(storage.local, 'isAvailable').returns(false);
             });
 
             it('should not try and fetch the json', function (done) {
@@ -94,13 +94,13 @@ define([
             });
 
             afterEach(function () {
-                storage.localStorage.isAvailable.restore();
+                storage.local.isAvailable.restore();
             });
         });
 
         describe('user can dismiss alerts', function () {
             beforeEach(function () {
-                storage.localStorage.set(knownAlertIDsStorageKey, {
+                storage.local.set(knownAlertIDsStorageKey, {
                     'uk_known': false,
                     'uk_dismissed': true
                 });
@@ -117,7 +117,7 @@ define([
                     alertThatIs('unknown', {age: 2, collection: 'uk'})
                 ];
 
-                expect(storage.localStorage.get(knownAlertIDsStorageKey).uk_unknown).toBeUndefined();
+                expect(storage.local.get(knownAlertIDsStorageKey).uk_unknown).toBeUndefined();
 
                 mockBreakingNewsWith(collections).then(function (alert) {
                     expect(alert.headline).toEqual('2min uk unknown headline');
@@ -127,7 +127,7 @@ define([
                     setTimeout(function () {
                         expect($('.breaking-news--spectre').length).toBe(1);
                         expect($('.breaking-news--hidden').length).toBe(0);
-                        expect(storage.localStorage.get(knownAlertIDsStorageKey).uk_unknown).toBe(false);
+                        expect(storage.local.get(knownAlertIDsStorageKey).uk_unknown).toBe(false);
                         done();
                     }, 120);
                 }).catch(done.fail);
@@ -226,12 +226,12 @@ define([
                     alertThatIs('known')
                 ];
 
-                expect(storage.localStorage.get(knownAlertIDsStorageKey).uk_known).not.toBeUndefined();
-                expect(storage.localStorage.get(knownAlertIDsStorageKey).uk_dismissed).not.toBeUndefined();
+                expect(storage.local.get(knownAlertIDsStorageKey).uk_known).not.toBeUndefined();
+                expect(storage.local.get(knownAlertIDsStorageKey).uk_dismissed).not.toBeUndefined();
 
                 mockBreakingNewsWith(collections).then(function () {
-                    expect(storage.localStorage.get(knownAlertIDsStorageKey).uk_known).not.toBeUndefined();
-                    expect(storage.localStorage.get(knownAlertIDsStorageKey).uk_dismissed).toBeUndefined();
+                    expect(storage.local.get(knownAlertIDsStorageKey).uk_known).not.toBeUndefined();
+                    expect(storage.local.get(knownAlertIDsStorageKey).uk_dismissed).toBeUndefined();
                 }).then(done).catch(done.fail);
             });
         });

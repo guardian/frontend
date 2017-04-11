@@ -57,7 +57,7 @@ define([
 
     function updatePref(containerId, state) {
         var prefs = userPrefs.get(PREF_NAME, {
-            type: 'sessionStorage'
+            type: 'session'
         }) || {};
         if (state !== STATE_DISPLAYED) {
             delete prefs[containerId];
@@ -65,13 +65,13 @@ define([
             prefs[containerId] = 'more';
         }
         userPrefs.set(PREF_NAME, prefs, {
-            type: 'sessionStorage'
+            type: 'session'
         });
     }
 
     function readPrefs(containerId) {
         var prefs = userPrefs.get(PREF_NAME, {
-            type: 'sessionStorage'
+            type: 'session'
         });
         return (prefs && prefs[containerId]) ? STATE_DISPLAYED : STATE_HIDDEN;
     }

@@ -7,7 +7,7 @@ define([
                 assign) {
 
     function selectSequentiallyFrom(array) {
-        return array[storage.localStorage.get('gu.alreadyVisited') % array.length];
+        return array[storage.local.get('gu.alreadyVisited') % array.length];
     }
 
     var MEMBERSHIP = 'membership';

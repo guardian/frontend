@@ -8,12 +8,12 @@ function (
 ) {
     function CookieRefresh() {
         this.init = function () {
-            if (storage.localStorage.isAvailable() && Id.isUserLoggedIn()) {
-                var lastRefresh = storage.localStorage.get(Id.lastRefreshKey),
+            if (storage.local.isAvailable() && Id.isUserLoggedIn()) {
+                var lastRefresh = storage.local.get(Id.lastRefreshKey),
                     currentTime = new Date().getTime();
                 if (this.shouldRefreshCookie(lastRefresh, currentTime)) {
                     Id.getUserFromApiWithRefreshedCookie();
-                    storage.localStorage.set(Id.lastRefreshKey, currentTime);
+                    storage.local.set(Id.lastRefreshKey, currentTime);
                 }
             }
         };

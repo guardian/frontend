@@ -21,7 +21,7 @@ define([
     function init() {
         get().then(function (geolocation) {
             var currentDate = new Date();
-            storage.localStorage.set(storageKey, geolocation, {
+            storage.local.set(storageKey, geolocation, {
                 expires: currentDate.setDate(currentDate.getDate() + daysBeforeGeolocationRefresh)
             });
         });
@@ -52,7 +52,7 @@ define([
     }
 
     function getSync() {
-        var geolocationFromStorage = storage.localStorage.get(storageKey);
+        var geolocationFromStorage = storage.local.get(storageKey);
         return geolocationFromStorage ? geolocationFromStorage : editionToGeolocation(config.page.edition)
     }
 

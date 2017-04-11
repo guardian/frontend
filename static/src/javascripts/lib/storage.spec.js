@@ -1,6 +1,6 @@
 // @flow
 
-import { localStorage, sessionStorage } from 'lib/storage';
+import { local, session } from 'lib/storage';
 
 const IO = [
     {
@@ -159,9 +159,9 @@ const testStorage = (storageName, fn) => {
 };
 
 describe('sessionStorage', () => {
-    testStorage('session', sessionStorage);
+    testStorage('session', session);
 });
 
 describe('localStorage', () => {
-    testStorage('local', localStorage);
+    testStorage('local', local);
 });

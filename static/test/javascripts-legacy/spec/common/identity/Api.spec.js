@@ -39,7 +39,7 @@ define([
                                );
                                cookies.get = getCookieStub;
                                getStorageStub = sinon.stub();
-                               storage.localStorage.get = getStorageStub;
+                               storage.local.get = getStorageStub;
                                reqwestStub.reset();
 
                                done();

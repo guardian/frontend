@@ -45,7 +45,7 @@ define([
     }
 
     function userHasSeenThisSession() {
-        return !!storage.sessionStorage.get('email-sign-up-seen');
+        return !!storage.session.get('email-sign-up-seen');
     }
 
     function buildUserSubscriptions(response) {
@@ -129,7 +129,7 @@ define([
                 !config.page.isFront &&
                 (config.page.contentId && config.page.contentId.indexOf("email-sign-up") === -1) &&
                 config.switches.emailInArticle &&
-                storage.sessionStorage.isAvailable() &&
+                storage.session.isAvailable() &&
                 !userHasSeenThisSession() &&
                 !(browser === 'MSIE' && contains(['7','8','9'], version + ''));
     }

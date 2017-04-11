@@ -65,7 +65,7 @@ define([
 
             config.switches.adblock = settings[counter].switch;
             window.guardian.adBlockers.active = settings[counter].adBlocker;
-            storage.localStorage.set('gu.alreadyVisited', settings[counter].alreadyVisited);
+            storage.local.set('gu.alreadyVisited', settings[counter].alreadyVisited);
             mockBreakpoint = settings[counter].mockBreakpoint;
 
 

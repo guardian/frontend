@@ -37,7 +37,7 @@ define([
         }
 
         function storedValue() {
-            return storage.localStorage.get('gu.prefs.' + accessibility.KEY_PREFIX + '.flashing-elements');
+            return storage.local.get('gu.prefs.' + accessibility.KEY_PREFIX + '.flashing-elements');
         }
 
         it('toggles from unknown', function (done) {
@@ -72,7 +72,7 @@ define([
 
         it('initializes to known value', function (done) {
             window.localStorage.clear();
-            storage.localStorage.set('gu.prefs.' + accessibility.KEY_PREFIX + '.flashing-elements', false);
+            storage.local.set('gu.prefs.' + accessibility.KEY_PREFIX + '.flashing-elements', false);
 
             var run = installSpy();
             bootstrap.init(function () {

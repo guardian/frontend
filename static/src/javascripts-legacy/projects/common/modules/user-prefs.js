@@ -6,7 +6,7 @@ define([
 
     var storagePrefix = 'gu.prefs.';
     var defaultOptions = {
-        type: 'localStorage'
+        type: 'local'
     };
 
     function set(name, value, options) {

@@ -106,11 +106,11 @@ define([
             var itemId = $('.ad-slot__content', that.adSlot).attr('id'),
                 itemIdArray = itemId.split('/');
 
-            if (!storage.localStorage.get('gu.commercial.expandable.' + itemIdArray[1])) {
+            if (!storage.local.get('gu.commercial.expandable.' + itemIdArray[1])) {
                 // expires in 1 week
                 var week = 1000 * 60 * 60 * 24 * 7;
                 fastdom.write(function () {
-                    storage.localStorage.set('gu.commercial.expandable.' + itemIdArray[1], true, { expires: Date.now() + week });
+                    storage.local.set('gu.commercial.expandable.' + itemIdArray[1], true, { expires: Date.now() + week });
                     that.$button.addClass('button-spin');
                     $('.ad-exp__open-chevron').removeClass('chevron-up').addClass('chevron-down');
                     that.$ad.css('height', that.openedHeight);
