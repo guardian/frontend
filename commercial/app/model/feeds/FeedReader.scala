@@ -33,7 +33,7 @@ class FeedReader(wsClient: WSClient) extends Logging {
       val requestHolder: WSRequest = {
         val unsignedRequestHolder: WSRequest = wsClient.url(request.url)
           .withQueryString(request.parameters.toSeq: _*)
-        .withRequestTimeout(6.seconds)
+          .withRequestTimeout(4.seconds)
         signature.foldLeft(unsignedRequestHolder) { (soFar, calc) =>
           soFar.sign(calc)
         }
