@@ -1,6 +1,4 @@
-@(membershipURL: String, contributionsURL: String)
-
-<div class="block block--content contributions__epic contributions__epic--liveblog">
+<div class="block block--content contributions__epic contributions__epic--liveblog" data-component="<%=componentName%>">
     <div>
         <h2 class="contributions__title contributions__title--epic">
             Since you’re here …
@@ -16,16 +14,16 @@
     <div class="contributions__amount-field">
         <div>
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member contributions__contribute--epic-member-top"
-            href="@membershipURL"
-            target="_blank">
+               href="<%=membershipUrl%>"
+               target="_blank">
                 Become a supporter
             </a>
         </div>
 
         <div>
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
-            href="@contributionsURL"
-            target="_blank">
+               href="<%=contributionUrl%>"
+               target="_blank">
                 Make a contribution
             </a>
         </div>

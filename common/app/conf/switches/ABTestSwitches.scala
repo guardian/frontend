@@ -71,6 +71,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-contributions-epic-liveblog",
+    "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 7, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-epic-regulars-v2",
     "Test messages aimed at our regular readers",
     owners = Seq(Owner.withGithub("jranks123")),

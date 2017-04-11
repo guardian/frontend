@@ -10,7 +10,8 @@ define([
     'common/modules/experiments/tests/contributions-epic-regulars-v2',
     'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
     'common/modules/experiments/tests/contributions-epic-laundromat',
-    'common/modules/experiments/tests/acquisitions-epic-vs-epic-and-engagement-banner'
+    'common/modules/experiments/tests/acquisitions-epic-vs-epic-and-engagement-banner',
+    'common/modules/experiments/tests/acquisitions-epic-liveblog'
 
 ], function (
     reduce,
@@ -24,7 +25,8 @@ define([
     regularsV2,
     acquisitionsEpicArticle50Trigger,
     laundromat,
-    acquisitionsEpicVsEpicAndEngagementBanner
+    acquisitionsEpicVsEpicAndEngagementBanner,
+    acquisitionsEpicLivelog
 
 ) {
     /**
@@ -38,7 +40,8 @@ define([
         epicToSupportLandingPage,
         askFourEarning,
         acquisitionsEpicArticle50Trigger,
-        brexit
+        brexit,
+        acquisitionsEpicLivelog
     ];
 
     var epicEngagementBannerTests = reduce(tests, function(out, test) {
@@ -66,20 +69,21 @@ define([
         abTestClashData: abTestClashData,
 
         getTest: function() {
-            var eligibleTests = tests.filter(function (test) {
-                var t = new test();
-                var forced = window.location.hash.indexOf('ab-' + t.id) > -1;
-                var variant = segmentUtil.variantFor(t);
-
-                var hasNotReachedRateLimit = variant &&
-                    ((viewLog.viewsInPreviousDays(variant.maxViews.days) < variant.maxViews.count &&
-                    viewLog.viewsInPreviousDays(variant.maxViews.minDaysBetweenViews) === 0) ||
-                    variant.isUnlimited);
-
-                return forced || (testCanRunChecks.testCanBeRun(t) && segmentUtil.isInTest(t) && hasNotReachedRateLimit);
-            });
-
-            return eligibleTests[0] && new eligibleTests[0]();
+            // var eligibleTests = tests.filter(function (test) {
+            //     var t = new test();
+            //     var forced = window.location.hash.indexOf('ab-' + t.id) > -1;
+            //     var variant = segmentUtil.variantFor(t);
+            //
+            //     var hasNotReachedRateLimit = variant &&
+            //         ((viewLog.viewsInPreviousDays(variant.maxViews.days) < variant.maxViews.count &&
+            //         viewLog.viewsInPreviousDays(variant.maxViews.minDaysBetweenViews) === 0) ||
+            //         variant.isUnlimited);
+            //
+            //     return forced || (testCanRunChecks.testCanBeRun(t) && segmentUtil.isInTest(t) && hasNotReachedRateLimit);
+            // });
+            //
+            // return eligibleTests[0] && new eligibleTests[0]();
+            return new acquisitionsEpicLivelog();
         }
     }
 });
