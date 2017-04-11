@@ -33,5 +33,3 @@ module.system.node.resolve_dirname=static/src/javascripts
 module.system.node.resolve_dirname=static/src/javascripts-legacy
 module.system.node.resolve_dirname=static/vendor/javascripts
 module.system.node.resolve_dirname=node_modules
-
-unsafe.enable_getters_and_setters=true
