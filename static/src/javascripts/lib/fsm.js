@@ -31,38 +31,39 @@
     };
 */
 
-function FiniteStateMachine(options) {
-    this.context = options.context || undefined;
-    this.states = options.states || {};
-    this.context.state = options.initial || '';
-    this.debug = options.debug || false;
-    this.onChangeState = options.onChangeState.bind(this.context) || function() {};
+class FiniteStateMachine {
+    constructor(options) {
+        this.context = options.context || undefined;
+        this.states = options.states || {};
+        this.context.state = options.initial || '';
+        this.debug = options.debug || false;
+        this.onChangeState = options.onChangeState.bind(this.context) || (() => {});
+    }
+
+    log(...args) {
+        if (this.debug && window.console && window.console.log) {
+            window.console.log(...args);
+        }
+    }
+
+    trigger(event, data) {
+
+        this.log('fsm: (event)', event);
+
+        const state = this.context.state, noop = () => {};
+
+        (this.states[state].events[event] || noop).call(this.context, data);
+
+        // execute leave/enter callbacks if present and we have changed state
+        if (state !== this.context.state || this.context.reloadState) {
+            this.context.reloadState = false;
+            this.onChangeState(state, this.context.state);
+            (this.states[state].leave || noop).apply(this.context);
+            (this.states[this.context.state].enter || noop).apply(this.context);
+
+            this.log('fsm: (state)', state + ' -> ' + this.context.state);
+        }
+    }
 }
-
-FiniteStateMachine.prototype.log = function() {
-    if (this.debug && window.console && window.console.log) {
-        window.console.log.apply(window.console, arguments);
-    }
-};
-
-FiniteStateMachine.prototype.trigger = function(event, data) {
-
-    this.log('fsm: (event)', event);
-
-    var state = this.context.state,
-        noop = function() {};
-
-    (this.states[state].events[event] || noop).call(this.context, data);
-
-    // execute leave/enter callbacks if present and we have changed state
-    if (state !== this.context.state || this.context.reloadState) {
-        this.context.reloadState = false;
-        this.onChangeState(state, this.context.state);
-        (this.states[state].leave || noop).apply(this.context);
-        (this.states[this.context.state].enter || noop).apply(this.context);
-
-        this.log('fsm: (state)', state + ' -> ' + this.context.state);
-    }
-};
 
 export default FiniteStateMachine;
