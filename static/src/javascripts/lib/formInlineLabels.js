@@ -2,6 +2,7 @@
 import bean from 'bean';
 import $ from 'lib/$';
 import fastdom from 'fastdom';
+
 /**
  * @param {String} type 'add' or 'remove'
  * @param {Object} $el $ element
@@ -9,7 +10,13 @@ import fastdom from 'fastdom';
  * @param {Function} testFunc A callback function that should return boolean describing whether we
  * should perform the add or remove class
  */
-const updateClass = (type, $el, cssClass, testFunc) =>
+
+const updateClass = (
+    type: string,
+    $el: Object,
+    cssClass: string,
+    testFunc?: Function
+): Function =>
     () => {
         // If we pass a boolean for test, then check if we should update the class
         const shouldUpdateClass = testFunc !== undefined ? testFunc() : true;
