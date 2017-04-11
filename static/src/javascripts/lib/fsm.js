@@ -1,3 +1,4 @@
+// @flow
 /*
     simple practical and flexible "finite state machine" implementation
 
@@ -32,25 +33,31 @@
 */
 
 class FiniteStateMachine {
-    constructor(options) {
-        this.context = options.context || undefined;
+    context: Object;
+    states: Object;
+    debug: ?boolean;
+    onChangeState: (oldState: string, newState: string) => void;
+
+    constructor(options: Object) {
+        this.context = options.context;
         this.states = options.states || {};
         this.context.state = options.initial || '';
         this.debug = options.debug || false;
-        this.onChangeState = options.onChangeState.bind(this.context) || (() => {});
+        this.onChangeState = options.onChangeState.bind(this.context) ||
+            (() => {});
     }
 
-    log(...args) {
+    log(...args: Array<string>): void {
         if (this.debug && window.console && window.console.log) {
             window.console.log(...args);
         }
     }
 
-    trigger(event, data) {
-
+    trigger(event: string, data: Object): void {
         this.log('fsm: (event)', event);
 
-        const state = this.context.state, noop = () => {};
+        const state = this.context.state;
+        const noop = () => {};
 
         (this.states[state].events[event] || noop).call(this.context, data);
 
@@ -61,7 +68,7 @@ class FiniteStateMachine {
             (this.states[state].leave || noop).apply(this.context);
             (this.states[this.context.state].enter || noop).apply(this.context);
 
-            this.log('fsm: (state)', state + ' -> ' + this.context.state);
+            this.log('fsm: (state)', `${state} -> ${this.context.state}`);
         }
     }
 }
