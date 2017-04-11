@@ -3,14 +3,6 @@ import bean from 'bean';
 import $ from 'lib/$';
 import fastdom from 'fastdom';
 
-/**
- * @param {String} type 'add' or 'remove'
- * @param {Object} $el $ element
- * @param {String} cssClass The class to add or remove
- * @param {Function} testFunc A callback function that should return boolean describing whether we
- * should perform the add or remove class
- */
-
 const updateClass = (
     type: string,
     $el: Object,
@@ -33,8 +25,7 @@ export default {
         const $el = $(el);
         const $input = $(opts.textInputClass, el);
         const $label = $(opts.labelClass, el);
-        const hiddenLabelClass = opts.hiddenLabelClass;
-        const labelEnabledClass = opts.labelEnabledClass;
+        const { hiddenLabelClass, labelEnabledClass } = opts;
 
         // Add the js only styling class for inline label enabled
         updateClass('add', $el, labelEnabledClass)();
