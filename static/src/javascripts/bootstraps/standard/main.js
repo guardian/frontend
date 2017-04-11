@@ -27,7 +27,7 @@ import addEventListener from 'lib/add-event-listener';
 import identity from 'common/modules/identity/api';
 import url from 'lib/url';
 import cookies from 'lib/cookies';
-import robust from 'lib/robust';
+import { catchErrorsWithContext } from 'lib/robust';
 import userTiming from 'lib/user-timing';
 import config from 'lib/config';
 import newHeaderNavigation from 'common/modules/navigation/newHeaderNavigation';
@@ -165,7 +165,7 @@ const addErrorHandler = (): void => {
 const init = (): void => {
     userTiming.mark('standard start');
 
-    robust.context([
+    catchErrorsWithContext([
         [
             'ga-user-timing-standard-start',
             () => {
@@ -241,7 +241,7 @@ const init = (): void => {
 
     userTiming.mark('standard end');
 
-    robust.context([
+    catchErrorsWithContext([
         [
             'ga-user-timing-standard-end',
             () => {

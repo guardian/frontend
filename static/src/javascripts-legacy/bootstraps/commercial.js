@@ -90,7 +90,7 @@ define([
             var moduleInit = module[1];
             var moduleDefer = module[2];
 
-            robust.context([
+            robust.catchErrorsWithContext([
                 [moduleName, function () {
                     // These modules all have async init procedures which don't block, and return a promise purely for
                     // perf logging, to time when their async work is done. The command buffer guarantees execution order,
@@ -117,7 +117,7 @@ define([
         }
 
         userTiming.mark('commercial start');
-        robust.context([
+        robust.catchErrorsWithContext([
             ['ga-user-timing-commercial-start', function () {
                 ga.trackPerformance('Javascript Load', 'commercialStart', 'Commercial start parse time');
             }],
@@ -129,7 +129,7 @@ define([
         return loadModules(commercialModules, performanceLogging.primaryBaseline)
         .then(function () {
             userTiming.mark('commercial end');
-            robust.context([
+            robust.catchErrorsWithContext([
                 ['ga-user-timing-commercial-end', function () {
                     ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
                 }]
