@@ -36,12 +36,20 @@
             }
 
             @if(amp) {
+
+                @fragments.mainMedia(article, amp)
+
                 @fragments.headTonal(article, model, isPaidContent, amp = amp)
 
-                @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                    @fragments.mainMedia(article, amp)
-                }
             } else {
+                @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                    @* TODO: ??? This one is the hardest. Headline first, then use css to switch. *@
+                } else {
+                    @* TODO:  headline first. css switch for mobile*@
+                }
+            }
+
+            @if(!amp) {
                 <div class="hide-on-mobile">
                     @fragments.headTonal(article, model, isPaidContent, amp = amp)
 
@@ -50,9 +58,9 @@
                     }
                 </div>
                 <div class="mobile-only">
-                    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                        @fragments.mainMedia(article, amp)
-                    }
+                @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                    @fragments.mainMedia(article, amp)
+                }
                 </div>
             }
 
@@ -62,7 +70,7 @@
                         <div class="js-score"></div>
                         <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
 
-                        @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
+                        @if(!amp & (!(article.tags.isFeature && article.elements.hasShowcaseMainElement))) {
                             @fragments.mainMedia(article, amp)
                         }
 
