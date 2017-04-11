@@ -122,7 +122,7 @@ const trackPerformance = (
     }
 };
 
-export default {
+export {
     trackNonClickInteraction,
     trackSamePageLinkClick,
     trackExternalLinkClick,
