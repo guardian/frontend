@@ -25,13 +25,13 @@ import Promise from 'Promise';
  * - response.ok .status .statusText
  */
 function fetch(input, init) {
-    return new Promise(function(resolve, reject) {
-        var req = buildRequest(input, init || {});
+    return new Promise((resolve, reject) => {
+        const req = buildRequest(input, init || {});
         reqwest(req)
-            .then(function(resp) {
+            .then(resp => {
                 resolve(createResponse(resp));
             })
-            .fail(function(resp) {
+            .fail(resp => {
                 if (resp.status === 0) {
                     // reqwest wasn't able to make the request
                     reject(new Error('Fetch error: ' + resp.statusText));
@@ -44,8 +44,8 @@ function fetch(input, init) {
 }
 
 function buildRequest(path, options) {
-    var isCors = options.mode === 'cors';
-    var withCredentials =
+    const isCors = options.mode === 'cors';
+    const withCredentials =
         (isCors && options.credentials === 'include') ||
         (!isCors && options.credentials === 'same-origin');
 
@@ -56,16 +56,16 @@ function buildRequest(path, options) {
         crossOrigin: isCors,
         headers: options.headers,
         data: options.body,
-        withCredentials: withCredentials
+        withCredentials
     };
 }
 
 function createResponse(response) {
-    var bodyRead = false;
-    var body = response.responseText;
+    let bodyRead = false;
+    const body = response.responseText;
 
     function text() {
-        var result = bodyRead ? Promise.reject(new TypeError('Already read')) : Promise.resolve(body);
+        const result = bodyRead ? Promise.reject(new TypeError('Already read')) : Promise.resolve(body);
         bodyRead = true;
         return result;
     }
@@ -75,8 +75,8 @@ function createResponse(response) {
         ok: response.status >= 200 && response.status < 300,
         statusText: response.statusText,
         url: response.responseURL || '',
-        text: text,
-        json: function() {
+        text,
+        json() {
             return text().then(JSON.parse);
         }
     };
