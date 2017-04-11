@@ -1,12 +1,11 @@
 // @flow
 
-import qwery from 'qwery';
 import fastdom from 'fastdom';
 import ophan from 'ophan/ng';
 import userAccount from 'common/modules/navigation/user-account';
 
-const html = qwery('html')[0];
-const menuItems = qwery('.js-close-nav-list');
+const html = document.documentElement;
+const menuItems = [...document.querySelectorAll('.js-close-nav-list')];
 const enhanced = {};
 
 const weShouldEnhance = (checkbox: HTMLInputElement): ?boolean =>
@@ -21,7 +20,7 @@ const closeAllOtherPrimaryLists = (targetItem?: HTMLElement): void => {
 };
 
 const removeOrderingFromLists = (): void => {
-    const mainListItems = qwery('.js-navigation-item');
+    const mainListItems = [...document.querySelectorAll('.js-navigation-item')];
 
     mainListItems.forEach(item => {
         const listItem = item;
@@ -34,7 +33,7 @@ const toggleSidebar = (event: Event): void => {
     // #? hacky type cast
     const button: HTMLElement = (event.target: any);
     const mainMenu = document.getElementById('main-menu');
-    const veggieBurgerLink = qwery('.js-change-link')[0];
+    const veggieBurgerLink = document.querySelector('.js-change-link');
 
     const menuIsOpen = (): boolean =>
         button.getAttribute('aria-expanded') === 'true';
@@ -60,7 +59,7 @@ const toggleSidebar = (event: Event): void => {
         });
     } else {
         fastdom.write(() => {
-            const firstButton = qwery('.js-navigation-button')[0];
+            const navButton = document.querySelector('.js-navigation-button');
 
             button.setAttribute('aria-expanded', 'true');
             mainMenu.setAttribute('aria-hidden', 'false');
@@ -72,8 +71,8 @@ const toggleSidebar = (event: Event): void => {
                 'nav2 : veggie-burger : hide'
             );
 
-            if (firstButton) {
-                firstButton.focus();
+            if (navButton) {
+                navButton.focus();
             }
             // No targetItem to put in as the parameter. All lists should close.
             closeAllOtherPrimaryLists();
