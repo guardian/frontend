@@ -106,7 +106,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
     });
 };
 
-const enhanceCheckboxesToButtons = (): void => {
+const enhanceSidebarToggle = (): void => {
     const checkbox = document.getElementById('main-menu-toggle');
 
     if (!checkbox) {
@@ -146,7 +146,7 @@ const addEventHandler = (): void => {
 };
 
 const init = (): void => {
-    enhanceCheckboxesToButtons();
+    enhanceSidebarToggle();
     addEventHandler();
     userAccount();
 };
