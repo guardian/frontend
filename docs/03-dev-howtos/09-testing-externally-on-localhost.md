@@ -1,10 +1,9 @@
 # Testing externally on your localhost
-====================================
 
 There are a number of tools on the market for this. The one we recommended is ngrok.
 
 
-#To use ngrok:
+# To use ngrok:
 
 Install ngrok via their website: https://ngrok.com/download or use homebrew :
 ```bash
