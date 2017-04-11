@@ -32,7 +32,7 @@ const add = (name: string, value: string, daysToLive: ?number): void => {
     document.cookie = `${name}=${value}; path=/; expires=${expires.toUTCString()};${getDomainAttribute()}`;
 };
 
-const cleanUp = (names: Array<string>): void => {
+const cleanUp = (names: string[]): void => {
     names.forEach(name => {
         remove(name);
     });
@@ -56,7 +56,7 @@ const addSessionCookie = (name: string, value: string): void => {
     document.cookie = `${name}=${value}; path=/;${getDomainAttribute()}`;
 };
 
-const getCookieValues = (name: string): Array<?string> => {
+const getCookieValues = (name: string): string[] => {
     const cookieVals = [];
     const nameEq = `${name}=`;
     const cookies = document.cookie.split(';');
