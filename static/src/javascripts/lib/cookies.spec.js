@@ -1,5 +1,12 @@
 // @flow
-import { cleanUp, add, addSessionCookie, addForMinutes, remove, get } from 'lib/cookies';
+import {
+    cleanUp,
+    add,
+    addSessionCookie,
+    addForMinutes,
+    remove,
+    get,
+} from 'lib/cookies';
 
 jest.mock('lodash/arrays/remove', () => jest.fn());
 
@@ -44,14 +51,14 @@ describe('Cookies', () => {
 
         cleanUp(['cookie-1-name', 'cookie-2-name']);
 
-        const c = document.cookie;
+        const { cookie } = document;
 
-        expect(c).toMatch(
+        expect(cookie).toMatch(
             new RegExp(
                 'cookie-1-name=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=.theguardian.com'
             )
         );
-        expect(c).toMatch(
+        expect(cookie).toMatch(
             new RegExp(
                 'cookie-2-name=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=.theguardian.com'
             )
