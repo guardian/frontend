@@ -3,39 +3,41 @@
     "lib/add-event-listener.js",
     "lib/ajax.js",
     "lib/atob.js",
-    "lib/capture-perf-timings.js",
-    "lib/chain.js",
-    "lib/clamp.js",
-    "lib/client-rects.js"
+    "lib/capture-perf-timings.js"
   ],
   "Gareth Trufitt": [
-    "lib/config.js",
+    "lib/chain.js",
+    "lib/clamp.js",
+    "lib/client-rects.js",
+    "lib/config.js"
+  ],
+  "Simon Adcock": [
     "lib/cookies.js",
     "lib/create-store.js",
     "lib/detect.js",
-    "lib/element-inview.js",
-    "lib/fastdom-errors.js",
-    "lib/fastdom-promise.js"
+    "lib/element-inview.js"
   ],
-  "Simon Adcock": [
+  "Nicolas Long": [
+    "lib/fastdom-promise.js",
     "lib/fetch.js",
-    "lib/formatters.js",
+    "lib/formatters.js"
+  ],
+  "Calum Campbell": [
     "lib/formInlineLabels.js",
     "lib/fsm.js",
     "lib/geolocation.js",
-    "lib/load-css-promise.js",
-    "lib/load-script.js",
-    "lib/location.js"
+    "lib/load-css-promise.js"
   ],
   "GHaberis": [
+    "lib/load-script.js",
+    "lib/location.js",
     "lib/pad.js",
-    "lib/page.js",
+    "lib/page.js"
+  ],
+  "Gustav Pursche": [
     "lib/picturefill.js",
     "lib/proximity-loader.js",
     "lib/queue.js",
-    "lib/QueueAsync.js",
-  ],
-  "Gustav Pursche": [
-    "lib/steady-page.js",
+    "lib/steady-page.js"
   ]
 }

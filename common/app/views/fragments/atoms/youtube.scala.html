@@ -9,7 +9,10 @@
 @import model.content.MediaWrapper._
 @import model.content.MediaWrapper
 @import conf.switches.Switches.YouTubePosterOverride
-@(media: model.content.MediaAtom, displayCaption: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None, mediaWrapper: Option[MediaWrapper] = None)(implicit request: RequestHeader)
+@import model.VideoFaciaProperties
+@import views.html.fragments.items.elements.facia_cards.title
+
+@(media: model.content.MediaAtom, displayCaption: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None, mediaWrapper: Option[MediaWrapper] = None, faciaHeaderProperties: Option[VideoFaciaProperties] = None)(implicit request: RequestHeader)
 
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
 @defining(playable && !posterImageOverride.exists(_ => YouTubePosterOverride.isSwitchedOn)){sixteenByNine: Boolean =>
@@ -41,7 +44,25 @@
                         allowfullscreen="">
                 </iframe>
                 }
+            @if(mediaWrapper.contains(MediaWrapper.VideoContainer)){
+                <div class="video-overlay">
+                    <div class="video-overlay__headline">
+
+                    @for(f <- faciaHeaderProperties) {
+                        @title(f.header, 0, 0)
+                        @if(f.showByline) {
+                            <div class="fc-item__byline">@f.byline</div>
+                        }
+
+                    </div>
+                    <span class="video-overlay__duration">
+                    @media.formattedDuration
+                    </span>
+                </div>
+                <a href="@f.header.url.get(request)" class="video-container-overlay-link"></a>
             }
+          }
+        }
         @defining(posterImageOverride.filter(_ => !playable || YouTubePosterOverride.isSwitchedOn) orElse media.posterImage) { bestPosterImage =>
             @bestPosterImage.map { image =>
                 <div class="@RenderClasses(Map("youtube-media-atom__overlay" -> true, "vjs-big-play-button" -> !expired))" style="background-image: url(@Video700.bestFor(image))">

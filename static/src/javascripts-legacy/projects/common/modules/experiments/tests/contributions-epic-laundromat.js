@@ -9,7 +9,7 @@ define([
         campaignId: 'epic_laundromat',
 
         start: '2017-03-20',
-        expiry: '2017-04-10',
+        expiry: '2017-04-13',
 
         author: 'Jonathan Rankin',
         description: 'Run the epic on laundromat articles, ignoring the sensitive tag',
