@@ -23,7 +23,6 @@
     "lib/formatters.js"
   ],
   "Calum Campbell": [
-    "lib/fsm.js",
     "lib/geolocation.js",
     "lib/load-css-promise.js"
   ],
