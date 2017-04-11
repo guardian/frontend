@@ -48,11 +48,10 @@ const toggleSidebar = (trigger: HTMLElement): void => {
     const update = () => {
         const expandedAttr = isOpen ? 'false' : 'true';
         const hiddenAttr = isOpen ? 'true' : 'false';
-        const linkState = isOpen ? 'show' : 'hide';
 
         sidebarToggle.setAttribute(
             'data-link-name',
-            `nav2 : veggie-burger : ${linkState}`
+            `nav2 : veggie-burger : ${isOpen ? 'show' : 'hide'}`
         );
 
         trigger.setAttribute('aria-expanded', expandedAttr);
