@@ -53,7 +53,10 @@ const toggleSidebar = (trigger: HTMLElement): void => {
         trigger.setAttribute('aria-expanded', expandedAttr);
         mainMenu.setAttribute('aria-hidden', hiddenAttr);
         veggieBurgerLink.classList.toggle(openClass, !isOpen);
-        html.classList.toggle(globalOpenClass, !isOpen);
+
+        if (html) {
+            html.classList.toggle(globalOpenClass, !isOpen);
+        }
 
         if (isOpen) {
             removeOrderingFromLists();
@@ -92,10 +95,10 @@ const applyEnhancementsTo = (checkbox: HTMLElement): void => {
                 checkbox.parentNode.replaceChild(button, checkbox);
             }
 
-            button.addEventListener('click', event => {
+            button.addEventListener('click', (event: Event) => {
                 // #? hacky type cast
-                const button: HTMLElement = (event.target: any);
-                toggleSidebar(button);
+                const target: HTMLElement = (event.target: any);
+                toggleSidebar(target);
             });
 
             enhanced[button.id] = true;
