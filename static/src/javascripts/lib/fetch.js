@@ -1,5 +1,6 @@
+// @flow
 import reqwest from 'reqwest';
-import Promise from 'Promise';
+
 /**
  * Provide a minimal function equivalent to fetch. I don't dare calling it a
  * polyfill but the signature is the same, albeit simplified.
@@ -24,29 +25,9 @@ import Promise from 'Promise';
  * - response.text() and response.json()
  * - response.ok .status .statusText
  */
-function fetch(input, init) {
-    return new Promise((resolve, reject) => {
-        const req = buildRequest(input, init || {});
-        reqwest(req)
-            .then(resp => {
-                resolve(createResponse(resp));
-            })
-            .fail(resp => {
-                if (resp.status === 0) {
-                    // reqwest wasn't able to make the request
-                    reject(new Error('Fetch error: ' + resp.statusText));
-                } else {
-                    // an error response was received, in fetch this is not a rejection
-                    resolve(createResponse(resp));
-                }
-            });
-    });
-}
-
-function buildRequest(path, options) {
+const buildRequest = (path, options) => {
     const isCors = options.mode === 'cors';
-    const withCredentials =
-        (isCors && options.credentials === 'include') ||
+    const withCredentials = (isCors && options.credentials === 'include') ||
         (!isCors && options.credentials === 'same-origin');
 
     return {
@@ -56,19 +37,21 @@ function buildRequest(path, options) {
         crossOrigin: isCors,
         headers: options.headers,
         data: options.body,
-        withCredentials
+        withCredentials,
     };
-}
+};
 
-function createResponse(response) {
+const createResponse = response => {
     let bodyRead = false;
     const body = response.responseText;
 
-    function text() {
-        const result = bodyRead ? Promise.reject(new TypeError('Already read')) : Promise.resolve(body);
+    const text = () => {
+        const result = bodyRead
+            ? Promise.reject(new TypeError('Already read'))
+            : Promise.resolve(body);
         bodyRead = true;
         return result;
-    }
+    };
 
     return {
         status: response.status,
@@ -78,8 +61,26 @@ function createResponse(response) {
         text,
         json() {
             return text().then(JSON.parse);
-        }
+        },
     };
-}
+};
+
+const fetch = (input: string, init: ?Object) =>
+    new Promise((resolve, reject) => {
+        const req = buildRequest(input, init || {});
+        reqwest(req)
+            .then(resp => {
+                resolve(createResponse(resp));
+            })
+            .fail(resp => {
+                if (resp.status === 0) {
+                    // reqwest wasn't able to make the request
+                    reject(new Error(`Fetch error: ${resp.statusText}`));
+                } else {
+                    // an error response was received, in fetch this is not a rejection
+                    resolve(createResponse(resp));
+                }
+            });
+    });
 
 export default fetch;
