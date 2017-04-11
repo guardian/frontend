@@ -1,0 +1,55 @@
+$caption-button-size: 32px;
+
+@include mq($until: tablet) {
+
+    .reveal-caption {
+        position: absolute;
+        right: $gs-gutter / 4;
+        width: $caption-button-size;
+        height: $caption-button-size;
+        z-index: 1;
+        background-color: rgba($neutral-1, .4);
+        border-radius: 50%;
+    }
+
+    .reveal-caption--img {
+        bottom: $gs-baseline/2;
+    }
+
+    .caption--main.caption--video {
+        padding-bottom: 0;
+    }
+
+    .caption--main.caption--img {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba($multimedia-support-5, .8);
+        color: #ffffff;
+        display: none;
+        padding: $gs-baseline / 2 $gs-gutter * 2 $gs-baseline $gs-gutter / 2;
+        max-width: 100%;
+
+
+        @include mq($from: mobileLandscape) {
+            padding-left: $gs-gutter;
+        }
+
+        a {
+            color: #ffffff;
+        }
+
+        &:before {
+            content: none;
+        }
+    }
+
+    input[id='show-caption']:checked ~ .caption--main {
+        display: block;
+    }
+
+    input[id='show-caption']:checked ~ .reveal-caption {
+        background-color: $multimedia-support-5;
+    }
+}
