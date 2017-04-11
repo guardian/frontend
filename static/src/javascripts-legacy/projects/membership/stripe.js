@@ -141,7 +141,7 @@ define([
                 }).then(function(resp) {
                     return resp.json();
                 }).then(function (json) {
-                    var card = json
+                    var card = json;
                     display($parent, card);
                 }).catch(function() {
                     $parent.text('We have not been able to update your card details at this time.');
