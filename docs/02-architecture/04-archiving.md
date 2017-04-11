@@ -10,7 +10,7 @@ We want to archive this content for safe keeping and remove the technical system
 
 This outlines the archival procedure for The Guardian website.
 
-# How
+# How
 
 Essentially, archiving parts of the website boils down to,
 
