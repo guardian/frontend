@@ -13,7 +13,6 @@ import com.amazonaws.util.StringInputStream
 import common.Logging
 import conf.Configuration
 import org.joda.time.{DateTime, DateTimeZone}
-import play.Play
 import play.api.libs.ws.{WSClient, WSRequest}
 import sun.misc.BASE64Encoder
 

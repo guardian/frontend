@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.Edition.defaultEdition
 import common.{Edition, ExecutionContexts, Logging}
@@ -9,7 +10,7 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
-import play.api.mvc.{Action, Controller, RequestHeader}
+import play.api.mvc.{Action, Controller, RequestHeader, Result}
 import services.{ConfigAgent, IndexPage, IndexPageItem}
 import views.support.PreviousAndNext
 
@@ -33,9 +34,16 @@ class AllIndexController(contentApiClient: ContentApiClient, sectionsLookUp: Sec
 
   def altDate(path: String, day: String, month: String, year: String) = Action.async{ implicit request =>
     val reqDate = requestedDate(s"$year/$month/$day").withTimeAtStartOfDay()
-    findByDate(path, reqDate).map{ _.map{ date =>
-      Found(s"/$path/${urlFormat(date)}/all")
-    }.getOrElse(Found(s"/$path/all"))}
+    lazy val fallbackToAll: Result = Found(s"/$path/all")
+    findByDate(path, reqDate)
+      .map { maybeDate =>
+        maybeDate
+          .map(date => Found(s"/$path/${urlFormat(date)}/all"))
+          .getOrElse(fallbackToAll)
+      }
+      .recover {
+        case _ => fallbackToAll
+      }
   }
 
   // redirect old dated pages e.g. /sport/cycling/2011/jan/05 to new format /sport/cycling/2011/jan/05/all
@@ -56,31 +64,39 @@ class AllIndexController(contentApiClient: ContentApiClient, sectionsLookUp: Sec
 
   def allOn(path: String, day: String, month: String, year: String) = Action.async { implicit request =>
     val reqDate = requestedDate(s"$year/$month/$day")
+    lazy val notFound: Result = Cached(300)(WithoutRevalidationResult(NotFound))
+    loadLatest(path, reqDate)
+      .map { maybeIndexPage =>
+        maybeIndexPage
+          .map { index =>
 
-    loadLatest(path, reqDate).map { _.map { index =>
+            val contentOnRequestedDate = index.contents.filter(_.item.trail.webPublicationDate.sameDay(reqDate))
 
-      val contentOnRequestedDate = index.contents.filter(_.item.trail.webPublicationDate.sameDay(reqDate))
+            val olderDate = index.trails.find(!_.trail.webPublicationDate.sameDay(reqDate)).map(_.trail.webPublicationDate.toDateTime)
 
-      val olderDate = index.trails.find(!_.trail.webPublicationDate.sameDay(reqDate)).map(_.trail.webPublicationDate.toDateTime)
+            if (index.trails.isEmpty) {
+              Cached(300)(WithoutRevalidationResult(redirectToFirstAllPage(path)))
+            } else if (contentOnRequestedDate.isEmpty) {
+              Cached(300)(WithoutRevalidationResult(redirectToOlderAllPage(olderDate, path)))
+            } else {
+              val prevPage = {
+                olderDate match {
+                  case Some(older) => Some(s"/$path/${urlFormat(older)}/all")
+                  case _ => Some(s"/$path/${urlFormat(reqDate.minusDays(1))}/altdate")
+                }
+              }
+              val today = DateTime.now
+              val nextPage = if (reqDate.sameDay(today)) None else Some(s"/$path/${urlFormat(reqDate.plusDays(1))}/altdate")
+              val model = index.copy(contents = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
 
-      if (index.trails.isEmpty) {
-        Cached(300)(WithoutRevalidationResult(redirectToFirstAllPage(path)))
-      } else if (contentOnRequestedDate.isEmpty) {
-        Cached(300)(WithoutRevalidationResult(redirectToOlderAllPage(olderDate, path)))
-      } else {
-        val prevPage = {
-          olderDate match {
-            case Some(older) => Some(s"/$path/${urlFormat(older)}/all")
-            case _ => Some(s"/$path/${urlFormat(reqDate.minusDays(1))}/altdate")
+              Cached(300)(RevalidatableResult.Ok(views.html.all(model, PreviousAndNext(prevPage, nextPage))))
+            }
           }
-        }
-        val today = DateTime.now
-        val nextPage = if (reqDate.sameDay(today)) None else Some(s"/$path/${urlFormat(reqDate.plusDays(1))}/altdate")
-        val model = index.copy(contents = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
-
-        Cached(300)(RevalidatableResult.Ok(views.html.all(model, PreviousAndNext(prevPage, nextPage))))
+          .getOrElse(notFound)
       }
-    }.getOrElse(Cached(300)(WithoutRevalidationResult(NotFound)))}
+      .recover {
+        case _ => notFound
+      }
   }
 
   private def redirectToOlderAllPage(olderDate: Option[DateTime], path: String) = olderDate.map {
@@ -96,7 +112,7 @@ class AllIndexController(contentApiClient: ContentApiClient, sectionsLookUp: Sec
   private def loadLatest(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
     val result = contentApiClient.getResponse(
       contentApiClient.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest")
-    ).map{ item =>
+    ).map { item =>
       item.section.map( section =>
         IndexPage(
           page = Section.make(section),
@@ -105,19 +121,32 @@ class AllIndexController(contentApiClient: ContentApiClient, sectionsLookUp: Sec
           date,
           tzOverride = None
         )
-      ).orElse(item.tag.map( apitag => {
-        val tag = Tag.make(apitag)
-        IndexPage(page = tag, contents = item.results.getOrElse(Nil).map(IndexPageItem(_)), Tags(List(tag)), date, tzOverride = None)
-      }))
+      ).orElse {
+        item.tag.map { apitag =>
+          val tag = Tag.make(apitag)
+          IndexPage(
+            page = tag,
+            contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
+            Tags(List(tag)),
+            date,
+            tzOverride = None
+          )
+        }
+      }
     }
 
-    result.recover{ case e: Exception =>
-      log.error(e.getMessage, e)
-      None
+    result.onFailure {
+      case GuardianContentApiError(404, _, _) =>
+        log.warn(s"Cannot fetch content for request '${request.uri}'")
+      case e: Exception =>
+        log.error(e.getMessage, e)
     }
+
+    result
   }
 
   private def findByDate(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[DateTime]] = {
+
     val result = contentApiClient.getResponse(
       contentApiClient.item(s"/$path", Edition(request))
         .pageSize(1)
@@ -126,10 +155,15 @@ class AllIndexController(contentApiClient: ContentApiClient, sectionsLookUp: Sec
     ).map{ item =>
       item.results.getOrElse(Nil).headOption.flatMap(_.webPublicationDate).map(_.toJodaDateTime.withZone(DateTimeZone.UTC))
     }
-    result.recover{ case e: Exception =>
-      log.error(e.getMessage, e)
-      None
+
+    result.onFailure {
+      case GuardianContentApiError(404, _, _) =>
+        log.warn(s"Cannot fetch content for request '${request.uri}'")
+      case e: Exception =>
+        log.error(e.getMessage, e)
     }
+
+    result
   }
 
   private def urlFormat(date: DateTime) = date.toString(dateFormatUTC).toLowerCase

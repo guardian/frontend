@@ -1,7 +1,6 @@
 package common.dfp
 
 import model.Tag
-import conf.switches.Switches._
 import common.Edition
 
 trait HighMerchandiseComponentAgent {

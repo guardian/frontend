@@ -167,6 +167,7 @@
                 <li class="recipe__article--list-title">Method</li>
                 @recipe.data.steps.zipWithIndex.map{case(step, i) => <li><span class="number">@{i + 1}</span>@step</li> }
             </ul>
+            <p class="recipe__content--feedback-text">You’re seeing a new design for our recipes and we would really appreciate your feedback. <a target="_blank" rel="noopener noreferrer" class="recipe__content--feedback-link" data-link-name="new recipe: form" href="https://docs.google.com/a/guardian.co.uk/forms/d/e/1FAIpQLSdMmHTu5RlS9oI-6CZctYxXjMwVGnzfV1SfYd-OYDsJvc2bJw/viewform?usp=pp_url&entry.1145678620=@articleModel.item.trail.headline">Leave feedback</a></p>
         </div>
 
         <div class="ad-wrapper">

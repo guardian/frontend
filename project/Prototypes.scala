@@ -6,9 +6,7 @@ import sbt._
 import sbt.Keys._
 import com.gu.riffraff.artifact.RiffRaffArtifact
 import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
-import play.twirl.sbt.Import._
 import Dependencies._
-import play.sbt.routes.RoutesKeys._
 import play.sbt.PlayScala
 import com.typesafe.sbt.SbtNativePackager.Universal
 import com.typesafe.sbt.packager.Keys.packageName
@@ -68,10 +66,6 @@ trait Prototypes {
       .withWarnScalaVersionEviction(false)
   )
 
-  val frontendClientSideSettings = Seq(
-    TwirlKeys.templateImports ++= Seq("conf._")
-  )
-
   val frontendTestSettings = Seq(
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     testOptions in Test := Nil,
@@ -129,7 +123,6 @@ trait Prototypes {
     Project(applicationName, file(applicationName)).enablePlugins(PlayScala, UniversalPlugin)
     .settings(frontendDependencyManagementSettings)
     .settings(frontendCompilationSettings)
-    .settings(frontendClientSideSettings)
     .settings(frontendTestSettings)
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(macwire, commonsIo))
@@ -141,7 +134,6 @@ trait Prototypes {
     Project(applicationName, file(applicationName)).enablePlugins(PlayScala)
     .settings(frontendDependencyManagementSettings)
     .settings(frontendCompilationSettings)
-    .settings(frontendClientSideSettings)
     .settings(frontendTestSettings)
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(commonsIo))

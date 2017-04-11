@@ -1,6 +1,5 @@
 package implicits
 
-import com.gu.commercial.branding.PaidContent
 import common.Edition.defaultEdition
 import implicits.Dates._
 import model._

@@ -1,7 +1,9 @@
 @(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
+
 @import play.api.Mode.Dev
 @import views.support.Commercial.listSponsorLogosOnPage
 @import views.support.{Commercial, GoogleAnalyticsAccount}
+@import conf.Configuration
 
 <script id='google_analytics'>
 

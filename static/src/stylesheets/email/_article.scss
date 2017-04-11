@@ -1,22 +1,11 @@
-@import '../_vars';
+$max-width: 580px;
+$small-width: 100%;
 
-// Overriding the settings.scss from foundation-emails
-$global-width-small: 100%;
-$global-gutter: 0;
-$body-background: #eaeaea;
-$container-background: #ffffff;
-$global-padding: 0;
-$global-margin: 10px;
-$global-font-color: #333333;
-$hr-border: 1px dashed #dcdcdc;
-$hr-margin: 20px 0 -4px 0;
-$callout-padding: 5px 10px;
-$callout-margin-bottom: 0;
-$callout-border: none;
+$body-color: #eaeaea;
+$container-color: #ffffff;
 
-
-@import 'foundation-emails/foundation-emails';
-@import '_common';
+@import '_normalise';
+@import '_util';
 @import '_footer';
 
 @font-face {
@@ -37,44 +26,43 @@ $callout-border: none;
     font-stretch: normal;
 }
 
-td.wrapper {
+.article-body {
     padding: 0;
 }
 
-table.columns,
-table.column {
-    td {
-        padding: 0;
-    }
+.padded {
+    padding: 5px 10px;
 }
 
 h1, h2, h3, h4, h5, h6, p, blockquote {
     font-family: 'Guardian Egyptian Text', Georgia, serif;
+    font-weight: normal;
     color: #333333;
 }
 
 h1 {
     font-size: 32px;
     line-height: 36px;
-    margin-bottom: 20px;
+    margin: 0 0 20px;
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 20px;
+    font-weight: bold;
     line-height: 28px;
-    margin-bottom: 5px;
-    margin-top: 20px;
+    margin: 20px 0 5px;
 }
 
 h3 {
-    font-weight: normal;
     font-size: 18px;
     line-height: 28px;
+    margin: 0 0 10px;
 }
 
 p {
     font-size: 16px;
     line-height: 24px;
+    margin: 0 0 10px;
 }
 
 a {
@@ -101,16 +89,11 @@ a {
     }
 }
 
-th {
-    hyphens: none;
-}
-
 hr {
     background: #ffffff;
     height: 0px;
     border: 1px dashed #dcdcdc;
-    margin-top: 20px;
-    margin-bottom: -4px;
+    margin: 8px 0 0;
 }
 
 hr.rule--compact {
@@ -148,6 +131,7 @@ blockquote {
 }
 
 .caption {
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 12px;
     line-height: 14px;
     color: #767676;
@@ -156,3 +140,5 @@ blockquote {
 .text--brand {
     color: #005689;
 }
+
+@import '_media-query';

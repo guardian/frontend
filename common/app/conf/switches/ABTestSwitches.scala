@@ -22,16 +22,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-increase-inline-ads",
-    "Displays more inline ads in articles on desktop",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-editorial-email-variants",
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
@@ -56,7 +46,7 @@ trait ABTestSwitches {
     "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
     owners = Seq(Owner.withGithub("alexduf")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
+    sellByDate = new LocalDate(2017, 4, 13),
     exposeClientSide = true
   )
 
@@ -106,7 +96,7 @@ trait ABTestSwitches {
     "Assign some of the new sleeve notes subscribers to receive the new email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
+    sellByDate = new LocalDate(2017, 5, 19),
     exposeClientSide = true
   )
 
@@ -116,7 +106,7 @@ trait ABTestSwitches {
     "Assign some of the new sleeve notes subscribers to receive the old email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
+    sellByDate = new LocalDate(2017, 5, 19),
     exposeClientSide = true
   )
 
@@ -142,7 +132,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-bookmarks-email-variants",
+    "ab-bookmarks-email-variants-2",
     "Assign users to variants of bookmarks email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
@@ -162,21 +152,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-design-variations-v3",
-    "Test more design variations to the Epic",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 6),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-article-50-trigger",
     "Display the Epic on Article 50 articles for readers in Europe",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
+    sellByDate = new LocalDate(2017, 4, 13),
     exposeClientSide = true
   )
 
@@ -186,14 +166,14 @@ trait ABTestSwitches {
     "Display the Epic on Laundromat articles",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
+    sellByDate = new LocalDate(2017, 4, 13),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
     "ab-email-demand-tests",
-    "Test demand for food, business, and cities emails",
+    "Test demand for a cities email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 21),
@@ -226,7 +206,7 @@ trait ABTestSwitches {
     "Test displaying the Epic only vs the Epic and Engagement Banner",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
+    sellByDate = new LocalDate(2017, 4, 13),
     exposeClientSide = true
   )
 

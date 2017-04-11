@@ -1,4 +1,4 @@
-@import layout.EmailCardStyle
+@import layout.{EmailCardStyle, EmailHidden, EmailFreeText, EmailFaciaCard}
 @import layout.EmailLayouts
 @import layout.{EmailContentContainer, LiveIntentMarquee, LiveIntentMPU, LiveIntentSafeRTB}
 @(page: model.PressedPage)(implicit request: RequestHeader)
@@ -94,32 +94,43 @@
     }
 }
 
+@freeText(text: String) = {
+    @fullRow(Seq("free-text"))(Html(text))
+}
+
 @renderCard(card: ContentCard, cardStyle: EmailCardStyle) = {
-    @card.cardStyle match {
-        case ExternalLink => {
-            @faciaCardWithoutTrailText(
-                card = card,
-                withImage = false,
-                largeHeadline = false
-            )
-        }
-        case _ => {
-            @if(cardStyle.trailText) {
-                @faciaCardWithTrailText(
-                    card = card,
-                    withImage = cardStyle.image,
-                    largeHeadline = cardStyle.largeHeadline
-                )
-            } else {
-                @faciaCardWithoutTrailText(
-                    card = card,
-                    withImage = cardStyle.image,
-                    largeHeadline = cardStyle.largeHeadline
-                )
+    @cardStyle match {
+        case EmailHidden => { }
+        case EmailFreeText => { @freeText(card.header.headline) }
+        case layoutStyle: EmailFaciaCard => {
+            @card.cardStyle match {
+                case ExternalLink => {
+                    @faciaCardWithoutTrailText(
+                        card = card,
+                        withImage = false,
+                        largeHeadline = false
+                    )
+                }
+                case _ => {
+                    @if(layoutStyle.trailText) {
+                        @faciaCardWithTrailText(
+                            card = card,
+                            withImage = layoutStyle.image,
+                            largeHeadline = layoutStyle.largeHeadline
+                        )
+                    } else {
+                        @faciaCardWithoutTrailText(
+                            card = card,
+                            withImage = layoutStyle.image,
+                            largeHeadline = layoutStyle.largeHeadline
+                        )
+                    }
+                }
             }
         }
     }
 }
+
 
 @fullRow(Seq()) {
     @imgForFront(page.banner, page.email.map(_.name))

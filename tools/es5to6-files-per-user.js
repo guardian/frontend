@@ -33,10 +33,12 @@ const platform = [
     'sndrs',
     'Gareth Trufitt',
     'Simon Adcock',
-    // 'NataliaLKB',
+    'Nicolas Long',
+    'Calum Campbell',
     'GHaberis',
-    // 'stephanfowler',
     'Gustav Pursche',
+    // 'NataliaLKB',
+    // 'stephanfowler',
 ];
 const platformModules = files.filter(_ => _.includes('lib'));
 const platformFilesPerHuman = filesPerHuman(platformModules, platform);
@@ -77,15 +79,16 @@ const list = Object.assign(
     //     {}
     // ),
     platform.reduce(
-        (l, human) => Object.assign(l, {
-            [human]: [
-                ...platformModules.splice(0, platformFilesPerHuman),
-                // ...miscModules.splice(
-                //     0,
-                //     totalFilesEach - platformFilesPerHuman
-                // ),
-            ],
-        }),
+        (l, human) =>
+            Object.assign(l, {
+                [human]: [
+                    ...platformModules.splice(0, platformFilesPerHuman),
+                    // ...miscModules.splice(
+                    //     0,
+                    //     totalFilesEach - platformFilesPerHuman
+                    // ),
+                ],
+            }),
         {}
     )
     // misc.reduce(

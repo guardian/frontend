@@ -13,7 +13,7 @@
 
 }
 
-<div class="fc-item fc-item--has-image js-fc-item fc-item--list-media-mobile fc-item--standard-tablet adverts--within-unbranded">
+<div class="fc-item fc-item--has-image js-fc-item fc-item--list-media-mobile fc-item--standard-tablet adverts--within-unbranded without-sponsor-logo @item.cardTypes.map(_.classes)">
     <div class="fc-item__container">
         @item.image.map(image => itemImage(
             image,

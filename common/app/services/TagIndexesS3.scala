@@ -2,7 +2,6 @@ package services
 
 import conf.Configuration
 import model.{TagIndexListings, TagIndexPage}
-import play.api.Play
 import play.api.libs.json._
 
 sealed trait TagIndexError

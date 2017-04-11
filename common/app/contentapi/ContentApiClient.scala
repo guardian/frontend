@@ -4,8 +4,7 @@ import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
 import com.gu.contentapi.client.ContentApiClientLogic
 import com.gu.contentapi.client.model._
-import com.gu.contentapi.client.model.v1.{AtomsResponse, ItemResponse}
-import com.gu.contentapi.client.thrift.ThriftDeserializer
+import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common._
 import conf.Configuration

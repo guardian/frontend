@@ -1,4 +1,4 @@
-@(activity: List[WitnessActivity])(implicit request: RequestHeader)
+@(activity: List[discussion.model.WitnessActivity])(implicit request: RequestHeader)
 
 <div class="activity-stream__witness-contributions" data-link-name="User activity contributions">
 @if(activity.isEmpty){
