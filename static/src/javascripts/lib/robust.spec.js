@@ -1,6 +1,6 @@
 // @flow
 
-import robust from './robust';
+import { catchErrorsAndLog, context } from './robust';
 
 // #? Refactor this into a test utility with lots of magic?
 jest.mock('lib/report-error', () => jest.fn());
@@ -29,11 +29,11 @@ describe('robust', () => {
 
     test('catchErrorsAndLog()', () => {
         expect(() => {
-            robust.catchErrorsAndLog('test', noError);
+            catchErrorsAndLog('test', noError);
         }).not.toThrowError();
 
         expect(() => {
-            robust.catchErrorsAndLog('test', throwError);
+            catchErrorsAndLog('test', throwError);
         }).not.toThrowError(ERROR);
 
         expect(window.console.warn).toHaveBeenCalledTimes(1);
@@ -41,11 +41,11 @@ describe('robust', () => {
 
     test('catchErrorsAndLog() - default reporter', () => {
         reportErrorMock.mockClear();
-        robust.catchErrorsAndLog('test', noError);
+        catchErrorsAndLog('test', noError);
         expect(reportErrorMock).not.toHaveBeenCalled();
 
         reportErrorMock.mockClear();
-        robust.catchErrorsAndLog('test', throwError);
+        catchErrorsAndLog('test', throwError);
         expect(reportErrorMock).toHaveBeenCalledWith(ERROR, META, false);
     });
 
@@ -58,7 +58,7 @@ describe('robust', () => {
             ['test-3', runner],
         ];
 
-        robust.context(MODULES);
+        context(MODULES);
         expect(runner).toHaveBeenCalledTimes(MODULES.length);
     });
 });

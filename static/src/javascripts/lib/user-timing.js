@@ -34,4 +34,4 @@ const getTiming = (label: string): ?number => {
     }
 };
 
-export default { mark, getTiming, getCurrentTime };
+export { mark, getTiming, getCurrentTime };

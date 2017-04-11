@@ -71,7 +71,4 @@ const create = (type: string, duration: number): Function => {
     };
 };
 
-export default {
-    functions,
-    create,
-};
+export { functions, create };
