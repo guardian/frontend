@@ -16,7 +16,9 @@ describe('Cookies', () => {
         'cookie',
         ({
             get() {
-                return cookieValue.replace('|', ';').replace(/^[;|]|[;|]$/g, '');
+                return cookieValue
+                    .replace('|', ';')
+                    .replace(/^[;|]|[;|]$/g, '');
             },
 
             set(value) {
