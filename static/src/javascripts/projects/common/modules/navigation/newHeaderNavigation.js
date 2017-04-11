@@ -5,14 +5,16 @@ import ophan from 'ophan/ng';
 import userAccount from 'common/modules/navigation/user-account';
 
 const html = document.documentElement;
-const menuItems = [...document.querySelectorAll('.js-close-nav-list')];
+const sidebarSections = [...document.querySelectorAll('.js-close-nav-list')];
+const sidebar = document.getElementById('main-menu');
+const sidebarToggle = document.querySelector('.js-change-link');
 const enhanced = {};
 
 const weShouldEnhance = (checkbox: HTMLInputElement): ?boolean =>
     checkbox && !enhanced[checkbox.id] && !checkbox.checked;
 
 const closeAllSidebarBlocksExcept = (targetItem?: HTMLElement): void => {
-    menuItems.forEach(item => {
+    sidebarSections.forEach(item => {
         if (item !== targetItem) {
             item.removeAttribute('open');
         }
@@ -22,12 +24,9 @@ const closeAllSidebarBlocksExcept = (targetItem?: HTMLElement): void => {
 const toggleSidebar = (trigger: HTMLElement): void => {
     const openClass = 'new-header__nav__menu-button--open';
     const globalOpenClass = 'nav-is-open';
-
     const isOpen = trigger.getAttribute('aria-expanded') === 'true';
-    const mainMenu = document.getElementById('main-menu');
-    const veggieBurgerLink = document.querySelector('.js-change-link');
 
-    if (!mainMenu || !veggieBurgerLink) {
+    if (!sidebar || !sidebarToggle) {
         return;
     }
 
@@ -53,14 +52,14 @@ const toggleSidebar = (trigger: HTMLElement): void => {
         const hiddenAttr = isOpen ? 'true' : 'false';
         const linkState = isOpen ? 'show' : 'hide';
 
-        veggieBurgerLink.setAttribute(
+        sidebarToggle.setAttribute(
             'data-link-name',
             `nav2 : veggie-burger : ${linkState}`
         );
 
         trigger.setAttribute('aria-expanded', expandedAttr);
-        mainMenu.setAttribute('aria-hidden', hiddenAttr);
-        veggieBurgerLink.classList.toggle(openClass, !isOpen);
+        sidebar.setAttribute('aria-hidden', hiddenAttr);
+        sidebarToggle.classList.toggle(openClass, !isOpen);
 
         if (html) {
             html.classList.toggle(globalOpenClass, !isOpen);
@@ -131,8 +130,8 @@ const enhanceCheckboxesToButtons = (): void => {
     }
 };
 
-const bindMenuItemClickEvents = (): void => {
-    menuItems.forEach(item =>
+const addEventHandler = (): void => {
+    sidebarSections.forEach(item =>
         item.addEventListener(
             'click',
             closeAllSidebarBlocksExcept.bind(null, item)
@@ -141,7 +140,7 @@ const bindMenuItemClickEvents = (): void => {
 
 const init = (): void => {
     enhanceCheckboxesToButtons();
-    bindMenuItemClickEvents();
+    addEventHandler();
     userAccount();
 };
 
