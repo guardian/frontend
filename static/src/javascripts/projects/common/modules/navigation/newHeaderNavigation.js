@@ -109,21 +109,18 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
 const enhanceCheckboxesToButtons = (): void => {
     const checkbox = document.getElementById('main-menu-toggle');
 
-    const weShouldEnhance = (checkbox: HTMLInputElement): ?boolean =>
-        !enhanced[checkbox.id] && !checkbox.checked;
-
-    const closeMenuHandler = (): void => {
-        enhanceCheckbox(checkbox);
-        checkbox.removeEventListener('click', closeMenuHandler);
-    };
-
-    if (!checkbox || !(checkbox instanceof HTMLInputElement)) {
+    if (!checkbox) {
         return;
     }
 
-    if (weShouldEnhance(checkbox)) {
+    if (!enhanced[checkbox.id] && !checkbox.checked) {
         enhanceCheckbox(checkbox);
     } else {
+        const closeMenuHandler = (): void => {
+            enhanceCheckbox(checkbox);
+            checkbox.removeEventListener('click', closeMenuHandler);
+        };
+
         checkbox.addEventListener('click', closeMenuHandler);
 
         ophan.record({
@@ -134,10 +131,16 @@ const enhanceCheckboxesToButtons = (): void => {
 };
 
 const addEventHandler = (): void => {
+    if (!sidebar) {
+        return;
+    }
+
     sidebar.addEventListener('click', (event: Event) => {
-        if (event.target.matches('.js-close-nav-list')) {
+        const target: HTMLElement = (event.target: any);
+
+        if (target.matches('.js-close-nav-list')) {
             event.stopPropagation();
-            closeAllSidebarBlocksExcept(event.target);
+            closeAllSidebarBlocksExcept(target);
         }
     });
 };
