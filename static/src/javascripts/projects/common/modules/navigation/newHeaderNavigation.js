@@ -9,9 +9,6 @@ const sidebar = document.getElementById('main-menu');
 const sidebarToggle = document.querySelector('.js-change-link');
 const enhanced = {};
 
-const weShouldEnhance = (checkbox: HTMLInputElement): ?boolean =>
-    checkbox && !enhanced[checkbox.id] && !checkbox.checked;
-
 const closeAllSidebarBlocksExcept = (targetItem?: HTMLElement): void => {
     const sections = [...document.querySelectorAll('.js-close-nav-list')];
 
@@ -77,22 +74,20 @@ const toggleSidebar = (trigger: HTMLElement): void => {
     fastdom.write(update);
 };
 
-const applyEnhancementsTo = (checkbox: HTMLElement): void => {
+const enhanceCheckbox = (checkbox: HTMLElement): void => {
     fastdom.read(() => {
         const button = document.createElement('button');
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
-
-        fastdom.write(() => {
+        const enhance = () => {
             [...checkbox.classList].forEach(c => button.classList.add(c));
 
             button.setAttribute('id', checkboxId);
+            button.setAttribute('aria-expanded', 'false');
 
             if (checkboxControls) {
                 button.setAttribute('aria-controls', checkboxControls);
             }
-
-            button.setAttribute('aria-expanded', 'false');
 
             if (checkbox.parentNode) {
                 checkbox.parentNode.replaceChild(button, checkbox);
@@ -105,24 +100,31 @@ const applyEnhancementsTo = (checkbox: HTMLElement): void => {
             });
 
             enhanced[button.id] = true;
-        });
+        };
+
+        fastdom.write(enhance);
     });
 };
 
 const enhanceCheckboxesToButtons = (): void => {
     const checkbox = document.getElementById('main-menu-toggle');
 
+    const weShouldEnhance = (checkbox: HTMLInputElement): ?boolean =>
+        !enhanced[checkbox.id] && !checkbox.checked;
+
+    const closeMenuHandler = (): void => {
+        enhanceCheckbox(checkbox);
+        checkbox.removeEventListener('click', closeMenuHandler);
+    };
+
     if (!checkbox || !(checkbox instanceof HTMLInputElement)) {
         return;
     }
 
     if (weShouldEnhance(checkbox)) {
-        applyEnhancementsTo(checkbox);
+        enhanceCheckbox(checkbox);
     } else {
-        checkbox.addEventListener('click', function closeMenuHandler() {
-            applyEnhancementsTo(checkbox);
-            checkbox.removeEventListener('click', closeMenuHandler);
-        });
+        checkbox.addEventListener('click', closeMenuHandler);
 
         ophan.record({
             component: 'main-navigation',
