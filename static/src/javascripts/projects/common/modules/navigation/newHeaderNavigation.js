@@ -19,15 +19,6 @@ const closeAllSidebarBlocksExcept = (targetItem?: HTMLElement): void => {
     });
 };
 
-const removeOrderingFromLists = (): void => {
-    const mainListItems = [...document.querySelectorAll('.js-navigation-item')];
-
-    mainListItems.forEach(item => {
-        const listItem = item;
-        listItem.style.order = '';
-    });
-};
-
 const toggleSidebar = (trigger: HTMLElement): void => {
     const openClass = 'new-header__nav__menu-button--open';
     const globalOpenClass = 'nav-is-open';
@@ -39,6 +30,23 @@ const toggleSidebar = (trigger: HTMLElement): void => {
     if (!mainMenu || !veggieBurgerLink) {
         return;
     }
+
+    const resetItemOrder = (): void => {
+        const items = [...document.querySelectorAll('.js-navigation-item')];
+
+        items.forEach(item => {
+            const listItem = item;
+            listItem.style.order = '';
+        });
+    };
+
+    const focusFirstSection = (): void => {
+        const firstSection = document.querySelector('.js-navigation-button');
+
+        if (firstSection) {
+            firstSection.focus();
+        }
+    };
 
     const update = () => {
         const expandedAttr = isOpen ? 'false' : 'true';
@@ -59,14 +67,9 @@ const toggleSidebar = (trigger: HTMLElement): void => {
         }
 
         if (isOpen) {
-            removeOrderingFromLists();
+            resetItemOrder();
         } else {
-            const navButton = document.querySelector('.js-navigation-button');
-
-            if (navButton) {
-                navButton.focus();
-            }
-
+            focusFirstSection();
             closeAllSidebarBlocksExcept();
         }
     };
