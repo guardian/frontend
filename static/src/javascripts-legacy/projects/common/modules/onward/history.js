@@ -110,22 +110,22 @@ define([
 
     function saveHistory(history) {
         historyCache = history;
-        return storage.local.set(storageKeyHistory, history);
+        return storage.localStorage.set(storageKeyHistory, history);
     }
 
     function saveSummary(summary) {
         summaryCache = summary;
-        return storage.local.set(storageKeySummary, summary);
+        return storage.localStorage.set(storageKeySummary, summary);
     }
 
     function getHistory() {
-        historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
+        historyCache = historyCache || storage.localStorage.get(storageKeyHistory) || [];
         return historyCache;
     }
 
     function getSummary() {
         if (!summaryCache) {
-            summaryCache = storage.local.get(storageKeySummary);
+            summaryCache = storage.localStorage.get(storageKeySummary);
 
             if (!isObject(summaryCache) || !isObject(summaryCache.tags) || !isNumber(summaryCache.periodEnd)) {
                 summaryCache = {
@@ -299,8 +299,8 @@ define([
     function reset() {
         historyCache = undefined;
         summaryCache = undefined;
-        storage.local.remove(storageKeyHistory);
-        storage.local.remove(storageKeySummary);
+        storage.localStorage.remove(storageKeyHistory);
+        storage.localStorage.remove(storageKeySummary);
     }
 
     function logHistory(pageConfig) {

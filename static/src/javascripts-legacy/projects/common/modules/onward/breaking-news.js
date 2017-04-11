@@ -55,7 +55,7 @@ define([
         knownAlertIDs;
 
     function storeKnownAlertIDs() {
-        storage.local.set(knownAlertIDsStorageKey, knownAlertIDs);
+        storage.localStorage.set(knownAlertIDsStorageKey, knownAlertIDs);
     }
 
     function markAlertAsSeen(id) {
@@ -73,7 +73,7 @@ define([
 
     // if we can't record a dismissal, we won't show an alert
     function userCanDismissAlerts() {
-        return storage.local.isAvailable();
+        return storage.localStorage.isAvailable();
     }
 
     function fetchBreakingNews() {
@@ -213,7 +213,7 @@ define([
 
     function init () {
         if (userCanDismissAlerts()) {
-            knownAlertIDs = storage.local.get(knownAlertIDsStorageKey) || {};
+            knownAlertIDs = storage.localStorage.get(knownAlertIDsStorageKey) || {};
 
             return fetchBreakingNews()
                 .then(parseResponse)

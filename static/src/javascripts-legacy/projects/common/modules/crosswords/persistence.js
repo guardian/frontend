@@ -5,7 +5,7 @@ define([
     storage,
     map
 ) {
-    var localStorage = storage.local;
+    var localStorage = storage.localStorage;
 
     var localStorageKey = function (id) {
         return 'crosswords.' + id;

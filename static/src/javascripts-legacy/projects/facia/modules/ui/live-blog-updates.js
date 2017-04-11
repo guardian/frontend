@@ -171,7 +171,7 @@ define([
             var oldBlockDates;
 
             if (!isEmpty(elementsById)) {
-                oldBlockDates = storage.session.get(sessionStorageKey) || {};
+                oldBlockDates = storage.sessionStorage.get(sessionStorageKey) || {};
 
                 forEach(elementsById, function (elements, articleId) {
                     fetchJson('/' + articleId + '.json?rendered=false', {
@@ -183,7 +183,7 @@ define([
                         if (blocks && blocks.length) {
                             showBlocks(articleId, elements, blocks, oldBlockDates[articleId]);
                             oldBlockDates[articleId] = blocks[0].publishedDateTime;
-                            storage.session.set(sessionStorageKey, oldBlockDates);
+                            storage.sessionStorage.set(sessionStorageKey, oldBlockDates);
                         }
                     })
                     .catch(function () {});

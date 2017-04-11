@@ -19,7 +19,7 @@ import fastdom from 'fastdom';
 import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
 import images from 'common/modules/ui/images';
-import storage from 'lib/storage';
+import { localStorage } from 'lib/storage';
 import fetchJSON from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import checkMediator from 'common/modules/check-mediator';
@@ -205,8 +205,8 @@ const init = (): void => {
     // set local storage: gu.alreadyVisited
     if (window.guardian.isEnhanced) {
         const key = 'gu.alreadyVisited';
-        const alreadyVisited = storage.local.get(key) || 0;
-        storage.local.set(key, alreadyVisited + 1);
+        const alreadyVisited = localStorage.get(key) || 0;
+        localStorage.set(key, alreadyVisited + 1);
     }
 
     if (config.switches.blockIas && navigator.serviceWorker) {

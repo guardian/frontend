@@ -3,7 +3,7 @@ define([
 ], function (storage) {
 
     var viewKey = 'gu.contributions.views';
-    var viewLog = storage.local.get(viewKey) || [];
+    var viewLog = storage.localStorage.get(viewKey) || [];
 
 
     var maxLogEntries = 50;
@@ -19,7 +19,7 @@ define([
             date: new Date().getTime(),
             testId: testId
         });
-        storage.local.set(viewKey, viewLog.slice(-maxLogEntries));
+        storage.localStorage.set(viewKey, viewLog.slice(-maxLogEntries));
     }
 
     function viewsInPreviousDays(days, test) {

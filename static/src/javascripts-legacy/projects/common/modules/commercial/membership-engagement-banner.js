@@ -285,7 +285,7 @@ define([
         function init() {
             var bannerParams = deriveBannerParams();
 
-            if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
+            if (bannerParams && (storage.localStorage.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
                 return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
 
                     if (canShow) {
@@ -302,7 +302,7 @@ define([
         }
 
         function selectSequentiallyFrom(array) {
-            return array[storage.local.get('gu.alreadyVisited') % array.length];
+            return array[storage.localStorage.get('gu.alreadyVisited') % array.length];
         }
 
         return {

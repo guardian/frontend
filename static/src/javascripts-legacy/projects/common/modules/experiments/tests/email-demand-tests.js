@@ -122,7 +122,7 @@ define([
                     var elements = $(articleBody)[0].children;
                     $demandTestSection.insertAfter(elements[elements.length - minimumTrailingParagraphs]);
                     emailRunChecks.setEmailShown(listConfig.listName);
-                    storage.session.set('email-sign-up-seen', 'true');
+                    storage.sessionStorage.set('email-sign-up-seen', 'true');
 
                     ophan.trackComponentAttention('email-demand-test-' + listConfig.listName, $demandTestSection[0]);
 

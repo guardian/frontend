@@ -8,9 +8,9 @@ define([
     var userSegmentsKey = 'gu.ads.userSegmentsData';
 
     function getUserSegments() {
-        if (storage.local.isAvailable()) {
+        if (storage.localStorage.isAvailable()) {
             var userCookieData,
-                userSegmentsData = storage.local.get(userSegmentsKey);
+                userSegmentsData = storage.localStorage.get(userSegmentsKey);
 
             if (userSegmentsData) {
                 userCookieData = id.getUserFromCookie();
@@ -18,7 +18,7 @@ define([
                 if (userCookieData && (userSegmentsData.userHash === (userCookieData.id % 9999))) {
                     return userSegmentsData.segments;
                 } else {
-                    storage.local.remove(userSegmentsKey);
+                    storage.localStorage.remove(userSegmentsKey);
                 }
             }
         }
@@ -27,7 +27,7 @@ define([
     }
 
     function requestUserSegmentsFromId() {
-        if (storage.local.isAvailable() && (storage.local.get(userSegmentsKey) === null) && id.getUserFromCookie()) {
+        if (storage.localStorage.isAvailable() && (storage.localStorage.get(userSegmentsKey) === null) && id.getUserFromCookie()) {
             id.getUserFromApi(function (user) {
                 if (user && user.adData) {
                     var key,
@@ -35,7 +35,7 @@ define([
                     for (key in user.adData) {
                         userSegments.push(key + user.adData[key]);
                     }
-                    storage.local.set(
+                    storage.localStorage.set(
                         userSegmentsKey,
                         {
                             segments: userSegments,

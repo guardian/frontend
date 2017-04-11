@@ -192,12 +192,12 @@ define([
      */
     Id.shouldAutoSigninInUser = function () {
         var signedInUser = !!cookies.get(Id.cookieName),
-            checkFacebook = !!storage.local.get(Id.fbCheckKey);
+            checkFacebook = !!storage.localStorage.get(Id.fbCheckKey);
         return !signedInUser && !checkFacebook && !this.hasUserSignedOutInTheLast24Hours();
     };
 
     Id.setNextFbCheckTime = function (nextFbCheckDue) {
-        storage.local.set(Id.fbCheckKey, {}, { expires: nextFbCheckDue });
+        storage.localStorage.set(Id.fbCheckKey, {}, { expires: nextFbCheckDue });
     };
 
     Id.emailSignup = function (listId) {

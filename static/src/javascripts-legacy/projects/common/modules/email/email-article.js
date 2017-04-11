@@ -215,7 +215,7 @@ define([
                     $iframeEl = $(iframe),
                     onEmailAdded = function () {
                         emailRunChecks.setEmailShown(listConfig.listName);
-                        storage.session.set('email-sign-up-seen', 'true');
+                        storage.sessionStorage.set('email-sign-up-seen', 'true');
                     }
 
                 bean.on(iframe, 'load', function () {

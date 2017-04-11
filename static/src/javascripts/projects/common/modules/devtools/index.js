@@ -1,6 +1,6 @@
 // @flow
 import template from 'lodash/utilities/template';
-import storage from 'lib/storage';
+import { localStorage } from 'lib/storage';
 import $ from 'lib/$';
 import bean from 'bean';
 import find from 'lodash/collections/find';
@@ -9,7 +9,7 @@ import styles from 'raw-loader!common/views/devtools/styles.css';
 import { TESTS as tests } from 'common/modules/experiments/ab';
 
 const getSelectedAbTests = () =>
-    JSON.parse(storage.local.get('gu.devtools.ab')) || [];
+    JSON.parse(localStorage.get('gu.devtools.ab')) || [];
 
 const selectRadios = () => {
     const abTests = getSelectedAbTests();
@@ -36,12 +36,12 @@ const bindEvents = () => {
             } else {
                 abTests.push({ id: testId, variant: variantId });
             }
-            storage.local.set('gu.devtools.ab', JSON.stringify(abTests));
+            localStorage.set('gu.devtools.ab', JSON.stringify(abTests));
         });
     });
 
     bean.on($('.js-devtools-clear-ab')[0], 'click', () => {
-        storage.local.set('gu.devtools.ab', JSON.stringify([]));
+        localStorage.set('gu.devtools.ab', JSON.stringify([]));
         selectRadios();
     });
 

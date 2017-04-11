@@ -24,7 +24,7 @@ define([
     }
 
     function visitedMoreThanOnce() {
-        var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
+        var alreadyVisited = storage.localStorage.get('gu.alreadyVisited') || 0;
 
         return alreadyVisited > 1;
     }

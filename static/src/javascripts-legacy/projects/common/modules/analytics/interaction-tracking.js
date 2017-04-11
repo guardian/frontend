@@ -69,7 +69,7 @@ define([
             tag: spec.tag || 'untracked',
             time: new Date().getTime()
         };
-        storage.session.set(NG_STORAGE_KEY, storeObj);
+        storage.sessionStorage.set(NG_STORAGE_KEY, storeObj);
     }
 
     function trackExternalLinkClick(spec) {
