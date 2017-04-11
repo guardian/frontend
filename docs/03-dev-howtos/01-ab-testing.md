@@ -162,7 +162,7 @@ define([
 Add #ab-<TestName>=<VariantName> to the end of your URL (in dev or prod) to force yourself into a test.
 e.g. www.theguardian.com/news#ab-MyGreatTest=GreenButton
 
-#### Firing complete events in dev mode
+#### Firing complete events in dev mode
 In prod, the completion events are fired based on the MVT ID cookie. This doesn't exist in dev, so if you need to test a complete event, force yourself into the test using the #ab-<TestName>=<VariantName> pattern described above.
 This way, the `success` function of the test and variant you specify will be run, so you can test your completion behaviour.
 

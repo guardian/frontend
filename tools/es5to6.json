@@ -18,13 +18,11 @@
     "lib/element-inview.js"
   ],
   "Nicolas Long": [
-    "lib/fastdom-errors.js",
     "lib/fastdom-promise.js",
     "lib/fetch.js",
     "lib/formatters.js"
   ],
   "Calum Campbell": [
-    "lib/formInlineLabels.js",
     "lib/fsm.js",
     "lib/geolocation.js",
     "lib/load-css-promise.js"

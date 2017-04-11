@@ -40,11 +40,11 @@ define([
             mode: 'cors',
             credentials: 'include',
         }).then(function (resp) {
-            var body = resp && resp.text();
-
-            if (body && body.subscription) {
+            return resp.json();
+        }).then(function (json) {
+            if (json && json.subscription) {
                 hideLoader();
-                populateUserDetails(body);
+                populateUserDetails(json);
             } else {
                 hideLoader();
                 displayDigitalPackUpSell();
