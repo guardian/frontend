@@ -162,16 +162,6 @@
 
     .fc-item__meta {
         color: $neutral-2;
-
-        .fc-save-for-later {
-            .inline-icon {
-                fill: $neutral-2;
-            }
-            &:hover:after {
-                color: $neutral-2;
-                text-decoration: underline;
-            }
-        }
     }
 
     &.fc-container--sponsored {

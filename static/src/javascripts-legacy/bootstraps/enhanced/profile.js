@@ -9,7 +9,6 @@ define([
     'common/modules/identity/api',
     'common/modules/identity/account-profile',
     'common/modules/identity/public-profile',
-    'common/modules/identity/saved-for-later',
     'common/modules/identity/email-preferences',
     'common/modules/discussion/user-avatars',
     'lib/mediator',
@@ -25,7 +24,6 @@ define([
     Id,
     AccountProfile,
     PublicProfile,
-    SavedForLater,
     EmailPreferences,
     UserAvatars,
     mediator,
@@ -93,13 +91,6 @@ define([
             });
         },
 
-        savedForLater: function () {
-            var savedForLater = new SavedForLater();
-            mediator.on('page:identity:ready', function () {
-                savedForLater.init();
-            });
-        },
-
         emailPreferences: function () {
             mediator.on('page:identity:ready', function () {
                 EmailPreferences.init();
@@ -117,7 +108,6 @@ define([
             modules.validationEmail();
             modules.tabs();
             modules.accountProfile();
-            modules.savedForLater();
             modules.emailPreferences();
             PublicProfile.init();
 

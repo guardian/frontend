@@ -27,13 +27,6 @@
     .rich-link__kicker,
     .fc-item__byline,
     .rich-link__standfirst,
-    .fc-save-for-later--is-saved {
-        color: $news-support-6;
-    }
-
-    .fc-save-for-later {
-        border-color: mix(#000000, $analysis-background, 10%);
-    }
 
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, $analysis-background, 10%);
@@ -41,10 +34,6 @@
 
     .fc-item__meta {
         color: $neutral-2;
-    }
-
-    .fc-save-for-later--is-saved .inline-tone-fill {
-        fill: $news-support-6;
     }
 }
 
