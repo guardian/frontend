@@ -264,7 +264,7 @@ define([
     }
 
     function getForcedIntoTests() {
-        var devtoolsAbTests = JSON.parse(store.local.get('gu.devtools.ab')) || [];
+        var devtoolsAbTests = JSON.parse(store.localStorage.get('gu.devtools.ab')) || [];
         var tokens;
 
         if (/^#ab/.test(window.location.hash)) {

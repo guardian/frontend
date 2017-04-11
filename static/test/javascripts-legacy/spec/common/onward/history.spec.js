@@ -41,7 +41,7 @@ define([
 
         beforeEach(function () {
             hist.reset();
-            storage.local.set('gu.history', contains);
+            storage.localStorage.set('gu.history', contains);
         });
 
         it('should get history from local storage', function () {
@@ -71,7 +71,7 @@ define([
         });
 
         it('should only store 50 latest entries', function () {
-            storage.local.set('gu.history', max);
+            storage.localStorage.set('gu.history', max);
             hist.logHistory(pageConfig);
 
             expect(hist.test.getHistory().length).toEqual(50);

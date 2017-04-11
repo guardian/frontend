@@ -8,11 +8,11 @@ define([
     var participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
-        return store.local.get(participationsKey) || {};
+        return store.localStorage.get(participationsKey) || {};
     }
 
     function setParticipations(participations) {
-        store.local.set(participationsKey, participations);
+        store.localStorage.set(participationsKey, participations);
     }
 
     function isParticipating(test) {

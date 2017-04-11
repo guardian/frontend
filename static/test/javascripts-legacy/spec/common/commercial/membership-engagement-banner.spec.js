@@ -92,16 +92,16 @@ define([
         describe('If breaking news banner', function () {
             beforeEach(function (done) {
                 showMembershipMessages = commercialFeatures.async.canDisplayMembershipEngagementBanner;
-                alreadyVisited = storage.local.get('gu.alreadyVisited');
+                alreadyVisited = storage.localStorage.get('gu.alreadyVisited');
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = Promise.resolve(true);
                 fixtures.render(conf);
-                storage.local.set('gu.alreadyVisited', 10);
+                storage.localStorage.set('gu.alreadyVisited', 10);
                 done();
             });
 
             afterEach(function () {
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = showMembershipMessages;
-                storage.local.set('gu.alreadyVisited', alreadyVisited);
+                storage.localStorage.set('gu.alreadyVisited', alreadyVisited);
                 fixtures.clean(conf.id);
                 mediator.removeAllListeners();
             });
@@ -126,18 +126,18 @@ define([
             beforeEach(function (done) {
                 showMembershipMessages = commercialFeatures.async.canDisplayMembershipEngagementBanner;
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = Promise.resolve(false);
-                alreadyVisited = storage.local.get('gu.alreadyVisited');
-                storage.local.set('gu.alreadyVisited', 10);
+                alreadyVisited = storage.localStorage.get('gu.alreadyVisited');
+                storage.localStorage.set('gu.alreadyVisited', 10);
                 fixtures.render(conf);
-                participations = storage.local.get('gu.ab.participations');
-                storage.local.remove('gu.ab.participations');
+                participations = storage.localStorage.get('gu.ab.participations');
+                storage.localStorage.remove('gu.ab.participations');
                 done();
             });
 
             afterEach(function () {
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = showMembershipMessages;
-                storage.local.set('gu.alreadyVisited', alreadyVisited);
-                storage.local.set('gu.ab.participations', participations);
+                storage.localStorage.set('gu.alreadyVisited', alreadyVisited);
+                storage.localStorage.set('gu.ab.participations', participations);
                 fixtures.clean(conf.id);
             });
 
@@ -147,16 +147,16 @@ define([
         describe('If user not member', function () {
             beforeEach(function (done) {
                 showMembershipMessages = commercialFeatures.async.canDisplayMembershipEngagementBanner;
-                alreadyVisited = storage.local.get('gu.alreadyVisited');
+                alreadyVisited = storage.localStorage.get('gu.alreadyVisited');
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = Promise.resolve(true);
                 fixtures.render(conf);
-                storage.local.set('gu.alreadyVisited', 10);
+                storage.localStorage.set('gu.alreadyVisited', 10);
                 done();
             });
 
             afterEach(function () {
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = showMembershipMessages;
-                storage.local.set('gu.alreadyVisited', alreadyVisited);
+                storage.localStorage.set('gu.alreadyVisited', alreadyVisited);
                 mediator.removeAllListeners();
                 fixtures.clean(conf.id);
             });

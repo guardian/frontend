@@ -84,7 +84,7 @@ define([
                     krux.getSegments = function () {
                         return ['E012712', 'E012390', 'E012478'];
                     };
-                    storage.local.set('gu.alreadyVisited', 0);
+                    storage.localStorage.set('gu.alreadyVisited', 0);
                     done();
                 });
         });
@@ -201,22 +201,22 @@ define([
 
         describe('Already visited frequency', function () {
             it('can pass a value of five or less', function () {
-                storage.local.set('gu.alreadyVisited', 5);
+                storage.localStorage.set('gu.alreadyVisited', 5);
                 expect(buildPageTargeting().fr).toEqual('5');
             });
 
             it('between five and thirty, includes it in a bucket in the form "x-y"', function () {
-                storage.local.set('gu.alreadyVisited', 18);
+                storage.localStorage.set('gu.alreadyVisited', 18);
                 expect(buildPageTargeting().fr).toEqual('16-19');
             });
 
             it('over thirty, includes it in the bucket "30plus"', function () {
-                storage.local.set('gu.alreadyVisited', 300);
+                storage.localStorage.set('gu.alreadyVisited', 300);
                 expect(buildPageTargeting().fr).toEqual('30plus');
             });
 
             it('passes a value of 0 if the value is not stored', function () {
-                storage.local.remove('gu.alreadyVisited');
+                storage.localStorage.remove('gu.alreadyVisited');
                 expect(buildPageTargeting().fr).toEqual('0');
             });
         });
