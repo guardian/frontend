@@ -4,7 +4,6 @@ import fastdom from 'fastdom';
 import ophan from 'ophan/ng';
 import userAccount from 'common/modules/navigation/user-account';
 
-const html = document.documentElement;
 const sidebar = document.getElementById('main-menu');
 const sidebarToggle = document.querySelector('.js-change-link');
 const enhanced = {};
@@ -20,6 +19,7 @@ const closeAllSidebarBlocksExcept = (targetItem?: HTMLElement): void => {
 };
 
 const toggleSidebar = (trigger: HTMLElement): void => {
+    const html = document.documentElement;
     const openClass = 'new-header__nav__menu-button--open';
     const globalOpenClass = 'nav-is-open';
     const isOpen = trigger.getAttribute('aria-expanded') === 'true';
