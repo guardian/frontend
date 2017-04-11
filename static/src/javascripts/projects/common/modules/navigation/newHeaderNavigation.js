@@ -11,7 +11,7 @@ const enhanced = {};
 const weShouldEnhance = (checkbox: HTMLInputElement): ?boolean =>
     checkbox && !enhanced[checkbox.id] && !checkbox.checked;
 
-const closeAllOtherPrimaryLists = (targetItem?: HTMLElement): void => {
+const closeAllSidebarBlocksExcept = (targetItem?: HTMLElement): void => {
     menuItems.forEach(item => {
         if (item !== targetItem) {
             item.removeAttribute('open');
@@ -75,7 +75,8 @@ const toggleSidebar = (event: Event): void => {
                 navButton.focus();
             }
             // No targetItem to put in as the parameter. All lists should close.
-            closeAllOtherPrimaryLists();
+            closeAllSidebarBlocksExcept();
+
             // Prevents scrolling on the body
             html.classList.add('nav-is-open');
         });
@@ -135,7 +136,7 @@ const bindMenuItemClickEvents = (): void => {
     menuItems.forEach(item =>
         item.addEventListener(
             'click',
-            closeAllOtherPrimaryLists.bind(null, item)
+            closeAllSidebarBlocksExcept.bind(null, item)
         ));
 };
 
