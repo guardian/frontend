@@ -31,7 +31,7 @@ import robust from 'lib/robust';
 import userTiming from 'lib/user-timing';
 import config from 'lib/config';
 import newHeaderNavigation from 'common/modules/navigation/newHeaderNavigation';
-import ga from 'common/modules/analytics/google';
+import { trackPerformance } from 'common/modules/analytics/google';
 import debounce from 'lodash/functions/debounce';
 import ophan from 'ophan/ng';
 
@@ -169,7 +169,7 @@ const init = (): void => {
         [
             'ga-user-timing-standard-start',
             () => {
-                ga.trackPerformance(
+                trackPerformance(
                     'Javascript Load',
                     'standardStart',
                     'Standard start parse time'
@@ -245,7 +245,7 @@ const init = (): void => {
         [
             'ga-user-timing-standard-end',
             () => {
-                ga.trackPerformance(
+                trackPerformance(
                     'Javascript Load',
                     'standardEnd',
                     'Standard end parse time'
