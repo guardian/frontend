@@ -2,18 +2,18 @@ import Promise from 'Promise';
 import fetch from 'lib/fetch-json';
 import config from 'lib/config';
 import storage from 'lib/storage';
-var location;
-var storageKey = 'gu.geolocation';
-var editionToGeolocationMap = {
+let location;
+const storageKey = 'gu.geolocation';
+const editionToGeolocationMap = {
     'UK': 'GB',
     'US': 'US',
     'AU': 'AU'
 };
-var daysBeforeGeolocationRefresh = 10;
+const daysBeforeGeolocationRefresh = 10;
 
 function init() {
-    get().then(function(geolocation) {
-        var currentDate = new Date();
+    get().then(geolocation => {
+        const currentDate = new Date();
         storage.local.set(storageKey, geolocation, {
             expires: currentDate.setDate(currentDate.getDate() + daysBeforeGeolocationRefresh)
         });
@@ -25,14 +25,14 @@ function editionToGeolocation(editionKey) {
 }
 
 function get() {
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
         if (location) return resolve(location);
         else {
             fetch(config.page.ajaxUrl + '/geolocation', {
                 method: 'GET',
                 contentType: 'application/json',
                 crossOrigin: true
-            }).then(function(response) {
+            }).then(response => {
                 if (response.country) {
                     location = response.country;
                     resolve(response.country);
@@ -45,18 +45,18 @@ function get() {
 }
 
 function getSync() {
-    var geolocationFromStorage = storage.local.get(storageKey);
+    const geolocationFromStorage = storage.local.get(storageKey);
     return geolocationFromStorage ? geolocationFromStorage : editionToGeolocation(config.page.edition)
 }
 
-var regionCountryCodes = [
+const regionCountryCodes = [
     'AU',
     'CA',
     'GB',
     'US'
 ];
 
-var europeCountryCodes = [
+const europeCountryCodes = [
     'AD',
     'AL',
     'AT',
@@ -118,7 +118,7 @@ var europeCountryCodes = [
 // These are the different 'regions' we accept when taking payment.
 // See https://membership.theguardian.com/uk/supporter# for more context.
 function getSupporterPaymentRegion() {
-    var location = getSync();
+    const location = getSync();
     if (regionCountryCodes.indexOf(location) > -1) {
         return location;
     }
@@ -129,14 +129,14 @@ function getSupporterPaymentRegion() {
 }
 
 function isInEurope() {
-    var countryCode = getSync();
+    const countryCode = getSync();
     return europeCountryCodes.indexOf(countryCode) > -1 || countryCode === 'GB'
 }
 
 export default {
-    get: get,
-    getSupporterPaymentRegion: getSupporterPaymentRegion,
-    getSync: getSync,
-    isInEurope: isInEurope,
-    init: init
+    get,
+    getSupporterPaymentRegion,
+    getSync,
+    isInEurope,
+    init
 };
