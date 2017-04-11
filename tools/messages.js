@@ -33,48 +33,50 @@ switch (process.argv[2]) {
         const listAll = process.argv[3] === '--all';
 
         // for all the lines in the makefile, construct the message
-        fs.readFileSync('makefile', 'utf8').split('\n').forEach((
-            line,
-            lineNumber,
-            makefile
-        ) => {
-            // if this line is a target...
-            if (
-                line.match(/^[^.\s#]/) && (listAll || !line.match(/# PRIVATE$/))
-            ) {
-                // see if there are any comments immediately before it
-                const comments = takeWhile(
-                    makefile.slice(0, lineNumber).reverse(),
-                    testLine => testLine.match(/^#/)
-                )
-                    // format the comments for output to CLI
-                    .map(comment => comment.replace(/#\s+/, ''))
-                    // put them back into correct order
-                    .reverse();
+        fs
+            .readFileSync('makefile', 'utf8')
+            .split('\n')
+            .forEach((line, lineNumber, makefile) => {
+                // if this line is a target...
+                if (
+                    line.match(/^[^.\s#]/) &&
+                    (listAll || !line.match(/# PRIVATE$/))
+                ) {
+                    // see if there are any comments immediately before it
+                    const comments = takeWhile(
+                        makefile.slice(0, lineNumber).reverse(),
+                        testLine => testLine.match(/^#/)
+                    )
+                        // format the comments for output to CLI
+                        .map(comment => comment.replace(/#\s+/, ''))
+                        // put them back into correct order
+                        .reverse();
 
-                // format the target name for output to CLI
-                const targetName = line.split(':')[0];
+                    // format the target name for output to CLI
+                    const targetName = line.split(':')[0];
 
-                if (comments.length) {
-                    // add the target name with the first comment following it
-                    messageLines.push(
-                        `\`${targetName}\`${new Array(gutterWidth - targetName.length).join('.')}${comments.join(' ')}`
-                    );
-                } else {
-                    // just add the target name
-                    messageLines.push(`\`${targetName}\``);
+                    if (comments.length) {
+                        // add the target name with the first comment following it
+                        messageLines.push(
+                            `\`${targetName}\`${new Array(gutterWidth - targetName.length).join('.')}${comments.join(' ')}`
+                        );
+                    } else {
+                        // just add the target name
+                        messageLines.push(`\`${targetName}\``);
+                    }
                 }
-            }
 
-            // if we've got a divider, just add space to create a line break
-            if (line.match(/^# \*{3,}/)) {
-                if (listAll) {
-                    messageLines.push(`\n${line.replace(/#|\*/g, '').trim()}`);
-                } else {
-                    messageLines.push(' ');
+                // if we've got a divider, just add space to create a line break
+                if (line.match(/^# \*{3,}/)) {
+                    if (listAll) {
+                        messageLines.push(
+                            `\n${line.replace(/#|\*/g, '').trim()}`
+                        );
+                    } else {
+                        messageLines.push(' ');
+                    }
                 }
-            }
-        });
+            });
 
         if (!listAll) {
             messageLines.push('\nTo see the full set, run `make list`.');

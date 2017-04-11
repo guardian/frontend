@@ -21,30 +21,30 @@ const fetch = options => {
     });
 
     return promiseRetry(
-        retry => new Promise((resolve, reject) => {
-            const errorMessage = `Unable to fetch ${options.endpoint}`;
+        retry =>
+            new Promise((resolve, reject) => {
+                const errorMessage = `Unable to fetch ${options.endpoint}`;
 
-            request(`${options.host + options.endpoint}?amp`, (
-                error,
-                resp,
-                body
-            ) => {
-                if (error || resp.statusCode !== 200) {
-                    const errorDetails = error ? error.message : '';
-                    const statusCodeMessage = resp
-                        ? ` Status code was ${resp ? resp.statusCode : ''}`
-                        : '';
+                request(
+                    `${options.host + options.endpoint}?amp`,
+                    (error, resp, body) => {
+                        if (error || resp.statusCode !== 200) {
+                            const errorDetails = error ? error.message : '';
+                            const statusCodeMessage = resp
+                                ? ` Status code was ${resp ? resp.statusCode : ''}`
+                                : '';
 
-                    reject(
-                        new Error(
-                            `${errorMessage + statusCodeMessage}\n${errorDetails}`
-                        )
-                    );
-                } else {
-                    resolve(body);
-                }
-            });
-        }).catch(retry),
+                            reject(
+                                new Error(
+                                    `${errorMessage + statusCodeMessage}\n${errorDetails}`
+                                )
+                            );
+                        } else {
+                            resolve(body);
+                        }
+                    }
+                );
+            }).catch(retry),
         {
             retries: 2,
         }

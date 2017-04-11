@@ -5,7 +5,9 @@ define([
     'lib/element-inview',
     'bootstraps/enhanced/media/video-player',
     'lodash/objects/assign',
-    'lib/create-store'
+    'lib/create-store',
+    'common/modules/atoms/youtube',
+    'lib/detect'
 ], function (
     bean,
     fastdom,
@@ -13,21 +15,51 @@ define([
     ElementInview,
     videojs,
     assign,
-    createStore
-) {
+    createStore,
+    youtube,
+    detect
+)
+{
+    function updateYouTubeVideo(currentItem){
+        var youTubeAtom = currentItem.querySelector('.youtube-media-atom');
+        if(youTubeAtom) {
+            return youtube.onVideoContainerNavigation(youTubeAtom.getAttribute("data-unique-atom-id"));
+        }
+    }
 
     var reducers = {
         NEXT: function next(previousState) {
             var position = previousState.position >= previousState.length ? previousState.position : previousState.position + 1;
+            updateYouTubeVideo(document.querySelector('.js-video-playlist-item-'+ (position-1)));
             return assign({}, previousState, getPositionState(position, previousState.length));
         },
 
         PREV: function prev(previousState) {
             var position = previousState.position <= 0 ? 0 : previousState.position - 1;
+            updateYouTubeVideo(document.querySelector('.js-video-playlist-item-'+ (position+1)));
             return assign({}, previousState, getPositionState(position, previousState.length));
         },
 
         INIT: function init(previousState) {
+            function makeYouTubeNonPlayableAtSmallBreakpoint(previousState) {
+                if(detect.isBreakpoint({max: 'desktop'})){
+                 var youTubeIframes = previousState.container.querySelectorAll('.youtube-media-atom iframe');
+                 youTubeIframes.forEach(function(el){
+                     el.remove();
+                 });
+                 var overlayLinks = previousState.container.querySelectorAll('.video-container-overlay-link');
+                 overlayLinks.forEach(function(el){
+                     el.classList.add('u-faux-block-link__overlay');
+                 });
+
+                 var atomWrapper = previousState.container.querySelectorAll('.youtube-media-atom');
+                 atomWrapper.forEach(function(el){
+                     el.classList.add('no-player');
+                 })
+                }
+            }
+            makeYouTubeNonPlayableAtSmallBreakpoint(previousState);
+
             fastdom.read(function() {
                 // Lazy load images on scroll for mobile
                 $('.js-video-playlist-image', previousState.container).each(function(el) {

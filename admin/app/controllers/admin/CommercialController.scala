@@ -1,9 +1,9 @@
 package controllers.admin
 
-import common.dfp.{GuCreativeTemplate, GuLineItem}
+import common.dfp.{GuCreativeTemplate, GuCustomField, GuLineItem}
 import common.{ExecutionContexts, JsonComponent, Logging}
 import conf.Configuration
-import dfp.{AdvertiserAgent, CreativeTemplateAgent, DfpApi, DfpDataExtractor, OrderAgent}
+import dfp.{AdvertiserAgent, CreativeTemplateAgent, CustomFieldAgent, DfpApi, DfpDataExtractor, OrderAgent}
 import model._
 import ophan.SurgingContentAgent
 import play.api.libs.json.{Format, JsString, JsValue, Json}
@@ -66,6 +66,13 @@ class CommercialController(implicit context: ApplicationContext) extends Control
       soFar :+ template.copy(creatives = creatives.filter(_.templateId.get == template.id).sortBy(_.name))
     }.sortBy(_.name)
     NoCache(Ok(views.html.commercial.templates(templates)))
+  }
+
+  def renderCustomFields = Action { implicit request =>
+
+    val fields: Seq[GuCustomField] = CustomFieldAgent.get.data.values.toSeq
+    NoCache(Ok(views.html.commercial.customFields(fields)))
+
   }
 
   def renderAdTests = Action { implicit request =>

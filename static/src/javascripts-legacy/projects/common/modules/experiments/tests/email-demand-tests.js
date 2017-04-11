@@ -42,28 +42,11 @@ define([
         this.successMeasure = 'Number of clicks';
         this.audienceCriteria = 'All users';
         this.dataLinkNames = '';
-        this.idealOutcome = 'People will demonstrate their interest in food, business and/or cities emails';
+        this.idealOutcome = 'People will demonstrate their interest a cities email';
 
         var articleBody = '.js-article__body';
 
         var listConfigs = {
-            food: {
-                listName: 'food',
-                displayName: {
-                    normalText: 'food',
-                    accentedText: 'weekly'
-                },
-                tone: 'feature',
-                headline: "What's for dinner?",
-                description: "Sign-up for our new weekly food email and you’ll get recipes, restaurant reviews and the best" +
-                " of all things culinary. Whether you’re a full-on foodie or a budding gastronaut, we’ve something to sate your appetite",
-                linkOnClick: "https://docs.google.com/forms/d/e/1FAIpQLSeGAacgwIRrUFxKPRSUG-imlqEwUKgVYFhOnJP4__avevZEHw/viewform?usp=sf_link",
-                canRun: function () {
-                    var tags = config.page.keywordIds.concat(config.page.nonKeywordTagIds);
-
-                    return (tags.indexOf('lifeandstyle/food-and-drink') > -1) || (tags.indexOf('tone/recipes') > -1)
-                }
-            },
             cities: {
                 listName: 'cities',
                 displayName: {
@@ -75,22 +58,9 @@ define([
                 "over the world – from gentrification and climate change to cycling and urban history",
                 linkOnClick: "https://docs.google.com/forms/d/e/1FAIpQLScUfA4BZ8RtDGJaM9NSVc7YxDRg_SB9-bLtdJG-Gml837cayQ/viewform?usp=sf_link",
                 canRun: function () {
-                    return config.page.section === 'cities';
-                }
-            },
-            business: {
-                listName: 'business',
-                displayName: {
-                    normalText: 'business',
-                    accentedText: 'today'
-                },
-                tone: 'news',
-                headline: "Business updates, direct to your inbox",
-                description: "Sign up to our daily email for an at-a-glance guide to the biggest stories, smartest " +
-                "analysis and hottest topics in the world of business and economics",
-                linkOnClick: "https://docs.google.com/forms/d/e/1FAIpQLSclNwg8nkuwYrApRnnVkhGsdIIb85Uk0_DTEoCRiMDdgqIBFQ/viewform?usp=sf_link",
-                canRun: function () {
-                    return config.page.section === 'business';
+                    var tags = config.page.keywordIds.concat(config.page.nonKeywordTagIds);
+
+                    return (config.page.section === 'cities' || (tags.indexOf('cities/cities') > -1));
                 }
             }
         };
