@@ -5,7 +5,6 @@ import ophan from 'ophan/ng';
 import userAccount from 'common/modules/navigation/user-account';
 
 const html = document.documentElement;
-const sidebarSections = [...document.querySelectorAll('.js-close-nav-list')];
 const sidebar = document.getElementById('main-menu');
 const sidebarToggle = document.querySelector('.js-change-link');
 const enhanced = {};
@@ -14,9 +13,11 @@ const weShouldEnhance = (checkbox: HTMLInputElement): ?boolean =>
     checkbox && !enhanced[checkbox.id] && !checkbox.checked;
 
 const closeAllSidebarBlocksExcept = (targetItem?: HTMLElement): void => {
-    sidebarSections.forEach(item => {
-        if (item !== targetItem) {
-            item.removeAttribute('open');
+    const sections = [...document.querySelectorAll('.js-close-nav-list')];
+
+    sections.forEach(section => {
+        if (section !== targetItem) {
+            section.removeAttribute('open');
         }
     });
 };
@@ -131,11 +132,12 @@ const enhanceCheckboxesToButtons = (): void => {
 };
 
 const addEventHandler = (): void => {
-    sidebarSections.forEach(item =>
-        item.addEventListener(
-            'click',
-            closeAllSidebarBlocksExcept.bind(null, item)
-        ));
+    sidebar.addEventListener('click', (event: Event) => {
+        if (event.target.matches('.js-close-nav-list')) {
+            event.stopPropagation();
+            closeAllSidebarBlocksExcept(event.target);
+        }
+    });
 };
 
 const init = (): void => {
