@@ -85,11 +85,4 @@ const get = (name: string): ?string => {
     return null;
 };
 
-export default {
-    cleanUp,
-    add,
-    addSessionCookie,
-    addForMinutes,
-    remove,
-    get,
-};
+export { cleanUp, add, addSessionCookie, addForMinutes, remove, get };

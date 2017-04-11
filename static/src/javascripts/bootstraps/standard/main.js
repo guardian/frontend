@@ -25,8 +25,8 @@ import mediator from 'lib/mediator';
 import checkMediator from 'common/modules/check-mediator';
 import addEventListener from 'lib/add-event-listener';
 import identity from 'common/modules/identity/api';
+import { remove, add } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
-import cookies from 'lib/cookies';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import config from 'lib/config';
@@ -39,9 +39,9 @@ const setAdTestCookie = (): void => {
     const queryParams = getUrlVars();
 
     if (queryParams.adtest === 'clear') {
-        cookies.remove('adtest');
+        remove('adtest');
     } else if (queryParams.adtest) {
-        cookies.add('adtest', encodeURIComponent(queryParams.adtest), 10);
+        add('adtest', encodeURIComponent(queryParams.adtest), 10);
     }
 };
 
