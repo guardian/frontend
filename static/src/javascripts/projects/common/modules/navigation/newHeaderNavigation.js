@@ -5,10 +5,9 @@ import ophan from 'ophan/ng';
 import userAccount from 'common/modules/navigation/user-account';
 
 const sidebar = document.getElementById('main-menu');
-const sidebarToggle = document.querySelector('.js-change-link');
 const enhanced = {};
 
-const closeAllSidebarBlocksExcept = (targetItem?: HTMLElement): void => {
+const closeSidebarSections = (targetItem?: HTMLElement): void => {
     const sections = [...document.querySelectorAll('.js-close-nav-list')];
 
     sections.forEach(section => {
@@ -19,7 +18,8 @@ const closeAllSidebarBlocksExcept = (targetItem?: HTMLElement): void => {
 };
 
 const toggleSidebar = (trigger: HTMLElement): void => {
-    const html = document.documentElement;
+    const documentElement = document.documentElement;
+    const sidebarToggle = document.querySelector('.js-change-link');
     const openClass = 'new-header__nav__menu-button--open';
     const globalOpenClass = 'nav-is-open';
     const isOpen = trigger.getAttribute('aria-expanded') === 'true';
@@ -37,7 +37,7 @@ const toggleSidebar = (trigger: HTMLElement): void => {
         });
     };
 
-    const focusFirstSection = (): void => {
+    const focusFirstSidebarSection = (): void => {
         const firstSection = document.querySelector('.js-navigation-button');
 
         if (firstSection) {
@@ -59,15 +59,15 @@ const toggleSidebar = (trigger: HTMLElement): void => {
         sidebar.setAttribute('aria-hidden', hiddenAttr);
         sidebarToggle.classList.toggle(openClass, !isOpen);
 
-        if (html) {
-            html.classList.toggle(globalOpenClass, !isOpen);
+        if (documentElement) {
+            documentElement.classList.toggle(globalOpenClass, !isOpen);
         }
 
         if (isOpen) {
             resetItemOrder();
         } else {
-            focusFirstSection();
-            closeAllSidebarBlocksExcept();
+            focusFirstSidebarSection();
+            closeSidebarSections();
         }
     };
 
@@ -89,15 +89,15 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
                 button.setAttribute('aria-controls', checkboxControls);
             }
 
-            if (checkbox.parentNode) {
-                checkbox.parentNode.replaceChild(button, checkbox);
-            }
-
             button.addEventListener('click', (event: Event) => {
                 // #? hacky type cast
                 const target: HTMLElement = (event.target: any);
                 toggleSidebar(target);
             });
+
+            if (checkbox.parentNode) {
+                checkbox.parentNode.replaceChild(button, checkbox);
+            }
 
             enhanced[button.id] = true;
         };
@@ -140,7 +140,7 @@ const addEventHandler = (): void => {
 
         if (target.matches('.js-close-nav-list')) {
             event.stopPropagation();
-            closeAllSidebarBlocksExcept(target);
+            closeSidebarSections(target);
         }
     });
 };
