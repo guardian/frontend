@@ -27,75 +27,59 @@ const go = () => {
         bootStandard();
 
         // 2. once standard is done, next is commercial
-        if (config.switches.commercial) {
-            if (config.page.isDev) {
-                window.guardian.adBlockers.onDetect.push(isInUse => {
-                    const needsMessage = isInUse &&
-                        window.console &&
-                        window.console.warn;
-                    const message = 'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
-                    if (needsMessage) {
-                        window.console.warn(message);
-                    }
-                });
-            }
-
-            userTiming.mark('commercial request');
-            require.ensure(
-                [],
-                require => {
-                    raven.context({ tags: { feature: 'commercial' } }, () => {
-                        userTiming.mark('commercial boot');
-                        require('bootstraps/commercial')().then(() => {
-                            // 3. finally, try enhanced
-                            // this is defined here so that webpack's code-splitting algo
-                            // excludes all the modules bundled in the commercial chunk from this one
-                            if (window.guardian.isEnhanced) {
-                                userTiming.mark('enhanced request');
-                                require.ensure(
-                                    [],
-                                    // webpack needs the require function to be called 'require'
-                                    // eslint-disable-next-line no-shadow
-                                    require => {
-                                        userTiming.mark('enhanced boot');
-                                        require('bootstraps/enhanced/main')();
-
-                                        if (
-                                            document.readyState === 'complete'
-                                        ) {
-                                            capturePerfTimings();
-                                        } else {
-                                            window.addEventListener(
-                                                'load',
-                                                capturePerfTimings
-                                            );
-                                        }
-                                    },
-                                    'enhanced'
-                                );
-                            }
-                        });
-                    });
-                },
-                'commercial'
-            );
-        } else if (window.guardian.isEnhanced) {
-            userTiming.mark('enhanced request');
-            require.ensure(
-                [],
-                require => {
-                    userTiming.mark('enhanced boot');
-                    require('bootstraps/enhanced/main')();
-
-                    if (document.readyState === 'complete') {
-                        capturePerfTimings();
-                    } else {
-                        window.addEventListener('load', capturePerfTimings);
-                    }
-                },
-                'enhanced-no-commercial'
-            );
+        if (config.page.isDev) {
+            window.guardian.adBlockers.onDetect.push(isInUse => {
+                const needsMessage = isInUse &&
+                    window.console &&
+                    window.console.warn;
+                const message = 'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
+                if (needsMessage) {
+                    window.console.warn(message);
+                }
+            });
         }
+
+        userTiming.mark('commercial request');
+        require.ensure(
+            [],
+            require => {
+                raven.context({ tags: { feature: 'commercial' } }, () => {
+                    userTiming.mark('commercial boot');
+                    const commercialBoot = config.switches.commercial
+                        ? require('bootstraps/commercial')
+                        : Promise.resolve;
+
+                    commercialBoot().then(() => {
+                        // 3. finally, try enhanced
+                        // this is defined here so that webpack's code-splitting algo
+                        // excludes all the modules bundled in the commercial chunk from this one
+                        if (window.guardian.isEnhanced) {
+                            userTiming.mark('enhanced request');
+                            require.ensure(
+                                [],
+                                // webpack needs the require function to be called 'require'
+                                // eslint-disable-next-line no-shadow
+                                require => {
+                                    userTiming.mark('enhanced boot');
+                                    require('bootstraps/enhanced/main')();
+
+                                    if (document.readyState === 'complete') {
+                                        capturePerfTimings();
+                                    } else {
+                                        window.addEventListener(
+                                            'load',
+                                            capturePerfTimings
+                                        );
+                                    }
+                                },
+                                'enhanced'
+                            );
+                        }
+                    });
+                });
+            },
+            'commercial'
+        );
     });
 };
 
