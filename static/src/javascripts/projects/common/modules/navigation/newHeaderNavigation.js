@@ -24,63 +24,51 @@ const removeOrderingFromLists = (): void => {
 
     mainListItems.forEach(item => {
         const listItem = item;
-
         listItem.style.order = '';
     });
 };
 
-const toggleSidebar = (event: Event): void => {
-    // #? hacky type cast
-    const button: HTMLElement = (event.target: any);
+const toggleSidebar = (trigger: HTMLElement): void => {
+    const openClass = 'new-header__nav__menu-button--open';
+    const globalOpenClass = 'nav-is-open';
+
+    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
     const mainMenu = document.getElementById('main-menu');
     const veggieBurgerLink = document.querySelector('.js-change-link');
-
-    const menuIsOpen = (): boolean =>
-        button.getAttribute('aria-expanded') === 'true';
 
     if (!mainMenu || !veggieBurgerLink) {
         return;
     }
-    if (menuIsOpen()) {
-        fastdom.write(() => {
-            button.setAttribute('aria-expanded', 'false');
-            mainMenu.setAttribute('aria-hidden', 'true');
-            veggieBurgerLink.classList.remove(
-                'new-header__nav__menu-button--open'
-            );
-            veggieBurgerLink.setAttribute(
-                'data-link-name',
-                'nav2 : veggie-burger : show'
-            );
+
+    const update = () => {
+        const expandedAttr = isOpen ? 'false' : 'true';
+        const hiddenAttr = isOpen ? 'true' : 'false';
+        const linkState = isOpen ? 'show' : 'hide';
+
+        veggieBurgerLink.setAttribute(
+            'data-link-name',
+            `nav2 : veggie-burger : ${linkState}`
+        );
+
+        trigger.setAttribute('aria-expanded', expandedAttr);
+        mainMenu.setAttribute('aria-hidden', hiddenAttr);
+        veggieBurgerLink.classList.toggle(openClass, !isOpen);
+        html.classList.toggle(globalOpenClass, !isOpen);
+
+        if (isOpen) {
             removeOrderingFromLists();
-
-            // Users should be able to scroll again
-            html.classList.remove('nav-is-open');
-        });
-    } else {
-        fastdom.write(() => {
+        } else {
             const navButton = document.querySelector('.js-navigation-button');
-
-            button.setAttribute('aria-expanded', 'true');
-            mainMenu.setAttribute('aria-hidden', 'false');
-            veggieBurgerLink.classList.add(
-                'new-header__nav__menu-button--open'
-            );
-            veggieBurgerLink.setAttribute(
-                'data-link-name',
-                'nav2 : veggie-burger : hide'
-            );
 
             if (navButton) {
                 navButton.focus();
             }
-            // No targetItem to put in as the parameter. All lists should close.
-            closeAllSidebarBlocksExcept();
 
-            // Prevents scrolling on the body
-            html.classList.add('nav-is-open');
-        });
-    }
+            closeAllSidebarBlocksExcept();
+        }
+    };
+
+    fastdom.write(update);
 };
 
 const applyEnhancementsTo = (checkbox: HTMLElement): void => {
@@ -89,22 +77,27 @@ const applyEnhancementsTo = (checkbox: HTMLElement): void => {
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
 
-        [...checkbox.classList].forEach(c => button.classList.add(c));
-
-        button.setAttribute('id', checkboxId);
-
-        if (checkboxControls) {
-            button.setAttribute('aria-controls', checkboxControls);
-        }
-
-        button.setAttribute('aria-expanded', 'false');
-
         fastdom.write(() => {
+            [...checkbox.classList].forEach(c => button.classList.add(c));
+
+            button.setAttribute('id', checkboxId);
+
+            if (checkboxControls) {
+                button.setAttribute('aria-controls', checkboxControls);
+            }
+
+            button.setAttribute('aria-expanded', 'false');
+
             if (checkbox.parentNode) {
                 checkbox.parentNode.replaceChild(button, checkbox);
             }
 
-            button.addEventListener('click', toggleSidebar);
+            button.addEventListener('click', event => {
+                // #? hacky type cast
+                const button: HTMLElement = (event.target: any);
+                toggleSidebar(button);
+            });
+
             enhanced[button.id] = true;
         });
     });
