@@ -87,7 +87,8 @@ object International extends Edition(
     genius,
     speedy,
     everyman,
-    azed
+    azed,
+    weekendSectionLink
   )
 
   override val navigation: Seq[NavItem] = {
