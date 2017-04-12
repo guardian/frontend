@@ -3,7 +3,7 @@ define([
     'fastdom',
     'qwery',
     'lib/$',
-    'lib/ajax',
+    'lib/fetch-json',
     'lib/formatters',
     'lib/mediator',
     'lodash/utilities/template',
@@ -22,7 +22,7 @@ define([
     fastdom,
     qwery,
     $,
-    ajax,
+    fetchJSON,
     formatters,
     mediator,
     template,
@@ -103,17 +103,14 @@ define([
 
     function getCommentCounts(context) {
         fastdom.read(function () {
-            var indexedElements = getElementsIndexedById(context || document.body),
-                ids = getContentIds(indexedElements);
-            ajax({
-                url: countUrl + ids,
-                type: 'json',
-                method: 'get',
-                crossOrigin: true,
-                success: function (response) {
-                    if (response && response.counts) {
-                        renderCounts(response.counts, indexedElements);
-                    }
+            var indexedElements = getElementsIndexedById(context || document.body);
+            var endpoint = countUrl + getContentIds(indexedElements);
+
+            fetchJSON(endpoint, {
+                mode: 'cors',
+            }).then(function (response) {
+                if (response && response.counts) {
+                    renderCounts(response.counts, indexedElements);
                 }
             });
         });
