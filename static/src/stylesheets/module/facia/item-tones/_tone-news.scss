@@ -11,7 +11,9 @@
 
     .fc-item__kicker,
     .fc-item__byline,
-    .rich-link__read-more-text,
+    .rich-link__read-more-text {
+        color: $news-default;
+    }
 
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, $neutral-8, 10%);

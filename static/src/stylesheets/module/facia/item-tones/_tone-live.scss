@@ -32,7 +32,9 @@
     .fc-item__kicker,
     .fc-item__byline,
     .fc-item__meta,
-    .rich-link__read-more-text,
+    .rich-link__read-more-text {
+        color: $live-mute;
+    }
 
     .rich-link__arrow-icon {
         fill: $live-mute;

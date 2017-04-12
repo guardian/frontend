@@ -31,7 +31,9 @@
 
     .fc-item__kicker,
     .fc-item__byline,
-    .rich-link__read-more-text,
+    .rich-link__read-more-text {
+        color: $review-accent;
+    }
 
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, $review-background, 10%);

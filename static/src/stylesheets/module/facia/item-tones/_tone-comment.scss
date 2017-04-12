@@ -19,7 +19,10 @@
     .rich-link__kicker,
     .fc-item__byline,
     .rich-link__byline,
-    .rich-link__read-more-text,
+    .rich-link__read-more-text {
+        color: $comment-default;
+    }
+
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, $comment-background, 10%);
     }

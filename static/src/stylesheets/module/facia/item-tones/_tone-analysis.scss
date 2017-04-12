@@ -26,7 +26,9 @@
     .fc-item__kicker,
     .rich-link__kicker,
     .fc-item__byline,
-    .rich-link__standfirst,
+    .rich-link__standfirst {
+        color: $news-support-6;
+    }
 
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, $analysis-background, 10%);
