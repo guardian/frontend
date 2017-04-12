@@ -49,13 +49,10 @@ const addForMinutes = (
     value: string,
     minutesToLive: number
 ): void => {
-    if (minutesToLive) {
-        const expires = new Date();
-        expires.setMinutes(expires.getMinutes() + minutesToLive);
-        document.cookie = `${name}=${value}; path=/; expires=${expires.toUTCString()};${getDomainAttribute()}`;
-    } else {
-        addCookie(name, value);
-    }
+    const expires = new Date();
+
+    expires.setMinutes(expires.getMinutes() + minutesToLive);
+    document.cookie = `${name}=${value}; path=/; expires=${expires.toUTCString()};${getDomainAttribute()}`;
 };
 
 const addSessionCookie = (name: string, value: string): void => {
