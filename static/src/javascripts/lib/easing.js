@@ -1,6 +1,6 @@
 // @flow
 
-/* Create basic easing easingFunctions
+/* Create basic easing functions
 
    Usage:
      var ease = easing.createEasing('easeOutQuint', 3000); // createEasings a 3 second duration easing function
