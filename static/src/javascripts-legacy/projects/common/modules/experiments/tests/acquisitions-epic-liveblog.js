@@ -1,10 +1,12 @@
 define([
     'common/modules/commercial/contributions-utilities',
     'lib/geolocation',
+    'lodash/utilities/template',
     'raw-loader!common/views/acquisitions-epic-liveblog.html'
 ], function (
     contributionsUtilities,
     geolocation,
+    template,
     liveblogEpicTemplate
 ) {
 
