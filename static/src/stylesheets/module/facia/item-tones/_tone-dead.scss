@@ -15,7 +15,10 @@
     }
 
     .fc-item__kicker,
-    .fc-item__byline,
+    .fc-item__byline {
+        color: $live-accent;
+    }
+
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, $neutral-7, 10%);
     }

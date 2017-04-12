@@ -35,7 +35,9 @@
     .fc-item__kicker,
     .fc-item__byline,
     .fc-item__meta,
-    .rich-link__read-more-text,
+    .rich-link__read-more-text {
+        color: $feature-mute;
+    }
 
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, $feature-default, 10%);

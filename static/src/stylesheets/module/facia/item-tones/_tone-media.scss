@@ -36,7 +36,9 @@
     .fc-item__kicker,
     .rich-link__kicker,
     .fc-item__byline,
-    .rich-link__read-more-text,
+    .rich-link__read-more-text {
+        color: $media-default;
+    }
 
     .fc-item__kicker:after,
     .rich-link__kicker:after,

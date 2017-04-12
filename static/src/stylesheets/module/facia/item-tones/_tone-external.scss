@@ -2,7 +2,9 @@
     background-color: $neutral-6;
 
     .fc-item__kicker,
-    .fc-item__byline,
+    .fc-item__byline {
+        color: $external-main-1;
+    }
 
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, $neutral-6, 10%);
