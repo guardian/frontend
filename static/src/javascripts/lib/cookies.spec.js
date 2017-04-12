@@ -22,7 +22,7 @@ describe('Cookies', () => {
         document,
         'cookie',
         ({
-            getCookie() {
+            get() {
                 return cookieValue
                     .replace('|', ';')
                     .replace(/^[;|]|[;|]$/g, '');
