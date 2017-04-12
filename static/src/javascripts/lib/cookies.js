@@ -10,7 +10,10 @@ const getDomainAttribute = (): string => {
     return shortDomain === 'localhost' ? '' : ` domain=${shortDomain};`;
 };
 
-const removeCookie = (name: string, currentDomainOnly: boolean = false): void => {
+const removeCookie = (
+    name: string,
+    currentDomainOnly: boolean = false
+): void => {
     // Remove cookie, implicitly using the document's domain.
     document.cookie = `${name}=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
     if (!currentDomainOnly) {
@@ -85,4 +88,11 @@ const getCookie = (name: string): ?string => {
     return null;
 };
 
-export { cleanUp, addCookie, addSessionCookie, addForMinutes, removeCookie, getCookie };
+export {
+    cleanUp,
+    addCookie,
+    addSessionCookie,
+    addForMinutes,
+    removeCookie,
+    getCookie,
+};
