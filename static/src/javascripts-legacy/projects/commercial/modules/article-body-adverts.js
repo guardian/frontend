@@ -4,6 +4,7 @@ define([
     'lib/config',
     'lib/detect',
     'lib/fastdom-promise',
+    'common/modules/experiments/utils',
     'common/modules/article/space-filler',
     'commercial/modules/ad-sizes',
     'commercial/modules/dfp/add-slot',
@@ -16,6 +17,7 @@ define([
     config,
     detect,
     fastdom,
+    abUtils,
     spaceFiller,
     adSizes,
     addSlot,
@@ -30,6 +32,8 @@ define([
     var replaceTopSlot;
     var getSlotName;
     var getSlotType;
+    var isOffsetingAds = abUtils.testCanBeRun('IncreaseInlineAds') &&
+        abUtils.getTestVariantId('IncreaseInlineAds') === 'yes';
 
     function init() {
 
@@ -105,6 +109,14 @@ define([
         };
     }
 
+    function getAltRules() {
+        var altRules = getRules();
+        altRules.selectors = {
+            ' .ad-slot': { minAbove: 500, minBelow: 500 }
+        };
+        return altRules;
+    }
+
     function getInlineMerchRules() {
         var inlineMerchRules = getRules();
         inlineMerchRules.minAbove = 300;
@@ -114,7 +126,7 @@ define([
     }
 
     function getLongArticleRules() {
-        var longArticleRules = getRules();
+        var longArticleRules = isOffsetingAds ? getAltRules() : getRules();
         longArticleRules.selectors[' .ad-slot'].minAbove =
         longArticleRules.selectors[' .ad-slot'].minBelow = detect.getViewport().height;
         return longArticleRules;
@@ -131,7 +143,7 @@ define([
     }
 
     function addInlineAds() {
-        return addArticleAds(2, getRules())
+        return addArticleAds(2, isOffsetingAds ? getAltRules() : getRules())
         .then(function (countAdded) {
             if (countAdded === 2) {
                 return addArticleAds(8, getLongArticleRules())
@@ -165,7 +177,8 @@ define([
                     para,
                     getSlotName(),
                     getSlotType(),
-                    'inline'
+                    'inline' + (isOffsetingAds && bodyAds > 1 ? ' offset-right' : ''),
+                    isOffsetingAds && bodyAds > 1 ? { desktop: [adSizes.halfPage] } : null
                 );
             });
 
@@ -176,8 +189,8 @@ define([
         }
     }
 
-    function insertAdAtPara(para, name, type, classes) {
-        var ad = createSlot(type, { name: name, classes: classes });
+    function insertAdAtPara(para, name, type, classes, sizes) {
+        var ad = createSlot(type, { name: name, classes: classes, sizes: sizes });
 
         return fastdom.write(function () {
             para.parentNode.insertBefore(ad, para);

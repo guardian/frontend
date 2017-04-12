@@ -20,6 +20,7 @@ define([
     'common/modules/experiments/tests/film-today-email-variants',
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
+    'common/modules/experiments/tests/increase-inline-ads',
     'common/modules/experiments/tests/email-demand-tests',
     'common/modules/experiments/tests/paid-card-logo',
     'ophan/ng',
@@ -45,6 +46,7 @@ define([
              FilmTodayEmailVariants,
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
+             IncreaseInlineAds,
              EmailDemandTests,
              PaidCardLogo,
              ophan,
@@ -61,6 +63,7 @@ define([
         FilmTodayEmailVariants,
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
+        new IncreaseInlineAds(),
         new EmailDemandTests(),
         new PaidCardLogo(),
         new PaidCommenting()
