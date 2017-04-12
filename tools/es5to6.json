@@ -22,7 +22,6 @@
     "lib/formatters.js"
   ],
   "Calum Campbell": [
-    "lib/geolocation.js",
     "lib/load-css-promise.js"
   ],
   "GHaberis": [
