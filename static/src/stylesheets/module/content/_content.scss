@@ -22,6 +22,56 @@
     box-sizing: border-box;
 }
 
+.content__header-container {
+    @include mq($until: tablet) {
+        // on desktop, the headline is first, on mobile the image is first
+        display: flex;
+        flex-wrap: wrap-reverse;
+    }
+}
+
+.content__head,
+.content__main-media-full-width-mobile {
+    @include mq($until: tablet) {
+        // Even when using flex, the main media should be 100% of it's container
+        width: 100%;
+        flex-grow: 1;
+    }
+}
+
+.content__main-media-wrapper {
+    margin: 0 auto;
+
+    @include mq(tablet) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+        box-sizing: border-box;
+    }
+}
+
+.content__main-media {
+    max-width: gs-span(8);
+    margin: auto;
+    position: relative;
+
+    @include mq(tablet, desktop) {
+        max-width: gs-span(9);
+    }
+
+    @include mq(desktop) {
+        margin-left: 0;
+        margin-right: $right-column + $gs-gutter;
+    }
+
+    @include mq(leftCol) {
+        margin-left: $left-column + $gs-gutter;
+    }
+
+    @include mq(wide) {
+        margin-left: $left-column-wide + $gs-gutter;
+    }
+}
+
 .content__main-column {
     max-width: gs-span(8);
     margin: auto;

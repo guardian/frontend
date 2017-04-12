@@ -1,17 +1,3 @@
-.media-primary {
-    margin: 0 $gs-gutter * -.5;
-    position: relative;
-
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter / -1;
-        margin-right: $gs-gutter / -1;
-    }
-    @include mq(phablet) {
-        margin-left: 0;
-        margin-right: 0;
-    }
-}
-
 .content__main-column--article {
     min-height: gs-height(6);
 }
