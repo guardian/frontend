@@ -1,60 +1,58 @@
-import Promise from 'Promise';
-import fetch from 'lib/fetch-json';
+// @flow
+import fetchJSON from 'lib/fetch-json';
 import config from 'lib/config';
 import storage from 'lib/storage';
+
 let location;
 const storageKey = 'gu.geolocation';
 const editionToGeolocationMap = {
-    'UK': 'GB',
-    'US': 'US',
-    'AU': 'AU'
+    UK: 'GB',
+    US: 'US',
+    AU: 'AU',
 };
 const daysBeforeGeolocationRefresh = 10;
 
-function init() {
-    get().then(geolocation => {
-        const currentDate = new Date();
-        storage.local.set(storageKey, geolocation, {
-            expires: currentDate.setDate(currentDate.getDate() + daysBeforeGeolocationRefresh)
-        });
-    });
-}
-
-function editionToGeolocation(editionKey) {
-    return editionToGeolocationMap[editionKey] || 'GB';
-}
-
-function get() {
-    return new Promise((resolve, reject) => {
+const get = (): Promise<string> =>
+    new Promise((resolve, reject) => {
         if (location) return resolve(location);
-        else {
-            fetch(config.page.ajaxUrl + '/geolocation', {
-                method: 'GET',
-                contentType: 'application/json',
-                crossOrigin: true
-            }).then(response => {
+
+        fetchJSON('/geolocation', {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+        })
+            .then(response => {
                 if (response.country) {
                     location = response.country;
                     resolve(response.country);
                 } else {
                     reject('No country in geolocation response', response);
                 }
-            }).catch(reject);
-        }
+            })
+            .catch(reject);
     });
-}
 
-function getSync() {
+const init = (): void => {
+    get().then(geolocation => {
+        const currentDate = new Date();
+        storage.local.set(storageKey, geolocation, {
+            expires: currentDate.setDate(
+                currentDate.getDate() + daysBeforeGeolocationRefresh
+            ),
+        });
+    });
+};
+
+const editionToGeolocation = (editionKey: string = 'UK'): string =>
+    editionToGeolocationMap[editionKey];
+
+const getSync = (): string => {
     const geolocationFromStorage = storage.local.get(storageKey);
-    return geolocationFromStorage ? geolocationFromStorage : editionToGeolocation(config.page.edition)
-}
+    return geolocationFromStorage || editionToGeolocation(config.page.edition);
+};
 
-const regionCountryCodes = [
-    'AU',
-    'CA',
-    'GB',
-    'US'
-];
+const regionCountryCodes = ['AU', 'CA', 'GB', 'US'];
 
 const europeCountryCodes = [
     'AD',
@@ -111,32 +109,25 @@ const europeCountryCodes = [
     'WF',
     'YT',
     'VA',
-    'AX'
+    'AX',
 ];
 
 // Returns one of { GB, US, AU, CA, EU, INT }
 // These are the different 'regions' we accept when taking payment.
 // See https://membership.theguardian.com/uk/supporter# for more context.
-function getSupporterPaymentRegion() {
-    const location = getSync();
-    if (regionCountryCodes.indexOf(location) > -1) {
-        return location;
+const getSupporterPaymentRegion = (): string => {
+    if (regionCountryCodes.includes(location)) {
+        return getSync();
     }
-    if (europeCountryCodes.indexOf(location) > -1) {
+    if (europeCountryCodes.includes(location)) {
         return 'EU';
     }
     return 'INT';
-}
-
-function isInEurope() {
-    const countryCode = getSync();
-    return europeCountryCodes.indexOf(countryCode) > -1 || countryCode === 'GB'
-}
-
-export default {
-    get,
-    getSupporterPaymentRegion,
-    getSync,
-    isInEurope,
-    init
 };
+
+const isInEurope = (): boolean => {
+    const countryCode = getSync();
+    return europeCountryCodes.includes(countryCode) || countryCode === 'GB';
+};
+
+export { get, getSupporterPaymentRegion, getSync, isInEurope, init };
