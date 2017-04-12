@@ -27,7 +27,7 @@ define([
         this.author = 'Roberto Tyley';
         this.description = 'Show contributions/membership messages for the ' + edition + ' edition.';
         this.showForSensitive = false;
-        this.audience = 0.5;
+        this.audience = 1.0;
         this.audienceOffset = 0;
         this.successMeasure = 'Conversion';
         this.audienceCriteria = 'All users in the ' + edition + ' edition.';
@@ -78,9 +78,5 @@ define([
         return this.addMessageVariant(variantId, {contributions: variantParams});
     };
 
-    return [
-        new EditionTest('UK', 'MembershipEngagementBannerUkRemindMeLater', '2017-02-02', '2017-04-07', 'remind_me_later')
-            .addMembershipVariant('control', {})
-            .addMembershipVariant('remind_me', {showRemindMe : true})
-    ]
+    return []
 });
