@@ -1,9 +1,9 @@
 // @flow
 
-/* Create basic easing functions
+/* Create basic easing easingFunctions
 
    Usage:
-     var ease = easing.create('easeOutQuint', 3000); // creates a 3 second duration easing function
+     var ease = easing.createEasing('easeOutQuint', 3000); // createEasings a 3 second duration easing function
      ease(); // each call will return a value from 0 (at t=0) to 1.0 (at t>=duration)
 
    https://gist.github.com/gre/1650294
@@ -20,7 +20,8 @@ const easeInOut = (power: number): Function =>
             ? easeIn(power)(t * 2) / 2
             : easeOut(power)(t * 2 - 1) / 2 + 0.5;
 
-const functions = {
+// #? these probably should not be generated on parse but on being called
+const easingFunctions = {
     // no easing, no acceleration
     linear: easeInOut(1),
 
@@ -61,9 +62,9 @@ const functions = {
     easeInOutQuint: easeInOut(5),
 };
 
-const create = (type: string, duration: number): Function => {
+const createEasing = (type: string, duration: number): Function => {
     const startTime = new Date();
-    const ease = functions[type];
+    const ease = easingFunctions[type];
 
     return () => {
         const elapsed = new Date() - startTime;
@@ -71,4 +72,4 @@ const create = (type: string, duration: number): Function => {
     };
 };
 
-export { functions, create };
+export { easingFunctions, createEasing };
