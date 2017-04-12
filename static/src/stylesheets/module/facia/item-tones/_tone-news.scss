@@ -12,13 +12,6 @@
     .fc-item__kicker,
     .fc-item__byline,
     .rich-link__read-more-text,
-    .fc-save-for-later--is-saved {
-        color: $news-default;
-    }
-
-    .fc-save-for-later {
-        border-color: mix(#000000, $neutral-8, 10%);
-    }
 
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, $neutral-8, 10%);
@@ -29,10 +22,6 @@
     }
 
     .rich-link__arrow-icon {
-        fill: $news-default;
-    }
-
-    .fc-save-for-later--is-saved .inline-tone-fill {
         fill: $news-default;
     }
 }

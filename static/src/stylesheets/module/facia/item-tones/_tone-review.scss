@@ -32,13 +32,6 @@
     .fc-item__kicker,
     .fc-item__byline,
     .rich-link__read-more-text,
-    .fc-save-for-later--is-saved {
-        color: $review-accent;
-    }
-
-    .fc-save-for-later {
-        border-color: mix($c-headline, $review-background, 20%);
-    }
 
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, $review-background, 10%);

@@ -1,8 +1,0 @@
-<button class="button button--medium button--tertiary save-for-later__button js-save-for-later__button save-for-later__button--<%= isSaved ? 'saved' : 'save' %>"
-   data-link-name="<%= isSaved ? 'Unsave' : 'Save' %> | <%= position %>"
-   data-component="save-for-later"
-   <%= !isSaved ? 'data-custom-event-properties=\'{ "prop74": "' + config.page.contentType + 'Save:' + config.page.pageId + '" }\'' : '' %>>
-    <%= icon %>
-    <span class="save-for-later__label save-for-later__label--save">Save for later</span>
-    <span class="save-for-later__label save-for-later__label--saved">Article saved</span>
-</button>

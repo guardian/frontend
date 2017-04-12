@@ -36,14 +36,6 @@
     .fc-item__byline,
     .fc-item__standfirst,
     .rich-link__read-more-text,
-    .fc-save-for-later--is-saved {
-        color: $editorial-accent;
-    }
-
-    .fc-save-for-later {
-        border-color: mix($c-headline, $editorial-default, 20%);
-    }
-
 
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, $editorial-default, 10%);
@@ -55,10 +47,6 @@
 
     .fc-item__meta {
         color: $editorial-accent;
-    }
-
-    .fc-save-for-later--is-saved .inline-tone-fill {
-        fill: $editorial-accent;
     }
 
     .fc-sublink__title:before {

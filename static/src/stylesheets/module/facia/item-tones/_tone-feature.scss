@@ -36,13 +36,6 @@
     .fc-item__byline,
     .fc-item__meta,
     .rich-link__read-more-text,
-    .fc-save-for-later--is-saved {
-        color: $feature-mute;
-    }
-
-    .fc-save-for-later {
-        border-color: mix($c-headline, $feature-default, 20%);
-    }
 
     .fc-item__kicker--dreamsnap {
         background-color: mix(#000000, $feature-default, 10%);
@@ -74,10 +67,6 @@
 
     .fc-sublink__title:before {
         border-color: mix($c-headline, $feature-default, 40%);
-    }
-
-    .fc-save-for-later--is-saved .inline-tone-fill {
-        fill: $feature-mute;
     }
 }
 

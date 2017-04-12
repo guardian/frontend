@@ -245,36 +245,6 @@ define([
         return request;
     };
 
-    Id.getSavedArticles = function () {
-
-        var endpoint = '/syncedPrefs/me/savedArticles',
-            request = ajax({
-                url: Id.idApiRoot + endpoint,
-                type: 'jsonp',
-                crossOrigin: true
-            });
-
-        return request;
-    };
-
-    Id.saveToArticles = function (data) {
-        var endpoint = '/syncedPrefs/cors/me/savedArticles',
-            request = ajax({
-                url: Id.idApiRoot + endpoint,
-                type: 'json',
-                crossOrigin: true,
-                method: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(data),
-                withCredentials: true,
-                headers: {
-                    'X-GU-ID-Client-Access-Token':  'Bearer ' + config.page.idApiJsClientToken
-                }
-            });
-
-        return request;
-    };
-
     Id.updateUsername = function (username) {
         var endpoint = '/user/me',
             data = {'publicFields': {'username': username, 'displayName': username}},

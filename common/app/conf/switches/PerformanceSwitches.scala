@@ -186,15 +186,4 @@ trait PerformanceSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
-
-  val SaveForLaterSwitch = Switch(
-    SwitchGroup.Performance,
-    "save-for-later",
-    "It this switch is turned on, user are able to save articles. Turn off if this causes overload on then identity api",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
 }

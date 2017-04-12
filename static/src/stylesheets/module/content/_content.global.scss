@@ -119,26 +119,6 @@
     }
 }
 
-.meta__save-for-later {
-
-    .content--liveblog & {
-        @include mq(desktop) {
-            position: relative;
-            left: 0;
-            top: 0;
-            border-top: 1px dotted $neutral-5;
-        }
-    }
-
-    //Todo: Replace to content--gallery when gallery redesign goes live
-    .new-gallery & {
-        position: relative;
-        left: 0;
-        border-top: 0;
-        padding: $gs-baseline 0 0;
-    }
-}
-
 .meta__number:not(.u-h) + .meta__number {
     border-left: 1px solid $neutral-7;
     padding-left: $gs-gutter / 2;
