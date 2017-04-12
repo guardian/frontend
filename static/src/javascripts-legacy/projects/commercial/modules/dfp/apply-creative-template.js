@@ -66,7 +66,7 @@ define([
                 .then(mergeViewabilityTracker)
                 .then(renderCreative)
                 .catch(function (err) {
-                reportError('Failed to get creative JSON ' + err);
+                    reportError('Failed to get creative JSON ' + err, null, true);
             });
         } else {
             return Promise.resolve(true);
