@@ -14,8 +14,8 @@ define([
         id: 'AcquisitionsEpicLiveblog',
         campaignId: 'epic_liveblog',
 
-        start: '2017-04-20',
-        expiry: '2018-04-20',
+        start: '2017-04-01',
+        expiry: '2018-04-01',
 
         author: 'Joseph Smith',
         description: '',
