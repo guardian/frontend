@@ -15,13 +15,8 @@
     }
 
     .fc-item__kicker,
-    .fc-item__byline,
-    .fc-save-for-later--is-saved {
+    .fc-item__byline {
         color: $live-accent;
-    }
-
-    .fc-save-for-later {
-        border-color: mix(#000000, $neutral-7, 10%);
     }
 
     .fc-item__kicker--dreamsnap {
@@ -34,10 +29,6 @@
 
     .rich-link__arrow-icon {
         fill: $neutral-2;
-    }
-
-    .fc-save-for-later--is-saved .inline-tone-fill {
-        fill: $live-accent;
     }
 }
 

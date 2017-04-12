@@ -1,6 +1,6 @@
 package idapiclient
 
-import com.gu.identity.model.{EmailList, LiftJsonConfig, SavedArticles, Subscriber, User}
+import com.gu.identity.model.{EmailList, LiftJsonConfig, Subscriber, User}
 import client.{Anonymous, Auth, Parameters, Response}
 import client.connection.{Http, HttpResponse}
 
@@ -30,10 +30,6 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityC
 
   def extractUser: (client.Response[HttpResponse]) => client.Response[User] = extract(jsonField("user"))
 
-  def extractSavedArticles: (client.Response[HttpResponse]) => client.Response[SavedArticles] = {
-    extract(jsonField("savedArticles"))
-  }
-
   // AUTH
   def authBrowser(userAuth: Auth, trackingData: TrackingData, persistent: Option[Boolean] = None): Future[Response[CookiesResponse]] = {
     val params = buildParams(None, Some(trackingData), Seq("format" -> "cookies") ++ persistent.map("persistent" -> _.toString))
@@ -45,24 +41,6 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityC
 
   def unauth(auth: Auth, trackingData: TrackingData): Future[Response[CookiesResponse]] =
     post("unauth", Some(auth), Some(trackingData)) map extract[CookiesResponse](jsonField("cookies"))
-
-  def savedArticles(auth: Auth): Future[Response[SavedArticles]] = {
-    val apiPath = urlJoin("syncedPrefs", "me", "savedArticles")
-    val params = buildParams(Some(auth))
-    val headers = buildHeaders(Some(auth))
-
-    val response = http.GET(apiUrl(apiPath), params, headers)
-    response map extractSavedArticles
-  }
-
-  def updateSavedArticles(auth: Auth, savedArticles: SavedArticles): Future[Response[SavedArticles]] = {
-    val apiPath = urlJoin("syncedPrefs", "me", "savedArticles")
-    val updatedSavedArticles = write(savedArticles)
-    val params = buildParams(Some(auth))
-    val headers = buildHeaders(Some(auth))
-
-    val response = http.POST(apiUrl(apiPath), Some(updatedSavedArticles), params, headers)
-    response map extractSavedArticles }
 
   // USERS
 
@@ -182,11 +160,11 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityC
     post(urlJoin("user", "me", "group", groupCode), Some(auth)) map extractUnit
   }
 
-  def executeAccountDeletionStepFunction(userId: String, email: String, auth: Auth) = {
-    case class DeletionBody(identityId: String, email: String)
+  def executeAccountDeletionStepFunction(userId: String, email: String, reason: Option[String], auth: Auth) = {
+    case class DeletionBody(identityId: String, email: String, reason: Option[String])
     http.POST(
         s"${conf.id.accountDeletionApiRoot}/delete",
-        Some(write(DeletionBody(userId, email))),
+        Some(write(DeletionBody(userId, email, reason))),
         headers = buildHeaders(Some(auth), extra = Seq(("x-api-key", conf.id.accountDeletionApiKey)))
     ) map extract[AccountDeletionResult](identity)
   }

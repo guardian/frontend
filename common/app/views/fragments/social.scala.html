@@ -10,7 +10,6 @@
         @if(sharelinks.hidden.nonEmpty) {
             @SocialMore
             @sharelinks.hidden.map { link => @ShareLink(List("social--hidden", "js-social__secondary"), link) }
-            @SaveForLater
             @CloseTray
         }
     }
@@ -44,10 +43,6 @@
         @fragments.inlineSvg("ellipsis-36", "icon", List("rounded-icon", "centered-icon", "social-icon", "social-icon--more"))
         <span class="u-h">View more sharing options</span>
     </label>
-}
-
-@SaveForLater = {
-    <li class="social--hidden social__item social__secondary social__saveforlater js-social__secondary"><div class="meta__save-for-later js-save-for-later" data-position="top"></div></li>
 }
 
 @CloseTray = {

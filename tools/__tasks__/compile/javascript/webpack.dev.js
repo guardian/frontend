@@ -10,23 +10,24 @@ const config = require('../../../../webpack.config.dev.js');
 
 module.exports = {
     description: 'Create Webpack bundles',
-    task: () => new Observable(observer => {
-        config.plugins = [
-            require('../../../webpack-progress-reporter')(observer),
-            ...config.plugins,
-        ];
+    task: () =>
+        new Observable(observer => {
+            config.plugins = [
+                require('../../../webpack-progress-reporter')(observer),
+                ...config.plugins,
+            ];
 
-        const bundler = webpack(config);
+            const bundler = webpack(config);
 
-        bundler.run((err, stats) => {
-            if (err) {
-                throw new Error(chalk.red(err));
-            }
-            const info = stats.toJson();
-            if (stats.hasErrors()) {
-                throw new Error(chalk.red(info.errors));
-            }
-            observer.complete();
-        });
-    }),
+            bundler.run((err, stats) => {
+                if (err) {
+                    throw new Error(chalk.red(err));
+                }
+                const info = stats.toJson();
+                if (stats.hasErrors()) {
+                    throw new Error(chalk.red(info.errors));
+                }
+                observer.complete();
+            });
+        }),
 };

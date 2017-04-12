@@ -5,10 +5,11 @@
 
 @sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection) = {
     <li class="main-navigation__item navigation-border js-navigation-item">
-        <details class="js-close-nav-list main-navigation__primary-list" id="primary-list-@topLevelSection.name" open>
+        <details class="js-close-nav-list main-navigation__primary-list"
+                 id="primary-list-@topLevelSection.name"
+                 open>
             <summary class="main-navigation__item__button js-navigation-button"
-                data-link-name="nav2 : secondary : @topLevelSection.name">
-
+                     data-link-name="nav2 : secondary : @topLevelSection.name">
                 <i class="main-menu__icon main-menu__icon--chevron"></i>
                 @topLevelSection.name
             </summary>
@@ -23,7 +24,7 @@
                     @topLevelSection.getAllEditionalisedNavLinks(edition).map { sectionItem =>
                         <li class="navigation-group__item">
                             <a href="@LinkTo { @sectionItem.url }"
-                                data-link-name="nav2 : secondary : @{ if(sectionItem.longTitle.isEmpty) sectionItem.title else sectionItem.longTitle }">
+                               data-link-name="nav2 : secondary : @{ if(sectionItem.longTitle.isEmpty) sectionItem.title else sectionItem.longTitle }">
                                     @if(sectionItem.iconName.nonEmpty) {
                                         @fragments.inlineSvg(sectionItem.iconName, "icon", List("main-menu__icon"))
                                     }
@@ -38,13 +39,14 @@
 }
 
 <label for="main-menu-toggle"
-    class="main-menu-container__overlay"
-    aria-hidden="true"
-    data-link-name="nav2 : overlay"></label>
+       class="main-menu-container__overlay"
+       aria-hidden="true"
+       data-link-name="nav2 : overlay"></label>
 
 <div class="main-menu-container">
-
-    <div class="main-menu-container__menu js-main-menu" id="main-menu" aria-hidden="true">
+    <div class="main-menu-container__menu js-main-menu"
+         id="main-menu"
+         aria-hidden="true">
         <ul class="main-navigation">
             @NewNavigation.topLevelSections.map { section =>
                 @sectionList(section)
@@ -55,20 +57,31 @@
             <ul class="navigation-group">
                 <li class="navigation-group__item navigation-group__item--search">
                     <form class="navigation-group__search-container"
-                        action="https://www.google.co.uk/search">
+                          action="https://www.google.co.uk/search">
+                        <input type="text"
+                               name="q"
+                               class="navigation-group__search-box"
+                               placeholder="search for..."
+                               data-link-name="nav2 : search">
 
-                        <input type="text" name="q"
-                            class="navigation-group__search-box"
-                            placeholder="search for..."
-                            data-link-name="nav2 : search">
-                        <input type="hidden" name="as_sitesearch" value="www.theguardian.com">
+                        <input type="hidden"
+                               name="as_sitesearch"
+                               value="www.theguardian.com">
 
-                        @* label surrounding the input and icon so that if you click the search icon it will trigger the submit *@
+                        @* label surrounding the input and icon so that if you
+                        click the search icon it will trigger the submit *@
                         <label for="submit-google-search">
-                            <input class="u-h" type="submit" id="submit-google-search" data-link-name="nav2 : search : submit">
+                            <input class="u-h"
+                                   type="submit"
+                                   id="submit-google-search"
+                                   data-link-name="nav2 : search : submit">
                             @fragments.inlineSvg("search-36", "icon", List("main-menu__icon", "main-menu__icon--search"))
                         </label>
-                        <label for="q" class="u-h">What term do you want to search?</label>
+
+                        <label for="q"
+                               class="u-h">
+                            What term do you want to search?
+                        </label>
                     </form>
                 </li>
             </ul>
@@ -82,7 +95,8 @@
                     <li class="navigation-group__item js-editionalise-secondary-nav"
                         data-edition=@{edition.id.toLowerCase}>
 
-                        <a href="@item.url" data-link-name="nav2 : @item.title">
+                        <a href="@item.url"
+                           data-link-name="nav2 : @item.title">
                             @item.title
                         </a>
                     </li>
@@ -102,7 +116,8 @@
 
                 @NewNavigation.NavFooterLinks.getAllEditionalisedNavLinks(edition).map { item =>
                     <li class="navigation-group__item">
-                        <a href="@LinkTo { @item.url }" data-link-name="nav2 : @item.title">
+                        <a href="@LinkTo { @item.url }"
+                           data-link-name="nav2 : @item.title">
                             @item.title
                         </a>
                     </li>
@@ -111,19 +126,17 @@
         }
 
         <ul class="navigation-group navigation-border secondary-navigation">
-
             <li class="navigation-group__item">
                 <a href="https://www.facebook.com/theguardian"
-                    data-link-name="nav2 : facebook">
-
+                   data-link-name="nav2 : facebook">
                     @fragments.inlineSvg("share-facebook", "icon", List("main-menu__icon", "main-menu__icon--social"))
                     Facebook
                 </a>
             </li>
+
             <li class="navigation-group__item">
                 <a href="https://twitter.com/guardian"
-                data-link-name="nav2 : twitter">
-
+                   data-link-name="nav2 : twitter">
                     @fragments.inlineSvg("share-twitter", "icon", List("main-menu__icon", "main-menu__icon--social"))
                     Twitter
                 </a>

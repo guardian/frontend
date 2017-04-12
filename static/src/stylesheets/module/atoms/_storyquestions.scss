@@ -54,6 +54,7 @@
 
 .user__question-text {
     @include fs-headline(2);
+    line-height: 18px;
     font-weight: 900;
     display: block;
     max-width: 68%;
@@ -66,6 +67,7 @@
 
     @include mq($from: tablet) {
         @include fs-headline(3);
+        line-height: 27px;
         max-width: 80%;
         font-weight: 900;
     }

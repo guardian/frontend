@@ -7,7 +7,6 @@ import org.joda.time.LocalDate
 trait ABTestSwitches {
 
   for ((edition, testId) <- Map(
-    Uk -> "ab-membership-engagement-banner-uk-remind-me-later",
     International -> "ab-membership-engagement-international-experiment-test12",
     Au -> "ab-au-memb-engagement-msg-copy-test8"
   )) Switch(
@@ -22,21 +21,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-increase-inline-ads",
-    "Displays more inline ads in articles on desktop",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-editorial-email-variants",
     "Assign users to variants of our editorial emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 12),
+    sellByDate = new LocalDate(2017, 5, 30),
     exposeClientSide = true
   )
 
@@ -46,7 +35,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 12),
+    sellByDate = new LocalDate(2017, 5, 30),
     exposeClientSide = true
   )
 
@@ -56,7 +45,7 @@ trait ABTestSwitches {
     "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
     owners = Seq(Owner.withGithub("alexduf")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
+    sellByDate = new LocalDate(2017, 4, 13),
     exposeClientSide = true
   )
 
@@ -166,7 +155,7 @@ trait ABTestSwitches {
     "Display the Epic on Article 50 articles for readers in Europe",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
+    sellByDate = new LocalDate(2017, 4, 13),
     exposeClientSide = true
   )
 
@@ -176,14 +165,14 @@ trait ABTestSwitches {
     "Display the Epic on Laundromat articles",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
+    sellByDate = new LocalDate(2017, 4, 13),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
     "ab-email-demand-tests",
-    "Test demand for food, business, and cities emails",
+    "Test demand for a cities email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 4, 21),
@@ -216,7 +205,7 @@ trait ABTestSwitches {
     "Test displaying the Epic only vs the Epic and Engagement Banner",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
+    sellByDate = new LocalDate(2017, 4, 13),
     exposeClientSide = true
   )
 

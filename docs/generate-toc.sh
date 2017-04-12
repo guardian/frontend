@@ -32,12 +32,12 @@ root=$(git rev-parse --show-toplevel)
 docs="$root/docs"
 pushd $docs > /dev/null
 
-echo "#Table Of Content"
+echo "# Table Of Contents"
 echo "*(Do NOT edit manually. Generated automatically)*"
 echo ""
 for dir in */; do
     dirname=$(cleanDirectoryName $dir)
-    echo "##[$dirname]($dir)"
+    echo "## [$dirname]($dir)"
     cd $dir > /dev/null
     for doc in *.md; do
         if [ "$doc" != "README.md" ]; then

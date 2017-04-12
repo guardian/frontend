@@ -6,6 +6,17 @@ import robust from './robust';
 jest.mock('lib/report-error', () => jest.fn());
 const reportErrorMock: any = require('lib/report-error');
 
+let origConsoleWarn;
+
+beforeEach(() => {
+    origConsoleWarn = window.console.warn;
+    window.console.warn = jest.fn();
+});
+
+afterEach(() => {
+    window.console.warn = origConsoleWarn;
+});
+
 describe('robust', () => {
     const ERROR = new Error('Something broke.');
     const META = { module: 'test' };
@@ -17,10 +28,6 @@ describe('robust', () => {
     };
 
     test('catchErrorsAndLog()', () => {
-        // mock window.console.warn, to check whether it was called
-        const origConsoleWarn = window.console.warn;
-        window.console.warn = jest.fn();
-
         expect(() => {
             robust.catchErrorsAndLog('test', noError);
         }).not.toThrowError();
@@ -30,9 +37,6 @@ describe('robust', () => {
         }).not.toThrowError(ERROR);
 
         expect(window.console.warn).toHaveBeenCalledTimes(1);
-
-        // reset window.console.warn
-        window.console.warn = origConsoleWarn;
     });
 
     test('catchErrorsAndLog() - default reporter', () => {

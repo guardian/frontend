@@ -18,8 +18,6 @@
 @import 'item-layouts/fc-item--full-media-75';
 @import 'item-layouts/fc-item--full-media-100';
 @import 'item-layouts/fc-item--fluid';
-@import 'item-layouts/fc-item--saved-for-later';
-
 
 // overrides of current slices
 
@@ -287,40 +285,6 @@
         }
     }
 }
-
-//--
-.fc-item--saved-for-later-mobile {
-    @include mq($until: tablet) {
-        @include fc-item--saved-for-later;
-        padding-left: 0;
-        padding-right: 0;
-
-        .fc-item__image-container {
-            display: none;
-        }
-    }
-}
-
-.fc-item--saved-for-later-tablet {
-    @include mq(tablet) {
-        @include fc-item--saved-for-later;
-        @include fc-item--horizontal(20%);
-
-        .has-flex-wrap & {
-            .fc-item__container {
-                flex-direction: row;
-            }
-        }
-    }
-
-    @include mq(desktop) {
-        .fc-item__header,
-        .fc-item__standfirst {
-            padding-right: 30%;
-        }
-    }
-}
-
 
 // Commercial items
 .fc-item--list-compact {

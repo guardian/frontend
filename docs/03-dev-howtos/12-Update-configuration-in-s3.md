@@ -1,4 +1,4 @@
-#Update configuration in s3
+# Update configuration in s3
 
 We store all our configuration in a single file in `s3`
 This contains all the configuration for each application and for each stage.

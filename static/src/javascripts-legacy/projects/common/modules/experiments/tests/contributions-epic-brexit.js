@@ -9,7 +9,7 @@ define([
         campaignId: 'epic_brexit_2017_01',
 
         start: '2017-01-06',
-        expiry: '2017-04-10',
+        expiry: '2017-04-13',
 
         author: 'Alex Dufournet',
         description: 'Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles',

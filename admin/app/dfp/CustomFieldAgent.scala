@@ -1,30 +1,24 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201608.StatementBuilder
-import com.google.api.ads.dfp.axis.v201608._
+import com.google.api.ads.dfp.axis.v201608.{CustomFieldValue, LineItem, TextValue}
+import common.dfp.GuCustomField
+import dfp.DfpApi.getAllCustomFields
 
 import scala.util.Try
 
-object CustomFieldAgent extends DataAgent[String, Long] {
+object CustomFieldAgent extends DataAgent[String, GuCustomField] {
 
-  override def loadFreshData() = Try {
-    val maybeData = for (session <- SessionWrapper()) yield {
-      val fields = session.customFields(new StatementBuilder())
-      fields.map(f => f.getName -> f.getId.toLong).toMap
-    }
-    maybeData getOrElse Map.empty
-  }
+  override def loadFreshData() = Try { getAllCustomFields.map(f => f.name -> f).toMap }
 }
 
 object CustomFieldService {
 
   def sponsor(lineItem: LineItem) = for {
-    sponsorFieldId <- CustomFieldAgent.get.data.get("Sponsor")
+    sponsorField <- CustomFieldAgent.get.data.get("Sponsor")
     customFieldValues <- Option(lineItem.getCustomFieldValues)
     sponsor <- customFieldValues.collect {
-      case fieldValue: CustomFieldValue if fieldValue.getCustomFieldId == sponsorFieldId =>
+      case fieldValue: CustomFieldValue if fieldValue.getCustomFieldId == sponsorField.id =>
         fieldValue.getValue.asInstanceOf[TextValue].getValue
     }.headOption
   } yield sponsor
-
 }

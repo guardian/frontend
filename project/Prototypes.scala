@@ -20,6 +20,8 @@ trait Prototypes {
     javacOptions := Seq("-g","-encoding", "utf8"),
     scalacOptions := Seq("-unchecked", "-deprecation", "-target:jvm-1.8",
       "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings","-Xfatal-warnings"),
+    publishArtifact in (Compile, packageDoc) := false,
+    sources in (Compile,doc) := Seq.empty,
     doc in Compile := target.map(_ / "none").value,
     incOptions := incOptions.value.withNameHashing(true),
     scalaVersion := "2.11.8",

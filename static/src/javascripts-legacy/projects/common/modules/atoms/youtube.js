@@ -26,6 +26,13 @@ define([
         'PAUSED': onPlayerPaused
     };
 
+    function onVideoContainerNavigation(atomId) {
+        var player = players[atomId];
+        if(player){
+            player.player.pauseVideo();
+        }
+    }
+
     function checkState(atomId, state, status) {
         if (state === window.YT.PlayerState[status] && STATES[status]) {
             STATES[status](atomId);
@@ -184,6 +191,8 @@ define([
 
                 // append index of atom as atomId must be unique
                 var atomId = el.getAttribute('data-media-atom-id') + '/' + index;
+                //need data attribute with index for unique lookup
+                el.setAttribute('data-unique-atom-id', atomId);
                 var overlay = el.querySelector('.youtube-media-atom__overlay');
 
                 tracking.init(getTrackingId(atomId));
@@ -211,6 +220,7 @@ define([
     }
 
     return {
-        checkElemsForVideos: checkElemsForVideos
+        checkElemsForVideos: checkElemsForVideos,
+        onVideoContainerNavigation: onVideoContainerNavigation
     };
 });
