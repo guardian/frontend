@@ -2,7 +2,7 @@ define([
     'lib/config'
 ], function(config) {
     function isTestSwitchedOn(test) {
-        return config.switches['ab' + test.id];
+        return config.switches['ab' + test];
     }
 
     function isExpired(testExpiry) {
@@ -16,8 +16,8 @@ define([
         var expired = isExpired(test.expiry),
             isSensitive = config.page.isSensitive;
 
-        return ((isSensitive ? test.showForSensitive : true)
-            && isTestSwitchedOn(test)) && !expired && test.canRun();
+        return ((isSensitive ? test.showForSensitive : true) && isTestSwitchedOn(test)) 
+                    && !expired && (!test.canRun || test.canRun());
     }
 
     return {

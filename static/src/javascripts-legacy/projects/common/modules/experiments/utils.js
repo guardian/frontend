@@ -71,7 +71,7 @@ define([
      */
     function isInVariant(test, variant) {
         return getParticipations()[test.name] &&
-            getParticipations()[test.name].variant === variant &&
+            getParticipations()[test.name].variant === variant.id &&
             testCanRunChecks.testCanBeRun(test.name);
     }
 
