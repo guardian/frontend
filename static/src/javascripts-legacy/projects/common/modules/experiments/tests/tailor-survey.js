@@ -59,17 +59,17 @@ define([
 
             var newCookieValue = id + '=' + dayCanShowAgain;
 
-            var currentCookieValues = cookies.get('GU_TAILOR_SURVEY');
+            var currentCookieValues = cookies.getCookie('GU_TAILOR_SURVEY');
 
             if (currentCookieValues) {
                 // we've shown surveys already
                 currentCookieValues = currentCookieValues + ',' + newCookieValue;
-                cookies.remove('GU_TAILOR_SURVEY');
-                cookies.add('GU_TAILOR_SURVEY', currentCookieValues, 365);
+                cookies.removeCookie('GU_TAILOR_SURVEY');
+                cookies.addCookie('GU_TAILOR_SURVEY', currentCookieValues, 365);
             }
             else {
                 // first time we show any survey
-                cookies.add('GU_TAILOR_SURVEY', newCookieValue, 365);
+                cookies.addCookie('GU_TAILOR_SURVEY', newCookieValue, 365);
             }
         }
         // Given a response from tailor, we see if the response has a survey suggestion, and if so return the first
@@ -89,7 +89,7 @@ define([
         // We go through the list of surveys that have already been shown to the user, and return a list of survey ids
         // that aren't currently allowed to be shown.
         function getSurveyIdsNotToShow() {
-            var currentCookieValues = cookies.get('GU_TAILOR_SURVEY');
+            var currentCookieValues = cookies.getCookie('GU_TAILOR_SURVEY');
 
             var values = currentCookieValues ? currentCookieValues.split(',') : [];
 

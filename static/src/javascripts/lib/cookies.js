@@ -10,7 +10,7 @@ const getDomainAttribute = (): string => {
     return shortDomain === 'localhost' ? '' : ` domain=${shortDomain};`;
 };
 
-const remove = (name: string, currentDomainOnly: boolean = false): void => {
+const removeCookie = (name: string, currentDomainOnly: boolean = false): void => {
     // Remove cookie, implicitly using the document's domain.
     document.cookie = `${name}=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
     if (!currentDomainOnly) {
@@ -19,7 +19,7 @@ const remove = (name: string, currentDomainOnly: boolean = false): void => {
     }
 };
 
-const add = (name: string, value: string, daysToLive: ?number): void => {
+const addCookie = (name: string, value: string, daysToLive: ?number): void => {
     const expires = new Date();
 
     if (daysToLive) {
@@ -34,7 +34,7 @@ const add = (name: string, value: string, daysToLive: ?number): void => {
 
 const cleanUp = (names: string[]): void => {
     names.forEach(name => {
-        remove(name);
+        removeCookie(name);
     });
 };
 
@@ -48,7 +48,7 @@ const addForMinutes = (
         expires.setMinutes(expires.getMinutes() + minutesToLive);
         document.cookie = `${name}=${value}; path=/; expires=${expires.toUTCString()};${getDomainAttribute()}`;
     } else {
-        add(name, value);
+        addCookie(name, value);
     }
 };
 
@@ -76,7 +76,7 @@ const getCookieValues = (name: string): string[] => {
     return cookieVals;
 };
 
-const get = (name: string): ?string => {
+const getCookie = (name: string): ?string => {
     const cookieVal = getCookieValues(name);
 
     if (cookieVal.length > 0) {
@@ -85,4 +85,4 @@ const get = (name: string): ?string => {
     return null;
 };
 
-export { cleanUp, add, addSessionCookie, addForMinutes, remove, get };
+export { cleanUp, addCookie, addSessionCookie, addForMinutes, removeCookie, getCookie };
