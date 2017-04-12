@@ -72,7 +72,7 @@ const fetch = (input: string, init: ?Object) =>
             .then(resp => {
                 resolve(createResponse(resp));
             })
-            .fail(resp => {
+            .catch(resp => {
                 if (resp.status === 0) {
                     // reqwest wasn't able to make the request
                     reject(new Error(`Fetch error: ${resp.statusText}`));
