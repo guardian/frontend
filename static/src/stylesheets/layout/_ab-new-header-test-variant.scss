@@ -1,4 +1,30 @@
+/****************
+ * Changes to an Article Body
+ ****************/
+
 $caption-button-size: 32px;
+
+// When the image is at the top of the article, the headline and byline are moved into a div with margins. This counteracts that
+// TODO: If this change is kept after the test the template will have to be rewriten and these overrides won't be needed
+.content__head:not(.tonal__head--tone-dead, .tonal__head--tone-live, .tonal__head--tone-media) {
+    @include mq($until: mobileLandscape) {
+        margin-right: -$gs-gutter / 2;
+        margin-left: -$gs-gutter / 2;
+    }
+
+    @include mq($from: mobileLandscape, $until: phablet) {
+        margin-right: -$gs-gutter;
+        margin-left: -$gs-gutter;
+    }
+}
+
+@include mq($from: phablet, $until: tablet) {
+    .media-primary,
+    .content__head {
+        margin-left: -$gs-gutter;
+        margin-right: -$gs-gutter;
+    }
+}
 
 @include mq($until: tablet) {
 
@@ -53,3 +79,10 @@ $caption-button-size: 32px;
         background-color: $multimedia-support-5;
     }
 }
+
+
+
+
+//TODO: captions
+//TODO: headline + main
+//TODO: AMP <- image always first if possible?
