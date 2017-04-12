@@ -14,11 +14,14 @@ const removeCookie = (
     name: string,
     currentDomainOnly: boolean = false
 ): void => {
+    const expires = 'expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    const path = 'path=/;';
+
     // Remove cookie, implicitly using the document's domain.
-    document.cookie = `${name}=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+    document.cookie = `${name}=;${path}${expires}`;
     if (!currentDomainOnly) {
         // also remove from the short domain
-        document.cookie = `${name}=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=${getShortDomain()};`;
+        document.cookie = `${name}=;${path}${expires} domain=${getShortDomain()};`;
     }
 };
 
