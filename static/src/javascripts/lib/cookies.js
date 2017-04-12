@@ -60,23 +60,23 @@ const addSessionCookie = (name: string, value: string): void => {
 };
 
 const getCookieValues = (name: string): string[] => {
-    const cookieVals = [];
     const nameEq = `${name}=`;
     const cookies = document.cookie.split(';');
 
-    cookies.forEach(cookie => {
-        let cookieN = cookie;
+    return cookies.reduce(
+        (acc, cookie) => {
+            const cookieTrimmed = cookie.trim();
 
-        while (cookieN.charAt(0) === ' ') {
-            cookieN = cookieN.substring(1, cookie.length);
-        }
+            if (cookieTrimmed.indexOf(nameEq) === 0) {
+                acc.push(
+                    cookieTrimmed.substring(nameEq.length, cookieTrimmed.length)
+                );
+            }
 
-        if (cookieN.indexOf(nameEq) === 0) {
-            cookieVals.push(cookieN.substring(nameEq.length, cookieN.length));
-        }
-    });
-
-    return cookieVals;
+            return acc;
+        },
+        []
+    );
 };
 
 const getCookie = (name: string): ?string => {
