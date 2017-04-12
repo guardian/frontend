@@ -69,21 +69,20 @@ define([
         abTestClashData: abTestClashData,
 
         getTest: function() {
-            // var eligibleTests = tests.filter(function (test) {
-            //     var t = new test();
-            //     var forced = window.location.hash.indexOf('ab-' + t.id) > -1;
-            //     var variant = segmentUtil.variantFor(t);
-            //
-            //     var hasNotReachedRateLimit = variant &&
-            //         ((viewLog.viewsInPreviousDays(variant.maxViews.days) < variant.maxViews.count &&
-            //         viewLog.viewsInPreviousDays(variant.maxViews.minDaysBetweenViews) === 0) ||
-            //         variant.isUnlimited);
-            //
-            //     return forced || (testCanRunChecks.testCanBeRun(t) && segmentUtil.isInTest(t) && hasNotReachedRateLimit);
-            // });
-            //
-            // return eligibleTests[0] && new eligibleTests[0]();
-            return new acquisitionsEpicLivelog();
+            var eligibleTests = tests.filter(function (test) {
+                var t = new test();
+                var forced = window.location.hash.indexOf('ab-' + t.id) > -1;
+                var variant = segmentUtil.variantFor(t);
+
+                var hasNotReachedRateLimit = variant &&
+                    ((viewLog.viewsInPreviousDays(variant.maxViews.days) < variant.maxViews.count &&
+                    viewLog.viewsInPreviousDays(variant.maxViews.minDaysBetweenViews) === 0) ||
+                    variant.isUnlimited);
+
+                return forced || (testCanRunChecks.testCanBeRun(t) && segmentUtil.isInTest(t) && hasNotReachedRateLimit);
+            });
+
+            return eligibleTests[0] && new eligibleTests[0]();
         }
     }
 });
