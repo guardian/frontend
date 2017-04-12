@@ -1,7 +1,9 @@
 define([
-    'lib/config'
+    'lib/config',
+    'common/modules/experiments/ab'
 ], function (
-    config
+    config,
+    ab
 ) {
 
   var shouldRun = !config.page.isFront && config.switches.simpleReach &&
@@ -9,7 +11,7 @@ define([
 
   var simpleReachUrl = '';
 
-  if (shouldRun) {
+  if (ab.getTestVariantId("SimpleReach") === "opt-in" && shouldRun) {
       var authors = config.page.author.split(',');
       var channels = config.page.sectionName.split(',');
       var keywords = config.page.keywords.split(',');
