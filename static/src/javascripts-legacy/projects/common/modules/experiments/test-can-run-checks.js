@@ -2,7 +2,7 @@ define([
     'lib/config'
 ], function(config) {
     function isTestSwitchedOn(test) {
-        return config.switches['ab' + test];
+        return config.switches['ab' + test.id];
     }
 
     function isExpired(testExpiry) {
