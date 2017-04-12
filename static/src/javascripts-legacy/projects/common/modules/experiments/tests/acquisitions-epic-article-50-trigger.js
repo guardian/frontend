@@ -11,7 +11,7 @@ define([
         campaignId: 'epic_article_50_trigger',
 
         start: '2017-03-14',
-        expiry: '2017-04-13',
+        expiry: '2017-04-19',
 
         author: 'Guy Dawson',
         description: '',
