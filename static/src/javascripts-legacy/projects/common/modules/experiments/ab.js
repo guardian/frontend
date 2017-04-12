@@ -46,7 +46,7 @@ define([
              FilmTodayEmailVariants,
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
-             IncreaseInlineAds,
+             increaseInlineAdsRedux,
              EmailDemandTests,
              PaidCardLogo,
              ophan,
@@ -63,7 +63,7 @@ define([
         FilmTodayEmailVariants,
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
-        new IncreaseInlineAds(),
+        new increaseInlineAdsRedux(),
         new EmailDemandTests(),
         new PaidCardLogo(),
         new PaidCommenting()

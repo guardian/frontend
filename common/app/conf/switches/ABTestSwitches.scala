@@ -21,11 +21,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-increase-inline-ads",
+    "ab-increase-inline-ads-redux",
     "Displays more inline ads in articles on desktop",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    owners = Seq(Owner.withGithub("gidsg")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 10),
+    sellByDate = new LocalDate(2017, 5, 17),
     exposeClientSide = true
   )
 
