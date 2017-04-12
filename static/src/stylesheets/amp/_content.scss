@@ -210,7 +210,11 @@
 }
 
 .media-primary {
-    position: relative;
+    margin: 0 (-$gs-gutter / 2);
+
+    @include mq(mobileLandscape) {
+        margin: 0 (-$gs-gutter);
+    }
 }
 
 // TODO: on amp, shouldn't have this. Or, use amp-lightbox
