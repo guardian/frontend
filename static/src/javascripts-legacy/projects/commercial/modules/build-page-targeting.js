@@ -12,7 +12,8 @@ define([
     'lodash/arrays/compact',
     'lodash/arrays/uniq',
     'lodash/functions/once',
-    'lodash/objects/pick'
+    'lodash/objects/pick',
+    'commercial/modules/commercial-features'
 ], function (
     config,
     cookies,
@@ -27,7 +28,8 @@ define([
     compact,
     uniq,
     once,
-    pick
+    pick,
+    commercialFeatures
 ) {
 
     function format(keyword) {
@@ -169,12 +171,16 @@ define([
         var win         = window;
         var page        = config.page;
         var contentType = formatTarget(page.contentType);
+        var platform    = commercialFeatures.adFree ? 'ngaf' : 'ng';
+        var advRegion   = config.page.edition.toUpperCase() === 'ROW' ? 'UK' : config.page.edition.toUpperCase();
+        var advertiser  = commercialFeatures.adFree ? 'MERCHANDISING ' + advRegion : null;
         var pageTargets = assign({
+            adv:     advertiser,
             url:     win.location.pathname,
             edition: page.edition && page.edition.toLowerCase(),
             se:      getSeries(page),
             ct:      contentType,
-            p:       'ng',
+            p:       platform,
             k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
             x:       krux.getSegments(),
             su:      page.isSurging,

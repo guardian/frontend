@@ -58,7 +58,7 @@ define([
             return loadScript(config.libs.googletag, { async: false });
         }
 
-        if (commercialFeatures.dfpAdvertising) {
+        if (commercialFeatures.dfpAdvertising || commercialFeatures.adFree) {
             setupAdvertising()
             // A promise error here, from a failed module load,
             // could be a network problem or an intercepted request.

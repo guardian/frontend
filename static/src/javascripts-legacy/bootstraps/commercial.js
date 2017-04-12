@@ -24,7 +24,7 @@ define([
     'commercial/modules/paid-containers',
     'commercial/modules/dfp/performance-logging',
     'common/modules/analytics/google',
-    'commercial/modules/user-features'
+    'commercial/modules/commercial-features'
 ], function (
     Promise,
     config,
@@ -51,9 +51,17 @@ define([
     paidContainers,
     performanceLogging,
     ga,
-    userFeatures
+    commercialFeatures
 ) {
-    var commercialModules = [
+    var commercialModules = commercialFeatures.adFree ? [
+        ['cm-highMerch', highMerch.init],
+        ['cm-thirdPartyTags', thirdPartyTags.init],
+        ['cm-prepare-googletag', prepareGoogletag.init, true],
+        ['cm-paidContainers', paidContainers.init],
+        ['cm-closeDisabledSlots', closeDisabledSlots.init],
+        ['cm-paidContainers', paidContainers.init],
+        ['cm-paidforBand', paidforBand.init]
+    ] : [
         ['cm-highMerch', highMerch.init],
         ['cm-thirdPartyTags', thirdPartyTags.init],
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
@@ -111,16 +119,12 @@ define([
     }
 
     return function () {
-        if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
-            closeDisabledSlots.init(true);
-            return Promise.resolve();
-        }
 
         userTiming.mark('commercial start');
         robust.context([
             ['ga-user-timing-commercial-start', function () {
                 ga.trackPerformance('Javascript Load', 'commercialStart', 'Commercial start parse time');
-            }],
+            }]
         ]);
 
         // Stub the command queue

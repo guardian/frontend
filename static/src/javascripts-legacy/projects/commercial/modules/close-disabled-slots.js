@@ -1,9 +1,11 @@
 define([
     'qwery',
-    'lib/fastdom-promise'
+    'lib/fastdom-promise',
+    'commercial/modules/commercial-features'
 ], function (
     qwery,
-    fastdom
+    fastdom,
+    commercialFeatures
 ) {
     var adSlotSelector = '.js-ad-slot';
 
@@ -28,7 +30,12 @@ define([
         });
     }
 
+    function shouldDisableForAdFree(adSlot) {
+        return commercialFeatures.adFree &&
+            !adSlot.className.toLowerCase().contains('merchandising');
+    }
+
     function shouldDisableAdSlot(adSlot) {
-        return window.getComputedStyle(adSlot).display === 'none';
+        return window.getComputedStyle(adSlot).display === 'none' || shouldDisableForAdFree(adSlot);
     }
 });
