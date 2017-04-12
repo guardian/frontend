@@ -43,25 +43,26 @@
 
             } else {
                 @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                    @* TODO: ??? This one is the hardest. Headline first, then use css to switch. *@
+
+                    <div class="content__header-container">
+                        @fragments.headTonal(article, model, isPaidContent)
+
+                        <div class="content__main-media-full-width-mobile">
+                            @fragments.mainMedia(article)
+                        </div>
+                    </div>
+
                 } else {
-                    @* TODO:  headline first. css switch for mobile*@
-                }
-            }
+                    <div class="content__header-container">
+                        @fragments.headTonal(article, model, isPaidContent)
 
-            @if(!amp) {
-                <div class="hide-on-mobile">
-                    @fragments.headTonal(article, model, isPaidContent, amp = amp)
-
-                    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                        @fragments.mainMedia(article, amp)
-                    }
-                </div>
-                <div class="mobile-only">
-                @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                    @fragments.mainMedia(article, amp)
+                        <div class="content__main-media-wrapper content__main-media-full-width-mobile">
+                            <div class="content__main-media">
+                                @fragments.mainMedia(article)
+                            </div>
+                        </div>
+                    </div>
                 }
-                </div>
             }
 
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
@@ -69,16 +70,6 @@
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
                         <div class="js-score"></div>
                         <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
-
-                        @if(!amp & (!(article.tags.isFeature && article.elements.hasShowcaseMainElement))) {
-                            @fragments.mainMedia(article, amp)
-                        }
-
-                        @if(!amp) {
-                            <div class="mobile-only">
-                                @fragments.headTonal(article, model, isPaidContent, amp = amp)
-                            </div>
-                        }
 
                         @fragments.witnessCallToAction(article.content)
 
