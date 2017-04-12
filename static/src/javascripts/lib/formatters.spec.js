@@ -1,5 +1,5 @@
 // @flow
-import formatters from 'lib/formatters';
+import { integerCommas } from 'lib/formatters';
 
 describe('integerCommas', () => {
     it('should correctly add a comma for >=4 digit numbers', () => {
@@ -17,7 +17,7 @@ describe('integerCommas', () => {
         ];
 
         for (let i = 0; i < tests.length; i += 1) {
-            expect(formatters.integerCommas(tests[i][0])).toBe(tests[i][1]);
+            expect(integerCommas(tests[i][0])).toBe(tests[i][1]);
         }
     });
 });

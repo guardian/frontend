@@ -18,4 +18,4 @@ const integerCommas = (val: string | number): string | void => {
     }
 };
 
-export default { integerCommas };
+export { integerCommas };
