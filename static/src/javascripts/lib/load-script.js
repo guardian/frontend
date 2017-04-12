@@ -1,13 +1,10 @@
-import Promise from 'Promise';
-import assign from 'lodash/objects/assign';
-export default loadScript;
-
-function loadScript(src, props) {
+// @flow
+const loadScript = (src: string, props: Object): Promise<any> => {
     if (typeof src !== 'string') {
         return Promise.reject('no src supplied');
     }
 
-    if (document.querySelector('script[src="' + src + '"]')) {
+    if (document.querySelector(`script[src="${src}"]`)) {
         return Promise.resolve();
     }
 
@@ -16,10 +13,14 @@ function loadScript(src, props) {
         const script = document.createElement('script');
         script.src = src;
         if (props) {
-            assign(script, props);
+            Object.assign(script, props);
         }
         script.onload = resolve;
         script.onerror = reject;
-        ref.parentNode.insertBefore(script, ref);
+        if (ref.parentNode) {
+            ref.parentNode.insertBefore(script, ref);
+        }
     });
-}
+};
+
+export default loadScript;
