@@ -54,6 +54,7 @@
 
 .user__question-text {
     @include fs-headline(2);
+    line-height: 27px;
     font-weight: 900;
     display: block;
     max-width: 68%;
