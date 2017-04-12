@@ -172,7 +172,7 @@ define([
         var page        = config.page;
         var contentType = formatTarget(page.contentType);
         var platform    = commercialFeatures.adFree ? 'ngaf' : 'ng';
-        var advRegion   = config.page.edition.toUpperCase() === 'ROW' ? 'UK' : config.page.edition.toUpperCase();
+        var advRegion   = page.edition.toUpperCase() === 'ROW' ? 'UK' : page.edition.toUpperCase();
         var advertiser  = commercialFeatures.adFree ? 'MERCHANDISING ' + advRegion : null;
         var pageTargets = assign({
             adv:     advertiser,
