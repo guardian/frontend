@@ -11,9 +11,9 @@ function loadScript(src, props) {
         return Promise.resolve();
     }
 
-    return new Promise(function(resolve, reject) {
-        var ref = document.scripts[0];
-        var script = document.createElement('script');
+    return new Promise((resolve, reject) => {
+        const ref = document.scripts[0];
+        const script = document.createElement('script');
         script.src = src;
         if (props) {
             assign(script, props);
