@@ -20,7 +20,7 @@ define([
     }
 
     return function () {
-        robust.context([
+        robust.catchErrorsWithContext([
             ['i-css-class', setCssClass],
         ]);
     };

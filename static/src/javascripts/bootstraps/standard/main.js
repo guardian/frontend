@@ -19,16 +19,16 @@ import fastdom from 'fastdom';
 import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
 import images from 'common/modules/ui/images';
-import storage from 'lib/storage';
+import { local as storage } from 'lib/storage';
 import fetchJSON from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import checkMediator from 'common/modules/check-mediator';
 import addEventListener from 'lib/add-event-listener';
 import identity from 'common/modules/identity/api';
-import url from 'lib/url';
+import { getUrlVars } from 'lib/url';
 import cookies from 'lib/cookies';
-import robust from 'lib/robust';
-import userTiming from 'lib/user-timing';
+import { catchErrorsWithContext } from 'lib/robust';
+import { markTime } from 'lib/user-timing';
 import config from 'lib/config';
 import newHeaderNavigation from 'common/modules/navigation/newHeaderNavigation';
 import { trackPerformance } from 'common/modules/analytics/google';
@@ -36,7 +36,7 @@ import debounce from 'lodash/functions/debounce';
 import ophan from 'ophan/ng';
 
 const setAdTestCookie = (): void => {
-    const queryParams = url.getUrlVars();
+    const queryParams = getUrlVars();
 
     if (queryParams.adtest === 'clear') {
         cookies.remove('adtest');
@@ -163,9 +163,9 @@ const addErrorHandler = (): void => {
 };
 
 const init = (): void => {
-    userTiming.mark('standard start');
+    markTime('standard start');
 
-    robust.context([
+    catchErrorsWithContext([
         [
             'ga-user-timing-standard-start',
             () => {
@@ -205,8 +205,8 @@ const init = (): void => {
     // set local storage: gu.alreadyVisited
     if (window.guardian.isEnhanced) {
         const key = 'gu.alreadyVisited';
-        const alreadyVisited = storage.local.get(key) || 0;
-        storage.local.set(key, alreadyVisited + 1);
+        const alreadyVisited = storage.get(key) || 0;
+        storage.set(key, alreadyVisited + 1);
     }
 
     if (config.switches.blockIas && navigator.serviceWorker) {
@@ -239,9 +239,9 @@ const init = (): void => {
 
     showHiringMessage();
 
-    userTiming.mark('standard end');
+    markTime('standard end');
 
-    robust.context([
+    catchErrorsWithContext([
         [
             'ga-user-timing-standard-end',
             () => {

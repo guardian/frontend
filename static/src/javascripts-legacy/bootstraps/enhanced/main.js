@@ -39,9 +39,9 @@ define([
         };
 
 
-        userTiming.mark('App Begin');
+        userTiming.markTime('App Begin');
 
-        robust.context([
+        robust.catchErrorsWithContext([
             ['ga-user-timing-enhanced-start', function () {
                 ga.trackPerformance('Javascript Load', 'enhancedStart', 'Enhanced start parse time');
             }],
@@ -53,7 +53,7 @@ define([
             ['ab-tests', function () {
                 ab.segmentUser();
 
-                robust.context([
+                robust.catchErrorsWithContext([
                     ['ab-tests-run', ab.run],
                     ['ab-tests-registerImpressionEvents', ab.registerImpressionEvents],
                     ['ab-tests-registerCompleteEvents', ab.registerCompleteEvents],
@@ -66,7 +66,7 @@ define([
         bootstrapContext('common', common);
 
         // geolocation
-        robust.context([
+        robust.catchErrorsWithContext([
             ['geolocation', geolocation.init],
         ]);
 
@@ -204,8 +204,8 @@ define([
         bootstrapContext('checkDispatcher', checkDispatcher);
 
         // Mark the end of synchronous execution.
-        userTiming.mark('App End');
-        robust.context([
+        userTiming.markTime('App End');
+        robust.catchErrorsWithContext([
             ['ga-user-timing-enhanced-end', function () {
                 ga.trackPerformance('Javascript Load', 'enhancedEnd', 'Enhanced end parse time');
             }],

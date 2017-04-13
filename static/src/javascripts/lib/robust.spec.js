@@ -1,6 +1,8 @@
 // @flow
 
-import robust from './robust';
+import { catchErrorsWithContext, _ } from './robust';
+
+const { catchAndLogError } = _;
 
 // #? Refactor this into a test utility with lots of magic?
 jest.mock('lib/report-error', () => jest.fn());
@@ -27,29 +29,29 @@ describe('robust', () => {
         throw ERROR;
     };
 
-    test('catchErrorsAndLog()', () => {
+    test('catchAndLogError()', () => {
         expect(() => {
-            robust.catchErrorsAndLog('test', noError);
+            catchAndLogError('test', noError);
         }).not.toThrowError();
 
         expect(() => {
-            robust.catchErrorsAndLog('test', throwError);
+            catchAndLogError('test', throwError);
         }).not.toThrowError(ERROR);
 
         expect(window.console.warn).toHaveBeenCalledTimes(1);
     });
 
-    test('catchErrorsAndLog() - default reporter', () => {
+    test('catchAndLogError() - default reporter', () => {
         reportErrorMock.mockClear();
-        robust.catchErrorsAndLog('test', noError);
+        catchAndLogError('test', noError);
         expect(reportErrorMock).not.toHaveBeenCalled();
 
         reportErrorMock.mockClear();
-        robust.catchErrorsAndLog('test', throwError);
+        catchAndLogError('test', throwError);
         expect(reportErrorMock).toHaveBeenCalledWith(ERROR, META, false);
     });
 
-    test('context()', () => {
+    test('catchErrorsWithContext()', () => {
         const runner = jest.fn();
 
         const MODULES = [
@@ -58,7 +60,7 @@ describe('robust', () => {
             ['test-3', runner],
         ];
 
-        robust.context(MODULES);
+        catchErrorsWithContext(MODULES);
         expect(runner).toHaveBeenCalledTimes(MODULES.length);
     });
 });
