@@ -1,5 +1,6 @@
-import Promise from 'Promise';
-export default new Promise(resolve => {
+// @flow
+
+const loadCssPromise: Promise<any> = new Promise(resolve => {
     if (window.guardian.css.loaded) {
         // CSS has loaded, go
         resolve();
@@ -8,3 +9,5 @@ export default new Promise(resolve => {
         window.guardian.css.onLoad = resolve;
     }
 });
+
+export { loadCssPromise };
