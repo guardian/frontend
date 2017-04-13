@@ -83,7 +83,7 @@ final case class Content(
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
   lazy val hasRecipeAtom: Boolean = atoms.fold(false)(a => a.recipes.nonEmpty)
-  lazy val showNewRecipeDesign: Boolean = hasRecipeAtom
+  lazy val showNewRecipeDesign: Boolean = hasRecipeAtom && ABNewRecipeDesign.switch.isSwitchedOn
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -452,7 +452,7 @@ object Article {
       opengraphPropertiesOverrides = opengraphProperties,
       shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
       contentWithSlimHeader = (content.isImmersive && content.tags.isArticle),
-      isNewRecipe = content.showNewRecipeDesign
+      isNewRecipeDesign = content.showNewRecipeDesign
     )
   }
 

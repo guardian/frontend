@@ -7,7 +7,7 @@
 @fragments.newHeader(page)
 
 @* TODO: #new-recipe - remove when removing the test *@
-@hasSlimHeader = @{page.metadata.hasSlimHeader || (page.metadata.isNewRecipe && mvt.ABNewRecipeDesign.isParticipating)}
+@hasSlimHeader = @{page.metadata.hasSlimHeader || (page.metadata.isNewRecipeDesign && mvt.ABNewRecipeDesign.isParticipating)}
 
 <header id="header"
         class="l-header u-cf @if(hasSlimHeader && !showNormalHeader) {l-header--is-slim l-header--no-navigation} js-header hide-on-mobile"
