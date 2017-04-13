@@ -16,7 +16,6 @@ define([
 
 function init() {
     var recipe = $('.recipe__article--structured');
-    var article = $('.js-recipe__content');
     var firstRecipe = $('.js-recipe__article--structured');
     var firstRecipeHeadline = $('.js-recipe__article--structured .js-recipe__article--structured-headline h1');
     var nextWrapper = $('.js-recipe__article--next-recipe');

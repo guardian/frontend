@@ -328,7 +328,7 @@
     padding-bottom: $gs-baseline;
 
     @include mq($from: tablet) {
-      max-width: 550px;
+        max-width: 550px;
     }
 
     @include mq($until: tablet) {
@@ -434,7 +434,7 @@
     line-height: 22px;
 
     @include mq($from: desktop) {
-      max-width: 460px;
+        max-width: 460px;
     }
 
     @include mq($from: leftCol) {
@@ -580,6 +580,7 @@
 
     @include mq($from: leftCol) {
         width: 55%;
+
     }
     @include mq($from: wide) {
         width: 52%;
