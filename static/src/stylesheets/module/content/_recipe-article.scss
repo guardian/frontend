@@ -92,7 +92,7 @@
         }
     }
     @include mq($from: leftCol) {
-        flex-basis: 45%;
+        flex-basis: 42%;
         &.is-sticky {
             width: 45%
         }
@@ -197,14 +197,19 @@
 .recipe__article--byline-image {
     position: absolute;
     border-radius: 50%;
-    width: calc(#{$gs-gutter / 2} * 5);
-    height: calc(#{$gs-gutter / 2} * 5);
+    width: calc(#{$gs-gutter / 2} * 4);
+    height: calc(#{$gs-gutter / 2} * 4);
     background-color: $neutral-3;
     overflow: hidden;
     top: $gs-baseline;
     margin: auto;
     left: 0;
     right: 0;
+
+    @include mq($from: leftCol) {
+        width: calc(#{$gs-gutter / 2} * 5);
+        height: calc(#{$gs-gutter / 2} * 5);
+    }
 }
 
 .recipe__article--byline-image .byline-img .byline-img__img {
@@ -290,11 +295,11 @@
     @include mq($from: desktop) {
         flex-basis: 55%;
         float: right;
-        border-left: 1px solid $neutral-3;
+        border-left: 1px solid $neutral-6;
     }
 
     @include mq($from: leftCol) {
-        flex-basis: 52%;
+        flex-basis: 53%;
     }
 }
 
@@ -309,6 +314,7 @@
     margin: 0;
     margin-bottom: $gs-baseline * 2;
     color: $neutral-1;
+    max-width: 550px;
     @include mq($from: desktop) {
         max-width: 460px;
     }
@@ -326,6 +332,7 @@
     display: flex;
     justify-content: space-between;
     padding-bottom: $gs-baseline;
+    max-width: 550px;
 
     @include mq($from: tablet) {
         max-width: 550px;
@@ -379,6 +386,7 @@
     border-top: 1px solid $neutral-3;
     font-weight: 900;
     padding-top: $gs-baseline / 2;
+    max-width: 550px;
 
     @include mq($from: desktop) {
         max-width: 460px;
@@ -409,6 +417,7 @@
     p, ul {
         font-size: 16px;
         line-height: 24px;
+        max-width: 550px;
 
         @include mq($from: desktop) {
             max-width: 460px;
@@ -432,6 +441,7 @@
     margin-bottom: $gs-gutter;
     font-size: 18px;
     line-height: 22px;
+    max-width: 550px;
 
     @include mq($from: desktop) {
         max-width: 460px;
@@ -530,6 +540,10 @@
     transition: opacity .5s ease-in-out;
     z-index: 1010;
 
+    @include mq($until: desktop) {
+      left: 0;
+    }
+
     .kicker {
         color: $features-main-2;
 
@@ -578,7 +592,9 @@
         }
     }
 
-    @include mq($from: leftCol) {
+    @include mq
+
+    @include mq($from: desktop) {
         width: 55%;
 
     }
@@ -635,6 +651,7 @@
 
 .recipe__article--structured-headline {
     margin-bottom: $gs-baseline * 2;
+    max-width: 550px;
 
     @include mq($from: desktop) {
         max-width: 460px;
@@ -740,6 +757,7 @@
 
 .method-list {
     margin-bottom: $gs-baseline * 2;
+    max-width: 550px;
     @include mq($from: desktop) {
         max-width: 460px;
     }
