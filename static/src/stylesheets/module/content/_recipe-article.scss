@@ -315,6 +315,7 @@
     margin-bottom: $gs-baseline * 2;
     color: $neutral-1;
     max-width: 550px;
+    
     @include mq($from: desktop) {
         max-width: 460px;
     }
