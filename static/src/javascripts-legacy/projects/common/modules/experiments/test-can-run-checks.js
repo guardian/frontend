@@ -16,8 +16,8 @@ define([
         var expired = isExpired(test.expiry),
             isSensitive = config.page.isSensitive;
 
-        return ((isSensitive ? test.showForSensitive : true)
-            && isTestSwitchedOn(test)) && !expired && test.canRun();
+        return ((isSensitive ? test.showForSensitive : true) && isTestSwitchedOn(test)) 
+                    && !expired && (!test.canRun || test.canRun());
     }
 
     return {
