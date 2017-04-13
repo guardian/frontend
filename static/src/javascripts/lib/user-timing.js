@@ -13,7 +13,7 @@ const getCurrentTime = (): number => {
     return new Date().getTime() - startDate;
 };
 
-const markTime = (label: string): void => {
+const mark = (label: string): void => {
     if ('mark' in performanceAPI) {
         performanceAPI.mark(label);
     } else {
@@ -22,7 +22,7 @@ const markTime = (label: string): void => {
 };
 
 // Returns the ms time when the mark was made.
-const getMarkTime = (label: string): ?number => {
+const getTiming = (label: string): ?number => {
     if ('getEntriesByName' in performanceAPI) {
         const perfMark = performanceAPI.getEntriesByName(label, 'mark')[0];
 
@@ -34,4 +34,4 @@ const getMarkTime = (label: string): ?number => {
     }
 };
 
-export { markTime, getMarkTime, getCurrentTime };
+export default { mark, getTiming, getCurrentTime };

@@ -1,7 +1,7 @@
 // @flow
 
 import Chance from 'chance';
-import { easingFunctions, createEasing } from 'lib/easing';
+import easing from 'lib/easing';
 
 const chance = new Chance();
 jest.useRealTimers();
@@ -27,20 +27,20 @@ describe('easing', () => {
     Object.keys(TESTS).forEach(name => {
         const values = TESTS[name];
 
-        test(`easingFunctions.${name}()`, () => {
+        test(`functions.${name}()`, () => {
             values.forEach(([actual, expected]) => {
-                expect(easingFunctions[name](actual)).toBe(expected);
+                expect(easing.functions[name](actual)).toBe(expected);
             });
         });
     });
 
-    test('createEasing()', () => {
+    test('create()', () => {
         const OriginalDate = global.Date;
         const ELAPSED = chance.integer({ min: 0, max: 100 });
         const DURATION = chance.integer({ min: ELAPSED, max: 300 });
         global.Date = jest.fn(() => new OriginalDate(0));
 
-        const ease = createEasing('linear', DURATION);
+        const ease = easing.create('linear', DURATION);
         expect(ease()).toBe(0);
 
         global.Date = jest.fn(

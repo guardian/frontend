@@ -156,7 +156,7 @@ define([
             if (modules.subscriptionsEmpty()) {
                 modules.getSub().then(function (sub) {
                     sub.unsubscribe().catch(function (error) {
-                        robust.logError('07cm-frontendNotificatons', error);
+                        robust.log('07cm-frontendNotificatons', error);
                     });
                 });
             }

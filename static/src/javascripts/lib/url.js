@@ -85,7 +85,7 @@ const back = (): void => {
     }
 };
 
-export {
+export default {
     getUrlVars,
     getPath,
     pushUrl,

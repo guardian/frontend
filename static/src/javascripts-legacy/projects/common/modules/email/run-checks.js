@@ -141,7 +141,7 @@ define([
             return Id.getUserEmailSignUps()
                 .then(buildUserSubscriptions)
                 .catch(function (error) {
-                    robust.logError('c-email', error);
+                    robust.log('c-email', error);
                 });
         }
     }

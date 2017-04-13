@@ -145,7 +145,7 @@ define([
         };
 
         // the main function to render the survey
-        function renderQuickSurvey() {
+        function renderQuickSurvey() {    
             var queryParams = {
                 edition: config.page.edition,
             };
@@ -155,7 +155,7 @@ define([
             // look for a survey with this ID to return. This is useful as we can easily see how a particular survey
             // would be rendered, without actually putting it live. If this parameter is empty or not specified, tailor
             // behaves as usual.
-            var surveyToShow = storage.local.get('surveyToShow');
+            var surveyToShow = localStorage.getItem('surveyToShow');
 
             if (surveyToShow) {
                 queryParams.surveyToShow = surveyToShow;
