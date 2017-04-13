@@ -441,21 +441,21 @@
     margin-bottom: $gs-gutter;
 
     p {
-      font-size: 18px;
-      line-height: 22px;
-      max-width: 550px;
+        font-size: 18px;
+        line-height: 22px;
+        max-width: 550px;
 
-      @include mq($from: desktop) {
-          max-width: 460px;
-      }
+        @include mq($from: desktop) {
+            max-width: 460px;
+        }
 
-      @include mq($from: leftCol) {
-          max-width: 500px;
-      }
+        @include mq($from: leftCol) {
+            max-width: 500px;
+        }
 
-      @include mq($from: wide) {
-          max-width: 550px;
-      }
+        @include mq($from: wide) {
+            max-width: 550px;
+        }
     }
 }
 
