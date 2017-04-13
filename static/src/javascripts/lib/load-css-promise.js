@@ -1,5 +1,5 @@
 import Promise from 'Promise';
-export default new Promise(function(resolve) {
+export default new Promise(resolve => {
     if (window.guardian.css.loaded) {
         // CSS has loaded, go
         resolve();
