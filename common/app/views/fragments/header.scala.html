@@ -6,8 +6,11 @@
 @* TODO: When implementing the desktop design, aim to consolidate the html *@
 @fragments.newHeader(page)
 
+@* TODO: #new-recipe - remove when removing the test *@
+@hasSlimHeader = @{page.metadata.hasSlimHeader || (page.metadata.isNewRecipe && mvt.ABNewRecipeDesign.isParticipating)}
+
 <header id="header"
-        class="l-header u-cf @if(page.metadata.hasSlimHeader && !showNormalHeader) {l-header--is-slim l-header--no-navigation} js-header hide-on-mobile"
+        class="l-header u-cf @if(hasSlimHeader && !showNormalHeader) {l-header--is-slim l-header--no-navigation} js-header hide-on-mobile"
         role="banner"
         data-link-name="global navigation: header">
     <div class="js-navigation-header navigation-container navigation-container--collapsed">
@@ -75,7 +78,7 @@
             <div class="l-header-main">
                 @if((page.metadata.sectionId == "observer" && page.metadata.isFront) || page.metadata.id == "theobserver") {
                     <a href="@LinkTo{@page.metadata.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" data-component="logo">
-                        @if(page.metadata.hasSlimHeader) {
+                        @if(hasSlimHeader) {
                             @fragments.inlineSvg("observer-logo-160", "logo")
                         } else {
                             <span class="u-h">The Observer - Back to home</span>
@@ -85,7 +88,8 @@
                 } else {
                     <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" data-component="logo">
                         <span class="u-h">The Guardian - Back to home</span>
-                        @if(page.metadata.hasSlimHeader) {
+
+                        @if(hasSlimHeader) {
                             @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
                             <!--[if (gt IE 8)|(IEMobile)]><!-->
                                 @fragments.inlineSvg("guardian-logo-160", "logo")
@@ -103,11 +107,14 @@
                         }
                     </a>
                 }
-                @if(page.metadata.hasSlimHeader) {
+
+                @* #new-recipe *@
+                @if(hasSlimHeader) {
                     @fragments.nav.navigationToggle()
                 }
             </div>
         </div>
+
         @fragments.nav.navigation(page)
     </div>
 

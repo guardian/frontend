@@ -196,7 +196,8 @@ final case class MetaData (
   isHosted: Boolean = false,
   twitterPropertiesOverrides: Map[String, String] = Map(),
   contentWithSlimHeader: Boolean = false,
-  commercial: Option[CommercialProperties]
+  commercial: Option[CommercialProperties],
+  isNewRecipe: Boolean = false
 ){
   val sectionId = section map (_.id) getOrElse ""
 
