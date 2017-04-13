@@ -134,7 +134,7 @@ define([
         config.commercial = config.commercial || {};
         return config.commercial.featuresDebug = new CommercialFeatures();
     } catch (error) {
-        robust.logError('cm-commercialFeatures', error);
+        robust.log('cm-commercialFeatures', error);
     }
 
 });

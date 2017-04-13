@@ -49,7 +49,7 @@ define([
     }
 
     return function () {
-        robust.catchErrorsWithContext([
+        robust.context([
             ['trail-a11y',       accessibility.shouldHideFlashingElements],
             ['trail-article', initOpenCta],
             ['trail-fence', initFence],

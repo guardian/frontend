@@ -10,7 +10,7 @@ import domready from 'domready';
 import raven from 'lib/raven';
 import bootStandard from 'bootstraps/standard/main';
 import config from 'lib/config';
-import { markTime } from 'lib/user-timing';
+import userTiming from 'lib/user-timing';
 import capturePerfTimings from 'lib/capture-perf-timings';
 
 // let webpack know where to get files from
@@ -23,7 +23,7 @@ __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 const go = () => {
     domready(() => {
         // 1. boot standard, always
-        markTime('standard boot');
+        userTiming.mark('standard boot');
         bootStandard();
 
         // 2. once standard is done, next is commercial
@@ -39,12 +39,12 @@ const go = () => {
             });
         }
 
-        markTime('commercial request');
+        userTiming.mark('commercial request');
         require.ensure(
             [],
             require => {
                 raven.context({ tags: { feature: 'commercial' } }, () => {
-                    markTime('commercial boot');
+                    userTiming.mark('commercial boot');
                     const commercialBoot = config.switches.commercial
                         ? require('bootstraps/commercial')
                         : Promise.resolve;
@@ -54,13 +54,13 @@ const go = () => {
                         // this is defined here so that webpack's code-splitting algo
                         // excludes all the modules bundled in the commercial chunk from this one
                         if (window.guardian.isEnhanced) {
-                            markTime('enhanced request');
+                            userTiming.mark('enhanced request');
                             require.ensure(
                                 [],
                                 // webpack needs the require function to be called 'require'
                                 // eslint-disable-next-line no-shadow
                                 require => {
-                                    markTime('enhanced boot');
+                                    userTiming.mark('enhanced boot');
                                     require('bootstraps/enhanced/main')();
 
                                     if (document.readyState === 'complete') {

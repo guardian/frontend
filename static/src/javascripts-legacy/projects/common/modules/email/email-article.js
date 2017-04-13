@@ -247,13 +247,13 @@ define([
                             emailRunChecks.getUserEmailSubscriptions().then(function () {
                                 addListToPage(find(listConfigs, emailRunChecks.listCanRun));
                             }).catch(function (error) {
-                                robust.logError('c-email', error);
+                                robust.log('c-email', error);
                             });
                         }
                     });
                 }
             }).catch(function (error) {
-                robust.logError('check-mediator', error);
+                robust.log('check-mediator', error);
             });
         },
         getListConfigs: function () {

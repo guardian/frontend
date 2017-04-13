@@ -92,5 +92,7 @@ class Storage {
     }
 }
 
-export const local = new Storage('localStorage');
-export const session = new Storage('sessionStorage');
+export default {
+    local: new Storage('localStorage'),
+    session: new Storage('sessionStorage'),
+};
