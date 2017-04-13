@@ -66,11 +66,8 @@ define([
                 .then(mergeViewabilityTracker)
                 .then(renderCreative)
                 .catch(function (err) {
-                    // if there is an error, it will likely be a huge spike and we don't want to get rate limited by sentry
-                    if (Math.random() < 0.0001) {
-                        reportError('Failed to get creative JSON ' + err, {feature: 'commercial'}, false);
-                    }
-            });
+                  reportError('Failed to get creative JSON ' + err, {feature: 'commercial'}, false);
+                });
         } else {
             return Promise.resolve(true);
         }
