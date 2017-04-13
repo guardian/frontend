@@ -13,7 +13,7 @@
 
                     @for(question <- qs.questions) {
                         <div class="user__questions-text--wrapper js-ask-question-link">
-                            <span id="js-question-text-@question.questionId" class="user__question-text">
+                            <span class="user__question-text">
                                 <meta class="notranslate" name="js-notranslate-@question.questionId" content="@question.questionText">
                                 <span class="user__questions-text--inner">
                                     @question.questionText
