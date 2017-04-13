@@ -41,9 +41,10 @@ define([
                 })
                 .then(function (resp) {
                     return steadyPage.insert($container[0], function() {
-                        $container.html(options.beforeInsert(resp.html))
+                        $container
+                            .html(options.beforeInsert(resp.html))
                             .addClass('lazyloaded');
-                    }).then(function() {
+
                         return resp;
                     });
                 })
