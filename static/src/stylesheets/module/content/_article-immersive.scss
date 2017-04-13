@@ -238,7 +238,7 @@
     /* Meta
     ========================================================================== */
     .content__section-label--advertisement {
-        @include fs-textSans(3);
+        @include f-textSans;
         font-size: 20px;
         line-height: 24px;
         font-weight: 900;
