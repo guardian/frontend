@@ -47,7 +47,7 @@ define([
                         return resp;
                     });
                 })
-                .then(options.finally(resp))
+                .then(options.finally)
                 .catch(options.catch);
             }
         }
