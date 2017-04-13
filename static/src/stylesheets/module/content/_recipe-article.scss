@@ -541,7 +541,7 @@
     z-index: 1010;
 
     @include mq($until: desktop) {
-      left: 0;
+        left: 0;
     }
 
     .kicker {
