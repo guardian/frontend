@@ -107,7 +107,7 @@ final case class Content(
     cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1 && !tags.isInteractive
 
   lazy val signedArticleImage: String = {
-    ImgSrc(rawOpenGraphImage, EmailImage)
+    ImgSrc(rawOpenGraphImage, Item1200)
   }
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
@@ -367,8 +367,8 @@ object Content {
       paFootballTeams = apiContent.references.filter(ref => ref.id.contains("pa-football-team")).map(ref => ref.id.split("/").last).distinct,
       javascriptReferences = apiContent.references.map(ref => Reference.toJavaScript(ref.id)),
       wordCount = Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").length,
-      hasStoryPackage = apifields.flatMap(_.hasStoryPackage).getOrElse(false),
       showByline = fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline,
+      hasStoryPackage = apifields.flatMap(_.hasStoryPackage).getOrElse(false),
       rawOpenGraphImage = {
         val bestOpenGraphImage = if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
           trail.trailPicture.flatMap(_.largestImageUrl)

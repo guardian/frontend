@@ -4,7 +4,6 @@ import com.softwaremill.macwire._
 import conf.IdentityConfigurationComponents
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import idapiclient.IdApiComponents
-import model.SaveForLaterDataBuilder
 import play.api.libs.ws.WSClient
 
 trait IdentityServices extends IdentityConfigurationComponents with IdApiComponents {
@@ -20,6 +19,4 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
   lazy val authenticationService = wire[AuthenticationService]
   lazy val userCreationService = wire[UserCreationService]
   lazy val torNodeLoggingIdRequestParser = wire[TorNodeLoggingIdRequestParser]
-  lazy val playSavedArticlesService = wire[PlaySavedArticlesService]
-  lazy val saveforLaterDataBuilder = wire[SaveForLaterDataBuilder]
 }

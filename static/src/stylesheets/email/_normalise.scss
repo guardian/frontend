@@ -53,10 +53,25 @@ a img {
 }
 
 p {
-    margin: 0 0 0 10px;
+    margin: 0;
 }
 
 table {
     border-spacing: 0;
     border-collapse: collapse;
+}
+
+// We don't want these vendor-specific rules to be inlined because they will
+// inflate the email size for no benefit in some clients. These @-rules
+// will target WebKit and Mozilla specifically, and prevent the styles being inlined.
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    td {
+        -webkit-font-smoothing: antialiased;
+    }
+}
+
+@-moz-document url-prefix() {
+    td {
+        -moz-osx-font-smoothing: grayscale;
+    }
 }

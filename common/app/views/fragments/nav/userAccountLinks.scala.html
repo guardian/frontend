@@ -1,7 +1,7 @@
 @()
 
 @import conf.Configuration
-@import conf.switches.Switches.{IdentityProfileNavigationSwitch, SaveForLaterSwitch}
+@import conf.switches.Switches.IdentityProfileNavigationSwitch
 
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
 
@@ -22,14 +22,6 @@
                 </summary>
 
                 <ul class="personalisation__links">
-                    @if(SaveForLaterSwitch.isSwitchedOn) {
-                        <li class="personalisation__link">
-                            <a href="@Configuration.id.url/saved-for-later"
-                                data-link-name="nav2 : saved for later">
-                                    Saved for later
-                            </a>
-                        </li>
-                    }
                     <li class="personalisation__link">
                         <a data-link-name="nav2 : comment activity" class="js-add-comment-activity-link" hidden>
                             Comment activity

@@ -1,17 +1,18 @@
 @(article: model.Article)(implicit request: RequestHeader)
 
 @import views.support.{ImgSrc, EmailImage}
-@import views.support.EmailHelpers._
+@import views.support.EmailHelpers.icon
+@import fragments.email._
 
 @if(!article.elements.hasMainEmbed) {
     @article.elements.mainPicture.map { picture =>
         @EmailImage.bestFor(picture.images).map { url =>
-            @fullRow {
+            @row(Seq("no-pad")) {
                 <img width="580" class="full-width" src="@url" alt="@ImgSrc.getFallbackAsset(picture.images).flatMap(_.altText).getOrElse("")" />
             }
 
             @picture.images.largestImage.map { img =>
-                @paddedRow {
+                @row(Seq("padded")) {
                     @if(img.showCaption) {
                         <div class="caption">
                             @icon("camera")

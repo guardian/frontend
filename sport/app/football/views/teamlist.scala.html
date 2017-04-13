@@ -1,6 +1,6 @@
-@(pageModel: TablesPage, comps: Seq[model.Competition])(implicit request: RequestHeader, context: model.ApplicationContext)
+@(pageModel: football.controllers.TablesPage, comps: Seq[model.Competition])(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@main(pageModel.page, "football"){
+@main(pageModel.page, Some("football")){
 }{
 
     @football.views.html.fragments.teamlistBody(pageModel, comps)

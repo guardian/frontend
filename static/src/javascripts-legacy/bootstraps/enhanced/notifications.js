@@ -6,7 +6,7 @@ define([
     'lib/$',
     'lib/config',
     'lib/storage',
-    'lib/ajax',
+    'lib/fetch',
     'lodash/utilities/template',
     'lib/robust',
     'common/views/svgs',
@@ -28,7 +28,7 @@ define([
     $,
     config,
     storage,
-    ajax,
+    fetch,
     template,
     robust,
     svgs,
@@ -178,11 +178,15 @@ define([
             return modules.getSub().then(function (sub) {
                 var endpoint = sub && sub.endpoint;
                 if (endpoint) {
-                    return ajax({
-                        url: notificationsEndpoint,
+                    return fetch(notificationsEndpoint, {
                         method: 'POST',
-                        contentType: 'application/x-www-form-urlencoded',
-                        data: {browserEndpoint: endpoint, notificationTopicId: config.page.pageId}
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: {
+                            browserEndpoint: endpoint,
+                            notificationTopicId: config.page.pageId,
+                        },
                     });
                 }
             });

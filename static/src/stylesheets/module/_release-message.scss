@@ -625,14 +625,14 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         margin-right: 16px;
     }
 
-    .message-button-rounded__cta.primary.yellow {
+    .message-button-rounded__cta.yellow {
         svg path {
             stroke: #000333;
             fill: #000333;
         }
         background-color: #ff9b0b;
     }
-    .message-button-rounded__cta.primary.purple {
+    .message-button-rounded__cta.purple {
 
         svg path {
             stroke: #ffffff;
@@ -641,7 +641,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         color: #ffffff;
         background-color: #dc2a7d;
     }
-    .message-button-rounded__cta.primary.dark-blue {
+    .message-button-rounded__cta.dark-blue {
         svg path {
             stroke: #000333;
             fill: #000333;
@@ -649,7 +649,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         color: #000333;
         background-color: #4bc6df;
     }
-    .message-button-rounded__cta.primary.bright-blue {
+    .message-button-rounded__cta.bright-blue {
         svg path {
             stroke: #ffffff;
             fill: #ffffff;
@@ -661,35 +661,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         display: block;
         float: right;
         height: $gs-column-width/2;
-    }
-
-    .message-button-rounded__cta.secondary {
-        //The secondary span is the only thing that is not overlap by the anchor
-        z-index: $zindex-popover + 1;
-        @include mq($from: mobile) {
-            padding-left: 9px;
-            padding-right: 9px;
-        }
-        border: 1px solid;
-        margin-left: 10px;
-
-    }
-    .message-button-rounded__cta.secondary.yellow {
-        border-color: #333333;
-    }
-
-    .message-button-rounded__cta.secondary.purple {
-        border-color: #ffffff;
-        color: #ffffff;
-    }
-
-    .message-button-rounded__cta.secondary.dark-blue {
-        border-color: #ffffff;
-        color: #ffffff;
-    }
-
-    .message-button-rounded__cta.secondary.bright-blue {
-        border-color: #333333;
     }
 }
 
@@ -717,11 +688,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message--membership-prominent.dark-blue {
     background-color: #005689;
-}
-
-
-.site-message--membership-secondary.bright-blue {
-    background: #ff0000;
 }
 
 /*
@@ -976,97 +942,5 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     height: 100%;
 }
 
-.membership__remind-me-form {
-    border-top: 1px dotted $neutral-1;
-    margin-top: $gs-baseline/2;
-    width: 100%;
-}
 
-.membership__engagement-text-field {
-    @include clearfix;
-    @include circular;
-    padding-left: $gs-gutter;
-    color: #000000;
-    @include mq($from: mobile) {
-        font-size: 12px;
-        line-height: 24px;
-        height: $gs-baseline * 3;
-        margin-top: $gs-baseline/2;
-    }
-    @include mq($from: tablet) {
-        font-size: 14px;
-        line-height: 28px;
-        height: $gs-baseline * 3;
-    }
-    @include mq($from: desktop) {
-        font-size: 14px;
-        line-height: $gs-baseline * 3;
-        height: $gs-baseline * 3;
-        width: 269px;
-    }
-    position: relative;
-    border: 0;
-    width: 100%;
-}
 
-.message-button-rounded__cta.membership__remind-me-form__cta {
-    color: #fffffb;
-    background-color: #333333;
-    top: 0px;
-    z-index: $zindex-popover + 1;
-    margin-top: $gs-baseline/2;
-
-    @include mq($from: desktop) {
-        margin-left: $gs-gutter/2;
-        margin-top: $gs-baseline;
-    }
-
-}
-
-.membership__remind-me-form {
-
-    .membership__remind-me-form__error {
-        @include fs-textSans(2);
-        font-size: 12px;
-        line-height: 16px;
-        position: relative;
-        margin-top: 4px;
-        display: block;
-    }
-
-    .membership__remind-me-form__error.yellow {
-        color: $live-main-1;
-    }
-
-    .membership__remind-me-form__error.bright-blue {
-        color: $live-main-1;
-    }
-
-    .membership__remind-me-form__error.purple,
-    .membership__remind-me-form__error.dark-blue {
-        color: #ffffff;
-    }
-
-    .membership__remind-me-form__error.hide-element,
-    .membership__remind-me-form__thanks-message.hide-element {
-        display: none;
-    }
-
-    .membership__remind-me-form__thanks-message {
-        margin-top: $gs-baseline;
-        margin-bottom: $gs-baseline;
-        position: relative;
-        display: block;
-
-        @include mq($from: desktop) {
-            margin-bottom: $gs-baseline/2;
-        }
-    }
-
-    .membership__remind-me-form__fields {
-        @include mq($from: desktop) {
-            float: left;
-            margin-bottom: $gs-baseline/2;
-        }
-    }
-}

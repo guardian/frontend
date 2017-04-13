@@ -79,7 +79,6 @@ object Filters {
   // which effectively means "JsonVaryHeaders goes around Gzipper"
   def common(implicit materializer: Materializer, context: ApplicationContext): List[EssentialFilter] = List(
     new RequestLoggingFilter,
-    new PanicSheddingFilter,
     new JsonVaryHeadersFilter,
     new Gzipper,
     new BackendHeaderFilter,

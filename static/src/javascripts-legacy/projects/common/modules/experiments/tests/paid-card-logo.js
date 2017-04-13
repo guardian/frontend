@@ -37,16 +37,16 @@ define([
         this.variants = [
             {
                 id: 'with-logo',
-                test: function () {},
+                test: function () {
+                    $('.adverts--within-unbranded').each(function(el){
+                        el.classList.remove('without-sponsor-logo');
+                    });
+                },
                 success: this.completeFunc
             },
             {
                 id: 'without-logo',
-                test: function () {
-                    $('.adverts--within-unbranded').each(function(el){
-                        el.classList.add('without-sponsor-logo');
-                    });
-                },
+                test: function () {},
                 success: this.completeFunc
             }
         ];

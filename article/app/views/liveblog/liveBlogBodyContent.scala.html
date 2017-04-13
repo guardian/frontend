@@ -1,3 +1,5 @@
+@import model.liveblog.LiveBlogPage
+@import model.liveblog.LatestBlock
 @(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.Edition
@@ -16,7 +18,7 @@
             @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage)
         }
         <div class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="block-@{
-            _root_.liveblog.LatestBlock(article.blocks)
+            LatestBlock(article.blocks)
         }" data-test-id="live-blog-blocks"
         itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
             @views.html.liveblog.liveBlogBlocks(model.currentPage.currentPage.blocks, article, timezone)

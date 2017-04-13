@@ -411,6 +411,17 @@
         text-align: center;
         align-self: center;
     }
+    &.fc-item--list-media-tablet {
+        @include mq(tablet) {
+            .badge__link {
+                margin-left: $gs-gutter;
+            }
+            .badge {
+                flex-direction: row;
+                margin-top: 0;
+            }
+        }
+    }
     .badge__link {
         @include mq($until: mobileLandscape) {
             margin-left: $gs-gutter;

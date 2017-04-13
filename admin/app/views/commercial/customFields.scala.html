@@ -1,0 +1,41 @@
+@import common.dfp.GuCustomField
+
+@(fields: Seq[GuCustomField])(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@admin_main("Custom Fields", isAuthed = true) {
+
+<link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")" />
+
+<h1>DFP CustomFields</h1>
+
+<table class="table table-striped table-bordered table-condensed table-hover">
+    <thead>
+        <tr>
+            <th class="col-md-1">ID</th>
+            <th class="col-md-2">Name</th>
+            <th class="col-md-3">Description</th>
+            <th class="col-md-1">Is Active</th>
+            <th class="col-md-1">Entity Type</th>
+            <th class="col-md-1">Visibility</th>
+            <th class="col-md-6">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+    @for(field <- fields) {
+        <tr id="field-@field.id">
+            <td><a href="https://www.google.com/dfp/59666047#admin/editCustomField/id=@field.id">@field.id</a></td>
+            <td>@field.name</td>
+            <td>@field.description</td>
+            <td>@field.isActive</td>
+            <td>@field.entityType</td>
+            <td>@field.visibility</td>
+            <td>
+                @for(option <- field.options) {
+                    <div>@option.name (@option.id)</div>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+}

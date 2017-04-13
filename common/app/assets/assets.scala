@@ -5,7 +5,7 @@ import conf.Configuration
 import model.ApplicationContext
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
-import play.api.{Mode, Play}
+import play.api.Mode
 
 import scala.collection.concurrent.{Map => ConcurrentMap, TrieMap}
 import scala.util.{Failure, Success, Try}

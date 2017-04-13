@@ -14,20 +14,4 @@
         </span>
         </time>
     }
-
-    @if(conf.switches.Switches.SaveForLaterSwitch.isSwitchedOn) {
-        @if(item.isSavedForLater) {
-            <button class="button button--secondary button--medium saved-content__button js-saved-content__button"
-                    data-link-name="Delete"
-                    name="deleteArticle"
-                    type="submit"
-                    @item.shortUrl.map { url => value="@url" }>
-            @fragments.inlineSvg("cross", "icon") Remove
-            </button>
-        } else {
-            <button class="js-save-for-later-link fc-save-for-later u-faux-block-link__promote  is-hidden">
-            @fragments.inlineSvg("bookmark", "icon", List("inline-tone-fill"))
-            </button>
-        }
-    }
 </aside>

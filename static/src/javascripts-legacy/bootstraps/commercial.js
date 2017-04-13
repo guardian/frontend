@@ -60,7 +60,7 @@ define([
         ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
         ['cm-articleAsideAdverts', articleAsideAdverts.init, true],
         ['cm-prepare-googletag', prepareGoogletag.init, true],
-        ['cm-articleBodyAdverts', articleBodyAdverts.init, true],
+        ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-liveblogAdverts', liveblogAdverts.init, true],
         ['cm-closeDisabledSlots', closeDisabledSlots.init],
         ['cm-stickyTopBanner', stickyTopBanner.init],
@@ -100,7 +100,7 @@ define([
                         performanceLogging.wrap(moduleName, moduleInit);
                     var result = wrapped();
                     modulePromises.push(result);
-                }],
+                }]
             ]);
         });
 
@@ -132,9 +132,8 @@ define([
             robust.context([
                 ['ga-user-timing-commercial-end', function () {
                     ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
-                }],
+                }]
             ]);
-            performanceLogging.reportTrackingData();
         })
         .catch(function (err) {
             // Just in case something goes wrong, we don't want it to

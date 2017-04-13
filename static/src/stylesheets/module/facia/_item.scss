@@ -574,13 +574,6 @@ $block-height: 71px;
     float: left;
     margin-bottom: $gs-baseline / 4;
     margin-right: 1em;
-
-    .saved-contents & {
-        @include mq(desktop) {
-            position: absolute;
-            bottom: 0;
-        }
-    }
 }
 
 .fc-item__timestamp {
@@ -616,80 +609,6 @@ $block-height: 71px;
 
 .fc-trail__count--inline-template {
     display: none;
-}
-
-.fc-save-for-later {
-    // reset button defaults
-    border: 0;
-    border-left: 1px solid;
-    background-color: transparent;
-    padding: 0;
-    color: transparent;
-    margin-right: 0 - ($gs-gutter / 4);
-    padding-right: ($gs-gutter / 4);
-    padding-left: $gs-gutter / 4;
-    transition: color 100ms;
-
-    &:hover,
-    &:focus,
-    &:active {
-        text-decoration: underline;
-        color: inherit;
-    }
-
-
-    &:after {
-        content: 'save';
-    }
-
-    &.fc-save-for-later--is-saved:after {
-        content: 'saved';
-    }
-
-    @include mq($until: tablet) {
-        border-left: 0;
-        float: right;
-
-        .fc-item--has-timestamp & {
-            &:after,
-            &.fc-save-for-later--is-saved:after {
-                content: '';
-            }
-        }
-    }
-
-    @include mq($from: tablet, $until: desktop) {
-        .fc-item--has-timestamp &:last-child {
-            border-left: 0;
-            padding-left: 0;
-
-            .inline-icon {
-                margin-left: 0;
-            }
-        }
-    }
-
-    .inline-icon {
-        float: right;
-        margin-left: $gs-gutter / 4;
-        margin-right: 0;
-
-        @include mq(tablet) {
-            float: left;
-            margin-right: $gs-gutter / 4;
-        }
-    }
-}
-
-.fc-save-for-later:only-child {
-    @include mq(tablet) {
-        border: 0;
-        padding: 0;
-
-        .inline-icon {
-            margin-left: 0;
-        }
-    }
 }
 
 .fc-item--has-cutout .fc-item__media-wrapper {
