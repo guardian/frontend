@@ -595,14 +595,12 @@
         }
     }
 
-    @include mq
-
     @include mq($from: desktop) {
         width: 55%;
 
     }
     @include mq($from: wide) {
-        width: 52%;
+        width: 53%;
     }
 }
 
