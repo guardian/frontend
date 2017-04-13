@@ -333,6 +333,7 @@
     justify-content: space-between;
     padding-bottom: $gs-baseline;
     max-width: 550px;
+    height: 36px;
 
     @include mq($from: tablet) {
         max-width: 550px;
@@ -357,8 +358,7 @@
 
     .social {
         &.social--expanded-top {
-            margin-left: -70px;
-            width: 220px;
+            width: 250px;
         }
     }
 
@@ -439,20 +439,23 @@
 .recipe__standfirst {
     @include fs-headline(2);
     margin-bottom: $gs-gutter;
-    font-size: 18px;
-    line-height: 22px;
-    max-width: 550px;
 
-    @include mq($from: desktop) {
-        max-width: 460px;
-    }
+    p {
+      font-size: 18px;
+      line-height: 22px;
+      max-width: 550px;
 
-    @include mq($from: leftCol) {
-        max-width: 500px;
-    }
+      @include mq($from: desktop) {
+          max-width: 460px;
+      }
 
-    @include mq($from: wide) {
-        max-width: 550px;
+      @include mq($from: leftCol) {
+          max-width: 500px;
+      }
+
+      @include mq($from: wide) {
+          max-width: 550px;
+      }
     }
 }
 
