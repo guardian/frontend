@@ -134,7 +134,7 @@ import scala.util.matching.Regex
 
 
   case class AmpComments(document: Document, figure: Element) extends MatchableAmpElement("figure", "data-canonical-url") {
-   override val urlPattern = "https://discussion.theguardian.com/comment-permalink/(\\d+)".r
+   override val urlPattern: Regex = "https://discussion.theguardian.com/comment-permalink/(\\d+)".r
    override def getMatchingUrl(): String = { figure.attr("data-canonical-url")}
    override def returnAmpEmbed(): Element = {
      val comment = figure.clone()
@@ -234,17 +234,10 @@ import scala.util.matching.Regex
 
 
   case class AmpInstagram(document: Document, figure: Element) extends MatchableAmpElement("a", "href") {
-    override val ampTag = "amp-instagram"
-    override val urlPattern = """^\/\/platform\.instagram\/.com\/*""".r
-    def getHref(iframe: Element): String = {
-      iframe.getElementsByTag("a").map(_.attr("href")).headOption.getOrElse("")
-    }
+    override val ampTag: String = "amp-instagram"
+    override val urlPattern: Regex = """^https?:\/\/www\.instagram\.com\/.\/(\w+)\/""".r
     override def getMatchingUrl(): String = {
-      val iframe = figure.getElementsByTag("iframe")
-      if (iframe.nonEmpty)
-        getHref(iframe.first())
-      else
-        ""
+      figure.getElementsByTag("a").map(_.attr("href")).headOption.getOrElse("")
     }
     def createInstagramElement(document: Document, src: String): Option[Element] = {
       val list = src.split( """instagram\.com/p/""")
@@ -275,7 +268,7 @@ import scala.util.matching.Regex
 
   case class AmpSoundCloud(document: Document, figure: Element) extends AmpAudioElement(document: Document, figure: Element) {
     override val ampTag = "amp-soundcloud"
-    override val urlPattern = ".*api.soundcloud.com/tracks/(\\d+).*".r
+    override val urlPattern: Regex = ".*api.soundcloud.com/tracks/(\\d+).*".r
     override val matchingUrl = URLDecoder.decode(getMatchingUrl(), "UTF-8")
     override def returnAmpEmbed(): Element = {
       val soundCloudEmbed = figure.clone()
@@ -309,26 +302,26 @@ import scala.util.matching.Regex
   }
 
   case class AmpAudioBoom(document: Document, figure: Element) extends AmpAudioElement(document: Document, figure: Element) {
-    override val urlPattern = """^https?:\/\/audioboom\.com\/""".r
+    override val urlPattern: Regex = """^https?:\/\/audioboom\.com\/""".r
   }
 
   case class AmpOtherAudio(document: Document, figure: Element) extends AmpAudioElement(document: Document, figure: Element) {
-    override val urlPattern = "".r
+    override val urlPattern: Regex = "".r
   }
 
   case class AmpYoutubeExternalVideo(document: Document, figure: Element) extends AmpExternalVideoElement(document: Document, figure: Element) {
     override val ampTag = "amp-youtube"
-    override val urlPattern = """^https?:\/\/www\.youtube\.com\/watch\?v=([^#&?]+).*""".r
+    override val urlPattern: Regex = """^https?:\/\/www\.youtube\.com\/watch\?v=([^#&?]+).*""".r
   }
 
   case class AmpVimeoExternalVideo(document: Document, figure: Element) extends AmpExternalVideoElement(document: Document, figure: Element) {
     override val ampTag = "amp-vimeo"
-    override val urlPattern =  """^https?:\/\/vimeo\.com\/(\d+).*""".r
+    override val urlPattern: Regex =  """^https?:\/\/vimeo\.com\/(\d+).*""".r
   }
 
   case class AmpFacebookExternalVideo(document: Document, figure: Element) extends AmpExternalVideoElement(document: Document, figure: Element) {
     override val ampTag = "amp-facebook"
-    override val urlPattern =  """^https?:\/\/www\.facebook\.com\/([\w.]+)\/videos\/(\d+)\/""".r
+    override val urlPattern: Regex =  """^https?:\/\/www\.facebook\.com\/([\w.]+)\/videos\/(\d+)\/""".r
     override def getCustomVideoAttributes(url: String): Option[Map[String, String]] = {
       url match {
         case urlPattern(organisation,videoId) => Some(Map("data-href"-> s"https://www.facebook.com/$organisation/videos/$videoId", "data-embed-as" -> "video"))
@@ -340,11 +333,11 @@ import scala.util.matching.Regex
 
 
   case class AmpGoogleMap(document: Document, figure: Element) extends AmpMapElement(document: Document, figure: Element) {
-    override val urlPattern =  """^https?:\/\/www\.google\.com\/maps\/embed*""".r
+    override val urlPattern: Regex =  """^https?:\/\/www\.google\.com\/maps\/embed*""".r
   }
 
   case class AmpOtherMap(document: Document, figure: Element) extends AmpMapElement(document: Document, figure: Element) {
-    override val urlPattern =  "".r
+    override val urlPattern: Regex =  "".r
   }
 
 
