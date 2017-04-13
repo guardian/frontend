@@ -391,14 +391,14 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-soundcloud").size should be (0)
   }
 
-  "AmpEmbedCleaner" should "not add an amp-iframe or amp-soundcloud element, if an audio element contains an iframe with src url from that is not from soundcloud.com" in {
+  "AmpEmbedCleaner" should "add an amp-iframe, not an amp-soundcloud element, if an audio element contains an iframe with valid src url from that is not from soundcloud.com" in {
     val frameborder = "0"
     val width = "460"
     val height = "300"
     val src = audioBoomUrl
     val cleanDoc: Document = cleanDocumentWithAudioEmbed("element-embed", frameborder, width, height, src)
     val result = (cleanDoc.getElementsByTag("amp-iframe").size, cleanDoc.getElementsByTag("amp-soundcloud").size)
-    result should be ((0,0))
+    result should be ((1,0))
   }
 
   "AmpEmbedCleaner" should "not add an amp-soundcloud element if an audio element does not contain an iframe" in {
