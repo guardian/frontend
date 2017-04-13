@@ -4,25 +4,40 @@ import fastdom from 'fastdom';
 import ophan from 'ophan/ng';
 import userAccount from 'common/modules/navigation/user-account';
 
-const sidebar = document.getElementById('main-menu');
 const enhanced = {};
 
-const closeSidebarSections = (targetItem?: HTMLElement): void => {
-    const sections = [...document.querySelectorAll('.js-close-nav-list')];
+const getSidebarElement = (): ?HTMLElement =>
+    document.getElementById('main-menu');
 
+const closeAllSidebarSections = (exclude: HTMLElement): void => {
+    const sections = [...document.querySelectorAll('.js-close-nav-list')];
     sections.forEach(section => {
-        if (section !== targetItem) {
-            section.removeAttribute('open');
+        if (section !== exclude) {
+            closeSidebarSection(section);
         }
     });
 };
 
-const toggleSidebar = (trigger: HTMLElement): void => {
+const closeSidebarSection = (section: HTMLElement): void => {
+    section.removeAttribute('open');
+};
+
+const openSidebarSection = (section: HTMLElement, options?: Object): void => {
+    section.setAttribute('open', '');
+
+    if (options && options.scrollTo) {
+        // TODO: scroll to element
+    }
+};
+
+const toggleSidebar = (): void => {
     const documentElement = document.documentElement;
     const sidebarToggle = document.querySelector('.js-change-link');
     const openClass = 'new-header__nav__menu-button--open';
     const globalOpenClass = 'nav-is-open';
+    const trigger = document.querySelector('.new-header__nav-trigger');
     const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+    const sidebar = getSidebarElement();
 
     if (!sidebar || !sidebarToggle) {
         return;
@@ -66,7 +81,6 @@ const toggleSidebar = (trigger: HTMLElement): void => {
             resetItemOrder();
         } else {
             focusFirstSidebarSection();
-            closeSidebarSections();
         }
     };
 
@@ -81,18 +95,13 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         const enhance = () => {
             [...checkbox.classList].forEach(c => button.classList.add(c));
 
+            button.addEventListener('click', (event: Event) => toggleSidebar());
             button.setAttribute('id', checkboxId);
             button.setAttribute('aria-expanded', 'false');
 
             if (checkboxControls) {
                 button.setAttribute('aria-controls', checkboxControls);
             }
-
-            button.addEventListener('click', (event: Event) => {
-                // #? hacky type cast
-                const target: HTMLElement = (event.target: any);
-                toggleSidebar(target);
-            });
 
             if (checkbox.parentNode) {
                 checkbox.parentNode.replaceChild(button, checkbox);
@@ -129,7 +138,28 @@ const enhanceSidebarToggle = (): void => {
     }
 };
 
+const toggleSidebarWithOpenSection = () => {
+    const sidebar = getSidebarElement();
+    const sectionId = document.querySelector('.subnav').dataset.sectionId;
+    const targetSelector = `.js-navigation-item[data-section-id="${sectionId}"]`;
+    const target = sidebar.querySelector(targetSelector);
+
+    if (target) {
+        openSidebarSection(target.children[0]);
+    }
+
+    toggleSidebar();
+
+    ophan.record({
+        component: 'main-navigation',
+        value: 'is opened by "more" toggle',
+    });
+};
+
 const addEventHandler = (): void => {
+    const subnav = document.querySelector('.subnav');
+    const sidebar = getSidebarElement();
+
     if (!sidebar) {
         return;
     }
@@ -139,7 +169,16 @@ const addEventHandler = (): void => {
 
         if (target.matches('.js-close-nav-list')) {
             event.stopPropagation();
-            closeSidebarSections(target);
+            closeAllSidebarSections(target);
+        }
+    });
+
+    subnav.addEventListener('click', (event: Event) => {
+        const target: HTMLElement = (event.target: any);
+
+        if (target.matches('.js-toggle-nav-section')) {
+            event.stopPropagation();
+            toggleSidebarWithOpenSection();
         }
     });
 };
@@ -148,6 +187,7 @@ const init = (): void => {
     enhanceSidebarToggle();
     addEventHandler();
     userAccount();
+    closeAllSidebarSections();
 };
 
 export default init;

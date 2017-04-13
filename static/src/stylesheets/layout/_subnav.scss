@@ -72,6 +72,17 @@
     }
 }
 
+.subnav__link--toggle-more {
+    background: transparent;
+    border: none;
+    padding-bottom: 0;
+    padding-top: 0;
+
+    &:after {
+        display: none;
+    }
+}
+
 .subnav__link--current-section {
     color: #ffffff;
 }

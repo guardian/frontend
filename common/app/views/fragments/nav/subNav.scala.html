@@ -3,7 +3,8 @@
 @import common.{NewNavigation, Edition, LinkTo}
 @import views.support.RenderClasses
 
-<ul class="subnav">
+<ul class="subnav"
+    data-section-id="@page.metadata.sectionId">
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
 
         @NewNavigation.SubSectionLinks.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront).map { link =>
@@ -12,10 +13,20 @@
                         "subnav__link" -> true,
                         "subnav__link--current-section" -> (id == link.uniqueSection)
                     ))"
-                    href="@LinkTo(link.url)" data-link-name="nav2 : subnav : @{ if(link.longTitle.isEmpty) link.title else link.longTitle}">
-                        @link.title
+                    href="@LinkTo(link.url)"
+                    data-link-name="nav2 : subnav : @{ if(link.longTitle.isEmpty) link.title else link.longTitle}">
+                    @link.title
                 </a>
             </li>
         }
     }
+
+    <li class="subnav__link-item">
+        <button class="
+            subnav__link
+            subnav__link--toggle-more
+            js-toggle-nav-section">
+            more
+        </button>
+    </li>
 </ul>
