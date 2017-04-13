@@ -1,7 +1,7 @@
 @(item: model.ContentType, page: model.Page, showExtras: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
 @import model._
 @import views.support.Commercial.isPaidContent
-@import views.support.ContentOldAgeDescriber
+@import views.support.{ContentOldAgeDescriber, RenderClasses}
 
 @byline() = {
     @item match {
@@ -65,17 +65,17 @@
         }
     }
 }
-
-<div class="content__meta-container js-content-meta js-football-meta u-cf
-    @if(item.trail.byline.isEmpty){ content__meta-container--no-byline}
-    @if(item.tags.isLiveBlog) { content__meta-container--liveblog}
-    @if(item.elements.hasShowcaseMainElement){ content__meta-container--showcase}
-    @if(item.content.hasTonalHeaderByline){ content__meta-container--tonal-header}
-    @item.content.contributorBio.map { bio => content__meta-container--bio}
-    @if(item.content.isExplore) {content__meta-container--explore}
-    @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)) { content__meta-container--twitter}
-    @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">
-
+<div class="@RenderClasses(Map(
+    ("content__meta-container--no-byline", item.trail.byline.isEmpty),
+    ("content__meta-container--liveblog", item.tags.isLiveBlog),
+    ("content__meta-container--float", item.elements.hasShowcaseMainElement),
+    ("content__meta-container--media-page", item.tags.isMedia),
+    ("content__meta-container--tonal-header", item.content.hasTonalHeaderByline),
+    ("content__meta-container--explore", item.content.isExplore),
+    ("content__meta-container--twitter", item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)),
+    ("content__meta-container--email", item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)),
+    ("content__meta-container--bio", item.content.contributorBio.nonEmpty)),
+    "content__meta-container", "js-content-meta", "js-football-meta", "u-cf")">
 
     @if(
         item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !isPaidContent(page))

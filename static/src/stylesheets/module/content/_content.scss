@@ -557,10 +557,16 @@
     }
 }
 
-.content__meta-container.content__meta-container--showcase {
+.content__meta-container--float {
     @include mq(leftCol) {
         float: left;
         position: static;
+        margin-left: ($left-column + $gs-gutter) * -1;
+    }
+}
+
+.content__meta-container--media-page {
+    @include mq(leftCol) {
         margin-left: ($left-column + $gs-gutter) * -1;
     }
 }
