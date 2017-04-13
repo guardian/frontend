@@ -58,7 +58,8 @@
 }
 
 /* Override default .gs-container breakpoints */
-.gs-container {
+.gs-container,
+.content__main-media-wrapper {
     @include mq(tablet) {
         max-width: gs-span(9) + $gs-gutter * 2;
     }

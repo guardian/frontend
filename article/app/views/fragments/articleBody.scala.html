@@ -12,6 +12,17 @@
     if (page.article.tags.isReview) "reviewBody" else "articleBody"
 }
 
+@secondaryColumn(isPaidForContent: Boolean) = {
+    <div class="content__secondary-column js-secondary-column" aria-hidden="true">
+
+        @fragments.articleAsideSlot(shouldShowAds(model), articleAsideOptionalSizes)
+
+        @if(!isPaidForContent){
+            <div class="js-components-container"></div>
+        }
+    </div>
+}
+
 @defining(model.article) { article =>
   @defining(isPaidContent(model)) { isPaidContent =>
 
@@ -36,24 +47,40 @@
             }
 
             @if(amp) {
+
+                @fragments.mainMedia(article, amp)
+
                 @fragments.headTonal(article, model, isPaidContent, amp = amp)
 
-                @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                    @fragments.mainMedia(article, amp)
-                }
             } else {
-                <div class="hide-on-mobile">
-                    @fragments.headTonal(article, model, isPaidContent, amp = amp)
+                @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
 
-                    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                        @fragments.mainMedia(article, amp)
-                    }
-                </div>
-                <div class="mobile-only">
-                    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                        @fragments.mainMedia(article, amp)
-                    }
-                </div>
+                    <div class="content__header-container">
+                        @fragments.headTonal(article, model, isPaidContent)
+
+                        <div class="content__main-media-full-width-mobile">
+                            @fragments.mainMedia(article)
+                        </div>
+                    </div>
+
+                } else {
+                    <div class="content__header-container">
+                        @fragments.headTonal(article, model, isPaidContent)
+
+                        <div class="content__main-media-wrapper content__main-media-full-width-mobile">
+                            <div class="content__main-media">
+
+                                @fragments.mainMedia(article)
+                            </div>
+
+                            <div class="hide-on-mobile">
+                                @fragments.contentMeta(article, model)
+                            </div>
+
+                            @secondaryColumn(isPaidContent)
+                        </div>
+                    </div>
+                }
             }
 
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
@@ -62,19 +89,15 @@
                         <div class="js-score"></div>
                         <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
 
-                        @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
-                            @fragments.mainMedia(article, amp)
-                        }
-
-                        @if(!amp) {
+                        @if((article.tags.isFeature && article.elements.hasShowcaseMainElement) || amp) {
+                            @fragments.contentMeta(article, model, amp = amp)
+                        } else {
                             <div class="mobile-only">
-                                @fragments.headTonal(article, model, isPaidContent, amp = amp)
+                                @fragments.contentMeta(article, model, amp = amp)
                             </div>
                         }
 
                         @fragments.witnessCallToAction(article.content)
-
-                        @fragments.contentMeta(article, model, amp = amp)
 
                         @if(article.tags.isNews && !article.elements.hasMainEmbed && article.elements.elements("main").isEmpty) {
                             <hr class="content__hr hide-until-leftcol" />
@@ -103,14 +126,9 @@
                         <div class="after-article js-after-article"></div>
                     </div>
 
-                    <div class="content__secondary-column js-secondary-column" aria-hidden="true">
-
-                        @fragments.articleAsideSlot(shouldShowAds(model), articleAsideOptionalSizes)
-
-                        @if(!isPaidContent){
-                        <div class="js-components-container"></div>
-                        }
-                    </div>
+                    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                        @secondaryColumn(isPaidContent)
+                    }
                 </div>
             </div>
         </article>

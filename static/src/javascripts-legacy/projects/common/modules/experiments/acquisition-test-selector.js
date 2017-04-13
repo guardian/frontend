@@ -50,13 +50,7 @@ define([
     }, []);
 
     var abTestClashData = tests.map(function(test) {
-        var testInstance = new test();
-        return {
-            name: testInstance.id,
-            variants: testInstance.variants.filter(function (variant) {
-                return !variant.isOutbrainCompliant
-            })
-        }
+        return new test();
     });
 
     return {

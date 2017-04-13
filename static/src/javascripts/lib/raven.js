@@ -6,7 +6,9 @@ import detect from 'lib/detect';
 
 const { sentryPublicApiKey, sentryHost } = config.page;
 const sentryUrl = `https://${sentryPublicApiKey}@${sentryHost}`;
+
 let adblockBeingUsed = false;
+
 const sentryOptions = {
     whitelistUrls: [
         // loaclhost will not log errors, but call `shouldSendCallback`
