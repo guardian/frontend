@@ -87,15 +87,7 @@
             <div class="gs-container">
                 @if(!isTheMinuteArticle) {
                     <div class="content__main-column">
-                    @if(!isPaidContent){
                       @fragments.meta.metaInline(page.item)
-                    } else {
-                      <div class="section-label--advertisement">
-                        <a class="content__section-label__link content__section-label__link--advertisement" href="@LinkTo {/@page.item.content.sectionLabelLink}">
-                          @Html(Localisation(page.item.content.sectionLabelName))
-                        </a>
-                      </div>
-                    }
                 }
 
 
