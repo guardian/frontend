@@ -28,8 +28,8 @@ define([
         options = merge({
             beforeInsert: identity,
             force: false,
-            success: identity,
-            error: identity,
+            finally: identity,
+            catch: identity,
         }, options);
 
         if (url && options.container) {
@@ -40,14 +40,15 @@ define([
                     mode: 'cors',
                 })
                 .then(function (resp) {
-                    return steadyPage.insert($container[0], function(){
+                    return steadyPage.insert($container[0], function() {
                         $container.html(options.beforeInsert(resp.html))
                             .addClass('lazyloaded');
-                    }).then(function(){
-                        options.success(resp);
+                    }).then(function() {
+                        return resp;
                     });
                 })
-                .catch(options.error);
+                .then(options.finally(resp))
+                .catch(options.catch);
             }
         }
     }
