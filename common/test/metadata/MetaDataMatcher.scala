@@ -70,7 +70,7 @@ object MetaDataMatcher extends Matchers  {
     status(result) should be(200)
 
     val elements = body.getElementsByClass("old-article-message")
-    elements.size() should be > 0
+    elements.size() should be(1)
   }
 
   def ensureNoOldArticleMessage(result: Future[Result], articleUrl: String) {
