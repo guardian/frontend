@@ -563,20 +563,11 @@
         position: static;
         margin-left: ($left-column + $gs-gutter) * -1;
     }
-
-    @include mq(wide) {
-        margin-left: ($left-column-wide + $gs-gutter) * -1;
-    }
 }
 
-.content__meta-container--media-page,
-.content__meta-container--immersive {
+.content__meta-container--media-page {
     @include mq(leftCol) {
         margin-left: ($left-column + $gs-gutter) * -1;
-    }
-
-    @include mq(wide) {
-        margin-left: ($left-column-wide + $gs-gutter) * -1;
     }
 }
 
