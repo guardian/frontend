@@ -69,7 +69,7 @@ import collection.JavaConversions._
 
         Then("I should see the names of the authors")
         $("[itemprop=author]")(0).getText should be("Ben Arnold")
-        $("[itemprop=author]")(1).getText should be("Andrew Mueller")
+        $("[itemprop=author]").last.getText should be("Phelim O'Neill")
 
         And("I should see a link to the author's page")
         $("[itemprop=author] a[itemprop='sameAs']")(0).getAttribute("href") should be(withHost("/profile/ben-arnold"))
