@@ -29,13 +29,10 @@ const scrollTo = (
     };
     const interval = setInterval(scrollFn, 15);
 
-    setTimeout(
-        () => {
-            clearInterval(interval);
-            fastdom.write(() => $container.scrollTop(offset));
-        },
-        duration
-    );
+    setTimeout(() => {
+        clearInterval(interval);
+        fastdom.write(() => $container.scrollTop(offset));
+    }, duration);
 };
 
 const scrollToElement = (
