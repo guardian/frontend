@@ -68,7 +68,7 @@
 <div class="@RenderClasses(Map(
     ("content__meta-container--no-byline", item.trail.byline.isEmpty),
     ("content__meta-container--liveblog", item.tags.isLiveBlog),
-    ("content__meta-container--float", item.elements.hasShowcaseMainElement),
+    ("content__meta-container--float", item.elements.hasShowcaseMainElement || isPaidContent(page)),
     ("content__meta-container--media-page", item.tags.isMedia),
     ("content__meta-container--tonal-header", item.content.hasTonalHeaderByline),
     ("content__meta-container--explore", item.content.isExplore),
