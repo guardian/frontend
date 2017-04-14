@@ -561,7 +561,7 @@
     @include mq(leftCol) {
         float: left;
         position: static;
-        margin-left: ($left-column + $gs-gutter) * -1;
+        margin-left: ($left-column + $gs-gutter)*-1;
     }
 }
 
