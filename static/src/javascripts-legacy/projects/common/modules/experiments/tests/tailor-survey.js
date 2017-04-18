@@ -14,7 +14,7 @@ define([
     'ophan/ng',
     'lodash/utilities/template',
     'common/modules/article/space-filler',
-    'common/modules/tailor/tailor'
+    'common/modules/tailor/fetch-data'
 ], function (
     bean,
     bonzo,
@@ -31,7 +31,7 @@ define([
     ophan,
     template,
     spaceFiller,
-    tailor
+    fetchData
 ) {
     return function () {
         this.id = 'TailorSurvey';
@@ -168,7 +168,7 @@ define([
                 queryParams.surveysNotToShow = surveysNotToShow;
             }
 
-            return tailor.fetchData('suggestions', true, queryParams).then(function (suggestions) {
+            return fetchData('suggestions', true, queryParams).then(function (suggestions) {
                 // get the survey to show
                 var surveySuggestionToShow = getSurveySuggestionToShow(suggestions);
 
