@@ -29,10 +29,10 @@ const go = () => {
         // 2. once standard is done, next is commercial
         if (config.page.isDev) {
             window.guardian.adBlockers.onDetect.push(isInUse => {
-                const needsMessage = isInUse &&
-                    window.console &&
-                    window.console.warn;
-                const message = 'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
+                const needsMessage =
+                    isInUse && window.console && window.console.warn;
+                const message =
+                    'Do you have an adblocker enabled? Commercial features might fail to run, or throw exceptions.';
                 if (needsMessage) {
                     window.console.warn(message);
                 }

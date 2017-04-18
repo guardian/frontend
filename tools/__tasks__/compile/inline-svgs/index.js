@@ -29,14 +29,17 @@ module.exports = {
                 const dest = path.resolve(conf, 'inline-svgs', svgPath);
                 return mkdirpp(path.dirname(dest))
                     .then(() =>
-                        readFile(path.resolve(srcDir, svgPath), 'utf-8'))
+                        readFile(path.resolve(srcDir, svgPath), 'utf-8')
+                    )
                     .then(
                         fileData =>
                             new Promise(resolve =>
-                                svgo.optimize(fileData, resolve))
+                                svgo.optimize(fileData, resolve)
+                            )
                     )
                     .then(optimisedFileData =>
-                        writeFile(dest, optimisedFileData.data));
+                        writeFile(dest, optimisedFileData.data)
+                    );
             })
         ),
 };

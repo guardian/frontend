@@ -47,7 +47,8 @@ type CustomFetchResponse = {
 
 const buildRequest = (path: string, options: Object): CustomFetchRequest => {
     const isCors = options.mode === 'cors';
-    const withCredentials = (isCors && options.credentials === 'include') ||
+    const withCredentials =
+        (isCors && options.credentials === 'include') ||
         (!isCors && options.credentials === 'same-origin');
 
     return {

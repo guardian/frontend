@@ -11,14 +11,11 @@
 
 const easeIn = (power: number): Function => t => t ** power;
 
-const easeOut = (power: number): Function =>
-    t => 1 - Math.abs((t - 1) ** power);
+const easeOut = (power: number): Function => t =>
+    1 - Math.abs((t - 1) ** power);
 
-const easeInOut = (power: number): Function =>
-    t =>
-        t < 0.5
-            ? easeIn(power)(t * 2) / 2
-            : easeOut(power)(t * 2 - 1) / 2 + 0.5;
+const easeInOut = (power: number): Function => t =>
+    (t < 0.5 ? easeIn(power)(t * 2) / 2 : easeOut(power)(t * 2 - 1) / 2 + 0.5);
 
 // #? these probably should not be generated on parse but on being called
 const easingFunctions = {

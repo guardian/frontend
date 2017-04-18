@@ -39,8 +39,8 @@ const sentryOptions = {
 
     shouldSendCallback(data: Object): boolean {
         const { isDev } = config.page;
-        const isIgnored = typeof data.tags.ignored !== 'undefined' &&
-            data.tags.ignored;
+        const isIgnored =
+            typeof data.tags.ignored !== 'undefined' && data.tags.ignored;
         const { enableSentryReporting } = config.switches;
         const isInSample = Math.random() < 0.1;
 
@@ -51,11 +51,13 @@ const sentryOptions = {
             }
         }
 
-        return enableSentryReporting &&
+        return (
+            enableSentryReporting &&
             isInSample &&
             !isIgnored &&
             !adblockBeingUsed &&
-            !isDev;
+            !isDev
+        );
     },
 };
 

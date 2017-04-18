@@ -14,15 +14,12 @@ const getUrlVars = (query?: string): Object =>
     (query || getCurrentQueryString())
         .split('&')
         .filter(Boolean)
-        .map(param => param.includes('=') ? param.split('=') : [param, true])
-        .reduce(
-            (acc, input) => {
-                const result = acc;
-                result[input[0]] = input[1];
-                return result;
-            },
-            {}
-        );
+        .map(param => (param.includes('=') ? param.split('=') : [param, true]))
+        .reduce((acc, input) => {
+            const result = acc;
+            result[input[0]] = input[1];
+            return result;
+        }, {});
 
 const updateQueryString = (params: Object, historyFn: Function) => {
     const querystringChanged = getCurrentQueryString() !== params.querystring;

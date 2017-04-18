@@ -95,12 +95,14 @@ module.exports = (
                             inline: false,
                             prev: result.map.toString(),
                         },
-                    }))
+                    })
+                )
                 .then(result =>
                     Promise.all([
                         writeFileP(dest, result.css),
                         writeFileP(`${dest}.map`, result.map),
-                    ]));
+                    ])
+                );
         })
     );
 };
