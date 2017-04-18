@@ -14,8 +14,9 @@ const closeSidebarSection = (section: HTMLElement): void => {
     section.removeAttribute('open');
 };
 
-const closeAllSidebarSections = (exclude: HTMLElement): void => {
+const closeAllSidebarSections = (exclude?: HTMLElement): void => {
     const sections = [...document.querySelectorAll('.js-close-nav-list')];
+
     sections.forEach(section => {
         if (section !== exclude) {
             closeSidebarSection(section);
@@ -40,7 +41,7 @@ const toggleSidebar = (): void => {
     const openClass = 'new-header__nav__menu-button--open';
     const globalOpenClass = 'nav-is-open';
     const trigger = document.querySelector('.new-header__nav-trigger');
-    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+    const isOpen = trigger && trigger.getAttribute('aria-expanded') === 'true';
     const sidebar = getSidebarElement();
 
     if (!sidebar || !sidebarToggle) {
@@ -73,7 +74,10 @@ const toggleSidebar = (): void => {
             `nav2 : veggie-burger : ${isOpen ? 'show' : 'hide'}`
         );
 
-        trigger.setAttribute('aria-expanded', expandedAttr);
+        if (trigger) {
+            trigger.setAttribute('aria-expanded', expandedAttr);
+        }
+
         sidebar.setAttribute('aria-hidden', hiddenAttr);
         sidebarToggle.classList.toggle(openClass, !isOpen);
 
@@ -144,9 +148,10 @@ const enhanceSidebarToggle = (): void => {
 
 const toggleSidebarWithOpenSection = () => {
     const sidebar = getSidebarElement();
-    const pillarTitle = document.querySelector('.subnav').dataset.pillarTitle;
+    const subnav = document.querySelector('.subnav');
+    const pillarTitle = (subnav && subnav.dataset.pillarTitle) || '';
     const targetSelector = `.js-navigation-item[data-section-name="${pillarTitle}"]`;
-    const target = sidebar.querySelector(targetSelector);
+    const target = sidebar && sidebar.querySelector(targetSelector);
 
     if (target) {
         openSidebarSection(target.children[0], { scrollIntoView: true });
@@ -177,14 +182,16 @@ const addEventHandler = (): void => {
         }
     });
 
-    subnav.addEventListener('click', (event: Event) => {
-        const target: HTMLElement = (event.target: any);
+    if (subnav) {
+        subnav.addEventListener('click', (event: Event) => {
+            const target: HTMLElement = (event.target: any);
 
-        if (target.matches('.js-toggle-nav-section')) {
-            event.stopPropagation();
-            toggleSidebarWithOpenSection();
-        }
-    });
+            if (target.matches('.js-toggle-nav-section')) {
+                event.stopPropagation();
+                toggleSidebarWithOpenSection();
+            }
+        });
+    }
 };
 
 const init = (): void => {
