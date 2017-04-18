@@ -9,6 +9,7 @@
 @import views.html.fragments.form.{inputField, textareaField}
 @import views.html.fragments.registrationFooter
 @import views.html.fragments.socialSignin
+@import conf.Static
 
 @tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "") = {
     <li class="tabs__tab @if(hidden){is-hidden} @if(page.metadata.id == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(page.metadata.id == url)" aria-controls="tabs-account-profile-@i">

@@ -1,19 +1,8 @@
 package conf.switches
 
 import conf.switches.Expiry.never
-import org.joda.time.LocalDate
 
 trait PerformanceSwitches {
-
-  val PanicSheddingSwitch = Switch(
-    SwitchGroup.Performance,
-    "panic-shedding",
-    "When this switch is on, the Panic Shedding system is enabled which can filter requests under high latency",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
 
   val InlineJSStandardOptimisation = Switch(
     SwitchGroup.Performance,
@@ -197,15 +186,4 @@ trait PerformanceSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
-
-  val SaveForLaterSwitch = Switch(
-    SwitchGroup.Performance,
-    "save-for-later",
-    "It this switch is turned on, user are able to save articles. Turn off if this causes overload on then identity api",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
 }

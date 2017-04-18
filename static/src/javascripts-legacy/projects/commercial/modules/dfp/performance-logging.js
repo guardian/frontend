@@ -127,10 +127,21 @@ define([
     }
 
     function defer(name, fn) {
-        var startStop = [moduleStart.bind(null, name), moduleEnd.bind(null, name)];
+        var start = moduleStart.bind(null, name);
+        var stop = moduleEnd.bind(null, name);
+        var startStop = [start, stop];
         return function() {
             try {
-                return fn.apply(null, startStop.concat(startStop.slice.call(arguments)));
+                var ret = fn.apply(null, startStop.concat(startStop.slice.call(arguments)));
+                // Module-initialiser functions using defer are expected to call stop(),
+                // but a failed promise could be uncaught, so catch them here and call stop().
+                if (ret instanceof Promise) {
+                    return ret.catch(function(reason) {
+                        stop();
+                        throw reason;
+                    });
+                }
+                return ret;
             } catch (e) {
                 stop();
                 throw e;

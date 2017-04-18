@@ -1,17 +1,17 @@
 define([
     'ophan/ng',
-    'lib/user-timing'
-], function (ophan, userTiming) {
+    'lib/user-timing',
+    'lib/window-performance',
+], function (ophan, userTiming, performanceAPI) {
     return function captureTiming() {
-        var supportsPerformanceProperties = 'performance' in window &&
-                                            'navigation' in window.performance &&
-                                            'timing' in window.performance;
+        var supportsPerformanceProperties = 'navigation' in performanceAPI &&
+                                            'timing' in performanceAPI;
 
         if (!supportsPerformanceProperties) {
             return;
         }
 
-        var timing = window.performance && window.performance.timing;
+        var timing = performanceAPI && performanceAPI.timing;
 
         var marks = [
             'standard boot',
@@ -27,12 +27,12 @@ define([
             lastByte: timing.responseEnd - timing.responseStart,
             domContentLoadedEvent: timing.domContentLoadedEventStart - timing.responseEnd,
             loadEvent: timing.loadEventStart - timing.domContentLoadedEventStart,
-            navType: window.performance.navigation.type,
-            redirectCount: window.performance.navigation.redirectCount,
+            navType: performanceAPI.navigation.type,
+            redirectCount: performanceAPI.navigation.redirectCount,
             assetsPerformance: marks.map(function (mark) {
                 return {
                     name: mark,
-                    timing: parseInt(userTiming.getTiming(mark) || 0, 10),
+                    timing: parseInt(userTiming.getMarkTime(mark) || 0, 10),
                 };
             }),
         };

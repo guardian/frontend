@@ -65,10 +65,10 @@ define([
     }
 
     function adtestParams() {
-        var cookieAdtest = cookies.get('adtest');
+        var cookieAdtest = cookies.getCookie('adtest');
         if (cookieAdtest) {
             if (cookieAdtest.substring(0, 4) === 'demo') {
-                cookies.remove('adtest');
+                cookies.removeCookie('adtest');
             }
             return cookieAdtest;
         }

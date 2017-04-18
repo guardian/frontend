@@ -1,4 +1,4 @@
-#Visual glossary of the Guardian.com
+# Visual glossary of the Guardian.com
 
 ## Content Types
 
@@ -6,12 +6,12 @@
 
 [A standard article](http://m.code.dev-theguardian.com/law/2012/jul/27/twitter-joke-trial-high-court) consists of a [headline](http://m.code.dev-theguardian.com/football/blog/2012/may/10/signing-of-season-premier-league), standfirst, date, main image + caption, body copy, contributor/byline + image
 
-![image](images/standard article.jpg)
+![image](images/standard%20article.jpg)
 
 - [Embedded images, quotes](http://m.code.dev-theguardian.com/crosswords/crossword-blog/2012/jul/26/top-10-crosswords-fiction-olivers-travels)
 - [Full width trail image](https://www.theguardian.com/travel/2016/aug/08/top-10-seawater-swimming-pools-in-europe)
 
-![image](images/full width trail.jpg)
+![image](images/full%20width%20trail.jpg)
 
 
 
@@ -19,11 +19,11 @@
 
 - [The Counted - Interactive map](http://www.theguardian.com/us-news/ng-interactive/2015/jun/01/the-counted-map-us-police-killings)
 
-![image](images/the counted.jpg)
+![image](images/the%20counted.jpg)
 
 - [How Katie Ledecky obliterated her own world record in the 400m freestyle](http://www.theguardian.com/sport/ng-interactive/2016/aug/08/how-katie-ledecky-obliterated-her-own-world-record-in-the-400m-freestyle)
 
-![image](images/katie ledecky.jpg)
+![image](images/katie%20ledecky.jpg)
 
 
 ### Immersives
@@ -66,13 +66,13 @@
 
 [Your next box set](http://m.code.dev-theguardian.com/tv-and-radio/2012/jul/26/john-adams-next-box-set)
 
-![image](images/box set.jpg)
+![image](images/box%20set.jpg)
 
 ### Blog Series
 
 [Blog Series](http://m.code.dev-theguardian.com/crosswords/crossword-blog/2012/jul/26/top-10-crosswords-fiction-olivers-travels)
 
-![image](images/blog series.jpg)
+![image](images/blog%20series.jpg)
 
 ### Related
 
@@ -86,7 +86,7 @@
 
 [List of fronts containing containers built from CAPI queries and no curation](https://docs.google.com/spreadsheets/d/1x5JcqR33tnFCjd83mzBxmQONH5xeDkmeQNEjT_MUz0I/edit#gid=374412710)
 
-## Rich Links
+## Rich Links
 
 [Lots of examples](http://preview.gutools.co.uk/info/developer-blog/2014/dec/12/rich-link-testing)
 

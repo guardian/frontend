@@ -9,7 +9,6 @@ define([
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
     'common/modules/experiments/tests/contributions-epic-regulars-v2',
     'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
-    'common/modules/experiments/tests/acquisitions-epic-design-variations-v3',
     'common/modules/experiments/tests/contributions-epic-laundromat',
     'common/modules/experiments/tests/acquisitions-epic-vs-epic-and-engagement-banner'
 
@@ -24,7 +23,6 @@ define([
     askFourEarning,
     regularsV2,
     acquisitionsEpicArticle50Trigger,
-    acquisitionsEpicDesignVariationsV3,
     laundromat,
     acquisitionsEpicVsEpicAndEngagementBanner
 
@@ -36,7 +34,6 @@ define([
         alwaysAsk,
         laundromat,
 		regularsV2,
-        acquisitionsEpicDesignVariationsV3,
         acquisitionsEpicVsEpicAndEngagementBanner,
         epicToSupportLandingPage,
         askFourEarning,
@@ -52,21 +49,8 @@ define([
         return out;
     }, []);
 
-    function nonOutbrainCompliantVariantIds(testInstance) {
-        return reduce(testInstance.variants, function(out, variant) {
-            if (!variant.isOutbrainCompliant) {
-                out.push(variant.id)
-            }
-            return out;
-        }, [])
-    }
-
     var abTestClashData = tests.map(function(test) {
-        var testInstance = new test();
-        return {
-            name: testInstance.id,
-            variants: nonOutbrainCompliantVariantIds(testInstance)
-        }
+        return new test();
     });
 
     return {

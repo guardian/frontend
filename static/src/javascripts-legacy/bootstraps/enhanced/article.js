@@ -8,7 +8,6 @@ define([
     'lib/url',
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
-    'common/modules/article/open-module',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/atoms/quiz',
@@ -25,7 +24,6 @@ define([
     urlutils,
     richLinks,
     membershipEvents,
-    openModule,
     ab,
     geoMostPopular,
     quiz,
@@ -70,7 +68,6 @@ define([
         richLinks.upgradeRichLinks();
         richLinks.insertTagRichLink();
         membershipEvents.upgradeEvents();
-        openModule.init();
         mediator.emit('page:article:ready');
         quiz.handleCompletion();
         storyQuestions.init();

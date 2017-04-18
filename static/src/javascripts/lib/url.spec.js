@@ -1,6 +1,14 @@
 // @flow
 
-import url from './url';
+import {
+    getUrlVars,
+    getPath,
+    pushUrl,
+    constructQuery,
+    back,
+    pushQueryString,
+    replaceQueryString,
+} from './url';
 
 jest.mock('lib/detect', () => ({
     hasPushStateSupport() {
@@ -22,7 +30,7 @@ describe('url', () => {
 
         // pass in the query
         QUERIES.forEach(([query, expected]) => {
-            expect(url.getUrlVars(query)).toEqual(expected);
+            expect(getUrlVars(query)).toEqual(expected);
         });
 
         // get the query from window.location.search
@@ -32,7 +40,7 @@ describe('url', () => {
                 value: `?${query}`,
             });
 
-            expect(url.getUrlVars()).toEqual(expected);
+            expect(getUrlVars()).toEqual(expected);
         });
 
         window.location.search = origWindowSearch;
@@ -47,7 +55,7 @@ describe('url', () => {
             [{ foo: ['bar1', 'bar2'], boo: 'far' }, 'foo=bar1,bar2&boo=far'],
             [{}, ''],
         ].forEach(([vars, expected]) => {
-            expect(url.constructQuery(vars)).toEqual(expected);
+            expect(constructQuery(vars)).toEqual(expected);
         });
     });
 
@@ -60,7 +68,7 @@ describe('url', () => {
         ];
 
         QUERIES.forEach(([query, expected]) => {
-            expect(url.getPath(query)).toEqual(expected);
+            expect(getPath(query)).toEqual(expected);
         });
     });
 
@@ -68,7 +76,7 @@ describe('url', () => {
         const origBack = window.history.back;
         window.history.back = jest.fn();
 
-        url.back();
+        back();
         expect(window.history.back).toHaveBeenCalled();
 
         window.history.back = origBack;
@@ -85,7 +93,7 @@ describe('url', () => {
         window.history.pushState = jest.fn();
 
         // push
-        url.pushUrl(state, title, path);
+        pushUrl(state, title, path);
         expect(window.history.pushState).toHaveBeenCalledWith(
             state,
             title,
@@ -97,7 +105,7 @@ describe('url', () => {
         window.history.replaceState.mockClear();
         window.history.pushState.mockClear();
 
-        url.pushUrl(state, title, path, true);
+        pushUrl(state, title, path, true);
         expect(window.history.pushState).not.toHaveBeenCalled();
         expect(window.history.replaceState).toHaveBeenCalledWith(
             state,
@@ -109,46 +117,49 @@ describe('url', () => {
         window.history.pushState = origPush;
     });
 
-    test('pushQueryString(), replaceQueryString()', () => {
-        ['pushState', 'replaceState'].forEach(method => {
-            const origWindowSearch = window.location.search;
-            const origMethod = window.history[method];
-            const urlMethod = method === 'pushState'
-                ? 'pushQueryString'
-                : 'replaceQueryString';
-            const title = 'new-state-title';
-            const querystring = '/foo/bar';
-            const state = { foo: 'bar' };
+    const testQueryString = (historyMethod, moduleMethod) => {
+        const origWindowSearch = window.location.search;
+        const origMethod = window.history[historyMethod];
+        const title = 'new-state-title';
+        const querystring = '/foo/bar';
+        const state = { foo: 'bar' };
 
-            window.history[method] = jest.fn();
-            window.title = title;
+        window.history[historyMethod] = jest.fn();
+        window.title = title;
 
-            url[urlMethod]({ state, querystring, title });
-            expect(window.history[method]).toHaveBeenCalledWith(
-                state,
-                title,
-                querystring
-            );
+        moduleMethod({ state, querystring, title });
+        expect(window.history[historyMethod]).toHaveBeenCalledWith(
+            state,
+            title,
+            querystring
+        );
 
-            window.history[method].mockClear();
-            url[urlMethod]({ querystring });
-            expect(window.history[method]).toHaveBeenCalledWith(
-                {},
-                title,
-                querystring
-            );
+        window.history[historyMethod].mockClear();
+        moduleMethod({ querystring });
+        expect(window.history[historyMethod]).toHaveBeenCalledWith(
+            {},
+            title,
+            querystring
+        );
 
-            Object.defineProperty(window.location, 'search', {
-                writable: true,
-                value: `?${querystring}`,
-            });
-
-            window.history[method].mockClear();
-            url[urlMethod]({ querystring });
-            expect(window.history[method]).not.toHaveBeenCalled();
-
-            window.history[method] = origMethod;
-            window.location.search = origWindowSearch;
+        Object.defineProperty(window.location, 'search', {
+            writable: true,
+            value: `?${querystring}`,
         });
+
+        window.history[historyMethod].mockClear();
+        moduleMethod({ querystring });
+        expect(window.history[historyMethod]).not.toHaveBeenCalled();
+
+        window.history[historyMethod] = origMethod;
+        window.location.search = origWindowSearch;
+    };
+
+    test('pushQueryString()', () => {
+        testQueryString('pushState', pushQueryString);
+    });
+
+    test('replaceQueryString()', () => {
+        testQueryString('replaceState', replaceQueryString);
     });
 });

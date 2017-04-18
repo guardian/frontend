@@ -60,7 +60,7 @@ define([
         ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
         ['cm-articleAsideAdverts', articleAsideAdverts.init, true],
         ['cm-prepare-googletag', prepareGoogletag.init, true],
-        ['cm-articleBodyAdverts', articleBodyAdverts.init, true],
+        ['cm-articleBodyAdverts', articleBodyAdverts.init],
         ['cm-liveblogAdverts', liveblogAdverts.init, true],
         ['cm-closeDisabledSlots', closeDisabledSlots.init],
         ['cm-stickyTopBanner', stickyTopBanner.init],
@@ -90,7 +90,7 @@ define([
             var moduleInit = module[1];
             var moduleDefer = module[2];
 
-            robust.context([
+            robust.catchErrorsWithContext([
                 [moduleName, function () {
                     // These modules all have async init procedures which don't block, and return a promise purely for
                     // perf logging, to time when their async work is done. The command buffer guarantees execution order,
@@ -100,7 +100,7 @@ define([
                         performanceLogging.wrap(moduleName, moduleInit);
                     var result = wrapped();
                     modulePromises.push(result);
-                }],
+                }]
             ]);
         });
 
@@ -116,8 +116,8 @@ define([
             return Promise.resolve();
         }
 
-        userTiming.mark('commercial start');
-        robust.context([
+        userTiming.markTime('commercial start');
+        robust.catchErrorsWithContext([
             ['ga-user-timing-commercial-start', function () {
                 ga.trackPerformance('Javascript Load', 'commercialStart', 'Commercial start parse time');
             }],
@@ -128,13 +128,12 @@ define([
 
         return loadModules(commercialModules, performanceLogging.primaryBaseline)
         .then(function () {
-            userTiming.mark('commercial end');
-            robust.context([
+            userTiming.markTime('commercial end');
+            robust.catchErrorsWithContext([
                 ['ga-user-timing-commercial-end', function () {
                     ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
-                }],
+                }]
             ]);
-            performanceLogging.reportTrackingData();
         })
         .catch(function (err) {
             // Just in case something goes wrong, we don't want it to

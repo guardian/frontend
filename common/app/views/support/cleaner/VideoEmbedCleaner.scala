@@ -2,7 +2,7 @@ package views.support.cleaner
 
 import java.net.{URL, URLEncoder}
 
-import model.{Article, ShareLinks, VideoAsset, VideoElement}
+import model.{Article, ShareLinks, VideoElement}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{HtmlCleaner, Item640}
 

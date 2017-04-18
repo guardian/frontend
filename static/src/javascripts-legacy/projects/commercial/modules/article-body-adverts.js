@@ -32,14 +32,12 @@ define([
     var replaceTopSlot;
     var getSlotName;
     var getSlotType;
-    var isOffsetingAds = abUtils.testCanBeRun('IncreaseInlineAds') &&
-        abUtils.getTestVariantId('IncreaseInlineAds') === 'yes';
+    var isOffsetingAds = abUtils.testCanBeRun('IncreaseInlineAdsRedux') &&
+        abUtils.getTestVariantId('IncreaseInlineAdsRedux') === 'yes';
 
-    function init(start, stop) {
-        start();
+    function init() {
 
         if (!commercialFeatures.articleBodyAdverts) {
-            stop();
             return Promise.resolve(false);
         }
 
@@ -55,11 +53,11 @@ define([
             // we must wait for DFP to return, since if the merch
             // component is empty, it might completely change the
             // positions where we insert those MPUs.
-            im.then(waitForMerch).then(addInlineAds).then(stop);
+            im.then(waitForMerch).then(addInlineAds);
             return im;
         }
 
-        addInlineAds().then(stop);
+        addInlineAds();
         return Promise.resolve(true);
     }
 

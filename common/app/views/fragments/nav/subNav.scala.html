@@ -1,0 +1,21 @@
+@(page: model.Page)(implicit request: RequestHeader)
+
+@import common.{NewNavigation, Edition, LinkTo}
+@import views.support.RenderClasses
+
+<ul class="subnav">
+    @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
+
+        @NewNavigation.SubSectionLinks.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront).map { link =>
+            <li class="subnav__link-item">
+                <a class="@RenderClasses(Map(
+                        "subnav__link" -> true,
+                        "subnav__link--current-section" -> (id == link.uniqueSection)
+                    ))"
+                    href="@LinkTo(link.url)" data-link-name="nav2 : subnav : @{ if(link.longTitle.isEmpty) link.title else link.longTitle}">
+                        @link.title
+                </a>
+            </li>
+        }
+    }
+</ul>

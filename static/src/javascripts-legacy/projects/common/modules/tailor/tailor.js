@@ -18,14 +18,12 @@ define([
         suggestions: 'https://tailor.guardianapis.com/suggestions?browserId='
     };
 
-    var browserId = cookies.get('bwid');
+    var browserId = cookies.getCookie('bwid');
 
     function getURL(type, queryParams) {
         var baseURL = URLS[type];
 
-        if (!browserId || !baseURL) {
-            return '';
-        }
+        if (!browserId || !baseURL) return;
 
         baseURL += browserId;
 
@@ -48,28 +46,20 @@ define([
     function fetchData(type, bypassStorage, queryParams) {
         var url = getURL(type, queryParams);
 
-        // if no valid url end point return empty object
-        if (!url) {
-            return Promise.resolve({});
-        }
+        return new Promise(function(resolve, reject) {
+            // if no valid url end point, or tailor switch is off, reject
+            if (!url || !config.switches.useTailorEndpoints) return reject();
 
-        var tailorData = bypassStorage ? null : storage.local.get('gu.tailor');
+            var tailorData = bypassStorage ? null : storage.local.get('gu.tailor');
 
-        // if data in local storage return this
-        if (tailorData && tailorData[url]) {
-            return Promise.resolve(tailorData[url]);
-        }
+            // if data in local storage return this
+            if (tailorData && tailorData[url]) {
+                return resolve(tailorData[url]);
+            }
 
-        // if use tailor switch is off then return an empty object
-        if (!config.switches.useTailorEndpoints) {
-            return Promise.resolve({});
-        }
-
-        return fetchJson(url, {
-                    method: 'get'
-                })
-                .then(handleResponse.bind(null, url))
-                .catch(handleError.bind(null, url))
+            return resolve(fetchJson(url, { method: 'get' }));
+        }).then(handleResponse.bind(null, url))
+          .catch(handleError.bind(null, url));
     }
 
     function handleResponse(url, data) {
@@ -90,7 +80,25 @@ define([
         });
     }
 
+    /**
+     * Query the user's regular status
+     *
+     * @returns {Promise.<Boolean>}
+     */
+    function isRegular() {
+        return fetchData('suggestions', false).then(function(suggestions) {
+            try {
+                return suggestions.userDataForClient.regular;
+            } catch (e) {
+                return false;
+            }
+        }).catch(function() {
+            return false;
+        });
+    }
+
     return {
-        fetchData: fetchData
+        fetchData: fetchData,
+        isRegular: isRegular
     };
 });

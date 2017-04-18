@@ -12,7 +12,7 @@ define([
     function retrieve(n) {
         var k = 'kx' + n;
 
-        return storage.local.getRaw(k) || cookies.get(k + '=([^;]*)') || '';
+        return storage.local.getRaw(k) || cookies.getCookie(k + '=([^;]*)') || '';
     }
 
     function getSegments() {

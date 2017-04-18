@@ -1,4 +1,4 @@
-@(filterGroups: Map[String, Seq[CompetitionFilter]], pageType: String, selectedCompetition: Option[model.Competition])(implicit request: RequestHeader)
+@(filterGroups: Map[String, Seq[football.controllers.CompetitionFilter]], pageType: String, selectedCompetition: Option[model.Competition])(implicit request: RequestHeader)
 
 @renderOpts(name: String) = {
     @filterGroups.get(name).map{ filter =>

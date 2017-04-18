@@ -2,13 +2,8 @@
     background-color: $neutral-6;
 
     .fc-item__kicker,
-    .fc-item__byline,
-    .fc-save-for-later--is-saved {
+    .fc-item__byline {
         color: $external-main-1;
-    }
-
-    .fc-save-for-later {
-        border-color: mix(#000000, $neutral-6, 10%);
     }
 
     .fc-item__kicker--dreamsnap {
@@ -23,10 +18,6 @@
     .fc-item__container:before,
     .rich-link__container:before {
         background-color: $external-support-1;
-    }
-
-    .fc-save-for-later--is-saved .inline-tone-fill {
-        fill: $external-main-1;
     }
 }
 

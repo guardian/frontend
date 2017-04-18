@@ -135,17 +135,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val FacebookAutoSigninSwitch = Switch(
-    SwitchGroup.Feature,
-    "facebook-autosignin",
-    "If this switch is on then users who have previously authorized the guardian app in facebook and who have not " +
-      "recently signed out are automatically signed in.",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val FacebookShareUseTrailPicFirstSwitch = Switch(
     SwitchGroup.Feature,
     "facebook-shareimage",
@@ -483,7 +472,7 @@ trait FeatureSwitches {
     "Live blog chrome notifications - prod",
     owners = Seq(Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 5),
+    sellByDate = new LocalDate(2017, 6, 30), //Friday
     exposeClientSide = true
   )
 
@@ -507,16 +496,6 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
-  )
-
-  val NewHeader = Switch(
-    SwitchGroup.Feature,
-    "new-header",
-    "New header switch, just in case anything is really wrong with it",
-    owners = Seq(Owner.withGithub("natalialkb")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 4, 12),
-    exposeClientSide = false
   )
 
   val InlineEmailStyles = Switch(

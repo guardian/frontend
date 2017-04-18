@@ -75,7 +75,7 @@ define([
                         pageViewId: 'presetOphanPageViewId'
                     };
 
-                    cookies.get = function () {
+                    cookies.getCookie = function () {
                         return 'ng101';
                     };
                     detect.getBreakpoint = function () {

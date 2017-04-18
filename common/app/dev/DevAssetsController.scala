@@ -11,7 +11,6 @@ import play.api.{Environment, Mode}
 import play.api.http.HttpEntity
 import play.api.libs.MimeTypes
 import play.api.mvc._
-import play.api.libs.iteratee.Enumerator
 
 class DevAssetsController(val environment: Environment) extends Controller with ExecutionContexts {
 

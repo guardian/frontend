@@ -24,7 +24,7 @@ object Sublinks {
   def fromItemClasses(itemClasses: ItemClasses) = itemClasses.tablet match {
     case FullMedia50 | FullMedia75 => fromZero(4)
     case Half => fromZero(3)
-    case ListItem | MediaList | SavedForLater | Fluid => unit(0)
+    case ListItem | MediaList | Fluid => unit(0)
     case FullMedia100 => InclusiveRange(2, 4)
     case Standard | Third => fromZero(2)
     case ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall => fromZero(3)

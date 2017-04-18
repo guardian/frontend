@@ -11,9 +11,6 @@ define([
     contributionsEpicEqualButtons,
     tailor
 ) {
-
-    var bwidCookie = cookies.get('bwid') || '';
-
     function controlTemplate(regular) {
         var suffix = regular ? '_regular' : '_non_regular';
         return function(variant) {
@@ -72,28 +69,14 @@ define([
         }
     }
 
-    function isRegular() {
-        return tailor.fetchData('suggestions', false).then(function (suggestions) {
-            try {
-                return suggestions.userDataForClient.regular;
-            } catch (e) {
-                return false;
+    function renderTemplate(render, template) {
+        return tailor.isRegular().then(function (regular) {
+            if (regular) {
+                render(template(true));
+            } else {
+                render(controlTemplate(false));
             }
         });
-    }
-
-    function renderTemplate(render, template) {
-        if (bwidCookie) {
-            isRegular().then(function (regular) {
-                if (regular) {
-                    render(template(true));
-                } else {
-                    render(controlTemplate(false));
-                }
-            });
-        } else {
-            render(controlTemplate(false));
-        }
     }
 
     return contributionsUtilities.makeABTest({

@@ -1,4 +1,4 @@
-#FAQs
+# FAQs
 
 ## I can see mark-up in my response, but it's not in the application anywhere. Where is it coming from?
 

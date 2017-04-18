@@ -2,10 +2,10 @@
 define([
     'lib/$',
     'bean',
-    'lib/ajax',
+    'lib/fetch',
     'lib/config',
     'fastdom'
-], function ($, bean, ajax, config, fastdom) {
+], function ($, bean, fetch, config, fastdom) {
 
     var checkoutHandler = StripeCheckout.configure({
         key: config.page.stripePublicToken,
@@ -128,20 +128,22 @@ define([
         function update(endpoint) {
             return function (token) {
                 loading.send();
-                ajax({
-                    url: endpoint,
-                    crossOrigin: true,
-                    withCredentials: true,
+                fetch(endpoint, {
+                    mode: 'cors',
+                    credentials: 'include',
                     method: 'post',
                     headers: {
                         'Csrf-Token': 'nocheck'
                     },
-                    data: {
+                    body: {
                         stripeToken: token.id
-                    }
-                }).then(function success(card) {
+                    },
+                }).then(function(resp) {
+                    return resp.json();
+                }).then(function (json) {
+                    var card = json;
                     display($parent, card);
-                }, function fail() {
+                }).catch(function() {
                     $parent.text('We have not been able to update your card details at this time.');
                 });
             };

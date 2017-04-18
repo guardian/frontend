@@ -21,6 +21,10 @@ Check that you own your own .npm directory `ls -ld ~/.npm`
 If it is owned by root, then take ownership of it
 `sudo chown -R $(whoami) ~/.npm`
 
+### { Error: ENOENT: no such file or directory, scandir '../frontend/node_modules/node-sass/vendor'
+
+Run `make reinstall` to resolve.
+
 ### Global install permissions errors
 The script installs global npm packages without sudo. If you get npm permission errors, follow the guide to using npm without sudo [here](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 

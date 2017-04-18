@@ -1,6 +1,7 @@
 @(item: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.{Edition, StringEncodings}
 @import conf.Static
+@import conf.Configuration
 @import play.api.libs.json.Json
 @import views.support.{CamelCase, JavaScriptPage, GoogleAnalyticsAccount}
 @import conf.Configuration.environment
@@ -22,10 +23,6 @@
             "membership": {
                 "adblock-coins": "@Static("images/membership/adblock-coins.png")",
                 "adblock-coins-us": "@Static("images/membership/adblock-coins-us.png")"
-            },
-            "acquisitions": {
-                "paypal": "@Static("images/acquisitions/paypal.png")",
-                "paypalAndCreditCard": "@Static("images/acquisitions/paypal_and_credit_card.png")"
             }
         },
         "stylesheets": {

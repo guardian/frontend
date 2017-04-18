@@ -64,7 +64,7 @@ define([
      */
     Id.getUserFromCookie = function () {
         if (userFromCookieCache === null) {
-            var cookieData = cookies.get(Id.cookieName),
+            var cookieData = cookies.getCookie(Id.cookieName),
             userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
             if (userData) {
                 var displayName = decodeURIComponent(userData[2]);
@@ -86,7 +86,7 @@ define([
      * @return {string}
      */
     Id.getCookie = function () {
-        return cookies.get(Id.cookieName);
+        return cookies.getCookie(Id.cookieName);
     };
 
     /**
@@ -179,7 +179,7 @@ define([
      * @return {Boolean}
      */
     Id.hasUserSignedOutInTheLast24Hours = function () {
-        var cookieData = cookies.get(Id.signOutCookieName);
+        var cookieData = cookies.getCookie(Id.signOutCookieName);
 
         if (cookieData) {
             return ((Math.round(new Date().getTime() / 1000)) < (parseInt(cookieData, 10) + 86400));
@@ -191,7 +191,7 @@ define([
      * Returns true if a there is no signed in user and the user has not signed in the last 24 hours
      */
     Id.shouldAutoSigninInUser = function () {
-        var signedInUser = !!cookies.get(Id.cookieName),
+        var signedInUser = !!cookies.getCookie(Id.cookieName),
             checkFacebook = !!storage.local.get(Id.fbCheckKey);
         return !signedInUser && !checkFacebook && !this.hasUserSignedOutInTheLast24Hours();
     };
@@ -239,36 +239,6 @@ define([
                 crossOrigin: true,
                 data: {
                     method: 'post'
-                }
-            });
-
-        return request;
-    };
-
-    Id.getSavedArticles = function () {
-
-        var endpoint = '/syncedPrefs/me/savedArticles',
-            request = ajax({
-                url: Id.idApiRoot + endpoint,
-                type: 'jsonp',
-                crossOrigin: true
-            });
-
-        return request;
-    };
-
-    Id.saveToArticles = function (data) {
-        var endpoint = '/syncedPrefs/cors/me/savedArticles',
-            request = ajax({
-                url: Id.idApiRoot + endpoint,
-                type: 'json',
-                crossOrigin: true,
-                method: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(data),
-                withCredentials: true,
-                headers: {
-                    'X-GU-ID-Client-Access-Token':  'Bearer ' + config.page.idApiJsClientToken
                 }
             });
 

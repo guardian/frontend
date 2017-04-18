@@ -1,10 +1,13 @@
 @import model.Article
 
+@import model.liveblog.LiveBlogPage
+@import model.liveblog.LatestBlock
 @(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.Edition
 @import views.support.{AmpAd, AmpAdDataSlot}
 @import org.joda.time.DateTimeZone
+@import views.support.structuredData.LiveBlogPosting
 
 @liveBlogBlocksAMP(article: Article, timezone: DateTimeZone) = {
     @model.currentPage.currentPage.blocks.sliding(5, 5).zipWithIndex.map { case (blockGroup, index) =>
@@ -28,13 +31,14 @@
         @if(model.currentPage.currentPage.isArchivePage) {
             @fragments.liveBlogNavigation(article.content.metadata.id, model.currentPage, amp = true)
         }
+
             <amp-live-list
                 id="live-list"
                 data-poll-interval="15000"
                 data-max-items-per-page="20"
                 @if(model.currentPage.currentPage.pageNumber != 1) {disabled}
                 class="js-liveblog-body u-cf from-content-api js-blog-blocks blocks @if(article.fields.isLive) {live-blog}" data-most-recent-block="block-@{
-                _root_.liveblog.LatestBlock(article.blocks)
+                LatestBlock(article.blocks)
             }" data-test-id="live-blog-blocks"
             itemprop="@if(article.tags.isReview) {reviewBody} else {articleBody}">
                 <button update on="tap:live-list.update" class="toast__space-reserver">

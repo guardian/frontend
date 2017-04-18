@@ -91,9 +91,9 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Loggi
 
   private final val circuitBreaker = new CircuitBreaker(
     scheduler = actorSystem.scheduler,
-    maxFailures = 10,
-    callTimeout = 5.seconds,
-    resetTimeout = 1.minute
+    maxFailures = 5,
+    callTimeout = 3.seconds,
+    resetTimeout = 5.minutes
   )
 
   circuitBreaker.onOpen(
@@ -117,7 +117,6 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Loggi
         val request = FeedRequest(
           feedName = "Book Lookup",
           url = s"${props.urlPrefix}/$isbn",
-          timeout = 3.seconds,
           switch = BookLookupSwitch,
           responseEncoding = "utf-8")
 
