@@ -37,7 +37,7 @@ define([
                 .catch(function () {
                     avatar.attr('src', avatarApi.deterministicUrl(avatarUserId));
                 })
-                .finally(function () {
+                .then(function () {
                     updateCleanup();
                 });
         } else {
