@@ -446,7 +446,8 @@ object NewNavigation {
         NavLink("editor", "/crosswords/series/crossword-editor-update"),
         NavLink("quick", "/crosswords/series/quick"),
         NavLink("cryptic", "/crosswords/series/cryptic"),
-        NavLink("prize", "/crosswords/series/prize")
+        NavLink("prize", "/crosswords/series/prize"),
+        NavLink("weekend", "/crosswords/series/weekend-crossword")
       ),
       List(
         NavLink("quiptic", "/crosswords/series/quiptic"),

@@ -18,7 +18,7 @@ GET           /oauth2callback                                                   
 GET           /logout                                                                          controllers.OAuthLoginPreviewController.logout
 
 # Crossword
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy|weekend>/:id    controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
 
 
 # Commercial
