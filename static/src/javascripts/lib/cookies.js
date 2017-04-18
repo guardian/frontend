@@ -63,20 +63,17 @@ const getCookieValues = (name: string): string[] => {
     const nameEq = `${name}=`;
     const cookies = document.cookie.split(';');
 
-    return cookies.reduce(
-        (acc, cookie) => {
-            const cookieTrimmed = cookie.trim();
+    return cookies.reduce((acc, cookie) => {
+        const cookieTrimmed = cookie.trim();
 
-            if (cookieTrimmed.indexOf(nameEq) === 0) {
-                acc.push(
-                    cookieTrimmed.substring(nameEq.length, cookieTrimmed.length)
-                );
-            }
+        if (cookieTrimmed.indexOf(nameEq) === 0) {
+            acc.push(
+                cookieTrimmed.substring(nameEq.length, cookieTrimmed.length)
+            );
+        }
 
-            return acc;
-        },
-        []
-    );
+        return acc;
+    }, []);
 };
 
 const getCookie = (name: string): ?string => {
