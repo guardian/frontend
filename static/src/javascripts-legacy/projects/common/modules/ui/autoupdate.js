@@ -8,7 +8,7 @@ define([
     'bonzo',
     'qwery',
     'lib/$',
-    'lib/ajax',
+    'lib/fetch-json',
     'lib/config',
     'lib/detect',
     'lib/mediator',
@@ -27,7 +27,7 @@ define([
     bonzo,
     qwery,
     $,
-    ajax,
+    fetchJSON,
     config,
     detect,
     mediator,
@@ -137,12 +137,10 @@ define([
             var shouldFetchBlocks = '&isLivePage=' + (isLivePage ? 'true' : 'false');
             var latestBlockIdToUse = ((latestBlockId) ? latestBlockId : 'block-0');
             var count = 0;
+            var endpoint = window.location.pathname + '.json?lastUpdate=' + latestBlockIdToUse + shouldFetchBlocks;
 
-            return ajax({
-                url: window.location.pathname + '.json?lastUpdate=' + latestBlockIdToUse + shouldFetchBlocks,
-                type: 'json',
-                method: 'get',
-                crossOrigin: true
+            return fetchJSON(endpoint, {
+                mode: 'cors',
             }).then(function (resp) {
                 count = resp.numNewBlocks;
 
@@ -165,7 +163,7 @@ define([
                         toastButtonRefresh();
                     }
                 }
-            }).always(function () {
+            }).finally(function () {
                 if (count == 0 || currentUpdateDelay > 0) {
                     updateDelay(currentUpdateDelay);
                     updateTimeoutId = setTimeout(checkForUpdates, currentUpdateDelay);
