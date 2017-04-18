@@ -109,7 +109,8 @@ define([
         avatarApi.updateAvatar(formData)
             .then(function () {
                 self.prependSuccessMessage(self.messages.avatarUploadSuccess, avatarForm);
-            }, function (err) {
+            })
+            .catch(function (err) {
                 if (err.status >= 400 && err.status < 500) {
                     self.prependErrorMessage(
                         JSON.parse(err.responseText).message || self.messages.avatarUploadFailure,
