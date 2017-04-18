@@ -67,7 +67,7 @@ object NewNavigation {
     val uk = NavLinkLists(List(headlines, ukNews, world, business, environment, tech, football))
     val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, environment, economy, football))
     val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, science, soccer))
-    val int = NavLinkLists(List(headlines, world, ukNews, science, cities, globalDevelopment, football))
+    val int = NavLinkLists(List(headlines, world, ukNews, business, science, cities, globalDevelopment, football))
   }
 
   case object News extends EditionalisedNavigationSection {
