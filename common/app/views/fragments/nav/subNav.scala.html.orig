@@ -4,7 +4,11 @@
 @import views.support.RenderClasses
 
 <ul class="subnav"
+<<<<<<< Updated upstream
+    data-section-id="@page.metadata.sectionId">
+=======
     data-section-id="@page.metadata.section">
+>>>>>>> Stashed changes
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
 
         @NewNavigation.SubSectionLinks.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront).map { link =>
