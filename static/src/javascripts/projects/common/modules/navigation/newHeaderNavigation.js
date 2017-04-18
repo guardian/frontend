@@ -10,6 +10,10 @@ const enhanced = {};
 const getSidebarElement = (): ?HTMLElement =>
     document.getElementById('main-menu');
 
+const closeSidebarSection = (section: HTMLElement): void => {
+    section.removeAttribute('open');
+};
+
 const closeAllSidebarSections = (exclude: HTMLElement): void => {
     const sections = [...document.querySelectorAll('.js-close-nav-list')];
     sections.forEach(section => {
@@ -19,11 +23,10 @@ const closeAllSidebarSections = (exclude: HTMLElement): void => {
     });
 };
 
-const closeSidebarSection = (section: HTMLElement): void => {
-    section.removeAttribute('open');
-};
-
-const openSidebarSection = (section: HTMLElement, options?: Object = {}): void => {
+const openSidebarSection = (
+    section: HTMLElement,
+    options?: Object = {}
+): void => {
     section.setAttribute('open', '');
 
     if (options.scrollIntoView === true) {
@@ -96,7 +99,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         const enhance = () => {
             [...checkbox.classList].forEach(c => button.classList.add(c));
 
-            button.addEventListener('click', (event: Event) => toggleSidebar());
+            button.addEventListener('click', () => toggleSidebar());
             button.setAttribute('id', checkboxId);
             button.setAttribute('aria-expanded', 'false');
 
@@ -141,8 +144,8 @@ const enhanceSidebarToggle = (): void => {
 
 const toggleSidebarWithOpenSection = () => {
     const sidebar = getSidebarElement();
-    const sectionId = document.querySelector('.subnav').dataset.sectionId;
-    const targetSelector = `.js-navigation-item[data-section-id="${sectionId}"]`;
+    const pillarTitle = document.querySelector('.subnav').dataset.pillarTitle;
+    const targetSelector = `.js-navigation-item[data-section-name="${pillarTitle}"]`;
     const target = sidebar.querySelector(targetSelector);
 
     if (target) {
@@ -153,7 +156,7 @@ const toggleSidebarWithOpenSection = () => {
 
     ophan.record({
         component: 'main-navigation',
-        value: 'is opened by "more" toggle',
+        value: `more toggle: ${pillarTitle}`,
     });
 };
 

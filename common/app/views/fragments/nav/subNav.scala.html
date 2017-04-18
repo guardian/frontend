@@ -3,30 +3,39 @@
 @import common.{NewNavigation, Edition, LinkTo}
 @import views.support.RenderClasses
 
-<ul class="subnav"
-    data-section-id="@page.metadata.section">
-    @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
+@defining((NewNavigation.SubSectionLinks.getSectionOrTagId(page))) { id =>
+    @defining((NewNavigation.SectionLinks.getTopLevelSection(id))) { currentTopLevelSection =>
+        @defining((NewNavigation.PrimaryLinks.find { link => link.title == currentTopLevelSection }.fold("")(_.title)))
+        { activePillarTitle =>
 
-        @NewNavigation.SubSectionLinks.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront).map { link =>
-            <li class="subnav__link-item">
-                <a class="@RenderClasses(Map(
+        <ul class="subnav"
+            data-pillar-title="@activePillarTitle">
+
+            @NewNavigation.SubSectionLinks.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront).map { link =>
+                <li class="subnav__link-item">
+                    <a class="@RenderClasses(Map(
                         "subnav__link" -> true,
                         "subnav__link--current-section" -> (id == link.uniqueSection)
                     ))"
                     href="@LinkTo(link.url)"
-                    data-link-name="nav2 : subnav : @{ if(link.longTitle.isEmpty) link.title else link.longTitle}">
+                    data-link-name="nav2 : subnav : @{
+                        if(link.longTitle.isEmpty) link.title else link.longTitle
+                    }">
                     @link.title
-                </a>
+                    </a>
+                </li>
+            }
+
+
+            <li class="subnav__link-item">
+                <button class="
+                    subnav__link
+                    subnav__link--toggle-more
+                    js-toggle-nav-section">
+                    more
+                </button>
             </li>
+        </ul>
         }
     }
-
-    <li class="subnav__link-item">
-        <button class="
-            subnav__link
-            subnav__link--toggle-more
-            js-toggle-nav-section">
-            more
-        </button>
-    </li>
-</ul>
+}
