@@ -379,16 +379,14 @@ object NewNavigation {
       }
     }
 
-    def getTopLevelSection(id: String) = {
-      val sectionList = sectionLinks.filter { item =>
+    def getParentPillar(id: String) = {
+      val sectionList = sectionLinks.find { item =>
         item.pageId == id
       }
 
-      if (sectionList.isEmpty) {
-        "News"
-      } else {
-        sectionList.head.parentSection.name
-      }
+      sectionList.map {
+        _.parentSection.name
+      }.getOrElse("News")
     }
   }
 
@@ -533,6 +531,18 @@ object NewNavigation {
       } else {
         simplifySectionId(page.metadata.sectionId)
       }
+    }
+
+    def getActivePillar(page: Page) = {
+      val sectionOrTagId = getSectionOrTagId(page);
+      val activeSectionLink = SectionLinks.sectionLinks.find { item =>
+        item.pageId == sectionOrTagId
+      }
+      val activePillarName = activeSectionLink.map {
+        _.parentSection.name
+      }.getOrElse("")
+
+      (sectionOrTagId, activePillarName)
     }
 
     def simplifySectionId(sectionId: String) = {

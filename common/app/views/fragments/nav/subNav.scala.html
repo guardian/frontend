@@ -3,30 +3,26 @@
 @import common.{NewNavigation, Edition, LinkTo}
 @import views.support.RenderClasses
 
-@defining((NewNavigation.SubSectionLinks.getSectionOrTagId(page))) { id =>
-    @defining((NewNavigation.SectionLinks.getTopLevelSection(id))) { currentTopLevelSection =>
-        @defining((NewNavigation.PrimaryLinks.find { link => link.title == currentTopLevelSection }.fold("")(_.title)))
-        { activePillarTitle =>
+@defining(NewNavigation.SubSectionLinks.getActivePillar(page)) { case (id, activePillarName) =>
+    <ul class="subnav"
+        data-pillar-title="@activePillarName">
 
-        <ul class="subnav"
-            data-pillar-title="@activePillarTitle">
+        @NewNavigation.SubSectionLinks.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront).map { link =>
+            <li class="subnav__link-item">
+                <a class="@RenderClasses(Map(
+                    "subnav__link" -> true,
+                    "subnav__link--current-section" -> (id == link.uniqueSection)
+                ))"
+                href="@LinkTo(link.url)"
+                data-link-name="nav2 : subnav : @{
+                    if(link.longTitle.isEmpty) link.title else link.longTitle
+                }">
+                @link.title
+                </a>
+            </li>
+        }
 
-            @NewNavigation.SubSectionLinks.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront).map { link =>
-                <li class="subnav__link-item">
-                    <a class="@RenderClasses(Map(
-                        "subnav__link" -> true,
-                        "subnav__link--current-section" -> (id == link.uniqueSection)
-                    ))"
-                    href="@LinkTo(link.url)"
-                    data-link-name="nav2 : subnav : @{
-                        if(link.longTitle.isEmpty) link.title else link.longTitle
-                    }">
-                    @link.title
-                    </a>
-                </li>
-            }
-
-
+        @if(mvt.ABNavigationMoreToggle.isParticipating) {
             <li class="subnav__link-item">
                 <button class="
                     subnav__link
@@ -35,7 +31,6 @@
                     more
                 </button>
             </li>
-        </ul>
         }
-    }
+    </ul>
 }

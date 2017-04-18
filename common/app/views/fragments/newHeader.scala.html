@@ -8,7 +8,7 @@
         role="banner">
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
         @defining(
-            NewNavigation.SectionLinks.getTopLevelSection(id)
+            NewNavigation.SectionLinks.getParentPillar(id)
         ) { case (currentTopLevelSection) =>
             <div class="new-header__inner gs-container">
                 <a href="@LinkTo{/}"
