@@ -17,7 +17,9 @@
     "lib/element-inview.js"
   ],
   "Nicolas Long": [],
-  "Calum Campbell": [],
+  "Calum Campbell": [
+    "lib/load-css-promise.js"
+  ],
   "GHaberis": [
     "lib/load-script.js",
     "lib/location.js",
