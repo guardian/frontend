@@ -1,9 +1,9 @@
 define([
     'lib/$',
-    'lib/ajax'
+    'lib/fetch-json'
 ], function (
     $,
-    ajax
+    fetchJSON
 ) {
 
     /**
@@ -21,12 +21,11 @@ define([
     MatchInfo.prototype.endpoint = '/football/api/match-nav/';
 
     /**
-     * @return Reqwest
+     * @return Promise
      */
     MatchInfo.prototype.fetch = function () {
-        return ajax({
-            crossOrigin: true,
-            url: this.endpoint
+        return fetchJSON(this.endpoint, {
+            mode: 'cors',
         });
     };
 
