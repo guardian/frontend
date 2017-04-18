@@ -310,7 +310,7 @@ define([
         };
     return {
         init: function () {
-            robust.context([
+            robust.catchErrorsWithContext([
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],
 

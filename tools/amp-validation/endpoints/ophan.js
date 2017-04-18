@@ -2,7 +2,8 @@ const http = require('http');
 
 const fetch = () =>
     new Promise((resolve, reject) => {
-        const errorMessage = 'Failed to fetch top traffic endpoints from ophan.';
+        const errorMessage =
+            'Failed to fetch top traffic endpoints from ophan.';
         const opts = {
             hostname: 'api.ophan.co.uk',
             path: '/api/mostread?count=50',
@@ -37,7 +38,8 @@ const getEndpointsFromResponse = res => {
             })
             .on('end', () => {
                 const endpoints = JSON.parse(body).map(hit =>
-                    hit.url.replace(/^https?:\/\/www\.theguardian\.com/, ''));
+                    hit.url.replace(/^https?:\/\/www\.theguardian\.com/, '')
+                );
                 resolve(endpoints);
             })
             .on('error', reject);

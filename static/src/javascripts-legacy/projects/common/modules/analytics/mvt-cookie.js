@@ -11,13 +11,13 @@ define([
 
     function overwriteMvtCookie(testId) {
         // For test purposes only.
-        cookies.add(MULTIVARIATE_ID_COOKIE, testId, 365);
+        cookies.addCookie(MULTIVARIATE_ID_COOKIE, testId, 365);
     }
 
     function getMvtFullId() {
-        var bwidCookie = cookies.get(BROWSER_ID_COOKIE),
+        var bwidCookie = cookies.getCookie(BROWSER_ID_COOKIE),
             mvtidCookie = getMvtValue(),
-            visitoridCookie = cookies.get(VISITOR_ID_COOKIE);
+            visitoridCookie = cookies.getCookie(VISITOR_ID_COOKIE);
 
         if (!visitoridCookie) {
             visitoridCookie = 'unknown-visitor-id';
@@ -35,7 +35,7 @@ define([
     }
 
     function getMvtValue() {
-        return cookies.get(MULTIVARIATE_ID_COOKIE);
+        return cookies.getCookie(MULTIVARIATE_ID_COOKIE);
     }
 
     function getMvtNumValues() {

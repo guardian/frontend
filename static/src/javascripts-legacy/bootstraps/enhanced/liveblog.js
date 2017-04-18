@@ -77,7 +77,7 @@ define([
     };
 
     function ready() {
-        robust.context([
+        robust.catchErrorsWithContext([
             ['lb-autoupdate', modules.createAutoUpdate],
             ['lb-timeline',   modules.affixTimeline],
             ['lb-timestamp',  modules.keepTimestampsCurrent],
@@ -88,7 +88,7 @@ define([
         trail();
         articleLiveblogCommon();
 
-        robust.context([
+        robust.catchErrorsWithContext([
             ['lb-ready', function () { mediator.emit('page:liveblog:ready'); }],
         ]);
     }

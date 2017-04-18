@@ -6,7 +6,9 @@ import detect from 'lib/detect';
 
 const { sentryPublicApiKey, sentryHost } = config.page;
 const sentryUrl = `https://${sentryPublicApiKey}@${sentryHost}`;
+
 let adblockBeingUsed = false;
+
 const sentryOptions = {
     whitelistUrls: [
         // loaclhost will not log errors, but call `shouldSendCallback`
@@ -37,8 +39,8 @@ const sentryOptions = {
 
     shouldSendCallback(data: Object): boolean {
         const { isDev } = config.page;
-        const isIgnored = typeof data.tags.ignored !== 'undefined' &&
-            data.tags.ignored;
+        const isIgnored =
+            typeof data.tags.ignored !== 'undefined' && data.tags.ignored;
         const { enableSentryReporting } = config.switches;
         const isInSample = Math.random() < 0.1;
 
@@ -49,11 +51,13 @@ const sentryOptions = {
             }
         }
 
-        return enableSentryReporting &&
+        return (
+            enableSentryReporting &&
             isInSample &&
             !isIgnored &&
             !adblockBeingUsed &&
-            !isDev;
+            !isDev
+        );
     },
 };
 

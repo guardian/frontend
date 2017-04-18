@@ -70,9 +70,9 @@ define([
      * @returns {*|boolean|Boolean}
      */
     function isInVariant(test, variant) {
-        return getParticipations()[test.name] &&
-            getParticipations()[test.name].variant === variant &&
-            testCanRunChecks.testCanBeRun(test.name);
+        return getParticipations()[test.id] &&
+            getParticipations()[test.id].variant === variant.id &&
+            testCanRunChecks.testCanBeRun(test);
     }
 
     return {
