@@ -59,17 +59,17 @@ define([
 
             var newCookieValue = id + '=' + dayCanShowAgain;
 
-            var currentCookieValues = cookies.get('GU_TAILOR_SURVEY');
+            var currentCookieValues = cookies.getCookie('GU_TAILOR_SURVEY');
 
             if (currentCookieValues) {
                 // we've shown surveys already
                 currentCookieValues = currentCookieValues + ',' + newCookieValue;
-                cookies.remove('GU_TAILOR_SURVEY');
-                cookies.add('GU_TAILOR_SURVEY', currentCookieValues, 365);
+                cookies.removeCookie('GU_TAILOR_SURVEY');
+                cookies.addCookie('GU_TAILOR_SURVEY', currentCookieValues, 365);
             }
             else {
                 // first time we show any survey
-                cookies.add('GU_TAILOR_SURVEY', newCookieValue, 365);
+                cookies.addCookie('GU_TAILOR_SURVEY', newCookieValue, 365);
             }
         }
         // Given a response from tailor, we see if the response has a survey suggestion, and if so return the first
@@ -89,7 +89,7 @@ define([
         // We go through the list of surveys that have already been shown to the user, and return a list of survey ids
         // that aren't currently allowed to be shown.
         function getSurveyIdsNotToShow() {
-            var currentCookieValues = cookies.get('GU_TAILOR_SURVEY');
+            var currentCookieValues = cookies.getCookie('GU_TAILOR_SURVEY');
 
             var values = currentCookieValues ? currentCookieValues.split(',') : [];
 
@@ -145,7 +145,7 @@ define([
         };
 
         // the main function to render the survey
-        function renderQuickSurvey() {    
+        function renderQuickSurvey() {
             var queryParams = {
                 edition: config.page.edition,
             };
@@ -155,7 +155,7 @@ define([
             // look for a survey with this ID to return. This is useful as we can easily see how a particular survey
             // would be rendered, without actually putting it live. If this parameter is empty or not specified, tailor
             // behaves as usual.
-            var surveyToShow = localStorage.getItem('surveyToShow');
+            var surveyToShow = storage.local.get('surveyToShow');
 
             if (surveyToShow) {
                 queryParams.surveyToShow = surveyToShow;

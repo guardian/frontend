@@ -37,7 +37,7 @@ define([
                                    'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJBbSVDMyVBOWxpZSBKJUMzJUI0c2UiLCI1MzQiLDEzODI5NTMwMzE1OTEsMV0' +
                                    '.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY'
                                );
-                               cookies.get = getCookieStub;
+                               cookies.getCookie = getCookieStub;
                                getStorageStub = sinon.stub();
                                storage.local.get = getStorageStub;
                                reqwestStub.reset();
@@ -86,7 +86,7 @@ define([
         });
 
         it('should not call api if the cookie does not exist', function () {
-            cookies.get.withArgs('GU_U').returns(null);
+            getCookieStub.withArgs('GU_U').returns(null);
             var apiCallback = sinon.spy();
 
             Id.getUserFromApi(apiCallback);

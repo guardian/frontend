@@ -40,11 +40,12 @@ const generateCSS = (fontFamily, font) =>
                     'font-feature-settings',
                     'unicode-range',
                 ]
-                    .map(prop => font[prop] ? `${prop}: ${font[prop]};` : '')
+                    .map(prop => (font[prop] ? `${prop}: ${font[prop]};` : ''))
                     .join('')}
                 }
             `
-            ))
+            )
+        )
         .then(result => result.css);
 
 module.exports = {
@@ -78,7 +79,8 @@ module.exports = {
                                 writeFile(
                                     dest,
                                     `guFont(${JSON.stringify({ css: CSS })});`
-                                ));
+                                )
+                            );
                     })
                 );
             },

@@ -48,12 +48,14 @@ module.exports = {
                     ).then(
                         polyfills =>
                             uglify.minify(polyfills, { fromString: true }).code
-                    ))
+                    )
+                )
                 .then(polyfills =>
                     writeFileP(
                         path.resolve(dest, 'polyfillio.fallback.js'),
                         polyfills
-                    ))
+                    )
+                )
         );
     },
 };

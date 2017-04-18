@@ -16,13 +16,9 @@ define([
 
 function init() {
     var recipe = $('.recipe__article--structured');
-    var article = $('.js-recipe__content');
-    var articleNoJS = $('.js-recipe__content--no-js');
     var firstRecipe = $('.js-recipe__article--structured');
     var firstRecipeHeadline = $('.js-recipe__article--structured .js-recipe__article--structured-headline h1');
     var nextWrapper = $('.js-recipe__article--next-recipe');
-    var readMoreNoJS = $('.js-read-more--no-js');
-    var readMoreWrapper = $('.js-read-more--wrapper');
     var nextRecipeTitle = $('.js-recipe__article--next-title');
     var nextRecipeText = $('.js-recipe__article--next-text');
     var nextRecipeKicker = $('.js-kicker');
@@ -30,7 +26,6 @@ function init() {
     var stickyImages = $('.js-recipes__images-wrapper');
     var contentFooter = $('.content-footer');
     var displayClass = 'recipe__image__wrapper--is-displayed';
-    var readMoreButton;
     var contentFooterTop;
     var windowHeight = window.innerHeight;
 
@@ -109,11 +104,6 @@ function init() {
         scroller.scrollToElement(destination[0]);
     }
 
-    bean.on(readMoreWrapper[0], 'click', function() {
-        article.toggleClass('js-visible');
-        readMoreButton.toggleClass('js-x-sign');
-    });
-
     nextWrapper.each(function(elem) {
       bean.on(elem, 'click', function() {
           scrollToNextRecipe();
@@ -138,11 +128,6 @@ function init() {
         if (detect.isBreakpoint({ min: 'desktop' })) {
           new Sticky(stickyImages[0], {}).init();
         }
-
-        readMoreWrapper.html(readMoreNoJS.html());
-        readMoreButton = $('.js-recipe__article--read-more');
-        article.html(articleNoJS.html());
-        articleNoJS.remove();
     }
 
     initalise();

@@ -19,7 +19,7 @@ const catchErrors = (fn: Function): ?Error => {
     return error;
 };
 
-const log = (module: string, error: Error): void => {
+const logError = (module: string, error: Error): void => {
     if (window.console && window.console.warn) {
         window.console.warn('Caught error.', error.stack);
     }
@@ -27,15 +27,16 @@ const log = (module: string, error: Error): void => {
     reportError(error, { module }, false);
 };
 
-const catchErrorsAndLog = (name: string, fn: Function): void => {
+const catchAndLogError = (name: string, fn: Function): void => {
     const error = catchErrors(fn);
 
     if (error) {
-        log(name, error);
+        logError(name, error);
     }
 };
 
-const context = (modules: Array<any>): void =>
-    modules.forEach(([name, fn]) => catchErrorsAndLog(name, fn));
+const catchErrorsWithContext = (modules: Array<any>): void =>
+    modules.forEach(([name, fn]) => catchAndLogError(name, fn));
 
-export default { catchErrorsAndLog, context, log };
+export { catchErrorsWithContext, logError };
+export const _ = { catchAndLogError };

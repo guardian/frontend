@@ -43,8 +43,8 @@ class FiniteStateMachine {
         this.states = options.states || {};
         this.context.state = options.initial || '';
         this.debug = options.debug || false;
-        this.onChangeState = options.onChangeState.bind(this.context) ||
-            (() => {});
+        this.onChangeState =
+            options.onChangeState.bind(this.context) || (() => {});
     }
 
     log(...args: Array<string>): void {
