@@ -23,7 +23,7 @@ define([
             hasForcedOptIn = /forceForesee/.test(location.hash);
 
         // the Foresee code is large, we only want to load it in when necessary.
-        if (!Cookie.get('GU_TEST') && !isNetworkFront && !isProfilePage && (window.openForeseeWhenReady || sample || hasForcedOptIn)) {
+        if (!Cookie.getCookie('GU_TEST') && !isNetworkFront && !isProfilePage && (window.openForeseeWhenReady || sample || hasForcedOptIn)) {
             openForesee();
         }
 
