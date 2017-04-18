@@ -3,6 +3,9 @@
 @import common._
 @import views.support.RenderClasses
 
+@* TODO: #new-recipe - remove when removing the test *@
+@hasSlimHeader = @{page.metadata.hasSlimHeader || (page.metadata.isNewRecipeDesign && mvt.ABNewRecipeDesign.isParticipating)}
+
 @defining(Edition(request).navigation) { navigation =>
     <div class="@RenderClasses(Map(
                     ("navigation", true),
@@ -34,10 +37,11 @@
                         @fragments.nav.topNavigation(page, navigation)
                     </nav>
                 </div>
-                @* Don't show navigation toggle if slimHeader, or participating in the gallery redesign test*@
-                @if(!page.metadata.hasSlimHeader) {
+
+                @if(!hasSlimHeader) {
                     @fragments.nav.navigationToggle()
                 }
+
             </div>
             <div id="all-sections-popup" class="navigation__expandable js-mega-nav-placeholder" data-component="all-nav"></div>
         </div>

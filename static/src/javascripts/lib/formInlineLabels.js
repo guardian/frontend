@@ -8,17 +8,16 @@ const updateClass = (
     $el: Object,
     cssClass: string,
     testFunc?: Function
-): Function =>
-    () => {
-        // If we pass a boolean for test, then check if we should update the class
-        const shouldUpdateClass = testFunc !== undefined ? testFunc() : true;
+): Function => () => {
+    // If we pass a boolean for test, then check if we should update the class
+    const shouldUpdateClass = testFunc !== undefined ? testFunc() : true;
 
-        if (shouldUpdateClass) {
-            fastdom.write(() => {
-                $el[type === 'add' ? 'addClass' : 'removeClass'](cssClass);
-            });
-        }
-    };
+    if (shouldUpdateClass) {
+        fastdom.write(() => {
+            $el[type === 'add' ? 'addClass' : 'removeClass'](cssClass);
+        });
+    }
+};
 
 export default {
     init(el: string, opts: Object) {

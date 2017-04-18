@@ -48,7 +48,8 @@ final case class CrosswordSearchPage(override val metadata: MetaData) extends St
     "genius",
     "speedy",
     "everyman",
-    "azed"
+    "azed",
+    "weekend"
   )
 
   val setters: Seq[String] = Seq(

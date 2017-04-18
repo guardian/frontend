@@ -18,7 +18,7 @@ define([
         suggestions: 'https://tailor.guardianapis.com/suggestions?browserId='
     };
 
-    var browserId = cookies.get('bwid');
+    var browserId = cookies.getCookie('bwid');
 
     function getURL(type, queryParams) {
         var baseURL = URLS[type];

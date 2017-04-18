@@ -21,7 +21,8 @@ const getSVG = iconPath =>
                     resolve({
                         name: path.parse(iconPath).name,
                         data: result,
-                    }));
+                    })
+                );
             } catch (e) {
                 return reject(e);
             }
