@@ -46,21 +46,22 @@ define([
     function fetchData(type, bypassStorage, queryParams) {
         var url = getURL(type, queryParams);
 
-        return new Promise(function(resolve, reject) {
-            // if no valid url end point, or tailor switch is off, reject
-            if (!url || !config.switches.useTailorEndpoints) return reject();
+        // exit if no valid url end point, or tailor switch is off
+        if (!url || !config.switches.useTailorEndpoints) {
+            return Promise.resolve({});
+        }
 
-            var tailorData = bypassStorage ? null : storage.local.get('gu.tailor');
+        var tailorData = bypassStorage ? null : storage.local.get('gu.tailor');
 
-            // if data in local storage return this
-            if (tailorData && tailorData[url]) {
-                return resolve(tailorData[url]);
-            }
+        // if data in local storage, resolve with this
+        if (tailorData && tailorData[url]) {
+            return Promise.resolve(tailorData[url]);
+        }
 
-            return resolve(fetchJson(url, { method: 'get' }));
-        }).then(handleResponse.bind(null, url))
-          .catch(handleError.bind(null, url));
-    }
+        return fetchJson(url, { method: 'get' })
+            .then(handleResponse.bind(null, url))
+            .catch(handleError.bind(null, url));
+}
 
     function handleResponse(url, data) {
         var tailorData = storage.local.get('gu.tailor') || {};
