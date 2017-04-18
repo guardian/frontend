@@ -29,10 +29,10 @@ define([
      * Persist close state
      */
     function init() {
-        var geoContinentCookie = cookies.get('GU_geo_continent');
+        var geoContinentCookie = cookies.getCookie('GU_geo_continent');
         if (geoContinentCookie && geoContinentCookie.toUpperCase() === 'EU') {
             var EU_COOKIE_MSG = 'GU_EU_MSG',
-                euMessageCookie = cookies.get(EU_COOKIE_MSG);
+                euMessageCookie = cookies.getCookie(EU_COOKIE_MSG);
             if (!euMessageCookie || euMessageCookie != 'seen') {
                 var link = 'https://www.theguardian.com/info/cookies',
                     txt = 'Welcome to the Guardian. This site uses cookies. Read <a href="' + link + '" class="cookie-message__link">our policy</a>.',
@@ -40,7 +40,7 @@ define([
                     cookieLifeDays = 365,
                     msg = new Message('cookies', opts);
                 msg.show(txt);
-                cookies.add(EU_COOKIE_MSG, 'seen', cookieLifeDays);
+                cookies.addCookie(EU_COOKIE_MSG, 'seen', cookieLifeDays);
                 return true;
             }
         }

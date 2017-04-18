@@ -63,7 +63,7 @@ define(['helpers/injector'], function (Injector) {
                 it('Performs an update if membership-frontend wipes just the paying-member cookie', function () {
                     // Set everything except paying-member cookie
                     setAllFeaturesData({isExpired: true});
-                    cookies.remove(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+                    cookies.removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
 
                     userFeatures.refresh();
                     expect(userFeatures._requestNewData).toHaveBeenCalled();
@@ -72,7 +72,7 @@ define(['helpers/injector'], function (Injector) {
                 it('Performs an update if the ad-free state is missing', function() {
                     // Set everything except the ad-free cookie
                     setAllFeaturesData({isExpired: true});
-                    cookies.remove(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
+                    cookies.removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
 
                     userFeatures.refresh();
                     expect(userFeatures._requestNewData).toHaveBeenCalled();
@@ -112,18 +112,18 @@ define(['helpers/injector'], function (Injector) {
                 });
 
                 it('Is true when the user has a `true` paying member cookie', function () {
-                    cookies.add(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, true);
+                    cookies.addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, true);
                     expect(userFeatures.isPayingMember()).toBe(true);
                 });
 
                 it('Is false when the user has a `false` paying member cookie', function () {
-                    cookies.add(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, false);
+                    cookies.addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, false);
                     expect(userFeatures.isPayingMember()).toBe(false);
                 });
 
                 it('Is true when the user has no paying member cookie', function () {
                     // If we don't know, we err on the side of caution, rather than annoy paying users
-                    cookies.remove(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+                    cookies.removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
                     expect(userFeatures.isPayingMember()).toBe(true);
                 });
             });
@@ -139,8 +139,8 @@ define(['helpers/injector'], function (Injector) {
                 setAllFeaturesData({isExpired: false});
                 userFeatures._deleteOldData();
 
-                expect(cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBeNull();
-                expect(cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)).toBeNull();
+                expect(cookies.getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBeNull();
+                expect(cookies.getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)).toBeNull();
             });
         });
 
@@ -161,22 +161,22 @@ define(['helpers/injector'], function (Injector) {
             it('Puts the paying-member state in a cookie, so that membership-frontend can wipe it', function () {
                 serverResponse.adblockMessage = true;
                 userFeatures._persistResponse(serverResponse);
-                expect(cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe('false');
+                expect(cookies.getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe('false');
 
                 serverResponse.adblockMessage = false;
                 userFeatures._persistResponse(serverResponse);
-                expect(cookies.get(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe('true');
+                expect(cookies.getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe('true');
             });
 
             it('Puts an expiry date in an accompanying cookie', function () {
                 userFeatures._persistResponse(serverResponse);
-                var expiryDate = cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
+                var expiryDate = cookies.getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
                 expect(expiryDate).not.toBeNull();
             });
 
             it('The expiry date can be parsed into a Unix epoch', function () {
                 userFeatures._persistResponse(serverResponse);
-                var expiryDateString = cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
+                var expiryDateString = cookies.getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
                 expect(isNaN(expiryDateString)).toBe(false);
             });
 
@@ -185,7 +185,7 @@ define(['helpers/injector'], function (Injector) {
 
                 userFeatures._persistResponse(serverResponse);
 
-                expiryDateString = cookies.get(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
+                expiryDateString = cookies.getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
                 expiryDateEpoch = parseInt(expiryDateString, 10);
                 currentTimeEpoch = new Date().getTime();
 
@@ -200,15 +200,15 @@ define(['helpers/injector'], function (Injector) {
             msInOneDay = 24 * 60 * 60 * 1000;
             expiryDate = opts.isExpired ? new Date(currentTime - msInOneDay) : new Date(currentTime + msInOneDay);
 
-            cookies.add(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, true);
-            cookies.add(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE, false);
-            cookies.add(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime());
+            cookies.addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, true);
+            cookies.addCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE, false);
+            cookies.addCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime());
         }
 
         function deleteAllFeaturesData() {
-            cookies.remove(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
-            cookies.remove(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
-            cookies.remove(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
+            cookies.removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+            cookies.removeCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
+            cookies.removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
         }
     });
 });

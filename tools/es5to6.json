@@ -12,7 +12,6 @@
     "lib/config.js"
   ],
   "Simon Adcock": [
-    "lib/cookies.js",
     "lib/create-store.js",
     "lib/detect.js",
     "lib/element-inview.js"
