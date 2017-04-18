@@ -14,7 +14,7 @@ define([
     'ophan/ng',
     'lodash/utilities/template',
     'common/modules/article/space-filler',
-    'common/modules/tailor/fetch-data'
+    'common/modules/tailor/tailor'
 ], function (
     bean,
     bonzo,
@@ -31,7 +31,7 @@ define([
     ophan,
     template,
     spaceFiller,
-    fetchData
+    tailor
 ) {
     return function () {
         this.id = 'TailorSurvey';
@@ -70,19 +70,6 @@ define([
             else {
                 // first time we show any survey
                 cookies.addCookie('GU_TAILOR_SURVEY', newCookieValue, 365);
-            }
-        }
-        // Given a response from tailor, we see if the response has a survey suggestion, and if so return the first
-        // survey suggestion (there should only ever be one, but just in case).
-        function getSurveySuggestionToShow(response) {
-            if (response.suggestions) {
-                var surveySuggestions = response.suggestions.filter(function (suggestion) {
-                    return suggestion.class === 'SurveySuggestion';
-                });
-
-                if (surveySuggestions.length > 0) {
-                    return surveySuggestions[0];
-                }
             }
         }
 
@@ -168,18 +155,15 @@ define([
                 queryParams.surveysNotToShow = surveysNotToShow;
             }
 
-            return fetchData('suggestions', true, queryParams).then(function (suggestions) {
-                // get the survey to show
-                var surveySuggestionToShow = getSurveySuggestionToShow(suggestions);
+            return tailor.getSuggestion(queryParams).then(function(suggestion) {
+                if (suggestion) {
+                    storeSurveyShowedInCookie(suggestion.data);
 
-                if (surveySuggestionToShow) {
-                    storeSurveyShowedInCookie(surveySuggestionToShow.data);
-
-                    var json = getJsonFromSurvey(surveySuggestionToShow.data.survey);
+                    var json = getJsonFromSurvey(suggestion.data.survey);
 
                     var survey = bonzo.create(template(tailorSurvey, json));
 
-                    return inArticleWriter(survey, surveySuggestionToShow.data.survey.surveyId);
+                    return inArticleWriter(survey, suggestion.data.survey.surveyId);
                 } else {
                     Promise.resolve();
                 }
