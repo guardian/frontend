@@ -161,7 +161,7 @@ define([
                         toastButtonRefresh();
                     }
                 }
-            }).finally(function () {
+
                 if (count == 0 || currentUpdateDelay > 0) {
                     updateDelay(currentUpdateDelay);
                     updateTimeoutId = setTimeout(checkForUpdates, currentUpdateDelay);
