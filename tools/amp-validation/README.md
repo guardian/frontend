@@ -1,4 +1,4 @@
-#amphtml-validator
+# amphtml-validator
 
 Utility that uses the amphtml-validator to validate AMP endpoints.
 
