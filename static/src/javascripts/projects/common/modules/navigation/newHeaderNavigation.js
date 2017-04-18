@@ -2,6 +2,7 @@
 
 import fastdom from 'fastdom';
 import ophan from 'ophan/ng';
+import { scrollToElement } from 'lib/scroller';
 import userAccount from 'common/modules/navigation/user-account';
 
 const enhanced = {};
@@ -22,11 +23,11 @@ const closeSidebarSection = (section: HTMLElement): void => {
     section.removeAttribute('open');
 };
 
-const openSidebarSection = (section: HTMLElement, options?: Object): void => {
+const openSidebarSection = (section: HTMLElement, options?: Object = {}): void => {
     section.setAttribute('open', '');
 
-    if (options && options.scrollTo) {
-        // TODO: scroll to element
+    if (options.scrollIntoView === true) {
+        scrollToElement(section, 0, 'easeInQuad', getSidebarElement());
     }
 };
 
@@ -145,7 +146,7 @@ const toggleSidebarWithOpenSection = () => {
     const target = sidebar.querySelector(targetSelector);
 
     if (target) {
-        openSidebarSection(target.children[0]);
+        openSidebarSection(target.children[0], { scrollIntoView: true });
     }
 
     toggleSidebar();
