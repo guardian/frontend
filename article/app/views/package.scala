@@ -8,6 +8,7 @@ import model.{ApplicationContext, Article}
 import play.api.mvc.RequestHeader
 import views.support._
 import views.support.cleaner._
+import views.support.cleaner.amp_embed_cleaner.AmpEmbedCleaner
 
 object MainMediaWidths {
 

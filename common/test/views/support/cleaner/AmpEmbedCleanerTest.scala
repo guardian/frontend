@@ -6,9 +6,10 @@ import java.net.URLDecoder
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import model.{Article, Content}
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{Element, Document}
+import org.jsoup.nodes.{Document, Element}
 import org.scalatest.{FlatSpec, Matchers}
 import org.apache.commons.lang.StringEscapeUtils
+import views.support.cleaner.amp_embed_cleaner.AmpEmbedCleaner
 
 import scala.collection.JavaConversions._
 
@@ -138,12 +139,12 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
    * External video cleaner:
    */
 
-  "AmpEmbedCleaner" should "replace an iframe in a http YouTube video-element with an amp-youtube element" in {
+  "amp_embed_cleaner" should "replace an iframe in a http YouTube video-element with an amp-youtube element" in {
     val result = cleanDocumentWithVideos("element-video", "http://www.youtube.com/watch?v=foo_12-34")
     result.getElementsByTag("amp-youtube").size should be(1)
   }
 
-  "AmpEmbedCleaner" should "replace an iframe in a https YouTube video-element with an amp-youtube element" in {
+  "amp_embed_cleaner" should "replace an iframe in a https YouTube video-element with an amp-youtube element" in {
     val result = cleanDocumentWithVideos("element-video", "https://www.youtube.com/watch?v=foo_12-34")
     result.getElementsByTag("amp-youtube").size should be(1)
     result.getElementsByTag("amp-youtube").attr("data-videoid") should be("foo_12-34")
@@ -152,7 +153,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-youtube").attr("layout") should be("responsive")
   }
 
-  "AmpEmbedCleaner" should "not replace an iframe in a fake YouTube video-element with an amp-youtube element" in {
+  "amp_embed_cleaner" should "not replace an iframe in a fake YouTube video-element with an amp-youtube element" in {
     val result = cleanDocumentWithVideos("element-video",
       "http://www.youtube.com.de/watch?v=foo_12-34",
       "http://myyoutube.com/watch?v=foo_12-34",
@@ -161,17 +162,17 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-youtube").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "not create an amp-youtube element if videoid missing" in {
+  "amp_embed_cleaner" should "not create an amp-youtube element if videoid missing" in {
     val result = cleanDocumentWithVideos("element-video", "https://www.youtube.com/")
     result.getElementsByTag("amp-youtube").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "replace an iframe in a http Vimeo video-element with an amp-vimeo element" in {
+  "amp_embed_cleaner" should "replace an iframe in a http Vimeo video-element with an amp-vimeo element" in {
     val result = cleanDocumentWithVideos("element-video", "http://vimeo.com/1234")
     result.getElementsByTag("amp-vimeo").size should be(1)
   }
 
-  "AmpEmbedCleaner" should "replace an iframe in a https Vimeo video-element with an amp-vimeo element" in {
+  "amp_embed_cleaner" should "replace an iframe in a https Vimeo video-element with an amp-vimeo element" in {
     val result = cleanDocumentWithVideos("element-video", "https://vimeo.com/1234")
     result.getElementsByTag("amp-vimeo").size should be(1)
     result.getElementsByTag("amp-vimeo").attr("data-videoid") should be("1234")
@@ -180,7 +181,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-vimeo").attr("layout") should be("responsive")
   }
 
-  "AmpEmbedCleaner" should "not replace an iframe in a fake Vimeo video-element with an amp-vimeo element" in {
+  "amp_embed_cleaner" should "not replace an iframe in a fake Vimeo video-element with an amp-vimeo element" in {
     val result = cleanDocumentWithVideos("element-video",
       "https://vimeo.com.zz/1234",
       "https://vimeofake.com/1234",
@@ -189,12 +190,12 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-vimeo").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "not create an amp-vimeo element if videoid missing" in {
+  "amp_embed_cleaner" should "not create an amp-vimeo element if videoid missing" in {
     val result = cleanDocumentWithVideos("element-video", "https://vimeo.com/")
     result.getElementsByTag("amp-vimeo").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "replace a facebook video embed with a valid amp-facebook video embed" in {
+  "amp_embed_cleaner" should "replace a facebook video embed with a valid amp-facebook video embed" in {
     val faceookVideoId = "123456"
     val facebookVideoUrl = s"https://www.facebook.com/theguardian/videos/$faceookVideoId/"
     val result = cleanDocumentWithVideos("element-video", facebookVideoUrl)
@@ -206,7 +207,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-facebook").attr("layout") should be("responsive")
   }
 
-  "AmpEmbedCleaner" should "replace a facebook non-guardian video embed with a valid amp-facebook video embed" in {
+  "amp_embed_cleaner" should "replace a facebook non-guardian video embed with a valid amp-facebook video embed" in {
     val facebookOrganisationId = "Channel4"
     val faceookVideoId = "10154084521542330"
     val facebookVideoUrl = s"https://www.facebook.com/$facebookOrganisationId/videos/$faceookVideoId/"
@@ -219,7 +220,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-facebook").attr("layout") should be("responsive")
   }
 
-  "AmpEmbedCleaner" should "replace a facebook non-guardian video embed, containing a '.' char in the username, with a valid amp-facebook video embed" in {
+  "amp_embed_cleaner" should "replace a facebook non-guardian video embed, containing a '.' char in the username, with a valid amp-facebook video embed" in {
     val facebookOrganisationId = "Channel.4"
     val faceookVideoId = "10154084521542330"
     val facebookVideoUrl = s"https://www.facebook.com/$facebookOrganisationId/videos/$faceookVideoId/"
@@ -227,19 +228,19 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-facebook").size should be(1)
   }
 
-  "AmpEmbedCleaner" should "not replace an iframe in a fake Facebook video-element with an amp-facebook element" in {
+  "amp_embed_cleaner" should "not replace an iframe in a fake Facebook video-element with an amp-facebook element" in {
     val result = cleanDocumentWithVideos("element-video",
       "https://www.facebook.com.zz/theguardian/123456/"
     )
     result.getElementsByTag("amp-facebook").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "not create an amp-facebook element if videoid missing" in {
+  "amp_embed_cleaner" should "not create an amp-facebook element if videoid missing" in {
     val result = cleanDocumentWithVideos("element-video", "https://www.facebook.com/theguardian/videos/")
     result.getElementsByTag("amp-facebook").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "be able to create an amp-youtube element, an amp-vimeo element and an amp facebook element in the same document" in {
+  "amp_embed_cleaner" should "be able to create an amp-youtube element, an amp-vimeo element and an amp facebook element in the same document" in {
     val result = cleanDocumentWithVideos("element-video",
       "https://www.youtube.com/watch?v=foo_12-34",
       "https://vimeo.com/1234",
@@ -255,7 +256,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
    * Interactive cleaner:
    */
 
-  "AmpEmbedCleaner" should "create an amp-iframe element if interactive has a valid url and iframe wrapper" in {
+  "amp_embed_cleaner" should "create an amp-iframe element if interactive has a valid url and iframe wrapper" in {
     val interactiveValidUrlPlusiFrameWrapper = <html>
       <body>
         <figure class="element element-interactive interactive"
@@ -270,7 +271,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-iframe").size should be(1)
   }
 
-  "AmpEmbedCleaner" should "not create an amp-iframe element if interactive only has an iframe wrapper" in {
+  "amp_embed_cleaner" should "not create an amp-iframe element if interactive only has an iframe wrapper" in {
     val interactiveSansUrl = <html>
       <body>
         <figure class="element element-interactive interactive"
@@ -284,7 +285,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-iframe").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "not create an amp-iframe element if interactive does not have an iframe wrapper" in {
+  "amp_embed_cleaner" should "not create an amp-iframe element if interactive does not have an iframe wrapper" in {
     val interactiveSansiFrameWrapper = <html>
       <body>
         <figure class="element element-interactive interactive"
@@ -305,22 +306,22 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
    *  Other audio embeds become amp-iframe embeds.
    */
 
-  "AmpEmbedCleaner" should "replace an iframe in an audio-element that has a src url from soundcloud.com, with an amp-soundcloud element" in {
+  "amp_embed_cleaner" should "replace an iframe in an audio-element that has a src url from soundcloud.com, with an amp-soundcloud element" in {
     val result: Document = cleanDocumentWithAudioEmbed("element-audio", "", "", "", soundcloudUrlV2)
     result.getElementsByTag("amp-soundcloud").size should be(1)
   }
 
-  "AmpEmbedCleaner" should "create an amp-soundcloud element with a trackid from the iframe src that has a src url from soundcloud.com" in {
+  "amp_embed_cleaner" should "create an amp-soundcloud element with a trackid from the iframe src that has a src url from soundcloud.com" in {
     val result: Document = cleanDocumentWithAudioEmbed("element-audio", "", "", "", soundcloudUrlV2)
     result.getElementsByTag("amp-soundcloud").first.attr("data-trackid") should be(soundcloudTrackid.toString)
   }
 
-  "AmpEmbedCleaner" should " not create an amp-soundcloud element from an iframe src that does not have a track id even if the src uses the soundcloud url" in {
+  "amp_embed_cleaner" should " not create an amp-soundcloud element from an iframe src that does not have a track id even if the src uses the soundcloud url" in {
     val result: Document = cleanDocumentWithAudioEmbed("element-audio", "", "", "", soundcloudUrlNoTrackId)
     result.getElementsByTag("amp-soundcloud").size should be (0)
   }
 
-  "AmpEmbedCleaner" should "add an amp-iframe element, not an amp-soundcloud element if an audio element contains an iframe with src url from that is not from soundcloud.com" in {
+  "amp_embed_cleaner" should "add an amp-iframe element, not an amp-soundcloud element if an audio element contains an iframe with src url from that is not from soundcloud.com" in {
     val frameborder = "0"
     val width = "460"
     val height = "300"
@@ -330,7 +331,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result should be ((1,0))
   }
 
-  "AmpEmbedCleaner" should "create an amp-iframe element with a data-main-player-id from the iframe src from an audioboom embed" in {
+  "amp_embed_cleaner" should "create an amp-iframe element with a data-main-player-id from the iframe src from an audioboom embed" in {
     val frameborder = "0"
     val width = "460"
     val height = "300"
@@ -339,7 +340,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-iframe").first.attr("src") should be(audioBoomUrl)
   }
 
-  "AmpEmbedCleaner" should "not add an amp-iframe element if the iframe does not have a src attribute" in {
+  "amp_embed_cleaner" should "not add an amp-iframe element if the iframe does not have a src attribute" in {
     val frameborder = "0"
     val width = "460"
     val height = "300"
@@ -347,7 +348,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-iframe").size should be (0)
   }
 
-  "AmpEmbedCleaner" should "not add an amp-iframe element if the iframe does not have a height attribute" in {
+  "amp_embed_cleaner" should "not add an amp-iframe element if the iframe does not have a height attribute" in {
     val frameborder = "0"
     val width = "460"
     val src = audioBoomUrl
@@ -355,7 +356,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-iframe").size should be (0)
   }
 
-  "AmpEmbedCleaner" should "not add an amp-iframe element if the iframe does not have a width attribute" in {
+  "amp_embed_cleaner" should "not add an amp-iframe element if the iframe does not have a width attribute" in {
     val frameborder = "0"
     val height = "300"
     val src = audioBoomUrl
@@ -363,7 +364,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-iframe").size should be (0)
   }
 
-  "AmpEmbedCleaner" should "not add an amp-iframe element if the iframe does not have a frameborder attribute" in {
+  "amp_embed_cleaner" should "not add an amp-iframe element if the iframe does not have a frameborder attribute" in {
     val width = "460"
     val height = "300"
     val src = audioBoomUrl
@@ -371,7 +372,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-iframe").size should be (0)
   }
 
-  "AmpEmbedCleaner" should "not add an amp-soundcloud or amp-iframe element if an audio element does not contain an iframe at all" in {
+  "amp_embed_cleaner" should "not add an amp-soundcloud or amp-iframe element if an audio element does not contain an iframe at all" in {
     val doc = <html>
       <body>
         <figure class="element-audio"></figure>
@@ -388,7 +389,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   *  Maps cleaner
   */
 
-  "AmpEmbedCleaner" should "replace an iframe in an map element with an amp-iframe element" in {
+  "amp_embed_cleaner" should "replace an iframe in an map element with an amp-iframe element" in {
     val doc = <html>
       <body>
         <figure class="element-map">
@@ -402,7 +403,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-iframe").first.attr("src") should be(googleMapsUrl)
   }
 
-  "AmpEmbedCleaner" should "not add an amp-iframe element if an map element does not contain an iframe" in {
+  "amp_embed_cleaner" should "not add an amp-iframe element if an map element does not contain an iframe" in {
     val doc = <html>
       <body>
         <figure class="element-map"></figure>
@@ -418,42 +419,42 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   * Comments cleaner
   */
 
-  "AmpEmbedCleaner" should "change the avatar img in a comment to be an amp-img" in {
+  "amp_embed_cleaner" should "change the avatar img in a comment to be an amp-img" in {
     val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
     result.getElementsByTag("amp-img").size should be(1)
   }
 
-  "AmpEmbedCleaner" should "not leave any img tags in the comment embed" in {
+  "amp_embed_cleaner" should "not leave any img tags in the comment embed" in {
     val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
     result.getElementsByTag("img").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "remove the image if the class attrib is missing" in {
+  "amp_embed_cleaner" should "remove the image if the class attrib is missing" in {
     val result = cleanDocumentWithCommentEmbed("", commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
     result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "remove the image if the class is present, but not the expected name" in {
+  "amp_embed_cleaner" should "remove the image if the class is present, but not the expected name" in {
     val result = cleanDocumentWithCommentEmbed("foo", commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
     result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "remove the image if the src attrib is missing" in {
+  "amp_embed_cleaner" should "remove the image if the src attrib is missing" in {
     val result = cleanDocumentWithCommentEmbed(commentAvatarClass, "", commentAvatarHeight, commentAvatarWidth, commentAvatarAlt)
     result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "remove the image if the height attrib is missing" in {
+  "amp_embed_cleaner" should "remove the image if the height attrib is missing" in {
     val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, "", commentAvatarWidth, commentAvatarAlt)
     result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "remove the image if the width attrib is missing" in {
+  "amp_embed_cleaner" should "remove the image if the width attrib is missing" in {
     val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, commentAvatarHeight, "", commentAvatarAlt)
     result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "remove the image if the alt attrib is missing" in {
+  "amp_embed_cleaner" should "remove the image if the alt attrib is missing" in {
     val result = cleanDocumentWithCommentEmbed(commentAvatarClass, commentAvatarSrc, commentAvatarHeight, commentAvatarWidth, "")
     result.getElementsByTag("amp-img").size + result.getElementsByTag("img").size should be(0)
   }
@@ -466,23 +467,23 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   * Embeds that don't match any of these types others are removed.
   */
 
-  "AmpEmbedCleaner" should "replace an iframe in an element that has a src url from soundcloud.com with an amp-soundcloud element" in {
+  "amp_embed_cleaner" should "replace an iframe in an element that has a src url from soundcloud.com with an amp-soundcloud element" in {
     val result: Document = cleanDocumentWithAudioEmbed("element-embed", "", "", "", soundcloudUrlV2)
     result.getElementsByTag("amp-soundcloud").size should be(1)
   }
 
-  "AmpEmbedCleaner" should "create an amp-soundcloud element with a trackid from an iframe src that contains a url from soundcloud.com" in {
+  "amp_embed_cleaner" should "create an amp-soundcloud element with a trackid from an iframe src that contains a url from soundcloud.com" in {
     val result: Document = cleanDocumentWithAudioEmbed("element-embed", "", "", "", soundcloudUrlV1)
     result.getElementsByTag("amp-soundcloud").first.attr("data-trackid") should be(soundcloudTrackid.toString)
   }
 
-  "AmpEmbedCleaner" should " not create an amp-soundcloud element from an iframe src that does not have a track id" in {
+  "amp_embed_cleaner" should " not create an amp-soundcloud element from an iframe src that does not have a track id" in {
     val result: Document = cleanDocumentWithAudioEmbed("element-embed", "", "", "", soundcloudUrlNoTrackId)
     result.getElementsByTag("amp-soundcloud").size should be (0)
     result.getElementsByTag("amp-iframe").size should be (0)
   }
 
-  "AmpEmbedCleaner" should "not add any kind of amp element if an element-embed does not contain an iframe" in {
+  "amp_embed_cleaner" should "not add any kind of amp element if an element-embed does not contain an iframe" in {
     val doc = <html>
       <body>
         <figure class="element-embed"></figure>
@@ -499,7 +500,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-facebook").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "not add an amp-iframe element, if an element-embed contains an iframe with src url from any unknown src" in {
+  "amp_embed_cleaner" should "not add an amp-iframe element, if an element-embed contains an iframe with src url from any unknown src" in {
     val frameborder = "0"
     val width = "460"
     val height = "300"
@@ -514,7 +515,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-facebook").size should be(0)
   }
 
-  "AmpEmbedCleaner" should "add an amp-iframe element, if an element-embed contains an iframe with src url from audioboom.com" in {
+  "amp_embed_cleaner" should "add an amp-iframe element, if an element-embed contains an iframe with src url from audioboom.com" in {
     val frameborder = "0"
     val width = "460"
     val height = "300"
@@ -524,7 +525,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-iframe").first.attr("src") should be(audioBoomUrl)
   }
 
-  "AmpEmbedCleaner" should "add an amp-instagram element, if an element-embed contains an iframe with a valid instagram src url " in {
+  "amp_embed_cleaner" should "add an amp-instagram element, if an element-embed contains an iframe with a valid instagram src url " in {
     val document = <figure class="element element-embed">
       <div style="padding:8px;">
         <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="https://www.instagram.com/p/BB0CN8PMWdz/">Happy Presidents' Day! Mr presidents are on sale. Original $2.25 and littles $1. And Cin-Ful cinnamon rolls are $2!! #hurrybeforeitsgone</a></p>
@@ -541,13 +542,13 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-instagram").attr("data-shortcode") should be (shortcode)
   }
 
-  "AmpEmbedCleaner" should "add an amp-iframe element, if an element-embed contains an iframe with a valid google maps src url " in {
+  "amp_embed_cleaner" should "add an amp-iframe element, if an element-embed contains an iframe with a valid google maps src url " in {
     val result: Document = cleanDocumentWithMapsEmbed("element-embed", googleMapsUrl)
     result.getElementsByTag("amp-iframe").size should be(1)
     result.getElementsByTag("amp-iframe").first.attr("src") should be (googleMapsUrl)
   }
 
-  "AmpEmbedCleaner" should "replace an iframe an embed-element, that contains a YouTube video with an amp-youtube element" in {
+  "amp_embed_cleaner" should "replace an iframe an embed-element, that contains a YouTube video with an amp-youtube element" in {
     val result = cleanDocumentWithVideos("element-embed", "https://www.youtube.com/watch?v=foo_12-34")
     result.getElementsByTag("amp-youtube").size should be(1)
     result.getElementsByTag("amp-youtube").attr("data-videoid") should be("foo_12-34")
@@ -556,7 +557,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-youtube").attr("layout") should be("responsive")
   }
 
-  "AmpEmbedCleaner" should "replace an iframe an embed-element, that contains a Vimeo video with an amp-vimeo element" in {
+  "amp_embed_cleaner" should "replace an iframe an embed-element, that contains a Vimeo video with an amp-vimeo element" in {
     val result = cleanDocumentWithVideos("element-embed", "https://vimeo.com/1234")
     result.getElementsByTag("amp-vimeo").size should be (1)
     result.getElementsByTag("amp-vimeo").attr("data-videoid") should be("1234")
@@ -565,7 +566,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     result.getElementsByTag("amp-vimeo").attr("layout") should be("responsive")
   }
 
-  "AmpEmbedCleaner" should "replace an iframe an embed-element, that contains a Facebook video with an amp-facebook element" in {
+  "amp_embed_cleaner" should "replace an iframe an embed-element, that contains a Facebook video with an amp-facebook element" in {
     val faceookVideoId = "123456"
     val facebookVideoUrl = s"https://www.facebook.com/theguardian/videos/$faceookVideoId/"
     val result = cleanDocumentWithVideos("element-embed", facebookVideoUrl)
