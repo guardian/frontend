@@ -90,23 +90,14 @@
                   @fragments.standfirst(articleModel.item)
                 </div>
                 <div class="recipe__content js-recipe__content">
+                  @BodyCleaner(article, article.fields.body, amp)
                 </div>
                 <div class="recipe__article--buttons">
-                  <div class="js-read-more--wrapper" data-link-name="read-more-recipe">
-                      <a href="#recipe__content" class="js-read-more--no-js" data-link-name="read-more-recipe-no-js">
-                          <div class="recipe__article--read-more js-recipe__article--read-more">
-                          @fragments.inlineSvg("plus", "icon", List("control__icon-wrapper, rounded-icon, circle-button"))
-                          </div>
-                      </a>
-                  </div>
                   <div class="recipe__article--social">
                     @fragments.social(articleModel.item.sharelinks.pageShares, "top")
                   </div>
                 </div>
                 @for((recipe, i) <- recipes.zipWithIndex){ @recipePage(recipe, i) }
-                <div id="recipe__content" class="recipe__content--no-js js-recipe__content--no-js">
-                    @BodyCleaner(article, article.fields.body, amp)
-                </div>
             </div>
             <div class="js-recipe__article--next-recipe recipe__article--next-recipe">
                 <div class="recipe__article--next-button js-recipe__article--next-button hide-on-desktop">@fragments.inlineSvg("arrow-right", "icon")</div>
