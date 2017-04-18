@@ -4,7 +4,7 @@
 @import model.{Audio, AudioPlayer, Video, VideoPlayer}
 @import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
-@import views.support.{RenderClasses, SeoOptimisedContentImage, StripHtmlTags, Video640}
+@import views.support.{RenderClasses, SeoOptimisedContentImage, StripHtmlTags, Video640, Video1280}
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }) { case (media, mediaType) =>
     @defining(isPaidContent(page)) { isPaidContent =>
@@ -79,7 +79,11 @@
                                                 <meta itemprop="width" content="@mv.videos.width" />
                                             }
                                             <meta itemprop="requiresSubscription" content="false" />
-                                            <meta itemprop="image" content="@Html(video.content.signedArticleImage)" />
+                                            @defining(video.mediaAtom.flatMap(_.posterImage) orElse video.elements.thumbnail.map(_.images)) {sixteenByNineImage =>
+                                                @sixteenByNineImage.map {i =>
+                                                    <meta itemprop="image" content="@Video1280.bestFor(i)" />
+                                                }
+                                            }
 
                                             @defining(video.elements.thumbnail.map(_.images) orElse video.mediaAtom.flatMap(_.posterImage)) {bestThumbnail =>
                                                 @bestThumbnail.map { thumbnail =>
