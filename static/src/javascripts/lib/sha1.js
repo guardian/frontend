@@ -36,9 +36,10 @@ const Sha1 = {
             M[i] = new Array(16);
             for (let j = 0; j < 16; j++) {
                 // encode 4 chars per integer, big-endian encoding
-                M[i][j] = msg.charCodeAt(i * 64 + j * 4) << 24 |
-                    msg.charCodeAt(i * 64 + j * 4 + 1) << 16 |
-                    msg.charCodeAt(i * 64 + j * 4 + 2) << 8 |
+                M[i][j] =
+                    (msg.charCodeAt(i * 64 + j * 4) << 24) |
+                    (msg.charCodeAt(i * 64 + j * 4 + 1) << 16) |
+                    (msg.charCodeAt(i * 64 + j * 4 + 2) << 8) |
                     msg.charCodeAt(i * 64 + j * 4 + 3);
             } // note running off the end of msg is ok 'cos bitwise ops on NaN return 0
         }
@@ -47,7 +48,7 @@ const Sha1 = {
         // bitwise-op args to 32 bits, we need to simulate this by arithmetic operators
         M[N - 1][14] = (msg.length - 1) * 8 / 2 ** 32;
         M[N - 1][14] = Math.floor(M[N - 1][14]);
-        M[N - 1][15] = (msg.length - 1) * 8 & 0xffffffff;
+        M[N - 1][15] = ((msg.length - 1) * 8) & 0xffffffff;
 
         // set initial hash value [§5.3.1]
         let H0 = 0x67452301;
@@ -87,11 +88,8 @@ const Sha1 = {
             // 3 - main loop
             for (let t = 0; t < 80; t++) {
                 const s = Math.floor(t / 20); // seq for blocks of 'f' functions and 'K' constants
-                const T = Sha1.ROTL(a, 5) +
-                    Sha1.f(s, b, c, d) +
-                    e +
-                    K[s] +
-                    W[t] &
+                const T =
+                    (Sha1.ROTL(a, 5) + Sha1.f(s, b, c, d) + e + K[s] + W[t]) &
                     0xffffffff;
                 e = d;
                 d = c;
@@ -101,18 +99,20 @@ const Sha1 = {
             }
 
             // 4 - compute the new intermediate hash value (note 'addition modulo 2^32')
-            H0 = H0 + a & 0xffffffff;
-            H1 = H1 + b & 0xffffffff;
-            H2 = H2 + c & 0xffffffff;
-            H3 = H3 + d & 0xffffffff;
-            H4 = H4 + e & 0xffffffff;
+            H0 = (H0 + a) & 0xffffffff;
+            H1 = (H1 + b) & 0xffffffff;
+            H2 = (H2 + c) & 0xffffffff;
+            H3 = (H3 + d) & 0xffffffff;
+            H4 = (H4 + e) & 0xffffffff;
         }
 
-        return Sha1.toHexStr(H0) +
+        return (
+            Sha1.toHexStr(H0) +
             Sha1.toHexStr(H1) +
             Sha1.toHexStr(H2) +
             Sha1.toHexStr(H3) +
-            Sha1.toHexStr(H4);
+            Sha1.toHexStr(H4)
+        );
     },
 
     /**
@@ -122,11 +122,11 @@ const Sha1 = {
     f(s: number, x: number, y: number, z: number) {
         switch (s) {
             case 0:
-                return x & y ^ ~x & z; // Ch()
+                return (x & y) ^ (~x & z); // Ch()
             case 1:
                 return x ^ y ^ z; // Parity()
             case 2:
-                return x & y ^ x & z ^ y & z; // Maj()
+                return (x & y) ^ (x & z) ^ (y & z); // Maj()
             case 3:
                 return x ^ y ^ z; // Parity()
         }
@@ -137,7 +137,7 @@ const Sha1 = {
      * @private
      */
     ROTL(x: number, n: number) {
-        return x << n | x >>> 32 - n;
+        return (x << n) | (x >>> (32 - n));
     },
 
     /**
@@ -151,7 +151,7 @@ const Sha1 = {
         let v;
 
         for (let i = 7; i >= 0; i--) {
-            v = n >>> i * 4 & 0xf;
+            v = (n >>> (i * 4)) & 0xf;
             s += v.toString(16);
         }
 

@@ -218,6 +218,7 @@ trait Navigation {
   val genius = SectionLink("crosswords", "genius", "Genius", "/crosswords/series/genius")
   val speedy = SectionLink("crosswords", "speedy", "Speedy", "/crosswords/series/speedy")
   val everyman = SectionLink("crosswords", "everyman", "Everyman", "/crosswords/series/everyman")
+  val weekendSectionLink = SectionLink("crosswords", "weekend", "Weekend", "/crosswords/series/weekend-crossword")
 
   // R1 Azeds have been re-created as NGW content with a new landing page
   val azed = SectionLink("crosswords", "azed", "Azed", "/crosswords/series/azed")

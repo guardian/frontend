@@ -1,7 +1,7 @@
 // @flow
 import fetchJSON from 'lib/fetch-json';
 import config from 'lib/config';
-import storage from 'lib/storage';
+import { local as storage } from 'lib/storage';
 
 let location;
 const storageKey = 'gu.geolocation';
@@ -36,7 +36,7 @@ const get = (): Promise<string> =>
 const init = (): void => {
     get().then(geolocation => {
         const currentDate = new Date();
-        storage.local.set(storageKey, geolocation, {
+        storage.set(storageKey, geolocation, {
             expires: currentDate.setDate(
                 currentDate.getDate() + daysBeforeGeolocationRefresh
             ),
@@ -48,7 +48,7 @@ const editionToGeolocation = (editionKey: string = 'UK'): string =>
     editionToGeolocationMap[editionKey];
 
 const getSync = (): string => {
-    const geolocationFromStorage = storage.local.get(storageKey);
+    const geolocationFromStorage = storage.get(storageKey);
     return geolocationFromStorage || editionToGeolocation(config.page.edition);
 };
 

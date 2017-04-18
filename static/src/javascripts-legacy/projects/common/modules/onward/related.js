@@ -82,11 +82,9 @@ define([
                         }).join('&');
                 }
 
-                lazyload({
-                    url: relatedUrl,
+                lazyload(relatedUrl, {
                     container: container,
-                    success: function () {
-
+                    finally: function () {
                         var relatedContainer = container.querySelector('.related-content');
 
                         new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
@@ -95,12 +93,11 @@ define([
                         mediator.emit('page:new-content', container);
                         mediator.emit('ui:images:upgradePictures', container);
                         register.end(componentName);
-
                     },
-                    error: function () {
+                    catch: function () {
                         bonzo(container).remove();
                         register.error(componentName);
-                    }
+                    },
                 });
             }
         } else {
