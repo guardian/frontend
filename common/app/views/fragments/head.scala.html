@@ -23,7 +23,6 @@ http://developers.theguardian.com/join-the-team.html
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
 @fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
 
-<link rel="preload" as="script" href="@Static("javascripts/graun.standard.js")">
 @if(PolyfillIO.isSwitchedOn) {
     <link rel="preload" as="script" href="@common.Assets.js.polyfillioUrl">
 } else {
