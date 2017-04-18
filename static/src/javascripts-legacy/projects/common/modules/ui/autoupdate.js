@@ -17,7 +17,6 @@ define([
     'common/modules/ui/sticky',
     'lib/scroller',
     'lodash/collections/toArray',
-    'lodash/functions/bindAll',
     'common/modules/ui/relativedates',
     'common/modules/ui/notification-counter',
     'common/modules/atoms/youtube'
@@ -36,7 +35,6 @@ define([
     Sticky,
     scroller,
     toArray,
-    bindAll,
     RelativeDates,
     NotificationCounter,
     youtube
