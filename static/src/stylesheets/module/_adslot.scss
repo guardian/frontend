@@ -20,6 +20,8 @@
 }
 
 .ad-slot--right {
+    z-index: $zindex-ads;
+    background-color: $neutral-8;
     position: sticky;
     top: 0;
 
@@ -30,6 +32,50 @@
 
     &.is-sticky {
         width: 300px;
+    }
+}
+
+.article-aside-container {
+    // this is a wrapper, so we can have a fallback if the ad doesn't load
+    min-height: $mpu-original-height + $mpu-ad-label-height;
+    width: $mpu-original-width;
+    margin-bottom: $gs-baseline * 2;
+
+    .dumathoin {
+      @include f-headlineSans;
+      color: $multimedia-main-1;
+      background-color: $comment-support-2;
+      padding: $gs-baseline;
+      max-height: $mpu-original-height + $mpu-ad-label-height;
+      z-index: 0;
+      position: absolute;
+      border-top: 1px solid $multimedia-main-2;
+    }
+
+    .dumathoin__button {
+        display: flex;
+        width: 180px;
+        height: 30px;
+        margin: $gs-baseline 0;
+        padding: $gs-baseline/2 0;
+        border-radius: 100rem;
+        color: $multimedia-main-1;
+        background-color: $multimedia-main-2;
+
+        &:hover {
+            color: $multimedia-main-1;
+            background-color: darken($multimedia-main-2, 5%);
+            text-decoration: none;
+        }
+
+        .inline-icon {
+            fill: $multimedia-main-1;
+        }
+    }
+
+    .dumathoin__button-text {
+        line-height: 30px;
+        padding-left: $gs-baseline;
     }
 }
 

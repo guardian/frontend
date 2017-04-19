@@ -7,7 +7,25 @@
 @import conf.switches.Switches.CommercialSwitch
 
 @if(CommercialSwitch.isSwitchedOn && shouldShowAds) {
-  <div class="ad-slot-container">
+  <div class="article-aside-container">
+    <div class="dumathoin" data-component="dumathoin mpu fallback">
+      <p class="dumathoin__copy">
+        Advertising helps pay for our journalism ...Can you support us another way?
+      </p>
+      <p class="dumathoin__copy">
+        For less than the price of a coffee a week, you could help secure the Guardian’s future.
+      </p>
+      <a class="dumathoin__button" data-link-name="dumathoin supporter button"
+        href="https://membership.theguardian.com/supporter?INTCMP=mpucontainer">
+        <span class="dumathoin__button-text">Become a Supporter</span>
+        @fragments.inlineSvg("arrow-right", "icon", List("arrow-right"))
+      </a>
+      <a class="dumathoin__button" data-link-name="dumathoin contribution button"
+        href="https://contribute.theguardian.com?INTCMP=mpucontainer">
+        <span class="dumathoin__button-text">Make a Contribution</span>
+        @fragments.inlineSvg("arrow-right", "icon", List("arrow-right"))
+      </a>
+    </div>
   @fragments.commercial.adSlot(
       "right",
       Seq("mpu-banner-ad"),
