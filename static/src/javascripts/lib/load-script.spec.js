@@ -67,7 +67,7 @@ describe('loadScript', () => {
 
         loadScript('xxx', { async: true })
             .then(msg => {
-                // expect(scripts[0].async).toBeTruthy();
+                expect(scripts[0].async).toBeTruthy();
                 expect(msg).toBe('pass');
 
                 if (scripts[0]) {
