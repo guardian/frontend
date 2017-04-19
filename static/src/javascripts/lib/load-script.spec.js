@@ -67,14 +67,11 @@ describe('loadScript', () => {
 
         loadScript('xxx', { async: true })
             .then(msg => {
-                const script: HTMLScriptElement = (scripts[0]: any);
-                
-                expect(script.async).toBeTruthy();
-                
+                const newScript: HTMLScriptElement = (scripts[0]: any);
+                expect(newScript.async).toBeTruthy();
                 expect(msg).toBe('pass');
-
-                if (script) {
-                    script.remove();
+                if (newScript) {
+                    newScript.remove();
                 }
             })
             .then(done);
