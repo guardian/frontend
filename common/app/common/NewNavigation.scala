@@ -379,8 +379,12 @@ object NewNavigation {
       }
     }
 
+    def getSectionLink(id: String): Option[String] = {
+      sectionLinks.find(_.pageId == id).map(_.parentSection.name)
+    }
+
     def getPillar(id: String): String = {
-      sectionLinks.find(_.pageId == id).map(_.parentSection.name).getOrElse("News")
+      getSectionLink(id).getOrElse("News")
     }
   }
 
@@ -529,10 +533,9 @@ object NewNavigation {
 
     def getActivePillar(page: Page): Tuple2[String, String] = {
       val sectionOrTagId = getSectionOrTagId(page)
-      val activeSectionLink = SectionLinks.sectionLinks.find(_.pageId == sectionOrTagId)
-      val activePillarName = activeSectionLink.map(_.parentSection.name).getOrElse("")
+      val activeSectionLink = SectionLinks.getSectionLink(sectionOrTagId)
 
-      (sectionOrTagId, activePillarName)
+      (sectionOrTagId, activeSectionLink.getOrElse(""))
     }
 
     def simplifySectionId(sectionId: String): String = {
