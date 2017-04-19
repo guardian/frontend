@@ -28,7 +28,7 @@ define([
 
             if (sheet.ownerNode.tagName === 'STYLE') {
                 result.push(sheet.ownerNode.textContent);
-            } else {
+            } else if (sheet.cssRules.length) {
                 result.push(aProto.reduce.call(sheet.cssRules, function (res, input) {
                     return res + input.cssText;
                 }, ''));
