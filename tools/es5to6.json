@@ -20,7 +20,6 @@
     "lib/load-css-promise.js"
   ],
   "GHaberis": [
-    "lib/location.js",
     "lib/pad.js",
     "lib/page.js"
   ],
