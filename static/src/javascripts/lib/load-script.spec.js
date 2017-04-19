@@ -67,6 +67,8 @@ describe('loadScript', () => {
 
         loadScript('xxx', { async: true })
             .then(msg => {
+                // #? having to typecast newScript as scripts[0] is type HTMLElement
+                // and async is not valid property of type HTMLElement
                 const newScript: HTMLScriptElement = (scripts[0]: any);
                 expect(newScript.async).toBeTruthy();
                 expect(msg).toBe('pass');
