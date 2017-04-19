@@ -89,7 +89,7 @@ test: install
 
 # Run the modern JS test suite in watch mode.
 test-watch: install
-	@yarn test -- --watch
+	@yarn test -- --watch --coverage
 
 # Check the JS test suite coverage.
 coverage: install
