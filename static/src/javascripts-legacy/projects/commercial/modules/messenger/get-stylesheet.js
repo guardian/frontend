@@ -18,20 +18,14 @@ define([
         var result = [];
         while (i < ii) {
             var sheet = styleSheets[i++];
-            if (!sheet.ownerNode || !sheet.ownerNode.matches) {
-                continue;
-            }
-
-            if (!sheet.ownerNode.matches(specs.selector)) {
-                continue;
-            }
-
-            if (sheet.ownerNode.tagName === 'STYLE') {
-                result.push(sheet.ownerNode.textContent);
-            } else {
-                result.push(aProto.reduce.call(sheet.cssRules, function (res, input) {
-                    return res + input.cssText;
-                }, ''));
+            if (sheet.ownerNode && sheet.ownerNode.matches && sheet.ownerNode.matches(specs.selector)) {
+                if (sheet.ownerNode.tagName === 'STYLE') {
+                    result.push(sheet.ownerNode.textContent);
+                } else {
+                    result.push(aProto.reduce.call(sheet.cssRules || [], function (res, input) {
+                        return res + input.cssText;
+                    }, ''));
+                }
             }
         }
 
