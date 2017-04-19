@@ -10,14 +10,12 @@
         @NewNavigation.SubSectionLinks.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront).map { link =>
             <li class="subnav__link-item">
                 <a class="@RenderClasses(Map(
-                    "subnav__link" -> true,
-                    "subnav__link--current-section" -> (id == link.uniqueSection)
-                ))"
-                href="@LinkTo(link.url)"
-                data-link-name="nav2 : subnav : @{
-                    if(link.longTitle.isEmpty) link.title else link.longTitle
-                }">
-                @link.title
+                        "subnav__link" -> true,
+                        "subnav__link--current-section" -> (id == link.uniqueSection)
+                   ))"
+                   href="@LinkTo(link.url)"
+                   data-link-name="nav2 : subnav : @{if(link.longTitle.isEmpty) link.title else link.longTitle}">
+                    @link.title
                 </a>
             </li>
         }
