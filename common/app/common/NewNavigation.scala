@@ -386,6 +386,13 @@ object NewNavigation {
     def getPillar(id: String): String = {
       getSectionLink(id).getOrElse("News")
     }
+
+    def getActivePillar(page: Page): Tuple2[String, String] = {
+      val sectionOrTagId = SubSectionLinks.getSectionOrTagId(page)
+      val activeSectionLink = getSectionLink(sectionOrTagId)
+
+      (sectionOrTagId, activeSectionLink.getOrElse(""))
+    }
   }
 
   object SubSectionLinks {
@@ -529,13 +536,6 @@ object NewNavigation {
       } else {
         simplifySectionId(page.metadata.sectionId)
       }
-    }
-
-    def getActivePillar(page: Page): Tuple2[String, String] = {
-      val sectionOrTagId = getSectionOrTagId(page)
-      val activeSectionLink = SectionLinks.getSectionLink(sectionOrTagId)
-
-      (sectionOrTagId, activeSectionLink.getOrElse(""))
     }
 
     def simplifySectionId(sectionId: String): String = {

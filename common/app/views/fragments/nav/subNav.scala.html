@@ -3,7 +3,7 @@
 @import common.{NewNavigation, Edition, LinkTo}
 @import views.support.RenderClasses
 
-@defining(NewNavigation.SubSectionLinks.getActivePillar(page)) { case (id, activePillarName) =>
+@defining(NewNavigation.SectionLinks.getActivePillar(page)) { case (id, activePillarName) =>
     <ul class="subnav"
         data-pillar-title="@activePillarName">
 
