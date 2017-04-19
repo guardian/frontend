@@ -36,7 +36,8 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 config.switches = {
                     outbrain : true,
                     commercial : true,
-                    discussion : true
+                    discussion : true,
+                    adFreeMembershipTrial : false
                 };
 
                 location.getHash = function () {return '';};
@@ -49,6 +50,8 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                 detect.adblockInUse = Promise.resolve(false);
 
                 userFeatures.isPayingMember = function () {return false;};
+
+                userFeatures.isAdFreeUser = function() { return isSignedIn && config.switches.adFreeMembershipTrial; };
 
                 identityApi.isUserLoggedIn = function () {
                     return isSignedIn;
@@ -87,6 +90,15 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
             });
         });
 
+        describe('DFP advertising under ad-free', function () {
+            it('is disabled', function () {
+                config.switches.adFreeMembershipTrial = true;
+                isSignedIn = true;
+                features = new CommercialFeatures;
+                expect(features.dfpAdvertising).toBe(false);
+            });
+        });
+
         describe('Article body adverts', function () {
             it('Runs by default', function () {
                 features = new CommercialFeatures;
@@ -107,6 +119,16 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
 
             it('Doesn`t run in live blogs', function () {
                 config.page.isLiveBlog = true;
+                features = new CommercialFeatures;
+                expect(features.articleBodyAdverts).toBe(false);
+            });
+        });
+
+        describe('Article body adverts under ad-free', function () {
+            // LOL grammar
+            it('are disabled', function () {
+                config.switches.adFreeMembershipTrial = true;
+                isSignedIn = true;
                 features = new CommercialFeatures;
                 expect(features.articleBodyAdverts).toBe(false);
             });
@@ -140,10 +162,53 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
             });
         });
 
+        describe('Article aside adverts under ad-free', function () {
+            beforeEach(function () {
+                config.switches.adFreeMembershipTrial = true;
+                isSignedIn = true;
+            });
+
+            it('are disabled in articles', function () {
+                config.page.contentType = 'Article';
+                features = new CommercialFeatures;
+                expect(features.articleAsideAdverts).toBe(false);
+            });
+
+            it('are disabled in liveblogs', function () {
+                config.page.contentType = 'LiveBlog';
+                config.page.isLiveBlog = true;
+                features = new CommercialFeatures;
+                expect(features.articleAsideAdverts).toBe(false);
+            });
+
+            it('are disabled in minute articles', function () {
+                config.page.isMinuteArticle = true;
+                features = new CommercialFeatures;
+                expect(features.articleAsideAdverts).toBe(false);
+            });
+
+            it('are disabled in non-article non-liveblog pages (e.g. network front)', function () {
+                config.page.contentType = 'Network Front';
+                config.page.isLiveBlog = false;
+                features = new CommercialFeatures;
+                expect(features.articleAsideAdverts).toBe(false);
+            });
+
+        });
+
         describe('Video prerolls', function () {
             it('Runs by default', function () {
                 features = new CommercialFeatures;
                 expect(features.videoPreRolls).toBe(true);
+            });
+        });
+
+        describe('Video prerolls under ad-free', function () {
+            it('are disabled', function () {
+                config.switches.adFreeMembershipTrial = true;
+                isSignedIn = true;
+                features = new CommercialFeatures;
+                expect(features.videoPreRolls).toBe(false);
             });
         });
 
@@ -167,7 +232,51 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
             });
         });
 
+        describe('High-relevance commercial component under ad-free', function () {
+            beforeEach(function () {
+                config.switches.adFreeMembershipTrial = true;
+                isSignedIn = true;
+            });
+
+            it('Does not run on fronts', function () {
+                config.page.isFront = true;
+                features = new CommercialFeatures;
+                expect(features.highMerch).toBe(false);
+            });
+
+            it('Does run outside of fronts', function () {
+                config.page.isFront = false;
+                features = new CommercialFeatures;
+                expect(features.highMerch).toBe(true);
+            });
+        });
+
         describe('Third party tags', function () {
+            it('Runs by default', function () {
+                features = new CommercialFeatures;
+                expect(features.thirdPartyTags).toBe(true);
+            });
+
+            it('Does not run on identity pages', function () {
+                config.page.contentType = 'Identity';
+                features = new CommercialFeatures;
+                expect(features.thirdPartyTags).toBe(false);
+            });
+
+            it('Does not run on identity section', function () {
+                // This is needed for identity pages in the profile subdomain
+                config.page.section = 'identity';
+                features = new CommercialFeatures;
+                expect(features.thirdPartyTags).toBe(false);
+            });
+        });
+
+        describe('Third party tags under ad-free', function () {
+            beforeEach(function () {
+                config.switches.adFreeMembershipTrial = true;
+                isSignedIn = true;
+            });
+
             it('Runs by default', function () {
                 features = new CommercialFeatures;
                 expect(features.thirdPartyTags).toBe(true);
@@ -220,6 +329,42 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
             });
         });
 
+        describe('Outbrain / Plista under ad-free', function () {
+            beforeEach(function () {
+                config.switches.adFreeMembershipTrial = true;
+                isSignedIn = true;
+            });
+
+            it('Runs by default', function () {
+                features = new CommercialFeatures;
+                expect(features.outbrain).toBe(true);
+            });
+
+            it('Is disabled under perf tests', function () {
+                location.getHash = function () {return '#noads';};
+                features = new CommercialFeatures;
+                expect(features.outbrain).toBe(false);
+            });
+
+            it('Is disabled in sensitive content', function () {
+                config.page.shouldHideAdverts = true;
+                features = new CommercialFeatures;
+                expect(features.outbrain).toBe(false);
+            });
+
+            it('Is disabled when related content is hidden', function () {
+                config.page.showRelatedContent = false;
+                features = new CommercialFeatures;
+                expect(features.outbrain).toBe(false);
+            });
+
+            it('Is disabled when user is logged in and page is commentable', function () {
+                config.page.commentable = true;
+                features = new CommercialFeatures;
+                expect(features.outbrain).toBe(false);
+            });
+        });
+
         describe('Comment adverts', function () {
             beforeEach(function () {
                 config.page.commentable = true;
@@ -258,6 +403,55 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                     breakpoint = 'wide';
                     features = new CommercialFeatures;
                     expect(features.commentAdverts).toBe(true);
+                });
+
+                it('Does not appear if page is not wide', function () {
+                    breakpoint = 'desktop';
+                    features = new CommercialFeatures;
+                    expect(features.commentAdverts).toBe(false);
+                });
+            });
+        });
+
+        describe('Comment adverts under ad-free', function () {
+            beforeEach(function () {
+                config.switches.adFreeMembershipTrial = true;
+                config.page.commentable = true;
+                isSignedIn = true;
+            });
+
+            it('Does not display when page has comments', function () {
+                features = new CommercialFeatures;
+                expect(features.commentAdverts).toBe(false);
+            });
+
+            it('Does not display on minute articles', function () {
+                config.page.isMinuteArticle = true;
+                features = new CommercialFeatures;
+                expect(features.commentAdverts).toBe(false);
+            });
+
+            it('Does not appear when user signed out', function () {
+                isSignedIn = false;
+                features = new CommercialFeatures;
+                expect(features.commentAdverts).toBe(false);
+            });
+
+            it('Short circuits when no comments to add adverts to', function () {
+                config.page.commentable = false;
+                features = new CommercialFeatures;
+                expect(features.commentAdverts).toBe(false);
+            });
+
+            describe('If live blog', function () {
+                beforeEach(function () {
+                    config.page.isLiveBlog = true;
+                });
+
+                it('Does not appear if page is wide', function () {
+                    breakpoint = 'wide';
+                    features = new CommercialFeatures;
+                    expect(features.commentAdverts).toBe(false);
                 });
 
                 it('Does not appear if page is not wide', function () {

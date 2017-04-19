@@ -103,6 +103,8 @@ define([
 
         this.outbrain =
             (this.dfpAdvertising || this.adFree) &&
+            !noadsUrl &&
+            !sensitiveContent &&
             switches.outbrain &&
             isArticle &&
             !config.page.isPreview &&
