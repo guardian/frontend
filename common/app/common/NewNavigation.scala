@@ -379,11 +379,8 @@ object NewNavigation {
       }
     }
 
-    def getParentPillar(id: String): String = {
-      sectionLinks
-        .find(_.pageId == id)
-        .map(_.parentSection.name)
-        .getOrElse("News")
+    def getPillar(id: String): String = {
+      sectionLinks.find(_.pageId == id).map(_.parentSection.name).getOrElse("News")
     }
   }
 
