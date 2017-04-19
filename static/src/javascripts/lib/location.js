@@ -1,11 +1,9 @@
-define(function () {
-    /**
-     * Mockable proxy for window.location
-     */
+/**
+ * Mockable proxy for window.location
+ */
 
-    return {
-        getHash : function getHash() {
-            return window.location.hash;
-        }
-    };
-});
+export default {
+    getHash: function getHash() {
+        return window.location.hash;
+    }
+};
