@@ -5,4 +5,4 @@
  */
 const getHash = () => window.location.hash;
 
-export default getHash;
+export { getHash };
