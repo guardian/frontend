@@ -4570,10 +4570,6 @@ karma-phantomjs-launcher:
     lodash "^4.0.1"
     phantomjs-prebuilt "^2.1.7"
 
-karma-phantomjs-shim@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/karma-phantomjs-shim/-/karma-phantomjs-shim-1.4.0.tgz#21072f436e07764a425fbbdc15175b537106e7ed"
-
 karma-requirejs@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/karma-requirejs/-/karma-requirejs-1.1.0.tgz#fddae2cb87d7ebc16fb0222893564d7fee578798"
