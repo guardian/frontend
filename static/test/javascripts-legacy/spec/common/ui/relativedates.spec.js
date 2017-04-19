@@ -6,8 +6,7 @@ function (RelativeDates, fixtures) {
         fixtures: [
                     '<time id="time-valid" class="js-timestamp" datetime="2012-08-12T18:43:00.000Z">12th August</time>',
                     '<time id="time-invalid" class="js-timestamp" datetime="201-08-12agd18:43:00.000Z">Last Tuesday</time>',
-                    '<time id="time-locale" class="js-locale-timestamp" datetime="2014-06-13T17:00:00+0100" data-timestamp="1402675200000">17:00</time>',
-                    '<time id="time-with-timezone" class="js-locale-timestamp" datetime="2017-03-24T16:00:00+0000" data-timestamp="1490371200000" data-show-timezone>16:00</time>'
+                    '<time id="time-locale" class="js-locale-timestamp" datetime="2014-06-13T17:00:00+0100" data-timestamp="1402675200000">17:00</time>'
                    ]
     },
     // make the date static so tests are stable
@@ -164,28 +163,6 @@ function (RelativeDates, fixtures) {
         it('Should convert timestamps to users locale', function () {
             RelativeDates.init();
             expect(document.getElementById('time-locale').innerHTML).toBe('17:00');
-        });
-
-        it('Converts valid timestamps in the HTML document into their expected output without timezone appended if GMT', function () {
-            var toStringStub = sinon.stub(window.Date.prototype, 'toString').returns('Fri Mar 24 2017 16:00:00 GMT+0000 (GMT)');
-            
-            RelativeDates.init();
-
-            expect(toStringStub).toHaveBeenCalled();
-            expect(document.getElementById('time-with-timezone').innerHTML).toBe('16:00');
-
-            toStringStub.restore();
-        })
-
-        it('Converts valid timestamps in the HTML document into their expected output with timezone appended if not GMT', function () {
-            var toStringStub = sinon.stub(window.Date.prototype, 'toString').returns('Fri Mar 24 2017 16:00:00 GMT-0400 (EST)');
-
-            RelativeDates.init();
-
-            expect(toStringStub).toHaveBeenCalled();
-            expect(document.getElementById('time-with-timezone').innerHTML).toBe('16:00 EST');
-
-            toStringStub.restore();
         });
     });
 });
