@@ -1,5 +1,5 @@
 // @flow
-import loadScript from './load-script';
+import { loadScript } from './load-script';
 
 describe('loadScript', () => {
     const script = document.createElement('script');
