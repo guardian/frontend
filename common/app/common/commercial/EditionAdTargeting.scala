@@ -6,27 +6,63 @@ import common.Edition
 import ophan.SurgingContentAgent
 import play.api.libs.json._
 
-case class EditionAdTargeting(edition: Edition, params: Map[String, Either[String, Set[String]]])
+case class EditionAdTargeting(edition: Edition, params: Map[AdCallParamKey, AdCallParamValue])
 
 object EditionAdTargeting {
 
-  implicit val paramsWrites = new Writes[Either[String, Set[String]]] {
-    def writes(location: Either[String, Set[String]]) = location match {
-      case Left(v) => Json.toJson(v)
-      case Right(vs) => Json.toJson(vs)
-    }
-  }
+  implicit val adTargetingFormat: Format[Map[AdCallParamKey, AdCallParamValue]] = {
 
-  implicit val paramsReads = new Reads[Either[String, Set[String]]] {
-    override def reads(json: JsValue) = json match {
-      case JsString(v) =>
-        JsSuccess(Left(v))
-      case JsArray(js) =>
-        JsSuccess(Right(js.flatMap {
-          case JsString(v) => Some(v)
-          case _ => None
-        }.toSet))
-      case _ => JsError(s"Failed to read ad targeting param $json")
+    def adCallParamKeyByName(name: String): AdCallParamKey = name match {
+      case AuthorKey.name => AuthorKey
+      case BlogKey.name => BlogKey
+      case BrandingKey.name => BrandingKey
+      case ContentTypeKey.name => ContentTypeKey
+      case EditionKey.name => EditionKey
+      case KeywordKey.name => KeywordKey
+      case ObserverKey.name => ObserverKey
+      case PathKey.name => PathKey
+      case PlatformKey.name => PlatformKey
+      case SeriesKey.name => SeriesKey
+      case SurgeLevelKey.name => SurgeLevelKey
+      case ToneKey.name => ToneKey
+      case _ => KeywordKey
+    }
+
+    new Format[Map[AdCallParamKey, AdCallParamValue]] {
+
+      def reads(json: JsValue): JsResult[Map[AdCallParamKey, AdCallParamValue]] = json match {
+        case JsObject(jsonMap) =>
+          JsSuccess(
+            jsonMap.toMap flatMap {
+              case (k, JsString(v)) =>
+                Some(adCallParamKeyByName(k) -> new SingleValue { override def raw = v })
+              case (k, JsArray(jsonSeq)) =>
+                Some(adCallParamKeyByName(k) -> new MultipleValues {
+                  override def raw =
+                    jsonSeq.flatMap {
+                      case JsString(v) => Some(v)
+                      case _ => None
+                    }.toSet
+                })
+              case _ =>
+                None
+            }
+          )
+        case _ =>
+          JsSuccess(Map.empty)
+      }
+
+      def writes(o: Map[AdCallParamKey, AdCallParamValue]): JsValue = JsObject {
+        o map {
+          case (k, v) =>
+            k.name -> (
+              v match {
+                case v: SingleValue => JsString(v.toCleanString)
+                case vs: MultipleValues => JsArray(vs.toCleanStrings.toSeq.map(JsString))
+              }
+            )
+        }
+      }
     }
   }
 
@@ -37,32 +73,8 @@ object EditionAdTargeting {
     surgeLookupService = SurgingContentAgent
   )
 
-  private def editionTargeting(targeting: Edition => Map[AdCallParamKey, AdCallParamValue]): Seq[EditionAdTargeting] = {
-
-    def stringify(params: Map[AdCallParamKey, AdCallParamValue]) = for ((k, v) <- params) yield {
-      k.name -> {
-        v match {
-
-          /*
-           * Ultimately in the ad targeting json this will appear as a single value,
-           * eg. "ct" : "article"
-           */
-          case sv: SingleValue => Left(sv.toCleanString)
-
-          /*
-           * Ultimately in the ad targeting json this will appear as an Array value,
-           * even if it actually only holds a single value.
-           * eg. "k" : ["a"] or "k" : ["a", "b", "c"]
-           * This is to make it clear that it can have multiple values.
-           */
-          case mv: MultipleValues => Right(mv.toCleanStrings)
-        }
-      }
-    }
-
-    for (edition <- Edition.all)
-      yield EditionAdTargeting(edition, params = stringify(targeting(edition)))
-  }
+  private def editionTargeting(targeting: Edition => Map[AdCallParamKey, AdCallParamValue]): Seq[EditionAdTargeting] =
+    for (edition <- Edition.all) yield EditionAdTargeting(edition, params = targeting(edition))
 
   def fromContent(item: Content): Seq[EditionAdTargeting] =
     editionTargeting { edition =>
