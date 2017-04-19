@@ -379,10 +379,6 @@ object NewNavigation {
       }
     }
 
-    def getSectionLink(id: String): Option[String] = {
-      sectionLinks.find(_.pageId == id).map(_.parentSection.name)
-    }
-
     def getPillarName(id: String): String = {
       getSectionLink(id).getOrElse("News")
     }
@@ -392,6 +388,10 @@ object NewNavigation {
       val activeSectionLink = getSectionLink(sectionOrTagId)
 
       (sectionOrTagId, activeSectionLink.getOrElse(""))
+    }
+
+    private def getSectionLink(id: String): Option[String] = {
+      sectionLinks.find(_.pageId == id).map(_.parentSection.name)
     }
   }
 
