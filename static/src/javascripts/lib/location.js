@@ -3,6 +3,6 @@
 /**
  * Mockable proxy for window.location
  */
-const getHash = () => window.location.hash;
+const getHash = (): string => window.location.hash;
 
 export { getHash };
