@@ -383,7 +383,7 @@ object NewNavigation {
       sectionLinks.find(_.pageId == id).map(_.parentSection.name)
     }
 
-    def getPillar(id: String): String = {
+    def getPillarName(id: String): String = {
       getSectionLink(id).getOrElse("News")
     }
 
