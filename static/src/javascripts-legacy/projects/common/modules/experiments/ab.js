@@ -20,10 +20,12 @@ define([
     'common/modules/experiments/tests/film-today-email-variants',
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
+    'common/modules/experiments/tests/increase-inline-ads',
     'common/modules/experiments/tests/email-demand-tests',
     'common/modules/experiments/tests/paid-card-logo',
     'ophan/ng',
-    'common/modules/experiments/tests/paid-commenting'
+    'common/modules/experiments/tests/paid-commenting',
+    'common/modules/experiments/tests/simple-reach'
 ], function (reportError,
              config,
              cookies,
@@ -45,10 +47,12 @@ define([
              FilmTodayEmailVariants,
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
+             increaseInlineAdsRedux,
              EmailDemandTests,
              PaidCardLogo,
              ophan,
-             PaidCommenting
+             PaidCommenting,
+             SimpleReach
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
@@ -61,9 +65,11 @@ define([
         FilmTodayEmailVariants,
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
+        new increaseInlineAdsRedux(),
         new EmailDemandTests(),
         new PaidCardLogo(),
-        new PaidCommenting()
+        new PaidCommenting(),
+        new SimpleReach()
     ].concat(MembershipEngagementBannerTests));
 
     function cleanParticipations() {

@@ -1,129 +1,126 @@
 // @flow
 
-import qwery from 'qwery';
 import fastdom from 'fastdom';
 import ophan from 'ophan/ng';
 import userAccount from 'common/modules/navigation/user-account';
 
-const html = qwery('html')[0];
-const menuItems = qwery('.js-close-nav-list');
+const sidebar = document.getElementById('main-menu');
 const enhanced = {};
 
-const weShouldEnhance = (checkbox: HTMLInputElement): ?boolean =>
-    checkbox && !enhanced[checkbox.id] && !checkbox.checked;
+const closeSidebarSections = (targetItem?: HTMLElement): void => {
+    const sections = [...document.querySelectorAll('.js-close-nav-list')];
 
-const closeAllOtherPrimaryLists = (targetItem?: HTMLElement): void => {
-    menuItems.forEach(item => {
-        if (item !== targetItem) {
-            item.removeAttribute('open');
+    sections.forEach(section => {
+        if (section !== targetItem) {
+            section.removeAttribute('open');
         }
     });
 };
 
-const removeOrderingFromLists = (): void => {
-    const mainListItems = qwery('.js-navigation-item');
+const toggleSidebar = (trigger: HTMLElement): void => {
+    const documentElement = document.documentElement;
+    const sidebarToggle = document.querySelector('.js-change-link');
+    const openClass = 'new-header__nav__menu-button--open';
+    const globalOpenClass = 'nav-is-open';
+    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
 
-    mainListItems.forEach(item => {
-        const listItem = item;
-
-        listItem.style.order = '';
-    });
-};
-
-const toggleSidebar = (event: Event): void => {
-    // #? hacky type cast
-    const button: HTMLElement = (event.target: any);
-    const mainMenu = document.getElementById('main-menu');
-    const veggieBurgerLink = qwery('.js-change-link')[0];
-
-    const menuIsOpen = (): boolean =>
-        button.getAttribute('aria-expanded') === 'true';
-
-    if (!mainMenu || !veggieBurgerLink) {
+    if (!sidebar || !sidebarToggle) {
         return;
     }
-    if (menuIsOpen()) {
-        fastdom.write(() => {
-            button.setAttribute('aria-expanded', 'false');
-            mainMenu.setAttribute('aria-hidden', 'true');
-            veggieBurgerLink.classList.remove(
-                'new-header__nav__menu-button--open'
-            );
-            veggieBurgerLink.setAttribute(
-                'data-link-name',
-                'nav2 : veggie-burger : show'
-            );
-            removeOrderingFromLists();
 
-            // Users should be able to scroll again
-            html.classList.remove('nav-is-open');
+    const resetItemOrder = (): void => {
+        const items = [...document.querySelectorAll('.js-navigation-item')];
+
+        items.forEach(item => {
+            const listItem = item;
+            listItem.style.order = '';
         });
-    } else {
-        fastdom.write(() => {
-            const firstButton = qwery('.js-navigation-button')[0];
+    };
 
-            button.setAttribute('aria-expanded', 'true');
-            mainMenu.setAttribute('aria-hidden', 'false');
-            veggieBurgerLink.classList.add(
-                'new-header__nav__menu-button--open'
-            );
-            veggieBurgerLink.setAttribute(
-                'data-link-name',
-                'nav2 : veggie-burger : hide'
-            );
+    const focusFirstSidebarSection = (): void => {
+        const firstSection = document.querySelector('.js-navigation-button');
 
-            if (firstButton) {
-                firstButton.focus();
-            }
-            // No targetItem to put in as the parameter. All lists should close.
-            closeAllOtherPrimaryLists();
-            // Prevents scrolling on the body
-            html.classList.add('nav-is-open');
-        });
-    }
+        if (firstSection) {
+            firstSection.focus();
+        }
+    };
+
+    const update = () => {
+        const expandedAttr = isOpen ? 'false' : 'true';
+        const hiddenAttr = isOpen ? 'true' : 'false';
+
+        sidebarToggle.setAttribute(
+            'data-link-name',
+            `nav2 : veggie-burger : ${isOpen ? 'show' : 'hide'}`
+        );
+
+        trigger.setAttribute('aria-expanded', expandedAttr);
+        sidebar.setAttribute('aria-hidden', hiddenAttr);
+        sidebarToggle.classList.toggle(openClass, !isOpen);
+
+        if (documentElement) {
+            documentElement.classList.toggle(globalOpenClass, !isOpen);
+        }
+
+        if (isOpen) {
+            resetItemOrder();
+        } else {
+            focusFirstSidebarSection();
+            closeSidebarSections();
+        }
+    };
+
+    fastdom.write(update);
 };
 
-const applyEnhancementsTo = (checkbox: HTMLElement): void => {
+const enhanceCheckbox = (checkbox: HTMLElement): void => {
     fastdom.read(() => {
         const button = document.createElement('button');
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
+        const enhance = () => {
+            [...checkbox.classList].forEach(c => button.classList.add(c));
 
-        [...checkbox.classList].forEach(c => button.classList.add(c));
+            button.setAttribute('id', checkboxId);
+            button.setAttribute('aria-expanded', 'false');
 
-        button.setAttribute('id', checkboxId);
+            if (checkboxControls) {
+                button.setAttribute('aria-controls', checkboxControls);
+            }
 
-        if (checkboxControls) {
-            button.setAttribute('aria-controls', checkboxControls);
-        }
+            button.addEventListener('click', (event: Event) => {
+                // #? hacky type cast
+                const target: HTMLElement = (event.target: any);
+                toggleSidebar(target);
+            });
 
-        button.setAttribute('aria-expanded', 'false');
-
-        fastdom.write(() => {
             if (checkbox.parentNode) {
                 checkbox.parentNode.replaceChild(button, checkbox);
             }
 
-            button.addEventListener('click', toggleSidebar);
             enhanced[button.id] = true;
-        });
+        };
+
+        fastdom.write(enhance);
     });
 };
 
-const enhanceCheckboxesToButtons = (): void => {
+const enhanceSidebarToggle = (): void => {
     const checkbox = document.getElementById('main-menu-toggle');
 
-    if (!checkbox || !(checkbox instanceof HTMLInputElement)) {
+    if (!checkbox) {
         return;
     }
 
-    if (weShouldEnhance(checkbox)) {
-        applyEnhancementsTo(checkbox);
+    if (!enhanced[checkbox.id] && !checkbox.checked) {
+        enhanceCheckbox(checkbox);
     } else {
-        checkbox.addEventListener('click', function closeMenuHandler() {
-            applyEnhancementsTo(checkbox);
+        const closeMenuHandler = (): void => {
+            enhanceCheckbox(checkbox);
             checkbox.removeEventListener('click', closeMenuHandler);
-        });
+        };
+
+        checkbox.addEventListener('click', closeMenuHandler);
 
         ophan.record({
             component: 'main-navigation',
@@ -132,17 +129,24 @@ const enhanceCheckboxesToButtons = (): void => {
     }
 };
 
-const bindMenuItemClickEvents = (): void => {
-    menuItems.forEach(item =>
-        item.addEventListener(
-            'click',
-            closeAllOtherPrimaryLists.bind(null, item)
-        ));
+const addEventHandler = (): void => {
+    if (!sidebar) {
+        return;
+    }
+
+    sidebar.addEventListener('click', (event: Event) => {
+        const target: HTMLElement = (event.target: any);
+
+        if (target.matches('.js-close-nav-list')) {
+            event.stopPropagation();
+            closeSidebarSections(target);
+        }
+    });
 };
 
 const init = (): void => {
-    enhanceCheckboxesToButtons();
-    bindMenuItemClickEvents();
+    enhanceSidebarToggle();
+    addEventHandler();
     userAccount();
 };
 

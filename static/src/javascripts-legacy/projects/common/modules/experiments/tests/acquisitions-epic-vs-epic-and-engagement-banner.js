@@ -37,7 +37,7 @@ define([
         campaignId: campaignId,
 
         start: '2017-03-24',
-        expiry: '2017-04-13',
+        expiry: '2017-04-19',
 
         author: 'Guy Dawson',
         description: 'Epic and engagement banner vs the epic only',

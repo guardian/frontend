@@ -6,8 +6,11 @@
 @* TODO: When implementing the desktop design, aim to consolidate the html *@
 @fragments.newHeader(page)
 
+@* TODO: #new-recipe - remove when removing the test *@
+@hasSlimHeader = @{page.metadata.hasSlimHeader || (page.metadata.isNewRecipeDesign && mvt.ABNewRecipeDesign.isParticipating)}
+
 <header id="header"
-        class="l-header u-cf @if(page.metadata.hasSlimHeader && !showNormalHeader) {l-header--is-slim l-header--no-navigation} js-header hide-on-mobile"
+        class="l-header u-cf @if(hasSlimHeader && !showNormalHeader) {l-header--is-slim l-header--no-navigation} js-header hide-on-mobile"
         role="banner"
         data-link-name="global navigation: header">
     <div class="js-navigation-header navigation-container navigation-container--collapsed">
@@ -26,20 +29,11 @@
                                data-test-id="sign-in-link"
                                aria-haspopup="true">
                                 @fragments.inlineSvg("profile-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                                @if(conf.switches.Switches.SaveForLaterSwitch.isSwitchedOn) {
-                                    @fragments.inlineSvg("bookmark", "icon", List("save-for-later__icon"))
-                                }
                                 <span class="js-profile-info control__info"
                                       data-test-id="sign-in-name">sign in</span>
                             </a>
                             <div class="js-profile-popup">
                                 <ul class="popup popup--default popup__group popup--profile is-off" data-link-name="Sub Sections" data-test-id="popup-profile">
-                                    @if(conf.switches.Switches.SaveForLaterSwitch.isSwitchedOn) {
-                                        <li class="popup__item">
-                                            <a href="@Configuration.id.url/saved-for-later" class="brand-bar__item--action brand-bar__item--saved-for-later" data-link-name="Saved for Later">
-                                                Saved for later</a>
-                                        </li>
-                                    }
                                     <li class="popup__item"><a class="brand-bar__item--action js-comment-activity u-h" data-link-name="Comment activity">Comment activity</a></li>
                                     <li class="popup__item"><a href="@Configuration.id.url/public/edit" class="brand-bar__item--action" data-link-name="Edit profile">Edit profile</a></li>
                                     <li class="popup__item"><a href="@Configuration.id.url/email-prefs" class="brand-bar__item--action" data-link-name="Email preferences">Email preferences</a></li>
@@ -84,7 +78,7 @@
             <div class="l-header-main">
                 @if((page.metadata.sectionId == "observer" && page.metadata.isFront) || page.metadata.id == "theobserver") {
                     <a href="@LinkTo{@page.metadata.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" data-component="logo">
-                        @if(page.metadata.hasSlimHeader) {
+                        @if(hasSlimHeader) {
                             @fragments.inlineSvg("observer-logo-160", "logo")
                         } else {
                             <span class="u-h">The Observer - Back to home</span>
@@ -94,7 +88,8 @@
                 } else {
                     <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" data-component="logo">
                         <span class="u-h">The Guardian - Back to home</span>
-                        @if(page.metadata.hasSlimHeader) {
+
+                        @if(hasSlimHeader) {
                             @* CRAZY HACK TO FIX IE8 RENDERING ISSUE WITH LOGO SVG MARKUP *@
                             <!--[if (gt IE 8)|(IEMobile)]><!-->
                                 @fragments.inlineSvg("guardian-logo-160", "logo")
@@ -112,11 +107,13 @@
                         }
                     </a>
                 }
-                @if(page.metadata.hasSlimHeader) {
+
+                @if(hasSlimHeader) {
                     @fragments.nav.navigationToggle()
                 }
             </div>
         </div>
+
         @fragments.nav.navigation(page)
     </div>
 

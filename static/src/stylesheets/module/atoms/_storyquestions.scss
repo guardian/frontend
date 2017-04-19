@@ -66,6 +66,7 @@
 
     @include mq($from: tablet) {
         @include fs-headline(3);
+        line-height: 27px;
         max-width: 80%;
         font-weight: 900;
     }

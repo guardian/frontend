@@ -37,23 +37,25 @@ define([
     function renderNav(match, callback) {
         var matchInfo = new MatchInfo(match, config.page.pageId);
 
-        return matchInfo.fetch().then(function (resp) {
-            var $nav;
-            if (resp.nav && resp.nav.trim().length > 0) {
-                $nav = $.create(resp.nav).first().each(function (nav) {
-                    if (match.id || $('.tabs__tab', nav).length > 2) {
-                        $('.js-sport-tabs').append(nav);
-                    }
-                });
-            }
+        return matchInfo.fetch()
+            .then(function (resp) {
+                var $nav;
+                if (resp.nav && resp.nav.trim().length > 0) {
+                    $nav = $.create(resp.nav).first().each(function (nav) {
+                        if (match.id || $('.tabs__tab', nav).length > 2) {
+                            $('.js-sport-tabs').append(nav);
+                        }
+                    });
+                }
 
-            if (callback) {
-                callback(resp, $nav, matchInfo.endpoint);
-            } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
-        }, function () {
-            $('.score-container').remove();
-            $('.js-score').removeClass('u-h');
-        });
+                if (callback) {
+                    callback(resp, $nav, matchInfo.endpoint);
+                }
+            })
+            .catch(function () {
+                $('.score-container').remove();
+                $('.js-score').removeClass('u-h');
+            });
     }
 
     function renderExtras(extras, dropdownTemplate) {

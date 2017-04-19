@@ -85,6 +85,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val SimpleReachSwitch = Switch(
+    SwitchGroup.Commercial,
+    "simple-reach",
+    "Enable Simple Reach tracking and reporting.",
+    owners = Seq(Owner.withName("commercial team")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val TravelFeedFetchSwitch = Switch(
     SwitchGroup.CommercialFeeds,
     "gu-travel-feed-fetch",

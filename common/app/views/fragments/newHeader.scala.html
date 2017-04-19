@@ -4,13 +4,17 @@
 @import common.{LinkTo, NewNavigation, Edition}
 @import views.support.RenderClasses
 
-<header class="new-header" role="banner">
+<header class="new-header"
+        role="banner">
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
         @defining(
             NewNavigation.SectionLinks.getTopLevelSection(id)
         ) { case (currentTopLevelSection) =>
             <div class="new-header__inner gs-container">
-                <a href="@LinkTo{/}" class="new-header__logo-wrapper" tabindex="0" data-link-name="nav2 : logo">
+                <a href="@LinkTo{/}"
+                   class="new-header__logo-wrapper"
+                   tabindex="0"
+                   data-link-name="nav2 : logo">
                     <span class="u-h">The Guardian - Back to home</span>
                     @fragments.inlineSvg("guardian-logo-160", "logo", List("new-header__logo"))
                 </a>
@@ -22,12 +26,15 @@
                         data-link-name="nav2 : supporter-cta"
                         data-edition="@{editionId}"
                         href="@{Configuration.id.membershipUrl}/@{editionId}/supporter?INTCMP=mem_@{editionId}_web_newheader_trapezoid">
-
                         Become a <span>Supporter</span>
                     </a>
                 }
 
-                <nav class="new-header__nav" data-component="nav2" role="navigation" aria-label="Guardian sections">
+                <nav class="new-header__nav"
+                     data-component="nav2"
+                     role="navigation"
+                     aria-label="Guardian sections">
+
                     <ul class="new-header__nav-primary-links">
                         @NewNavigation.PrimaryLinks.map { link =>
                             <li class="new-header__nav-link-item">
@@ -41,18 +48,24 @@
                             </li>
                         }
                     </ul>
+
                     <label for="main-menu-toggle"
-                        class="new-header__nav__menu-button js-change-link"
-                        tabindex="0"
-                        data-link-name="nav2 : veggie-burger : show">
-                            <span class="new-header__veggie-burger-icon"></span>
-                            <span class="u-h">Menu</span>
+                           class="new-header__nav__menu-button js-change-link"
+                           tabindex="0"
+                           data-link-name="nav2 : veggie-burger : show">
+                        <span class="new-header__veggie-burger-icon"></span>
+                        <span class="u-h">Menu</span>
                     </label>
-                    <input type="checkbox" id="main-menu-toggle" class="new-header__nav__button js-enhance-checkbox" aria-controls="main-menu">
+
+                    <input type="checkbox"
+                           id="main-menu-toggle"
+                           class="new-header__nav__button js-enhance-checkbox"
+                           aria-controls="main-menu">
 
                     @fragments.nav.newHeaderMenu()
                 </nav>
             </div>
+
             @if(!page.metadata.hasSlimHeader) {
                 @fragments.nav.subNav(page)
             }

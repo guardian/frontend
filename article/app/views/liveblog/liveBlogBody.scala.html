@@ -10,7 +10,7 @@
 @import conf.switches.Switches._
 @import layout.{FaciaCardAndIndex, ItemClasses}
 @import views.html.fragments.items.facia_cards.item
-@import views.support.Commercial.isPaidContent
+@import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
 @import views.support.TrailCssClasses.toneClass
 
 @defining((model.article, Edition(request).timezone)) { case (article, timezone) =>
@@ -128,7 +128,9 @@
                 </div>
 
                 <div class="content__secondary-column js-secondary-column" aria-hidden="true">
-                    <div class="ad-slot-container js-ad-slot-container"></div>
+
+                    @fragments.articleAsideSlot(shouldShowAds(model), articleAsideOptionalSizes)
+
                     @if(model.related.hasStoryPackage && !amp) {
                         <aside role="complementary" class="blog__related">
                             <h3 class="blog__related__head">More on this story</h3>

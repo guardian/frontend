@@ -49,17 +49,6 @@ define([
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
         var messageCode = 'engagement-banner-2017-03-30';
 
-        //Remind me form selectors
-        var SECONDARY_BUTTON = '.secondary';
-        var REMIND_ME_FORM = '.membership__remind-me-form';
-        var REMIND_ME_TEXT_FIELD = '.membership__engagement-text-field';
-        var REMIND_ME_CTA = '.membership__remind-me-form__cta';
-        var REMIND_ME_THANKS_MESSAGE = '.membership__remind-me-form__thanks-message';
-        var REMIND_ME_ERROR = '.membership__remind-me-form__error';
-
-        var LIST_ID = 3813;
-        var EMAIL_PATH = '/email';
-
         var DO_NOT_RENDER_ENGAGEMENT_BANNER = 'do no render engagement banner';
 
         function getUserTest() {
@@ -174,7 +163,6 @@ define([
                 buttonCaption: params.buttonCaption,
                 colourClass: colourClass,
                 arrowWhiteRight: svgs('arrowWhiteRight'),
-                showRemindMe: params.showRemindMe || false
             });
 
             var messageShown = new Message(
@@ -192,94 +180,9 @@ define([
                 recordInteraction(params.interactionOnMessageShown);
 
                 mediator.emit('membership-message:display');
-
-                if(params.showRemindMe) {
-                    setSecondaryButtonListener();
-
-                    trackGAEvent('display', 'engagement-banner', 'engagement-banner-remind-me');
-                }
             }
 
             mediator.emit('banner-message:complete');
-        }
-
-        function trackGAEvent(category, action, label) {
-            var gaTracker = null;
-
-            if(config.googleAnalytics) {
-                 gaTracker = config.googleAnalytics.trackers.editorial;
-            }
-
-            if(gaTracker && window.ga){
-                window.ga(gaTracker + '.send', 'event', category, action, label);
-            }
-
-        }
-
-        function emailIsValid(email) {
-            return typeof email === 'string' && email.indexOf('@') > -1;
-        }
-
-        function sendEmail(email){
-            submitForm(email, LIST_ID).then(showThankYouMessage, showErrorMessage)
-        }
-
-        function showThankYouMessage(){
-            hideElement($(REMIND_ME_TEXT_FIELD));
-            hideElement($(REMIND_ME_CTA));
-            hideElement($(REMIND_ME_ERROR));
-
-            showElement($(REMIND_ME_THANKS_MESSAGE));
-        }
-
-        function showErrorMessage(){
-            hideElement($(REMIND_ME_TEXT_FIELD));
-            hideElement($(REMIND_ME_CTA));
-            showElement($(REMIND_ME_ERROR));
-        }
-
-        function submitForm(email, listID) {
-            var formQueryString =
-                'email=' + encodeURI(email) + '&' +
-                'listId=' + listID;
-
-            return fetch(config.page.ajaxUrl + EMAIL_PATH,
-                {   method: 'post',
-                    body: formQueryString,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                }
-            );
-        }
-
-        function showElement(element) {
-            element.removeClass('is-hidden');
-        }
-
-        function hideElement(element) {
-            element.addClass('is-hidden');
-        }
-
-        function setSecondaryButtonListener() {
-
-            bean.on($(SECONDARY_BUTTON)[0], 'click', function () {
-                hideElement($(SECONDARY_BUTTON));
-                showElement($(REMIND_ME_FORM));
-
-                trackGAEvent('click', 'engagement-banner', 'remind-me-button');
-            });
-
-            bean.on($(REMIND_ME_CTA)[0], 'click', function () {
-                var email = $(REMIND_ME_TEXT_FIELD)[0].value;
-
-                if(emailIsValid(email)){
-                    trackGAEvent('click', 'engagement-banner', 'send-email');
-                    sendEmail(email);
-                } else {
-                    showElement($(REMIND_ME_ERROR));
-                }
-            });
         }
 
         function init() {

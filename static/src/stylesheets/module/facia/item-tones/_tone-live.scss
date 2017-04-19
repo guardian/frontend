@@ -32,13 +32,8 @@
     .fc-item__kicker,
     .fc-item__byline,
     .fc-item__meta,
-    .rich-link__read-more-text,
-    .fc-save-for-later--is-saved {
+    .rich-link__read-more-text {
         color: $live-mute;
-    }
-
-    .fc-save-for-later {
-        border-color: mix($c-headline, $live-default, 20%);
     }
 
     .rich-link__arrow-icon {

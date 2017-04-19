@@ -267,7 +267,7 @@ define([
                             })
                             .then(handleSubmit(true, $form))
                             .catch(function (error) {
-                                robust.log('c-email', error);
+                                robust.logError('c-email', error);
                                 googleAnalytics.trackNonClickInteraction(analyticsInfo.replace('%action%', 'error'));
                                 handleSubmit(false, $form)();
                             });

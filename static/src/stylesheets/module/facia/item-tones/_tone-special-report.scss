@@ -35,13 +35,8 @@
     .rich-link__kicker,
     .fc-item__byline,
     .rich-link__byline,
-    .rich-link__read-more-text,
-    .fc-save-for-later--is-saved {
+    .rich-link__read-more-text {
         color: $special-report-accent;
-    }
-
-    .fc-save-for-later {
-        border-color: mix(#000000, $news-support-6, 10%);
     }
 
     .fc-item__kicker--dreamsnap {

@@ -12,19 +12,11 @@
     "lib/config.js"
   ],
   "Simon Adcock": [
-    "lib/cookies.js",
-    "lib/create-store.js",
     "lib/detect.js",
     "lib/element-inview.js"
   ],
-  "Nicolas Long": [
-    "lib/fastdom-promise.js",
-    "lib/fetch.js",
-    "lib/formatters.js"
-  ],
+  "Nicolas Long": [],
   "Calum Campbell": [
-    "lib/fsm.js",
-    "lib/geolocation.js",
     "lib/load-css-promise.js"
   ],
   "GHaberis": [

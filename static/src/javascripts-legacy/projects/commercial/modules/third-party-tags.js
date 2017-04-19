@@ -13,6 +13,7 @@ define([
     'commercial/modules/third-party-tags/imr-worldwide',
     'commercial/modules/third-party-tags/imr-worldwide-legacy',
     'commercial/modules/third-party-tags/remarketing',
+    'commercial/modules/third-party-tags/simple-reach',
     'commercial/modules/third-party-tags/tourism-australia',
     'commercial/modules/third-party-tags/krux',
     'commercial/modules/third-party-tags/outbrain',
@@ -30,6 +31,7 @@ define([
     imrWorldwide,
     imrWorldwideLegacy,
     remarketing,
+    simpleReach,
     tourismAustralia,
     krux,
     outbrain,
@@ -88,6 +90,7 @@ define([
             imrWorldwide,
             imrWorldwideLegacy,
             remarketing,
+            simpleReach,
             tourismAustralia,
             krux
         ].filter(function (_) { return _.shouldRun; });

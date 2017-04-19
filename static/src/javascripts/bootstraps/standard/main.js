@@ -19,50 +19,29 @@ import fastdom from 'fastdom';
 import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
 import images from 'common/modules/ui/images';
-import storage from 'lib/storage';
+import { local as storage } from 'lib/storage';
 import fetchJSON from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import checkMediator from 'common/modules/check-mediator';
 import addEventListener from 'lib/add-event-listener';
 import identity from 'common/modules/identity/api';
-import url from 'lib/url';
-import cookies from 'lib/cookies';
-import robust from 'lib/robust';
-import userTiming from 'lib/user-timing';
+import { removeCookie, addCookie } from 'lib/cookies';
+import { getUrlVars } from 'lib/url';
+import { catchErrorsWithContext } from 'lib/robust';
+import { markTime } from 'lib/user-timing';
 import config from 'lib/config';
 import newHeaderNavigation from 'common/modules/navigation/newHeaderNavigation';
-import ga from 'common/modules/analytics/google';
+import { trackPerformance } from 'common/modules/analytics/google';
 import debounce from 'lodash/functions/debounce';
 import ophan from 'ophan/ng';
 
 const setAdTestCookie = (): void => {
-    const queryParams = url.getUrlVars();
+    const queryParams = getUrlVars();
 
     if (queryParams.adtest === 'clear') {
-        cookies.remove('adtest');
+        removeCookie('adtest');
     } else if (queryParams.adtest) {
-        cookies.add('adtest', encodeURIComponent(queryParams.adtest), 10);
-    }
-};
-
-const showHiringMessage = (): void => {
-    try {
-        if (!config.page.isDev) {
-            window.console.log(
-                '\n' +
-                    '%cHello.\n' +
-                    '\n' +
-                    '%cWe are hiring – ever thought about joining us? \n' +
-                    '%chttp://developers.theguardian.com/join-the-team.html%c \n' +
-                    '\n',
-                'font-family: Georgia, serif; font-size: 32px; color: #005689',
-                'font-family: Georgia, serif; font-size: 16px; color: #767676',
-                'font-family: Helvetica Neue, sans-serif; font-size: 11px; text-decoration: underline; line-height: 1.2rem; color: #767676',
-                ''
-            );
-        }
-    } catch (e) {
-        /* do nothing */
+        addCookie('adtest', encodeURIComponent(queryParams.adtest), 10);
     }
 };
 
@@ -163,13 +142,13 @@ const addErrorHandler = (): void => {
 };
 
 const init = (): void => {
-    userTiming.mark('standard start');
+    markTime('standard start');
 
-    robust.context([
+    catchErrorsWithContext([
         [
             'ga-user-timing-standard-start',
             () => {
-                ga.trackPerformance(
+                trackPerformance(
                     'Javascript Load',
                     'standardStart',
                     'Standard start parse time'
@@ -205,8 +184,8 @@ const init = (): void => {
     // set local storage: gu.alreadyVisited
     if (window.guardian.isEnhanced) {
         const key = 'gu.alreadyVisited';
-        const alreadyVisited = storage.local.get(key) || 0;
-        storage.local.set(key, alreadyVisited + 1);
+        const alreadyVisited = storage.get(key) || 0;
+        storage.set(key, alreadyVisited + 1);
     }
 
     if (config.switches.blockIas && navigator.serviceWorker) {
@@ -237,15 +216,13 @@ const init = (): void => {
 
     newHeaderNavigation();
 
-    showHiringMessage();
+    markTime('standard end');
 
-    userTiming.mark('standard end');
-
-    robust.context([
+    catchErrorsWithContext([
         [
             'ga-user-timing-standard-end',
             () => {
-                ga.trackPerformance(
+                trackPerformance(
                     'Javascript Load',
                     'standardEnd',
                     'Standard end parse time'

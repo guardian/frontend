@@ -43,7 +43,6 @@ define([
     'common/modules/onward/breaking-news',
     'common/modules/social/pinterest',
     'common/modules/social/hidden-share-toggle',
-    'common/modules/save-for-later',
     'common/modules/commercial/membership-engagement-banner',
     'common/modules/email/email',
     'common/modules/email/email-article',
@@ -93,7 +92,6 @@ define([
     breakingNews,
     pinterest,
     hiddenShareToggle,
-    SaveForLater,
     membershipEngagementBanner,
     email,
     emailArticle,
@@ -282,14 +280,6 @@ define([
                 }
             },
 
-
-            saveForLater: function () {
-                if (config.switches.saveForLater) {
-                    var saveForLater = new SaveForLater();
-                    saveForLater.conditionalInit();
-                }
-            },
-
             membershipEngagementBanner: function() {
                 if (config.switches.membershipEngagementBanner) {
                     membershipEngagementBanner.init();
@@ -320,7 +310,7 @@ define([
         };
     return {
         init: function () {
-            robust.context([
+            robust.catchErrorsWithContext([
                 // Analytics comes at the top. If you think your thing is more important then please think again...
                 ['c-analytics', modules.loadAnalytics],
 
@@ -355,7 +345,6 @@ define([
                 ['c-accessibility-prefs', accessibilityPrefs],
                 ['c-pinterest', modules.initPinterest],
                 ['c-hidden-share-toggle', hiddenShareToggle],
-                ['c-save-for-later', modules.saveForLater],
                 ['c-show-membership-engagement-banner', modules.membershipEngagementBanner],
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],

@@ -20,17 +20,14 @@ define(['common/modules/lazyload', 'bonzo'], function (lazyload, bonzo) {
         it('should lazy load', function (done) {
             server.respondWith([200, {}, '{ "html": "<span>foo</span>" }']);
 
-            lazyload({
-                url: 'fixtures/lazy-load',
+            lazyload('fixtures/lazy-load', {
                 container: $container[0],
-                success: function () {
+                finally: function () {
                     expect($container.hasClass('lazyloaded')).toBeTruthy();
                     expect($container.html()).toBe('<span>foo</span>');
                     done();
                 }
             });
-
         });
-
     });
 });

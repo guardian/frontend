@@ -25,7 +25,7 @@ define([
             fixtures: [
                 '<div class="js-content-main-column" style="height:90000px;min-height:90000px;max-height:90000px;"></div>' +
                 '<div class="content__secondary-column js-secondary-column">' +
-                '<div class="js-ad-slot-container">' +
+                '<div class="ad-slot-container">' +
                 '<div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|300,250|300,600|fluid">' +
                 '</div></div></div>'
             ]

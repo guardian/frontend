@@ -16,7 +16,7 @@ define([
             contributionsEpicEqualButtons) {
 
     function canBeDisplayed() {
-        var userHasNeverContributed = !cookies.get('gu.contributions.contrib-timestamp');
+        var userHasNeverContributed = !cookies.getCookie('gu.contributions.contrib-timestamp');
         var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle; // may render badly on other types
         var isSensitive = config.page.isSensitive === true;
 

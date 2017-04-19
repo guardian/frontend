@@ -2,9 +2,9 @@ package commercial.controllers
 
 import commercial.model.Segment
 import commercial.model.feeds.{FeedMissingConfigurationException, FeedSwitchOffException}
+import commercial.model.merchandise.Book
 import commercial.model.merchandise.books.{BestsellersAgent, BookFinder, CacheNotConfiguredException}
 import common.{ExecutionContexts, JsonComponent, Logging}
-import commercial.model.merchandise.Book
 import model.{Cached, NoCache}
 import play.api.libs.json.Json
 import play.api.mvc._
@@ -29,9 +29,8 @@ class BookOffersController(bookFinder: BookFinder, bestsellersAgent: Bestsellers
     specificId map { isbn =>
       bookFinder.findByIsbn(isbn) map {
         _ map { book =>
-          val json = Json.toJson(book)
-          Cached(60.seconds){
-            JsonComponent(json)
+          Cached(10.minutes){
+            JsonComponent(Json.toJson(book))
           }
         } getOrElse {
           Cached(componentMaxAge)(jsonFormat.nilResult)

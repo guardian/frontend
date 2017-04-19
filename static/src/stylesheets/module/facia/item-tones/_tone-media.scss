@@ -36,13 +36,8 @@
     .fc-item__kicker,
     .rich-link__kicker,
     .fc-item__byline,
-    .rich-link__read-more-text,
-    .fc-save-for-later--is-saved {
+    .rich-link__read-more-text {
         color: $media-default;
-    }
-
-    .fc-save-for-later {
-        border-color: mix($c-headline, $media-background, 20%);
     }
 
     .fc-item__kicker:after,
@@ -59,10 +54,6 @@
     .rich-link__standfirst,
     .fc-item__meta {
         color: $neutral-3;
-    }
-
-    .fc-save-for-later--is-saved .inline-tone-fill {
-        fill: $media-default;
     }
 }
 

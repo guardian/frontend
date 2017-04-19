@@ -27,6 +27,7 @@ object CommercialClientLoggingVariant extends TestDefinition(
   }
 }
 
+/** Watch out for "TODO: #new-recipe:" when removing the test */
 object ABNewRecipeDesign extends TestDefinition(
   name = "ab-new-recipe-design",
   description = "Users in the test will see the new design on articles with structured recipes",

@@ -1,7 +1,6 @@
 // @flow
 
 import Chance from 'chance';
-import fetchSpy from 'lib/fetch';
 import fetchJson from './fetch-json';
 
 const chance = new Chance();
@@ -13,6 +12,7 @@ jest.mock('lib/config', () => ({
 }));
 
 jest.mock('lib/fetch', () => jest.fn());
+const fetchSpy: any = require('lib/fetch');
 
 describe('Fetch JSON util', () => {
     it('returns a promise which rejects on network errors', done => {
