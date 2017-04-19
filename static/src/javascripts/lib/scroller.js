@@ -38,10 +38,11 @@ const scrollTo = (
 const scrollToElement = (
     element: HTMLElement | string,
     duration?: number = 0,
-    easeFn?: string
+    easeFn?: string,
+    container: ?HTMLElement
 ): void => {
     const top = bonzo(element).offset().top;
-    scrollTo(top, duration, easeFn);
+    scrollTo(top, duration, easeFn, container);
 };
 
 export { scrollTo, scrollToElement };
