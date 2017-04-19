@@ -133,7 +133,7 @@ define([
                 });
             });
 
-            it('inserts up to ten adverts when DFP returns empty merchandising components', function (done) {
+            xit('inserts up to ten adverts when DFP returns empty merchandising components', function (done) {
                 spaceFillerStub.onCall(0).returns(Promise.resolve(false));
                 spaceFillerStub.onCall(1).returns(Promise.resolve(0));
                 spaceFillerStub.onCall(2).returns(Promise.resolve(2));
