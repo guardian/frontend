@@ -87,6 +87,10 @@ pasteup: install # PRIVATE
 test: install
 	@./tools/task-runner/runner test/javascript --verbose
 
+# Run the modern JS test suite in watch mode.
+test-watch: install
+	@yarn test -- --watch
+
 # Check the JS test suite coverage.
 coverage: install
 	@./tools/task-runner/runner test/javascript/coverage --stdout
