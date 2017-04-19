@@ -64,7 +64,3 @@ var appScript = document.createElement('script');
 appScript.src = 'https://assets.guim.co.uk/polyfill.io/v2/polyfill.min.js?rum=0&features=es6,es7,default-3.6&flags=gated&callback=requireTests';
 ref.parentNode.insertBefore(appScript, ref);
 window.guardianPolyfilled = requireTests;
-
-
-
-
