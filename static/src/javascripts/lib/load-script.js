@@ -23,4 +23,4 @@ const loadScript = (src: string, props: Object): Promise<any> => {
     });
 };
 
-export { loadScript };
+export default loadScript;
