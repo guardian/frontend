@@ -79,11 +79,9 @@
                                                 <meta itemprop="width" content="@mv.videos.width" />
                                             }
                                             <meta itemprop="requiresSubscription" content="false" />
-                                            @defining(video.mediaAtom.flatMap(_.posterImage) orElse video.elements.thumbnail.map(_.images)) {sixteenByNineImage =>
-                                                @sixteenByNineImage.map {i =>
-                                                    <meta itemprop="image" content="@Video1280.bestFor(i)" />
+                                            @video.sixteenByNineMetaImage.map{ i =>
+                                                    <meta itemprop="image" content="@i" />
                                                 }
-                                            }
 
                                             @defining(video.elements.thumbnail.map(_.images) orElse video.mediaAtom.flatMap(_.posterImage)) {bestThumbnail =>
                                                 @bestThumbnail.map { thumbnail =>
