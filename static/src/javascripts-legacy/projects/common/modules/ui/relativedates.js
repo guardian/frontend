@@ -200,7 +200,7 @@ define([
 
     function init(opts) {
         replaceValidTimestamps(opts);
-        replaceLocaleTimestamps(opts);
+        replaceLocaleTimestamps();
     }
 
     return {
