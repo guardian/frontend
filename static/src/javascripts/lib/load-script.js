@@ -1,5 +1,6 @@
 // @flow
 const loadScript = (src: string, props: Object): Promise<any> => {
+    // #? type checks like this should be redundant post es6/flow conversion
     if (typeof src !== 'string') {
         return Promise.reject('no src supplied');
     }
