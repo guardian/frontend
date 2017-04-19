@@ -1,7 +1,6 @@
 // @flow
 /* eslint-disable guardian-frontend/global-config */
 
-const prevConfig = window.guardian.config;
 Object.assign(window.guardian.config, {
     page: {
         tones: 'foo',
@@ -18,10 +17,6 @@ Object.assign(window.guardian.config, {
 import config from './config';
 
 jest.mock('lib/pad', () => jest.fn(arg => arg));
-
-afterAll(() => {
-    window.guardian.config = prevConfig;
-});
 
 describe('Config', () => {
     it('should have "hasTone" property', () => {
@@ -50,11 +45,5 @@ describe('Config', () => {
 
     it('should return the expected dateFromSlug', () => {
         expect(config.dateFromSlug()).toBe('2017/mar/14');
-    });
-
-    it('should have all properties from prevConfig in new config', () => {
-        expect(
-            Object.keys(prevConfig).every(key => key in config)
-        ).toBeTruthy();
     });
 });
