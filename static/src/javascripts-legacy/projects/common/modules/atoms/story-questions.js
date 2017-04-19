@@ -16,15 +16,15 @@ define([
         event.preventDefault();
         var questionElement = event.currentTarget.querySelector('.user__question-upvote');
         var atomIdElement = $('.js-storyquestion-atom-id');
-        
+
         if (questionElement && atomIdElement) {
             var questionId = questionElement.id;
             var atomId = atomIdElement.attr('id');
 
-            var question = $('#js-question-text-' + questionId);
+            var question = document.querySelector("meta[name=js-notranslate-" + questionId + "]");
 
             if (question) {
-                var questionText = question.text();
+                var questionText = question.content;
 
                 if (questionText && atomId) {
 
@@ -37,8 +37,8 @@ define([
                     }
 
                     ophan.record({
-                        atomId: atomId,
-                        component: questionText,
+                        atomId: atomId.trim(),
+                        component: questionText.trim(),
                         value: 'question_asked'
                     });
                 }
@@ -71,8 +71,8 @@ define([
 
                         if (atomId) {
                             ophan.record({
-                                atomId: atomId,
-                                component: atomId,
+                                atomId: atomId.trim(),
+                                component: atomId.trim(),
                                 value: 'question_component_in_view'
                             });
                         }
