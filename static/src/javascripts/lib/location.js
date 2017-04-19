@@ -1,9 +1,8 @@
+// @flow
+
 /**
  * Mockable proxy for window.location
  */
+const getHash = () => window.location.hash;
 
-export default {
-    getHash: function getHash() {
-        return window.location.hash;
-    }
-};
+export default getHash;
