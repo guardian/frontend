@@ -1,7 +1,6 @@
 define([
     'commercial/modules/commercial-features',
     'common/modules/commercial/contributions-utilities',
-    'lib/ajax',
     'lib/config',
     'lib/cookies',
     'lib/storage',
@@ -10,7 +9,6 @@ define([
 ], function (
     commercialFeatures,
     contributionsUtilities,
-    ajax,
     config,
     cookies,
     store,
