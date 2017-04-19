@@ -58,7 +58,7 @@ define([
             return Promise.resolve(tailorData[url]);
         }
 
-        return fetchJson(url, { method: 'get' })
+        return fetchJson(url)
             .then(handleResponse.bind(null, url))
             .catch(handleError.bind(null, url));
     }

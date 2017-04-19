@@ -155,7 +155,7 @@ define([
                 queryParams.surveysNotToShow = surveysNotToShow;
             }
 
-            return tailor.getSuggestion(queryParams).then(function(suggestion) {
+            return tailor.getSuggestedSurvey(queryParams).then(function(suggestion) {
                 if (suggestion) {
                     storeSurveyShowedInCookie(suggestion.data);
 

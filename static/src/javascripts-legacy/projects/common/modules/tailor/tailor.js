@@ -10,7 +10,7 @@ define([
      *
      * @returns {Promise.<Boolean>}
      */
-    function getSuggestion(queryParams) {
+    function getSuggestedSurvey(queryParams) {
         return fetchData('suggestions', false, queryParams).then(function(response) {
             if (response.suggestions) {
                 var surveySuggestions = response.suggestions.filter(function (suggestion) {
@@ -43,6 +43,6 @@ define([
 
     return {
         isRegular: isRegular,
-        getSuggestion: getSuggestion,
+        getSuggestedSurvey: getSuggestedSurvey,
     };
 });
