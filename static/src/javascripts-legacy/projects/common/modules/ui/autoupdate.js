@@ -137,6 +137,17 @@ define([
             var count = 0;
             var endpoint = window.location.pathname + '.json?lastUpdate=' + latestBlockIdToUse + shouldFetchBlocks;
 
+            // #? One day this should be in Promise.finally()
+            var setUpdateDelay = function() {
+                if (count == 0 || currentUpdateDelay > 0) {
+                    updateDelay(currentUpdateDelay);
+                    updateTimeoutId = setTimeout(checkForUpdates, currentUpdateDelay);
+                } else {
+                    // might have been cached so check straight away
+                    updateTimeoutId = setTimeout(checkForUpdates, 1);
+                }
+            };
+
             return fetchJSON(endpoint, {
                 mode: 'cors',
             }).then(function (resp) {
@@ -162,13 +173,9 @@ define([
                     }
                 }
 
-                if (count == 0 || currentUpdateDelay > 0) {
-                    updateDelay(currentUpdateDelay);
-                    updateTimeoutId = setTimeout(checkForUpdates, currentUpdateDelay);
-                } else {
-                    // might have been cached so check straight away
-                    updateTimeoutId = setTimeout(checkForUpdates, 1);
-                }
+                setUpdateDelay();
+            }).catch(function() {
+                setUpdateDelay();
             });
         };
 
