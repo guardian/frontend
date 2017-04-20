@@ -188,7 +188,7 @@ define([
 
         if (window.location.hash.indexOf('devtools') !== -1) {
             require.ensure([], function(require) {
-                bootstrapContext('devtools', require('bootstraps/enhanced/devtools').init);
+                bootstrapContext('devtools', require('common/modules/devtools').showDevTools);
             }, 'devtools');
         }
 
