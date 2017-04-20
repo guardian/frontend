@@ -26,14 +26,6 @@ define([
         audience: 1,
         audienceOffset: 0,
 
-        template: function(variant) {
-            template(liveblogEpicTemplate, {
-                membershipUrl: variant.membershipURL,
-                contributionUrl: variant.contributeURL,
-                componentName: variant.componentName
-            });
-        },
-
         variants: [
             {
                 id: 'control',
@@ -43,7 +35,15 @@ define([
                     minDaysBetweenViews: 0
                 },
                 insertBeforeSelectorAll: '.js-liveblog-epic-placeholder',
-                successOnView: true
+                successOnView: true,
+
+                template: function (variant) {
+                    return template(liveblogEpicTemplate, {
+                        membershipUrl: variant.membershipURL,
+                        contributionUrl: variant.contributeURL,
+                        componentName: variant.componentName
+                    });
+                },
             }
         ]
     });
