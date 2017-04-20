@@ -76,9 +76,9 @@ const appendOverlay = () => {
     $('body').prepend(template(overlay, data));
 };
 
-export default function showDevTools() {
+export const showDevTools = () => {
     appendOverlay();
     bindEvents();
     selectRadios();
     applyCss();
-}
+};

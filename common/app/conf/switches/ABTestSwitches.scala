@@ -51,16 +51,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-brexit",
-    "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
-    owners = Seq(Owner.withGithub("alexduf")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 19),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-always-ask-strategy",
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
@@ -161,36 +151,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-article-50-trigger",
-    "Display the Epic on Article 50 articles for readers in Europe",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 19),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-laundromat",
-    "Display the Epic on Laundromat articles",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 19),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-email-demand-tests",
-    "Test demand for a cities email",
-    owners = Seq(Owner.withGithub("lmath")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 21),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-paid-commenting-internal",
     "Paid commenting test",
     owners = Seq(Owner.withGithub("justinpinner")),
@@ -206,16 +166,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 5, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-vs-epic-and-engagement-banner",
-    "Test displaying the Epic only vs the Epic and Engagement Banner",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 19),
     exposeClientSide = true
   )
 

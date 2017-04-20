@@ -63,7 +63,7 @@ define([
     }
 
     function showMessage() {
-        loadCssPromise.then(function () {
+        loadCssPromise.loadCssPromise.then(function () {
             var platform = (detect.isIOS()) ? 'ios' : 'android',
                 msg = new Message(platform),
                 fullTemplate = tmp + (detect.getBreakpoint() === 'mobile' ? '' : tablet);

@@ -101,6 +101,8 @@ object Item700 extends Profile(width = Some(700))
 object Item1200 extends Profile(width = Some(1200))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
 object Video700 extends VideoProfile(width = Some(700), height = Some(394)) // 16:9
+object Video1280 extends VideoProfile(width = Some(1280), height = Some(720)) // 16:9
+
 
 object GoogleStructuredData extends Profile(width = Some(300), height = Some(300)) // 1:1
 

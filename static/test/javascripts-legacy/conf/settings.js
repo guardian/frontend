@@ -23,9 +23,10 @@ module.exports = function (config) {
     return {
         // root of project
         basePath: './../../../../',
-        frameworks: ['jasmine', 'requirejs', 'phantomjs-shim'],
+        frameworks: ['jasmine', 'requirejs'],
 
         files: [
+            'static/vendor/javascripts/polyfillio.fallback.js',
             { pattern: 'static/test/javascripts-legacy/components/sinonjs/sinon.js', included: true },
             { pattern: 'static/test/javascripts-legacy/components/jasmine-sinon/lib/jasmine-sinon.js', included: true },
             { pattern: 'static/test/javascripts-legacy/setup.js', included: true },

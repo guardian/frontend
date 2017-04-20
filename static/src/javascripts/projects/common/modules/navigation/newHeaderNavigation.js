@@ -2,27 +2,47 @@
 
 import fastdom from 'fastdom';
 import ophan from 'ophan/ng';
+import { scrollToElement } from 'lib/scroller';
 import userAccount from 'common/modules/navigation/user-account';
 
-const sidebar = document.getElementById('main-menu');
 const enhanced = {};
 
-const closeSidebarSections = (targetItem?: HTMLElement): void => {
+const getSidebarElement = (): ?HTMLElement =>
+    document.getElementById('main-menu');
+
+const closeSidebarSection = (section: HTMLElement): void => {
+    section.removeAttribute('open');
+};
+
+const closeAllSidebarSections = (exclude?: HTMLElement): void => {
     const sections = [...document.querySelectorAll('.js-close-nav-list')];
 
     sections.forEach(section => {
-        if (section !== targetItem) {
-            section.removeAttribute('open');
+        if (section !== exclude) {
+            closeSidebarSection(section);
         }
     });
 };
 
-const toggleSidebar = (trigger: HTMLElement): void => {
+const openSidebarSection = (
+    section: HTMLElement,
+    options?: Object = {}
+): void => {
+    section.setAttribute('open', '');
+
+    if (options.scrollIntoView === true) {
+        scrollToElement(section, 0, 'easeInQuad', getSidebarElement());
+    }
+};
+
+const toggleSidebar = (): void => {
     const documentElement = document.documentElement;
     const sidebarToggle = document.querySelector('.js-change-link');
     const openClass = 'new-header__nav__menu-button--open';
     const globalOpenClass = 'nav-is-open';
-    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+    const trigger = document.querySelector('.new-header__nav-trigger');
+    const isOpen = trigger && trigger.getAttribute('aria-expanded') === 'true';
+    const sidebar = getSidebarElement();
 
     if (!sidebar || !sidebarToggle) {
         return;
@@ -54,7 +74,10 @@ const toggleSidebar = (trigger: HTMLElement): void => {
             `nav2 : veggie-burger : ${isOpen ? 'show' : 'hide'}`
         );
 
-        trigger.setAttribute('aria-expanded', expandedAttr);
+        if (trigger) {
+            trigger.setAttribute('aria-expanded', expandedAttr);
+        }
+
         sidebar.setAttribute('aria-hidden', hiddenAttr);
         sidebarToggle.classList.toggle(openClass, !isOpen);
 
@@ -66,7 +89,6 @@ const toggleSidebar = (trigger: HTMLElement): void => {
             resetItemOrder();
         } else {
             focusFirstSidebarSection();
-            closeSidebarSections();
         }
     };
 
@@ -81,18 +103,13 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         const enhance = () => {
             [...checkbox.classList].forEach(c => button.classList.add(c));
 
+            button.addEventListener('click', () => toggleSidebar());
             button.setAttribute('id', checkboxId);
             button.setAttribute('aria-expanded', 'false');
 
             if (checkboxControls) {
                 button.setAttribute('aria-controls', checkboxControls);
             }
-
-            button.addEventListener('click', (event: Event) => {
-                // #? hacky type cast
-                const target: HTMLElement = (event.target: any);
-                toggleSidebar(target);
-            });
 
             if (checkbox.parentNode) {
                 checkbox.parentNode.replaceChild(button, checkbox);
@@ -129,7 +146,29 @@ const enhanceSidebarToggle = (): void => {
     }
 };
 
+const toggleSidebarWithOpenSection = () => {
+    const sidebar = getSidebarElement();
+    const subnav = document.querySelector('.subnav');
+    const pillarTitle = (subnav && subnav.dataset.pillarTitle) || '';
+    const targetSelector = `.js-navigation-item[data-section-name="${pillarTitle}"]`;
+    const target = sidebar && sidebar.querySelector(targetSelector);
+
+    if (target) {
+        openSidebarSection(target.children[0], { scrollIntoView: true });
+    }
+
+    toggleSidebar();
+
+    ophan.record({
+        component: 'main-navigation',
+        value: `more toggle: ${pillarTitle}`,
+    });
+};
+
 const addEventHandler = (): void => {
+    const subnav = document.querySelector('.subnav');
+    const sidebar = getSidebarElement();
+
     if (!sidebar) {
         return;
     }
@@ -139,15 +178,27 @@ const addEventHandler = (): void => {
 
         if (target.matches('.js-close-nav-list')) {
             event.stopPropagation();
-            closeSidebarSections(target);
+            closeAllSidebarSections(target);
         }
     });
+
+    if (subnav) {
+        subnav.addEventListener('click', (event: Event) => {
+            const target: HTMLElement = (event.target: any);
+
+            if (target.matches('.js-toggle-nav-section')) {
+                event.stopPropagation();
+                toggleSidebarWithOpenSection();
+            }
+        });
+    }
 };
 
 const init = (): void => {
     enhanceSidebarToggle();
     addEventHandler();
     userAccount();
+    closeAllSidebarSections();
 };
 
 export default init;
