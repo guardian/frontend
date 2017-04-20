@@ -2,11 +2,12 @@ package services
 
 import com.gu.facia.client.models.{Branded, CollectionConfigJson, ConfigJson, FrontJson}
 import model.{ApplicationContext, ApplicationIdentity}
+import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.Environment
 import test.WithTestContext
 
-class ShouldServeFrontTest extends FlatSpec with Matchers with WithTestContext {
+class ShouldServeFrontTest extends FlatSpec with Matchers with WithTestContext with ScalaFutures {
 
   val fronts = ConfigJson(
     Map(
@@ -66,18 +67,20 @@ class ShouldServeFrontTest extends FlatSpec with Matchers with WithTestContext {
     )
   )
 
-  ConfigAgent.refreshWith(fronts)
+  whenReady(ConfigAgent.refreshWith(fronts)) { config =>
 
-  "shouldServeFront" should "not serve the front if the front is not in the config JSON" in {
-    ConfigAgent.shouldServeFront("nonexistent-front") should be(false)
-  }
+    "shouldServeFront" should "not serve the front if the front is not in the config JSON" in {
+      ConfigAgent.shouldServeFront("nonexistent-front") should be(false)
+    }
 
-  it should "not serve a hidden editorial front" in {
-    ConfigAgent.shouldServeFront("hidden-editorial-front") should be(false)
-  }
+    it should "not serve a hidden editorial front" in {
+      ConfigAgent.shouldServeFront("hidden-editorial-front") should be(false)
+    }
 
-  it should "serve a hidden front in preview mode" in {
-    val previewContext = ApplicationContext(Environment.simple(), ApplicationIdentity("preview"))
-    ConfigAgent.shouldServeFront("editorial-front")(previewContext) should be(true)
+    it should "serve a hidden front in preview mode" in {
+      val previewContext = ApplicationContext(Environment.simple(), ApplicationIdentity("preview"))
+      ConfigAgent.shouldServeFront("hidden-editorial-front")(previewContext) should be(true)
+    }
+
   }
 }
