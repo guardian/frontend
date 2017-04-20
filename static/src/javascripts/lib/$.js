@@ -32,4 +32,6 @@ $.forEachElement = (selector: string, fn: Function): Array<Element> => {
     return els;
 };
 
+// #es6 can be named exports once we're es6-only
+// eslint-disable-next-line guardian-frontend/no-default-export
 export default $;
