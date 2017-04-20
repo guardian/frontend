@@ -99,8 +99,9 @@ define([
     function defaultCanEpicBeDisplayed(testConfig) {
         var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 90;
 
-        // TODO: may need something more sophisticated to stop liveblog block-level epics coinciding with bottom-of-page epic
-        var worksWellWithPageTemplate = (['Article', 'LiveBlog'].indexOf(config.page.contentType) > -1) && !config.page.isMinuteArticle;
+        var worksWellWithPageTemplate = (typeof testConfig.pageCheck === 'function')
+            ? testConfig.pageCheck(config.page)
+            : config.page.contentType === 'Article' && !config.page.isMinuteArticle;
 
         var storedGeolocation = geolocation.getSync();
         var inCompatibleLocation = testConfig.locations ? testConfig.locations.some(function (geo) {
@@ -160,7 +161,7 @@ define([
             }
 
             var testCanRun = (typeof options.canRun === 'function') ? options.canRun() : true;
-            return testCanRun && defaultCanEpicBeDisplayed(options)
+            return testCanRun && defaultCanEpicBeDisplayed(options);
         }).bind(this);
 
         this.variants = options.variants.map(function (variant) {

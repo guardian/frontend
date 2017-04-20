@@ -26,6 +26,10 @@ define([
         audience: 1,
         audienceOffset: 0,
 
+        pageCheck: function(page) {
+            return page.contentType === 'LiveBlog';
+        },
+
         variants: [
             {
                 id: 'control',
