@@ -79,10 +79,14 @@ define([
     // - all elements matching insertBeforeSelectorAll
     function getTargets(insertBeforeSelector, insertBeforeSelectorAll) {
         var targets = [];
-        var target = document.querySelector(insertBeforeSelector || '.submeta');
+        var target = null;
 
         if (insertBeforeSelectorAll) {
             targets = toArray(document.querySelectorAll(insertBeforeSelectorAll));
+        }
+
+        if (insertBeforeSelector) {
+            target = document.querySelector(insertBeforeSelector);
         }
 
         if (target) {
@@ -211,7 +215,13 @@ define([
 
                 mediator.emit('register:begin', trackingCampaignId);
                 return fastdom.write(function () {
-                    var targets = getTargets(options.insertBeforeSelector, options.insertBeforeSelectorAll);
+                    var targets = [];
+
+                    if (!options.insertBeforeSelector && !options.insertBeforeSelectorAll) {
+                        targets = getTargets('.submeta');
+                    } else {
+                        targets = getTargets(options.insertBeforeSelector, options.insertBeforeSelectorAll);
+                    }
 
                     if (targets.length > 0) {
                         component.insertBefore(targets);
