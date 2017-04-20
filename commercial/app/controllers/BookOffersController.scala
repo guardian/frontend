@@ -6,7 +6,7 @@ import commercial.model.merchandise.Book
 import commercial.model.merchandise.books.{BestsellersAgent, BookFinder, CacheNotConfiguredException}
 import common.{ExecutionContexts, JsonComponent, Logging}
 import model.{Cached, NoCache}
-import play.api.libs.json.Json
+import play.api.libs.json.{JsNull, Json}
 import play.api.mvc._
 
 import scala.concurrent.Future
@@ -33,7 +33,7 @@ class BookOffersController(bookFinder: BookFinder, bestsellersAgent: Bestsellers
             JsonComponent(Json.toJson(book))
           }
         } getOrElse {
-          Cached(componentMaxAge)(jsonFormat.nilResult)
+          Cached(componentMaxAge)(JsonComponent(JsNull))
         }
       } recover {
         case e: FeedSwitchOffException =>
