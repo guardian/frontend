@@ -1,6 +1,6 @@
 // @flow
 import template from 'lodash/utilities/template';
-import storage from 'lib/storage';
+import { local as storage } from 'lib/storage';
 import $ from 'lib/$';
 import bean from 'bean';
 import find from 'lodash/collections/find';
@@ -9,7 +9,7 @@ import styles from 'raw-loader!common/views/devtools/styles.css';
 import { TESTS as tests } from 'common/modules/experiments/ab';
 
 const getSelectedAbTests = () =>
-    JSON.parse(storage.local.get('gu.devtools.ab')) || [];
+    JSON.parse(storage.get('gu.devtools.ab')) || [];
 
 const selectRadios = () => {
     const abTests = getSelectedAbTests();
@@ -36,12 +36,12 @@ const bindEvents = () => {
             } else {
                 abTests.push({ id: testId, variant: variantId });
             }
-            storage.local.set('gu.devtools.ab', JSON.stringify(abTests));
+            storage.set('gu.devtools.ab', JSON.stringify(abTests));
         });
     });
 
     bean.on($('.js-devtools-clear-ab')[0], 'click', () => {
-        storage.local.set('gu.devtools.ab', JSON.stringify([]));
+        storage.set('gu.devtools.ab', JSON.stringify([]));
         selectRadios();
     });
 
@@ -76,9 +76,9 @@ const appendOverlay = () => {
     $('body').prepend(template(overlay, data));
 };
 
-export default function showDevTools() {
+export const showDevTools = () => {
     appendOverlay();
     bindEvents();
     selectRadios();
     applyCss();
-}
+};

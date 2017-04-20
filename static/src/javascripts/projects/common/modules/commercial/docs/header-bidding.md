@@ -1,4 +1,4 @@
-#Header bidding
+# Header bidding
 
 _This document assumes you're already familiar with how DFP advertising operates. If you aren't, take a look at Google's
 [DFP publisher university](http://g.co/PublisherU)._
@@ -14,11 +14,11 @@ send back a creative that displays the auction's winning ad, or - if it can trum
 This document will explain how the browser performs auctions, how DFP responds to them, and how the adverts are
 displayed.
 
-##Overview
+## Overview
 
 ![Header bidding workflow diagram](https://cloud.githubusercontent.com/assets/3148617/13568947/e35ab8cc-e45c-11e5-89a0-6413312e30e0.png)
 
-##Step 1: The browser auctions an ad-slot via Sonobi
+## Step 1: The browser auctions an ad-slot via Sonobi
 
 The browser needs to
 
@@ -38,7 +38,7 @@ own that takes the auction response JSON and returns some  string value:
  - the winner's name (e.g. AppNexus) is passed under `hb_bidder`
  - the winning value is aliased to a bucket (e.g. $6.33 => '6.00') and passed as `hb_pb`.
 
-##Step 2: DFP executes a competition
+## Step 2: DFP executes a competition
 
 DFP doesn't know anything about Sonobi or any of the targeting values we pass. To make them work, Sonobi has created line
 items that target them and are configured with inherent price values that Doubleclick _can_ use.
@@ -48,7 +48,7 @@ As an example, we might have a line item that:
  - matches when the bid equals "6.00", to represent a bid in the $6.00 to $6.49 bucket;
  - has a native value of $6.50, so that DFP can compare it to other line items and running campaigns;
 
-##Step 3: Displaying the advert
+## Step 3: Displaying the advert
 
 Each line item points to many creatives that have been created by Sonobi, which are 'proxy creatives' that have no content of their own, but only a script tag like
 the following:

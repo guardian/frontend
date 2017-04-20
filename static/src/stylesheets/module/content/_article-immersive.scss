@@ -237,6 +237,19 @@
 
     /* Meta
     ========================================================================== */
+    .content__section-label--advertisement {
+        @include f-textSans;
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 900;
+        margin: 0;
+        padding-top: $gs-baseline / 2;
+
+        .content__section-label__link--advertisement {
+            color: $paid-article-brand;
+        }
+    }
+
     .content__meta-container--immersive {
         position: relative;
         width: auto;

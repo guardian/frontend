@@ -21,14 +21,22 @@
         }
     }
 
-    @if(!(item.content.isImmersive && item.content.tags.isArticle)) {
-        <div class="content__section-label @if(item.content.tags.isGallery) { content__section-label--gallery }">
-            <a class="content__section-label__link"
-                data-link-name="article section"
-                href="@LinkTo {/@item.content.sectionLabelLink}">
-                    @Html(Localisation(item.content.sectionLabelName))
-            </a>
-        </div>
+    @if(item.content.isPaidContent && item.content.isImmersive) {
+      <div class="content__section-label--advertisement">
+          <a class="content__section-label__link content__section-label__link--advertisement" href="@LinkTo {/@item.content.sectionLabelLink}">
+              @Html(Localisation(item.content.sectionLabelName))
+          </a>
+      </div>
+    } else {
+        @if(!(item.content.isImmersive && item.content.tags.isArticle)) {
+          <div class="content__section-label @if(item.content.tags.isGallery) { content__section-label--gallery }">
+              <a class="content__section-label__link"
+                  data-link-name="article section"
+                  href="@LinkTo {/@item.content.sectionLabelLink}">
+                      @Html(Localisation(item.content.sectionLabelName))
+              </a>
+          </div>
+      }
     }
 
     @item.content.blogOrSeriesTag.map { series =>

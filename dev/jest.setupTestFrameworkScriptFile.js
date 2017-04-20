@@ -16,7 +16,8 @@ window.guardian = {
 };
 
 // Stub matchmedia
-window.matchMedia = window.matchMedia ||
+window.matchMedia =
+    window.matchMedia ||
     function() {
         return {
             matches: false,

@@ -98,7 +98,7 @@ define([
         },
 
         ready = function () {
-            robust.context([
+            robust.catchErrorsWithContext([
                 ['f-accessibility', accessibility.shouldHideFlashingElements],
                 ['f-snaps', modules.showSnaps],
                 ['f-show-more', modules.showContainerShowMore],
