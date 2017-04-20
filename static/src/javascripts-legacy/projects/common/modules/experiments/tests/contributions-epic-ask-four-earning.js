@@ -13,34 +13,7 @@ define([
     template
 ) {
 
-    function controlTemplate(variant) {
-        return template(acquisitionsEpicControlTemplate, {
-            membershipUrl: variant.membershipURL,
-            contributionUrl: variant.contributeURL,
-            componentName: variant.componentName
-        });
-    }
-
-    function controlTemplateRegulars(variant) {
-        return template(acquisitionsEpicControlTemplateRegulars, {
-            membershipUrl: variant.membershipURL,
-            contributionUrl: variant.contributeURL,
-            componentName: variant.componentName
-        });
-    }
-
-    function renderTemplate(render) {
-        return tailor.isRegular().then(function (regular) {
-            if (regular) {
-                render(controlTemplateRegulars);
-            } else {
-                render(controlTemplate);
-            }
-        });
-    }
-
-
-    return contributionsUtilities.makeABTest({
+   return contributionsUtilities.makeABTest({
         id: 'ContributionsEpicAskFourEarning',
         campaignId: 'kr1_epic_ask_four_earning',
 
@@ -65,7 +38,17 @@ define([
                     minDaysBetweenViews: 0
                 },
                 test: function(render) {
-                    renderTemplate(render);
+                    tailor.isRegular().then(function (regular) {
+                        var t = regular ? acquisitionsEpicControlTemplateRegulars : acquisitionsEpicControlTemplate;
+
+                        return render(function(variant) {
+                            return template(t, {
+                                membershipUrl: variant.membershipURL,
+                                contributionUrl: variant.contributeURL,
+                                componentName: variant.componentName
+                            });
+                        });                    
+                    });
                 },
                 insertBeforeSelector: '.submeta',
                 successOnView: true
