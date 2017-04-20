@@ -1,12 +1,11 @@
 package commercial.controllers
 
 import commercial.model.Segment
-import commercial.model.feeds.{FeedMissingConfigurationException, FeedSwitchOffException}
 import commercial.model.merchandise.Book
-import commercial.model.merchandise.books.{BestsellersAgent, BookFinder, CacheNotConfiguredException}
-import common.{ExecutionContexts, JsonComponent, Logging}
-import model.{Cached, NoCache}
-import play.api.libs.json.{JsNull, Json}
+import commercial.model.merchandise.books.{BestsellersAgent, BookFinder}
+import common.{ExecutionContexts, JsonComponent, JsonNotFound, Logging}
+import model.Cached
+import play.api.libs.json.{JsNull, JsValue, Json}
 import play.api.mvc._
 
 import scala.concurrent.Future
@@ -25,38 +24,32 @@ class BookOffersController(bookFinder: BookFinder, bestsellersAgent: Bestsellers
       (specificBooks ++ bestsellersAgent.bestsellersTargetedAt(segment)).distinctBy(_.isbn).take(4)
     }
 
+  private def isValidIsbn(isbn: String): Boolean = true
+
   def getBook = Action.async { implicit request =>
-    specificId map { isbn =>
-      bookFinder.findByIsbn(isbn) map {
-        _ map { book =>
-          Cached(10.minutes){
-            JsonComponent(Json.toJson(book))
-          }
-        } getOrElse {
-          Cached(componentMaxAge)(JsonComponent(JsNull))
+
+    lazy val failedLookupResponse: Result = Cached(30.seconds)(JsonNotFound())(request)
+    lazy val badRequestResponse: Future[Result] = Future.successful(Cached(1.day)(JsonComponent(JsNull))(request))
+
+    specificId match {
+      case Some(isbn) if isValidIsbn(isbn) =>
+        bookFinder.findByIsbn(isbn) map {
+          _ map { book: Book =>
+            Cached(1.hour){ JsonComponent(Json.toJson(book)) }
+          } getOrElse failedLookupResponse
+        } recover {
+          case NonFatal(e) =>
+            log.error("Book lookup failed.", e)
+            failedLookupResponse
         }
-      } recover {
-        case e: FeedSwitchOffException =>
-          log.warn(e.getMessage)
-          NoCache(jsonFormat.nilResult.result)
-        case e: FeedMissingConfigurationException =>
-          log.warn(e.getMessage)
-          NoCache(jsonFormat.nilResult.result)
-        case e: CacheNotConfiguredException =>
-          log.warn(e.getMessage)
-          NoCache(jsonFormat.nilResult.result)
-        case NonFatal(e) =>
-          log.error(e.getMessage)
-          NoCache(jsonFormat.nilResult.result)
-      }
-    } getOrElse {
-      Future.successful(NoCache(jsonFormat.nilResult.result))
+      case Some(invalidIsbn) => log.error(s"Book lookup called with invalid ISBN '$invalidIsbn'. Returning empty response."); badRequestResponse
+      case None => log.error(s"Book lookup called with no ISBN. Returning empty response."); badRequestResponse
     }
   }
 
   def getBooks = Action.async { implicit request =>
     booksSample(specificIds, segment) map { books =>
-      val json = Json.toJson(books)
+      val json: JsValue = Json.toJson(books)
       Cached(60.seconds){
         JsonComponent(json)
       }

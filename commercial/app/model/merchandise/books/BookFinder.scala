@@ -1,67 +1,34 @@
 package commercial.model.merchandise.books
 
-import akka.actor.ActorSystem
-import akka.pattern.CircuitBreaker
+import akka.actor.{ActorRef, ActorSystem}
+import akka.pattern.{CircuitBreaker, ask}
+import akka.util.Timeout
 import commercial.model.feeds.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
+import commercial.model.merchandise.Book
 import common.Logging
 import conf.Configuration
 import conf.switches.Switches.BookLookupSwitch
-import commercial.model.merchandise.Book
+import model.merchandise.books.BookJsonActor
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
 import play.api.libs.ws.{WSClient, WSSignatureCalculator}
-import shade.memcached.{Memcached, MemcachedCodecs, Configuration => MemcachedConfiguration}
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.control.NonFatal
 
 class BookFinder(actorSystem: ActorSystem, magentoService: MagentoService) extends Logging {
 
-  private implicit lazy val executionContext = actorSystem.dispatchers.lookup("akka.actor.memcached")
+  private implicit val bookActorExecutionContext: ExecutionContext = actorSystem.dispatchers.lookup("akka.actor.book-lookup")
+  private implicit val bookActorTimeout: Timeout = 0.2.seconds
 
-  private lazy val defaultBookDataCache = new MemcachedBookDataCache(actorSystem)
+  private lazy val bookActor: ActorRef = actorSystem.actorOf(BookJsonActor.props(magentoService), "book-lookup")
 
-  def findByIsbn(isbn: String,
-                 cache: BookDataCache = defaultBookDataCache,
-                 lookup: String => Future[Option[JsValue]] = magentoService.findByIsbn):
-  Future[Option[Book]] = {
+  def findByIsbn(isbn: String): Future[Option[Book]] = {
 
-    def cachedBook(bookData: JsValue): Future[Option[Book]] = {
-      Future.successful {
-        bookData match {
-          case JsNull => None
-          case _ =>
-            bookData.validate[Book] fold(
-              invalid => {
-                log.error(Json.stringify(JsError.toJson(invalid)))
-                None
-              },
-              book => Some(book))
-        }
-      }
-    }
-
-    lazy val lookedUpBook = {
-      lookup(isbn) map {
-        _ map { bookData =>
-          cache.add(isbn, bookData)
-          bookData.as[Book]
-        } orElse {
-          cache.add(isbn, JsNull)
-          None
-        }
-      }
-    }
-
-    cache.get(isbn) flatMap {
-      _ map cachedBook getOrElse lookedUpBook
-    } recoverWith {
-      case NonFatal(e) => lookedUpBook
-    }
+    val json: Future[Option[JsValue]] = (bookActor ? isbn).mapTo[Option[JsValue]]
+    json map { _.map { _.as[Book] } }
   }
 }
-
 
 class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Logging {
 
@@ -153,58 +120,4 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Loggi
 
     circuitBreaker.withCircuitBreaker(lookup(isbn))
   }
-
-}
-
-
-trait BookDataCache {
-  def get(isbn: String): Future[Option[JsValue]]
-  def add(isbn: String, json: JsValue): Future[Boolean]
-}
-
-class MemcachedBookDataCache(actorSystem: ActorSystem) extends BookDataCache with Logging with MemcachedCodecs {
-
-  private implicit lazy val executionContext = actorSystem.dispatchers.lookup("akka.actor.memcached")
-  private implicit val stringCodec = StringBinaryCodec
-
-  private lazy val maybeCache: Option[Memcached] = {
-    val maybeHost = Configuration.memcached.host
-    for (host <- maybeHost) yield {
-      val config = MemcachedConfiguration(
-        addresses = host,
-        keysPrefix = Some("commercial.model.merchandise.book")
-      )
-      Memcached(config, executionContext)
-    }
-  }
-
-  private def withCache[T](action: Memcached => Future[T]): Future[T] = {
-    maybeCache map action getOrElse {
-      Future.failed(CacheNotConfiguredException("Memcached"))
-    }
-  }
-
-  def get(isbn: String): Future[Option[JsValue]] = withCache { cache =>
-    val bookData = cache.get[String](isbn) map (_ map Json.parse)
-    bookData onFailure {
-      case NonFatal(e) => log.error(s"Fetching book from cache failed: ${e.getMessage}")
-    }
-    bookData
-  }
-
-  def add(isbn: String, json: JsValue): Future[Boolean] = withCache { cache =>
-    log.info(s"Caching book: $isbn -> $json")
-    val bookData = cache.add(isbn, Json.stringify(json), 15.minutes)
-    bookData onSuccess {
-      case result if !result => log.error(s"Caching book $isbn failed: not added to cache")
-    }
-    bookData onFailure {
-      case NonFatal(e) => log.error(s"Caching book $isbn failed : ${e.getMessage}")
-    }
-    bookData
-  }
-}
-
-case class CacheNotConfiguredException(cacheName:String) extends Exception {
-  override val getMessage: String = s"$cacheName cache not configured"
 }
