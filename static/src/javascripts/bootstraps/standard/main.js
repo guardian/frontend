@@ -162,7 +162,7 @@ const addErrorHandler = (): void => {
     });
 };
 
-const init = (): void => {
+const bootStandard = (): void => {
     userTiming.mark('standard start');
 
     robust.context([
@@ -255,4 +255,4 @@ const init = (): void => {
     ]);
 };
 
-export default init;
+export { bootStandard };
