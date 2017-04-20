@@ -14,7 +14,6 @@ define([
     'lodash/objects/assign',
     'lodash/utilities/template',
     'raw-loader!common/views/acquisitions-epic-control.html'
-    
 ], function (
     uniq,
     commercialFeatures,
