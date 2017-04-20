@@ -147,33 +147,21 @@ define([
         return $('.js-timestamp, .js-item__timestamp');
     }
 
-    function replaceLocaleTimestamps() {
+    function replaceLocaleTimestamps(html) {
         var cls = 'js-locale-timestamp';
-        $('.' + cls).each(function (el) {
+        var context = html || document;
+
+        $('.' + cls, context).each(function (el) {
             var datetime,
                 $el = bonzo(el),
-                timestamp = parseInt($el.attr('data-timestamp'), 10),
-                timezone,
-                html;
+                timestamp = parseInt($el.attr('data-timestamp'), 10);
 
             if (timestamp) {
                 datetime = new Date(timestamp);
-                html = pad(datetime.getHours()) + ':' + pad(datetime.getMinutes());
-                if (el.hasAttribute('data-show-timezone')) {
-                    timezone = getLocaleTimezone(datetime);
-                    if (timezone !== 'GMT') {
-                        html += ' ' + timezone;
-                    }
-                }
-                el.innerHTML = html;
+                el.innerHTML = pad(datetime.getHours()) + ':' + pad(datetime.getMinutes());
                 $el.removeClass(cls);
             }
         });
-    }
-
-    function getLocaleTimezone(datetime) {
-        // extracts timezone from datetime, eg. EST from Fri Mar 03 2017 09:57:25 GMT-0500 (EST)
-        return datetime.toString().match(/\(([^)]+)\)/)[1];
     }
 
     function replaceValidTimestamps(opts) {
@@ -212,10 +200,11 @@ define([
 
     function init(opts) {
         replaceValidTimestamps(opts);
-        replaceLocaleTimestamps(opts);
+        replaceLocaleTimestamps();
     }
 
     return {
+        replaceLocaleTimestamps: replaceLocaleTimestamps,
         makeRelativeDate: makeRelativeDate,
         isWithinSeconds: isWithinSeconds,
         init: init

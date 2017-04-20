@@ -437,10 +437,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     }
 }
 
-.new-header__nav__button {
-    display: none;
-}
-
 .main-menu-container {
     @include sidebar-animation(-110%);
 
@@ -457,7 +453,11 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     }
 }
 
-.new-header__nav__button {
+.new-header__nav-trigger {
+    display: none;
+}
+
+.new-header__nav-trigger {
     &:checked,
     &[aria-expanded='true']  {
         & ~ .main-menu-container {
