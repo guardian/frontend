@@ -38,46 +38,6 @@ define([
         return target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
     }
 
-    function parseId(id) {
-        if (!id) {
-            return null;
-        }
-        if (id === 'uk/uk') {
-            return id;
-        } else {
-            return format(id.split('/').pop());
-        }
-    }
-
-    function getSeries(page) {
-        if (page.seriesId) {
-            return parseId(page.seriesId);
-        }
-
-        var seriesIdFromUrl = /\/series\/(.+)$/.exec(page.pageId);
-        if (seriesIdFromUrl) {
-            return seriesIdFromUrl[1];
-        }
-
-        if (page.keywordIds) {
-            return page.keywordIds
-            .split(',')
-            .filter(function (keyword) {
-                return keyword.indexOf('series/') === 0;
-            })
-            .slice(0, 1)
-            .map(function (seriesId) {
-                return seriesId.split('/')[1];
-            });
-        }
-
-        return null;
-    }
-
-    function parseIds(ids) {
-        return ids ? compact(ids.split(',').map(parseId)) : null;
-    }
-
     function abParam() {
         var cmRegex = /^(cm|commercial)/;
         var abParticipations = abUtils.getParticipations();
@@ -152,32 +112,10 @@ define([
         return pick(url.getUrlVars(), whiteList);
     }
 
-    function getBrandingType() {
-        switch(config.page.sponsorshipType) {
-            case 'sponsored':
-                return 's';
-            case 'foundation':
-                return 'f';
-            case 'paid-content':
-                return 'p';
-            default:
-                return '';
-        }
-    }
-
     return once(function () {
-        var win         = window;
         var page        = config.page;
-        var contentType = formatTarget(page.contentType);
         var pageTargets = assign({
-            url:     win.location.pathname,
-            edition: page.edition && page.edition.toLowerCase(),
-            se:      getSeries(page),
-            ct:      contentType,
-            p:       'ng',
-            k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
             x:       krux.getSegments(),
-            su:      page.isSurging,
             pv:      config.ophan.pageViewId,
             bp:      detect.getBreakpoint(),
             at:      adtestParams(),
@@ -185,16 +123,11 @@ define([
             gdncrm:  userAdTargeting.getUserSegments(),
             ab:      abParam(),
             ref:     getReferrer(),
-            co:      parseIds(page.authorIds),
-            bl:      parseIds(page.blogIds),
-            ob:      page.publication === 'The Observer' ? 't' : '',
             ms:      formatTarget(page.source),
             fr:      getVisitedValue(),
-            tn:      parseIds(page.tones),
-            br:      getBrandingType(),
             // round video duration up to nearest 30 multiple
             vl:      page.videoDuration ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
-        }, getWhitelistedQueryParams());
+        }, page.sharedAdTargeting, getWhitelistedQueryParams());
 
         // filter out empty values
         var pageTargeting = pick(pageTargets, function (target) {
