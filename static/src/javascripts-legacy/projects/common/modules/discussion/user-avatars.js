@@ -33,10 +33,11 @@ define([
             avatarApi.getActive()
                 .then(function (response) {
                     avatar.attr('src', response.data.avatarUrl);
-                }, function () {
+                })
+                .catch(function () {
                     avatar.attr('src', avatarApi.deterministicUrl(avatarUserId));
                 })
-                .always(function () {
+                .then(function () {
                     updateCleanup();
                 });
         } else {
