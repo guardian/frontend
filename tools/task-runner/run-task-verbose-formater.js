@@ -32,7 +32,9 @@ const render = (tasks, parents = []) => {
                     );
                 }
                 if (
-                    task.isCompleted() && !task.hasFailed() && !task.isSkipped()
+                    task.isCompleted() &&
+                    !task.hasFailed() &&
+                    !task.isSkipped()
                 ) {
                     log(task.title, parents, chalk.dim.green(figures.tick));
                 }
