@@ -2,7 +2,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'lib/fetchJSON',
+    'lib/fetch-json',
     'lodash/objects/assign',
     'lodash/objects/clone'
 ], function (
@@ -133,7 +133,7 @@ define([
     /**
      * @param {Element} parent
      * @param {String} key
-     * @return {Reqwest}
+     * @return {Promise}
      */
     Component.prototype.fetch = function (parent, key) {
         this.checkAttached();
@@ -155,7 +155,7 @@ define([
     };
 
     /**
-     * @return Reqwest
+     * @return Promise
      */
     Component.prototype._fetch = function () {
         var endpoint = (typeof this.endpoint === 'function') ? this.endpoint() : this.endpoint,
