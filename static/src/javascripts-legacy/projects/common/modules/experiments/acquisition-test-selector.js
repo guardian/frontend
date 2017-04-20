@@ -6,7 +6,6 @@ define([
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/epic-to-support-landing-page',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
-    'common/modules/experiments/tests/contributions-epic-regulars-v2',
     'common/modules/experiments/tests/acquisitions-epic-liveblog'
 ], function (
     reduce,
@@ -16,7 +15,6 @@ define([
     alwaysAsk,
     epicToSupportLandingPage,
     askFourEarning,
-    regularsV2,
     acquisitionsEpicLivelog
 ) {
     /**
@@ -24,7 +22,6 @@ define([
      */
     var tests = [
         alwaysAsk,
-		regularsV2,
         epicToSupportLandingPage,
         askFourEarning,
         acquisitionsEpicLivelog
