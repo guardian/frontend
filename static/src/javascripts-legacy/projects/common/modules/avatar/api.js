@@ -1,8 +1,8 @@
 define([
-    'lib/ajax',
+    'lib/fetch-json',
     'lib/config'
 ], function (
-    ajax,
+    fetchJSON,
     config
 ) {
 
@@ -11,17 +11,12 @@ define([
     var Api = {};
 
     Api.request = function (method, path, data) {
-        var params = {
-            url: apiUrl + path,
-            type: 'json',
-            data: data || {},
-            processData : false,
+        return fetchJSON(apiUrl + path, {
+            body: data || {},
             method: method,
-            crossOrigin: true,
-            withCredentials: true
-        };
-
-        return ajax(params);
+            mode: 'cors',
+            credentials: 'include',
+        });
     };
 
     // A user's 'active' avatar is only available to signed-in users as it
