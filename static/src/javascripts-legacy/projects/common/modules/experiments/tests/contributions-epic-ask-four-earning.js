@@ -1,8 +1,44 @@
 define([
-    'common/modules/commercial/contributions-utilities'
+    'common/modules/commercial/contributions-utilities',
+    'raw-loader!common/views/acquisitions-epic-control.html',
+    'raw-loader!common/views/acquisitions-epic-control-regulars.html',
+    'common/modules/tailor/tailor',
+    'lodash/utilities/template'
+
 ], function (
-    contributionsUtilities
+    contributionsUtilities,
+    acquisitionsEpicControlTemplate,
+    acquisitionsEpicControlTemplateRegulars,
+    tailor,
+    template
 ) {
+
+    function controlTemplate(variant) {
+        return template(acquisitionsEpicControlTemplate, {
+            membershipUrl: variant.membershipURL,
+            contributionUrl: variant.contributeURL,
+            componentName: variant.componentName
+        });
+    }
+
+    function controlTemplateRegulars(variant) {
+        return template(acquisitionsEpicControlTemplateRegulars, {
+            membershipUrl: variant.membershipURL,
+            contributionUrl: variant.contributeURL,
+            componentName: variant.componentName
+        });
+    }
+
+    function renderTemplate(render) {
+        return tailor.isRegular().then(function (regular) {
+            if (regular) {
+                render(controlTemplateRegulars);
+            } else {
+                render(controlTemplate);
+            }
+        });
+    }
+
 
     return contributionsUtilities.makeABTest({
         id: 'ContributionsEpicAskFourEarning',
@@ -27,6 +63,9 @@ define([
                     days: 30,
                     count: 4,
                     minDaysBetweenViews: 0
+                },
+                test: function(render) {
+                    renderTemplate(render);
                 },
                 insertBeforeSelector: '.submeta',
                 successOnView: true
