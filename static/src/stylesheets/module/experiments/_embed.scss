@@ -11,6 +11,7 @@
     background-color: $comment-support-2;
     margin-top: $gs-baseline * 2;
     padding: ($gs-baseline / 3) $gs-gutter / 4 $gs-baseline $gs-gutter / 4;
+    position: relative;
 }
 
 
@@ -103,7 +104,7 @@
     display: flex;
     flex-direction: column;
 
-    @include mq($from: mobileLandscape) {
+    @include mq($from: 580px) {
         flex-direction: row;
     }
 }
@@ -184,7 +185,15 @@
     margin-bottom: $gs-baseline;
 }
 
-@include mq($from: mobileLandscape) {
+.contributions__journalist_pic {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width:140px;
+    height: auto;
+}
+
+@include mq($from: 580px) {
     .contributions__option-button--bottom {
         width: 70px;
     }
@@ -203,6 +212,10 @@
 
     .contributions__contribute--epic-member-top {
         margin-bottom: 0;
+    }
+
+    .contributions__journalist_pic {
+        width:180px;
     }
 
 }
@@ -230,4 +243,5 @@
     width: 100%;
     vertical-align: middle;
 }
+
 
