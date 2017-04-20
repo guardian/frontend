@@ -1,7 +1,7 @@
 // @flow
 
 import Chance from 'chance';
-import timing from './user-timing';
+import { markTime, getMarkTime, getCurrentTime } from './user-timing';
 
 const chance = new Chance();
 const mockIO = { entries: [] };
@@ -21,7 +21,8 @@ jest.mock('lib/window-performance', () => ({
 
     getEntriesByName: jest.fn((name, type) => {
         const item = mockIO.entries.find(
-            mark => mark.entryType === type && mark.name === name
+            timingMark =>
+                timingMark.entryType === type && timingMark.name === name
         );
         return [item];
     }),
@@ -29,20 +30,20 @@ jest.mock('lib/window-performance', () => ({
 
 describe('user-timing', () => {
     test('getCurrentTime()', () => {
-        expect(timing.getCurrentTime()).toBe(mockedNowValue);
+        expect(getCurrentTime()).toBe(mockedNowValue);
     });
 
-    test('mark()', () => {
+    test('markTime()', () => {
         const name = chance.word();
         mockIO.entries = [];
-        timing.mark(name);
+        markTime(name);
         expect(mockIO.entries.length).toBe(1);
     });
 
-    test('getTiming()', () => {
+    test('getMarkTime()', () => {
         const name = chance.word();
-        timing.mark(name);
-        const timer = timing.getTiming(name);
+        markTime(name);
+        const timer = getMarkTime(name);
         expect(timer).toBe(mockedNowValue);
     });
 });

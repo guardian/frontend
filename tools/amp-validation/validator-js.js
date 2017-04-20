@@ -44,7 +44,8 @@ const fetchValidator = devChannel => {
     };
 
     const saveToFile = res => {
-        const filename = os.tmpdir() +
+        const filename =
+            os.tmpdir() +
             (devChannel ? tempFilenames.preRelease : tempFilenames.release);
         const writeStream = fs.createWriteStream(filename);
 

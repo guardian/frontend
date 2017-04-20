@@ -10,7 +10,7 @@
     Note: if you pass in an element, you must also specify an easing function.
 */
 
-import easing from 'lib/easing';
+import { createEasing } from 'lib/easing';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 
@@ -23,28 +23,26 @@ const scrollTo = (
     const $container = bonzo(container);
     const from = $container.scrollTop();
     const distance = offset - from;
-    const ease = easing.create(easeFn, duration);
+    const ease = createEasing(easeFn, duration);
     const scrollFn = () => {
         fastdom.write(() => $container.scrollTop(from + ease() * distance));
     };
     const interval = setInterval(scrollFn, 15);
 
-    setTimeout(
-        () => {
-            clearInterval(interval);
-            fastdom.write(() => $container.scrollTop(offset));
-        },
-        duration
-    );
+    setTimeout(() => {
+        clearInterval(interval);
+        fastdom.write(() => $container.scrollTop(offset));
+    }, duration);
 };
 
 const scrollToElement = (
     element: HTMLElement | string,
     duration?: number = 0,
-    easeFn?: string
+    easeFn?: string,
+    container: ?HTMLElement
 ): void => {
     const top = bonzo(element).offset().top;
-    scrollTo(top, duration, easeFn);
+    scrollTo(top, duration, easeFn, container);
 };
 
-export default { scrollToElement, scrollTo };
+export { scrollTo, scrollToElement };

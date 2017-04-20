@@ -508,7 +508,7 @@ define([
     };
 
     function bootstrap() {
-        loadCssPromise.then(function () {
+        loadCssPromise.loadCssPromise.then(function () {
             if ('lightboxImages' in config.page && config.page.lightboxImages.images.length > 0) {
                 var lightbox,
                     galleryId,

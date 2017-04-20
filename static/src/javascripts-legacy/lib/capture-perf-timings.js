@@ -32,7 +32,7 @@ define([
             assetsPerformance: marks.map(function (mark) {
                 return {
                     name: mark,
-                    timing: parseInt(userTiming.getTiming(mark) || 0, 10),
+                    timing: parseInt(userTiming.getMarkTime(mark) || 0, 10),
                 };
             }),
         };

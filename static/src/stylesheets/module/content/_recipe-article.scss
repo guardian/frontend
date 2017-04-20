@@ -92,9 +92,9 @@
         }
     }
     @include mq($from: leftCol) {
-        flex-basis: 50%;
+        flex-basis: 42%;
         &.is-sticky {
-            width: 50%
+            width: 45%
         }
     }
 }
@@ -197,14 +197,19 @@
 .recipe__article--byline-image {
     position: absolute;
     border-radius: 50%;
-    width: calc(#{$gs-gutter / 2} * 5);
-    height: calc(#{$gs-gutter / 2} * 5);
+    width: calc(#{$gs-gutter / 2} * 4);
+    height: calc(#{$gs-gutter / 2} * 4);
     background-color: $neutral-3;
     overflow: hidden;
     top: $gs-baseline;
     margin: auto;
     left: 0;
     right: 0;
+
+    @include mq($from: leftCol) {
+        width: calc(#{$gs-gutter / 2} * 5);
+        height: calc(#{$gs-gutter / 2} * 5);
+    }
 }
 
 .recipe__article--byline-image .byline-img .byline-img__img {
@@ -290,11 +295,11 @@
     @include mq($from: desktop) {
         flex-basis: 55%;
         float: right;
-        border-left: 1px solid $neutral-3;
+        border-left: 1px solid $neutral-6;
     }
 
     @include mq($from: leftCol) {
-        flex-basis: 45%;
+        flex-basis: 53%;
     }
 }
 
@@ -310,14 +315,26 @@
     margin-bottom: $gs-baseline * 2;
     color: $neutral-1;
     max-width: 550px;
+    
+    @include mq($from: desktop) {
+        max-width: 460px;
+    }
 
+    @include mq($from: leftCol) {
+        max-width: 500px;
+    }
 
+    @include mq($from: wide) {
+        max-width: 550px;
+    }
 }
 
 .recipe__article--buttons {
     display: flex;
     justify-content: space-between;
     padding-bottom: $gs-baseline;
+    max-width: 550px;
+    height: 36px;
 
     @include mq($from: tablet) {
         max-width: 550px;
@@ -342,8 +359,7 @@
 
     .social {
         &.social--expanded-top {
-            margin-left: -70px;
-            width: 220px;
+            width: 250px;
         }
     }
 
@@ -368,10 +384,22 @@
 .recipe__content--feedback-text {
     @include fs-textSans(3);
     color: $neutral-2;
-    max-width: 550px;
     border-top: 1px solid $neutral-3;
     font-weight: 900;
     padding-top: $gs-baseline / 2;
+    max-width: 550px;
+
+    @include mq($from: desktop) {
+        max-width: 460px;
+    }
+
+    @include mq($from: leftCol) {
+        max-width: 500px;
+    }
+
+    @include mq($from: wide) {
+        max-width: 550px;
+    }
 }
 
 .recipe__content--feedback-link {
@@ -381,19 +409,54 @@
 .recipe__content, .recipe__standfirst {
     padding-top: $gs-baseline / 2;
     border-top: 1px solid $neutral-6;
+}
 
-    p {
+.recipe__content {
+    padding-top: $gs-baseline / 2;
+    border-top: 1px solid $neutral-6;
+
+    p,
+    ul {
         font-size: 16px;
-        line-height: 20px;
+        line-height: 24px;
         max-width: 550px;
+
+        @include mq($from: desktop) {
+            max-width: 460px;
+        }
+
+        @include mq($from: leftCol) {
+            max-width: 500px;
+        }
+
+        @include mq($from: wide) {
+            max-width: 550px;
+        }
     }
     h2 {
-        font-size: 16px;
+        font-size: 18px;
     }
 }
 
 .recipe__standfirst {
+    @include fs-headline(2);
     margin-bottom: $gs-gutter;
+
+    p {
+        max-width: 550px;
+
+        @include mq($from: desktop) {
+            max-width: 460px;
+        }
+
+        @include mq($from: leftCol) {
+            max-width: 500px;
+        }
+
+        @include mq($from: wide) {
+            max-width: 550px;
+        }
+    }
 }
 
 .recipe__content a, .recipe__standfirst a {
@@ -405,14 +468,6 @@
 }
 
 .recipe__content {
-    & > * {
-        display: none;
-        max-width: 550px;
-    }
-    & > *:nth-child(-n+2) {
-        display: block;
-    }
-
     ul {
         margin-left: 0px;
         list-style: none;
@@ -488,6 +543,10 @@
     transition: opacity .5s ease-in-out;
     z-index: 1010;
 
+    @include mq($until: desktop) {
+        left: 0;
+    }
+
     .kicker {
         color: $features-main-2;
 
@@ -529,12 +588,19 @@
     @include mq($from: desktop) {
         padding-left: $gs-gutter / 2;
         padding-bottom: $gs-baseline;
-        width: 50%;
 
         h2 {
             @include fs-headline(3);
             font-weight: 900;
         }
+    }
+
+    @include mq($from: desktop) {
+        width: 55%;
+
+    }
+    @include mq($from: wide) {
+        width: 53%;
     }
 }
 
@@ -587,6 +653,18 @@
 .recipe__article--structured-headline {
     margin-bottom: $gs-baseline * 2;
     max-width: 550px;
+
+    @include mq($from: desktop) {
+        max-width: 460px;
+    }
+
+    @include mq($from: leftCol) {
+        max-width: 500px;
+    }
+
+    @include mq($from: wide) {
+        max-width: 550px;
+    }
 }
 
 .recipe__article--structured-meta {
@@ -596,11 +674,19 @@
 .recipe__article--structured-ingredients {
     margin-bottom: $gs-baseline * 2;
     margin-top: $gs-baseline;
-    max-width: 550px;
 
     @include mq($from: desktop) {
+        max-width: 460px;
         display: flex;
         flex-wrap: wrap;
+    }
+
+    @include mq($from: leftCol) {
+        max-width: 500px;
+    }
+
+    @include mq($from: wide) {
+        max-width: 550px;
     }
 }
 
@@ -673,6 +759,17 @@
 .method-list {
     margin-bottom: $gs-baseline * 2;
     max-width: 550px;
+    @include mq($from: desktop) {
+        max-width: 460px;
+    }
+
+    @include mq($from: leftCol) {
+        max-width: 500px;
+    }
+
+    @include mq($from: wide) {
+        max-width: 550px;
+    }
 
     li:not(.recipe__article--list-title) {
         font-family: $f-sans-serif-text;

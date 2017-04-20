@@ -3,7 +3,8 @@
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const Visualizer = require('webpack-visualizer-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+    .BundleAnalyzerPlugin;
 
 const config = require('./webpack.config.js');
 

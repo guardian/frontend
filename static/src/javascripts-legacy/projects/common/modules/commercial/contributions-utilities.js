@@ -35,7 +35,7 @@ define([
     var membershipBaseURL = 'https://membership.theguardian.com/supporter';
     var contributionsBaseURL = 'https://contribute.theguardian.com';
 
-    var lastContributionDate = cookies.get('gu.contributions.contrib-timestamp');
+    var lastContributionDate = cookies.getCookie('gu.contributions.contrib-timestamp');
 
     /**
      * How many times the user can see the Epic, e.g. 6 times within 7 days.

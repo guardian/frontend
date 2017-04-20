@@ -106,10 +106,6 @@ final case class Content(
   lazy val showCircularBylinePicAtSide: Boolean =
     cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1 && !tags.isInteractive
 
-  lazy val signedArticleImage: String = {
-    ImgSrc(rawOpenGraphImage, Item1200)
-  }
-
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
     if (isPaidContent && FacebookShareImageLogoOverlay.isSwitchedOn) {
@@ -451,7 +447,8 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
-      contentWithSlimHeader = (content.isImmersive && content.tags.isArticle) || content.showNewRecipeDesign
+      contentWithSlimHeader = (content.isImmersive && content.tags.isArticle),
+      isNewRecipeDesign = content.showNewRecipeDesign
     )
   }
 
@@ -635,7 +632,12 @@ final case class Video (
         " - video interviews"," – video interviews" )
     suffixVariations.fold(trail.headline.trim) { (str, suffix) => str.stripSuffix(suffix) }
   }
-  def endSlatePath = EndSlateComponents.fromContent(content).toUriPath
+  def endSlatePath: String = EndSlateComponents.fromContent(content).toUriPath
+
+  def sixteenByNineMetaImage: Option[String] = for {
+    imageMedia <- mediaAtom.flatMap(_.posterImage) orElse content.elements.thumbnail.map(_.images)
+    videoProfile <- Video1280.bestFor(imageMedia)
+  } yield videoProfile
 }
 
 object Gallery {
