@@ -205,16 +205,16 @@ define([
 
         function update() {
             self._fetch()
-            .then(function (resp) {
-                self.autoupdate(bonzo.create(resp[self.responseDataKey])[0]);
+                .then(function (resp) {
+                    self.autoupdate(bonzo.create(resp[self.responseDataKey])[0]);
 
-                if (self.autoupdated) {
-                    setAutoUpdate()
-                }
-            })
-            .catch(function () {
-                setAutoUpdate()
-            });
+                    if (self.autoupdated) {
+                        setAutoUpdate();
+                    }
+                })
+                .catch(function () {
+                    setAutoUpdate();
+                });
         }
 
         if (this.autoupdated) {
