@@ -24,7 +24,7 @@ define([
         idealOutcome: 'Acquires many Supporters',
 
         audienceCriteria: 'All',
-        audience: 1,
+        audience: 0.9,
         audienceOffset: 0,
 
         variants: [
