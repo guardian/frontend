@@ -2,14 +2,14 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'lib/ajax',
+    'lib/fetchJSON',
     'lodash/objects/assign',
     'lodash/objects/clone'
 ], function (
     bean,
     bonzo,
     qwery,
-    ajax,
+    fetchJSON,
     assign,
     clone
 ) {
@@ -141,17 +141,17 @@ define([
         this.responseDataKey = key || this.responseDataKey;
         var self = this;
 
-        return this._fetch().then(function render(resp) {
-            self.elem = bonzo.create(resp[self.responseDataKey])[0];
-            self._prerender();
+        return this._fetch()
+            .then(function render(resp) {
+                self.elem = bonzo.create(resp[self.responseDataKey])[0];
+                self._prerender();
 
-            if (!self.destroyed) {
-                bonzo(parent)[self.manipulationType](self.elem);
-                self._ready(self.elem);
-            }
-        }).fail(function (xmlHttpRequest) {
-            self.error(xmlHttpRequest);
-        });
+                if (!self.destroyed) {
+                    bonzo(parent)[self.manipulationType](self.elem);
+                    self._ready(self.elem);
+                }
+            })
+            .catch(self.error);
     };
 
     /**
@@ -166,12 +166,9 @@ define([
             endpoint = endpoint.replace(':' + opt, this.options[opt]);
         }
 
-        return ajax({
-            url: endpoint,
-            type: 'json',
-            method: 'get',
-            crossOrigin: true,
-            data: this.fetchData
+        return fetchJSON(endpoint, {
+            mode: 'cors',
+            body: this.fetchData
         }).then(function (resp) {
             self.fetched(resp);
             return resp;
@@ -202,20 +199,26 @@ define([
      */
     Component.prototype._autoupdate = function () {
         var self = this;
+        var setAutoUpdate = function() {
+            self.t = setTimeout(update, self.updateEvery * 1000);
+        };
 
         function update() {
-            self._fetch().then(function (resp) {
+            self._fetch()
+            .then(function (resp) {
                 self.autoupdate(bonzo.create(resp[self.responseDataKey])[0]);
+
                 if (self.autoupdated) {
-                    self.t = setTimeout(update, self.updateEvery * 1000);
+                    setAutoUpdate()
                 }
-            }, function () {
-                self.t = setTimeout(update, self.updateEvery * 1000);
+            })
+            .catch(function () {
+                setAutoUpdate()
             });
         }
 
         if (this.autoupdated) {
-            this.t = setTimeout(update, this.updateEvery * 1000);
+            setAutoUpdate();
         }
     };
 
