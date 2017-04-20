@@ -13,6 +13,7 @@ define([
     'lib/geolocation',
     'lodash/objects/assign',
     'lodash/utilities/template',
+    'lodash/collections/toArray',
     'raw-loader!common/views/acquisitions-epic-control.html'
 ], function (
     uniq,
@@ -29,6 +30,7 @@ define([
     geolocation,
     assign,
     template,
+    toArray,
     acquisitionsEpicControlTemplate
 ) {
 
@@ -70,6 +72,24 @@ define([
 
     function doTagsMatch(options) {
         return options.useTargetingTool ? targetingTool.isAbTestTargeted(options) : true;
+    }
+
+    // Returns an array containing:
+    // - the first element matching insertBeforeSelector
+    // - all elements matching insertBeforeSelectorAll
+    function getTargets(insertBeforeSelector, insertBeforeSelectorAll) {
+        var targets = [];
+        var target = document.querySelector(insertBeforeSelector || '.submeta');
+
+        if (insertBeforeSelectorAll) {
+            targets = toArray(document.querySelectorAll(insertBeforeSelectorAll));
+        }
+
+        if (target) {
+            targets.push(target);
+        }
+
+        return targets;
     }
 
     function defaultCanEpicBeDisplayed(testConfig) {
@@ -191,11 +211,11 @@ define([
 
                 mediator.emit('register:begin', trackingCampaignId);
                 return fastdom.write(function () {
-                    var selector = options.insertBeforeSelector || '.submeta';
-                    var sibling = $(selector);
+                    var targets = getTargets(options.insertBeforeSelector, options.insertBeforeSelectorAll);
 
-                    if (sibling.length > 0) {
-                        component.insertBefore(sibling.first());
+                    if (targets.length > 0) {
+                        component.insertBefore(targets);
+
                         mediator.emit(test.insertEvent, component);
                         onInsert(component);
 

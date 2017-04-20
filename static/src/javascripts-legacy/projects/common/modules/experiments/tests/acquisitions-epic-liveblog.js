@@ -42,7 +42,7 @@ define([
                     count: 4,
                     minDaysBetweenViews: 0
                 },
-                insertBeforeSelector: '.js-liveblog-epic-placeholder',
+                insertBeforeSelectorAll: '.js-liveblog-epic-placeholder',
                 successOnView: true
             }
         ]
