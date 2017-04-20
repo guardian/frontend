@@ -23,7 +23,7 @@ module.exports = function (config) {
     return {
         // root of project
         basePath: './../../../../',
-        frameworks: ['jasmine', 'requirejs', 'phantomjs-shim'],
+        frameworks: ['jasmine', 'requirejs'],
 
         files: [
             { pattern: 'static/test/javascripts-legacy/components/sinonjs/sinon.js', included: true },
@@ -60,7 +60,19 @@ module.exports = function (config) {
         // - Safari (only Mac; has to be installed with `npm install karma-safari-launcher`)
         // - PhantomJS
         // - IE (only Windows; has to be installed with `npm install karma-ie-launcher`)
-        browsers: ['PhantomJS'],
+        browsers: ['Chrome_Canary_Headless'],
+        customLaunchers: {
+            Chrome_Canary_Headless: {
+                base: 'ChromeCanary',
+                flags: [
+                    // See https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md
+                    '--headless',
+                    '--disable-gpu',
+                    // Without a remote debugging port, Google Chrome exits immediately.
+                    ' --remote-debugging-port=9222',
+                ]
+            }
+        },
         captureTimeout: 60000,
         singleRun: false,
 

@@ -47,10 +47,19 @@ requirejs.config({
     }
 });
 
-require(['Promise', 'lodash/collections/toArray'], function (Promise, toArray) {
-    require(tests, function () {
-        Promise.all(toArray(arguments)).then(function () {
-            window.__karma__.start();
+// var is used in pf.io callback
+// eslint-disable-next-line no-unused-vars
+function requireTests () {
+    require(['Promise', 'lodash/collections/toArray'], function (Promise, toArray) {
+        require(tests, function () {
+            Promise.all(toArray(arguments)).then(window.__karma__.start);
         });
     });
-});
+}
+
+// This is here so that we can polyfill the already converted ES6 stuff without breaking karma tests.
+// I've simply pasted in the url because it's temp until karma no longer exists and unlikely to change before then.
+var ref = document.getElementsByTagName('script')[0];
+var appScript = document.createElement('script');
+appScript.src = 'https://assets.guim.co.uk/polyfill.io/v2/polyfill.min.js?rum=0&features=es6,es7,default-3.6&flags=gated&callback=requireTests';
+ref.parentNode.insertBefore(appScript, ref);

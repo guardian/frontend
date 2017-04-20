@@ -57,7 +57,10 @@
         "karma": {
             "presets": [
                 ["babel-preset-env", {
-                    "modules": "amd"
+                    "modules": "amd",
+                    "targets": {
+                        "chrome": 59
+                    }
                 }]
             ],
             "plugins": [
