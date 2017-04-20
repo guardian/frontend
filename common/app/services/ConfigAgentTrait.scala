@@ -38,8 +38,8 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     futureConfig.map(Option.apply).map(configAgent.send)
   }
 
-  def refreshWith(config: ConfigJson): Unit = {
-    configAgent.send(Option(config))
+  def refreshWith(config: ConfigJson): Future[Option[ConfigJson]] = {
+    configAgent.alter(Option(config))
   }
 
   def refreshAndReturn(): Future[Option[ConfigJson]] =
