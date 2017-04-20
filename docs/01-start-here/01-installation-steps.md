@@ -47,7 +47,7 @@ You need a Mac or Linux PC (Ubuntu).
     $ cd frontend
     ```
 
-2. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *frontend* and *CMS fronts* (you will need access to Janus)
+2. Get AWS Credentials using [Janus](https://janus.gutools.co.uk/) for *Frontend* and *CMS fronts* (you will need access to Janus)
 
 3. Make sure you have the [latest version of Java](#jdk)
 
@@ -190,6 +190,8 @@ Now check that you are up and running by hitting the following URLs:
 * [http://localhost:3000/media](http://localhost:3000/media)
 * [http://localhost:3000/media/2012/dec/05/newspaper-editors-sign-up-leveson](http://localhost:3000/media/2012/dec/05/newspaper-editors-sign-up-leveson)
 * [http://localhost:3000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery](http://localhost:3000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery)
+
+Please note, `make watch` proxies port 3000 with the ability to live reload assets, you could access all links using port 9000 as well. 
 
 If you have [setup local Nginx](https://github.com/guardian/frontend/blob/master/nginx/README.md) then try hitting 
 [https://m.thegulocal.com](https://m.thegulocal.com)

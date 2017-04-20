@@ -8,7 +8,7 @@ GET     /responsive-viewer/*path    controllers.ResponsiveViewerController.previ
 # For dev machines
 GET        /assets/internal/*file                                                              controllers.Assets.at(path="/public", file)
 GET        /assets/*path                                                                       dev.DevAssetsController.at(path)
-
+GET        /geolocation                                                                        controllers.FakeGeolocationController.geolocation
 
 #Login
 # authentication endpoints
@@ -163,6 +163,7 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                      
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                               controllers.GalleryController.lightboxJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                                        controllers.GalleryController.renderJson(path)
 
+GET        /service-worker.js                                                                  controllers.WebAppController.serviceWorker()
 GET        /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>                controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                      controllers.ImageContentController.renderJson(path)

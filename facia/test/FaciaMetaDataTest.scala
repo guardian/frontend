@@ -8,6 +8,8 @@ import play.api.libs.json._
 import play.api.test.Helpers._
 import services.ConfigAgent
 import test._
+import scala.concurrent.duration._
+import scala.concurrent.Await
 
 @DoNotDiscover class FaciaMetaDataTest extends FlatSpec
   with Matchers
@@ -18,11 +20,12 @@ import test._
   with WithTestWsClient {
 
   override def beforeAll() {
-    ConfigAgent.refreshWith(
+    val refresh = ConfigAgent.refreshWith(
       ConfigJson(
         fronts = Map("music" -> FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)),
         collections = Map.empty)
     )
+    Await.result(refresh, 3.seconds)
   }
 
   lazy val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient))
