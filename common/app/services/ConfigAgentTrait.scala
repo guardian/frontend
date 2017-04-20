@@ -25,9 +25,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 
   def isLoaded() = configAgent.get().isDefined
 
-  def getClient: ApiClient = {
-    FrontsApi.crossAccountClient
-  }
+  def getClient: ApiClient = FrontsApi.crossAccountClient
 
   def refresh() = {
     val futureConfig = getClient.config
