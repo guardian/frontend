@@ -50,7 +50,7 @@ define([
                 categories: categories,
                 dataMode: 'data-display'
             };
-            loadScript('//static-au.plista.com/async/' + name + '.js');
+            loadScript.loadScript('//static-au.plista.com/async/' + name + '.js');
         } else {
             lib.widgets.push({name: widgetName, pre: u});
         }

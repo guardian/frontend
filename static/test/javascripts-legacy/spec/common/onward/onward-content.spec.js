@@ -41,7 +41,7 @@ define([
         it('should use blog tag if first', function (done) {
             config.page.nonKeywordTagIds =
                 'global-development/poverty-matters,global-development/series/modern-day-slavery-in-focus';
-            server.respondWith('/series/global-development/poverty-matters.json?shortUrl=http%3A%2F%2Fgu.com%2Fp%2F42zeg', [200, {}, '']);
+            server.respondWith('/series/global-development/poverty-matters.json?shortUrl=http%3A%2F%2Fgu.com%2Fp%2F42zeg', [200, {}, '{}']);
             /*eslint-disable no-new*/
             new OnwardContent();
             /*eslint-enable no-new*/
@@ -54,7 +54,7 @@ define([
         it('should use series tag if first', function (done) {
             config.page.nonKeywordTagIds =
                 'global-development/series/modern-day-slavery-in-focus,global-development/poverty-matters';
-            server.respondWith('/series/global-development/series/modern-day-slavery-in-focus.json?shortUrl=http%3A%2F%2Fgu.com%2Fp%2F42zeg', [200, {}, '']);
+            server.respondWith('/series/global-development/series/modern-day-slavery-in-focus.json?shortUrl=http%3A%2F%2Fgu.com%2Fp%2F42zeg', [200, {}, '{}']);
             /*eslint-disable no-new*/
             new OnwardContent();
             /*eslint-enable no-new*/

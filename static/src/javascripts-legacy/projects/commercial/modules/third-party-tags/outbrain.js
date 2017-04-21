@@ -83,7 +83,7 @@ define([
                 module.tracking({
                     widgetId: widgetCodes.code || widgetCodes.image
                 });
-                loadScript(outbrainUrl);
+                loadScript.loadScript(outbrainUrl);
             });
         }
     }
