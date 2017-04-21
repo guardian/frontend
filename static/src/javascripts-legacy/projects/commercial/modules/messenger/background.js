@@ -47,7 +47,7 @@ define([
                 adSlot.insertBefore(backgroundParent, adSlot.firstChild);
             })
             .then(function () {
-                addEventListener(window, 'scroll', onScroll, { passive: true });
+                addEventListener.addEventListener(window, 'scroll', onScroll, { passive: true });
                 onScroll();
 
                 function onScroll() {

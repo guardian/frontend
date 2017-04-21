@@ -73,7 +73,7 @@ define([
     function setupListeners() {
         messenger.register('resize', onResize);
         if (!config.page.hasSuperStickyBanner) {
-            addEventListener(win, 'scroll', onScroll, { passive: true });
+            addEventListener.addEventListener(win, 'scroll', onScroll, { passive: true });
         }
     }
 

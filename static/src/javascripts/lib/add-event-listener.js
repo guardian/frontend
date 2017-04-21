@@ -41,4 +41,4 @@ const addEventListener = (
     }
 };
 
-export default addEventListener;
+export { addEventListener };

@@ -56,8 +56,8 @@ define([
             }).then(function () {
                 layer2 = qwery('.creative__layer2', adSlot);
 
-                addEventListener(window, 'scroll', onScroll, { passive: true });
-                addEventListener(adSlot, 'animationend', function () {
+                addEventListener.addEventListener(window, 'scroll', onScroll, { passive: true });
+                addEventListener.addEventListener(adSlot, 'animationend', function () {
                     window.removeEventListener('scroll', onScroll);
                 });
 

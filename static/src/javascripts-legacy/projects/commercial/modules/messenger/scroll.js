@@ -39,7 +39,7 @@ define([
 
     function addScrollListener(iframe, respond) {
         if (iframeCounter === 0) {
-            addEventListener(w, 'scroll', onScroll, { passive: true });
+            addEventListener.addEventListener(w, 'scroll', onScroll, { passive: true });
             if (useIO) {
                 observer = new w.IntersectionObserver(onIntersect);
             }
