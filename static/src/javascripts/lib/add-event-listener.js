@@ -1,7 +1,7 @@
-var supportsOptions = false;
+let supportsOptions = false;
 try {
-    var opts = Object.defineProperty({}, 'passive', {
-        get: function() {
+    const opts = Object.defineProperty({}, 'passive', {
+        get() {
             supportsOptions = true;
         }
     });
@@ -10,9 +10,7 @@ try {
 
 export default addEventListener;
 
-function addEventListener(node, eventName, eventHandler, options) {
-    options = options || {};
-
+function addEventListener(node, eventName, eventHandler, options = {}) {
     if (supportsOptions) {
         node.addEventListener(eventName, eventHandler, options);
     } else if (options.once) {
