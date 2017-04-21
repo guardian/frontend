@@ -21,3 +21,10 @@ class IdentityConfiguration extends GuardianConfiguration with SafeLogging {
   }
 
 }
+
+case class IdConfig (
+  apiRoot: String,
+  apiClientToken: String,
+  accountDeletionApiRoot: String,
+  accountDeletionApiKey: String
+)

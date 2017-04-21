@@ -6,6 +6,9 @@ import play.api.i18n.I18nComponents
 import play.api.Mode
 
 trait IdentityConfigurationComponents extends I18nComponents {
+  val a: String = ""
+
+  lazy val idConfig = wire[IdConfig]
   val identityConfiguration = wire[IdentityConfiguration]
   lazy val frontendIdentityCookieDecoder = wire[FrontendIdentityCookieDecoder]
 

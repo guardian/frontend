@@ -5,20 +5,19 @@ import org.scalatest.mock.MockitoSugar
 import org.scalatest.{Matchers => ShouldMatchers}
 import org.mockito.Mockito._
 import org.mockito.Matchers.argThat
-import org.mockito.Matchers
-import client.connection.{HttpResponse, Http}
+import org.mockito.{ArgumentMatcher, Matchers, Mockito}
+import client.connection.{Http, HttpResponse}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
-import scala.concurrent.{Await, Future, Promise, ExecutionContext}
-import client.{Error, Anonymous, Auth, Parameters, Response}
-import org.hamcrest.Description
-import org.mockito.ArgumentMatcher
-import org.joda.time.DateTime
-import client.connection.util.ExecutionContexts
 
+import scala.concurrent.{Await, ExecutionContext, Promise}
+import client.{Anonymous, Auth, Error, Parameters, Response}
+import org.hamcrest.Description
+import client.connection.util.ExecutionContexts
 import org.joda.time.format.ISODateTimeFormat
 import com.gu.identity.model._
-import conf.IdentityConfiguration
+import conf.IdConfig
 import net.liftweb.json.Serialization.write
+
 import scala.concurrent.duration._
 import scala.language.postfixOps
 import net.liftweb.json.JsonAST.JValue
@@ -32,8 +31,8 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val fmt = ISODateTimeFormat.dateTimeNoMillis()
 
   val http = mock[Http]
-  val idConfig = new IdentityConfiguration
-  val apiRoot = idConfig.id.apiRoot
+  val idConfig = IdConfig("https://id.code.dev-guardianapis.com","frontend-dev-client-token", "root", "key")
+  val apiRoot = idConfig.apiRoot
   val jsonParser = new JsonBodyParser {
     implicit val formats: Formats = LiftJsonConfig.formats + new JodaJsonSerializer
 
