@@ -75,7 +75,7 @@ trait ABTestSwitches {
     "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 1),
+    sellByDate = new LocalDate(2017, 7, 3),
     exposeClientSide = true
   )
 
