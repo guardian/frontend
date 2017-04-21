@@ -31,7 +31,6 @@ const commercialFilesPerHuman = filesPerHuman(commercialModules, commercial);
 
 const platform = [
     'Alex Sanders',
-    'Gareth Trufitt',
     'Simon Adcock',
     'Nicolas Long',
     'Calum Campbell',
@@ -53,7 +52,8 @@ const misc = [
     'jfsoul',
     'Gustav Pursche',
     'Joseph Smith',
-    'Calum Campbell',
+    'Gareth Trufitt',
+    'Philip Wills',
 ];
 const miscModules = files.filter(
     _ => !_.includes('commercial') && !_.includes('projects/common/utils')
