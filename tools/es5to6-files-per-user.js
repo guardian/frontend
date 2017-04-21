@@ -30,7 +30,7 @@ const commercialModules = files.filter(_ => _.includes('commercial'));
 const commercialFilesPerHuman = filesPerHuman(commercialModules, commercial);
 
 const platform = [
-    'Alex Sanders',
+    'sndrs',
     'Simon Adcock',
     'Nicolas Long',
     'Calum Campbell',

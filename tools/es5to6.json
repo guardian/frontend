@@ -104,7 +104,7 @@
     "projects/common/modules/commercial/adblock-banner-config.js",
     "projects/common/modules/commercial/adblock-messages.js"
   ],
-  "Alex Sanders": [
+  "sndrs": [
     "lib/add-event-listener.js",
     "bootstraps/admin.js",
     "bootstraps/enhanced/accessibility.js",
