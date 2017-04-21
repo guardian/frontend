@@ -59,8 +59,10 @@ define([
                 return Promise.resolve();
             });
 
-            injector.mock('lib/load-script', function () {
-                return Promise.resolve();
+            injector.mock('lib/load-script', {
+                loadScript: function () {
+                    return Promise.resolve();
+                }
             });
 
             injector.require([

@@ -11,7 +11,7 @@ define([
     ) {
 
     function openForesee() {
-        loadScript(config.libs.foresee);
+        loadScript.loadScript(config.libs.foresee);
     }
 
     function load() {
