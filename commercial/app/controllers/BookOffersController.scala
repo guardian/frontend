@@ -24,7 +24,7 @@ class BookOffersController(bookFinder: BookFinder, bestsellersAgent: Bestsellers
       (specificBooks ++ bestsellersAgent.bestsellersTargetedAt(segment)).distinctBy(_.isbn).take(4)
     }
 
-  private def isValidIsbn(isbn: String): Boolean = true
+  private def isValidIsbn(isbn: String): Boolean = (isbn forall (_.isDigit)) && (isbn.length == 10 || isbn.length == 13)
 
   def getBook = Action.async { implicit request =>
 
@@ -42,8 +42,12 @@ class BookOffersController(bookFinder: BookFinder, bestsellersAgent: Bestsellers
             log.error("Book lookup failed.", e)
             failedLookupResponse
         }
-      case Some(invalidIsbn) => log.error(s"Book lookup called with invalid ISBN '$invalidIsbn'. Returning empty response."); badRequestResponse
-      case None => log.error(s"Book lookup called with no ISBN. Returning empty response."); badRequestResponse
+      case Some(invalidIsbn) =>
+        log.error(s"Book lookup called with invalid ISBN '$invalidIsbn'. Returning empty response.")
+        badRequestResponse
+      case None =>
+        log.error(s"Book lookup called with no ISBN. Returning empty response.");
+        badRequestResponse
     }
   }
 
