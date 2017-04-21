@@ -8,7 +8,7 @@ define([
     'bonzo',
     'qwery',
     'lib/$',
-    'lib/ajax',
+    'lib/fetch-json',
     'lib/config',
     'lib/detect',
     'lib/mediator',
@@ -17,7 +17,6 @@ define([
     'common/modules/ui/sticky',
     'lib/scroller',
     'lodash/collections/toArray',
-    'lodash/functions/bindAll',
     'common/modules/ui/relativedates',
     'common/modules/ui/notification-counter',
     'common/modules/atoms/youtube'
@@ -27,7 +26,7 @@ define([
     bonzo,
     qwery,
     $,
-    ajax,
+    fetchJSON,
     config,
     detect,
     mediator,
@@ -36,7 +35,6 @@ define([
     Sticky,
     scroller,
     toArray,
-    bindAll,
     RelativeDates,
     NotificationCounter,
     youtube
@@ -137,12 +135,21 @@ define([
             var shouldFetchBlocks = '&isLivePage=' + (isLivePage ? 'true' : 'false');
             var latestBlockIdToUse = ((latestBlockId) ? latestBlockId : 'block-0');
             var count = 0;
+            var endpoint = window.location.pathname + '.json?lastUpdate=' + latestBlockIdToUse + shouldFetchBlocks;
 
-            return ajax({
-                url: window.location.pathname + '.json?lastUpdate=' + latestBlockIdToUse + shouldFetchBlocks,
-                type: 'json',
-                method: 'get',
-                crossOrigin: true
+            // #? One day this should be in Promise.finally()
+            var setUpdateDelay = function() {
+                if (count == 0 || currentUpdateDelay > 0) {
+                    updateDelay(currentUpdateDelay);
+                    updateTimeoutId = setTimeout(checkForUpdates, currentUpdateDelay);
+                } else {
+                    // might have been cached so check straight away
+                    updateTimeoutId = setTimeout(checkForUpdates, 1);
+                }
+            };
+
+            return fetchJSON(endpoint, {
+                mode: 'cors',
             }).then(function (resp) {
                 count = resp.numNewBlocks;
 
@@ -165,14 +172,10 @@ define([
                         toastButtonRefresh();
                     }
                 }
-            }).always(function () {
-                if (count == 0 || currentUpdateDelay > 0) {
-                    updateDelay(currentUpdateDelay);
-                    updateTimeoutId = setTimeout(checkForUpdates, currentUpdateDelay);
-                } else {
-                    // might have been cached so check straight away
-                    updateTimeoutId = setTimeout(checkForUpdates, 1);
-                }
+
+                setUpdateDelay();
+            }).catch(function() {
+                setUpdateDelay();
             });
         };
 

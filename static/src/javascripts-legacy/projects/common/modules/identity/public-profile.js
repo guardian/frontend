@@ -52,8 +52,6 @@ define([
             activityStream.change({
                 page: 1,
                 streamType: streamType
-            }).then(function () {
-
             });
         });
     }

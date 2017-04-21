@@ -19,7 +19,7 @@ define([
 
         // Setting the async property to false will _still_ load the script in
         // a non-blocking fashion but will ensure it is executed before googletag
-        loadScript(config.libs.sonobi, { async: false }).then(catchPolyfillErrors).then(stop);
+        loadScript.loadScript(config.libs.sonobi, { async: false }).then(catchPolyfillErrors).then(stop);
     }
 
     // Wrap the native implementation of getOwnPropertyNames in a try-catch. If any polyfill attempts

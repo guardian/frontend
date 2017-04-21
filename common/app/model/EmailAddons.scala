@@ -176,6 +176,12 @@ case object SleeveNotes extends FrontEmailMetadata {
   override val banner = Some("sleeve-notes.png")
 }
 
+case object TheSnap extends FrontEmailMetadata {
+  val name = "The Snap"
+  override val banner = Some("the-snap.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "politics/series/the-snap")
+}
+
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"

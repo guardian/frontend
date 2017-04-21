@@ -10,13 +10,7 @@ define([
     var adSlotSelector = '.js-ad-slot';
     var mpuCandidateSelector = '.fc-slice__item--mpu-candidate';
 
-    return {
-        init: init,
-        initForAdFree: initForAdFree
-    };
-
     function init(force) {
-
         // Get all ad slots
         var adSlots = qwery(adSlotSelector);
 
@@ -27,7 +21,9 @@ define([
 
         return fastdom.write(function () {
             adSlots.forEach(function (adSlot) {
-                adSlot.parentNode.removeChild(adSlot);
+                if (adSlot.parentNode) {
+                    adSlot.parentNode.removeChild(adSlot);
+                }
             });
         });
     }
@@ -49,4 +45,9 @@ define([
     function shouldDisableAdSlot(adSlot) {
         return window.getComputedStyle(adSlot).display === 'none' || shouldDisableForAdFree(adSlot);
     }
+
+    return {
+        init: init,
+        initForAdFree: initForAdFree
+    };
 });
