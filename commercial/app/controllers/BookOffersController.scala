@@ -28,7 +28,7 @@ class BookOffersController(bookFinder: BookFinder, bestsellersAgent: Bestsellers
 
   def getBook = Action.async { implicit request =>
 
-    lazy val failedLookupResponse: Result = Cached(30.seconds)(JsonNotFound())(request)
+    lazy val failedLookupResult: Result = Cached(30.seconds)(JsonNotFound())(request)
     lazy val badRequestResponse: Future[Result] = Future.successful(Cached(1.day)(JsonComponent(JsNull))(request))
 
     specificId match {
@@ -36,11 +36,11 @@ class BookOffersController(bookFinder: BookFinder, bestsellersAgent: Bestsellers
         bookFinder.findByIsbn(isbn) map {
           _ map { book: Book =>
             Cached(1.hour){ JsonComponent(Json.toJson(book)) }
-          } getOrElse failedLookupResponse
+          } getOrElse failedLookupResult
         } recover {
           case NonFatal(e) =>
             log.error("Book lookup failed.", e)
-            failedLookupResponse
+            failedLookupResult
         }
       case Some(invalidIsbn) =>
         log.error(s"Book lookup called with invalid ISBN '$invalidIsbn'. Returning empty response.")
