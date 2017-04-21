@@ -7,7 +7,6 @@ import model.diagnostics.csp.CSP
 import model.diagnostics.commercial.UserReport
 import model.TinyResponse
 import org.joda.time.format.ISODateTimeFormat
-import play.api.libs.json.JsObject
 
 class DiagnosticsController extends Controller with Logging {
   val r = scala.util.Random
@@ -32,8 +31,7 @@ class DiagnosticsController extends Controller with Logging {
   def commercialReport = Action(jsonParser) { implicit request =>
     UserReport.report(request.body)
 
-    /** An empty response isn't valid JSON, so we have to return an empty object */
-    JsonComponent(JsObject(Nil)).result
+    TinyResponse.noContent()
   }
 
   def commercialReports(dateTime: String) = Action { implicit request =>

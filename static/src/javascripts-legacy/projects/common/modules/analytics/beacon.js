@@ -1,9 +1,9 @@
 define([
     'lib/config',
-    'lib/fetch-json',
+    'lib/fetch',
 ], function (
     config,
-    fetchJSON
+    fetch
 ) {
     return {
         fire: function (path) {
@@ -15,7 +15,7 @@ define([
         postJson: function (path, jsonString) {
             var url = (config.page.beaconUrl || '').replace(/^\/\//, window.location.protocol + '//') + path;
 
-            fetchJSON(url, {
+            fetch(url, {
                 method: 'post',
                 header: {
                     'Content-Type': 'application/json',
