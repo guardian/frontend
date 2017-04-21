@@ -13,7 +13,6 @@ class CommercialTestSuite extends Suites (
   new events.SingleEventbriteMasterclassParsingTest,
   new soulmates.SoulmatesFeedTest,
   new LookupTest,
-  new books.BookFinderTest,
   new books.BookTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19006
