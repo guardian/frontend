@@ -48,40 +48,47 @@ const go = () => {
                     // webpack needs the require function to be called 'require'
                     // eslint-disable-next-line no-shadow
                     require => {
-                        raven.context({ tags: { feature: 'commercial' } }, () => {
-                            markTime('commercial boot');
-                            const commercialBoot = config.switches.commercial
-                                ? require('bootstraps/commercial')
-                                : Promise.resolve;
+                        raven.context(
+                            { tags: { feature: 'commercial' } },
+                            () => {
+                                markTime('commercial boot');
+                                const commercialBoot = config.switches
+                                    .commercial
+                                    ? require('bootstraps/commercial')
+                                    : Promise.resolve;
 
-                            commercialBoot().then(() => {
-                                // 3. finally, try enhanced
-                                // this is defined here so that webpack's code-splitting algo
-                                // excludes all the modules bundled in the commercial chunk from this one
-                                if (window.guardian.isEnhanced) {
-                                    markTime('enhanced request');
-                                    require.ensure(
-                                        [],
-                                        // webpack needs the require function to be called 'require'
-                                        // eslint-disable-next-line no-shadow
-                                        require => {
-                                            markTime('enhanced boot');
-                                            require('bootstraps/enhanced/main')();
+                                commercialBoot().then(() => {
+                                    // 3. finally, try enhanced
+                                    // this is defined here so that webpack's code-splitting algo
+                                    // excludes all the modules bundled in the commercial chunk from this one
+                                    if (window.guardian.isEnhanced) {
+                                        markTime('enhanced request');
+                                        require.ensure(
+                                            [],
+                                            // webpack needs the require function to be called 'require'
+                                            // eslint-disable-next-line no-shadow
+                                            require => {
+                                                markTime('enhanced boot');
+                                                require('bootstraps/enhanced/main')();
 
-                                            if (document.readyState === 'complete') {
-                                                capturePerfTimings();
-                                            } else {
-                                                window.addEventListener(
-                                                    'load',
-                                                    capturePerfTimings
-                                                );
-                                            }
-                                        },
-                                        'enhanced'
-                                    );
-                                }
-                            });
-                        });
+                                                if (
+                                                    document.readyState ===
+                                                    'complete'
+                                                ) {
+                                                    capturePerfTimings();
+                                                } else {
+                                                    window.addEventListener(
+                                                        'load',
+                                                        capturePerfTimings
+                                                    );
+                                                }
+                                            },
+                                            'enhanced'
+                                        );
+                                    }
+                                });
+                            }
+                        );
                     },
                     'commercial'
                 );
