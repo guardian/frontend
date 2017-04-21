@@ -2,6 +2,6 @@ package model
 
 object Titles {
 
-  val titles = List("Mr", "Mrs", "Ms", "Miss", "Dr", "Prof", "Rev")
+  val titles = List("Mr", "Mrs", "Ms", "Mx", "Miss", "Dr", "Prof", "Rev")
 
 }
