@@ -11,19 +11,32 @@ class BookJsonActor(magentoService: MagentoService) extends Actor with Logging {
 
   implicit val ec: ExecutionContext = context.system.dispatcher
 
-  private var bookCache: Map[String, JsValue] = Map[String, JsValue]()
+  private val bookCache = scala.collection.mutable.Map[String, JsValue]()
+  private val bookCacheJobs = scala.collection.mutable.Set[String]()
 
   def receive: PartialFunction[Any, Unit] = {
+
     case isbn: String => {
 
-      bookCache.get(isbn) match {
+      val cachedBook: Option[JsValue] = bookCache.get(isbn)
+
+      cachedBook match {
         case Some(json) => {
           log.info(s"Cache hit for ISBN: $isbn.")
           sender() ! Some(json)
         }
-        case None => magentoService.findByIsbn(isbn) map (_.foreach { book: JsValue => bookCache += (isbn -> book) })
-          log.info(s"Cache miss for ISBN: $isbn. Looking up ISBN with Magento Service.")
-          sender () ! None
+        case None => {
+          log.info(s"Cache miss for ISBN: $isbn.")
+
+          if (bookCacheJobs.contains(isbn))
+            log.info(s"ISBN lookup is already due for $isbn. Not running Magento Service.")
+          else {
+            log.info(s"Looking up ISBN $isbn with Magento Service.")
+            magentoService.findByIsbn(isbn) map (_.foreach { json: JsValue => bookCache.put(isbn, json) })
+            bookCacheJobs += isbn
+          }
+          sender() ! None
+        }
       }
     }
   }
