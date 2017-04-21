@@ -5,16 +5,9 @@ const once = require('lodash/once');
 const fetch = options => {
     const onError = once(error => {
         if (options.host === exports.hosts.dev) {
-            try {
-                require('megalog').error(
-                    `Are you running the article or dev-build app? \n \n ${error.message}`,
-                    {
-                        heading: 'A 200 was not returned',
-                    }
-                );
-            } catch (e) {
-                // do nothing
-            }
+            console.error(
+                `A 200 was not returned \n\n Are you running the article or dev-build app? \n \n ${error.message}`
+            );
         }
         throw error;
     });
