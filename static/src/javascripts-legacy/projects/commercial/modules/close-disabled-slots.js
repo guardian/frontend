@@ -8,9 +8,11 @@ define([
     commercialFeatures
 ) {
     var adSlotSelector = '.js-ad-slot';
+    var mpuCandidateSelector = '.fc-slice__item--mpu-candidate';
 
     return {
-        init: init
+        init: init,
+        initForAdFree: initForAdFree
     };
 
     function init(force) {
@@ -26,6 +28,15 @@ define([
         return fastdom.write(function () {
             adSlots.forEach(function (adSlot) {
                 adSlot.parentNode.removeChild(adSlot);
+            });
+        });
+    }
+
+    function initForAdFree() {
+        var mpuCandidates = qwery(mpuCandidateSelector).filter(shouldDisableForAdFree);
+        return fastdom.write(function () {
+            mpuCandidates.forEach(function (candidate) {
+                candidate.classList.add('fc-slice__item--no-mpu');
             });
         });
     }

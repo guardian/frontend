@@ -58,11 +58,18 @@ define([
             return loadScript(config.libs.googletag, { async: false });
         }
 
-        if (commercialFeatures.dfpAdvertising || commercialFeatures.adFree) {
+        if (commercialFeatures.dfpAdvertising) {
             setupAdvertising()
             // A promise error here, from a failed module load,
             // could be a network problem or an intercepted request.
             // Abandon the init sequence.
+            .catch(removeAdSlots);
+            return Promise.resolve();
+        }
+
+        if (commercialFeatures.adFree) {
+            setupAdvertising()
+            .then(removeAdSlotsForAdFree)
             .catch(removeAdSlots);
             return Promise.resolve();
         }
@@ -88,5 +95,9 @@ define([
 
     function removeAdSlots() {
         return closeSlots.init(true);
+    }
+
+    function removeAdSlotsForAdFree() {
+        return closeSlots.initForAdFree();
     }
 });
