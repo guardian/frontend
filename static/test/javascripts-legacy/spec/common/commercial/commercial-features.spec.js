@@ -339,7 +339,7 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
             });
 
             it('Is disabled under perf tests', function () {
-                location.getHash = function () {return '#noads';};
+                window.location.hash = '#noads';
                 features = new CommercialFeatures;
                 expect(features.outbrain).toBe(false);
             });
