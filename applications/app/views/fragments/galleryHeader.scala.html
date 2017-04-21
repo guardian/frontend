@@ -3,23 +3,38 @@
 @import views.support.TrailCssClasses.toneClass
 
 <header class="content__head tonal__head tonal__head--@toneClass(gallery.item)">
-    @* Hidden because we visually show this data in the head, but needed
-    here for SEO. *@
+    @* Hidden because we visually show this data in the head, but needed here for SEO. *@
     <h1 class="is-hidden" itemprop="headline">@Html(gallery.item.trail.headline)</h1>
 
     <div class="gs-container">
-        @fragments.commercial.badge(gallery.item, gallery)
+        <div class="gallery__header">
 
-        @fragments.contentMeta(gallery.item, gallery)
-
-        @if(gallery.item.fields.standfirst.isDefined) {
-            <div class="tonal__standfirst">
-                @fragments.standfirst(gallery.item)
+            <div class="gallery__badge--container">
+                @fragments.commercial.badge(gallery.item, gallery)
             </div>
-        }
 
-            <div class="content__meta-container gallery__meta-container">
+            <div class="meta__extras--gallery">
+                <div class="meta__social meta__social--gallery" data-component="share">
+                    @fragments.social(gallery.item.sharelinks.pageShares, "top", iconModifier = List("social-icon-media"))
+                </div>
 
+                <div class="meta__numbers meta__numbers--gallery">
+                    <div class="u-h meta__number meta__number--gallery js-sharecount"></div>
+                    <div class="u-h meta__number meta__number--gallery"
+                         data-discussion-id="@gallery.item.content.discussionId"
+                         data-commentcount-format="content"
+                         data-discussion-closed="@{!gallery.item.trail.isCommentable}">
+                    </div>
+                </div>
+            </div>
+
+            @if(gallery.item.fields.standfirst.isDefined) {
+                <div class="tonal__standfirst">
+                    @fragments.standfirst(gallery.item)
+                </div>
+            }
+
+            <div class="gallery__meta-container">
                 @if(!gallery.item.content.hasTonalHeaderByline) {
                     @fragments.meta.byline(gallery.item.trail.byline, gallery.item.tags)
                 }
@@ -32,7 +47,7 @@
                 @if(!gallery.item.trail.shouldHidePublicationDate) {
                     @fragments.meta.dateline(gallery.item.trail.webPublicationDate, gallery.item.fields.lastModified, gallery.item.content.hasBeenModified, gallery.item.fields.firstPublicationDate, gallery.item.tags.isLiveBlog, gallery.item.fields.isLive)
                 }
-
             </div>
+        </div>
     </div>
 </header>
