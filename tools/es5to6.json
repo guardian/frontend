@@ -105,7 +105,6 @@
     "projects/common/modules/commercial/adblock-messages.js"
   ],
   "sndrs": [
-    "lib/add-event-listener.js",
     "bootstraps/admin.js",
     "bootstraps/enhanced/accessibility.js",
     "bootstraps/enhanced/article-liveblog-common.js",
@@ -139,7 +138,6 @@
     "bootstraps/enhanced/youtube.js",
     "bootstraps/video-embed.js",
     "bootstraps/youtube-embed.js",
-    "lib/add-event-listener.js",
     "lib/ajax.js",
     "lib/atob.js"
   ],
