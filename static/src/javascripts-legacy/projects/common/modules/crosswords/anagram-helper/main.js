@@ -61,7 +61,7 @@ define([
                   return entry.value.toLowerCase();
                 }).filter(function(entry) {
                   return word.includes(entry);
-                }).sort();
+                }).filter(Boolean).sort();
 
             return shuffle(reduce(word.trim().split('').sort(), function (acc, letter) {
                 var entered = acc.entries[0] === letter.toLowerCase();
