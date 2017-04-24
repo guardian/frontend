@@ -1,16 +1,17 @@
 package services
 
+import common.GuardianConfiguration
 import org.scalatest.FunSuite
 import conf.IdentityConfiguration
 import org.scalatest.Matchers
-import play.api.mvc.{AnyContentAsEmpty, AnyContentAsText, Request}
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.{FakeHeaders, FakeRequest}
 
 class ReturnUrlVerifierTest extends FunSuite with Matchers {
 
-  val conf = new IdentityConfiguration
-
-  val domain = conf.id.domain
+  val gConf = new GuardianConfiguration
+  val conf = new IdentityConfiguration(gConf)
+  val domain = gConf.id.domain
 
   val validator = new ReturnUrlVerifier(conf)
 

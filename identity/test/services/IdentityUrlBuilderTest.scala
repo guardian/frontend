@@ -1,5 +1,6 @@
 package services
 
+import common.GuardianConfiguration
 import org.scalatest.path
 import conf.IdentityConfiguration
 import org.scalatest.Matchers
@@ -8,7 +9,8 @@ import org.mockito.Mockito._
 import idapiclient.TrackingData
 
 class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSugar {
-  val conf = new IdentityConfiguration
+  val gConf = new GuardianConfiguration
+  val conf = new IdentityConfiguration(gConf)
   val idRequest = mock[IdentityRequest]
   val omnitureTracking = mock[TrackingData]
   when(idRequest.trackingData) thenReturn omnitureTracking
@@ -85,12 +87,12 @@ class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSug
     when(omnitureTracking.registrationType) thenReturn Some("bar")
 
     "should add path and params to configured root" - {
-      idUrlBuilder.buildUrl("/test/path", idRequest) should equal(conf.id.url + "/test/path?returnUrl=foo&type=bar")
+      idUrlBuilder.buildUrl("/test/path", idRequest) should equal(conf.url + "/test/path?returnUrl=foo&type=bar")
     }
 
     "should override idRequest params if necessary" - {
       when(omnitureTracking.registrationType) thenReturn None
-      idUrlBuilder.buildUrl("/test/path", idRequest, ("returnUrl", "bar")) should equal(conf.id.url + "/test/path?returnUrl=bar")
+      idUrlBuilder.buildUrl("/test/path", idRequest, ("returnUrl", "bar")) should equal(conf.url + "/test/path?returnUrl=bar")
     }
   }
 }

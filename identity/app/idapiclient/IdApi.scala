@@ -8,14 +8,14 @@ import scala.concurrent.{ExecutionContext, Future}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import idapiclient.responses.{AccountDeletionResult, CookiesResponse}
 import client.connection.util.{ApiHelpers, ExecutionContexts}
-import conf.IdConfig
+import conf.{IdConfig, IdentityConfiguration}
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
 import idapiclient.requests.{PasswordUpdate, TokenPassword}
 
 
-abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig)
+abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityConfiguration)
   extends IdApiUtils with SafeLogging with ApiHelpers {
 
   override val apiRootUrl: String = conf.apiRoot
@@ -182,7 +182,7 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig)
     http.DELETE(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth))
 }
 
-class SynchronousIdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig)
+class SynchronousIdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityConfiguration)
     extends IdApi(http, jsonBodyParser, conf) {
   implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
 }

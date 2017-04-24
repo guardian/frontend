@@ -13,9 +13,11 @@ import scala.concurrent.{Await, ExecutionContext, Promise}
 import client.{Anonymous, Auth, Error, Parameters, Response}
 import org.hamcrest.Description
 import client.connection.util.ExecutionContexts
+import com.gu.cm.Identity
 import org.joda.time.format.ISODateTimeFormat
 import com.gu.identity.model._
-import conf.IdConfig
+import common.GuardianConfiguration
+import conf.{IdConfig, IdentityConfiguration}
 import net.liftweb.json.Serialization.write
 
 import scala.concurrent.duration._
@@ -30,8 +32,13 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
   val fmt = ISODateTimeFormat.dateTimeNoMillis()
 
+  class IdentityConfigurationStub(conf: GuardianConfiguration) extends IdentityConfiguration(conf) {
+    override val apiClientToken = "frontend-dev-client-token"
+  }
+
   val http = mock[Http]
-  val idConfig = IdConfig("https://id.code.dev-guardianapis.com","frontend-dev-client-token", "root", "key")
+  val gConf = new GuardianConfiguration
+  val idConfig = new IdentityConfigurationStub(gConf)
   val apiRoot = idConfig.apiRoot
   val jsonParser = new JsonBodyParser {
     implicit val formats: Formats = LiftJsonConfig.formats + new JodaJsonSerializer

@@ -5,9 +5,17 @@ import com.gu.email.exacttarget.ExactTargetFactory
 import java.net.URI
 import utils.SafeLogging
 
-class IdentityConfiguration extends GuardianConfiguration with SafeLogging {
+class IdentityConfiguration(conf: GuardianConfiguration) extends IdConfig with SafeLogging {
 
   import GuardianConfiguration._
+
+  val accountDeletionApiKey: String = conf.id.accountDeletionApiKey
+  val accountDeletionApiRoot: String = conf.id.accountDeletionApiRoot
+  val apiClientToken: String = conf.id.apiClientToken
+  val apiRoot: String = conf.id.apiRoot
+  val domain: String = conf.id.domain
+  val oauthUrl: String = conf.id.oauthUrl
+  val url: String = conf.id.url
 
   object exacttarget {
     lazy val factory = for {
@@ -22,9 +30,12 @@ class IdentityConfiguration extends GuardianConfiguration with SafeLogging {
 
 }
 
-case class IdConfig (
-  apiRoot: String,
-  apiClientToken: String,
-  accountDeletionApiRoot: String,
-  accountDeletionApiKey: String
-)
+trait IdConfig {
+  val apiRoot: String
+  val apiClientToken: String
+  val accountDeletionApiRoot: String
+  val accountDeletionApiKey: String
+  val url: String
+  val oauthUrl: String
+  val domain: String
+}
