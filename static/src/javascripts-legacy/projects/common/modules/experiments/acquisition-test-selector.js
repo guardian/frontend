@@ -5,7 +5,9 @@ define([
     'common/modules/commercial/acquisitions-view-log',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/epic-to-support-landing-page',
-    'common/modules/experiments/tests/contributions-epic-ask-four-earning'
+    'common/modules/experiments/tests/contributions-epic-ask-four-earning',
+    'common/modules/experiments/tests/contributions-epic-viner-picture'
+
 ], function (
     reduce,
     segmentUtil,
@@ -13,7 +15,8 @@ define([
     viewLog,
     alwaysAsk,
     epicToSupportLandingPage,
-    askFourEarning
+    askFourEarning,
+    vinerPicture
 
 ) {
     /**
@@ -21,6 +24,7 @@ define([
      */
     var tests = [
         alwaysAsk,
+        vinerPicture,
         epicToSupportLandingPage,
         askFourEarning
     ];
