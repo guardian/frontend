@@ -16,8 +16,6 @@ Object.assign(window.guardian.config, {
 // eslint-disable-next-line import/first
 import config from './config';
 
-jest.mock('lib/pad', () => jest.fn(arg => arg));
-
 describe('Config', () => {
     it('should have "hasTone" property', () => {
         expect(config.hasTone('foo')).toBeTruthy();
