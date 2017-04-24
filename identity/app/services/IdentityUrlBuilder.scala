@@ -1,9 +1,9 @@
 package services
 
-import conf.IdentityConfiguration
+import conf.IdConfig
 import java.net.URLEncoder
 
-class IdentityUrlBuilder(conf: IdentityConfiguration) {
+class IdentityUrlBuilder(conf: IdConfig) {
 
   def queryParams(idRequest: IdentityRequest): List[(String, String)] = {
     val params = List(

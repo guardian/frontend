@@ -2,12 +2,13 @@ package services
 
 import java.net.URI
 
-import conf.IdentityConfiguration
+import conf.IdConfig
 import play.api.mvc.RequestHeader
 import utils.SafeLogging
+
 import scala.util.Try
 
-class ReturnUrlVerifier(conf: IdentityConfiguration) extends SafeLogging {
+class ReturnUrlVerifier(conf: IdConfig) extends SafeLogging {
 
   private val returnUrlDomains = List(conf.domain)
 

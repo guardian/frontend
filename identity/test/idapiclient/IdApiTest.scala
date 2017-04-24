@@ -24,22 +24,17 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Formats
+import test.WithTestIdConfig
 
-class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar with WithTestIdConfig {
   implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
 
   implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
 
   val fmt = ISODateTimeFormat.dateTimeNoMillis()
 
-  class IdentityConfigurationStub(conf: GuardianConfiguration) extends IdentityConfiguration(conf) {
-    override val apiClientToken = "frontend-dev-client-token"
-  }
-
   val http = mock[Http]
-  val gConf = new GuardianConfiguration
-  val idConfig = new IdentityConfigurationStub(gConf)
-  val apiRoot = idConfig.apiRoot
+  val apiRoot = testIdConfig.apiRoot
   val jsonParser = new JsonBodyParser {
     implicit val formats: Formats = LiftJsonConfig.formats + new JodaJsonSerializer
 
@@ -47,7 +42,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   }
   val clientAuth = ClientAuth("frontend-dev-client-token")
   val clientAuthHeaders = List("X-GU-ID-Client-Access-Token" -> "Bearer frontend-dev-client-token")
-  val api = new SynchronousIdApi(http, jsonParser, idConfig)
+  val api = new SynchronousIdApi(http, jsonParser, testIdConfig)
   val errors = List(Error("Test error", "Error description", 500))
   val trackingParameters = mock[TrackingData]
   when(trackingParameters.parameters).thenReturn(List("tracking" -> "param"))
@@ -489,7 +484,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   }
 
   "synchronous version" - {
-    val syncApi = new SynchronousIdApi(http, jsonParser, idConfig)
+    val syncApi = new SynchronousIdApi(http, jsonParser, testIdConfig)
 
     "should use current thread testContext" in {
       syncApi.executionContext should equal(ExecutionContexts.currentThreadContext)
