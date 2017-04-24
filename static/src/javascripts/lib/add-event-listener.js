@@ -20,9 +20,9 @@ try {
 const addEventListener = (
     node: Node,
     name: string,
-    handler: Function,
+    handler: (e: Event) => void,
     options: Object = {}
-): void | false => {
+): void => {
     if (node) {
         if (supportsOptions) {
             node.addEventListener(name, handler, options);
