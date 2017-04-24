@@ -8,9 +8,6 @@ define([
         var pubads = {
             addEventListener: jasmine.createSpy('addEventListener')
         };
-        var googletag = {
-            pubads: function () { return pubads; }
-        };
         var performanceLogging;
 
         beforeEach(function (done) {
