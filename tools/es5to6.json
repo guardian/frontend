@@ -144,8 +144,6 @@
     "lib/atob.js"
   ],
   "Calum Campbell": [
-    "lib/capture-perf-timings.js",
-    "lib/capture-perf-timings.js",
     "lib/chain.js",
     "lib/clamp.js",
     "lib/client-rects.js",
