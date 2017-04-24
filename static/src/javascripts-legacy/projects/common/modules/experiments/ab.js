@@ -24,7 +24,8 @@ define([
     'common/modules/experiments/tests/paid-card-logo',
     'ophan/ng',
     'common/modules/experiments/tests/paid-commenting',
-    'common/modules/experiments/tests/simple-reach'
+    'common/modules/experiments/tests/simple-reach',
+    'common/modules/experiments/tests/bundle-digital-sub-price-test-1'
 ], function (reportError,
              config,
              cookies,
@@ -50,7 +51,8 @@ define([
              PaidCardLogo,
              ophan,
              PaidCommenting,
-             SimpleReach
+             SimpleReach,
+             BundleDigitalSubPriceTest1
     ) {
     var TESTS = compact([
         new EditorialEmailVariants(),
@@ -66,7 +68,8 @@ define([
         new increaseInlineAdsRedux(),
         new PaidCardLogo(),
         new PaidCommenting(),
-        new SimpleReach()
+        new SimpleReach(),
+        new BundleDigitalSubPriceTest1()
     ].concat(MembershipEngagementBannerTests));
 
     function cleanParticipations() {
