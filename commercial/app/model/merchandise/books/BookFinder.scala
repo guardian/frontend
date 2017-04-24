@@ -37,13 +37,13 @@ object BookAgent extends Logging {
         Some(json)
       }
       case None => {
-        log.info(s"Cache miss for ISBN: $isbn.")
+        log.debug(s"Cache miss for ISBN: $isbn.")
 
         if (isbnsToBeAddedToCache.get.contains(isbn)) {
-          log.info(s"ISBN lookup is already due for $isbn. Not running Magento Service.")
+          log.debug(s"ISBN lookup is already due for $isbn. Not running Magento Service.")
         }
         else {
-          log.info(s"Looking up ISBN $isbn with Magento Service.")
+          log.debug(s"Looking up ISBN $isbn with Magento Service.")
           isbnsToBeAddedToCache alter { _ + isbn }
 
           val lookup: Future[Option[JsValue]] = magentoService.findByIsbn(isbn)
