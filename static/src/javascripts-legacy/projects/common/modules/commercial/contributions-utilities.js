@@ -75,25 +75,19 @@ define([
     }
 
     // Returns an array containing:
-    // - the first element matching insertBeforeSelector
-    // - all elements matching insertBeforeSelectorAll
-    function getTargets(insertBeforeSelector, insertBeforeSelectorAll) {
-        var targets = [];
-        var target = null;
+    // - the first element matching insertBeforeSelector, if isMultiple is false or not supplied
+    // - all elements matching insertBeforeSelector, if isMultiple is true
+    // - or an empty array if the selector doesn't match anything on the page
+    function getTargets(insertBeforeSelector, isMultiple) {
+        var els = document.querySelectorAll(insertBeforeSelector);
 
-        if (insertBeforeSelectorAll) {
-            targets = toArray(document.querySelectorAll(insertBeforeSelectorAll));
+        if (isMultiple) {
+            return toArray(els);
+        } else if (els.length) {
+            return [els[0]];
         }
 
-        if (insertBeforeSelector) {
-            target = document.querySelector(insertBeforeSelector);
-        }
-
-        if (target) {
-            targets.push(target);
-        }
-
-        return targets;
+        return [];
     }
 
     function defaultCanEpicBeDisplayed(testConfig) {
@@ -218,10 +212,10 @@ define([
                 return fastdom.write(function () {
                     var targets = [];
 
-                    if (!options.insertBeforeSelector && !options.insertBeforeSelectorAll) {
-                        targets = getTargets('.submeta');
+                    if (!options.insertBeforeSelector) {
+                        targets = getTargets('.submeta', false);
                     } else {
-                        targets = getTargets(options.insertBeforeSelector, options.insertBeforeSelectorAll);
+                        targets = getTargets(options.insertBeforeSelector, options.insertMultiple);
                     }
 
                     if (targets.length > 0) {

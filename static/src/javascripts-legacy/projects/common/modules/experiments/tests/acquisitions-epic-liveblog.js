@@ -38,7 +38,9 @@ define([
                     count: 4,
                     minDaysBetweenViews: 0
                 },
-                insertBeforeSelectorAll: '.js-liveblog-epic-placeholder',
+                insertBeforeSelector: '.js-liveblog-epic-placeholder',
+                insertMultiple: true,
+
                 successOnView: true,
 
                 template: function (variant) {
