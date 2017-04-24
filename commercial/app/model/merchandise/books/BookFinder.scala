@@ -27,7 +27,7 @@ class BookFinder(actorSystem: ActorSystem, magentoService: MagentoService) exten
 object BookAgent extends Logging {
 
   private lazy val cache = AkkaAgent(Map.empty[String, JsValue])
-  private lazy val lookupJobs = AkkaAgent(Set.empty[String])
+  private lazy val isbnsToBeAddedToCache = AkkaAgent(Set.empty[String])
 
   def get(isbn: String)(implicit magentoService: MagentoService, executionContext: ExecutionContext): Option[JsValue] =
 
@@ -39,13 +39,21 @@ object BookAgent extends Logging {
       case None => {
         log.info(s"Cache miss for ISBN: $isbn.")
 
-        if (lookupJobs.get.contains(isbn)) {
+        if (isbnsToBeAddedToCache.get.contains(isbn)) {
           log.info(s"ISBN lookup is already due for $isbn. Not running Magento Service.")
         }
         else {
           log.info(s"Looking up ISBN $isbn with Magento Service.")
-          magentoService.findByIsbn(isbn) map (_.foreach { json: JsValue => cache alter { _ + (isbn -> json) } })
-          lookupJobs alter { _ + isbn }
+          isbnsToBeAddedToCache alter { _ + isbn }
+
+          val lookup: Future[Option[JsValue]] = magentoService.findByIsbn(isbn)
+
+          lookup map {
+            case Some(json: JsValue) =>
+              cache alter { _ + (isbn -> json) }
+            case None =>
+              isbnsToBeAddedToCache alter { _ - isbn }
+          }
         }
         None
       }
