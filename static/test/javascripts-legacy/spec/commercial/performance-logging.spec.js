@@ -5,9 +5,6 @@ define([
 ], function (Promise, fixtures, Injector) {
     describe('Performance Logging', function () {
         var injector = new Injector();
-        var pubads = {
-            addEventListener: jasmine.createSpy('addEventListener')
-        };
         var performanceLogging;
 
         beforeEach(function (done) {
