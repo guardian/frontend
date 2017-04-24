@@ -1,14 +1,13 @@
 package commercial.model.merchandise.books
 
-import akka.actor.{ActorRef, ActorSystem}
-import akka.pattern.{CircuitBreaker, ask}
+import akka.actor.ActorSystem
+import akka.pattern.CircuitBreaker
 import akka.util.Timeout
 import commercial.model.feeds.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
 import commercial.model.merchandise.Book
-import common.Logging
+import common.{AkkaAgent, Logging}
 import conf.Configuration
 import conf.switches.Switches.BookLookupSwitch
-import model.merchandise.books.BookJsonActor
 import play.api.libs.json._
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
 import play.api.libs.ws.{WSClient, WSSignatureCalculator}
@@ -20,14 +19,37 @@ class BookFinder(actorSystem: ActorSystem, magentoService: MagentoService) exten
 
   private implicit val bookActorExecutionContext: ExecutionContext = actorSystem.dispatchers.lookup("akka.actor.book-lookup")
   private implicit val bookActorTimeout: Timeout = 0.2.seconds
+  private implicit val magentoServiceImplicit = magentoService
 
-  private lazy val bookActor: ActorRef = actorSystem.actorOf(BookJsonActor.props(magentoService), "book-lookup")
+  def findByIsbn(isbn: String): Option[Book] = BookAgent.get(isbn) map { _.as[Book] }
+}
 
-  def findByIsbn(isbn: String): Future[Option[Book]] = {
+object BookAgent extends Logging {
 
-    val json: Future[Option[JsValue]] = (bookActor ? isbn).mapTo[Option[JsValue]]
-    json map { _.map { _.as[Book] } }
-  }
+  private lazy val cache = AkkaAgent(Map.empty[String, JsValue])
+  private lazy val lookupJobs = AkkaAgent(Set.empty[String])
+
+  def get(isbn: String)(implicit magentoService: MagentoService, executionContext: ExecutionContext): Option[JsValue] =
+
+    cache.get.get(isbn) match {
+      case Some(json) => {
+        log.info(s"Cache hit for ISBN: $isbn.")
+        Some(json)
+      }
+      case None => {
+        log.info(s"Cache miss for ISBN: $isbn.")
+
+        if (lookupJobs.get.contains(isbn)) {
+          log.info(s"ISBN lookup is already due for $isbn. Not running Magento Service.")
+        }
+        else {
+          log.info(s"Looking up ISBN $isbn with Magento Service.")
+          magentoService.findByIsbn(isbn) map (_.foreach { json: JsValue => cache alter { _ + (isbn -> json) } })
+          lookupJobs alter { _ + isbn }
+        }
+        None
+      }
+    }
 }
 
 class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Logging {
