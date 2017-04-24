@@ -157,7 +157,6 @@ define([
         primaryBaseline : primaryBaseline,
         addTag: addTag,
         wrap: wrap,
-        defer: defer,
-        reportTrackingData: reportData
+        defer: defer
     };
 });
