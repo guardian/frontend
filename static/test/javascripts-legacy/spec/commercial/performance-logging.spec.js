@@ -22,11 +22,6 @@ define([
             });
         });
 
-        it('should register onSlotRender event listener', function () {
-            performanceLogging.setListeners(googletag);
-            expect(pubads.addEventListener).toHaveBeenCalledWith('slotRenderEnded', performanceLogging.reportTrackingData)
-        });
-
         describe('wrap', function () {
             it('should return the wrapped function return value', function () {
                 var randomVal = Math.random();
