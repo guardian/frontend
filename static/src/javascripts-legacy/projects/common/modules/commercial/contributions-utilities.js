@@ -13,6 +13,7 @@ define([
     'lib/geolocation',
     'lodash/objects/assign',
     'lodash/utilities/template',
+    'lodash/collections/toArray',
     'raw-loader!common/views/acquisitions-epic-control.html'
 ], function (
     uniq,
@@ -29,6 +30,7 @@ define([
     geolocation,
     assign,
     template,
+    toArray,
     acquisitionsEpicControlTemplate
 ) {
 
@@ -72,10 +74,28 @@ define([
         return options.useTargetingTool ? targetingTool.isAbTestTargeted(options) : true;
     }
 
+    // Returns an array containing:
+    // - the first element matching insertBeforeSelector, if isMultiple is false or not supplied
+    // - all elements matching insertBeforeSelector, if isMultiple is true
+    // - or an empty array if the selector doesn't match anything on the page
+    function getTargets(insertBeforeSelector, isMultiple) {
+        var els = document.querySelectorAll(insertBeforeSelector);
+
+        if (isMultiple) {
+            return toArray(els);
+        } else if (els.length) {
+            return [els[0]];
+        }
+
+        return [];
+    }
+
     function defaultCanEpicBeDisplayed(testConfig) {
         var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 90;
 
-        var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle;
+        var worksWellWithPageTemplate = (typeof testConfig.pageCheck === 'function')
+            ? testConfig.pageCheck(config.page)
+            : config.page.contentType === 'Article' && !config.page.isMinuteArticle;
 
         var storedGeolocation = geolocation.getSync();
         var inCompatibleLocation = testConfig.locations ? testConfig.locations.some(function (geo) {
@@ -135,7 +155,7 @@ define([
             }
 
             var testCanRun = (typeof options.canRun === 'function') ? options.canRun() : true;
-            return testCanRun && defaultCanEpicBeDisplayed(options)
+            return testCanRun && defaultCanEpicBeDisplayed(options);
         }).bind(this);
 
         this.variants = options.variants.map(function (variant) {
@@ -190,11 +210,17 @@ define([
 
                 mediator.emit('register:begin', trackingCampaignId);
                 return fastdom.write(function () {
-                    var selector = options.insertBeforeSelector || '.submeta';
-                    var sibling = $(selector);
+                    var targets = [];
 
-                    if (sibling.length > 0) {
-                        component.insertBefore(sibling.first());
+                    if (!options.insertBeforeSelector) {
+                        targets = getTargets('.submeta', false);
+                    } else {
+                        targets = getTargets(options.insertBeforeSelector, options.insertMultiple);
+                    }
+
+                    if (targets.length > 0) {
+                        component.insertBefore(targets);
+
                         mediator.emit(test.insertEvent, component);
                         onInsert(component);
 

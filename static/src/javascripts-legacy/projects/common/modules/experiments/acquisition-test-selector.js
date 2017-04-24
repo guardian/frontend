@@ -5,7 +5,8 @@ define([
     'common/modules/commercial/acquisitions-view-log',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/epic-to-support-landing-page',
-    'common/modules/experiments/tests/contributions-epic-ask-four-earning'
+    'common/modules/experiments/tests/contributions-epic-ask-four-earning',
+    'common/modules/experiments/tests/acquisitions-epic-liveblog'
 ], function (
     reduce,
     segmentUtil,
@@ -13,8 +14,8 @@ define([
     viewLog,
     alwaysAsk,
     epicToSupportLandingPage,
-    askFourEarning
-
+    askFourEarning,
+    acquisitionsEpicLivelog
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
@@ -22,7 +23,8 @@ define([
     var tests = [
         alwaysAsk,
         epicToSupportLandingPage,
-        askFourEarning
+        askFourEarning,
+        acquisitionsEpicLivelog
     ];
 
     var epicEngagementBannerTests = reduce(tests, function(out, test) {
