@@ -22,7 +22,7 @@ const go = () => {
             const bootStandard = require('bootstraps/standard/main');
             const config = require('lib/config');
             const { markTime } = require('lib/user-timing');
-            const capturePerfTimings = require('lib/capture-perf-timings');
+            const { capturePerfTimings } = require('lib/capture-perf-timings');
 
             domready(() => {
                 // 1. boot standard, always
