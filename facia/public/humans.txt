@@ -144,10 +144,6 @@ Twitter: @aycenne
 From: Cork, Ireland
 Location: London, UK
 
-User Experience Architect: Alastair Jardine
-Twitter: @aj_ux
-From: London, UK
-
 Software Engineer in Test: Gideon Goldberg
 Twitter: @gidsg
 From: London, UK, Earth, the Universe
@@ -171,6 +167,17 @@ Twitter: @adamnfish
 
 Developer: Gustav Pursche
 From: Berlin, GER
+
+/* CONTENT PRODUCTION */
+
+Editorial Systems: Luke Hoyland
+Twitter:@lukehoyland
+Location: London, UK
+
+Solutions Architect: Sakib Supple
+Twitter:@twistedsweeter
+From: Narobi, Kenya
+Location: London, UK
 
 /* FORMER MEMBERS */
 
@@ -285,3 +292,7 @@ Twitter: @wblau
 
 Director of engineering: Grant Klopper
 Twitter: @grantklopper
+
+User Experience Architect: Alastair Jardine
+Twitter: @aj_ux
+From: London, UK
