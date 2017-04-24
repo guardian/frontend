@@ -107,7 +107,8 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Loggi
           feedName = "Book Lookup",
           url = s"${props.urlPrefix}/$isbn",
           switch = BookLookupSwitch,
-          responseEncoding = "utf-8")
+          responseEncoding = "utf-8",
+          timeout = 4.seconds)
 
         log.info(s"Looking up book with ISBN $isbn ...")
 
