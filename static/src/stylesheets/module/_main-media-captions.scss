@@ -8,7 +8,12 @@ $caption-button-size: 32px;
     z-index: 1;
     background-color: rgba($neutral-1, .4);
     border-radius: 50%;
+
+    &:hover {
+        background-color: rgba($neutral-1, 1);
+    }
 }
+
 
 .reveal-caption--img {
     bottom: $gs-baseline/2;
@@ -60,11 +65,20 @@ $caption-button-size: 32px;
 }
 
 @include mq($until: tablet) {
-    input[id='show-caption']:checked ~ .caption--main {
+    .reveal-caption__checkbox:checked ~ .caption--main {
         display: block;
     }
 
-    input[id='show-caption']:checked ~ .reveal-caption {
+    .reveal-caption__checkbox:checked ~ .reveal-caption {
         background-color: $multimedia-support-5;
+
+        &:hover {
+            background-color: rgba($neutral-1, 1);
+        }
     }
+
+    .reveal-caption__checkbox:focus ~ .reveal-caption {
+        background-color: rgba($neutral-1, 1);
+    }
+
 }
