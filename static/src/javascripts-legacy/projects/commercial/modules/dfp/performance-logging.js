@@ -91,8 +91,16 @@ define([
     // multiple times in a page view, so that partial data is captured, and then topped up as adverts load in.
     function reportTrackingData() {
         if (config.tests.commercialClientLogging) {
-            performanceLog.viewId = ophan.viewId;
-            beacon.postJson('/commercial-report', JSON.stringify(performanceLog));
+            var performanceReport = {
+                viewId: ophan.viewId,
+                tags: performanceLog.tags,
+                adverts: performanceLog.adverts,
+                baselines: performanceLog.baselines,
+                modules : (performanceLog.modules || []).filter(function (module){
+                    return !!module.duration;
+                })
+            };
+            beacon.postJson('/commercial-report', JSON.stringify(performanceReport));
         }
     }
 
@@ -157,7 +165,6 @@ define([
         primaryBaseline : primaryBaseline,
         addTag: addTag,
         wrap: wrap,
-        defer: defer,
-        reportTrackingData: reportData
+        defer: defer
     };
 });
