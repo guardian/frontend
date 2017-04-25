@@ -9,7 +9,7 @@ Most tests can be written in JavaScript, although we can serve variants via Varn
 There are six steps in the test lifecycle:-
 
  - [Adding a switch to turn the test on & off](#adding-a-switch)
- - [Writing a test, which is typically a simple AMD module](#writing-a-test)
+ - [Writing a test, which is typically a simple JS module](#writing-a-test)
  - [Running the test](#running-the-test)
  - [Analysis of the test data](#analysis-of-the-test-data)
  - [Share your findings](#share-your-findings)
