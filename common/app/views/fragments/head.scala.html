@@ -48,7 +48,7 @@ Example: http://output.jsbin.com/jodureg/1
     @defining(getMap(page)
         .filter( { case (key: String, _) => key == "sharedAdTargeting"} )
         .map( { case (key, value) => (key, value.toString)}) ) { (params: Map[String, String]) =>
-        <!--esi <esi:include src=@{"/esi/ad-call".appendQueryParams(params)}" /> -->
+        <!--esi <esi:include src="@{"/esi/ad-call".appendQueryParams(params)}" /> -->
     }
 }
 
