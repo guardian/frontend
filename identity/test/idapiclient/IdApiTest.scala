@@ -34,6 +34,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val http = mock[Http]
   val idConfig = new IdentityConfiguration
   val apiRoot = idConfig.id.apiRoot
+  val apiClientToken = "frontend-dev-client-token"
   val jsonParser = new JsonBodyParser {
     implicit val formats: Formats = LiftJsonConfig.formats + new JodaJsonSerializer
 
@@ -41,7 +42,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   }
   val clientAuth = ClientAuth("frontend-dev-client-token")
   val clientAuthHeaders = List("X-GU-ID-Client-Access-Token" -> "Bearer frontend-dev-client-token")
-  val api = new SynchronousIdApi(http, jsonParser, idConfig)
+  val api = new SynchronousIdApi(http, jsonParser, apiRoot, apiClientToken, idConfig.id.accountDeletionApiRoot, idConfig.id.accountDeletionApiKey)
   val errors = List(Error("Test error", "Error description", 500))
   val trackingParameters = mock[TrackingData]
   when(trackingParameters.parameters).thenReturn(List("tracking" -> "param"))
@@ -483,7 +484,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   }
 
   "synchronous version" - {
-    val syncApi = new SynchronousIdApi(http, jsonParser, idConfig)
+    val syncApi = new SynchronousIdApi(http, jsonParser, idConfig.id.apiRoot, idConfig.id.apiClientToken, idConfig.id.accountDeletionApiRoot, idConfig.id.accountDeletionApiKey)
 
     "should use current thread testContext" in {
       syncApi.executionContext should equal(ExecutionContexts.currentThreadContext)

@@ -8,18 +8,17 @@ import scala.concurrent.{ExecutionContext, Future}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import idapiclient.responses.{AccountDeletionResult, CookiesResponse}
 import client.connection.util.{ApiHelpers, ExecutionContexts}
-import conf.IdentityConfiguration
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
 import idapiclient.requests.{PasswordUpdate, TokenPassword}
 
 
-abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityConfiguration)
+abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, apiRoot: String, apiClientToken: String, accDeletionApiRoot: String, accDeletionApiKey: String)
   extends IdApiUtils with SafeLogging with ApiHelpers {
 
-  override val apiRootUrl: String = conf.id.apiRoot
-  override val clientAuth: Auth = new ClientAuth(conf.id.apiClientToken)
+  override val apiRootUrl: String = apiRoot
+  override val clientAuth: Auth = ClientAuth(apiClientToken)
 
   import jsonBodyParser.{extractUnit, extract}
 
@@ -163,9 +162,9 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityC
   def executeAccountDeletionStepFunction(userId: String, email: String, reason: Option[String], auth: Auth) = {
     case class DeletionBody(identityId: String, email: String, reason: Option[String])
     http.POST(
-        s"${conf.id.accountDeletionApiRoot}/delete",
+        s"${accDeletionApiRoot}/delete",
         Some(write(DeletionBody(userId, email, reason))),
-        headers = buildHeaders(Some(auth), extra = Seq(("x-api-key", conf.id.accountDeletionApiKey)))
+        headers = buildHeaders(Some(auth), extra = Seq(("x-api-key", accDeletionApiKey)))
     ) map extract[AccountDeletionResult](identity)
   }
 
@@ -182,8 +181,8 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityC
     http.DELETE(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth))
 }
 
-class SynchronousIdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityConfiguration)
-    extends IdApi(http, jsonBodyParser, conf) {
+class SynchronousIdApi(http: Http, jsonBodyParser: JsonBodyParser, apiRoot: String, apiClientToken: String, accDeletionApiRoot: String, accDeletionApiKey: String)
+    extends IdApi(http, jsonBodyParser, apiRoot, apiClientToken, accDeletionApiRoot, accDeletionApiKey) {
   implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
 }
 
