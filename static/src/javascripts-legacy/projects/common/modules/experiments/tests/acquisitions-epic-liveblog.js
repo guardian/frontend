@@ -2,13 +2,18 @@ define([
     'common/modules/commercial/contributions-utilities',
     'lib/geolocation',
     'lodash/utilities/template',
+    'lib/config',
     'raw-loader!common/views/acquisitions-epic-liveblog.html'
 ], function (
     contributionsUtilities,
     geolocation,
     template,
+    config,
     liveblogEpicTemplate
 ) {
+    function addPageIdToCampaignCode(code) {
+        return code + '_' + config.page.pageId.replace(/[/-]/g, '_');
+    }
 
     return contributionsUtilities.makeABTest({
         id: 'AcquisitionsEpicLiveblog',
@@ -45,8 +50,8 @@ define([
 
                 template: function (variant) {
                     return template(liveblogEpicTemplate, {
-                        membershipUrl: variant.membershipURL,
-                        contributionUrl: variant.contributeURL,
+                        membershipUrl: variant.membershipURLBuilder(addPageIdToCampaignCode),
+                        contributionUrl: variant.contributionsURLBuilder(addPageIdToCampaignCode),
                         componentName: variant.componentName
                     });
                 },
