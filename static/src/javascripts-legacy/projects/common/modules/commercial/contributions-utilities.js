@@ -264,7 +264,7 @@ define([
     };
 
     ContributionsABTestVariant.prototype.membershipURLBuilder = function(codeModifier) {
-        return this.makeURL(membershipBaseURL, codeModifier(this.contributeCampaignCode));
+        return this.makeURL(membershipBaseURL, codeModifier(this.membershipCampaignCode));
     };
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {
