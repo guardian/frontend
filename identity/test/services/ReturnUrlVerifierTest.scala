@@ -1,18 +1,16 @@
 package services
 
 import org.scalatest.FunSuite
-import conf.IdentityConfiguration
 import org.scalatest.Matchers
-import play.api.mvc.{AnyContentAsEmpty, AnyContentAsText, Request}
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.{FakeHeaders, FakeRequest}
+import test.WithTestIdConfig
 
-class ReturnUrlVerifierTest extends FunSuite with Matchers {
+class ReturnUrlVerifierTest extends FunSuite with Matchers with WithTestIdConfig {
 
-  val conf = new IdentityConfiguration
+  val domain = testIdConfig.domain
 
-  val domain = conf.id.domain
-
-  val validator = new ReturnUrlVerifier(conf)
+  val validator = new ReturnUrlVerifier(testIdConfig)
 
   test("is valid if return url matches domain") {
     val returnUrl = "http://" + domain + "/dlfksadlkfjlakfdklj"
