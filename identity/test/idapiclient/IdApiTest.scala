@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import org.scalatest.{Matchers => ShouldMatchers}
 import org.mockito.Mockito._
 import org.mockito.Matchers.argThat
-import org.mockito.{ArgumentMatcher, Matchers, Mockito}
+import org.mockito.{ArgumentMatcher, Matchers}
 import client.connection.{Http, HttpResponse}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
 
@@ -13,11 +13,8 @@ import scala.concurrent.{Await, ExecutionContext, Promise}
 import client.{Anonymous, Auth, Error, Parameters, Response}
 import org.hamcrest.Description
 import client.connection.util.ExecutionContexts
-import com.gu.cm.Identity
 import org.joda.time.format.ISODateTimeFormat
 import com.gu.identity.model._
-import common.GuardianConfiguration
-import conf.{IdConfig, IdentityConfiguration}
 import net.liftweb.json.Serialization.write
 
 import scala.concurrent.duration._

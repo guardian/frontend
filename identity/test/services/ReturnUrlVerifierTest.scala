@@ -1,8 +1,6 @@
 package services
 
-import common.GuardianConfiguration
 import org.scalatest.FunSuite
-import conf.IdentityConfiguration
 import org.scalatest.Matchers
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.{FakeHeaders, FakeRequest}

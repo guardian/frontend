@@ -48,12 +48,12 @@ class IdentityTestSuite extends Suites(
 trait WithTestIdConfig {
   class IdentityConfigurationStub extends IdConfig {
     val apiClientToken = "frontend-dev-client-token"
-    val apiRoot: String = ???
-    val accountDeletionApiRoot: String = ???
-    val accountDeletionApiKey: String = ???
-    val url: String = ???
-    val oauthUrl: String = ???
-    val domain: String = ???
+    val apiRoot: String = "https://id.no-id-api-exists-for-team-city.needs-to-be-faked"
+    val accountDeletionApiRoot: String = "root"
+    val accountDeletionApiKey: String = "key"
+    val url: String = ""
+    val oauthUrl: String = ""
+    val domain: String = "test.domain.com"
   }
 
   val testIdConfig = new IdentityConfigurationStub
