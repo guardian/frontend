@@ -134,7 +134,7 @@ define([
         this.audienceCriteria = options.audienceCriteria;
         this.dataLinkNames = options.dataLinkNames || '';
         this.membershipCampaignPrefix = options.membershipCampaignPrefix || 'gdnwb_copts_mem';
-        this.contributionsCampaignPrefix = options.contributionsCampaignPrefix || 'co_global';
+        this.contributionsCampaignPrefix = options.contributionsCampaignPrefix || 'gdnwb_copts_mem';
         this.insertEvent = this.makeEvent('insert');
         this.viewEvent = this.makeEvent('view');
         this.isEngagementBannerTest = options.isEngagementBannerTest || false;
