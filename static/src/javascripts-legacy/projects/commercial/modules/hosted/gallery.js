@@ -448,7 +448,7 @@ define([
 
     function init() {
         if (qwery('.js-hosted-gallery-container').length) {
-            return loadCssPromise
+            return loadCssPromise.loadCssPromise
                 .then(function () {
                     var gallery,
                         match,

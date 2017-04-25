@@ -2,11 +2,19 @@ package services
 
 import com.gu.facia.client.models.{Branded, CollectionConfigJson, ConfigJson, FrontJson}
 import model.{ApplicationContext, ApplicationIdentity}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 import play.api.Environment
 import test.WithTestContext
+import scala.concurrent.duration._
+import scala.concurrent.Await
 
-class ShouldServeFrontTest extends FlatSpec with Matchers with WithTestContext {
+class ShouldServeFrontTest
+  extends FlatSpec
+  with Matchers
+  with WithTestContext
+  with ScalaFutures
+  with BeforeAndAfterAll {
 
   val fronts = ConfigJson(
     Map(
@@ -66,7 +74,10 @@ class ShouldServeFrontTest extends FlatSpec with Matchers with WithTestContext {
     )
   )
 
-  ConfigAgent.refreshWith(fronts)
+  override def beforeAll() = {
+    val refresh = ConfigAgent.refreshWith(fronts)
+    Await.result(refresh, 3.seconds)
+  }
 
   "shouldServeFront" should "not serve the front if the front is not in the config JSON" in {
     ConfigAgent.shouldServeFront("nonexistent-front") should be(false)
@@ -78,6 +89,6 @@ class ShouldServeFrontTest extends FlatSpec with Matchers with WithTestContext {
 
   it should "serve a hidden front in preview mode" in {
     val previewContext = ApplicationContext(Environment.simple(), ApplicationIdentity("preview"))
-    ConfigAgent.shouldServeFront("editorial-front")(previewContext) should be(true)
+    ConfigAgent.shouldServeFront("hidden-editorial-front")(previewContext) should be(true)
   }
 }

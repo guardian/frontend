@@ -5,13 +5,13 @@ define([
     'lib/load-script'
 ], function (
     config,
-    Cookie,
+    cookie,
     detect,
     loadScript
     ) {
 
     function openForesee() {
-        loadScript(config.libs.foresee);
+        loadScript.loadScript(config.libs.foresee);
     }
 
     function load() {
@@ -23,7 +23,7 @@ define([
             hasForcedOptIn = /forceForesee/.test(location.hash);
 
         // the Foresee code is large, we only want to load it in when necessary.
-        if (!Cookie.get('GU_TEST') && !isNetworkFront && !isProfilePage && (window.openForeseeWhenReady || sample || hasForcedOptIn)) {
+        if (!cookie.getCookie('GU_TEST') && !isNetworkFront && !isProfilePage && (window.openForeseeWhenReady || sample || hasForcedOptIn)) {
             openForesee();
         }
 

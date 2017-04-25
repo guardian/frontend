@@ -14,7 +14,7 @@ object NewNavigation {
   var PrimaryLinks = List(headlines, opinion, sport, culture, lifestyle)
   val topLevelSections = List(News, Opinion, Sport, Arts, Life)
 
-  def getMembershipLinks(edition: Edition) = {
+  def getMembershipLinks(edition: Edition): NavLinkLists = {
     val editionId = edition.id.toLowerCase()
 
     NavLinkLists(List(
@@ -31,21 +31,21 @@ object NewNavigation {
     def au: NavLinkLists
     def int: NavLinkLists
 
-    def getPopularEditionalisedNavLinks(edition: Edition) = edition match {
+    def getPopularEditionalisedNavLinks(edition: Edition): Seq[NavLink] = edition match {
       case editions.Uk => uk.mostPopular
       case editions.Au => au.mostPopular
       case editions.Us => us.mostPopular
       case editions.International => int.mostPopular
     }
 
-    def getAllEditionalisedNavLinks(edition: Edition) = edition match {
+    def getAllEditionalisedNavLinks(edition: Edition): Seq[NavLink] = edition match {
       case editions.Uk => uk.mostPopular ++ uk.leastPopular
       case editions.Au => au.mostPopular ++ au.leastPopular
       case editions.Us => us.mostPopular ++ us.leastPopular
       case editions.International => int.mostPopular ++ int.leastPopular
     }
 
-    def getEditionalisedSubSectionLinks(edition: Edition) = edition match {
+    def getEditionalisedSubSectionLinks(edition: Edition): NavLinkLists = edition match {
       case editions.Uk => uk
       case editions.Au => au
       case editions.Us => us
@@ -67,7 +67,7 @@ object NewNavigation {
     val uk = NavLinkLists(List(headlines, ukNews, world, business, environment, tech, football))
     val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, environment, economy, football))
     val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, science, soccer))
-    val int = NavLinkLists(List(headlines, world, ukNews, business, science, cities, globalDevelopment, football))
+    val int = NavLinkLists(List(headlines, world, ukNews, business, science, globalDevelopment, football))
   }
 
   case object News extends EditionalisedNavigationSection {
@@ -360,7 +360,7 @@ object NewNavigation {
       SectionsLink("au/lifeandstyle/health-and-wellbeing", healthAu, Life)
     )
 
-    def getSectionLinks(sectionName: String, edition: Edition) = {
+    def getSectionLinks(sectionName: String, edition: Edition): Seq[NavLink] = {
       val sectionList = sectionLinks.filter { item =>
         item.pageId == sectionName
       }
@@ -379,16 +379,19 @@ object NewNavigation {
       }
     }
 
-    def getTopLevelSection(id: String) = {
-      val sectionList = sectionLinks.filter { item =>
-        item.pageId == id
-      }
+    def getPillarName(id: String): String = {
+      getSectionLink(id).getOrElse("News")
+    }
 
-      if (sectionList.isEmpty) {
-        "News"
-      } else {
-        sectionList.head.parentSection.name
-      }
+    def getActivePillar(page: Page): Tuple2[String, String] = {
+      val sectionOrTagId = SubSectionLinks.getSectionOrTagId(page)
+      val activeSectionLink = getSectionLink(sectionOrTagId)
+
+      (sectionOrTagId, activeSectionLink.getOrElse(""))
+    }
+
+    private def getSectionLink(id: String): Option[String] = {
+      sectionLinks.find(_.pageId == id).map(_.parentSection.name)
     }
   }
 
@@ -501,7 +504,7 @@ object NewNavigation {
       SubSectionLink("crosswords", crosswordsSubNav)
     )
 
-    def isEditionalistedSubSection(sectionId: String) = {
+    def isEditionalistedSubSection(sectionId: String): Boolean = {
       editionalisedSubSectionLinks.exists(_.pageId == sectionId)
     }
 
@@ -517,7 +520,7 @@ object NewNavigation {
       "cartoons/archive"
     )
 
-    def getSectionOrTagId(page: Page) = {
+    def getSectionOrTagId(page: Page): String = {
       val tags = Navigation.getTagsFromPage(page)
       val commonKeywords = tags.keywordIds.intersect(tagPages).sortWith(tags.keywordIds.indexOf(_) < tags.keywordIds.indexOf(_))
       val isTagPage = (page.metadata.isFront || frontLikePages.contains(page.metadata.id)) && tagPages.contains(page.metadata.id)
@@ -535,7 +538,7 @@ object NewNavigation {
       }
     }
 
-    def simplifySectionId(sectionId: String) = {
+    def simplifySectionId(sectionId: String): String = {
       val sectionMap = Map(
         "money/property" -> "money",
         "money/pensions" -> "money",
@@ -584,7 +587,7 @@ object NewNavigation {
       sectionMap.getOrElse(sectionId, sectionId)
     }
 
-    def getSubSectionNavLinks(id: String, edition: Edition, isFront: Boolean) = {
+    def getSubSectionNavLinks(id: String, edition: Edition, isFront: Boolean): Seq[NavLink] = {
       if (isEditionalistedSubSection(id)) {
         val subNav = editionalisedSubSectionLinks.filter(_.pageId == id).head.parentSection
 

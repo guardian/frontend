@@ -28,7 +28,7 @@ define([
 
         // Setting the async property to false will _still_ load the script in
         // a non-blocking fashion but will ensure it is executed before googletag
-        loadScript(config.libs.switch, { async: false }).then(setupLoadId).then(stop);
+        loadScript.loadScript(config.libs.switch, { async: false }).then(setupLoadId).then(stop);
     }
 
     // Set Switch's load id to the value of the ophan page view id. This id links the js

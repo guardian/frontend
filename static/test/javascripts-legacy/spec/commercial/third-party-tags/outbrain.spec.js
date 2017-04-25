@@ -29,8 +29,12 @@ define([
 
     describe('Outbrain', function () {
         var loadScript = jasmine.createSpy('loadScript');
+        
         beforeEach(function (done) {
-            injector.mock('lib/load-script', loadScript);
+            injector.mock('lib/load-script', {
+                loadScript: loadScript
+            });
+
             injector.mock('ophan/ng', { record: function () {} });
 
             injector.require([

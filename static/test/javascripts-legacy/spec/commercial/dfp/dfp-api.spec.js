@@ -59,8 +59,10 @@ define([
                 return Promise.resolve();
             });
 
-            injector.mock('lib/load-script', function () {
-                return Promise.resolve();
+            injector.mock('lib/load-script', {
+                loadScript: function () {
+                    return Promise.resolve();
+                }
             });
 
             injector.require([
@@ -100,7 +102,13 @@ define([
                     keywordIds:  'world/korea,world/ukraine',
                     pageId:      'world/uk',
                     section:     'news',
-                    seriesId:    'learning/series/happy-times'
+                    seriesId:    'learning/series/happy-times',
+                    sharedAdTargeting: {
+                        ct:      'Article',
+                        edition: 'us',
+                        k:       ['korea', 'ukraine'],
+                        se:      ['happy-times']
+                    }
                 };
                 config.images = {
                     commercial: {}
