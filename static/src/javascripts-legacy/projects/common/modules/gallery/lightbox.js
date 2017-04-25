@@ -20,8 +20,6 @@ define([
     'raw-loader!common/views/content/share-button-mobile.html',
     'lodash/collections/map',
     'lodash/functions/throttle',
-    'lodash/collections/forEach',
-    'lib/chain',
     'lib/load-css-promise'
 ], function (
     bean,
@@ -45,8 +43,6 @@ define([
     shareButtonMobileTpl,
     map,
     throttle,
-    forEach,
-    chain,
     loadCssPromise
 ) {
 
@@ -233,29 +229,27 @@ define([
     };
 
     GalleryLightbox.prototype.loadSurroundingImages = function (index, count) {
-
         var imageContent, $img;
-        chain([-1, 0, 1]).and(
-            map,
-            function (i) { return index + i === 0 ? count - 1 : (index - 1 + i) % count; }
-        ).and(forEach, function (i) {
-                imageContent = this.images[i];
-                $img = bonzo(this.$images[i]);
-                if (!$img.attr('src')) {
-                    $img.parent()
-                        .append(bonzo.create(loaderTpl));
 
-                    $img.attr('src', imageContent.src);
-                    $img.attr('srcset', imageContent.srcsets);
-                    $img.attr('sizes', imageContent.sizes);
+        [-1, 0, 1].map(function (i) { 
+            return index + i === 0 ? count - 1 : (index - 1 + i) % count; 
+        }).forEach(function (i) {
+            imageContent = this.images[i];
+            $img = bonzo(this.$images[i]);
+            if (!$img.attr('src')) {
+                $img.parent()
+                    .append(bonzo.create(loaderTpl));
 
-                    bean.one($img[0], 'load', function () {
-                        $('.js-loader').remove();
-                    });
+                $img.attr('src', imageContent.src);
+                $img.attr('srcset', imageContent.srcsets);
+                $img.attr('sizes', imageContent.sizes);
 
-                }
-            }.bind(this));
+                bean.one($img[0], 'load', function () {
+                    $('.js-loader').remove();
+                });
 
+            }
+        }.bind(this));
     };
 
     GalleryLightbox.prototype.translateContent = function (imgIndex, offset, duration) {
@@ -293,10 +287,9 @@ define([
                     this.images = json.images;
                     this.$countEl.text(this.images.length);
 
-                    var imagesHtml = chain(this.images).and(
-                        map,
-                        function (img, i) { return this.generateImgHTML(img, i + 1); }.bind(this)
-                    ).join('').value();
+                    var imagesHtml = this.images.map(function (img, i) { 
+                        return this.generateImgHTML(img, i + 1);
+                    }.bind(this)).join('');
 
                     this.$contentEl.html(imagesHtml);
 
