@@ -4,134 +4,149 @@
 
 @main(page){ } {
     <div class="l-side-margins">
-            <div class="content content--expired">
-                <header class="content__head">
-                    <div class="gs-container">
-                        <div class="content__main-column">
-                            <h1 itemprop="headline" class="content__headline">Report a technical issue</h1>
-                        </div>
+        <div class="content content--expired">
+            <header class="content__head">
+                <div class="gs-container">
+                    <div class="content__main-column">
+                        <h1 itemprop="headline" class="content__headline">Report a technical issue</h1>
                     </div>
-                </header>
-                <div class="content__main">
-                    <div class="gs-container">
-                        <div class="content__main-column content__main-column--expired">
-                            <div class="js-article__container u-cf">
-                                <div class="from-content-api" itemprop="articleBody">
-                                    <div class="from-content-api">
+                </div>
+            </header>
+            <div class="content__main">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--expired">
+                        <div class="js-article__container u-cf">
+                            <div class="from-content-api" itemprop="articleBody">
+                                <div class="from-content-api">
 
-                                        <h2>Contact us</h2>
+                                    <h2>Contact us</h2>
 
-                                        <div class="feedback__element">
-                                            <label class="" for="test">Problem</label>
-                                            <select id="feedback-category" class="feedback__select feedback__input--wide" onChange="flipflop()">
-                                                <option>Choose a selection</option>
-                                                <option>Account problems</option>
-                                                <option>Accessibility</option>
-                                                <option>Site Crashing/Reloding/Slowness</option>
-                                            </select>
+                                    <div class="feedback__element">
+                                        <label class="" for="test">Problem</label>
+                                        <select id="feedback-category" class="feedback__select feedback__input--wide" onChange="flipflop()">
+                                            <option>Choose a selection</option>
+                                        </select>
+                                    </div>
+
+
+                                    <fieldset class="feedback__form">
+
+                                        <div id="feedback-form-account">
+                                            <p>This is for queries about accessing or managing your Guardian account on the website or apps, most of which can be edited <a href="https://profile.theguardian.com/account/edit">here</a></p>
+                                            <p>Please note that queries about payment and billing should be sent to the relevant membership or subscription team using this form.</p>
+                                            </br>
+                                            @fragments.feedbackForm("account")
                                         </div>
 
+                                        <div id="feedback-form-website">
+                                            <p>If you are having an issue with a particular page it would be very helpful if you could provide the link to the page and a screenshot of the issue and if possible. It would also be useful to know which country you're accessing the Guardian from. If you're unsure of how to take a screenshot, instructions can be found at https://www.take-a-screenshot.org/</p>
+                                            @fragments.feedbackForm("website")
+                                        </div>
 
-                                        <fieldset class="feedback__form">
+                                        <div id="feedback-form-jobs">
+                                            <h4>How can I unsubscribe from Job alerts? </h4>
+                                            <p>At the bottom of the email you will see an unsubscribe link.  By clicking the link you will be taken to a page confirming you have unsubscribed from the emails. </p>
+                                            <h4>How can I unsubscribe from Job Match emails?</h4>
+                                            <p>As with Job alerts there will be an unsubscribe link at the bottom of the email.  The link will take you to your Guardian account page.  At the bottom of the page there are two tick boxes.
 
-                                            <div id="feedback-form-accessibility">
-                                                If you have an issue related to the accessibility of this website, please see our <a href="https://www.theguardian.com/help/accessibility-help">accessibility help page</a>
-                                            </div>
+                                                Select No and Save then log back into your Jobs account.  You will no longer receive any Job Match emails.
+                                            </p>
+                                            </br>
+                                            @fragments.feedbackForm("jobs")
+                                        </div>
+
+                                        <div id="feedback-form-email">
+                                            <p>If you have an existing Guardian account you can easily subscribe/unsubscribe from emails here: https://profile.theguardian.com/email-prefs</p>
+                                            <p>Alternatively, if you want to unsubscribe from a particular mailing list please simply use the link at the bottom of the email</p>
+                                            <p>If you have a query about job alerts, please contact the jobs team using the dropdown.</p>
+                                            @fragments.feedbackForm("email")
+                                        </div>
+
+                                        <div id="feedback-form-membership">
+                                            <p>Please include any information you have about your membership or subscription - for example membership tier and membership number; or type of subscription.
+                                                You may find the answer to your questions here:  our membership FAQs here https://membership.theguardian.com/help and our subscription FAQs here https://www.theguardian.com/subscriber-direct/subscription-frequently-asked-questions</p>
+                                            <p>For queries about free registration and commenting accounts, please use 'I need help with my Guardian account' dropdown.</p>
+                                            @fragments.feedbackForm("membership")
+                                        </div>
+
+                                        <div id="feedback-form-membership-billing">
+                                            <p>If you have any payment issue with your supporter, partner or patron tier membership then please use this drop-down. See this first for clarification: https://membership.theguardian.com/help</p>
+                                            @fragments.feedbackForm("membership-billing")
+                                        </div>
+
+                                        <div id="feedback-form-subs-billing">
+                                            <p>If you have any issue with your digital pack, your newpaper delivery or voucher delivery either of the Guardian or Guardian Weekly or Observer then please use this form. See this first for clarification: https://www.theguardian.com/subscriber-direct/subscription-frequently-asked-questions</p>
+                                            @fragments.feedbackForm("subs-billing")
+                                        </div>
+
+                                        <div id="feedback-form-adverts">
+                                            <p>If you are having an issue with a particular advert it would be very helpful if you could include a screenshot of the advert, and if possible let us know what page you were on when you saw this advert. It would also be useful to know which country you're accessing the Guardian from. If you're unsure of how to take a screenshot, instructions can be found at https://www.take-a-screenshot.org/</p>
+                                            @fragments.feedbackForm("adverts")
+                                        </div>
+
+                                        <div id="feedback-form-android">
+                                            <p>Please ensure that you are on the latest version of the app.</p>
+                                            <p>If you are, and your problem persists, please contact us from within the app if you can (press menu icon > cog icon > send feedback).</p>
+                                            <p>If you cannot use the app at all, can you please use this form and let us know the make and model of your device, the version of Android you are running, and the version number of the Guardian app?</p>
+                                            @fragments.feedbackForm("android")
+                                        </div>
+
+                                        <div id="feedback-form-ios">
+                                            <p>Please ensure that you are on the latest version of the app.</p>
+                                            <p>If you are, and your problem persists, please contact us from within the app if you can (press menu icon > cog icon > help > iOS app feedback email address).</p>
+                                            <p>If you cannot use the app at all, can you please use this form and let us know which iPhone or iPad you are using, the version of iOS you are running, and the version number of the Guardian app?</p>
+                                            @fragments.feedbackForm("ios")
+                                        </div>
+
+                                        <div id="feedback-form-daily">
+                                            <p>Please ensure that you are on the latest version of the app.</p>
+                                            <p>If you are, and your problem persists, please contact us from within the app if you can (from issue picker screen press settings icon > contact us > iOS edition feedback email address).</p>
+                                            <p>If you cannot use the app at all, can you please use this form and let us know which iPad you are using, the version of iOS you are running, and the version number of the daily edition app?</p>
+                                            @fragments.feedbackForm("daily")
+                                        </div>
+
+                                        <div id="feedback-form-tablet">
+                                            <p>Please ensure that you are on the latest version of the app.</p>
+                                            <p>If you are, and your problem persists, please contact us from within the app if you can (from issue picker screen press cog icon > contact us > Android edition feedback email address).</p>
+                                            <p>If you cannot use the app at all, can you please use this form and let us know which make and model of tablet you are using, the version of Android you are running, and the version number of the daily edition app?</p>
+                                            @fragments.feedbackForm("membership-tablet")
+                                        </div>
+
+                                        <div id="feedback-form-windows">
+                                            <p>Please ensure that you are on the latest version of the app.</p>
+                                            <p>If you are, and your problem persists, please contact us from within the app if you can (press menu icon > cog icon > support > send feedback).</p>
+                                            <p>If you cannot use the app at all, can you please use this form and let us know which make and model of device that you are using, the version of Windows mobile you are running, and the version number of the Guardian app?</p>
+                                            @fragments.feedbackForm("windows")
+                                        </div>
+
+                                        <div id="feedback-form-editorial">
+                                            <p>If you've spotted a mistake in our copy please let us know so that we can fix it. If you have a complaint about content please see here to find out what to do next. Link to readers editor page https://www.theguardian.com/info/2014/sep/12/-sp-how-to-make-a-complaint-about-guardian-or-observer-content</p>
+                                            @fragments.feedbackForm("editorial")
+                                        </div>
+
+                                        <div id="feedback-form-discussion">
+                                            <p>Our community FAQs can be found at https://www.theguardian.com/community-faqs. If you are having difficulties either reading comments or posting a comment please use the 'I want to report a problem with/have some feedback on your Website' option above</p>
+                                            @fragments.feedbackForm("discussion")
+                                        </div>
+
+                                        <div id="feedback-form-other">
+                                            @fragments.feedbackForm("other")
+                                        </div>
+
+                                    </fieldset>
 
 
-                                            <div id="feedback-form-account">
+                                    <small>
+                                        Or email us directly at <a data-link-name="tech feedback : mailto : userhelp" href="mailto:userhelp@@theguardian.com">userhelp@@theguardian.com</a> and someone should get back to you.
+                                    </small>
 
-                                                <form action="#" method="post">
-
-                                                    <input type="hidden" name="category" value="account" />
-
-                                                    <input name="extra" type="hidden" value="browser: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
-                                                        width: 1440
-                                                        adBlock: true
-                                                        devicePixelRatio: 2
-                                                        ophanId: j17riri44875b2yiv2y9
-                                                        gu_u: WyIxNzU5MjIzOCIsIiIsIk1hdHRoZXcgV2FsbHMiLCIyIiwxNDk4MTQ0NzkwNzQ1LDEsMTQ5MDM2NzEzMDAwMCx0cnVlXQ.MC0CFQCHPR17CxNZEUdRP1442ddwPp4KCwIUFwhIIB3NtnzRUGIQH4a0yv3pOJM
-                                                        payingMember: false
-                                                        abTests: TailorSurvey=variant, MembershipEngagementBannerUkRemindMeLater=notintest, PaidCommentingInternal=notintest"
-                                                    />
-
-                                                    <div class="feedback__element">
-                                                        <label class="" for="test">Description</label>
-                                                        <textarea name="body" class="feedback__textarea feedback__input--wide" placeholder="Help us out with a friendly message"></textarea>
-                                                    </div>
-                                                    <div class="feedback__element">
-                                                        <label class="" for="test">Email</label>
-                                                        <input name="user" class="feedback__input feedback__input--wide" id="test" type="email" value="" placeholder="E.g. alexsmith@@example.com">
-                                                    </div>
-                                                    <div class="feedback__element">
-                                                        <label class="" for="file">Attach File</label>
-                                                        <input name="user" class="feedback__input feedback__input--wide" id="test" type="file">
-                                                    </div>
-                                                    <div class="feedback__element">
-                                                        <button class="button button--large button--primary" id="" type="submit">Submit Feedback</button>
-                                                    </div>
-
-                                                </form>
-
-                                            </div>
-
-
-                                            <div id="feedback-form-crashes">
-
-                                                <p>Note that many crash and slowness problems can be solved by <a href="https://www.theguardian.com/info/2015/sep/22/making-theguardiancom-work-best-for-you">disabling optional features on our site</a></p>
-
-                                                <p>If this does not solve your problem, please contact us below</p>
-                                                <br/>
-
-                                                <form action="#" method="post">
-
-                                                    <input type="hidden" name="category" value="crashes" />
-
-                                                    <input name="extra" type="hidden" value="browser: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36
-                                                        width: 1440
-                                                        adBlock: true
-                                                        devicePixelRatio: 2
-                                                        ophanId: j17riri44875b2yiv2y9
-                                                        gu_u: WyIxNzU5MjIzOCIsIiIsIk1hdHRoZXcgV2FsbHMiLCIyIiwxNDk4MTQ0NzkwNzQ1LDEsMTQ5MDM2NzEzMDAwMCx0cnVlXQ.MC0CFQCHPR17CxNZEUdRP1442ddwPp4KCwIUFwhIIB3NtnzRUGIQH4a0yv3pOJM
-                                                        payingMember: false
-                                                        abTests: TailorSurvey=variant, MembershipEngagementBannerUkRemindMeLater=notintest, PaidCommentingInternal=notintest"
-                                                    />
-
-                                                    <div class="feedback__element">
-                                                        <label class="" for="test">Description</label>
-                                                        <textarea name="body" class="feedback__textarea feedback__input--wide" placeholder="Help us out with a friendly message"></textarea>
-                                                    </div>
-                                                    <div class="feedback__element">
-                                                        <label class="" for="test">Email</label>
-                                                        <input name="user" class="feedback__input feedback__input--wide" id="test" type="email" placeholder="E.g. alexsmith@@example.com">
-                                                    </div>
-                                                    <div class="feedback__element">
-                                                        <label class="" for="file">Attach File</label>
-                                                        <input name="file" class="feedback__input feedback__input--wide" id="test" type="file">
-                                                    </div>
-                                                    <div class="feedback__element">
-                                                        <button class="button button--large button--primary" id="" type="submit">Submit Feedback</button>
-                                                    </div>
-
-                                                </form>
-
-                                            </div>
-
-
-                                        </fieldset>
-
-
-                                        <small>
-                                            Or email us directly at <a data-link-name="tech feedback : mailto : userhelp" href="mailto:userhelp@@theguardian.com">userhelp@@theguardian.com</a> and someone should get back to you.
-                                        </small>
-
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
         <div class="facia-container facia-container--layout-content">
         @fragments.mostPopularPlaceholder("/")
@@ -139,36 +154,66 @@
     </div>
 }
 
-    <script>
+<script>
 
-        var fieldmap = {
-            "Account problems": "feedback-form-account",
-            "Accessibility": "feedback-form-accessibility",
-            "Site Crashing/Reloding/Slowness": "feedback-form-crashes"
-        };
+    var select = document.getElementById("feedback-category");
+
+    var fieldmap = {
+        "Help with my Guardian account": "feedback-form-account",
+        "Report a problem/give feedback on your website": "feedback-form-website",
+        "Unsubscribe from Jobs alerts/have other issues with my jobs account": "feedback-form-jobs",
+        "Manage my email preferences": "feedback-form-email",
+        "Report a Memberships/subscriptions technical issue or give some feedback": "feedback-form-membership",
+        "Membership payment or billing issues": "feedback-form-membership-billing",
+        "Subscriptions payment, billing or fulfillment issues": "feedback-form-subs-billing",
+        "Feedback about Adverts on your website/apps": "feedback-form-adverts",
+        "Help with my Android news app": "feedback-form-android",
+        "Help with my iOS news app": "feedback-form-ios",
+        "Help with the daily edition on my iPad": "feedback-form-daily",
+        "Help with the daily edition on my Android or Kindle Fire tablet": "feedback-form-tablet",
+        "help with my Windows mobile news app": "feedback-form-windows",
+        "Comment or query about an article": "feedback-form-editorial",
+        "Questions about commenting/moderation/community": "feedback-form-discussion",
+        "Other": "feedback-form-other"
+    };
+
+    for(choice in fieldmap){
+
+        // add option to dropdown
+
+        var opt = document.createElement("option");
+        opt.value = choice;
+        opt.innerHTML = choice;
+        select.appendChild(opt);
+
+        // hide it
+
+        try {
+            document.getElementById(fieldmap[choice]).style.display = "none";
+        } catch(err) {
+            console.log("Failed to find " + choice)
+        }
+
+    }
+
+    function flipflop(evt) {
+
+        console.log("Flipping and flopping");
+
+        var cat = document.getElementById("feedback-category").value
 
         for(choice in fieldmap){
-            console.log("Hiding " + fieldmap[choice])
-            document.getElementById(fieldmap[choice]).style.display = "none";
-        }
-
-        function flipflop(evt) {
-
-            console.log("Flipping and flopping");
-
-            var cat = document.getElementById("feedback-category").value
-
-            for(choice in fieldmap){
-                if(choice === cat){
-                    // show
-                    document.getElementById(fieldmap[choice]).style.display = "block";
-                } else {
-                    // hide
-                    document.getElementById(fieldmap[choice]).style.display = "none";
-                }
+            if(choice === cat){
+                // show
+                document.getElementById(fieldmap[choice]).style.display = "block";
+            } else {
+                // hide
+                document.getElementById(fieldmap[choice]).style.display = "none";
             }
-
         }
 
+    }
 
-    </script>
+
+</script>
+
