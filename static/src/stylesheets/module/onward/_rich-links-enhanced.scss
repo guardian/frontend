@@ -200,3 +200,30 @@
     float: none;
     width: auto;
 }
+
+.rich-link--paidfor {
+    &.tone-media--item,
+    & {
+        .rich-link__container {
+            background-color: $paid-article-card-bg;
+            &:hover,
+            &.u-faux-block-link--hover {
+                background: darken($paid-article-subheader, 7%);
+            }
+            &:before {
+                background-color: $paid-article-brand;
+            }
+            .rich-link__header,
+            .rich-link__read-more-text {
+                color: $neutral-1;
+                @include f-headlineSans;
+            }
+            .rich-link__arrow-icon {
+                fill: $paid-article-brand;
+            }
+        }
+    }
+    .rich-link__title {
+        color: $neutral-1;
+    }
+}
