@@ -207,7 +207,8 @@ object EmailAddons {
     TheWeekInPatriarchy,
     OutsideInAmerica,
     TheResistanceNow,
-    BeyondTheBlade)
+    BeyondTheBlade,
+    TheSnap)
   private val frontEmails = Seq(
     TheFlyer,
     CuratedMediaBriefing,
