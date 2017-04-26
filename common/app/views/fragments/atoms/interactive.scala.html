@@ -2,7 +2,7 @@
 @import model.content.InteractiveAtom
 @import templates.inlineJS.nonBlocking.js.{interactiveFonts, interactiveResize}
 
-@(interactive: InteractiveAtom, shouldFence: Boolean)(implicit context: model.ApplicationContext)
+@(interactive: InteractiveAtom, shouldFence: Boolean, isAmp: Boolean)(implicit context: model.ApplicationContext)
 
 @iframeBody = {
     <!DOCTYPE html>
@@ -33,7 +33,26 @@
 }
 
 @if(shouldFence) {
-    <iframe class="interactive-atom-fence" srcdoc="@iframeBody.toString"></iframe>
+    @if(isAmp) {
+        <amp-iframe class="interactive-atom-fence"
+                    srcdoc="@iframeBody.toString"
+                    layout="responsive"
+                    sandbox="allow-scripts allow-popups"
+                    width="500"
+                    height="200"
+                    resizable
+                    placeholder="">
+            <div class="cta cta--medium cta--show-more cta--show-more__unindent"
+                 overflow
+                 tabindex=0
+                 role=button
+                 aria-label="See the full visual">
+                See the full visual
+            </div>
+        </amp-iframe>
+    } else {
+        <iframe class="interactive-atom-fence" srcdoc="@iframeBody.toString"></iframe>
+    }
 } else {
     <figure class="interactive interactive-atom">
         <style>
