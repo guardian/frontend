@@ -1,6 +1,6 @@
 define([
     'Promise',
-    'lib/add-event-listener',
+    'lib/events',
     'lib/config',
     'lib/detect',
     'lib/fastdom-promise',

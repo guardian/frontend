@@ -1,6 +1,6 @@
 define([
     'qwery',
-    'lib/add-event-listener',
+    'lib/events',
     'lib/fastdom-promise',
     'lib/detect',
     'lodash/utilities/template',

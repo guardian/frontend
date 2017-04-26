@@ -1,5 +1,5 @@
 define([
-    'lib/add-event-listener',
+    'lib/events',
     'lib/detect',
     'lib/fastdom-promise',
     'commercial/modules/messenger'

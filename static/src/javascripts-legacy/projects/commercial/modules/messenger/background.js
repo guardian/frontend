@@ -1,5 +1,5 @@
 define([
-    'lib/add-event-listener',
+    'lib/events',
     'lodash/objects/assign',
     'lib/fastdom-promise',
     'commercial/modules/messenger'
