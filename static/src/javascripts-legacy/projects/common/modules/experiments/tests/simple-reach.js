@@ -4,7 +4,7 @@ define([
     return function () {
         this.id = 'SimpleReach';
         this.start = '2017-04-13';
-        this.expiry = '2017-04-21';
+        this.expiry = '2017-05-03';
         this.author = 'Kate Whalen';
         this.description = 'Add SimpleReach opt-in behind query param, so we can test it';
         this.audience = 0;

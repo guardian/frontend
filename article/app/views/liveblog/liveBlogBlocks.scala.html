@@ -42,4 +42,7 @@
         }
         @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(s"block-${block.id}", None), article.metadata.contentType, amp)
     </div>
+    @block.attributes.membershipPlaceholder.map { _ =>
+        <div class="js-liveblog-epic-placeholder"></div>
+    }
 }

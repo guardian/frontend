@@ -25,7 +25,9 @@ const render = tasks => {
                     console.log(task.output);
                 }
                 if (
-                    task.isCompleted() && !task.hasFailed() && !task.isSkipped()
+                    task.isCompleted() &&
+                    !task.hasFailed() &&
+                    !task.isSkipped()
                 ) {
                     console.log(
                         `##teamcity[message text='${chalk.green(figures.tick)} ${task.title}']`

@@ -211,7 +211,7 @@ trait CommercialSwitches {
     description = "Turn on Sonobi header bidding",
     owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 28), //Friday
+    sellByDate = never,
     exposeClientSide = true
   )
 

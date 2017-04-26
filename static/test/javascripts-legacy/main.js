@@ -49,8 +49,6 @@ requirejs.config({
 
 require(['Promise', 'lodash/collections/toArray'], function (Promise, toArray) {
     require(tests, function () {
-        Promise.all(toArray(arguments)).then(function () {
-            window.__karma__.start();
-        });
+        Promise.all(toArray(arguments)).then(window.__karma__.start);
     });
 });

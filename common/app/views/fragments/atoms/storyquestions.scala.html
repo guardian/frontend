@@ -3,7 +3,7 @@
 @if(!isAmp) {
     <div class="js-view-tracking-component submeta user__question">
         <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
-        <h2 class="user__question-title">Finished this article and want something explained?<span class="user__question-title--secondary">Let us know which of these questions we can answer for you.</span></h2>
+        <h2 class="user__question-title">Need something explained?<span class="user__question-title--secondary">Let us know which of these questions we can answer for you.</span></h2>
         @for(questions <- storyquestions.data.editorialQuestions) {
             @for(qs <- questions) {
                 <p>
@@ -13,7 +13,8 @@
 
                     @for(question <- qs.questions) {
                         <div class="user__questions-text--wrapper js-ask-question-link">
-                            <span id="js-question-text-@question.questionId" class="user__question-text">
+                            <span class="user__question-text">
+                                <meta class="notranslate" name="js-notranslate-@question.questionId" content="@question.questionText">
                                 <span class="user__questions-text--inner">
                                     @question.questionText
                                 </span>

@@ -8,7 +8,7 @@
         role="banner">
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
         @defining(
-            NewNavigation.SectionLinks.getTopLevelSection(id)
+            NewNavigation.SectionLinks.getPillarName(id)
         ) { case (currentTopLevelSection) =>
             <div class="new-header__inner gs-container">
                 <a href="@LinkTo{/}"
@@ -59,7 +59,7 @@
 
                     <input type="checkbox"
                            id="main-menu-toggle"
-                           class="new-header__nav__button js-enhance-checkbox"
+                           class="new-header__nav-trigger js-enhance-checkbox"
                            aria-controls="main-menu">
 
                     @fragments.nav.newHeaderMenu()

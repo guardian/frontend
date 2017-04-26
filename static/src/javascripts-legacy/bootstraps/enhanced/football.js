@@ -14,7 +14,8 @@ define([
     'common/modules/sport/football/match-list-live',
     'common/modules/sport/football/tag-page-stats',
     'common/modules/sport/score-board',
-    'common/modules/ui/rhc'
+    'common/modules/ui/rhc',
+    'common/modules/ui/relativedates'
 ], function (
     bean,
     bonzo,
@@ -31,7 +32,8 @@ define([
     MatchListLive,
     tagPageStats,
     ScoreBoard,
-    rhc
+    rhc,
+    relativeDates
 ) {
 
     function renderNav(match, callback) {
@@ -259,10 +261,15 @@ define([
             fetchJson(el.getAttribute('href') + '.json')
             .then(function (resp) {
                 $.create(resp.html).each(function (html) {
-                    $('[data-show-more-contains="' + el.getAttribute('data-puts-more-into') + '"]')
-                        .append($(el.getAttribute('data-shows-more'), html));
+                    var htmlContainer = document.querySelector('[data-show-more-contains="' + el.getAttribute('data-puts-more-into') + '"]');
+
+                    if (htmlContainer) {
+                        relativeDates.replaceLocaleTimestamps(html);
+                        htmlContainer.appendChild(html);
+                    }
 
                     var nurl = resp[el.getAttribute('data-new-url')];
+
                     if (nurl) {
                         bonzo(el).attr('href', nurl);
                     } else {

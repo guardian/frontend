@@ -7,7 +7,8 @@ import conf.Configuration
 import services.AwsEndpoints
 
 object FrontsApi extends ExecutionContexts {
-  val crossAccountClient: ApiClient = {
+
+  def crossAccountClient: ApiClient = {
     val client = new AmazonS3Client(Configuration.faciatool.crossAccountMandatoryCredentials)
     client.setEndpoint(AwsEndpoints.s3)
     ApiClient(Configuration.faciatool.crossAccountSourceBucket, Configuration.facia.stage.toUpperCase, AmazonSdkS3Client(client))

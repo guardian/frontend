@@ -2,14 +2,13 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
     var injector = new Injector();
 
     describe('Commercial features', function () {
-        var CommercialFeatures, config, features, location,
+        var CommercialFeatures, config, features,
             userPrefs, detect, userFeatures, isSignedIn, breakpoint;
 
         beforeEach(function (done) {
             injector.require([
                 'commercial/modules/commercial-features',
                 'lib/config',
-                'lib/location',
                 'common/modules/user-prefs',
                 'lib/detect',
                 'commercial/modules/user-features',
@@ -17,11 +16,10 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
             ], function () {
                 CommercialFeatures = arguments[0].constructor;
                 config = arguments[1];
-                location = arguments[2];
-                userPrefs = arguments[3];
-                detect = arguments[4];
-                userFeatures = arguments[5];
-                var identityApi = arguments[6];
+                userPrefs = arguments[2];
+                detect = arguments[3];
+                userFeatures = arguments[4];
+                var identityApi = arguments[5];
 
                 // Set up a happy path by default
                 config.page = {
@@ -39,7 +37,7 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
                     discussion : true
                 };
 
-                location.getHash = function () {return '';};
+                window.location.hash = '';
 
                 userPrefs.removeSwitch('adverts');
 
@@ -81,7 +79,7 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
 
             it('Is skipped for speedcurve tests', function () {
                 // We don't want external dependencies getting in the way of perf tests
-                location.getHash = function () {return '#noads';};
+                window.location.hash = '#noads';
                 features = new CommercialFeatures;
                 expect(features.dfpAdvertising).toBe(false);
             });
@@ -195,7 +193,7 @@ define(['helpers/injector', 'Promise'], function (Injector, Promise) {
             });
 
             it('Is disabled under perf tests', function () {
-                location.getHash = function () {return '#noads';};
+                window.location.hash = '#noads';
                 features = new CommercialFeatures;
                 expect(features.outbrain).toBe(false);
             });

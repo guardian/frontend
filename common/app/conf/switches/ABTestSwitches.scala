@@ -51,16 +51,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-brexit",
-    "Test whether we get a positive effect on membership/contribution by targeting the latest brexit articles",
-    owners = Seq(Owner.withGithub("alexduf")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 19),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-always-ask-strategy",
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
@@ -81,11 +71,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-regulars-v2",
-    "Test messages aimed at our regular readers",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-acquisitions-epic-liveblog",
+    "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
+    owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 1),
+    sellByDate = new LocalDate(2017, 7, 3),
     exposeClientSide = true
   )
 
@@ -161,41 +151,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-article-50-trigger",
-    "Display the Epic on Article 50 articles for readers in Europe",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 19),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-laundromat",
-    "Display the Epic on Laundromat articles",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 19),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-email-demand-tests",
-    "Test demand for a cities email",
-    owners = Seq(Owner.withGithub("lmath")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 21),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-paid-commenting-internal",
     "Paid commenting test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 27),
+    sellByDate = new LocalDate(2017, 5, 25),  // Thurs 25th May
     exposeClientSide = true
   )
 
@@ -206,16 +166,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 5, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-vs-epic-and-engagement-banner",
-    "Test displaying the Epic only vs the Epic and Engagement Banner",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 19),
     exposeClientSide = true
   )
 
@@ -235,7 +185,7 @@ trait ABTestSwitches {
     "Use the fabulous AB framework to add a opt-in for SimpleReach tracking",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 26),
+    sellByDate = new LocalDate(2017, 5, 3),
     exposeClientSide = true
   )
 
