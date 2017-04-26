@@ -8,17 +8,19 @@
     }
 }
 
-<div class="content__meta-container content__meta-container--immersive js-content-meta u-cf">
+<div class="content__meta-container--immersive js-content-meta u-cf">
     @if(!item.trail.shouldHidePublicationDate) {
-        @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, false, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
+        <div class="immersive__dateline-container">
+            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, false, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
+        </div>
     }
 
-    <div class="meta__numbers">
-        <div class="u-h meta__number meta__number--sharecount js-sharecount js-sharecount-immersive"></div>
-        <div class="u-h meta__number meta__number--commentcount" data-discussion-id="@item.content.discussionId" data-commentcount-format="contentImmersive" data-discussion-closed="@{!item.trail.isCommentable}"></div>
+    <div class="meta__numbers--immersive">
+        <div class="u-h meta__number meta__number--immersive meta__number--sharecount--immersive js-sharecount js-sharecount-immersive"></div>
+        <div class="u-h meta__number meta__number--immersive meta__number--commentcount--immersive" data-discussion-id="@item.content.discussionId" data-commentcount-format="contentImmersive" data-discussion-closed="@{!item.trail.isCommentable}"></div>
     </div>
 
-    <div class="meta__social" data-component="share">
+    <div class="immersive__social-container" data-component="share">
         @fragments.social(item.sharelinks.pageShares, "top")
     </div>
 </div>
