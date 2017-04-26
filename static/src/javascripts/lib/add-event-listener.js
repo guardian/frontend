@@ -21,21 +21,21 @@ const addEventListener = (
     node: EventTarget,
     name: string,
     handler: (e: Event) => void,
-    options: Object = {}
+    { passive = false, capture = false, once = false }: Object = {}
 ): void => {
     if (supportsOptions) {
-        node.addEventListener(name, handler, options);
-    } else if (options.once) {
+        node.addEventListener(name, handler, { passive, capture, once });
+    } else if (once) {
         node.addEventListener(
             name,
             function boundHandler(evt) {
                 handler.call(this, evt);
                 node.removeEventListener(name, boundHandler);
             },
-            options.capture
+            capture
         );
     } else {
-        node.addEventListener(name, handler, options.capture);
+        node.addEventListener(name, handler, capture);
     }
 };
 
