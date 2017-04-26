@@ -400,11 +400,9 @@
  * Fluid ad slots don't have widths
  */
 .ad-slot--fluid {
-    &:not(.ad-slot--container-inline) {
-        min-height: 250px;
-        padding: 0;
-        margin: 0;
-    }
+    min-height: 250px;
+    padding: 0;
+    margin: 0;
 
     &:not(.ad-slot--im) {
         width: auto;

@@ -1,0 +1,84 @@
+$caption-button-size: 32px;
+
+.reveal-caption {
+    position: absolute;
+    right: $gs-gutter / 4;
+    width: $caption-button-size;
+    height: $caption-button-size;
+    z-index: 1;
+    background-color: rgba($neutral-1, .4);
+    border-radius: 50%;
+
+    &:hover {
+        background-color: rgba($neutral-1, 1);
+    }
+}
+
+
+.reveal-caption--img {
+    bottom: $gs-baseline/2;
+}
+
+.caption--main {
+    min-height: ($gs-baseline / 3) * 7;
+    max-width: gs-span(7);
+    padding: ($gs-baseline / 3) * 2 $gs-gutter / 2 $gs-baseline * 2;
+
+    @include mq($from: tablet) {
+        max-width: gs-span(8);
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    @include mq($from: desktop) {
+        max-width: none;
+    }
+
+    &.caption--img {
+        @include mq($until: tablet) {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba($multimedia-support-5, .8);
+            color: #ffffff;
+            display: none;
+            padding: $gs-baseline / 2 $gs-gutter * 2 $gs-baseline $gs-gutter / 2;
+            max-width: 100%;
+
+            a {
+                color: currentColor;
+            }
+
+            &:before {
+                content: none;
+            }
+        }
+    }
+
+    &.caption--video,
+    .content__main-column--image & {
+        @include mq($until: tablet) {
+            padding-bottom: 0;
+        }
+    }
+}
+
+@include mq($until: tablet) {
+    .reveal-caption__checkbox:checked ~ .caption--main {
+        display: block;
+    }
+
+    .reveal-caption__checkbox:checked ~ .reveal-caption {
+        background-color: $multimedia-support-5;
+
+        &:hover {
+            background-color: rgba($neutral-1, 1);
+        }
+    }
+
+    .reveal-caption__checkbox:focus ~ .reveal-caption {
+        background-color: rgba($neutral-1, 1);
+    }
+
+}
