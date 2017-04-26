@@ -3,19 +3,13 @@ define([
     'lib/$',
     'lib/fetch-json',
     'lib/mediator',
-    'lib/report-error',
-    'lodash/collections/forEach',
-    'lodash/arrays/initial',
-    'lib/chain'
+    'lib/report-error'
 ], function (
     bean,
     $,
     fetchJson,
     mediator,
-    reportError,
-    forEach,
-    initial,
-    chain
+    reportError
 ) {
     function SearchTool(options) {
         var $list      = null,
@@ -227,7 +221,7 @@ define([
                 var docFragment   = document.createDocumentFragment(),
                     resultsToShow = results.length - numOfResults;
 
-                chain(results).and(initial, resultsToShow).and(forEach, function (item, index) {
+                results.slice(resultsToShow).forEach(function (item, index) {
                     var li = document.createElement('li');
 
                     li.className = 'search-tool__item';
