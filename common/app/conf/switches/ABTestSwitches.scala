@@ -155,7 +155,7 @@ trait ABTestSwitches {
     "Paid commenting test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 27),
+    sellByDate = new LocalDate(2017, 5, 25),  // Thurs 25th May
     exposeClientSide = true
   )
 
