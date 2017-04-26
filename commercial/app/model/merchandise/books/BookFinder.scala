@@ -40,6 +40,9 @@ object BookAgent extends Logging {
         case Success(Some(json: JsValue)) => cache alter { _ + (isbn -> json) }
       }
     }
+
+    bookJson
+
   }
 }
 
