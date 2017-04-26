@@ -14,7 +14,7 @@ import template from 'lodash/utilities/template';
 import spaceFiller from 'common/modules/article/space-filler';
 import tailor from 'common/modules/tailor/tailor';
 
-export default function tailorSurvey() {
+const TailorSurvey = function TailorSurvey() {
     this.id = 'TailorSurvey';
     this.start = '2017-03-07';
     this.expiry = '2017-04-28';
@@ -245,4 +245,6 @@ export default function tailorSurvey() {
             },
         },
     ];
-}
+};
+
+export { TailorSurvey };
