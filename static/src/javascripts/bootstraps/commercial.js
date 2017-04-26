@@ -1,7 +1,7 @@
-import Promise from 'Promise';
+// @flow
 import config from 'lib/config';
-import robust from 'lib/robust';
-import userTiming from 'lib/user-timing';
+import { catchErrorsWithContext } from 'lib/robust';
+import { markTime } from 'lib/user-timing';
 import reportError from 'lib/report-error';
 import highMerch from 'commercial/modules/high-merch';
 import articleAsideAdverts from 'commercial/modules/article-aside-adverts';
@@ -14,7 +14,8 @@ import fillAdvertSlots from 'commercial/modules/dfp/fill-advert-slots';
 import hostedAbout from 'commercial/modules/hosted/about';
 import hostedVideo from 'commercial/modules/hosted/video';
 import hostedGallery from 'commercial/modules/hosted/gallery';
-import hostedOJCarousel from 'commercial/modules/hosted/onward-journey-carousel';
+import hostedOJCarousel
+    from 'commercial/modules/hosted/onward-journey-carousel';
 import hostedOnward from 'commercial/modules/hosted/onward';
 import liveblogAdverts from 'commercial/modules/liveblog-adverts';
 import stickyTopBanner from 'commercial/modules/sticky-top-banner';
@@ -22,9 +23,10 @@ import thirdPartyTags from 'commercial/modules/third-party-tags';
 import paidforBand from 'commercial/modules/paidfor-band';
 import paidContainers from 'commercial/modules/paid-containers';
 import performanceLogging from 'commercial/modules/dfp/performance-logging';
-import ga from 'common/modules/analytics/google';
+import { trackPerformance } from 'common/modules/analytics/google';
 import userFeatures from 'commercial/modules/user-features';
-var commercialModules = [
+
+const commercialModules = [
     ['cm-highMerch', highMerch.init],
     ['cm-thirdPartyTags', thirdPartyTags.init],
     ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
@@ -37,45 +39,50 @@ var commercialModules = [
     ['cm-stickyTopBanner', stickyTopBanner.init],
     ['cm-fill-advert-slots', fillAdvertSlots.init, true],
     ['cm-paidContainers', paidContainers.init],
-    ['cm-paidforBand', paidforBand.init]
+    ['cm-paidforBand', paidforBand.init],
 ];
 
 if (config.page.isHosted) {
     commercialModules.push(
-        ['cm-hostedAbout', hostedAbout.init], ['cm-hostedVideo', hostedVideo.init, true], ['cm-hostedGallery', hostedGallery.init], ['cm-hostedOnward', hostedOnward.init, true], ['cm-hostedOJCarousel', hostedOJCarousel.init]
+        ['cm-hostedAbout', hostedAbout.init],
+        ['cm-hostedVideo', hostedVideo.init, true],
+        ['cm-hostedGallery', hostedGallery.init],
+        ['cm-hostedOnward', hostedOnward.init, true],
+        ['cm-hostedOJCarousel', hostedOJCarousel.init]
     );
 }
 
-function loadModules(modules, baseline) {
-
+const loadModules = (modules, baseline) => {
     performanceLogging.addStartTimeBaseline(baseline);
 
-    var modulePromises = [];
+    const modulePromises = [];
 
-    modules.forEach(function(module) {
-        var moduleName = module[0];
-        var moduleInit = module[1];
-        var moduleDefer = module[2];
+    modules.forEach(module => {
+        const moduleName = module[0];
+        const moduleInit = module[1];
+        const moduleDefer = module[2];
 
-        robust.catchErrorsWithContext([
-            [moduleName, function() {
-                // These modules all have async init procedures which don't block, and return a promise purely for
-                // perf logging, to time when their async work is done. The command buffer guarantees execution order,
-                // so we don't use the returned promise to order the bootstrap's module invocations.
-                var wrapped = moduleDefer ?
-                    performanceLogging.defer(moduleName, moduleInit) :
-                    performanceLogging.wrap(moduleName, moduleInit);
-                var result = wrapped();
-                modulePromises.push(result);
-            }]
+        catchErrorsWithContext([
+            [
+                moduleName,
+                function pushAfterComplete() {
+                    // These modules all have async init procedures which don't block, and return a promise purely for
+                    // perf logging, to time when their async work is done. The command buffer guarantees execution order,
+                    // so we don't use the returned promise to order the bootstrap's module invocations.
+                    const wrapped = moduleDefer
+                        ? performanceLogging.defer(moduleName, moduleInit)
+                        : performanceLogging.wrap(moduleName, moduleInit);
+                    const result = wrapped();
+                    modulePromises.push(result);
+                },
+            ],
         ]);
     });
 
-    return Promise.all(modulePromises)
-        .then(function() {
-            performanceLogging.addEndTimeBaseline(baseline);
-        });
-}
+    return Promise.all(modulePromises).then(() => {
+        performanceLogging.addEndTimeBaseline(baseline);
+    });
+};
 
 export default function() {
     if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
@@ -83,32 +90,46 @@ export default function() {
         return Promise.resolve();
     }
 
-    userTiming.markTime('commercial start');
-    robust.catchErrorsWithContext([
-        ['ga-user-timing-commercial-start', function() {
-            ga.trackPerformance('Javascript Load', 'commercialStart', 'Commercial start parse time');
-        }],
+    markTime('commercial start');
+    catchErrorsWithContext([
+        [
+            'ga-user-timing-commercial-start',
+            function runTrackPerformance() {
+                trackPerformance(
+                    'Javascript Load',
+                    'commercialStart',
+                    'Commercial start parse time'
+                );
+            },
+        ],
     ]);
 
     // Stub the command queue
     window.googletag = {
-        cmd: []
+        cmd: [],
     };
 
     return loadModules(commercialModules, performanceLogging.primaryBaseline)
-        .then(function() {
-            userTiming.markTime('commercial end');
-            robust.catchErrorsWithContext([
-                ['ga-user-timing-commercial-end', function() {
-                    ga.trackPerformance('Javascript Load', 'commercialEnd', 'Commercial end parse time');
-                }]
+        .then(() => {
+            markTime('commercial end');
+            catchErrorsWithContext([
+                [
+                    'ga-user-timing-commercial-end',
+                    function runTrackPerformance() {
+                        trackPerformance(
+                            'Javascript Load',
+                            'commercialEnd',
+                            'Commercial end parse time'
+                        );
+                    },
+                ],
             ]);
         })
-        .catch(function(err) {
+        .catch(err => {
             // Just in case something goes wrong, we don't want it to
             // prevent enhanced from loading
             reportError(err, {
-                feature: 'commercial'
+                feature: 'commercial',
             });
         });
 }
