@@ -18,7 +18,7 @@ try {
 }
 
 const addEventListener = (
-    node: Node,
+    node: EventTarget,
     name: string,
     handler: (e: Event) => void,
     options: Object = {}
