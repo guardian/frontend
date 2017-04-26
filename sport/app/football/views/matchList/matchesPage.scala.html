@@ -1,7 +1,13 @@
-@(page: model.Page, matchesList: football.model.MatchesList, filters: Map[String, Seq[football.controllers.CompetitionFilter]])(implicit request: RequestHeader, context: model.ApplicationContext)
-
-@import conf.switches.Switches
-@import football.model._
+@import _root_.football.controllers.CompetitionFilter
+@import _root_.football.controllers.FootballPage
+@import _root_.football.model.CompetitionList
+@import _root_.football.model.MatchesList
+@import common.Edition
+@import model.ApplicationContext
+@import views.html.fragments.commercial.pageLogo
+@(page: FootballPage, matchesList: MatchesList, filters: Map[String, Seq[CompetitionFilter]])(
+    implicit request: RequestHeader, context: ApplicationContext
+)
 
 @main(page, Some("football")){
 }{
@@ -10,9 +16,15 @@
         <div class="content__main">
             <div class="gs-container">
                 <div class="content__main-column">
-                    <h2 class="hide-on-mobile-if-localnav content__inline-section page-heading--football">
+                    <h2 class="hide-on-mobile-if-localnav content__inline-section page-type--football">
                     @matchesList.pageType
                     </h2>
+
+                    <div class="page-sponsor--football">
+                    @for(commercial <- page.metadata.commercial; branding <- commercial.branding(Edition(request))) {
+                        @pageLogo(branding, isInteractive = false)
+                    }
+                    </div>
 
                     @football.views.html.fragments.leagueSelector(filters, matchesList.pageType, matchesList match {
                         case ml: CompetitionList => ml.competition
@@ -22,7 +34,7 @@
                     <div class="football-leagues football-leagues--list modern-hidden">
                         <ul class="football-leagues-list u-unstyled">
                             @matchesList.competitions.map{ comp =>
-                                <li class="football-leagues__item"><a href="@comp.url/@matchesList.pageType" data-link-name="view @comp.fullName matches">@comp.fullName</option></a></li>
+                                <li class="football-leagues__item"><a href="@comp.url/@matchesList.pageType" data-link-name="view @comp.fullName matches">@comp.fullName</a></li>
                             }
                         </ul>
                     </div>
@@ -41,7 +53,7 @@
                                                 responsiveFont = true,
                                                 matchType = matchesList.pageType,
                                                 // this is a special case for the world cup, remove it afterwards
-                                                heading = Some(competition.fullName, Option(competition.url))
+                                                heading = Some((competition.fullName, Option(competition.url)))
                                             )
                                         </div>
                                     </div>
