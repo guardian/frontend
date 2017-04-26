@@ -112,12 +112,8 @@ case class PressedPage (
 
   def isBranded(edition: Edition): Boolean = branding(edition).isDefined
 
-  def isSponsored(edition: Edition): Boolean = branding(edition)
-    .map(_.isSponsored)
-    .getOrElse(metadata.commercial.exists(_.isSponsored(edition)))
+  def isSponsored(edition: Edition): Boolean = branding(edition).exists(_.isSponsored)
 
-  def isPaid(edition: Edition): Boolean = branding(edition)
-    .map(_.isPaid)
-    .getOrElse(metadata.commercial.exists(_.isPaidContent))
+  def isPaid(edition: Edition): Boolean = branding(edition).exists(_.isPaid)
 
 }
