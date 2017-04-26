@@ -300,7 +300,7 @@ object EmailNewsletters {
     tone = Some("feature"),
     aliases = List(2211, 3807),
     signupPage = Some("/travel/2016/aug/18/sign-up-to-the-flyer"),
-    exampleUrl = Some("/email/the-flyer?format=email-connected")
+    exampleUrl = Some("/email/the-flyer?format=email")
   )
 
   val moneyTalks = EmailNewsletter(
