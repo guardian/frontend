@@ -84,7 +84,7 @@ const loadModules = (modules, baseline) => {
     });
 };
 
-export default function() {
+export default () => {
     if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
         closeDisabledSlots.init(true);
         return Promise.resolve();
@@ -132,4 +132,4 @@ export default function() {
                 feature: 'commercial',
             });
         });
-}
+};
