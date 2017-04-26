@@ -26,7 +26,69 @@ define([
     cookies
 ) {
 
-    console.log("feedbacking started")
+    console.log("feedback js running");
+
+    var select = document.getElementById("feedback-category");
+
+    var fieldmap = {
+        "Help with my Guardian account": "feedback-form-account",
+        "Report a problem/give feedback on your website": "feedback-form-website",
+        "Unsubscribe from Jobs alerts/have other issues with my jobs account": "feedback-form-jobs",
+        "Manage my email preferences": "feedback-form-email",
+        "Report a Memberships/subscriptions technical issue or give some feedback": "feedback-form-membership",
+        "Membership payment or billing issues": "feedback-form-membership-billing",
+        "Subscriptions payment, billing or fulfillment issues": "feedback-form-subs-billing",
+        "Feedback about Adverts on your website/apps": "feedback-form-adverts",
+        "Help with my Android news app": "feedback-form-android",
+        "Help with my iOS news app": "feedback-form-ios",
+        "Help with the daily edition on my iPad": "feedback-form-daily",
+        "Help with the daily edition on my Android or Kindle Fire tablet": "feedback-form-tablet",
+        "help with my Windows mobile news app": "feedback-form-windows",
+        "Comment or query about an article": "feedback-form-editorial",
+        "Questions about commenting/moderation/community": "feedback-form-discussion",
+        "Other": "feedback-form-other"
+    };
+
+    console.log("Hiding stuff!");
+
+    for(choice in fieldmap){
+
+        // add option to dropdown
+
+        var opt = document.createElement("option");
+        opt.value = choice;
+        opt.innerHTML = choice;
+        select.appendChild(opt);
+
+        // hide it
+
+        try {
+            document.getElementById(fieldmap[choice]).style.display = "none";
+        } catch(err) {
+            console.log("Failed to find " + choice)
+        }
+
+    }
+
+    function flipflop(evt) {
+
+        console.log("Flipping and flopping");
+
+        var cat = document.getElementById("feedback-category").value
+
+        for(choice in fieldmap){
+            if(choice === cat){
+                // show
+                document.getElementById(fieldmap[choice]).style.display = "block";
+            } else {
+                // hide
+                document.getElementById(fieldmap[choice]).style.display = "none";
+            }
+        }
+
+    }
+
+    document.getElementById("feedback-category").addEventListener("change", flipflop, false);
 
     var adblockBeingUsed = false;
 
@@ -138,8 +200,5 @@ define([
         this.getValuesFromHash = getValuesFromHash;
         this.summariseAbTests = summariseAbTests;
 
-        document.getElementById("oingoboingo").innerHTML = "BLOODY WORKED";
-
-        console.log("I CAN'T STOP THIS FEELING. DEEP INSIDE MYSELF. GIRL YOU JUST DON'T REALISE");
     };
 });
