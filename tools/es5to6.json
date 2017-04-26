@@ -118,6 +118,7 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
+    "projects/common/modules/experiments/tests/tailor-survey.js",
     "projects/common/modules/tailor/tailor.js",
     "lib/ajax.js",
     "bootstraps/enhanced/identity-common.js",
@@ -127,8 +128,7 @@
     "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js",
     "bootstraps/enhanced/membership.js",
-    "bootstraps/enhanced/newsletters.js",
-    "bootstraps/enhanced/notifications.js"
+    "bootstraps/enhanced/newsletters.js"
   ],
   "Nicolas Long": [
     "lib/atob.js",
@@ -268,14 +268,14 @@
     "projects/common/modules/experiments/tests/simple-reach.js",
     "projects/common/modules/experiments/tests/sleeve-notes-legacy-email-variant.js",
     "projects/common/modules/experiments/tests/sleeve-notes-new-email-variant.js",
-    "projects/common/modules/experiments/tests/tailor-survey.js",
     "projects/common/modules/experiments/tests/the-long-read-email-variants.js",
     "projects/common/modules/experiments/utils.js",
     "projects/common/modules/gallery/lightbox.js",
     "projects/common/modules/identity/account-profile.js",
     "projects/common/modules/identity/api.js",
     "projects/common/modules/identity/cookierefresh.js",
-    "projects/common/modules/identity/email-preferences.js"
+    "projects/common/modules/identity/email-preferences.js",
+    "bootstraps/enhanced/notifications.js"
   ],
   "ShaunYearStrong": [
     "projects/common/modules/identity/forms.js",
