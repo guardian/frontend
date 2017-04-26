@@ -179,14 +179,4 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-simple-reach",
-    "Use the fabulous AB framework to add a opt-in for SimpleReach tracking",
-    owners = Seq(Owner.withGithub("katebee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 3),
-    exposeClientSide = true
-  )
-
 }
