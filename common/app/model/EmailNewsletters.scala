@@ -296,9 +296,9 @@ object EmailNewsletters {
     teaser = "Uncover unconventional destinations and rediscover old favourites - let our travel editors guide you to trips worth taking",
     description = "Weekly travel inspiration. Off-piste attractions, budget breaks, top 10s and reader reviews. Uncover unconventional destinations and rediscover old favourites - let our travel editors guide you to trips worth taking",
     frequency = "Every Wednesday",
-    listId = 2211,
+    listId = 3806,
     tone = Some("feature"),
-    aliases = List(3806, 3807),
+    aliases = List(2211, 3807),
     signupPage = Some("/travel/2016/aug/18/sign-up-to-the-flyer"),
     exampleUrl = Some("/email/the-flyer?format=email-connected")
   )
