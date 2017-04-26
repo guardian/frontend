@@ -53,7 +53,7 @@ git
 
         const steps = {
             'Create a branch for the conversion': `git checkout -b "${branchName}" || git checkout -b "${branchName}-${unique}"`,
-            'Move the legacy module to the new location': `mkdir -p ${path.dirname(es6Module)}; mv ${es5Module} $_; node ./tools/es5to6-remove-module.js ${moduleId}`,
+            'Move the legacy module to the new location': `mkdir -p ${path.dirname(es6Module)}; mv ${es5Module} ${path.dirname(es6Module)}; node ./tools/es5to6-remove-module.js ${moduleId}`,
             'Commit the move': `git add .; git commit -m "move ${moduleId} from legacy to standard JS"`,
             'Convert module to ES6': `npm run -s amdtoes6 -- -d ${path.dirname(es6Module)} -o ${path.dirname(es6Module)} -g **/${path.basename(es6Module)} `,
             'Commit the module tranform': `git add .; git commit -m "transform ${moduleId} to ES6 module"`,
