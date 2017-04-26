@@ -14,6 +14,7 @@ import play.api.libs.ws.{WSClient, WSSignatureCalculator}
 
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success}
 
 class BookFinder(actorSystem: ActorSystem, magentoService: MagentoService) extends Logging {
 
@@ -32,31 +33,22 @@ object BookAgent extends Logging {
   def get(isbn: String)(implicit magentoService: MagentoService, executionContext: ExecutionContext): Option[JsValue] =
 
     cache.get.get(isbn) match {
-      case Some(json) => {
-        log.info(s"Cache hit for ISBN: $isbn.")
-        Some(json)
-      }
-      case None => {
-        log.debug(s"Cache miss for ISBN: $isbn.")
-
-        if (isbnsToBeAddedToCache.get.contains(isbn)) {
-          log.debug(s"ISBN lookup is already due for $isbn. Not running Magento Service.")
-        }
-        else {
-          log.debug(s"Looking up ISBN $isbn with Magento Service.")
-          isbnsToBeAddedToCache alter { _ + isbn }
-
-          val lookup: Future[Option[JsValue]] = magentoService.findByIsbn(isbn)
-
-          lookup map {
-            case Some(json: JsValue) =>
-              cache alter { _ + (isbn -> json) }
-            case None =>
-              isbnsToBeAddedToCache alter { _ - isbn }
+      case Some(json) => Some(json)
+      case None =>
+        if (!isbnsToBeAddedToCache.get.contains(isbn)) {
+          isbnsToBeAddedToCache alter { _ + isbn } onComplete {
+            case Failure(e) => log.error("Unable to schedule ISBN for Magento Lookup.", e)
+            case Success(_)  =>
+              magentoService.findByIsbn(isbn) andThen {
+                case Failure(e) => log.error("Magento lookup failed.", e)
+                case Success(None) => log.warn(s"Magento unable to find book for $isbn.")
+                case Success(Some(json: JsValue)) => cache alter { _ + (isbn -> json) }
+              } andThen {
+                case _ => isbnsToBeAddedToCache alter { _ - isbn }
+              }
           }
         }
         None
-      }
     }
 }
 
@@ -138,7 +130,7 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Loggi
                   log.warn(s"Unable to validate Book: $jsonErr")
                   throw FeedParseException(request, jsonErr)
               }
-            case JsSuccess(book, _) => Some(bookJson)
+            case JsSuccess(_, _) => Some(bookJson)
           }
         }
       }
