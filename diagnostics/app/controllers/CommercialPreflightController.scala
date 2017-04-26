@@ -11,6 +11,11 @@ import play.api.mvc.{Action, Controller}
 import java.lang.Long.{toString => toStringBase}
 import scala.util.{Success, Failure, Random}
 
+// This Pre-Flight mechanism allows the CDN to make an early ad call. The CDN contains an esi which routes
+// to the CommercialPreFlightController, the /esi/ad-call route. This controller forwards the call to Switch.
+// It is necessary to pass an ophan page view, and some page targeting (for AppNexus), so this logic is all
+// contained below.
+
 case class AdRequest(
   load_id: String,
   zone_ids: List[Int],
@@ -21,11 +26,54 @@ case class AdRequest(
   browser_dimensions: Option[String],
   switch_user_id: Option[String],       // switch_user_id, SWID cookie
   floor_price: Option[String],
-  targeting_variables: Option[String]
+  targeting_variables: Option[AppNexusTargeting]
 )
+
+case class AdTargeting(
+  ct: String,
+  co: List[String],
+  url: String,
+  su: List[String],
+  edition: String,
+  tn: List[String],
+  p: String,
+  k: List[String]
+) {
+  def toAppNexusTargeting: AppNexusTargeting = {
+
+    AppNexusTargeting(
+      pt1 = url,
+      pt2 = edition,
+      pt3 = ct,
+      pt4 = p,
+      pt5 = k.mkString(","),
+      pt6 = su.mkString(","),
+      pt9 = (co ++ tn).mkString("|")
+    )
+  }
+}
+
+// pt7 and pt8 are browser-based, we can't populate them from the esi-based ad call.
+case class AppNexusTargeting(
+  pt1: String,
+  pt2: String,
+  pt3: String,
+  pt4: String,
+  pt5: String,
+  pt6: String,
+  pt9: String
+)
+
+object AppNexusTargeting {
+  implicit val appNexusTargeting = Json.writes[AppNexusTargeting]
+}
 
 object AdRequest {
   implicit val adRequestWrites = Json.writes[AdRequest]
+}
+
+object AdTargeting {
+  implicit val adTargetingReads = Json.reads[AdTargeting]
 }
 
 class CommercialPreflightController(wsClient: WSClient) extends Controller with Logging with ExecutionContexts {
@@ -46,6 +94,9 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
     val maybeHost =  request.headers.get("Host")
     val switchId = request.headers.get("X-GU-switch-id")
     val maybeTopUrl = request.headers.get("X-GU-topurl")
+    val maybeTargeting = request.getQueryString("sharedAdTargeting").flatMap( targetingObject => {
+      Json.parse(targetingObject).asOpt[AdTargeting]
+    })
 
     for {
       clientIp <- maybeClientIp
@@ -67,7 +118,7 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
         browser_dimensions = None,
         switch_user_id = switchId,
         floor_price = None,
-        targeting_variables = None
+        targeting_variables = maybeTargeting.map(_.toAppNexusTargeting)
       ))
 
       wsClient.url(Configuration.switch.switchAdHubUrl)

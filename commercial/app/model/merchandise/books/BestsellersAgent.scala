@@ -12,11 +12,8 @@ class BestsellersAgent(bookFinder: BookFinder) extends MerchandiseAgent[Book] wi
 
   def getSpecificBook(isbn: String) = available find (_.isbn == isbn)
 
-  def getSpecificBooks(isbns: Seq[String]): Future[Seq[Book]] = {
-    Future.sequence {
-      isbns map (bookFinder.findByIsbn(_))
-    } map (_.flatten.sortBy(book => isbns.indexOf(book.isbn)))
-  }
+  def getSpecificBooks(isbns: Seq[String]): Seq[Book] =
+    (isbns flatMap bookFinder.findByIsbn).sortBy(book => isbns.indexOf(book.isbn))
 
   def bestsellersTargetedAt(segment: Segment): Seq[Book] = {
     val targetedBestsellers = available filter { book =>
