@@ -134,7 +134,6 @@ define([
         this.audienceCriteria = options.audienceCriteria;
         this.dataLinkNames = options.dataLinkNames || '';
         this.campaignPrefix = options.campaignPrefix || 'gdnwb_copts_memco';
-        this.campaignSuffix = options.campaignSuffix || '';
         this.insertEvent = this.makeEvent('insert');
         this.viewEvent = this.makeEvent('view');
         this.isEngagementBannerTest = options.isEngagementBannerTest || false;
@@ -176,7 +175,7 @@ define([
         this.isUnlimited = options.isUnlimited || false;
 
         this.pageviewId = (config.ophan && config.ophan.pageViewId) || 'not_found';
-        this.campaignCode = getCampaignCode(test.campaignPrefix, this.campaignId, this.id, test.campaignSuffix);
+        this.campaignCode = getCampaignCode(test.campaignPrefix, this.campaignId, this.id);
         this.campaignCodes = [this.campaignCode];
 
         this.contributeURL = options.contributeURL || this.makeURL(contributionsBaseURL, this.campaignCode);
@@ -245,9 +244,8 @@ define([
         this.registerListener('success', 'successOnView', test.viewEvent, options);
     }
 
-    function getCampaignCode(campaignCodePrefix, campaignID, id, campaignCodeSuffix) {
-        var suffix = campaignCodeSuffix ? ('_' + campaignCodeSuffix) : '';
-        return campaignCodePrefix + '_' + campaignID + '_' + id + suffix;
+    function getCampaignCode(campaignCodePrefix, campaignID, id) {
+        return campaignCodePrefix + '_' + campaignID + '_' + id;
     }
 
     ContributionsABTestVariant.prototype.makeURL = function(base, campaignCode) {
