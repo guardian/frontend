@@ -118,6 +118,7 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
+    "projects/common/modules/tailor/tailor.js",
     "lib/ajax.js",
     "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
@@ -127,8 +128,7 @@
     "bootstraps/enhanced/media/video-player.js",
     "bootstraps/enhanced/membership.js",
     "bootstraps/enhanced/newsletters.js",
-    "bootstraps/enhanced/notifications.js",
-    "bootstraps/enhanced/preferences.js"
+    "bootstraps/enhanced/notifications.js"
   ],
   "Nicolas Long": [
     "lib/atob.js",
@@ -177,9 +177,9 @@
     "projects/common/modules/sport/football/tag-page-stats.js",
     "projects/common/modules/sport/score-board.js",
     "projects/common/modules/tailor/fetch-data.js",
-    "projects/common/modules/tailor/tailor.js",
     "projects/common/modules/ui/accessibility-prefs.js",
-    "projects/common/modules/ui/autoupdate.js"
+    "projects/common/modules/ui/autoupdate.js",
+    "bootstraps/enhanced/preferences.js"
   ],
   "NataliaLKB": [
     "lib/client-rects.js",
