@@ -26,7 +26,7 @@ import performanceLogging from 'commercial/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
 import userFeatures from 'commercial/modules/user-features';
 
-const commercialModules = [
+const commercialModules: Array<Array<any>> = [
     ['cm-highMerch', highMerch.init],
     ['cm-thirdPartyTags', thirdPartyTags.init],
     ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
@@ -52,20 +52,20 @@ if (config.page.isHosted) {
     );
 }
 
-const loadModules = (modules, baseline) => {
+const loadModules = (modules, baseline): Promise<void> => {
     performanceLogging.addStartTimeBaseline(baseline);
 
     const modulePromises = [];
 
     modules.forEach(module => {
-        const moduleName = module[0];
-        const moduleInit = module[1];
-        const moduleDefer = module[2];
+        const moduleName: string = module[0];
+        const moduleInit: () => void = module[1];
+        const moduleDefer: boolean = module[2];
 
         catchErrorsWithContext([
             [
                 moduleName,
-                function pushAfterComplete() {
+                function pushAfterComplete(): void {
                     // These modules all have async init procedures which don't block, and return a promise purely for
                     // perf logging, to time when their async work is done. The command buffer guarantees execution order,
                     // so we don't use the returned promise to order the bootstrap's module invocations.
@@ -79,12 +79,12 @@ const loadModules = (modules, baseline) => {
         ]);
     });
 
-    return Promise.all(modulePromises).then(() => {
+    return Promise.all(modulePromises).then((): void => {
         performanceLogging.addEndTimeBaseline(baseline);
     });
 };
 
-export default () => {
+export default (): Promise<void> => {
     if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
         closeDisabledSlots.init(true);
         return Promise.resolve();
@@ -94,7 +94,7 @@ export default () => {
     catchErrorsWithContext([
         [
             'ga-user-timing-commercial-start',
-            function runTrackPerformance() {
+            function runTrackPerformance(): void {
                 trackPerformance(
                     'Javascript Load',
                     'commercialStart',
@@ -115,7 +115,7 @@ export default () => {
             catchErrorsWithContext([
                 [
                     'ga-user-timing-commercial-end',
-                    function runTrackPerformance() {
+                    function runTrackPerformance(): void {
                         trackPerformance(
                             'Javascript Load',
                             'commercialEnd',
