@@ -23,21 +23,19 @@ const addEventListener = (
     handler: (e: Event) => void,
     options: Object = {}
 ): void => {
-    if (node) {
-        if (supportsOptions) {
-            node.addEventListener(name, handler, options);
-        } else if (options.once) {
-            node.addEventListener(
-                name,
-                function boundHandler(evt) {
-                    handler.call(this, evt);
-                    node.removeEventListener(name, boundHandler);
-                },
-                options.capture
-            );
-        } else {
-            node.addEventListener(name, handler, options.capture);
-        }
+    if (supportsOptions) {
+        node.addEventListener(name, handler, options);
+    } else if (options.once) {
+        node.addEventListener(
+            name,
+            function boundHandler(evt) {
+                handler.call(this, evt);
+                node.removeEventListener(name, boundHandler);
+            },
+            options.capture
+        );
+    } else {
+        node.addEventListener(name, handler, options.capture);
     }
 };
 
