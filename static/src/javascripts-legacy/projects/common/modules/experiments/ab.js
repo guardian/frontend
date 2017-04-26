@@ -10,7 +10,6 @@ define([
     'common/modules/experiments/segment-util',
     'common/modules/experiments/test-can-run-checks',
     'common/modules/experiments/acquisition-test-selector',
-    'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/opinion-email-variants',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     'common/modules/experiments/tests/paid-content-vs-outbrain',
@@ -36,7 +35,6 @@ define([
              segmentUtil,
              testCanRunChecks,
              acquisitionTestSelector,
-             EditorialEmailVariants,
              OpinionEmailVariants,
              MembershipEngagementBannerTests,
              PaidContentVsOutbrain2,
@@ -53,7 +51,6 @@ define([
              PaidCommenting
     ) {
     var TESTS = compact([
-        new EditorialEmailVariants(),
         new OpinionEmailVariants(),
         new PaidContentVsOutbrain2,
         acquisitionTestSelector.getTest(),
