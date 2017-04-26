@@ -1,6 +1,5 @@
 {
   "Francis Carr": [
-    "bootstraps/commercial.js",
     "projects/admin/bootstraps/commercial-browser-performance.js",
     "projects/commercial/modules/ad-sizes.js",
     "projects/commercial/modules/article-aside-adverts.js",

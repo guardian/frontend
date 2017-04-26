@@ -23,21 +23,21 @@ if (!userModules || !userModules.length) {
 }
 
 git
-    .status((err, status) => {
-        if (
-            status.current !== 'master' ||
-            status.files.length > 0 ||
-            status.ahead !== 0 ||
-            status.behind !== 0
-        ) {
-            console.log(
-                chalk.red(
-                    'Please run this in a clean, up to date copy of master.'
-                )
-            );
-            process.exit(1);
-        }
-    })
+    // .status((err, status) => {
+    //     if (
+    //         status.current !== 'master' ||
+    //         status.files.length > 0 ||
+    //         status.ahead !== 0 ||
+    //         status.behind !== 0
+    //     ) {
+    //         console.log(
+    //             chalk.red(
+    //                 'Please run this in a clean, up to date copy of master.'
+    //             )
+    //         );
+    //         process.exit(1);
+    //     }
+    // })
     .then(() => {
         const moduleId = userModules.shift();
         const unique = `${Date.now()}`.slice(-4);
