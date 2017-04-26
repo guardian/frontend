@@ -27,7 +27,7 @@ define([
         this.author = 'Roberto Tyley';
         this.description = 'Show contributions/membership messages for the ' + edition + ' edition.';
         this.showForSensitive = false;
-        this.audience = 1.0;
+        this.audience = 0;
         this.audienceOffset = 0;
         this.successMeasure = 'Conversion';
         this.audienceCriteria = 'All users in the ' + edition + ' edition.';
@@ -78,5 +78,85 @@ define([
         return this.addMessageVariant(variantId, {contributions: variantParams});
     };
 
-    return []
+    var PaywallAndPaypalTest = function() {
+        this.id = 'MembershipEngagementBannerPaywallAndPaypalTest';
+        this.start = '2017-02-27';
+        this.expiry = '2017-03-13';
+        this.author = 'Jonathan Rankin';
+        this.description = 'Test different copy for the engagement banner.';
+        this.audience = 1;
+        this.audienceOffset = 0;
+        this.successMeasure = 'Supporter click-through rate and/or acquisition rate';
+        this.audienceCriteria = 'All readers.';
+        this.idealOutcome = 'We are able to establish which copy is best, with statistical significance';
+
+        this.canRun = function() {
+            return commercialFeatures.canReasonablyAskForMoney && isNotInUSOrAU();
+        };
+
+        this.variants = [];
+    };
+
+    // cta should be a function which returns the call-to-action which is placed after the message text.
+    PaywallAndPaypalTest.prototype.addVariant = function(variantId, messageText) {
+
+        function createCampaignCode(variantId) {
+            // Campaign code follows convention. Talk to Alex for more information.
+            return 'gdnwb_copts_memco_paywall_paypal_' + variantId;
+        }
+
+        var engagementBannerParams = {
+            campaignCode: createCampaignCode(variantId)
+        };
+
+        if (messageText) {
+            engagementBannerParams[messageText] = messageText;
+        }
+
+
+
+
+
+        this.variants.push({
+            id: variantId,
+
+            // We don't want to run any 'code' in this test, we just want a variant to be selected.
+            // All message display is performed in membership-engagement-banner.js,
+            // modifying the banner using the data in variantParams.
+            test: function () {},
+
+            success: completer,
+
+            // This allows a lot of the deriveBannerParams() logic (in membership-engagement-banner.js) to be by-passed.
+            // If that function has picked up a variant from the CopyTest test, call this method and be done with it.
+           engagementBannerParams : engagementBannerParams
+
+        });
+
+        return this;
+    };
+
+
+
+
+
+    return [
+        new PaywallAndPaypalTest()
+            .addVariant(
+                'control',
+            )
+            .addVariant(
+                'paywall',
+                'Unlike many others, we haven\'t put up a paywall - we want to keep our journalism as open as we can.',
+            )
+            .addVariant(
+                'paypal',
+                monthlySupporterCtaWithToday
+            )
+            .addVariant(
+                'opportunity',
+                'If you’ve been thinking about supporting us, we’ve never needed you more.',
+                monthlySupporterCtaWithToday
+            )
+    ]
 });
