@@ -215,8 +215,8 @@
             }
             .rich-link__header,
             .rich-link__read-more-text {
-                color: $neutral-1;
                 @include f-headlineSans;
+                color: $neutral-1;
             }
             .rich-link__arrow-icon {
                 fill: $paid-article-brand;
