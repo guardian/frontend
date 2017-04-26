@@ -28,27 +28,18 @@ class BookFinder(actorSystem: ActorSystem, magentoService: MagentoService) exten
 object BookAgent extends Logging {
 
   private lazy val cache = AkkaAgent(Map.empty[String, JsValue])
-  private lazy val isbnsToBeAddedToCache = AkkaAgent(Set.empty[String])
 
   def get(isbn: String)(implicit magentoService: MagentoService, executionContext: ExecutionContext): Option[JsValue] =
 
     cache.get.get(isbn) match {
       case Some(json) => Some(json)
       case None =>
-        if (!isbnsToBeAddedToCache.get.contains(isbn)) {
-          isbnsToBeAddedToCache alter { _ + isbn } onComplete {
-            case Failure(e) => log.error("Unable to schedule ISBN for Magento Lookup.", e)
-            case Success(_)  =>
-              magentoService.findByIsbn(isbn) andThen {
-                case Failure(e) => log.error("Magento lookup failed.", e)
-                case Success(None) => log.warn(s"Magento unable to find book for $isbn.")
-                case Success(Some(json: JsValue)) => cache alter { _ + (isbn -> json) }
-              } andThen {
-                case _ => isbnsToBeAddedToCache alter { _ - isbn }
-              }
+          magentoService.findByIsbn(isbn) onComplete {
+            case Failure(e) => log.error("Magento lookup failed.", e)
+            case Success(None) => log.warn(s"Magento unable to find book for $isbn.")
+            case Success(Some(json: JsValue)) => cache alter { _ + (isbn -> json) }
           }
-        }
-        None
+          None
     }
 }
 
