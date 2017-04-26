@@ -11,13 +11,11 @@ define([
     config,
     liveblogEpicTemplate
 ) {
-    function addPageIdToCampaignCode(code) {
-        return code + '_' + config.page.pageId.replace(/[/-]/g, '_');
-    }
 
     return contributionsUtilities.makeABTest({
         id: 'AcquisitionsEpicLiveblog',
         campaignId: 'epic_liveblog',
+        campaignSuffix: config.page.pageId.replace(/-/g, '_').replace(/\//g, '__'),
 
         start: '2017-04-01',
         expiry: '2018-04-01',
@@ -45,13 +43,12 @@ define([
                 },
                 insertBeforeSelector: '.js-liveblog-epic-placeholder',
                 insertMultiple: true,
-
                 successOnView: true,
 
                 template: function (variant) {
                     return template(liveblogEpicTemplate, {
-                        membershipUrl: variant.membershipURLBuilder(addPageIdToCampaignCode),
-                        contributionUrl: variant.contributionsURLBuilder(addPageIdToCampaignCode),
+                        membershipUrl: variant.membershipURL,
+                        contributionUrl: variant.contributeURL,
                         componentName: variant.componentName
                     });
                 },
