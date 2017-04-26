@@ -7,7 +7,7 @@ define([
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker',
     'raw-loader!commercial/views/creatives/fabric-video.html'
-], function (qwery, addEventListener, fastdom, detect, template, addTrackingPixel, addViewabilityTracker, fabricVideoStr) {
+], function (qwery, events, fastdom, detect, template, addTrackingPixel, addViewabilityTracker, fabricVideoStr) {
     var fabricVideoTpl;
 
     return FabricVideo;
@@ -56,8 +56,8 @@ define([
             }).then(function () {
                 layer2 = qwery('.creative__layer2', adSlot);
 
-                addEventListener.addEventListener(window, 'scroll', onScroll, { passive: true });
-                addEventListener.addEventListener(adSlot, 'animationend', function () {
+                events.addEventListener(window, 'scroll', onScroll, { passive: true });
+                events.addEventListener(adSlot, 'animationend', function () {
                     window.removeEventListener('scroll', onScroll);
                 });
 
