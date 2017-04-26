@@ -7,7 +7,7 @@ define([
 ) {
 
   var shouldRun = !config.page.isFront && config.switches.simpleReach &&
-    config.page.edition === 'US' && config.page.isPaidContent;
+    config.page.isPaidContent;
 
   var simpleReachUrl = '';
 

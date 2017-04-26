@@ -155,7 +155,7 @@ trait ABTestSwitches {
     "Paid commenting test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 27),
+    sellByDate = new LocalDate(2017, 5, 25),  // Thurs 25th May
     exposeClientSide = true
   )
 
@@ -185,7 +185,7 @@ trait ABTestSwitches {
     "Use the fabulous AB framework to add a opt-in for SimpleReach tracking",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 26),
+    sellByDate = new LocalDate(2017, 5, 3),
     exposeClientSide = true
   )
 

@@ -2,22 +2,23 @@ package services
 
 import java.net.URI
 
-import conf.IdentityConfiguration
+import conf.IdConfig
 import play.api.mvc.RequestHeader
 import utils.SafeLogging
+
 import scala.util.Try
 
-class ReturnUrlVerifier(conf: IdentityConfiguration) extends SafeLogging {
+class ReturnUrlVerifier(conf: IdConfig) extends SafeLogging {
 
-  private val returnUrlDomains = List(conf.id.domain)
+  private val returnUrlDomains = List(conf.domain)
 
-  val defaultReturnUrl = "http://www." + conf.id.domain
+  val defaultReturnUrl = "http://www." + conf.domain
 
   def getVerifiedReturnUrl(request: RequestHeader): Option[String] = getVerifiedReturnUrl(
     request
       .getQueryString("returnUrl")
       .orElse(request.headers.get("Referer")
-      .filterNot(_.startsWith(conf.id.url))
+      .filterNot(_.startsWith(conf.url))
     )
   )
 
