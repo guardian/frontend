@@ -26,7 +26,7 @@ case class AdRequest(
   browser_dimensions: Option[String],
   switch_user_id: Option[String],       // switch_user_id, SWID cookie
   floor_price: Option[String],
-  targeting_variables: Option[String]
+  targeting_variables: Option[AppNexusTargeting]
 )
 
 case class AdTargeting(
@@ -46,8 +46,8 @@ case class AdTargeting(
       pt2 = edition,
       pt3 = ct,
       pt4 = p,
-      pt5 = k,
-      pt6 = su,
+      pt5 = k.mkString(","),
+      pt6 = su.mkString(","),
       pt9 = (co ++ tn).mkString("|")
     )
   }
@@ -59,12 +59,13 @@ case class AppNexusTargeting(
   pt2: String,
   pt3: String,
   pt4: String,
-  pt5: List[String],
-  pt6: List[String],
+  pt5: String,
+  pt6: String,
   pt9: String
-){
-  def toOpenRTBString: String = {
-  }
+)
+
+object AppNexusTargeting {
+  implicit val appNexusTargeting = Json.writes[AppNexusTargeting]
 }
 
 object AdRequest {
@@ -117,7 +118,7 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
         browser_dimensions = None,
         switch_user_id = switchId,
         floor_price = None,
-        targeting_variables = maybeTargeting.map(_.toAppNexusTargeting.toOpenRTBString)
+        targeting_variables = maybeTargeting.map(_.toAppNexusTargeting)
       ))
 
       wsClient.url(Configuration.switch.switchAdHubUrl)
