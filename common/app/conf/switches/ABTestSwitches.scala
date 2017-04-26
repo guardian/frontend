@@ -159,4 +159,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-paid-content-vs-outbrain",
+    "Displays a paid content widget instead of Outbrain",
+    owners = Seq(Owner.withGithub("lps88")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 10),
+    exposeClientSide = true
+  )
+
 }
