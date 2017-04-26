@@ -18,7 +18,7 @@ class PlaySigninService(conf: IdentityConfiguration) extends SafeLogging with Ex
           val secureHttpOnly = cookie.key.startsWith("SC_")
           val cookieMaxAgeOpt = maxAge.filterNot(_ => cookie.isSessionCookie)
 
-          Cookie(cookie.key, cookie.value, cookieMaxAgeOpt, "/", Some(conf.id.domain), secureHttpOnly, secureHttpOnly)
+          Cookie(cookie.key, cookie.value, cookieMaxAgeOpt, "/", Some(conf.domain), secureHttpOnly, secureHttpOnly)
         }
       }
     }

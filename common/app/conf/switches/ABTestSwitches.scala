@@ -71,6 +71,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-epic-liveblog",
+    "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 7, 3),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-tailor-survey",
     "Integrate Tailor with ab tests",
     owners = Seq(Owner.withGithub("oilnam")),
@@ -145,7 +155,7 @@ trait ABTestSwitches {
     "Paid commenting test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 27),
+    sellByDate = new LocalDate(2017, 5, 25),  // Thurs 25th May
     exposeClientSide = true
   )
 
@@ -161,21 +171,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-epic-to-support-landing-page",
-    "Use AB framework to divert traffic from epic to new support landing page",
-    owners = Seq(Owner.withGithub("JustinPinner")),
+    "ab-paid-content-vs-outbrain",
+    "Displays a paid content widget instead of Outbrain",
+    owners = Seq(Owner.withGithub("lps88")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 27),
+    sellByDate = new LocalDate(2017, 5, 10),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-simple-reach",
-    "Use the fabulous AB framework to add a opt-in for SimpleReach tracking",
-    owners = Seq(Owner.withGithub("katebee")),
+    "ab-epic-to-support-landing-page",
+    "Use AB framework to divert traffic from epic to new support landing page",
+    owners = Seq(Owner.withGithub("JustinPinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 26),
+    sellByDate = new LocalDate(2017, 4, 27),
     exposeClientSide = true
   )
 

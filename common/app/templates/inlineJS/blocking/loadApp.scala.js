@@ -8,87 +8,63 @@
 // for that, we use polyfill.io.
 //
 // since that's a possbile point of failure, we have a checked-in copy of
-// the pf.io response for *all* polyfills that we will serve to everyone
-// as a worst-case back up.
+// the pf.io response for *all* polyfills that we may serve to everyone
+// as a worst-case back up. This fallback will be loaded if the PolyfillIO
+// switch is off.
 //
 // in that situation, they're gated, meaning they won't patch if they don't
 // need to, but they're still downloaded (currently ~20 kB gzipped) and
 // the file is still parsed
 
 // this is a global that's called at the bottom of the pf.io response,
-// once the polyfills have run.
+// once the polyfills have run. This may be useful for debugging.
 function guardianPolyfilled() {
     try {
-        // boot.js uses one of these to kick the app off,
-        // depending on which js file loads first
         window.guardian.polyfilled = true;
-        window.guardian.onPolyfilled();
     } catch (e) {};
 }
 
 // Load the app and try to patch the env with polyfill.io
+// Adapted from https://www.html5rocks.com/en/tutorials/speed/script-loading/#toc-aggressive-optimisation
 (function (document, window) {
-    var ref = document.getElementsByTagName('script')[0];
-    var polyfillScript, fallbackScript;
+    var scripts = [];
+    var src;
+    var script;
+    var pendingScripts = [];
+    var firstScript = document.scripts[0];
 
-    // because we're potentially setting up a race condition (polyfill.io and fallback)
-    // we need a way to stop one of the scripts evaling if they both get requested
-    function disableScript(script) {
-        if(script) {
-            script.type = 'ignore-this-script';
+    @if(PolyfillIO.isSwitchedOn) {
+        scripts.push('@common.Assets.js.polyfillioUrl');
+    } else {
+        scripts.push('@Static("javascripts/vendor/polyfillio.fallback.js")');
+    }
+
+    scripts.push('@Static("javascripts/graun.standard.js")');
+
+    function stateChange() {
+        var pendingScript;
+        while (pendingScripts[0] && pendingScripts[0].readyState == 'loaded') {
+            pendingScript = pendingScripts.shift();
+            pendingScript.onreadystatechange = null;
+            firstScript.parentNode.insertBefore(pendingScript, firstScript);
         }
     }
 
-    // if polyfill.io fails or times out, we'll load our fallback
-    function loadFallback () {
-        fallbackScript = document.createElement('script');
-        fallbackScript.src = '@Static("javascripts/vendor/polyfillio.fallback.js")';
-        fallbackScript.onload = function () {
-            // if this ends up loading before polyfill.io, make sure
-            // polyfill.io response isn't also applied
-            disableScript(polyfillScript);
-        };
-        ref.parentNode.insertBefore(fallbackScript, appScript);
-    }
-
-    // load polyfills from polyfill.io
-    function loadPolyfillIO () {
-        polyfillScript = document.createElement('script');
-        polyfillScript.src = "@common.Assets.js.polyfillioUrl";
-        polyfillScript.onerror = function () { // if something goes wrong...
-            // 1. ignore this script
-            disableScript(polyfillScript);
-            // 2. try to cancel the timeout that would have loaded the fallback eventually
-            window.clearTimeout(window.guardian.loadPolyfillioFallback);
-            // 3. manually load the fallback
-            loadFallback();
-        };
-        polyfillScript.onload = function () { // once we get polyfills from polyfill.io...
-            // 1. try to cancel the timeout that would have loaded the fallback eventually
-            window.clearTimeout(window.guardian.loadPolyfillioFallback);
-            // 2. disable the fallback script
-            // why? it's possible this script took too long to arrive and the fallback
-            // was triggered, but then this actually arrived *before* the fallback did.
-            // in that case, we might as well use this instead of waiting, but we don't
-            // want to patch again with the fallback when *it* arrives.
-            disableScript(fallbackScript);
-        };
-        appScript.parentNode.insertBefore(polyfillScript, appScript);
-
-        // give pollyfill.io 3 seconds to arrive before we trigger the fallback
-        window.guardian.loadPolyfillioFallback = window.setTimeout(loadFallback, 3000);
-    }
-
-    // the app will probably take longest to load, so let's
-    // get it loading ASAP. it won't do anything till the polyfills
-    // have run anyway
-    var appScript = document.createElement('script');
-    appScript.src = '@Static("javascripts/graun.standard.js")';
-    ref.parentNode.insertBefore(appScript, ref);
-
-    @if(PolyfillIO.isSwitchedOn) {
-        loadPolyfillIO()
-    } else {
-        loadFallback();
+    while (src = scripts.shift()) {
+        if ('async' in firstScript) { // modern browsers
+            script = document.createElement('script');
+            script.async = false;
+            script.src = src;
+            document.head.appendChild(script);
+        }
+        else if (firstScript.readyState) { // IE<10
+            script = document.createElement('script');
+            pendingScripts.push(script);
+            script.onreadystatechange = stateChange;
+            script.src = src;
+        }
+        else { // fall back to defer
+            document.write('<script src="' + src + '" defer></'+'script>');
+        }
     }
 })(document, window);
