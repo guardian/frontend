@@ -30,7 +30,7 @@ define([
         this.canRun = function () {
             return document.querySelector('#membership-ab-thrasher') &&
                     !userFeatures.isPayingMember() &&
-                    //detect.isBreakpoint({min: 'leftCol'}) &&
+                    detect.isBreakpoint({min: 'desktop'}) &&
                     config.page.isFront &&
                     config.page.pageId.toLowerCase() === "uk" &&
                     config.page.edition.toUpperCase() === 'UK';
