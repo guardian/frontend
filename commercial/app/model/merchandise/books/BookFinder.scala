@@ -29,18 +29,18 @@ object BookAgent extends Logging {
 
   private lazy val cache = AkkaAgent(Map.empty[String, JsValue])
 
-  def get(isbn: String)(implicit magentoService: MagentoService, executionContext: ExecutionContext): Option[JsValue] =
+  def get(isbn: String)(implicit magentoService: MagentoService, executionContext: ExecutionContext): Option[JsValue] = {
 
-    cache.get.get(isbn) match {
-      case Some(json) => Some(json)
-      case None =>
-          magentoService.findByIsbn(isbn) onComplete {
-            case Failure(e) => log.error("Magento lookup failed.", e)
-            case Success(None) => log.warn(s"Magento unable to find book for $isbn.")
-            case Success(Some(json: JsValue)) => cache alter { _ + (isbn -> json) }
-          }
-          None
+    val bookJson: Option[JsValue] = cache.get.get(isbn)
+
+    if (bookJson.isEmpty) {
+      magentoService.findByIsbn(isbn) onComplete {
+        case Failure(e) => log.error("Magento lookup failed.", e)
+        case Success(None) => log.warn(s"Magento unable to find book for $isbn.")
+        case Success(Some(json: JsValue)) => cache alter { _ + (isbn -> json) }
+      }
     }
+  }
 }
 
 class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Logging {
