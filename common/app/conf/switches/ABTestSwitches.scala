@@ -171,6 +171,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-paid-content-vs-outbrain",
+    "Displays a paid content widget instead of Outbrain",
+    owners = Seq(Owner.withGithub("lps88")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-epic-to-support-landing-page",
     "Use AB framework to divert traffic from epic to new support landing page",
     owners = Seq(Owner.withGithub("JustinPinner")),

@@ -13,6 +13,7 @@ define([
     'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/opinion-email-variants',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
+    'common/modules/experiments/tests/paid-content-vs-outbrain',
     'common/modules/experiments/tests/tailor-survey',
     'common/modules/experiments/tests/the-long-read-email-variants',
     'common/modules/experiments/tests/fashion-statement-email-variants',
@@ -39,6 +40,7 @@ define([
              EditorialEmailVariants,
              OpinionEmailVariants,
              MembershipEngagementBannerTests,
+             PaidContentVsOutbrain2,
              TailorSurvey,
              TheLongReadEmailVariants,
              FashionStatementEmailVariants,
@@ -55,6 +57,7 @@ define([
     var TESTS = compact([
         new EditorialEmailVariants(),
         new OpinionEmailVariants(),
+        new PaidContentVsOutbrain2,
         acquisitionTestSelector.getTest(),
         new TailorSurvey(),
         TheLongReadEmailVariants,
