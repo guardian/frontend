@@ -227,3 +227,9 @@
         color: $neutral-1;
     }
 }
+.rich-link__branding {
+    @include fs-textSans(1);
+    color: $neutral-2;
+    font-weight: bold;
+    margin: -$gs-baseline / 2 $gs-gutter / 4 $gs-baseline;
+}

@@ -1,4 +1,5 @@
 @import model.ContentType
+@import common.Edition
 @import model.pressed.{Comment, DefaultCardstyle, Feature, Media, SpecialReport}
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{BulletCleaner, ImgSrc, Item460, RenderClasses, RichLinkContributor}
@@ -55,6 +56,13 @@
             }
             @content.content.starRating.map { stars => @fragments.items.elements.starRating(stars) }
         </div>
+
+        @if(content.tags.isPaidContent){
+            <div class="rich-link__branding">
+                Paid for by
+                @content.metadata.commercial.flatMap(_.branding(Edition(request))).map(_.sponsorName)
+            </div>
+        }
 
         @if(!content.tags.isGallery && !content.tags.isVideo) {
             <div class="rich-link__standfirst u-cf">
