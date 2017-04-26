@@ -98,24 +98,24 @@ define([
         render: function () {
             var headerClass = 'crossword__clues-header';
             var cluesByDirection = function (direction) {
-                    return this.props.clues.filter(function (clue) {
-                                return clue.entry.direction === direction;
-                            }).map(function (clue) {
-                                return React.createElement(Clue, {
-                                    ref: clue.entry.id,
-                                    id: clue.entry.id,
-                                    key: clue.entry.id,
-                                    number: clue.entry.number,
-                                    humanNumber: clue.entry.humanNumber,
-                                    clue: clue.entry.clue,
-                                    hasAnswered: clue.hasAnswered,
-                                    isSelected: clue.isSelected,
-                                    setReturnPosition: function () {
-                                        this.props.setReturnPosition(window.scrollY);
-                                    }.bind(this)
-                                });
-                            }.bind(this));
-                }.bind(this);
+                return this.props.clues.filter(function (clue) {
+                            return clue.entry.direction === direction;
+                        }).map(function (clue) {
+                            return React.createElement(Clue, {
+                                ref: clue.entry.id,
+                                id: clue.entry.id,
+                                key: clue.entry.id,
+                                number: clue.entry.number,
+                                humanNumber: clue.entry.humanNumber,
+                                clue: clue.entry.clue,
+                                hasAnswered: clue.hasAnswered,
+                                isSelected: clue.isSelected,
+                                setReturnPosition: function () {
+                                    this.props.setReturnPosition(window.scrollY);
+                                }.bind(this)
+                            });
+                        }.bind(this));
+            }.bind(this);
 
             return React.createElement(
                 'div', {
