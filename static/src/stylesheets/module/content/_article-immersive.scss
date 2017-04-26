@@ -580,7 +580,6 @@
 
     @include mq(wide) {
         margin-left: ($left-column-wide + $gs-gutter)*-1;
-        width: $left-column-wide;
     }
 }
 

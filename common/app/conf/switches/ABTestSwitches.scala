@@ -31,16 +31,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-editorial-email-variants",
-    "Assign users to variants of our editorial emails",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-opinion-email-variants",
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
@@ -164,16 +154,6 @@ trait ABTestSwitches {
     "ab-paid-card-logo",
     "Trialling paid cards in editorial containers",
     owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-simple-reach",
-    "Use the fabulous AB framework to add a opt-in for SimpleReach tracking",
-    owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 5, 3),
     exposeClientSide = true
