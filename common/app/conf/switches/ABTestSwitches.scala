@@ -171,16 +171,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-epic-to-support-landing-page",
-    "Use AB framework to divert traffic from epic to new support landing page",
-    owners = Seq(Owner.withGithub("JustinPinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 27),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-simple-reach",
     "Use the fabulous AB framework to add a opt-in for SimpleReach tracking",
     owners = Seq(Owner.withGithub("katebee")),
