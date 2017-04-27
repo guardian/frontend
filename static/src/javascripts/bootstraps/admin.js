@@ -1,7 +1,10 @@
+// @flow
 import abTests from 'admin/bootstraps/abtests';
 import radiator from 'admin/bootstraps/radiator';
-import commercialBrowserPerformance from 'admin/bootstraps/commercial-browser-performance';
+import commercialBrowserPerformance
+    from 'admin/bootstraps/commercial-browser-performance';
 import domReady from 'domready';
+
 domReady(() => {
     switch (window.location.pathname) {
         case '/analytics/abtests':
@@ -15,5 +18,7 @@ domReady(() => {
         case '/commercial/performance/browser-dashboard':
             commercialBrowserPerformance.init();
             break;
+
+        default: // do nothing
     }
 });
