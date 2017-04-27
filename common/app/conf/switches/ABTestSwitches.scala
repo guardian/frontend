@@ -151,21 +151,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-paid-card-logo",
-    "Trialling paid cards in editorial containers",
-    owners = Seq(Owner.withGithub("lps88")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-paid-content-vs-outbrain",
+    "ab-paid-content-vs-outbrain-2",
     "Displays a paid content widget instead of Outbrain",
-    owners = Seq(Owner.withGithub("lps88")),
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 10),
+    sellByDate = new LocalDate(2018, 1, 8),
     exposeClientSide = true
   )
 
