@@ -1,9 +1,9 @@
 // @flow
 
+import bean from 'bean';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import config from 'lib/config';
-import addEventListener from 'lib/add-event-listener';
 import { getCookie, addCookie, removeCookie } from 'lib/cookies';
 import { local } from 'lib/storage';
 import mediator from 'lib/mediator';
@@ -190,7 +190,8 @@ const handleSurveyResponse = surveyId => {
     ];
 
     surveyQuestions.forEach(question => {
-        addEventListener(question, 'click', event => {
+        // #? use addEventListener
+        bean.on(question, 'click', event => {
             if (event.target.attributes.getNamedItem('data-link-name')) {
                 const answer = event.target.attributes.getNamedItem(
                     'data-link-name'
