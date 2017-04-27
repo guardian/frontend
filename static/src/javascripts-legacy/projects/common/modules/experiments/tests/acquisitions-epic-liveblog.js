@@ -11,11 +11,12 @@ define([
     config,
     liveblogEpicTemplate
 ) {
+    var pageId = config.page.pageId || '';
 
     return contributionsUtilities.makeABTest({
         id: 'AcquisitionsEpicLiveblog',
         campaignId: 'epic_liveblog',
-        campaignSuffix: config.page.pageId.replace(/-/g, '_').replace(/\//g, '__'),
+        campaignSuffix: pageId.replace(/-/g, '_').replace(/\//g, '__'),
 
         start: '2017-04-01',
         expiry: '2018-04-01',
