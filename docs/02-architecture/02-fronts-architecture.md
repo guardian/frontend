@@ -1,69 +1,110 @@
-# Fronts Architecture
+# Fronts architecture
 
 ![Fronts architecture](images/fronts-archirecture.png)
 
-The goal of the Fronts architecture is serve each front via a _single_ blocking call to a persitence layer.
+Rendering a front requires to fetch a lot of information from multiple sources (CAPI, Fronts config, Fronts collections). In order to avoid doing this grueling work inline when an user request is received, all data necessary to render a front is prefetched and aggregated in a single location (S3). 
 
-The system produces static aggregation files, offline, one for each front (`pressed.json`). Each file contains all the content required for one front; it is a complete snapshot of its required ContentApi data, structured by collection, and overlaid by the temporary fronts-only article metdata. Each fulfills the single call made by the Facia app in order to service a request for that front.
+In a nutshell:
+- [Facia press](#facia-press): for each front, fetch all necessary data, aggregate it and store it into S3
+- [Facia](#facia): read the aggregated data from S3 and render the front
 
-The global list of defined fronts - and the definitions of the collections on those fronts - is held in a single configuration file (`config.json`). This file is edited using the Configuration Tool. It is polled and referred to by each component in the architecture. 
+## Facia Press
+It is not an user facing service, it processes events published to queues.
+There are 2 queues:
+- one queue populated by a cron job running in the Admin app.
+- one queue where the Fronts tool (fronts.gutools.co.uk) publishes events to when a front is being updated.
+The cron job is very important since content for a front can be coming from CAPI and change without any update from the Fronts tool.
 
-The running order of articles in each collection - and various tweaks to those articles - are represented in multiple `collection.json` files. These are individually edited using the Fronts Tool and persisted to S3. These `collection.json` files dictate which articles need to be requested from the ContentApi during the production of each front's `pressed.json` files.
+### Pressing a front:
+Reacting to a new event published to the queues described above Facia-press then:
 
-As soon as a collection is edited, its id is added to a queue consumed the Presser, which will re-create a `pressed.json` file for any front containing that collection. Additionally, each front is periodically queued for re-pressing by the Admin app; fronts have differential rates of periodic re-pressing, to reflect their differing priorities.
+1. Get the collections that compose the front by fetching the Fronts config at `s3://facia-tool-store/STAGE/frontsapi/config/config.json` in the CMS Fronts account. This file is edited using the Configuration Tool
 
-The `pressed.json` files - one for each front - are persisted to S3. Both preview and live versions are produced.
+Example of a front config:
+```
+...
+"uk/business": {
+    "collections": [
+        "uk/business/regular-stories",
+        "uk/business/feature-stories",
+        "12554364-5a48-4e1a-a931-4dbcd144a12a",
+        "98257c5b-f7af-4238-994e-edfb17e3b16e",
+        "7aa73028-4e76-48d7-a44e-b62a15d36a65",
+        "uk/business/most-viewed/regular-stories",
+        "b5058768-e4a8-4e37-a61e-5f8e4df7f8fc"
+    ],
+    "webTitle": "Economy",
+    "title": "Latest financial, market & economic news and analysis | Business",
+    "description": "Latest financial, market &amp; economic news and analysis from The Guardian"
+}
+...
+```
 
-## Service Level Metrics & Alerts
+In the same file, here is an example of one collection config
+```
+"12554364-5a48-4e1a-a931-4dbcd144a12a": {
+    "displayName": "multimedia",
+    "type": "fixed/small/slow-I"
+}
+```
+Note: 
+- A collection type correspond to its layout.
+- Facia-press is using the [Facia scala client](https://github.com/guardian/facia-scala-client) to interact with the data store in the CMS Fronts bucket. (No direct call to S3)
 
-A large number of ContentApi requests are made in order to produce each front's `pressed.json` file. Due to this dependency, the Presser is the point in the architecture that has the most potential for failure. The metrics and alerts relate principally to its ongoing ability to produce `pressed.json` files.
+2. Get the curated stories/content for each collections of the fronts by fetching the collection data files at `s3://facia-tool-store/STAGE/frontsapi/collection/COLLECTION/ID/collection.json` in the CMS Fronts account. This file is edited using the Fronts Tool
 
-Some of the metrics are to designed to identify terminally unhealthy processes. Others are informational and indicate problems in the broader network (notably ContentApi). Others monitor the speed at which updates travel through the architecture.
+Each collection would contain the `id` and `metadata` for all their running stories that have been curated by editors using the Fronts tool.
+For each story, Facia-Press also fetches content details via CAPI
 
-### Succesive press failures - MANUAL presser (facia-tool)
+3. Get backfilled content.
 
-* __Detail__ : immediately after a collection is edited within the Fronts Editor, the Presser is invoked to re-create the `pressed.json` files for any front containing that collection.
+A collection can contain curated content (picked by editors using the Fronts tools) but can also be filled with stories coming from CAPI.  This can be configured using the Fronts tools.
 
-* __Metrics__  : if the number of *consecutive* failures of the Presser to produce `pressed.json` files exceeds N, the healthcheck fails. The failure count is reset by any successful pressing. 
+4. Get treats content
 
-* __Consequence__ : Instance terminates.
+A treat is a link that can be shown on the website in the bottom left corner of a collection container.
 
-### Succesive press failures - CRON presser (facia-press)
+5. Get SEO and properties
 
-* __Detail__ : every three minutes, the Admin app puts the ids of every front on an SQS queue. These are pulled in bunches (of up to 10) every 10 seconds by Presser instances, and `pressed.json` files are re-created for each front.
+This is an additional request to CAPI to fetch SEO and other metadata for the front page
 
-* __Metrics__  : if the number of *consecutive* failures of the Presser to produce `pressed.json` files exceeds N, the healthcheck fails. The failure count is reset by any successful pressing. 
+6. Finally aggregate all the data fetched in the previous steps and store the result in its json form in S3 (`s3://aws-frontend-store/STAGE/frontsapi/pressed/live/FRONTS/fapi/pressed.json in Frontend account`)
 
-* __Consequence__ : Instance terminates.
+## Facia
 
-### Statictical press failures - CRON presser (facia-press)
+As mentioned above when Facia receive a request for a front, it:
 
-* __Detail__ : due to momentary ContentApi unavailability or increased latency somewhere in the network - pressing will on occasion fail. Above a certain frequency, these failures should be considered as indicative of a operational issue.   
+1. fetches the "pressed" data from S3 (`s3://aws-frontend-store/STAGE/frontsapi/pressed/live/FRONTS/fapi/pressed.json in Frontend account`)
 
-* __Metrics__  : 50 failures within 15 minutes, monitored in CloudWatch.
+2. renders the front.
 
-* __Consequence__ : PagerDuty alarm
+Each front collection would be rendered into a `container`. A container is always full-width.
 
-### Statictical press failures - MANUAL presser (facia-tool)
+The collection type (ex: `fixed/medium/slow-VI`) would decide the type and layout of the container. See [here](https://github.com/guardian/frontend/blob/master/common/app/slices/FixedContainers.scala#L79) and [here](https://github.com/guardian/frontend/blob/master/common/app/slices/Container.scala#L9)
 
-* __Detail__ : due to momentary ContentApi unavailability or increased latency somewhere in the network - pressing will on occasion fail. Above a certain frequency, these failures should be considered as indicative of a operational issue.   
+Each container is composed of `slices` (aka "rows"). Each [Slice definition](https://github.com/guardian/frontend/blob/master/common/app/slices/Slice.scala) specifies columns info and css classname.
 
-* __Metrics__  : 50 failures within 15 minutes, monitored in CloudWatch. 
+Each row would contained cards.
 
-* __Consequence__ : PagerDuty alarm
+A card displays the information of one story/content.
 
-### ContentAPI invalid responses
+## Glossary:
 
-* __Detail__ : the Presser (and also the fronts tools) are dependent on ContentApi results being well-formed. Occasionally ContentApi returns intermittently malformed results.
+Here is the defition of a few words and expression related to fronts:
 
-* __Metrics__  : (a) 50 malformed results within 15 minutes, monitored in CloudWatch; (b) a single malformed result monitored by the facia-tool UI.
+_Snap_:
+A way to include arbitrary content into a collection (rather than a story). 
+A snap can be a link (often used to show an interactive on the front) or dynamic content (latest story for given tag)
 
-* __Consequence__ : (a) PagerDuty alarm; (b) a "red" alert in the UI with an option to "try again".
+_Trasher_:
+A type of container which contain a single full-width element
 
-### On edit, press within 10 seconds (not incl. cache time)
+_Dynamo_:
+A type of container often use to highlight a huge story. It's better known in the codebase as the `dynamic/package` collection type.
 
-* __Detail__ : The end-to-end process from invoking the Presser to producing a `pressed.json` file - after a collection is manually edited - should be under 10 seconds. (It typically takes about 3 seconds under normal network conditions.)
+_Groups_:
+A way to further tweak the layout of a collection. Dynamic collection can have multiple groups (standard/snaps or huge/veryBig/big/standard). Depending of the group a story/content is in, the layout of the container would be slightly altered.
 
-* __Metric__  : the difference between the most recent timestamp of a front's various `collection.json` files, and the timestamp of that front's `pressed.json` file. This is checked 10 seconds after any edit; the result itself should be below 10 seconds.
+## More
 
-* __Consequence__ : if the metric exceeds 10 seconds, an "orange" alert appears in the tool UI with an option to "try again". The condition occurs on occasion due to momentary high latency somewhere in network, and generally does not reproduce itself on retry.
+- [Facia Level Metrics & Alerts](facia/facia-monitoring.md)
