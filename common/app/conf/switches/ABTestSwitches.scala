@@ -163,9 +163,9 @@ trait ABTestSwitches {
     ABTests,
     "ab-paid-content-vs-outbrain",
     "Displays a paid content widget instead of Outbrain",
-    owners = Seq(Owner.withGithub("lps88")),
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 10),
+    sellByDate = new LocalDate(2018, 1, 8),
     exposeClientSide = true
   )
 
