@@ -148,9 +148,10 @@ const renderQuickSurvey = () => {
 const disableRadioButtons = buttonClassName => {
     const radioButtons = document.getElementsByClassName(buttonClassName);
 
-    [...radioButtons].forEach(button => {
-        // eslint-disable-next-line no-param-reassign
-        button.disabled = true;
+    [...radioButtons].forEach((button: any) => {
+        const radio: HTMLInputElement = button;
+
+        radio.disabled = true;
     });
 };
 
@@ -159,7 +160,9 @@ const surveyFadeOut = () => {
         'impressions-survey__content'
     );
 
-    surveyContent[0].classList.add('js-impressions-survey__fadeout');
+    [...surveyContent].forEach(content => {
+        content.classList.add('js-impressions-survey__fadeout');
+    });
 };
 
 const thankyouFadeIn = () => {
