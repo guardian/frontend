@@ -105,7 +105,6 @@
     "projects/common/modules/commercial/adblock-messages.js"
   ],
   "sndrs": [
-    "bootstraps/admin.js",
     "bootstraps/enhanced/accessibility.js",
     "bootstraps/enhanced/article-liveblog-common.js",
     "bootstraps/enhanced/article-minute.js",
