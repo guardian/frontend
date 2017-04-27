@@ -1,9 +1,9 @@
 // @flow
 
-import bean from 'bean';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import config from 'lib/config';
+import addEventListener from 'lib/add-event-listener';
 import { getCookie, addCookie, removeCookie } from 'lib/cookies';
 import { local } from 'lib/storage';
 import mediator from 'lib/mediator';
@@ -11,7 +11,7 @@ import tailorSurveyHtml
     from 'raw-loader!common/views/experiments/tailor-survey.html';
 import ophan from 'ophan/ng';
 import template from 'lodash/utilities/template';
-import spaceFiller from 'common/modules/article/space-filler';
+import { fillSpace } from 'common/modules/article/space-filler';
 import tailor from 'common/modules/tailor/tailor';
 
 // Every time we show a survey to a user, we cannot show it again to that suer for a specified number of days.
@@ -98,7 +98,7 @@ const spacefinderRules = {
 
 // we can write a survey into a spare space using spaceFiller
 const inArticleWriter = (survey, surveyId) =>
-    spaceFiller.fillSpace(spacefinderRules, paras => {
+    fillSpace(spacefinderRules, paras => {
         const componentName = `data_tailor_survey_${surveyId}`;
 
         mediator.emit('register:begin', componentName);
@@ -147,7 +147,8 @@ const renderQuickSurvey = () => {
 
 const disableRadioButtons = buttonClassName => {
     const radioButtons = document.getElementsByClassName(buttonClassName);
-    bonzo(radioButtons).each(button => {
+
+    [...radioButtons].forEach(button => {
         // eslint-disable-next-line no-param-reassign
         button.disabled = true;
     });
@@ -184,7 +185,7 @@ const handleSurveyResponse = surveyId => {
     ];
 
     surveyQuestions.forEach(question => {
-        bean.on(question, 'click', event => {
+        addEventListener(question, 'click', event => {
             if (event.target.attributes.getNamedItem('data-link-name')) {
                 const answer = event.target.attributes.getNamedItem(
                     'data-link-name'
