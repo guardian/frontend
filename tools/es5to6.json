@@ -139,7 +139,6 @@
     "lib/atob.js"
   ],
   "Calum Campbell": [
-    "lib/chain.js",
     "lib/clamp.js",
     "lib/client-rects.js",
     "lib/detect.js",
@@ -150,7 +149,6 @@
     "lib/queue.js"
   ],
   "GHaberis": [
-    "lib/chain.js",
     "lib/steady-page.js",
     "projects/admin/bootstraps/abtests.js",
     "projects/admin/bootstraps/radiator.js",
