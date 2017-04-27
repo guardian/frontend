@@ -2,21 +2,21 @@
 
 ![Fronts architecture](images/fronts-archirecture.png)
 
-Rendering a front requires to fetch a lot of information from multiple sources (CAPI, Fronts config, Fronts collections). In order to avoid doing this grueling work inline when an user request is received, all data necessary to render a front is prefetched and aggregated in a single location (S3). 
+Rendering a front requires fetching a lot of information from multiple sources (CAPI, Fronts config, Fronts collections). In order to avoid doing this gruelling work inline when a user request is received, all data necessary to render a front is prefetched and aggregated in a single location (S3). 
 
 In a nutshell:
-- [Facia press](#facia-press): for each front, fetch all necessary data, aggregate it and store it into S3
+- [Facia press](#facia-press): for each front, fetch all necessary data, aggregate it and store it in S3
 - [Facia](#facia): read the aggregated data from S3 and render the front
 
 ## Facia Press
-It is not an user facing service, it processes events published to queues.
+It is not a user facing service, it processes events published to queues.
 There are 2 queues:
 - one queue populated by a cron job running in the Admin app.
-- one queue where the Fronts tool (fronts.gutools.co.uk) publishes events to when a front is being updated.
+- one queue where the Fronts tool (fronts.gutools.co.uk) publishes events when a front is being updated.
 The cron job is very important since content for a front can be coming from CAPI and change without any update from the Fronts tool.
 
 ### Pressing a front:
-Reacting to a new event published to the queues described above Facia-press then:
+In reaction to a new event published to the queues described above, Facia-press will:
 
 1. Get the collections that compose the front by fetching the Fronts config at `s3://facia-tool-store/STAGE/frontsapi/config/config.json` in the CMS Fronts account. This file is edited using the Configuration Tool
 
@@ -48,13 +48,13 @@ In the same file, here is an example of one collection config
 }
 ```
 Note: 
-- A collection type correspond to its layout.
+- A collection type corresponds to its layout.
 - Facia-press is using the [Facia scala client](https://github.com/guardian/facia-scala-client) to interact with the data store in the CMS Fronts bucket. (No direct call to S3)
 
 2. Get the curated stories/content for each collections of the fronts by fetching the collection data files at `s3://facia-tool-store/STAGE/frontsapi/collection/COLLECTION/ID/collection.json` in the CMS Fronts account. This file is edited using the Fronts Tool
 
 Each collection would contain the `id` and `metadata` for all their running stories that have been curated by editors using the Fronts tool.
-For each story, Facia-Press also fetches content details via CAPI
+For each story, Facia-Press also fetches content details via CAPI.
 
 3. Get backfilled content.
 
@@ -66,13 +66,13 @@ A treat is a link that can be shown on the website in the bottom left corner of 
 
 5. Get SEO and properties
 
-This is an additional request to CAPI to fetch SEO and other metadata for the front page
+This is an additional request to CAPI to fetch SEO and other metadata for the front page.
 
 6. Finally aggregate all the data fetched in the previous steps and store the result in its json form in S3 (`s3://aws-frontend-store/STAGE/frontsapi/pressed/live/FRONTS/fapi/pressed.json in Frontend account`)
 
 ## Facia
 
-As mentioned above when Facia receive a request for a front, it:
+As mentioned above, when Facia receives a request for a front, it:
 
 1. fetches the "pressed" data from S3 (`s3://aws-frontend-store/STAGE/frontsapi/pressed/live/FRONTS/fapi/pressed.json in Frontend account`)
 
@@ -80,11 +80,11 @@ As mentioned above when Facia receive a request for a front, it:
 
 Each front collection would be rendered into a `container`. A container is always full-width.
 
-The collection type (ex: `fixed/medium/slow-VI`) would decide the type and layout of the container. See [here](https://github.com/guardian/frontend/blob/master/common/app/slices/FixedContainers.scala#L79) and [here](https://github.com/guardian/frontend/blob/master/common/app/slices/Container.scala#L9)
+The collection type (ex: `fixed/medium/slow-VI`) will decide the type and layout of the container. See [here](https://github.com/guardian/frontend/blob/master/common/app/slices/FixedContainers.scala#L79) and [here](https://github.com/guardian/frontend/blob/master/common/app/slices/Container.scala#L9)
 
 Each container is composed of `slices` (aka "rows"). Each [Slice definition](https://github.com/guardian/frontend/blob/master/common/app/slices/Slice.scala) specifies columns info and css classname.
 
-Each row would contained cards.
+Each row contains cards.
 
 A card displays the information of one story/content.
 
@@ -94,16 +94,16 @@ Here is the defition of a few words and expression related to fronts:
 
 _Snap_:
 A way to include arbitrary content into a collection (rather than a story). 
-A snap can be a link (often used to show an interactive on the front) or dynamic content (latest story for given tag)
+A snap can be a link (often used to show an interactive on the front) or dynamic content (latest story for given tag).
 
-_Trasher_:
-A type of container which contain a single full-width element
+_Thrasher_:
+A type of container which contains a single full-width element.
 
 _Dynamo_:
-A type of container often use to highlight a huge story. It's better known in the codebase as the `dynamic/package` collection type.
+A type of container often used to highlight a huge story. It's better known in the codebase as the `dynamic/package` collection type.
 
 _Groups_:
-A way to further tweak the layout of a collection. Dynamic collection can have multiple groups (standard/snaps or huge/veryBig/big/standard). Depending of the group a story/content is in, the layout of the container would be slightly altered.
+A way to further tweak the layout of a collection. Dynamic collections can have multiple groups (standard/snaps or huge/veryBig/big/standard). Depending on the group a story/content is in, the layout of the container would be slightly altered.
 
 ## More
 
