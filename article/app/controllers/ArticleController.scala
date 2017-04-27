@@ -24,7 +24,7 @@ case class ArticlePage(article: Article, related: RelatedContent) extends PageWi
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
 class ArticleController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller
-    with RendersItemResponse with Logging with ExecutionContexts with ResultHelper {
+    with RendersItemResponse with Logging with ExecutionContexts with ResultWithPreload {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
@@ -124,9 +124,8 @@ class ArticleController(contentApiClient: ContentApiClient)(implicit context: Ap
       }
 
       val jsonResponse = () => views.html.fragments.articleBody(article)
-      val lcss = List(common.Assets.css.projectCss(Some("content")))
-      val ljs = List("javascripts/graun.standard.js", "javascripts/graun.commercial.js")
-      renderFormat(htmlResponse, jsonResponse, article, Switches.all).withPreload(lcss, ljs)
+      //val default = Seq("content.css", "javascripts/graun.standard.js", "javascripts/graun.commercial.js")
+      renderFormat(htmlResponse, jsonResponse, article, Switches.all)//.withPreload(default)
   }
 
   def renderLiveBlog(path: String, page: Option[String] = None, format: Option[String] = None) =
