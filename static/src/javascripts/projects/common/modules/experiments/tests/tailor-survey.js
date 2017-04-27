@@ -170,7 +170,9 @@ const thankyouFadeIn = () => {
         'impressions-survey__thanks'
     );
 
-    surveyThanks[0].classList.add('js-impressions-survey__fadein');
+    [...surveyThanks].forEach(thanks => {
+        thanks.classList.add('js-impressions-survey__fadein');
+    });
 };
 
 const recordOphanAbEvent = (answer, surveyId) => {
