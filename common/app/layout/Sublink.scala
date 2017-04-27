@@ -210,7 +210,7 @@ object FaciaCard {
   ): FaciaCard = {
 
     val containerName: Option[String] = config.displayName
-    if (faciaContent.branding(defaultEdition).exists(_.isPaid)) {
+    if ((containerName.contains("Paid content in unbranded container") || containerName.contains("lifestyle")) && faciaContent.branding(defaultEdition).exists(_.isPaid)) {
       PaidCard.fromPressedContent(faciaContent, Some(cardTypes))
     } else {
 
