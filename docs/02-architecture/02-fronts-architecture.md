@@ -53,7 +53,7 @@ Note:
 
 2. Get the curated stories/content for each collections of the fronts by fetching the collection data files at `s3://facia-tool-store/STAGE/frontsapi/collection/COLLECTION/ID/collection.json` in the CMS Fronts account. This file is edited using the Fronts Tool
 
-Each collection would contain the `id` and `metadata` for all their running stories that have been curated by editors using the Fronts tool.
+Each collection will contain the `id` and `metadata` for all their running stories that have been curated by editors using the Fronts tool.
 For each story, Facia-Press also fetches content details via CAPI.
 
 3. Get backfilled content.
@@ -90,7 +90,7 @@ A card displays the information of one story/content.
 
 ## Glossary:
 
-Here is the defition of a few words and expression related to fronts:
+Here is the definition of a few words and expressions related to fronts:
 
 _Snap_:
 A way to include arbitrary content into a collection (rather than a story). 
