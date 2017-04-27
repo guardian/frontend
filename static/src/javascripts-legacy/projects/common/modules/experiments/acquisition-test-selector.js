@@ -13,7 +13,7 @@ define([
     viewLog,
     alwaysAsk,
     askFourEarning,
-    acquisitionsEpicLivelog
+    acquisitionsEpicLiveBlog
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
@@ -21,7 +21,7 @@ define([
     var tests = [
         alwaysAsk,
         askFourEarning,
-        acquisitionsEpicLivelog
+        acquisitionsEpicLiveBlog
     ];
 
     var epicEngagementBannerTests = reduce(tests, function(out, test) {
