@@ -268,4 +268,9 @@
         }
     }
 
+    .media-primary & {
+        @include mq($from: mobile, $until: mobileLandscape) {
+            margin-top: -1rem;
+        }
+    }
 }
