@@ -22,6 +22,7 @@ define([
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
     'common/modules/experiments/tests/paid-card-logo',
+    'common/modules/experiments/tests/measure-understanding',
     'ophan/ng',
     'common/modules/experiments/tests/paid-commenting'
 ], function (reportError,
@@ -47,6 +48,7 @@ define([
              SleevenotesLegacyEmailVariant,
              increaseInlineAdsRedux,
              PaidCardLogo,
+             measureUnderstanding,
              ophan,
              PaidCommenting
     ) {
@@ -63,7 +65,8 @@ define([
         SleevenotesLegacyEmailVariant,
         new increaseInlineAdsRedux(),
         new PaidCardLogo(),
-        new PaidCommenting()
+        new PaidCommenting(),
+        measureUnderstanding.MeasureUnderstanding()
     ].concat(MembershipEngagementBannerTests));
 
     function cleanParticipations() {
