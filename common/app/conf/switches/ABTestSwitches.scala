@@ -180,4 +180,16 @@ trait ABTestSwitches {
   )
 
 
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-testimonials",
+    "Test placing reader testimonials in the Epic",
+    owners = Seq(
+      Owner.withGithub("Mullefa"),
+      Owner.withGithub("joelochlann")
+    ),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 5, 4),
+    exposeClientSide = true
+  )
 }
