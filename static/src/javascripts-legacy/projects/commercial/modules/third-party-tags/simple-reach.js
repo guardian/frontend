@@ -1,23 +1,21 @@
 define([
-    'lib/config',
-    'common/modules/experiments/ab'
+    'lib/config'
 ], function (
-    config,
-    ab
+    config
 ) {
 
   var shouldRun = !config.page.isFront && config.switches.simpleReach &&
-    config.page.edition === 'US' && config.page.isPaidContent;
+    config.page.isPaidContent;
 
   var simpleReachUrl = '';
 
-  if (ab.getTestVariantId("SimpleReach") === "opt-in" && shouldRun) {
+  if (shouldRun) {
       var authors = config.page.author.split(',');
       var channels = config.page.sectionName.split(',');
       var keywords = config.page.keywords.split(',');
 
       window.__reach_config = {
-        pid: '000000000000000000000000',
+        pid: '58ff7f3a736b795c10004930',
         title: config.page.headline,
         date: new Date(config.page.webPublicationDate),
         authors: authors,

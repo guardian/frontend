@@ -5,26 +5,25 @@ import org.scalatest.mock.MockitoSugar
 import org.scalatest.{Matchers => ShouldMatchers}
 import org.mockito.Mockito._
 import org.mockito.Matchers.argThat
-import org.mockito.Matchers
-import client.connection.{HttpResponse, Http}
+import org.mockito.{ArgumentMatcher, Matchers}
+import client.connection.{Http, HttpResponse}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
-import scala.concurrent.{Await, Future, Promise, ExecutionContext}
-import client.{Error, Anonymous, Auth, Parameters, Response}
-import org.hamcrest.Description
-import org.mockito.ArgumentMatcher
-import org.joda.time.DateTime
-import client.connection.util.ExecutionContexts
 
+import scala.concurrent.{Await, ExecutionContext, Promise}
+import client.{Anonymous, Auth, Error, Parameters, Response}
+import org.hamcrest.Description
+import client.connection.util.ExecutionContexts
 import org.joda.time.format.ISODateTimeFormat
 import com.gu.identity.model._
-import conf.IdentityConfiguration
 import net.liftweb.json.Serialization.write
+
 import scala.concurrent.duration._
 import scala.language.postfixOps
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Formats
+import test.WithTestIdConfig
 
-class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar with WithTestIdConfig {
   implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
 
   implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
@@ -32,8 +31,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val fmt = ISODateTimeFormat.dateTimeNoMillis()
 
   val http = mock[Http]
-  val idConfig = new IdentityConfiguration
-  val apiRoot = idConfig.id.apiRoot
+  val apiRoot = testIdConfig.apiRoot
   val jsonParser = new JsonBodyParser {
     implicit val formats: Formats = LiftJsonConfig.formats + new JodaJsonSerializer
 
@@ -41,7 +39,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   }
   val clientAuth = ClientAuth("frontend-dev-client-token")
   val clientAuthHeaders = List("X-GU-ID-Client-Access-Token" -> "Bearer frontend-dev-client-token")
-  val api = new SynchronousIdApi(http, jsonParser, idConfig)
+  val api = new SynchronousIdApi(http, jsonParser, testIdConfig)
   val errors = List(Error("Test error", "Error description", 500))
   val trackingParameters = mock[TrackingData]
   when(trackingParameters.parameters).thenReturn(List("tracking" -> "param"))
@@ -483,7 +481,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   }
 
   "synchronous version" - {
-    val syncApi = new SynchronousIdApi(http, jsonParser, idConfig)
+    val syncApi = new SynchronousIdApi(http, jsonParser, testIdConfig)
 
     "should use current thread testContext" in {
       syncApi.executionContext should equal(ExecutionContexts.currentThreadContext)

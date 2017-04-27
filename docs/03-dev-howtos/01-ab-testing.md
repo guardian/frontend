@@ -9,7 +9,7 @@ Most tests can be written in JavaScript, although we can serve variants via Varn
 There are six steps in the test lifecycle:-
 
  - [Adding a switch to turn the test on & off](#adding-a-switch)
- - [Writing a test, which is typically a simple AMD module](#writing-a-test)
+ - [Writing a test, which is typically a simple JS module](#writing-a-test)
  - [Running the test](#running-the-test)
  - [Analysis of the test data](#analysis-of-the-test-data)
  - [Share your findings](#share-your-findings)
@@ -29,7 +29,7 @@ A switch allows you to stop and start the AB test outside of a normal software r
 
 Inside, `./common/app/conf/switches/ABTestSwitches.scala` you want to create a Switch like this,
 
-```
+```scala
 val ABFontDelaySwitch = Switch("A/B Tests", "ab-web-fonts-delay",
     "If this is switched on an AB test runs to measure the impact of not showing fallback fonts while fonts download.",
     safeState = Off)
@@ -45,72 +45,78 @@ You will notice here that the switches we use to run our AB testing are the same
 
 ## Writing a test
 
-A test is simply a JavaScript AMD module written to some conventions.
+A test is simply a JavaScript module written to some conventions.
 
 Tests live in `./static/src/javascripts/projects/common/modules/experiments/tests/`, so create a file in there.
 
-```
-define(['bonzo'], function (bonzo) {
+```js
+import detect from 'lib/detect';
 
-    var GeoMostPopular = function () {
-
-        this.id = 'GeoMostPopular';
-        this.start = '2014-02-26';
-        this.expiry = '2014-03-14';
-        this.author = 'Richard Nguyen';
-        this.description = 'Choose popular trails based on request location.';
-        this.audience = 0.1;
-        this.audienceOffset = 0.4;
-        this.successMeasure = 'Click-through for the right most popular, and page views per visit.';
-        this.audienceCriteria = 'Users who are not on mobile, viewing an article.';
-        this.dataLinkNames = 'right hand most popular geo. Specific countries appear as: right hand most popular geo GB';
-        this.idealOutcome = 'Click-through is increased on articles, mostly in US, Australia and India regions.';
-
-        this.canRun = function(config) {
-            return config.page.contentType === 'Article' && detect.getBreakpoint() !== 'mobile';
-        };
-
-        this.variants = [
-            {
-                id: 'control',
-                test: function (context, config) {
-                },
-
-                impression: function(track) {
-                    // call track() when the impression should be registered (e.g. your element is in view)
-                },
-
-                success: function(complete) {
-                    // do something that determines whether the user has completed
-                    // the test (e.g. set up an event listener) and call 'complete' afterwards
-                    complete();
-                }
-            },
-            {
-                id: 'hide',
-                test: function (context, config) {
-                    bonzo(context.querySelector('.js-related')).hide();
-                },
-
-                impression: function(track) {
-                    // call track() when the impression should be registered (e.g. your element is in view)
-                },
-
-                success: function(complete) {
-                    // do something that determines whether the user has completed
-                    // the test (e.g. set up an event listener) and call 'complete' afterwards
-                    complete();
-                }
-            }
-        ];
+const geoMostPopular = () => {
+    const properties = {
+        id: 'GeoMostPopular',
+        start: '2014-02-26',
+        expiry: '2014-03-14',
+        author: 'Richard Nguyen',
+        description: 'Choose popular trails based on request location.',
+        audience: 0.1,
+        audienceOffset: 0.4,
+        successMeasure: 'Click-through for the right most popular, and page views per visit.',
+        audienceCriteria: 'Users who are not on mobile, viewing an article.',
+        dataLinkNames: 'right hand most popular geo. Specific countries appear as: right hand most popular geo GB',
+        idealOutcome: 'Click-through is increased on articles, mostly in US, Australia and India regions.',
     };
 
-    return GeoMostPopular;
+    Object.assign(this, properties);
 
-});
+    this.canRun = config =>
+        config.page.contentType === 'Article' &&
+        detect.getBreakpoint() !== 'mobile';
+
+    this.variants = [
+        {
+            id: 'control',
+            test(context, config) {
+                context.querySelector('.js-related').classList.add('u-hidden');
+            },
+
+            impression(track) {
+                /* call track() when the impression should be registered
+                  (e.g. your element is in view) */
+            },
+
+            success(complete) {
+                /* do something that determines whether the user has completed
+                   the test (e.g. set up an event listener) and call 'complete'
+                   afterwards */
+
+                complete();
+            }
+        },
+        {
+            id: 'hide',
+            test(context, config) { /* ... */ },
+
+            impression(track) {
+                /* call track() when the impression should be registered
+                   (e.g. your element is in view) */
+            },
+
+            success(complete) {
+                /* do something that determines whether the user has completed
+                the test (e.g. set up an event listener) and call 'complete'
+                afterwards */
+
+                complete();
+            }
+        }
+    ];
+};
+
+export geoMostPopular;
 ```
 
-The AMD module must return an object with the following properties,
+The module must return an object with the following properties,
 
 - `id`: The unique name of the test. **This must be TitleCased and correspond to the hyphen-separated portion of the switch id that follows `ab-`. e.g. if the switch id is `ab-geo-most-popular`, this id must be `GeoMostPopular`**
 - `start`: The planned start date of the test, the day when the test will be turned on.

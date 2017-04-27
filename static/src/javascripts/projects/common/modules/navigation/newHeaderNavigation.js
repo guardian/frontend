@@ -1,7 +1,6 @@
 // @flow
 
 import fastdom from 'fastdom';
-import ophan from 'ophan/ng';
 import { scrollToElement } from 'lib/scroller';
 import userAccount from 'common/modules/navigation/user-account';
 
@@ -106,6 +105,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
             button.addEventListener('click', () => toggleSidebar());
             button.setAttribute('id', checkboxId);
             button.setAttribute('aria-expanded', 'false');
+            button.setAttribute('data-link-name', 'nav2 : toggle');
 
             if (checkboxControls) {
                 button.setAttribute('aria-controls', checkboxControls);
@@ -138,11 +138,6 @@ const enhanceSidebarToggle = (): void => {
         };
 
         checkbox.addEventListener('click', closeMenuHandler);
-
-        ophan.record({
-            component: 'main-navigation',
-            value: 'is fully expanded',
-        });
     }
 };
 
@@ -158,11 +153,6 @@ const toggleSidebarWithOpenSection = () => {
     }
 
     toggleSidebar();
-
-    ophan.record({
-        component: 'main-navigation',
-        value: `more toggle: ${pillarTitle}`,
-    });
 };
 
 const addEventHandler = (): void => {

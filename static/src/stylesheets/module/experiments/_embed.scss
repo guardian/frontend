@@ -3,14 +3,27 @@
 .contributions__embed  {
     border-top: 1px solid $news-main-2;
     background-color: $comment-support-2;
-    padding: 0 $gs-gutter / 4 $gs-baseline $gs-gutter / 4;
+    padding: 0 ($gs-gutter / 4) $gs-baseline;
 }
 
 .contributions__epic {
     border-top: 1px solid $multimedia-main-2;
     background-color: $comment-support-2;
     margin-top: $gs-baseline * 2;
-    padding: ($gs-baseline / 3) $gs-gutter / 4 $gs-baseline $gs-gutter / 4;
+    padding: ($gs-baseline / 3) ($gs-gutter / 4) $gs-baseline;
+
+    &.contributions__epic--liveblog {
+        margin-top: 0;
+
+        // makes it override the block styles
+        border-top: 1px solid $multimedia-main-2;
+
+        padding: ($gs-baseline / 3) ($gs-gutter / 2) $gs-baseline;
+
+        @include mq(tablet) {
+            padding: ($gs-baseline / 3) ($gs-gutter / 2) $gs-baseline ($gs-gutter * 4);
+        }
+    }
 }
 
 
@@ -153,10 +166,6 @@
 
 .contributions__contribute--epic-member {
     width: 160px;
-}
-
-.contributions__option-button--support-landing-page {
-    width: auto;
 }
 
 .contributions__contribute--epic-member-top {

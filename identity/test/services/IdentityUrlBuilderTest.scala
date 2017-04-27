@@ -1,14 +1,13 @@
 package services
 
 import org.scalatest.path
-import conf.IdentityConfiguration
 import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import idapiclient.TrackingData
+import test.WithTestIdConfig
 
-class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSugar {
-  val conf = new IdentityConfiguration
+class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSugar with WithTestIdConfig {
   val idRequest = mock[IdentityRequest]
   val omnitureTracking = mock[TrackingData]
   when(idRequest.trackingData) thenReturn omnitureTracking
@@ -19,7 +18,7 @@ class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSug
   when(idRequest.campaignCode) thenReturn None
   when(omnitureTracking.registrationType) thenReturn None
 
-  val idUrlBuilder = new IdentityUrlBuilder(conf)
+  val idUrlBuilder = new IdentityUrlBuilder(testIdConfig)
 
   "queryParams" - {
     "if provided a valid returnUrl" - {
@@ -85,12 +84,12 @@ class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSug
     when(omnitureTracking.registrationType) thenReturn Some("bar")
 
     "should add path and params to configured root" - {
-      idUrlBuilder.buildUrl("/test/path", idRequest) should equal(conf.id.url + "/test/path?returnUrl=foo&type=bar")
+      idUrlBuilder.buildUrl("/test/path", idRequest) should equal(testIdConfig.url + "/test/path?returnUrl=foo&type=bar")
     }
 
     "should override idRequest params if necessary" - {
       when(omnitureTracking.registrationType) thenReturn None
-      idUrlBuilder.buildUrl("/test/path", idRequest, ("returnUrl", "bar")) should equal(conf.id.url + "/test/path?returnUrl=bar")
+      idUrlBuilder.buildUrl("/test/path", idRequest, ("returnUrl", "bar")) should equal(testIdConfig.url + "/test/path?returnUrl=bar")
     }
   }
 }

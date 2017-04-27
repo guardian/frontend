@@ -11,7 +11,7 @@ import raven from 'lib/raven';
 import bootStandard from 'bootstraps/standard/main';
 import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
-import capturePerfTimings from 'lib/capture-perf-timings';
+import { capturePerfTimings } from 'lib/capture-perf-timings';
 
 // let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -42,6 +42,8 @@ const go = () => {
         markTime('commercial request');
         require.ensure(
             [],
+            // webpack needs the require function to be called 'require'
+            // eslint-disable-next-line no-shadow
             require => {
                 raven.context({ tags: { feature: 'commercial' } }, () => {
                     markTime('commercial boot');

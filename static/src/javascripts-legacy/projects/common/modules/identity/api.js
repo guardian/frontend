@@ -1,6 +1,7 @@
 /*global escape:true */
 define([
     'lib/ajax',
+    'lib/fetch-json',
     'lib/atob',
     'lib/config',
     'lib/cookies',
@@ -10,6 +11,7 @@ define([
     'Promise'
 ], function (
     ajax,
+    fetchJSON,
     utilAtob,
     config,
     cookies,
@@ -246,22 +248,24 @@ define([
     };
 
     Id.updateUsername = function (username) {
-        var endpoint = '/user/me',
-            data = {'publicFields': {'username': username, 'displayName': username}},
-            request = ajax({
-                url: Id.idApiRoot + endpoint,
-                type: 'json',
-                crossOrigin: true,
-                method: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(data),
-                withCredentials: true,
-                headers: {
-                    'X-GU-ID-Client-Access-Token':  'Bearer ' + config.page.idApiJsClientToken
+        var endpoint = Id.idApiRoot + '/user/me',
+            data = {
+                publicFields: {
+                    username: username,
+                    displayName: username
                 }
-            });
+            };
 
-        return request;
+        return fetchJSON(endpoint, {
+            mode: 'cors',
+            method: 'POST',
+            body: JSON.stringify(data),
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'X-GU-ID-Client-Access-Token':  'Bearer ' + config.page.idApiJsClientToken
+            },
+        });
     };
 
     return Id;

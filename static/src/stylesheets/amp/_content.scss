@@ -210,11 +210,7 @@
 }
 
 .media-primary {
-    margin: 0 (-$gs-gutter / 2);
-
-    @include mq(mobileLandscape) {
-        margin: 0 (-$gs-gutter);
-    }
+    position: relative;
 }
 
 // TODO: on amp, shouldn't have this. Or, use amp-lightbox
@@ -234,4 +230,10 @@
     float: left;
     margin-top: 2px;
     margin-right: 5px;
+}
+
+.reveal-caption {
+    @include mq($from: tablet) {
+        display: none;
+    }
 }
