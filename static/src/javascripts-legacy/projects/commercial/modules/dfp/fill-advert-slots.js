@@ -14,7 +14,7 @@ define([
 ], function (Promise, qwery, sha1, identity, commercialFeatures, dfpEnv, Advert, queueAdvert, displayLazyAds, displayAds, refreshOnResize, prepareSwitchTag) {
 
     function init(start, stop) {
-        if (commercialFeatures.dfpAdvertising) {
+        if (commercialFeatures.dfpAdvertising || commercialFeatures.adFree) {
             fillAdvertSlots(start, stop);
         }
         return Promise.resolve();

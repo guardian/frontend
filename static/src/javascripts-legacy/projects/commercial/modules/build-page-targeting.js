@@ -13,7 +13,8 @@ define([
     'lodash/arrays/flatten',
     'lodash/arrays/uniq',
     'lodash/functions/once',
-    'lodash/objects/pick'
+    'lodash/objects/pick',
+    'commercial/modules/commercial-features'
 ], function (
     config,
     cookies,
@@ -29,7 +30,8 @@ define([
     flatten,
     uniq,
     once,
-    pick
+    pick,
+    commercialFeatures
 ) {
 
     function format(keyword) {
@@ -130,7 +132,9 @@ define([
 
     return once(function () {
         var page        = config.page;
+        var platform    = commercialFeatures.adFree ? 'ngaf' : 'ng';
         var pageTargets = assign({
+            p:       platform,
             x:       krux.getSegments(),
             pv:      config.ophan.pageViewId,
             bp:      detect.getBreakpoint(),
