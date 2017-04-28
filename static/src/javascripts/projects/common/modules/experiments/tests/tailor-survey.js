@@ -228,7 +228,7 @@ class TailorSurvey {
     constructor() {
         this.id = 'TailorSurvey';
         this.start = '2017-03-07';
-        this.expiry = '2017-04-28';
+        this.expiry = '2017-05-31';
         this.author = 'Manlio & Mahana';
         this.description = 'Testing Tailor surveys';
         this.audience = 1;
