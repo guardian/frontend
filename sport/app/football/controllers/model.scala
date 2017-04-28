@@ -1,6 +1,9 @@
 package football.controllers
 
-import common.Pagination
+import com.gu.commercial.branding._
+import common.commercial.{CommercialProperties, EditionAdTargeting, EditionBranding}
+import common.{Edition, Pagination}
+import conf.switches.Switches.sponsoredFootballFeedPages
 import implicits.Football
 import model._
 import org.joda.time.LocalDate
@@ -30,11 +33,49 @@ class FootballPage(
   pagination: Option[Pagination] = None,
   description: Option[String] = None) extends StandalonePage {
 
-  override val metadata = MetaData.make(
-    id = id,
-    section = Some(SectionSummary.fromId(section)),
-    webTitle = webTitle,
-    pagination = pagination,
-    description = description
-  )
+  /*
+   * This is a temporary solution:
+   * until football feed pages make a call to capi to get branding data,
+   * this has to be hardcoded here.
+   */
+  private lazy val brandings: Seq[EditionBranding] =
+    if (sponsoredFootballFeedPages.isSwitchedOn) {
+      for (edition <- Edition.all)
+        yield
+          EditionBranding(
+            edition = edition,
+            branding = Some(
+              Branding(
+                brandingType = Sponsored,
+                sponsorName = "Virgin Media",
+                logo = Logo(
+                  src =
+                    "https://static.theguardian.com/commercial/sponsor/28/Apr/2017/8e3b5ea3-3fed-44ae-8e70-b8811ec4f874-Virgin_logo.png",
+                  dimensions = Some(Dimensions(width = 140, height = 90)),
+                  link = "http://www.virginmedia.com/shop/tv/virgin-media-football.html",
+                  label = "Supported by"
+                ),
+                logoForDarkBackground = None,
+                aboutThisLink = "https://www.theguardian.com/info/2016/jan/25/content-funding",
+                hostedCampaignColour = None
+              ))
+          )
+    } else Nil
+
+  override val metadata = MetaData
+    .make(
+      id = id,
+      section = Some(SectionSummary.fromId(section)),
+      webTitle = webTitle,
+      pagination = pagination,
+      description = description
+    )
+    .copy(
+      commercial = Some(
+        CommercialProperties(
+          editionAdTargetings = EditionAdTargeting.forFrontUnknownToCapi(id),
+          editionBrandings = brandings
+        )
+      )
+    )
 }

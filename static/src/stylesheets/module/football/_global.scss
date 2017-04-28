@@ -11,6 +11,30 @@
     }
 }
 
+.page-type--football {
+    border-top: 0 !important;
+
+    @include mq(leftCol) {
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
+        margin-top: $gs-baseline/-4;
+    }
+    @include mq(wide) {
+        margin-left: -1 * (gs-span(3) + $gs-gutter);
+    }
+}
+
+.page-sponsor--football {
+    border-top: 0 !important;
+
+    @include mq(leftCol) {
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
+        margin-top: $gs-baseline/-4;
+    }
+    @include mq(wide) {
+        margin-left: -1 * (gs-span(3) + $gs-gutter);
+    }
+}
+
 .football-filters {
     @include mq(leftCol) {
         margin-top: -$gs-baseline*2;
