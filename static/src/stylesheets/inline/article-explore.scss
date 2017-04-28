@@ -416,22 +416,6 @@ $explore-series-header-element-opacity: .85;
     }
 }
 
-.content__meta-container--explore {
-    margin: 7px;
-    border: 0;
-
-    .meta__social {
-        border-top: 1px dotted $neutral-4;
-    }
-
-    @include mq($from: desktop) {
-        position: absolute;
-        margin-left: 0;
-        margin-right: -240px;
-        right: 0;
-    }
-}
-
 .content__article-body {
     figure {
         //these styles need to overide the styles coming from Layout Hint
@@ -519,5 +503,25 @@ $explore-series-header-element-opacity: .85;
 
     @include mq($from: desktop) {
         width: 980px;
+    }
+}
+
+.content__meta-container--explore {
+    margin: 7px;
+    border-top: 1px dotted $neutral-4;
+
+    @include mq($until: leftCol) {
+        border-bottom: 1px dotted $neutral-4;
+    }
+
+    @include mq($from: desktop) {
+        position: absolute;
+        margin-left: 0;
+        margin-right: -240px;
+        right: 0;
+    }
+
+    @include mq($from: wide) {
+        width: $left-column-wide;
     }
 }
