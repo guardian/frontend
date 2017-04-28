@@ -29,7 +29,6 @@ module.exports = {
         // disallow naming variables 'guardian', because
         // window.guardian is our global config/settings object
         'id-blacklist': ['error', 'guardian'],
-
         // disallow modules we used to use but have retired, either for
         // babel polyfills or browser natives
         'no-restricted-imports': [
