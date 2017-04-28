@@ -222,7 +222,10 @@ const reducer = (previousState: State, action: Action) =>
         ? reducers[action.type](previousState)
         : previousState);
 
-const createStore = (storeReducer: (State, Action) => State, initialState: State) => {
+const createStore = (
+    storeReducer: (State, Action) => State,
+    initialState: State
+) => {
     // We re-assign this over time
     let state = initialState;
     const subscribers = [];
