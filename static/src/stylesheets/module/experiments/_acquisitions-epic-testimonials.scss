@@ -1,4 +1,4 @@
-@import "svg";
+@import 'svg';
 
 // CSS used for the Epic testimonials test
 
@@ -16,8 +16,15 @@
 }
 
 .epic__testimonial__text {
+    margin-bottom: 0;
+    font-family: $f-sans-serif-text;
     font-style: italic;
 }
+
+.epic__testimonial__name {
+    font-family: $f-sans-serif-text;
+}
+
 
 // Variant 1 - control
 
@@ -63,9 +70,9 @@
 }
 
 .contributions__title--epic--subtle {
+    @include fs-header(3);
     display: inline;
     border-top: 1px solid $multimedia-main-2;
-    @include fs-header(3);
     padding-top: $gs-baseline / 3;
 }
 

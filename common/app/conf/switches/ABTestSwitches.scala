@@ -185,7 +185,7 @@ trait ABTestSwitches {
     "ab-acquisitions-epic-testimonials",
     "Test placing reader testimonials in the Epic",
     owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2017, 5, 4),
     exposeClientSide = true
   )
