@@ -4,16 +4,8 @@
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.commercial.cardLogo
 
-@badgeNoImage(branding: Branding) = {
-    <div class="badge badge--no-image">
-        <div class="badge__label">
-            Paid for by @branding.sponsorName
-        </div>
-    </div>
 
-}
-
-<div class="fc-item fc-item--has-image js-fc-item fc-item--list-media-mobile fc-item--standard-tablet adverts--within-unbranded without-sponsor-logo @item.cardTypes.map(_.classes)">
+<div class="fc-item fc-item--has-image js-fc-item fc-item--list-media-mobile fc-item--standard-tablet adverts--within-unbranded @item.cardTypes.map(_.classes)">
     <div class="fc-item__container">
         @item.image.map(image => itemImage(
             image,
@@ -27,11 +19,12 @@
                 </div>
             </div>
 
-            @item.branding.map(badgeNoImage)
+            <div class="badge badge--no-image">
+                <div class="badge__label">
+                    Paid for by @item.branding.map(_.sponsorName)
+                </div>
+            </div>
 
-            @item.branding.map(branding =>
-                cardLogo(branding, isStandardSizeCard = false)
-            )
         </div>
 
         <a href="@item.targetUrl"

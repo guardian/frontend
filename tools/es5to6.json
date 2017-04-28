@@ -1,6 +1,5 @@
 {
   "Francis Carr": [
-    "bootstraps/commercial.js",
     "projects/admin/bootstraps/commercial-browser-performance.js",
     "projects/commercial/modules/ad-sizes.js",
     "projects/commercial/modules/article-aside-adverts.js",
@@ -100,12 +99,11 @@
     "projects/commercial/modules/user-ad-feedback.js",
     "projects/commercial/modules/user-ad-targeting.js",
     "projects/commercial/modules/user-features.js",
-    "projects/common/modules/commercial/acquisitions-view-log.js",
     "projects/common/modules/commercial/adblock-banner-config.js",
-    "projects/common/modules/commercial/adblock-messages.js"
+    "projects/common/modules/commercial/adblock-messages.js",
+    "projects/common/modules/ui/images.js"
   ],
   "sndrs": [
-    "lib/add-event-listener.js",
     "bootstraps/admin.js",
     "bootstraps/enhanced/accessibility.js",
     "bootstraps/enhanced/article-liveblog-common.js",
@@ -118,6 +116,7 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
+    "projects/common/modules/tailor/tailor.js",
     "lib/ajax.js",
     "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
@@ -126,9 +125,7 @@
     "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js",
     "bootstraps/enhanced/membership.js",
-    "bootstraps/enhanced/newsletters.js",
-    "bootstraps/enhanced/notifications.js",
-    "bootstraps/enhanced/preferences.js"
+    "bootstraps/enhanced/newsletters.js"
   ],
   "Nicolas Long": [
     "lib/atob.js",
@@ -139,7 +136,6 @@
     "bootstraps/enhanced/youtube.js",
     "bootstraps/video-embed.js",
     "bootstraps/youtube-embed.js",
-    "lib/add-event-listener.js",
     "lib/ajax.js",
     "lib/atob.js"
   ],
@@ -177,9 +173,9 @@
     "projects/common/modules/sport/football/tag-page-stats.js",
     "projects/common/modules/sport/score-board.js",
     "projects/common/modules/tailor/fetch-data.js",
-    "projects/common/modules/tailor/tailor.js",
     "projects/common/modules/ui/accessibility-prefs.js",
-    "projects/common/modules/ui/autoupdate.js"
+    "projects/common/modules/ui/autoupdate.js",
+    "bootstraps/enhanced/preferences.js"
   ],
   "NataliaLKB": [
     "lib/client-rects.js",
@@ -242,24 +238,24 @@
     "projects/common/modules/email/email-article.js",
     "projects/common/modules/email/email.js",
     "projects/common/modules/email/run-checks.js",
-    "projects/common/modules/experiments/ab-test-clash.js",
-    "projects/common/modules/experiments/ab.js",
-    "projects/common/modules/experiments/acquisition-test-selector.js",
+    "projects/common/modules/ui/expandable.js",
+    "projects/common/modules/ui/faux-block-link.js",
+    "projects/common/modules/ui/full-height.js",
     "projects/common/modules/experiments/affix.js",
     "projects/common/modules/experiments/segment-util.js",
     "projects/common/modules/experiments/test-can-run-checks.js"
   ],
   "davidfurey": [
     "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
-    "projects/common/modules/experiments/tests/contributions-epic-always-ask-strategy.js",
-    "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
+    "projects/common/modules/ui/blockSharing.js",
+    "projects/common/modules/ui/clickstream.js",
     "projects/common/modules/experiments/tests/editorial-email-variants.js",
-    "projects/common/modules/experiments/tests/epic-to-support-landing-page.js",
+    "projects/common/modules/ui/cookiesBanner.js",
+    "projects/common/modules/ui/dropdowns.js",
     "projects/common/modules/experiments/tests/fashion-statement-email-variants.js",
     "projects/common/modules/experiments/tests/film-today-email-variants.js",
     "projects/common/modules/experiments/tests/generic-email-variants.js",
     "projects/common/modules/experiments/tests/increase-inline-ads.js",
-    "projects/common/modules/experiments/tests/membership-engagement-banner-tests.js",
     "projects/common/modules/experiments/tests/opinion-email-variants.js",
     "projects/common/modules/experiments/tests/paid-card-logo.js"
   ],
@@ -268,14 +264,14 @@
     "projects/common/modules/experiments/tests/simple-reach.js",
     "projects/common/modules/experiments/tests/sleeve-notes-legacy-email-variant.js",
     "projects/common/modules/experiments/tests/sleeve-notes-new-email-variant.js",
-    "projects/common/modules/experiments/tests/tailor-survey.js",
     "projects/common/modules/experiments/tests/the-long-read-email-variants.js",
     "projects/common/modules/experiments/utils.js",
     "projects/common/modules/gallery/lightbox.js",
     "projects/common/modules/identity/account-profile.js",
     "projects/common/modules/identity/api.js",
     "projects/common/modules/identity/cookierefresh.js",
-    "projects/common/modules/identity/email-preferences.js"
+    "projects/common/modules/identity/email-preferences.js",
+    "bootstraps/enhanced/notifications.js"
   ],
   "ShaunYearStrong": [
     "projects/common/modules/identity/forms.js",
@@ -306,15 +302,16 @@
     "projects/common/modules/preferences/main.js"
   ],
   "Joseph Smith": [
-    "projects/common/modules/ui/blockSharing.js",
-    "projects/common/modules/ui/clickstream.js",
-    "projects/common/modules/ui/cookiesBanner.js",
-    "projects/common/modules/ui/dropdowns.js",
-    "projects/common/modules/ui/expandable.js",
-    "projects/common/modules/ui/faux-block-link.js",
-    "projects/common/modules/ui/full-height.js",
-    "projects/common/modules/ui/images.js",
-    "projects/common/modules/ui/last-modified.js",
+    "projects/common/modules/commercial/contributions-utilities.js",
+    "projects/common/modules/experiments/tests/acquisitions-epic-liveblog.js",
+    "projects/common/modules/experiments/tests/contributions-epic-always-ask-strategy.js",
+    "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
+    "projects/common/modules/experiments/tests/epic-to-support-landing-page.js",
+    "projects/common/modules/experiments/tests/membership-engagement-banner-tests.js",
+    "projects/common/modules/experiments/acquisition-test-selector.js",
+    "projects/common/modules/commercial/acquisitions-view-log.js",
+    "projects/common/modules/experiments/ab.js",
+    "projects/common/modules/experiments/ab-test-clash.js",
     "projects/common/modules/ui/message.js",
     "projects/common/modules/ui/notification-counter.js",
     "projects/common/modules/ui/relativedates.js"
