@@ -8,21 +8,6 @@
     left: 0;
 }
 
-.gallery__meta-container {
-    &:before {
-        content: '';
-        border-top: 1px solid $media-mute;
-        padding-top: $gs-baseline / 4;
-        display: block;
-        width: gs-span(1);
-    }
-
-    .meta__twitter .button,
-    .meta__email .button {
-        margin-top: -$gs-baseline/2;
-    }
-}
-
 .gallery__divider {
     border-top: 1px solid $media-mute;
     margin-top: $gs-baseline;
@@ -189,22 +174,7 @@
     width: 100%;
 }
 
-.gallery__meta-container {
-    .byline,
-    .content__dateline {
-        border: 0;
-        min-height: 0;
-        padding: 0;
-    }
-}
-
 .l-side-margins--gallery {
-    .content__meta-container {
-        border: 0;
-        min-height: auto;
-        margin-bottom: $gs-baseline;
-    }
-
     .meta__comment-count--top {
         display: none;
     }
@@ -226,39 +196,6 @@
     .witness-cta {
         border: 0;
     }
-
-    .meta__extras {
-        border-top: 1px dotted $media-mute;
-        border-bottom: 1px dotted $media-mute;
-    }
-
-    // Reset the styles from _content.scss
-    .meta__numbers {
-        position: relative;
-        border: 0 none;
-        height: auto;
-        padding: $gs-baseline/2 0 0;
-    }
-
-    .meta__number {
-        text-align: right;
-    }
-
-    .meta__social {
-        border: 0;
-    }
-
-    .badge--alt {
-        margin-top: 0;
-        margin-bottom: $gs-baseline;
-        border-top: 1px dotted $neutral-1;
-
-        @include mq(desktop) {
-            position: absolute;
-            width: gs-span(3);
-        }
-    }
-
 }
 
 .gallery__fullscreen,
