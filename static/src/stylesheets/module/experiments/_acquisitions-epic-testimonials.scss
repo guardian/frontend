@@ -1,3 +1,5 @@
+@import "svg";
+
 // CSS used for the Epic testimonials test
 
 // Common classes
@@ -5,6 +7,12 @@
 .epic__testimonial__container {
     margin-top: 20px;
     margin-bottom: 20px;
+
+    padding-left: 40px;
+
+    background-repeat: no-repeat;
+    background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="17" height="10" stroke="#ffbb00" fill="#ffbb00" viewBox="0 0 33 20"><path d="M9.002 20c3.85.068 6.932-3.104 7-6.994.068-3.892-3.15-6.937-7-7.006-2.016-.036-3.59.694-4.888 2.053-.07-.48-.122-1.04-.113-1.553C4.064 2.97 7.414.937 11.003 1l-1-1C3.98 0 .098 4.447.002 10.006c-.097 5.557 3.35 9.892 9 9.994zM26.002 20c3.85.068 6.932-3.104 7-6.994.068-3.892-3.15-6.937-7-7.006-2.016-.036-3.59.694-4.888 2.053-.07-.48-.122-1.04-.113-1.553.063-3.53 3.413-5.563 7.002-5.5l-1-1c-6.022 0-9.904 4.447-10 10.006-.097 5.557 3.35 9.892 9 9.994z"/></svg>');
+    background-size: 30px 30px;
 }
 
 .epic__testimonial__text {
@@ -17,10 +25,18 @@
 
 // Variant 3 - subtle
 
+.epic__testimonial__container--subtle {
+    background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="17" height="10" stroke="#bdbdbd" fill="#bdbdbd" viewBox="0 0 33 20"><path d="M9.002 20c3.85.068 6.932-3.104 7-6.994.068-3.892-3.15-6.937-7-7.006-2.016-.036-3.59.694-4.888 2.053-.07-.48-.122-1.04-.113-1.553C4.064 2.97 7.414.937 11.003 1l-1-1C3.98 0 .098 4.447.002 10.006c-.097 5.557 3.35 9.892 9 9.994zM26.002 20c3.85.068 6.932-3.104 7-6.994.068-3.892-3.15-6.937-7-7.006-2.016-.036-3.59.694-4.888 2.053-.07-.48-.122-1.04-.113-1.553.063-3.53 3.413-5.563 7.002-5.5l-1-1c-6.022 0-9.904 4.447-10 10.006-.097 5.557 3.35 9.892 9 9.994z"/></svg>');
+}
+
 // Variant 4 - testimonial only
 
 .epic__testimonial__container--testimonial-only {
+    margin-top: 20px;
     margin-bottom: 10px;
+
+    padding-left: 0;
+    padding-top: 30px;
 }
 
 .epic__testimonial__name--testimonial-only {

@@ -26,10 +26,10 @@ define([
         id: 'AcquisitionsEpicTestimonials',
         campaignId: 'kr1_epic_testimonials',
 
-        start: '2017-04-27',
+        start: '2017-04-28',
         expiry: '2017-05-03',
 
-        author: 'Guy Dawson and Joe Smith',
+        author: 'Guy Dawson',
         description: 'Test placing reader testimonials in the Epic',
         successMeasure: 'Conversion rate',
         idealOutcome: 'We are able to determine which testimonial design is the best',
