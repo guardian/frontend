@@ -37,8 +37,10 @@ class FootballPage(
    * This is a temporary solution:
    * until football feed pages make a call to capi to get branding data,
    * this has to be hardcoded here.
+   *
+   * Has to be 'def' to pick up current switch state.
    */
-  private lazy val brandings: Seq[EditionBranding] =
+  private def brandings: Seq[EditionBranding] =
     if (sponsoredFootballFeedPages.isSwitchedOn) {
       for (edition <- Edition.all)
         yield
@@ -62,7 +64,8 @@ class FootballPage(
           )
     } else Nil
 
-  override val metadata = MetaData
+  // Has to be 'def' to pick up current switch state
+  override def metadata = MetaData
     .make(
       id = id,
       section = Some(SectionSummary.fromId(section)),
