@@ -6,6 +6,10 @@ import template from 'lodash/utilities/template';
 import countBy from 'lodash/collections/countBy';
 import find from 'lodash/collections/find';
 
+// Globals that aren't imported
+declare var $: any;
+declare var Epoch: any;
+
 let chart;
 const FETCH_INTERVAL = 1000; // The frequency that we poll for report data.
 const FETCH_DELAY = 10; // The delay which we wait before we ask for a time-based datapoint, eg. 10 seconds before the present moment.
