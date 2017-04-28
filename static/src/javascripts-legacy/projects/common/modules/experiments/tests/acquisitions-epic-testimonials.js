@@ -1,12 +1,26 @@
 define([
     'lodash/utilities/template',
     'common/modules/commercial/contributions-utilities',
-    'raw-loader!common/views/acquisitions-epic-testimonials-prominent.html'
+    'raw-loader!common/views/acquisitions-epic-testimonials-prominent.html',
+    'raw-loader!common/views/acquisitions-epic-testimonials-subtle.html',
+    'raw-loader!common/views/acquisitions-epic-testimonials-testimonial-only.html'
 ], function (
     template,
     contributionsUtilities,
-    acquisitionsEpicTestimonialsProminent
+    acquisitionsEpicTestimonialsProminent,
+    acquisitionsEpicTestimonialsSubtle,
+    acquisitionsEpicTestimonialsOnly
 ) {
+
+    function createVariantTemplate(epicTemplate) {
+        return function(variant) {
+            return template(epicTemplate, {
+                membershipUrl: variant.membershipURL,
+                contributionUrl: variant.contributeURL,
+                componentName: variant.componentName
+            })
+        }
+    }
 
     return contributionsUtilities.makeABTest({
         id: 'AcquisitionsEpicTestimonials',
@@ -21,10 +35,8 @@ define([
         idealOutcome: 'We are able to determine which testimonial design is the best',
 
         audienceCriteria: 'All',
-        // TODO: confirm
         audience: 0.9,
         audienceOffset: 0,
-        // END TODO
 
         variants: [
             {
@@ -32,16 +44,15 @@ define([
             },
             {
                 id: 'prominent',
-                template: function (variant) {
-                    return template(acquisitionsEpicTestimonialsProminent, {
-                        membershipUrl: variant.membershipURL,
-                        contributionUrl: variant.contributeURL,
-                        componentName: variant.componentName
-                    });
-                }
+                template: createVariantTemplate(acquisitionsEpicTestimonialsProminent)
             },
             {
-                id: 'subtle'
+                id: 'subtle',
+                template: createVariantTemplate(acquisitionsEpicTestimonialsSubtle)
+            },
+            {
+                id: 'testimonial_only',
+                template: createVariantTemplate(acquisitionsEpicTestimonialsOnly)
             }
         ]
     });
