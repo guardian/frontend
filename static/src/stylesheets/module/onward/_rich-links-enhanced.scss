@@ -200,3 +200,36 @@
     float: none;
     width: auto;
 }
+
+.rich-link--paidfor {
+    &.tone-media--item,
+    & {
+        .rich-link__container {
+            background-color: $paid-article-card-bg;
+            &:hover,
+            &.u-faux-block-link--hover {
+                background: darken($paid-article-subheader, 7%);
+            }
+            &:before {
+                background-color: $paid-article-brand;
+            }
+            .rich-link__header,
+            .rich-link__read-more-text {
+                @include f-headlineSans;
+                color: $neutral-1;
+            }
+            .rich-link__arrow-icon {
+                fill: $paid-article-brand;
+            }
+        }
+    }
+    .rich-link__title {
+        color: $neutral-1;
+    }
+}
+.rich-link__branding {
+    @include fs-textSans(1);
+    color: $neutral-2;
+    font-weight: bold;
+    margin: -$gs-baseline / 2 $gs-gutter / 4 $gs-baseline;
+}
