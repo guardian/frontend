@@ -18,7 +18,13 @@ type Action = {
     type: string,
 };
 
-const updateYouTubeVideo = (currentItem: ?Element) => {
+type Position = {
+    position: number,
+    atStart: boolean,
+    atEnd: boolean,
+};
+
+const updateYouTubeVideo = (currentItem: ?Element): void => {
     if (currentItem != null) {
         const youTubeAtom = currentItem.querySelector('.youtube-media-atom');
         if (youTubeAtom) {
@@ -29,14 +35,14 @@ const updateYouTubeVideo = (currentItem: ?Element) => {
     }
 };
 
-const getPositionState = (position: number, length: number) => ({
+const getPositionState = (position: number, length: number): Position => ({
     position,
     atStart: position === 0,
     atEnd: position >= length,
 });
 
 const reducers = {
-    NEXT: function next(previousState: State) {
+    NEXT: function next(previousState: State): State {
         const position = previousState.position >= previousState.length
             ? previousState.position
             : previousState.position + 1;
@@ -51,7 +57,7 @@ const reducers = {
         );
     },
 
-    PREV: function prev(previousState: State) {
+    PREV: function prev(previousState: State): State {
         const position = previousState.position <= 0
             ? 0
             : previousState.position - 1;
@@ -65,7 +71,7 @@ const reducers = {
         );
     },
 
-    INIT: function init(previousState: State) {
+    INIT: function init(previousState: State): State {
         const makeYouTubeNonPlayableAtSmallBreakpoint = state => {
             if (
                 detect.isBreakpoint({
@@ -127,7 +133,7 @@ const reducers = {
     },
 };
 
-const fetchLazyImage = (container: Element, i: number) => {
+const fetchLazyImage = (container: Element, i: number): void => {
     $(`.js-video-playlist-image--${i}`, container).each(el => {
         fastdom
             .read(() => {
@@ -145,7 +151,7 @@ const fetchLazyImage = (container: Element, i: number) => {
     });
 };
 
-const update = (state: State, container: Element) => {
+const update = (state: State, container: Element): Promise<number> => {
     const translateWidth = -state.videoWidth * state.position;
 
     return fastdom.write(() => {
@@ -196,14 +202,17 @@ const update = (state: State, container: Element) => {
     });
 };
 
-const getInitialState: Element => State = container => ({
+const getInitialState = (container: Element): State => ({
     position: 0,
     length: Number(container.getAttribute('data-number-of-videos')),
     videoWidth: 700,
     container,
 });
 
-const setupDispatches = (dispatch: Action => void, container) => {
+const setupDispatches = (
+    dispatch: (a: Action) => void,
+    container: Element
+): void => {
     bean.on(container, 'click', '.js-video-playlist-next', () => {
         dispatch({
             type: 'NEXT',
@@ -217,13 +226,13 @@ const setupDispatches = (dispatch: Action => void, container) => {
     });
 };
 
-const reducer = (previousState: State, action: Action) =>
+const reducer = (previousState: State, action: Action): State =>
     (reducers[action.type]
         ? reducers[action.type](previousState)
         : previousState);
 
 const createStore = (
-    storeReducer: (State, Action) => State,
+    storeReducer: (s: State, a: Action) => State,
     initialState: State
 ) => {
     // We re-assign this over time
