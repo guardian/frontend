@@ -1,17 +1,43 @@
-#!/bin/bash
+#!/usr/bin/env node
+/* eslint-disable no-console */
 
-# ensure yarn.lock is committed with package.json changes
-readonly staged=$(git diff --name-only --cached)
+const path = require('path');
 
-if [[ $staged == package.json* && $staged != *"yarn.lock"* ]]; then
-  node tools/messages.js should-yarn;
-  exit 1;
-fi
+const execa = require('execa');
+const chalk = require('chalk');
 
-# Update Documentations Table of Content if needed
-if [[ $staged == *"docs/"* ]]; then
-    docs=$(git rev-parse --show-toplevel)/docs
-    readme=$docs/README.md
-    $docs/generate-toc.sh > $readme
-    git add $readme
-fi
+execa
+    .stdout('git', ['diff', '--name-only', '--cached'])
+    .then(staged => staged.split('\n'))
+    .then(staged => {
+        const jsFiles = staged.filter(file => file.endsWith('.js'));
+        if (jsFiles.length) {
+            console.log(
+                chalk.dim(
+                    `Linting: \n${jsFiles.map(file => `  ${file}`).join('\n')}`
+                )
+            );
+            execa.sync('yarn', ['eslint-fix', ...jsFiles]);
+            execa.sync('git', ['add', ...jsFiles]);
+        }
+
+        if (
+            staged.some(file => file === 'package.json') &&
+            !staged.some(file => file === 'yarn.lock')
+        ) {
+            return Promise.reject(
+                `${chalk.red(`${chalk.underline('package.json')} has changed but ${chalk.underline('yarn.lock')} is not included in this commit.`)}\n${chalk.dim(`If this is intentional, commit this change with --no-verify.`)}`
+            );
+        }
+
+        if (staged.some(file => file.includes('docs/'))) {
+            const docs = path.resolve('docs');
+            const readme = path.resolve(docs, 'README.md');
+            execa.sync(path.resolve(docs, 'generate-toc.sh'), ['>', readme]);
+            execa.sync('git', [readme]);
+        }
+    })
+    .catch(e => {
+        console.log(`\n${e}\n`);
+        process.exit(1);
+    });
