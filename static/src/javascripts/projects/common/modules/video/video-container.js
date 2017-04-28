@@ -7,26 +7,36 @@ import videojs from 'bootstraps/enhanced/media/video-player';
 import youtube from 'common/modules/atoms/youtube';
 import detect from 'lib/detect';
 
-const updateYouTubeVideo = currentItem => {
-    const youTubeAtom = currentItem.querySelector('.youtube-media-atom');
-    if (youTubeAtom) {
-        return youtube.onVideoContainerNavigation(
-            youTubeAtom.getAttribute('data-unique-atom-id')
-        );
+type State = {
+    position: number,
+    length: number,
+    videoWidth: number,
+    container: Element,
+};
+
+const updateYouTubeVideo = (currentItem: ?Element) => {
+    if (currentItem != null) {
+        const youTubeAtom = currentItem.querySelector('.youtube-media-atom');
+        if (youTubeAtom) {
+            return youtube.onVideoContainerNavigation(
+                youTubeAtom.getAttribute('data-unique-atom-id')
+            );
+        }
     }
 };
 
-const getPositionState = (position, length) => ({
+const getPositionState = (position: number, length: number) => ({
     position,
     atStart: position === 0,
     atEnd: position >= length,
 });
 
 const reducers = {
-    NEXT: function next(previousState) {
+    NEXT: function next(previousState: State) {
         const position = previousState.position >= previousState.length
             ? previousState.position
             : previousState.position + 1;
+
         updateYouTubeVideo(
             document.querySelector(`.js-video-playlist-item-${position - 1}`)
         );
@@ -37,7 +47,7 @@ const reducers = {
         );
     },
 
-    PREV: function prev(previousState) {
+    PREV: function prev(previousState: State) {
         const position = previousState.position <= 0
             ? 0
             : previousState.position - 1;
@@ -51,7 +61,7 @@ const reducers = {
         );
     },
 
-    INIT: function init(previousState) {
+    INIT: function init(previousState: State) {
         const makeYouTubeNonPlayableAtSmallBreakpoint = state => {
             if (
                 detect.isBreakpoint({
@@ -113,7 +123,7 @@ const reducers = {
     },
 };
 
-const fetchLazyImage = (container, i) => {
+const fetchLazyImage = (container: Element, i: number) => {
     $(`.js-video-playlist-image--${i}`, container).each(el => {
         fastdom
             .read(() => {
@@ -131,16 +141,20 @@ const fetchLazyImage = (container, i) => {
     });
 };
 
-const update = (state, container) => {
+const update = (state: State, container: Element) => {
     const translateWidth = -state.videoWidth * state.position;
 
     return fastdom.write(() => {
-        container
-            .querySelector('.video-playlist__item--active')
-            .classList.remove('video-playlist__item--active');
-        container
-            .querySelector(`.js-video-playlist-item-${state.position}`)
-            .classList.add('video-playlist__item--active');
+        const activeEl = container.querySelector(
+            '.video-playlist__item--active'
+        );
+        if (activeEl != null)
+            activeEl.classList.remove('video-playlist__item--active');
+        const newActive = container.querySelector(
+            `.js-video-playlist-item-${state.position}`
+        );
+        if (newActive != null)
+            newActive.classList.add('video-playlist__item--active');
 
         container.classList.remove(
             'video-playlist--end',
@@ -160,12 +174,17 @@ const update = (state, container) => {
             videojs($(el)[0]).pause();
         });
 
-        container
-            .querySelector(`.js-video-playlist-item-${state.position}`)
-            .classList.add('video-playlist__item--active');
-        container
-            .querySelector('.js-video-playlist-inner')
-            .setAttribute(
+        const activePlaylistItem = container.querySelector(
+            `.js-video-playlist-item-${state.position}`
+        );
+        if (activePlaylistItem != null)
+            activePlaylistItem.classList.add('video-playlist__item--active');
+
+        const playlistInner = container.querySelector(
+            '.js-video-playlist-inner'
+        );
+        if (playlistInner != null)
+            playlistInner.setAttribute(
                 'style',
                 `-webkit-transform: translate(${translateWidth}px);` +
                     `transform: translate(${translateWidth}px);`
@@ -173,9 +192,9 @@ const update = (state, container) => {
     });
 };
 
-const getInitialState = container => ({
+const getInitialState: Element => State = container => ({
     position: 0,
-    length: container.getAttribute('data-number-of-videos'),
+    length: Number(container.getAttribute('data-number-of-videos')),
     videoWidth: 700,
     container,
 });
@@ -194,12 +213,12 @@ const setupDispatches = (dispatch, container) => {
     });
 };
 
-const reducer = (previousState, action) =>
+const reducer = (previousState: State, action) =>
     (reducers[action.type]
         ? reducers[action.type](previousState)
         : previousState);
 
-const createStore = (storeReducer, initialState) => {
+const createStore = (storeReducer, initialState: State) => {
     // We re-assign this over time
     let state = initialState;
     const subscribers = [];
@@ -230,7 +249,7 @@ const createStore = (storeReducer, initialState) => {
 };
 
 export default {
-    init(container) {
+    init: (container: Element) => {
         const initialState = getInitialState(container);
         const store = createStore(reducer, initialState);
 
