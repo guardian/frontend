@@ -8,21 +8,21 @@ import youtube from 'common/modules/atoms/youtube';
 import detect from 'lib/detect';
 
 function updateYouTubeVideo(currentItem) {
-    var youTubeAtom = currentItem.querySelector('.youtube-media-atom');
+    const youTubeAtom = currentItem.querySelector('.youtube-media-atom');
     if (youTubeAtom) {
         return youtube.onVideoContainerNavigation(youTubeAtom.getAttribute("data-unique-atom-id"));
     }
 }
 
-var reducers = {
+const reducers = {
     NEXT: function next(previousState) {
-        var position = previousState.position >= previousState.length ? previousState.position : previousState.position + 1;
+        const position = previousState.position >= previousState.length ? previousState.position : previousState.position + 1;
         updateYouTubeVideo(document.querySelector('.js-video-playlist-item-' + (position - 1)));
         return assign({}, previousState, getPositionState(position, previousState.length));
     },
 
     PREV: function prev(previousState) {
-        var position = previousState.position <= 0 ? 0 : previousState.position - 1;
+        const position = previousState.position <= 0 ? 0 : previousState.position - 1;
         updateYouTubeVideo(document.querySelector('.js-video-playlist-item-' + (position + 1)));
         return assign({}, previousState, getPositionState(position, previousState.length));
     },
@@ -32,38 +32,38 @@ var reducers = {
             if (detect.isBreakpoint({
                     max: 'desktop'
                 })) {
-                var youTubeIframes = previousState.container.querySelectorAll('.youtube-media-atom iframe');
-                youTubeIframes.forEach(function(el) {
+                const youTubeIframes = previousState.container.querySelectorAll('.youtube-media-atom iframe');
+                youTubeIframes.forEach(el => {
                     el.remove();
                 });
-                var overlayLinks = previousState.container.querySelectorAll('.video-container-overlay-link');
-                overlayLinks.forEach(function(el) {
+                const overlayLinks = previousState.container.querySelectorAll('.video-container-overlay-link');
+                overlayLinks.forEach(el => {
                     el.classList.add('u-faux-block-link__overlay');
                 });
 
-                var atomWrapper = previousState.container.querySelectorAll('.youtube-media-atom');
-                atomWrapper.forEach(function(el) {
+                const atomWrapper = previousState.container.querySelectorAll('.youtube-media-atom');
+                atomWrapper.forEach(el => {
                     el.classList.add('no-player');
                 })
             }
         }
         makeYouTubeNonPlayableAtSmallBreakpoint(previousState);
 
-        fastdom.read(function() {
+        fastdom.read(() => {
             // Lazy load images on scroll for mobile
-            $('.js-video-playlist-image', previousState.container).each(function(el) {
-                var elementInview = ElementInview(el, $('.js-video-playlist-inner', previousState.container).get(0), {
+            $('.js-video-playlist-image', previousState.container).each(el => {
+                const elementInview = ElementInview(el, $('.js-video-playlist-inner', previousState.container).get(0), {
                     // This loads 1 image in the future
                     left: 410
                 });
 
-                elementInview.on('firstview', function(el) {
-                    fastdom.write(function() {
-                        var dataSrc = el.getAttribute('data-src');
-                        var src = el.getAttribute('src');
+                elementInview.on('firstview', el => {
+                    fastdom.write(() => {
+                        const dataSrc = el.getAttribute('data-src');
+                        const src = el.getAttribute('src');
 
                         if (dataSrc && !src) {
-                            fastdom.write(function() {
+                            fastdom.write(() => {
                                 el.setAttribute('src', dataSrc);
                             });
                         }
@@ -76,14 +76,14 @@ var reducers = {
 };
 
 function fetchLazyImage(container, i) {
-    $('.js-video-playlist-image--' + i, container).each(function(el) {
-        fastdom.read(function() {
-            var dataSrc = el.getAttribute('data-src');
-            var src = el.getAttribute('src');
+    $('.js-video-playlist-image--' + i, container).each(el => {
+        fastdom.read(() => {
+            const dataSrc = el.getAttribute('data-src');
+            const src = el.getAttribute('src');
             return dataSrc && !src ? dataSrc : null;
-        }).then(function(src) {
+        }).then(src => {
             if (src) {
-                fastdom.write(function() {
+                fastdom.write(() => {
                     el.setAttribute('src', src);
                 });
             }
@@ -92,9 +92,9 @@ function fetchLazyImage(container, i) {
 }
 
 function update(state, container) {
-    var translateWidth = -state.videoWidth * state.position;
+    const translateWidth = -state.videoWidth * state.position;
 
-    return fastdom.write(function() {
+    return fastdom.write(() => {
         container.querySelector('.video-playlist__item--active').classList.remove('video-playlist__item--active');
         container.querySelector('.js-video-playlist-item-' + state.position).classList.add('video-playlist__item--active');
 
@@ -109,7 +109,7 @@ function update(state, container) {
         fetchLazyImage(container, state.position + 1);
 
         // pause all players (we should potentially think about this site wide)
-        $('.js-video-playlist .vjs').each(function(el) {
+        $('.js-video-playlist .vjs').each(el => {
             videojs($(el)[0]).pause();
         });
 
@@ -123,7 +123,7 @@ function update(state, container) {
 
 function getPositionState(position, length) {
     return {
-        position: position,
+        position,
         atStart: position === 0,
         atEnd: position >= length
     };
@@ -134,18 +134,18 @@ function getInitialState(container) {
         position: 0,
         length: container.getAttribute('data-number-of-videos'),
         videoWidth: 700,
-        container: container
+        container
     };
 }
 
 function setupDispatches(dispatch, container) {
-    bean.on(container, 'click', '.js-video-playlist-next', function() {
+    bean.on(container, 'click', '.js-video-playlist-next', () => {
         dispatch({
             type: 'NEXT'
         });
     });
 
-    bean.on(container, 'click', '.js-video-playlist-prev', function() {
+    bean.on(container, 'click', '.js-video-playlist-prev', () => {
         dispatch({
             type: 'PREV'
         });
@@ -158,43 +158,41 @@ function reducer(previousState, action) {
 
 function createStore(reducer, initialState) {
     // We re-assign this over time
-    var state = initialState;
-    var subscribers = [];
+    let state = initialState;
+    const subscribers = [];
 
-    var notify = function() {
-        subscribers.forEach(function(fn) {
+    const notify = () => {
+        subscribers.forEach(fn => {
             fn();
         });
     };
-    var dispatch = function(action) {
+    const dispatch = action => {
         state = reducer(state, action);
         notify();
     };
-    var subscribe = function(fn) {
+    const subscribe = fn => {
         subscribers.push(fn);
     };
-    var getState = function() {
-        return state;
-    };
+    const getState = () => state;
 
     dispatch({
         type: 'INIT'
     });
 
     return {
-        dispatch: dispatch,
-        subscribe: subscribe,
-        getState: getState
+        dispatch,
+        subscribe,
+        getState
     };
 }
 
 export default {
-    init: function(container) {
-        var initialState = getInitialState(container);
-        var store = createStore(reducer, initialState);
+    init(container) {
+        const initialState = getInitialState(container);
+        const store = createStore(reducer, initialState);
 
         setupDispatches(store.dispatch, container);
-        store.subscribe(function() {
+        store.subscribe(() => {
             update(store.getState(), container);
         });
     }
