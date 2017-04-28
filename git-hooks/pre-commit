@@ -9,18 +9,24 @@ const chalk = require('chalk');
 execa
     .stdout('git', ['diff', '--name-only', '--cached'])
     .then(staged => staged.split('\n'))
+    // lint and commit any lint fixes
     .then(staged => {
         const jsFiles = staged.filter(file => file.endsWith('.js'));
         if (jsFiles.length) {
-            console.log(
-                chalk.dim(
-                    `Linting: \n${jsFiles.map(file => `  ${file}`).join('\n')}`
+            return execa('eslint', ['--fix', ...jsFiles], {
+                stdio: 'inherit',
+            })
+                .then(() =>
+                    execa('git', ['add', ...jsFiles], {
+                        stdio: 'inherit',
+                    })
                 )
-            );
-            execa.sync('yarn', ['eslint-fix', ...jsFiles]);
-            execa.sync('git', ['add', ...jsFiles]);
+                .then(() => staged);
         }
-
+        return staged;
+    })
+    // make sure yarn.lock is commited
+    .then(staged => {
         if (
             staged.some(file => file === 'package.json') &&
             !staged.some(file => file === 'yarn.lock')
@@ -29,13 +35,20 @@ execa
                 `${chalk.red(`${chalk.underline('package.json')} has changed but ${chalk.underline('yarn.lock')} is not included in this commit.`)}\n${chalk.dim(`If this is intentional, commit this change with --no-verify.`)}`
             );
         }
-
+        return staged;
+    })
+    // make sure docs TOC stays up to date
+    .then(staged => {
         if (staged.some(file => file.includes('docs/'))) {
             const docs = path.resolve('docs');
             const readme = path.resolve(docs, 'README.md');
-            execa.sync(path.resolve(docs, 'generate-toc.sh'), ['>', readme]);
-            execa.sync('git', [readme]);
+            return execa(path.resolve(docs, 'generate-toc.sh'), ['>', readme], {
+                stdio: 'inherit',
+            })
+                .then(() => execa.sync('git', [readme]))
+                .then(() => staged);
         }
+        return staged;
     })
     .catch(e => {
         console.log(`\n${e}\n`);
