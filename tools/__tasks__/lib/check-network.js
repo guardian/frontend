@@ -1,9 +1,7 @@
 const tcpp = require('tcp-ping');
 const pify = require('pify');
 
-const { port, domain } = require('./config');
-
-module.exports = {
+module.exports = (domain, port) => ({
     description: `Probing ${domain} on port ${port}...`,
     task: () =>
         pify(tcpp.probe, { multiArgs: true })(domain, port).then(result => {
@@ -13,4 +11,4 @@ module.exports = {
                 );
             }
         }),
-};
+});
