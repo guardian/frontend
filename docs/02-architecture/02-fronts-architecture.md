@@ -13,7 +13,15 @@ It is not a user facing service, it processes events published to queues.
 There are 2 queues:
 - one queue populated by a cron job running in the Admin app.
 - one queue where the Fronts tool (fronts.gutools.co.uk) publishes events when a front is being updated.
+
 The cron job is very important since content for a front can be coming from CAPI and change without any update from the Fronts tool.
+
+The level of priority of a front will impact how often the cron job would request its update:
+- Edition and sport fronts: High update frequency
+- Other Editorial fronts: Strandard update frequency
+- Email fronts: Strandard update frequency
+- Commercial fronts: Low update frequency
+- Training fronts: Low update frequency
 
 ### Pressing a front:
 In reaction to a new event published to the queues described above, Facia-press will:
