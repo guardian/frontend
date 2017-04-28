@@ -232,7 +232,6 @@ object NewNavigation {
       jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader"),
       dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
       NavLink("holidays", "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav"),
-      NavLink("courses", "https://courses.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_COURSES"),
       ukMasterClasses,
       NavLink("professional networks", "/guardian-professional"),
       apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
