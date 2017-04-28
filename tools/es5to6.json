@@ -104,7 +104,6 @@
     "projects/common/modules/ui/images.js"
   ],
   "sndrs": [
-    "bootstraps/admin.js",
     "bootstraps/enhanced/accessibility.js",
     "bootstraps/enhanced/article-liveblog-common.js",
     "bootstraps/enhanced/article-minute.js",
