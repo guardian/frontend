@@ -45,7 +45,7 @@ trait ABTestSwitches {
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 1),
+    sellByDate = new LocalDate(2017, 6, 1),
     exposeClientSide = true
   )
 
@@ -55,7 +55,7 @@ trait ABTestSwitches {
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 1),
+    sellByDate = new LocalDate(2017, 6, 1),
     exposeClientSide = true
   )
 
