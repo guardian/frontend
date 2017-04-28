@@ -3,12 +3,14 @@ define([
     'qwery',
     'lib/config',
     'lib/detect',
+    'lib/cookies',
     'commercial/modules/user-features'
 ], function (
     bean,
     qwery,
     config,
     detect,
+    cookies,
     userFeatures
 ) {
     return function () {
@@ -17,18 +19,19 @@ define([
         this.start = '2017-04-24';
         this.expiry = '2017-05-25'; // Thursday 25th May
         this.author = 'Justin Pinner';
-        this.description = 'Test digital sub price points via thrasher';
+        this.description = 'Test digital subs price points via thrasher';
         this.showForSensitive = true;
-        this.audience = 0.01;       // TODO: CHECK!
-        this.audienceOffset = 0;    // TODO: CHECK!
+        this.audience = 0.25;
+        this.audienceOffset = 0;
         this.successMeasure = '';
-        this.audienceCriteria = 'Non-paying UK network front users';
+        this.audienceCriteria = 'Non-paying UK network front users - tablet resolution and above';
         this.dataLinkNames = '';
         this.idealOutcome = 'Find the price that works for most people.';
         this.hypothesis = 'One of our price points will be more desirable than the others';
 
         this.canRun = function () {
             return document.querySelector('#membership-ab-thrasher') &&
+                    !cookies.getCookie('GU_DBPT1') &&
                     !userFeatures.isPayingMember() &&
                     detect.isBreakpoint({min: 'tablet'}) &&
                     config.page.isFront &&
