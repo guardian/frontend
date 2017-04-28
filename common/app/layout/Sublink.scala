@@ -209,51 +209,46 @@ object FaciaCard {
     showSeriesAndBlogKickers: Boolean
   ): FaciaCard = {
 
-    val containerName: Option[String] = config.displayName
-    if (faciaContent.branding(defaultEdition).exists(_.isPaid)) {
-      PaidCard.fromPressedContent(faciaContent, Some(cardTypes))
-    } else {
 
-      val maybeKicker = faciaContent.header.kicker orElse {
-        if (showSeriesAndBlogKickers) {
-          faciaContent.header.seriesOrBlogKicker
-        } else {
-          None
-        }
+    val maybeKicker = faciaContent.header.kicker orElse {
+      if (showSeriesAndBlogKickers) {
+        faciaContent.header.seriesOrBlogKicker
+      } else {
+        None
       }
-
-      /** If the kicker contains the byline, don't display it */
-      val suppressByline = (
-                             for {
-                               kicker <- maybeKicker
-                               kickerText <- kicker.properties.kickerText
-                               byline <- faciaContent.properties.byline
-                             } yield kickerText contains byline
-                             ) getOrElse false
-
-      ContentCard(
-        faciaContent.properties.maybeContentId.orElse(Option(faciaContent.card.id)),
-        FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
-        getByline(faciaContent).filterNot(Function.const(suppressByline)),
-        FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent, cardTypes),
-        CutOut.fromTrail(faciaContent),
-        faciaContent.card.cardStyle,
-        cardTypes,
-        Sublinks.takeSublinks(faciaContent.supporting, cardTypes).map(Sublink.fromFaciaContent),
-        faciaContent.card.starRating,
-        DiscussionSettings.fromTrail(faciaContent),
-        SnapStuff.fromTrail(faciaContent),
-        faciaContent.card.webPublicationDateOption.filterNot(const(faciaContent.shouldHidePublicationDate)),
-        faciaContent.card.trailText,
-        faciaContent.card.mediaType,
-        DisplaySettings.fromTrail(faciaContent),
-        faciaContent.card.isLive,
-        if (config.showTimestamps) Option(DateTimestamp) else None,
-        faciaContent.card.shortUrlPath,
-        useShortByline = false,
-        faciaContent.card.group
-      )
     }
+
+    /** If the kicker contains the byline, don't display it */
+    val suppressByline = (
+                           for {
+                             kicker <- maybeKicker
+                             kickerText <- kicker.properties.kickerText
+                             byline <- faciaContent.properties.byline
+                           } yield kickerText contains byline
+                           ) getOrElse false
+
+    ContentCard(
+      faciaContent.properties.maybeContentId.orElse(Option(faciaContent.card.id)),
+      FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
+      getByline(faciaContent).filterNot(Function.const(suppressByline)),
+      FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent, cardTypes),
+      CutOut.fromTrail(faciaContent),
+      faciaContent.card.cardStyle,
+      cardTypes,
+      Sublinks.takeSublinks(faciaContent.supporting, cardTypes).map(Sublink.fromFaciaContent),
+      faciaContent.card.starRating,
+      DiscussionSettings.fromTrail(faciaContent),
+      SnapStuff.fromTrail(faciaContent),
+      faciaContent.card.webPublicationDateOption.filterNot(const(faciaContent.shouldHidePublicationDate)),
+      faciaContent.card.trailText,
+      faciaContent.card.mediaType,
+      DisplaySettings.fromTrail(faciaContent),
+      faciaContent.card.isLive,
+      if (config.showTimestamps) Option(DateTimestamp) else None,
+      faciaContent.card.shortUrlPath,
+      useShortByline = false,
+      faciaContent.card.group
+    )
   }
 }
 
