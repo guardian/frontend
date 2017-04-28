@@ -93,6 +93,7 @@
     "karma-spec-reporter": "^0.0.26",
     "karma-teamcity-reporter": "^1.0.0",
     "lebab": "^2.7.1",
+    "lint-staged": "^3.4.1",
     "listr": "^0.8.0",
     "lodash": "^3.10.1",
     "lodash.capitalize": "^4.2.1",
@@ -177,6 +178,7 @@
     "lebab": "lebab --transform arrow,let,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,class,default-param --replace",
     "eslint-fix": "eslint --color --fix",
     "flow": "flow",
-    "test": "jest"
+    "test": "jest",
+    "precommit": "lint-staged"
   }
 }
