@@ -688,10 +688,10 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomData <- findAtom(atomId)
       } {
-        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
         if(mediaWrapper.contains(MediaWrapper.MainMedia)){
           atomContainer.addClass("element-atom--main-media")
         }
+        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
         bodyElement.remove()
         atomContainer.append(html)
       }
