@@ -1,7 +1,5 @@
-@import _root_.football.controllers.CompetitionFilter
-@import _root_.football.controllers.FootballPage
-@import _root_.football.model.CompetitionList
-@import _root_.football.model.MatchesList
+@import _root_.football.controllers.{CompetitionFilter, FootballPage}
+@import _root_.football.model.{CompetitionList, MatchesList}
 @import common.Edition
 @import model.ApplicationContext
 @import views.html.fragments.commercial.pageLogo
@@ -21,7 +19,10 @@
                     </h2>
 
                     <div class="page-sponsor--football">
-                    @for(commercial <- page.metadata.commercial; branding <- commercial.branding(Edition(request))) {
+                    @for(
+                        commercial <- page.metadata.commercial;
+                        branding <- commercial.branding(Edition(request))
+                    ) {
                         @pageLogo(branding, isInteractive = false)
                     }
                     </div>
