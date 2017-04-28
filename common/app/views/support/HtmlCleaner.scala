@@ -8,7 +8,7 @@ import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
-import model.content.{Atom, Atoms, MediaWrapper}
+import model.content.{Atom, Atoms, MediaAtom, MediaWrapper}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
@@ -690,6 +690,9 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
       } {
         if(mediaWrapper.contains(MediaWrapper.MainMedia)){
           atomContainer.addClass("element-atom--main-media")
+        }
+        if(atomData.isInstanceOf[MediaAtom]){
+          atomContainer.addClass("element-atom--media")
         }
         val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
         bodyElement.remove()
