@@ -159,4 +159,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-bundle-digital-sub-price-test-1",
+    "Test pricing options for digital subs",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 25),  // Thursday
+    exposeClientSide = true
+  )
+
 }
