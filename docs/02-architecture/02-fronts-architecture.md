@@ -78,6 +78,12 @@ This is an additional request to CAPI to fetch SEO and other metadata for the fr
 
 6. Finally aggregate all the data fetched in the previous steps and store the result in its json form in S3 (`s3://aws-frontend-store/STAGE/frontsapi/pressed/live/FRONTS/fapi/pressed.json in Frontend account`)
 
+Note:
+
+Two versions of a fronts data are being pressed: Live and Draft
+- __Draft__ corresponds to a front with all its latest modifications, even the ones that have not been "launched" yet. Editors can use [Preview](https://preview.gu-tools.com) to look at a "draft" front before they make their changes public.
+- __Live__ corresponds to a front in its "launched" state. The one accessible on https://theguardian.com
+
 ## Facia
 
 As mentioned above, when Facia receives a request for a front, it:
