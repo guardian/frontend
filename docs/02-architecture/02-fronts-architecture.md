@@ -18,7 +18,7 @@ The cron job is very important since content for a front can be coming from CAPI
 ### Pressing a front:
 In reaction to a new event published to the queues described above, Facia-press will:
 
-1. Get the collections that compose the front by fetching the Fronts config at `s3://facia-tool-store/STAGE/frontsapi/config/config.json` in the CMS Fronts account. This file is edited using the Configuration Tool
+1. Get the collections that compose the front by fetching the Fronts config at `s3://facia-tool-store/STAGE/frontsapi/config/config.json` in the CMS Fronts account. This file is edited using the Configuration Tool. Ex: [Editorial Fronts Configuration Tool](https://fronts.gutools.co.uk/editorial/config)
 
 Example of a front config:
 ```
@@ -90,20 +90,20 @@ A card displays the information of one story/content.
 
 ## Glossary:
 
-Here is the definition of a few words and expressions related to fronts:
+Here are the definitions of a few words and expressions related to fronts:
 
 _Snap_:
 A way to include arbitrary content into a collection (rather than a story). 
 A snap can be a link (often used to show an interactive on the front) or dynamic content (latest story for given tag).
 
 _Thrasher_:
-A type of container which contains a single full-width element.
+A type of container that contains a single full-width element.
 
 _Dynamo_:
 A type of container often used to highlight a huge story. It's better known in the codebase as the `dynamic/package` collection type.
 
 _Groups_:
-A way to further tweak the layout of a collection. Dynamic collections can have multiple groups (standard/snaps or huge/veryBig/big/standard). Depending on the group a story/content is in, the layout of the container would be slightly altered.
+A way to further tweak the layout of a collection. Dynamic collections can have multiple groups (standard/snaps or huge/veryBig/big/standard). Depending on the group a story/content is in, the layout of the container will be slightly altered.
 
 ## More
 

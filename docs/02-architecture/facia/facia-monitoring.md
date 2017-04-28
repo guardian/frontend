@@ -4,7 +4,7 @@ A large number of ContentApi requests are made in order to produce each front's 
 
 Some of the metrics are to designed to identify terminally unhealthy processes. Others are informational and indicate problems in the broader network (notably ContentApi). Others monitor the speed at which updates travel through the architecture.
 
-## Succesive press failures - MANUAL presser (facia-tool)
+## Successive press failures - MANUAL presser (facia-tool)
 
 * __Detail__ : immediately after a collection is edited within the Fronts Editor, the Presser is invoked to re-create the `pressed.json` files for any front containing that collection.
 
@@ -22,7 +22,7 @@ Some of the metrics are to designed to identify terminally unhealthy processes. 
 
 ## Statictical press failures - CRON presser (facia-press)
 
-* __Detail__ : due to momentary ContentApi unavailability or increased latency somewhere in the network - pressing will on occasion fail. Above a certain frequency, these failures should be considered as indicative of a operational issue.   
+* __Detail__ : due to momentary ContentApi unavailability or increased latency somewhere in the network - pressing will on occasion fail. Above a certain frequency, these failures should be considered as indicative of an operational issue.   
 
 * __Metrics__  : 50 failures within 15 minutes, monitored in CloudWatch.
 
@@ -30,7 +30,7 @@ Some of the metrics are to designed to identify terminally unhealthy processes. 
 
 ## Statictical press failures - MANUAL presser (facia-tool)
 
-* __Detail__ : due to momentary ContentApi unavailability or increased latency somewhere in the network - pressing will on occasion fail. Above a certain frequency, these failures should be considered as indicative of a operational issue.   
+* __Detail__ : due to momentary ContentApi unavailability or increased latency somewhere in the network - pressing will on occasion fail. Above a certain frequency, these failures should be considered as indicative of an operational issue.   
 
 * __Metrics__  : 50 failures within 15 minutes, monitored in CloudWatch. 
 
@@ -50,4 +50,4 @@ Some of the metrics are to designed to identify terminally unhealthy processes. 
 
 * __Metric__  : the difference between the most recent timestamp of a front's various `collection.json` files, and the timestamp of that front's `pressed.json` file. This is checked 10 seconds after any edit; the result itself should be below 10 seconds.
 
-* __Consequence__ : if the metric exceeds 10 seconds, an "orange" alert appears in the tool UI with an option to "try again". The condition occurs on occasion due to momentary high latency somewhere in network, and generally does not reproduce itself on retry.
+* __Consequence__ : if the metric exceeds 10 seconds, an "orange" alert appears in the tool UI with an option to "try again". The condition occurs on occasion due to momentary high latency somewhere in network, and generally does not recur on retry.
