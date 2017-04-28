@@ -234,4 +234,14 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2017, 7, 3),
     exposeClientSide = true
   )
+
+  val articleAsideFallbackSwitch: Switch = Switch(
+    group = SwitchGroup.Commercial,
+    name = "adslot-fallback",
+    description = "Include a fallback CTA, visible if the article-aside MPU does not load",
+    owners = Owner.group(SwitchGroup.Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 24),
+    exposeClientSide = true
+  )
 }

@@ -5,14 +5,22 @@
 
 )
 @import conf.switches.Switches.CommercialSwitch
+@import conf.switches.Switches.articleAsideFallbackSwitch
 
 @if(CommercialSwitch.isSwitchedOn && shouldShowAds) {
-  <div class="ad-slot-container">
+
+  @if(articleAsideFallbackSwitch.isSwitchedOn) {
+    <div class="article-aside-container">
+      @fragments.adSlotFallback()
+  }
   @fragments.commercial.adSlot(
       "right",
       Seq("mpu-banner-ad"),
       Map("mobile" -> (Seq("1,1", "2,2", "300,250", "300,600", "fluid") ++ articleAsideOptionalSizes)),
       optClassNames = if (isSticky) Some("js-sticky-mpu") else None
       ){ }
-  </div>
+
+  @if(articleAsideFallbackSwitch.isSwitchedOn) {
+      </div>
+  }
 }
