@@ -169,4 +169,15 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-membership-engagement-banner-paywall-and-paypal-test",
+    "test new paywall and Paypal variants on the engagement banner",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 25),
+    exposeClientSide = true
+  )
+
+
 }

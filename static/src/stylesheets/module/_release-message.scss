@@ -504,6 +504,63 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 /*
  * Prominent membership message as a feature
  */
+
+
+
+.membership_paypal-logo {
+    display: none;
+    height: auto;
+    margin-right: $gs-gutter/2;
+    object-fit: contain;
+    order: 2;
+    margin-top: $gs-gutter/2;
+    margin-bottom: 0;
+    width: 200px;
+
+    @include mq($from: tablet) {
+        margin-top: 0;
+        order: 1;
+    }
+}
+
+.showPaypal {
+    display: inline-block;
+}
+
+
+.membership__paypal-container a {
+    text-decoration: none;
+    margin-bottom: $gs-gutter/4;
+}
+
+
+.membership__support-button {
+    order: 1;
+    margin-top: $gs-gutter/2;
+
+    @include mq($from: tablet) {
+        order: 2;
+    }
+}
+
+.membership__message-text {
+    margin-right: $gs-gutter/2;
+}
+
+.membership__paypal-container {
+    display: flex;
+    flex-direction: column;
+
+    @include mq($from: tablet) {
+        display: inline-block;
+    }
+}
+
+.membership__engagement-message-button-caption {
+    text-decoration: none;
+}
+
+
 .site-message--membership-prominent {
     .site-message__message {
         @include mq($until: tablet) {
@@ -627,7 +684,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
     .message-button-rounded__cta.yellow {
         svg path {
-            stroke: #000333;
             fill: #000333;
         }
         background-color: #ff9b0b;
@@ -635,7 +691,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     .message-button-rounded__cta.purple {
 
         svg path {
-            stroke: #ffffff;
             fill: #ffffff;
         }
         color: #ffffff;
@@ -643,7 +698,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
     .message-button-rounded__cta.dark-blue {
         svg path {
-            stroke: #000333;
             fill: #000333;
         }
         color: #000333;
@@ -651,7 +705,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
     .message-button-rounded__cta.bright-blue {
         svg path {
-            stroke: #ffffff;
             fill: #ffffff;
         }
         color: #ffffff;
@@ -668,7 +721,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     @include site-message-dark-text;
     background-color: #ffce4b;
     svg {
-        stroke: #000000;
         fill: #000000;
     }
 }
@@ -681,7 +733,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     @include site-message-dark-text;
     background-color: #4bc6df;
     svg {
-        stroke: #000000;
         fill: #000000;
     }
 }

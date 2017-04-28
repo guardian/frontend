@@ -15,8 +15,7 @@ define([
     template,
     commercialFeatures,
     userFeatures,
-    mediator
-) {
+    mediator) {
     var EditionTest = function (edition, id, start, expiry, campaignPrefix) {
 
         this.edition = edition;
@@ -78,10 +77,35 @@ define([
         return this.addMessageVariant(variantId, {contributions: variantParams});
     };
 
-    var PaywallAndPaypalTest = function() {
+    function completer(complete) {
+        mediator.on('membership-message:display', function () {
+            // When the button link is clicked, call the function that indicates the A/B test is 'complete'
+            // ...note that for Membership & Contributions this completion is only the start of a longer
+            // journey that will hopefully end pages later with the user giving us money.
+            bean.on(qwery('#membership__engagement-message-link')[0], 'click', complete);
+        });
+    }
+
+    var monthlySupporterCost = {
+        UK:  '£5',
+        AU:  '$10',
+        INT: '$7 / €5'
+    };
+
+    function weeklySupporterCta() {
+        var edition = config.page.edition;
+        if(edition === 'US'){
+            return 'Support us with a one-off contribution'
+        }
+        var cost = monthlySupporterCost[config.page.edition];
+        return 'Support us for ' + cost + ' a month.'
+    }
+    
+
+    var MembershipEngagementBannerPaywallAndPaypalTest = function() {
         this.id = 'MembershipEngagementBannerPaywallAndPaypalTest';
         this.start = '2017-02-27';
-        this.expiry = '2017-03-13';
+        this.expiry = '2017-05-25';
         this.author = 'Jonathan Rankin';
         this.description = 'Test different copy for the engagement banner.';
         this.audience = 1;
@@ -91,14 +115,14 @@ define([
         this.idealOutcome = 'We are able to establish which copy is best, with statistical significance';
 
         this.canRun = function() {
-            return commercialFeatures.canReasonablyAskForMoney && isNotInUSOrAU();
+            return commercialFeatures.canReasonablyAskForMoney ;
         };
 
         this.variants = [];
     };
 
     // cta should be a function which returns the call-to-action which is placed after the message text.
-    PaywallAndPaypalTest.prototype.addVariant = function(variantId, messageText) {
+    MembershipEngagementBannerPaywallAndPaypalTest.prototype.addVariant = function(variantId, messageText, cta, paypalClass) {
 
         function createCampaignCode(variantId) {
             // Campaign code follows convention. Talk to Alex for more information.
@@ -110,12 +134,17 @@ define([
         };
 
         if (messageText) {
-            engagementBannerParams[messageText] = messageText;
+
+            if (typeof cta === 'function') {
+                messageText = messageText + ' ' + cta()
+            }
+
+            engagementBannerParams.messageText = messageText;
         }
-
-
-
-
+        
+        if(paypalClass) {
+            engagementBannerParams.paypalClass = paypalClass;
+        }
 
         this.variants.push({
             id: variantId,
@@ -141,22 +170,21 @@ define([
 
 
     return [
-        new PaywallAndPaypalTest()
+        new MembershipEngagementBannerPaywallAndPaypalTest()
             .addVariant(
-                'control',
+                'control'
             )
             .addVariant(
                 'paywall',
                 'Unlike many others, we haven\'t put up a paywall - we want to keep our journalism as open as we can.',
+                weeklySupporterCta
             )
             .addVariant(
                 'paypal',
-                monthlySupporterCtaWithToday
+                '',
+                '',
+                'showPaypal'
             )
-            .addVariant(
-                'opportunity',
-                'If you’ve been thinking about supporting us, we’ve never needed you more.',
-                monthlySupporterCtaWithToday
-            )
+
     ]
 });
