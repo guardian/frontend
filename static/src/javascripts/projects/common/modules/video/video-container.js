@@ -14,6 +14,10 @@ type State = {
     container: Element,
 };
 
+type Action = {
+    type: string,
+};
+
 const updateYouTubeVideo = (currentItem: ?Element) => {
     if (currentItem != null) {
         const youTubeAtom = currentItem.querySelector('.youtube-media-atom');
@@ -199,7 +203,7 @@ const getInitialState: Element => State = container => ({
     container,
 });
 
-const setupDispatches = (dispatch, container) => {
+const setupDispatches = (dispatch: Action => void, container) => {
     bean.on(container, 'click', '.js-video-playlist-next', () => {
         dispatch({
             type: 'NEXT',
@@ -213,12 +217,12 @@ const setupDispatches = (dispatch, container) => {
     });
 };
 
-const reducer = (previousState: State, action) =>
+const reducer = (previousState: State, action: Action) =>
     (reducers[action.type]
         ? reducers[action.type](previousState)
         : previousState);
 
-const createStore = (storeReducer, initialState: State) => {
+const createStore = (storeReducer: (State, Action) => State, initialState: State) => {
     // We re-assign this over time
     let state = initialState;
     const subscribers = [];
