@@ -13,7 +13,7 @@ import play.api.mvc.{Controller, RequestHeader}
 import play.twirl.api.Html
 
 trait MatchListController extends Controller with Requests {
-  val competitionsService: Competitions
+  def competitionsService: Competitions
   protected val datePattern = DateTimeFormat.forPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezone)
   protected def createDate(year: String, month: String, day: String): LocalDate =
     datePattern.parseDateTime(s"$year$month$day").toLocalDate
