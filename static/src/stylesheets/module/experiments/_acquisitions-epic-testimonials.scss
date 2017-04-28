@@ -1,15 +1,58 @@
 // CSS used for the Epic testimonials test
 
+// Common classes
+
+.epic__testimonial__container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.epic__testimonial__text {
+    font-style: italic;
+}
 
 // Variant 1 - control
 
 // Variant 2 - prominent
 
-.epic__testimonial__container--prominent {
-    margin-top: 20px;
-    margin-bottom: 20px;
+// Variant 3 - subtle
+
+// Variant 4 - testimonial only
+
+.epic__testimonial__container--testimonial-only {
+    margin-bottom: 10px;
 }
 
-//.epic__testimonial__text--prominent {
-//    font-style: italic;
-//}
+.epic__testimonial__name--testimonial-only {
+    margin-top: 13px;
+}
+
+.epic__testimonial__info__container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.epic__testimonial__info {
+    font-size: 14px;
+}
+
+// Remaining classes taken from previous pull request
+
+.contributions__epic--subtle {
+    // Unset border top as it will be set for the inline header element
+    border-top: 0;
+    background-color: #ffffff;
+    margin-top: $gs-baseline * 4;
+    margin-bottom: $gs-baseline * 4;
+}
+
+.contributions__title--epic--subtle {
+    display: inline;
+    border-top: 1px solid $multimedia-main-2;
+    @include fs-header(3);
+    padding-top: $gs-baseline / 3;
+}
+
+.contributions__paragraph--subtle {
+    margin-top: 0;
+}
