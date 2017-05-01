@@ -224,7 +224,7 @@ object EmailNewsletters {
   val theLongRead = EmailNewsletter(
     name = "The Long Read",
     theme = "feature",
-    teaser = "Get lost in a great story. From politics to fashion, international investigations to new thinking, culture to crime. The Guardian’s award-winning long reads bring you the biggest ideas and the arguements that matter",
+    teaser = "Get lost in a great story; the Guardian’s award-winning long reads bring you the biggest ideas and the arguments that matter",
     description = "Get lost in a great story. From politics to fashion, international investigations to new thinking, culture to crime - we’ll bring you the biggest ideas and the arguments that matter. Sign up to have the Guardian’s award-winning long reads emailed to you every Saturday morning",
     frequency = "Every Saturday",
     listId = 3322,
