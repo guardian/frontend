@@ -37,7 +37,7 @@
     align-items: center;
 
     .inline-icon {
-        border: 1px solid $news-main-1;
+        border: 1px solid currentColor;
         border-radius: 50%;
         width: 20px;
         height: 20px;
@@ -47,13 +47,13 @@
     }
 
     svg {
-        stroke: $news-main-1;
+        stroke: currentColor;
     }
 
     &:hover,
     &:focus {
         .inline-icon {
-            background: $news-main-1;
+            background: currentColor;
         }
     }
 }
