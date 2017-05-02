@@ -21,7 +21,7 @@ define([
             });
         });
 
-        loadScript('https://assets.pinterest.com/js/pinmarklet.js?r=' + new Date().getTime());
+        loadScript.loadScript('https://assets.pinterest.com/js/pinmarklet.js?r=' + new Date().getTime());
     }
 
     return function () {

@@ -59,7 +59,7 @@ define([
         //   modify discussion-frontend to remove `fetch` polyfill and pass, if needed,
         //   opts.net = { json: fetchJson }
 
-        return loadScript(config.page.discussionFrontendUrl)
+        return loadScript.loadScript(config.page.discussionFrontendUrl)
             .then(function() {
                 init(window.guardian.app.discussion);
             })

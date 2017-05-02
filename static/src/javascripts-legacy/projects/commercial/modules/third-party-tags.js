@@ -7,6 +7,7 @@ define([
     'lib/config',
     'lib/fastdom-promise',
     'lodash/utilities/template',
+    'common/modules/experiments/ab',
     'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/audience-science-gateway',
     'commercial/modules/third-party-tags/audience-science-pql',
@@ -25,6 +26,7 @@ define([
     config,
     fastdom,
     template,
+    ab,
     commercialFeatures,
     audienceScienceGateway,
     audienceSciencePql,
@@ -76,11 +78,18 @@ define([
         }
 
         // Outbrain/Plista needs to be loaded before first ad as it is checking for presence of high relevance component on page
-        loadExternalContentWidget();
+        if (!isLuckyBastard()) {
+            loadExternalContentWidget();
+        }
 
         loadOther();
 
         return Promise.resolve(true);
+    }
+
+    function isLuckyBastard() {
+        var testName = 'PaidContentVsOutbrain2';
+        return ab.testCanBeRun(testName) && ab.getTestVariantId(testName) === 'paid-content';
     }
 
     function loadOther() {

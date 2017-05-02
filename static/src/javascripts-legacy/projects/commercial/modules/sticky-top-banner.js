@@ -1,6 +1,6 @@
 define([
     'Promise',
-    'lib/add-event-listener',
+    'lib/events',
     'lib/config',
     'lib/detect',
     'lib/fastdom-promise',
@@ -10,7 +10,7 @@ define([
     'commercial/modules/messenger'
 ], function (
     Promise,
-    addEventListener,
+    events,
     config,
     detect,
     fastdom,
@@ -73,7 +73,7 @@ define([
     function setupListeners() {
         messenger.register('resize', onResize);
         if (!config.page.hasSuperStickyBanner) {
-            addEventListener(win, 'scroll', onScroll, { passive: true });
+            events.addEventListener(win, 'scroll', onScroll, { passive: true });
         }
     }
 

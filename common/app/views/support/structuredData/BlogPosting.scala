@@ -48,7 +48,7 @@ object BlogPosting {
       "headline" -> block.title.getOrElse[String](blog.trail.headline),
       "author" -> blockAuthor(blog, block),
       "publisher" -> Json.obj("@id" -> "https://www.theguardian.com#publisher"),
-      "url" -> LinkTo{blog.metadata.id+"?page=with:block-"+block.id+"#block-"+block.id},
+      "url" -> LinkTo{blog.metadata.url+"?page=with:block-"+block.id+"#block-"+block.id},
       "datePublished" -> blockDate(block),
       "articleBody" -> blockBody(block)
     )

@@ -4,28 +4,24 @@ define([
     'common/modules/experiments/test-can-run-checks',
     'common/modules/commercial/acquisitions-view-log',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
-    'common/modules/experiments/tests/epic-to-support-landing-page',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
-    'common/modules/experiments/tests/contributions-epic-regulars-v2'
-
+    'common/modules/experiments/tests/acquisitions-epic-liveblog'
 ], function (
     reduce,
     segmentUtil,
     testCanRunChecks,
     viewLog,
     alwaysAsk,
-    epicToSupportLandingPage,
     askFourEarning,
-    regularsV2
+    acquisitionsEpicLiveBlog
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */
     var tests = [
         alwaysAsk,
-		regularsV2,
-        epicToSupportLandingPage,
-        askFourEarning
+        askFourEarning,
+        acquisitionsEpicLiveBlog
     ];
 
     var epicEngagementBannerTests = reduce(tests, function(out, test) {

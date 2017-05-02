@@ -2,7 +2,7 @@ package model.liveblog
 
 import java.util.Locale
 
-import com.gu.contentapi.client.model.v1.{Block, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
+import com.gu.contentapi.client.model.v1.{Block, MembershipPlaceholder, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import model.liveblog.BodyBlock._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
@@ -119,7 +119,7 @@ case class LiveBlogDate(fullDate: String, hhmm: String, ampm: String, gmt: Strin
 
 object BlockAttributes {
   def make(blockAttributes: ApiBlockAttributes) =
-    new BlockAttributes(blockAttributes.keyEvent.getOrElse(false), blockAttributes.summary.getOrElse(false))
+    new BlockAttributes(blockAttributes.keyEvent.getOrElse(false), blockAttributes.summary.getOrElse(false), blockAttributes.membershipPlaceholder)
 }
 
-case class BlockAttributes(keyEvent: Boolean, summary: Boolean)
+case class BlockAttributes(keyEvent: Boolean, summary: Boolean, membershipPlaceholder: Option[MembershipPlaceholder])

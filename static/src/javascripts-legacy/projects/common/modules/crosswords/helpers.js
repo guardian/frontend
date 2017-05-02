@@ -12,8 +12,7 @@ define([
     'lodash/arrays/range',
     'lodash/arrays/uniq',
     'lodash/collections/filter',
-    'lodash/collections/some',
-    'lib/chain'
+    'lodash/collections/some'
 ], function (
     constants,
     findIndex,
@@ -28,8 +27,7 @@ define([
     range,
     uniq,
     filter,
-    some,
-    chain
+    some
 ) {
     var isAcross = function (clue) {
         return clue.direction === 'across';
@@ -266,8 +264,18 @@ define([
 
     /** A map for looking up separators (i.e word or hyphen) that a given cell relates to */
     var buildSeparatorMap = function (clues) {
-        return chain(clues).and(map, function (clue) {
-            return map(clue.separatorLocations, function (locations, separator) {
+        var flatten = function(a, b) {
+            if (Array.isArray(b) && b.length) {
+            b = b.reduce(flatten, []);
+          }
+
+          return a.concat(b);
+        };
+
+        return clues.map(function (clue) {
+            return Object.keys(clue.separatorLocations).map(function (separator) {
+                var locations = clue.separatorLocations[separator];
+
                 return locations.map(function (location) {
                     var key = isAcross(clue) ? clueMapKey(clue.position.x + location, clue.position.y) : clueMapKey(clue.position.x, clue.position.y + location);
 
@@ -277,8 +285,8 @@ define([
                         separator: separator
                     };
                 });
-            });
-        }).and(flatten).and(reduce, function (map, d) {
+            })
+        }).reduce(flatten, []).reduce(function (map, d) {
             if (map[d.key] === undefined) {
                 map[d.key] = {};
             }
@@ -286,7 +294,7 @@ define([
             map[d.key][d.direction] = d.separator;
 
             return map;
-        }, {}).value();
+        }, {});
     };
 
     var entryHasCell = function (entry, x, y) {

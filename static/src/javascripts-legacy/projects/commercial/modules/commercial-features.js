@@ -1,5 +1,4 @@
 define([
-    'lib/location',
     'lib/config',
     'lib/detect',
     'lib/robust',
@@ -7,7 +6,6 @@ define([
     'common/modules/identity/api',
     'common/modules/user-prefs'
 ], function (
-    location,
     config,
     detect,
     robust,
@@ -20,7 +18,7 @@ define([
         var self = this;
 
         // this is used for SpeedCurve tests
-        var noadsUrl = location.getHash().match(/[#&]noads(&.*)?$/);
+        var noadsUrl = window.location.hash.match(/[#&]noads(&.*)?$/);
 
         var externalAdvertising =
             !noadsUrl &&

@@ -28,7 +28,9 @@ define([
 
         beforeEach(function (done) {
             injector.mock('common/modules/analytics/interaction-tracking', interactionTracking);
-            injector.mock('lib/load-css-promise', Promise.resolve());
+            injector.mock('lib/load-css-promise', {
+                loadCssPromise : Promise.resolve()
+            });
             injector.mock('commercial/modules/dfp/performance-logging', {moduleStart: noop, moduleEnd: noop});
 
             injector.require([
