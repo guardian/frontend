@@ -83,8 +83,6 @@
     @include hide;
 }
 
-/** .youtube__video-started inherited from glabs implementation could BEM this eg. .youtube-media-atom__iframe--video-started **/
-
 .youtube-media-atom__iframe.youtube__video-started:not(.youtube__video-ended) ~ .video-overlay {
     @include hide;
 }
