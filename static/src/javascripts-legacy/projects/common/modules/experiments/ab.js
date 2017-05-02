@@ -22,7 +22,8 @@ define([
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
     'ophan/ng',
-    'common/modules/experiments/tests/paid-commenting'
+    'common/modules/experiments/tests/paid-commenting',
+    'common/modules/experiments/tests/bundle-digital-sub-price-test-1'
 ], function (reportError,
              config,
              cookies,
@@ -46,7 +47,8 @@ define([
              SleevenotesLegacyEmailVariant,
              increaseInlineAdsRedux,
              ophan,
-             PaidCommenting
+             PaidCommenting,
+             BundleDigitalSubPriceTest1
     ) {
     var TESTS = compact([
         new OpinionEmailVariants(),
@@ -60,7 +62,8 @@ define([
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
         new increaseInlineAdsRedux(),
-        new PaidCommenting()
+        new PaidCommenting(),
+        new BundleDigitalSubPriceTest1()
     ].concat(MembershipEngagementBannerTests));
 
     function cleanParticipations() {

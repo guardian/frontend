@@ -45,7 +45,7 @@ trait ABTestSwitches {
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 1),
+    sellByDate = new LocalDate(2017, 6, 1),
     exposeClientSide = true
   )
 
@@ -55,7 +55,7 @@ trait ABTestSwitches {
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 1),
+    sellByDate = new LocalDate(2017, 6, 1),
     exposeClientSide = true
   )
 
@@ -75,7 +75,7 @@ trait ABTestSwitches {
     "Integrate Tailor with ab tests",
     owners = Seq(Owner.withGithub("oilnam")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 28),
+    sellByDate = new LocalDate(2017, 5, 31),
     exposeClientSide = true
   )
 
@@ -156,6 +156,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 1, 8),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-bundle-digital-sub-price-test-1",
+    "Test pricing options for digital subs",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 25),  // Thursday
     exposeClientSide = true
   )
 

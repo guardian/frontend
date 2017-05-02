@@ -22,14 +22,7 @@ define([
     'lodash/collections/contains',
     'lodash/objects/isArray',
     'lodash/objects/pick',
-    'lodash/objects/mapValues',
-    'lodash/collections/map',
-    'lib/chain',
-    'lodash/arrays/compact',
-    'lodash/collections/pluck',
-    'lodash/arrays/last',
-    'lodash/collections/sortBy',
-    'lodash/collections/reduceRight'
+    'lodash/objects/mapValues'
 ], function (
     fastdom,
     $,
@@ -50,14 +43,7 @@ define([
     contains,
     isArray,
     pick,
-    mapValues,
-    map,
-    chain,
-    compact,
-    pluck,
-    last,
-    sortBy,
-    reduceRight
+    mapValues
 ) {
     var editions = [
             'uk',
@@ -145,10 +131,15 @@ define([
             }, 0);
         }
 
-        return chain(getSummary().tags)
-            .and(pick, function(v, k) { return contains(k, 'series'); })
-            .and(mapValues, function(tag) { return views(tag[1]) + views(tag[2]); })
-            .value();
+        var seriesTags = pick(getSummary().tags, function(v, k) { 
+            return contains(k, 'series'); 
+        });
+
+        var seriesTagsSummary = mapValues(seriesTags, function(tag) { 
+            return views(tag[1]) + views(tag[2]); 
+        });
+
+        return seriesTagsSummary;
     }
 
     function mostViewedSeries() {
@@ -178,16 +169,20 @@ define([
             summary.periodEnd = newToday;
 
             forEach(summary.tags, function (record, tid) {
-                var result = chain(buckets).and(map, function (bucket) {
-                        var visits = chain(record[bucket.indexInRecord]).and(map, function (day) {
-                                var newAge = day[0] + updateBy;
-                                return newAge < summaryPeriodDays && newAge >= 0 ? [newAge, day[1]] : false;
-                            }).and(compact).value();
+                var result = buckets.map(function (bucket) {
+                    if (record[bucket.indexInRecord]) {
+                        var visits = record[bucket.indexInRecord].map(function (day) {
+                            var newAge = day[0] + updateBy;
+                            return newAge < summaryPeriodDays && newAge >= 0 ? [newAge, day[1]] : false;
+                        }).filter(Boolean);
 
                         return (visits.length > 1 || (visits.length === 1 && visits[0][0] < forgetUniquesAfter)) ? visits : [];
-                    }).value();
+                    }
 
-                if (some(result, function (r) { return r.length; })) {
+                    return [];
+                });
+
+                if (result.some(function (r) { return r.length; })) {
                     summary.tags[tid] = [record[0]].concat(result);
                 } else {
                     delete summary.tags[tid];
@@ -210,23 +205,26 @@ define([
         tids = op.whitelist ? tids.filter(function (tid) { return op.whitelist.indexOf(tid) > -1; }) : tids;
         tids = op.blacklist ? tids.filter(function (tid) { return op.blacklist.indexOf(tid) === -1; }) : tids;
 
-        return chain(tids).and(map, function (tid) {
-                var record = tags[tid],
-                    rank = reduce(buckets, function (rank, bucket) {
-                        return rank + tally(record[bucket.indexInRecord], op.weights[bucket.type], op.thresholds[bucket.type]);
-                    }, 0);
+        return tids.map(function (tid) {
+            var record = tags[tid],
+                rank = reduce(buckets, function (rank, bucket) {
+                    return rank + tally(record[bucket.indexInRecord], op.weights[bucket.type], op.thresholds[bucket.type]);
+                }, 0);
 
-                return {
-                    idAndName: [tid, record[0]],
-                    rank: rank
-                };
-            })
-            .and(compact)
-            .and(sortBy, 'rank')
-            .and(last, op.number)
-            .reverse()
-            .and(pluck, 'idAndName')
-            .value();
+            return {
+                idAndName: [tid, record[0]],
+                rank: rank
+            };
+        })
+        .filter(Boolean)
+        .sort(function (a, b) {
+          return a.rank - b.rank;
+        })
+        .slice(-op.number)
+        .map(function (tid) {
+            return tid.idAndName;
+        })
+        .reverse();
     }
 
     function getContributors() {
@@ -328,37 +326,40 @@ define([
             page = collapsePath(pageConfig.pageId),
             isFront = false;
 
-        chain(pageMeta).and(reduceRight, function (tagMeta, tag) {
-                var tid = collapsePath(firstCsv(pageConfig[tag.tid])),
-                    tname = tid && firstCsv(pageConfig[tag.tname]);
+        var meta = pageMeta.reduceRight(function (tagMeta, tag) {
+            var tid = collapsePath(firstCsv(pageConfig[tag.tid])),
+                tname = tid && firstCsv(pageConfig[tag.tname]);
 
-                if (tid && tname) {
-                    tagMeta[tid] = tname;
-                }
-                isFront = isFront || tid === page;
-                return tagMeta;
-            }, {}).and(forEach, function (tname, tid) {
-                var record = summary.tags[tid] || [],
-                    visits,
-                    today;
+            if (tid && tname) {
+                tagMeta[tid] = tname;
+            }
+            isFront = isFront || tid === page;
+            return tagMeta;
+        }, {});
 
-                forEach(buckets, function (bucket) {
-                    record[bucket.indexInRecord] = record[bucket.indexInRecord] || [];
-                });
+        Object.keys(meta).forEach(function (tid) {
+            var tname = meta[tid],
+                record = summary.tags[tid] || [],
+                visits,
+                today;
 
-                record[0] = tname;
-
-                visits = record[isFront ? 2 : 1];
-                today = find(visits, function (day) { return day[0] === 0; });
-
-                if (today) {
-                    today[1] = today[1] + 1;
-                } else {
-                    visits.unshift([0, 1]);
-                }
-
-                summary.tags[tid] = record;
+            buckets.forEach(function (bucket) {
+                record[bucket.indexInRecord] = record[bucket.indexInRecord] || [];
             });
+
+            record[0] = tname;
+
+            visits = record[isFront ? 2 : 1];
+            today = find(visits, function (day) { return day[0] === 0; });
+
+            if (today) {
+                today[1] = today[1] + 1;
+            } else {
+                visits.unshift([0, 1]);
+            }
+
+            summary.tags[tid] = record;
+        });
 
         saveSummary(summary);
     }

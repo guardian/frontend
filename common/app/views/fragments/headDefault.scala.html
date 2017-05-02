@@ -1,6 +1,6 @@
 @(item: model.ContentType, page: model.Page, showBadge: Boolean = false)(implicit request: RequestHeader)
 
-<header class="content__head u-cf">
+<header class="content__head @if(item.tags.isInteractive) {content__head--interactive} u-cf">
     <div class="gs-container">
         <div class="content__main-column">
 
