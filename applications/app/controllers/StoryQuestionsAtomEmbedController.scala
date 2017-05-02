@@ -13,7 +13,7 @@ import model.content.StoryQuestionsAtom
 class StoryQuestionsAtomEmbedController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
   def render(id: String) = Action.async { implicit request =>
-    lookup(s"atom/story-questions/$id") map {
+    lookup(s"atom/storyquestions/$id") map {
       case Left(model) => renderStoryQuestionsAtom(model)
       case Right(other) => renderOther(other)
     }
@@ -27,7 +27,7 @@ class StoryQuestionsAtomEmbedController(contentApiClient: ContentApiClient)(impl
     val response: Future[ItemResponse] = contentApiClient.getResponse(contentApiClient.item(path, edition))
 
     val result = response map { response =>
-      make(response.media) match  {
+      make(response.storyquestions) match  {
         case Some(x) => Left(x)
         case _ => Right(NotFound)
       }
