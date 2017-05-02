@@ -226,6 +226,7 @@ const setupDispatches = (
     });
 };
 
+// #? is this over-kill? should we use Redux?
 const reducer = (previousState: State, action: Action): State =>
     (reducers[action.type]
         ? reducers[action.type](previousState)
