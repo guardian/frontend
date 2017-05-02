@@ -30,14 +30,14 @@ const MeasureUnderstanding = () => {
     // at the click of a button, we send a notification to ophan and clean up
     // registered listeners to prevent duplicate calls
     const onClick = (evt: Event) => {
-        // Flow will complain if we don't type check
+        // #? Flow will complain if we don't type check
         if (!(evt.target instanceof Element)) {
             throw new Error('This will never happen');
         }
         const button = evt.target.closest('.js-button');
         const value = button && button.getAttribute('data-value');
         if (value) {
-            // Flow will complain if we don't type check
+            // #? Flow will complain if we don't type check
             if (!(evt.currentTarget instanceof Element)) {
                 throw new Error('This will never happen');
             }
