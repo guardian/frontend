@@ -64,18 +64,18 @@
 
 .youtube-media-atom__iframe {
     z-index: 0;
-}
 
-.youtube-media-atom__iframe:hover ~ .youtube-media-atom__overlay .youtube-media-atom__play-button {
-    transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
-    transform: translate(-50%, -50%) scale(1.12);
-    transform-origin: center;
-}
+    &:hover ~ .youtube-media-atom__overlay .youtube-media-atom__play-button {
+        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+        transform: translate(-50%, -50%) scale(1.12);
+        transform-origin: center;
+    }
 
-.youtube-media-atom__iframe:hover ~ .youtube-media-atom__overlay .youtube-media-atom__immersive-interface .youtube-media-atom__play-button {
-    transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
-    transform: scale(1.08);
-    transform-origin: center;
+    &:hover ~ .youtube-media-atom__overlay .youtube-media-atom__immersive-interface .youtube-media-atom__play-button {
+        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+        transform: scale(1.08);
+        transform-origin: center;
+    }
 }
 
 .youtube-media-atom__iframe:not(.youtube__video-ready) ~ .youtube-media-atom__overlay,
@@ -137,27 +137,27 @@
     width: 100%;
     height: 34px;
     z-index: 2;
-}
 
-.youtube-media-atom__bottom-bar::before,
-.youtube-media-atom__bottom-bar::after {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    z-index: -1;
-}
+    &:before,
+    &:after {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        z-index: -1;
+    }
 
-.youtube-media-atom__bottom-bar::before {
-    content: '';
-    opacity: .1;
-    background: $neutral-1;
-}
+    &:before {
+        content: '';
+        opacity: .1;
+        background: $neutral-1;
+    }
 
-.youtube-media-atom__bottom-bar::after {
-    @include simple-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, .5));
-    content: '';
-    opacity: .7;
+    &:after {
+        @include simple-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, .5));
+        content: '';
+        opacity: .7;
+    }
 }
 
 .youtube-media-atom__bottom-bar__icon {
@@ -166,7 +166,7 @@
     width: 36px;
 }
 
-.youtube-media-atom__bottom-bar__icon svg {
+.youtube-media-atom__bottom-bar__icon .inline-video-icon__svg {
     fill: $media-default;
     width: 19px;
     height: 12px;
@@ -183,18 +183,18 @@
     padding-top: 4px;
     padding-left: 8px;
     text-shadow: 0 0 16px rgba(51, 51, 51, .25);
-}
 
-.youtube-media-atom__bottom-bar__duration::before {
-    content: '';
-    width: 1px;
-    height: 16px;
-    opacity: .5;
-    position: absolute;
-    left: 36px;
-    background-color: $multimedia-main-2;
-    top: auto;
-    bottom: 8px;
+    &:before {
+        content: '';
+        width: 1px;
+        height: 16px;
+        opacity: .5;
+        position: absolute;
+        left: 36px;
+        background-color: $multimedia-main-2;
+        top: auto;
+        bottom: 8px;
+    }
 }
 
 .immersive-main-media__media .youtube-media-atom {
@@ -231,22 +231,23 @@
     width: 92px;
     height: 92px;
     transform: none;
+
+    &:hover {
+        transform: none;
+    }
+
+    &:before {
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+    }
+
+    &:after {
+        display: none;
+    }
 }
 
-.immersive-main-media__media .youtube-media-atom__play-button:hover {
-    transform: none;
-}
-
-.immersive-main-media__media .youtube-media-atom__play-button:before {
-    width: 100%;
-    height: 100%;
-    border-radius: 100%;
-}
-.immersive-main-media__media .youtube-media-atom__play-button:after {
-    display: none;
-}
-
-.immersive-main-media__media .youtube-media-atom__play-button svg {
+.immersive-main-media__media .youtube-media-atom__play-button .inline-play__svg {
     width: 46px;
     height: 39px;
     fill: $multimedia-main-1;
@@ -266,8 +267,8 @@
     padding: 0 12px;
     background-color: rgba(51, 51, 51, .7);
     border-radius: 32px;
-}
 
-.immersive-main-media__media .youtube-media-atom__bottom-bar__duration:before {
-    display: none;
+    &:before {
+        display: none;
+    }
 }
