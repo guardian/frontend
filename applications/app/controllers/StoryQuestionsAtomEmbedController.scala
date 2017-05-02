@@ -10,7 +10,15 @@ import scala.concurrent.Future
 import contentapi.ContentApiClient
 import model.content.StoryQuestionsAtom
 
-class StoryQuestionsAtomEmbedController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class StoryQuestionsAtomEmbedController(
+  contentApiClient: ContentApiClient
+)(
+  implicit context: ApplicationContext
+)
+  extends Controller
+  with Logging
+  with ExecutionContexts
+{
 
   def render(id: String) = Action.async { implicit request =>
     lookup(s"atom/storyquestions/$id") map {
@@ -41,9 +49,7 @@ class StoryQuestionsAtomEmbedController(contentApiClient: ContentApiClient)(impl
   }
 
   private def renderStoryQuestionsAtom(model: StoryQuestionsAtom)(implicit request: RequestHeader): Result = {
-
-    val page: StoryQuestionsAtomEmbedPage = StoryQuestionsAtomEmbedPage(model)
-
+    val page = StoryQuestionsAtomEmbedPage(model)
     Cached(600)(RevalidatableResult.Ok(views.html.fragments.atoms.storyQuestionsEmbed(page)))
   }
 }
