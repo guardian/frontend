@@ -1,0 +1,15 @@
+@import conf.Static
+@import model.StoryQuestionsAtomEmbedPage
+@import conf.Configuration
+
+@(page: StoryQuestionsAtomEmbedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+<!DOCTYPE html>
+<html lang="en-GB" class="gu-story-questions-embed-html">
+    <head>
+        <title>@page.metadata.webTitle</title>
+        <base target="_parent"/>
+    </head>
+    <body>
+    </body>
+</html>
