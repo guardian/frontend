@@ -7,7 +7,7 @@ import fetchData from 'common/modules/tailor/fetch-data';
  *
  * @returns {Promise.<Boolean>}
  */
-const getSuggestedSurvey = (queryParams: Object): void =>
+const getSuggestedSurvey = (queryParams: Object): Promise<any> =>
     fetchData('suggestions', false, queryParams).then(response => {
         if (response.suggestions) {
             const surveySuggestions = response.suggestions.filter(
@@ -25,7 +25,7 @@ const getSuggestedSurvey = (queryParams: Object): void =>
  *
  * @returns {Promise.<Boolean>}
  */
-const isRegular = (): void =>
+const isRegular = (): Promise<boolean> =>
     fetchData('suggestions', false)
         .then(suggestions => {
             try {
