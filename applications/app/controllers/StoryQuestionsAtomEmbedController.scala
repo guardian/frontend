@@ -3,7 +3,7 @@ package controllers
 import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentatom.thrift.{Atom => ApiAtom}
 import common._
-import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.Cached.RevalidatableResult
 import model._
 import play.api.mvc._
 import scala.concurrent.Future
@@ -19,7 +19,7 @@ class StoryQuestionsAtomEmbedController(contentApiClient: ContentApiClient)(impl
     }
   }
 
-  def make(apiAtom: Option[ApiAtom]): Option[StoryQuestionsAtom] = apiAtom map(atom => StoryQuestionsAtom.make(atom))
+  private def make(apiAtom: Option[ApiAtom]): Option[StoryQuestionsAtom] = apiAtom map StoryQuestionsAtom.make _
 
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
@@ -37,7 +37,6 @@ class StoryQuestionsAtomEmbedController(contentApiClient: ContentApiClient)(impl
 
   private def renderOther(result: Result)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
-    case 410 => Cached(60)(WithoutRevalidationResult(Gone(views.html.videoEmbedMissing())))
     case _ => result
   }
 
