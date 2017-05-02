@@ -54,7 +54,7 @@ define([
         new OpinionEmailVariants(),
         new PaidContentVsOutbrain2,
         acquisitionTestSelector.getTest(),
-        // new tailorSurvey.TailorSurvey(),
+        new tailorSurvey.TailorSurvey(),
         TheLongReadEmailVariants,
         FashionStatementEmailVariants,
         BookmarksEmailVariants2,
