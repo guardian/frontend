@@ -1,12 +1,10 @@
 <div id="site-message__message">
     <div class="site-message__message site-message__message--membership">
-        <span id="membership__engagement-message-text">
-            <%=messageText%>
-        </span>
-        <span id="membership__engagement-message-button" class="message-button-rounded__cta <%=colourClass%>">
-            <span id="membership__engagement-message-button-caption"><%=buttonCaption%></span><%=arrowWhiteRight%>
+        <span class = "membership__message-text"><%=messageText%></span>
+        <span class="membership__paypal-container">
+            <img class="membership__paypal-logo <%=paypalClass%>" src="<%=paypalLogoSrc%>" alt="Paypal and credit card">
+            <span class="membership__support-button"><a class="message-button-rounded__cta <%=colourClass%>" href="<%=linkHref%>"><%=buttonCaption%><%=arrowWhiteRight%></a></span>
         </span>
     </div>
-    <a id="membership__engagement-message-link" class="u-faux-block-link__overlay" target="_blank" href="<%=linkHref%>" data-link-name="Read more link">
-    </a>
+    <a class="u-faux-block-link__overlay js-engagement-message-link" target="_blank" href="<%=linkHref%>" data-link-name="Read more link"></a>
 </div>

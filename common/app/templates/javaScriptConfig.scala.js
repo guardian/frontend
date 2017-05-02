@@ -23,7 +23,10 @@
             "membership": {
                 "adblock-coins": "@Static("images/membership/adblock-coins.png")",
                 "adblock-coins-us": "@Static("images/membership/adblock-coins-us.png")"
-            }
+            },
+            "acquisitions": {
+                "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")"
+             }
         },
         "stylesheets": {
             "fonts": {
