@@ -61,6 +61,17 @@ object EmailNewsletters {
     triggerId = Some(2563)
   )
 
+  val morningBriefing = EmailNewsletter(
+    name = "Morning Briefing UK",
+    theme = "news",
+    teaser = "Breaking down the day's stories, from latest manoeuvring in global politics to the ‘and finally’ story that’s going viral",
+    description = "Breaking down the news stories of the day and telling you why they matter so you’ll be completely up-to-speed. Besides the headlines, you'll get a fantastic lunchtime read and highlights of what’s on the UK’s front pages that morning",
+    frequency = "Every weekday",
+    listId = 3640,
+    signupPage = Some("/info/2016/mar/01/the-morning-briefing-start-the-day-one-step-ahead"),
+    exampleUrl = Some("/world/series/guardian-morning-briefing/latest/email")
+  )
+
   val morningMail = EmailNewsletter(
     name = "Morning Mail",
     theme = "news",
@@ -213,7 +224,7 @@ object EmailNewsletters {
   val theLongRead = EmailNewsletter(
     name = "The Long Read",
     theme = "feature",
-    teaser = "Get lost in a great story. From politics to fashion, international investigations to new thinking, culture to crime. The Guardian’s award-winning long reads bring you the biggest ideas and the arguements that matter",
+    teaser = "Get lost in a great story; the Guardian’s award-winning long reads bring you the biggest ideas and the arguments that matter",
     description = "Get lost in a great story. From politics to fashion, international investigations to new thinking, culture to crime - we’ll bring you the biggest ideas and the arguments that matter. Sign up to have the Guardian’s award-winning long reads emailed to you every Saturday morning",
     frequency = "Every Saturday",
     listId = 3322,
@@ -401,6 +412,7 @@ object EmailNewsletters {
     guardianTodayUk,
     guardianTodayUs,
     guardianTodayAu,
+    morningBriefing,
     morningMail
   )
 
