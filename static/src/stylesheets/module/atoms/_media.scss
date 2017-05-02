@@ -1,0 +1,5 @@
+.element-atom--media.element-atom--main-media {
+    @include mq($from: mobile, $until: mobileLandscape) {
+        margin-top: 0;
+    }
+}
