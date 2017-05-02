@@ -88,7 +88,7 @@ ${i + 1 + remainingCount}. ${remaingStep}
 \`${steps[remaingStep]}\`
 `)
                                         .join('')}
-If you get stuck, feel free to ping us in https://theguardian.slack.com/messages/dotcom-platform.`
+If you get stuck, feel free to ping us in https://theguardian.slack.com/messages/dotcom-es2017.`
                                 );
                                 process.exit(1);
                             });
