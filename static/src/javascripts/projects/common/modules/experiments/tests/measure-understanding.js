@@ -16,6 +16,7 @@ const MeasureUnderstanding = () => {
     const id = 'MeasureUnderstanding';
 
     // Ophan survey id
+    // TODO get survey id
     const component = 'data_survey_1234';
 
     // will run in articles only if no story questions atom is already there
@@ -29,12 +30,14 @@ const MeasureUnderstanding = () => {
     // at the click of a button, we send a notification to ophan and clean up
     // registered listeners to prevent duplicate calls
     const onClick = (evt: Event) => {
+        // Flow will complain if we don't type check
         if (!(evt.target instanceof Element)) {
             throw new Error('This will never happen');
         }
         const button = evt.target.closest('.js-button');
         const value = button && button.getAttribute('data-value');
         if (value) {
+            // Flow will complain if we don't type check
             if (!(evt.currentTarget instanceof Element)) {
                 throw new Error('This will never happen');
             }
@@ -91,6 +94,7 @@ const MeasureUnderstanding = () => {
 
     return Object.freeze({
         id,
+        // TODO get test settings
         start: '2017-04-27',
         expiry: '2017-05-27',
         audience: 0.5,
