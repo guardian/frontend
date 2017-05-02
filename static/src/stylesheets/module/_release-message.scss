@@ -507,7 +507,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 
 
-.membership_paypal-logo {
+.membership__paypal-logo {
     display: none;
     height: auto;
     margin-right: $gs-gutter/2;
@@ -515,9 +515,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     order: 2;
     margin-top: $gs-gutter/2;
     margin-bottom: 0;
-    width: 200px;
+    width: 175px;
 
-    @include mq($from: tablet) {
+    @include mq(tablet) {
         margin-top: 0;
         order: 1;
     }
@@ -538,7 +538,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     order: 1;
     margin-top: $gs-gutter/2;
 
-    @include mq($from: tablet) {
+    @include mq(tablet) {
         order: 2;
     }
 }
@@ -551,7 +551,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     display: flex;
     flex-direction: column;
 
-    @include mq($from: tablet) {
+    @include mq(tablet) {
         display: inline-block;
     }
 }

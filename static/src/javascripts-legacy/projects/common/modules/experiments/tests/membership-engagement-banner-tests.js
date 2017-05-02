@@ -82,7 +82,7 @@ define([
             // When the button link is clicked, call the function that indicates the A/B test is 'complete'
             // ...note that for Membership & Contributions this completion is only the start of a longer
             // journey that will hopefully end pages later with the user giving us money.
-            bean.on(qwery('#membership__engagement-message-link')[0], 'click', complete);
+            bean.on(qwery('.js-engagement-message-link')[0], 'click', complete);
         });
     }
 
@@ -100,7 +100,7 @@ define([
         var cost = monthlySupporterCost[config.page.edition];
         return 'Support us for ' + cost + ' a month.'
     }
-    
+
 
     var MembershipEngagementBannerPaywallAndPaypalTest = function() {
         this.id = 'MembershipEngagementBannerPaywallAndPaypalTest';
@@ -141,7 +141,7 @@ define([
 
             engagementBannerParams.messageText = messageText;
         }
-        
+
         if(paypalClass) {
             engagementBannerParams.paypalClass = paypalClass;
         }

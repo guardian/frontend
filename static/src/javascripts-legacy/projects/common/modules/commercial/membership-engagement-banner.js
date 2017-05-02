@@ -147,17 +147,10 @@ define([
             }
         }
 
-        var paypalAndCreditCardImage = (function() {
-            try {
-                return config.images.acquisitions.paypalAndCreditCard;
-            }
-            catch (e) {
-                return '';
-            }
-        })();
+        var paypalAndCreditCardImage = (config.images && config.images.acquisitions && config.images.acquisitions['paypal-and-credit-card']) || '';
 
 
-    function showBanner(params) {
+        function showBanner(params) {
 
             if (params === DO_NOT_RENDER_ENGAGEMENT_BANNER) {
                 return;
@@ -167,7 +160,7 @@ define([
 
             var messageText = Array.isArray(params.messageText)?selectSequentiallyFrom(params.messageText):params.messageText;
 
-            var paypalClass = params.paypalClass ? params.paypalClass:'';
+            var paypalClass = params.paypalClass || '';
 
             //the paypall variant only works with the yellow banner
             if(paypalClass) {
