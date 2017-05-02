@@ -114,7 +114,6 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/tailor/tailor.js",
     "lib/ajax.js",
     "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
