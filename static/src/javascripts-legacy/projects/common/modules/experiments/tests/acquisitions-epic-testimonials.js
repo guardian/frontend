@@ -26,8 +26,8 @@ define([
         id: 'AcquisitionsEpicTestimonials',
         campaignId: 'kr1_epic_testimonials',
 
-        start: '2017-04-28',
-        expiry: '2017-05-03',
+        start: '2017-05-02',
+        expiry: '2017-05-10', // Wednesday
 
         author: 'Guy Dawson',
         description: 'Test placing reader testimonials in the Epic',
