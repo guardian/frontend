@@ -2,9 +2,16 @@
 @import 'form';
 @import 'header';
 
+$warning-color: #f96262;
+
 .feedback__form {
     border: 0px;
     outline: none;
+    display: none;
+}
+
+.feedback__form-selected {
+    display: block !important;
 }
 
 .feedback__element {
@@ -68,4 +75,12 @@
 
 .feedback__input--wide {
     width: 80%;
+}
+
+.mandatory-failed {
+    border-color: $warning-color;
+}
+
+#feedback-warning {
+    color: $warning-color;
 }

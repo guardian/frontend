@@ -26,9 +26,8 @@ define([
     cookies
 ) {
 
-    console.log("feedback js running");
-
     var select = document.getElementById("feedback-category");
+    var warning = document.getElementById("feedback-warning");
 
     var fieldmap = {
         "Help with my Guardian account": "feedback-form-account",
@@ -49,75 +48,7 @@ define([
         "Other": "feedback-form-other"
     };
 
-    console.log("Hiding stuff!");
-
-    for(choice in fieldmap){
-
-        // add option to dropdown
-
-        var opt = document.createElement("option");
-        opt.value = choice;
-        opt.innerHTML = choice;
-        select.appendChild(opt);
-
-        // hide it
-
-        try {
-            document.getElementById(fieldmap[choice]).style.display = "none";
-        } catch(err) {
-            console.log("Failed to find " + choice)
-        }
-
-    }
-
-    function flipflop(evt) {
-
-        console.log("Flipping and flopping");
-
-        var cat = document.getElementById("feedback-category").value
-
-        for(choice in fieldmap){
-            if(choice === cat){
-                // show
-                document.getElementById(fieldmap[choice]).style.display = "block";
-            } else {
-                // hide
-                document.getElementById(fieldmap[choice]).style.display = "none";
-            }
-        }
-
-    }
-
-    document.getElementById("feedback-category").addEventListener("change", flipflop, false);
-
     var adblockBeingUsed = false;
-
-    function objToString(obj) {
-        return reduce(obj, function (str, value, key) {
-            return str + key + ': ' + value + '\n';
-        }, '');
-    }
-
-    function objToHash(obj) {
-        return reduce(obj, function (str, value, key) {
-            return str + '&' + encodeURIComponent(key) + '=' + encodeURIComponent(value);
-        }, '');
-    }
-
-    function addEmailValuesToHash(storedValues) {
-        return function (link) {
-            return function () {
-                var oldHref = link.attr('href');
-                var props = {
-                    page: window.location,
-                    width: window.innerWidth,
-                    ads: getCreativeIDs().join(' ')
-                };
-                var body = objToHash(assign(props, storedValues));
-                link.attr('href', oldHref + '#' + body.substring(1));
-            };
-        };
-    }
 
     function getExtraDataInformation() {
         return {
@@ -133,42 +64,6 @@ define([
         };
     }
 
-    function addEmailHeaders(storedValues) {
-        return function (link) {
-            return function () {
-                var oldHref = link.attr('href');
-                var props = getExtraDataInformation();
-                var body = '\r\n\r\n\r\n\r\n------------------------------\r\nAdditional technical data about your request - please do not edit:\r\n\r\n'
-                    + objToString(assign(props, storedValues))
-                    + '\r\n\r\n';
-                link.attr('href', oldHref + '?body=' + encodeURIComponent(body));
-            };
-        };
-    }
-
-    function registerHandler(selector, addEmailHeaders) {
-        var link = $(selector);
-
-        if (link.length) {
-            for (var i=0; i < link.length; ++i)
-                bean.on(link[i], 'click', addEmailHeaders(link));
-        }
-    }
-
-    function getValuesFromHash(hash) {
-        var pairs = hash.substring(1).split('&');
-        return reduce(pairs, function (accu, pairJoined) {
-            var pair = pairJoined.split('='),
-                object = {};
-            if (!!pair[0] && !!pair[1]) {
-                object[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
-                return assign(accu, object);
-            } else {
-                return accu;
-            }
-        }, {});
-    }
-
     function summariseAbTests(testParticipations) {
         var tests = keys(testParticipations);
         if (tests.length === 0) {
@@ -181,24 +76,83 @@ define([
         }
     }
 
-    /**
-     * the link in the footer adds some of the values to the hash so feedback can use it later.  Those values
-     * override those at the time the email is sent.
-     */
+    function addOptionsToSelectDropDown() {
+        for(choice in fieldmap){
+            var opt = document.createElement("option");
+            opt.value = choice;
+            opt.innerHTML = choice;
+            select.appendChild(opt);
+        }
+    }
+
+    function toggleFormVisibility() {
+
+        var cat = document.getElementById("feedback-category").value;
+
+        for(choice in fieldmap){
+            if(choice === cat){
+                document.getElementById(fieldmap[choice]).classList.add("feedback__form-selected");
+            } else {
+                document.getElementById(fieldmap[choice]).classList.remove("feedback__form-selected");
+            }
+        }
+
+    }
+
+    function mandatoryCheck(elem) {
+        if(elem.value == ""){
+            elem.classList.add("mandatory-failed");
+            return false;
+        } else {
+            elem.classList.remove("mandatory-failed");
+            return true;
+        }
+    }
+
+    function initForms() {
+
+        document.querySelectorAll(".feedback__form input,.feedback__form textarea").forEach((elem) => {
+            elem.onblur = function(){ mandatoryCheck(elem); }
+            elem.oninput = function(){ mandatoryCheck(elem); }
+        });
+
+        document.querySelectorAll(".feedback__form form").forEach((elem) => {
+            elem.onsubmit = function() {
+
+                var hasFailed = false;
+
+                document.querySelectorAll(".feedback__form-selected input,.feedback__form-selected textarea").forEach((elem) => {
+                    if(!mandatoryCheck(elem)){
+                        hasFailed = true;
+                    }
+                });
+
+                if(hasFailed){
+                    console.log("Mandatory check failed. Not proceeding with form submission.");
+                    warning.innerHTML = "All fields must be filled to proceed";
+                }
+
+                return !hasFailed;
+
+            }
+
+        });
+
+        document.getElementById("feedback-category").addEventListener("change", toggleFormVisibility, false);
+
+    }
+
     return function () {
+
         detect.adblockInUse.then(function(adblockInUse){
             adblockBeingUsed = adblockInUse;
         });
 
-        var storedValues = getValuesFromHash(window.location.hash);
-        registerHandler('.js-tech-feedback-report', addEmailValuesToHash(storedValues));
-        registerHandler('.js-tech-feedback-mailto', addEmailHeaders(storedValues));
-        registerHandler('[href=mailto:userhelp@theguardian.com]', addEmailHeaders(storedValues));
-        registerHandler('[href=mailto:crosswords.beta@theguardian.com]', addEmailHeaders(storedValues));// FIXME should have used a .js- selector
+        console.log(getExtraDataInformation());
 
-        // Exposed for testing
-        this.getValuesFromHash = getValuesFromHash;
-        this.summariseAbTests = summariseAbTests;
+        addOptionsToSelectDropDown();
+        initForms();
 
     };
+
 });
