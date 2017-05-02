@@ -1,17 +1,56 @@
-#!/bin/bash
+#!/usr/bin/env node
+/* eslint-disable no-console */
 
-# ensure yarn.lock is committed with package.json changes
-readonly staged=$(git diff --name-only --cached)
+const path = require('path');
 
-if [[ $staged == package.json* && $staged != *"yarn.lock"* ]]; then
-  node tools/messages.js should-yarn;
-  exit 1;
-fi
+const execa = require('execa');
+const chalk = require('chalk');
 
-# Update Documentations Table of Content if needed
-if [[ $staged == *"docs/"* ]]; then
-    docs=$(git rev-parse --show-toplevel)/docs
-    readme=$docs/README.md
-    $docs/generate-toc.sh > $readme
-    git add $readme
-fi
+execa
+    .stdout('git', ['diff', '--name-only', '--cached'])
+    .then(staged => staged.split('\n'))
+    // lint and commit any lint fixes
+    .then(staged => {
+        const jsFiles = staged.filter(file => file.endsWith('.js'));
+        if (jsFiles.length) {
+            return execa('eslint', ['--fix', ...jsFiles], {
+                stdio: 'inherit',
+            })
+                .then(() =>
+                    execa('git', ['add', ...jsFiles], {
+                        stdio: 'inherit',
+                    })
+                )
+                .then(() => staged);
+        }
+        return staged;
+    })
+    // make sure yarn.lock is commited
+    .then(staged => {
+        if (
+            staged.some(file => file === 'package.json') &&
+            !staged.some(file => file === 'yarn.lock')
+        ) {
+            return Promise.reject(
+                `${chalk.red(`${chalk.underline('package.json')} has changed but ${chalk.underline('yarn.lock')} is not included in this commit.`)}\n${chalk.dim(`If this is intentional, commit this change with --no-verify.`)}`
+            );
+        }
+        return staged;
+    })
+    // make sure docs TOC stays up to date
+    .then(staged => {
+        if (staged.some(file => file.includes('docs/'))) {
+            const docs = path.resolve('docs');
+            const readme = path.resolve(docs, 'README.md');
+            return execa(path.resolve(docs, 'generate-toc.sh'), ['>', readme], {
+                stdio: 'inherit',
+            })
+                .then(() => execa.sync('git', [readme]))
+                .then(() => staged);
+        }
+        return staged;
+    })
+    .catch(e => {
+        console.log(`\n${e}\n`);
+        process.exit(1);
+    });

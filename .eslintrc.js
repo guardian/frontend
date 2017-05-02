@@ -19,6 +19,7 @@ module.exports = {
         },
     },
     rules: {
+        'import/no-extraneous-dependencies': 'off',
         // prettier settings
         'prettier/prettier': [
             'error',
