@@ -21,10 +21,10 @@ define([
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
-    'common/modules/experiments/tests/paid-card-logo',
     'common/modules/experiments/tests/measure-understanding',
     'ophan/ng',
-    'common/modules/experiments/tests/paid-commenting'
+    'common/modules/experiments/tests/paid-commenting',
+    'common/modules/experiments/tests/bundle-digital-sub-price-test-1'
 ], function (reportError,
              config,
              cookies,
@@ -39,7 +39,7 @@ define([
              OpinionEmailVariants,
              MembershipEngagementBannerTests,
              PaidContentVsOutbrain2,
-             TailorSurvey,
+             tailorSurvey,
              TheLongReadEmailVariants,
              FashionStatementEmailVariants,
              BookmarksEmailVariants2,
@@ -47,16 +47,16 @@ define([
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
              increaseInlineAdsRedux,
-             PaidCardLogo,
              measureUnderstanding,
              ophan,
-             PaidCommenting
+             PaidCommenting,
+             BundleDigitalSubPriceTest1
     ) {
     var TESTS = compact([
         new OpinionEmailVariants(),
         new PaidContentVsOutbrain2,
         acquisitionTestSelector.getTest(),
-        new TailorSurvey(),
+        new tailorSurvey.TailorSurvey(),
         TheLongReadEmailVariants,
         FashionStatementEmailVariants,
         BookmarksEmailVariants2,
@@ -64,9 +64,9 @@ define([
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
         new increaseInlineAdsRedux(),
-        new PaidCardLogo(),
+        measureUnderstanding.MeasureUnderstanding(),
         new PaidCommenting(),
-        measureUnderstanding.MeasureUnderstanding()
+        new BundleDigitalSubPriceTest1()
     ].concat(MembershipEngagementBannerTests));
 
     function cleanParticipations() {

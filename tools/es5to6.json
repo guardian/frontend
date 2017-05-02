@@ -1,7 +1,5 @@
 {
   "Francis Carr": [
-    "bootstraps/commercial.js",
-    "projects/admin/bootstraps/commercial-browser-performance.js",
     "projects/commercial/modules/ad-sizes.js",
     "projects/commercial/modules/article-aside-adverts.js",
     "projects/commercial/modules/article-body-adverts.js",
@@ -105,7 +103,6 @@
     "projects/common/modules/ui/images.js"
   ],
   "sndrs": [
-    "bootstraps/admin.js",
     "bootstraps/enhanced/accessibility.js",
     "bootstraps/enhanced/article-liveblog-common.js",
     "bootstraps/enhanced/article-minute.js",
@@ -117,7 +114,6 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/experiments/tests/tailor-survey.js",
     "projects/common/modules/tailor/tailor.js",
     "lib/ajax.js",
     "bootstraps/enhanced/identity-common.js",
@@ -142,7 +138,6 @@
     "lib/atob.js"
   ],
   "Calum Campbell": [
-    "lib/chain.js",
     "lib/clamp.js",
     "lib/client-rects.js",
     "lib/detect.js",
@@ -153,7 +148,6 @@
     "lib/queue.js"
   ],
   "GHaberis": [
-    "lib/chain.js",
     "lib/steady-page.js",
     "projects/admin/bootstraps/abtests.js",
     "projects/admin/bootstraps/radiator.js",
