@@ -3,13 +3,15 @@ define([
     'common/modules/commercial/contributions-utilities',
     'raw-loader!common/views/acquisitions-epic-testimonials-prominent.html',
     'raw-loader!common/views/acquisitions-epic-testimonials-subtle.html',
-    'raw-loader!common/views/acquisitions-epic-testimonials-testimonial-only.html'
+    'raw-loader!common/views/acquisitions-epic-testimonials-testimonial-only.html',
+    'svg-loader!svgs/icon/quote.svg'
 ], function (
     template,
     contributionsUtilities,
     acquisitionsEpicTestimonialsProminent,
     acquisitionsEpicTestimonialsSubtle,
-    acquisitionsEpicTestimonialsOnly
+    acquisitionsEpicTestimonialsOnly,
+    quoteSvg
 ) {
 
     function createVariantTemplate(epicTemplate) {
@@ -17,7 +19,8 @@ define([
             return template(epicTemplate, {
                 membershipUrl: variant.membershipURL,
                 contributionUrl: variant.contributeURL,
-                componentName: variant.componentName
+                componentName: variant.componentName,
+                quoteSvg: quoteSvg.markup
             })
         }
     }
