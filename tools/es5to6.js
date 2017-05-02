@@ -88,7 +88,7 @@ ${i + 1 + remainingCount}. ${remaingStep}
 \`${steps[remaingStep]}\`
 `)
                                         .join('')}
-If you get stuck, feel free to ping us in https://theguardian.slack.com/messages/dotcom-es2017.`
+If you get stuck, feel free to ping us in: \`https://theguardian.slack.com/messages/dotcom-es2017\`\n\nYou may also want to double check the wiki guide:  \`https://github.com/guardian/frontend/wiki/So-you-want-to-ES6%3F\``
                                 );
                                 process.exit(1);
                             });
