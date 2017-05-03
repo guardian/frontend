@@ -173,8 +173,11 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 }
 
 .new-header {
-    @include mobile-only;
     background-color: $guardian-brand;
+
+    @include mq(tablet) {
+        display: none;
+    }
 }
 
 .new-header__inner {
