@@ -51,7 +51,7 @@ define([
             if (this.thrasher()) {
                 var subTitleEl = document.querySelector('.membership-ab-thrasher_header .sub_title');
                 if (subTitleEl) {
-                    subTitleEl.innerHTML = '<p>We\'re introducing <strong>new ways</strong> to support' + (detect.isBreakpoint({min: 'desktop'}) ? '<br>' : ' ') + 'the Guardian\'s quality journalism and independent voice. Choose your new digital or print subscription today.</p>';
+                    subTitleEl.innerHTML = '<p>We\'re introducing <strong>new ways</strong> to support' + (detect.isBreakpoint({min: 'desktop'}) ? '<br>' : ' ') + 'the Guardian\'s quality journalism and independent voice. Choose to subscribe or contribute today.</p>';
                 }
             }
         };
