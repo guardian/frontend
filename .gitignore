@@ -1,5 +1,6 @@
 artifacts.zip
 /dist
+/data
 
 *.min.css
 *.min.css.map
