@@ -482,9 +482,9 @@ object NewNavigation {
     case object travelSubNav extends EditionalisedNavigationSection {
       val name = ""
 
-      val uk = NavLinkLists(List(travel, travelUk, travelEurope, travelUs, skiing))
-      val us = NavLinkLists(List(travel, travelUs, travelEurope, travelUk, skiing))
-      val au = NavLinkLists(List(travel, travelAustralasia, travelAsia, travelUk, travelEurope, travelUs, skiing))
+      val uk = NavLinkLists(List(travel, travelUk, travelEurope, travelUs))
+      val us = NavLinkLists(List(travel, travelUs, travelEurope, travelUk))
+      val au = NavLinkLists(List(travel, travelAustralasia, travelAsia, travelUk, travelEurope, travelUs))
       val int = uk
     }
 

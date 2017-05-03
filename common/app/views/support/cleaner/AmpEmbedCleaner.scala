@@ -198,11 +198,13 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
           val linkToInteractive = link.first().attr("href")
           val iframe = document.createElement("amp-iframe")
           val overflowElem = document.createElement("div")
+          val placeholderElem = document.createElement("amp-img")
+
           // In AMP, when using the layout `responsive`, width is 100%,
           // and height is decided by the ratio between width and height.
           // https://www.ampproject.org/docs/guides/responsive/control_layout.html
           iframe.attr("width", "5")
-          iframe.attr("height", "1")
+          iframe.attr("height", "3")
           iframe.attr("layout", "responsive")
           iframe.attr("resizable", "")
           iframe.attr("sandbox", "allow-scripts allow-same-origin")
@@ -213,8 +215,16 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
           overflowElem.addClass("cta cta--medium cta--show-more cta--show-more__unindent")
           overflowElem.text("See the full visual")
           overflowElem.attr("overflow", "")
-          overflowElem.attr("placeholder", "")
+
+          // This placeholder element will only show if the interactive is a main media, and then be replaced
+          // as the interactive loads. In this case the LinkToInteractive is not an image so nothing will load,
+          // but we need an https resource here, because the src cannot be empty
+          placeholderElem.attr("layout", "fill")
+          placeholderElem.attr("src", linkToInteractive)
+          placeholderElem.attr("placeholder", "")
+
           link.remove()
+          iframe.appendChild(placeholderElem)
           iframe.appendChild(overflowElem)
           interactive.appendChild(iframe)
         } else {

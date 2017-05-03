@@ -133,8 +133,8 @@ define([
         this.successMeasure = options.successMeasure;
         this.audienceCriteria = options.audienceCriteria;
         this.dataLinkNames = options.dataLinkNames || '';
-        this.membershipCampaignPrefix = options.membershipCampaignPrefix || 'gdnwb_copts_mem';
-        this.contributionsCampaignPrefix = options.contributionsCampaignPrefix || 'co_global';
+        this.campaignPrefix = options.campaignPrefix || 'gdnwb_copts_memco';
+        this.campaignSuffix = options.campaignSuffix || '';
         this.insertEvent = this.makeEvent('insert');
         this.viewEvent = this.makeEvent('view');
         this.isEngagementBannerTest = options.isEngagementBannerTest || false;
@@ -176,12 +176,11 @@ define([
         this.isUnlimited = options.isUnlimited || false;
 
         this.pageviewId = (config.ophan && config.ophan.pageViewId) || 'not_found';
-        this.contributeCampaignCode = getCampaignCode(test.contributionsCampaignPrefix, this.campaignId, this.id);
-        this.membershipCampaignCode = getCampaignCode(test.membershipCampaignPrefix, this.campaignId, this.id);
-        this.campaignCodes = uniq([this.contributeCampaignCode, this.membershipCampaignCode]);
+        this.campaignCode = getCampaignCode(test.campaignPrefix, this.campaignId, this.id, test.campaignSuffix);
+        this.campaignCodes = [this.campaignCode];
 
-        this.contributeURL = options.contributeURL || this.makeURL(contributionsBaseURL, this.contributeCampaignCode);
-        this.membershipURL = options.membershipURL || this.makeURL(membershipBaseURL, this.membershipCampaignCode);
+        this.contributeURL = options.contributeURL || this.makeURL(contributionsBaseURL, this.campaignCode);
+        this.membershipURL = options.membershipURL || this.makeURL(membershipBaseURL, this.campaignCode);
 
         this.componentName = 'mem_acquisition_' + trackingCampaignId + '_' + this.id;
 
@@ -246,8 +245,9 @@ define([
         this.registerListener('success', 'successOnView', test.viewEvent, options);
     }
 
-    function getCampaignCode(campaignCodePrefix, campaignID, id) {
-        return campaignCodePrefix + '_' + campaignID + '_' + id;
+    function getCampaignCode(campaignCodePrefix, campaignID, id, campaignCodeSuffix) {
+        var suffix = campaignCodeSuffix ? ('_' + campaignCodeSuffix) : '';
+        return campaignCodePrefix + '_' + campaignID + '_' + id + suffix;
     }
 
     ContributionsABTestVariant.prototype.makeURL = function(base, campaignCode) {
@@ -260,11 +260,11 @@ define([
     };
 
     ContributionsABTestVariant.prototype.contributionsURLBuilder = function(codeModifier) {
-        return this.makeURL(contributionsBaseURL, codeModifier(this.contributeCampaignCode));
+        return this.makeURL(contributionsBaseURL, codeModifier(this.campaignCode));
     };
 
     ContributionsABTestVariant.prototype.membershipURLBuilder = function(codeModifier) {
-        return this.makeURL(membershipBaseURL, codeModifier(this.contributeCampaignCode));
+        return this.makeURL(membershipBaseURL, codeModifier(this.campaignCode));
     };
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {

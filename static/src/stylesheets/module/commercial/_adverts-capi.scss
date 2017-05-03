@@ -436,7 +436,7 @@
     }
 
     .badge--no-image {
-        display: none;
+        margin-bottom: $gs-baseline/2;
     }
 
     .inline-icon__svg {
@@ -445,14 +445,5 @@
         margin-right: .3em;
     }
 
-    &.without-sponsor-logo {
-        .badge--no-image {
-            display: block;
-            margin-bottom: $gs-baseline/2;
-            + .badge {
-                display: none;
-            }
-        }
-    }
 }
 
