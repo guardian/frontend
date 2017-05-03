@@ -12,7 +12,7 @@ import tailorSurveyHtml
 import ophan from 'ophan/ng';
 import template from 'lodash/utilities/template';
 import { fillSpace } from 'common/modules/article/space-filler';
-import tailor from 'common/modules/tailor/tailor';
+import { getSuggestedSurvey } from 'common/modules/tailor/tailor';
 
 // Every time we show a survey to a user, we cannot show it again to that suer for a specified number of days.
 // We store 'surveyId=dayShowAgain' in the cookie, and pass any surveys that cannot currently be shown in the
@@ -132,7 +132,7 @@ const renderQuickSurvey = () => {
         queryParams.surveysNotToShow = surveysNotToShow;
     }
 
-    return tailor.getSuggestedSurvey(queryParams).then(suggestion => {
+    return getSuggestedSurvey(queryParams).then(suggestion => {
         if (suggestion) {
             storeSurveyShowedInCookie(suggestion.data);
 
