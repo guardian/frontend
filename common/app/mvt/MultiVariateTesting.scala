@@ -43,7 +43,7 @@ object ABNavigationMoreToggleControl extends TestDefinition(
   name = "ab-navigation-more-toggle-control",
   description = "Users in the test will see a more link in the navigation subnav",
   owners = Seq(Owner.withGithub("gustavpursche")),
-  sellByDate = new LocalDate(2017, 5, 4)
+  sellByDate = new LocalDate(2017, 5, 8)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-navigation-more-toggle").contains("control")
@@ -54,7 +54,7 @@ object ABNavigationMoreToggleVariant extends TestDefinition(
   name = "ab-navigation-more-toggle-variant",
   description = "Users in the test will see a more link in the navigation subnav",
   owners = Seq(Owner.withGithub("gustavpursche")),
-  sellByDate = new LocalDate(2017, 5, 4)
+  sellByDate = new LocalDate(2017, 5, 8)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-navigation-more-toggle").contains("variant")
