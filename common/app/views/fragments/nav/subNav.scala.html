@@ -4,9 +4,7 @@
 @import views.support.RenderClasses
 
 @defining(NewNavigation.SectionLinks.getActivePillar(page)) { case (id, activePillarName) =>
-    <ul class="subnav"
-        data-pillar-title="@activePillarName">
-
+    <ul class="subnav">
         @NewNavigation.SubSectionLinks.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront).map { link =>
             <li class="subnav__link-item">
                 <a class="@RenderClasses(Map(
