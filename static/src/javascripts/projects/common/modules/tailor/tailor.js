@@ -5,7 +5,7 @@ import fetchData from 'common/modules/tailor/fetch-data';
  * Given a response from tailor, we see if the response has a survey suggestion, and if so return the first
  * survey suggestion (there should only ever be one, but just in case).
  *
- * @returns {Promise.<Boolean>}
+ * @returns {Promise.<any>}
  */
 const getSuggestedSurvey = (queryParams: Object): Promise<any> =>
     fetchData('suggestions', false, queryParams).then(response => {
