@@ -1,9 +1,41 @@
-var switchUnitId = {
+// @flow
+
+type $AdSize = {
+    width: number,
+    height: number,
+    switchUnitId: ?number,
+    toString: (_: void) => string,
+};
+
+const AdSize = (
+    width: number,
+    height: number,
+    switchUnitId: ?number
+): $AdSize => {
+    const toString = (): string =>
+        width === height && height === 0 ? 'fluid' : `${width},${height}`;
+
+    return Object.freeze({
+        width,
+        height,
+        switchUnitId,
+        toString,
+    });
+};
+
+type SwitchUnitId = {
+    mpu: number,
+    leaderboard: number,
+    billboard: number,
+};
+
+const switchUnitId: SwitchUnitId = {
     mpu: 228,
     leaderboard: 229,
-    billboard: 229
+    billboard: 229,
 };
-var adSizes = {
+
+const adSizes: { [string]: AdSize } = {
     // standard ad sizes
     billboard: AdSize(970, 250, switchUnitId.billboard),
     leaderboard: AdSize(728, 90, switchUnitId.leaderboard),
@@ -23,8 +55,9 @@ var adSizes = {
     merchandising: AdSize(88, 88),
     inlineMerchandising: AdSize(88, 85),
     fabric: AdSize(88, 71),
-    empty: AdSize(2, 2)
+    empty: AdSize(2, 2),
 };
+
 adSizes['970x250'] = adSizes.billboard;
 adSizes['728x90'] = adSizes.leaderboard;
 adSizes['300x250'] = adSizes.mpu;
@@ -32,16 +65,3 @@ adSizes['300x600'] = adSizes.halfPage;
 adSizes['300x1050'] = adSizes.portrait;
 
 export default adSizes;
-
-function AdSize(width, height, switchUnitId) {
-    function toString() {
-        return width === height && height === 0 ? 'fluid' : width + ',' + height;
-    }
-
-    return Object.freeze({
-        width: width,
-        height: height,
-        switchUnitId: switchUnitId,
-        toString: toString
-    });
-}
