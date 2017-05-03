@@ -327,7 +327,6 @@
     "projects/common/modules/video/onward-container.js"
   ],
   "Philip Wills": [
-    "projects/common/views/svg.js",
     "projects/common/views/svgs.js",
     "projects/facia/modules/onwards/geo-most-popular-front.js",
     "projects/facia/modules/onwards/search-tool.js",
