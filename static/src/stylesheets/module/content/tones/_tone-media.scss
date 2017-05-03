@@ -81,6 +81,13 @@
         border-color: $media-mute;
     }
 
+    .caption--img {
+        a {
+            color: $neutral-7;
+            border-bottom: 1px solid $neutral-2;
+        }
+    }
+
     .from-content-api {
         a {
             @extend %u-underline;
