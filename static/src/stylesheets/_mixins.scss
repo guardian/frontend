@@ -154,12 +154,6 @@
     }
 }
 
-@mixin mobile-only {
-    @include mq(tablet) {
-        display: none !important;
-    }
-}
-
 @mixin video-play-button-size($size) {
     width: $size;
     height: $size;
