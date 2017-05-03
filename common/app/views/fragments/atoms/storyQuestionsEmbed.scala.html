@@ -9,6 +9,15 @@
     <head>
         <title>@page.metadata.webTitle</title>
         <base target="_parent"/>
+        <link rel="stylesheet" href="@Static("stylesheets/atoms/storyquestions.css")">
+        <style>
+            .user__question-upvote {
+                pointer-events: none;
+            }
+            .user__question-response {
+                display: none;
+            }
+        </style>
     </head>
     <body>
         @views.html.fragments.atoms.storyquestions(page.atom, isAmp = false)
