@@ -20,7 +20,7 @@ define([
      *
      * @return {String} variant ID
      */
-    function variantIdFor(test) {
+    var variantIdFor = memoize(function (test) {
         var smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset;
         var largestTestId = smallestTestId + mvtCookie.getMvtNumValues() * test.audience;
         var mvtCookieId = mvtCookie.getMvtValue();
@@ -33,7 +33,7 @@ define([
         } else {
             return NOT_IN_TEST;
         }
-    }
+    }, getId);
     
      function variantFor(test) {
          var variantId = variantIdFor(test);
@@ -45,7 +45,7 @@ define([
     
 
     return {
-        variantIdFor: memoize(variantIdFor, getId),
+        variantIdFor: variantIdFor,
         
         variantFor: variantFor, 
         
