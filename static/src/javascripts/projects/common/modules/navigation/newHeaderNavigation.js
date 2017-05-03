@@ -173,7 +173,7 @@ const addEventHandler = (): void => {
         }
     });
 
-    if (subnav) {
+    if (subnav && toggle) {
         toggle.addEventListener('click', () => {
             toggleSidebarWithOpenSection();
         });
