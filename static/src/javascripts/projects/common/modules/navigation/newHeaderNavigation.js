@@ -157,6 +157,7 @@ const toggleSidebarWithOpenSection = () => {
 
 const addEventHandler = (): void => {
     const subnav = document.querySelector('.subnav');
+    const toggle = document.querySelector('.js-toggle-nav-section');
     const sidebar = getSidebarElement();
 
     if (!sidebar) {
@@ -173,13 +174,8 @@ const addEventHandler = (): void => {
     });
 
     if (subnav) {
-        subnav.addEventListener('click', (event: Event) => {
-            const target: HTMLElement = (event.target: any);
-
-            if (target.matches('.js-toggle-nav-section')) {
-                event.stopPropagation();
-                toggleSidebarWithOpenSection();
-            }
+        toggle.addEventListener('click', () => {
+            toggleSidebarWithOpenSection();
         });
     }
 };
