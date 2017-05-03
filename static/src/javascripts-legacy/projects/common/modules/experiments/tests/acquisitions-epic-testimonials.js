@@ -29,7 +29,7 @@ define([
         id: 'AcquisitionsEpicTestimonials',
         campaignId: 'kr1_epic_testimonials',
 
-        start: '2017-05-02',
+        start: '2017-05-03',
         expiry: '2017-05-10', // Wednesday
 
         author: 'Guy Dawson',
