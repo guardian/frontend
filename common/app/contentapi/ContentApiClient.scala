@@ -73,7 +73,7 @@ object QueryDefaults extends implicits.Collections {
   }
 
   object FaciaDefaults {
-    val tag = "tag=type/gallery|type/article|type/video|type/sudoku"
+    val tag = "tag=type/gallery|type/article|type/video|type/sudoku|type/interactive"
     val editorsPicks = "show-editors-picks=true"
     val showInlineFields = s"show-fields=$trailFields"
     val showFields = "trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent,internalContentCode,internalPageCode"
