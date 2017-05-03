@@ -16,8 +16,11 @@ const MeasureUnderstanding = () => {
     const id = 'MeasureUnderstanding';
 
     // Ophan survey id
-    // TODO get survey id
-    const component = 'data_survey_1234';
+    const component = 'measure_understanding';
+
+    // Test duration
+    const start = '2017-04-27';
+    const expiry = '2017-05-27';
 
     // will run in articles only if no story questions atom is already there
     // *and* the user hasn't already answered the question
@@ -55,7 +58,7 @@ const MeasureUnderstanding = () => {
                     }
                 })
                 .then(() => {
-                    localStorage.set(id, true);
+                    localStorage.set(id, true, { expires: Date.parse(expiry) });
                     ophan.record({ component, value });
                     mediator.emit('ab:understanding:complete');
                 });
@@ -95,8 +98,8 @@ const MeasureUnderstanding = () => {
     return Object.freeze({
         id,
         // TODO get test settings
-        start: '2017-04-27',
-        expiry: '2017-05-27',
+        start,
+        expiry,
         audience: 0.5,
         audienceOffset: 0,
         author: 'Ela',
