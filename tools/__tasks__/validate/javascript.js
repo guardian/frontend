@@ -3,18 +3,15 @@ const chalk = require('chalk');
 const config = '--quiet --color';
 
 const error = ctx => {
-    ctx.messages.push(
-        `${chalk.blue('make fix')} can correct simple errors automatically.`
-    );
-    ctx.messages.push(
-        `Your editor may be able to catch eslint errors as you work:\n${chalk.underline('http://eslint.org/docs/user-guide/integrations#editors')}`
-    );
+    ctx.messages
+        .push(`${chalk.blue('make fix')} can correct simple errors automatically.`);
+    ctx.messages
+        .push(`Your editor may be able to catch eslint errors as you work:\n${chalk.underline('http://eslint.org/docs/user-guide/integrations#editors')}`);
 };
 
 const flowError = ctx => {
-    ctx.messages.push(
-        `Your editor may be able to catch flow errors as you work:\n${chalk.underline('https://docs.google.com/a/guardian.co.uk/document/d/1-w5KdwNVAZcGRL3Q9QCvj5y3aQyoVizm6GrHQaqQHNE/edit?usp=sharing')}`
-    );
+    ctx.messages
+        .push(`Your editor may be able to catch flow errors as you work:\n${chalk.underline('https://docs.google.com/a/guardian.co.uk/document/d/1-w5KdwNVAZcGRL3Q9QCvj5y3aQyoVizm6GrHQaqQHNE/edit?usp=sharing')}`);
 };
 
 module.exports = {
