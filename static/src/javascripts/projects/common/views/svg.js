@@ -7,6 +7,7 @@ export const addClassesAndTitle = (
     // Only mess with classes if we actually need to.
     let markupWithClasses = markup;
     if (classes) {
+        // #? Typchecking not needed anymore
         if (Array.isArray(classes)) {
             markupWithClasses = markupWithClasses.replace(
                 /class="/,
