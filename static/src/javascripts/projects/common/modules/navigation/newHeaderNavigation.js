@@ -1,7 +1,6 @@
 // @flow
 
 import fastdom from 'fastdom';
-import { scrollToElement } from 'lib/scroller';
 import userAccount from 'common/modules/navigation/user-account';
 
 const enhanced = {};
@@ -21,17 +20,6 @@ const closeAllSidebarSections = (exclude?: HTMLElement): void => {
             closeSidebarSection(section);
         }
     });
-};
-
-const openSidebarSection = (
-    section: HTMLElement,
-    options?: Object = {}
-): void => {
-    section.setAttribute('open', '');
-
-    if (options.scrollIntoView === true) {
-        scrollToElement(section, 0, 'easeInQuad', getSidebarElement());
-    }
 };
 
 const toggleSidebar = (): void => {
@@ -141,22 +129,7 @@ const enhanceSidebarToggle = (): void => {
     }
 };
 
-const toggleSidebarWithOpenSection = () => {
-    const sidebar = getSidebarElement();
-    const subnav = document.querySelector('.subnav');
-    const pillarTitle = (subnav && subnav.dataset.pillarTitle) || '';
-    const targetSelector = `.js-navigation-item[data-section-name="${pillarTitle}"]`;
-    const target = sidebar && sidebar.querySelector(targetSelector);
-
-    if (target) {
-        openSidebarSection(target.children[0], { scrollIntoView: true });
-    }
-
-    toggleSidebar();
-};
-
 const addEventHandler = (): void => {
-    const subnav = document.querySelector('.subnav');
     const sidebar = getSidebarElement();
 
     if (!sidebar) {
@@ -171,17 +144,6 @@ const addEventHandler = (): void => {
             closeAllSidebarSections(target);
         }
     });
-
-    if (subnav) {
-        subnav.addEventListener('click', (event: Event) => {
-            const target: HTMLElement = (event.target: any);
-
-            if (target.matches('.js-toggle-nav-section')) {
-                event.stopPropagation();
-                toggleSidebarWithOpenSection();
-            }
-        });
-    }
 };
 
 const init = (): void => {
