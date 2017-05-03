@@ -188,6 +188,7 @@
  */
 .ad-slot--inline,
 .ad-slot--container-inline,
+.ad-slot--container-inline.ad-slot--fluid,
 .ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
     width: $mpu-original-width;
@@ -207,7 +208,8 @@
     }
 }
 
-.ad-slot--container-inline {
+.ad-slot--container-inline,
+.ad-slot--container-inline.ad-slot--fluid {
     @include mq(mobileLandscape) {
         margin-top: 0;
     }
