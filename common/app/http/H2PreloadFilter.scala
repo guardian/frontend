@@ -15,7 +15,7 @@ class H2PreloadFilter @Inject() (implicit val mat: Materializer, context: Applic
 
   def apply(nextFilter: RequestHeader => Future[Result])(requestHeader: RequestHeader): Future[Result] = {
     nextFilter(requestHeader).map { result =>
-      val preloadFiles = Preload.config(context.applicationIdentity)
+      val preloadFiles = Preload.config.getOrElse(context.applicationIdentity, Seq.empty)
       result.withPreload(preloadFiles)
     }
   }
