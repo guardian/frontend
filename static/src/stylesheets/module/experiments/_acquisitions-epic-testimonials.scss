@@ -16,8 +16,7 @@
 }
 
 .epic__testimonial__quote svg {
-    fill: #ffbb00;
-    stroke: #ffbb00;
+    fill: $multimedia-main-2;
     width: 1.5 * $gs-gutter;
     height: 1.5 * $gs-gutter;
 }
@@ -42,8 +41,7 @@
 // Variant 3 - subtle
 
 .epic__testimonial__quote--subtle svg {
-    fill: #bdbdbd;
-    stroke: #bdbdbd;
+    fill: $neutral-3;
 }
 
 // Variant 4 - testimonial only
