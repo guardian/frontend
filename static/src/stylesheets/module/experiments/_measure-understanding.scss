@@ -8,7 +8,7 @@
     background-color: $neutral-6;
     margin-right: auto;
     align-self: flex-start;
-    max-width: 68%;
+    max-width: gs-span(5);
     padding: $gs-baseline / 2 $gs-gutter / 2;
 
     @include mq($from: tablet) {
