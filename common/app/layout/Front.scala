@@ -211,7 +211,7 @@ case class FaciaContainer(
 
   def faciaComponentName = componentId getOrElse {
     displayName map { title: String =>
-      title.toLowerCase.replace(" ", "-")
+      title.toLowerCase.replace(" ", "-").replaceAll("&", "and").replaceAll("""[^A-Za-z0-9_-]""", "")
     } getOrElse "no-name"
   }
 
