@@ -10,15 +10,18 @@ import find from 'lodash/collections/find';
 declare var $: any;
 declare var Epoch: any;
 
-let chart;
-const FETCH_INTERVAL = 1000; // The frequency that we poll for report data.
-const FETCH_DELAY = 10; // The delay which we wait before we ask for a time-based datapoint, eg. 10 seconds before the present moment.
-const reportTemplateUrl = '/commercial-reports/<%=isoDate%>';
+type HeatmapDatapoint = { time: number, histogram: Array<Array<number>> };
+type Chart = { push: (_: Array<HeatmapDatapoint>) => void };
+
+let chart: Chart;
+const FETCH_INTERVAL: number = 1000; // The frequency that we poll for report data.
+const FETCH_DELAY: number = 10; // The delay which we wait before we ask for a time-based datapoint, eg. 10 seconds before the present moment.
+const reportTemplateUrl: string = '/commercial-reports/<%=isoDate%>';
 
 // Store the 1000 most recently fetched datapoints.
-const commercialStartTimes = [];
+const commercialStartTimes: Array<number> = [];
 
-const updateAverageStartTime = startTimes => {
+const updateAverageStartTime = (startTimes: Array<number>): void => {
     // Push the new start times into the stored array to find an average.
     Array.prototype.push.apply(commercialStartTimes, startTimes);
     // Limit the size of the array to 1000.
@@ -30,35 +33,40 @@ const updateAverageStartTime = startTimes => {
         return;
     }
 
-    const sum = commercialStartTimes.reduce((accum, num) => {
-        // Disregard silly numbers, investigating why Date times are appearing in the array.
-        if (num < 20000) {
-            return accum + num;
-        }
-        return accum;
-    });
+    const sum: number = commercialStartTimes.reduce(
+        (accum: number, num: number) => {
+            // Disregard silly numbers, investigating why Date times are appearing in the array.
+            if (num < 20000) {
+                return accum + num;
+            }
+            return accum;
+        },
+        0
+    );
 
-    const averageStartTime = (sum / commercialStartTimes.length).toFixed(2);
+    const averageStartTime: string = (sum /
+        commercialStartTimes.length).toFixed(2);
 
     $('.graph__average-value').text(averageStartTime);
 };
 
-const fetchData = () => {
-    const currentDate = new Date();
+const fetchData = (): void => {
+    const currentDate: Date = new Date();
     currentDate.setSeconds(currentDate.getSeconds() - FETCH_DELAY);
-    const fetchUrl = template(reportTemplateUrl, {
+    const fetchUrl: string = template(reportTemplateUrl, {
         isoDate: currentDate.toISOString(),
     });
 
     fetchJson(config.page.beaconUrl + fetchUrl, {
         mode: 'cors',
     }).then(logs => {
-        type Reports = {
-            baselines: Array<{ name: string, startTime: number }>,
+        type StartTime = { name: string, startTime: number };
+        type Report = {
+            baselines: Array<StartTime>,
         };
-        const reports: Array<Reports> = logs.reports || [];
-        let appStartTimes: Array<number> = reports.map(report => {
-            const primaryBaseline = find(
+        const reports: Array<Report> = logs.reports || [];
+        const appStartTimes: Array<number> = reports.map(report => {
+            const primaryBaseline: StartTime | void = find(
                 report.baselines,
                 baseline => baseline.name === 'primary'
             );
@@ -66,11 +74,11 @@ const fetchData = () => {
         });
 
         // Filter the times array from silly numbers, investigating why Date times are appearing in the array.
-        appStartTimes = appStartTimes.filter(startTime => startTime < 20000);
+        appStartTimes.filter(startTime => startTime < 20000);
 
         updateAverageStartTime(appStartTimes);
 
-        const heatmapData = {
+        const heatmapData: HeatmapDatapoint = {
             time: currentDate.getTime() / 1000,
             histogram: countBy(appStartTimes),
         };
@@ -78,7 +86,7 @@ const fetchData = () => {
     });
 };
 
-const initialise = () => {
+const initialise = (): void => {
     chart = $('#browser-live-performance-data').epoch({
         type: 'time.heatmap',
         buckets: 20,
