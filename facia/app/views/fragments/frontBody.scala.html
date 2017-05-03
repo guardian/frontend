@@ -24,7 +24,11 @@
                 @fragments.guBand()
             }
 
-                @defining(layout.Front.fromPressedPage(faciaPage, Edition(request)).containers) { collections =>
+                @if(isSponsored){
+                    <h1>I AM SPONSORED</h1>
+                }
+
+                @defining(layout.Front.fromPressedPage(faciaPage, Edition(request), isPaidPage = isPaid).containers) { collections =>
 
                     @collections.map { containerDefinition =>
                         @fragments.containers.facia_cards.container(

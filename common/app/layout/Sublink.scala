@@ -15,6 +15,7 @@ import services.FaciaContentConvert
 import views.support._
 
 import scala.Function.const
+import play.api.mvc.RequestHeader
 
 object EditionalisedLink {
   def fromFaciaContent(faciaContent: PressedContent) =
@@ -37,7 +38,8 @@ case class EditionalisedLink(
 }
 
 object Sublink {
-  def fromFaciaContent(faciaContent: PressedContent) =
+  def fromFaciaContent(faciaContent: PressedContent) = {
+    println(faciaContent.properties.linkText)
     Sublink(
       faciaContent.header.kicker,
       faciaContent.header.headline,
@@ -45,6 +47,9 @@ object Sublink {
       faciaContent.card.cardStyle,
       faciaContent.card.mediaType
     )
+  }
+
+
 }
 
 case class Sublink(
@@ -193,7 +198,7 @@ case object DateTimestamp extends FaciaCardTimestamp {
 }
 
 case object TimeTimestamp extends FaciaCardTimestamp {
-  override val javaScriptUpdate: Boolean = false
+    override val javaScriptUpdate: Boolean = false
   override val formatString: String = "h:mm aa"
 }
 

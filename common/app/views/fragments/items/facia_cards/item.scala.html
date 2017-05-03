@@ -1,4 +1,5 @@
-@(card: layout.FaciaCardAndIndex, containerIndex: Int, isRow: Boolean = true, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader)
+@import model.FrontProperties
+@(card: layout.FaciaCardAndIndex, containerIndex: Int, isRow: Boolean = true, isList: Boolean = false, colSpan: Int = 1, frontProperties: Option[FrontProperties] = None)(implicit request: RequestHeader)
 @import layout.{ContentCard, HtmlBlob, PaidCard}
 @import views.html.fragments.items.facia_cards.contentCard
 @import views.html.fragments.items.facia_cards.paidContentCard
@@ -21,7 +22,7 @@
             @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
         }
 
-        case paidCard: PaidCard => {
+        case paidCard: PaidCard  => {
             @paidContentCard(
                 item = paidCard,
                 omnitureId = mkInteractionTrackingCode(containerIndex, index, paidCard),

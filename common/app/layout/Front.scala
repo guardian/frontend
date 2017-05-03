@@ -458,7 +458,8 @@ object Front extends implicits.Collections {
 
   def fromPressedPage(pressedPage: PressedPage,
                       edition: Edition,
-                      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty): Front =
+                      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty,
+                      isPaidPage: Boolean = false): Front =
     Front(fromPressedPageWithDeduped(pressedPage, edition, initialContext).containers)
 
   def makeLinkedData(url: String, collections: Seq[FaciaContainer])(implicit request: RequestHeader): ItemList = {

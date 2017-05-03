@@ -17,6 +17,7 @@
 @defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
     @containerDefinition.customHeader.map {
         case header: MetaDataHeader => {
+        <h1>In CONTAINER FRONTPROPERTIES ISPAIDCONTENT @frontProperties.isPaidContent FRONTID @frontId ISPAIDFRONT @isPaidFront MAYBECONTAINERMODEL @maybeContainerModel SHOWFRONTBRANDING @showFrontBranding</h1>
             @containerMetaData(header)
         }
         case _ => {}

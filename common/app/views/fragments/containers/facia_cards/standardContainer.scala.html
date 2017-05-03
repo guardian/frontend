@@ -28,6 +28,7 @@
 }
 
 @for(containerLayout <- containerDefinition.containerLayout) {
+    <h1>IN STANDARD CONTAINER</h1>
     <div class="@RenderClasses(Map(
         ("fc-container__body", true),
         ("fc-container--rolled-up-hide", true),
@@ -39,7 +40,7 @@
          data-id="@containerDefinition.dataId">
 
         @for(sliceWithCards <- containerLayout.slices) {
-            @slice(sliceWithCards, containerDefinition.index)
+            @slice(sliceWithCards, containerDefinition.index, frontProperties = Some(frontProperties))
         }
 
         @if(containerDefinition.hasShowMore && containerDefinition.hasShowMoreEnabled) {
