@@ -35,7 +35,7 @@ const switchUnitId: SwitchUnitId = {
     billboard: 229,
 };
 
-const adSizes: { [string]: AdSize } = {
+const adSizes: Object = {
     // standard ad sizes
     billboard: AdSize(970, 250, switchUnitId.billboard),
     leaderboard: AdSize(728, 90, switchUnitId.leaderboard),
