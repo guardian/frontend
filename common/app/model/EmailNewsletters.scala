@@ -45,7 +45,7 @@ object EmailNewsletters {
     listId = 1493,
     subheading = Some("US"),
     signupPage = Some("/info/2015/dec/08/daily-email-uk"),
-    exampleUrl = Some("/us-news/series/guardian-us-briefing/latest/email"),
+    exampleUrl = Some("/email/us/daily"),
     triggerId = Some(2564)
   )
 
@@ -86,13 +86,13 @@ object EmailNewsletters {
   val mediaBriefing = EmailNewsletter(
     name = "MediaGuardian Briefing",
     theme = "news",
-    teaser = "An indispensable summary of what the papers are saying about media on your desktop before 9am",
-    description = "An indispensable summary of the media industry headlines in your inbox before 9am. We dig out the most important stories from every and any newspaper, broadcaster and website",
+    teaser = "An indispensable summary of what the papers are saying about media on your desktop at 9am",
+    description = "An indispensable summary of the media industry headlines in your inbox at 9am. We dig out the most important stories from every and any newspaper, broadcaster and website",
     frequency = "Weekday mornings",
     listId = 217,
     tone = Some("news"),
     signupPage = Some("/info/2016/feb/15/sign-up-to-the-media-briefing"),
-    exampleUrl = Some("/media/series/mediaguardian-briefing/latest/email")
+    exampleUrl = Some("/email/media-briefing")
   )
 
   val brexitBriefing = EmailNewsletter(
@@ -206,7 +206,7 @@ object EmailNewsletters {
     listId = 3745,
     tone = Some("media"),
     signupPage = Some("/info/2016/sep/02/sign-up-for-the-guardian-documentaries-update"),
-    exampleUrl = Some("/news/2016/sep/23/from-gun-nation-to-desert-fire-welcome-to-guardian-documentaries/email")
+    exampleUrl = Some("/news/series/guardian-documentaries-update/latest/email")
   )
 
   val weekendReading = EmailNewsletter(
@@ -241,8 +241,9 @@ object EmailNewsletters {
     frequency = "Every Friday",
     listId = 39,
     aliases = List(3834, 3835),
-    tone = Some("review"),
-    signupPage = Some("/info/ng-interactive/2017/mar/06/sign-up-for-the-sleeve-notes-email")
+    tone = Some("feature"),
+    signupPage = Some("/info/ng-interactive/2017/mar/06/sign-up-for-the-sleeve-notes-email"),
+    exampleUrl = Some("/email/sleevenotes")
   )
 
   val closeUp = EmailNewsletter(
@@ -272,11 +273,12 @@ object EmailNewsletters {
     theme = "culture",
     teaser = "Kick back and relax on a Sunday with our weekly email full of literary delights. Expert reviews, author interviews and top 10s, plus highlights from our columnists and community",
     description = "Join us in the world of books. Discover new books with our expert reviews, author interviews and top 10s, plus enjoy highlights from our columnists and community. Kick back on a Sunday with our weekly email full of literary delights",
-    frequency = "Every Thursday",
+    frequency = "Every Sunday",
     listId = 3039,
     aliases = List(3866, 3867),
     tone = Some("feature"),
-    signupPage = Some("/books/2015/feb/03/sign-up-to-our-bookmarks-email")
+    signupPage = Some("/books/2015/feb/03/sign-up-to-our-bookmarks-email"),
+    exampleUrl = Some("/email/bookmarks")
   )
 
   val artWeekly = EmailNewsletter(
@@ -306,12 +308,12 @@ object EmailNewsletters {
     theme = "lifestyle",
     teaser = "Uncover unconventional destinations and rediscover old favourites - let our travel editors guide you to trips worth taking",
     description = "Weekly travel inspiration. Off-piste attractions, budget breaks, top 10s and reader reviews. Uncover unconventional destinations and rediscover old favourites - let our travel editors guide you to trips worth taking",
-    frequency = "Every Wednesday",
+    frequency = "Every Monday",
     listId = 3806,
     tone = Some("feature"),
     aliases = List(2211, 3807),
     signupPage = Some("/travel/2016/aug/18/sign-up-to-the-flyer"),
-    exampleUrl = Some("/email/the-flyer?format=email")
+    exampleUrl = Some("/email/the-flyer")
   )
 
   val moneyTalks = EmailNewsletter(
