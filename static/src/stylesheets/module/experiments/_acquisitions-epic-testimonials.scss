@@ -2,33 +2,33 @@
 
 // Common classes
 
-.epic__testimonial__container {
+.epic__testimonial-container {
     margin-top: $gs-gutter;
     margin-bottom: $gs-gutter;
 }
 
-.epic__testimonial__quote {
+.epic__testimonial-quote {
     position: relative;
 }
 
-.epic__testimonial__quote span {
+.epic__testimonial-quote span {
     position: absolute;
 }
 
-.epic__testimonial__quote svg {
+.epic__testimonial-quote svg {
     fill: $multimedia-main-2;
     width: 1.5 * $gs-gutter;
     height: 1.5 * $gs-gutter;
 }
 
-.epic__testimonial__text {
+.epic__testimonial-text {
     margin-bottom: 0;
     font-family: $f-sans-serif-text;
     font-style: italic;
     padding-left: 2 * $gs-gutter;
 }
 
-.epic__testimonial__name {
+.epic__testimonial-name {
     font-family: $f-sans-serif-text;
     font-style: normal;
 }
@@ -40,27 +40,27 @@
 
 // Variant 3 - subtle
 
-.epic__testimonial__quote--subtle svg {
+.epic__testimonial-quote--subtle svg {
     fill: $neutral-3;
 }
 
 // Variant 4 - testimonial only
 
-.epic__testimonial__container--testimonial-only {
+.epic__testimonial-container--testimonial-only {
     margin-top: $gs-gutter;
     margin-bottom: $gs-gutter / 2;
 }
 
-.epic__testimonial__name--testimonial-only {
+.epic__testimonial-name--testimonial-only {
     margin-top: $gs-baseline;
 }
 
-.epic__testimonial__info__container {
+.epic__testimonial-info-container {
     margin-top: $gs-gutter / 2;
     margin-bottom: $gs-gutter / 2;
 }
 
-.epic__testimonial__info {
+.epic__testimonial-info {
     font-family: $f-sans-serif-text;
     font-size: 14px;
 }
