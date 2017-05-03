@@ -16,7 +16,7 @@ class ShortUrlsController(contentApiClient: ContentApiClient)(implicit context: 
   private def redirectUrl(shortUrl: String, queryString: Map[String, Seq[String]])(implicit request: RequestHeader) = {
     contentApiClient.getResponse(contentApiClient.item(shortUrl)).map { response =>
       response.content.map(_.id).map { id =>
-        Redirect(LinkTo(s"/$id"), queryString = queryString, status = MOVED_PERMANENTLY)
+        Redirect(LinkTo(s"/$id"), queryString)
       }.getOrElse(NotFound)
     }.recover(convertApiExceptionsWithoutEither).map(Cached.explicitlyCache(1800))
   }
