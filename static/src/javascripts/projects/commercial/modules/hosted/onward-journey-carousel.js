@@ -4,11 +4,18 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 
 class HostedCarousel {
-    moveCarouselBy(direction) {
+    $carousel: Object;
+    $nextItem: Object;
+    $prevItem: Object;
+    $dots: Object;
+    pageCount: number;
+    index: number;
+
+    moveCarouselBy(direction: number) {
         this.moveCarouselTo(this.index + direction);
     }
 
-    moveCarouselTo(index) {
+    moveCarouselTo(index: number) {
         const that = this;
         const pageNo = Math.min(Math.max(index, 0), this.pageCount - 1);
         this.index = pageNo;
