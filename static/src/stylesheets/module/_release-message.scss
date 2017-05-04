@@ -523,8 +523,14 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 }
 
-.showPaypal {
+.show-paypal {
     display: inline-block;
+}
+
+.show-paypal-message-text {
+    @include mq(desktop) {
+        font-size: 25px;
+    }
 }
 
 

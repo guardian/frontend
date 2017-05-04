@@ -95,19 +95,19 @@ define([
     function weeklySupporterCta() {
         var edition = config.page.edition;
         if(edition === 'US'){
-            return 'Support us with a one-off contribution'
+            return 'Support us with a one-off contribution';
         }
         var cost = monthlySupporterCost[config.page.edition];
-        return 'Support us for ' + cost + ' a month.'
+        return 'Support us for ' + cost + ' a month.';
     }
 
 
-    var MembershipEngagementBannerPaywallAndPaypalTest = function() {
-        this.id = 'MembershipEngagementBannerPaywallAndPaypalTest';
-        this.start = '2017-02-27';
+    var MembershipEngagementBannerPaywallAndPaypalTestRoundTwo = function() {
+        this.id = 'MembershipEngagementBannerPaywallAndPaypalTestRoundTwo';
+        this.start = '2017-05-04';
         this.expiry = '2017-05-25';
         this.author = 'Jonathan Rankin';
-        this.description = 'Test different copy for the engagement banner.';
+        this.description = 'Test a combination of the paywall message and paypal for the engagement banner.';
         this.audience = 1;
         this.audienceOffset = 0;
         this.successMeasure = 'Supporter click-through rate and/or acquisition rate';
@@ -122,7 +122,7 @@ define([
     };
 
     // cta should be a function which returns the call-to-action which is placed after the message text.
-    MembershipEngagementBannerPaywallAndPaypalTest.prototype.addVariant = function(variantId, messageText, cta, paypalClass) {
+    MembershipEngagementBannerPaywallAndPaypalTestRoundTwo.prototype.addVariant = function(variantId, messageText, cta, paypalClass) {
 
         function createCampaignCode(variantId) {
             // Campaign code follows convention. Talk to Alex for more information.
@@ -170,21 +170,15 @@ define([
 
 
     return [
-        new MembershipEngagementBannerPaywallAndPaypalTest()
+        new MembershipEngagementBannerPaywallAndPaypalTestRoundTwo()
             .addVariant(
                 'control'
             )
             .addVariant(
-                'paywall',
+                'paypalPaywall',
                 'Unlike many others, we haven\'t put up a paywall - we want to keep our journalism as open as we can.',
-                weeklySupporterCta
+                weeklySupporterCta,
+                'show-paypal'
             )
-            .addVariant(
-                'paypal',
-                '',
-                '',
-                'showPaypal'
-            )
-
     ]
 });
