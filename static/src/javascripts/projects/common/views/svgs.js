@@ -1,3 +1,4 @@
+// @flow
 /* global console */
 // Include any images needed in templates here.
 // This file is only required by core, and so has a long cache time.
@@ -36,54 +37,60 @@ import notificationsOn from 'svg-loader!svgs/icon/notification-on.svg';
 import glabsLogoSmall from 'svg-loader!svgs/logo/glabs-logo-small.svg';
 import membershipLogo from 'svg-loader!svgs/commercial/logo-membership.svg';
 import adblockCoins from 'svg-loader!svgs/commercial/adblock-coins.svg';
-import notificationsExplainerDesktop from 'svg-loader!svgs/notifications-explainer-desktop.svg';
-import notificationsExplainerMobile from 'svg-loader!svgs/notifications-explainer-mobile.svg';
+import notificationsExplainerDesktop
+    from 'svg-loader!svgs/notifications-explainer-desktop.svg';
+import notificationsExplainerMobile
+    from 'svg-loader!svgs/notifications-explainer-mobile.svg';
 import adblockCoinsUS from 'svg-loader!svgs/commercial/adblock-coins-us.svg';
 import star from 'svg-loader!svgs/icon/star.svg';
 import chevronRight from 'svg-loader!svgs/icon/chevron-right.svg';
-import svg from 'common/views/svg';
-var svgs = {
-    commentCount16icon: commentCount16icon,
-    marque36icon: marque36icon,
-    marque54icon: marque54icon,
-    marketDownIcon: marketDownIcon,
-    marketUpIcon: marketUpIcon,
-    marketSameIcon: marketSameIcon,
-    arrowicon: arrowicon,
-    arrowdownicon: arrowdownicon,
-    crossIcon: crossIcon,
-    quoteIcon: quoteIcon,
-    paidContent: paidContent,
-    closeCentralIcon: closeCentralIcon,
-    arrowWhiteRight: arrowWhiteRight,
-    arrowRight: arrowRight,
-    bookmark: bookmark,
-    dropdownMask: dropdownMask,
-    commentAnchor: commentAnchor,
-    reply: reply,
-    expandImage: expandImage,
-    cursor: cursor,
-    plus: plus,
-    share: share,
-    shareTwitter: shareTwitter,
-    shareEmail: shareEmail,
-    shareFacebook: shareFacebook,
-    sharePinterest: sharePinterest,
-    shareGPlus: shareGPlus,
-    externalLink: externalLink,
-    tick: tick,
-    notificationsOff: notificationsOff,
-    notificationsOn: notificationsOn,
-    glabsLogoSmall: glabsLogoSmall,
+
+import { addClassesAndTitle } from 'common/views/svg';
+
+const svgs = {
+    commentCount16icon,
+    marque36icon,
+    marque54icon,
+    marketDownIcon,
+    marketUpIcon,
+    marketSameIcon,
+    arrowicon,
+    arrowdownicon,
+    crossIcon,
+    quoteIcon,
+    paidContent,
+    closeCentralIcon,
+    arrowWhiteRight,
+    arrowRight,
+    bookmark,
+    dropdownMask,
+    commentAnchor,
+    reply,
+    expandImage,
+    cursor,
+    plus,
+    share,
+    shareTwitter,
+    shareEmail,
+    shareFacebook,
+    sharePinterest,
+    shareGPlus,
+    externalLink,
+    tick,
+    notificationsOff,
+    notificationsOn,
+    glabsLogoSmall,
     adblockCoinsUk: adblockCoins,
     adblockCoinsUs: adblockCoinsUS,
     logomembership: membershipLogo,
-    notificationsExplainerDesktop: notificationsExplainerDesktop,
-    notificationsExplainerMobile: notificationsExplainerMobile,
-    star: star,
-    chevronRight: chevronRight
+    notificationsExplainerDesktop,
+    notificationsExplainerMobile,
+    star,
+    chevronRight,
 };
 
-export default function(name, classes, title) {
-    return svg.addClassesAndTitle(svgs[name].markup, classes, title);
-};
+export const inlineSvg = (
+    name: string,
+    classes?: Array<string>,
+    title?: string
+): string => addClassesAndTitle(svgs[name].markup, classes, title);
