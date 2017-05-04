@@ -128,6 +128,6 @@ define([
     };
 
     return function (name, classes, title) {
-        return svg(svgs[name].markup, classes, title);
+        return svg.addClassesAndTitle(svgs[name].markup, classes, title);
     };
 });
