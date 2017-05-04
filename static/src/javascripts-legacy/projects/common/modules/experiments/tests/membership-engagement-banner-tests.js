@@ -126,7 +126,7 @@ define([
 
         function createCampaignCode(variantId) {
             // Campaign code follows convention. Talk to Alex for more information.
-            return 'gdnwb_copts_memco_paywall_paypal_' + variantId;
+            return 'gdnwb_copts_memco_paywall_paypal_round_two' + variantId;
         }
 
         var engagementBannerParams = {
