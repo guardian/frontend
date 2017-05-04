@@ -22,7 +22,7 @@ define([
         this.description = 'Test digital subs price points via thrasher';
         this.showForSensitive = true;
         this.audience = 0.25;
-        this.audienceOffset = 0;
+        this.audienceOffset = 0.5;
         this.successMeasure = '';
         this.audienceCriteria = 'Non-paying UK network front users - tablet resolution and above';
         this.dataLinkNames = '';
