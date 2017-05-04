@@ -523,16 +523,17 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 }
 
-.show-paypal {
-    display: inline-block;
-}
+.site-message__message--show-paypal {
+    .membership__paypal-logo {
+        display: inline-block;
+    }
 
-.show-paypal-message-text {
-    @include mq(desktop) {
-        font-size: 25px;
+    .membership__message-text {
+        @include mq(desktop) {
+            font-size: 25px;
+        }
     }
 }
-
 
 .membership__paypal-container a {
     text-decoration: none;

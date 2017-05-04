@@ -178,7 +178,7 @@ define([
                 'paypalPaywall',
                 'Unlike many others, we haven\'t put up a paywall - we want to keep our journalism as open as we can.',
                 weeklySupporterCta,
-                'show-paypal'
+                'site-message__message--show-paypal'
             )
     ]
 });
