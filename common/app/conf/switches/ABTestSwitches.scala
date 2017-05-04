@@ -171,8 +171,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-engagement-banner-paywall-and-paypal-test",
-    "test new paywall and Paypal variants on the engagement banner",
+    "ab-membership-engagement-banner-paywall-and-paypal-test-round-two",
+    "Test variant with paywall message and paypal logo on the engagement banner",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 5, 25),
