@@ -34,7 +34,8 @@
 @include grid-system;
 @import 'layout/_header';
 @import 'layout/_ab-new-header-test-variant';
-@import 'layout/_subnav';
+@import 'layout/new-header/_subnav';
+@import 'layout/new-header/_subnav-link';
 @import 'module/nav/_supporter-trapezoid';
 @import 'layout/_helpers';
 @import 'layout/_side-margins';

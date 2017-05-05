@@ -3,33 +3,37 @@
 @import common.{NewNavigation, Edition, LinkTo}
 @import views.support.RenderClasses
 
-@defining(NewNavigation.SectionLinks.getActivePillar(page)) { case (id, activePillarName) =>
-    <ul class="subnav"
-        data-pillar-title="@activePillarName">
+<div class="subnav">
+    <div class="gs-container">
+        @defining(NewNavigation.SectionLinks.getActivePillar(page)) { case (id, activePillarName) =>
+            <ul class="subnav__list"
+                data-pillar-title="@activePillarName">
 
-        @NewNavigation.SubSectionLinks.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront).map { link =>
-            <li class="subnav__link-item">
-                <a class="@RenderClasses(Map(
-                        "subnav__link" -> true,
-                        "subnav__link--current-section" -> (id == link.uniqueSection)
-                   ))"
-                   href="@LinkTo(link.url)"
-                   data-link-name="nav2 : subnav : @{if(link.longTitle.isEmpty) link.title else link.longTitle}">
-                    @link.title
-                </a>
-            </li>
-        }
+                @NewNavigation.SubSectionLinks.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront).map { link =>
+                    <li class="subnav__item">
+                        <a class="@RenderClasses(Map(
+                                "subnav-link" -> true,
+                                "subnav-link--current-section" -> (id == link.uniqueSection)
+                           ))"
+                           href="@LinkTo(link.url)"
+                           data-link-name="nav2 : subnav : @{if(link.longTitle.isEmpty) link.title else link.longTitle}">
+                            @link.title
+                        </a>
+                    </li>
+                }
 
-        @if(mvt.ABNavigationMoreToggleVariant.isParticipating) {
-            <li class="subnav__link-item">
-                <button class="
-                    subnav__link
-                    subnav__link--toggle-more
-                    js-toggle-nav-section"
-                    data-link-name="nav2 : subnav-toggle">
-                    more
-                </button>
-            </li>
+                @if(mvt.ABNavigationMoreToggleVariant.isParticipating) {
+                    <li class="subnav__item">
+                        <button class="
+                            subnav-link
+                            subnav-link--toggle-more
+                            js-toggle-nav-section"
+                            data-link-name="nav2 : subnav-toggle">
+                            more
+                        </button>
+                    </li>
+                }
+            </ul>
         }
-    </ul>
-}
+    </div>
+</div>
