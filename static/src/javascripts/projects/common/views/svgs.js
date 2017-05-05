@@ -1,7 +1,5 @@
 // @flow
-/* global console */
 // Include any images needed in templates here.
-// This file is only required by core, and so has a long cache time.
 
 import commentCount16icon from 'svg-loader!svgs/icon/comment-16.svg';
 import marque36icon from 'svg-loader!svgs/icon/marque-36.svg';
@@ -35,13 +33,13 @@ import tick from 'svg-loader!svgs/icon/tick.svg';
 import notificationsOff from 'svg-loader!svgs/icon/notification-off.svg';
 import notificationsOn from 'svg-loader!svgs/icon/notification-on.svg';
 import glabsLogoSmall from 'svg-loader!svgs/logo/glabs-logo-small.svg';
-import membershipLogo from 'svg-loader!svgs/commercial/logo-membership.svg';
-import adblockCoins from 'svg-loader!svgs/commercial/adblock-coins.svg';
+import logomembership from 'svg-loader!svgs/commercial/logo-membership.svg';
+import adblockCoinsUk from 'svg-loader!svgs/commercial/adblock-coins.svg';
 import notificationsExplainerDesktop
     from 'svg-loader!svgs/notifications-explainer-desktop.svg';
 import notificationsExplainerMobile
     from 'svg-loader!svgs/notifications-explainer-mobile.svg';
-import adblockCoinsUS from 'svg-loader!svgs/commercial/adblock-coins-us.svg';
+import adblockCoinsUs from 'svg-loader!svgs/commercial/adblock-coins-us.svg';
 import star from 'svg-loader!svgs/icon/star.svg';
 import chevronRight from 'svg-loader!svgs/icon/chevron-right.svg';
 
@@ -80,9 +78,9 @@ const svgs = {
     notificationsOff,
     notificationsOn,
     glabsLogoSmall,
-    adblockCoinsUk: adblockCoins,
-    adblockCoinsUs: adblockCoinsUS,
-    logomembership: membershipLogo,
+    adblockCoinsUk,
+    adblockCoinsUs,
+    logomembership,
     notificationsExplainerDesktop,
     notificationsExplainerMobile,
     star,
