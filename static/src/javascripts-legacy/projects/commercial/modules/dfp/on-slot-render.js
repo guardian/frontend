@@ -27,7 +27,7 @@ define([
         advert.isEmpty = event.isEmpty;
 
         if (event.isEmpty) {
-            emptyAdvert(advert);
+            emptyAdvert.emptyAdvert(advert);
             reportEmptyResponse(advert.id, event);
             emitRenderEvents(false);
         } else {
