@@ -71,7 +71,7 @@ define([
                 linkHref: adblockLink + '?INTCMP=' + message.campaign,
                 messageText: message.messageText,
                 linkText: message.linkText,
-                arrowWhiteRight: svgs('arrowWhiteRight')
+                arrowWhiteRight: svgs.inlineSvg('arrowWhiteRight')
             }));
         }
     }

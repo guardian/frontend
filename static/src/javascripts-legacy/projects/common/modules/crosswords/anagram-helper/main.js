@@ -103,7 +103,7 @@ define([
 
         render: function () {
             var closeIcon = {
-                __html: svgs('closeCentralIcon')
+                __html: svgs.inlineSvg('closeCentralIcon')
             };
             var clue = helpers.getAnagramClueData(this.props.entries, this.props.focussedEntry);
             var cells = helpers.cellsForClue(this.props.entries, this.props.focussedEntry);

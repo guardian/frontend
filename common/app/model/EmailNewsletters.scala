@@ -228,7 +228,7 @@ object EmailNewsletters {
     description = "Get lost in a great story. From politics to fashion, international investigations to new thinking, culture to crime - we’ll bring you the biggest ideas and the arguments that matter. Sign up to have the Guardian’s award-winning long reads emailed to you every Saturday morning",
     frequency = "Every Saturday",
     listId = 3322,
-    aliases = List(3868, 3869),
+    aliases = List(3868, 3869, 3890),
     tone = Some("feature"),
     signupPage = Some("/news/2015/jul/20/sign-up-to-the-long-read-email")
   )

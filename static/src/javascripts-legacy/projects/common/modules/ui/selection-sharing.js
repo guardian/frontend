@@ -27,8 +27,8 @@ define([
 ) {
 
     var $body = bonzo(document.body),
-        twitterIcon = svgs('shareTwitter', ['icon', 'centered-icon']),
-        emailIcon = svgs('shareEmail', ['icon', 'centered-icon']),
+        twitterIcon = svgs.inlineSvg('shareTwitter', ['icon', 'centered-icon']),
+        emailIcon = svgs.inlineSvg('shareEmail', ['icon', 'centered-icon']),
         selectionSharing = template(sharingTemplate, {
             twitterIcon: twitterIcon,
             emailIcon: emailIcon

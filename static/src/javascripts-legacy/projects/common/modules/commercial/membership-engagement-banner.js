@@ -172,7 +172,7 @@ define([
                 messageText: messageText,
                 buttonCaption: params.buttonCaption,
                 colourClass: colourClass,
-                arrowWhiteRight: svgs('arrowWhiteRight'),
+                arrowWhiteRight: svgs.inlineSvg('arrowWhiteRight'),
                 paypalLogoSrc: paypalAndCreditCardImage,
                 paypalClass : paypalClass
             });
