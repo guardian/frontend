@@ -50,7 +50,7 @@ define([
                         });
                     });
                 },
-                insertBeforeSelector: '.submeta',
+                insertAtSelector: '.submeta',
                 successOnView: true
             }
         ]

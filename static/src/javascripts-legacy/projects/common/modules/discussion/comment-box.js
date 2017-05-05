@@ -306,11 +306,7 @@ CommentBox.prototype.postComment = function() {
 
         if (self.errors.length === 0) {
             if (self.options.newCommenter && self.options.newUsername) {
-                var username = self.getElem('onboarding-username-input').value;
-
-                IdentityApi.updateUsername(username)
-                    .then(updateUsernameSuccess)
-                    .catch(updateUsernameFailure);
+                IdentityApi.updateUsername(self.getElem('onboarding-username-input').value).then(updateUsernameSuccess, updateUsernameFailure);
             } else {
                 postCommentToDAPI();
             }

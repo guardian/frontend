@@ -5,9 +5,7 @@ const once = require('lodash/once');
 const fetch = options => {
     const onError = once(error => {
         if (options.host === exports.hosts.dev) {
-            console.error(
-                `A 200 was not returned \n\n Are you running the article or dev-build app? \n \n ${error.message}`
-            );
+            console.error(`A 200 was not returned \n\n Are you running the article or dev-build app? \n \n ${error.message}`);
         }
         throw error;
     });

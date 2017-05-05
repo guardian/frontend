@@ -86,7 +86,7 @@ object TrailsToRss extends implicits.Collections {
         val imageMetadata = new Metadata()
         trailAsset.caption.foreach({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
         trailAsset.credit.foreach { creditName =>
-          val credit = new Credit(null, null, creditName)
+          val credit = new Credit(null, null, stripInvalidXMLCharacters(creditName))
           imageMetadata.setCredits(Seq(credit).toArray)
         }
         media.setMetadata(imageMetadata)
@@ -107,7 +107,7 @@ object TrailsToRss extends implicits.Collections {
       entry.setLink(trail.metadata.webUrl)
       /* set http intentionally to not break existing guid */
       entry.setUri("http://www.theguardian.com/" + trail.metadata.id)
-      
+
       entry.setDescription(description)
       entry.setCategories(categories)
       entry.setModules(new java.util.ArrayList(mediaModules ++ Seq(dc)))

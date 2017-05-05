@@ -11,7 +11,7 @@
     <div
         id="block-@block.id"
         data-sort-time="@block.publishedCreatedTimestamp()"
-        class="block block--content@block.eventClass"
+        class="block block--content@block.eventClass@block.attributes.membershipPlaceholder.map { _ => js-insert-epic-after}"
     >
         <p class="block-time published-time">
             @if(amp){
@@ -42,7 +42,4 @@
         }
         @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(s"block-${block.id}", None), article.metadata.contentType, amp)
     </div>
-    @block.attributes.membershipPlaceholder.map { _ =>
-        <div class="js-liveblog-epic-placeholder"></div>
-    }
 }

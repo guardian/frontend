@@ -43,7 +43,12 @@
             <div class="content__main">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column">
-                        @fragments.contentMeta(article, model)
+
+                        <div class="content__meta-container--explore u-cf">
+                            <div class="meta__social" data-component="share">
+                                @fragments.social(article.sharelinks.pageShares, "top")
+                            </div>
+                        </div>
 
                         <div class="content__article-body from-content-api js-article__body" itemprop="articleBody">
                             @BodyCleaner(article, article.fields.body, amp = amp)

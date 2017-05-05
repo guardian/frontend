@@ -5,7 +5,8 @@ define([
     'common/modules/commercial/acquisitions-view-log',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
-    'common/modules/experiments/tests/acquisitions-epic-liveblog'
+    'common/modules/experiments/tests/acquisitions-epic-liveblog',
+    'common/modules/experiments/tests/acquisitions-epic-testimonials'
 ], function (
     reduce,
     segmentUtil,
@@ -13,12 +14,14 @@ define([
     viewLog,
     alwaysAsk,
     askFourEarning,
-    acquisitionsEpicLiveBlog
+    acquisitionsEpicLiveBlog,
+    acquisitionsEpicTestimonials
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */
     var tests = [
+        acquisitionsEpicTestimonials,
         alwaysAsk,
         askFourEarning,
         acquisitionsEpicLiveBlog

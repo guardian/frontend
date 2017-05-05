@@ -82,7 +82,7 @@ define([
                 handler = isSubscribed ? modules.unSubscribeHandler: modules.subscribeHandler,
                 src = template(followLink, {
                     isSubscribed: isSubscribed,
-                    icon: svgs(isSubscribed ? 'notificationsOff' : 'notificationsOn')
+                    icon: svgs.inlineSvg(isSubscribed ? 'notificationsOff' : 'notificationsOn')
                 });
 
             if (!isEmpty($follow)) {

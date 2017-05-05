@@ -34,6 +34,10 @@ module.exports = {
             description: 'Inline',
             task: () => compile('inline/*.scss'),
         },
+        {
+            description: 'Atoms',
+            task: () => compile('atoms/*.scss'),
+        },
     ],
     concurrent: true,
 };

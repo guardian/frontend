@@ -60,7 +60,7 @@ define([
                     statusClass: (isSuccess) ? 'email-sub__message--success' : 'email-sub__message--failure',
                     submissionHeadline: (isSuccess) ? formData.customSuccessHeadline || messages.defaultSuccessHeadline : 'Something went wrong',
                     submissionMessage: (isSuccess) ? formData.customSuccessDesc || messages.defaultSuccessDesc : 'Please try again.',
-                    submissionIcon: (isSuccess) ? svgs('tick') : svgs('crossIcon')
+                    submissionIcon: (isSuccess) ? svgs.inlineSvg('tick') : svgs.inlineSvg('crossIcon')
                 },
                 submissionHtml = template(successHtml, submissionMessage);
 
@@ -137,7 +137,7 @@ define([
 
                     if (formCloseButton) {
                         var closeButtonTemplate = {
-                            closeIcon: svgs('closeCentralIcon')
+                            closeIcon: svgs.inlineSvg('closeCentralIcon')
                         },
                         closeButtonHtml = template(closeHtml, closeButtonTemplate);
 
