@@ -1,8 +1,11 @@
-var sections = ['politics', 'world', 'business', 'commentisfree'];
+// @flow
+const sections = ['politics', 'world', 'business', 'commentisfree'];
 
-function getSection(section) {
-    section = section.toLowerCase();
-    return /news/.test(section) || sections.indexOf(section) !== -1 ? 'news' : 'defaults';
-}
+const getSection = function(section) {
+    const sectionLower = section.toLowerCase();
+    return /news/.test(sectionLower) || sections.indexOf(sectionLower) !== -1
+        ? 'news'
+        : 'defaults';
+};
 
 export default getSection;
