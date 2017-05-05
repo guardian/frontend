@@ -29,25 +29,6 @@ define([
     var select = document.getElementById("feedback-category");
     var warning = document.getElementById("feedback-warning");
 
-    var fieldmap = {
-        "Help with my Guardian account": "feedback-form-account",
-        "Report a problem/give feedback on your website": "feedback-form-website",
-        "Unsubscribe from Jobs alerts/have other issues with my jobs account": "feedback-form-jobs",
-        "Manage my email preferences": "feedback-form-email",
-        "Report a Memberships/subscriptions technical issue or give some feedback": "feedback-form-membership",
-        "Membership payment or billing issues": "feedback-form-membership-billing",
-        "Subscriptions payment, billing or fulfillment issues": "feedback-form-subs-billing",
-        "Feedback about Adverts on your website/apps": "feedback-form-adverts",
-        "Help with my Android news app": "feedback-form-android",
-        "Help with my iOS news app": "feedback-form-ios",
-        "Help with the daily edition on my iPad": "feedback-form-daily",
-        "Help with the daily edition on my Android or Kindle Fire tablet": "feedback-form-tablet",
-        "help with my Windows mobile news app": "feedback-form-windows",
-        "Comment or query about an article": "feedback-form-editorial",
-        "Questions about commenting/moderation/community": "feedback-form-discussion",
-        "Other": "feedback-form-other"
-    };
-
     var adblockBeingUsed = false;
 
     function getExtraDataInformation() {
@@ -76,27 +57,14 @@ define([
         }
     }
 
-    function addOptionsToSelectDropDown() {
-        for(choice in fieldmap){
-            var opt = document.createElement("option");
-            opt.value = choice;
-            opt.innerHTML = choice;
-            select.appendChild(opt);
-        }
-    }
-
     function toggleFormVisibility() {
-
-        var cat = document.getElementById("feedback-category").value;
-
-        for(choice in fieldmap){
-            if(choice === cat){
-                document.getElementById(fieldmap[choice]).classList.add("feedback__form-selected");
-            } else {
-                document.getElementById(fieldmap[choice]).classList.remove("feedback__form-selected");
+        document.querySelectorAll("#feedback-category>option").forEach(function(elem){
+            if(elem.selected && elem.value != "nothing"){
+                document.getElementById(elem.value).classList.add("feedback__form-selected");
+            } else if(elem.value != "nothing") {
+                document.getElementById(elem.value).classList.remove("feedback__form-selected");
             }
-        }
-
+        });
     }
 
     function mandatoryCheck(elem) {
@@ -128,7 +96,6 @@ define([
                 });
 
                 if(hasFailed){
-                    console.log("Mandatory check failed. Not proceeding with form submission.");
                     warning.innerHTML = "All fields must be filled to proceed";
                 }
 
@@ -148,9 +115,6 @@ define([
             adblockBeingUsed = adblockInUse;
         });
 
-        console.log(getExtraDataInformation());
-
-        addOptionsToSelectDropDown();
         initForms();
 
     };
