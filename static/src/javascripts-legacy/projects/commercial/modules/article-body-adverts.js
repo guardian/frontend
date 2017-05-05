@@ -25,7 +25,7 @@ define([
     trackAdRender,
     createSlot,
     commercialFeatures,
-    increaseInlineAdsRedux
+    increaseInlineAds
 ) {
 
     /* bodyAds is a counter that keeps track of the number of inline MPUs
@@ -34,7 +34,7 @@ define([
     var replaceTopSlot;
     var getSlotName;
     var getSlotType;
-    var isOffsetingAds = abUtils.testCanBeRun(new increaseInlineAdsRedux()) && abUtils.getTestVariantId('IncreaseInlineAdsReduxRedux') === 'yes';
+    var isOffsetingAds = abUtils.testCanBeRun(new increaseInlineAds()) && abUtils.getTestVariantId('IncreaseInlineAdsReduxRedux') === 'yes';
 
     function init() {
 
