@@ -54,11 +54,9 @@ const init = (start: () => void, stop: () => void): Promise<boolean> => {
         })
         .then((adSlot: Element) => {
             stop();
-            mediator.emit('page:commercial:right', adSlot);
+            mediator.emit('page:defaultcommercial:right', adSlot);
             return true;
         });
 };
 
-export default {
-    init,
-};
+export { init };
