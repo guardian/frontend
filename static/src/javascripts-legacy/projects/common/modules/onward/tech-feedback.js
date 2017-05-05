@@ -109,6 +109,10 @@ define([
 
     }
 
+    function hideUnenhancedFallback() {
+        document.getElementById("feedback-form-default").remove();
+    }
+
     return function () {
 
         detect.adblockInUse.then(function(adblockInUse){
@@ -116,6 +120,7 @@ define([
         });
 
         initForms();
+        hideUnenhancedFallback();
 
     };
 
