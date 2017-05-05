@@ -12,19 +12,19 @@
         "projects/commercial/modules/creatives/fabric-expanding-v1.js"
     ],
     "Jon Norman": [
+        "projects/commercial/modules/dfp/dfp-env.js",
+        "projects/commercial/modules/dfp/add-slot.js",
+        "projects/commercial/modules/dfp/create-slot.js",
+        "projects/commercial/modules/dfp/define-slot.js",
+        "projects/commercial/modules/dfp/apply-creative-template.js",
+        "projects/commercial/modules/dfp/breakpoint-name-to-attribute.js",
+        "projects/commercial/modules/dfp/Advert.js",
+        "projects/commercial/modules/dfp/display-ads.js",
         "projects/commercial/modules/creatives/fabric-v1.js",
         "projects/commercial/modules/creatives/fabric-video.js",
         "projects/commercial/modules/creatives/frame.js",
         "projects/commercial/modules/creatives/revealer.js",
-        "projects/commercial/modules/creatives/scrollable-mpu-v2.js",
-        "projects/commercial/modules/dfp/add-slot.js",
-        "projects/commercial/modules/dfp/Advert.js",
-        "projects/commercial/modules/dfp/apply-creative-template.js",
-        "projects/commercial/modules/dfp/breakpoint-name-to-attribute.js",
-        "projects/commercial/modules/dfp/create-slot.js",
-        "projects/commercial/modules/dfp/define-slot.js",
-        "projects/commercial/modules/dfp/dfp-env.js",
-        "projects/commercial/modules/dfp/display-ads.js"
+        "projects/commercial/modules/creatives/scrollable-mpu-v2.js"
     ],
     "Regis Kuckaertz": [
         "projects/commercial/modules/dfp/display-lazy-ads.js",
