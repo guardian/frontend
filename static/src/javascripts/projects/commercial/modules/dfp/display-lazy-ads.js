@@ -38,11 +38,11 @@ const instantLoad = (): void => {
     instantLoadAdverts.forEach(loadAdvert);
 };
 
-const run = (): void => {
+const displayLazyAds = (): void => {
     window.googletag.pubads().collapseEmptyDivs();
     window.googletag.enableServices();
     instantLoad();
     enableLazyLoad();
 };
 
-export { run };
+export { displayLazyAds };
