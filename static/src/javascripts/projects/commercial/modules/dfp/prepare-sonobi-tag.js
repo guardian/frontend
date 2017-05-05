@@ -1,33 +1,23 @@
-import Promise from 'Promise';
+// @flow
 import config from 'lib/config';
-import loadScript from 'lib/load-script';
+import { loadScript } from 'lib/load-script';
 import commercialFeatures from 'commercial/modules/commercial-features';
 import buildPageTargeting from 'commercial/modules/build-page-targeting';
 import dfpEnv from 'commercial/modules/dfp/dfp-env';
-
-function setupSonobi(start, stop) {
-    start();
-
-    // Setting the async property to false will _still_ load the script in
-    // a non-blocking fashion but will ensure it is executed before googletag
-    loadScript.loadScript(config.libs.sonobi, {
-        async: false
-    }).then(catchPolyfillErrors).then(stop);
-}
 
 // Wrap the native implementation of getOwnPropertyNames in a try-catch. If any polyfill attempts
 // to re-implement this function, and doesn't consider the "access permissions" issue that exists in IE11,
 // then the resulting "Access Denied" error will be caught. Without this, the error is always delivered to Sentry,
 // but does not pass through window.onerror. More info here: https://github.com/paulmillr/es6-shim/issues/333
-function catchPolyfillErrors() {
-
+const catchPolyfillErrors = () => {
     // Skip polyfill error-catch in dev environments.
     if (config.page.isDev) {
         return;
     }
 
-    var nativeGetOwnPropertyNames = Object.getOwnPropertyNames;
-    Object.getOwnPropertyNames = function(obj) {
+    const nativeGetOwnPropertyNames: (obj: any) => Array<string> =
+        Object.getOwnPropertyNames;
+    Object.getOwnPropertyNames = (obj: any): Array<string> => {
         try {
             return nativeGetOwnPropertyNames(obj);
         } catch (e) {
@@ -35,17 +25,27 @@ function catchPolyfillErrors() {
             return [];
         }
     };
-}
+};
 
-function init(start, stop) {
+const setupSonobi = (start: () => void, stop: () => void) => {
+    start();
+
+    // Setting the async property to false will _still_ load the script in
+    // a non-blocking fashion but will ensure it is executed before googletag
+    loadScript(config.libs.sonobi, { async: false })
+        .then(catchPolyfillErrors)
+        .then(stop);
+};
+
+const init = (start: () => void, stop: () => void) => {
     if (dfpEnv.sonobiEnabled && commercialFeatures.dfpAdvertising) {
         buildPageTargeting();
         setupSonobi(start, stop);
     }
 
     return Promise.resolve();
-}
+};
 
 export default {
-    init: init
+    init,
 };
