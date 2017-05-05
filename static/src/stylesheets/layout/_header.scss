@@ -770,11 +770,10 @@ x:-o-prefocus, .new-header__nav__menu-button {
 // Temporary french tricolour veggie burger
 .new-header__nav__menu-button--tricolour {
     overflow: hidden;
-    -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
     background-color: #ffffff;
 
     &:before,
-    &:after{
+    &:after {
         content: '';
         position: absolute;
         width: 33.5%;
@@ -790,7 +789,7 @@ x:-o-prefocus, .new-header__nav__menu-button {
 
     &:after {
         right: 0;
-        background: #EF4135;
+        background: #ef4135;
         z-index: -1;
     }
 
