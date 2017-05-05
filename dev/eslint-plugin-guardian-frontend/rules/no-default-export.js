@@ -1,4 +1,4 @@
-const message = 'Use named exports, not default.';
+const message = 'Prefer named exports over default export.';
 
 module.exports = {
     create: context => ({

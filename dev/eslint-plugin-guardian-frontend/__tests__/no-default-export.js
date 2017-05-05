@@ -18,6 +18,6 @@ ruleTester.run('no-default-export', rule, {
         'export default () => {}',
     ].map(code => ({
         code,
-        errors: [{ message: 'Use named exports, not default.' }],
+        errors: [{ message: 'Prefer named exports over default export.' }],
     })),
 });
