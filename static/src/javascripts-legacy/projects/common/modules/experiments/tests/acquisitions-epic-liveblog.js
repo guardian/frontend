@@ -42,7 +42,8 @@ define([
                     count: 4,
                     minDaysBetweenViews: 0
                 },
-                insertBeforeSelector: '.js-liveblog-epic-placeholder',
+                insertAtSelector: '.js-insert-epic-after',
+                insertAfter: true,
                 insertMultiple: true,
                 successOnView: true,
 
