@@ -11,7 +11,6 @@
         "projects/commercial/modules/creatives/fabric-expanding-v1.js"
     ],
     "Jon Norman": [
-        "projects/commercial/modules/dfp/dfp-env.js",
         "projects/commercial/modules/dfp/add-slot.js",
         "projects/commercial/modules/dfp/create-slot.js",
         "projects/commercial/modules/dfp/define-slot.js",
