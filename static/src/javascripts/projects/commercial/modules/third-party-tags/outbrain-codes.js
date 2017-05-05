@@ -1,3 +1,4 @@
+// @flow
 import getSection from 'commercial/modules/third-party-tags/outbrain-sections';
 /* These codes are given to us directly by Outbrain. They will eventually
    be sent back to them via a data- attribute, in order for them to return
@@ -9,69 +10,74 @@ import getSection from 'commercial/modules/third-party-tags/outbrain-sections';
    2. merchandising: these are the codes when the widget replaces the low-
     priority merchandising component
 */
-var outbrainCodes = {
+const outbrainCodes = {
     defaults: {
         news: {
             mobile: {
-                code: 'MB_4'
+                code: 'MB_4',
             },
             desktop: {
                 image: 'AR_12',
-                text: 'AR_14'
+                text: 'AR_14',
             },
             tablet: {
                 image: 'MB_6',
-                text: 'MB_8'
-            }
+                text: 'MB_8',
+            },
         },
         defaults: {
             mobile: {
-                code: 'MB_5'
+                code: 'MB_5',
             },
             desktop: {
                 image: 'AR_13',
-                text: 'AR_15'
+                text: 'AR_15',
             },
             tablet: {
                 image: 'MB_7',
-                text: 'MB_9'
-            }
-        }
+                text: 'MB_9',
+            },
+        },
     },
 
     merchandising: {
         mobile: {
-            code: 'MB_10'
+            code: 'MB_10',
         },
         desktop: {
-            code: 'AR_28'
+            code: 'AR_28',
         },
         tablet: {
-            code: 'MB_11'
-        }
+            code: 'MB_11',
+        },
     },
 
     nonCompliant: {
         mobile: {
-            code: 'MB_10'
+            code: 'MB_10',
         },
         desktop: {
-            code: 'AR_28'
+            code: 'AR_28',
         },
         tablet: {
-            code: 'MB_11'
-        }
-    }
+            code: 'MB_11',
+        },
+    },
 };
 
-function getCode(data) {
+const getCode = function(data) {
     if (!(data.slot in outbrainCodes) || data.slot === 'defaults') {
-        return outbrainCodes.defaults[getSection(data.section)][data.breakpoint === 'wide' ? 'desktop' : data.breakpoint];
+        return outbrainCodes.defaults[getSection(data.section)][
+            data.breakpoint === 'wide' ? 'desktop' : data.breakpoint
+        ];
     } else if (data.slot === 'nonCompliant') {
-        return outbrainCodes.nonCompliant[data.breakpoint === 'wide' ? 'desktop' : data.breakpoint];
-    } else {
-        return outbrainCodes.merchandising[data.breakpoint === 'wide' ? 'desktop' : data.breakpoint];
+        return outbrainCodes.nonCompliant[
+            data.breakpoint === 'wide' ? 'desktop' : data.breakpoint
+        ];
     }
-}
+    return outbrainCodes.merchandising[
+        data.breakpoint === 'wide' ? 'desktop' : data.breakpoint
+    ];
+};
 
 export default getCode;
