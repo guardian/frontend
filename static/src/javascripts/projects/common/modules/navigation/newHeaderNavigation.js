@@ -1,7 +1,6 @@
 // @flow
 
 import fastdom from 'fastdom';
-import ophan from 'ophan/ng';
 import { scrollToElement } from 'lib/scroller';
 import userAccount from 'common/modules/navigation/user-account';
 
@@ -106,6 +105,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
             button.addEventListener('click', () => toggleSidebar());
             button.setAttribute('id', checkboxId);
             button.setAttribute('aria-expanded', 'false');
+            button.setAttribute('data-link-name', 'nav2 : toggle');
 
             if (checkboxControls) {
                 button.setAttribute('aria-controls', checkboxControls);
@@ -138,11 +138,6 @@ const enhanceSidebarToggle = (): void => {
         };
 
         checkbox.addEventListener('click', closeMenuHandler);
-
-        ophan.record({
-            component: 'main-navigation',
-            value: 'is fully expanded',
-        });
     }
 };
 
@@ -158,15 +153,11 @@ const toggleSidebarWithOpenSection = () => {
     }
 
     toggleSidebar();
-
-    ophan.record({
-        component: 'main-navigation',
-        value: `more toggle: ${pillarTitle}`,
-    });
 };
 
 const addEventHandler = (): void => {
     const subnav = document.querySelector('.subnav');
+    const toggle = document.querySelector('.js-toggle-nav-section');
     const sidebar = getSidebarElement();
 
     if (!sidebar) {
@@ -182,14 +173,9 @@ const addEventHandler = (): void => {
         }
     });
 
-    if (subnav) {
-        subnav.addEventListener('click', (event: Event) => {
-            const target: HTMLElement = (event.target: any);
-
-            if (target.matches('.js-toggle-nav-section')) {
-                event.stopPropagation();
-                toggleSidebarWithOpenSection();
-            }
+    if (subnav && toggle) {
+        toggle.addEventListener('click', () => {
+            toggleSidebarWithOpenSection();
         });
     }
 };

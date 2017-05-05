@@ -2,6 +2,8 @@ package test
 
 import java.io.File
 
+import common.GuardianConfiguration
+import conf.{IdConfig, IdentityConfiguration}
 import controllers.{EditProfileControllerTest, EmailControllerTest}
 import filters.StrictTransportSecurityHeaderFilterTest
 import org.scalatest.Suites
@@ -41,4 +43,19 @@ class IdentityTestSuite extends Suites(
   new StrictTransportSecurityHeaderFilterTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19010
+}
+
+trait WithTestIdConfig {
+  class IdentityConfigurationStub extends IdConfig {
+    val apiClientToken = "frontend-dev-client-token"
+    val apiRoot: String = "https://id.no-id-api-exists-for-team-city.needs-to-be-faked"
+    val accountDeletionApiRoot: String = "root"
+    val accountDeletionApiKey: String = "key"
+    val url: String = ""
+    val oauthUrl: String = ""
+    val domain: String = "test.domain.com"
+  }
+
+  val testIdConfig = new IdentityConfigurationStub
+
 }

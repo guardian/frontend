@@ -1,9 +1,16 @@
 @import common.Edition
 @import common.commercial.ContainerModel
 @import views.support.RenderClasses
+@import views.support.Commercial.container.isFirstNonThrasherContainer
+
 @(faciaPage: model.PressedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@defining((faciaPage.isSponsored(Edition(request)), faciaPage.isPaid)) { case (isSponsored, isPaid) =>
+@defining(
+    (
+        faciaPage.isSponsored(Edition(request)),
+        faciaPage.isPaid(Edition(request))
+    )
+) { case (isSponsored, isPaid) =>
     @if(faciaPage.collections.nonEmpty) {
         <div class="l-side-margins">
             <div class="@RenderClasses(Map(
@@ -29,7 +36,8 @@
                                 _.id == containerDefinition.dataId
                             }.map {
                                 ContainerModel.fromPressedCollection(Edition(request))
-                            }
+                            },
+                            showFrontBranding = faciaPage.isBranded(Edition(request)) && isFirstNonThrasherContainer(containerDefinition.index, collections)
                         )
                     }
 

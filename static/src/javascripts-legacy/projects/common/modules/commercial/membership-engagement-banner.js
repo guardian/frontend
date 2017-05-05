@@ -147,6 +147,9 @@ define([
             }
         }
 
+        var paypalAndCreditCardImage = (config.images && config.images.acquisitions && config.images.acquisitions['paypal-and-credit-card']) || '';
+
+
         function showBanner(params) {
 
             if (params === DO_NOT_RENDER_ENGAGEMENT_BANNER) {
@@ -157,12 +160,21 @@ define([
 
             var messageText = Array.isArray(params.messageText)?selectSequentiallyFrom(params.messageText):params.messageText;
 
+            var paypalClass = params.paypalClass || '';
+
+            //the paypall variant only works with the yellow banner
+            if(paypalClass) {
+                colourClass = 'membership-prominent yellow';
+            }
+
             var renderedBanner = template(messageTemplate, {
                 linkHref: params.linkUrl + '?INTCMP=' + params.campaignCode,
                 messageText: messageText,
                 buttonCaption: params.buttonCaption,
                 colourClass: colourClass,
                 arrowWhiteRight: svgs('arrowWhiteRight'),
+                paypalLogoSrc: paypalAndCreditCardImage,
+                paypalClass : paypalClass
             });
 
             var messageShown = new Message(

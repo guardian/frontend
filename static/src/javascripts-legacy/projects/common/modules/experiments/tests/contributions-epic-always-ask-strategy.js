@@ -30,7 +30,7 @@ define([
         campaignId: 'epic_always_ask_strategy',
 
         start: '2016-12-06',
-        expiry: '2017-05-01',
+        expiry: '2017-06-01',
 
         author: 'Guy Dawson',
         description: 'Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period.',
@@ -72,7 +72,7 @@ define([
                     });
                 },
 
-                insertBeforeSelector: '.submeta',
+                insertAtSelector: '.submeta',
 
                 test: function (render) {
                     if (canBeDisplayed()) render();

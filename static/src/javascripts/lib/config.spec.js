@@ -8,6 +8,11 @@ Object.assign(window.guardian.config, {
         references: [{ baz: 'one' }, { baz: 'two' }],
         webPublicationDate: '2013-03-20T17:07:00.000Z',
         pageId: 'politics/2017/mar/14/ukip-donor-arron-banks-says-he-has-quit-party-to-set-up-ukip-20',
+        x: {
+            y: {
+                z: 'z',
+            },
+        },
     },
 });
 
@@ -15,8 +20,6 @@ Object.assign(window.guardian.config, {
 // (but can't do it with the jest mocks that get auto-hoisted)
 // eslint-disable-next-line import/first
 import config from './config';
-
-jest.mock('lib/pad', () => jest.fn(arg => arg));
 
 describe('Config', () => {
     it('should have "hasTone" property', () => {
@@ -44,6 +47,24 @@ describe('Config', () => {
     });
 
     it('should return the expected dateFromSlug', () => {
-        expect(config.dateFromSlug()).toBe('2017/mar/14');
+        expect(config.dateFromSlug()).toEqual('2017/mar/14');
+    });
+
+    it('`get` should return a value using dot notation', () => {
+        expect(config.get('page.x.y.z')).toEqual('z');
+    });
+
+    it('`get` should return a value using bracket notation', () => {
+        expect(config.get('page[x].y[z]')).toEqual('z');
+    });
+
+    it('`get` should return undefined for non-existing key', () => {
+        expect(config.get('page.qwert')).toBeUndefined();
+    });
+
+    it('`get` should return default value for non-existing key with a default', () => {
+        expect(config.get('page.qwert', ['I am the default'])).toEqual([
+            'I am the default',
+        ]);
     });
 });

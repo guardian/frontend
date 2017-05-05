@@ -211,7 +211,7 @@ trait CommercialSwitches {
     description = "Turn on Sonobi header bidding",
     owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 28), //Friday
+    sellByDate = never,
     exposeClientSide = true
   )
 
@@ -221,7 +221,7 @@ trait CommercialSwitches {
     description = "Solicit feedback for ad impressions",
     owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 10),
+    sellByDate = new LocalDate(2017, 7, 12),
     exposeClientSide = true
   )
 
@@ -231,7 +231,17 @@ trait CommercialSwitches {
     description = "A test feature to evaluate Switch Concepts' server-to-server preflight ad call",
     owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 28),
+    sellByDate = new LocalDate(2017, 7, 3),
     exposeClientSide = true
+  )
+
+  val sponsoredFootballFeedPages = Switch(
+    group = SwitchGroup.Commercial,
+    name = "sponsored-football-pages",
+    description = "Show a hardcoded sponsor's logo on football pages.",
+    owners = Owner.group(SwitchGroup.Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 9, 6),
+    exposeClientSide = false
   )
 }

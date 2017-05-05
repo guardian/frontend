@@ -387,7 +387,7 @@ define([
 
         if (config.switches.enhancedMediaPlayer) {
             if (shouldPreroll) {
-                loadScript('//imasdk.googleapis.com/js/sdkloader/ima3.js').then(function () {
+                loadScript.loadScript('//imasdk.googleapis.com/js/sdkloader/ima3.js').then(function () {
                     initWithRaven(true);
                 }).catch(function (e) {
                     raven.captureException(e, { tags: { feature: 'media', action: 'ads', ignored: true } });

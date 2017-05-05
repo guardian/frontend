@@ -23,7 +23,7 @@ import { local as storage } from 'lib/storage';
 import fetchJSON from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import checkMediator from 'common/modules/check-mediator';
-import addEventListener from 'lib/add-event-listener';
+import { addEventListener } from 'lib/events';
 import identity from 'common/modules/identity/api';
 import { removeCookie, addCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';

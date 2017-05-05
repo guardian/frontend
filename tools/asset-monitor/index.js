@@ -66,9 +66,7 @@ const analyse = filePath => {
             .then(() => cloudwatch.log(path.basename(filePath), data))
             .then(msg => {
                 console.log(
-                    chalk.green(
-                        `Successfully logged file data to CloudWatch ${msg.id}`
-                    )
+                    chalk.green(`Successfully logged file data to CloudWatch ${msg.id}`)
                 );
                 return true;
             })

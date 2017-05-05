@@ -1,5 +1,6 @@
 package model
 
+import com.gu.contentapi.client.model.v1.MembershipPlaceholder
 import common.commercial.CommercialProperties
 import common.{NavItem, Pagination, SectionLink}
 import model.content._
@@ -223,6 +224,7 @@ object ContentTypeFormat {
     )(Atoms.apply _)
 
 
+  implicit val membershipPlaceholderFormat = Json.format[MembershipPlaceholder]
   implicit val blockAttributesFormat = Json.format[BlockAttributes]
   implicit val bodyBlockFormat = Json.format[BodyBlock]
   implicit val blocksFormat = Json.format[Blocks]

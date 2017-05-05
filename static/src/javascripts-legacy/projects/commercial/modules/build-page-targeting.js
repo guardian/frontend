@@ -10,6 +10,7 @@ define([
     'commercial/modules/user-ad-targeting',
     'common/modules/experiments/utils',
     'lodash/arrays/compact',
+    'lodash/arrays/flatten',
     'lodash/arrays/uniq',
     'lodash/functions/once',
     'lodash/objects/pick'
@@ -25,6 +26,7 @@ define([
     userAdTargeting,
     abUtils,
     compact,
+    flatten,
     uniq,
     once,
     pick
@@ -112,6 +114,20 @@ define([
         return pick(url.getUrlVars(), whiteList);
     }
 
+    function formatAppNexusTargeting(obj) {
+        return flatten(Object.keys(obj)
+            .filter(function(key) {
+                return obj[key] !== '' && obj[key] !== null;
+            })
+            .map(function(key) {
+                var value = obj[key];
+                return Array.isArray(value) ?
+                    value.map(function(nestedValue){ return key + '=' + nestedValue })
+                    : key + '=' + value;
+            }))
+            .join(',');
+    }
+
     return once(function () {
         var page        = config.page;
         var pageTargets = assign({
@@ -139,12 +155,12 @@ define([
         });
 
         // third-parties wish to access our page targeting, before the googletag script is loaded.
-        page.appNexusPageTargeting = url.constructQuery({
+        page.appNexusPageTargeting = formatAppNexusTargeting({
             pt1: pageTargeting.url,
             pt2: pageTargeting.edition,
             pt3: pageTargeting.ct,
             pt4: pageTargeting.p,
-            pt5: pageTargeting.k ? pageTargeting.k.toString() : '', // makes it comma seperated
+            pt5: pageTargeting.k,
             pt6: pageTargeting.su,
             pt7: pageTargeting.bp,
             pt8: pageTargeting.x,

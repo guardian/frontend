@@ -2,7 +2,6 @@ define([
     'bonzo',
     'common/modules/ui/relativedates',
     'lib/$',
-    'lib/chain',
     'lib/detect',
     'lib/fastdom-promise',
     'lib/fetch-json',
@@ -15,13 +14,11 @@ define([
     'lodash/collections/forEach',
     'lodash/functions/debounce',
     'lodash/collections/filter',
-    'lodash/objects/isEmpty',
-    'lodash/collections/map'
+    'lodash/objects/isEmpty'
 ], function (
     bonzo,
     relativeDates,
     $,
-    chain,
     detect,
     fastdomPromise,
     fetchJson,
@@ -34,8 +31,7 @@ define([
     forEach,
     debounce,
     filter,
-    isEmpty,
-    map
+    isEmpty
 ) {
     var animateDelayMs = 2000,
         animateAfterScrollDelayMs = 500,
@@ -79,21 +75,21 @@ define([
     function showBlocks(articleId, targets, blocks, oldBlockDate) {
         var fakeUpdate = isUndefined(oldBlockDate);
 
+
         forEach(targets, function (element) {
             var hasNewBlock = false,
                 wrapperClasses = [
                     'fc-item__liveblog-blocks__inner',
                     'u-faux-block-link__promote'
                 ],
-                blocksHtml = chain(blocks).slice(0, 2).and(map, function (block, index) {
-                        if (!hasNewBlock && (block.publishedDateTime > oldBlockDate || fakeUpdate)) {
-                            block.isNew = true;
-                            hasNewBlock = true;
-                            wrapperClasses.push('fc-item__liveblog-blocks__inner--offset');
-                        }
-                        return renderBlock(articleId, block, index);
-                    }).slice(0, hasNewBlock ? 2 : 1).value(),
-
+                blocksHtml = blocks.slice(0, 2).map(function (block, index) {
+                    if (!hasNewBlock && (block.publishedDateTime > oldBlockDate || fakeUpdate)) {
+                        block.isNew = true;
+                        hasNewBlock = true;
+                        wrapperClasses.push('fc-item__liveblog-blocks__inner--offset');
+                    }
+                    return renderBlock(articleId, block, index);
+                }).slice(0, hasNewBlock ? 2 : 1),
                 el = bonzo.create(
                     '<div class="' + wrapperClasses.join(' ') + '">' + blocksHtml.join('') + '</div>'
                 ),

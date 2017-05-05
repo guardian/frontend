@@ -53,14 +53,12 @@ git
 
         const steps = {
             'Create a branch for the conversion': `git checkout -b "${branchName}" || git checkout -b "${branchName}-${unique}"`,
-            'Move the legacy module to the new location': `mkdir -p ${path.dirname(es6Module)}; mv ${es5Module} $_; node ./tools/es5to6-remove-module.js ${moduleId}`,
-            'Commit the move': `git add .; git commit -m "move ${moduleId} from legacy to standard JS"`,
+            'Move the legacy module to the new location': `mkdir -p ${path.dirname(es6Module)}; mv ${es5Module} ${path.dirname(es6Module)}; node ./tools/es5to6-remove-module.js ${moduleId}`,
+            'Commit the move': `git add .; git commit -m "move ${moduleId} from legacy to standard JS" --no-verify`,
             'Convert module to ES6': `npm run -s amdtoes6 -- -d ${path.dirname(es6Module)} -o ${path.dirname(es6Module)} -g **/${path.basename(es6Module)} `,
-            'Commit the module tranform': `git add .; git commit -m "transform ${moduleId} to ES6 module"`,
+            'Commit the module tranform': `git add .; git commit -m "transform ${moduleId} to ES6 module" --no-verify`,
             'Convert contents to ES6': `npm run -s lebab -- ${es6Module}`,
             'Commit the content tranform': `git add .; git commit -m "transform ${moduleId} content to ES6"`,
-            'Fix lint errors': `npm run -s eslint-fix -- ${es6Module}`,
-            'Commit any lint fixes': `git add .; git commit -m "fix lint errors with ${moduleId} after transform to ES6"`,
         };
 
         Object.keys(steps)
@@ -79,19 +77,17 @@ git
                             })
                             .catch(e => {
                                 console.log(chalk.red(e.stack));
-                                megalog.error(
-                                    `\`${step}\` did not complete.
+                                megalog.error(`\`${step}\` did not complete.
 
 Once you have fixed the problem, you'll need to run the remaining steps manually:
 ${Object.keys(steps)
-                                        .slice(i)
-                                        .map((remaingStep, remainingCount) => `
+                                    .slice(i)
+                                    .map((remaingStep, remainingCount) => `
 ${i + 1 + remainingCount}. ${remaingStep}
 \`${steps[remaingStep]}\`
 `)
-                                        .join('')}
-If you get stuck, feel free to ping us in https://theguardian.slack.com/messages/dotcom-platform.`
-                                );
+                                    .join('')}
+If you get stuck, feel free to ping us in: \`https://theguardian.slack.com/messages/dotcom-es2017\`\n\nYou may also want to double check the wiki guide:  \`https://github.com/guardian/frontend/wiki/So-you-want-to-ES6%3F\``);
                                 process.exit(1);
                             });
                     }),
@@ -99,9 +95,7 @@ If you get stuck, feel free to ping us in https://theguardian.slack.com/messages
             )
             .then(() => {
                 console.log(
-                    chalk.blue(
-                        `\n💫  Module is now es6! Double check the code, then create a PR.`
-                    )
+                    chalk.blue(`\n💫  Module is now es6! Double check the code, then create a PR.`)
                 );
                 console.log(chalk.dim(`New location: ${es6Module}\n`));
             });

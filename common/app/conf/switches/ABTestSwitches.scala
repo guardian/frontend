@@ -31,16 +31,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-editorial-email-variants",
-    "Assign users to variants of our editorial emails",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-opinion-email-variants",
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
@@ -55,7 +45,7 @@ trait ABTestSwitches {
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 1),
+    sellByDate = new LocalDate(2017, 6, 1),
     exposeClientSide = true
   )
 
@@ -65,17 +55,17 @@ trait ABTestSwitches {
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 1),
+    sellByDate = new LocalDate(2017, 6, 1),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-contributions-epic-regulars-v2",
-    "Test messages aimed at our regular readers",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-acquisitions-epic-liveblog",
+    "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
+    owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 1),
+    sellByDate = new LocalDate(2017, 7, 3),
     exposeClientSide = true
   )
 
@@ -85,7 +75,7 @@ trait ABTestSwitches {
     "Integrate Tailor with ab tests",
     owners = Seq(Owner.withGithub("oilnam")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 28),
+    sellByDate = new LocalDate(2017, 5, 31),
     exposeClientSide = true
   )
 
@@ -155,38 +145,48 @@ trait ABTestSwitches {
     "Paid commenting test",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 27),
+    sellByDate = new LocalDate(2017, 5, 25),  // Thurs 25th May
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-paid-card-logo",
-    "Trialling paid cards in editorial containers",
-    owners = Seq(Owner.withGithub("lps88")),
+    "ab-paid-content-vs-outbrain-2",
+    "Displays a paid content widget instead of Outbrain",
+    owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 3),
+    sellByDate = new LocalDate(2018, 1, 8),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-epic-to-support-landing-page",
-    "Use AB framework to divert traffic from epic to new support landing page",
-    owners = Seq(Owner.withGithub("JustinPinner")),
+    "ab-bundle-digital-sub-price-test-1",
+    "Test pricing options for digital subs",
+    owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 27),
+    sellByDate = new LocalDate(2017, 5, 25),  // Thursday
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-simple-reach",
-    "Use the fabulous AB framework to add a opt-in for SimpleReach tracking",
-    owners = Seq(Owner.withGithub("katebee")),
+    "ab-membership-engagement-banner-paywall-and-paypal-test-round-two",
+    "Test variant with paywall message and paypal logo on the engagement banner",
+    owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 26),
+    sellByDate = new LocalDate(2017, 5, 25),
     exposeClientSide = true
   )
 
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-testimonials",
+    "Test placing reader testimonials in the Epic",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 5, 10),
+    exposeClientSide = true
+  )
 }

@@ -12,13 +12,22 @@
 
 <fieldset class="fieldset">
     <div class="fieldset__heading">
-        <div class="user-avatar" data-userid="@user.id"></div>
-        <h2 class="form__heading">
-            @user.publicFields.displayName
-        </h2>
-        @user.dates.accountCreatedDate.map { joinDate =>
-            <p class="form-field__note">Joined: @joinDate.toString("d MMM yyyy")</p>
-        }
+        <h2 class="form__heading">Username</h2>
+    </div>
+    <div class="fieldset__fields">
+        <ul class="u-unstyled">
+            <li class="form-field">
+                @user.publicFields.displayName
+            </li>
+            <li>
+                <div class="form__note">
+                    If you have not posted any comments you will be prompted to create/change a username when you post
+                    a comment for the first time. After entering your comment and clicking on ‘post your comment’
+                    you will be asked to create a username. If you have posted comments or experience any difficulties,
+                    please email <a href="mailto:userhelp@@theguardian.com">Userhelp</a>.
+                </div>
+            </li>
+        </ul>
     </div>
 </fieldset>
 
@@ -32,6 +41,9 @@
 
             <div class="fieldset__fields">
                 <ul class="u-unstyled">
+                    <li class="form-field">
+                        <div class="user-avatar" style="float:none"  data-userid="@user.id"></div>
+                    </li>
                     <li class="form-field">
                         <input type="file" name="file" accept="image/gif, image/jpeg, image/png" />
                     </li>

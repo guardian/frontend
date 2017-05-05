@@ -7,12 +7,7 @@ define([
 ) {
     var adSlotSelector = '.js-ad-slot';
 
-    return {
-        init: init
-    };
-
     function init(force) {
-
         // Get all ad slots
         var adSlots = qwery(adSlotSelector);
 
@@ -23,7 +18,9 @@ define([
 
         return fastdom.write(function () {
             adSlots.forEach(function (adSlot) {
-                adSlot.parentNode.removeChild(adSlot);
+                if (adSlot.parentNode) {
+                    adSlot.parentNode.removeChild(adSlot);
+                }
             });
         });
     }
@@ -31,4 +28,8 @@ define([
     function shouldDisableAdSlot(adSlot) {
         return window.getComputedStyle(adSlot).display === 'none';
     }
+
+    return {
+        init: init
+    };
 });

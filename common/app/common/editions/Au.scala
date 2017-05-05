@@ -47,7 +47,7 @@ object Au extends Edition(
       NavItem(economy, economyLocalNav),
       NavItem(media),
       NavItem(technology),
-      NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel, skiingTravel)),
+      NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
       NavItem(fashion),
       NavItem(science),
       NavItem(membership),

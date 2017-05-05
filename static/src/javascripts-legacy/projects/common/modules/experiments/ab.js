@@ -10,9 +10,9 @@ define([
     'common/modules/experiments/segment-util',
     'common/modules/experiments/test-can-run-checks',
     'common/modules/experiments/acquisition-test-selector',
-    'common/modules/experiments/tests/editorial-email-variants',
     'common/modules/experiments/tests/opinion-email-variants',
     'common/modules/experiments/tests/membership-engagement-banner-tests',
+    'common/modules/experiments/tests/paid-content-vs-outbrain',
     'common/modules/experiments/tests/tailor-survey',
     'common/modules/experiments/tests/the-long-read-email-variants',
     'common/modules/experiments/tests/fashion-statement-email-variants',
@@ -21,10 +21,9 @@ define([
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
-    'common/modules/experiments/tests/paid-card-logo',
     'ophan/ng',
     'common/modules/experiments/tests/paid-commenting',
-    'common/modules/experiments/tests/simple-reach'
+    'common/modules/experiments/tests/bundle-digital-sub-price-test-1'
 ], function (reportError,
              config,
              cookies,
@@ -36,10 +35,10 @@ define([
              segmentUtil,
              testCanRunChecks,
              acquisitionTestSelector,
-             EditorialEmailVariants,
              OpinionEmailVariants,
              MembershipEngagementBannerTests,
-             TailorSurvey,
+             PaidContentVsOutbrain2,
+             tailorSurvey,
              TheLongReadEmailVariants,
              FashionStatementEmailVariants,
              BookmarksEmailVariants2,
@@ -47,16 +46,15 @@ define([
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
              increaseInlineAdsRedux,
-             PaidCardLogo,
              ophan,
              PaidCommenting,
-             SimpleReach
+             BundleDigitalSubPriceTest1
     ) {
     var TESTS = compact([
-        new EditorialEmailVariants(),
         new OpinionEmailVariants(),
+        new PaidContentVsOutbrain2,
         acquisitionTestSelector.getTest(),
-        new TailorSurvey(),
+        new tailorSurvey.TailorSurvey(),
         TheLongReadEmailVariants,
         FashionStatementEmailVariants,
         BookmarksEmailVariants2,
@@ -64,9 +62,8 @@ define([
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
         new increaseInlineAdsRedux(),
-        new PaidCardLogo(),
         new PaidCommenting(),
-        new SimpleReach()
+        new BundleDigitalSubPriceTest1()
     ].concat(MembershipEngagementBannerTests));
 
     function cleanParticipations() {

@@ -2,7 +2,10 @@
 import config from 'lib/config';
 import fetch from 'lib/fetch';
 
-const json = (input: string | Request, init: RequestOptions = {}) => {
+const json = (
+    input: string | Request,
+    init: RequestOptions = {}
+): Promise<any> => {
     // #? we should use Object.assign for this assignment, but this currently breaks
     // Karma tests that depend on fetch-json.js and have not been stubbed
     const options = init;

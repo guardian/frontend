@@ -1,21 +1,11 @@
 const request = require('request');
 const promiseRetry = require('promise-retry');
 const once = require('lodash/once');
-const megalog = require('megalog');
 
 const fetch = options => {
     const onError = once(error => {
         if (options.host === exports.hosts.dev) {
-            try {
-                megalog.error(
-                    `Are you running the article or dev-build app? \n \n ${error.message}`,
-                    {
-                        heading: 'A 200 was not returned',
-                    }
-                );
-            } catch (e) {
-                // do nothing
-            }
+            console.error(`A 200 was not returned \n\n Are you running the article or dev-build app? \n \n ${error.message}`);
         }
         throw error;
     });

@@ -10,6 +10,8 @@ import common.ExecutionContexts
 import services.ConfigAgent
 import org.scalatest._
 import controllers.FaciaControllerImpl
+import scala.concurrent.duration._
+import scala.concurrent.Await
 
 @DoNotDiscover class FaciaControllerTest extends FlatSpec
   with Matchers
@@ -30,12 +32,13 @@ import controllers.FaciaControllerImpl
   val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
 
   override def beforeAll() {
-    ConfigAgent.refreshWith(
+    val refresh = ConfigAgent.refreshWith(
       ConfigJson(
         fronts = Map("music" -> frontJson, "inline-embeds" -> frontJson, "uk" -> frontJson, "au/media" -> frontJson),
         collections = Map.empty)
     )
     conf.switches.Switches.FaciaInlineEmbeds.switchOn()
+    Await.result(refresh, 3.seconds)
   }
 
   it should "serve an X-Accel-Redirect for something it doesn't know about" in {

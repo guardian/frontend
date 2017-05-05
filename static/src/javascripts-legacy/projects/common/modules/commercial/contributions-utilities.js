@@ -13,6 +13,7 @@ define([
     'lib/geolocation',
     'lodash/objects/assign',
     'lodash/utilities/template',
+    'lodash/collections/toArray',
     'raw-loader!common/views/acquisitions-epic-control.html'
 ], function (
     uniq,
@@ -29,6 +30,7 @@ define([
     geolocation,
     assign,
     template,
+    toArray,
     acquisitionsEpicControlTemplate
 ) {
 
@@ -72,10 +74,28 @@ define([
         return options.useTargetingTool ? targetingTool.isAbTestTargeted(options) : true;
     }
 
+    // Returns an array containing:
+    // - the first element matching insertAtSelector, if isMultiple is false or not supplied
+    // - all elements matching insertAtSelector, if isMultiple is true
+    // - or an empty array if the selector doesn't match anything on the page
+    function getTargets(insertAtSelector, isMultiple) {
+        var els = document.querySelectorAll(insertAtSelector);
+
+        if (isMultiple) {
+            return toArray(els);
+        } else if (els.length) {
+            return [els[0]];
+        }
+
+        return [];
+    }
+
     function defaultCanEpicBeDisplayed(testConfig) {
         var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 90;
 
-        var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle;
+        var worksWellWithPageTemplate = (typeof testConfig.pageCheck === 'function')
+            ? testConfig.pageCheck(config.page)
+            : config.page.contentType === 'Article' && !config.page.isMinuteArticle;
 
         var storedGeolocation = geolocation.getSync();
         var inCompatibleLocation = testConfig.locations ? testConfig.locations.some(function (geo) {
@@ -113,8 +133,8 @@ define([
         this.successMeasure = options.successMeasure;
         this.audienceCriteria = options.audienceCriteria;
         this.dataLinkNames = options.dataLinkNames || '';
-        this.membershipCampaignPrefix = options.membershipCampaignPrefix || 'gdnwb_copts_mem';
-        this.contributionsCampaignPrefix = options.contributionsCampaignPrefix || 'co_global';
+        this.campaignPrefix = options.campaignPrefix || 'gdnwb_copts_memco';
+        this.campaignSuffix = options.campaignSuffix || '';
         this.insertEvent = this.makeEvent('insert');
         this.viewEvent = this.makeEvent('view');
         this.isEngagementBannerTest = options.isEngagementBannerTest || false;
@@ -135,7 +155,7 @@ define([
             }
 
             var testCanRun = (typeof options.canRun === 'function') ? options.canRun() : true;
-            return testCanRun && defaultCanEpicBeDisplayed(options)
+            return testCanRun && defaultCanEpicBeDisplayed(options);
         }).bind(this);
 
         this.variants = options.variants.map(function (variant) {
@@ -156,12 +176,11 @@ define([
         this.isUnlimited = options.isUnlimited || false;
 
         this.pageviewId = (config.ophan && config.ophan.pageViewId) || 'not_found';
-        this.contributeCampaignCode = getCampaignCode(test.contributionsCampaignPrefix, this.campaignId, this.id);
-        this.membershipCampaignCode = getCampaignCode(test.membershipCampaignPrefix, this.campaignId, this.id);
-        this.campaignCodes = uniq([this.contributeCampaignCode, this.membershipCampaignCode]);
+        this.campaignCode = getCampaignCode(test.campaignPrefix, this.campaignId, this.id, test.campaignSuffix);
+        this.campaignCodes = [this.campaignCode];
 
-        this.contributeURL = options.contributeURL || this.makeURL(contributionsBaseURL, this.contributeCampaignCode);
-        this.membershipURL = options.membershipURL || this.makeURL(membershipBaseURL, this.membershipCampaignCode);
+        this.contributeURL = options.contributeURL || this.makeURL(contributionsBaseURL, this.campaignCode);
+        this.membershipURL = options.membershipURL || this.makeURL(membershipBaseURL, this.campaignCode);
 
         this.componentName = 'mem_acquisition_' + trackingCampaignId + '_' + this.id;
 
@@ -190,11 +209,21 @@ define([
 
                 mediator.emit('register:begin', trackingCampaignId);
                 return fastdom.write(function () {
-                    var selector = options.insertBeforeSelector || '.submeta';
-                    var sibling = $(selector);
+                    var targets = [];
 
-                    if (sibling.length > 0) {
-                        component.insertBefore(sibling.first());
+                    if (!options.insertAtSelector) {
+                        targets = getTargets('.submeta', false);
+                    } else {
+                        targets = getTargets(options.insertAtSelector, options.insertMultiple);
+                    }
+
+                    if (targets.length > 0) {
+                        if (options.insertAfter) {
+                            component.insertAfter(targets);
+                        } else {
+                            component.insertBefore(targets);
+                        }
+
                         mediator.emit(test.insertEvent, component);
                         onInsert(component);
 
@@ -220,8 +249,9 @@ define([
         this.registerListener('success', 'successOnView', test.viewEvent, options);
     }
 
-    function getCampaignCode(campaignCodePrefix, campaignID, id) {
-        return campaignCodePrefix + '_' + campaignID + '_' + id;
+    function getCampaignCode(campaignCodePrefix, campaignID, id, campaignCodeSuffix) {
+        var suffix = campaignCodeSuffix ? ('_' + campaignCodeSuffix) : '';
+        return campaignCodePrefix + '_' + campaignID + '_' + id + suffix;
     }
 
     ContributionsABTestVariant.prototype.makeURL = function(base, campaignCode) {
@@ -234,11 +264,11 @@ define([
     };
 
     ContributionsABTestVariant.prototype.contributionsURLBuilder = function(codeModifier) {
-        return this.makeURL(contributionsBaseURL, codeModifier(this.contributeCampaignCode));
+        return this.makeURL(contributionsBaseURL, codeModifier(this.campaignCode));
     };
 
     ContributionsABTestVariant.prototype.membershipURLBuilder = function(codeModifier) {
-        return this.makeURL(membershipBaseURL, codeModifier(this.contributeCampaignCode));
+        return this.makeURL(membershipBaseURL, codeModifier(this.campaignCode));
     };
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {

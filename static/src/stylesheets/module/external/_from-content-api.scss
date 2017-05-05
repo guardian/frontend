@@ -190,20 +190,6 @@
     }
 }
 
-.caption--main {
-    padding: ($gs-baseline/3)*2 $gs-gutter/2 $gs-baseline*2;
-
-    @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
-    }
-    @include mq(phablet) {
-        padding-left: 0;
-        padding-right: 0;
-    }
-}
-
-
 /* Figures
    ========================================================================== */
 

@@ -65,7 +65,7 @@ define([
     Id.getUserFromCookie = function () {
         if (userFromCookieCache === null) {
             var cookieData = cookies.getCookie(Id.cookieName),
-            userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
+                userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
             if (userData) {
                 var displayName = decodeURIComponent(userData[2]);
                 userFromCookieCache = {
