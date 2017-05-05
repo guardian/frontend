@@ -4,7 +4,11 @@ module.exports = {
     settings: {
         'import/resolver': 'webpack',
     },
-    extends: ['plugin:flowtype/recommended'],
+    extends: [
+        'plugin:flowtype/recommended',
+        'prettier/flowtype',
+        'prettier/react',
+    ],
     plugins: ['guardian-frontend', 'flowtype', 'flow-header'],
     rules: {
         // require-specific overrides
