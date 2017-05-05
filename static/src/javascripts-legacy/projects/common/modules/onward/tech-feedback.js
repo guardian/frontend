@@ -79,10 +79,14 @@ define([
 
     function initForms() {
 
+        // mandatory checks (realtime)
+
         document.querySelectorAll(".feedback__form input,.feedback__form textarea").forEach((elem) => {
             elem.onblur = function(){ mandatoryCheck(elem); }
             elem.oninput = function(){ mandatoryCheck(elem); }
         });
+
+        // mandatory checks (on submit)
 
         document.querySelectorAll(".feedback__form form").forEach((elem) => {
             elem.onsubmit = function() {
@@ -105,7 +109,15 @@ define([
 
         });
 
+        // form toggling
+
         document.getElementById("feedback-category").addEventListener("change", toggleFormVisibility, false);
+
+        // insert hidden extra data into forms
+
+        document.querySelectorAll(".feedback__form input[name=extra]").forEach(function(elem){
+            elem.value = JSON.stringify(getExtraDataInformation());
+        })
 
     }
 
