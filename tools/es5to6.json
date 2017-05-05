@@ -11,7 +11,6 @@
         "projects/commercial/modules/creatives/fabric-expanding-v1.js"
     ],
     "Jon Norman": [
-        "projects/commercial/modules/dfp/dfp-env.js",
         "projects/commercial/modules/dfp/add-slot.js",
         "projects/commercial/modules/dfp/create-slot.js",
         "projects/commercial/modules/dfp/define-slot.js",
@@ -40,7 +39,7 @@
         "projects/commercial/modules/dfp/performance-logging.js",
         "projects/commercial/modules/dfp/prepare-googletag.js"
     ],
-    "rich-nguyen": [
+    "Richard Nguyen": [
         "projects/commercial/modules/dfp/prepare-sonobi-tag.js",
         "projects/commercial/modules/dfp/prepare-switch-tag.js",
         "projects/commercial/modules/dfp/queue-advert.js",
@@ -86,7 +85,6 @@
         "projects/commercial/modules/third-party-tags/krux.js"
     ],
     "Lydia Shepherd": [
-        "projects/commercial/modules/third-party-tags/outbrain-sections.js",
         "projects/commercial/modules/third-party-tags/outbrain.js",
         "projects/commercial/modules/third-party-tags/plista.js",
         "projects/commercial/modules/third-party-tags/remarketing.js",
@@ -189,8 +187,10 @@
         "projects/common/modules/asyncCallMerger.js",
         "projects/common/modules/atoms/quiz.js",
         "projects/common/modules/atoms/story-questions.js",
-        "projects/common/modules/atoms/youtube-player.js",
         "projects/common/modules/atoms/youtube-tracking.js"
+    ],
+    "Gideon Goldberg": [
+        "projects/common/modules/atoms/youtube-player.js"
     ],
     "stephanfowler": [
         "lib/detect.js",
