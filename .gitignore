@@ -1,5 +1,6 @@
 artifacts.zip
 /dist
+/coverage
 
 *.min.css
 *.min.css.map
