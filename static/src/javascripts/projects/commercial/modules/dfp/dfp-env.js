@@ -1,6 +1,8 @@
-import url from 'lib/url';
+// @flow
+import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
-var dfpEnv = {
+
+const dfpEnv = {
     /* renderStartTime: integer. Point in time when DFP kicks in */
     renderStartTime: -1,
 
@@ -8,7 +10,9 @@ var dfpEnv = {
     adSlotSelector: '.js-ad-slot',
 
     /* sonobiEnabled: boolean. Set to true if sonobi real-time-bidding is enabled*/
-    sonobiEnabled: (config.switches.sonobiHeaderBidding || url.getUrlVars()['sonobi']) && !(config.switches.preflightAdCall && !!window.esi),
+    sonobiEnabled: (config.switches.sonobiHeaderBidding ||
+        getUrlVars().sonobi) &&
+        !(config.switches.preflightAdCall && !!window.esi),
 
     /* preFlightAdCallEnabled: boolean. Set to true if real-time bidding should be performed through pre-flight ad call */
     preFlightAdCallEnabled: config.switches.preflightAdCall && !!window.esi,
@@ -35,10 +39,10 @@ var dfpEnv = {
     adverts: [],
 
     /* shouldLazyLoad: () -> boolean. Determines whether ads should be lazy loaded */
-    shouldLazyLoad: function() {
+    shouldLazyLoad() {
         // We do not want lazy loading on pageskins because it messes up the roadblock
         // Also, if the special dll parameter is passed with a value of 1, we don't lazy load
-        return !config.page.hasPageSkin && url.getUrlVars()['dll'] !== '1';
-    }
+        return !config.page.hasPageSkin && getUrlVars().dll !== '1';
+    },
 };
 export default dfpEnv;
