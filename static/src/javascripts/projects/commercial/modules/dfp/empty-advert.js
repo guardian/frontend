@@ -1,10 +1,15 @@
-import fastdom from 'fastdom';
-export default emptyAdvert;
+// @flow
 
-function emptyAdvert(advert) {
-    fastdom.write(function() {
+/* eslint no-param-reassign: ["error", { "props": false }], no-multi-assign: "off"*/
+
+import fastdom from 'fastdom';
+
+const emptyAdvert = (advert: Object): void => {
+    fastdom.write(() => {
         window.googletag.destroySlots([advert.slot]);
         advert.node.remove();
         advert.node = advert.slot = null;
     });
-}
+};
+
+export { emptyAdvert };
