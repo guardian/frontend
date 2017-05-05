@@ -34,7 +34,7 @@ define([
     var replaceTopSlot;
     var getSlotName;
     var getSlotType;
-    var isOffsetingAds = abUtils.testCanBeRun(new increaseInlineAdsRedux());
+    var isOffsetingAds = abUtils.testCanBeRun(new increaseInlineAdsRedux()) && abUtils.getTestVariantId('IncreaseInlineAdsReduxRedux') === 'yes';
 
     function init() {
 
