@@ -28,7 +28,7 @@ define([
             queueAdverts,
             setPublisherProvidedId,
             prepareSwitchTag.callSwitch,
-            dfpEnv.shouldLazyLoad() ? displayLazyAds : displayAds,
+            dfpEnv.shouldLazyLoad() ? displayLazyAds.run : displayAds,
             // anything we want to happen after displaying ads
             refreshOnResize,
             stop
