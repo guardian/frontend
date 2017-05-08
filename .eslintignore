@@ -14,4 +14,3 @@ static/src/javascripts-legacy/lib/picturefill.js
 # tests #karma-jest
 static/test/javascripts-legacy/components
 static/test/javascripts-legacy/helpers/raw-loader.js
-static/test/javascripts-legacy/helpers/polyfills.js
