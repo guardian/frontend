@@ -22,7 +22,7 @@ define([
             ], function () {
                 spaceFiller = arguments[0];
                 spaceFinder = arguments[1];
-                raven = arguments[3];
+                raven = arguments[2];
 
                 spyOn(raven, 'captureException');
 
