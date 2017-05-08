@@ -27,7 +27,6 @@
     "projects/common/modules/atoms/youtube.js"
   ],
   "Regis Kuckaertz": [
-    "projects/commercial/modules/dfp/fill-advert-slots.js",
     "projects/commercial/modules/dfp/get-advert-by-id.js",
     "projects/commercial/modules/dfp/get-adverts.js",
     "projects/commercial/modules/dfp/get-creative-ids.js",

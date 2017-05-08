@@ -201,7 +201,7 @@ define([
         it('should get the slots', function (done) {
             dfp.prepareGoogletag.init(noop, noop)
             .then(function() {
-                return dfp.fillAdvertSlots.init(noop, noop);
+                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
             })
             .then(function () {
                 expect(Object.keys(dfp.getAdverts()).length).toBe(4);
@@ -216,7 +216,7 @@ define([
                     return dfp.prepareGoogletag.init(noop, noop);
                 })
                 .then(function() {
-                    return dfp.fillAdvertSlots.init(noop, noop);
+                    return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
                 })
                 .then(function () {
                     var slots = dfp.getAdverts();
@@ -238,7 +238,7 @@ define([
         it('should define slots', function (done) {
             dfp.prepareGoogletag.init(noop, noop)
             .then(function() {
-                return dfp.fillAdvertSlots.init(noop, noop);
+                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
             })
             .then(function () {
                 [
@@ -267,7 +267,7 @@ define([
             };
             dfp.prepareGoogletag.init(noop, noop)
             .then(function() {
-                return dfp.fillAdvertSlots.init(noop, noop);
+                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
             })
             .then(function () {
                 expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
@@ -282,7 +282,7 @@ define([
             $('.js-ad-slot').first().attr('data-out-of-page', true);
             dfp.prepareGoogletag.init(noop, noop)
             .then(function() {
-                return dfp.fillAdvertSlots.init(noop, noop);
+                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
             })
             .then(function () {
                 expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalled();
@@ -298,7 +298,7 @@ define([
 
             dfp.prepareGoogletag.init(noop, noop)
             .then(function() {
-                return dfp.fillAdvertSlots.init(noop, noop);
+                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
             })
             .then(function () {
                 window.googletag.pubads().listeners.slotRenderEnded(fakeEventOne);
