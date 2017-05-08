@@ -4,7 +4,7 @@ import config from 'lib/config';
 
 type Map<A, B> = { [A]: B };
 
-type DfpEnv = {
+export type DfpEnv = {
     renderStartTime: number,
     adSlotSelector: string,
     sonobiEnabled: boolean,
@@ -62,4 +62,5 @@ const dfpEnv: DfpEnv = {
         return !config.page.hasPageSkin && getUrlVars().dll !== '1';
     },
 };
+
 export default dfpEnv;
