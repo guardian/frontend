@@ -70,7 +70,7 @@ define([
                 'inline' + (slotCounter + 1);
             var adSlot = createSlot('inline', { name: slotName, classes: 'liveblog-inline' });
             slots[i].parentNode.insertBefore(adSlot, slots[i].nextSibling);
-            addSlot(adSlot);
+            addSlot.addSlot(adSlot);
             slotCounter += 1;
         }
     }

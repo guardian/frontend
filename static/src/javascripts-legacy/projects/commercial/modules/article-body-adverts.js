@@ -10,7 +10,8 @@ define([
     'commercial/modules/dfp/add-slot',
     'commercial/modules/dfp/track-ad-render',
     'commercial/modules/dfp/create-slot',
-    'commercial/modules/commercial-features'
+    'commercial/modules/commercial-features',
+    'common/modules/experiments/tests/increase-inline-ads'
 ], function (
     Promise,
     qwery,
@@ -23,7 +24,8 @@ define([
     addSlot,
     trackAdRender,
     createSlot,
-    commercialFeatures
+    commercialFeatures,
+    increaseInlineAds
 ) {
 
     /* bodyAds is a counter that keeps track of the number of inline MPUs
@@ -32,8 +34,7 @@ define([
     var replaceTopSlot;
     var getSlotName;
     var getSlotType;
-    var isOffsetingAds = abUtils.testCanBeRun('IncreaseInlineAdsRedux') &&
-        abUtils.getTestVariantId('IncreaseInlineAdsRedux') === 'yes';
+    var isOffsetingAds = abUtils.testCanBeRun(new increaseInlineAds()) && abUtils.getTestVariantId('IncreaseInlineAdsReduxRedux') === 'yes';
 
     function init() {
 
@@ -196,7 +197,7 @@ define([
             para.parentNode.insertBefore(ad, para);
         })
         .then(function () {
-            addSlot(ad, name === 'im');
+            addSlot.addSlot(ad, name === 'im');
         });
     }
 });

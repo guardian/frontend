@@ -12,7 +12,7 @@ import closeDisabledSlots from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
 import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
-import fillAdvertSlots from 'commercial/modules/dfp/fill-advert-slots';
+import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
 import hostedAbout from 'commercial/modules/hosted/about';
 import hostedVideo from 'commercial/modules/hosted/video';
 import hostedGallery from 'commercial/modules/hosted/gallery';
@@ -39,7 +39,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-liveblogAdverts', liveblogAdverts.init, true],
     ['cm-closeDisabledSlots', closeDisabledSlots.init],
     ['cm-stickyTopBanner', stickyTopBanner.init],
-    ['cm-fill-advert-slots', fillAdvertSlots.init, true],
+    ['cm-fill-advert-slots', fillAdvertSlots, true],
     ['cm-paidContainers', paidContainers.init],
     ['cm-paidforBand', paidforBand.init],
 ];
