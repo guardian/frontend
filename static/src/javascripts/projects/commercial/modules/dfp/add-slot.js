@@ -38,4 +38,4 @@ const addSlot = (adSlot: HTMLElement, forceDisplay: Boolean) => {
     });
 };
 
-export default addSlot;
+export { addSlot };

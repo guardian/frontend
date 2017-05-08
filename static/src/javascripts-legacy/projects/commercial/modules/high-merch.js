@@ -25,12 +25,12 @@ define([
 
             container.className = 'fc-container fc-container--commercial';
             container.appendChild(createSlot(config.page.isPaidContent ? 'high-merch-paid' : 'high-merch'));
-            
+
             if (commercialFeatures.outbrain && isLuckyBastard()) {
                 trackAdRender('dfp-ad--merchandising-high')
                     .then(insertAlternativeSlot);
             }
-            
+
             return fastdom.write(function () {
                 if (anchor && anchor.parentNode) {
                     anchor.parentNode.insertBefore(container, anchor);
@@ -59,7 +59,7 @@ define([
             container.parentNode.insertBefore(slot, container.nextSibling);
         })
         .then(function () {
-            addSlot(slot, true);
+            addSlot.addSlot(slot, true);
         });
     }
 });
