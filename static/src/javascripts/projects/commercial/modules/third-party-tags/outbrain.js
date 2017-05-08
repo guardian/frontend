@@ -1,5 +1,4 @@
-import Promise from 'Promise';
-import fastdom from 'lib/fastdom-promise';
+// @flow
 import $ from 'lib/$';
 import config from 'lib/config';
 import detect from 'lib/detect';
@@ -7,81 +6,77 @@ import template from 'lodash/utilities/template';
 import steadyPage from 'lib/steady-page';
 import getCode from 'commercial/modules/third-party-tags/outbrain-codes';
 import outbrainStr from 'raw-loader!commercial/views/outbrain.html';
-import loadScript from 'lib/load-script';
+import { loadScript } from 'lib/load-script';
 import checkMediator from 'common/modules/check-mediator';
 import ophan from 'ophan/ng';
-var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
-var outbrainTpl = template(outbrainStr);
 
-var selectors = {
+const outbrainUrl = '//widgets.outbrain.com/outbrain.js';
+const outbrainTpl = template(outbrainStr);
+
+const selectors = {
     outbrain: {
         widget: '.js-outbrain',
-        container: '.js-outbrain-container'
+        container: '.js-outbrain-container',
     },
     merchandising: {
         widget: '.js-container--commercial',
-        container: '.js-outbrain-container'
+        container: '.js-outbrain-container',
     },
     nonCompliant: {
         widget: '.js-outbrain',
-        container: '.js-outbrain-container'
-    }
+        container: '.js-outbrain-container',
+    },
 };
 
-function build(codes, breakpoint) {
-    var html = outbrainTpl({
-        widgetCode: codes.code || codes.image
+const build = function(codes, breakpoint) {
+    let html = outbrainTpl({
+        widgetCode: codes.code || codes.image,
     });
     if (breakpoint !== 'mobile' && codes.text) {
         html += outbrainTpl({
-            widgetCode: codes.text
+            widgetCode: codes.text,
         });
     }
     return html;
-}
-
-var module = {
-    load: load,
-    tracking: tracking,
-    init: init
 };
 
-function load(target) {
-    var slot = target in selectors ? target : 'defaults';
-    var $outbrain = $(selectors.outbrain.widget);
-    var $container = $(selectors.outbrain.container, $outbrain[0]);
-    var breakpoint = detect.getBreakpoint();
-    var widgetCodes, widgetHtml;
+const tracking = function(trackingObj) {
+    ophan.record({
+        outbrain: trackingObj,
+    });
+};
 
-    widgetCodes = getCode({
-        slot: slot,
+const load = function(target) {
+    const slot = target in selectors ? target : 'defaults';
+    const $outbrain = $(selectors.outbrain.widget);
+    const $container = $(selectors.outbrain.container, $outbrain[0]);
+    const breakpoint = detect.getBreakpoint();
+
+    const widgetCodes = getCode({
+        slot,
         section: config.page.section,
-        breakpoint: breakpoint
+        breakpoint,
     });
 
-    widgetHtml = build(widgetCodes, breakpoint);
+    const widgetHtml = build(widgetCodes, breakpoint);
 
     if ($container.length) {
-        return steadyPage.insert($container[0], function() {
-            if (slot === 'merchandising') {
-                $(selectors[slot].widget).replaceWith($outbrain[0]);
-            }
-            $container.append(widgetHtml);
-            $outbrain.css('display', 'block');
-        }).then(function() {
-            module.tracking({
-                widgetId: widgetCodes.code || widgetCodes.image
+        return steadyPage
+            .insert($container[0], () => {
+                if (slot === 'merchandising') {
+                    $(selectors[slot].widget).replaceWith($outbrain[0]);
+                }
+                $container.append(widgetHtml);
+                $outbrain.css('display', 'block');
+            })
+            .then(() => {
+                tracking({
+                    widgetId: widgetCodes.code || widgetCodes.image,
+                });
+                loadScript(outbrainUrl);
             });
-            loadScript.loadScript(outbrainUrl);
-        });
     }
-}
-
-function tracking(trackingObj) {
-    ophan.record({
-        outbrain: trackingObj
-    });
-}
+};
 
 /*
  Loading Outbrain is dependent on successful return of high relevance component
@@ -89,69 +84,83 @@ function tracking(trackingObj) {
  not loading Outbrain. As Outbrain is being partially loaded behind the adblock we can
  make the call instantly when we detect adBlock in use.
 */
-function canLoadInstantly() {
-    return detect.adblockInUse.then(function(adblockInUse) {
-        return !document.getElementById('dfp-ad--merchandising-high') ||
-            adblockInUse;
-    });
-}
+const canLoadInstantly = function() {
+    return detect.adblockInUse.then(
+        adblockInUse =>
+            !document.getElementById('dfp-ad--merchandising-high') ||
+            adblockInUse
+    );
+};
 
-function onIsOutbrainDisabled(outbrainDisabled) {
-    if (outbrainDisabled) {
-        module.tracking({
-            state: 'outbrainDisabled'
-        });
-        return Promise.resolve();
-    } else {
-        return canLoadInstantly().then(onCanLoadInstantly);
-    }
-}
-
-function onCanLoadInstantly(loadInstantly) {
-    if (loadInstantly) {
-        return checkMediator.waitForCheck('isOutbrainNonCompliant').then(onIsOutbrainNonCompliant);
-    } else {
-        return checkMediator.waitForCheck('isOutbrainBlockedByAds').then(onIsOutbrainBlockedByAds);
-    }
-}
-
-function onIsOutbrainNonCompliant(outbrainNonCompliant) {
-    outbrainNonCompliant ? module.load('nonCompliant') : module.load();
-    module.tracking({
-        state: outbrainNonCompliant ? 'nonCompliant' : 'compliant'
+const onIsOutbrainNonCompliant = function(outbrainNonCompliant) {
+    if (outbrainNonCompliant) load('nonCompliant');
+    else load();
+    tracking({
+        state: outbrainNonCompliant ? 'nonCompliant' : 'compliant',
     });
     return Promise.resolve();
-}
+};
 
-function onIsOutbrainBlockedByAds(outbrainBlockedByAds) {
-    if (outbrainBlockedByAds) {
-        module.tracking({
-            state: 'outbrainBlockedByAds'
-        });
-        return Promise.resolve();
-    } else {
-        return checkMediator.waitForCheck('isOutbrainMerchandiseCompliant').then(onIsOutbrainMerchandiseCompliant);
-    }
-}
-
-function onIsOutbrainMerchandiseCompliant(outbrainMerchandiseCompliant) {
+const onIsOutbrainMerchandiseCompliant = function(
+    outbrainMerchandiseCompliant
+) {
     if (outbrainMerchandiseCompliant) {
-        module.load('merchandising');
-        module.tracking({
-            state: 'outbrainMerchandiseCompliant'
+        load('merchandising');
+        tracking({
+            state: 'outbrainMerchandiseCompliant',
         });
         return Promise.resolve();
-    } else {
-        return checkMediator.waitForCheck('isOutbrainNonCompliant').then(onIsOutbrainNonCompliant);
     }
-}
+    return checkMediator
+        .waitForCheck('isOutbrainNonCompliant')
+        .then(onIsOutbrainNonCompliant);
+};
 
-function outbrainChecks() {
-    return checkMediator.waitForCheck('isOutbrainDisabled').then(onIsOutbrainDisabled);
-}
+const onIsOutbrainBlockedByAds = function(outbrainBlockedByAds) {
+    if (outbrainBlockedByAds) {
+        tracking({
+            state: 'outbrainBlockedByAds',
+        });
+        return Promise.resolve();
+    }
+    return checkMediator
+        .waitForCheck('isOutbrainMerchandiseCompliant')
+        .then(onIsOutbrainMerchandiseCompliant);
+};
 
-function init() {
+const onCanLoadInstantly = function(loadInstantly) {
+    if (loadInstantly) {
+        return checkMediator
+            .waitForCheck('isOutbrainNonCompliant')
+            .then(onIsOutbrainNonCompliant);
+    }
+    return checkMediator
+        .waitForCheck('isOutbrainBlockedByAds')
+        .then(onIsOutbrainBlockedByAds);
+};
+
+const onIsOutbrainDisabled = function(outbrainDisabled) {
+    if (outbrainDisabled) {
+        tracking({
+            state: 'outbrainDisabled',
+        });
+        return Promise.resolve();
+    }
+    return canLoadInstantly().then(onCanLoadInstantly);
+};
+
+const outbrainChecks = function() {
+    return checkMediator
+        .waitForCheck('isOutbrainDisabled')
+        .then(onIsOutbrainDisabled);
+};
+
+const init = function() {
     return outbrainChecks();
-}
+};
 
-export default module;
+export default {
+    load,
+    tracking,
+    init,
+};
