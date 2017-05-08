@@ -21,7 +21,7 @@ define([
     function onSlotRender(event) {
         recordFirstAdRendered();
 
-        var advert = getAdvertById(event.slot.getSlotElementId());
+        var advert = getAdvertById.getAdvertById(event.slot.getSlotElementId());
         Advert.stopLoading(advert, true);
         Advert.startRendering(advert);
         advert.isEmpty = event.isEmpty;

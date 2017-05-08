@@ -81,7 +81,7 @@ define([
         trackAdRender(topSlotId)
         .then(function (isRendered) {
             if (isRendered) {
-                var advert = getAdvertById(topSlotId);
+                var advert = getAdvertById.getAdvertById(topSlotId);
                 if (advert &&
                     advert.size &&
                     // skip for Fabric creatives
