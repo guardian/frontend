@@ -15,11 +15,15 @@ const hideTabs = (parent: Element): void => {
     $('.js-tabs', parent).addClass('u-h');
 };
 
-// #? Review use of inheritance
 export class GeoMostPopularFront extends Component {
     constructor() {
         super();
         register.begin('most-popular');
+        this.endpoint = '/most-read-geo.json';
+        this.isNetworkFront = config.page.contentType === 'Network Front';
+        this.isVideoFront = config.page.pageId === 'video';
+        this.isInternational = config.page.pageId === 'international';
+        this.manipulationType = 'html';
     }
 
     prerender(): void {
@@ -52,13 +56,3 @@ export class GeoMostPopularFront extends Component {
         mediator.emit('modules:geomostpopular:ready');
     }
 }
-
-Component.define(GeoMostPopularFront);
-
-GeoMostPopularFront.prototype.endpoint = '/most-read-geo.json';
-GeoMostPopularFront.prototype.isNetworkFront =
-    config.page.contentType === 'Network Front';
-GeoMostPopularFront.prototype.isVideoFront = config.page.pageId === 'video';
-GeoMostPopularFront.prototype.isInternational =
-    config.page.pageId === 'international';
-GeoMostPopularFront.prototype.manipulationType = 'html';
