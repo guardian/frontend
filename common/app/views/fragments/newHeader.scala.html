@@ -10,7 +10,9 @@
         @defining(
             NewNavigation.SectionLinks.getPillarName(id)
         ) { case (currentTopLevelSection) =>
-            <div class="new-header__inner gs-container">
+            <nav class="new-header__inner gs-container"
+                 data-component="nav2"
+                 aria-label="Guardian sections">
                 <a href="@LinkTo{/}"
                    class="new-header__logo-wrapper"
                    tabindex="0"
@@ -30,40 +32,35 @@
                     </a>
                 }
 
-                <nav data-component="nav2"
-                     role="navigation"
-                     aria-label="Guardian sections">
+                <ul class="new-header__pillars">
+                    @NewNavigation.PrimaryLinks.map { link =>
+                        <li class="new-header__pillar">
+                            <a class="@RenderClasses(Map(
+                                "new-header__pillar-link" -> true,
+                                "new-header__pillar-link--current-section" -> ((link.title == currentTopLevelSection) && !page.metadata.hasSlimHeader)))"
+                                href="@LinkTo(link.url)"
+                                data-link-name="nav2 : primary : @link.title">
+                                    @link.title
+                            </a>
+                        </li>
+                    }
+                </ul>
 
-                    <ul class="new-header__pillars">
-                        @NewNavigation.PrimaryLinks.map { link =>
-                            <li class="new-header__pillar">
-                                <a class="@RenderClasses(Map(
-                                    "new-header__pillar-link" -> true,
-                                    "new-header__pillar-link--current-section" -> ((link.title == currentTopLevelSection) && !page.metadata.hasSlimHeader)))"
-                                    href="@LinkTo(link.url)"
-                                    data-link-name="nav2 : primary : @link.title">
-                                        @link.title
-                                </a>
-                            </li>
-                        }
-                    </ul>
+                <label for="main-menu-toggle"
+                       class="new-header__nav__menu-button js-change-link"
+                       tabindex="0"
+                       data-link-name="nav2 : veggie-burger : show">
+                    <span class="new-header__veggie-burger-icon"></span>
+                    <span class="u-h">Menu</span>
+                </label>
 
-                    <label for="main-menu-toggle"
-                           class="new-header__nav__menu-button js-change-link"
-                           tabindex="0"
-                           data-link-name="nav2 : veggie-burger : show">
-                        <span class="new-header__veggie-burger-icon"></span>
-                        <span class="u-h">Menu</span>
-                    </label>
+                <input type="checkbox"
+                       id="main-menu-toggle"
+                       class="new-header__nav-trigger js-enhance-checkbox"
+                       aria-controls="main-menu">
 
-                    <input type="checkbox"
-                           id="main-menu-toggle"
-                           class="new-header__nav-trigger js-enhance-checkbox"
-                           aria-controls="main-menu">
-
-                    @fragments.nav.newHeaderMenu()
-                </nav>
-            </div>
+                @fragments.nav.newHeaderMenu()
+            </nav>
 
             @if(!page.metadata.hasSlimHeader) {
                 @fragments.nav.subNav(page)
