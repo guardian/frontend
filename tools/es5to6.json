@@ -39,7 +39,6 @@
     "projects/common/modules/avatar/api.js"
   ],
   "Richard Nguyen": [
-    "projects/commercial/modules/dfp/prepare-switch-tag.js",
     "projects/commercial/modules/dfp/queue-advert.js",
     "projects/commercial/modules/dfp/refresh-on-resize.js",
     "projects/commercial/modules/dfp/render-advert-label.js",
