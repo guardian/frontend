@@ -15,6 +15,7 @@ const hideTabs = (parent: Element): void => {
     $('.js-tabs', parent).addClass('u-h');
 };
 
+// #? Review use of inheritance
 export class GeoMostPopularFront extends Component {
     constructor() {
         super();
