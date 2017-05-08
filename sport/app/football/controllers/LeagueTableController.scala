@@ -3,7 +3,7 @@ package football.controllers
 import common._
 import conf.switches.Switches
 import feed.CompetitionsService
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{Action, AnyContent, Controller}
 import model._
 import model.Page
 
@@ -49,7 +49,7 @@ class LeagueTableController(val competitionsService: CompetitionsService)(implic
 
   private def loadTables: Seq[Table] = sortedCompetitions.filter(_.hasLeagueTable).map { Table(_) }
 
-  def renderLeagueTableJson() = renderLeagueTable()
+  def renderLeagueTableJson(): Action[AnyContent] = renderLeagueTable()
   def renderLeagueTable() = Action { implicit request =>
 
     val page = new FootballPage(
@@ -72,7 +72,7 @@ class LeagueTableController(val competitionsService: CompetitionsService)(implic
 
   }
 
-  def renderTeamlistJson() = renderTeamlist()
+  def renderTeamlistJson(): Action[AnyContent] = renderTeamlist()
   def renderTeamlist() = Action { implicit request =>
 
     val page = new FootballPage(
@@ -93,7 +93,7 @@ class LeagueTableController(val competitionsService: CompetitionsService)(implic
 
   }
 
-  def renderCompetitionJson(competition: String) = renderCompetition(competition)
+  def renderCompetitionJson(competition: String): Action[AnyContent] = renderCompetition(competition)
   def renderCompetition(competition: String) = Action { implicit request =>
     val table = loadTables.find(_.competition.url.endsWith(s"/$competition")).orElse(loadTables.find(_.competition.id == competition))
     table.map { table =>
@@ -119,7 +119,7 @@ class LeagueTableController(val competitionsService: CompetitionsService)(implic
     )
   }
 
-  def renderCompetitionGroupJson(competition: String, groupReference: String) = renderCompetitionGroup(competition, groupReference)
+  def renderCompetitionGroupJson(competition: String, groupReference: String): Action[AnyContent] = renderCompetitionGroup(competition, groupReference)
   def renderCompetitionGroup(competition: String, groupReference: String) = Action { implicit request =>
     val response = for {
       table <- loadTables.find(_.competition.url.endsWith(s"/$competition")).orElse(loadTables.find(_.competition.id == competition))

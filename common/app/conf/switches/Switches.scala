@@ -24,7 +24,7 @@ object SwitchGroup {
     name = "Commercial: Labs",
     description = Some("Features of, and experiments with, branded content.")
   )
-  var Discussion = SwitchGroup("Discussion")
+  val Discussion = SwitchGroup("Discussion")
   val Facia = SwitchGroup("Facia")
   val Feature = SwitchGroup("Feature")
   val Identity = SwitchGroup("Identity")
@@ -41,7 +41,7 @@ trait Initializable[T] extends ExecutionContexts with Logging {
 
   def initialize(t: T): Unit = initialized.trySuccess(t)
   def onInitialized: Future[T] = initialized.future
-  def failInitializationAfter(initializationTimeout: FiniteDuration)(akkaAsync: AkkaAsync) = {
+  def failInitializationAfter(initializationTimeout: FiniteDuration)(akkaAsync: AkkaAsync): Unit = {
     akkaAsync.after(initializationTimeout) {
       initialized.tryFailure {
         new TimeoutException(s"Initialization timed out after $initializationTimeout")
@@ -131,7 +131,7 @@ object Switch {
 
   case class Expiry(daysToExpiry: Option[Int], expiresSoon: Boolean, hasExpired: Boolean)
 
-  def expiry(switch: Switch, today: LocalDate = new DateTime(DateTimeZone.forID("Europe/London")).toLocalDate) = { // We assume expiration datetime is set to London time
+  def expiry(switch: Switch, today: LocalDate = new DateTime(DateTimeZone.forID("Europe/London")).toLocalDate): Expiry = { // We assume expiration datetime is set to London time
     val daysToExpiry = switch.sellByDate.map {
       Days.daysBetween(today, _).getDays
     }

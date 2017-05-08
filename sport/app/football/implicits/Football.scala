@@ -38,24 +38,24 @@ trait Football extends Collections {
     lazy val statusSummary = StatusSummary(s"${m.homeTeam.name} v ${m.awayTeam.name}",
       MatchStatus(m.matchStatus).toString, m.homeTeam.score, m.awayTeam.score)
 
-    def isOn(date: LocalDate) = m.date.isAfter(date) && m.date.isBefore(date.plusDays(1))
+    def isOn(date: LocalDate): Boolean = m.date.isAfter(date) && m.date.isBefore(date.plusDays(1))
 
     //results and fixtures do not actually have a status field in the API
     lazy val matchStatus = m match {
-      case f: Fixture => "Fixture"
+      case _: Fixture => "Fixture"
       case l: LiveMatch => l.status
-      case r: Result => "FT"
+      case _: Result => "FT"
       case m: MatchDay => m.matchStatus
     }
 
     lazy val isFixture = m match {
-      case f: Fixture => true
+      case _: Fixture => true
       case m: MatchDay => m.matchStatus == "-" // yeah really even though its not in the docs
       case _ => false
     }
 
     lazy val isResult = m match {
-      case r: Result => true
+      case _: Result => true
       case m: MatchDay => m.result
       case _ => false
     }
@@ -64,7 +64,7 @@ trait Football extends Collections {
 
     val smartUrl: String = MatchUrl.smartUrl(m)
 
-    def hasTeam(teamId: String) = m.homeTeam.id == teamId || m.awayTeam.id == teamId
+    def hasTeam(teamId: String): Boolean = m.homeTeam.id == teamId || m.awayTeam.id == teamId
 
     // England, Scotland, Wales, N. Ireland or Rep. Ireland
     lazy val isHomeNationGame = {
@@ -103,7 +103,7 @@ trait Football extends Collections {
  // "700" is for world-cup 2014 - remove that entry when it is done (leave the impls for other tournaments)
 
   val roundLinks = Map[String, Round => Option[String]]()
-  def groupTag(competitionId: String, round: Round) = roundLinks.get(competitionId).flatMap(_(round))
+  def groupTag(competitionId: String, round: Round): Option[String] = roundLinks.get(competitionId).flatMap(_(round))
 }
 
 object Football extends Football

@@ -13,7 +13,7 @@ import org.joda.time.format.DateTimeFormat
 import org.scala_tools.time.Imports._
 import pa.FootballMatch
 import play.api.libs.json._
-import play.api.mvc.{Action, Controller, RequestHeader, Result}
+import play.api.mvc._
 import play.twirl.api.Html
 
 import scala.concurrent.Future
@@ -41,8 +41,8 @@ class MoreOnMatchController(val competitionsService: CompetitionsService, conten
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMdd").withZone(DateTimeZone.forID("Europe/London"))
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
-  def matchNavJson(year: String, month: String, day: String, team1: String, team2: String) = matchNav(year, month, day, team1, team2)
-  def matchNav(year: String, month: String, day: String, team1: String, team2: String) = Action.async { implicit request =>
+  def matchNavJson(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] = matchNav(year, month, day, team1, team2)
+  def matchNav(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] = Action.async { implicit request =>
     val contentDate = dateFormat.parseDateTime(year + month + day).toLocalDate
 
     val maybeResponse: Option[Future[Result]] = competitionsService.matchFor(interval(contentDate), team1, team2) map { theMatch =>
@@ -71,8 +71,8 @@ class MoreOnMatchController(val competitionsService: CompetitionsService, conten
     maybeResponse.getOrElse(Future.successful(Cached(30){ JsonNotFound() }))
   }
 
-  def moreOnJson(matchId: String) = moreOn(matchId)
-  def moreOn(matchId: String) = Action.async { implicit request =>
+  def moreOnJson(matchId: String): Action[AnyContent] = moreOn(matchId)
+  def moreOn(matchId: String): Action[AnyContent] = Action.async { implicit request =>
     val maybeMatch: Option[FootballMatch] = competitionsService.findMatch(matchId)
 
     val maybeResponse: Option[Future[RevalidatableResult]] = maybeMatch map { theMatch =>
@@ -106,12 +106,12 @@ class MoreOnMatchController(val competitionsService: CompetitionsService, conten
     }
   }
 
-  def redirectToMatchId(matchId: String) = Action.async { implicit request =>
+  def redirectToMatchId(matchId: String): Action[AnyContent] = Action.async { implicit request =>
     val maybeMatch: Option[FootballMatch] = competitionsService.findMatch(matchId)
     canonicalRedirectForMatch(maybeMatch, request)
   }
 
-  def redirectToMatch(year: String, month: String, day: String, home: String, away: String) = Action.async { implicit request =>
+  def redirectToMatch(year: String, month: String, day: String, home: String, away: String): Action[AnyContent] = Action.async { implicit request =>
     val contentDate = dateFormat.parseDateTime(year + month + day).toLocalDate
     val maybeMatch = competitionsService.matchFor(interval(contentDate), home, away)
     canonicalRedirectForMatch(maybeMatch, request)
@@ -126,17 +126,16 @@ class MoreOnMatchController(val competitionsService: CompetitionsService, conten
     Cached(30)(response)
   }
 
-  def matchSummaryMf2(year: String, month: String, day: String, team1: String, team2: String) = Action.async { implicit request =>
+  def matchSummaryMf2(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] = Action.async { implicit request =>
     val contentDate = dateFormat.parseDateTime(year + month + day).toLocalDate
 
     val maybeResponse: Option[Future[Result]] = competitionsService.matchFor(interval(contentDate), team1, team2) map { theMatch =>
 
       val related: Future[Seq[ContentType]] = loadMoreOn(request, theMatch)
       // We are only interested in content with exactly 2 team tags
-      related map { _ filter hasExactlyTwoTeams } map { filtered =>
+      related map { _ filter hasExactlyTwoTeams } map { _ =>
         Cached(if(theMatch.isLive) 10 else 300) {
           lazy val competition = competitionsService.competitionForMatch(theMatch.id)
-          lazy val homeTeamResults = competition.map(_.teamResults(theMatch.homeTeam.id).take(5))
 
           JsonComponent(
             "items" -> Json.arr(

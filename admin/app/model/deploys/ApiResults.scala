@@ -9,7 +9,7 @@ object ApiResults extends Results {
   object ApiError { implicit val format = Json.format[ApiError] }
 
   case class ApiErrors(errors: List[ApiError]) {
-    def statusCode = errors.map(_.statusCode).max
+    def statusCode: Int = errors.map(_.statusCode).max
   }
 
   type ApiResponse[T] = Either[ApiErrors, T]

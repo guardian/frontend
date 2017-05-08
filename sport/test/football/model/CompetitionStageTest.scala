@@ -227,18 +227,18 @@ import test._
     }
   }
 
-  def instanceOf[T](implicit manifest: Manifest[T]) = {
+  def instanceOf[T](implicit manifest: Manifest[T]): BePropertyMatcher[AnyRef] = {
     new BePropertyMatcher[AnyRef] {
       val clazz = manifest.runtimeClass.asInstanceOf[Class[T]]
-      def apply(left: AnyRef) = {
+      def apply(left: AnyRef): BePropertyMatchResult = {
         BePropertyMatchResult(left.getClass.isAssignableFrom(clazz), s"instance of ${clazz.getName}")
       }
     }
   }
 
-  def instanceOfKnockout = {
+  def instanceOfKnockout: BePropertyMatcher[AnyRef] = {
     new BePropertyMatcher[AnyRef] {
-      def apply(left: AnyRef) = {
+      def apply(left: AnyRef): BePropertyMatchResult = {
         BePropertyMatchResult(left.isInstanceOf[Knockout], s"instance of League")
       }
     }

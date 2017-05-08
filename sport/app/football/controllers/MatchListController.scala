@@ -7,14 +7,14 @@ import implicits.Requests
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, Competition, TeamMap}
 import org.joda.time.LocalDate
-import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import pa.FootballTeam
-import play.api.mvc.{Controller, RequestHeader}
+import play.api.mvc.{Controller, RequestHeader, Result}
 import play.twirl.api.Html
 
 trait MatchListController extends Controller with Requests {
   def competitionsService: Competitions
-  protected val datePattern = DateTimeFormat.forPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezone)
+  protected val datePattern: DateTimeFormatter = DateTimeFormat.forPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezone)
   protected def createDate(year: String, month: String, day: String): LocalDate =
     datePattern.parseDateTime(s"$year$month$day").toLocalDate
 
@@ -22,7 +22,7 @@ trait MatchListController extends Controller with Requests {
     page: FootballPage,
     matchesList: MatchesList,
     filters: Map[String, Seq[CompetitionFilter]]
-  )(implicit request: RequestHeader, context: ApplicationContext) = {
+  )(implicit request: RequestHeader, context: ApplicationContext): Result = {
     Cached(10) {
       if (request.isJson)
         JsonComponent(
@@ -39,7 +39,7 @@ trait MatchListController extends Controller with Requests {
     page: FootballPage,
     matchesList: MatchesList,
     filters: Map[String, Seq[CompetitionFilter]]
-  )(implicit request: RequestHeader, context: ApplicationContext) = {
+  )(implicit request: RequestHeader, context: ApplicationContext): Result = {
     Cached(10) {
       if(request.isJson)
         JsonComponent(

@@ -61,20 +61,20 @@ class ResultsController(val competitionsService: CompetitionsService)(implicit c
   /* Public methods */
 
   def allResults(): Action[AnyContent] = renderForDate(LocalDate.now(Edition.defaultEdition.timezone))
-  def allResultsJson() = allResults()
+  def allResultsJson(): Action[AnyContent] = allResults()
 
   def allResultsFor(year: String, month: String, day: String): Action[AnyContent] = renderForDate(createDate(year, month, day))
-  def allResultsForJson(year: String, month: String, day: String) = allResultsFor(year, month, day)
+  def allResultsForJson(year: String, month: String, day: String): Action[AnyContent] = allResultsFor(year, month, day)
 
   def moreResultsFor(year: String, month: String, day: String): Action[AnyContent] = renderMoreForDate(createDate(year, month, day))
-  def moreResultsForJson(year: String, month: String, day: String) = moreResultsFor(year, month, day)
+  def moreResultsForJson(year: String, month: String, day: String): Action[AnyContent] = moreResultsFor(year, month, day)
 
   def tagResults(tag: String): Action[AnyContent] = renderForDate(LocalDate.now(Edition.defaultEdition.timezone), Some(tag))
-  def tagResultsJson(tag: String) = tagResults(tag)
+  def tagResultsJson(tag: String): Action[AnyContent] = tagResults(tag)
 
   def tagResultsFor(year: String, month: String, day: String, tag: String): Action[AnyContent] = renderForDate(createDate(year, month, day), Some(tag))
-  def tagResultsForJson(year: String, month: String, day: String, tag: String) = tagResultsFor(year, month, day, tag)
+  def tagResultsForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] = tagResultsFor(year, month, day, tag)
 
   def moreTagResultsFor(year: String, month: String, day: String, tag: String): Action[AnyContent] = renderMoreForDate(createDate(year, month, day), Some(tag))
-  def moreTagResultsForJson(year: String, month: String, day: String, tag: String) = moreTagResultsFor(year, month, day, tag)
+  def moreTagResultsForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] = moreTagResultsFor(year, month, day, tag)
 }

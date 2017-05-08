@@ -1,8 +1,10 @@
 package football.model
 
-import org.joda.time.{LocalDate, DateTime}
+import org.joda.time.{DateTime, LocalDate}
 import pa._
 import model.Competition
+
+import scala.collection.immutable.IndexedSeq
 
 trait CompetitionTestData {
   val now = DateTime.now()
@@ -72,7 +74,7 @@ trait CompetitionTestData {
       fixture(now.plusDays(1), stage, round, "1")
     )
   }
-  def futureLeagueMatches(stage: Stage) = {
+  def futureLeagueMatches(stage: Stage): List[Fixture] = {
     val round = Round("1", Some("League"))
     List(
       fixture(now.plusDays(7), stage, round, "1"),
@@ -109,7 +111,7 @@ trait CompetitionTestData {
       fixture(now.plusDays(2), stage, Round("4", Some("Group D")), "1", teams(11), teams(15))
     )
   }
-  def futureGroupMatches(stage: Stage) = {
+  def futureGroupMatches(stage: Stage): List[Fixture] = {
     List(
       fixture(now.plusDays(1), stage, Round("1", Some("Group A")), "1", teams(0), teams(4)),
       fixture(now.plusDays(1), stage, Round("2", Some("Group B")), "1", teams(1), teams(5)),
@@ -122,7 +124,7 @@ trait CompetitionTestData {
     )
   }
 
-  def pastKnockoutMatches(stage: Stage) = {
+  def pastKnockoutMatches(stage: Stage): List[Result] = {
     List(
       result(now.minusDays(7), stage, quarterFinals, "1", teams(6), teams(7)),
       result(now.minusDays(7), stage, quarterFinals, "1", teams(2), teams(3)),
@@ -134,7 +136,7 @@ trait CompetitionTestData {
       result(now.minusDays(1), stage, `final`, "1", teams(0), teams(4))
     )
   }
-  def currentKnockoutMatches(stage: Stage) = {
+  def currentKnockoutMatches(stage: Stage): List[FootballMatch with Product with Serializable] = {
     List(
       result(now.minusDays(2), stage, quarterFinals, "1", teams(0), teams(1)),
       result(now.minusDays(2), stage, quarterFinals, "1", teams(2), teams(3)),
@@ -146,7 +148,7 @@ trait CompetitionTestData {
       fixture(now.plusDays(3), stage, `final`, "1", teams(0), teams(4))
     )
   }
-  def betweenRoundsKnockoutMatches(stage: Stage) = {
+  def betweenRoundsKnockoutMatches(stage: Stage): List[FootballMatch with Product with Serializable] = {
     List(
       result(now.minusDays(2), stage, quarterFinals, "1", teams(0), teams(1)),
       result(now.minusDays(2), stage, quarterFinals, "1", teams(2), teams(3)),
@@ -158,7 +160,7 @@ trait CompetitionTestData {
       fixture(now.plusDays(3), stage, `final`, "1", teams(0), teams(4))
     )
   }
-  def futureKnockoutMatches(stage: Stage) = {
+  def futureKnockoutMatches(stage: Stage): List[Fixture] = {
     List(
       fixture(now.plusDays(1), stage, quarterFinals, "1", teams(0), teams(1)),
       fixture(now.plusDays(1).plusMinutes(5), stage, quarterFinals, "1", teams(2), teams(3)),
@@ -171,7 +173,7 @@ trait CompetitionTestData {
     )
   }
 
-  def currentKnockoutMatchesWithLegs(stage: Stage) = {
+  def currentKnockoutMatchesWithLegs(stage: Stage): List[FootballMatch with Product with Serializable] = {
     List(
       result(now.minusDays(4), stage, quarterFinals, "1", teams(0), teams(1)),
       result(now.minusDays(4), stage, quarterFinals, "1", teams(2), teams(3)),
@@ -203,7 +205,7 @@ trait CompetitionTestData {
     )
   }
 
-  def testCompetition(leagueTable: Seq[LeagueTableEntry], matches: List[FootballMatch]) = {
+  def testCompetition(leagueTable: Seq[LeagueTableEntry], matches: List[FootballMatch]): Competition = {
     Competition(
       matches = matches,
       leagueTable = leagueTable,
@@ -219,12 +221,12 @@ trait CompetitionTestData {
   }
 
 
-  def makeLeagueTable(stage: Stage, round: Int => Round) = teams.zipWithIndex.map { case (matchDayTeam, index) =>
+  def makeLeagueTable(stage: Stage, round: Int => Round): IndexedSeq[LeagueTableEntry] = teams.zipWithIndex.map { case (matchDayTeam, index) =>
     val leagueTeam = LeagueTeam(matchDayTeam.id, matchDayTeam.name, index, LeagueStats(4, 5, 2, 1, 5, 5), LeagueStats(4, 5, 2, 1, 5, 5), LeagueStats(4, 5, 2, 1, 5, 5), 0, 20 - index)
     LeagueTableEntry(stage.stageNumber, round(index), leagueTeam)
   }
-  def leagueTable(stage: Stage, round: Round) = makeLeagueTable(stage, _ => round)
-  def groupTables(stage: Stage) = {
+  def leagueTable(stage: Stage, round: Round): IndexedSeq[LeagueTableEntry] = makeLeagueTable(stage, _ => round)
+  def groupTables(stage: Stage): IndexedSeq[LeagueTableEntry] = {
     val groups = List(Round("1", Some("Group A")), Round("2", Some("Group B")), Round("3", Some("Group C")), Round("4", Some("Group D")))
     makeLeagueTable(stage, i => groups(i % 4))
   }

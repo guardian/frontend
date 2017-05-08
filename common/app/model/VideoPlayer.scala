@@ -25,17 +25,17 @@ case class VideoPlayer(
   hasFaciaHeader: Boolean = false,
   faciaHeaderProperties: Option[VideoFaciaProperties] = None
 ) {
-  def poster = profile.bestFor(video.images).getOrElse(Static("images/media-holding.jpg"))
+  def poster: String = profile.bestFor(video.images).getOrElse(Static("images/media-holding.jpg"))
 
   /** Width and height are always defined for video profile, so this is OK. */
-  def width = profile.width.get
-  def height = profile.width.get
+  def width: Int = profile.width.get
+  def height: Int = profile.width.get
 
-  def showEndSlate = width >= Video640.width.get
+  def showEndSlate: Boolean = width >= Video640.width.get
 
-  def isRatioHd = overrideIsRatioHd getOrElse profile.isRatioHD
+  def isRatioHd: Boolean = overrideIsRatioHd getOrElse profile.isRatioHD
 
-  def blockVideoAds = video.videos.blockVideoAds
+  def blockVideoAds: Boolean = video.videos.blockVideoAds
 }
 
 object VideoPlayer {

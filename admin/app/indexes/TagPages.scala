@@ -81,7 +81,7 @@ object TagPages extends Logging with ExecutionContexts {
     ("theobserver", "The Observer")
   )
 
-  def alphaIndexKey(s: String) = {
+  def alphaIndexKey(s: String): String = {
     val badCharacters = """[^a-z0-9]+""".r
 
     val maybeFirstChar = Try(badCharacters.replaceAllIn(asAscii(s).toLowerCase, "").charAt(0)).toOption
@@ -93,7 +93,7 @@ object TagPages extends Logging with ExecutionContexts {
     maybeFirstChar.filterNot(_.isDigit).map(_.toString).getOrElse("1-9")
   }
 
-  def tagHeadKey(id: String) = {
+  def tagHeadKey(id: String): Option[String] = {
     id.split("/").headOption
   }
 
@@ -102,14 +102,14 @@ object TagPages extends Logging with ExecutionContexts {
       insertWith(acc, key(tag), Set(tag))(_ union _)
     }
 
-  def asciiLowerWebTitle(tag: Tag) =
+  def asciiLowerWebTitle(tag: Tag): String =
     asAscii(tag.webTitle).toLowerCase
 
-  def nameOrder(tag: Tag) =
+  def nameOrder(tag: Tag): (Option[String], Option[String], String) =
     (tag.lastName, tag.firstName, tag.webTitle)
 
   def toPages[A: Ordering](tagsByKey: Map[String, Set[Tag]])
-                          (titleFromKey: String => String, sortKey: Tag => A) =
+                          (titleFromKey: String => String, sortKey: Tag => A): Seq[TagIndexPage] =
     tagsByKey.toSeq.sortBy(_._1) map { case (id, tagSet) =>
       TagIndexPage(
         id,

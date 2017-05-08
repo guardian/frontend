@@ -11,7 +11,7 @@ import scala.concurrent.Future
 object MemoryMetrics extends ExecutionContexts {
   private def jvmLoadBalancers = loadBalancers.diff(List(LoadBalancer("frontend-router"), LoadBalancer("frontend-image")).flatten)
 
-  def memory = withErrorLogging(Future.traverse(jvmLoadBalancers) { loadBalancer =>
+  def memory: Future[Seq[AwsLineChart]] = withErrorLogging(Future.traverse(jvmLoadBalancers) { loadBalancer =>
     val applicationName: Dimension = new Dimension().withName("ApplicationName").withValue(loadBalancer.project)
     for {
       usedHeapMemory <- euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()

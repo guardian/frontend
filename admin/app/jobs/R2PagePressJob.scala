@@ -23,7 +23,7 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService) extends Exe
   private lazy val maxMessages = Configuration.r2Press.pressQueueMaxMessages
   private lazy val credentials = Configuration.aws.mandatoryCredentials
 
-  def run() = {
+  def run(): Future[Unit] = {
     if (R2PagePressServiceSwitch.isSwitchedOn) {
       log.info("R2PagePressJob starting")
       try {
@@ -113,12 +113,12 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService) extends Exe
       val cleanedHtmlString = parseAndClean(originalSource, message.convertToHttps)
 
       cleanedHtmlString.map { cleanedHtmlString =>
-        S3ArchivePutAndCheck(pressUrl, cleanedHtmlString) match {
-          case true =>
-            redirects.set(ArchiveRedirect(urlIn, pressUrl))
-            log.info(s"Pressed $urlIn as $pressUrl")
-            queue.delete(notification.handle)
-          case _ => log.error(s"Press failed for $pressUrl")
+        if (S3ArchivePutAndCheck(pressUrl, cleanedHtmlString)) {
+          redirects.set(ArchiveRedirect(urlIn, pressUrl))
+          log.info(s"Pressed $urlIn as $pressUrl")
+          queue.delete(notification.handle)
+        } else {
+          log.error(s"Press failed for $pressUrl")
         }
       }.map(_ => ())
     }.getOrElse(Future.successful(()))
@@ -150,12 +150,12 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService) extends Exe
               val cleanedHtmlString = parseAndClean(originalSource, message.convertToHttps)
 
               cleanedHtmlString.map { cleanedHtmlString =>
-                S3ArchivePutAndCheck(pressUrl, cleanedHtmlString) match {
-                  case true =>
-                    redirects.set(ArchiveRedirect(urlIn, pressUrl))
-                    log.info(s"Pressed $urlIn as $pressUrl")
-                    queue.delete(notification.handle)
-                  case _ => log.error(s"Press failed for $pressUrl")
+                if (S3ArchivePutAndCheck(pressUrl, cleanedHtmlString)) {
+                  redirects.set(ArchiveRedirect(urlIn, pressUrl))
+                  log.info(s"Pressed $urlIn as $pressUrl")
+                  queue.delete(notification.handle)
+                } else {
+                  log.error(s"Press failed for $pressUrl")
                 }
               }
             } catch {

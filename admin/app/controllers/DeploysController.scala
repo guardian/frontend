@@ -12,7 +12,7 @@ trait DeploysController extends Controller with Logging with Requests {
 
   val riffRaff: RiffRaffService
 
-  def getDeploys(stage: Option[String], pageSize: Option[Int] = None) = Action.async {
+  def getDeploys(stage: Option[String], pageSize: Option[Int] = None): Action[AnyContent] = Action.async {
     riffRaff.getRiffRaffDeploys(Some("dotcom:all"), stage, pageSize, Some("Completed")).map(ApiResults(_))
   }
 

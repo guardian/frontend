@@ -6,7 +6,7 @@ import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
 
 private[dfp] object ApiHelper extends Logging {
 
-  def isPageSkin(dfpLineItem: LineItem) = {
+  def isPageSkin(dfpLineItem: LineItem): Boolean = {
 
     def hasA1x1Pixel(placeholders: Array[CreativePlaceholder]): Boolean = {
       placeholders.exists {

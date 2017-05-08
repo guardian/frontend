@@ -8,19 +8,19 @@ import scala.language.postfixOps
 
 object DfpLink {
 
-  def lineItem(lineItemId: Long) = {
+  def lineItem(lineItemId: Long): String = {
     s"https://www.google.com/dfp/$dfpAccountId#delivery/LineItemDetail/lineItemId=$lineItemId"
   }
 
-  def creativeTemplate(templateId: Long) = {
+  def creativeTemplate(templateId: Long): String = {
     s"https://www.google.com/dfp/$dfpAccountId#delivery/CreateCreativeTemplate/creativeTemplateId=$templateId"
   }
 
-  def creative(creativeId: Long) = {
+  def creative(creativeId: Long): String = {
     s"https://www.google.com/dfp/$dfpAccountId#delivery/CreativeDetail/creativeId=$creativeId"
   }
 
-  def adUnit(adUnitId: String) = {
+  def adUnit(adUnitId: String): String = {
     s"https://www.google.com/dfp/59666047?#inventory/inventory/adSlotId=$adUnitId"
   }
 }

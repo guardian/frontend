@@ -27,7 +27,7 @@ object `package` {
   }
 
   implicit class Int2RichInt(i: Int) {
-    def distanceFrom(j: Int) = abs(j - i)
+    def distanceFrom(j: Int): Int = abs(j - i)
     def in(range: Range): Boolean = range contains i
   }
 
@@ -51,7 +51,7 @@ object `package` {
     }
   }
 
-  def stripHtml(text: String) = {
+  def stripHtml(text: String): String = {
     text.replaceAll("""(<a[^>]*>)|(</a>)""", "")
   }
 

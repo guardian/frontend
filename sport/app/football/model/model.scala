@@ -46,12 +46,12 @@ case class Group(round: Round, entries: Seq[LeagueTableEntry])
 case class Table(competition: Competition, groups: Seq[Group], hasGroups: Boolean = false) {
   lazy val multiGroup = hasGroups || groups.size > 1
 
-  def topOfTableSnippet = {
+  def topOfTableSnippet: Table = {
     val snippet = groups.map(g => g.copy(entries = g.entries.take(4)))
     this.copy(groups = snippet)
   }
 
-  def snippetForTeam(teamId: String) = {
+  def snippetForTeam(teamId: String): Table = {
 
     val snippet = groups.map { g =>
       val length = g.entries.size
@@ -78,7 +78,7 @@ object Table {
       .map { case (round, table) => Group(round, table) }
       .toSeq.sortBy(_.round.roundNumber match {
         case IsNumber(num) => num.toInt
-        case other => 0
+        case _ => 0
       })
     Table(competition, groups)
   }

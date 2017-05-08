@@ -10,7 +10,6 @@ import scala.concurrent.Future
 class AmpFilter(implicit val mat: Materializer) extends Filter with ExecutionContexts with implicits.Requests {
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
     if (request.isAmp) {
-      val domain = request.headers.get("Origin").getOrElse("https://" + request.domain)
       val exposeAmpHeader = "Access-Control-Expose-Headers" -> "AMP-Access-Control-Allow-Source-Origin"
       val ampHeader = "AMP-Access-Control-Allow-Source-Origin" -> Configuration.amp.baseUrl
 

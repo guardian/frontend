@@ -33,11 +33,11 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     Edition.all.find(_.id.toLowerCase() == editionToFilterBy).getOrElse(Edition.all.head)
   }
 
-  def applicationsRedirect(path: String)(implicit request: RequestHeader) = {
+  def applicationsRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {
     successful(InternalRedirect.internalRedirect("applications", path, request.rawQueryStringOption.map("?" + _)))
   }
 
-  def rssRedirect(path: String)(implicit request: RequestHeader) = {
+  def rssRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {
     successful(InternalRedirect.internalRedirect(
       "rss_server",
       path,
@@ -46,14 +46,14 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
-  def renderFrontPressSpecial(path: String) = Action.async { implicit request => renderFrontPressResult(path) }
+  def renderFrontPressSpecial(path: String): Action[AnyContent] = Action.async { implicit request => renderFrontPressResult(path) }
 
   // Needed as aliases for reverse routing
-  def renderFrontJson(id: String) = renderFront(id)
+  def renderFrontJson(id: String): Action[AnyContent] = renderFront(id)
 
-  def renderContainerJson(id: String) = renderContainer(id, false)
+  def renderContainerJson(id: String): Action[AnyContent] = renderContainer(id, false)
 
-  def renderSomeFrontContainersMf2(count: Int, offset: Int, section: String = "", edition: String = "") = Action.async { implicit request =>
+  def renderSomeFrontContainersMf2(count: Int, offset: Int, section: String = "", edition: String = ""): Action[AnyContent] = Action.async { implicit request =>
     val e = if(edition.isEmpty) Edition(request) else getEditionFromString(edition)
     val collectionsPath = if(section.isEmpty) e.id.toLowerCase else Editionalise(section, e)
     getSomeCollections(collectionsPath, count, offset, "none").map { collections =>
@@ -66,11 +66,11 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   }
 
-  def renderContainerJsonWithFrontsLayout(id: String) = renderContainer(id, true)
+  def renderContainerJsonWithFrontsLayout(id: String): Action[AnyContent] = renderContainer(id, true)
 
   // Needed as aliases for reverse routing
-  def renderRootFrontRss() = renderFrontRss(path = "")
-  def renderFrontRss(path: String) = Action.async { implicit  request =>
+  def renderRootFrontRss(): Action[AnyContent] = renderFrontRss(path = "")
+  def renderFrontRss(path: String): Action[AnyContent] = Action.async { implicit request =>
     log.info(s"Serving RSS Path: $path")
     if (shouldEditionRedirect(path))
       redirectTo(s"${Editionalise(path, Edition(request))}/rss")
@@ -80,8 +80,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       renderFrontPressResult(path)
   }
 
-  def rootEditionRedirect() = renderFront(path = "")
-  def renderFront(path: String) = Action.async { implicit request =>
+  def rootEditionRedirect(): Action[AnyContent] = renderFront(path = "")
+  def renderFront(path: String): Action[AnyContent] = Action.async { implicit request =>
     log.info(s"Serving Path: $path")
     if (shouldEditionRedirect(path))
       redirectTo(Editionalise(path, Edition(request)))
@@ -101,7 +101,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     Cached(CacheTime.Facia)(WithoutRevalidationResult(Found(LinkTo(s"/$path$params"))))
   }
 
-  def renderFrontJsonLite(path: String) = Action.async { implicit request =>
+  def renderFrontJsonLite(path: String): Action[AnyContent] = Action.async { implicit request =>
     frontJsonFapi.get(path).map {
         case Some(pressedPage) => Cached(CacheTime.Facia)(JsonComponent(FapiFrontJsonLite.get(pressedPage)))
         case None => Cached(CacheTime.Facia)(JsonComponent(JsObject(Nil)))}
@@ -137,14 +137,14 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     futureResult
   }
 
-  def renderFrontPress(path: String) = Action.async { implicit request => renderFrontPressResult(path) }
+  def renderFrontPress(path: String): Action[AnyContent] = Action.async { implicit request => renderFrontPressResult(path) }
 
-  def renderContainer(id: String, preserveLayout: Boolean = false) = Action.async { implicit request =>
+  def renderContainer(id: String, preserveLayout: Boolean = false): Action[AnyContent] = Action.async { implicit request =>
     log.info(s"Serving collection ID: $id")
     renderContainerView(id, preserveLayout)
   }
 
-  def renderMostRelevantContainerJson(path: String) = Action.async { implicit request =>
+  def renderMostRelevantContainerJson(path: String): Action[AnyContent] = Action.async { implicit request =>
     log.info(s"Serving most relevant container for $path")
 
     val canonicalId = ConfigAgent.getCanonicalIdForFront(path).orElse (
@@ -156,7 +156,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     }.getOrElse(successful(NotFound))
   }
 
-  def alternativeEndpoints(path: String) = path.split("/").toList.take(2).reverse
+  def alternativeEndpoints(path: String): List[String] = path.split("/").toList.take(2).reverse
 
   private def renderContainerView(collectionId: String, preserveLayout: Boolean = false)(implicit request: RequestHeader): Future[Result] = {
     log.info(s"Rendering container view for collection id $collectionId")
@@ -188,7 +188,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     }
   }
 
-  def renderShowMore(path: String, collectionId: String) = Action.async { implicit request =>
+  def renderShowMore(path: String, collectionId: String): Action[AnyContent] = Action.async { implicit request =>
     frontJsonFapi.get(path).flatMap {
       case Some(pressedPage) =>
         val containers = Front.fromPressedPage(pressedPage, Edition(request)).containers
@@ -229,7 +229,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       })
 
   /* Google news hits this endpoint */
-  def renderCollectionRss(id: String) = Action.async { implicit request =>
+  def renderCollectionRss(id: String): Action[AnyContent] = Action.async { implicit request =>
     getPressedCollection(id).flatMap {
       case Some(collection) =>
         successful{

@@ -7,7 +7,7 @@ import cricketPa.{CricketTeam, CricketTeams}
 import jobs.CricketStatsJob
 import model.Cached.RevalidatableResult
 import model._
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{Action, AnyContent, Controller}
 
 case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam) extends StandalonePage {
   override val metadata = MetaData.make(
@@ -18,7 +18,7 @@ case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam)
 
 class CricketMatchController(cricketStatsJob: CricketStatsJob)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
-  def renderMatchIdJson(date: String, teamId: String) = renderMatchId(date, teamId)
+  def renderMatchIdJson(date: String, teamId: String): Action[AnyContent] = renderMatchId(date, teamId)
 
   def renderMatchId(date: String, teamId: String) = Action { implicit request =>
     CricketTeams.byWordsForUrl(teamId).flatMap { team =>

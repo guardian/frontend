@@ -24,7 +24,7 @@ object ContainerDefinition {
     customCssClasses = Set.empty
   )
 
-  def fromContainer(container: Container, items: Seq[PressedContent]) = container match {
+  def fromContainer(container: Container, items: Seq[PressedContent]): Option[ContainerDefinition] = container match {
     case Dynamic(dynamicContainer) =>
       dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
     case Fixed(containerDefinition) =>
@@ -34,7 +34,7 @@ object ContainerDefinition {
   }
 
   /** Fast container that looks good for the number of items provided */
-  def fastForNumberOfItems(n: Int) = n match {
+  def fastForNumberOfItems(n: Int): ContainerDefinition = n match {
     case 1 => ofSlices(FullMedia50)
     case 2 => ofSlices(HalfHalf2)
     case 3 => ofSlices(TTT)
@@ -46,7 +46,7 @@ object ContainerDefinition {
   }
 
   /** Slow container that looks good for the number of items provided */
-  def slowForNumberOfItems(n: Int) = n match {
+  def slowForNumberOfItems(n: Int): ContainerDefinition = n match {
     case 1 => ofSlices(FullMedia75)
     case 2 => ofSlices(HalfHalf2)
     case 3 => ofSlices(TTT)
@@ -64,7 +64,7 @@ case class ContainerDefinition(
   mobileShowMore: MobileShowMore,
   customCssClasses: Set[String]
 ) {
-  def numItems = slices.map(_.layout.numItems).sum
+  def numItems: Int = slices.map(_.layout.numItems).sum
 
-  def isSingleton = slices.length == 1 && numItems == 1
+  def isSingleton: Boolean = slices.length == 1 && numItems == 1
 }

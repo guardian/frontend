@@ -1,7 +1,6 @@
 package football.model
 
 import org.joda.time.{Interval, DateTime}
-import feed.Competitions
 import model.Competition
 import pa._
 import implicits.Football._

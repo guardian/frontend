@@ -30,7 +30,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
   def convertApiExceptionsWithoutEither[T](implicit request: RequestHeader,
                                            context: ApplicationContext,
                                            log: Logger): PartialFunction[Throwable, Result] = {
-    case e: CircuitBreakerOpenException =>
+    case _: CircuitBreakerOpenException =>
       log.error(s"Got a circuit breaker open error while calling content api")
       NoCache(ServiceUnavailable)
     case GuardianContentApiError(404, message, _) =>
@@ -62,7 +62,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
           Only the once you actually render is used
    */
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page)(implicit request: RequestHeader) =
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page)(implicit request: RequestHeader): Result =
     Cached(page) {
       if (request.isJson)
         JsonComponent(jsonResponse())
@@ -72,7 +72,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
         RevalidatableResult.Ok(htmlResponse())
     }
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page, switches: Seq[Switch])(implicit request: RequestHeader, context: ApplicationContext) =
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page, switches: Seq[Switch])(implicit request: RequestHeader, context: ApplicationContext): Result =
     Cached(page) {
       if (request.isJson)
         JsonComponent(page, jsonResponse())
@@ -82,7 +82,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
         RevalidatableResult.Ok(htmlResponse())
     }
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, cacheTime: Integer)(implicit request: RequestHeader, context: ApplicationContext) =
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, cacheTime: Integer)(implicit request: RequestHeader, context: ApplicationContext): Result =
     Cached(cacheTime) {
       if (request.isJson)
         JsonComponent(jsonResponse())

@@ -4,7 +4,7 @@ import common._
 import conf.switches.Switches
 import feed.CompetitionsService
 import model.ApplicationContext
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{Action, AnyContent, Controller}
 
 class CompetitionListController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends Controller with CompetitionListFilters with Logging with ExecutionContexts {
 
@@ -18,7 +18,7 @@ class CompetitionListController(val competitionsService: CompetitionsService)(im
     "Rest of world"
   )
 
-  def renderCompetitionListJson() = renderCompetitionList()
+  def renderCompetitionListJson(): Action[AnyContent] = renderCompetitionList()
   def renderCompetitionList() = Action { implicit request =>
     val htmlResponse = () => football.views.html.competitions(filters, page, competitionList)
     val jsonResponse = () => football.views.html.fragments.competitionsBody(filters, page, competitionList)

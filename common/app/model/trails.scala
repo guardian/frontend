@@ -51,7 +51,7 @@ object Trail {
     commercial: Commercial,
     elements: Elements,
     metadata: MetaData,
-    apiContent: contentapi.Content) = {
+    apiContent: contentapi.Content): Trail = {
 
     Trail(
       webPublicationDate = apiContent.webPublicationDate.map(_.toJodaDateTime).getOrElse(DateTime.now),

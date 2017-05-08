@@ -15,14 +15,14 @@ abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDura
 
   protected def refresh(): Future[A]
 
-  def get = agent.get()
+  def get: Option[A] = agent.get()
 
-  def getOrRefresh = (for {
+  def getOrRefresh: Future[A] = (for {
     _ <- subscription
     a <- get
   } yield Future.successful(a)).getOrElse(refresh())
 
-  final def start()(implicit actorSystem: ActorSystem) = {
+  final def start()(implicit actorSystem: ActorSystem): Unit = {
     log.info(s"Starting refresh cycle after $initialDelay repeatedly over $interval delay")
 
     subscription = Some(actorSystem.scheduler.schedule(initialDelay, interval) {
@@ -36,5 +36,5 @@ abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDura
     })
   }
 
-  final def stop() = subscription foreach { _.cancel() }
+  final def stop(): Unit = subscription foreach { _.cancel() }
 }

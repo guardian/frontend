@@ -38,7 +38,7 @@ object HostedGalleryPage extends Logging {
     log.info(s"Building hosted gallery ${content.id} ...")
 
     val page = for {
-      campaignId <- content.sectionId map (_.stripPrefix("advertiser-content/"))
+      _ <- content.sectionId map (_.stripPrefix("advertiser-content/"))
       campaign <- HostedCampaign.fromContent(content)
       atoms <- getAndLog(content, content.atoms, "the atoms are missing")
       ctaAtoms <- getAndLog(content, atoms.cta, "the CTA atoms are missing")

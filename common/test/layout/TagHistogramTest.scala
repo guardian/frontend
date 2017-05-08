@@ -2,14 +2,14 @@ package layout
 
 import com.gu.contentapi.client.model.v1.Tag
 import contentapi.FixtureTemplates
-import model.Content
-import org.scalatest.{Matchers, FlatSpec}
+import model.{Content, Trail}
+import org.scalatest.{FlatSpec, Matchers}
 
 class TagHistogramTest extends FlatSpec with Matchers {
-  def tag(id: String) =
+  def tag(id: String): Tag =
     FixtureTemplates.emptyTag.copy(id = id)
 
-  def trailWithTags(tags: List[Tag]) =
+  def trailWithTags(tags: List[Tag]): Trail =
     Content(FixtureTemplates.emptyApiContent.copy(tags = tags)).trail
 
   "frequency" should "return 0 for any unrecorded tag ID" in {

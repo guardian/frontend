@@ -14,7 +14,7 @@ class SwitchboardController(akkaAsync: AkkaAsync)(implicit context: ApplicationC
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 
-  def renderSwitchboard() = Action.async { implicit request =>
+  def renderSwitchboard(): Action[AnyContent] = Action.async { implicit request =>
     log.info("loaded Switchboard")
 
     Future { Store.getSwitchesWithLastModified } map { switchesWithLastModified =>
@@ -33,7 +33,7 @@ class SwitchboardController(akkaAsync: AkkaAsync)(implicit context: ApplicationC
     }
   }
 
-  def save() = Action.async { implicit request =>
+  def save(): Action[AnyContent] = Action.async { implicit request =>
     val form = request.body.asFormUrlEncoded
 
     val localLastModified = form.get("lastModified").head.toLong
@@ -49,7 +49,7 @@ class SwitchboardController(akkaAsync: AkkaAsync)(implicit context: ApplicationC
       val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
       val updates: Seq[String] = request.body.asFormUrlEncoded.map { params =>
           Switches.all map { switch =>
-              switch.name + "=" + params.get(switch.name).map(v => "on").getOrElse("off")
+              switch.name + "=" + params.get(switch.name).map(_ => "on").getOrElse("off")
           }
       } getOrElse Nil
 

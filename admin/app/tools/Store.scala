@@ -17,12 +17,12 @@ trait Store extends Logging with Dates {
 
   final val defaultJsonEncoding: String = "application/json;charset=utf-8"
 
-  def getSwitches = S3.get(switchesKey)
-  def getSwitchesWithLastModified = S3.getWithLastModified(switchesKey)
-  def getSwitchesLastModified = S3.getLastModified(switchesKey)
+  def getSwitches: Option[String] = S3.get(switchesKey)
+  def getSwitchesWithLastModified: Option[(String, DateTime)] = S3.getWithLastModified(switchesKey)
+  def getSwitchesLastModified: Option[DateTime] = S3.getLastModified(switchesKey)
   def putSwitches(config: String) { S3.putPublic(switchesKey, config, "text/plain") }
 
-  def getTopStories = S3.get(topStoriesKey)
+  def getTopStories: Option[String] = S3.get(topStoriesKey)
   def putTopStories(config: String) { S3.putPublic(topStoriesKey, config, "application/json") }
 
   def putInlineMerchandisingSponsorships(keywordsJson: String) {
@@ -52,7 +52,7 @@ trait Store extends Logging with Dates {
 
   val now: String = DateTime.now().toHttpDateTimeString
 
-  def getDfpPageSkinnedAdUnits() =
+  def getDfpPageSkinnedAdUnits(): PageSkinSponsorshipReport =
     S3.get(dfpPageSkinnedAdUnitsKey).flatMap(PageSkinSponsorshipReportParser(_)) getOrElse PageSkinSponsorshipReport(now, Nil)
 
   def getDfpInlineMerchandisingTargetedTagsReport(): InlineMerchandisingTargetedTagsReport = {

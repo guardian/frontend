@@ -64,7 +64,7 @@ object AdUnitService {
     }
   }
 
-  def isArchivedAdUnit(adUnitId: String) = archivedAdUnit(adUnitId).isDefined
+  def isArchivedAdUnit(adUnitId: String): Boolean = archivedAdUnit(adUnitId).isDefined
 
   def inactiveAdUnit(adUnitId: String): Option[GuAdUnit] = {
     AdUnitAgent.get.data.get(adUnitId).collect {
@@ -72,6 +72,6 @@ object AdUnitService {
     }
   }
 
-  def isInactiveAdUnit(adUnitId: String) = inactiveAdUnit(adUnitId).isDefined
+  def isInactiveAdUnit(adUnitId: String): Boolean = inactiveAdUnit(adUnitId).isDefined
 
 }

@@ -1,20 +1,23 @@
 package rugby.jobs
 
+import akka.agent.Agent
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import rugby.model._
-import rugby.feed.{MatchNavigation, OptaFeed, OptaEvent, RugbyOptaFeedException}
+import rugby.feed.{MatchNavigation, OptaEvent, OptaFeed, RugbyOptaFeedException}
+
+import scala.collection.immutable.Iterable
 import scala.concurrent.Future
 import scala.util.Failure
 import scala.util.Success
 
 
 class RugbyStatsJob(optaFeed: OptaFeed) extends ExecutionContexts with Logging {
-  protected val fixturesAndResultsMatches = AkkaAgent[Map[String, Match]](Map.empty)
-  protected val matchNavContent = AkkaAgent[Map[String, MatchNavigation]](Map.empty)
-  protected val pastScoreEvents = AkkaAgent[Map[String, Seq[ScoreEvent]]](Map.empty)
-  protected val pastMatchesStat = AkkaAgent[Map[String, MatchStat]](Map.empty)
-  protected val groupTables =  AkkaAgent[Map[OptaEvent, Seq[GroupTable]]](Map.empty)
+  protected val fixturesAndResultsMatches: Agent[Map[String, Match]] = AkkaAgent[Map[String, Match]](Map.empty)
+  protected val matchNavContent: Agent[Map[String, MatchNavigation]] = AkkaAgent[Map[String, MatchNavigation]](Map.empty)
+  protected val pastScoreEvents: Agent[Map[String, Seq[ScoreEvent]]] = AkkaAgent[Map[String, Seq[ScoreEvent]]](Map.empty)
+  protected val pastMatchesStat: Agent[Map[String, MatchStat]] = AkkaAgent[Map[String, MatchStat]](Map.empty)
+  protected val groupTables: Agent[Map[OptaEvent, Seq[GroupTable]]] =  AkkaAgent[Map[OptaEvent, Seq[GroupTable]]](Map.empty)
 
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 
@@ -55,7 +58,7 @@ class RugbyStatsJob(optaFeed: OptaFeed) extends ExecutionContexts with Logging {
       )
     }
     scoresEventsForMatchesFuture.onComplete {
-      case Success(result) => //do nothing
+      case Success(_) => //do nothing
       case Failure(t) => log.warn(s"Failed to fetch event score result with error: ${t.getMessage}" , t)
     }
 
@@ -79,14 +82,14 @@ class RugbyStatsJob(optaFeed: OptaFeed) extends ExecutionContexts with Logging {
       )
     }
     statForMatchesFuture.onComplete {
-      case Success(result) => //do nothing
+      case Success(_) => //do nothing
       case Failure(t) => log.warn(s"Failed to fetch match stat with error: ${t.getMessage}", t)
     }
 
     statForMatchesFuture.map(_.toMap)
   }
 
-  def sendMatchArticles(navigationArticles: Future[Map[String, MatchNavigation]]) = {
+  def sendMatchArticles(navigationArticles: Future[Map[String, MatchNavigation]]): Future[Iterable[Map[String, MatchNavigation]]] = {
     navigationArticles.flatMap { matches =>
       Future.sequence(matches.map { matchItem =>
         matchNavContent.alter { _ + matchItem }

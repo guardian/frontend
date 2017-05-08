@@ -13,7 +13,7 @@ object CustomFieldAgent extends DataAgent[String, GuCustomField] {
 
 object CustomFieldService {
 
-  def sponsor(lineItem: LineItem) = for {
+  def sponsor(lineItem: LineItem): Option[String] = for {
     sponsorField <- CustomFieldAgent.get.data.get("Sponsor")
     customFieldValues <- Option(lineItem.getCustomFieldValues)
     sponsor <- customFieldValues.collect {

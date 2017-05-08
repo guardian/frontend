@@ -25,7 +25,7 @@ object SurgingContentAgent extends SurgeLookupService with Logging with Executio
 
   def getSurging: SurgingContent = agent.get()
 
-  override def pageViewsPerMinute(pageId: String) = getSurging.surges.get(pageId)
+  override def pageViewsPerMinute(pageId: String): Option[Int] = getSurging.surges.get(pageId)
 }
 
 case class SurgingContent(surges: Map[String, Int] = Map.empty, lastUpdated: DateTime = DateTime.now()) {
@@ -34,7 +34,7 @@ case class SurgingContent(surges: Map[String, Int] = Map.empty, lastUpdated: Dat
 
 
 object SurgeUtils {
-  def parse(json: JsValue) = {
+  def parse(json: JsValue): Seq[(String, Int)] = {
     for {
       item: JsValue <- json.asOpt[JsArray].map(_.value).getOrElse(Nil)
       url <- (item \ "path").asOpt[String].map(_.drop(1)) // Our content Ids don't start with a slash
@@ -55,7 +55,7 @@ class SurgingContentAgentLifecycle(
     jobs.deschedule("SurgingContentAgentRefreshJob")
   }}
 
-  override def start() = {
+  override def start(): Unit = {
     jobs.deschedule("SurgingContentAgentRefreshJob")
 
     // update every 30 min, on the 51st second past the minute (e.g 13:09:51, 13:39:51)

@@ -22,7 +22,7 @@ class PageDecacheController(wsClient: WSClient)(implicit context: ApplicationCon
 
   val authActions = new AuthActions(wsClient)
 
-  def renderPageDecache(url: Option[String] = None) = Action.async { implicit request =>
+  def renderPageDecache(url: Option[String] = None): Action[AnyContent] = Action.async { implicit request =>
     url match {
       case Some(s) => renderPrePurgeTestResult(s)
       case None => Future(NoCache(Ok(views.html.cache.pageDecache())))
@@ -39,14 +39,14 @@ class PageDecacheController(wsClient: WSClient)(implicit context: ApplicationCon
         .map { response =>
           PrePurgeTestResult(purgeUrl, response.status >= 200 && response.status < 300)
         }.recoverWith {
-          case t: Throwable => successful(PrePurgeTestResult(purgeUrl, passed = false))
+          case _: Throwable => successful(PrePurgeTestResult(purgeUrl, passed = false))
         }.map { result =>
           NoCache(Ok(views.html.cache.pageDecache(Some(result))))
         }
     }.getOrElse(successful(InternalServerError("Couldn't get router URL - please go back and try again")))
   }
 
-  def decache() = authActions.AuthActionTest.async { implicit request =>
+  def decache(): Action[AnyContent] = authActions.AuthActionTest.async { implicit request =>
     getSubmittedUrl(request).map(new URI(_)).map{ urlToDecache =>
 
       new CdnPurge(wsClient)

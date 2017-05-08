@@ -9,6 +9,7 @@ import org.joda.time.{DateTimeComparator, LocalDate}
 import org.scala_tools.time.Imports._
 import pa._
 
+import scala.collection.immutable.Iterable
 import scala.concurrent.Future
 
 
@@ -24,9 +25,9 @@ trait Competitions extends implicits.Football {
     competitions.filter(_.url == path)
   )
 
-  def competitionsWithTag(tag: String) = competitions.find(_.url.endsWith(tag))
+  def competitionsWithTag(tag: String): Option[Competition] = competitions.find(_.url.endsWith(tag))
 
-  def competitionsWithId(compId: String) = competitions.find(_.id == compId)
+  def competitionsWithId(compId: String): Option[Competition] = competitions.find(_.id == compId)
 
   lazy val competitionsWithTodaysMatchesAndFutureFixtures = Competitions(
     competitions.map(c => c.copy(matches = c.matches.filter(m => m.isFixture || m.isOn(new LocalDate)))).filter(_.hasMatches)
@@ -44,7 +45,7 @@ trait Competitions extends implicits.Football {
     competitions.filter(_.hasLeagueTable).filter(_.leagueTable.exists(_.team.id == team))
   )
 
-  def mostPertinentCompetitionForTeam(teamId: String) =
+  def mostPertinentCompetitionForTeam(teamId: String): Option[Competition] =
     withTeam(teamId).competitions.sortBy({ competition =>
       val table = Table(competition)
       val group = table.groups.find(_.entries.exists(_.team.id == teamId))
@@ -53,16 +54,16 @@ trait Competitions extends implicits.Football {
 
   lazy val matchDates = competitions.flatMap(_.matchDates).distinct.sorted
 
-  def nextMatchDates(startDate: LocalDate, numDays: Int) = matchDates.filter(_ >= startDate).take(numDays)
+  def nextMatchDates(startDate: LocalDate, numDays: Int): Seq[LocalDate] = matchDates.filter(_ >= startDate).take(numDays)
 
-  def previousMatchDates(date: LocalDate, numDays: Int) = matchDates.reverse.filter(_ <= date).take(numDays)
+  def previousMatchDates(date: LocalDate, numDays: Int): Seq[LocalDate] = matchDates.reverse.filter(_ <= date).take(numDays)
 
   def findMatch(id: String): Option[FootballMatch] = matches.find(_.id == id)
 
   def competitionForMatch(matchId: String): Option[Competition] =
     competitions.find(_.matches.exists(_.id == matchId))
 
-  def withTeamMatches(teamId: String) = competitions.filter(_.hasMatches).flatMap(c =>
+  def withTeamMatches(teamId: String): Seq[TeamFixture] = competitions.filter(_.hasMatches).flatMap(c =>
     c.matches.filter(m => m.homeTeam.id == teamId || m.awayTeam.id == teamId).sortByDate.map { m =>
       TeamFixture(c, m)
     }
@@ -72,7 +73,7 @@ trait Competitions extends implicits.Football {
     MatchDayTeam(teamId, unclean.name, None, None, None, None)
   }
 
-  def matchFor(date: LocalDate, homeTeamId: String, awayTeamId: String) =
+  def matchFor(date: LocalDate, homeTeamId: String, awayTeamId: String): Option[FootballMatch] =
     matches.find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId && m.date.toLocalDate == date)
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
@@ -80,7 +81,7 @@ trait Competitions extends implicits.Football {
     .filter(m => interval.contains(m.date))
     .find(m => m.hasTeam(team1) && m.hasTeam(team2))
 
-  def matches = competitions.flatMap(_.matches).sortByDate
+  def matches: Seq[FootballMatch] = competitions.flatMap(_.matches).sortByDate
 
 }
 
@@ -153,26 +154,17 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     competitionAgents find { _.competition.id == id } map { _.refresh() }
   }
 
-  def refreshCompetitionData() = {
+  def refreshCompetitionData(): Future[List[Option[Unit]]] = {
     log.info("Refreshing competition data")
     footballClient.competitions.map { allComps =>
       mostRecentCompetitionSeasons(allComps).map { season =>
         competitionAgents.find(_.competition.id == season.id).map { agent =>
-          val newCompetition = agent.competition.startDate match {
-            case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) =>
-              log.info(s"updating competition: ${season.id} season: ${season.seasonId} startDate was: ${existingStartDate.toString} now: ${season.startDate.toString}")
-              agent.update(agent.competition.copy(startDate = Some(season.startDate)))
-            case None =>
-              log.info(s"setting competition: ${season.id} season: ${season.seasonId} startDate was: None now: ${season.startDate.toString}")
-              agent.update(agent.competition.copy(startDate = Some(season.startDate)))
-            case _ =>
-          }
         }
       }
     }.recover(footballClient.logErrors)
   }
 
-  def refreshMatchDay() = {
+  def refreshMatchDay(): Future[Iterable[Competition]] = {
     log.info("Refreshing match day data")
     val result = getLiveMatches.map(_.map{ case (compId, newMatches) =>
       competitionAgents.find(_.competition.id == compId).map { agent =>

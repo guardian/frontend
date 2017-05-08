@@ -53,14 +53,12 @@ sealed trait ElementProfile {
   val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
   val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
 
-  def resizeString = {
+  def resizeString: String = {
     val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
 
 
-
-  private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
 }
 
 case class Profile(
@@ -114,7 +112,7 @@ abstract class ShareImage(shouldIncludeOverlay: Boolean) extends Profile(width =
   val blendOffsetParam = "ba=bottom%2Cleft"
   val blendImageParam: String
 
-  override def resizeString = {
+  override def resizeString: String = {
     if(shouldIncludeOverlay) {
       val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam, cropParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
       s"?$params"
@@ -144,7 +142,7 @@ object EmailVideoImage extends Profile(width = Some(580), autoFormat = false) {
   val blendOffsetParam = "ba=center"
   val blendImageParam = s"blend64=${Base64.getUrlEncoder.encodeToString(EmailHelpers.Images.play.getBytes)}"
 
-  override def resizeString = {
+  override def resizeString: String = {
     val params = Seq(widthParam, heightParam, qualityparam, autoParam, sharpParam, fitParam, dprParam, blendModeParam, blendOffsetParam, blendImageParam).filter(_.nonEmpty).mkString("&")
     s"?$params"
   }
@@ -220,7 +218,7 @@ object ImgSrc extends Logging with implicits.Strings {
     widths.profiles.map { profile => srcsetForProfile(profile, imageContainer, hidpi = false) } mkString ", "
   }
 
-  def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybePath: Option[String] = None, maybeImageMedia: Option[ImageMedia] = None, hidpi: Boolean = false) = {
+  def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybePath: Option[String] = None, maybeImageMedia: Option[ImageMedia] = None, hidpi: Boolean = false): String = {
     val isPng = maybePath.exists(path => path.toLowerCase.endsWith("png"))
     breakpointWidth.toPixels(breakpointWidths)
       .map(browserWidth => Profile(width = Some(browserWidth), hidpi = hidpi, isPng = isPng))

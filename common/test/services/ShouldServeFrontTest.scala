@@ -74,7 +74,7 @@ class ShouldServeFrontTest
     )
   )
 
-  override def beforeAll() = {
+  override def beforeAll(): Unit = {
     val refresh = ConfigAgent.refreshWith(fronts)
     Await.result(refresh, 3.seconds)
   }

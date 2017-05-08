@@ -29,37 +29,37 @@ class DfpDataCacheLifecycle(
     new Job[DataCache[String, GuAdUnit]] {
       val name = "DFP-AdUnits-Update"
       val interval = 30
-      def run() = AdUnitAgent.refresh()
+      def run(): Future[DataCache[String, GuAdUnit]] = AdUnitAgent.refresh()
     },
 
     new Job[DataCache[String, GuCustomField]] {
       val name = "DFP-CustomFields-Update"
       val interval = 30
-      def run() = CustomFieldAgent.refresh()
+      def run(): Future[DataCache[String, GuCustomField]] = CustomFieldAgent.refresh()
     },
 
     new Job[DataCache[Long, String]] {
       val name = "DFP-TargetingKeys-Update"
       val interval = 30
-      def run() = CustomTargetingKeyAgent.refresh()
+      def run(): Future[DataCache[Long, String]] = CustomTargetingKeyAgent.refresh()
     },
 
     new Job[DataCache[Long, String]] {
       val name = "DFP-TargetingValues-Update"
       val interval = 30
-      def run() = CustomTargetingValueAgent.refresh()
+      def run(): Future[DataCache[Long, String]] = CustomTargetingValueAgent.refresh()
     },
 
     new Job[Unit] {
       val name: String = "DFP-CustomTargeting-Store"
       val interval: Int = 15
-      def run() = CustomTargetingKeyValueJob.run()
+      def run(): Future[Unit] = CustomTargetingKeyValueJob.run()
     },
 
     new Job[DataCache[Long, Seq[String]]] {
       val name = "DFP-Placements-Update"
       val interval = 30
-      def run() = PlacementAgent.refresh()
+      def run(): Future[DataCache[Long, Seq[String]]] = PlacementAgent.refresh()
     },
 
     new Job[Unit] {
@@ -89,25 +89,25 @@ class DfpDataCacheLifecycle(
     new Job[Seq[GuCreativeTemplate]] {
       val name: String = "DFP-Creative-Templates-Update"
       val interval: Int = 15
-      def run() = CreativeTemplateAgent.refresh()
+      def run(): Future[Seq[GuCreativeTemplate]] = CreativeTemplateAgent.refresh()
     },
 
     new Job[Unit] {
       val name: String = "DFP-Template-Creatives-Cache"
       val interval: Int = 2
-      def run() = DfpTemplateCreativeCacheJob.run()
+      def run(): Future[Unit] = DfpTemplateCreativeCacheJob.run()
     },
 
     new Job[Unit] {
       val name = "DFP-Order-Advertiser-Update"
       val interval: Int = 300
-      def run() = {
+      def run(): Future[Unit] = {
         Future.sequence(Seq(AdvertiserAgent.refresh(), OrderAgent.refresh())).map(_ => ())
       }
     }
   )
 
-  override def start() = {
+  override def start(): Unit = {
     jobs foreach { job =>
       jobScheduler.deschedule(job.name)
       jobScheduler.scheduleEveryNMinutes(job.name, job.interval) {

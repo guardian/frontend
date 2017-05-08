@@ -20,7 +20,7 @@ object Commercial {
     case _ => true
   }
 
-  def articleAsideOptionalSizes(implicit request: RequestHeader) = Edition(request).id match {
+  def articleAsideOptionalSizes(implicit request: RequestHeader): Seq[String] = Edition(request).id match {
     case "US" => Seq("300,1050")
     case _   => Seq.empty
   }

@@ -10,7 +10,7 @@ import model._
 import org.joda.time.format.DateTimeFormat
 import pa.{FootballMatch, LineUp, LineUpTeam}
 import play.api.libs.json._
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{Action, AnyContent, Controller}
 
 import scala.concurrent.Future
 
@@ -18,7 +18,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
   lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
 
-  def teamHasStats(team: LineUpTeam) =
+  def teamHasStats(team: LineUpTeam): Boolean =
     ( team.offsides, team.shotsOn, team.shotsOff, team.fouls) match {
       case (0,0,0,0) => false
       case _ => true
@@ -49,11 +49,11 @@ class MatchController(competitionsService: CompetitionsService)(implicit context
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 
-  def renderMatchIdJson(matchId: String) = renderMatchId(matchId)
-  def renderMatchId(matchId: String) = render(competitionsService.findMatch(matchId))
+  def renderMatchIdJson(matchId: String): Action[AnyContent] = renderMatchId(matchId)
+  def renderMatchId(matchId: String): Action[AnyContent] = render(competitionsService.findMatch(matchId))
 
-  def renderMatchJson(year: String, month: String, day: String, home: String, away: String) = renderMatch(year, month, day, home, away)
-  def renderMatch(year: String, month: String, day: String, home: String, away: String) =
+  def renderMatchJson(year: String, month: String, day: String, home: String, away: String): Action[AnyContent] = renderMatch(year, month, day, home, away)
+  def renderMatch(year: String, month: String, day: String, home: String, away: String): Action[AnyContent] =
     (findTeamIdByUrlName(home), findTeamIdByUrlName(away)) match {
       case (Some(homeId), Some(awayId)) =>
         val date = dateFormat.parseDateTime(year + month + day).toLocalDate

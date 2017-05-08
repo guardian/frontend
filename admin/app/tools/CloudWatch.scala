@@ -155,7 +155,7 @@ object CloudWatch extends Logging with ExecutionContexts {
     .withMetricName("HealthyHostCount")
     .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id))))
 
-  def fastlyErrors = Future.traverse(fastlyMetrics) { case (graphTitle, metric) =>
+  def fastlyErrors: Future[List[AwsLineChart]] = Future.traverse(fastlyMetrics) { case (graphTitle, metric) =>
     withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusHours(6).toDate)
       .withEndTime(new DateTime().toDate)
@@ -168,7 +168,7 @@ object CloudWatch extends Logging with ExecutionContexts {
     }
   }
 
-  def cost = withErrorLogging(defaultClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+  def cost: Future[MaximumMetric] = withErrorLogging(defaultClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
     .withNamespace("AWS/Billing")
     .withMetricName("EstimatedCharges")
     .withStartTime(new DateTime().toLocalDate.toDate)
@@ -177,7 +177,7 @@ object CloudWatch extends Logging with ExecutionContexts {
     .withPeriod(60 * 60 * 24)
     .withDimensions(new Dimension().withName("Currency").withValue("USD")))).map(MaximumMetric.apply)
 
-  def fastlyHitMissStatistics = Future.traverse(fastlyHitMissMetrics) { case (graphTitle, region) =>
+  def fastlyHitMissStatistics: Future[List[AwsLineChart]] = Future.traverse(fastlyHitMissMetrics) { case (graphTitle, region) =>
     for {
       hits <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
@@ -216,7 +216,7 @@ object CloudWatch extends Logging with ExecutionContexts {
 
   def googleConfidence: Future[AwsLineChart] = confidenceGraph("google-percent-conversion")
 
-  def routerBackend50x = {
+  def routerBackend50x: Future[AwsLineChart] = {
     val dimension = new Dimension()
       .withName("LoadBalancerName")
       .withValue(LoadBalancer("frontend-router").fold("unknown")(_.id))
@@ -244,7 +244,7 @@ object CloudWatch extends Logging with ExecutionContexts {
       .withDimensions(stage)
     )
 
-    def control = withErrorLogging(
+    def control: Future[AwsLineChart] = withErrorLogging(
       for {
         viewed <- get("headlines-control-seen")
         clicked <- get("headlines-control-clicked")
@@ -257,7 +257,7 @@ object CloudWatch extends Logging with ExecutionContexts {
       )
     )
 
-    def variant = withErrorLogging(
+    def variant: Future[AwsLineChart] = withErrorLogging(
       for {
         viewed <- get("headlines-variant-seen")
         clicked <- get("headlines-variant-clicked")
@@ -271,7 +271,7 @@ object CloudWatch extends Logging with ExecutionContexts {
     )
   }
 
-  def AbMetricNames() = {
+  def AbMetricNames(): Future[ListMetricsResult] = {
     withErrorLogging(euWestClient.listMetricsFuture(new ListMetricsRequest()
       .withNamespace("AbTests")
       .withDimensions(stageFilter)

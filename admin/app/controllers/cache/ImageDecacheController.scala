@@ -27,7 +27,7 @@ class ImageDecacheController(wsClient: WSClient)(implicit context: ApplicationCo
     NoCache(Ok(views.html.cache.imageDecache()))
   }
 
-  def decache() = authActions.AuthActionTest.async { implicit request =>
+  def decache(): Action[AnyContent] = authActions.AuthActionTest.async { implicit request =>
     getSubmittedImage(request).map(new URI(_)).map{ image =>
 
       val originUrl: String = s"${image.getHost}${image.getPath}" match {
@@ -56,7 +56,7 @@ class ImageDecacheController(wsClient: WSClient)(implicit context: ApplicationCo
           image = image.toString,
           originImage = Some(originUrl)
         ))
-        case status => Ok(views.html.cache.imageDecache(
+        case _ => Ok(views.html.cache.imageDecache(
           messageType = Error,
           image = image.toString,
           originImage = Some(originUrl)

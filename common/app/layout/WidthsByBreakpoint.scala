@@ -74,7 +74,7 @@ object FaciaWidths {
     (FullMedia100, 331.px)
   )
 
-  def mediaFromItemClasses(itemClasses: ItemClasses) = {
+  def mediaFromItemClasses(itemClasses: ItemClasses): WidthsByBreakpoint = {
     val desktopClass = itemClasses.desktop.getOrElse(itemClasses.tablet)
 
     WidthsByBreakpoint(
@@ -84,7 +84,7 @@ object FaciaWidths {
     )
   }
 
-  def cutOutFromItemClasses(itemClasses: ItemClasses) = {
+  def cutOutFromItemClasses(itemClasses: ItemClasses): WidthsByBreakpoint = {
     val desktopClass = itemClasses.desktop.getOrElse(itemClasses.tablet)
 
     WidthsByBreakpoint(
@@ -321,8 +321,8 @@ case class BreakpointWidth(breakpoint: Breakpoint, width: BrowserWidth) {
   private val MaximumMobileImageWidth = 620
   private val SourcesToEmitOnMobile = 3
 
-  def toPixels = (breakpointWidths: Seq[BreakpointWidth]) => this match {
-    case BreakpointWidth(breakpoint, PixelWidth(pixels)) =>
+  def toPixels: (Seq[BreakpointWidth]) => Seq[Int] = (breakpointWidths: Seq[BreakpointWidth]) => this match {
+    case BreakpointWidth(_, PixelWidth(pixels)) =>
       Seq(pixels)
     case BreakpointWidth(Mobile, _: PercentageWidth | _: ViewportWidth) =>
       // Percentage and viewport widths are not explicitly associated with any pixel widths that could be used with a srcset.

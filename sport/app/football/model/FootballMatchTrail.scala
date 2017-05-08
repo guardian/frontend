@@ -20,7 +20,6 @@ object FootballMatchTrail {
     }
 
   def toTrail(m: FootballMatch): FootballMatchTrail = {
-    val text = matchText(m)
 
     FootballMatchTrail(
       isLive = m match {

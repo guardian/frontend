@@ -14,7 +14,7 @@ object ShortName {
 
   val names = Map("44" -> "Wolves")
 
-  def apply(team: Team) = names.getOrElse(team.id, team.name)
+  def apply(team: Team): String = names.getOrElse(team.id, team.name)
 
 }
 
@@ -66,7 +66,7 @@ object MatchStatus extends Logging {
 
 object NudgePercent {
   // the realities of padding and margins means we never actually want 100%
-  def apply(main: Int, other: Int) = {
+  def apply(main: Int, other: Int): Int = {
     if (main == 0 && other == 0) 50
     else if (main >= 91) 91
     else if (main < 9) 9
@@ -76,7 +76,7 @@ object NudgePercent {
 
 object PercentMaker {
   // I want the percentages to add up to 100
-  def apply(home: Int, away: Int) = {
+  def apply(home: Int, away: Int): (Int, Int) = {
     val homeD = home.toDouble
     val totalD = (home + away).toDouble
     if (home + away == 100) (home, away)
