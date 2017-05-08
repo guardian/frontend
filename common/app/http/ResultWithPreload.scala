@@ -1,6 +1,6 @@
 package http
 
-import common.{CssPreloadAsset, JsPreloadAsset, PreloadAsset}
+import common.{CssPreloadAsset, JsPreloadAsset, PreloadAsset, UrlPreload}
 import model.ApplicationContext
 import play.api.mvc.Result
 
@@ -16,6 +16,8 @@ trait ResultWithPreload {
             s"<${conf.Static(jsFile.asset)}>; rel=preload; as=script; nopush"
           case cssFile: CssPreloadAsset =>
             s"<${conf.Static(common.Assets.css.projectCss(Some(cssFile.asset.stripSuffix(".css"))))}>; rel=preload; as=style; nopush"
+          case url: UrlPreload =>
+            s"<$url>; rel=preload; nopush"
         }.mkString(",")
         val linkHeaderValue = self.header.headers.get(linkHeaderKey).map(_ ++ s",$preloadFiles") getOrElse preloadFiles
         self.withHeaders(linkHeaderKey -> linkHeaderValue)
