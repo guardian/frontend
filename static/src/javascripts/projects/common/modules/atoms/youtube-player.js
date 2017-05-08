@@ -58,7 +58,12 @@ const setupPlayer = (id, onPlayerReady, onPlayerStateChange) =>
 
 const hasPlayerStarted = event => event.target.getCurrentTime() > 0;
 
-const init = (el: HTMLElement, handlers: {}, videoId: string) => {
+type Handlers = {
+    onPlayerReady: () => void,
+    onPlayerStateChange: () => void,
+};
+
+const init = (el: HTMLElement, handlers: Handlers, videoId: string) => {
     loadYoutubeJs();
 
     return promise.then(() => {
