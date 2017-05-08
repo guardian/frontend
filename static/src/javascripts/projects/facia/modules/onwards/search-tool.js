@@ -1,250 +1,244 @@
-define([
-    'bean',
-    'lib/$',
-    'lib/fetch-json',
-    'lib/mediator',
-    'lib/report-error'
-], function (
-    bean,
-    $,
-    fetchJson,
-    mediator,
-    reportError
-) {
-    function SearchTool(options) {
-        var $list      = null,
-            $input     = null,
-            oldQuery   = '',
-            newQuery   = '',
-            inputTmp   = '',
-            keyCodeMap = {
-                13: 'enter',
-                38: 'up',
-                40: 'down'
-            },
-            opts       = options || {},
-            $container = opts.container,
-            apiUrl     = opts.apiUrl;
+import bean from 'bean';
+import $ from 'lib/$';
+import fetchJson from 'lib/fetch-json';
+import mediator from 'lib/mediator';
+import reportError from 'lib/report-error';
 
-        return {
-            init: function () {
-                this.bindElements($container);
-                this.bindEvents();
-            },
+function SearchTool(options) {
+    var $list = null,
+        $input = null,
+        oldQuery = '',
+        newQuery = '',
+        inputTmp = '',
+        keyCodeMap = {
+            13: 'enter',
+            38: 'up',
+            40: 'down'
+        },
+        opts = options || {},
+        $container = opts.container,
+        apiUrl = opts.apiUrl;
 
-            bindElements: function (container) {
-                $list  = $('.js-search-tool-list', container);
-                $input = $('.js-search-tool-input', container);
-            },
+    return {
+        init: function() {
+            this.bindElements($container);
+            this.bindEvents();
+        },
 
-            bindEvents: function () {
-                bean.on(document.body, 'keyup', this.handleKeyEvents.bind(this));
-                bean.on(document.body, 'click', this.handleClick.bind(this));
+        bindElements: function(container) {
+            $list = $('.js-search-tool-list', container);
+            $input = $('.js-search-tool-input', container);
+        },
 
-                mediator.on('autocomplete:toggle', this.toggleControls.bind(this));
-            },
+        bindEvents: function() {
+            bean.on(document.body, 'keyup', this.handleKeyEvents.bind(this));
+            bean.on(document.body, 'click', this.handleClick.bind(this));
 
-            hasInputValueChanged: function () {
-                return (oldQuery.length !== newQuery.length);
-            },
+            mediator.on('autocomplete:toggle', this.toggleControls.bind(this));
+        },
 
-            handleClick: function (e) {
-                var isInput = $(e.target).hasClass('js-search-tool-input'),
-                    isLink  = this.isLink(e.target);
+        hasInputValueChanged: function() {
+            return (oldQuery.length !== newQuery.length);
+        },
 
-                if (isInput) {
-                    e.preventDefault();
-                    mediator.emit('autocomplete:toggle', true);
-                } else if (isLink) {
-                    e.preventDefault();
-                    $('.active', $list).removeClass('active');
-                    $(isLink).addClass('active');
-                    this.pushData();
+        handleClick: function(e) {
+            var isInput = $(e.target).hasClass('js-search-tool-input'),
+                isLink = this.isLink(e.target);
+
+            if (isInput) {
+                e.preventDefault();
+                mediator.emit('autocomplete:toggle', true);
+            } else if (isLink) {
+                e.preventDefault();
+                $('.active', $list).removeClass('active');
+                $(isLink).addClass('active');
+                this.pushData();
+            } else {
+                mediator.emit('autocomplete:toggle', false);
+            }
+        },
+
+        isLink: function(target) {
+            if ($(target).hasClass('js-search-tool-link')) {
+                return target;
+            } else {
+                return $.ancestor(target, 'js-search-tool-link');
+            }
+        },
+
+        toggleControls: function(value) {
+            var $input = $('.js-search-tool-input')[0],
+                $location = $('.js-search-tool'),
+                $close = $('.js-close-location'),
+                $edit = $('.js-edit-location');
+
+            if (value) {
+                inputTmp = $input.value;
+                $location.addClass('is-editing');
+                $input.setSelectionRange(0, $input.value.length);
+                $close.removeClass('u-h');
+                $edit.addClass('u-h');
+            } else {
+                $location.removeClass('is-editing');
+                this.clear();
+                this.setInputValue(inputTmp);
+                $close.addClass('u-h');
+                $edit.removeClass('u-h');
+            }
+        },
+
+        pushData: function() {
+            var $active = $('.active', $list),
+                data = {},
+                store = 'set';
+
+            if ($active.length === 0) {
+                if ($input.val() === '') {
+                    store = 'remove';
                 } else {
-                    mediator.emit('autocomplete:toggle', false);
+                    return false;
                 }
-            },
+            }
 
-            isLink: function (target) {
-                if ($(target).hasClass('js-search-tool-link')) {
-                    return target;
-                } else {
-                    return $.ancestor(target, 'js-search-tool-link');
-                }
-            },
+            data = {
+                'id': $active.attr('data-weather-id'),
+                'city': $active.attr('data-weather-city'),
+                'store': store
+            };
 
-            toggleControls: function (value) {
-                var $input    = $('.js-search-tool-input')[0],
-                    $location = $('.js-search-tool'),
-                    $close    = $('.js-close-location'),
-                    $edit     = $('.js-edit-location');
+            // Send data to whoever is listening
+            mediator.emit('autocomplete:fetch', data);
+            this.setInputValue();
+            inputTmp = data.city;
+            $input.blur();
 
-                if (value) {
-                    inputTmp = $input.value;
-                    $location.addClass('is-editing');
-                    $input.setSelectionRange(0, $input.value.length);
-                    $close.removeClass('u-h');
-                    $edit.addClass('u-h');
-                } else {
-                    $location.removeClass('is-editing');
-                    this.clear();
-                    this.setInputValue(inputTmp);
-                    $close.addClass('u-h');
-                    $edit.removeClass('u-h');
-                }
-            },
+            // Clear all after timeout because of the tracking we can't remove everything straight away
+            setTimeout(this.destroy.bind(this), 50);
 
-            pushData: function () {
-                var $active = $('.active', $list),
-                    data    = {},
-                    store   = 'set';
+            return data;
+        },
 
-                if ($active.length === 0) {
-                    if ($input.val() === '') {
-                        store = 'remove';
-                    } else {
-                        return false;
-                    }
-                }
+        getListOfResults: function(e) {
+            newQuery = e.target.value;
 
-                data = {
-                    'id': $active.attr('data-weather-id'),
-                    'city': $active.attr('data-weather-city'),
-                    'store': store
-                };
+            // If we have empty input clear everything and don't fetch the data
+            if (!e.target.value.match(/\S/)) {
+                this.clear();
+                oldQuery = '';
+                return;
+            }
 
-                // Send data to whoever is listening
-                mediator.emit('autocomplete:fetch', data);
-                this.setInputValue();
-                inputTmp = data.city;
-                $input.blur();
+            // If input value hasn't changed don't fetch the data
+            if (!this.hasInputValueChanged()) {
+                return;
+            }
 
-                // Clear all after timeout because of the tracking we can't remove everything straight away
-                setTimeout(this.destroy.bind(this), 50);
+            this.fetchData();
+        },
 
-                return data;
-            },
-
-            getListOfResults: function (e) {
-                newQuery = e.target.value;
-
-                // If we have empty input clear everything and don't fetch the data
-                if (!e.target.value.match(/\S/)) {
-                    this.clear();
-                    oldQuery = '';
-                    return;
-                }
-
-                // If input value hasn't changed don't fetch the data
-                if (!this.hasInputValueChanged()) {
-                    return;
-                }
-
-                this.fetchData();
-            },
-
-            fetchData: function () {
-                return fetchJson(apiUrl + newQuery, {
+        fetchData: function() {
+            return fetchJson(apiUrl + newQuery, {
                     mode: 'cors'
-                }).then(function (positions) {
+                }).then(function(positions) {
                     this.renderList(positions, 5);
                     oldQuery = newQuery;
                 }.bind(this))
-                .catch(function (ex) {
-                    reportError(ex, { feature: 'search-tool' });
+                .catch(function(ex) {
+                    reportError(ex, {
+                        feature: 'search-tool'
+                    });
                 });
-            },
+        },
 
-            handleKeyEvents: function (e) {
-                var key = keyCodeMap[e.which || e.keyCode];
+        handleKeyEvents: function(e) {
+            var key = keyCodeMap[e.which || e.keyCode];
 
-                // Run this function only if we are inside the input
-                if (!$(e.target).hasClass('js-search-tool-input')) {
-                    return;
-                }
-
-                if (key === 'down') { // down
-                    e.preventDefault();
-                    this.move(1);
-                } else if (key === 'up') { // up
-                    e.preventDefault();
-                    this.move(-1);
-                } else if (key === 'enter') { // enter
-                    this.pushData();
-                } else {
-                    this.getListOfResults(e);
-                }
-            },
-
-            move: function (increment) {
-                var $active = $('.active', $list),
-                    id      = parseInt($active.attr('id'), 10);
-
-                if (isNaN(id)) {
-                    id = -1;
-                }
-
-                $active.removeClass('active');
-
-                // When outside of the list show latest query
-                if (this.getNewId(id + increment) < 0) {
-                    this.setInputValue(oldQuery);
-
-                    // When looping inside of the list show list item
-                } else {
-                    $('#' + this.getNewId(id + increment) + 'sti', $list).addClass('active');
-                    this.setInputValue();
-                }
-            },
-
-            getNewId: function (id) {
-                var len   = $('li', $list).length,
-                    newId = id % len;
-
-                // Make sure that we can hit saved input option which has position -1
-                if (newId < -1) {
-                    newId = len - 1;
-                } else if (id === len) {
-                    newId = -1;
-                }
-
-                return newId;
-            },
-
-            setInputValue: function (value) {
-                var inputValue = value || $('.active', $list).attr('data-weather-city');
-
-                $input.val(inputValue);
-            },
-
-            renderList: function (results, numOfResults) {
-                var docFragment   = document.createDocumentFragment(),
-                    resultsToShow = results.length - numOfResults;
-
-                results.slice(0, resultsToShow).forEach(function (item, index) {
-                    var li = document.createElement('li');
-
-                    li.className = 'search-tool__item';
-                    li.innerHTML = '<a role="button" href="#' + item.id + '"' +
-                        ' id="' + index + 'sti" class="js-search-tool-link search-tool__link' + (index === 0 ? ' active"' : '"') +
-                        ' data-link-name="weather-search-tool" data-weather-id="' + item.id + '" data-weather-city="' + item.city + '">' +
-                        item.city + ' <span class="search-tool__meta">' + item.country + '</span></a>';
-
-                    docFragment.appendChild(li);
-                });
-
-                this.clear().append(docFragment);
-            },
-
-            clear: function () {
-                return $list.html('');
-            },
-
-            destroy: function () {
-                this.clear();
+            // Run this function only if we are inside the input
+            if (!$(e.target).hasClass('js-search-tool-input')) {
+                return;
             }
-        };
-    }
 
-    return SearchTool;
-});
+            if (key === 'down') { // down
+                e.preventDefault();
+                this.move(1);
+            } else if (key === 'up') { // up
+                e.preventDefault();
+                this.move(-1);
+            } else if (key === 'enter') { // enter
+                this.pushData();
+            } else {
+                this.getListOfResults(e);
+            }
+        },
+
+        move: function(increment) {
+            var $active = $('.active', $list),
+                id = parseInt($active.attr('id'), 10);
+
+            if (isNaN(id)) {
+                id = -1;
+            }
+
+            $active.removeClass('active');
+
+            // When outside of the list show latest query
+            if (this.getNewId(id + increment) < 0) {
+                this.setInputValue(oldQuery);
+
+                // When looping inside of the list show list item
+            } else {
+                $('#' + this.getNewId(id + increment) + 'sti', $list).addClass('active');
+                this.setInputValue();
+            }
+        },
+
+        getNewId: function(id) {
+            var len = $('li', $list).length,
+                newId = id % len;
+
+            // Make sure that we can hit saved input option which has position -1
+            if (newId < -1) {
+                newId = len - 1;
+            } else if (id === len) {
+                newId = -1;
+            }
+
+            return newId;
+        },
+
+        setInputValue: function(value) {
+            var inputValue = value || $('.active', $list).attr('data-weather-city');
+
+            $input.val(inputValue);
+        },
+
+        renderList: function(results, numOfResults) {
+            var docFragment = document.createDocumentFragment(),
+                resultsToShow = results.length - numOfResults;
+
+            results.slice(0, resultsToShow).forEach(function(item, index) {
+                var li = document.createElement('li');
+
+                li.className = 'search-tool__item';
+                li.innerHTML = '<a role="button" href="#' + item.id + '"' +
+                    ' id="' + index + 'sti" class="js-search-tool-link search-tool__link' + (index === 0 ? ' active"' : '"') +
+                    ' data-link-name="weather-search-tool" data-weather-id="' + item.id + '" data-weather-city="' + item.city + '">' +
+                    item.city + ' <span class="search-tool__meta">' + item.country + '</span></a>';
+
+                docFragment.appendChild(li);
+            });
+
+            this.clear().append(docFragment);
+        },
+
+        clear: function() {
+            return $list.html('');
+        },
+
+        destroy: function() {
+            this.clear();
+        }
+    };
+}
+
+export default SearchTool;
