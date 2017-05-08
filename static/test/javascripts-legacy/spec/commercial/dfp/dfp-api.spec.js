@@ -161,6 +161,7 @@ define([
                     enableServices: sinon.spy(),
                     display: sinon.spy()
                 };
+                window.__switch_zero = false;
                 performanceLogging.setListeners = function () {
                     // noop
                 };
