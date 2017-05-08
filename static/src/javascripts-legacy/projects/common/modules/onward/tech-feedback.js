@@ -16,9 +16,7 @@ define([
     cookies
 ) {
 
-    var select = document.getElementById("feedback-category");
     var warning = document.getElementById("feedback__explainer");
-
     var adblockBeingUsed = false;
 
     function getExtraDataInformation() {
