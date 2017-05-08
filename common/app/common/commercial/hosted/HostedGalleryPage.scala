@@ -1,9 +1,9 @@
 package common.commercial.hosted
 
-import com.gu.contentapi.client.model.v1.ElementType.Image
-import com.gu.contentapi.client.model.v1.{Asset, Content, Element}
+import com.gu.contentapi.client.model.v1.Content
 import common.Logging
-import common.commercial.hosted.HostedUtils.getAndLog
+import common.commercial.hosted.ContentUtils.{findLargestAsset, imageElements, findSmallestThumbnailAsset}
+import common.commercial.hosted.LoggingUtils.getAndLog
 import model.MetaData
 
 case class HostedGalleryPage(
@@ -16,11 +16,10 @@ case class HostedGalleryPage(
   override val socialShareText: Option[String] = None,
   override val shortSocialShareText: Option[String] = None,
   images: List[HostedGalleryImage],
+  override val thumbnailUrl: String,
   override val metadata: MetaData
 ) extends HostedPage {
-
-  override val imageUrl = images.headOption.map(_.url).getOrElse("")
-
+  override val mainImageUrl = images.headOption.map(_.url).getOrElse("")
 }
 
 case class HostedGalleryImage(
@@ -38,31 +37,17 @@ object HostedGalleryPage extends Logging {
     log.info(s"Building hosted gallery ${content.id} ...")
 
     val page = for {
-      campaignId <- content.sectionId map (_.stripPrefix("advertiser-content/"))
       campaign <- HostedCampaign.fromContent(content)
       atoms <- getAndLog(content, content.atoms, "the atoms are missing")
       ctaAtoms <- getAndLog(content, atoms.cta, "the CTA atoms are missing")
       ctaAtom <- getAndLog(content, ctaAtoms.headOption, "the CTA atom is missing")
     } yield {
 
-      val mainImageAsset: Option[Asset] = {
-        val elements: Option[Seq[Element]] = content.elements
-        val optElement = elements.flatMap(
-          _.find { element =>
-            element.`type` == Image && element.relation == "main"
-          }
-        )
-        optElement.map { element =>
-          element.assets.maxBy(_.typeData.flatMap(_.width).getOrElse(0))
-        }
-      }
+      val thumbnailAsset = findSmallestThumbnailAsset(content)
 
       val galleryImages = {
-        val elements: Seq[Element] = content.elements.map(
-          _.filter { element => element.`type` == Image && element.relation == "gallery" }
-        ).getOrElse(Nil)
-        elements.map { element =>
-          val asset = element.assets.maxBy(_.typeData.flatMap(_.width).getOrElse(0))
+        imageElements(content, "gallery") map { element =>
+          val asset = findLargestAsset(element)
           HostedGalleryImage(
             url = asset.file.getOrElse(""),
             width = asset.typeData.flatMap(_.width),
@@ -81,12 +66,11 @@ object HostedGalleryPage extends Logging {
         title = content.webTitle,
         // using capi trail text instead of standfirst because we don't want the markup
         standfirst = content.fields.flatMap(_.trailText).getOrElse(""),
-
         cta = HostedCallToAction.fromAtom(ctaAtom),
-
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
-        metadata = HostedMetadata.fromContent(content).copy(openGraphImages = mainImageAsset.flatMap(_.file).toList)
+        thumbnailUrl = thumbnailAsset.flatMap(_.file) getOrElse "",
+        metadata = HostedMetadata.fromContent(content).copy(openGraphImages = thumbnailAsset.flatMap(_.file).toList)
       )
     }
 
