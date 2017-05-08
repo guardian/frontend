@@ -197,7 +197,7 @@ define([
             para.parentNode.insertBefore(ad, para);
         })
         .then(function () {
-            addSlot(ad, name === 'im');
+            addSlot.addSlot(ad, name === 'im');
         });
     }
 });
