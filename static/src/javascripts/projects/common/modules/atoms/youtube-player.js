@@ -20,7 +20,16 @@ const addVideoStartedClass = el => {
     el.classList.add('youtube__video-started');
 };
 
-const onPlayerStateChangeEvent = (event, handlers, el) => {
+type Handlers = {
+    onPlayerReady: () => void,
+    onPlayerStateChange: () => void,
+};
+
+const onPlayerStateChangeEvent = (
+    event,
+    handlers: Handlers,
+    el: HTMLElement
+) => {
     // change class according to the current state
     // TODO: Fix this so we can add poster image.
     fastdom.write(() => {
@@ -38,7 +47,7 @@ const onPlayerStateChangeEvent = (event, handlers, el) => {
     }
 };
 
-const onPlayerReadyEvent = (event, handlers, el) => {
+const onPlayerReadyEvent = (event, handlers: Handlers, el: HTMLElement) => {
     fastdom.write(() => {
         el.classList.add('youtube__video-ready');
     });
@@ -57,11 +66,6 @@ const setupPlayer = (id, onPlayerReady, onPlayerStateChange) =>
     });
 
 const hasPlayerStarted = event => event.target.getCurrentTime() > 0;
-
-type Handlers = {
-    onPlayerReady: () => void,
-    onPlayerStateChange: () => void,
-};
 
 const init = (el: HTMLElement, handlers: Handlers, videoId: string) => {
     loadYoutubeJs();
