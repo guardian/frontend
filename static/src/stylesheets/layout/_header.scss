@@ -309,19 +309,27 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     line-height: 1;
     z-index: $zindex-main-menu;
     box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
+
+    .new-header--open & {
+        @include sidebar-animation(0%);
+    }
 }
 
 .main-menu-container__overlay {
     background-color: hsla(0, 0%, 0%, .5);
+    height: 100%;
+    left: 0;
+    opacity: 0;
     position: fixed;
     top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
     transition: opacity .2s cubic-bezier(.23, 1, .32, 1);
     // Without this, in Safari/IOS this element appears above the menu
+    width: 100%;
     z-index: $zindex-overlay;
-    display: none;
+
+    .new-header--open & {
+        opacity: 1;
+    }
 }
 
 .main-menu-container__menu {
@@ -364,28 +372,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
     @include mq(mobileLandscape) {
         margin-right: $gutter-large + ($veggie-burger-medium / 2);
-    }
-}
-
-.new-header__nav-trigger {
-    display: none;
-}
-
-.veggi-burger {
-    &:checked,
-    &[aria-expanded='true']  {
-        & ~ .main-menu-container {
-            @include sidebar-animation(0%);
-        }
-    }
-
-    &:checked,
-    &[aria-expanded='true'] {
-        & ~ .main-menu-container__overlay {
-            opacity: 1;
-            transition: opacity .4s cubic-bezier(.23, 1, .32, 1);
-            display: block;
-        }
     }
 }
 

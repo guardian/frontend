@@ -1,0 +1,13 @@
+.veggi-burger-fallback {
+    display: none;
+
+    &:checked {
+        & ~ .main-menu-container {
+            @include sidebar-animation(0%);
+        }
+
+        & ~ .main-menu-container__overlay {
+            opacity: 1;
+        }
+    }
+}
