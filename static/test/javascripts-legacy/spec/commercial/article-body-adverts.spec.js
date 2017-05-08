@@ -32,8 +32,10 @@ define([
                 return Promise.resolve(ads[id]);
             });
 
-            injector.mock('commercial/modules/dfp/add-slot', function () {
-                /* noop */
+            injector.mock('commercial/modules/dfp/add-slot', {
+                addSlot: function () {
+                    /* noop */
+                }
             });
             injector.require([
                 'commercial/modules/article-body-adverts',
