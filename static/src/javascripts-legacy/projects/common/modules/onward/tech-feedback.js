@@ -82,14 +82,14 @@ define([
         // mandatory checks (realtime)
 
         document.querySelectorAll(".feedback__form input,.feedback__form textarea").forEach(function(elem){
-            elem.onblur = function(){ mandatoryCheck(elem); }
-            elem.oninput = function(){ mandatoryCheck(elem); }
+            elem.addEventListener("blur", function(){ mandatoryCheck(elem); });
+            elem.addEventListener("input", function(){ mandatoryCheck(elem); });
         });
 
         // mandatory checks (on submit)
 
         document.querySelectorAll(".feedback__form form").forEach(function(elem){
-            elem.onsubmit = function() {
+            elem.addEventListener("submit", function() {
 
                 var hasFailed = false;
 
@@ -105,8 +105,7 @@ define([
 
                 return !hasFailed;
 
-            }
-
+            });
         });
 
         // form toggling
